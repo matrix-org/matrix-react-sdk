@@ -381,7 +381,6 @@
     "%(severalUsers)shad their invitations withdrawn %(count)s times|one": "%(severalUsers)s erabiltzaileei gonbidapena indargabetu zaie",
     "%(oneUser)shad their invitation withdrawn %(count)s times|other": "%(oneUser)s erabiltzaileari gonbidapena indargabetu zaio %(count)s aldiz",
     "%(oneUser)shad their invitation withdrawn %(count)s times|one": "%(oneUser)s erabiltzaileari gonbidapena indargabetu zaio",
-    "%(severalUsers)schanged their avatar %(count)s times|one": "%(severalUsers)s erabiltzaileek bere abatarra aldatu dute",
     "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)s erabiltzaileak bere abatarra aldatu du",
     "%(items)s and %(count)s others|other": "%(items)s eta beste %(count)s",
     "%(items)s and %(count)s others|one": "%(items)s eta beste bat",

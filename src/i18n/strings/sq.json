@@ -399,7 +399,6 @@
     "%(oneUser)sleft and rejoined %(count)s times|other": "%(oneUser)sdoli dhe rihyri %(count)s herë",
     "%(severalUsers)schanged their name %(count)s times|other": "%(severalUsers)sndryshuan emrat e tyre %(count)s herë",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sndryshoi emrin e vet %(count)s herë",
-    "%(oneUser)schanged their avatar %(count)s times|other": "%(oneUser)sndryshoi avatarin e vet %(count)s herë",
     "Clear cache and resync": "Spastro fshehtinën dhe rinjëkohëso",
     "Clear Storage and Sign Out": "Spastro Depon dhe Dil",
     "Permission Required": "Lypset Leje",

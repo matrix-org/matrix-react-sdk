@@ -373,7 +373,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s hebben hun naam gewijzigd",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s is %(count)s keer van naam veranderd",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s is van naam veranderd",
-    "%(severalUsers)schanged their avatar %(count)s times|one": "%(severalUsers)s hebben hun afbeelding gewijzigd",
     "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)s is van afbeelding veranderd",
     "%(items)s and %(count)s others|other": "%(items)s en %(count)s andere",
     "%(items)s and %(count)s others|one": "%(items)s en één ander",

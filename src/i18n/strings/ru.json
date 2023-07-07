@@ -350,7 +350,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)sизменили имя",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sизменил(а) имя %(count)s раз(а)",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)sизменил(а) имя",
-    "%(severalUsers)schanged their avatar %(count)s times|one": "%(severalUsers)sизменили аватар",
     "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)sизменил(а) аватар",
     "%(items)s and %(count)s others|other": "%(items)s и ещё %(count)s участника(-ов)",
     "%(items)s and %(count)s others|one": "%(items)s и ещё кто-то",

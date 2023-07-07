@@ -281,7 +281,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)sсмениха своето име",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sсмени своето име %(count)s пъти",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)sсмени своето име",
-    "%(severalUsers)schanged their avatar %(count)s times|one": "%(severalUsers)sсмениха своята профилна снимка",
     "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)sсмени своята профилна снимка",
     "%(items)s and %(count)s others|other": "%(items)s и %(count)s други",
     "%(items)s and %(count)s others|one": "%(items)s и още един",

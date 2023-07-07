@@ -665,7 +665,6 @@
     "%(oneUser)sleft %(count)s times|one": "%(oneUser)s forlot rommet",
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s endret navnene sine",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s endret navnet sitt",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)s endret avataren sin",
     "Custom level": "Tilpasset nivå",
     "And %(count)s more...|other": "Og %(count)s til...",
     "Matrix": "Matrix",

@@ -620,7 +620,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s èn hunder noame gewyzigd",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s è zyn/heur noame %(count)s kis gewyzigd",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s è zyn/heur noame gewyzigd",
-    "%(severalUsers)schanged their avatar %(count)s times|one": "%(severalUsers)s èn hundern avatar gewyzigd",
     "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)s è zyn/heurn avatar gewyzigd",
     "collapse": "toeklappn",
     "expand": "uutklappn",
