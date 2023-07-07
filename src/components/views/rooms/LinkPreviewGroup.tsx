@@ -97,11 +97,11 @@ const fetchPreviews = (cli: MatrixClient, links: string[], ts: number): Promise<
         links.map(async (link): Promise<[string, IPreviewUrlResponse] | undefined> => {
             try {
                 const preview = await cli.getUrlPreview(link, ts);
+                // Ensure at least one of the rendered fields is truthy
                 if (
-                    preview &&
-                    Object.keys(preview).length > 0 &&
-                    // Ensure at least one of the rendered fields is truthy
-                    (preview["og:image"]?.startsWith("mxc://") || preview["og:description"] || preview["og:title"])
+                    preview?.["og:image"]?.startsWith("mxc://") ||
+                    !!preview?.["og:description"] ||
+                    !!preview?.["og:title"]
                 ) {
                     return [link, preview];
                 }
