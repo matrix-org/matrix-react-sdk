@@ -94,7 +94,7 @@ export default class HTMLExporter extends Exporter {
         const exportDate = formatFullDateNoDayNoTime(new Date());
         const creator = this.room.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
         const creatorName = (creator ? this.room.getMember(creator)?.rawDisplayName : creator) || creator;
-        const exporter = this.client.getUserId()!;
+        const exporter = this.room.client.getSafeUserId();
         const exporterName = this.room.getMember(exporter)?.rawDisplayName;
         const topic = this.room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic || "";
         const createdText = _t("%(creatorName)s created this room.", {
@@ -132,7 +132,7 @@ export default class HTMLExporter extends Exporter {
             currentPage !== 0 ? (
                 <div style={{ textAlign: "center" }}>
                     <a href={`./messages${currentPage === 1 ? "" : currentPage}.html`} style={{ fontWeight: "bold" }}>
-                        Previous group of messages
+                        {_t("Previous group of messages")}
                     </a>
                 </div>
             ) : (
@@ -144,7 +144,7 @@ export default class HTMLExporter extends Exporter {
             currentPage < nbPages - 1 ? (
                 <div style={{ textAlign: "center", margin: "10px" }}>
                     <a href={"./messages" + (currentPage + 2) + ".html"} style={{ fontWeight: "bold" }}>
-                        Next group of messages
+                        {_t("Next group of messages")}
                     </a>
                 </div>
             ) : (
@@ -161,7 +161,7 @@ export default class HTMLExporter extends Exporter {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link href="css/style.css" rel="stylesheet" />
                 <script src="js/script.js"></script>
-                <title>Exported Data</title>
+                <title>${_t("Exported Data")}</title>
             </head>
             <body style="height: 100vh;">
                 <section
@@ -282,7 +282,7 @@ export default class HTMLExporter extends Exporter {
     public getEventTile(mxEv: MatrixEvent, continuation: boolean): JSX.Element {
         return (
             <div className="mx_Export_EventWrapper" id={mxEv.getId()}>
-                <MatrixClientContext.Provider value={this.client}>
+                <MatrixClientContext.Provider value={this.room.client}>
                     <EventTile
                         mxEvent={mxEv}
                         continuation={continuation}
@@ -402,7 +402,7 @@ export default class HTMLExporter extends Exporter {
             // TODO: Handle callEvent errors
             logger.error(e);
             eventTile = await this.getEventTileMarkup(
-                this.createModifiedEvent(textForEvent(mxEv), mxEv, false),
+                this.createModifiedEvent(textForEvent(mxEv, this.room.client), mxEv, false),
                 joined,
             );
         }
@@ -429,11 +429,12 @@ export default class HTMLExporter extends Exporter {
                 true,
             );
             if (this.cancelled) return this.cleanUp();
-            if (!haveRendererForEvent(event, false)) continue;
+            if (!haveRendererForEvent(event, this.room.client, false)) continue;
 
             content += this.needsDateSeparator(event, prevEvent) ? this.getDateSeparator(event) : "";
             const shouldBeJoined =
-                !this.needsDateSeparator(event, prevEvent) && shouldFormContinuation(prevEvent, event, false);
+                !this.needsDateSeparator(event, prevEvent) &&
+                shouldFormContinuation(prevEvent, event, this.room.client, false);
             const body = await this.createMessageBody(event, shouldBeJoined);
             this.totalSize += Buffer.byteLength(body);
             content += body;

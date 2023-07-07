@@ -39,7 +39,6 @@ interface IState {
     shouldLoadBackupStatus: boolean;
     loading: boolean;
     backupInfo: IKeyBackupInfo | null;
-    error?: string;
 }
 
 export default class LogoutDialog extends React.Component<IProps, IState> {
@@ -50,7 +49,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
 
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const shouldLoadBackupStatus = cli.isCryptoEnabled() && !cli.getKeyBackupEnabled();
 
         this.state = {
@@ -66,7 +65,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
 
     private async loadBackupStatus(): Promise<void> {
         try {
-            const backupInfo = await MatrixClientPeg.get().getKeyBackupVersion();
+            const backupInfo = await MatrixClientPeg.safeGet().getKeyBackupVersion();
             this.setState({
                 loading: false,
                 backupInfo,
@@ -75,7 +74,6 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             logger.log("Unable to fetch key backup status", e);
             this.setState({
                 loading: false,
-                error: e,
             });
         }
     }
@@ -86,7 +84,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
                 typeof ExportE2eKeysDialog
             >,
             {
-                matrixClient: MatrixClientPeg.get(),
+                matrixClient: MatrixClientPeg.safeGet(),
             },
         );
     };

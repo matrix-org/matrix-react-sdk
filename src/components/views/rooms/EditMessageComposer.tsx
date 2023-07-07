@@ -50,6 +50,7 @@ import { editorRoomKey, editorStateKey } from "../../../Editing";
 import DocumentOffset from "../../../editor/offset";
 import { attachMentions, attachRelation } from "./SendMessageComposer";
 import { filterBoolean } from "../../../utils/arrays";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -151,13 +152,10 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private getRoom(): Room {
-        const roomId = this.props.editState.getEvent().getRoomId();
-        const room = this.props.mxClient.getRoom(roomId);
-        // Something is very wrong if we encounter this
-        if (!room) {
-            throw new Error(`Cannot find room for event ${roomId}`);
+        if (!this.context.room) {
+            throw new Error(`Cannot render without room`);
         }
-        return room;
+        return this.context.room;
     }
 
     private onKeyDown = (event: KeyboardEvent): void => {
@@ -184,6 +182,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     events: this.events,
                     isForward: false,
                     fromEventId: this.props.editState.getEvent().getId(),
+                    matrixClient: MatrixClientPeg.safeGet(),
                 });
                 if (previousEvent) {
                     dis.dispatch({
@@ -203,6 +202,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     events: this.events,
                     isForward: true,
                     fromEventId: this.props.editState.getEvent().getId(),
+                    matrixClient: MatrixClientPeg.safeGet(),
                 });
                 if (nextEvent) {
                     dis.dispatch({
@@ -341,7 +341,13 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 const [cmd, args, commandText] = getSlashCommand(this.model);
                 if (cmd) {
                     const threadId = editedEvent?.getThread()?.id || null;
-                    const [content, commandSuccessful] = await runSlashCommand(cmd, args, roomId, threadId);
+                    const [content, commandSuccessful] = await runSlashCommand(
+                        MatrixClientPeg.safeGet(),
+                        cmd,
+                        args,
+                        roomId,
+                        threadId,
+                    );
                     if (!commandSuccessful) {
                         return; // errored
                     }

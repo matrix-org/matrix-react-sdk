@@ -70,7 +70,7 @@ const mkTimeline = (room: Room, events: MatrixEvent[]): [EventTimeline, EventTim
         room: room as Room,
         getLiveTimeline: () => timeline,
         getTimelineForEvent: () => timeline,
-        getPendingEvents: () => [],
+        getPendingEvents: () => [] as MatrixEvent[],
     } as unknown as EventTimelineSet;
     const timeline = new EventTimeline(timelineSet);
     events.forEach((event) => timeline.addEvent(event, { toStartOfTimeline: false }));
@@ -106,7 +106,7 @@ const mockEvents = (room: Room, count = 2): MatrixEvent[] => {
 };
 
 const setupTestData = (): [MatrixClient, Room, MatrixEvent[]] => {
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
     const room = mkRoom(client, "roomId");
     const events = mockEvents(room);
     return [client, room, events];
@@ -377,7 +377,7 @@ describe("TimelinePanel", () => {
     });
 
     it("should scroll event into view when props.eventId changes", () => {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const room = mkRoom(client, "roomId");
         const events = mockEvents(room);
 
@@ -798,7 +798,7 @@ describe("TimelinePanel", () => {
         let reply2: MatrixEvent;
 
         beforeEach(() => {
-            client = MatrixClientPeg.get();
+            client = MatrixClientPeg.safeGet();
 
             Thread.hasServerSideSupport = FeatureSupport.Stable;
             room = new Room("roomId", client, "userId");
@@ -851,22 +851,22 @@ describe("TimelinePanel", () => {
         });
 
         it("updates thread previews", async () => {
-            root.setUnsigned({
-                "m.relations": {
-                    [THREAD_RELATION_TYPE.name]: {
-                        latest_event: reply1.event,
-                        count: 1,
-                        current_user_participated: true,
-                    },
-                },
-            });
+            mocked(client.supportsThreads).mockReturnValue(true);
+            reply1.getContent()["m.relates_to"] = {
+                rel_type: RelationType.Thread,
+                event_id: root.getId(),
+            };
+            reply2.getContent()["m.relates_to"] = {
+                rel_type: RelationType.Thread,
+                event_id: root.getId(),
+            };
 
             const thread = room.createThread(root.getId()!, root, [], true);
             // So that we do not have to mock the thread loading
             thread.initialEventsFetched = true;
             // @ts-ignore
             thread.fetchEditsWhereNeeded = () => Promise.resolve();
-            await thread.addEvent(reply1, true);
+            await thread.addEvent(reply1, false, true);
             await allThreads.getLiveTimeline().addEvent(thread.rootEvent!, { toStartOfTimeline: true });
             const replyToEvent = jest.spyOn(thread, "replyToEvent", "get");
 
@@ -878,16 +878,6 @@ describe("TimelinePanel", () => {
             await dom.findByText("RootEvent");
             await dom.findByText("ReplyEvent1");
             expect(replyToEvent).toHaveBeenCalled();
-
-            root.setUnsigned({
-                "m.relations": {
-                    [THREAD_RELATION_TYPE.name]: {
-                        latest_event: reply2.event,
-                        count: 2,
-                        current_user_participated: true,
-                    },
-                },
-            });
 
             replyToEvent.mockClear();
             await thread.addEvent(reply2, false, true);
@@ -952,7 +942,7 @@ describe("TimelinePanel", () => {
     });
 
     it("renders when the last message is an undecryptable thread root", async () => {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         client.isRoomEncrypted = () => true;
         client.supportsThreads = () => true;
         client.decryptEventIfNeeded = () => Promise.resolve();

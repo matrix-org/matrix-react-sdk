@@ -491,7 +491,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         // This would cause jumping to happen on Chrome/macOS.
         return new Promise((resolve) => window.setTimeout(resolve, 1))
             .then(() => {
-                return this.props.onFillRequest(backwards);
+                return this.props.onFillRequest?.(backwards);
             })
             .finally(() => {
                 this.pendingFillRequests[dir] = false;
@@ -700,7 +700,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             const trackedNode = this.getTrackedNode();
             if (trackedNode) {
                 const newBottomOffset = this.topFromBottom(trackedNode);
-                const bottomDiff = newBottomOffset - scrollState.bottomOffset;
+                const bottomDiff = newBottomOffset - (scrollState.bottomOffset ?? 0);
                 this.bottomGrowth += bottomDiff;
                 scrollState.bottomOffset = newBottomOffset;
                 const newHeight = `${this.getListHeight()}px`;
@@ -830,6 +830,7 @@ export default class ScrollPanel extends React.Component<IProps> {
     }
 
     private topFromBottom(node: HTMLElement): number {
+        if (!this.itemlist.current) return -1;
         // current capped height - distance from top = distance from bottom of container to top of tracked element
         return this.itemlist.current.clientHeight - node.offsetTop;
     }
@@ -853,7 +854,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         return this.divScroll;
     }
 
-    private collectScroll = (divScroll: HTMLDivElement): void => {
+    private collectScroll = (divScroll: HTMLDivElement | null): void => {
         this.divScroll = divScroll;
     };
 

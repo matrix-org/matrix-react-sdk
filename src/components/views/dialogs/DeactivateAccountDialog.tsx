@@ -18,6 +18,7 @@ limitations under the License.
 import React from "react";
 import { AuthType, IAuthData } from "matrix-js-sdk/src/interactive-auth";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -109,7 +110,10 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         this.setState({ bodyText, continueText, continueKind });
     };
 
-    private onUIAuthFinished: InteractiveAuthCallback = (success, result) => {
+    private onUIAuthFinished: InteractiveAuthCallback<Awaited<ReturnType<MatrixClient["deactivateAccount"]>>> = (
+        success,
+        result,
+    ) => {
         if (success) return; // great! makeRequest() will be called too.
 
         if (result === ERROR_USER_CANCELLED) {
@@ -125,7 +129,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         // XXX: this should be returning a promise to maintain the state inside the state machine correct
         // but given that a deactivation is followed by a local logout and all object instances being thrown away
         // this isn't done.
-        MatrixClientPeg.get()
+        MatrixClientPeg.safeGet()
             .deactivateAccount(auth, this.state.shouldErase)
             .then((r) => {
                 // Deactivation worked - logout & close this dialog
@@ -158,7 +162,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
     }
 
     private initAuth(shouldErase: boolean): void {
-        MatrixClientPeg.get()
+        MatrixClientPeg.safeGet()
             .deactivateAccount(null, shouldErase)
             .then((r) => {
                 // If we got here, oops. The server didn't require any auth.
@@ -190,7 +194,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
                 <div>
                     {this.state.bodyText}
                     <InteractiveAuth
-                        matrixClient={MatrixClientPeg.get()}
+                        matrixClient={MatrixClientPeg.safeGet()}
                         authData={this.state.authData}
                         // XXX: onUIAuthComplete breaches the expected method contract, it gets away with it because it
                         // knows the entire app is about to die as a result of the account deactivation.

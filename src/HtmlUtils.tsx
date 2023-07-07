@@ -19,16 +19,16 @@ limitations under the License.
 
 import React, { LegacyRef, ReactElement, ReactNode } from "react";
 import sanitizeHtml from "sanitize-html";
-import { load as cheerio } from "cheerio";
 import classNames from "classnames";
 import EMOJIBASE_REGEX from "emojibase-regex";
-import { merge, split } from "lodash";
+import { merge } from "lodash";
 import katex from "katex";
 import { decode } from "html-entities";
 import { IContent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 import _Linkify from "linkify-react";
 import escapeHtml from "escape-html";
+import GraphemeSplitter from "graphemer";
 
 import {
     _linkifyElement,
@@ -464,14 +464,18 @@ const emojiToJsxSpan = (emoji: string, key: number): JSX.Element => (
  * @returns if isHtmlMessage is true, returns an array of strings, otherwise return an array of React Elements for emojis
  * and plain text for everything else
  */
-function formatEmojis(message: string | undefined, isHtmlMessage: boolean): (JSX.Element | string)[] {
+export function formatEmojis(message: string | undefined, isHtmlMessage?: false): JSX.Element[];
+export function formatEmojis(message: string | undefined, isHtmlMessage: true): string[];
+export function formatEmojis(message: string | undefined, isHtmlMessage?: boolean): (JSX.Element | string)[] {
     const emojiToSpan = isHtmlMessage ? emojiToHtmlSpan : emojiToJsxSpan;
     const result: (JSX.Element | string)[] = [];
+    if (!message) return result;
+
     let text = "";
     let key = 0;
 
-    // We use lodash's grapheme splitter to avoid breaking apart compound emojis
-    for (const char of split(message, "")) {
+    const splitter = new GraphemeSplitter();
+    for (const char of splitter.iterateGraphemes(message)) {
         if (EMOJIBASE_REGEX.test(char)) {
             if (text) {
                 result.push(text);
@@ -549,27 +553,19 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
             }
 
             safeBody = sanitizeHtml(formattedBody!, sanitizeParams);
-            const phtml = cheerio(safeBody, {
-                // @ts-ignore: The `_useHtmlParser2` internal option is the
-                // simplest way to both parse and render using `htmlparser2`.
-                _useHtmlParser2: true,
-                decodeEntities: false,
-            });
-            const isPlainText = phtml.html() === phtml.root().text();
+            const phtml = new DOMParser().parseFromString(safeBody, "text/html");
+            const isPlainText = phtml.body.innerHTML === phtml.body.textContent;
             isHtmlMessage = !isPlainText;
 
             if (isHtmlMessage && SettingsStore.getValue("feature_latex_maths")) {
-                // @ts-ignore - The types for `replaceWith` wrongly expect
-                // Cheerio instance to be returned.
-                phtml('div, span[data-mx-maths!=""]').replaceWith(function (i, e) {
-                    return katex.renderToString(decode(phtml(e).attr("data-mx-maths")), {
+                [...phtml.querySelectorAll<HTMLElement>("div, span[data-mx-maths]")].forEach((e) => {
+                    e.outerHTML = katex.renderToString(decode(e.getAttribute("data-mx-maths")), {
                         throwOnError: false,
-                        // @ts-ignore - `e` can be an Element, not just a Node
-                        displayMode: e.name == "div",
+                        displayMode: e.tagName == "DIV",
                         output: "htmlAndMathml",
                     });
                 });
-                safeBody = phtml.html();
+                safeBody = phtml.body.innerHTML;
             }
         } else if (highlighter) {
             safeBody = highlighter.applyHighlights(escapeHtml(plainBody), safeHighlights!).join("");
@@ -670,7 +666,7 @@ export function topicToHtml(
         isFormattedTopic = false; // Fall back to plain-text topic
     }
 
-    let emojiBodyElements: ReturnType<typeof formatEmojis> | undefined;
+    let emojiBodyElements: JSX.Element[] | undefined;
     if (!isFormattedTopic && topicHasEmoji) {
         emojiBodyElements = formatEmojis(topic, false);
     }

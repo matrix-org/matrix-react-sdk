@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { Map as MapLibreMap } from "maplibre-gl";
 
 import { createMap } from "./map";
+import { useMatrixClientContext } from "../../contexts/MatrixClientContext";
 
 interface UseMapProps {
     bodyId: string;
@@ -32,14 +33,18 @@ interface UseMapProps {
  * As map is recreated on changes to it
  */
 export const useMap = ({ interactive, bodyId, onError }: UseMapProps): MapLibreMap | undefined => {
+    const cli = useMatrixClientContext();
     const [map, setMap] = useState<MapLibreMap>();
 
     useEffect(
         () => {
             try {
-                setMap(createMap(!!interactive, bodyId, onError));
+                setMap(createMap(cli, !!interactive, bodyId, onError));
             } catch (error) {
-                onError?.(error);
+                console.error("Error encountered in useMap", error);
+                if (error instanceof Error) {
+                    onError?.(error);
+                }
             }
             return () => {
                 if (map) {
