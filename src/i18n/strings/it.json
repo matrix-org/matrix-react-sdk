@@ -285,7 +285,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)shanno modificato il loro nome",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sha modificato il suo nome %(count)s volte",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)sha modificato il suo nome",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)sha cambiato il suo avatar",
     "%(items)s and %(count)s others|other": "%(items)s e altri %(count)s",
     "%(items)s and %(count)s others|one": "%(items)s e un altro",
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",

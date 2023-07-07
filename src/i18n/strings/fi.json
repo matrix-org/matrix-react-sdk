@@ -377,7 +377,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s vaihtoivat nimensä",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s vaihtoi nimensä %(count)s kertaa",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s vaihtoi nimensä",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)s vaihtoi profiilikuvansa",
     "%(items)s and %(count)s others|other": "%(items)s ja %(count)s muuta",
     "%(items)s and %(count)s others|one": "%(items)s ja yksi muu",
     "Old cryptography data detected": "Vanhaa salaustietoa havaittu",

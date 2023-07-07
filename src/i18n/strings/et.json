@@ -889,7 +889,6 @@
     "%(oneUser)schanged their name %(count)s times|other": "Kasutaja %(oneUser)s muutis oma nime %(count)s korda",
     "You cannot place a call with yourself.": "Sa ei saa iseendale helistada.",
     "You do not have permission to start a conference call in this room": "Sul ei ole piisavalt õigusi, et selles jututoas alustada konverentsikõnet",
-    "%(oneUser)schanged their avatar %(count)s times|one": "Kasutaja %(oneUser)s muutis oma tunnuspilti",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Palu oma koduserveri haldajat (<code>%(homeserverDomain)s</code>), et ta seadistaks kõnede kindlamaks toimimiseks TURN serveri.",
     "OK": "Sobib",
     "Permission Required": "Vaja on täiendavaid õigusi",

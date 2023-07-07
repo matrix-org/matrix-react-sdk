@@ -428,7 +428,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)sbytte namn",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sbytte namn %(count)s gånger",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)sbytte namn",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)sbytte sin avatar",
     "%(items)s and %(count)s others|other": "%(items)s och %(count)s till",
     "%(items)s and %(count)s others|one": "%(items)s och en till",
     "collapse": "fäll ihop",

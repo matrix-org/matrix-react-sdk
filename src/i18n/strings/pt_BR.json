@@ -371,7 +371,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s alteraram o nome e sobrenome",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s alterou o nome e sobrenome %(count)s vezes",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s alterou o nome e sobrenome",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)s alterou a foto de perfil",
     "%(items)s and %(count)s others|other": "%(items)s e %(count)s outras",
     "%(items)s and %(count)s others|one": "%(items)s e uma outra",
     "collapse": "recolher",

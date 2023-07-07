@@ -958,7 +958,6 @@
     "%(severalUsers)smade no changes %(count)s times|one": "%(severalUsers)s هیچ تغییری ایجاد نکردند",
     "%(severalUsers)smade no changes %(count)s times|other": "%(severalUsers)s %(count)s تغییری ایجاد نکردند",
     "Enter your Security Phrase a second time to confirm it.": "عبارت امنیتی خود را برای تائید مجددا وارد کنید.",
-    "%(severalUsers)schanged their avatar %(count)s times|other": "%(severalUsers)s %(count)s مرتبه آواتار خود را تغییر دادند",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s نام خود را تغییر داد",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s نام خود را %(count)s مرتبه تغییر داد",
     "Your keys are being backed up (the first backup could take a few minutes).": "در حال پیشتیبان‌گیری از کلیدهای شما (اولین نسخه پشتیبان ممکن است چند دقیقه طول بکشد).",

@@ -323,7 +323,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s endra namna sine",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s har endra namnet sitt %(count)s gonger",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s endra namnet sitt",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)s endra avataren sin",
     "%(items)s and %(count)s others|other": "%(items)s og %(count)s til",
     "%(items)s and %(count)s others|one": "%(items)s og ein til",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",

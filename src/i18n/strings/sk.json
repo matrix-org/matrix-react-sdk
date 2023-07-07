@@ -248,7 +248,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)ssi zmenili meno",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)ssi %(count)s krát zmenil meno",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)ssi zmenil meno",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)ssi zmenil obrázok v profile",
     "%(items)s and %(count)s others|other": "%(items)s a %(count)s ďalší",
     "%(items)s and %(count)s others|one": "%(items)s a jeden ďalší",
     "%(items)s and %(lastItem)s": "%(items)s a tiež %(lastItem)s",

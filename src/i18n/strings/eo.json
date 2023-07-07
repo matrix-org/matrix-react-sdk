@@ -272,7 +272,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)sŝanĝis sian nomon",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s%(count)s-foje ŝanĝis sian nomon",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)sŝanĝis sian nomon",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)sŝanĝis sian profilbildon",
     "%(items)s and %(count)s others|other": "%(items)s kaj %(count)s aliaj",
     "%(items)s and %(count)s others|one": "%(items)s kaj unu alia",
     "%(items)s and %(lastItem)s": "%(items)s kaj %(lastItem)s",

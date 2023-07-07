@@ -2093,7 +2093,6 @@
     "%(oneUser)smade no changes %(count)s times|other": "%(oneUser)stidak membuat perubahan %(count)s kali",
     "%(severalUsers)smade no changes %(count)s times|one": "%(severalUsers)stidak membuat perubahan",
     "%(severalUsers)smade no changes %(count)s times|other": "%(severalUsers)stidak membuat perubahan %(count)s kali",
-    "%(severalUsers)schanged their avatar %(count)s times|other": "%(severalUsers)smengubah avatarnya %(count)s kali",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)smengubah namanya",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)smengubah namanya %(count)s kali",
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)smengubah namanya",

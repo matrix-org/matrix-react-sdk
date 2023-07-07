@@ -378,7 +378,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)sが名前を変更しました",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sが%(count)s回名前を変更しました",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)sが名前を変更しました",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)sがアバターを変更しました",
     "%(items)s and %(count)s others|other": "%(items)sと他%(count)s人",
     "%(items)s and %(count)s others|one": "%(items)sともう1人",
     "%(items)s and %(lastItem)s": "%(items)s, %(lastItem)s",

@@ -280,7 +280,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s han canviat el seu nom",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sha canviat el seu nom %(count)s vegades",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s ha canviat el seu nom",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)sha canviat el seu avatar",
     "%(items)s and %(count)s others|other": "%(items)s i %(count)s altres",
     "%(items)s and %(count)s others|one": "%(items)s i un altre",
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",

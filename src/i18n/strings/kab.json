@@ -943,7 +943,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)sbeddlen ismawen-nsen",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sibeddel isem-is %(count)s tikkal",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)sibeddel isem-is",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)sibeddel avaṭar-ines",
     "%(severalUsers)smade no changes %(count)s times|other": "%(severalUsers)sur gin ara isnifal %(count)s tikkal",
     "%(severalUsers)smade no changes %(count)s times|one": "%(severalUsers)sur gin ara isnifal",
     "%(oneUser)smade no changes %(count)s times|other": "%(oneUser)sur ye gi ara isnifal %(count)s tikkal",

@@ -358,7 +358,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s megváltoztatta a nevét",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s %(count)s alkalommal megváltoztatta a nevét",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s megváltoztatta a nevét",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)s megváltoztatta a profilképét",
     "%(items)s and %(count)s others|other": "%(items)s és még %(count)s másik",
     "%(items)s and %(count)s others|one": "%(items)s és még egy másik",
     "Notify the whole room": "Az egész szoba értesítése",

@@ -913,7 +913,6 @@
     "%(oneUser)smade no changes %(count)s times|other": "%(oneUser)s không thay đổi %(count)s lần",
     "%(severalUsers)smade no changes %(count)s times|one": "%(severalUsers)s không thay đổi",
     "%(severalUsers)smade no changes %(count)s times|other": "%(severalUsers)s không thay đổi %(count)s lần",
-    "%(severalUsers)schanged their avatar %(count)s times|other": "%(severalUsers)s đã thay đổi avatar của họ %(count)s lần",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s đã thay đổi tên của họ",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s đã thay đổi tên của họ %(count)s lần",
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s đã thay đổi tên của họ",

@@ -1917,7 +1917,6 @@
     "%(oneUser)smade no changes %(count)s times|other": "%(oneUser)sບໍ່ໄດ້ປ່ຽນແປງ %(count)s ເທື່ອ",
     "%(severalUsers)smade no changes %(count)s times|one": "%(severalUsers)sບໍ່ມີການປ່ຽນແປງ",
     "%(severalUsers)smade no changes %(count)s times|other": "%(severalUsers)sບໍ່ໄດ້ປ່ຽນແປງ %(count)s ເທື່ອ",
-    "%(severalUsers)schanged their avatar %(count)s times|other": "%(severalUsers)sປ່ຽນຮູບແທນຕົວຂອງເຂົາເຈົ້າ %(count)sຄັ້ງ",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sປ່ຽນຊື່ຂອງເຂົາເຈົ້າ %(count)sຄັ້ງ",
     "%(severalUsers)schanged their name %(count)s times|other": "%(severalUsers)sປ່ຽນຊື່ຂອງເຂົາເຈົ້າ %(count)sຄັ້ງ",
     "were unbanned %(count)s times|one": "ຍົກເລີກການຫ້າມ",

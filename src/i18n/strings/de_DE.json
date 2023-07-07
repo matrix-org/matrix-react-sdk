@@ -344,7 +344,6 @@
     "%(severalUsers)schanged their name %(count)s times|other": "%(severalUsers)shaben %(count)s-mal ihren Namen geändert",
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)shaben ihren Namen geändert",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)shat %(count)s-mal den Namen geändert",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)shat das Profilbild geändert",
     "Members only (since the point in time of selecting this option)": "Mitglieder",
     "Members only (since they were invited)": "Mitglieder (ab Einladung)",
     "Members only (since they joined)": "Mitglieder (ab Betreten)",

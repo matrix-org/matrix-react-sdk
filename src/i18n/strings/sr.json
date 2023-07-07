@@ -274,7 +274,6 @@
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s промени своје име",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s промени своје име %(count)s пута",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s промени своје име",
-    "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)s промени свој аватар",
     "%(items)s and %(count)s others|other": "%(items)s и %(count)s других",
     "%(items)s and %(count)s others|one": "%(items)s и још један",
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",

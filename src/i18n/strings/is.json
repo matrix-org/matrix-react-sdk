@@ -1422,7 +1422,6 @@
     "Edit poll": "Breyta könnun",
     "Create Poll": "Búa til könnun",
     "Create poll": "Búa til könnun",
-    "%(severalUsers)schanged their avatar %(count)s times|other": "%(severalUsers)sbreyttu auðkennismynd sinni %(count)s sinnum",
     "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)sbreytti nafni sínu",
     "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sbreytti nafni sínu %(count)s sinnum",
     "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)sbreyttu nafni sínu",
