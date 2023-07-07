@@ -500,7 +500,7 @@ export const Commands = [
         runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const html = htmlSerializeFromMdIfNeeded(args, { forceHTML: false });
-                return success(cli.setRoomTopic(roomId, threadId, args, html));
+                return success(cli.setRoomTopic(roomId, args, html));
             }
             const room = cli.getRoom(roomId);
             if (!room) {
@@ -537,7 +537,7 @@ export const Commands = [
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, threadId, args) {
             if (args) {
-                return success(cli.setRoomName(roomId, threadId, args));
+                return success(cli.setRoomName(roomId, args));
             }
             return reject(this.getUsage());
         },
@@ -950,7 +950,7 @@ export const Commands = [
                     if (!powerLevelEvent?.getContent().users[args]) {
                         return reject(new UserFriendlyError("Could not find user in room"));
                     }
-                    return success(cli.setPowerLevel(roomId, threadId, args, undefined, powerLevelEvent));
+                    return success(cli.setPowerLevel(roomId, args, undefined, powerLevelEvent));
                 }
             }
             return reject(this.getUsage());
