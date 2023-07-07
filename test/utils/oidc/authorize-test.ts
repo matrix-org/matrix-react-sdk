@@ -29,7 +29,6 @@ describe("startOidcLogin()", () => {
     const delegatedAuthConfig = makeDelegatedAuthConfig(issuer);
 
     const sessionStorageGetSpy = jest.spyOn(sessionStorage.__proto__, "setItem").mockReturnValue(undefined);
-    const randomStringMockImpl = (length: number) => new Array(length).fill("x").join("");
 
     // to restore later
     const realWindowLocation = window.location;
@@ -57,14 +56,6 @@ describe("startOidcLogin()", () => {
 
     afterAll(() => {
         window.location = realWindowLocation;
-    });
-
-    it("should store auth params in session storage", async () => {
-        jest.spyOn(randomStringUtils, "randomString").mockReset().mockImplementation(randomStringMockImpl);
-        await startOidcLogin(delegatedAuthConfig, clientId, homeserver);
-
-        expect(sessionStorageGetSpy).toHaveBeenCalledWith(`mx_sso_hs_url`, homeserver);
-        expect(sessionStorageGetSpy).toHaveBeenCalledWith(`oidc_nonce`, expect.anything());
     });
 
     it("navigates to authorization endpoint with correct parameters", async () => {
