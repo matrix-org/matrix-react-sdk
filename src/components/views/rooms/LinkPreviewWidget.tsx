@@ -75,9 +75,6 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
 
     public render(): React.ReactNode {
         const p = this.props.preview;
-        if (!p || Object.keys(p).length === 0) {
-            return <div />;
-        }
 
         // FIXME: do we want to factor out all image displaying between this and MImageBody - especially for lightboxing?
         let image: string | null = p["og:image"] ?? null;
@@ -108,11 +105,6 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
                     />
                 </div>
             );
-        }
-
-        // Don't show anything if we're about to render nothing
-        if (!img && !p["og:description"] && !p["og:title"]) {
-            return null;
         }
 
         // The description includes &-encoded HTML entities, we decode those as React treats the thing as an
