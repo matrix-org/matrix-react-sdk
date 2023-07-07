@@ -132,13 +132,6 @@ interface ICommandOpts {
     hideCompletionAfterSpace?: boolean;
     isEnabled?(matrixClient: MatrixClient | null): boolean;
     renderingTypes?: TimelineRenderingType[];
-
-    /**
-     * When true, runFn should be a `RunInThreadFn` to receive the actual thread
-     * ID. If the command is called without the context of a thread, the supplied
-     * thread ID will be undefined/falsy.
-     */
-    canReceiveThreadId?: boolean;
 }
 
 export class Command {
@@ -968,7 +961,6 @@ export const Commands = [
     new Command({
         command: "devtools",
         description: _td("Opens the Developer Tools dialog"),
-        canReceiveThreadId: true,
         runFn: function (cli, roomId, threadRootId) {
             Modal.createDialog(DevtoolsDialog, { roomId, threadRootId }, "mx_DevtoolsDialog_wrapper");
             return success();
