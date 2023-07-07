@@ -82,7 +82,7 @@ practices that anyone working with the SDK needs to be aware of and uphold:
     component is a view or a structure, and then a broad functional grouping
     (e.g. 'rooms' here)
 
--   The view's CSS file MUST have the same name (e.g. view/rooms/MessageTile.css).
+-   The view's CSS file MUST have the same name (e.g. views/rooms/MessageTile.css).
     CSS for matrix-react-sdk currently resides in
     https://github.com/matrix-org/matrix-react-sdk/tree/master/res/css.
 
