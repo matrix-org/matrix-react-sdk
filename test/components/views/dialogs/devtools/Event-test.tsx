@@ -31,7 +31,7 @@ describe("<EventEditor />", () => {
     });
 
     it("should render", () => {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const { asFragment } = render(
             <MatrixClientContext.Provider value={cli}>
                 <DevtoolsContext.Provider
@@ -50,7 +50,7 @@ describe("<EventEditor />", () => {
 
     describe("thread context", () => {
         it("should pre-populate a thread relationship", () => {
-            const cli = MatrixClientPeg.get();
+            const cli = MatrixClientPeg.safeGet();
             const { asFragment } = render(
                 <MatrixClientContext.Provider value={cli}>
                     <DevtoolsContext.Provider
