@@ -91,7 +91,7 @@ export default class EditableTextContainer extends React.Component<IProps, IStat
         } catch (error) {
             if (this.unmounted) return;
             this.setState({
-                errorString: error instanceof Object ? error.toString() : String(error),
+                errorString: error instanceof Error ? error.message : String(error),
                 busy: false,
             });
         }
