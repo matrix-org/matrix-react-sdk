@@ -2505,7 +2505,7 @@
     "%(targetName)s left the room": "%(targetName)s покинул(а) комнату",
     "%(targetName)s left the room: %(reason)s": "%(targetName)s покинул(а) комнату: %(reason)s",
     "%(targetName)s rejected the invitation": "%(targetName)s отклонил(а) приглашение",
-    "%(targetName)s joined the room": "%(targetName)s присоединился(лась) к комнате",
+    "%(targetName)s joined the room": "%(targetName)s теперь с нами",
     "%(senderName)s made no change": "%(senderName)s не сделал(а) изменений",
     "%(senderName)s set a profile picture": "%(senderName)s установил(а) аватар",
     "%(senderName)s changed their profile picture": "%(senderName)s изменил(а) аватар",
