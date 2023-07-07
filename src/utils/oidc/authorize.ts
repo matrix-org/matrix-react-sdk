@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-    completeAuthorizationCodeGrant,
-} from "matrix-js-sdk/src/oidc/authorize";
+import { completeAuthorizationCodeGrant } from "matrix-js-sdk/src/oidc/authorize";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { OidcClientConfig } from "matrix-js-sdk/src/autodiscovery";
 import { generateOidcAuthorizationUrl } from "matrix-js-sdk/src/oidc/authorize";
@@ -41,11 +39,7 @@ export const startOidcLogin = async (
     const redirectUri = window.location.origin;
 
     const nonce = randomString(10);
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> kerry/oidc-client-ts-start-auth
     const authorizationUrl = await generateOidcAuthorizationUrl({
         metadata: delegatedAuthConfig.metadata,
         redirectUri,
@@ -89,14 +83,10 @@ export const completeOidcLogin = async (
     accessToken: string;
 }> => {
     const { code, state } = getCodeAndStateFromQueryParams(queryParams);
-    const {
-        homeserverUrl,
-        tokenResponse,
-        identityServerUrl,
-        oidcClientSettings,
-    } = await completeAuthorizationCodeGrant(code, state);
+    const { homeserverUrl, tokenResponse, identityServerUrl } = await completeAuthorizationCodeGrant(code, state);
 
     // @TODO(kerrya) do something with the refresh token https://github.com/vector-im/element-web/issues/25444
+
     return {
         homeserverUrl: homeserverUrl,
         identityServerUrl: identityServerUrl,

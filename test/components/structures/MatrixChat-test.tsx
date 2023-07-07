@@ -131,7 +131,6 @@ describe("<MatrixChat />", () => {
     const localStorageGetSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
     const localStorageClearSpy = jest.spyOn(localStorage.__proto__, "clear");
     const sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem");
-    const sessionStorageGetSpy = jest.spyOn(sessionStorage.__proto__, "getItem");
 
     // make test results readable
     filterConsole("Failed to parse localStorage object");
@@ -733,7 +732,6 @@ describe("<MatrixChat />", () => {
         const homeserverUrl = "https://matrix.org";
         const identityServerUrl = "https://is.org";
         const clientId = "xyz789";
-        const baseUrl = "https://test.com";
 
         const code = "test-oidc-auth-code";
         const state = "test-oidc-state";
