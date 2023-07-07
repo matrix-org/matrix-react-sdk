@@ -975,7 +975,7 @@ export const Commands = [
             SettingsStore.getValue(UIFeature.Widgets) &&
             shouldShowComponent(UIComponent.AddIntegrations) &&
             !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, widgetUrl) {
+        runFn: function (cli, roomId, threadId, widgetUrl) {
             if (!widgetUrl) {
                 return reject(new UserFriendlyError("Please supply a widget URL or embed code"));
             }
@@ -1180,7 +1180,7 @@ export const Commands = [
         description: _td("Displays information about a user"),
         args: "<user-id>",
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, userId) {
+        runFn: function (cli, roomId, threadId, userId) {
             if (!userId || !userId.startsWith("@") || !userId.includes(":")) {
                 return reject(this.getUsage());
             }
@@ -1236,7 +1236,7 @@ export const Commands = [
         command: "query",
         description: _td("Opens chat with the given user"),
         args: "<user-id>",
-        runFn: function (cli, roomId, userId) {
+        runFn: function (cli, roomId, threadId, userId) {
             // easter-egg for now: look up phone numbers through the thirdparty API
             // (very dumb phone number detection...)
             const isPhoneNumber = userId && /^\+?[0123456789]+$/.test(userId);
