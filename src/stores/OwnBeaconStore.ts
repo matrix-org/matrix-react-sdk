@@ -105,14 +105,14 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * Reset on successful publish of location
      */
     public readonly beaconLocationPublishErrorCounts = new Map<BeaconIdentifier, number>();
-    public readonly beaconUpdateErrors = new Map<BeaconIdentifier, Error>();
+    public readonly beaconUpdateErrors = new Map<BeaconIdentifier, unknown>();
     /**
      * ids of live beacons
      * ordered by creation time descending
      */
     private liveBeaconIds: BeaconIdentifier[] = [];
     private locationInterval?: number;
-    private geolocationError?: GeolocationError;
+    private geolocationError?: unknown;
     private clearPositionWatch?: ClearWatchCallback;
     /**
      * Track when the last position was published
@@ -462,7 +462,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         try {
             this.clearPositionWatch = watchPosition(this.onWatchedPosition, this.onGeolocationError);
         } catch (error) {
-            this.onGeolocationError(error?.message);
+            this.onGeolocationError(error);
             // don't set locationInterval if geolocation failed to setup
             return;
         }
@@ -506,13 +506,13 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         }
     };
 
-    private onGeolocationError = async (error: GeolocationError): Promise<void> => {
+    private onGeolocationError = async (error: unknown): Promise<void> => {
         this.geolocationError = error;
         logger.error("Geolocation failed", this.geolocationError);
 
         // other errors are considered non-fatal
         // and self recovering
-        if (![GeolocationError.Unavailable, GeolocationError.PermissionDenied].includes(error)) {
+        if (![GeolocationError.Unavailable, GeolocationError.PermissionDenied].includes(error as GeolocationError)) {
             return;
         }
 
@@ -531,7 +531,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             const position = await getCurrentPosition();
             this.publishLocationToBeacons(mapGeolocationPositionToTimedGeo(position));
         } catch (error) {
-            this.onGeolocationError(error?.message);
+            this.onGeolocationError(error);
         }
     };
 
