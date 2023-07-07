@@ -22,7 +22,7 @@ import { ValidatedIssuerMetadata } from "matrix-js-sdk/src/oidc/validate";
  * @param issuer used as the base for all other urls
  * @returns OidcClientConfig
  */
- export const makeDelegatedAuthConfig = (issuer = "https://auth.org/"): OidcClientConfig => {
+export const makeDelegatedAuthConfig = (issuer = "https://auth.org/"): OidcClientConfig => {
     const metadata = mockOpenIdConfiguration(issuer);
 
     return {

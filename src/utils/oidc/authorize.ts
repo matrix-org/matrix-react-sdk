@@ -41,7 +41,11 @@ export const startOidcLogin = async (
     const redirectUri = window.location.origin;
 
     const nonce = randomString(10);
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> kerry/oidc-client-ts-start-auth
     const authorizationUrl = await generateOidcAuthorizationUrl({
         metadata: delegatedAuthConfig.metadata,
         redirectUri,

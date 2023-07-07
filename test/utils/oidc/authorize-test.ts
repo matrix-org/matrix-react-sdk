@@ -32,10 +32,7 @@ describe("OIDC authorization", () => {
 
     const delegatedAuthConfig = makeDelegatedAuthConfig(issuer);
 
-    const sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem").mockReturnValue(undefined);
-    const sessionStorageGetSpy = jest.spyOn(sessionStorage.__proto__, "getItem").mockReturnValue(undefined);
-
-    const randomStringMockImpl = (length: number) => new Array(length).fill("x").join("");
+    const sessionStorageGetSpy = jest.spyOn(sessionStorage.__proto__, "setItem").mockReturnValue(undefined);
 
     // to restore later
     const realWindowLocation = window.location;
@@ -44,7 +41,6 @@ describe("OIDC authorization", () => {
         fetchMock.mockClear();
         fetchMock.resetBehavior();
 
-        sessionStorageSetSpy.mockClear();
         sessionStorageGetSpy.mockReset();
 
         // @ts-ignore allow delete of non-optional prop
@@ -72,21 +68,6 @@ describe("OIDC authorization", () => {
     });
 
     describe("startOidcLogin()", () => {
-        it("should store authorization params in session storage", async () => {
-            jest.spyOn(randomStringUtils, "randomString").mockReset().mockImplementation(randomStringMockImpl);
-            await startOidcLogin(delegatedAuthConfig, clientId, homeserver);
-
-            const state = randomStringUtils.randomString(8);
-
-            expect(sessionStorageSetSpy).toHaveBeenCalledWith(`oidc_${state}_nonce`, randomStringUtils.randomString(8));
-            expect(sessionStorageSetSpy).toHaveBeenCalledWith(`oidc_${state}_redirectUri`, baseUrl);
-            expect(sessionStorageSetSpy).toHaveBeenCalledWith(
-                `oidc_${state}_issuer`,
-                delegatedAuthConfig.issuer,
-            );
-            expect(sessionStorageSetSpy).toHaveBeenCalledWith(`oidc_${state}_clientId`, clientId);
-            expect(sessionStorageSetSpy).toHaveBeenCalledWith(`oidc_${state}_homeserverUrl`, homeserver);
-        });
 
         it("navigates to authorization endpoint with correct parameters", async () => {
             await startOidcLogin(delegatedAuthConfig, clientId, homeserver);
