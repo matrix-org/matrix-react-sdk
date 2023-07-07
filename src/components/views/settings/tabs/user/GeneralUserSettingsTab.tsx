@@ -33,7 +33,6 @@ import SpellCheckSettings from "../../SpellCheckSettings";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import DeactivateAccountDialog from "../../../dialogs/DeactivateAccountDialog";
 import PlatformPeg from "../../../../../PlatformPeg";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import Modal from "../../../../../Modal";
 import dis from "../../../../../dispatcher/dispatcher";
 import { Service, ServicePolicyPair, startTermsFlow } from "../../../../../Terms";
@@ -61,6 +60,8 @@ import SettingsSubsection, { SettingsSubsectionText } from "../../shared/Setting
 import { SettingsSubsectionHeading } from "../../shared/SettingsSubsectionHeading";
 import Heading from "../../../typography/Heading";
 import InlineSpinner from "../../../elements/InlineSpinner";
+import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -87,8 +88,8 @@ interface IState {
               agreedUrls: string[];
               resolve: (values: string[]) => void;
           };
-    emails: IThreepid[];
-    msisdns: IThreepid[];
+    emails: ThirdPartyIdentifier[];
+    msisdns: ThirdPartyIdentifier[];
     loading3pids: boolean; // whether or not the emails and msisdns have been loaded
     canChangePassword: boolean;
     idServerName?: string;
@@ -96,16 +97,20 @@ interface IState {
 }
 
 export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     private readonly dispatcherRef: string;
 
-    public constructor(props: IProps) {
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props);
+        this.context = context;
 
         this.state = {
             language: languageHandler.getCurrentLanguage(),
             spellCheckEnabled: false,
             spellCheckLanguages: [],
-            haveIdServer: Boolean(MatrixClientPeg.get().getIdentityServerUrl()),
+            haveIdServer: Boolean(this.context.getIdentityServerUrl()),
             idServerHasUnsignedTerms: false,
             requiredPolicyInfo: {
                 // This object is passed along to a component for handling
@@ -147,21 +152,21 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
     private onAction = (payload: ActionPayload): void => {
         if (payload.action === "id_server_changed") {
-            this.setState({ haveIdServer: Boolean(MatrixClientPeg.get().getIdentityServerUrl()) });
+            this.setState({ haveIdServer: Boolean(this.context.getIdentityServerUrl()) });
             this.getThreepidState();
         }
     };
 
-    private onEmailsChange = (emails: IThreepid[]): void => {
+    private onEmailsChange = (emails: ThirdPartyIdentifier[]): void => {
         this.setState({ emails });
     };
 
-    private onMsisdnsChange = (msisdns: IThreepid[]): void => {
+    private onMsisdnsChange = (msisdns: ThirdPartyIdentifier[]): void => {
         this.setState({ msisdns });
     };
 
     private async getCapabilities(): Promise<void> {
-        const cli = MatrixClientPeg.get();
+        const cli = this.context;
 
         const serverSupportsSeparateAddAndBind = await cli.doesServerSupportSeparateAddAndBind();
 
@@ -180,7 +185,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     }
 
     private async getThreepidState(): Promise<void> {
-        const cli = MatrixClientPeg.get();
+        const cli = this.context;
 
         // Check to see if terms need accepting
         this.checkTerms();
@@ -191,7 +196,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         try {
             threepids = await getThreepidsWithBindStatus(cli);
         } catch (e) {
-            const idServerUrl = MatrixClientPeg.get().getIdentityServerUrl();
+            const idServerUrl = this.context.getIdentityServerUrl();
             logger.warn(
                 `Unable to reach identity server at ${idServerUrl} to check ` + `for 3PIDs bindings in Settings`,
             );
@@ -207,7 +212,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private async checkTerms(): Promise<void> {
         // By starting the terms flow we get the logic for checking which terms the user has signed
         // for free. So we might as well use that for our own purposes.
-        const idServerUrl = MatrixClientPeg.get().getIdentityServerUrl();
+        const idServerUrl = this.context.getIdentityServerUrl();
         if (!this.state.haveIdServer || !idServerUrl) {
             this.setState({ idServerHasUnsignedTerms: false });
             return;
@@ -217,6 +222,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         try {
             const idAccessToken = await authClient.getAccessToken({ check: false });
             await startTermsFlow(
+                this.context,
                 [new Service(SERVICE_TYPES.IS, idServerUrl, idAccessToken!)],
                 (policiesAndServices, agreedUrls, extraClassNames) => {
                     return new Promise((resolve, reject) => {
@@ -319,14 +325,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             },
         });
     };
-
-    private renderProfileSection(): JSX.Element {
-        return (
-            <div className="mx_SettingsTab_section">
-                <ProfileSettings />
-            </div>
-        );
-    }
 
     private renderAccountSection(): JSX.Element {
         let threepidSection: ReactNode = null;
@@ -544,7 +542,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                 />
             ) : null;
             const heading = (
-                <Heading size="h2">
+                <Heading size="2">
                     {discoWarning}
                     {_t("Discovery")}
                 </Heading>
@@ -558,13 +556,12 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         return (
             <SettingsTab data-testid="mx_GeneralUserSettingsTab">
-                <div className="mx_SettingsTab_heading" data-testid="general">
-                    {_t("General")}
-                </div>
-                {this.renderProfileSection()}
-                {this.renderAccountSection()}
-                {this.renderLanguageSection()}
-                {supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null}
+                <SettingsSection heading={_t("General")}>
+                    <ProfileSettings />
+                    {this.renderAccountSection()}
+                    {this.renderLanguageSection()}
+                    {supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null}
+                </SettingsSection>
                 {discoverySection}
                 {this.renderIntegrationManagerSection()}
                 {accountManagementSection}

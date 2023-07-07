@@ -16,14 +16,13 @@ limitations under the License.
 */
 
 import React from "react";
-import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from "../../../../Modal";
-import AddThreepid, { Binding } from "../../../../AddThreepid";
+import AddThreepid, { Binding, ThirdPartyIdentifier } from "../../../../AddThreepid";
 import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
 import SettingsSubsection from "../shared/SettingsSubsection";
 import InlineSpinner from "../../elements/InlineSpinner";
@@ -46,7 +45,7 @@ TODO: Reduce all the copying between account vs. discovery components.
 */
 
 interface IEmailAddressProps {
-    email: IThreepid;
+    email: ThirdPartyIdentifier;
 }
 
 interface IEmailAddressState {
@@ -78,7 +77,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
     }
 
     private async changeBinding({ bind, label, errorTitle }: Binding): Promise<void> {
-        if (!(await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind())) {
+        if (!(await MatrixClientPeg.safeGet().doesServerSupportSeparateAddAndBind())) {
             return this.changeBindingTangledAddBind({ bind, label, errorTitle });
         }
 
@@ -86,7 +85,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
 
         try {
             if (bind) {
-                const task = new AddThreepid();
+                const task = new AddThreepid(MatrixClientPeg.safeGet());
                 this.setState({
                     verifying: true,
                     continueDisabled: true,
@@ -97,7 +96,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                     continueDisabled: false,
                 });
             } else {
-                await MatrixClientPeg.get().unbindThreePid(medium, address);
+                await MatrixClientPeg.safeGet().unbindThreePid(medium, address);
             }
             this.setState({ bound: bind });
         } catch (err) {
@@ -117,7 +116,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
     private async changeBindingTangledAddBind({ bind, label, errorTitle }: Binding): Promise<void> {
         const { medium, address } = this.props.email;
 
-        const task = new AddThreepid();
+        const task = new AddThreepid(MatrixClientPeg.safeGet());
         this.setState({
             verifying: true,
             continueDisabled: true,
@@ -125,7 +124,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         });
 
         try {
-            await MatrixClientPeg.get().deleteThreePid(medium, address);
+            await MatrixClientPeg.safeGet().deleteThreePid(medium, address);
             if (bind) {
                 await task.bindEmailAddress(address);
             } else {
@@ -259,7 +258,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
     }
 }
 interface IProps {
-    emails: IThreepid[];
+    emails: ThirdPartyIdentifier[];
     isLoading?: boolean;
 }
 

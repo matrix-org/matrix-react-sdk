@@ -157,19 +157,24 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
     private onSubmit = async (ev: SyntheticEvent): Promise<void> => {
         ev.preventDefault();
 
+        if (this.state.defaultChosen) {
+            this.props.onFinished(this.defaultServer);
+            return;
+        }
+
         const valid = await this.fieldRef.current?.validate({ allowEmpty: false });
 
-        if (!valid && !this.state.defaultChosen) {
+        if (!valid) {
             this.fieldRef.current?.focus();
             this.fieldRef.current?.validate({ allowEmpty: false, focused: true });
             return;
         }
 
-        this.props.onFinished(this.state.defaultChosen ? this.defaultServer : this.validatedConf);
+        this.props.onFinished(this.validatedConf);
     };
 
     public render(): React.ReactNode {
-        let text;
+        let text: string | undefined;
         if (this.defaultServer.hsName === "matrix.org") {
             text = _t("Matrix.org is the biggest public homeserver in the world, so it's a good place for many.");
         }
@@ -202,6 +207,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                         value="true"
                         checked={this.state.defaultChosen}
                         onChange={this.onDefaultChosen}
+                        data-testid="defaultHomeserver"
                     >
                         {defaultServerName}
                     </StyledRadioButton>

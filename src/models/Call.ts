@@ -655,9 +655,12 @@ export class ElementCall extends Call {
             roomId: groupCall.room.roomId,
             baseUrl: client.baseUrl,
             lang: getCurrentLanguage().replace("_", "-"),
-            fontScale: `${SettingsStore.getValue("baseFontSize") / FontWatcher.DEFAULT_SIZE}`,
+            fontScale: `${(SettingsStore.getValue("baseFontSizeV2") ?? 16) / FontWatcher.DEFAULT_SIZE}`,
             analyticsID,
         });
+
+        if (SettingsStore.getValue("fallbackICEServerAllowed")) params.append("allowIceFallback", "");
+        if (SettingsStore.getValue("feature_allow_screen_share_only_mode")) params.append("allowVoipWithNoMedia", "");
 
         // Set custom fonts
         if (SettingsStore.getValue("useSystemFont")) {

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-:root {
-    --font-normal: 400;
-    --font-semi-bold: 600;
-}
+import { IAnnotatedPushRule, PushRuleAction, PushRuleKind, RuleId } from "matrix-js-sdk/src/matrix";
+
+export type PushRuleDiff = {
+    updated: PushRuleUpdate[];
+    added: IAnnotatedPushRule[];
+    deleted: PushRuleDeletion[];
+};
+
+export type PushRuleDeletion = {
+    rule_id: RuleId | string;
+    kind: PushRuleKind;
+};
+
+export type PushRuleUpdate = {
+    rule_id: RuleId | string;
+    kind: PushRuleKind;
+    enabled?: boolean;
+    actions?: PushRuleAction[];
+};

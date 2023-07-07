@@ -31,7 +31,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { SettingsSubsectionText } from "./shared/SettingsSubsection";
 
 interface IState {
-    error?: Error;
+    error: boolean;
     crossSigningPublicKeysOnDevice?: boolean;
     crossSigningPrivateKeysInStorage?: boolean;
     masterPrivateKeyCached?: boolean;
@@ -47,11 +47,13 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
     public constructor(props: {}) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            error: false,
+        };
     }
 
     public componentDidMount(): void {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         cli.on(ClientEvent.AccountData, this.onAccountData);
         cli.on(CryptoEvent.UserTrustStatusChanged, this.onStatusChanged);
         cli.on(CryptoEvent.KeysChanged, this.onStatusChanged);
@@ -89,22 +91,20 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
     };
 
     private async getUpdatedStatus(): Promise<void> {
-        const cli = MatrixClientPeg.get();
-        const crypto = cli.crypto;
+        const cli = MatrixClientPeg.safeGet();
+        const crypto = cli.getCrypto();
         if (!crypto) return;
 
-        const pkCache = cli.getCrossSigningCacheCallbacks();
-        const crossSigning = crypto.crossSigningInfo;
-        const secretStorage = cli.secretStorage;
-        const crossSigningPublicKeysOnDevice = Boolean(crossSigning.getId());
-        const crossSigningPrivateKeysInStorage = Boolean(await crossSigning.isStoredInSecretStorage(secretStorage));
-        const masterPrivateKeyCached = !!(await pkCache?.getCrossSigningKeyCache?.("master"));
-        const selfSigningPrivateKeyCached = !!(await pkCache?.getCrossSigningKeyCache?.("self_signing"));
-        const userSigningPrivateKeyCached = !!(await pkCache?.getCrossSigningKeyCache?.("user_signing"));
+        const crossSigningStatus = await crypto.getCrossSigningStatus();
+        const crossSigningPublicKeysOnDevice = crossSigningStatus.publicKeysOnDevice;
+        const crossSigningPrivateKeysInStorage = crossSigningStatus.privateKeysInSecretStorage;
+        const masterPrivateKeyCached = crossSigningStatus.privateKeysCachedLocally.masterKey;
+        const selfSigningPrivateKeyCached = crossSigningStatus.privateKeysCachedLocally.selfSigningKey;
+        const userSigningPrivateKeyCached = crossSigningStatus.privateKeysCachedLocally.userSigningKey;
         const homeserverSupportsCrossSigning = await cli.doesServerSupportUnstableFeature(
             "org.matrix.e2e_cross_signing",
         );
-        const crossSigningReady = await cli.isCrossSigningReady();
+        const crossSigningReady = await crypto.isCrossSigningReady();
 
         this.setState({
             crossSigningPublicKeysOnDevice,
@@ -127,9 +127,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
      * @param {bool} [forceReset] Bootstrap again even if keys already present
      */
     private bootstrapCrossSigning = async ({ forceReset = false }): Promise<void> => {
-        this.setState({ error: undefined });
+        this.setState({ error: false });
         try {
-            const cli = MatrixClientPeg.get();
+            const cli = MatrixClientPeg.safeGet();
             await cli.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
                     const { finished } = Modal.createDialog(InteractiveAuthDialog, {
@@ -145,7 +145,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                 setupNewCrossSigning: forceReset,
             });
         } catch (e) {
-            this.setState({ error: e });
+            this.setState({ error: true });
             logger.error("Error bootstrapping cross-signing", e);
         }
         if (this.unmounted) return;

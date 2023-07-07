@@ -28,7 +28,7 @@ import WidgetUtils from "../../../utils/WidgetUtils";
 import WidgetEchoStore from "../../../stores/WidgetEchoStore";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import ResizeHandle from "../elements/ResizeHandle";
-import Resizer from "../../../resizer/resizer";
+import Resizer, { IConfig } from "../../../resizer/resizer";
 import PercentageDistributor from "../../../resizer/distributors/percentage";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { clamp, percentageOf, percentageWithin } from "../../../utils/numbers";
@@ -58,7 +58,7 @@ interface IState {
 export default class AppsDrawer extends React.Component<IProps, IState> {
     private unmounted = false;
     private resizeContainer?: HTMLDivElement;
-    private resizer: Resizer;
+    private resizer: Resizer<IConfig>;
     private dispatcherRef?: string;
     public static defaultProps: Partial<IProps> = {
         showApps: true,
@@ -104,7 +104,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         }
     };
 
-    private createResizer(): Resizer {
+    private createResizer(): Resizer<IConfig> {
         // This is the horizontal one, changing the distribution of the width between the app tiles
         // (ie. a vertical resize handle because, the handle itself is vertical...)
         const classNames = {
@@ -283,9 +283,9 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
                     room={this.props.room}
                     minHeight={100}
                     maxHeight={this.props.maxHeight - 50}
-                    handleClass="mx_AppsContainer_resizerHandle"
-                    handleWrapperClass="mx_AppsContainer_resizerHandleContainer"
-                    className="mx_AppsContainer_resizer"
+                    className="mx_AppsDrawer_resizer"
+                    handleWrapperClass="mx_AppsDrawer_resizer_container"
+                    handleClass="mx_AppsDrawer_resizer_container_handle"
                     resizeNotifier={this.props.resizeNotifier}
                 >
                     {appContainers}
@@ -358,9 +358,9 @@ const PersistentVResizer: React.FC<IPersistentResizerProps> = ({
 
                 resizeNotifier.stopResizing();
             }}
+            className={className}
             handleWrapperClass={handleWrapperClass}
             handleClasses={{ bottom: handleClass }}
-            className={className}
             enable={{ bottom: true }}
         >
             {children}

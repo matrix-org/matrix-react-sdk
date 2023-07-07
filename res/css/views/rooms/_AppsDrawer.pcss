@@ -32,43 +32,47 @@ limitations under the License.
     overflow: hidden;
     flex-grow: 1;
 
-    .mx_AppsContainer_resizerHandleContainer {
+    .mx_AppsDrawer_resizer {
+        margin-bottom: var(--container-gap-width);
+    }
+
+    .mx_AppsDrawer_resizer_container {
         width: 100%;
         height: 10px;
         display: block;
         position: relative;
-    }
 
-    .mx_AppsContainer_resizerHandle {
-        cursor: ns-resize;
+        .mx_AppsDrawer_resizer_container_handle {
+            cursor: ns-resize;
 
-        /* Override styles from library, making the whole area the target area */
-        width: 100% !important;
-        height: 100% !important;
+            /* Override styles from library, making the whole area the target area */
+            width: 100% !important;
+            height: 100% !important;
 
-        /* This is positioned directly below frame */
-        position: absolute;
-        bottom: 50% !important; /* override from library */
-
-        /* We then render the pill handle in an ::after to keep it in the handle's */
-        /* area without being a massive line across the screen */
-        &::after {
-            content: "";
+            /* This is positioned directly below frame */
             position: absolute;
-            border-radius: 3px;
+            bottom: 50% !important; /* override from library */
 
-            height: 4px;
-            bottom: 0;
+            /* We then render the pill handle in an ::after to keep it in the handle's */
+            /* area without being a massive line across the screen */
+            &::after {
+                content: "";
+                position: absolute;
+                border-radius: 3px;
 
-            /* Together, these make the bar 64px wide */
-            /* These are also overridden from the library */
-            left: calc(50% - 32px);
-            right: calc(50% - 32px);
+                height: 4px;
+                bottom: 0;
+
+                /* Together, these make the bar 64px wide */
+                /* These are also overridden from the library */
+                left: calc(50% - 32px);
+                right: calc(50% - 32px);
+            }
         }
     }
 
     &:hover {
-        .mx_AppsContainer_resizerHandle::after {
+        .mx_AppsDrawer_resizer_container_handle::after {
             opacity: 0.8;
             background: $primary-content;
         }
@@ -121,10 +125,6 @@ limitations under the License.
             min-width: var(--minWidth) !important;
         }
     }
-}
-
-.mx_AppsContainer_resizer {
-    margin-bottom: var(--container-gap-width);
 }
 
 .mx_AppsContainer {
@@ -254,92 +254,82 @@ limitations under the License.
     }
 }
 
-.mx_AppTileBody,
-.mx_AppTileBody_mini {
-    width: 100%;
-    overflow: hidden;
-    border-radius: 8px;
-    height: var(--AppTileBody-height);
-
-    iframe {
-        border: none;
-        width: 100%;
-        height: 100%;
-    }
-}
-
+/* Rules added to this selector style appTileBody generally */
 .mx_AppTileBody {
-    --AppTileBody-height: 100%;
-
-    background-color: $widget-body-bg-color;
-
-    iframe {
-        overflow: hidden;
-        padding: 0;
-        margin: 0;
-        display: block;
-    }
-}
-
-.mx_AppTileBody_mini {
-    --AppTileBody-height: var(--AppTile_mini-height);
-}
-
-.mx_AppTile .mx_AppTileBody,
-.mx_AppTileFullWidth .mx_AppTileBody,
-.mx_AppTile_mini .mx_AppTileBody_mini {
-    height: inherit;
-    flex: 1;
-}
-
-.mx_AppWarning,
-.mx_AppPermission {
-    text-align: center;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: $font-16px;
-
-    h4 {
-        margin: 0;
-        padding: 0;
-    }
-}
-
-.mx_AppTile_loading {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    position: relative;
-    height: 100%;
-
-    /* match bg of border so that the cut corners have the right fill */
-    background-color: $widget-body-bg-color !important;
+    /* Apply to every variant of appTileBody */
     border-radius: 8px;
-
-    iframe {
-        display: none;
-    }
 
     /* const loadingElement */
-    .mx_AppTile_loading_fadeInSpinner {
+    /* Note the loading spinner and the message next to it are not always included in mx_AppTileBody--loading */
+    .mx_AppTileBody_fadeInSpinner {
+        /* place spinner and the message at the center of mx_AppTileBody */
+        height: 100%;
+        width: 100%;
+
+        font-weight: bold; /* message next to the spinner */
         animation-fill-mode: backwards;
         animation-duration: 200ms;
         animation-delay: 500ms;
-        animation-name: mx_AppTile_loading_fadeInSpinnerAnimation;
+        animation-name: mx_AppTileBody_fadeInSpinnerAnimation;
+    }
 
-        .mx_Spinner {
-            position: absolute;
-            inset: 0;
+    &.mx_AppTileBody--large,
+    &.mx_AppTileBody--mini {
+        width: 100%;
+        overflow: hidden;
+        height: var(--AppTileBody-height);
+
+        iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &.mx_AppTileBody--large {
+        --AppTileBody-height: 100%;
+
+        background-color: $widget-body-bg-color;
+
+        iframe {
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            display: block;
+        }
+    }
+
+    &.mx_AppTileBody--mini {
+        --AppTileBody-height: var(--AppTile_mini-height);
+    }
+
+    &.mx_AppTileBody--loading {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        height: 100%;
+
+        /* match bg of border so that the cut corners have the right fill */
+        background-color: $widget-body-bg-color !important;
+
+        iframe {
+            display: none;
         }
     }
 }
 
-@keyframes mx_AppTile_loading_fadeInSpinnerAnimation {
+/* appTileBody is embedded to PersistedElement outside of mx_AppTile,
+   so rules to style appTileBody generally should not be included here. */
+.mx_AppTile .mx_AppTileBody--large,
+.mx_AppTileFullWidth .mx_AppTileBody--large,
+.mx_AppTile_mini .mx_AppTileBody--mini {
+    height: inherit;
+    flex: 1;
+}
+
+@keyframes mx_AppTileBody_fadeInSpinnerAnimation {
     from {
         opacity: 0;
     }

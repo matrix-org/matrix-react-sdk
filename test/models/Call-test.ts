@@ -68,7 +68,7 @@ const setUpClientRoomAndStores = (): {
     carol: RoomMember;
 } => {
     stubClient();
-    const client = mocked<MatrixClient>(MatrixClientPeg.get());
+    const client = mocked<MatrixClient>(MatrixClientPeg.safeGet());
 
     const room = new Room("!1:example.org", client, "@alice:example.org", {
         pendingEventOrdering: PendingEventOrdering.Detached,
@@ -603,7 +603,7 @@ describe("ElementCall", () => {
             const originalGetValue = SettingsStore.getValue;
             SettingsStore.getValue = <T>(name: string, roomId?: string, excludeDefault?: boolean) => {
                 switch (name) {
-                    case "baseFontSize":
+                    case "baseFontSizeV2":
                         return 12 as T;
                     case "useSystemFont":
                         return true as T;
@@ -619,8 +619,38 @@ describe("ElementCall", () => {
             if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
 
             const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
-            expect(urlParams.get("fontScale")).toBe("1.2");
+            expect(urlParams.get("fontScale")).toBe("0.75");
             expect(urlParams.getAll("font")).toEqual(["OpenDyslexic", "DejaVu Sans"]);
+
+            SettingsStore.getValue = originalGetValue;
+        });
+
+        it("passes ICE fallback preference through widget URL", async () => {
+            // Test with the preference set to false
+            await ElementCall.create(room);
+            const call1 = Call.get(room);
+            if (!(call1 instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams1 = new URLSearchParams(new URL(call1.widget.url).hash.slice(1));
+            expect(urlParams1.has("allowIceFallback")).toBe(false);
+
+            // Now test with the preference set to true
+            const originalGetValue = SettingsStore.getValue;
+            SettingsStore.getValue = <T>(name: string, roomId?: string, excludeDefault?: boolean) => {
+                switch (name) {
+                    case "fallbackICEServerAllowed":
+                        return true as T;
+                    default:
+                        return originalGetValue<T>(name, roomId, excludeDefault);
+                }
+            };
+
+            await ElementCall.create(room);
+            const call2 = Call.get(room);
+            if (!(call2 instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams2 = new URLSearchParams(new URL(call2.widget.url).hash.slice(1));
+            expect(urlParams2.has("allowIceFallback")).toBe(true);
 
             SettingsStore.getValue = originalGetValue;
         });

@@ -18,7 +18,7 @@ import React from "react";
 import { act, fireEvent, render, RenderResult } from "@testing-library/react";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 import {
     ClientEvent,
@@ -31,6 +31,7 @@ import {
     UNSTABLE_MSC3882_CAPABILITY,
     CryptoApi,
     DeviceVerificationStatus,
+    MatrixError,
 } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
@@ -88,6 +89,7 @@ describe("<SessionManagerTab />", () => {
 
     const mockCrypto = mocked({
         getDeviceVerificationStatus: jest.fn(),
+        requestDeviceVerification: jest.fn().mockResolvedValue(mockVerificationRequest),
     } as unknown as CryptoApi);
 
     const mockClient = getMockClientWithEventEmitter({
@@ -96,7 +98,6 @@ describe("<SessionManagerTab />", () => {
         getDevices: jest.fn(),
         getStoredDevice: jest.fn(),
         getDeviceId: jest.fn().mockReturnValue(deviceId),
-        requestVerification: jest.fn().mockResolvedValue(mockVerificationRequest),
         deleteMultipleDevices: jest.fn(),
         generateClientSecret: jest.fn(),
         setDeviceDetails: jest.fn(),
@@ -531,7 +532,7 @@ describe("<SessionManagerTab />", () => {
             // click verify button from current session section
             fireEvent.click(getByTestId(`verification-status-button-${alicesMobileDevice.device_id}`));
 
-            expect(mockClient.requestVerification).toHaveBeenCalledWith(aliceId, [alicesMobileDevice.device_id]);
+            expect(mockCrypto.requestDeviceVerification).toHaveBeenCalledWith(aliceId, alicesMobileDevice.device_id);
             expect(modalSpy).toHaveBeenCalled();
         });
 
@@ -722,10 +723,12 @@ describe("<SessionManagerTab />", () => {
         });
 
         describe("other devices", () => {
-            const interactiveAuthError = {
-                httpStatus: 401,
-                data: { flows: [{ stages: ["m.login.password"] }] },
-            };
+            const interactiveAuthError = new MatrixError(
+                {
+                    flows: [{ stages: ["m.login.password"] }],
+                },
+                401,
+            );
 
             beforeEach(() => {
                 mockClient.deleteMultipleDevices.mockReset();

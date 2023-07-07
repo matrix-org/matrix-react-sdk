@@ -20,10 +20,11 @@ import FileSaver from "file-saver";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
-import { CrossSigningKeys, MatrixError, UIAFlow } from "matrix-js-sdk/src/matrix";
+import { CrossSigningKeys, IAuthDict, MatrixError, UIAFlow } from "matrix-js-sdk/src/matrix";
 import { IRecoveryKey } from "matrix-js-sdk/src/crypto/api";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import classNames from "classnames";
+import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t, _td } from "../../../../languageHandler";
@@ -90,7 +91,7 @@ interface IState {
     accountPasswordCorrect: boolean | null;
     canSkip: boolean;
     passPhraseKeySelected: string;
-    error?: string;
+    error?: boolean;
 }
 
 /*
@@ -102,7 +103,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         hasCancel: true,
         forceReset: false,
     };
-    private recoveryKey: IRecoveryKey;
+    private recoveryKey?: IRecoveryKey;
     private backupKey?: Uint8Array;
     private recoveryKeyNode = createRef<HTMLElement>();
     private passphraseField = createRef<Field>();
@@ -110,7 +111,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     public constructor(props: IProps) {
         super(props);
 
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
 
         let passPhraseKeySelected: SecureBackupSetupMethod;
         const setupMethods = getSecureBackupSetupMethods(cli);
@@ -157,7 +158,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     }
 
     public componentWillUnmount(): void {
-        MatrixClientPeg.get().removeListener(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatusChange);
+        MatrixClientPeg.get()?.removeListener(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatusChange);
     }
 
     private getInitialPhase(): void {
@@ -176,12 +177,11 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
     private async fetchBackupInfo(): Promise<{ backupInfo?: IKeyBackupInfo; backupSigStatus?: TrustInfo }> {
         try {
-            const backupInfo = await MatrixClientPeg.get().getKeyBackupVersion();
+            const cli = MatrixClientPeg.safeGet();
+            const backupInfo = await cli.getKeyBackupVersion();
             const backupSigStatus =
                 // we may not have started crypto yet, in which case we definitely don't trust the backup
-                backupInfo && MatrixClientPeg.get().isCryptoEnabled()
-                    ? await MatrixClientPeg.get().isKeyBackupTrusted(backupInfo)
-                    : null;
+                backupInfo && cli.isCryptoEnabled() ? await cli.isKeyBackupTrusted(backupInfo) : null;
 
             const { forceReset } = this.props;
             const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ChooseKeyPassphrase;
@@ -204,7 +204,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
     private async queryKeyUploadAuth(): Promise<void> {
         try {
-            await MatrixClientPeg.get().uploadDeviceSigningKeys(undefined, {} as CrossSigningKeys);
+            await MatrixClientPeg.safeGet().uploadDeviceSigningKeys(undefined, {} as CrossSigningKeys);
             // We should never get here: the server should always require
             // UI auth to upload device signing keys. If we do, we upload
             // no keys which would be a no-op.
@@ -235,7 +235,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
     private onChooseKeyPassphraseFormSubmit = async (): Promise<void> => {
         if (this.state.passPhraseKeySelected === SecureBackupSetupMethod.Key) {
-            this.recoveryKey = await MatrixClientPeg.get().createRecoveryKeyFromPassphrase();
+            this.recoveryKey = await MatrixClientPeg.safeGet().createRecoveryKeyFromPassphrase();
             this.setState({
                 copied: false,
                 downloaded: false,
@@ -270,6 +270,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     };
 
     private onDownloadClick = (): void => {
+        if (!this.recoveryKey) return;
         const blob = new Blob([this.recoveryKey.encodedPrivateKey!], {
             type: "text/plain;charset=us-ascii",
         });
@@ -280,17 +281,19 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         });
     };
 
-    private doBootstrapUIAuth = async (makeRequest: (authData: any) => Promise<{}>): Promise<void> => {
+    private doBootstrapUIAuth = async (
+        makeRequest: (authData: IAuthDict) => Promise<UIAResponse<void>>,
+    ): Promise<void> => {
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
             await makeRequest({
                 type: "m.login.password",
                 identifier: {
                     type: "m.id.user",
-                    user: MatrixClientPeg.get().getUserId(),
+                    user: MatrixClientPeg.safeGet().getSafeUserId(),
                 },
                 // TODO: Remove `user` once servers support proper UIA
                 // See https://github.com/matrix-org/synapse/issues/5665
-                user: MatrixClientPeg.get().getUserId(),
+                user: MatrixClientPeg.safeGet().getSafeUserId(),
                 password: this.state.accountPassword,
             });
         } else {
@@ -311,7 +314,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
             const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                 title: _t("Setting up keys"),
-                matrixClient: MatrixClientPeg.get(),
+                matrixClient: MatrixClientPeg.safeGet(),
                 makeRequest,
                 aestheticsForStagePhases: {
                     [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
@@ -331,7 +334,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             error: undefined,
         });
 
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
 
         const { forceReset } = this.props;
 
@@ -339,7 +342,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             if (forceReset) {
                 logger.log("Forcing secret storage reset");
                 await cli.bootstrapSecretStorage({
-                    createSecretStorageKey: async () => this.recoveryKey,
+                    createSecretStorageKey: async () => this.recoveryKey!,
                     setupNewKeyBackup: true,
                     setupNewSecretStorage: true,
                 });
@@ -355,7 +358,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     authUploadDeviceSigningKeys: this.doBootstrapUIAuth,
                 });
                 await cli.bootstrapSecretStorage({
-                    createSecretStorageKey: async () => this.recoveryKey,
+                    createSecretStorageKey: async () => this.recoveryKey!,
                     keyBackupInfo: this.state.backupInfo!,
                     setupNewKeyBackup: !this.state.backupInfo,
                     getKeyBackupPassphrase: async (): Promise<Uint8Array> => {
@@ -386,7 +389,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     phase: Phase.Migrate,
                 });
             } else {
-                this.setState({ error: e });
+                this.setState({ error: true });
             }
             logger.error("Error bootstrapping secret storage", e);
         }
@@ -457,7 +460,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
         if (this.state.passPhrase !== this.state.passPhraseConfirm) return;
 
-        this.recoveryKey = await MatrixClientPeg.get().createRecoveryKeyFromPassphrase(this.state.passPhrase);
+        this.recoveryKey = await MatrixClientPeg.safeGet().createRecoveryKeyFromPassphrase(this.state.passPhrase);
         this.setState({
             copied: false,
             downloaded: false,
@@ -544,7 +547,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     }
 
     private renderPhaseChooseKeyPassphrase(): JSX.Element {
-        const setupMethods = getSecureBackupSetupMethods(MatrixClientPeg.get());
+        const setupMethods = getSecureBackupSetupMethods(MatrixClientPeg.safeGet());
         const optionKey = setupMethods.includes(SecureBackupSetupMethod.Key) ? this.renderOptionKey() : null;
         const optionPassphrase = setupMethods.includes(SecureBackupSetupMethod.Passphrase)
             ? this.renderOptionPassphrase()
@@ -760,7 +763,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 <div className="mx_CreateSecretStorageDialog_primaryContainer mx_CreateSecretStorageDialog_recoveryKeyPrimarycontainer">
                     <div className="mx_CreateSecretStorageDialog_recoveryKeyContainer">
                         <div className="mx_CreateSecretStorageDialog_recoveryKey">
-                            <code ref={this.recoveryKeyNode}>{this.recoveryKey.encodedPrivateKey}</code>
+                            <code ref={this.recoveryKeyNode}>{this.recoveryKey?.encodedPrivateKey}</code>
                         </div>
                         <div className="mx_CreateSecretStorageDialog_recoveryKeyButtons">
                             <AccessibleButton

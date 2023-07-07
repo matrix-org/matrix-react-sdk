@@ -67,11 +67,11 @@ export const WidgetContextMenu: React.FC<IProps> = ({
     if (roomId && getConfigLivestreamUrl() && WidgetType.JITSI.matches(app.type)) {
         const onStreamAudioClick = async (): Promise<void> => {
             try {
-                await startJitsiAudioLivestream(widgetMessaging!, roomId);
+                await startJitsiAudioLivestream(cli, widgetMessaging!, roomId);
             } catch (err) {
                 logger.error("Failed to start livestream", err);
                 // XXX: won't i18n well, but looks like widget api only support 'message'?
-                const message = err.message || _t("Unable to start audio streaming.");
+                const message = err instanceof Error ? err.message : _t("Unable to start audio streaming.");
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Failed to start livestream"),
                     description: message,

@@ -50,7 +50,7 @@ interface IState {
     contentUrl: string | null;
     thumbUrl: string | null;
     isAnimated?: boolean;
-    error?: Error;
+    error?: unknown;
     imgError: boolean;
     imgLoaded: boolean;
     loadedImageDimensions?: {
@@ -160,7 +160,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     };
 
     private clearError = (): void => {
-        MatrixClientPeg.get().off(ClientEvent.Sync, this.reconnectedListener);
+        MatrixClientPeg.get()?.off(ClientEvent.Sync, this.reconnectedListener);
         this.setState({ imgError: false });
     };
 
@@ -177,7 +177,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         this.setState({
             imgError: true,
         });
-        MatrixClientPeg.get().on(ClientEvent.Sync, this.reconnectedListener);
+        MatrixClientPeg.safeGet().on(ClientEvent.Sync, this.reconnectedListener);
     };
 
     private onImageLoad = (): void => {
@@ -261,7 +261,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
         let thumbUrl: string | null;
         let contentUrl: string | null;
-        if (this.props.mediaEventHelper.media.isEncrypted) {
+        if (this.props.mediaEventHelper?.media.isEncrypted) {
             try {
                 [contentUrl, thumbUrl] = await Promise.all([
                     this.props.mediaEventHelper.sourceUrl.value,
@@ -311,7 +311,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 }
 
                 try {
-                    const blob = await this.props.mediaEventHelper.sourceBlob.value;
+                    const blob = await this.props.mediaEventHelper!.sourceBlob.value;
                     if (!(await blobIsAnimated(content.info?.mimetype, blob))) {
                         isAnimated = false;
                     }
@@ -373,7 +373,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
     public componentWillUnmount(): void {
         this.unmounted = true;
-        MatrixClientPeg.get().off(ClientEvent.Sync, this.reconnectedListener);
+        MatrixClientPeg.get()?.off(ClientEvent.Sync, this.reconnectedListener);
         this.clearBlurhashTimeout();
         if (this.sizeWatcher) SettingsStore.unwatchSetting(this.sizeWatcher);
         if (this.state.isAnimated && this.state.thumbUrl) {
