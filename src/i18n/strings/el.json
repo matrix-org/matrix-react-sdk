@@ -2022,7 +2022,6 @@
     "Old cryptography data detected": "Εντοπίστηκαν παλιά δεδομένα κρυπτογράφησης",
     "expand": "επέκταση",
     "collapse": "σύμπτηξη",
-    "This homeserver doesn't offer any login flows which are supported by this client.": "Αυτός ο κεντρικός διακομιστής δεν προσφέρει κάποιο τρόπο σύνδεσης που να υποστηρίζεται από αυτό το πρόγραμμα πελάτη.",
     "URL previews are disabled by default for participants in this room.": "Η προεπισκόπηση διευθύνσεων URL είναι απενεργοποιημένη από προεπιλογή για τους συμμετέχοντες σε αυτό το δωμάτιο.",
     "%(name)s wants to verify": "%(name)s θέλει να επαληθεύσει",
     "%(name)s cancelled": "%(name)s ακύρωσε",
