@@ -113,8 +113,13 @@ export const CommandCategories = {
 
 export type RunResult = XOR<{ error: Error }, { promise: Promise<IContent | undefined> }>;
 
-type RunInThreadFn = (this: Command, matrixClient: MatrixClient, roomId: string, threadRootId?: string, args?: string) => RunResult;
-type RunFn = (this: Command, matrixClient: MatrixClient, roomId: string, args?: string) => RunResult;
+type RunFn = (
+    this: Command,
+    matrixClient: MatrixClient,
+    roomId: string,
+    threadId: string | null,
+    args?: string,
+) => RunResult;
 
 interface ICommandOpts {
     command: string;
@@ -122,7 +127,7 @@ interface ICommandOpts {
     args?: string;
     description: string;
     analyticsName?: SlashCommandEvent["command"];
-    runFn?: RunFn | RunInThreadFn;
+    runFn?: RunFn;
     category: string;
     hideCompletionAfterSpace?: boolean;
     isEnabled?(matrixClient: MatrixClient | null): boolean;
@@ -141,12 +146,11 @@ export class Command {
     public readonly aliases: string[];
     public readonly args?: string;
     public readonly description: string;
-    public readonly runFn?: RunFn | RunInThreadFn;
+    public readonly runFn?: RunFn;
     public readonly category: string;
     public readonly hideCompletionAfterSpace: boolean;
     public readonly renderingTypes?: TimelineRenderingType[];
     public readonly analyticsName?: SlashCommandEvent["command"];
-    public readonly canReceiveThreadId?: boolean;
     private readonly _isEnabled?: (matrixClient: MatrixClient | null) => boolean;
 
     public constructor(opts: ICommandOpts) {
@@ -160,7 +164,6 @@ export class Command {
         this._isEnabled = opts.isEnabled;
         this.renderingTypes = opts.renderingTypes;
         this.analyticsName = opts.analyticsName;
-        this.canReceiveThreadId = opts.canReceiveThreadId;
     }
 
     public getCommand(): string {
@@ -194,11 +197,7 @@ export class Command {
             });
         }
 
-        if (this.canReceiveThreadId) {
-            return this.runFn(matrixClient, roomId, threadId, args);
-        } else {
-            return this.runFn(matrixClient, roomId, args);
-        }
+        return this.runFn(matrixClient, roomId, threadId, args);
     }
 
     public getUsage(): string {
@@ -246,7 +245,7 @@ export const Commands = [
         command: "spoiler",
         args: "<message>",
         description: _td("Sends the given message as a spoiler"),
-        runFn: function (cli, roomId, message = "") {
+        runFn: function (cli, roomId, threadId, message = "") {
             return successSync(ContentHelpers.makeHtmlMessage(message, `<span data-mx-spoiler>${message}</span>`));
         },
         category: CommandCategories.messages,
@@ -307,7 +306,7 @@ export const Commands = [
         command: "plain",
         args: "<message>",
         description: _td("Sends a message as plain text, without interpreting it as markdown"),
-        runFn: function (cli, roomId, messages = "") {
+        runFn: function (cli, roomId, threadId, messages = "") {
             return successSync(ContentHelpers.makeTextMessage(messages));
         },
         category: CommandCategories.messages,
@@ -316,7 +315,7 @@ export const Commands = [
         command: "html",
         args: "<message>",
         description: _td("Sends a message as html, without interpreting it as markdown"),
-        runFn: function (cli, roomId, messages = "") {
+        runFn: function (cli, roomId, threadId, messages = "") {
             return successSync(ContentHelpers.makeHtmlMessage(messages, messages));
         },
         category: CommandCategories.messages,
@@ -1210,7 +1209,7 @@ export const Commands = [
         description: _td("Send a bug report with logs"),
         isEnabled: () => !!SdkConfig.get().bug_report_endpoint_url,
         args: "<description>",
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             return success(
                 Modal.createDialog(BugReportDialog, {
                     initialText: args,

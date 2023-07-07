@@ -29,7 +29,7 @@ describe("DevtoolsDialog", () => {
     let cli: MatrixClient;
     let room: Room;
 
-    function getComponent(roomId: string, threadRootId?: string, onFinished = () => true) {
+    function getComponent(roomId: string, threadRootId: string | null = null, onFinished = () => true) {
         return render(
             <MatrixClientContext.Provider value={cli}>
                 <DevtoolsDialog roomId={roomId} threadRootId={threadRootId} onFinished={onFinished} />
