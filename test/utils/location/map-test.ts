@@ -14,34 +14,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { createMapSiteLink } from "../../../src/utils/location";
+import { createMapSiteLinkFromEvent } from "../../../src/utils/location";
 import { mkMessage } from "../../test-utils";
 import { makeLegacyLocationEvent, makeLocationEvent } from "../../test-utils/location";
 
-describe("createMapSiteLink", () => {
+describe("createMapSiteLinkFromEvent", () => {
     it("returns null if event does not contain geouri", () => {
-        expect(createMapSiteLink(mkMessage({
-            room: '1', user: '@sender:server', event: true,
-        }))).toBeNull();
+        expect(
+            createMapSiteLinkFromEvent(
+                mkMessage({
+                    room: "1",
+                    user: "@sender:server",
+                    event: true,
+                }),
+            ),
+        ).toBeNull();
     });
 
-    it("returns OpenStreetMap link if event contains m.location", () => {
-        expect(
-            createMapSiteLink(makeLocationEvent("geo:51.5076,-0.1276")),
-        ).toEqual(
-            "https://www.openstreetmap.org/" +
-            "?mlat=51.5076&mlon=-0.1276" +
-            "#map=16/51.5076/-0.1276",
+    it("returns OpenStreetMap link if event contains m.location with valid uri", () => {
+        expect(createMapSiteLinkFromEvent(makeLocationEvent("geo:51.5076,-0.1276"))).toEqual(
+            "https://www.openstreetmap.org/" + "?mlat=51.5076&mlon=-0.1276" + "#map=16/51.5076/-0.1276",
         );
+    });
+
+    it("returns null if event contains m.location with invalid uri", () => {
+        expect(createMapSiteLinkFromEvent(makeLocationEvent("123 Sesame St"))).toBeNull();
     });
 
     it("returns OpenStreetMap link if event contains geo_uri", () => {
-        expect(
-            createMapSiteLink(makeLegacyLocationEvent("geo:51.5076,-0.1276")),
-        ).toEqual(
-            "https://www.openstreetmap.org/" +
-            "?mlat=51.5076&mlon=-0.1276" +
-            "#map=16/51.5076/-0.1276",
+        expect(createMapSiteLinkFromEvent(makeLegacyLocationEvent("geo:51.5076,-0.1276"))).toEqual(
+            "https://www.openstreetmap.org/" + "?mlat=51.5076&mlon=-0.1276" + "#map=16/51.5076/-0.1276",
         );
+    });
+
+    it("returns null if event contains an invalid geo_uri", () => {
+        expect(createMapSiteLinkFromEvent(makeLegacyLocationEvent("123 Sesame St"))).toBeNull();
     });
 });

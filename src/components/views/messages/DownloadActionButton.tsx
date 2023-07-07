@@ -18,6 +18,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import React from "react";
 import classNames from "classnames";
 
+import { Icon as DownloadIcon } from "../../../../res/img/download.svg";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
 import Spinner from "../elements/Spinner";
@@ -51,7 +52,7 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
         };
     }
 
-    private onDownloadClick = async () => {
+    private onDownloadClick = async (): Promise<void> => {
         if (this.state.loading) return;
 
         if (this.props.mediaEventHelperGet().media.isEncrypted) {
@@ -62,41 +63,44 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
 
         if (this.state.blob) {
             // Cheat and trigger a download, again.
-            return this.doDownload();
+            return this.doDownload(this.state.blob);
         }
 
         const blob = await this.props.mediaEventHelperGet().sourceBlob.value;
         this.setState({ blob });
-        await this.doDownload();
+        await this.doDownload(blob);
     };
 
-    private async doDownload() {
+    private async doDownload(blob: Blob): Promise<void> {
         await this.downloader.download({
-            blob: this.state.blob,
+            blob,
             name: this.props.mediaEventHelperGet().fileName,
         });
         this.setState({ loading: false });
     }
 
-    public render() {
-        let spinner: JSX.Element;
+    public render(): React.ReactNode {
+        let spinner: JSX.Element | undefined;
         if (this.state.loading) {
             spinner = <Spinner w={18} h={18} />;
         }
 
         const classes = classNames({
-            'mx_MessageActionBar_maskButton': true,
-            'mx_MessageActionBar_downloadButton': true,
-            'mx_MessageActionBar_downloadSpinnerButton': !!spinner,
+            mx_MessageActionBar_iconButton: true,
+            mx_MessageActionBar_downloadButton: true,
+            mx_MessageActionBar_downloadSpinnerButton: !!spinner,
         });
 
-        return <RovingAccessibleTooltipButton
-            className={classes}
-            title={spinner ? _t(this.state.tooltip) : _t("Download")}
-            onClick={this.onDownloadClick}
-            disabled={!!spinner}
-        >
-            { spinner }
-        </RovingAccessibleTooltipButton>;
+        return (
+            <RovingAccessibleTooltipButton
+                className={classes}
+                title={spinner ? _t(this.state.tooltip) : _t("Download")}
+                onClick={this.onDownloadClick}
+                disabled={!!spinner}
+            >
+                <DownloadIcon />
+                {spinner}
+            </RovingAccessibleTooltipButton>
+        );
     }
 }

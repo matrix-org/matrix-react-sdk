@@ -16,13 +16,14 @@ limitations under the License.
 
 import React from "react";
 
-import { IRecordingUpdate, RECORDING_PLAYBACK_SAMPLES, VoiceRecording } from "../../../audio/VoiceRecording";
+import { IRecordingUpdate, RECORDING_PLAYBACK_SAMPLES } from "../../../audio/VoiceRecording";
 import { arrayFastResample, arraySeed } from "../../../utils/arrays";
 import Waveform from "./Waveform";
 import { MarkedExecution } from "../../../utils/MarkedExecution";
+import { VoiceMessageRecording } from "../../../audio/VoiceMessageRecording";
 
 interface IProps {
-    recorder: VoiceRecording;
+    recorder: VoiceMessageRecording;
 }
 
 interface IState {
@@ -38,19 +39,19 @@ export default class LiveRecordingWaveform extends React.PureComponent<IProps, I
     };
 
     private waveform: number[] = [];
-    private scheduledUpdate = new MarkedExecution(
+    private scheduledUpdate: MarkedExecution = new MarkedExecution(
         () => this.updateWaveform(),
         () => requestAnimationFrame(() => this.scheduledUpdate.trigger()),
     );
 
-    constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             waveform: arraySeed(0, RECORDING_PLAYBACK_SAMPLES),
         };
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         this.props.recorder.liveData.onUpdate((update: IRecordingUpdate) => {
             // The incoming data is between zero and one, so we don't need to clamp/rescale it.
             this.waveform = arrayFastResample(Array.from(update.waveform), RECORDING_PLAYBACK_SAMPLES);
@@ -58,11 +59,11 @@ export default class LiveRecordingWaveform extends React.PureComponent<IProps, I
         });
     }
 
-    private updateWaveform() {
+    private updateWaveform(): void {
         this.setState({ waveform: this.waveform });
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return <Waveform relHeights={this.state.waveform} />;
     }
 }

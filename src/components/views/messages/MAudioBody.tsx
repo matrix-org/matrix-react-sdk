@@ -16,9 +16,10 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IContent } from "matrix-js-sdk/src/matrix";
 
 import { Playback } from "../../../audio/Playback";
-import InlineSpinner from '../elements/InlineSpinner';
+import InlineSpinner from "../elements/InlineSpinner";
 import { _t } from "../../../languageHandler";
 import AudioPlayer from "../audio_messages/AudioPlayer";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
@@ -28,6 +29,7 @@ import { PlaybackManager } from "../../../audio/PlaybackManager";
 import { isVoiceMessage } from "../../../utils/EventUtils";
 import { PlaybackQueue } from "../../../audio/PlaybackQueue";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import MediaProcessingError from "./shared/MediaProcessingError";
 
 interface IState {
     error?: Error;
@@ -35,16 +37,16 @@ interface IState {
 }
 
 export default class MAudioBody extends React.PureComponent<IBodyProps, IState> {
-    static contextType = RoomContext;
+    public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
-    constructor(props: IBodyProps) {
+    public constructor(props: IBodyProps) {
         super(props);
 
         this.state = {};
     }
 
-    public async componentDidMount() {
+    public async componentDidMount(): Promise<void> {
         let buffer: ArrayBuffer;
 
         try {
@@ -65,8 +67,8 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         // We should have a buffer to work with now: let's set it up
 
         // Note: we don't actually need a waveform to render an audio event, but voice messages do.
-        const content = this.props.mxEvent.getContent<IMediaEventContent>();
-        const waveform = content?.["org.matrix.msc1767.audio"]?.waveform?.map(p => p / 1024);
+        const content = this.props.mxEvent.getContent<IMediaEventContent & IContent>();
+        const waveform = content?.["org.matrix.msc1767.audio"]?.waveform?.map((p: number) => p / 1024);
 
         // We should have a buffer to work with now: let's set it up
         const playback = PlaybackManager.instance.createPlaybackInstance(buffer, waveform);
@@ -74,29 +76,30 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         this.setState({ playback });
 
         if (isVoiceMessage(this.props.mxEvent)) {
-            PlaybackQueue.forRoom(this.props.mxEvent.getRoomId()).unsortedEnqueue(this.props.mxEvent, playback);
+            PlaybackQueue.forRoom(this.props.mxEvent.getRoomId()!).unsortedEnqueue(this.props.mxEvent, playback);
         }
 
         // Note: the components later on will handle preparing the Playback class for us.
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.state.playback?.destroy();
     }
 
     protected get showFileBody(): boolean {
-        return this.context.timelineRenderingType !== TimelineRenderingType.Room &&
+        return (
+            this.context.timelineRenderingType !== TimelineRenderingType.Room &&
             this.context.timelineRenderingType !== TimelineRenderingType.Pinned &&
-            this.context.timelineRenderingType !== TimelineRenderingType.Search;
+            this.context.timelineRenderingType !== TimelineRenderingType.Search
+        );
     }
 
-    public render() {
+    public render(): React.ReactNode {
         if (this.state.error) {
             return (
-                <span className="mx_MAudioBody">
-                    <img src={require("../../../../res/img/warning.svg").default} width="16" height="16" />
-                    { _t("Error processing audio message") }
-                </span>
+                <MediaProcessingError className="mx_MAudioBody">
+                    {_t("Error processing audio message")}
+                </MediaProcessingError>
             );
         }
 
@@ -123,7 +126,7 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         return (
             <span className="mx_MAudioBody">
                 <AudioPlayer playback={this.state.playback} mediaName={this.props.mxEvent.getContent().body} />
-                { this.showFileBody && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
+                {this.showFileBody && <MFileBody {...this.props} showGenericPlaceholder={false} />}
             </span>
         );
     }

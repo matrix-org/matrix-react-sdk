@@ -29,21 +29,21 @@ they have two methods:
         This method usually ends up calling `resize` once the start offset is subtracted.
 */
 export default class FixedDistributor<C extends IConfig, I extends ResizeItem<any> = ResizeItem<C>> {
-    static createItem(resizeHandle: HTMLDivElement, resizer: Resizer, sizer: Sizer): ResizeItem {
+    public static createItem(resizeHandle: HTMLDivElement, resizer: Resizer, sizer: Sizer): ResizeItem {
         return new ResizeItem(resizeHandle, resizer, sizer);
     }
 
-    static createSizer(containerElement: HTMLElement, vertical: boolean, reverse: boolean): Sizer {
+    public static createSizer(containerElement: HTMLElement, vertical: boolean, reverse: boolean): Sizer {
         return new Sizer(containerElement, vertical, reverse);
     }
 
     private readonly beforeOffset: number;
 
-    constructor(public readonly item: I) {
+    public constructor(public readonly item: I) {
         this.beforeOffset = item.offset();
     }
 
-    public get size() {
+    public get size(): string {
         return this.item.getSize();
     }
 
@@ -51,19 +51,19 @@ export default class FixedDistributor<C extends IConfig, I extends ResizeItem<an
         this.item.setRawSize(size);
     }
 
-    public resize(size: number) {
+    public resize(size: number): void {
         this.item.setSize(size);
     }
 
-    public resizeFromContainerOffset(offset: number) {
+    public resizeFromContainerOffset(offset: number): void {
         this.resize(offset - this.beforeOffset);
     }
 
-    public start() {
+    public start(): void {
         this.item.start();
     }
 
-    public finish() {
+    public finish(): void {
         this.item.finish();
     }
 }

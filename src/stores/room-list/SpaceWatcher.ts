@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { RoomListStoreClass } from "./RoomListStore";
+import { RoomListStore as Interface } from "./Interface";
 import { SpaceFilterCondition } from "./filters/SpaceFilterCondition";
 import SpaceStore from "../spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../spaces";
@@ -28,7 +28,7 @@ export class SpaceWatcher {
     private activeSpace: SpaceKey = SpaceStore.instance.activeSpace;
     private allRoomsInHome: boolean = SpaceStore.instance.allRoomsInHome;
 
-    constructor(private store: RoomListStoreClass) {
+    public constructor(private store: Interface) {
         if (SpaceWatcher.needsFilter(this.activeSpace, this.allRoomsInHome)) {
             this.updateFilter();
             store.addFilter(this.filter);
@@ -41,7 +41,7 @@ export class SpaceWatcher {
         return !(spaceKey === MetaSpace.Home && allRoomsInHome);
     }
 
-    private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome = this.allRoomsInHome) => {
+    private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome = this.allRoomsInHome): void => {
         if (activeSpace === this.activeSpace && allRoomsInHome === this.allRoomsInHome) return; // nop
 
         const neededFilter = SpaceWatcher.needsFilter(this.activeSpace, this.allRoomsInHome);
@@ -61,11 +61,11 @@ export class SpaceWatcher {
         }
     };
 
-    private onHomeBehaviourUpdated = (allRoomsInHome: boolean) => {
+    private onHomeBehaviourUpdated = (allRoomsInHome: boolean): void => {
         this.onSelectedSpaceUpdated(this.activeSpace, allRoomsInHome);
     };
 
-    private updateFilter = () => {
+    private updateFilter = (): void => {
         this.filter.updateSpace(this.activeSpace);
     };
 }

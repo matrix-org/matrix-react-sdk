@@ -15,15 +15,13 @@ limitations under the License.
 */
 
 import "matrix-js-sdk/src/@types/global"; // load matrix-js-sdk's type extensions first
-// Load types for the WG CSS Font Loading APIs https://github.com/Microsoft/TypeScript/issues/13569
-import "@types/css-font-loading-module";
 import "@types/modernizr";
 
 import ContentMessages from "../ContentMessages";
 import { IMatrixClientPeg } from "../MatrixClientPeg";
 import ToastStore from "../stores/ToastStore";
 import DeviceListener from "../DeviceListener";
-import { RoomListStoreClass } from "../stores/room-list/RoomListStore";
+import { RoomListStore } from "../stores/room-list/Interface";
 import { PlatformPeg } from "../PlatformPeg";
 import RoomListLayoutStore from "../stores/room-list/RoomListLayoutStore";
 import { IntegrationManagers } from "../integrations/IntegrationManagers";
@@ -33,8 +31,7 @@ import { Notifier } from "../Notifier";
 import type { Renderer } from "react-dom";
 import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import WidgetStore from "../stores/WidgetStore";
-import CallHandler from "../CallHandler";
-import { Analytics } from "../Analytics";
+import LegacyCallHandler from "../LegacyCallHandler";
 import UserActivity from "../UserActivity";
 import { ModalWidgetStore } from "../stores/ModalWidgetStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
@@ -52,6 +49,7 @@ import ActiveWidgetStore from "../stores/ActiveWidgetStore";
 import AutoRageshakeStore from "../stores/AutoRageshakeStore";
 import { IConfigOptions } from "../IConfigOptions";
 import { MatrixDispatcher } from "../dispatcher/dispatcher";
+import { DeepReadonly } from "./common";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -62,7 +60,7 @@ declare global {
         Olm: {
             init: () => Promise<void>;
         };
-        mxReactSdkConfig: IConfigOptions;
+        mxReactSdkConfig: DeepReadonly<IConfigOptions>;
 
         // Needed for Safari, unknown to TypeScript
         webkitAudioContext: typeof AudioContext;
@@ -74,13 +72,13 @@ declare global {
         // https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1029#issuecomment-869224737
         // https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas
         OffscreenCanvas?: {
-            new(width: number, height: number): OffscreenCanvas;
+            new (width: number, height: number): OffscreenCanvas;
         };
 
         mxContentMessages: ContentMessages;
         mxToastStore: ToastStore;
         mxDeviceListener: DeviceListener;
-        mxRoomListStore: RoomListStoreClass;
+        mxRoomListStore: RoomListStore;
         mxRoomListLayoutStore: RoomListLayoutStore;
         mxPlatformPeg: PlatformPeg;
         mxIntegrationManagers: typeof IntegrationManagers;
@@ -90,8 +88,7 @@ declare global {
         mxRightPanelStore: RightPanelStore;
         mxWidgetStore: WidgetStore;
         mxWidgetLayoutStore: WidgetLayoutStore;
-        mxCallHandler: CallHandler;
-        mxAnalytics: Analytics;
+        mxLegacyCallHandler: LegacyCallHandler;
         mxUserActivity: UserActivity;
         mxModalWidgetStore: ModalWidgetStore;
         mxVoipUserMapper: VoipUserMapper;
@@ -151,14 +148,7 @@ declare global {
 
     // https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas
     interface OffscreenCanvas {
-        height: number;
-        width: number;
-        getContext: HTMLCanvasElement["getContext"];
-        convertToBlob(opts?: {
-            type?: string;
-            quality?: number;
-        }): Promise<Blob>;
-        transferToImageBitmap(): ImageBitmap;
+        convertToBlob(opts?: { type?: string; quality?: number }): Promise<Blob>;
     }
 
     interface HTMLAudioElement {
@@ -173,10 +163,6 @@ declare global {
         // sinkId & setSinkId are experimental and typescript doesn't know about them
         sinkId: string;
         setSinkId(outputId: string): void;
-    }
-
-    interface HTMLStyleElement {
-        disabled?: boolean;
     }
 
     // Add Chrome-specific `instant` ScrollBehaviour
@@ -200,6 +186,11 @@ declare global {
     }
 
     interface Error {
+        // Standard
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
+        cause?: unknown;
+
+        // Non-standard
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/fileName
         fileName?: string;
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/lineNumber
@@ -208,14 +199,26 @@ declare global {
         columnNumber?: number;
     }
 
+    // We can remove these pieces if we ever update to `target: "es2022"` in our
+    // TypeScript config which supports the new `cause` property, see
+    // https://github.com/vector-im/element-web/issues/24913
+    interface ErrorOptions {
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
+        cause?: unknown;
+    }
+
+    interface ErrorConstructor {
+        new (message?: string, options?: ErrorOptions): Error;
+        (message?: string, options?: ErrorOptions): Error;
+    }
+
+    // eslint-disable-next-line no-var
+    var Error: ErrorConstructor;
+
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
     interface AudioWorkletProcessor {
         readonly port: MessagePort;
-        process(
-            inputs: Float32Array[][],
-            outputs: Float32Array[][],
-            parameters: Record<string, Float32Array>
-        ): boolean;
+        process(inputs: Float32Array[][], outputs: Float32Array[][], parameters: Record<string, Float32Array>): boolean;
     }
 
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
@@ -232,12 +235,10 @@ declare global {
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
     function registerProcessor(
         name: string,
-        processorCtor: (new (
-            options?: AudioWorkletNodeOptions
-        ) => AudioWorkletProcessor) & {
+        processorCtor: (new (options?: AudioWorkletNodeOptions) => AudioWorkletProcessor) & {
             parameterDescriptors?: AudioParamDescriptor[];
-        }
-    );
+        },
+    ): void;
 
     // eslint-disable-next-line no-var
     var grecaptcha:

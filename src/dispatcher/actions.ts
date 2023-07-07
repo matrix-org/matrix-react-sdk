@@ -41,6 +41,11 @@ export enum Action {
     ViewUserSettings = "view_user_settings",
 
     /**
+     * Open the user device settings. No additional payload information required.
+     */
+    ViewUserDeviceSettings = "view_user_device_settings",
+
+    /**
      * Opens the room directory. No additional payload information required.
      */
     ViewRoomDirectory = "view_room_directory",
@@ -71,6 +76,11 @@ export enum Action {
     FocusSendMessageComposer = "focus_send_message_composer",
 
     /**
+     * Clear the  to the send message composer. Should be used with a FocusComposerPayload.
+     */
+    ClearAndFocusSendMessageComposer = "clear_focus_send_message_composer",
+
+    /**
      * Focuses the user's cursor to the edit message composer. Should be used with a FocusComposerPayload.
      */
     FocusEditMessageComposer = "focus_edit_message_composer",
@@ -94,6 +104,11 @@ export enum Action {
     /**
      * Sets the apps root font size. Should be used with UpdateFontSizePayload
      */
+    MigrateBaseFontSize = "migrate_base_font_size",
+
+    /**
+     * Sets the apps root font size. Should be used with UpdateFontSizePayload
+     */
     UpdateFontSize = "update_font_size",
 
     /**
@@ -105,6 +120,11 @@ export enum Action {
      * Changes room based on payload parameters. Should be used with JoinRoomPayload.
      */
     ViewRoom = "view_room",
+
+    /**
+     * Changes thread based on payload parameters. Should be used with ThreadPayload.
+     */
+    ViewThread = "view_thread",
 
     /**
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
@@ -226,19 +246,6 @@ export enum Action {
     PseudonymousAnalyticsReject = "pseudonymous_analytics_reject",
 
     /**
-     * The user accepted anonymous analytics (i.e. matomo, pre-posthog) from the toast
-     * (this action and its handler can be removed once posthog is rolled out)
-     * Payload: none
-     */
-    AnonymousAnalyticsAccept = "anonymous_analytics_accept",
-
-    /**
-     * The user rejected anonymous analytics (i.e. matomo, pre-posthog) from the toast
-     * Payload: none
-     */
-    AnonymousAnalyticsReject = "anonymous_analytics_reject",
-
-    /**
      * Fires after crypto is setup if key backup is not enabled
      * Used to trigger auto rageshakes when configured
      */
@@ -313,4 +320,35 @@ export enum Action {
      * logs. Fires with no payload.
      */
     DumpDebugLogs = "dump_debug_logs",
+
+    /**
+     * Show current room topic
+     */
+    ShowRoomTopic = "show_room_topic",
+
+    /**
+     * Fired when the client was logged out. No additional payload information required.
+     */
+    OnLoggedOut = "on_logged_out",
+
+    /**
+     * Fired when the client was logged in. No additional payload information required.
+     */
+    OnLoggedIn = "on_logged_in",
+
+    /**
+     * Overwrites the existing login with fresh session credentials. Use with a OverwriteLoginPayload.
+     */
+    OverwriteLogin = "overwrite_login",
+
+    /**
+     * Fired when the PlatformPeg gets a new platform set upon it, should only happen once per app load lifecycle.
+     * Fires with the PlatformSetPayload.
+     */
+    PlatformSet = "platform_set",
+
+    /**
+     * Fired when we want to view a thread, either a new one or an existing one
+     */
+    ShowThread = "show_thread",
 }

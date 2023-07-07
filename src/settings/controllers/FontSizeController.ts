@@ -21,15 +21,23 @@ import { Action } from "../../dispatcher/actions";
 import { SettingLevel } from "../SettingLevel";
 
 export default class FontSizeController extends SettingController {
-    constructor() {
+    public constructor() {
         super();
     }
 
-    public onChange(level: SettingLevel, roomId: string, newValue: any) {
-        // Dispatch font size change so that everything open responds to the change.
-        dis.dispatch<UpdateFontSizePayload>({
-            action: Action.UpdateFontSize,
-            size: newValue,
-        });
+    public onChange(level: SettingLevel, roomId: string, newValue: any): void {
+        // In a distant past, `baseFontSize` was set on the account and config
+        // level. This can be accessed only after the initial sync. If we end up
+        // discovering that a logged in user has this kind of setting, we want to
+        // trigger another migration of the base font size.
+        if (level === SettingLevel.ACCOUNT || level === SettingLevel.CONFIG) {
+            dis.fire(Action.MigrateBaseFontSize);
+        } else if (newValue !== "") {
+            // Dispatch font size change so that everything open responds to the change.
+            dis.dispatch<UpdateFontSizePayload>({
+                action: Action.UpdateFontSize,
+                size: newValue,
+            });
+        }
     }
 }

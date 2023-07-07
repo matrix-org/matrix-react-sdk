@@ -14,26 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
+import classNames from "classnames";
 
-import { Icon as WarningBadge } from '../../../../res/img/element-icons/warning-badge.svg';
-import { _t } from '../../../languageHandler';
-import { getLocationShareErrorMessage, LocationShareError } from '../../../utils/location';
-import AccessibleButton from '../elements/AccessibleButton';
-import Heading from '../typography/Heading';
+import { Icon as WarningBadge } from "../../../../res/img/element-icons/warning-badge.svg";
+import { _t } from "../../../languageHandler";
+import { getLocationShareErrorMessage, LocationShareError } from "../../../utils/location";
+import AccessibleButton from "../elements/AccessibleButton";
+import Heading from "../typography/Heading";
 
-interface Props {
-    onFinished: () => void;
+export interface MapErrorProps {
     error: LocationShareError;
+    onFinished?: () => void;
+    isMinimised?: boolean;
+    className?: string;
+    onClick?: () => void;
 }
 
-export const MapError: React.FC<Props> = ({
-    onFinished, error,
-}) => (<div data-test-id='location-picker-error' className="mx_MapError">
-    <WarningBadge className="mx_MapError_icon" />
-    <Heading className="mx_MapError_heading" size='h3'>{ _t("Unable to load map") }</Heading>
-    <p>
-        { getLocationShareErrorMessage(error) }
-    </p>
-    <AccessibleButton element='button' kind="primary" onClick={onFinished}>{ _t("OK") }</AccessibleButton>
-</div>);
+export const MapError: React.FC<MapErrorProps> = ({ error, isMinimised, className, onFinished, onClick }) => (
+    <div
+        data-testid="map-rendering-error"
+        className={classNames("mx_MapError", className, { mx_MapError_isMinimised: isMinimised })}
+        onClick={onClick}
+    >
+        <WarningBadge className="mx_MapError_icon" />
+        <Heading className="mx_MapError_heading" size="3">
+            {_t("Unable to load map")}
+        </Heading>
+        <p className="mx_MapError_message">{getLocationShareErrorMessage(error)}</p>
+        {onFinished && (
+            <AccessibleButton element="button" kind="primary" onClick={onFinished}>
+                {_t("OK")}
+            </AccessibleButton>
+        )}
+    </div>
+);

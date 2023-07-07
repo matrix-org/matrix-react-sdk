@@ -21,38 +21,66 @@ import PlaybackClock from "./PlaybackClock";
 import AudioPlayerBase, { IProps as IAudioPlayerBaseProps } from "./AudioPlayerBase";
 import SeekBar from "./SeekBar";
 import PlaybackWaveform from "./PlaybackWaveform";
+import { PlaybackState } from "../../../audio/Playback";
+
+export enum PlaybackLayout {
+    /**
+     * Clock on the left side of a waveform, without seek bar.
+     */
+    Composer,
+
+    /**
+     * Clock on the right side of a waveform, with an added seek bar.
+     */
+    Timeline,
+}
 
 interface IProps extends IAudioPlayerBaseProps {
-    /**
-     * When true, use a waveform instead of a seek bar
-     */
-    withWaveform?: boolean;
+    layout?: PlaybackLayout; // Defaults to Timeline layout
 }
 
 export default class RecordingPlayback extends AudioPlayerBase<IProps> {
     // This component is rendered in two ways: the composer and timeline. They have different
     // rendering properties (specifically the difference of a waveform or not).
 
-    private renderWaveformLook(): ReactNode {
-        return <>
-            <PlaybackClock playback={this.props.playback} />
-            <PlaybackWaveform playback={this.props.playback} />
-        </>;
+    private renderComposerLook(): ReactNode {
+        return (
+            <>
+                <PlaybackClock playback={this.props.playback} />
+                <PlaybackWaveform playback={this.props.playback} />
+            </>
+        );
     }
 
-    private renderSeekableLook(): ReactNode {
-        return <>
-            <SeekBar
-                playback={this.props.playback}
-                tabIndex={-1} // prevent tabbing into the bar
-                playbackPhase={this.state.playbackPhase}
-                ref={this.seekRef}
-            />
-            <PlaybackClock playback={this.props.playback} />
-        </>;
+    private renderTimelineLook(): ReactNode {
+        return (
+            <>
+                <div className="mx_RecordingPlayback_timelineLayoutMiddle">
+                    <PlaybackWaveform playback={this.props.playback} />
+                    <SeekBar
+                        playback={this.props.playback}
+                        tabIndex={0} // allow keyboard users to fall into the seek bar
+                        disabled={this.state.playbackPhase === PlaybackState.Decoding}
+                        ref={this.seekRef}
+                    />
+                </div>
+                <PlaybackClock playback={this.props.playback} />
+            </>
+        );
     }
 
     protected renderComponent(): ReactNode {
+        let body: ReactNode;
+        switch (this.props.layout) {
+            case PlaybackLayout.Composer:
+                body = this.renderComposerLook();
+                break;
+            case PlaybackLayout.Timeline: // default is timeline, fall through.
+            default:
+                body = this.renderTimelineLook();
+                break;
+        }
+
         return (
             <div className="mx_MediaBody mx_VoiceMessagePrimaryContainer" onKeyDown={this.onKeyDown}>
                 <PlayPauseButton
@@ -60,7 +88,7 @@ export default class RecordingPlayback extends AudioPlayerBase<IProps> {
                     playbackPhase={this.state.playbackPhase}
                     ref={this.playPauseRef}
                 />
-                { this.props.withWaveform ? this.renderWaveformLook() : this.renderSeekableLook() }
+                {body}
             </div>
         );
     }

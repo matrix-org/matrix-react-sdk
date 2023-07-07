@@ -14,27 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from 'react';
-import maplibregl from 'maplibre-gl';
-import {
-    Beacon,
-    BeaconEvent,
-} from 'matrix-js-sdk/src/matrix';
-import { LocationAssetType } from 'matrix-js-sdk/src/@types/location';
+import React, { ReactNode, useContext } from "react";
+import * as maplibregl from "maplibre-gl";
+import { Beacon, BeaconEvent } from "matrix-js-sdk/src/matrix";
+import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import { useEventEmitterState } from '../../../hooks/useEventEmitter';
-import SmartMarker from '../location/SmartMarker';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import SmartMarker from "../location/SmartMarker";
 
 interface Props {
     map: maplibregl.Map;
     beacon: Beacon;
+    tooltip?: ReactNode;
 }
 
 /**
  * Updates a map SmartMarker with latest location from given beacon
  */
-const BeaconMarker: React.FC<Props> = ({ map, beacon }) => {
+const BeaconMarker: React.FC<Props> = ({ map, beacon, tooltip }) => {
     const latestLocationState = useEventEmitterState(
         beacon,
         BeaconEvent.LocationUpdate,
@@ -47,19 +45,23 @@ const BeaconMarker: React.FC<Props> = ({ map, beacon }) => {
         return null;
     }
 
-    const geoUri = latestLocationState?.uri;
+    const geoUri = latestLocationState.uri || "";
 
-    const markerRoomMember = beacon.beaconInfo.assetType === LocationAssetType.Self ?
-        room.getMember(beacon.beaconInfoOwner) :
-        undefined;
+    const assetTypeIsSelf = beacon.beaconInfo?.assetType === LocationAssetType.Self;
+    const _member = room?.getMember(beacon.beaconInfoOwner);
 
-    return <SmartMarker
-        map={map}
-        id={beacon.identifier}
-        geoUri={geoUri}
-        roomMember={markerRoomMember}
-        useMemberColor
-    />;
+    const markerRoomMember = assetTypeIsSelf && _member ? _member : undefined;
+
+    return (
+        <SmartMarker
+            map={map}
+            id={beacon.identifier}
+            geoUri={geoUri}
+            roomMember={markerRoomMember}
+            tooltip={tooltip}
+            useMemberColor
+        />
+    );
 };
 
 export default BeaconMarker;
