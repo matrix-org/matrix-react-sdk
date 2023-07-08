@@ -3466,5 +3466,9 @@
     "Early previews": "Предпросмотр",
     "Yes, it was me": "Да, это я",
     "Poll history": "Опросы",
-    "Syncing…": "Синхронизация…"
+    "Syncing…": "Синхронизация…",
+    "Active polls": "Активные опросы",
+    "Checking for an update…": "Проверка наличия обновлений…",
+    "Formatting": "Форматирование",
+    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s изменил(а) имя и аватар"
 }
