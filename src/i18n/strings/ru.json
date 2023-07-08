@@ -3473,5 +3473,8 @@
     "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s изменил(а) имя и аватар",
     "Last event:": "Последнее событие:",
     "WARNING: session already verified, but keys do NOT MATCH!": "ВНИМАНИЕ: сеанс уже заверен, но ключи НЕ СОВПАДАЮТ!",
-    "ID: ": "ID: "
+    "ID: ": "ID: ",
+    "Bulleted list": "Маркированный список",
+    "Edit link": "Изменить ссылку",
+    "Numbered list": "Нумерованный список"
 }
