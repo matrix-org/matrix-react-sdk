@@ -3470,5 +3470,8 @@
     "Active polls": "Активные опросы",
     "Checking for an update…": "Проверка наличия обновлений…",
     "Formatting": "Форматирование",
-    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s изменил(а) имя и аватар"
+    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s изменил(а) имя и аватар",
+    "Last event:": "Последнее событие:",
+    "WARNING: session already verified, but keys do NOT MATCH!": "ВНИМАНИЕ: сеанс уже заверен, но ключи НЕ СОВПАДАЮТ!",
+    "ID: ": "ID: "
 }
