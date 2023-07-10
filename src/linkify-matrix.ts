@@ -31,7 +31,7 @@ import { Action } from "./dispatcher/actions";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { MatrixClientPeg } from "./MatrixClientPeg";
-import { PERMITTED_URL_SCHEMES } from "./HtmlUtils";
+import { PERMITTED_URL_SCHEMES } from "./utils/UrlUtils";
 
 export enum Type {
     URL = "url",
