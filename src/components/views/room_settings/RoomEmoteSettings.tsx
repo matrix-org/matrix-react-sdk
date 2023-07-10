@@ -59,6 +59,9 @@ interface compatibilityImagePack {
             url?: string;
         };
     };
+    pack?: {
+        display_name: string;
+    };
 }
 
 export default class RoomEmoteSettings extends React.Component<IProps, IState> {
@@ -86,9 +89,15 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         const compat = compatEvent ? compatEvent.getContent().isCompat || false : false;
 
         const imagePackEvent = room.currentState.getStateEvents(EMOTES_COMP.name, "Element Compatible Emotes");
-        this.imagePack = imagePackEvent ? imagePackEvent.getContent() || { images: {} } : { images: {} };
+        this.imagePack = imagePackEvent
+            ? imagePackEvent.getContent() || { images: {}, pack: { display_name: "Element Compatible Emotes" } }
+            : { images: {}, pack: { display_name: "Element Compatible Emotes" } };
         if (!this.imagePack["images"]) {
             this.imagePack["images"] = {};
+        }
+
+        if (!this.imagePack["pack"]) {
+            this.imagePack["pack"] = { display_name: "Element Compatible Emotes" };
         }
 
         this.state = {
@@ -226,7 +235,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             }
             newState.value = value;
             await client.sendStateEvent(this.props.roomId, EMOTES_STATE.name, emotesMxcs, "");
-            this.imagePack = { images: {} };
+            this.imagePack = { images: {}, pack: this.imagePack["pack"] };
             for (const [key, val] of newPack) {
                 this.imagePack["images"][key] = val;
             }
