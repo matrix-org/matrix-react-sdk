@@ -27,3 +27,23 @@ exports[`<QRCode /> renders a QR with high error correction level 1`] = `
   </div>
 </div>
 `;
+
+exports[`<QRCode /> shows a spinner when data is null 1`] = `
+<div>
+  <div
+    class="mx_QRCode"
+  >
+    <div
+      class="mx_Spinner"
+    >
+      <div
+        aria-label="Loading…"
+        class="mx_Spinner_icon"
+        data-testid="spinner"
+        role="progressbar"
+        style="width: 32px; height: 32px;"
+      />
+    </div>
+  </div>
+</div>
+`;
