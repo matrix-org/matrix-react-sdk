@@ -166,7 +166,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 );
             }
 
-            // special case OIDC capabilities because they you the setting store to track that oidc request are always allowed:
+            // To always allow OIDC requests for element call, the widgetPermissionStore is used:
             SdkContextClass.instance.widgetPermissionStore.setOIDCState(
                 forWidget,
                 forWidgetKind,
