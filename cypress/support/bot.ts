@@ -48,9 +48,14 @@ interface CreateBotOpts {
      */
     rustCrypto?: boolean;
     /**
-     * Whether or not to
+     * Whether or not to bootstrap the secret storage
      */
     bootstrapSecretStorage?: boolean;
+
+    /**
+     * Whether or not to use local cross signing key storage
+     */
+    cryptoCallbacks?: boolean;
 }
 
 const defaultCreateBotOptions = {
@@ -147,6 +152,8 @@ function setupBotClient(
                 Object.assign(keys, k);
             };
 
+            const cryptoCallbacks = (opts.cryptoCallbacks && { getCrossSigningKey, saveCrossSigningKeys }) || undefined;
+
             const cli = new win.matrixcs.MatrixClient({
                 baseUrl: homeserver.baseUrl,
                 userId: credentials.userId,
@@ -155,7 +162,7 @@ function setupBotClient(
                 store: new win.matrixcs.MemoryStore(),
                 scheduler: new win.matrixcs.MatrixScheduler(),
                 cryptoStore: new win.matrixcs.MemoryCryptoStore(),
-                // cryptoCallbacks: { getCrossSigningKey, saveCrossSigningKeys },
+                cryptoCallbacks,
             });
 
             if (opts.autoAcceptInvites) {

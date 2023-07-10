@@ -19,7 +19,7 @@ import type { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import type { CypressBot } from "../../support/bot";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
-import { doTwoWaySasVerification, waitForVerificationRequest } from "./utils";
+import { checkDeviceIsCrossSigned, doTwoWaySasVerification, logIntoElement, waitForVerificationRequest } from "./utils";
 import { skipIfRustCrypto } from "../../support/util";
 
 interface CryptoTestContext extends Mocha.Context {
@@ -141,6 +141,7 @@ describe("Cryptography", function () {
                     displayName: "Bob",
                     autoAcceptInvites: false,
                     userIdPrefix: "bob_",
+                    cryptoCallbacks: true,
                 }).as("bob");
             });
     });
@@ -381,5 +382,94 @@ describe("Cryptography", function () {
                 .should("have.class", "mx_EventTile_verified")
                 .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
         });
+    });
+});
+
+describe("Verify own device", () => {
+    let aliceBotClient: CypressBot;
+    let homeserver: HomeserverInstance;
+
+    beforeEach(() => {
+        skipIfRustCrypto();
+        cy.startHomeserver("default").then((data: HomeserverInstance) => {
+            homeserver = data;
+
+            // Visit the login page of the app, to load the matrix sdk
+            cy.visit("/#/login");
+
+            // wait for the page to load
+            cy.window({ log: false }).should("have.property", "matrixcs");
+
+            // Create a new device for alice
+            cy.getBot(homeserver, { bootstrapCrossSigning: true, bootstrapSecretStorage: true }).then((bot) => {
+                aliceBotClient = bot;
+            });
+        });
+    });
+
+    afterEach(() => {
+        cy.stopHomeserver(homeserver);
+    });
+
+    /* Click the "Verify with another device" button, and have the bot client auto-accept it.
+     *
+     * Stores the incoming `VerificationRequest` on the bot client as `@verificationRequest`.
+     */
+    function initiateAliceVerificationRequest() {
+        // alice bot waits for verification request
+        const promiseVerificationRequest = waitForVerificationRequest(aliceBotClient);
+
+        // Click on "Verify with another device"
+        cy.get(".mx_AuthPage").within(() => {
+            cy.findByRole("button", { name: "Verify with another device" }).click();
+        });
+
+        // alice bot responds yes to verification request from alice
+        cy.wrap(promiseVerificationRequest).as("verificationRequest");
+    }
+
+    it("with SAS", function (this: CryptoTestContext) {
+        logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
+
+        // Launch the verification request between alice and the bot
+        initiateAliceVerificationRequest();
+
+        // Handle emoji SAS verification
+        cy.get(".mx_InfoDialog").within(() => {
+            cy.get<VerificationRequest>("@verificationRequest").then(async (request: VerificationRequest) => {
+                // the bot user races with the Element user to hit the "verify by emoji" button
+                const verifier = await request.startVerification("m.sas.v1");
+                // Handle emoji request and check that emojis are matching
+                doTwoWaySasVerification(verifier);
+            });
+
+            cy.findByRole("button", { name: "They match" }).click();
+            cy.findByRole("button", { name: "Got it" }).click();
+        });
+
+        // Check that our device is now cross-signed
+        checkDeviceIsCrossSigned();
+    });
+
+    it("with Security Phrase", function (this: CryptoTestContext) {
+        logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
+
+        // Select the security phrase
+        cy.get(".mx_AuthPage").within(() => {
+            cy.findByRole("button", { name: "Verify with Security Key or Phrase" }).click();
+        });
+
+        // Fill the passphrase
+        cy.get(".mx_Dialog").within(() => {
+            cy.get("input").type("new passphrase");
+            cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+        });
+
+        cy.get(".mx_AuthPage").within(() => {
+            cy.findByRole("button", { name: "Done" }).click();
+        });
+
+        // Check that our device is now cross-signed
+        checkDeviceIsCrossSigned();
     });
 });
