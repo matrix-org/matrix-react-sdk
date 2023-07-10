@@ -71,6 +71,7 @@ import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
 import { SdkContextClass } from "./contexts/SDKContext";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { getDeviceCryptoInfo } from "./utils/crypto/deviceInfo";
+import { warnSelfDemote } from "./components/views/right_panel/UserInfo";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -917,8 +918,24 @@ export const Commands = [
                         ) {
                             return reject(new UserFriendlyError("Could not find user in room"));
                         }
-                        const powerLevelEvent = room.currentState.getStateEvents("m.room.power_levels", "");
-                        return success(cli.setPowerLevel(roomId, userId, powerLevel, powerLevelEvent));
+
+                        const updatePowerlevel = (): Promise<unknown> => {
+                            const powerLevelEvent = room!.currentState.getStateEvents("m.room.power_levels", "");
+                            return cli.setPowerLevel(roomId, userId, powerLevel, powerLevelEvent);
+                        };
+
+                        let prom: Promise<unknown> = Promise.resolve();
+                        if (member.userId === cli.getUserId() && member.powerLevel > powerLevel) {
+                            const warningPromise = warnSelfDemote(room.isSpaceRoom());
+                            prom = warningPromise.then((ok) => {
+                                if (ok) {
+                                    prom = updatePowerlevel();
+                                }
+                            });
+                        } else {
+                            prom = updatePowerlevel();
+                        }
+                        return success(prom);
                     }
                 }
             }
@@ -950,7 +967,24 @@ export const Commands = [
                     if (!powerLevelEvent?.getContent().users[args]) {
                         return reject(new UserFriendlyError("Could not find user in room"));
                     }
-                    return success(cli.setPowerLevel(roomId, args, undefined, powerLevelEvent));
+
+                    const updatePowerlevel = (): Promise<unknown> => {
+                        const powerLevelEvent = room!.currentState.getStateEvents("m.room.power_levels", "");
+                        return cli.setPowerLevel(roomId, args, undefined, powerLevelEvent);
+                    };
+
+                    let prom: Promise<unknown> = Promise.resolve();
+                    if (args === cli.getUserId()) {
+                        const warningPromise = warnSelfDemote(room.isSpaceRoom());
+                        prom = warningPromise.then((ok) => {
+                            if (ok) {
+                                prom = updatePowerlevel();
+                            }
+                        });
+                    } else {
+                        prom = updatePowerlevel();
+                    }
+                    return success(prom);
                 }
             }
             return reject(this.getUsage());
