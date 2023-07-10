@@ -18,6 +18,7 @@ import { RefObject, useEffect } from "react";
 
 export function usePlainTextInitialization(initialContent = "", ref: RefObject<HTMLElement>): void {
     useEffect(() => {
+        // we always read and write the ref.current using .innerHTML for consistency in linebreak handling
         if (ref.current) {
             ref.current.innerHTML = initialContent;
         }
