@@ -39,7 +39,23 @@ export const dynamicImportSendMessage = async (
 };
 
 export const dynamicImportConversionFunctions = async (): Promise<{
+    /**
+     * Creates a rust model from rich text input (html) and uses it to generate the plain text equivalent (which may
+     * contain markdown). The return value must be used to set `.innerHTML` for consistency in handling linebreaks.
+     *
+     * @param rich - html to convert
+     * @returns a string of plain text that may contain markdown
+     */
     richToPlain(rich: string): Promise<string>;
+
+    /**
+     * Creates a rust model from plain text input (interpreted as markdown) and uses it to generate the rich text
+     * equivalent. Output can be formatted for display in the composer or for sending in a Matrix message.
+     *
+     * @param plain - plain text to convert, read as innerHTML
+     * @param inMessageFormat - whether or not the return should be formatted for use as a message formatted_body
+     * @returns a string of html
+     */
     plainToRich(plain: string, inMessageFormat: boolean): Promise<string>;
 }> => {
     const { richToPlain, plainToRich } = await retry(() => import("@matrix-org/matrix-wysiwyg"), RETRY_COUNT);
