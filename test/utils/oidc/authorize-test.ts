@@ -48,6 +48,7 @@ describe("OIDC authorization", () => {
             href: baseUrl,
             origin: baseUrl,
         };
+
         jest.spyOn(randomStringUtils, "randomString").mockRestore();
     });
 
@@ -73,7 +74,7 @@ describe("OIDC authorization", () => {
             expect(authUrl.searchParams.get("code_challenge_method")).toEqual("S256");
 
             // scope ends with a 10char randomstring deviceId
-            const scope = authUrl.searchParams.get("scope");
+            const scope = authUrl.searchParams.get("scope")!;
             expect(scope.substring(0, scope.length - 10)).toEqual(expectedScopeWithoutDeviceId);
             expect(scope.substring(scope.length - 10)).toBeTruthy();
 
