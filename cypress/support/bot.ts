@@ -47,6 +47,10 @@ interface CreateBotOpts {
      * Whether to use the rust crypto impl. Defaults to false (for now!)
      */
     rustCrypto?: boolean;
+    /**
+     * Whether or not to
+     */
+    bootstrapSecretStorage?: boolean;
 }
 
 const defaultCreateBotOptions = {
@@ -151,7 +155,7 @@ function setupBotClient(
                 store: new win.matrixcs.MemoryStore(),
                 scheduler: new win.matrixcs.MatrixScheduler(),
                 cryptoStore: new win.matrixcs.MemoryCryptoStore(),
-                cryptoCallbacks: { getCrossSigningKey, saveCrossSigningKeys },
+                // cryptoCallbacks: { getCrossSigningKey, saveCrossSigningKeys },
             });
 
             if (opts.autoAcceptInvites) {
@@ -192,6 +196,16 @@ function setupBotClient(
                     },
                 });
             }
+
+            if (opts.bootstrapSecretStorage) {
+                const passphrase = "new passphrase";
+                await cli.getCrypto()!.bootstrapSecretStorage({
+                    setupNewKeyBackup: true,
+                    setupNewSecretStorage: true,
+                    createSecretStorageKey: () => cli.createRecoveryKeyFromPassphrase(passphrase),
+                });
+            }
+
             return cli;
         },
     );
