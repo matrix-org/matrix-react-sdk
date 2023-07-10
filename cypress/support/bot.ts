@@ -17,11 +17,11 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import type { ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import type { GeneratedSecretStorageKey } from "matrix-js-sdk/src/crypto-api";
 import { HomeserverInstance } from "../plugins/utils/homeserver";
 import { Credentials } from "./homeserver";
 import Chainable = Cypress.Chainable;
 import { collapseLastLogGroup } from "./log";
-import { GeneratedSecretStorageKey } from "../../../matrix-js-sdk/src/crypto-api";
 
 interface CreateBotOpts {
     /**
