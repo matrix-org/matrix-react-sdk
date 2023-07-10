@@ -472,4 +472,27 @@ describe("Verify own device", () => {
         // Check that our device is now cross-signed
         checkDeviceIsCrossSigned();
     });
+
+    it("with Security Key", function (this: CryptoTestContext) {
+        logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
+
+        // Select the security phrase
+        cy.get(".mx_AuthPage").within(() => {
+            cy.findByRole("button", { name: "Verify with Security Key or Phrase" }).click();
+        });
+
+        // Fill the security key
+        cy.get(".mx_Dialog").within(() => {
+            cy.findByRole("button", { name: "use your Security Key" }).click();
+            cy.get("#mx_securityKey").type(aliceBotClient.__cypress_recovery_key.encodedPrivateKey);
+            cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+        });
+
+        cy.get(".mx_AuthPage").within(() => {
+            cy.findByRole("button", { name: "Done" }).click();
+        });
+
+        // Check that our device is now cross-signed
+        checkDeviceIsCrossSigned();
+    });
 });

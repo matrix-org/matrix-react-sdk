@@ -21,6 +21,7 @@ import { HomeserverInstance } from "../plugins/utils/homeserver";
 import { Credentials } from "./homeserver";
 import Chainable = Cypress.Chainable;
 import { collapseLastLogGroup } from "./log";
+import { GeneratedSecretStorageKey } from "../../../matrix-js-sdk/src/crypto-api";
 
 interface CreateBotOpts {
     /**
@@ -67,6 +68,7 @@ const defaultCreateBotOptions = {
 
 export interface CypressBot extends MatrixClient {
     __cypress_password: string;
+    __cypress_recovery_key: GeneratedSecretStorageKey;
 }
 
 declare global {
@@ -206,10 +208,13 @@ function setupBotClient(
 
             if (opts.bootstrapSecretStorage) {
                 const passphrase = "new passphrase";
+                const recoveryKey = await cli.createRecoveryKeyFromPassphrase(passphrase);
+                Object.assign(cli, { __cypress_recovery_key: recoveryKey });
+
                 await cli.getCrypto()!.bootstrapSecretStorage({
                     setupNewKeyBackup: true,
                     setupNewSecretStorage: true,
-                    createSecretStorageKey: () => cli.createRecoveryKeyFromPassphrase(passphrase),
+                    createSecretStorageKey: () => Promise.resolve(recoveryKey),
                 });
             }
 
