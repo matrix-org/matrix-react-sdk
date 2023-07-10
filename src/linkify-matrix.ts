@@ -19,7 +19,7 @@ import * as linkifyjs from "linkifyjs";
 import { EventListeners, Opts, registerCustomProtocol, registerPlugin } from "linkifyjs";
 import linkifyElement from "linkify-element";
 import linkifyString from "linkify-string";
-import { User } from "matrix-js-sdk/src/matrix";
+import { getHttpUriForMxc, User } from "matrix-js-sdk/src/matrix";
 
 import {
     parsePermalink,
@@ -185,6 +185,11 @@ export const options: Opts = {
 
     formatHref: function (href: string, type: Type | string): string {
         switch (type) {
+            case "url":
+                if (href.startsWith("mxc://") && MatrixClientPeg.get()) {
+                    return getHttpUriForMxc(MatrixClientPeg.get()!.baseUrl, href);
+                }
+            // fallthrough
             case Type.RoomAlias:
             case Type.UserId:
             default: {
@@ -243,6 +248,8 @@ registerPlugin(Type.UserId, ({ scanner, parser }) => {
 });
 
 registerCustomProtocol("matrix", true);
+
+registerCustomProtocol("mxc", false);
 
 export const linkify = linkifyjs;
 export const _linkifyElement = linkifyElement;
