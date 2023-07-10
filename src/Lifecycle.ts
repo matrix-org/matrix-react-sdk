@@ -327,7 +327,7 @@ function registerAsGuest(hsUrl: string, isUrl?: string, defaultDeviceDisplayName
                     {
                         userId: creds.user_id,
                         deviceId: creds.device_id,
-                        accessToken: creds.access_token,
+                        accessToken: creds.access_token!,
                         homeserverUrl: hsUrl,
                         identityServerUrl: isUrl,
                         guest: true,
@@ -497,7 +497,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
     }
 }
 
-async function handleLoadSessionFailure(e: Error): Promise<boolean> {
+async function handleLoadSessionFailure(e: unknown): Promise<boolean> {
     logger.error("Unable to load session", e);
 
     const modal = Modal.createDialog(SessionRestoreErrorDialog, {
@@ -920,10 +920,8 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
 
         // now restore those invites and registration time
         if (!opts?.deleteEverything) {
-            pendingInvites.forEach((i) => {
-                const roomId = i.roomId;
-                delete i.roomId; // delete to avoid confusing the store
-                ThreepidInviteStore.instance.storeInvite(roomId, i);
+            pendingInvites.forEach(({ roomId, ...invite }) => {
+                ThreepidInviteStore.instance.storeInvite(roomId, invite);
             });
 
             if (registrationTime) {
