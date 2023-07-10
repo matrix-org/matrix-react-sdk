@@ -18,15 +18,15 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
-import { split } from "lodash";
 
 import DMRoomMap from "./utils/DMRoomMap";
 import { mediaFromMxc } from "./customisations/Media";
 import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
+import { getFirstGrapheme } from "./utils/strings";
 
 // Not to be used for BaseAvatar urls as that has similar default avatar fallback already
 export function avatarUrlForMember(
-    member: RoomMember,
+    member: RoomMember | undefined,
     width: number,
     height: number,
     resizeMethod: ResizeMethod,
@@ -96,7 +96,7 @@ export function defaultAvatarUrlForString(s: string): string {
     const colorIndex = total % defaultColors.length;
     // overwritten color value in custom themes
     const cssVariable = `--avatar-background-colors_${colorIndex}`;
-    const cssValue = document.body.style.getPropertyValue(cssVariable);
+    const cssValue = getComputedStyle(document.body).getPropertyValue(cssVariable);
     const color = cssValue || defaultColors[colorIndex];
     let dataUrl = colorToDataURLCache.get(color);
     if (!dataUrl) {
@@ -133,8 +133,7 @@ export function getInitialLetter(name: string): string | undefined {
         name = name.substring(1);
     }
 
-    // rely on the grapheme cluster splitter in lodash so that we don't break apart compound emojis
-    return split(name, "", 1)[0].toUpperCase();
+    return getFirstGrapheme(name).toUpperCase();
 }
 
 export function avatarUrlForRoom(

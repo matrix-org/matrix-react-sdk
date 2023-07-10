@@ -75,7 +75,7 @@ describe("<Pill>", () => {
     beforeEach(() => {
         client = mocked(stubClient());
         SdkContextClass.instance.client = client;
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(client);
         room1 = new Room(room1Id, client, user1Id);
         room1.name = "Room 1";
         const user1JoinRoom1Event = mkRoomMemberJoinEvent(user1Id, room1Id, {
@@ -117,6 +117,12 @@ describe("<Pill>", () => {
 
         jest.spyOn(dis, "dispatch");
         pillParentClickHandler = jest.fn();
+
+        jest.spyOn(global.Math, "random").mockReturnValue(0.123456);
+    });
+
+    afterEach(() => {
+        jest.spyOn(global.Math, "random").mockRestore();
     });
 
     describe("when rendering a pill for a room", () => {

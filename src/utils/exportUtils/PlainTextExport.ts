@@ -104,7 +104,7 @@ export default class PlainTextExporter extends Exporter {
             } else mediaText = ` (${this.mediaOmitText})`;
         }
         if (this.isReply(mxEv)) return senderDisplayName + ": " + this.textForReplyEvent(mxEv.getContent()) + mediaText;
-        else return textForEvent(mxEv) + mediaText;
+        else return textForEvent(mxEv, this.room.client) + mediaText;
     };
 
     protected async createOutput(events: MatrixEvent[]): Promise<string> {
@@ -120,7 +120,7 @@ export default class PlainTextExporter extends Exporter {
                 true,
             );
             if (this.cancelled) return this.cleanUp();
-            if (!haveRendererForEvent(event, false)) continue;
+            if (!haveRendererForEvent(event, this.room.client, false)) continue;
             const textForEvent = await this.plainTextForEvent(event);
             content += textForEvent && `${new Date(event.getTs()).toLocaleString()} - ${textForEvent}\n`;
         }

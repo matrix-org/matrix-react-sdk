@@ -22,15 +22,14 @@ import { User } from "matrix-js-sdk/src/models/user";
 import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import * as ContentHelpers from "matrix-js-sdk/src/content-helpers";
-import { Element as ChildElement, parseFragment as parseHtml } from "parse5";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IContent } from "matrix-js-sdk/src/models/event";
 import { MRoomTopicEventContent } from "matrix-js-sdk/src/@types/topic";
 import { SlashCommand as SlashCommandEvent } from "@matrix-org/analytics-events/types/typescript/SlashCommand";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
-import { _t, _td, ITranslatableError, newTranslatableError } from "./languageHandler";
+import { _t, _td, UserFriendlyError } from "./languageHandler";
 import Modal from "./Modal";
 import MultiInviter from "./utils/MultiInviter";
 import { Linkify, topicToHtml } from "./HtmlUtils";
@@ -70,25 +69,27 @@ import { htmlSerializeFromMdIfNeeded } from "./editor/serialize";
 import { leaveRoomBehaviour } from "./utils/leave-behaviour";
 import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
 import { SdkContextClass } from "./contexts/SDKContext";
+import { MatrixClientPeg } from "./MatrixClientPeg";
+import { getDeviceCryptoInfo } from "./utils/crypto/deviceInfo";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
     target: HTMLInputElement & EventTarget;
 }
 
-const singleMxcUpload = async (): Promise<string | null> => {
+const singleMxcUpload = async (cli: MatrixClient): Promise<string | null> => {
     return new Promise((resolve) => {
         const fileSelector = document.createElement("input");
         fileSelector.setAttribute("type", "file");
-        fileSelector.onchange = (ev: HTMLInputEvent) => {
-            const file = ev.target.files?.[0];
+        fileSelector.onchange = (ev: Event) => {
+            const file = (ev as HTMLInputEvent).target.files?.[0];
             if (!file) return;
 
             Modal.createDialog(UploadConfirmDialog, {
                 file,
                 onFinished: async (shouldContinue): Promise<void> => {
                     if (shouldContinue) {
-                        const { content_uri: uri } = await MatrixClientPeg.get().uploadContent(file);
+                        const { content_uri: uri } = await cli.uploadContent(file);
                         resolve(uri);
                     } else {
                         resolve(null);
@@ -110,9 +111,15 @@ export const CommandCategories = {
     other: _td("Other"),
 };
 
-export type RunResult = XOR<{ error: Error | ITranslatableError }, { promise: Promise<IContent | undefined> }>;
+export type RunResult = XOR<{ error: Error }, { promise: Promise<IContent | undefined> }>;
 
-type RunFn = (this: Command, roomId: string, args?: string) => RunResult;
+type RunFn = (
+    this: Command,
+    matrixClient: MatrixClient,
+    roomId: string,
+    threadId: string | null,
+    args?: string,
+) => RunResult;
 
 interface ICommandOpts {
     command: string;
@@ -123,7 +130,7 @@ interface ICommandOpts {
     runFn?: RunFn;
     category: string;
     hideCompletionAfterSpace?: boolean;
-    isEnabled?(): boolean;
+    isEnabled?(matrixClient: MatrixClient | null): boolean;
     renderingTypes?: TimelineRenderingType[];
 }
 
@@ -137,7 +144,7 @@ export class Command {
     public readonly hideCompletionAfterSpace: boolean;
     public readonly renderingTypes?: TimelineRenderingType[];
     public readonly analyticsName?: SlashCommandEvent["command"];
-    private readonly _isEnabled?: () => boolean;
+    private readonly _isEnabled?: (matrixClient: MatrixClient | null) => boolean;
 
     public constructor(opts: ICommandOpts) {
         this.command = opts.command;
@@ -160,17 +167,18 @@ export class Command {
         return this.getCommand() + " " + this.args;
     }
 
-    public run(roomId: string, threadId: string | null, args?: string): RunResult {
+    public run(matrixClient: MatrixClient, roomId: string, threadId: string | null, args?: string): RunResult {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!this.runFn) {
-            return reject(newTranslatableError("Command error: Unable to handle slash command."));
+            return reject(new UserFriendlyError("Command error: Unable to handle slash command."));
         }
 
         const renderingType = threadId ? TimelineRenderingType.Thread : TimelineRenderingType.Room;
         if (this.renderingTypes && !this.renderingTypes?.includes(renderingType)) {
             return reject(
-                newTranslatableError("Command error: Unable to find rendering type (%(renderingType)s)", {
+                new UserFriendlyError("Command error: Unable to find rendering type (%(renderingType)s)", {
                     renderingType,
+                    cause: undefined,
                 }),
             );
         }
@@ -182,15 +190,15 @@ export class Command {
             });
         }
 
-        return this.runFn(roomId, args);
+        return this.runFn(matrixClient, roomId, threadId, args);
     }
 
     public getUsage(): string {
         return _t("Usage") + ": " + this.getCommandWithArgs();
     }
 
-    public isEnabled(): boolean {
-        return this._isEnabled ? this._isEnabled() : true;
+    public isEnabled(cli: MatrixClient | null): boolean {
+        return this._isEnabled?.(cli) ?? true;
     }
 }
 
@@ -206,13 +214,19 @@ function successSync(value: any): RunResult {
     return success(Promise.resolve(value));
 }
 
-const isCurrentLocalRoom = (): boolean => {
-    const cli = MatrixClientPeg.get();
+const isCurrentLocalRoom = (cli: MatrixClient | null): boolean => {
     const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
     if (!roomId) return false;
-    const room = cli.getRoom(roomId);
+    const room = cli?.getRoom(roomId);
     if (!room) return false;
     return isLocalRoom(room);
+};
+
+const canAffectPowerlevels = (cli: MatrixClient | null): boolean => {
+    const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
+    if (!cli || !roomId) return false;
+    const room = cli?.getRoom(roomId);
+    return !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getSafeUserId()) && !isLocalRoom(room);
 };
 
 /* Disable the "unexpected this" error for these commands - all of the run
@@ -224,7 +238,7 @@ export const Commands = [
         command: "spoiler",
         args: "<message>",
         description: _td("Sends the given message as a spoiler"),
-        runFn: function (roomId, message = "") {
+        runFn: function (cli, roomId, threadId, message = "") {
             return successSync(ContentHelpers.makeHtmlMessage(message, `<span data-mx-spoiler>${message}</span>`));
         },
         category: CommandCategories.messages,
@@ -233,7 +247,7 @@ export const Commands = [
         command: "shrug",
         args: "<message>",
         description: _td("Prepends ¯\\_(ツ)_/¯ to a plain-text message"),
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             let message = "¯\\_(ツ)_/¯";
             if (args) {
                 message = message + " " + args;
@@ -246,7 +260,7 @@ export const Commands = [
         command: "tableflip",
         args: "<message>",
         description: _td("Prepends (╯°□°）╯︵ ┻━┻ to a plain-text message"),
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             let message = "(╯°□°）╯︵ ┻━┻";
             if (args) {
                 message = message + " " + args;
@@ -259,7 +273,7 @@ export const Commands = [
         command: "unflip",
         args: "<message>",
         description: _td("Prepends ┬──┬ ノ( ゜-゜ノ) to a plain-text message"),
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             let message = "┬──┬ ノ( ゜-゜ノ)";
             if (args) {
                 message = message + " " + args;
@@ -272,7 +286,7 @@ export const Commands = [
         command: "lenny",
         args: "<message>",
         description: _td("Prepends ( ͡° ͜ʖ ͡°) to a plain-text message"),
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             let message = "( ͡° ͜ʖ ͡°)";
             if (args) {
                 message = message + " " + args;
@@ -285,7 +299,7 @@ export const Commands = [
         command: "plain",
         args: "<message>",
         description: _td("Sends a message as plain text, without interpreting it as markdown"),
-        runFn: function (roomId, messages = "") {
+        runFn: function (cli, roomId, threadId, messages = "") {
             return successSync(ContentHelpers.makeTextMessage(messages));
         },
         category: CommandCategories.messages,
@@ -294,7 +308,7 @@ export const Commands = [
         command: "html",
         args: "<message>",
         description: _td("Sends a message as html, without interpreting it as markdown"),
-        runFn: function (roomId, messages = "") {
+        runFn: function (cli, roomId, threadId, messages = "") {
             return successSync(ContentHelpers.makeHtmlMessage(messages, messages));
         },
         category: CommandCategories.messages,
@@ -303,14 +317,13 @@ export const Commands = [
         command: "upgraderoom",
         args: "<new_version>",
         description: _td("Upgrades a room to a new version"),
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
-                const cli = MatrixClientPeg.get();
                 const room = cli.getRoom(roomId);
                 if (!room?.currentState.mayClientSendStateEvent("m.room.tombstone", cli)) {
                     return reject(
-                        newTranslatableError("You do not have the required permissions to use this command."),
+                        new UserFriendlyError("You do not have the required permissions to use this command."),
                     );
                 }
 
@@ -339,20 +352,19 @@ export const Commands = [
         args: "<YYYY-MM-DD>",
         description: _td("Jump to the given date in the timeline"),
         isEnabled: () => SettingsStore.getValue("feature_jump_to_date"),
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 return success(
                     (async (): Promise<void> => {
                         const unixTimestamp = Date.parse(args);
                         if (!unixTimestamp) {
-                            throw newTranslatableError(
+                            throw new UserFriendlyError(
                                 "We were unable to understand the given date (%(inputDate)s). " +
                                     "Try using the format YYYY-MM-DD.",
-                                { inputDate: args },
+                                { inputDate: args, cause: undefined },
                             );
                         }
 
-                        const cli = MatrixClientPeg.get();
                         const { event_id: eventId, origin_server_ts: originServerTs } = await cli.timestampToEvent(
                             roomId,
                             unixTimestamp,
@@ -381,9 +393,9 @@ export const Commands = [
         command: "nick",
         args: "<display_name>",
         description: _td("Changes your display nickname"),
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
-                return success(MatrixClientPeg.get().setDisplayName(args));
+                return success(cli.setDisplayName(args));
             }
             return reject(this.getUsage());
         },
@@ -395,16 +407,15 @@ export const Commands = [
         aliases: ["roomnick"],
         args: "<display_name>",
         description: _td("Changes your display nickname in the current room only"),
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
-                const cli = MatrixClientPeg.get();
-                const ev = cli.getRoom(roomId)?.currentState.getStateEvents("m.room.member", cli.getUserId()!);
+                const ev = cli.getRoom(roomId)?.currentState.getStateEvents("m.room.member", cli.getSafeUserId());
                 const content = {
                     ...(ev ? ev.getContent() : { membership: "join" }),
                     displayname: args,
                 };
-                return success(cli.sendStateEvent(roomId, "m.room.member", content, cli.getUserId()!));
+                return success(cli.sendStateEvent(roomId, "m.room.member", content, cli.getSafeUserId()));
             }
             return reject(this.getUsage());
         },
@@ -415,17 +426,17 @@ export const Commands = [
         command: "roomavatar",
         args: "[<mxc_url>]",
         description: _td("Changes the avatar of the current room"),
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             let promise = Promise.resolve(args ?? null);
             if (!args) {
-                promise = singleMxcUpload();
+                promise = singleMxcUpload(cli);
             }
 
             return success(
                 promise.then((url) => {
                     if (!url) return;
-                    return MatrixClientPeg.get().sendStateEvent(roomId, "m.room.avatar", { url }, "");
+                    return cli.sendStateEvent(roomId, "m.room.avatar", { url }, "");
                 }),
             );
         },
@@ -435,16 +446,15 @@ export const Commands = [
     new Command({
         command: "myroomavatar",
         args: "[<mxc_url>]",
-        description: _td("Changes your avatar in this current room only"),
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
-            const cli = MatrixClientPeg.get();
+        description: _td("Changes your profile picture in this current room only"),
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             const room = cli.getRoom(roomId);
-            const userId = cli.getUserId()!;
+            const userId = cli.getSafeUserId();
 
             let promise = Promise.resolve(args ?? null);
             if (!args) {
-                promise = singleMxcUpload();
+                promise = singleMxcUpload(cli);
             }
 
             return success(
@@ -465,17 +475,17 @@ export const Commands = [
     new Command({
         command: "myavatar",
         args: "[<mxc_url>]",
-        description: _td("Changes your avatar in all rooms"),
-        runFn: function (roomId, args) {
+        description: _td("Changes your profile picture in all rooms"),
+        runFn: function (cli, roomId, threadId, args) {
             let promise = Promise.resolve(args ?? null);
             if (!args) {
-                promise = singleMxcUpload();
+                promise = singleMxcUpload(cli);
             }
 
             return success(
                 promise.then((url) => {
                     if (!url) return;
-                    return MatrixClientPeg.get().setAvatarUrl(url);
+                    return cli.setAvatarUrl(url);
                 }),
             );
         },
@@ -486,9 +496,8 @@ export const Commands = [
         command: "topic",
         args: "[<topic>]",
         description: _td("Gets or sets the room topic"),
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
-            const cli = MatrixClientPeg.get();
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const html = htmlSerializeFromMdIfNeeded(args, { forceHTML: false });
                 return success(cli.setRoomTopic(roomId, args, html));
@@ -496,7 +505,10 @@ export const Commands = [
             const room = cli.getRoom(roomId);
             if (!room) {
                 return reject(
-                    newTranslatableError("Failed to get room topic: Unable to find room (%(roomId)s", { roomId }),
+                    new UserFriendlyError("Failed to get room topic: Unable to find room (%(roomId)s", {
+                        roomId,
+                        cause: undefined,
+                    }),
                 );
             }
 
@@ -522,10 +534,10 @@ export const Commands = [
         command: "roomname",
         args: "<name>",
         description: _td("Sets the room name"),
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
-                return success(MatrixClientPeg.get().setRoomName(roomId, args));
+                return success(cli.setRoomName(roomId, args));
             }
             return reject(this.getUsage());
         },
@@ -537,8 +549,8 @@ export const Commands = [
         args: "<user-id> [<reason>]",
         description: _td("Invites user with given id to current room"),
         analyticsName: "Invite",
-        isEnabled: () => !isCurrentLocalRoom() && shouldShowComponent(UIComponent.InviteUsers),
-        runFn: function (roomId, args) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli) && shouldShowComponent(UIComponent.InviteUsers),
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const [address, reason] = args.split(/\s+(.+)/);
                 if (address) {
@@ -548,10 +560,7 @@ export const Commands = [
                     // get a bit more complex here, but we try to show something
                     // meaningful.
                     let prom = Promise.resolve();
-                    if (
-                        getAddressType(address) === AddressType.Email &&
-                        !MatrixClientPeg.get().getIdentityServerUrl()
-                    ) {
+                    if (getAddressType(address) === AddressType.Email && !cli.getIdentityServerUrl()) {
                         const defaultIdentityServerUrl = getDefaultIdentityServerUrl();
                         if (defaultIdentityServerUrl) {
                             const { finished } = Modal.createDialog(QuestionDialog, {
@@ -573,20 +582,20 @@ export const Commands = [
 
                             prom = finished.then(([useDefault]) => {
                                 if (useDefault) {
-                                    setToDefaultIdentityServer();
+                                    setToDefaultIdentityServer(cli);
                                     return;
                                 }
-                                throw newTranslatableError(
+                                throw new UserFriendlyError(
                                     "Use an identity server to invite by email. Manage in Settings.",
                                 );
                             });
                         } else {
                             return reject(
-                                newTranslatableError("Use an identity server to invite by email. Manage in Settings."),
+                                new UserFriendlyError("Use an identity server to invite by email. Manage in Settings."),
                             );
                         }
                     }
-                    const inviter = new MultiInviter(roomId);
+                    const inviter = new MultiInviter(cli, roomId);
                     return success(
                         prom
                             .then(() => {
@@ -594,7 +603,15 @@ export const Commands = [
                             })
                             .then(() => {
                                 if (inviter.getCompletionState(address) !== "invited") {
-                                    throw new Error(inviter.getErrorText(address));
+                                    const errorStringFromInviterUtility = inviter.getErrorText(address);
+                                    if (errorStringFromInviterUtility) {
+                                        throw new Error(errorStringFromInviterUtility);
+                                    } else {
+                                        throw new UserFriendlyError(
+                                            "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility",
+                                            { user: address, roomId, cause: undefined },
+                                        );
+                                    }
                                 }
                             }),
                     );
@@ -610,7 +627,7 @@ export const Commands = [
         aliases: ["j", "goto"],
         args: "<room-address>",
         description: _td("Joins room with given address"),
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 // Note: we support 2 versions of this command. The first is
                 // the public-facing one for most users and the other is a
@@ -643,7 +660,7 @@ export const Commands = [
                 if (params[0][0] === "#") {
                     let roomAlias = params[0];
                     if (!roomAlias.includes(":")) {
-                        roomAlias += ":" + MatrixClientPeg.get().getDomain();
+                        roomAlias += ":" + cli.getDomain();
                     }
 
                     dis.dispatch<ViewRoomPayload>({
@@ -722,10 +739,8 @@ export const Commands = [
         args: "[<room-address>]",
         description: _td("Leave room"),
         analyticsName: "Part",
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
-            const cli = MatrixClientPeg.get();
-
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             let targetRoomId: string | undefined;
             if (args) {
                 const matches = args.match(/^(\S+)$/);
@@ -743,13 +758,18 @@ export const Commands = [
                         return room.getCanonicalAlias() === roomAlias || room.getAltAliases().includes(roomAlias);
                     })?.roomId;
                     if (!targetRoomId) {
-                        return reject(newTranslatableError("Unrecognised room address: %(roomAlias)s", { roomAlias }));
+                        return reject(
+                            new UserFriendlyError("Unrecognised room address: %(roomAlias)s", {
+                                roomAlias,
+                                cause: undefined,
+                            }),
+                        );
                     }
                 }
             }
 
             if (!targetRoomId) targetRoomId = roomId;
-            return success(leaveRoomBehaviour(targetRoomId));
+            return success(leaveRoomBehaviour(cli, targetRoomId));
         },
         category: CommandCategories.actions,
         renderingTypes: [TimelineRenderingType.Room],
@@ -759,12 +779,12 @@ export const Commands = [
         aliases: ["kick"],
         args: "<user-id> [reason]",
         description: _td("Removes user with given id from this room"),
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/^(\S+?)( +(.*))?$/);
                 if (matches) {
-                    return success(MatrixClientPeg.get().kick(roomId, matches[1], matches[3]));
+                    return success(cli.kick(roomId, matches[1], matches[3]));
                 }
             }
             return reject(this.getUsage());
@@ -776,12 +796,12 @@ export const Commands = [
         command: "ban",
         args: "<user-id> [reason]",
         description: _td("Bans user with given id"),
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/^(\S+?)( +(.*))?$/);
                 if (matches) {
-                    return success(MatrixClientPeg.get().ban(roomId, matches[1], matches[3]));
+                    return success(cli.ban(roomId, matches[1], matches[3]));
                 }
             }
             return reject(this.getUsage());
@@ -793,13 +813,13 @@ export const Commands = [
         command: "unban",
         args: "<user-id>",
         description: _td("Unbans user with given ID"),
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/^(\S+)$/);
                 if (matches) {
                     // Reset the user membership to "leave" to unban him
-                    return success(MatrixClientPeg.get().unban(roomId, matches[1]));
+                    return success(cli.unban(roomId, matches[1]));
                 }
             }
             return reject(this.getUsage());
@@ -811,10 +831,8 @@ export const Commands = [
         command: "ignore",
         args: "<user-id>",
         description: _td("Ignores a user, hiding their messages from you"),
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
-                const cli = MatrixClientPeg.get();
-
                 const matches = args.match(/^(@[^:]+:\S+)$/);
                 if (matches) {
                     const userId = matches[1];
@@ -842,10 +860,8 @@ export const Commands = [
         command: "unignore",
         args: "<user-id>",
         description: _td("Stops ignoring a user, showing their messages going forward"),
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
-                const cli = MatrixClientPeg.get();
-
                 const matches = args.match(/(^@[^:]+:\S+$)/);
                 if (matches) {
                     const userId = matches[1];
@@ -874,17 +890,8 @@ export const Commands = [
         command: "op",
         args: "<user-id> [<power-level>]",
         description: _td("Define the power level of a user"),
-        isEnabled(): boolean {
-            const cli = MatrixClientPeg.get();
-            const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
-            if (!roomId) return false;
-            const room = cli.getRoom(roomId);
-            return (
-                !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId()!) &&
-                !isLocalRoom(room)
-            );
-        },
-        runFn: function (roomId, args) {
+        isEnabled: canAffectPowerlevels,
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/^(\S+?)( +(-?\d+))?$/);
                 let powerLevel = 50; // default power level for op
@@ -894,11 +901,13 @@ export const Commands = [
                         powerLevel = parseInt(matches[3], 10);
                     }
                     if (!isNaN(powerLevel)) {
-                        const cli = MatrixClientPeg.get();
                         const room = cli.getRoom(roomId);
                         if (!room) {
                             return reject(
-                                newTranslatableError("Command failed: Unable to find room (%(roomId)s", { roomId }),
+                                new UserFriendlyError("Command failed: Unable to find room (%(roomId)s", {
+                                    roomId,
+                                    cause: undefined,
+                                }),
                             );
                         }
                         const member = room.getMember(userId);
@@ -906,7 +915,7 @@ export const Commands = [
                             !member?.membership ||
                             getEffectiveMembership(member.membership) === EffectiveMembership.Leave
                         ) {
-                            return reject(newTranslatableError("Could not find user in room"));
+                            return reject(new UserFriendlyError("Could not find user in room"));
                         }
                         const powerLevelEvent = room.currentState.getStateEvents("m.room.power_levels", "");
                         return success(cli.setPowerLevel(roomId, userId, powerLevel, powerLevelEvent));
@@ -922,31 +931,24 @@ export const Commands = [
         command: "deop",
         args: "<user-id>",
         description: _td("Deops user with given id"),
-        isEnabled(): boolean {
-            const cli = MatrixClientPeg.get();
-            const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
-            if (!roomId) return false;
-            const room = cli.getRoom(roomId);
-            return (
-                !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId()!) &&
-                !isLocalRoom(room)
-            );
-        },
-        runFn: function (roomId, args) {
+        isEnabled: canAffectPowerlevels,
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/^(\S+)$/);
                 if (matches) {
-                    const cli = MatrixClientPeg.get();
                     const room = cli.getRoom(roomId);
                     if (!room) {
                         return reject(
-                            newTranslatableError("Command failed: Unable to find room (%(roomId)s", { roomId }),
+                            new UserFriendlyError("Command failed: Unable to find room (%(roomId)s", {
+                                roomId,
+                                cause: undefined,
+                            }),
                         );
                     }
 
                     const powerLevelEvent = room.currentState.getStateEvents("m.room.power_levels", "");
                     if (!powerLevelEvent?.getContent().users[args]) {
-                        return reject(newTranslatableError("Could not find user in room"));
+                        return reject(new UserFriendlyError("Could not find user in room"));
                     }
                     return success(cli.setPowerLevel(roomId, args, undefined, powerLevelEvent));
                 }
@@ -959,8 +961,8 @@ export const Commands = [
     new Command({
         command: "devtools",
         description: _td("Opens the Developer Tools dialog"),
-        runFn: function (roomId) {
-            Modal.createDialog(DevtoolsDialog, { roomId }, "mx_DevtoolsDialog_wrapper");
+        runFn: function (cli, roomId, threadRootId) {
+            Modal.createDialog(DevtoolsDialog, { roomId, threadRootId }, "mx_DevtoolsDialog_wrapper");
             return success();
         },
         category: CommandCategories.advanced,
@@ -969,36 +971,35 @@ export const Commands = [
         command: "addwidget",
         args: "<url | embed code | Jitsi url>",
         description: _td("Adds a custom widget by URL to the room"),
-        isEnabled: () =>
+        isEnabled: (cli) =>
             SettingsStore.getValue(UIFeature.Widgets) &&
             shouldShowComponent(UIComponent.AddIntegrations) &&
-            !isCurrentLocalRoom(),
-        runFn: function (roomId, widgetUrl) {
+            !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, widgetUrl) {
             if (!widgetUrl) {
-                return reject(newTranslatableError("Please supply a widget URL or embed code"));
+                return reject(new UserFriendlyError("Please supply a widget URL or embed code"));
             }
 
             // Try and parse out a widget URL from iframes
             if (widgetUrl.toLowerCase().startsWith("<iframe ")) {
-                // We use parse5, which doesn't render/create a DOM node. It instead runs
-                // some superfast regex over the text so we don't have to.
-                const embed = parseHtml(widgetUrl);
+                const embed = new DOMParser().parseFromString(widgetUrl, "text/html").body;
                 if (embed?.childNodes?.length === 1) {
-                    const iframe = embed.childNodes[0] as ChildElement;
-                    if (iframe.tagName.toLowerCase() === "iframe" && iframe.attrs) {
-                        const srcAttr = iframe.attrs.find((a) => a.name === "src");
+                    const iframe = embed.firstElementChild;
+                    if (iframe?.tagName.toLowerCase() === "iframe") {
                         logger.log("Pulling URL out of iframe (embed code)");
-                        if (!srcAttr) return reject(newTranslatableError("iframe has no src attribute"));
-                        widgetUrl = srcAttr.value;
+                        if (!iframe.hasAttribute("src")) {
+                            return reject(new UserFriendlyError("iframe has no src attribute"));
+                        }
+                        widgetUrl = iframe.getAttribute("src")!;
                     }
                 }
             }
 
             if (!widgetUrl.startsWith("https://") && !widgetUrl.startsWith("http://")) {
-                return reject(newTranslatableError("Please supply a https:// or http:// widget URL"));
+                return reject(new UserFriendlyError("Please supply a https:// or http:// widget URL"));
             }
-            if (WidgetUtils.canUserModifyWidgets(roomId)) {
-                const userId = MatrixClientPeg.get().getUserId();
+            if (WidgetUtils.canUserModifyWidgets(cli, roomId)) {
+                const userId = cli.getUserId();
                 const nowMs = new Date().getTime();
                 const widgetId = encodeURIComponent(`${roomId}_${userId}_${nowMs}`);
                 let type = WidgetType.CUSTOM;
@@ -1015,9 +1016,9 @@ export const Commands = [
                     widgetUrl = WidgetUtils.getLocalJitsiWrapperUrl();
                 }
 
-                return success(WidgetUtils.setRoomWidget(roomId, widgetId, type, widgetUrl, name, data));
+                return success(WidgetUtils.setRoomWidget(cli, roomId, widgetId, type, widgetUrl, name, data));
             } else {
-                return reject(newTranslatableError("You cannot modify widgets in this room."));
+                return reject(new UserFriendlyError("You cannot modify widgets in this room."));
             }
         },
         category: CommandCategories.admin,
@@ -1027,32 +1028,34 @@ export const Commands = [
         command: "verify",
         args: "<user-id> <device-id> <device-signing-key>",
         description: _td("Verifies a user, session, and pubkey tuple"),
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/^(\S+) +(\S+) +(\S+)$/);
                 if (matches) {
-                    const cli = MatrixClientPeg.get();
-
                     const userId = matches[1];
                     const deviceId = matches[2];
                     const fingerprint = matches[3];
 
                     return success(
                         (async (): Promise<void> => {
-                            const device = cli.getStoredDevice(userId, deviceId);
+                            const device = await getDeviceCryptoInfo(cli, userId, deviceId);
                             if (!device) {
-                                throw newTranslatableError("Unknown (user, session) pair: (%(userId)s, %(deviceId)s)", {
-                                    userId,
-                                    deviceId,
-                                });
+                                throw new UserFriendlyError(
+                                    "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)",
+                                    {
+                                        userId,
+                                        deviceId,
+                                        cause: undefined,
+                                    },
+                                );
                             }
-                            const deviceTrust = await cli.checkDeviceTrust(userId, deviceId);
+                            const deviceTrust = await cli.getCrypto()?.getDeviceVerificationStatus(userId, deviceId);
 
-                            if (deviceTrust.isVerified()) {
+                            if (deviceTrust?.isVerified()) {
                                 if (device.getFingerprint() === fingerprint) {
-                                    throw newTranslatableError("Session already verified!");
+                                    throw new UserFriendlyError("Session already verified!");
                                 } else {
-                                    throw newTranslatableError(
+                                    throw new UserFriendlyError(
                                         "WARNING: session already verified, but keys do NOT MATCH!",
                                     );
                                 }
@@ -1060,7 +1063,7 @@ export const Commands = [
 
                             if (device.getFingerprint() !== fingerprint) {
                                 const fprint = device.getFingerprint();
-                                throw newTranslatableError(
+                                throw new UserFriendlyError(
                                     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session" +
                                         ' %(deviceId)s is "%(fprint)s" which does not match the provided key ' +
                                         '"%(fingerprint)s". This could mean your communications are being intercepted!',
@@ -1069,6 +1072,7 @@ export const Commands = [
                                         userId,
                                         deviceId,
                                         fingerprint,
+                                        cause: undefined,
                                     },
                                 );
                             }
@@ -1102,12 +1106,12 @@ export const Commands = [
     new Command({
         command: "discardsession",
         description: _td("Forces the current outbound group session in an encrypted room to be discarded"),
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId) {
             try {
-                MatrixClientPeg.get().forceDiscardSession(roomId);
+                cli.forceDiscardSession(roomId);
             } catch (e) {
-                return reject(e.message);
+                return reject(e instanceof Error ? e.message : e);
             }
             return success();
         },
@@ -1117,26 +1121,26 @@ export const Commands = [
     new Command({
         command: "remakeolm",
         description: _td("Developer command: Discards the current outbound group session and sets up new Olm sessions"),
-        isEnabled: () => {
-            return SettingsStore.getValue("developerMode") && !isCurrentLocalRoom();
+        isEnabled: (cli) => {
+            return SettingsStore.getValue("developerMode") && !isCurrentLocalRoom(cli);
         },
-        runFn: (roomId) => {
+        runFn: (cli, roomId) => {
             try {
-                const room = MatrixClientPeg.get().getRoom(roomId);
+                const room = cli.getRoom(roomId);
 
-                MatrixClientPeg.get().forceDiscardSession(roomId);
+                cli.forceDiscardSession(roomId);
 
                 return success(
                     room?.getEncryptionTargetMembers().then((members) => {
                         // noinspection JSIgnoredPromiseFromCall
-                        MatrixClientPeg.get().crypto?.ensureOlmSessionsForUsers(
+                        cli.crypto?.ensureOlmSessionsForUsers(
                             members.map((m) => m.userId),
                             true,
                         );
                     }),
                 );
             } catch (e) {
-                return reject(e.message);
+                return reject(e instanceof Error ? e.message : e);
             }
         },
         category: CommandCategories.advanced,
@@ -1146,7 +1150,7 @@ export const Commands = [
         command: "rainbow",
         description: _td("Sends the given message coloured as a rainbow"),
         args: "<message>",
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (!args) return reject(this.getUsage());
             return successSync(ContentHelpers.makeHtmlMessage(args, textToHtmlRainbow(args)));
         },
@@ -1156,7 +1160,7 @@ export const Commands = [
         command: "rainbowme",
         description: _td("Sends the given emote coloured as a rainbow"),
         args: "<message>",
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (!args) return reject(this.getUsage());
             return successSync(ContentHelpers.makeHtmlEmote(args, textToHtmlRainbow(args)));
         },
@@ -1175,13 +1179,13 @@ export const Commands = [
         command: "whois",
         description: _td("Displays information about a user"),
         args: "<user-id>",
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, userId) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, userId) {
             if (!userId || !userId.startsWith("@") || !userId.includes(":")) {
                 return reject(this.getUsage());
             }
 
-            const member = MatrixClientPeg.get().getRoom(roomId)?.getMember(userId);
+            const member = cli.getRoom(roomId)?.getMember(userId);
             dis.dispatch<ViewUserPayload>({
                 action: Action.ViewUser,
                 // XXX: We should be using a real member object and not assuming what the receiver wants.
@@ -1197,7 +1201,7 @@ export const Commands = [
         description: _td("Send a bug report with logs"),
         isEnabled: () => !!SdkConfig.get().bug_report_endpoint_url,
         args: "<description>",
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             return success(
                 Modal.createDialog(BugReportDialog, {
                     initialText: args,
@@ -1210,14 +1214,14 @@ export const Commands = [
         command: "tovirtual",
         description: _td("Switches to this room's virtual room, if it has one"),
         category: CommandCategories.advanced,
-        isEnabled(): boolean {
-            return !!LegacyCallHandler.instance.getSupportsVirtualRooms() && !isCurrentLocalRoom();
+        isEnabled(cli): boolean {
+            return !!LegacyCallHandler.instance.getSupportsVirtualRooms() && !isCurrentLocalRoom(cli);
         },
-        runFn: (roomId) => {
+        runFn: (cli, roomId) => {
             return success(
                 (async (): Promise<void> => {
                     const room = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(roomId);
-                    if (!room) throw newTranslatableError("No virtual room for this room");
+                    if (!room) throw new UserFriendlyError("No virtual room for this room");
                     dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_id: room.roomId,
@@ -1232,7 +1236,7 @@ export const Commands = [
         command: "query",
         description: _td("Opens chat with the given user"),
         args: "<user-id>",
-        runFn: function (roomId, userId) {
+        runFn: function (cli, roomId, threadId, userId) {
             // easter-egg for now: look up phone numbers through the thirdparty API
             // (very dumb phone number detection...)
             const isPhoneNumber = userId && /^\+?[0123456789]+$/.test(userId);
@@ -1245,12 +1249,12 @@ export const Commands = [
                     if (isPhoneNumber) {
                         const results = await LegacyCallHandler.instance.pstnLookup(userId);
                         if (!results || results.length === 0 || !results[0].userid) {
-                            throw newTranslatableError("Unable to find Matrix ID for phone number");
+                            throw new UserFriendlyError("Unable to find Matrix ID for phone number");
                         }
                         userId = results[0].userid;
                     }
 
-                    const roomId = await ensureDMExists(MatrixClientPeg.get(), userId);
+                    const roomId = await ensureDMExists(cli, userId);
                     if (!roomId) throw new Error("Failed to ensure DM exists");
 
                     dis.dispatch<ViewRoomPayload>({
@@ -1268,7 +1272,7 @@ export const Commands = [
         command: "msg",
         description: _td("Sends a message to the given user"),
         args: "<user-id> [<message>]",
-        runFn: function (roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 // matches the first whitespace delimited group and then the rest of the string
                 const matches = args.match(/^(\S+?)(?: +(.*))?$/s);
@@ -1277,7 +1281,6 @@ export const Commands = [
                     if (userId && userId.startsWith("@") && userId.includes(":")) {
                         return success(
                             (async (): Promise<void> => {
-                                const cli = MatrixClientPeg.get();
                                 const roomId = await ensureDMExists(cli, userId);
                                 if (!roomId) throw new Error("Failed to ensure DM exists");
 
@@ -1304,11 +1307,11 @@ export const Commands = [
         command: "holdcall",
         description: _td("Places the call in the current room on hold"),
         category: CommandCategories.other,
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             const call = LegacyCallHandler.instance.getCallForRoom(roomId);
             if (!call) {
-                return reject(newTranslatableError("No active call in this room"));
+                return reject(new UserFriendlyError("No active call in this room"));
             }
             call.setRemoteOnHold(true);
             return success();
@@ -1319,11 +1322,11 @@ export const Commands = [
         command: "unholdcall",
         description: _td("Takes the call in the current room off hold"),
         category: CommandCategories.other,
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
             const call = LegacyCallHandler.instance.getCallForRoom(roomId);
             if (!call) {
-                return reject(newTranslatableError("No active call in this room"));
+                return reject(new UserFriendlyError("No active call in this room"));
             }
             call.setRemoteOnHold(false);
             return success();
@@ -1334,10 +1337,10 @@ export const Commands = [
         command: "converttodm",
         description: _td("Converts the room to a DM"),
         category: CommandCategories.other,
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
-            const room = MatrixClientPeg.get().getRoom(roomId);
-            if (!room) return reject(newTranslatableError("Could not find room"));
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
+            const room = cli.getRoom(roomId);
+            if (!room) return reject(new UserFriendlyError("Could not find room"));
             return success(guessAndSetDMRoom(room, true));
         },
         renderingTypes: [TimelineRenderingType.Room],
@@ -1346,10 +1349,10 @@ export const Commands = [
         command: "converttoroom",
         description: _td("Converts the DM to a room"),
         category: CommandCategories.other,
-        isEnabled: () => !isCurrentLocalRoom(),
-        runFn: function (roomId, args) {
-            const room = MatrixClientPeg.get().getRoom(roomId);
-            if (!room) return reject(newTranslatableError("Could not find room"));
+        isEnabled: (cli) => !isCurrentLocalRoom(cli),
+        runFn: function (cli, roomId, threadId, args) {
+            const room = cli.getRoom(roomId);
+            if (!room) return reject(new UserFriendlyError("Could not find room"));
             return success(guessAndSetDMRoom(room, false));
         },
         renderingTypes: [TimelineRenderingType.Room],
@@ -1370,7 +1373,7 @@ export const Commands = [
             command: effect.command,
             description: effect.description(),
             args: "<message>",
-            runFn: function (roomId, args) {
+            runFn: function (cli, roomId, threadId, args) {
                 let content: IContent;
                 if (!args) {
                     content = ContentHelpers.makeEmoteMessage(effect.fallbackMessage());
@@ -1399,9 +1402,8 @@ Commands.forEach((cmd) => {
 });
 
 export function parseCommandString(input: string): { cmd?: string; args?: string } {
-    // trim any trailing whitespace, as it can confuse the parser for
-    // IRC-style commands
-    input = input.replace(/\s+$/, "");
+    // trim any trailing whitespace, as it can confuse the parser for IRC-style commands
+    input = input.trimEnd();
     if (input[0] !== "/") return {}; // not a command
 
     const bits = input.match(/^(\S+?)(?:[ \n]+((.|\n)*))?$/);
@@ -1431,7 +1433,7 @@ interface ICmd {
 export function getCommand(input: string): ICmd {
     const { cmd, args } = parseCommandString(input);
 
-    if (cmd && CommandMap.has(cmd) && CommandMap.get(cmd)!.isEnabled()) {
+    if (cmd && CommandMap.has(cmd) && CommandMap.get(cmd)!.isEnabled(MatrixClientPeg.get())) {
         return {
             cmd: CommandMap.get(cmd),
             args,

@@ -10,7 +10,6 @@ module.exports = {
         "color-hex-length": null,
         "at-rule-no-unknown": null,
         "no-descending-specificity": null,
-        "no-empty-first-line": true,
         "scss/at-rule-no-unknown": [
             true,
             {
@@ -23,7 +22,6 @@ module.exports = {
         // class name. This regex is trying to *allow* anything except `&words`, such as `&::before`,
         // `&.mx_Class`, etc.
         "selector-nested-pattern": "^((&[ :.\\[,])|([^&]))",
-        "declaration-colon-space-after": "always-single-line",
         // Disable some defaults
         "selector-class-pattern": null,
         "custom-property-pattern": null,
@@ -35,6 +33,11 @@ module.exports = {
         "import-notation": null,
         "value-keyword-case": null,
         "declaration-block-no-redundant-longhand-properties": null,
+        "declaration-block-no-duplicate-properties": [
+            true,
+            // useful for fallbacks
+            { ignore: ["consecutive-duplicates-with-different-values"] },
+        ],
         "shorthand-property-no-redundant-values": null,
         "property-no-vendor-prefix": null,
         "value-no-vendor-prefix": null,
@@ -42,5 +45,6 @@ module.exports = {
         "media-feature-name-no-vendor-prefix": null,
         "number-max-precision": null,
         "no-invalid-double-slash-comments": true,
+        "media-feature-range-notation": null,
     },
 };

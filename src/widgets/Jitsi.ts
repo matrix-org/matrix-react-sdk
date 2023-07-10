@@ -31,7 +31,7 @@ export interface JitsiWidgetData {
 export class Jitsi {
     private static instance: Jitsi;
 
-    private domain: string;
+    private domain?: string;
 
     public get preferredDomain(): string {
         return this.domain || "meet.element.io";
@@ -62,7 +62,7 @@ export class Jitsi {
     }
 
     public start(): void {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         cli.on(ClientEvent.ClientWellKnown, this.update);
         // call update initially in case we missed the first WellKnown.client event and for if no well-known present
         this.update(cli.getClientWellKnown());

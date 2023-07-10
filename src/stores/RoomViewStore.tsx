@@ -150,8 +150,8 @@ export class RoomViewStore extends EventEmitter {
     // another RVS via INITIAL_STATE as they share the same underlying object. Mostly relevant for tests.
     private state = utils.deepCopy(INITIAL_STATE);
 
-    private dis: MatrixDispatcher;
-    private dispatchToken: string;
+    private dis?: MatrixDispatcher;
+    private dispatchToken?: string;
 
     public constructor(dis: MatrixDispatcher, private readonly stores: SdkContextClass) {
         super();
@@ -217,7 +217,7 @@ export class RoomViewStore extends EventEmitter {
 
             // Fired so we can reduce dependency on event emitters to this store, which is relatively
             // central to the application and can easily cause import cycles.
-            this.dis.dispatch<ActiveRoomChangedPayload>({
+            this.dis?.dispatch<ActiveRoomChangedPayload>({
                 action: Action.ActiveRoomChanged,
                 oldRoomId: lastRoomId,
                 newRoomId: this.state.roomId,
@@ -228,6 +228,7 @@ export class RoomViewStore extends EventEmitter {
     }
 
     private doMaybeSetCurrentVoiceBroadcastPlayback(room: Room): void {
+        if (!this.stores.client) return;
         doMaybeSetCurrentVoiceBroadcastPlayback(
             room,
             this.stores.client,
@@ -305,7 +306,7 @@ export class RoomViewStore extends EventEmitter {
                     this.setState({ shouldPeek: false });
                 }
 
-                awaitRoomDownSync(MatrixClientPeg.get(), payload.roomId).then((room) => {
+                awaitRoomDownSync(MatrixClientPeg.safeGet(), payload.roomId).then((room) => {
                     const numMembers = room.getJoinedMemberCount();
                     const roomSize =
                         numMembers > 1000
@@ -342,7 +343,7 @@ export class RoomViewStore extends EventEmitter {
                     // can happen when performing a search across all rooms. Persist the data from this event for both
                     // room and search timeline rendering types, search will get auto-closed by RoomView at this time.
                     if (payload.event && payload.event.getRoomId() !== this.state.roomId) {
-                        this.dis.dispatch<ViewRoomPayload>({
+                        this.dis?.dispatch<ViewRoomPayload>({
                             action: Action.ViewRoom,
                             room_id: payload.event.getRoomId(),
                             replyingToEvent: payload.event,
@@ -360,7 +361,7 @@ export class RoomViewStore extends EventEmitter {
 
     private async viewRoom(payload: ViewRoomPayload): Promise<void> {
         if (payload.room_id) {
-            const room = MatrixClientPeg.get().getRoom(payload.room_id);
+            const room = MatrixClientPeg.safeGet().getRoom(payload.room_id);
 
             if (payload.metricsTrigger !== null && payload.room_id !== this.state.roomId) {
                 let activeSpace: ViewRoomEvent["activeSpace"];
@@ -413,7 +414,7 @@ export class RoomViewStore extends EventEmitter {
                     return;
                 }
                 // Re-fire the payload: we won't re-process it because the prev room ID == payload room ID now
-                this.dis.dispatch({
+                this.dis?.dispatch({
                     ...payload,
                 });
                 return;
@@ -454,7 +455,7 @@ export class RoomViewStore extends EventEmitter {
             this.setState(newState);
 
             if (payload.auto_join) {
-                this.dis.dispatch<JoinRoomPayload>({
+                this.dis?.dispatch<JoinRoomPayload>({
                     ...payload,
                     action: Action.JoinRoom,
                     roomId: payload.room_id,
@@ -487,23 +488,23 @@ export class RoomViewStore extends EventEmitter {
                     viewingCall: payload.view_call ?? false,
                 });
                 try {
-                    const result = await MatrixClientPeg.get().getRoomIdForAlias(payload.room_alias);
+                    const result = await MatrixClientPeg.safeGet().getRoomIdForAlias(payload.room_alias);
                     storeRoomAliasInCache(payload.room_alias, result.room_id);
                     roomId = result.room_id;
                 } catch (err) {
                     logger.error("RVS failed to get room id for alias: ", err);
-                    this.dis.dispatch<ViewRoomErrorPayload>({
+                    this.dis?.dispatch<ViewRoomErrorPayload>({
                         action: Action.ViewRoomError,
                         room_id: null,
                         room_alias: payload.room_alias,
-                        err,
+                        err: err instanceof MatrixError ? err : undefined,
                     });
                     return;
                 }
             }
 
             // Re-fire the payload with the newly found room_id
-            this.dis.dispatch({
+            this.dis?.dispatch({
                 ...payload,
                 room_id: roomId,
             });
@@ -530,12 +531,12 @@ export class RoomViewStore extends EventEmitter {
             joining: true,
         });
 
-        const cli = MatrixClientPeg.get();
         // take a copy of roomAlias & roomId as they may change by the time the join is complete
-        const { roomAlias, roomId } = this.state;
-        const address = roomAlias || roomId;
+        const { roomAlias, roomId = payload.roomId } = this.state;
+        const address = roomAlias || roomId!;
         const viaServers = this.state.viaServers || [];
         try {
+            const cli = MatrixClientPeg.safeGet();
             await retry<Room, MatrixError>(
                 () =>
                     cli.joinRoom(address, {
@@ -552,13 +553,13 @@ export class RoomViewStore extends EventEmitter {
             // We do *not* clear the 'joining' flag because the Room object and/or our 'joined' member event may not
             // have come down the sync stream yet, and that's the point at which we'd consider the user joined to the
             // room.
-            this.dis.dispatch<JoinRoomReadyPayload>({
+            this.dis?.dispatch<JoinRoomReadyPayload>({
                 action: Action.JoinRoomReady,
-                roomId,
+                roomId: roomId!,
                 metricsTrigger: payload.metricsTrigger,
             });
         } catch (err) {
-            this.dis.dispatch({
+            this.dis?.dispatch({
                 action: Action.JoinRoomError,
                 roomId,
                 err,
@@ -567,7 +568,7 @@ export class RoomViewStore extends EventEmitter {
     }
 
     private getInvitingUserId(roomId: string): string | undefined {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const room = cli.getRoom(roomId);
         if (room?.getMyMembership() === "invite") {
             const myMember = room.getMember(cli.getSafeUserId());
@@ -595,7 +596,7 @@ export class RoomViewStore extends EventEmitter {
             // provide a better error message for invites
             if (invitingUserId) {
                 // if the inviting user is on the same HS, there can only be one cause: they left.
-                if (invitingUserId.endsWith(`:${MatrixClientPeg.get().getDomain()}`)) {
+                if (invitingUserId.endsWith(`:${MatrixClientPeg.safeGet().getDomain()}`)) {
                     description = _t("The person who invited you has already left.");
                 } else {
                     description = _t("The person who invited you has already left, or their server is offline.");
@@ -647,7 +648,7 @@ export class RoomViewStore extends EventEmitter {
      */
     public resetDispatcher(dis: MatrixDispatcher): void {
         if (this.dispatchToken) {
-            this.dis.unregister(this.dispatchToken);
+            this.dis?.unregister(this.dispatchToken);
         }
         this.dis = dis;
         if (dis) {

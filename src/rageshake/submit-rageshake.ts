@@ -16,10 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import pako from "pako";
-import Tar from "tar-js";
 import { logger } from "matrix-js-sdk/src/logger";
 
+import type * as Pako from "pako";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import PlatformPeg from "../PlatformPeg";
 import { _t } from "../languageHandler";
@@ -88,17 +87,13 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
                 keys.push(`curve25519:${client.getDeviceCurve25519Key()}`);
             }
             body.append("device_keys", keys.join(", "));
-            body.append("cross_signing_key", client.getCrossSigningId() ?? "n/a");
+            body.append("cross_signing_key", (await client.getCrypto()?.getCrossSigningKeyId()) ?? "n/a");
 
             // add cross-signing status information
             const crossSigning = client.crypto.crossSigningInfo;
             const secretStorage = client.crypto.secretStorage;
 
             body.append("cross_signing_ready", String(await client.isCrossSigningReady()));
-            body.append(
-                "cross_signing_supported_by_hs",
-                String(await client.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")),
-            );
             body.append("cross_signing_key", crossSigning.getId() ?? "n/a");
             body.append(
                 "cross_signing_privkey_in_secret_storage",
@@ -181,6 +176,11 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
     body.append("mx_local_settings", localStorage.getItem("mx_local_settings")!);
 
     if (opts.sendLogs) {
+        let pako: typeof Pako | undefined;
+        if (gzipLogs) {
+            pako = await import("pako");
+        }
+
         progressCallback(_t("Collecting logs"));
         const logs = await rageshake.getLogsForReport();
         for (const entry of logs) {
@@ -189,7 +189,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
 
             // compress
             if (gzipLogs) {
-                buf = pako.gzip(buf);
+                buf = pako!.gzip(buf);
             }
 
             body.append("compressed-log", new Blob([buf]), entry.id);
@@ -241,6 +241,7 @@ export default async function sendBugReport(bugReportEndpoint?: string, opts: IO
  * @return {Promise} Resolved when the bug report is downloaded (or started).
  */
 export async function downloadBugReport(opts: IOpts = {}): Promise<void> {
+    const Tar = (await import("tar-js")).default;
     const progressCallback = opts.progressCallback || ((): void => {});
     const body = await collectBugReport(opts, false);
 
@@ -284,8 +285,7 @@ function uint8ToString(buf: Uint8Array): string {
 }
 
 export async function submitFeedback(
-    endpoint: string,
-    label: string,
+    label: string | undefined,
     comment: string,
     canContact = false,
     extraData: Record<string, any> = {},
@@ -296,7 +296,7 @@ export async function submitFeedback(
     } catch (err) {} // PlatformPeg already logs this.
 
     const body = new FormData();
-    body.append("label", label);
+    if (label) body.append("label", label);
     body.append("text", comment);
     body.append("can_contact", canContact ? "yes" : "no");
 

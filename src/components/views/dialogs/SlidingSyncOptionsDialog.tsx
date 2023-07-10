@@ -63,7 +63,7 @@ async function proxyHealthCheck(endpoint: string, hsUrl?: string): Promise<void>
 }
 
 export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): void }> = ({ onFinished }) => {
-    const cli = MatrixClientPeg.get();
+    const cli = MatrixClientPeg.safeGet();
     const currentProxy = SettingsStore.getValue("feature_sliding_sync_proxy_url");
     const hasNativeSupport = useAsyncMemo(
         () =>
@@ -84,10 +84,10 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
             : _t("Your server lacks native support");
     }
 
-    const validProxy = withValidation<undefined, { error?: Error }>({
-        async deriveData({ value }): Promise<{ error?: Error }> {
+    const validProxy = withValidation<undefined, { error?: unknown }>({
+        async deriveData({ value }): Promise<{ error?: unknown }> {
             try {
-                await proxyHealthCheck(value, MatrixClientPeg.get().baseUrl);
+                await proxyHealthCheck(value!, MatrixClientPeg.safeGet().baseUrl);
                 return {};
             } catch (error) {
                 return { error };
@@ -104,7 +104,7 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
                 final: true,
                 test: async (_, { error }) => !error,
                 valid: () => _t("Looks good"),
-                invalid: ({ error }) => error?.message ?? null,
+                invalid: ({ error }) => (error instanceof Error ? error.message : null),
             },
         ],
     });
@@ -124,7 +124,7 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
             value={currentProxy}
             button={_t("Enable")}
             validator={validProxy}
-            onFinished={(enable: boolean, proxyUrl: string) => {
+            onFinished={(enable, proxyUrl) => {
                 if (enable) {
                     SettingsStore.setValue("feature_sliding_sync_proxy_url", null, SettingLevel.DEVICE, proxyUrl);
                     onFinished(true);

@@ -57,6 +57,12 @@ import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessa
 import WidgetUtils from "../../../../src/utils/WidgetUtils";
 import { ElementWidgetActions } from "../../../../src/stores/widgets/ElementWidgetActions";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../../src/MediaDeviceHandler";
+import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
+import { UIComponent } from "../../../../src/settings/UIFeature";
+
+jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
+    shouldShowComponent: jest.fn(),
+}));
 
 describe("RoomHeader", () => {
     let client: Mocked<MatrixClient>;
@@ -69,7 +75,7 @@ describe("RoomHeader", () => {
         mockPlatformPeg({ supportsJitsiScreensharing: () => true });
 
         stubClient();
-        client = mocked(MatrixClientPeg.get());
+        client = mocked(MatrixClientPeg.safeGet());
         client.getUserId.mockReturnValue("@alice:example.org");
 
         room = new Room("!1:example.org", client, "@alice:example.org", {
@@ -112,7 +118,7 @@ describe("RoomHeader", () => {
             [MediaDeviceKindEnum.AudioOutput]: [],
         });
 
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(client);
         jest.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue(carol.userId);
     });
 
@@ -120,7 +126,7 @@ describe("RoomHeader", () => {
         await Promise.all([CallStore.instance, WidgetStore.instance].map(resetAsyncStoreWithClient));
         client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
         jest.restoreAllMocks();
-        SdkConfig.put({});
+        SdkConfig.reset();
     });
 
     const mockRoomType = (type: string) => {
@@ -729,17 +735,26 @@ describe("RoomHeader", () => {
         expect(wrapper.container.querySelector(".mx_RoomHeader_button")).toBeFalsy();
     });
 
-    it("should render the room options context menu if not passing enableRoomOptionsMenu (default true)", () => {
+    it("should render the room options context menu if not passing enableRoomOptionsMenu (default true) and UIComponent customisations room options enabled", () => {
+        mocked(shouldShowComponent).mockReturnValue(true);
         const room = createRoom({ name: "Room", isDm: false, userIds: [] });
         const wrapper = mountHeader(room);
+        expect(shouldShowComponent).toHaveBeenCalledWith(UIComponent.RoomOptionsMenu);
         expect(wrapper.container.querySelector(".mx_RoomHeader_name.mx_AccessibleButton")).toBeDefined();
     });
 
-    it("should not render the room options context menu if passing enableRoomOptionsMenu = false", () => {
-        const room = createRoom({ name: "Room", isDm: false, userIds: [] });
-        const wrapper = mountHeader(room, { enableRoomOptionsMenu: false });
-        expect(wrapper.container.querySelector(".mx_RoomHeader_name.mx_AccessibleButton")).toBeFalsy();
-    });
+    it.each([
+        [false, true],
+        [true, false],
+    ])(
+        "should not render the room options context menu if passing enableRoomOptionsMenu = %s and UIComponent customisations room options enable = %s",
+        (enableRoomOptionsMenu, showRoomOptionsMenu) => {
+            mocked(shouldShowComponent).mockReturnValue(showRoomOptionsMenu);
+            const room = createRoom({ name: "Room", isDm: false, userIds: [] });
+            const wrapper = mountHeader(room, { enableRoomOptionsMenu });
+            expect(wrapper.container.querySelector(".mx_RoomHeader_name.mx_AccessibleButton")).toBeFalsy();
+        },
+    );
 });
 
 interface IRoomCreationInfo {
@@ -750,7 +765,7 @@ interface IRoomCreationInfo {
 
 function createRoom(info: IRoomCreationInfo) {
     stubClient();
-    const client: MatrixClient = MatrixClientPeg.get();
+    const client: MatrixClient = MatrixClientPeg.safeGet();
 
     const roomId = "!1234567890:domain";
     const userId = client.getUserId()!;
@@ -761,7 +776,7 @@ function createRoom(info: IRoomCreationInfo) {
         };
     }
 
-    DMRoomMap.makeShared().start();
+    DMRoomMap.makeShared(client).start();
 
     const room = new Room(roomId, client, userId, {
         pendingEventOrdering: PendingEventOrdering.Detached,

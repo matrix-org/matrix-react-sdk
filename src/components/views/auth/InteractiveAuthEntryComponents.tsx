@@ -18,14 +18,14 @@ import classNames from "classnames";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { AuthType, IAuthDict, IInputs, IStageStatus } from "matrix-js-sdk/src/interactive-auth";
 import { logger } from "matrix-js-sdk/src/logger";
-import React, { ChangeEvent, createRef, FormEvent, Fragment, MouseEvent } from "react";
+import React, { ChangeEvent, createRef, FormEvent, Fragment } from "react";
 
 import EmailPromptIcon from "../../../../res/img/element-icons/email-prompt.svg";
 import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { LocalisedPolicy, Policies } from "../../../Terms";
 import { AuthHeaderModifier } from "../../structures/auth/header/AuthHeaderModifier";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
@@ -91,6 +91,9 @@ interface IAuthEntryProps {
     onPhaseChange: (phase: number) => void;
     submitAuthDict: (auth: IAuthDict) => void;
     requestEmailToken?: () => Promise<void>;
+    fail: (error: Error) => void;
+    clientSecret: string;
+    showContinue: boolean;
 }
 
 interface IPasswordAuthEntryState {
@@ -214,7 +217,7 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
 
         let errorText = this.props.errorText;
 
-        let sitePublicKey;
+        let sitePublicKey: string | undefined;
         if (!this.props.stageParams || !this.props.stageParams.public_key) {
             errorText = _t(
                 "Missing captcha public key in homeserver configuration. Please report " +
@@ -224,7 +227,7 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
             sitePublicKey = this.props.stageParams.public_key;
         }
 
-        let errorSection;
+        let errorSection: JSX.Element | undefined;
         if (errorText) {
             errorSection = (
                 <div className="error" role="alert">
@@ -235,7 +238,9 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
 
         return (
             <div>
-                <CaptchaForm sitePublicKey={sitePublicKey} onCaptchaResponse={this.onCaptchaResponse} />
+                {sitePublicKey && (
+                    <CaptchaForm sitePublicKey={sitePublicKey} onCaptchaResponse={this.onCaptchaResponse} />
+                )}
                 {errorSection}
             </div>
         );
@@ -246,7 +251,6 @@ interface ITermsAuthEntryProps extends IAuthEntryProps {
     stageParams?: {
         policies?: Policies;
     };
-    showContinue: boolean;
 }
 
 interface LocalisedPolicyWithId extends LocalisedPolicy {
@@ -386,20 +390,20 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
 
         let submitButton: JSX.Element | undefined;
         if (this.props.showContinue !== false) {
-            // XXX: button classes
             submitButton = (
-                <button
-                    className="mx_InteractiveAuthEntryComponents_termsSubmit mx_GeneralButton"
+                <AccessibleButton
+                    kind="primary"
+                    className="mx_InteractiveAuthEntryComponents_termsSubmit"
                     onClick={this.trySubmit}
                     disabled={!allChecked}
                 >
                     {_t("Accept")}
-                </button>
+                </AccessibleButton>
             );
         }
 
         return (
-            <div>
+            <div className="mx_InteractiveAuthEntryComponents">
                 <p>{_t("Please review and accept the policies of this homeserver:")}</p>
                 {checkboxes}
                 {errorSection}
@@ -414,7 +418,7 @@ interface IEmailIdentityAuthEntryProps extends IAuthEntryProps {
         emailAddress?: string;
     };
     stageState?: {
-        emailSid: string;
+        emailSid?: string;
     };
 }
 
@@ -538,12 +542,10 @@ export class EmailIdentityAuthEntry extends React.Component<
 }
 
 interface IMsisdnAuthEntryProps extends IAuthEntryProps {
-    inputs: {
-        phoneCountry: string;
-        phoneNumber: string;
+    inputs?: {
+        phoneCountry?: string;
+        phoneNumber?: string;
     };
-    clientSecret: string;
-    fail: (error: Error) => void;
 }
 
 interface IMsisdnAuthEntryState {
@@ -556,8 +558,8 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
     public static LOGIN_TYPE = AuthType.Msisdn;
 
     private submitUrl?: string;
-    private sid: string;
-    private msisdn: string;
+    private sid?: string;
+    private msisdn?: string;
 
     public constructor(props: IMsisdnAuthEntryProps) {
         super(props);
@@ -588,8 +590,8 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
     private requestMsisdnToken(): Promise<void> {
         return this.props.matrixClient
             .requestRegisterMsisdnToken(
-                this.props.inputs.phoneCountry,
-                this.props.inputs.phoneNumber,
+                this.props.inputs?.phoneCountry ?? "",
+                this.props.inputs?.phoneNumber ?? "",
                 this.props.clientSecret,
                 1, // TODO: Multiple send attempts?
             )
@@ -615,8 +617,8 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
         });
 
         try {
-            let result;
-            if (this.submitUrl) {
+            let result: { success: boolean };
+            if (this.submitUrl && this.sid) {
                 result = await this.props.matrixClient.submitMsisdnTokenOtherUrl(
                     this.submitUrl,
                     this.sid,
@@ -645,7 +647,7 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
                 });
             }
         } catch (e) {
-            this.props.fail(e);
+            this.props.fail(e instanceof Error ? e : new Error("Failed to submit msisdn token"));
             logger.log("Failed to submit msisdn token");
         }
     };
@@ -861,6 +863,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
 
     public render(): React.ReactNode {
         let continueButton: JSX.Element;
+
         const cancelButton = (
             <AccessibleButton
                 onClick={this.props.onCancel ?? null}
@@ -902,8 +905,14 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
             <Fragment>
                 {errorSection}
                 <div className="mx_InteractiveAuthEntryComponents_sso_buttons">
-                    {cancelButton}
-                    {continueButton}
+                    {this.props.busy ? (
+                        <Spinner w={24} h={24} />
+                    ) : (
+                        <>
+                            {cancelButton}
+                            {continueButton}
+                        </>
+                    )}
                 </div>
             </Fragment>
         );
@@ -936,7 +945,7 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
         this.fallbackButton.current?.focus();
     };
 
-    private onShowFallbackClick = (e: MouseEvent): void => {
+    private onShowFallbackClick = (e: ButtonEvent): void => {
         if (!this.props.authSessionId) return;
 
         e.preventDefault();
@@ -973,14 +982,11 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
 }
 
 export interface IStageComponentProps extends IAuthEntryProps {
-    clientSecret?: string;
     stageParams?: Record<string, any>;
     inputs?: IInputs;
     stageState?: IStageStatus;
-    showContinue?: boolean;
     continueText?: string;
     continueKind?: string;
-    fail?(e: Error): void;
     setEmailSid?(sid: string): void;
     onCancel?(): void;
     requestEmailToken?(): Promise<void>;

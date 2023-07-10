@@ -40,6 +40,7 @@ import { RoomListStore as Interface, RoomListStoreEvent } from "./Interface";
 import { SlidingRoomListStoreClass } from "./SlidingRoomListStore";
 import { UPDATE_EVENT } from "../AsyncStore";
 import { SdkContextClass } from "../../contexts/SDKContext";
+import { getChangedOverrideRoomMutePushRules } from "./utils/roomMute";
 
 interface IState {
     // state is tracked in underlying classes
@@ -189,8 +190,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
 
     protected async onDispatchAsync(payload: ActionPayload): Promise<void> {
         // Everything here requires a MatrixClient or some sort of logical readiness.
-        const logicallyReady = this.matrixClient && this.initialListsGenerated;
-        if (!logicallyReady) return;
+        if (!this.matrixClient || !this.initialListsGenerated) return;
 
         if (!this.algorithm) {
             // This shouldn't happen because `initialListsGenerated` implies we have an algorithm.
@@ -229,7 +229,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
                     eventPayload.event.getType() === EventType.RoomTombstone &&
                     eventPayload.event.getStateKey() === ""
                 ) {
-                    const newRoom = this.matrixClient.getRoom(eventPayload.event.getContent()["replacement_room"]);
+                    const newRoom = this.matrixClient?.getRoom(eventPayload.event.getContent()["replacement_room"]);
                     if (newRoom) {
                         // If we have the new room, then the new room check will have seen the predecessor
                         // and did the required updates, so do nothing here.
@@ -243,8 +243,11 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
                 logger.warn(`Live timeline event ${eventPayload.event.getId()} received without associated room`);
                 logger.warn(`Queuing failed room update for retry as a result.`);
                 window.setTimeout(async (): Promise<void> => {
-                    const updatedRoom = this.matrixClient.getRoom(roomId);
-                    await tryUpdate(updatedRoom);
+                    const updatedRoom = this.matrixClient?.getRoom(roomId);
+
+                    if (updatedRoom) {
+                        await tryUpdate(updatedRoom);
+                    }
                 }, 100); // 100ms should be enough for the room to show up
                 return;
             } else {
@@ -287,6 +290,17 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
             this.onDispatchMyMembership(<any>payload);
             return;
         }
+
+        const possibleMuteChangeRoomIds = getChangedOverrideRoomMutePushRules(payload);
+        if (possibleMuteChangeRoomIds) {
+            for (const roomId of possibleMuteChangeRoomIds) {
+                const room = roomId && this.matrixClient.getRoom(roomId);
+                if (room) {
+                    await this.handleRoomUpdate(room, RoomUpdateCause.PossibleMuteChange);
+                }
+            }
+            this.updateFn.trigger();
+        }
     }
 
     /**
@@ -304,7 +318,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
             const roomState: RoomState = membershipPayload.room.currentState;
             const predecessor = roomState.findPredecessor(this.msc3946ProcessDynamicPredecessor);
             if (predecessor) {
-                const prevRoom = this.matrixClient.getRoom(predecessor.roomId);
+                const prevRoom = this.matrixClient?.getRoom(predecessor.roomId);
                 if (prevRoom) {
                     const isSticky = this.algorithm.stickyRoom === prevRoom;
                     if (isSticky) {
@@ -455,7 +469,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
 
     // logic must match calculateTagSorting
     private calculateListOrder(tagId: TagID): ListAlgorithm {
-        const defaultOrder = ListAlgorithm.Importance;
+        const defaultOrder = ListAlgorithm.Natural;
         const definedOrder = this.getListOrder(tagId);
         const storedOrder = this.getStoredListOrder(tagId);
 

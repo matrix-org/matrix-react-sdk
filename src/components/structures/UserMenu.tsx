@@ -51,6 +51,7 @@ import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePaylo
 import { Icon as LiveIcon } from "../../../res/img/compound/live-8px.svg";
 import { VoiceBroadcastRecording, VoiceBroadcastRecordingsStoreEvent } from "../../voice-broadcast";
 import { SDKContext } from "../../contexts/SDKContext";
+import { shouldShowFeedback } from "../../utils/Feedback";
 
 interface IProps {
     isPanelCollapsed: boolean;
@@ -87,9 +88,9 @@ export default class UserMenu extends React.Component<IProps, IState> {
     public static contextType = SDKContext;
     public context!: React.ContextType<typeof SDKContext>;
 
-    private dispatcherRef: string;
-    private themeWatcherRef: string;
-    private readonly dndWatcherRef: string;
+    private dispatcherRef?: string;
+    private themeWatcherRef?: string;
+    private readonly dndWatcherRef?: string;
     private buttonRef: React.RefObject<HTMLButtonElement> = createRef();
 
     public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
@@ -109,10 +110,10 @@ export default class UserMenu extends React.Component<IProps, IState> {
     }
 
     private get hasHomePage(): boolean {
-        return !!getHomePageUrl(SdkConfig.get());
+        return !!getHomePageUrl(SdkConfig.get(), this.context.client!);
     }
 
-    private onCurrentVoiceBroadcastRecordingChanged = (recording: VoiceBroadcastRecording): void => {
+    private onCurrentVoiceBroadcastRecordingChanged = (recording: VoiceBroadcastRecording | null): void => {
         this.setState({
             showLiveAvatarAddon: recording !== null,
         });
@@ -194,7 +195,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         }
     };
 
-    private onOpenMenuClick = (ev: React.MouseEvent): void => {
+    private onOpenMenuClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
         this.setState({ contextMenuPosition: ev.currentTarget.getBoundingClientRect() });
@@ -217,7 +218,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.setState({ contextMenuPosition: null });
     };
 
-    private onSwitchThemeClick = (ev: React.MouseEvent): void => {
+    private onSwitchThemeClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -290,7 +291,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (!this.state.contextMenuPosition) return null;
 
         let topSection: JSX.Element | undefined;
-        if (MatrixClientPeg.get().isGuest()) {
+        if (MatrixClientPeg.safeGet().isGuest()) {
             topSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
                     {_t(
@@ -333,7 +334,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         }
 
         let feedbackButton: JSX.Element | undefined;
-        if (SettingsStore.getValue(UIFeature.Feedback)) {
+        if (shouldShowFeedback()) {
             feedbackButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconMessage"
@@ -371,7 +372,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             </IconizedContextMenuOptionList>
         );
 
-        if (MatrixClientPeg.get().isGuest()) {
+        if (MatrixClientPeg.safeGet().isGuest()) {
             primaryOptionList = (
                 <IconizedContextMenuOptionList>
                     {homeButton}
@@ -398,7 +399,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         </span>
                         <span className="mx_UserMenu_contextMenu_userId">
                             {UserIdentifierCustomisations.getDisplayUserIdentifier(
-                                MatrixClientPeg.get().getSafeUserId(),
+                                MatrixClientPeg.safeGet().getSafeUserId(),
                                 {
                                     withDisplayName: true,
                                 },
@@ -427,7 +428,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         const avatarSize = 32; // should match border-radius of the avatar
 
-        const userId = MatrixClientPeg.get().getSafeUserId();
+        const userId = MatrixClientPeg.safeGet().getSafeUserId();
         const displayName = OwnProfileStore.instance.displayName || userId;
         const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
 
@@ -445,6 +446,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         return (
             <div className="mx_UserMenu">
                 <ContextMenuButton
+                    className="mx_UserMenu_contextMenuButton"
                     onClick={this.onOpenMenuClick}
                     inputRef={this.buttonRef}
                     label={_t("User menu")}

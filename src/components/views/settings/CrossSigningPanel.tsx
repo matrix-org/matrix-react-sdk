@@ -28,9 +28,10 @@ import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroy
 import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
 import { accessSecretStorage } from "../../../SecurityManager";
 import AccessibleButton from "../elements/AccessibleButton";
+import { SettingsSubsectionText } from "./shared/SettingsSubsection";
 
 interface IState {
-    error?: Error;
+    error: boolean;
     crossSigningPublicKeysOnDevice?: boolean;
     crossSigningPrivateKeysInStorage?: boolean;
     masterPrivateKeyCached?: boolean;
@@ -46,11 +47,13 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
     public constructor(props: {}) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            error: false,
+        };
     }
 
     public componentDidMount(): void {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         cli.on(ClientEvent.AccountData, this.onAccountData);
         cli.on(CryptoEvent.UserTrustStatusChanged, this.onStatusChanged);
         cli.on(CryptoEvent.KeysChanged, this.onStatusChanged);
@@ -88,19 +91,20 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
     };
 
     private async getUpdatedStatus(): Promise<void> {
-        const cli = MatrixClientPeg.get();
-        const pkCache = cli.getCrossSigningCacheCallbacks();
-        const crossSigning = cli.crypto!.crossSigningInfo;
-        const secretStorage = cli.crypto!.secretStorage;
-        const crossSigningPublicKeysOnDevice = Boolean(crossSigning.getId());
-        const crossSigningPrivateKeysInStorage = Boolean(await crossSigning.isStoredInSecretStorage(secretStorage));
-        const masterPrivateKeyCached = !!(pkCache && (await pkCache.getCrossSigningKeyCache("master")));
-        const selfSigningPrivateKeyCached = !!(pkCache && (await pkCache.getCrossSigningKeyCache("self_signing")));
-        const userSigningPrivateKeyCached = !!(pkCache && (await pkCache.getCrossSigningKeyCache("user_signing")));
+        const cli = MatrixClientPeg.safeGet();
+        const crypto = cli.getCrypto();
+        if (!crypto) return;
+
+        const crossSigningStatus = await crypto.getCrossSigningStatus();
+        const crossSigningPublicKeysOnDevice = crossSigningStatus.publicKeysOnDevice;
+        const crossSigningPrivateKeysInStorage = crossSigningStatus.privateKeysInSecretStorage;
+        const masterPrivateKeyCached = crossSigningStatus.privateKeysCachedLocally.masterKey;
+        const selfSigningPrivateKeyCached = crossSigningStatus.privateKeysCachedLocally.selfSigningKey;
+        const userSigningPrivateKeyCached = crossSigningStatus.privateKeysCachedLocally.userSigningKey;
         const homeserverSupportsCrossSigning = await cli.doesServerSupportUnstableFeature(
             "org.matrix.e2e_cross_signing",
         );
-        const crossSigningReady = await cli.isCrossSigningReady();
+        const crossSigningReady = await crypto.isCrossSigningReady();
 
         this.setState({
             crossSigningPublicKeysOnDevice,
@@ -123,9 +127,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
      * @param {bool} [forceReset] Bootstrap again even if keys already present
      */
     private bootstrapCrossSigning = async ({ forceReset = false }): Promise<void> => {
-        this.setState({ error: undefined });
+        this.setState({ error: false });
         try {
-            const cli = MatrixClientPeg.get();
+            const cli = MatrixClientPeg.safeGet();
             await cli.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
                     const { finished } = Modal.createDialog(InteractiveAuthDialog, {
@@ -141,7 +145,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                 setupNewCrossSigning: forceReset,
             });
         } catch (e) {
-            this.setState({ error: e });
+            this.setState({ error: true });
             logger.error("Error bootstrapping cross-signing", e);
         }
         if (this.unmounted) return;
@@ -178,22 +182,38 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         if (homeserverSupportsCrossSigning === undefined) {
             summarisedStatus = <Spinner />;
         } else if (!homeserverSupportsCrossSigning) {
-            summarisedStatus = <p>{_t("Your homeserver does not support cross-signing.")}</p>;
+            summarisedStatus = (
+                <SettingsSubsectionText data-testid="summarised-status">
+                    {_t("Your homeserver does not support cross-signing.")}
+                </SettingsSubsectionText>
+            );
         } else if (crossSigningReady && crossSigningPrivateKeysInStorage) {
-            summarisedStatus = <p>✅ {_t("Cross-signing is ready for use.")}</p>;
+            summarisedStatus = (
+                <SettingsSubsectionText data-testid="summarised-status">
+                    ✅ {_t("Cross-signing is ready for use.")}
+                </SettingsSubsectionText>
+            );
         } else if (crossSigningReady && !crossSigningPrivateKeysInStorage) {
-            summarisedStatus = <p>⚠️ {_t("Cross-signing is ready but keys are not backed up.")}</p>;
+            summarisedStatus = (
+                <SettingsSubsectionText data-testid="summarised-status">
+                    ⚠️ {_t("Cross-signing is ready but keys are not backed up.")}
+                </SettingsSubsectionText>
+            );
         } else if (crossSigningPrivateKeysInStorage) {
             summarisedStatus = (
-                <p>
+                <SettingsSubsectionText data-testid="summarised-status">
                     {_t(
                         "Your account has a cross-signing identity in secret storage, " +
                             "but it is not yet trusted by this session.",
                     )}
-                </p>
+                </SettingsSubsectionText>
             );
         } else {
-            summarisedStatus = <p>{_t("Cross-signing is not set up.")}</p>;
+            summarisedStatus = (
+                <SettingsSubsectionText data-testid="summarised-status">
+                    {_t("Cross-signing is not set up.")}
+                </SettingsSubsectionText>
+            );
         }
 
         const keysExistAnywhere =
@@ -238,46 +258,44 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         }
 
         return (
-            <div>
+            <>
                 {summarisedStatus}
                 <details>
                     <summary>{_t("Advanced")}</summary>
                     <table className="mx_CrossSigningPanel_statusList">
-                        <tbody>
-                            <tr>
-                                <td>{_t("Cross-signing public keys:")}</td>
-                                <td>{crossSigningPublicKeysOnDevice ? _t("in memory") : _t("not found")}</td>
-                            </tr>
-                            <tr>
-                                <td>{_t("Cross-signing private keys:")}</td>
-                                <td>
-                                    {crossSigningPrivateKeysInStorage
-                                        ? _t("in secret storage")
-                                        : _t("not found in storage")}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{_t("Master private key:")}</td>
-                                <td>{masterPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
-                            </tr>
-                            <tr>
-                                <td>{_t("Self signing private key:")}</td>
-                                <td>{selfSigningPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
-                            </tr>
-                            <tr>
-                                <td>{_t("User signing private key:")}</td>
-                                <td>{userSigningPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
-                            </tr>
-                            <tr>
-                                <td>{_t("Homeserver feature support:")}</td>
-                                <td>{homeserverSupportsCrossSigning ? _t("exists") : _t("not found")}</td>
-                            </tr>
-                        </tbody>
+                        <tr>
+                            <th scope="row">{_t("Cross-signing public keys:")}</th>
+                            <td>{crossSigningPublicKeysOnDevice ? _t("in memory") : _t("not found")}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{_t("Cross-signing private keys:")}</th>
+                            <td>
+                                {crossSigningPrivateKeysInStorage
+                                    ? _t("in secret storage")
+                                    : _t("not found in storage")}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{_t("Master private key:")}</th>
+                            <td>{masterPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{_t("Self signing private key:")}</th>
+                            <td>{selfSigningPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{_t("User signing private key:")}</th>
+                            <td>{userSigningPrivateKeyCached ? _t("cached locally") : _t("not found locally")}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{_t("Homeserver feature support:")}</th>
+                            <td>{homeserverSupportsCrossSigning ? _t("exists") : _t("not found")}</td>
+                        </tr>
                     </table>
                 </details>
                 {errorSection}
                 {actionRow}
-            </div>
+            </>
         );
     }
 }

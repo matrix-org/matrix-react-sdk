@@ -17,7 +17,7 @@ exports[`<MessageEditHistory /> should match the snapshot 1`] = `
       class="mx_Dialog_header mx_Dialog_headerWithCancel"
     >
       <h2
-        class="mx_Heading_h2 mx_Dialog_title"
+        class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         Message edits
@@ -48,7 +48,6 @@ exports[`<MessageEditHistory /> should match the snapshot 1`] = `
                 aria-label="Thu, Jan 1 1970"
                 class="mx_DateSeparator"
                 role="separator"
-                tabindex="-1"
               >
                 <hr
                   role="none"
@@ -134,7 +133,7 @@ exports[`<MessageEditHistory /> should support events with 1`] = `
       class="mx_Dialog_header mx_Dialog_headerWithCancel"
     >
       <h2
-        class="mx_Heading_h2 mx_Dialog_title"
+        class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         Message edits
@@ -165,7 +164,6 @@ exports[`<MessageEditHistory /> should support events with 1`] = `
                 aria-label=",  NaN NaN"
                 class="mx_DateSeparator"
                 role="separator"
-                tabindex="-1"
               >
                 <hr
                   role="none"
