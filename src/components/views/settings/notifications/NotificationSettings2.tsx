@@ -74,17 +74,11 @@ const NotificationOptions = [
 ];
 
 function boldText(text: string): JSX.Element {
-    return (
-        <strong>{text}</strong>
-    );
+    return <strong>{text}</strong>;
 }
 
 function helpLink(sub: string): JSX.Element {
-    return (
-        <ExternalLink href="https://element.io/help#settings2">
-            {sub}
-        </ExternalLink>
-    );
+    return <ExternalLink href="https://element.io/help#settings2">{sub}</ExternalLink>;
 }
 
 function useHasUnreadNotifications(): boolean {
@@ -117,10 +111,10 @@ export default function NotificationSettings2(): JSX.Element {
                 >
                     {_t(
                         "<strong>Update:</strong>" +
-                        "We’ve simplified Notifications Settings to make options easier to find. " +
-                        "Some custom settings you’ve chosen in the past are not shown here, but they’re still active. " +
-                        "If you proceed, some of your settings may change. " +
-                        "<a>Learn more</a>",
+                            "We’ve simplified Notifications Settings to make options easier to find. " +
+                            "Some custom settings you’ve chosen in the past are not shown here, but they’re still active. " +
+                            "If you proceed, some of your settings may change. " +
+                            "<a>Learn more</a>",
                         {},
                         {
                             strong: boldText,
