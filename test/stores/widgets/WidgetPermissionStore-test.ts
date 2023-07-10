@@ -39,7 +39,7 @@ describe("WidgetPermissionStore", () => {
         type: "m.custom",
         url: "https://invalid.address.here",
     });
-    const ec_w = new Widget({
+    const elementCallWidget = new Widget({
         id: "group_call",
         creatorUserId: "@alice:example.org",
         type: MatrixWidgetType.Custom,
@@ -100,7 +100,9 @@ describe("WidgetPermissionStore", () => {
         expect(store2).toStrictEqual(store);
     });
     it("auto-approves OIDC requests for element-call", async () => {
-        new StopGapWidgetDriver([], ec_w, WidgetKind.Room, true, roomId);
-        expect(widgetPermissionStore.getOIDCState(ec_w, WidgetKind.Room, roomId)).toEqual(OIDCState.Allowed);
+        new StopGapWidgetDriver([], elementCallWidget, WidgetKind.Room, true, roomId);
+        expect(widgetPermissionStore.getOIDCState(elementCallWidget, WidgetKind.Room, roomId)).toEqual(
+            OIDCState.Allowed,
+        );
     });
 });
