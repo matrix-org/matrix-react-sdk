@@ -3474,8 +3474,10 @@
     "Last event:": "Последнее событие:",
     "WARNING: session already verified, but keys do NOT MATCH!": "ВНИМАНИЕ: сеанс уже заверен, но ключи НЕ СОВПАДАЮТ!",
     "ID: ": "ID: ",
-    "Bulleted list": "Маркированный список",
+    "Bulleted list": "Список",
     "Edit link": "Изменить ссылку",
     "Numbered list": "Нумерованный список",
-    "Signing In…": "Выполняется вход…"
+    "Signing In…": "Выполняется вход…",
+    "Indent decrease": "Пункт",
+    "Indent increase": "Подпункт"
 }
