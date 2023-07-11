@@ -22,6 +22,7 @@ import { HomeserverInstance } from "../plugins/utils/homeserver";
 import { Credentials } from "./homeserver";
 import Chainable = Cypress.Chainable;
 import { collapseLastLogGroup } from "./log";
+import { AddSecretStorageKeyOpts } from "../../../matrix-js-sdk/src/secret-storage";
 
 interface CreateBotOpts {
     /**
@@ -52,11 +53,6 @@ interface CreateBotOpts {
      * Whether or not to bootstrap the secret storage
      */
     bootstrapSecretStorage?: boolean;
-
-    /**
-     * Whether or not to use local cross signing key storage
-     */
-    cryptoCallbacks?: boolean;
 }
 
 const defaultCreateBotOptions = {
@@ -154,7 +150,23 @@ function setupBotClient(
                 Object.assign(keys, k);
             };
 
-            const cryptoCallbacks = (opts.cryptoCallbacks && { getCrossSigningKey, saveCrossSigningKeys }) || undefined;
+            // Store the cached secret storage key and return it when `getSecretStorageKey` is called
+            let cachedKey: { keyId: string; key: Uint8Array };
+            const cacheSecretStorageKey = (keyId: string, keyInfo: AddSecretStorageKeyOpts, key: Uint8Array) => {
+                cachedKey = {
+                    keyId,
+                    key,
+                };
+            };
+
+            const getSecretStorageKey = () => Promise.resolve<[string, Uint8Array]>([cachedKey.keyId, cachedKey.key]);
+
+            const cryptoCallbacks = {
+                getCrossSigningKey,
+                saveCrossSigningKeys,
+                cacheSecretStorageKey,
+                getSecretStorageKey,
+            };
 
             const cli = new win.matrixcs.MatrixClient({
                 baseUrl: homeserver.baseUrl,
@@ -208,7 +220,7 @@ function setupBotClient(
 
             if (opts.bootstrapSecretStorage) {
                 const passphrase = "new passphrase";
-                const recoveryKey = await cli.createRecoveryKeyFromPassphrase(passphrase);
+                const recoveryKey = await cli.getCrypto().createRecoveryKeyFromPassphrase(passphrase);
                 Object.assign(cli, { __cypress_recovery_key: recoveryKey });
 
                 await cli.getCrypto()!.bootstrapSecretStorage({

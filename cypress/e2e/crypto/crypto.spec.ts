@@ -141,7 +141,6 @@ describe("Cryptography", function () {
                     displayName: "Bob",
                     autoAcceptInvites: false,
                     userIdPrefix: "bob_",
-                    cryptoCallbacks: true,
                 }).as("bob");
             });
     });

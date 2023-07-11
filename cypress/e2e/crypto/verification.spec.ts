@@ -34,6 +34,15 @@ describe("Device verification", () => {
 
             // wait for the page to load
             cy.window({ log: false }).should("have.property", "matrixcs");
+
+            // Create a new device for alice
+            cy.getBot(homeserver, {
+                rustCrypto: true,
+                bootstrapCrossSigning: true,
+                bootstrapSecretStorage: true,
+            }).then((bot) => {
+                aliceBotClient = bot;
+            });
         });
     });
 
@@ -58,165 +67,141 @@ describe("Device verification", () => {
         cy.wrap(promiseVerificationRequest).as("verificationRequest");
     }
 
-    describe("rust crypto", () => {
-        beforeEach(() => {
-            // Create a new device for alice
-            cy.getBot(homeserver, {
-                rustCrypto: true,
-                bootstrapCrossSigning: true,
-            }).then((bot) => {
-                aliceBotClient = bot;
-            });
-        });
+    it("Verify device during login with SAS", () => {
+        logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
 
-        it("Verify device during login with SAS", () => {
-            logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
+        // Launch the verification request between alice and the bot
+        initiateAliceVerificationRequest();
 
-            // Launch the verification request between alice and the bot
-            initiateAliceVerificationRequest();
+        // Handle emoji SAS verification
+        cy.get(".mx_InfoDialog").within(() => {
+            cy.get<VerificationRequest>("@verificationRequest").then(async (request: VerificationRequest) => {
+                // the bot chooses to do an emoji verification
+                const verifier = await request.startVerification("m.sas.v1");
 
-            // Handle emoji SAS verification
-            cy.get(".mx_InfoDialog").within(() => {
-                cy.get<VerificationRequest>("@verificationRequest").then(async (request: VerificationRequest) => {
-                    // the bot chooses to do an emoji verification
-                    const verifier = await request.startVerification("m.sas.v1");
-
-                    // Handle emoji request and check that emojis are matching
-                    doTwoWaySasVerification(verifier);
-                });
-
-                cy.findByRole("button", { name: "They match" }).click();
-                cy.findByRole("button", { name: "Got it" }).click();
-            });
-
-            // Check that our device is now cross-signed
-            checkDeviceIsCrossSigned();
-        });
-
-        it("Handle incoming verification request with SAS", () => {
-            logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
-
-            /* Dismiss "Verify this device" */
-            cy.get(".mx_AuthPage").within(() => {
-                cy.findByRole("button", { name: "Skip verification for now" }).click();
-                cy.findByRole("button", { name: "I'll verify later" }).click();
-            });
-
-            /* figure out the device id of the Element client */
-            let elementDeviceId: string;
-            cy.window({ log: false }).then((win) => {
-                const cli = win.mxMatrixClientPeg.safeGet();
-                elementDeviceId = cli.getDeviceId();
-                expect(elementDeviceId).to.exist;
-                cy.log(`Got element device id: ${elementDeviceId}`);
-            });
-
-            /* Now initiate a verification request from the *bot* device. */
-            let botVerificationRequest: VerificationRequest;
-            cy.then(() => {
-                async function initVerification() {
-                    botVerificationRequest = await aliceBotClient
-                        .getCrypto()!
-                        .requestDeviceVerification(aliceBotClient.getUserId(), elementDeviceId);
-                }
-
-                cy.wrap(initVerification(), { log: false });
-            }).then(() => {
-                cy.log("Initiated verification request");
-            });
-
-            /* Check the toast for the incoming request */
-            getToast("Verification requested").within(() => {
-                // it should contain the device ID of the requesting device
-                cy.contains(`${aliceBotClient.getDeviceId()} from `);
-
-                // Accept
-                cy.findByRole("button", { name: "Verify Session" }).click();
-            });
-
-            /* Click 'Start' to start SAS verification */
-            cy.findByRole("button", { name: "Start" }).click();
-
-            /* on the bot side, wait for the verifier to exist ... */
-            async function awaitVerifier() {
-                // wait for the verifier to exist
-                while (!botVerificationRequest.verifier) {
-                    await emitPromise(botVerificationRequest, "change");
-                }
-                return botVerificationRequest.verifier;
-            }
-
-            cy.then(() => cy.wrap(awaitVerifier())).then((verifier: Verifier) => {
-                // ... confirm ...
-                botVerificationRequest.verifier.verify();
-
-                // ... and then check the emoji match
+                // Handle emoji request and check that emojis are matching
                 doTwoWaySasVerification(verifier);
             });
 
-            /* And we're all done! */
-            cy.get(".mx_InfoDialog").within(() => {
-                cy.findByRole("button", { name: "They match" }).click();
-                cy.findByText(`You've successfully verified (${aliceBotClient.getDeviceId()})!`).should("exist");
-                cy.findByRole("button", { name: "Got it" }).click();
-            });
+            cy.findByRole("button", { name: "They match" }).click();
+            cy.findByRole("button", { name: "Got it" }).click();
         });
+
+        // Check that our device is now cross-signed
+        checkDeviceIsCrossSigned();
     });
 
-    describe("old crypto", () => {
-        beforeEach(() => {
-            // Create a new device for alice
-            cy.getBot(homeserver, {
-                bootstrapCrossSigning: true,
-                bootstrapSecretStorage: true,
-            }).then((bot) => {
-                aliceBotClient = bot;
-            });
+    it("Verify device during login with Security Phrase", () => {
+        logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
+
+        // Select the security phrase
+        cy.get(".mx_AuthPage").within(() => {
+            cy.findByRole("button", { name: "Verify with Security Key or Phrase" }).click();
         });
 
-        it("Verify device during login with Security Phrase", () => {
-            logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
-
-            // Select the security phrase
-            cy.get(".mx_AuthPage").within(() => {
-                cy.findByRole("button", { name: "Verify with Security Key or Phrase" }).click();
-            });
-
-            // Fill the passphrase
-            cy.get(".mx_Dialog").within(() => {
-                cy.get("input").type("new passphrase");
-                cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
-            });
-
-            cy.get(".mx_AuthPage").within(() => {
-                cy.findByRole("button", { name: "Done" }).click();
-            });
-
-            // Check that our device is now cross-signed
-            checkDeviceIsCrossSigned();
+        // Fill the passphrase
+        cy.get(".mx_Dialog").within(() => {
+            cy.get("input").type("new passphrase");
+            cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
         });
 
-        it("Verify device during login with Security Key", () => {
-            logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
+        cy.get(".mx_AuthPage").within(() => {
+            cy.findByRole("button", { name: "Done" }).click();
+        });
 
-            // Select the security phrase
-            cy.get(".mx_AuthPage").within(() => {
-                cy.findByRole("button", { name: "Verify with Security Key or Phrase" }).click();
-            });
+        // Check that our device is now cross-signed
+        checkDeviceIsCrossSigned();
+    });
 
-            // Fill the security key
-            cy.get(".mx_Dialog").within(() => {
-                cy.findByRole("button", { name: "use your Security Key" }).click();
-                cy.get("#mx_securityKey").type(aliceBotClient.__cypress_recovery_key.encodedPrivateKey);
-                cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
-            });
+    it("Verify device during login with Security Key", () => {
+        logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
 
-            cy.get(".mx_AuthPage").within(() => {
-                cy.findByRole("button", { name: "Done" }).click();
-            });
+        // Select the security phrase
+        cy.get(".mx_AuthPage").within(() => {
+            cy.findByRole("button", { name: "Verify with Security Key or Phrase" }).click();
+        });
 
-            // Check that our device is now cross-signed
-            checkDeviceIsCrossSigned();
+        // Fill the security key
+        cy.get(".mx_Dialog").within(() => {
+            cy.findByRole("button", { name: "use your Security Key" }).click();
+            cy.get("#mx_securityKey").type(aliceBotClient.__cypress_recovery_key.encodedPrivateKey);
+            cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+        });
+
+        cy.get(".mx_AuthPage").within(() => {
+            cy.findByRole("button", { name: "Done" }).click();
+        });
+
+        // Check that our device is now cross-signed
+        checkDeviceIsCrossSigned();
+    });
+
+    it("Handle incoming verification request with SAS", () => {
+        logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
+
+        /* Dismiss "Verify this device" */
+        cy.get(".mx_AuthPage").within(() => {
+            cy.findByRole("button", { name: "Skip verification for now" }).click();
+            cy.findByRole("button", { name: "I'll verify later" }).click();
+        });
+
+        /* figure out the device id of the Element client */
+        let elementDeviceId: string;
+        cy.window({ log: false }).then((win) => {
+            const cli = win.mxMatrixClientPeg.safeGet();
+            elementDeviceId = cli.getDeviceId();
+            expect(elementDeviceId).to.exist;
+            cy.log(`Got element device id: ${elementDeviceId}`);
+        });
+
+        /* Now initiate a verification request from the *bot* device. */
+        let botVerificationRequest: VerificationRequest;
+        cy.then(() => {
+            async function initVerification() {
+                botVerificationRequest = await aliceBotClient
+                    .getCrypto()!
+                    .requestDeviceVerification(aliceBotClient.getUserId(), elementDeviceId);
+            }
+
+            cy.wrap(initVerification(), { log: false });
+        }).then(() => {
+            cy.log("Initiated verification request");
+        });
+
+        /* Check the toast for the incoming request */
+        getToast("Verification requested").within(() => {
+            // it should contain the device ID of the requesting device
+            cy.contains(`${aliceBotClient.getDeviceId()} from `);
+
+            // Accept
+            cy.findByRole("button", { name: "Verify Session" }).click();
+        });
+
+        /* Click 'Start' to start SAS verification */
+        cy.findByRole("button", { name: "Start" }).click();
+
+        /* on the bot side, wait for the verifier to exist ... */
+        async function awaitVerifier() {
+            // wait for the verifier to exist
+            while (!botVerificationRequest.verifier) {
+                await emitPromise(botVerificationRequest, "change");
+            }
+            return botVerificationRequest.verifier;
+        }
+
+        cy.then(() => cy.wrap(awaitVerifier())).then((verifier: Verifier) => {
+            // ... confirm ...
+            botVerificationRequest.verifier.verify();
+
+            // ... and then check the emoji match
+            doTwoWaySasVerification(verifier);
+        });
+
+        /* And we're all done! */
+        cy.get(".mx_InfoDialog").within(() => {
+            cy.findByRole("button", { name: "They match" }).click();
+            cy.findByText(`You've successfully verified (${aliceBotClient.getDeviceId()})!`).should("exist");
+            cy.findByRole("button", { name: "Got it" }).click();
         });
     });
 });
