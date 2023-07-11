@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { MouseEventHandler, ReactNode } from "react";
 import { FormattingFunctions, AllActionStates, ActionState } from "@matrix-org/matrix-wysiwyg";
+import { FormattedMessage as FormattedMessageEvent } from "@matrix-org/analytics-events/types/typescript/FormattedMessage";
 import classNames from "classnames";
 
 import { Icon as BoldIcon } from "../../../../../../res/img/element-icons/room/composer/bold.svg";
@@ -38,6 +39,7 @@ import { _td } from "../../../../../languageHandler";
 import { ButtonEvent } from "../../../elements/AccessibleButton";
 import { openLinkModal } from "./LinkModal";
 import { useComposerContext } from "../ComposerContext";
+import { isNotUndefined } from "../../../../../Typeguards";
 
 interface TooltipProps {
     label: string;
@@ -59,9 +61,15 @@ interface ButtonProps extends TooltipProps {
     icon: ReactNode;
     actionState: ActionState;
     onClick: MouseEventHandler<HTMLButtonElement>;
+    analyticsKey?: FormattedMessageEvent["formatAction"];
 }
 
-function Button({ label, keyCombo, onClick, actionState, icon }: ButtonProps): JSX.Element {
+function Button({ analyticsKey, label, keyCombo, onClick, actionState, icon }: ButtonProps): JSX.Element {
+    const prevActionState = React.useRef(actionState);
+    if (isNotUndefined(analyticsKey) && prevActionState.current !== actionState && actionState === "reversed") {
+        fireFormattingAnalyticEvent(analyticsKey);
+    }
+    prevActionState.current = actionState;
     return (
         <AccessibleTooltipButton
             element="button"
@@ -92,6 +100,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
     return (
         <div className="mx_FormattingButtons">
             <Button
+                analyticsKey="Bold"
                 actionState={actionStates.bold}
                 label={_td("Bold")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "b" }}
@@ -99,6 +108,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
                 icon={<BoldIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
+                analyticsKey="Italic"
                 actionState={actionStates.italic}
                 label={_td("Italic")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "i" }}
@@ -106,6 +116,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
                 icon={<ItalicIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
+                analyticsKey="Underline"
                 actionState={actionStates.underline}
                 label={_td("Underline")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "u" }}
@@ -113,28 +124,38 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
                 icon={<UnderlineIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
+                analyticsKey="Strikethrough"
                 actionState={actionStates.strikeThrough}
                 label={_td("Strikethrough")}
                 onClick={() => composer.strikeThrough()}
                 icon={<StrikeThroughIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
+                analyticsKey="UnorderedList"
                 actionState={actionStates.unorderedList}
                 label={_td("Bulleted list")}
                 onClick={() => composer.unorderedList()}
                 icon={<BulletedListIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
+                analyticsKey="OrderedList"
                 actionState={actionStates.orderedList}
                 label={_td("Numbered list")}
                 onClick={() => composer.orderedList()}
                 icon={<NumberedListIcon className="mx_FormattingButtons_Icon" />}
             />
+            {/* Neither of the indent or unindent buttons can be triggered by a keyboard shorcut. Their states also
+            only toggle between `disabled` and `enabled`, which presents ambiguity as to whether they have been clicked
+            (state goes from `enabled` => `disabled`) or they were available to click and then the list was toggled off
+            (as this causes the same state transition). Use the user click to record interaction*/}
             {isInList && (
                 <Button
                     actionState={actionStates.indent}
                     label={_td("Indent increase")}
-                    onClick={() => composer.indent()}
+                    onClick={() => {
+                        composer.indent();
+                        fireFormattingAnalyticEvent("Indent");
+                    }}
                     icon={<IndentIcon className="mx_FormattingButtons_Icon" />}
                 />
             )}
@@ -142,17 +163,22 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
                 <Button
                     actionState={actionStates.unindent}
                     label={_td("Indent decrease")}
-                    onClick={() => composer.unindent()}
+                    onClick={() => {
+                        composer.unindent();
+                        fireFormattingAnalyticEvent("Unindent");
+                    }}
                     icon={<UnIndentIcon className="mx_FormattingButtons_Icon" />}
                 />
             )}
             <Button
+                analyticsKey="Quote"
                 actionState={actionStates.quote}
                 label={_td("Quote")}
                 onClick={() => composer.quote()}
                 icon={<QuoteIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
+                analyticsKey="InlineCode"
                 actionState={actionStates.inlineCode}
                 label={_td("Code")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "e" }}
@@ -160,17 +186,33 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
                 icon={<InlineCodeIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
+                analyticsKey="CodeBlock"
                 actionState={actionStates.codeBlock}
                 label={_td("Code block")}
                 onClick={() => composer.codeBlock()}
                 icon={<CodeBlockIcon className="mx_FormattingButtons_Icon" />}
             />
+            {/* Inserting a link works differently to the rest of the buttons and has no keyboard shortcut, so 
+            fire an analytic event onClick */}
             <Button
+                analyticsKey="Link"
                 actionState={actionStates.link}
                 label={_td("Link")}
-                onClick={() => openLinkModal(composer, composerContext, actionStates.link === "reversed")}
+                onClick={() => {
+                    openLinkModal(composer, composerContext, actionStates.link === "reversed");
+                    fireFormattingAnalyticEvent("Link");
+                }}
                 icon={<LinkIcon className="mx_FormattingButtons_Icon" />}
             />
         </div>
     );
+}
+
+/**
+ * Util function to fire a formatting analytic event
+ * @param formatAction - the action that will be recorded in the analytic event that is fired
+ * @returns
+ */
+function fireFormattingAnalyticEvent(formatAction: FormattedMessageEvent["formatAction"]): void {
+    console.log("<<<", formatAction);
 }
