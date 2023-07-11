@@ -55,6 +55,5 @@ installLogsCollector({
         "cy:request",
         "cy:intercept",
         "cy:command",
-        "ctr:info",
     ],
 });
