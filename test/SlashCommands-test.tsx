@@ -145,6 +145,22 @@ describe("SlashCommands", () => {
         });
     });
 
+    describe("/deop", () => {
+        beforeEach(() => {
+            command = findCommand("deop")!;
+        });
+
+        it("should warn about self demotion", async () => {
+            setCurrentRoom();
+            const member = new RoomMember(roomId, client.getSafeUserId());
+            member.membership = "join";
+            member.powerLevel = 100;
+            room.getMember = () => member;
+            command.run(client, roomId, null, client.getSafeUserId());
+            expect(warnSelfDemote).toHaveBeenCalled();
+        });
+    });
+
     describe("/tovirtual", () => {
         beforeEach(() => {
             command = findCommand("tovirtual")!;
