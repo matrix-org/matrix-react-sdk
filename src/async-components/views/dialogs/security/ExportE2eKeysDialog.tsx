@@ -176,9 +176,9 @@ export default class ExportE2eKeysDialog extends React.Component<IProps, IState>
                                 "The exported file will allow anyone who can read it to decrypt " +
                                     "any encrypted messages that you can see, so you should be " +
                                     "careful to keep it secure. To help with this, you should enter " +
-                                    "a passphrase below, which will be used to encrypt the exported " +
-                                    "data. It will only be possible to import the data by using the " +
-                                    "same passphrase.",
+                                    "a unique passphrase below, which will only be used to encrypt the " +
+                                    "exported data. " +
+                                    "It will only be possible to import the data by using the same passphrase.",
                             )}
                         </p>
                         <div className="error">{this.state.errStr}</div>
