@@ -16,6 +16,10 @@
 
 // TODO: These types should be elsewhere.
 
+import { MsgType } from "matrix-js-sdk/src/matrix";
+
+import { BLURHASH_FIELD } from "../../utils/image-media";
+
 export interface IEncryptedFile {
     url: string;
     key: {
@@ -30,30 +34,66 @@ export interface IEncryptedFile {
     v: string;
 }
 
-export interface IMediaEventInfo {
-    thumbnail_url?: string; // eslint-disable-line camelcase
-    thumbnail_file?: IEncryptedFile; // eslint-disable-line camelcase
-    thumbnail_info?: {
-        // eslint-disable-line camelcase
-        mimetype: string;
-        w?: number;
-        h?: number;
-        size?: number;
-    };
-    mimetype: string;
+interface ThumbnailInfo {
+    mimetype?: string;
     w?: number;
     h?: number;
     size?: number;
 }
 
-export interface IMediaEventContent {
-    msgtype: string;
-    body?: string;
-    filename?: string; // `m.file` optional field
-    url?: string; // required on unencrypted media
-    file?: IEncryptedFile; // required for *encrypted* media
-    info?: IMediaEventInfo;
+interface BaseInfo {
+    mimetype?: string;
+    size?: number;
 }
+
+export interface FileInfo extends BaseInfo {
+    [BLURHASH_FIELD]?: string;
+    thumbnail_file?: IEncryptedFile;
+    thumbnail_info?: ThumbnailInfo;
+    thumbnail_url?: string;
+}
+
+export interface ImageInfo extends FileInfo, ThumbnailInfo {}
+
+export interface AudioInfo extends BaseInfo {
+    duration?: number;
+}
+
+export interface VideoInfo extends AudioInfo, ImageInfo {}
+
+export type IMediaEventInfo = FileInfo | ImageInfo | AudioInfo | VideoInfo;
+
+interface BaseContent {
+    body: string;
+}
+
+interface BaseFileContent extends BaseContent {
+    file?: IEncryptedFile;
+    url?: string;
+}
+
+export interface FileContent extends BaseFileContent {
+    filename?: string;
+    info?: FileInfo;
+    msgtype: MsgType.File;
+}
+
+export interface ImageContent extends BaseFileContent {
+    info?: ImageInfo;
+    msgtype: MsgType.Image;
+}
+
+export interface AudioContent extends BaseFileContent {
+    info?: AudioInfo;
+    msgtype: MsgType.Audio;
+}
+
+export interface VideoContent extends BaseFileContent {
+    info?: VideoInfo;
+    msgtype: MsgType.Video;
+}
+
+export type IMediaEventContent = FileContent | ImageContent | AudioContent | VideoContent;
 
 export interface IPreparedMedia extends IMediaObject {
     thumbnail?: IMediaObject;
@@ -73,12 +113,17 @@ export interface IMediaObject {
  */
 export function prepEventContentAsMedia(content: Partial<IMediaEventContent>): IPreparedMedia {
     let thumbnail: IMediaObject | undefined;
-    if (content?.info?.thumbnail_url) {
+    if (typeof content?.info === "object" && "thumbnail_url" in content.info && content.info.thumbnail_url) {
         thumbnail = {
             mxc: content.info.thumbnail_url,
             file: content.info.thumbnail_file,
         };
-    } else if (content?.info?.thumbnail_file?.url) {
+    } else if (
+        typeof content?.info === "object" &&
+        "thumbnail_file" in content.info &&
+        typeof content?.info?.thumbnail_file === "object" &&
+        content?.info?.thumbnail_file?.url
+    ) {
         thumbnail = {
             mxc: content.info.thumbnail_file.url,
             file: content.info.thumbnail_file,

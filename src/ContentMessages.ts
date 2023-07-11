@@ -33,7 +33,14 @@ import {
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { removeElement } from "matrix-js-sdk/src/utils";
 
-import { IEncryptedFile, IMediaEventContent, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
+import {
+    AudioInfo,
+    IEncryptedFile,
+    ImageInfo,
+    IMediaEventContent,
+    IMediaEventInfo,
+    VideoInfo,
+} from "./customisations/models/IMediaEventContent";
 import dis from "./dispatcher/dispatcher";
 import { _t } from "./languageHandler";
 import Modal from "./Modal";
@@ -146,11 +153,7 @@ const ALWAYS_INCLUDE_THUMBNAIL = ["image/avif", "image/webp"];
  * @param {File} imageFile The image to read and thumbnail.
  * @return {Promise} A promise that resolves with the attachment info.
  */
-async function infoForImageFile(
-    matrixClient: MatrixClient,
-    roomId: string,
-    imageFile: File,
-): Promise<Partial<IMediaEventInfo>> {
+async function infoForImageFile(matrixClient: MatrixClient, roomId: string, imageFile: File): Promise<ImageInfo> {
     let thumbnailType = "image/png";
     if (imageFile.type === "image/jpeg") {
         thumbnailType = "image/jpeg";
@@ -188,12 +191,12 @@ async function infoForImageFile(
  * Load a file into a newly created video element and pull some strings
  * in an attempt to guarantee the first frame will be showing.
  *
- * @param {File} videoFile The file to load in an video element.
- * @return {Promise} A promise that resolves with the video image element.
+ * @param {File} videoFile The file to load in a video element.
+ * @return {Promise} A promise that resolves with the video element.
  */
 function loadVideoElement(videoFile: File): Promise<HTMLVideoElement> {
     return new Promise((resolve, reject) => {
-        // Load the file into an html element
+        // Load the file into a html element
         const video = document.createElement("video");
         video.preload = "metadata";
         video.playsInline = true;
@@ -237,20 +240,16 @@ function loadVideoElement(videoFile: File): Promise<HTMLVideoElement> {
  * @param {File} videoFile The video to read and thumbnail.
  * @return {Promise} A promise that resolves with the attachment info.
  */
-function infoForVideoFile(
-    matrixClient: MatrixClient,
-    roomId: string,
-    videoFile: File,
-): Promise<Partial<IMediaEventInfo>> {
+function infoForVideoFile(matrixClient: MatrixClient, roomId: string, videoFile: File): Promise<VideoInfo> {
     const thumbnailType = "image/jpeg";
 
-    let videoInfo: Partial<IMediaEventInfo>;
+    const videoInfo: VideoInfo = {};
     return loadVideoElement(videoFile)
         .then((video) => {
             return createThumbnail(video, video.videoWidth, video.videoHeight, thumbnailType);
         })
         .then((result) => {
-            videoInfo = result.info;
+            Object.assign(videoInfo, result.info);
             return uploadFile(matrixClient, roomId, result.thumbnail);
         })
         .then((result) => {
