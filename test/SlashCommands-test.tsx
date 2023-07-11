@@ -130,6 +130,10 @@ describe("SlashCommands", () => {
             command = findCommand("op")!;
         });
 
+        it("should return usage if no args", () => {
+            expect(command.run(client, roomId, null, undefined).error).toBe(command.getUsage());
+        });
+
         it("should reject with usage if given an invalid power level value", () => {
             expect(command.run(client, roomId, null, "@bob:server Admin").error).toBe(command.getUsage());
         });
@@ -143,11 +147,24 @@ describe("SlashCommands", () => {
             command.run(client, roomId, null, `${client.getUserId()} 0`);
             expect(warnSelfDemote).toHaveBeenCalled();
         });
+
+        it("should default to 50 if no powerlevel specified", async () => {
+            setCurrentRoom();
+            const member = new RoomMember(roomId, "@user:server");
+            member.membership = "join";
+            room.getMember = () => member;
+            command.run(client, roomId, null, member.userId);
+            expect(client.setPowerLevel).toHaveBeenCalledWith(roomId, member.userId, 50);
+        });
     });
 
     describe("/deop", () => {
         beforeEach(() => {
             command = findCommand("deop")!;
+        });
+
+        it("should return usage if no args", () => {
+            expect(command.run(client, roomId, null, undefined).error).toBe(command.getUsage());
         });
 
         it("should warn about self demotion", async () => {
