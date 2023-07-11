@@ -239,7 +239,7 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
     } catch (error) {
         logger.error("Failed to login via OIDC", error);
 
-        await onFailedDelegatedAuthLogin(getErrorMessage(error));
+        await onFailedDelegatedAuthLogin(getErrorMessage(error as Error));
         return false;
     }
 }
@@ -417,7 +417,7 @@ function registerAsGuest(hsUrl: string, isUrl?: string, defaultDeviceDisplayName
                     {
                         userId: creds.user_id,
                         deviceId: creds.device_id,
-                        accessToken: creds.access_token,
+                        accessToken: creds.access_token!,
                         homeserverUrl: hsUrl,
                         identityServerUrl: isUrl,
                         guest: true,
@@ -587,7 +587,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
     }
 }
 
-async function handleLoadSessionFailure(e: Error): Promise<boolean> {
+async function handleLoadSessionFailure(e: unknown): Promise<boolean> {
     logger.error("Unable to load session", e);
 
     const modal = Modal.createDialog(SessionRestoreErrorDialog, {
@@ -838,11 +838,12 @@ let _isLoggingOut = false;
  * Logs the current session out and transitions to the logged-out state
  */
 export function logout(): void {
-    if (!MatrixClientPeg.get()) return;
+    const client = MatrixClientPeg.get();
+    if (!client) return;
 
     PosthogAnalytics.instance.logout();
 
-    if (MatrixClientPeg.get()!.isGuest()) {
+    if (client.isGuest()) {
         // logout doesn't work for guest sessions
         // Also we sometimes want to re-log in a guest session if we abort the login.
         // defer until next tick because it calls a synchronous dispatch, and we are likely here from a dispatch.
@@ -851,7 +852,6 @@ export function logout(): void {
     }
 
     _isLoggingOut = true;
-    const client = MatrixClientPeg.get()!;
     PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
     client.logout(true).then(onLoggedOut, (err) => {
         // Just throwing an error here is going to be very unhelpful
@@ -1010,10 +1010,8 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
 
         // now restore those invites and registration time
         if (!opts?.deleteEverything) {
-            pendingInvites.forEach((i) => {
-                const roomId = i.roomId;
-                delete i.roomId; // delete to avoid confusing the store
-                ThreepidInviteStore.instance.storeInvite(roomId, i);
+            pendingInvites.forEach(({ roomId, ...invite }) => {
+                ThreepidInviteStore.instance.storeInvite(roomId, invite);
             });
 
             if (registrationTime) {

@@ -21,13 +21,12 @@ import { OidcError } from "matrix-js-sdk/src/oidc/error";
 import { _t } from "../../languageHandler";
 
 export enum OidcClientError {
-    StoredParamsNotFound = "Cannot complete OIDC login: required properties not found in session storage.",
     InvalidQueryParameters = "Invalid query parameters for OIDC native login. `code` and `state` are required.",
 }
 
 export const getErrorMessage = (error: Error | MatrixError): string | ReactNode => {
     switch (error.message) {
-        case OidcClientError.StoredParamsNotFound:
+        case OidcError.MissingOrInvalidStoredState:
             return _t(
                 "We asked the browser to remember which homeserver you use to let you sign in, " +
                     "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",

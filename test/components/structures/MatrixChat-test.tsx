@@ -17,15 +17,16 @@ limitations under the License.
 import React, { ComponentProps } from "react";
 import { fireEvent, render, RenderResult, screen, within } from "@testing-library/react";
 import fetchMock from "fetch-mock-jest";
+import { mocked } from "jest-mock";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import * as MatrixJs from "matrix-js-sdk/src/matrix";
 import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
-import { generateAuthorizationParams } from "matrix-js-sdk/src/oidc/authorize";
+import { completeAuthorizationCodeGrant } from "matrix-js-sdk/src/oidc/authorize";
 import { logger } from "matrix-js-sdk/src/logger";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
-import * as OidcValidation from "matrix-js-sdk/src/oidc/validate";
+import { BearerTokenResponse } from "matrix-js-sdk/src/oidc/validate";
 
 import MatrixChat from "../../../src/components/structures/MatrixChat";
 import * as StorageManager from "../../../src/utils/StorageManager";
@@ -41,6 +42,10 @@ import {
 } from "../../test-utils";
 import * as leaveRoomUtils from "../../../src/utils/leave-behaviour";
 import { OidcClientError } from "../../../src/utils/oidc/error";
+
+jest.mock("matrix-js-sdk/src/oidc/authorize", () => ({
+    completeAuthorizationCodeGrant: jest.fn(),
+}));
 
 describe("<MatrixChat />", () => {
     const userId = "@alice:server.org";
@@ -127,7 +132,6 @@ describe("<MatrixChat />", () => {
     const localStorageGetSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
     const localStorageClearSpy = jest.spyOn(localStorage.__proto__, "clear");
     const sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem");
-    const sessionStorageGetSpy = jest.spyOn(sessionStorage.__proto__, "getItem");
 
     // make test results readable
     filterConsole("Failed to parse localStorage object");
@@ -431,7 +435,11 @@ describe("<MatrixChat />", () => {
             // this is used to create a temporary client during login
             jest.spyOn(MatrixJs, "createClient").mockClear().mockReturnValue(loginClient);
 
-            loginClient.login.mockClear().mockResolvedValue({});
+            loginClient.login.mockClear().mockResolvedValue({
+                access_token: "TOKEN",
+                device_id: "IMADEVICE",
+                user_id: userId,
+            });
             loginClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
 
             loginClient.getProfileInfo.mockResolvedValue({
@@ -722,32 +730,15 @@ describe("<MatrixChat />", () => {
 
     describe("when query params have a OIDC params", () => {
         const issuer = "https://auth.com/";
-        const authorizationEndpoint = "https://auth.com/authorization";
-        const homeserver = "https://matrix.org";
+        const homeserverUrl = "https://matrix.org";
         const identityServerUrl = "https://is.org";
         const clientId = "xyz789";
-        const baseUrl = "https://test.com";
 
-        const delegatedAuthConfig = {
-            issuer,
-            registrationEndpoint: issuer + "registration",
-            authorizationEndpoint,
-            tokenEndpoint: issuer + "token",
-        };
-        const authorizationParams = generateAuthorizationParams({ redirectUri: baseUrl });
-        const storedAuthorizationParams = {
-            nonce: authorizationParams.nonce,
-            redirectUri: baseUrl,
-            codeVerifier: authorizationParams.codeVerifier,
-            clientId,
-            homeserverUrl: homeserver,
-            identityServerUrl,
-            delegatedAuthConfig: JSON.stringify(delegatedAuthConfig),
-        };
         const code = "test-oidc-auth-code";
+        const state = "test-oidc-state";
         const realQueryParams = {
             code,
-            state: authorizationParams.state,
+            state: state,
         };
 
         const userId = "@alice:server.org";
@@ -756,21 +747,21 @@ describe("<MatrixChat />", () => {
 
         const mockLocalStorage: Record<string, string> = {
             // these are only going to be set during login
-            mx_hs_url: homeserver,
+            mx_hs_url: homeserverUrl,
             mx_is_url: identityServerUrl,
             mx_user_id: userId,
             mx_device_id: deviceId,
         };
 
-        let loginClient!: ReturnType<typeof getMockClientWithEventEmitter>;
-
-        const validBearerTokenResponse = {
-            token_type: "Bearer",
+        const tokenResponse: BearerTokenResponse = {
             access_token: accessToken,
-            refresh_token: "test_refresh_token",
-            id_token: "test_id_token",
-            expires_in: 12345,
+            refresh_token: "def456",
+            scope: "test",
+            token_type: "Bearer",
+            expires_at: 12345,
         };
+
+        let loginClient!: ReturnType<typeof getMockClientWithEventEmitter>;
 
         const expectOIDCError = async (
             errorMessage = "Something went wrong during authentication. Go to the sign in page and try again.",
@@ -784,10 +775,15 @@ describe("<MatrixChat />", () => {
         };
 
         beforeEach(() => {
-            // annoying to mock jwt decoding used in validateIdToken
-            jest.spyOn(OidcValidation, "validateIdToken")
-                .mockClear()
-                .mockImplementation(() => {});
+            mocked(completeAuthorizationCodeGrant).mockClear().mockResolvedValue({
+                oidcClientSettings: {
+                    clientId,
+                    issuer,
+                },
+                tokenResponse,
+                homeserverUrl,
+                identityServerUrl,
+            });
 
             jest.spyOn(logger, "error").mockClear();
         });
@@ -801,21 +797,6 @@ describe("<MatrixChat />", () => {
             jest.spyOn(logger, "log").mockClear();
 
             localStorageGetSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
-            sessionStorageGetSpy.mockImplementation((key: string) => {
-                const itemKey = key.split(`oidc_${authorizationParams.state}_`).pop();
-                return storedAuthorizationParams[itemKey] || null;
-            });
-
-            fetchMock.resetHistory();
-            fetchMock.post(
-                delegatedAuthConfig.tokenEndpoint,
-                {
-                    status: 200,
-                    body: validBearerTokenResponse,
-                },
-                { overwriteRoutes: true },
-            );
-
             loginClient.whoami.mockResolvedValue({
                 user_id: userId,
                 device_id: deviceId,
@@ -823,27 +804,29 @@ describe("<MatrixChat />", () => {
             });
         });
 
-        it("should fail when authorization params are not found in session storage", async () => {
-            sessionStorageGetSpy.mockReturnValue(undefined);
-            getComponent({ realQueryParams });
+        it("should fail when query params do not include valid code and state", async () => {
+            const queryParams = {
+                code: 123,
+                state: "abc",
+            };
+            getComponent({ realQueryParams: queryParams });
 
             await flushPromises();
 
             expect(logger.error).toHaveBeenCalledWith(
                 "Failed to login via OIDC",
-                new Error(OidcClientError.StoredParamsNotFound),
+                new Error(OidcClientError.InvalidQueryParameters),
             );
 
-            await expectOIDCError(
-                "We asked the browser to remember which homeserver you use to let you sign in, " +
-                    "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
-            );
+            await expectOIDCError();
         });
 
-        it("should attempt to get access token", async () => {
+        it("should make correct request to complete authorization", async () => {
             getComponent({ realQueryParams });
 
-            expect(fetchMock).toHaveFetched(delegatedAuthConfig.tokenEndpoint);
+            await flushPromises();
+
+            expect(completeAuthorizationCodeGrant).toHaveBeenCalledWith(code, state);
         });
 
         it("should look up userId using access token", async () => {
@@ -853,7 +836,7 @@ describe("<MatrixChat />", () => {
 
             // check we used a client with the correct accesstoken
             expect(MatrixJs.createClient).toHaveBeenCalledWith({
-                baseUrl: homeserver,
+                baseUrl: homeserverUrl,
                 accessToken,
                 idBaseUrl: identityServerUrl,
             });
@@ -884,12 +867,24 @@ describe("<MatrixChat />", () => {
 
         describe("when login fails", () => {
             beforeEach(() => {
-                fetchMock.post(
-                    delegatedAuthConfig.tokenEndpoint,
-                    {
-                        status: 500,
-                    },
-                    { overwriteRoutes: true },
+                mocked(completeAuthorizationCodeGrant).mockRejectedValue(new Error(OidcError.CodeExchangeFailed));
+            });
+
+            it("should log and return to welcome page with correct error when login state is not found", async () => {
+                mocked(completeAuthorizationCodeGrant).mockRejectedValue(
+                    new Error(OidcError.MissingOrInvalidStoredState),
+                );
+                getComponent({ realQueryParams });
+
+                await flushPromises();
+
+                expect(logger.error).toHaveBeenCalledWith(
+                    "Failed to login via OIDC",
+                    new Error(OidcError.MissingOrInvalidStoredState),
+                );
+
+                await expectOIDCError(
+                    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
                 );
             });
 
@@ -932,7 +927,7 @@ describe("<MatrixChat />", () => {
 
                 await flushPromises();
 
-                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_hs_url", storedAuthorizationParams.homeserverUrl);
+                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_hs_url", homeserverUrl);
                 expect(localStorageSetSpy).toHaveBeenCalledWith("mx_user_id", userId);
                 expect(localStorageSetSpy).toHaveBeenCalledWith("mx_has_access_token", "true");
                 expect(localStorageSetSpy).toHaveBeenCalledWith("mx_device_id", deviceId);
@@ -952,7 +947,7 @@ describe("<MatrixChat />", () => {
                         " guest: " +
                         false +
                         " hs: " +
-                        storedAuthorizationParams.homeserverUrl +
+                        homeserverUrl +
                         " softLogout: " +
                         false,
                     " freshLogin: " + false,
