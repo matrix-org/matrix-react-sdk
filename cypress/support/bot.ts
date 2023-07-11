@@ -17,6 +17,8 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import type { ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import type { GeneratedSecretStorageKey } from "matrix-js-sdk/src/crypto-api";
+import type { AddSecretStorageKeyOpts } from "matrix-js-sdk/src/secret-storage";
 import { HomeserverInstance } from "../plugins/utils/homeserver";
 import { Credentials } from "./homeserver";
 import Chainable = Cypress.Chainable;
@@ -43,6 +45,14 @@ interface CreateBotOpts {
      * Whether or not to generate cross-signing keys
      */
     bootstrapCrossSigning?: boolean;
+    /**
+     * Whether to use the rust crypto impl. Defaults to false (for now!)
+     */
+    rustCrypto?: boolean;
+    /**
+     * Whether or not to bootstrap the secret storage
+     */
+    bootstrapSecretStorage?: boolean;
 }
 
 const defaultCreateBotOptions = {
@@ -54,6 +64,7 @@ const defaultCreateBotOptions = {
 
 export interface CypressBot extends MatrixClient {
     __cypress_password: string;
+    __cypress_recovery_key: GeneratedSecretStorageKey;
 }
 
 declare global {
@@ -125,66 +136,102 @@ function setupBotClient(
     opts: CreateBotOpts,
 ): Chainable<MatrixClient> {
     opts = Object.assign({}, defaultCreateBotOptions, opts);
-    return cy.window({ log: false }).then((win) => {
-        const keys = {};
+    return cy.window({ log: false }).then(
+        // extra timeout, as this sometimes takes a while
+        { timeout: 30_000 },
+        async (win): Promise<MatrixClient> => {
+            const keys = {};
 
-        const getCrossSigningKey = (type: string) => {
-            return keys[type];
-        };
+            const getCrossSigningKey = (type: string) => {
+                return keys[type];
+            };
 
-        const saveCrossSigningKeys = (k: Record<string, Uint8Array>) => {
-            Object.assign(keys, k);
-        };
+            const saveCrossSigningKeys = (k: Record<string, Uint8Array>) => {
+                Object.assign(keys, k);
+            };
 
-        const cli = new win.matrixcs.MatrixClient({
-            baseUrl: homeserver.baseUrl,
-            userId: credentials.userId,
-            deviceId: credentials.deviceId,
-            accessToken: credentials.accessToken,
-            store: new win.matrixcs.MemoryStore(),
-            scheduler: new win.matrixcs.MatrixScheduler(),
-            cryptoStore: new win.matrixcs.MemoryCryptoStore(),
-            cryptoCallbacks: { getCrossSigningKey, saveCrossSigningKeys },
-        });
+            // Store the cached secret storage key and return it when `getSecretStorageKey` is called
+            let cachedKey: { keyId: string; key: Uint8Array };
+            const cacheSecretStorageKey = (keyId: string, keyInfo: AddSecretStorageKeyOpts, key: Uint8Array) => {
+                cachedKey = {
+                    keyId,
+                    key,
+                };
+            };
 
-        if (opts.autoAcceptInvites) {
-            cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
-                if (member.membership === "invite" && member.userId === cli.getUserId()) {
-                    cli.joinRoom(member.roomId);
-                }
+            const getSecretStorageKey = () => Promise.resolve<[string, Uint8Array]>([cachedKey.keyId, cachedKey.key]);
+
+            const cryptoCallbacks = {
+                getCrossSigningKey,
+                saveCrossSigningKeys,
+                cacheSecretStorageKey,
+                getSecretStorageKey,
+            };
+
+            const cli = new win.matrixcs.MatrixClient({
+                baseUrl: homeserver.baseUrl,
+                userId: credentials.userId,
+                deviceId: credentials.deviceId,
+                accessToken: credentials.accessToken,
+                store: new win.matrixcs.MemoryStore(),
+                scheduler: new win.matrixcs.MatrixScheduler(),
+                cryptoStore: new win.matrixcs.MemoryCryptoStore(),
+                cryptoCallbacks,
             });
-        }
 
-        if (!opts.startClient) {
-            return cy.wrap(cli);
-        }
-
-        return cy.wrap(
-            cli
-                .initCrypto()
-                .then(() => cli.setGlobalErrorOnUnknownDevices(false))
-                .then(() => cli.startClient())
-                .then(async () => {
-                    if (opts.bootstrapCrossSigning) {
-                        await cli.bootstrapCrossSigning({
-                            authUploadDeviceSigningKeys: async (func) => {
-                                await func({
-                                    type: "m.login.password",
-                                    identifier: {
-                                        type: "m.id.user",
-                                        user: credentials.userId,
-                                    },
-                                    password: credentials.password,
-                                });
-                            },
-                        });
+            if (opts.autoAcceptInvites) {
+                cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
+                    if (member.membership === "invite" && member.userId === cli.getUserId()) {
+                        cli.joinRoom(member.roomId);
                     }
-                })
-                .then(() => cli),
-            // extra timeout, as this sometimes takes a while
-            { timeout: 30_000 },
-        );
-    });
+                });
+            }
+
+            if (!opts.startClient) {
+                return cli;
+            }
+
+            if (opts.rustCrypto) {
+                await cli.initRustCrypto({ useIndexedDB: false });
+            } else {
+                await cli.initCrypto();
+            }
+            cli.setGlobalErrorOnUnknownDevices(false);
+            await cli.startClient();
+
+            if (opts.bootstrapCrossSigning) {
+                // XXX: workaround https://github.com/matrix-org/matrix-rust-sdk/issues/2193
+                //   wait for out device list to be available, as a proxy for the device keys having been uploaded.
+                await cli.getCrypto()!.getUserDeviceInfo([credentials.userId]);
+
+                await cli.getCrypto()!.bootstrapCrossSigning({
+                    authUploadDeviceSigningKeys: async (func) => {
+                        await func({
+                            type: "m.login.password",
+                            identifier: {
+                                type: "m.id.user",
+                                user: credentials.userId,
+                            },
+                            password: credentials.password,
+                        });
+                    },
+                });
+            }
+
+            if (opts.bootstrapSecretStorage) {
+                const passphrase = "new passphrase";
+                const recoveryKey = await cli.getCrypto().createRecoveryKeyFromPassphrase(passphrase);
+                Object.assign(cli, { __cypress_recovery_key: recoveryKey });
+
+                await cli.getCrypto()!.bootstrapSecretStorage({
+                    setupNewSecretStorage: true,
+                    createSecretStorageKey: () => Promise.resolve(recoveryKey),
+                });
+            }
+
+            return cli;
+        },
+    );
 }
 
 Cypress.Commands.add("getBot", (homeserver: HomeserverInstance, opts: CreateBotOpts): Chainable<CypressBot> => {

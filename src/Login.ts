@@ -19,7 +19,7 @@ limitations under the License.
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { DELEGATED_OIDC_COMPATIBILITY, ILoginFlow, ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
+import { DELEGATED_OIDC_COMPATIBILITY, ILoginFlow, LoginFlow, LoginRequest } from "matrix-js-sdk/src/@types/auth";
 
 import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
@@ -102,7 +102,7 @@ export default class Login {
                 const oidcFlow = await tryInitOidcNativeFlow(
                     this.delegatedAuthentication,
                     SdkConfig.get().brand,
-                    SdkConfig.get().oidc_static_client_ids,
+                    SdkConfig.get().oidc_static_clients,
                 );
                 return [oidcFlow];
             } catch (error) {
@@ -211,9 +211,9 @@ export interface OidcNativeFlow extends ILoginFlow {
 const tryInitOidcNativeFlow = async (
     delegatedAuthConfig: ValidatedDelegatedAuthConfig,
     brand: string,
-    oidcStaticClientIds?: IConfigOptions["oidc_static_client_ids"],
+    oidcStaticClients?: IConfigOptions["oidc_static_clients"],
 ): Promise<OidcNativeFlow> => {
-    const clientId = await getOidcClientId(delegatedAuthConfig, brand, window.location.origin, oidcStaticClientIds);
+    const clientId = await getOidcClientId(delegatedAuthConfig, brand, window.location.origin, oidcStaticClients);
 
     const flow = {
         type: "oidcNativeFlow",
@@ -238,7 +238,7 @@ export async function sendLoginRequest(
     hsUrl: string,
     isUrl: string | undefined,
     loginType: string,
-    loginParams: ILoginParams,
+    loginParams: Omit<LoginRequest, "type">,
 ): Promise<IMatrixClientCreds> {
     const client = createClient({
         baseUrl: hsUrl,
