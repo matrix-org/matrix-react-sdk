@@ -212,7 +212,6 @@ function setupBotClient(
                 Object.assign(cli, { __cypress_recovery_key: recoveryKey });
 
                 await cli.getCrypto()!.bootstrapSecretStorage({
-                    setupNewKeyBackup: true,
                     setupNewSecretStorage: true,
                     createSecretStorageKey: () => Promise.resolve(recoveryKey),
                 });
