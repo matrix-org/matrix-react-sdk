@@ -188,6 +188,49 @@ async function infoForImageFile(matrixClient: MatrixClient, roomId: string, imag
 }
 
 /**
+ * Load a file into a newly created audio element and load the metadata
+ *
+ * @param {File} audioFile The file to load in an audio element.
+ * @return {Promise} A promise that resolves with the audio element.
+ */
+function loadAudioElement(audioFile: File): Promise<HTMLAudioElement> {
+    return new Promise((resolve, reject) => {
+        // Load the file into a html element
+        const audio = document.createElement("audio");
+        audio.preload = "metadata";
+        audio.muted = true;
+
+        const reader = new FileReader();
+
+        reader.onload = function (ev): void {
+            audio.onloadedmetadata = async function (): Promise<void> {
+                resolve(audio);
+            };
+            audio.onerror = function (e): void {
+                reject(e);
+            };
+
+            audio.src = ev.target?.result as string;
+        };
+        reader.onerror = function (e): void {
+            reject(e);
+        };
+        reader.readAsDataURL(audioFile);
+    });
+}
+
+/**
+ * Read the metadata for an audio file.
+ *
+ * @param {File} audioFile The audio to read.
+ * @return {Promise} A promise that resolves with the attachment info.
+ */
+async function infoForAudioFile(audioFile: File): Promise<AudioInfo> {
+    const audio = await loadAudioElement(audioFile);
+    return { duration: audio.duration };
+}
+
+/**
  * Load a file into a newly created video element and pull some strings
  * in an attempt to guarantee the first frame will be showing.
  *
@@ -246,6 +289,7 @@ function infoForVideoFile(matrixClient: MatrixClient, roomId: string, videoFile:
     const videoInfo: VideoInfo = {};
     return loadVideoElement(videoFile)
         .then((video) => {
+            videoInfo.duration = video.duration;
             return createThumbnail(video, video.videoWidth, video.videoHeight, thumbnailType);
         })
         .then((result) => {
@@ -545,6 +589,14 @@ export default class ContentMessages {
                 }
             } else if (file.type.indexOf("audio/") === 0) {
                 content.msgtype = MsgType.Audio;
+                try {
+                    const audioInfo = await infoForAudioFile(file);
+                    Object.assign(content.info, audioInfo);
+                } catch (e) {
+                    // Failed to process audio file, fall back to uploading an m.file
+                    logger.error(e);
+                    content.msgtype = MsgType.File;
+                }
             } else if (file.type.indexOf("video/") === 0) {
                 content.msgtype = MsgType.Video;
                 try {
