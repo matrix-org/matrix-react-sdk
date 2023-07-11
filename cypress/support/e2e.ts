@@ -19,6 +19,7 @@ limitations under the License.
 import "@percy/cypress";
 import "cypress-real-events";
 import "@testing-library/cypress/add-commands";
+import installLogsCollector from "cypress-terminal-report/src/installLogsCollector";
 
 import "./config.json";
 import "./homeserver";
@@ -39,3 +40,5 @@ import "./network";
 import "./composer";
 import "./proxy";
 import "./axe";
+
+installLogsCollector();
