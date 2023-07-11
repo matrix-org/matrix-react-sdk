@@ -3485,5 +3485,9 @@
     "Requires your server to support MSC3030": "Требуется, чтобы ваш сервер поддерживал MSC3030",
     "Grey": "Серый",
     "Red": "Красный",
-    "There are no active polls in this room": "В этой комнате нет активных опросов"
+    "There are no active polls in this room": "В этой комнате нет активных опросов",
+    "Temporary implementation. Locations persist in room history.": "Временная реализация. Местоположения сохраняются в истории комнаты.",
+    "Downloading update…": "Загрузка обновления…",
+    "Loading…": "Загрузка…",
+    "Rust cryptography implementation": "Реализация криптографии Rust"
 }
