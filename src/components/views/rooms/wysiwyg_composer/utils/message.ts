@@ -65,15 +65,13 @@ export async function sendMessage(
         eventName: "Composer",
         isEditing: false,
         isReply: Boolean(replyToEvent),
-        // TODO thread
         inThread: relation?.rel_type === THREAD_RELATION_TYPE.name,
     };
 
-    // TODO thread
-    /*if (posthogEvent.inThread) {
-        const threadRoot = room.findEventById(relation?.event_id);
+    if (posthogEvent.inThread) {
+        const threadRoot = room.findEventById(relation?.event_id ?? "");
         posthogEvent.startsThread = threadRoot?.getThread()?.events.length === 1;
-    }*/
+    }
     PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
 
     let content: IContent | null = null;
