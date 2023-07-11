@@ -779,7 +779,7 @@
     "<userName/> invited you": "<userName/> пригласил(а) вас",
     "You're previewing %(roomName)s. Want to join it?": "Вы просматриваете %(roomName)s. Хотите присоединиться?",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s не может быть предварительно просмотрена. Вы хотите присоединиться к ней?",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Обновление этой комнаты отключит текущий экземпляр комнаты и создаст обновлённую комнату с тем же именем.",
+    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Обновление этой комнаты отключит текущий экземпляр комнаты и создаст обновлённую комнату с тем же названием.",
     "This room has already been upgraded.": "Эта комната уже была обновлена.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Версия этой комнаты — <roomVersion />, этот домашний сервер считает её <i>нестабильной</i>.",
     "Add some now": "Добавить сейчас",
