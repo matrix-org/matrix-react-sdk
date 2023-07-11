@@ -555,7 +555,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         controller: new ServerSupportUnstableFeatureController(
             "feature_intentional_mentions",
             defaultWatchManager,
-            [],
+            [["org.matrix.msc3952_intentional_mentions"]],
             "v1.7",
         ),
     },
