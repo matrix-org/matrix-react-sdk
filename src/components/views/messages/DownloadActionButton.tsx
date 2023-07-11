@@ -31,7 +31,7 @@ interface IProps {
     // XXX: It can take a cycle or two for the MessageActionBar to have all the props/setup
     // required to get us a MediaEventHelper, so we use a getter function instead to prod for
     // one.
-    mediaEventHelperGet: () => MediaEventHelper;
+    mediaEventHelperGet: () => MediaEventHelper | undefined;
 }
 
 interface IState {
