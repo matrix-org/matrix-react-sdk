@@ -18,10 +18,12 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import React from "react";
 
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { useNotificationDefaultLevels } from "../../../hooks/useNotificationDefaultLevels";
 import { useNotificationState } from "../../../hooks/useRoomNotificationState";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { _t } from "../../../languageHandler";
 import { RoomNotifState } from "../../../RoomNotifs";
+import DMRoomMap from "../../../utils/DMRoomMap";
 import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
 import IconizedContextMenu, {
     IconizedContextMenuOptionList,
@@ -33,7 +35,16 @@ interface IProps extends IContextMenuProps {
     room: Room;
 }
 
+const labelWithDefault = (label: string): string => {
+    return _t("%(notificationLevel)s (Default)", {
+        notificationLevel: label,
+    });
+};
+
 export const RoomNotificationContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
+    const isDm = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+    const defaultLevels = useNotificationDefaultLevels();
+    const defaultLevel: RoomNotifState | undefined = isDm ? defaultLevels?.dm : defaultLevels?.room;
     const [notificationState, setNotificationState] = useNotificationState(room);
 
     const wrapHandler = (handler: (ev: ButtonEvent) => void, persistent = false): ((ev: ButtonEvent) => void) => {
@@ -61,20 +72,36 @@ export const RoomNotificationContextMenu: React.FC<IProps> = ({ room, onFinished
 
     const allMessagesOption: JSX.Element = (
         <IconizedContextMenuRadio
-            label={_t("All messages")}
+            label={
+                defaultLevel === RoomNotifState.MentionsOnly ? labelWithDefault(_t("All messages")) : _t("All messages")
+            }
             active={notificationState === RoomNotifState.AllMessagesLoud}
             iconClassName="mx_RoomNotificationContextMenu_iconBellDot"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.AllMessagesLoud))}
-        />
+        >
+            {_t("All messages")}
+            {defaultLevel === RoomNotifState.AllMessages && (
+                <span className="mx_RoomNotificationContextMenu_defaultLabel">{_t("(Default)")}</span>
+            )}
+        </IconizedContextMenuRadio>
     );
 
     const mentionsOption: JSX.Element = (
         <IconizedContextMenuRadio
-            label={_t("Mentions & keywords")}
+            label={
+                defaultLevel === RoomNotifState.MentionsOnly
+                    ? labelWithDefault(_t("Mentions & keywords"))
+                    : _t("Mentions & keywords")
+            }
             active={notificationState === RoomNotifState.MentionsOnly}
             iconClassName="mx_RoomNotificationContextMenu_iconBellMentions"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.MentionsOnly))}
-        />
+        >
+            {_t("Mentions & keywords")}
+            {defaultLevel === RoomNotifState.MentionsOnly && (
+                <span className="mx_RoomNotificationContextMenu_defaultLabel">{_t("(Default)")}</span>
+            )}
+        </IconizedContextMenuRadio>
     );
 
     const muteOption: JSX.Element = (

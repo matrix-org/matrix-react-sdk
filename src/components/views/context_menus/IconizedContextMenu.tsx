@@ -55,6 +55,7 @@ interface IRadioProps extends React.ComponentProps<typeof MenuItemRadio> {
 
 export const IconizedContextMenuRadio: React.FC<IRadioProps> = ({
     label,
+    children,
     iconClassName,
     active,
     className,
@@ -71,7 +72,7 @@ export const IconizedContextMenuRadio: React.FC<IRadioProps> = ({
             label={label}
         >
             {iconClassName && <span className={classNames("mx_IconizedContextMenu_icon", iconClassName)} />}
-            <span className="mx_IconizedContextMenu_label">{label}</span>
+            <span className="mx_IconizedContextMenu_label">{children ?? label}</span>
             {active && <span className="mx_IconizedContextMenu_icon mx_IconizedContextMenu_checked" />}
         </MenuItemRadio>
     );
