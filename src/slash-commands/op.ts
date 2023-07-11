@@ -73,9 +73,7 @@ export const op = new Command({
                 if (matches.length === 4 && undefined !== matches[3]) {
                     powerLevel = parseInt(matches[3], 10);
                 }
-                if (!isNaN(powerLevel)) {
-                    return updatePowerLevelHelper(cli, roomId, userId, powerLevel);
-                }
+                return updatePowerLevelHelper(cli, roomId, userId, powerLevel);
             }
         }
         return reject(this.getUsage());

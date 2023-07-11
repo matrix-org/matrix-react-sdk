@@ -138,6 +138,10 @@ describe("SlashCommands", () => {
             expect(command.run(client, roomId, null, "@bob:server Admin").error).toBe(command.getUsage());
         });
 
+        it("should reject with usage for invalid input", () => {
+            expect(command.run(client, roomId, null, " ").error).toBe(command.getUsage());
+        });
+
         it("should warn about self demotion", async () => {
             setCurrentRoom();
             const member = new RoomMember(roomId, client.getSafeUserId());
@@ -175,6 +179,10 @@ describe("SlashCommands", () => {
             room.getMember = () => member;
             command.run(client, roomId, null, client.getSafeUserId());
             expect(warnSelfDemote).toHaveBeenCalled();
+        });
+
+        it("should reject with usage for invalid input", () => {
+            expect(command.run(client, roomId, null, " ").error).toBe(command.getUsage());
         });
     });
 
