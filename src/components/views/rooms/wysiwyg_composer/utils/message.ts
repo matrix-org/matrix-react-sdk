@@ -67,6 +67,8 @@ export async function sendMessage(
         isReply: Boolean(replyToEvent),
         inThread: relation?.rel_type === THREAD_RELATION_TYPE.name,
         isLocation: false,
+        editor: isHTML ? "RteFormatting" : "RtePlain",
+        isMarkdownEnabled: false,
     };
 
     if (posthogEvent.inThread) {
@@ -201,6 +203,8 @@ export async function editMessage(
         inThread: Boolean(editedEvent?.getThread()),
         isReply: Boolean(editedEvent.replyEventId),
         isLocation: false,
+        editor: "RteFormatting", // it is always the rich text mode when editing a message
+        isMarkdownEnabled: false,
     });
 
     // TODO emoji

@@ -311,6 +311,8 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             inThread: !!editedEvent?.getThread(),
             isReply: !!editedEvent.replyEventId,
             isLocation: false,
+            editor: "Legacy",
+            isMarkdownEnabled: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
         });
 
         // Replace emoticon at the end of the message

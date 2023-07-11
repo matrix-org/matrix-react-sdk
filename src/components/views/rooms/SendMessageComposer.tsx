@@ -450,6 +450,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             isReply: !!this.props.replyToEvent,
             inThread: this.props.relation?.rel_type === THREAD_RELATION_TYPE.name,
             isLocation: false,
+            editor: "Legacy",
+            isMarkdownEnabled: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
         };
         if (posthogEvent.inThread && this.props.relation!.event_id) {
             const threadRoot = this.props.room.findEventById(this.props.relation!.event_id);
