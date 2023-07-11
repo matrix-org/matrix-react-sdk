@@ -40,6 +40,7 @@ import { ButtonEvent } from "../../../elements/AccessibleButton";
 import { openLinkModal } from "./LinkModal";
 import { useComposerContext } from "../ComposerContext";
 import { isNotUndefined } from "../../../../../Typeguards";
+import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 
 interface TooltipProps {
     label: string;
@@ -211,8 +212,12 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
 /**
  * Util function to fire a formatting analytic event
  * @param formatAction - the action that will be recorded in the analytic event that is fired
- * @returns
+ * @returns void
  */
 function fireFormattingAnalyticEvent(formatAction: FormattedMessageEvent["formatAction"]): void {
-    console.log("<<<", formatAction);
+    PosthogAnalytics.instance.trackEvent<FormattedMessageEvent>({
+        eventName: "FormattedMessage",
+        editor: "RteFormatting",
+        formatAction,
+    });
 }
