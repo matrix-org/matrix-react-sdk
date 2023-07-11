@@ -3489,5 +3489,9 @@
     "Temporary implementation. Locations persist in room history.": "Временная реализация. Местоположения сохраняются в истории комнаты.",
     "Downloading update…": "Загрузка обновления…",
     "Loading…": "Загрузка…",
-    "Rust cryptography implementation": "Реализация криптографии Rust"
+    "Rust cryptography implementation": "Реализация криптографии Rust",
+    "View poll in timeline": "Посмотреть опрос в ленте сообщений",
+    "Your language": "Ваш язык",
+    "Message in %(room)s": "Сообщение в %(room)s",
+    "Message from %(user)s": "Сообщение от %(user)s"
 }
