@@ -66,6 +66,7 @@ export async function sendMessage(
         isEditing: false,
         isReply: Boolean(replyToEvent),
         inThread: relation?.rel_type === THREAD_RELATION_TYPE.name,
+        isLocation: false,
     };
 
     if (posthogEvent.inThread) {
@@ -199,6 +200,7 @@ export async function editMessage(
         isEditing: true,
         inThread: Boolean(editedEvent?.getThread()),
         isReply: Boolean(editedEvent.replyEventId),
+        isLocation: false,
     });
 
     // TODO emoji
