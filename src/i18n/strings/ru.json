@@ -3493,5 +3493,8 @@
     "View poll in timeline": "Посмотреть опрос в ленте сообщений",
     "Your language": "Ваш язык",
     "Message in %(room)s": "Сообщение в %(room)s",
-    "Message from %(user)s": "Сообщение от %(user)s"
+    "Message from %(user)s": "Сообщение от %(user)s",
+    "Thread Id: ": "Id обсуждения: ",
+    "Creating rooms…": "Создание комнат…",
+    "Sign out of all devices": "Выйти из всех сеансов"
 }
