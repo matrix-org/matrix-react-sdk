@@ -227,7 +227,7 @@ function loadAudioElement(audioFile: File): Promise<HTMLAudioElement> {
  */
 async function infoForAudioFile(audioFile: File): Promise<AudioInfo> {
     const audio = await loadAudioElement(audioFile);
-    return { duration: audio.duration };
+    return { duration: Math.ceil(audio.duration * 1000) };
 }
 
 /**
@@ -289,7 +289,7 @@ function infoForVideoFile(matrixClient: MatrixClient, roomId: string, videoFile:
     const videoInfo: VideoInfo = {};
     return loadVideoElement(videoFile)
         .then((video) => {
-            videoInfo.duration = video.duration;
+            videoInfo.duration = Math.ceil(video.duration * 1000);
             return createThumbnail(video, video.videoWidth, video.videoHeight, thumbnailType);
         })
         .then((result) => {
