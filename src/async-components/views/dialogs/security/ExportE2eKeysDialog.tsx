@@ -98,10 +98,10 @@ export default class ExportE2eKeysDialog extends React.Component<IProps, IState>
         ev.preventDefault();
 
         if (!(await this.verifyFieldsBeforeSubmit())) return;
+        if (this.unmounted) return;
 
         const passphrase = this.state.passphrase1;
         this.startExport(passphrase);
-        return;
     };
 
     private startExport(passphrase: string): void {
