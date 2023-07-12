@@ -616,7 +616,7 @@
     "Unable to restore backup": "Невозможно восстановить резервную копию",
     "No backup found!": "Резервных копий не найдено!",
     "Download": "Скачать",
-    "Username": "Имя пользователя",
+    "Username": "Псевдоним",
     "Email (optional)": "Адрес электронной почты (не обязательно)",
     "Phone (optional)": "Телефон (не обязательно)",
     "Confirm": "Подтвердить",
@@ -2789,7 +2789,7 @@
     "Add people": "Добавить людей",
     "You do not have permissions to invite people to this space": "У вас нет разрешения приглашать людей в это пространство",
     "Invite to space": "Пригласить в пространство",
-    "Start new chat": "Начать новый чат",
+    "Start new chat": "Начать ЛС",
     "Recently viewed": "Недавно просмотренные",
     "Poll": "Опрос",
     "You do not have permission to start polls in this room.": "У вас нет разрешения начинать опросы в этой комнате.",
@@ -3335,7 +3335,7 @@
     "Model": "Модель",
     "Live": "В эфире",
     "Video call (%(brand)s)": "Видеозвонок (%(brand)s)",
-    "Voice broadcasts": "Аудиопередачи",
+    "Voice broadcasts": "Голосовые трансляции",
     "Voice broadcast": "Голосовая трансляция",
     "New group call experience": "Новый опыт группового вызова",
     "Video call started": "Начался видеозвонок",
@@ -3496,5 +3496,8 @@
     "Message from %(user)s": "Сообщение от %(user)s",
     "Thread Id: ": "Id обсуждения: ",
     "Creating rooms…": "Создание комнат…",
-    "Sign out of all devices": "Выйти из всех сеансов"
+    "Sign out of all devices": "Выйти из всех сеансов",
+    "Set a new account password…": "Установите новый пароль…",
+    "%(senderName)s started a voice broadcast": "%(senderName)s начал(а) голосовую трансляцию",
+    "Room directory": "Каталог комнат"
 }
