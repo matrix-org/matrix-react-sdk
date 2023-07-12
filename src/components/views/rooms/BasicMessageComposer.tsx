@@ -16,6 +16,7 @@ limitations under the License.
 
 import classNames from "classnames";
 import React, { createRef, ClipboardEvent, SyntheticEvent } from "react";
+import { FormattedMessage as FormattedMessageEvent } from "@matrix-org/analytics-events/types/typescript/FormattedMessage";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import EMOTICON_REGEX from "emojibase-regex/emoticon";
@@ -52,6 +53,7 @@ import { _t } from "../../../languageHandler";
 import { linkify } from "../../../linkify-matrix";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { PosthogAnalytics } from "../../../PosthogAnalytics";
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp("(?:^|\\s)(" + EMOTICON_REGEX.source + ")\\s|:^$");
@@ -771,6 +773,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             return;
         }
 
+        fireFormattingAnalyticEvent(action);
+
         const range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection()!);
 
         this.historyManager.ensureLastChangesPushed(this.props.model);
@@ -905,4 +909,41 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             return model.positionForOffset(caret.offset + addedLen, true);
         });
     }
+}
+
+/**
+ * Util function to convert a `Formatting` action to a formatting analytic event and then fire that event
+ *
+ * @param action - the formatting action that will be recorded in the analytic event that is fired
+ * @returns void
+ */
+function fireFormattingAnalyticEvent(action: Formatting): void {
+    let formatAction: FormattedMessageEvent["formatAction"];
+
+    switch (action) {
+        case Formatting.Bold:
+            formatAction = "Bold";
+            break;
+        case Formatting.Italics:
+            formatAction = "Italic";
+            break;
+        case Formatting.Strikethrough:
+            formatAction = "Strikethrough";
+            break;
+        case Formatting.Code:
+            formatAction = "InlineCode";
+            break;
+        case Formatting.Quote:
+            formatAction = "Quote";
+            break;
+        case Formatting.InsertLink:
+            formatAction = "Link";
+            break;
+    }
+
+    PosthogAnalytics.instance.trackEvent<FormattedMessageEvent>({
+        eventName: "FormattedMessage",
+        editor: "RteFormatting",
+        formatAction,
+    });
 }
