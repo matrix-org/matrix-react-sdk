@@ -19,7 +19,6 @@ limitations under the License.
 import {
     IAddThreePidOnlyBody,
     IAuthData,
-    IBindThreePidBody,
     IRequestMsisdnTokenResponse,
     IRequestTokenResponse,
     MatrixClient,
@@ -260,7 +259,7 @@ export default class AddThreepid {
                         sid: this.sessionId!,
                         client_secret: this.clientSecret,
                         id_server: getIdServerDomain(this.matrixClient),
-                    } as IBindThreePidBody,
+                    },
                     this.bind,
                 );
             }
@@ -381,7 +380,7 @@ export default class AddThreepid {
                     sid: this.sessionId!,
                     client_secret: this.clientSecret,
                     id_server: getIdServerDomain(this.matrixClient),
-                } as IBindThreePidBody,
+                },
                 this.bind,
             );
         }
