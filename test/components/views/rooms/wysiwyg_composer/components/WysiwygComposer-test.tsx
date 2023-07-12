@@ -430,7 +430,7 @@ describe("WysiwygComposer", () => {
                 jest.restoreAllMocks();
             });
 
-            it("fires an User type analytic event for a user selection", async () => {
+            it("fires a User type analytic event for a user selection", async () => {
                 await insertMentionInput();
                 await userEvent.click(screen.getByText("user_1"));
 
