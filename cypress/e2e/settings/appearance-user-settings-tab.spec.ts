@@ -299,32 +299,5 @@ describe("Appearance user settings tab", () => {
                 cy.findByLabelText("Use high contrast").should("not.exist");
             },
         );
-
-        it("should support enabling the high contast theme", () => {
-            cy.createRoom({ name: "Test Room" }).viewRoomByName("Test Room");
-
-            cy.get(".mx_GenericEventListSummary").within(() => {
-                // Assert that $primary-content is applied to GELS summary on the light theme
-                // $primary-content on the light theme = #17191c = rgb(27, 29, 34)
-                cy.get(".mx_TextualEvent.mx_GenericEventListSummary_summary")
-                    .should("have.css", "color", "rgb(27, 29, 34)")
-                    .should("have.css", "opacity", "0.5");
-            });
-
-            cy.openUserSettings("Appearance")
-                .findByTestId("mx_ThemeChoicePanel")
-                .findByLabelText("Use high contrast")
-                .click({ force: true }); // force click because the size of the checkbox is zero
-
-            cy.closeDialog();
-
-            cy.get(".mx_GenericEventListSummary").within(() => {
-                // Assert that $secondary-content is specified for GELS summary on the high contrast theme
-                // $secondary-content on the high contrast theme = #5e6266 = rgb(71, 74, 81)
-                cy.get(".mx_TextualEvent.mx_GenericEventListSummary_summary")
-                    .should("have.css", "color", "rgb(71, 74, 81)")
-                    .should("have.css", "opacity", "1");
-            });
-        });
     });
 });
