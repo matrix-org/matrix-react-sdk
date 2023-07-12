@@ -14,27 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mocked } from "jest-mock";
+import { Crypto } from "@peculiar/webcrypto";
 import { logger } from "matrix-js-sdk/src/logger";
 import * as MatrixJs from "matrix-js-sdk/src/matrix";
 import { setCrypto } from "matrix-js-sdk/src/crypto/crypto";
-import { Crypto } from "@peculiar/webcrypto";
 import * as MatrixCryptoAes from "matrix-js-sdk/src/crypto/aes";
 
 import StorageEvictedDialog from "../src/components/views/dialogs/StorageEvictedDialog";
 import { restoreFromLocalStorage, setLoggedIn } from "../src/Lifecycle";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
 import Modal from "../src/Modal";
-import PlatformPeg from "../src/PlatformPeg";
 import * as StorageManager from "../src/utils/StorageManager";
+import { getMockClientWithEventEmitter, mockPlatformPeg } from "./test-utils";
 
 const webCrypto = new Crypto();
 
 const windowCrypto = window.crypto;
-
-import { getMockClientWithEventEmitter, mockPlatformPeg } from "./test-utils";
-import { subtleCrypto } from "matrix-js-sdk/src/crypto/crypto";
-import BasePlatform from "../src/BasePlatform";
 
 describe("Lifecycle", () => {
     const mockPlatform = mockPlatformPeg({
