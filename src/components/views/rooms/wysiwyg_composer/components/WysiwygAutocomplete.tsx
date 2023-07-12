@@ -16,14 +16,21 @@ limitations under the License.
 
 import React, { ForwardedRef, forwardRef } from "react";
 import { FormattingFunctions, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
+import { Mention as MentionEvent } from "@matrix-org/analytics-events/types/typescript/Mention";
 
 import { useRoomContext } from "../../../../../contexts/RoomContext";
 import Autocomplete from "../../Autocomplete";
 import { ICompletion } from "../../../../../autocomplete/Autocompleter";
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
 import { getMentionDisplayText, getMentionAttributes, buildQuery } from "../utils/autocomplete";
+import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 
 interface WysiwygAutocompleteProps {
+    /**
+     * The editor mode that is using this component, used to generate analytics around use of Mentions.
+     */
+    analyticsEditor: Exclude<MentionEvent["editor"], "Legacy">;
+
     /**
      * The suggestion output from the rust model is used to build the query that is
      * passed to the `<Autocomplete />` component
@@ -68,7 +75,16 @@ const WysiwygAutocomplete = forwardRef(
                 return;
             }
 
-            switch (completion.type) {
+            const { type, href } = completion;
+
+            // fire analytics tracking events if required
+            if (type === "room" || type === "at-room") {
+                trackMentionAnalyticEvent("Room");
+            } else if (type === "user") {
+                trackMentionAnalyticEvent("User");
+            }
+
+            switch (type) {
                 case "command": {
                     // TODO determine if utils in SlashCommands.tsx are required.
                     // Trim the completion as some include trailing spaces, but we always insert a
@@ -82,9 +98,9 @@ const WysiwygAutocomplete = forwardRef(
                 }
                 case "room":
                 case "user": {
-                    if (typeof completion.href === "string") {
+                    if (typeof href === "string") {
                         handleMention(
-                            completion.href,
+                            href,
                             getMentionDisplayText(completion, client),
                             getMentionAttributes(completion, client, room),
                         );
@@ -116,3 +132,16 @@ const WysiwygAutocomplete = forwardRef(
 WysiwygAutocomplete.displayName = "WysiwygAutocomplete";
 
 export { WysiwygAutocomplete };
+
+/**
+ * Util function to fire a formatting analytic event
+ * @param formatAction - the action that will be recorded in the analytic event that is fired
+ * @returns void
+ */
+function trackMentionAnalyticEvent(targetType: MentionEvent["targetType"]): void {
+    PosthogAnalytics.instance.trackEvent<MentionEvent>({
+        eventName: "Mention",
+        editor: "RteFormatting",
+        targetType,
+    });
+}
