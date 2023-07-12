@@ -50,6 +50,7 @@ export interface IMatrixClientCreds {
     userId: string;
     deviceId?: string;
     accessToken: string;
+    refreshToken?: string;
     guest?: boolean;
     pickleKey?: string;
     freshLogin?: boolean;
