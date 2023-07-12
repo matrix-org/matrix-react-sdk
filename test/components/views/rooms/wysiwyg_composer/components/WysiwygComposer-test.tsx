@@ -421,6 +421,51 @@ describe("WysiwygComposer", () => {
             // check that it we still have the initial text
             expect(screen.getByText(initialInput)).toBeInTheDocument();
         });
+
+        describe("Analytics", () => {
+            beforeEach(async () => {
+                jest.spyOn(mockPosthogAnalytics.PosthogAnalytics.instance, "trackEvent").mockImplementation(() => {});
+            });
+            afterEach(() => {
+                jest.restoreAllMocks();
+            });
+
+            it("fires an User type analytic event for a user selection", async () => {
+                await insertMentionInput();
+                await userEvent.click(screen.getByText("user_1"));
+
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledWith({
+                    eventName: "Mention",
+                    targetType: "User",
+                    editor: "RteFormatting",
+                });
+            });
+
+            it("fires a Room type analytic event for a room selection", async () => {
+                await insertMentionInput();
+                await userEvent.click(screen.getByText("room_with_completion_id"));
+
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledWith({
+                    eventName: "Mention",
+                    targetType: "Room",
+                    editor: "RteFormatting",
+                });
+            });
+
+            it("fires a Room type analytic event for an at-room selection", async () => {
+                await insertMentionInput();
+                await userEvent.click(screen.getByText("@room"));
+
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledWith({
+                    eventName: "Mention",
+                    targetType: "Room",
+                    editor: "RteFormatting",
+                });
+            });
+        });
     });
 
     describe("When settings require Ctrl+Enter to send", () => {

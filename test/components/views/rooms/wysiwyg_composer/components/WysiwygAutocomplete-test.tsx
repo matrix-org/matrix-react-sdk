@@ -81,6 +81,7 @@ describe("WysiwygAutocomplete", () => {
             <MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={mockRoomContext}>
                     <WysiwygAutocomplete
+                        analyticsEditor="RteFormatting"
                         ref={autocompleteRef}
                         suggestion={null}
                         handleMention={mockHandleMention}
@@ -96,6 +97,7 @@ describe("WysiwygAutocomplete", () => {
     it("does not show the autocomplete when room is undefined", () => {
         render(
             <WysiwygAutocomplete
+                analyticsEditor="RteFormatting"
                 ref={autocompleteRef}
                 suggestion={null}
                 handleMention={mockHandleMention}
