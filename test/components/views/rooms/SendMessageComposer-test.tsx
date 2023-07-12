@@ -183,7 +183,7 @@ describe("<SendMessageComposer/>", () => {
             const content: IContent = {};
             attachMentions("@alice:test", content, model, undefined);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": {},
+                "m.mentions": {},
             });
         });
 
@@ -192,7 +192,7 @@ describe("<SendMessageComposer/>", () => {
             const content: IContent = {};
             attachMentions("@alice:test", content, model, undefined);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] },
+                "m.mentions": { user_ids: ["@bob:test"] },
             });
         });
 
@@ -203,13 +203,13 @@ describe("<SendMessageComposer/>", () => {
                 type: "m.room.message",
                 user: "@bob:test",
                 room: "!abc:test",
-                content: { "org.matrix.msc3952.mentions": {} },
+                content: { "m.mentions": {} },
                 event: true,
             });
             let content: IContent = {};
             attachMentions("@alice:test", content, model, replyToEvent);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] },
+                "m.mentions": { user_ids: ["@bob:test"] },
             });
 
             // It also adds any other mentioned users, but removes yourself.
@@ -217,13 +217,13 @@ describe("<SendMessageComposer/>", () => {
                 type: "m.room.message",
                 user: "@bob:test",
                 room: "!abc:test",
-                content: { "org.matrix.msc3952.mentions": { user_ids: ["@alice:test", "@charlie:test"] } },
+                content: { "m.mentions": { user_ids: ["@alice:test", "@charlie:test"] } },
                 event: true,
             });
             content = {};
             attachMentions("@alice:test", content, model, replyToEvent);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": { user_ids: ["@bob:test", "@charlie:test"] },
+                "m.mentions": { user_ids: ["@bob:test", "@charlie:test"] },
             });
         });
 
@@ -232,7 +232,7 @@ describe("<SendMessageComposer/>", () => {
             const content: IContent = {};
             attachMentions("@alice:test", content, model, undefined);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": { room: true },
+                "m.mentions": { room: true },
             });
         });
 
@@ -243,13 +243,13 @@ describe("<SendMessageComposer/>", () => {
                 type: "m.room.message",
                 user: "@alice:test",
                 room: "!abc:test",
-                content: { "org.matrix.msc3952.mentions": { room: true } },
+                content: { "m.mentions": { room: true } },
                 event: true,
             });
             const content: IContent = {};
             attachMentions("@alice:test", content, model, replyToEvent);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": {},
+                "m.mentions": {},
             });
         });
 
@@ -261,13 +261,13 @@ describe("<SendMessageComposer/>", () => {
                 user: "@alice:test",
                 room: "!abc:test",
                 // @ts-ignore - Purposefully testing invalid data.
-                content: { "org.matrix.msc3952.mentions": { user_ids: "@bob:test" } },
+                content: { "m.mentions": { user_ids: "@bob:test" } },
                 event: true,
             });
             const content: IContent = {};
             attachMentions("@alice:test", content, model, replyToEvent);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": {},
+                "m.mentions": {},
             });
         });
 
@@ -278,8 +278,8 @@ describe("<SendMessageComposer/>", () => {
                 const prevContent: IContent = {};
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": {},
-                    "m.new_content": { "org.matrix.msc3952.mentions": {} },
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": {} },
                 });
             });
 
@@ -287,12 +287,12 @@ describe("<SendMessageComposer/>", () => {
                 const model = new EditorModel([], partsCreator);
                 const content: IContent = { "m.new_content": {} };
                 const prevContent: IContent = {
-                    "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"], room: true },
+                    "m.mentions": { user_ids: ["@bob:test"], room: true },
                 };
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": {},
-                    "m.new_content": { "org.matrix.msc3952.mentions": {} },
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": {} },
                 });
             });
 
@@ -302,19 +302,19 @@ describe("<SendMessageComposer/>", () => {
                 const prevContent: IContent = {};
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] },
-                    "m.new_content": { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] } },
+                    "m.mentions": { user_ids: ["@bob:test"] },
+                    "m.new_content": { "m.mentions": { user_ids: ["@bob:test"] } },
                 });
             });
 
             it("test prev user mentions", () => {
                 const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
                 const content: IContent = { "m.new_content": {} };
-                const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] } };
+                const prevContent: IContent = { "m.mentions": { user_ids: ["@bob:test"] } };
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": {},
-                    "m.new_content": { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] } },
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": { user_ids: ["@bob:test"] } },
                 });
             });
 
@@ -324,19 +324,19 @@ describe("<SendMessageComposer/>", () => {
                 const prevContent: IContent = {};
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": { room: true },
-                    "m.new_content": { "org.matrix.msc3952.mentions": { room: true } },
+                    "m.mentions": { room: true },
+                    "m.new_content": { "m.mentions": { room: true } },
                 });
             });
 
             it("test prev room mention", () => {
                 const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
                 const content: IContent = { "m.new_content": {} };
-                const prevContent: IContent = { "org.matrix.msc3952.mentions": { room: true } };
+                const prevContent: IContent = { "m.mentions": { room: true } };
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": {},
-                    "m.new_content": { "org.matrix.msc3952.mentions": { room: true } },
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": { room: true } },
                 });
             });
 
@@ -345,11 +345,11 @@ describe("<SendMessageComposer/>", () => {
                 const model = new EditorModel([], partsCreator);
                 const content: IContent = { "m.new_content": {} };
                 // @ts-ignore - Purposefully testing invalid data.
-                const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: "@bob:test" } };
+                const prevContent: IContent = { "m.mentions": { user_ids: "@bob:test" } };
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": {},
-                    "m.new_content": { "org.matrix.msc3952.mentions": {} },
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": {} },
                 });
             });
         });
