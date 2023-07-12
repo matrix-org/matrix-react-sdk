@@ -464,7 +464,7 @@
                 ],
                 "rule_id": ".m.rule.tombstone",
                 "default": true,
-                "enabled": false,
+                "enabled": true,
                 "kind": "override"
             },
             {

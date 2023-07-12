@@ -44,7 +44,7 @@ describe("NotificationSettings", () => {
             activity: {
                 bot_notices: false,
                 invite: true,
-                status_event: false,
+                status_event: true,
                 member_event: false,
             },
             mentions: {
@@ -111,12 +111,6 @@ describe("NotificationSettings", () => {
                 rule_id: RuleId.InviteToSelf,
                 enabled: true,
                 actions: StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
-            },
-            {
-                kind: PushRuleKind.Override,
-                rule_id: RuleId.Tombstone,
-                enabled: true,
-                actions: StandardActions.ACTION_HIGHLIGHT,
             },
         ]);
     });

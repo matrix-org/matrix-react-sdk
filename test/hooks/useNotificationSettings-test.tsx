@@ -42,7 +42,8 @@ const expectedModel: NotificationSettings = {
     activity: {
         bot_notices: false,
         invite: true,
-        status_event: false,
+        status_event: true,
+        member_event: false,
     },
     mentions: {
         user: true,
