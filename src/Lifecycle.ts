@@ -223,7 +223,7 @@ export async function attemptDelegatedAuthLogin(
  */
 async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
     try {
-        const { accessToken, homeserverUrl, identityServerUrl } = await completeOidcLogin(queryParams);
+        const { accessToken, refreshToken, homeserverUrl, identityServerUrl } = await completeOidcLogin(queryParams);
 
         const {
             user_id: userId,
@@ -233,6 +233,7 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
 
         const credentials = {
             accessToken,
+            refreshToken,
             homeserverUrl,
             identityServerUrl,
             deviceId,
@@ -478,7 +479,7 @@ export async function getStoredSessionVars(): Promise<Partial<IStoredSession>> {
     }
     // if we pre-date storing "mx_has_access_token", but we retrieved an access
     // token, then we should say we have an access token
-    const hasAccessToken = localStorage.getItem("mx_has_access_token") === "true" || !!accessToken;
+    const hasAccessToken = localStorage.getItem(`mx_has_${ACCESS_TOKEN_NAME}`) === "true" || !!accessToken;
     const userId = localStorage.getItem("mx_user_id") ?? undefined;
     const deviceId = localStorage.getItem("mx_device_id") ?? undefined;
 
@@ -780,6 +781,15 @@ class AbortLoginAndRebuildStorage extends Error {}
  * @param pickleKey optional pickle key used to encrypt token
  */
 async function persistTokenInStorage(storageKey: string, name: string, token: string | undefined, pickleKey: IMatrixClientCreds['pickleKey']): Promise<void> {
+    const hasTokenStorageKey = `mx_has_${name}`;
+    // store whether we expect to find a token, to detect the case
+    // where IndexedDB is blown away
+    if (token) {
+        localStorage.setItem(hasTokenStorageKey, "true");
+    } else {
+        localStorage.removeItem(hasTokenStorageKey);
+    }
+
     if (pickleKey) {
         let encryptedToken: IEncryptedPayload | undefined;
         try {
@@ -828,14 +838,6 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     }
     localStorage.setItem("mx_user_id", credentials.userId);
     localStorage.setItem("mx_is_guest", JSON.stringify(credentials.guest));
-
-    // store whether we expect to find an access token, to detect the case
-    // where IndexedDB is blown away
-    if (credentials.accessToken) {
-        localStorage.setItem("mx_has_access_token", "true");
-    } else {
-        localStorage.removeItem("mx_has_access_token");
-    }
 
     await persistTokenInStorage(ACCESS_TOKEN_STORAGE_KEY, ACCESS_TOKEN_NAME ,credentials.accessToken, credentials.pickleKey);
     await persistTokenInStorage(REFRESH_TOKEN_STORAGE_KEY, REFRESH_TOKEN_NAME, credentials.refreshToken, credentials.pickleKey);

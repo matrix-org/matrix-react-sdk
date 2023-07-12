@@ -269,6 +269,8 @@ describe("Lifecycle", () => {
             jest.spyOn(mockPlatform, "createPickleKey");
         });
 
+        const refreshToken = 'test-refresh-token';
+
         const credentials = {
             homeserverUrl,
             identityServerUrl,
@@ -303,6 +305,18 @@ describe("Lifecycle", () => {
                 expect(localStorage.setItem).toHaveBeenCalledWith("mx_device_id", deviceId);
 
                 expect(StorageManager.idbSave).toHaveBeenCalledWith("account", "mx_access_token", accessToken);
+                // dont put accessToken in localstorage when we have idb
+                expect(localStorage.setItem).not.toHaveBeenCalledWith("mx_access_token", accessToken);
+            });
+
+            it("should persist a refreshToken when present", async () => {
+                await setLoggedIn({
+                    ...credentials,
+                    refreshToken
+                });
+
+                expect(StorageManager.idbSave).toHaveBeenCalledWith("account", "mx_access_token", accessToken);
+                expect(StorageManager.idbSave).toHaveBeenCalledWith("account", "mx_refresh_token", refreshToken);
                 // dont put accessToken in localstorage when we have idb
                 expect(localStorage.setItem).not.toHaveBeenCalledWith("mx_access_token", accessToken);
             });
