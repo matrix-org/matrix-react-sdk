@@ -25,18 +25,28 @@ import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import EditorModel from "../../../../src/editor/model";
 import { createPartCreator, createRenderer } from "../../../editor/mock";
 import SettingsStore from "../../../../src/settings/SettingsStore";
+import * as mockPosthogAnalytics from "../../../../src/PosthogAnalytics";
 
 describe("BasicMessageComposer", () => {
     const renderer = createRenderer();
     const pc = createPartCreator();
-
-    TestUtils.stubClient();
-
-    const client: MatrixClient = MatrixClientPeg.safeGet();
-
     const roomId = "!1234567890:domain";
-    const userId = client.getSafeUserId();
-    const room = new Room(roomId, client, userId);
+
+    let client: MatrixClient;
+    let userId: string;
+    let room: Room;
+
+    beforeEach(() => {
+        TestUtils.stubClient();
+        client = MatrixClientPeg.safeGet();
+
+        userId = client.getSafeUserId();
+        room = new Room(roomId, client, userId);
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
 
     it("should allow a user to paste a URL without it being mangled", async () => {
         const model = new EditorModel([], pc, renderer);
@@ -81,6 +91,67 @@ describe("BasicMessageComposer", () => {
             const transformedText = model.parts.map((part) => part.text).join("");
             expect(transformedText).toBe(after + " ");
         }
+    });
+
+    describe("Analytics", () => {
+        beforeEach(async () => {
+            jest.spyOn(mockPosthogAnalytics.PosthogAnalytics.instance, "trackEvent").mockImplementation(() => {});
+        });
+
+        const buttonsWithShortcuts = [
+            { name: "Bold", formatAction: "Bold", keyboardShortcut: "{Control>}b{/Control}" },
+            { name: "Italics", formatAction: "Italic", keyboardShortcut: "{Control>}i{/Control}" },
+            { name: "Code block", formatAction: "InlineCode", keyboardShortcut: "{Control>}e{/Control}" },
+            { name: "Quote", formatAction: "Quote", keyboardShortcut: "{Control>}{Shift>}>{/Shift}{/Control}" },
+            { name: "Insert link", formatAction: "Link", keyboardShortcut: "{Control>}{Shift>}l{/Shift}{/Control}" },
+        ];
+        const buttonsWithoutShortcuts = [{ name: "Strikethrough", formatAction: "Strikethrough" }];
+
+        it.each([...buttonsWithShortcuts, ...buttonsWithoutShortcuts])(
+            "Fires analytic event on click for: $name",
+            async ({ name, formatAction }) => {
+                userEvent.setup();
+                const model = new EditorModel([], pc, renderer);
+                render(<BasicMessageComposer model={model} room={room} />);
+
+                // type some text then use the keyboard to highlight a selection to display the formatting menu
+                await userEvent.type(screen.getByRole("textbox"), "hello{Shift>}{ArrowLeft}{/Shift}");
+
+                // select the button and click it to simulate activating the formatting method
+                const button = screen.getByRole("button", { name });
+                await userEvent.click(button);
+                // check that the analytics tracking has fired once with the expected formattingAction
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledWith({
+                    eventName: "FormattedMessage",
+                    editor: "RteFormatting",
+                    formatAction,
+                });
+            },
+        );
+
+        it.each(buttonsWithShortcuts)(
+            "Fires analytic event on use of keyboard shortcut for: $name",
+            async ({ formatAction, keyboardShortcut }) => {
+                userEvent.setup();
+                const model = new EditorModel([], pc, renderer);
+                render(<BasicMessageComposer model={model} room={room} />);
+
+                // type some text then use the keyboard to highlight a selection to display the formatting menu
+                await userEvent.type(screen.getByRole("textbox"), "hello");
+
+                // activate the button using the keyboard shortcut
+                await userEvent.keyboard(keyboardShortcut);
+
+                // check that the analytics tracking has fired once with the expected formattingAction
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledWith({
+                    eventName: "FormattedMessage",
+                    editor: "RteFormatting",
+                    formatAction,
+                });
+            },
+        );
     });
 });
 
