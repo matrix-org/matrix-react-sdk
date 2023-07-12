@@ -250,11 +250,7 @@
                     }
                 ],
                 "actions": [
-                    "notify",
-                    {
-                        "set_tweak": "highlight",
-                        "value": false
-                    }
+                    "dont_notify"
                 ],
                 "rule_id": ".m.rule.member_event",
                 "default": true,

@@ -363,12 +363,6 @@ describe("<Notifications />", () => {
                 expect(cli.setPushRuleActions).toHaveBeenCalledWith(
                     "global",
                     PushRuleKind.Override,
-                    RuleId.MemberEvent,
-                    StandardActions.ACTION_NOTIFY,
-                );
-                expect(cli.setPushRuleActions).toHaveBeenCalledWith(
-                    "global",
-                    PushRuleKind.Override,
                     RuleId.Tombstone,
                     StandardActions.ACTION_HIGHLIGHT,
                 );

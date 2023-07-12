@@ -95,7 +95,7 @@ function toStandardRules(
         rule_id: RuleId.MemberEvent,
         kind: PushRuleKind.Override,
         enabled: true,
-        actions: model.activity.status_event ? StandardActions.ACTION_NOTIFY : StandardActions.ACTION_DONT_NOTIFY,
+        actions: model.activity.member_event ? StandardActions.ACTION_NOTIFY : StandardActions.ACTION_DONT_NOTIFY,
     });
 
     const mentionActions = NotificationUtils.encodeActions({

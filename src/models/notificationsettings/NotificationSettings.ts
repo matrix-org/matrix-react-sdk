@@ -32,6 +32,7 @@ export type NotificationSettings = {
     activity: {
         invite: boolean;
         status_event: boolean;
+        member_event: boolean;
         bot_notices: boolean;
     };
     mentions: {
@@ -55,7 +56,8 @@ export const DefaultNotificationSettings: NotificationSettings = {
     },
     activity: {
         invite: true,
-        status_event: false,
+        status_event: true,
+        member_event: false,
         bot_notices: true,
     },
     mentions: {

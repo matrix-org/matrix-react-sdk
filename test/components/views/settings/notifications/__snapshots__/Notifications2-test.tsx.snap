@@ -397,6 +397,7 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
                 class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
               >
                 <input
+                  checked=""
                   disabled=""
                   id="checkbox_jV"
                   type="checkbox"
@@ -430,13 +431,46 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
                 class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
               >
                 <input
-                  checked=""
                   disabled=""
                   id="checkbox_1Oid"
                   type="checkbox"
                 />
                 <label
                   for="checkbox_1Oid"
+                >
+                  <div
+                    class="mx_Checkbox_background"
+                  >
+                    <div
+                      class="mx_Checkbox_checkmark"
+                    />
+                  </div>
+                </label>
+              </span>
+              <div
+                class="mx_LabelledCheckbox_labels"
+              >
+                <span
+                  class="mx_LabelledCheckbox_label"
+                >
+                  People join a room, leave, or change their nick
+                </span>
+              </div>
+            </label>
+            <label
+              class="mx_LabelledCheckbox"
+            >
+              <span
+                class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+              >
+                <input
+                  checked=""
+                  disabled=""
+                  id="checkbox_PW"
+                  type="checkbox"
+                />
+                <label
+                  for="checkbox_PW"
                 >
                   <div
                     class="mx_Checkbox_background"
@@ -504,11 +538,11 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
                 <input
                   checked=""
                   disabled=""
-                  id="checkbox_PW"
+                  id="checkbox_N"
                   type="checkbox"
                 />
                 <label
-                  for="checkbox_PW"
+                  for="checkbox_N"
                 >
                   <div
                     class="mx_Checkbox_background"
@@ -538,11 +572,11 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
                 <input
                   checked=""
                   disabled=""
-                  id="checkbox_N"
+                  id="checkbox_4rTRs"
                   type="checkbox"
                 />
                 <label
-                  for="checkbox_N"
+                  for="checkbox_4rTRs"
                 >
                   <div
                     class="mx_Checkbox_background"
@@ -572,11 +606,11 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
                 <input
                   checked=""
                   disabled=""
-                  id="checkbox_4rTRs"
+                  id="checkbox_Yn"
                   type="checkbox"
                 />
                 <label
-                  for="checkbox_4rTRs"
+                  for="checkbox_Yn"
                 >
                   <div
                     class="mx_Checkbox_background"
@@ -1109,6 +1143,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                 class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
               >
                 <input
+                  checked=""
                   id="checkbox_jV"
                   type="checkbox"
                 />
@@ -1141,12 +1176,44 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                 class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
               >
                 <input
-                  checked=""
                   id="checkbox_1Oid"
                   type="checkbox"
                 />
                 <label
                   for="checkbox_1Oid"
+                >
+                  <div
+                    class="mx_Checkbox_background"
+                  >
+                    <div
+                      class="mx_Checkbox_checkmark"
+                    />
+                  </div>
+                </label>
+              </span>
+              <div
+                class="mx_LabelledCheckbox_labels"
+              >
+                <span
+                  class="mx_LabelledCheckbox_label"
+                >
+                  People join a room, leave, or change their nick
+                </span>
+              </div>
+            </label>
+            <label
+              class="mx_LabelledCheckbox"
+            >
+              <span
+                class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+              >
+                <input
+                  checked=""
+                  id="checkbox_PW"
+                  type="checkbox"
+                />
+                <label
+                  for="checkbox_PW"
                 >
                   <div
                     class="mx_Checkbox_background"
@@ -1213,11 +1280,11 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               >
                 <input
                   checked=""
-                  id="checkbox_PW"
+                  id="checkbox_N"
                   type="checkbox"
                 />
                 <label
-                  for="checkbox_PW"
+                  for="checkbox_N"
                 >
                   <div
                     class="mx_Checkbox_background"
@@ -1246,11 +1313,11 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               >
                 <input
                   checked=""
-                  id="checkbox_N"
+                  id="checkbox_4rTRs"
                   type="checkbox"
                 />
                 <label
-                  for="checkbox_N"
+                  for="checkbox_4rTRs"
                 >
                   <div
                     class="mx_Checkbox_background"
@@ -1279,11 +1346,11 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               >
                 <input
                   checked=""
-                  id="checkbox_4rTRs"
+                  id="checkbox_Yn"
                   type="checkbox"
                 />
                 <label
-                  for="checkbox_4rTRs"
+                  for="checkbox_Yn"
                 >
                   <div
                     class="mx_Checkbox_background"
@@ -1523,11 +1590,11 @@ exports[`<Notifications /> matches the snapshot 1`] = `
                   class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
                 >
                   <input
-                    id="checkbox_Yn"
+                    id="checkbox_Pu"
                     type="checkbox"
                   />
                   <label
-                    for="checkbox_Yn"
+                    for="checkbox_Pu"
                   >
                     <div
                       class="mx_Checkbox_background"

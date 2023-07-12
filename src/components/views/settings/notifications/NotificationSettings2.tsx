@@ -262,6 +262,20 @@ export default function NotificationSettings2(): JSX.Element {
                         }}
                     />
                     <LabelledCheckbox
+                        label={_t("People join a room, leave, or change their nick")}
+                        value={settings.activity.member_event}
+                        disabled={disabled}
+                        onChange={(value) => {
+                            reconcile({
+                                ...model!,
+                                activity: {
+                                    ...model!.activity,
+                                    member_event: value,
+                                },
+                            });
+                        }}
+                    />
+                    <LabelledCheckbox
                         label={_t("Messages sent by bots")}
                         value={settings.activity.bot_notices}
                         disabled={disabled}

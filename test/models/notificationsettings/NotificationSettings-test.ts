@@ -45,6 +45,7 @@ describe("NotificationSettings", () => {
                 bot_notices: false,
                 invite: true,
                 status_event: false,
+                member_event: false,
             },
             mentions: {
                 user: true,
@@ -111,6 +112,12 @@ describe("NotificationSettings", () => {
                 enabled: true,
                 actions: StandardActions.ACTION_NOTIFY_DEFAULT_SOUND,
             },
+            {
+                kind: PushRuleKind.Override,
+                rule_id: RuleId.Tombstone,
+                enabled: true,
+                actions: StandardActions.ACTION_HIGHLIGHT,
+            },
         ]);
     });
 
@@ -133,6 +140,7 @@ describe("NotificationSettings", () => {
                 bot_notices: false,
                 invite: true,
                 status_event: true,
+                member_event: false,
             },
             mentions: {
                 user: true,
@@ -144,14 +152,7 @@ describe("NotificationSettings", () => {
         expect(model).toEqual(expectedModel);
         const pendingChanges = reconcileNotificationSettings(pushRules, model, false);
         expect(pendingChanges.added).toHaveLength(0);
-        expect(pendingChanges.updated).toEqual([
-            {
-                kind: PushRuleKind.Override,
-                rule_id: RuleId.MemberEvent,
-                enabled: true,
-                actions: StandardActions.ACTION_NOTIFY,
-            },
-        ]);
+        expect(pendingChanges.updated).toEqual([]);
         const roundtripPendingChanges = reconcileNotificationSettings(newPushRules, model, false);
         expect(roundtripPendingChanges.added).toHaveLength(0);
         expect(roundtripPendingChanges.deleted).toHaveLength(0);
@@ -177,6 +178,7 @@ describe("NotificationSettings", () => {
                 bot_notices: true,
                 invite: true,
                 status_event: false,
+                member_event: false,
             },
             mentions: {
                 user: true,
@@ -210,6 +212,7 @@ describe("NotificationSettings", () => {
                 bot_notices: true,
                 invite: true,
                 status_event: false,
+                member_event: false,
             },
             mentions: {
                 user: false,

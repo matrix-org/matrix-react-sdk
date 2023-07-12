@@ -91,9 +91,10 @@ export function toNotificationSettings(
             people: determineSound(dmRules),
         },
         activity: {
-            bot_notices: !isMuted([standardRules.get(RuleId.SuppressNotices)]),
             invite: shouldNotify([standardRules.get(RuleId.InviteToSelf)]),
-            status_event: shouldNotify([standardRules.get(RuleId.MemberEvent), standardRules.get(RuleId.Tombstone)]),
+            status_event: shouldNotify([standardRules.get(RuleId.Tombstone)]),
+            member_event: shouldNotify([standardRules.get(RuleId.MemberEvent)]),
+            bot_notices: !isMuted([standardRules.get(RuleId.SuppressNotices)]),
         },
         mentions: {
             user: shouldNotify([
