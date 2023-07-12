@@ -773,7 +773,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             return;
         }
 
-        fireFormattingAnalyticEvent(action);
+        trackFormattingAnalyticEvent(action);
 
         const range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection()!);
 
@@ -917,7 +917,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
  * @param action - the formatting action that will be recorded in the analytic event that is fired
  * @returns void
  */
-function fireFormattingAnalyticEvent(action: Formatting): void {
+function trackFormattingAnalyticEvent(action: Formatting): void {
     let formatAction: FormattedMessageEvent["formatAction"];
 
     switch (action) {
