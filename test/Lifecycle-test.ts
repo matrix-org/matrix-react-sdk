@@ -62,6 +62,8 @@ describe("Lifecycle", () => {
         jest.spyOn(MatrixClientPeg, "start").mockResolvedValue(undefined);
 
         // reset any mocking
+        // @ts-ignore mocking
+        delete global.localStorage;
         global.localStorage = realLocalStorage;
 
         setCrypto(webCrypto);
