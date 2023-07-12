@@ -908,6 +908,7 @@ describe("<MatrixChat />", () => {
                 expect(localStorageSetSpy).toHaveBeenCalledWith("mx_hs_url", homeserverUrl);
                 expect(localStorageSetSpy).toHaveBeenCalledWith("mx_user_id", userId);
                 expect(localStorageSetSpy).toHaveBeenCalledWith("mx_has_access_token", "true");
+                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_has_refresh_token", "true");
                 expect(localStorageSetSpy).toHaveBeenCalledWith("mx_device_id", deviceId);
             });
 

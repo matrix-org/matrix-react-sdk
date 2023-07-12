@@ -81,6 +81,7 @@ export const completeOidcLogin = async (
     homeserverUrl: string;
     identityServerUrl?: string;
     accessToken: string;
+    refreshToken?: string;
 }> => {
     const { code, state } = getCodeAndStateFromQueryParams(queryParams);
     const { homeserverUrl, tokenResponse, identityServerUrl } = await completeAuthorizationCodeGrant(code, state);
@@ -91,5 +92,6 @@ export const completeOidcLogin = async (
         homeserverUrl: homeserverUrl,
         identityServerUrl: identityServerUrl,
         accessToken: tokenResponse.access_token,
+        refreshToken: tokenResponse.refresh_token
     };
 };
