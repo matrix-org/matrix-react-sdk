@@ -35,7 +35,7 @@ import { removeElement } from "matrix-js-sdk/src/utils";
 
 import {
     AudioInfo,
-    IEncryptedFile,
+    EncryptedFile,
     ImageInfo,
     IMediaEventContent,
     IMediaEventInfo,
@@ -342,7 +342,7 @@ export async function uploadFile(
     file: File | Blob,
     progressHandler?: UploadOpts["progressHandler"],
     controller?: AbortController,
-): Promise<{ url?: string; file?: IEncryptedFile }> {
+): Promise<{ url?: string; file?: EncryptedFile }> {
     const abortController = controller ?? new AbortController();
 
     // If the room is encrypted then encrypt the file before uploading it.
@@ -372,7 +372,7 @@ export async function uploadFile(
             file: {
                 ...encryptResult.info,
                 url,
-            } as IEncryptedFile,
+            } as EncryptedFile,
         };
     } else {
         const { content_uri: url } = await matrixClient.uploadContent(file, { progressHandler, abortController });

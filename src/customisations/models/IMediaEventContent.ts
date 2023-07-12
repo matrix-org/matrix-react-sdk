@@ -20,8 +20,17 @@ import { MsgType } from "matrix-js-sdk/src/matrix";
 
 import { BLURHASH_FIELD } from "../../utils/image-media";
 
-export interface IEncryptedFile {
+/**
+ * @see https://spec.matrix.org/v1.7/client-server-api/#extensions-to-mroommessage-msgtypes
+ */
+export interface EncryptedFile {
+    /**
+     * The URL to the file.
+     */
     url: string;
+    /**
+     * A JSON Web Key object.
+     */
     key: {
         alg: string;
         key_ops: string[]; // eslint-disable-line camelcase
@@ -29,15 +38,39 @@ export interface IEncryptedFile {
         k: string;
         ext: boolean;
     };
+    /**
+     * The 128-bit unique counter block used by AES-CTR, encoded as unpadded base64.
+     */
     iv: string;
+    /**
+     * A map from an algorithm name to a hash of the ciphertext, encoded as unpadded base64.
+     * Clients should support the SHA-256 hash, which uses the key sha256.
+     */
     hashes: { [alg: string]: string };
+    /**
+     * Version of the encrypted attachment's protocol. Must be v2.
+     */
     v: string;
 }
 
 interface ThumbnailInfo {
+    /**
+     * The mimetype of the image, e.g. image/jpeg.
+     */
     mimetype?: string;
+    /**
+     * The intended display width of the image in pixels.
+     * This may differ from the intrinsic dimensions of the image file.
+     */
     w?: number;
+    /**
+     * The intended display height of the image in pixels.
+     * This may differ from the intrinsic dimensions of the image file.
+     */
     h?: number;
+    /**
+     * Size of the image in bytes.
+     */
     size?: number;
 }
 
@@ -46,53 +79,154 @@ interface BaseInfo {
     size?: number;
 }
 
+/**
+ * @see https://spec.matrix.org/v1.7/client-server-api/#mfile
+ */
 export interface FileInfo extends BaseInfo {
+    /**
+     * @see https://github.com/matrix-org/matrix-spec-proposals/pull/2448
+     */
     [BLURHASH_FIELD]?: string;
-    thumbnail_file?: IEncryptedFile;
+    /**
+     * Information on the encrypted thumbnail file, as specified in End-to-end encryption.
+     * Only present if the thumbnail is encrypted.
+     * @see https://spec.matrix.org/v1.7/client-server-api/#sending-encrypted-attachments
+     */
+    thumbnail_file?: EncryptedFile;
+    /**
+     * Metadata about the image referred to in thumbnail_url.
+     */
     thumbnail_info?: ThumbnailInfo;
+    /**
+     * The URL to the thumbnail of the file. Only present if the thumbnail is unencrypted.
+     */
     thumbnail_url?: string;
 }
 
+/**
+ * @see https://spec.matrix.org/v1.7/client-server-api/#mimage
+ *
+ */
 export interface ImageInfo extends FileInfo, ThumbnailInfo {}
 
+/**
+ * @see https://spec.matrix.org/v1.7/client-server-api/#mimage
+ */
 export interface AudioInfo extends BaseInfo {
+    /**
+     * The duration of the audio in milliseconds.
+     */
     duration?: number;
 }
 
-export interface VideoInfo extends AudioInfo, ImageInfo {}
+/**
+ * @see https://spec.matrix.org/v1.7/client-server-api/#mvideo
+ */
+export interface VideoInfo extends AudioInfo, ImageInfo {
+    /**
+     * The duration of the video in milliseconds.
+     */
+    duration?: number;
+}
 
 export type IMediaEventInfo = FileInfo | ImageInfo | AudioInfo | VideoInfo;
 
 interface BaseContent {
-    body: string;
-}
-
-interface BaseFileContent extends BaseContent {
-    file?: IEncryptedFile;
+    /**
+     * Required if the file is encrypted. Information on the encrypted file, as specified in End-to-end encryption.
+     * @see https://spec.matrix.org/v1.7/client-server-api/#sending-encrypted-attachments
+     */
+    file?: EncryptedFile;
+    /**
+     * Required if the file is unencrypted. The URL (typically mxc:// URI) to the file.
+     */
     url?: string;
 }
 
-export interface FileContent extends BaseFileContent {
+/**
+ * @see https://spec.matrix.org/v1.7/client-server-api/#mfile
+ */
+export interface FileContent extends BaseContent {
+    /**
+     * A human-readable description of the file.
+     * This is recommended to be the filename of the original upload.
+     */
+    body: string;
+    /**
+     * The original filename of the uploaded file.
+     */
     filename?: string;
+    /**
+     * Information about the file referred to in url.
+     */
     info?: FileInfo;
+    /**
+     * One of: [m.file].
+     */
     msgtype: MsgType.File;
 }
 
-export interface ImageContent extends BaseFileContent {
+/**
+ * @see https://spec.matrix.org/v1.7/client-server-api/#mimage
+ */
+export interface ImageContent extends BaseContent {
+    /**
+     * A textual representation of the image.
+     * This could be the alt text of the image, the filename of the image,
+     * or some kind of content description for accessibility e.g. ‘image attachment’.
+     */
+    body: string;
+    /**
+     * Metadata about the image referred to in url.
+     */
     info?: ImageInfo;
+    /**
+     * One of: [m.image].
+     */
     msgtype: MsgType.Image;
 }
 
-export interface AudioContent extends BaseFileContent {
+/**
+ * @see https://spec.matrix.org/v1.7/client-server-api/#maudio
+ */
+export interface AudioContent extends BaseContent {
+    /**
+     * A description of the audio e.g. ‘Bee Gees - Stayin’ Alive’,
+     * or some kind of content description for accessibility e.g. ‘audio attachment’.
+     */
+    body: string;
+    /**
+     * Metadata for the audio clip referred to in url.
+     */
     info?: AudioInfo;
+    /**
+     * One of: [m.audio].
+     */
     msgtype: MsgType.Audio;
 }
 
-export interface VideoContent extends BaseFileContent {
+/**
+ * @see https://spec.matrix.org/v1.7/client-server-api/#mvideo
+ */
+export interface VideoContent extends BaseContent {
+    /**
+     * A description of the video e.g. ‘Gangnam style’,
+     * or some kind of content description for accessibility e.g. ‘video attachment’.
+     */
+    body: string;
+    /**
+     * Metadata about the video clip referred to in url.
+     */
     info?: VideoInfo;
+    /**
+     * One of: [m.video].
+     */
     msgtype: MsgType.Video;
 }
 
+/**
+ * Type representing media event contents for `m.room.message` events listed in the Matrix specification
+ */
 export type IMediaEventContent = FileContent | ImageContent | AudioContent | VideoContent;
 
 export interface IPreparedMedia extends IMediaObject {
@@ -101,7 +235,7 @@ export interface IPreparedMedia extends IMediaObject {
 
 export interface IMediaObject {
     mxc: string;
-    file?: IEncryptedFile;
+    file?: EncryptedFile;
 }
 
 /**
