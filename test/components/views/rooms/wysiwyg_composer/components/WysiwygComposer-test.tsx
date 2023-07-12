@@ -853,10 +853,10 @@ describe("WysiwygComposer", () => {
 
         // test that these buttons work both on click and on use of keyboard shortcut
         const buttonsWithShortcuts = [
-            { name: "Bold", formatAction: "Bold", ctrlOrCommandShortcut: "b" },
-            { name: "Italic", formatAction: "Italic", ctrlOrCommandShortcut: "i" },
-            { name: "Underline", formatAction: "Underline", ctrlOrCommandShortcut: "u" },
-            { name: "Code", formatAction: "InlineCode", ctrlOrCommandShortcut: "e" },
+            { name: "Bold", formatAction: "Bold", keyboardShortcut: "{Control>}b{/Control}" },
+            { name: "Italic", formatAction: "Italic", keyboardShortcut: "{Control>}i{/Control}" },
+            { name: "Underline", formatAction: "Underline", keyboardShortcut: "{Control>}u{/Control}" },
+            { name: "Code", formatAction: "InlineCode", keyboardShortcut: "{Control>}e{/Control}" },
         ];
 
         // test that these buttons work on click
@@ -899,10 +899,10 @@ describe("WysiwygComposer", () => {
 
         it.each(buttonsWithShortcuts)(
             "Fires single analytic event on use of keyboard shortcut for: $name",
-            async ({ formatAction, ctrlOrCommandShortcut: ctrlOrCommandShortcut }) => {
+            async ({ formatAction, keyboardShortcut }) => {
                 // activate the button using the keyboard shortcut
                 await act(async () => {
-                    await userEvent.keyboard(`{Control>}${ctrlOrCommandShortcut}{/Control}`);
+                    await userEvent.keyboard(keyboardShortcut);
                 });
 
                 // check that the analytics tracking has fired once with the expected formattingAction
@@ -915,7 +915,7 @@ describe("WysiwygComposer", () => {
 
                 // check that deactivating the button with the keyboard shortcut does not fire another tracking event
                 await act(async () => {
-                    await userEvent.keyboard(`{Control>}${ctrlOrCommandShortcut}{/Control}`);
+                    await userEvent.keyboard(`{Control>}${keyboardShortcut}{/Control}`);
                 });
 
                 expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
