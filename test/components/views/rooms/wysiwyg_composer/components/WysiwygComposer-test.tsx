@@ -40,6 +40,7 @@ import Autocompleter, { ICompletion } from "../../../../../../src/autocomplete/A
 import AutocompleteProvider from "../../../../../../src/autocomplete/AutocompleteProvider";
 import * as Permalinks from "../../../../../../src/utils/permalinks/Permalinks";
 import { PermalinkParts } from "../../../../../../src/utils/permalinks/PermalinkConstructor";
+import * as mockPosthogAnalytics from "../../../../../../src/PosthogAnalytics";
 
 describe("WysiwygComposer", () => {
     const customRender = (onChange = jest.fn(), onSend = jest.fn(), disabled = false, initialContent?: string) => {
@@ -287,7 +288,6 @@ describe("WysiwygComposer", () => {
             await insertMentionInput();
             // press enter
             await userEvent.keyboard("{Enter}");
-            screen.debug();
 
             // check that it closes the autocomplete
             await waitFor(() => {
@@ -837,6 +837,101 @@ describe("WysiwygComposer", () => {
                         }),
                     );
                 });
+            });
+        });
+    });
+
+    describe("Analytics", () => {
+        beforeEach(async () => {
+            jest.spyOn(mockPosthogAnalytics.PosthogAnalytics.instance, "trackEvent").mockImplementation(() => {});
+            customRender();
+            await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
+        });
+        afterEach(() => {
+            jest.restoreAllMocks();
+        });
+
+        // test that these buttons work both on click and on use of keyboard shortcut
+        const buttonsWithShortcuts = [
+            { name: "Bold", formatAction: "Bold", ctrlOrCommandShortcut: "b" },
+            { name: "Italic", formatAction: "Italic", ctrlOrCommandShortcut: "i" },
+            { name: "Underline", formatAction: "Underline", ctrlOrCommandShortcut: "u" },
+            { name: "Code", formatAction: "InlineCode", ctrlOrCommandShortcut: "e" },
+        ];
+
+        // test that these buttons work on click
+        const buttonsWithoutShortcuts = [
+            { name: "Strikethrough", formatAction: "Strikethrough" },
+            { name: "Bulleted list", formatAction: "UnorderedList" },
+            { name: "Numbered list", formatAction: "OrderedList" },
+            { name: "Quote", formatAction: "Quote" },
+            { name: "Code block", formatAction: "CodeBlock" },
+        ];
+
+        it.each([...buttonsWithShortcuts, ...buttonsWithoutShortcuts])(
+            "Fires single analytic event on click for: $name",
+            async ({ name, formatAction }) => {
+                // select the button and click it to simulate activating the formatting method
+                const button = screen.getByRole("button", { name });
+                await act(async () => {
+                    await userEvent.click(button);
+                });
+
+                // check that the analytics tracking has fired once with the expected formattingAction
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledWith({
+                    eventName: "FormattedMessage",
+                    editor: "RteFormatting",
+                    formatAction,
+                });
+
+                // check that deactivating the button does not fire another tracking event
+                await act(async () => {
+                    await userEvent.click(button);
+                });
+
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+            },
+        );
+
+        it.each(buttonsWithShortcuts)(
+            "Fires single analytic event on use of keyboard shortcut for: $name",
+            async ({ formatAction, ctrlOrCommandShortcut: ctrlOrCommandShortcut }) => {
+                // activate the button using the keyboard shortcut
+                await act(async () => {
+                    await userEvent.keyboard(`{Control>}${ctrlOrCommandShortcut}{/Control}`);
+                });
+
+                // check that the analytics tracking has fired once with the expected formattingAction
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledWith({
+                    eventName: "FormattedMessage",
+                    editor: "RteFormatting",
+                    formatAction,
+                });
+
+                // check that deactivating the button with the keyboard shortcut does not fire another tracking event
+                await act(async () => {
+                    await userEvent.keyboard(`{Control>}${ctrlOrCommandShortcut}{/Control}`);
+                });
+
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+            },
+        );
+
+        it("Fires analytic event on every click of link button", async () => {
+            // Clicking the link button opens a modal, so we fire an analytic event whenever this happens
+            const button = screen.getByRole("button", { name: "Link" });
+            await act(async () => {
+                await userEvent.click(button);
+            });
+
+            // check that the analytics tracking has fired once with the expected formattingAction
+            expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+            expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledWith({
+                eventName: "FormattedMessage",
+                editor: "RteFormatting",
+                formatAction: "Link",
             });
         });
     });
