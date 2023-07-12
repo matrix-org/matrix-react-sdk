@@ -868,6 +868,9 @@ describe("WysiwygComposer", () => {
             { name: "Code block", formatAction: "CodeBlock" },
         ];
 
+        // indent and unindent buttons are tested in `FormattingButtons-test.tsx` due to difficulty simulating
+        // the user behaviour to use these buttons
+
         it.each([...buttonsWithShortcuts, ...buttonsWithoutShortcuts])(
             "Fires single analytic event on click for: $name",
             async ({ name, formatAction }) => {
