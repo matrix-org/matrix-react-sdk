@@ -17,6 +17,7 @@ limitations under the License.
 import classNames from "classnames";
 import React, { createRef, ClipboardEvent, SyntheticEvent } from "react";
 import { FormattedMessage as FormattedMessageEvent } from "@matrix-org/analytics-events/types/typescript/FormattedMessage";
+import { Mention as MentionEvent } from "@matrix-org/analytics-events/types/typescript/Mention";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import EMOTICON_REGEX from "emojibase-regex/emoticon";
@@ -684,6 +685,14 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
     private onAutoCompleteConfirm = (completion: ICompletion): void => {
         this.modifiedFlag = true;
+
+        // send analytics events for mentions when we select them
+        if (completion.type === "room" || completion.type === "at-room") {
+            trackMentionAnalyticEvent("Room");
+        } else if (completion.type === "user") {
+            trackMentionAnalyticEvent("User");
+        }
+
         this.props.model.autoComplete?.onComponentConfirm(completion);
     };
 
@@ -945,5 +954,19 @@ function trackFormattingAnalyticEvent(action: Formatting): void {
         eventName: "FormattedMessage",
         editor: "RteFormatting",
         formatAction,
+    });
+}
+
+/**
+ * Util function to fire a mention analytic event
+ *
+ * @param targetType - the editor type that will be recorded in the analytic event that is fired
+ * @returns void
+ */
+function trackMentionAnalyticEvent(targetType: MentionEvent["targetType"]): void {
+    PosthogAnalytics.instance.trackEvent<MentionEvent>({
+        eventName: "Mention",
+        editor: "RteFormatting",
+        targetType,
     });
 }

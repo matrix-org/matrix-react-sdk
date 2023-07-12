@@ -134,8 +134,9 @@ WysiwygAutocomplete.displayName = "WysiwygAutocomplete";
 export { WysiwygAutocomplete };
 
 /**
- * Util function to fire a formatting analytic event
- * @param formatAction - the action that will be recorded in the analytic event that is fired
+ * Util function to fire a mention analytic event
+ *
+ * @param targetType - the editor type that will be recorded in the analytic event that is fired
  * @returns void
  */
 function trackMentionAnalyticEvent(targetType: MentionEvent["targetType"]): void {
