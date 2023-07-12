@@ -53,9 +53,10 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
     }
 
     private onDownloadClick = async (): Promise<void> => {
-        if (this.state.loading) return;
+        const mediaEventHelper = this.props.mediaEventHelperGet();
+        if (this.state.loading || !mediaEventHelper) return;
 
-        if (this.props.mediaEventHelperGet().media.isEncrypted) {
+        if (mediaEventHelper.media.isEncrypted) {
             this.setState({ tooltip: _td("Decrypting") });
         }
 
@@ -66,7 +67,7 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
             return this.doDownload(this.state.blob);
         }
 
-        const blob = await this.props.mediaEventHelperGet().sourceBlob.value;
+        const blob = await mediaEventHelper.sourceBlob.value;
         this.setState({ blob });
         await this.doDownload(blob);
     };
@@ -74,7 +75,7 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
     private async doDownload(blob: Blob): Promise<void> {
         await this.downloader.download({
             blob,
-            name: this.props.mediaEventHelperGet().fileName,
+            name: this.props.mediaEventHelperGet()!.fileName,
         });
         this.setState({ loading: false });
     }
