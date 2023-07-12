@@ -68,7 +68,7 @@ interface ButtonProps extends TooltipProps {
 function Button({ analyticsKey, label, keyCombo, onClick, actionState, icon }: ButtonProps): JSX.Element {
     const prevActionState = React.useRef(actionState);
     if (isNotUndefined(analyticsKey) && prevActionState.current !== actionState && actionState === "reversed") {
-        fireFormattingAnalyticEvent(analyticsKey);
+        trackFormattingAnalyticEvent(analyticsKey);
     }
     prevActionState.current = actionState;
     return (
@@ -155,7 +155,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
                     label={_td("Indent increase")}
                     onClick={() => {
                         composer.indent();
-                        fireFormattingAnalyticEvent("Indent");
+                        trackFormattingAnalyticEvent("Indent");
                     }}
                     icon={<IndentIcon className="mx_FormattingButtons_Icon" />}
                 />
@@ -166,7 +166,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
                     label={_td("Indent decrease")}
                     onClick={() => {
                         composer.unindent();
-                        fireFormattingAnalyticEvent("Unindent");
+                        trackFormattingAnalyticEvent("Unindent");
                     }}
                     icon={<UnIndentIcon className="mx_FormattingButtons_Icon" />}
                 />
@@ -201,7 +201,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
                 label={_td("Link")}
                 onClick={() => {
                     openLinkModal(composer, composerContext, actionStates.link === "reversed");
-                    fireFormattingAnalyticEvent("Link");
+                    trackFormattingAnalyticEvent("Link");
                 }}
                 icon={<LinkIcon className="mx_FormattingButtons_Icon" />}
             />
@@ -214,7 +214,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
  * @param formatAction - the action that will be recorded in the analytic event that is fired
  * @returns void
  */
-function fireFormattingAnalyticEvent(formatAction: FormattedMessageEvent["formatAction"]): void {
+function trackFormattingAnalyticEvent(formatAction: FormattedMessageEvent["formatAction"]): void {
     PosthogAnalytics.instance.trackEvent<FormattedMessageEvent>({
         eventName: "FormattedMessage",
         editor: "RteFormatting",
