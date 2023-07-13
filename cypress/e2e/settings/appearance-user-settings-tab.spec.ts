@@ -122,9 +122,10 @@ describe("Appearance user settings tab", () => {
                 // Click the left position of the slider
                 cy.get("input").realClick({ position: "left" });
 
+                const MIN_FONT_SIZE = 11;
                 // Assert that the smallest font size is selected
-                cy.get("input[value='13']").should("exist");
-                cy.get("output .mx_Slider_selection_label").findByText("13");
+                cy.get(`input[value='${MIN_FONT_SIZE}']`).should("exist");
+                cy.get("output .mx_Slider_selection_label").findByText(MIN_FONT_SIZE);
             });
 
             cy.get(".mx_FontScalingPanel_fontSlider").percySnapshotElement("Font size slider - smallest (13)", {
@@ -135,12 +136,13 @@ describe("Appearance user settings tab", () => {
                 // Click the right position of the slider
                 cy.get("input").realClick({ position: "right" });
 
+                const MAX_FONT_SIZE = 21;
                 // Assert that the largest font size is selected
-                cy.get("input[value='18']").should("exist");
-                cy.get("output .mx_Slider_selection_label").findByText("18");
+                cy.get(`input[value='${MAX_FONT_SIZE}']`).should("exist");
+                cy.get("output .mx_Slider_selection_label").findByText(MAX_FONT_SIZE);
             });
 
-            cy.get(".mx_FontScalingPanel_fontSlider").percySnapshotElement("Font size slider - largest (18)", {
+            cy.get(".mx_FontScalingPanel_fontSlider").percySnapshotElement("Font size slider - largest (21)", {
                 widths: [486],
             });
         });
@@ -297,32 +299,5 @@ describe("Appearance user settings tab", () => {
                 cy.findByLabelText("Use high contrast").should("not.exist");
             },
         );
-
-        it("should support enabling the high contast theme", () => {
-            cy.createRoom({ name: "Test Room" }).viewRoomByName("Test Room");
-
-            cy.get(".mx_GenericEventListSummary").within(() => {
-                // Assert that $primary-content is applied to GELS summary on the light theme
-                // $primary-content on the light theme = #17191c = rgb(23, 25, 28)
-                cy.get(".mx_TextualEvent.mx_GenericEventListSummary_summary")
-                    .should("have.css", "color", "rgb(23, 25, 28)")
-                    .should("have.css", "opacity", "0.5");
-            });
-
-            cy.openUserSettings("Appearance")
-                .findByTestId("mx_ThemeChoicePanel")
-                .findByLabelText("Use high contrast")
-                .click({ force: true }); // force click because the size of the checkbox is zero
-
-            cy.closeDialog();
-
-            cy.get(".mx_GenericEventListSummary").within(() => {
-                // Assert that $secondary-content is specified for GELS summary on the high contrast theme
-                // $secondary-content on the high contrast theme = #5e6266 = rgb(94, 98, 102)
-                cy.get(".mx_TextualEvent.mx_GenericEventListSummary_summary")
-                    .should("have.css", "color", "rgb(94, 98, 102)")
-                    .should("have.css", "opacity", "1");
-            });
-        });
     });
 });

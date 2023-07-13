@@ -40,7 +40,7 @@ export interface JoinRuleSettingsProps {
     room: Room;
     promptUpgrade?: boolean;
     closeSettingsFn(): void;
-    onError(error: Error): void;
+    onError(error: unknown): void;
     beforeChange?(joinRule: JoinRule): Promise<boolean>; // if returns false then aborts the change
     aliasWarning?: ReactNode;
 }
@@ -61,7 +61,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
 
     const disabled = !room.currentState.mayClientSendStateEvent(EventType.RoomJoinRules, cli);
 
-    const [content, setContent] = useLocalEcho<IJoinRuleEventContent | undefined>(
+    const [content, setContent] = useLocalEcho<IJoinRuleEventContent | undefined, IJoinRuleEventContent>(
         () => room.currentState.getStateEvents(EventType.RoomJoinRules, "")?.getContent(),
         (content) => cli.sendStateEvent(room.roomId, EventType.RoomJoinRules, content, ""),
         onError,

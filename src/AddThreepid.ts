@@ -16,14 +16,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IAuthData, IRequestMsisdnTokenResponse, IRequestTokenResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
+import {
+    IAddThreePidOnlyBody,
+    IAuthData,
+    IRequestMsisdnTokenResponse,
+    IRequestTokenResponse,
+    MatrixClient,
+} from "matrix-js-sdk/src/matrix";
 import { MatrixError, HTTPError } from "matrix-js-sdk/src/matrix";
+import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 
 import Modal from "./Modal";
 import { _t, UserFriendlyError } from "./languageHandler";
 import IdentityAuthClient from "./IdentityAuthClient";
 import { SSOAuthEntry } from "./components/views/auth/InteractiveAuthEntryComponents";
-import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDialog";
+import InteractiveAuthDialog, { InteractiveAuthDialogProps } from "./components/views/dialogs/InteractiveAuthDialog";
 
 function getIdServerDomain(matrixClient: MatrixClient): string {
     const idBaseUrl = matrixClient.getIdentityServerUrl(true);
@@ -39,6 +46,9 @@ export type Binding = {
     errorTitle: string;
 };
 
+// IThreepid modified stripping validated_at and added_at as they aren't necessary for our UI
+export type ThirdPartyIdentifier = Omit<IThreepid, "validated_at" | "added_at">;
+
 /**
  * Allows a user to add a third party identifier to their homeserver and,
  * optionally, the identity servers.
@@ -52,7 +62,7 @@ export type Binding = {
  * https://gist.github.com/jryans/839a09bf0c5a70e2f36ed990d50ed928
  */
 export default class AddThreepid {
-    private sessionId: string;
+    private sessionId?: string;
     private submitUrl?: string;
     private bind = false;
     private readonly clientSecret: string;
@@ -196,7 +206,7 @@ export default class AddThreepid {
                         throw new UserFriendlyError("No identity access token found");
                     }
                     await this.matrixClient.bindThreePid({
-                        sid: this.sessionId,
+                        sid: this.sessionId!,
                         client_secret: this.clientSecret,
                         id_server: getIdServerDomain(this.matrixClient),
                         id_access_token: identityAccessToken,
@@ -230,7 +240,7 @@ export default class AddThreepid {
                                 continueKind: "primary",
                             },
                         };
-                        const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                        const { finished } = Modal.createDialog(InteractiveAuthDialog<{}>, {
                             title: _t("Add Email Address"),
                             matrixClient: this.matrixClient,
                             authData: err.data,
@@ -239,14 +249,14 @@ export default class AddThreepid {
                                 [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
                                 [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
                             },
-                        });
+                        } as InteractiveAuthDialogProps<IAddThreePidOnlyBody>);
                         return finished;
                     }
                 }
             } else {
                 await this.matrixClient.addThreePid(
                     {
-                        sid: this.sessionId,
+                        sid: this.sessionId!,
                         client_secret: this.clientSecret,
                         id_server: getIdServerDomain(this.matrixClient),
                     },
@@ -270,11 +280,11 @@ export default class AddThreepid {
      * @param {{type: string, session?: string}} auth UI auth object
      * @return {Promise<Object>} Response from /3pid/add call (in current spec, an empty object)
      */
-    private makeAddThreepidOnlyRequest = (auth?: { type: string; session?: string }): Promise<{}> => {
+    private makeAddThreepidOnlyRequest = (auth?: IAddThreePidOnlyBody["auth"] | null): Promise<{}> => {
         return this.matrixClient.addThreePidOnly({
-            sid: this.sessionId,
+            sid: this.sessionId!,
             client_secret: this.clientSecret,
-            auth,
+            auth: auth ?? undefined,
         });
     };
 
@@ -296,13 +306,13 @@ export default class AddThreepid {
         if (this.submitUrl) {
             result = await this.matrixClient.submitMsisdnTokenOtherUrl(
                 this.submitUrl,
-                this.sessionId,
+                this.sessionId!,
                 this.clientSecret,
                 msisdnToken,
             );
         } else if (this.bind || !supportsSeparateAddAndBind) {
             result = await this.matrixClient.submitMsisdnToken(
-                this.sessionId,
+                this.sessionId!,
                 this.clientSecret,
                 msisdnToken,
                 await authClient.getAccessToken(),
@@ -317,7 +327,7 @@ export default class AddThreepid {
         if (supportsSeparateAddAndBind) {
             if (this.bind) {
                 await this.matrixClient.bindThreePid({
-                    sid: this.sessionId,
+                    sid: this.sessionId!,
                     client_secret: this.clientSecret,
                     id_server: getIdServerDomain(this.matrixClient),
                     id_access_token: await authClient.getAccessToken(),
@@ -351,7 +361,7 @@ export default class AddThreepid {
                             continueKind: "primary",
                         },
                     };
-                    const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                    const { finished } = Modal.createDialog(InteractiveAuthDialog<{}>, {
                         title: _t("Add Phone Number"),
                         matrixClient: this.matrixClient,
                         authData: err.data,
@@ -360,14 +370,14 @@ export default class AddThreepid {
                             [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
                             [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
                         },
-                    });
+                    } as InteractiveAuthDialogProps<IAddThreePidOnlyBody>);
                     return finished;
                 }
             }
         } else {
             await this.matrixClient.addThreePid(
                 {
-                    sid: this.sessionId,
+                    sid: this.sessionId!,
                     client_secret: this.clientSecret,
                     id_server: getIdServerDomain(this.matrixClient),
                 },

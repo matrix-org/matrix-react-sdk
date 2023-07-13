@@ -316,13 +316,17 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // the first thing to do is to try the token params in the query-string
         // if the session isn't soft logged out (ie: is a clean session being logged in)
         if (!Lifecycle.isSoftLogout()) {
-            Lifecycle.attemptTokenLogin(
+            Lifecycle.attemptDelegatedAuthLogin(
                 this.props.realQueryParams,
                 this.props.defaultDeviceDisplayName,
                 this.getFragmentAfterLogin(),
             ).then(async (loggedIn): Promise<boolean | void> => {
-                if (this.props.realQueryParams?.loginToken) {
-                    // remove the loginToken from the URL regardless
+                if (
+                    this.props.realQueryParams?.loginToken ||
+                    this.props.realQueryParams?.code ||
+                    this.props.realQueryParams?.state
+                ) {
+                    // remove the loginToken or auth code from the URL regardless
                     this.props.onTokenLoginCompleted();
                 }
 
@@ -330,6 +334,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     this.tokenLogin = true;
 
                     // Create and start the client
+                    // accesses the new credentials just set in storage during attemptTokenLogin
+                    // and sets logged in state
                     await Lifecycle.restoreFromLocalStorage({
                         ignoreGuest: true,
                     });
@@ -339,7 +345,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // if the user has followed a login or register link, don't reanimate
                 // the old creds, but rather go straight to the relevant page
                 const firstScreen = this.screenAfterLogin ? this.screenAfterLogin.screen : null;
-
                 const restoreSuccess = await this.loadSession();
                 if (restoreSuccess) {
                     return true;
@@ -1659,7 +1664,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             Modal.createDialog(KeySignatureUploadFailedDialog, { failures, source, continuation });
         });
 
-        cli.on(CryptoEvent.VerificationRequest, (request) => {
+        cli.on(CryptoEvent.VerificationRequestReceived, (request) => {
             if (request.verifier) {
                 Modal.createDialog(
                     IncomingSasDialog,

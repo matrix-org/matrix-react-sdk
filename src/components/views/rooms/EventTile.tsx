@@ -108,6 +108,7 @@ export interface IEventTileOps {
 
 export interface IEventTileType extends React.Component {
     getEventTileOps?(): IEventTileOps;
+    getMediaHelper(): MediaEventHelper | undefined;
 }
 
 export interface EventTileProps {

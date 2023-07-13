@@ -29,8 +29,12 @@ $left-gutter: 64px;
     max-width: 100%;
     clear: both; /* TODO: check if this is necessary */
     padding-top: 18px;
-    font-size: $font-14px;
     position: relative;
+
+    &.mx_EventTile_info {
+        font-size: var(--cpd-font-size-body-sm);
+        color: $secondary-content;
+    }
 
     .mx_EventTile_avatar {
         cursor: pointer;
@@ -105,7 +109,7 @@ $left-gutter: 64px;
 
     .mx_DisambiguatedProfile {
         color: $primary-content;
-        font-size: $font-14px;
+        font: var(--cpd-font-body-md-regular);
         display: inline-block;
         padding-bottom: 0px;
         padding-top: 0px;
@@ -139,7 +143,7 @@ $left-gutter: 64px;
     &.mx_EventTile_highlight,
     &.mx_EventTile_highlight .markdown-body,
     &.mx_EventTile_highlight .mx_EventTile_edited {
-        color: $alert;
+        color: $primary-content;
     }
 
     &.mx_EventTile_bubbleContainer {
@@ -687,7 +691,7 @@ $left-gutter: 64px;
     .mx_EventTile_pendingModeration {
         user-select: none;
         font-size: $font-12px;
-        color: $roomtopic-color;
+        color: $secondary-content;
         display: inline-block;
         margin-left: 9px;
     }
@@ -697,11 +701,12 @@ $left-gutter: 64px;
     }
 
     .markdown-body {
+        font: var(--cpd-font-body-md-regular) !important;
+        letter-spacing: var(--cpd-font-letter-spacing-body-md);
         font-family: inherit !important;
         white-space: normal !important;
         line-height: inherit !important;
         color: inherit; /* inherit the colour from the dark or light theme by default (but not for code blocks) */
-        font-size: $font-14px;
 
         pre,
         code {
@@ -1136,13 +1141,13 @@ $left-gutter: 64px;
     }
 
     &:hover {
-        background-color: $system;
+        background-color: $panels;
     }
 
     /* ThreadsList has always group layout */
     &[data-layout="group"]:hover {
         .mx_EventTile_line {
-            background-color: $system; /* override $event-selected-color */
+            background-color: inherit;
             box-shadow: none; /* don't show the verification left stroke in the thread list */
         }
     }
