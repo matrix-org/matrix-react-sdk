@@ -901,7 +901,13 @@ describe("<RoomKickButton />", () => {
 
     let defaultProps: Parameters<typeof RoomKickButton>[0];
     beforeEach(() => {
-        defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+        defaultProps = {
+            room: mockRoom,
+            member: defaultMember,
+            startUpdating: jest.fn(),
+            stopUpdating: jest.fn(),
+            isUpdating: false,
+        };
     });
 
     const renderComponent = (props = {}) => {
@@ -1002,7 +1008,13 @@ describe("<BanToggleButton />", () => {
     const memberWithBanMembership = { ...defaultMember, membership: "ban" };
     let defaultProps: Parameters<typeof BanToggleButton>[0];
     beforeEach(() => {
-        defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+        defaultProps = {
+            room: mockRoom,
+            member: defaultMember,
+            startUpdating: jest.fn(),
+            stopUpdating: jest.fn(),
+            isUpdating: false,
+        };
     });
 
     const renderComponent = (props = {}) => {
@@ -1130,6 +1142,7 @@ describe("<RoomAdminToolsContainer />", () => {
         defaultProps = {
             room: mockRoom,
             member: defaultMember,
+            isUpdating: false,
             startUpdating: jest.fn(),
             stopUpdating: jest.fn(),
             powerLevels: {},
