@@ -54,8 +54,7 @@ const SYMBOL_PATTERN = /([\u2100-\u2bff])/;
 
 // Regex pattern for non-emoji characters that can appear in an "all-emoji" message
 // (Zero-Width Joiner, Zero-Width Space, Emoji presentation character, other whitespace)
-// eslint-disable-next-line no-misleading-character-class
-const EMOJI_SEPARATOR_REGEX = /[\u200D\u200B\uFE0F\s]/g;
+const EMOJI_SEPARATOR_REGEX = /[\u200D\u200B\s]|\uFE0F/g;
 
 const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, "i");
 
