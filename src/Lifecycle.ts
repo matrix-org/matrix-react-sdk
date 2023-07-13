@@ -547,6 +547,34 @@ async function abortLogin(): Promise<void> {
     }
 }
 
+const isEncryptedPayload = (token?: IEncryptedPayload | string | undefined): token is IEncryptedPayload => {
+    return !!token && typeof token !== "string";
+};
+/**
+ * Try to decrypt a token retrieved from storage
+ * @param pickleKey pickle key used during encryption of token, or undefined
+ * @param token
+ * @param tokenName token name used during encryption of token eg ACCESS_TOKEN_NAME
+ * @returns the decrypted token, or the plain text token, returns undefined when token cannot be decrypted
+ */
+async function tryDecryptToken(
+    pickleKey: string | undefined,
+    token: IEncryptedPayload | string | undefined,
+    tokenName: string,
+): Promise<string | undefined> {
+    if (pickleKey && isEncryptedPayload(token)) {
+        const encrKey = await pickleKeyToAesKey(pickleKey);
+        const decryptedToken = await decryptAES(token, encrKey, tokenName);
+        encrKey.fill(0);
+        return decryptedToken;
+    }
+    // if the token wasn't encrypted (plain string) just return it back
+    if (typeof token === "string") {
+        return token;
+    }
+    // otherwise return undefined
+}
+
 // returns a promise which resolves to true if a session is found in
 // localstorage
 //
@@ -577,31 +605,14 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             return false;
         }
 
-        // @TODO(kerrya) extract this into function DRY
-        let decryptedAccessToken = accessToken;
-        const pickleKey = await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "");
+        const pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) || undefined;
         if (pickleKey) {
             logger.log("Got pickle key");
-            if (typeof accessToken !== "string") {
-                const encrKey = await pickleKeyToAesKey(pickleKey);
-                decryptedAccessToken = await decryptAES(accessToken, encrKey, ACCESS_TOKEN_NAME);
-                encrKey.fill(0);
-            }
         } else {
             logger.log("No pickle key available");
         }
-
-        let decryptedRefreshToken = refreshToken;
-        if (pickleKey) {
-            logger.log("Got pickle key");
-            if (refreshToken && typeof refreshToken !== "string") {
-                const encrKey = await pickleKeyToAesKey(pickleKey);
-                decryptedRefreshToken = await decryptAES(refreshToken, encrKey, REFRESH_TOKEN_NAME);
-                encrKey.fill(0);
-            }
-        } else {
-            logger.log("No pickle key available");
-        }
+        const decryptedAccessToken = await tryDecryptToken(pickleKey, accessToken, ACCESS_TOKEN_NAME);
+        const decryptedRefreshToken = await tryDecryptToken(pickleKey, refreshToken, REFRESH_TOKEN_NAME);
 
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
@@ -611,8 +622,8 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             {
                 userId: userId,
                 deviceId: deviceId,
-                accessToken: decryptedAccessToken as string,
-                refreshToken: decryptedRefreshToken as string,
+                accessToken: decryptedAccessToken!,
+                refreshToken: decryptedRefreshToken,
                 homeserverUrl: hsUrl,
                 identityServerUrl: isUrl,
                 guest: isGuest,
