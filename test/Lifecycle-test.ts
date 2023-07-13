@@ -32,9 +32,7 @@ const webCrypto = new Crypto();
 const windowCrypto = window.crypto;
 
 describe("Lifecycle", () => {
-    const mockPlatform = mockPlatformPeg({
-        getPickleKey: jest.fn(),
-    });
+    const mockPlatform = mockPlatformPeg();
 
     const realLocalStorage = global.localStorage;
 
@@ -55,8 +53,6 @@ describe("Lifecycle", () => {
     });
 
     beforeEach(() => {
-        mockPlatform.getPickleKey.mockResolvedValue(null);
-
         // stub this
         jest.spyOn(MatrixClientPeg, "replaceUsingCreds").mockImplementation(() => {});
         jest.spyOn(MatrixClientPeg, "start").mockResolvedValue(undefined);
@@ -88,8 +84,16 @@ describe("Lifecycle", () => {
             .mockImplementation((key: unknown) => mockStore[key as string] ?? null);
         jest.spyOn(localStorage.__proto__, "removeItem")
             .mockClear()
-            .mockImplementation((key: unknown) => mockStore[key as string] ?? null);
-        jest.spyOn(localStorage.__proto__, "setItem").mockClear();
+            .mockImplementation((key: unknown) => {
+                const { [key as string]: toRemove, ...newStore } = mockStore;
+                mockStore = newStore;
+                return toRemove;
+            });
+        jest.spyOn(localStorage.__proto__, "setItem")
+            .mockClear()
+            .mockImplementation((key: unknown, value: unknown) => {
+                mockStore[key as string] = value;
+            });
     };
 
     const initSessionStorageMock = (mockStore: Record<string, unknown> = {}): void => {
@@ -98,8 +102,16 @@ describe("Lifecycle", () => {
             .mockImplementation((key: unknown) => mockStore[key as string] ?? null);
         jest.spyOn(sessionStorage.__proto__, "removeItem")
             .mockClear()
-            .mockImplementation((key: unknown) => mockStore[key as string] ?? null);
-        jest.spyOn(sessionStorage.__proto__, "setItem").mockClear();
+            .mockImplementation((key: unknown) => {
+                const { [key as string]: toRemove, ...newStore } = mockStore;
+                mockStore = newStore;
+                return toRemove;
+            });
+        jest.spyOn(sessionStorage.__proto__, "setItem")
+            .mockClear()
+            .mockImplementation((key: unknown, value: unknown) => {
+                mockStore[key as string] = value;
+            });
         jest.spyOn(sessionStorage.__proto__, "clear").mockClear();
     };
 
@@ -110,7 +122,16 @@ describe("Lifecycle", () => {
                 // @ts-ignore mock type
                 async (table: string, key: string) => mockStore[table]?.[key] ?? null,
             );
-        jest.spyOn(StorageManager, "idbSave").mockClear().mockResolvedValue(undefined);
+        jest.spyOn(StorageManager, "idbSave")
+            .mockClear()
+            .mockImplementation(
+                // @ts-ignore mock type
+                async (tableKey: string, key: string, value: unknown) => {
+                    const table = mockStore[tableKey] || {};
+                    table[key as string] = value;
+                    mockStore[tableKey] = table;
+                },
+            );
         jest.spyOn(StorageManager, "idbDelete").mockClear().mockResolvedValue(undefined);
     };
 
@@ -129,6 +150,19 @@ describe("Lifecycle", () => {
         account: {
             mx_access_token: accessToken,
         },
+    };
+    const credentials = {
+        homeserverUrl,
+        identityServerUrl,
+        userId,
+        deviceId,
+        accessToken,
+    };
+
+    const encryptedTokenShapedObject = {
+        ciphertext: expect.any(String),
+        iv: expect.any(String),
+        mac: expect.any(String),
     };
 
     describe("restoreFromLocalStorage()", () => {
@@ -250,6 +284,65 @@ describe("Lifecycle", () => {
                     expect(MatrixClientPeg.start).toHaveBeenCalled();
                 });
             });
+
+            describe("with a pickle key", () => {
+                beforeEach(async () => {
+                    initLocalStorageMock({});
+                    initIdbMock({});
+                    // setup storage with a session with encrypted token
+                    await setLoggedIn(credentials);
+                });
+
+                it("should persist credentials", async () => {
+                    expect(await restoreFromLocalStorage()).toEqual(true);
+
+                    expect(localStorage.setItem).toHaveBeenCalledWith("mx_has_access_token", "true");
+
+                    // token encrypted and persisted
+                    expect(StorageManager.idbSave).toHaveBeenCalledWith(
+                        "account",
+                        "mx_access_token",
+                        encryptedTokenShapedObject,
+                    );
+                });
+
+                it("should persist access token when idb is not available", async () => {
+                    // dont fail for pickle key persist
+                    jest.spyOn(StorageManager, "idbSave").mockImplementation(
+                        async (table: string, key: string | string[]) => {
+                            if (table === "account" && key === "mx_access_token") {
+                                throw new Error("oups");
+                            }
+                        },
+                    );
+
+                    expect(await restoreFromLocalStorage()).toEqual(true);
+
+                    expect(StorageManager.idbSave).toHaveBeenCalledWith(
+                        "account",
+                        "mx_access_token",
+                        encryptedTokenShapedObject,
+                    );
+                    // put accessToken in localstorage as fallback
+                    expect(localStorage.setItem).toHaveBeenCalledWith("mx_access_token", accessToken);
+                });
+
+                it("should create new matrix client with credentials", async () => {
+                    expect(await restoreFromLocalStorage()).toEqual(true);
+
+                    expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith({
+                        userId,
+                        // decrypted accessToken
+                        accessToken,
+                        homeserverUrl,
+                        identityServerUrl,
+                        deviceId,
+                        freshLogin: true,
+                        guest: false,
+                        pickleKey: expect.any(String),
+                    });
+                });
+            });
         });
     });
 
@@ -269,15 +362,7 @@ describe("Lifecycle", () => {
             jest.spyOn(mockPlatform, "createPickleKey");
         });
 
-        const refreshToken = 'test-refresh-token';
-
-        const credentials = {
-            homeserverUrl,
-            identityServerUrl,
-            userId,
-            deviceId,
-            accessToken,
-        };
+        const refreshToken = "test-refresh-token";
 
         it("should remove fresh login flag from session storage", async () => {
             await setLoggedIn(credentials);
@@ -312,7 +397,7 @@ describe("Lifecycle", () => {
             it("should persist a refreshToken when present", async () => {
                 await setLoggedIn({
                     ...credentials,
-                    refreshToken
+                    refreshToken,
                 });
 
                 expect(StorageManager.idbSave).toHaveBeenCalledWith("account", "mx_access_token", accessToken);
@@ -384,11 +469,11 @@ describe("Lifecycle", () => {
                 expect(localStorage.setItem).toHaveBeenCalledWith("mx_device_id", deviceId);
 
                 expect(localStorage.setItem).toHaveBeenCalledWith("mx_has_pickle_key", "true");
-                expect(StorageManager.idbSave).toHaveBeenCalledWith("account", "mx_access_token", {
-                    ciphertext: expect.any(String),
-                    iv: expect.any(String),
-                    mac: expect.any(String),
-                });
+                expect(StorageManager.idbSave).toHaveBeenCalledWith(
+                    "account",
+                    "mx_access_token",
+                    encryptedTokenShapedObject,
+                );
                 expect(StorageManager.idbSave).toHaveBeenCalledWith(
                     "pickleKey",
                     [userId, deviceId],

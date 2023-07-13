@@ -772,15 +772,20 @@ class AbortLoginAndRebuildStorage extends Error {}
 
 /**
  * Persist a token in storage
- * When pickle key is present, will attempt to encrypt the token 
+ * When pickle key is present, will attempt to encrypt the token
  * Stores in idb, falling back to localStorage
- * 
+ *
  * @param storageKey key used to store the token
  * @param name eg "access_token" used as initialization vector during encryption
- * @param token 
+ * @param token
  * @param pickleKey optional pickle key used to encrypt token
  */
-async function persistTokenInStorage(storageKey: string, name: string, token: string | undefined, pickleKey: IMatrixClientCreds['pickleKey']): Promise<void> {
+async function persistTokenInStorage(
+    storageKey: string,
+    name: string,
+    token: string | undefined,
+    pickleKey: IMatrixClientCreds["pickleKey"],
+): Promise<void> {
     const hasTokenStorageKey = `mx_has_${name}`;
     // store whether we expect to find a token, to detect the case
     // where IndexedDB is blown away
@@ -794,7 +799,7 @@ async function persistTokenInStorage(storageKey: string, name: string, token: st
         let encryptedToken: IEncryptedPayload | undefined;
         try {
             if (!token) {
-                throw new Error("No token: not attempting encryption")
+                throw new Error("No token: not attempting encryption");
             }
             // try to encrypt the access token using the pickle key
             const encrKey = await pickleKeyToAesKey(pickleKey);
@@ -839,8 +844,18 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     localStorage.setItem("mx_user_id", credentials.userId);
     localStorage.setItem("mx_is_guest", JSON.stringify(credentials.guest));
 
-    await persistTokenInStorage(ACCESS_TOKEN_STORAGE_KEY, ACCESS_TOKEN_NAME ,credentials.accessToken, credentials.pickleKey);
-    await persistTokenInStorage(REFRESH_TOKEN_STORAGE_KEY, REFRESH_TOKEN_NAME, credentials.refreshToken, credentials.pickleKey);
+    await persistTokenInStorage(
+        ACCESS_TOKEN_STORAGE_KEY,
+        ACCESS_TOKEN_NAME,
+        credentials.accessToken,
+        credentials.pickleKey,
+    );
+    await persistTokenInStorage(
+        REFRESH_TOKEN_STORAGE_KEY,
+        REFRESH_TOKEN_NAME,
+        credentials.refreshToken,
+        credentials.pickleKey,
+    );
 
     if (credentials.pickleKey) {
         localStorage.setItem("mx_has_pickle_key", String(true));

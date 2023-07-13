@@ -92,6 +92,6 @@ export const completeOidcLogin = async (
         homeserverUrl: homeserverUrl,
         identityServerUrl: identityServerUrl,
         accessToken: tokenResponse.access_token,
-        refreshToken: tokenResponse.refresh_token
+        refreshToken: tokenResponse.refresh_token,
     };
 };
