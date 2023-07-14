@@ -183,7 +183,7 @@ describe("FilePanel", () => {
             });
         });
 
-        it("should render the audio pleyer and play the audio file on the panel", () => {
+        it("should render the audio player and play the audio file on the panel", () => {
             // Upload an image file
             uploadFile("cypress/fixtures/1sec.ogg");
 
@@ -206,6 +206,7 @@ describe("FilePanel", () => {
                             cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
                             // Click the play button
+                            cy.wait(100);
                             cy.findByRole("button", { name: "Play" }).click();
 
                             // Assert that the pause button is rendered
