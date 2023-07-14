@@ -47,7 +47,6 @@ import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
-import { XOR } from "../../../@types/common";
 
 interface IButtonProps extends Omit<ComponentProps<typeof AccessibleTooltipButton>, "title" | "onClick"> {
     space?: Room;
@@ -56,6 +55,7 @@ interface IButtonProps extends Omit<ComponentProps<typeof AccessibleTooltipButto
     selected?: boolean;
     label: string;
     contextMenuTooltip?: string;
+    notificationState?: NotificationState;
     isNarrow?: boolean;
     avatarSize?: number;
     innerRef?: RefObject<HTMLElement>;
@@ -63,18 +63,9 @@ interface IButtonProps extends Omit<ComponentProps<typeof AccessibleTooltipButto
     onClick?(ev?: ButtonEvent): void;
 }
 
-type ButtonPropsWithNotification = IButtonProps & { notificationState: NotificationState } & XOR<
-        {
-            space: Room;
-        },
-        {
-            spaceKey: SpaceKey;
-        }
-    >;
-
-export const SpaceButton: React.FC<XOR<ButtonPropsWithNotification, IButtonProps>> = ({
+export const SpaceButton: React.FC<IButtonProps> = ({
     space,
-    spaceKey,
+    spaceKey: _spaceKey,
     className,
     selected,
     label,
@@ -91,6 +82,8 @@ export const SpaceButton: React.FC<XOR<ButtonPropsWithNotification, IButtonProps
     const [onFocus, isActive] = useRovingTabIndex(handle);
     const tabIndex = isActive ? 0 : -1;
 
+    const spaceKey = _spaceKey ?? space?.roomId;
+
     let avatar = (
         <div className="mx_SpaceButton_avatarPlaceholder">
             <div className="mx_SpaceButton_icon" />
@@ -101,7 +94,7 @@ export const SpaceButton: React.FC<XOR<ButtonPropsWithNotification, IButtonProps
     }
 
     let notifBadge;
-    if (notificationState) {
+    if (spaceKey && notificationState) {
         let ariaLabel = _t("Jump to first unread room.");
         if (space?.getMyMembership() === "invite") {
             ariaLabel = _t("Jump to first invite.");
@@ -110,7 +103,7 @@ export const SpaceButton: React.FC<XOR<ButtonPropsWithNotification, IButtonProps
         const jumpToNotification = (ev: MouseEvent): void => {
             ev.stopPropagation();
             ev.preventDefault();
-            SpaceStore.instance.setActiveRoomInSpace(spaceKey ?? space.roomId);
+            SpaceStore.instance.setActiveRoomInSpace(spaceKey);
         };
 
         notifBadge = (
@@ -141,7 +134,9 @@ export const SpaceButton: React.FC<XOR<ButtonPropsWithNotification, IButtonProps
     const viewSpaceHome = (): void =>
         // space is set here because of the assignment condition of onClick
         defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: space!.roomId });
-    const activateSpace = (): void => SpaceStore.instance.setActiveSpace(spaceKey ?? space?.roomId ?? "");
+    const activateSpace = (): void => {
+        if (spaceKey) SpaceStore.instance.setActiveSpace(spaceKey);
+    };
     const onClick = props.onClick ?? (selected && space ? viewSpaceHome : activateSpace);
 
     return (
