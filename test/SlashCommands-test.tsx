@@ -353,6 +353,10 @@ describe("SlashCommands", () => {
             command = findCommand("join")!;
         });
 
+        it("should return usage if no args", () => {
+            expect(command.run(client, roomId, null, undefined).error).toBe(command.getUsage());
+        });
+
         it("should handle matrix.org permalinks", () => {
             command.run(client, roomId, null, "https://matrix.to/#/!roomId:server/$eventId");
             expect(dispatcher.dispatch).toHaveBeenCalledWith(
@@ -371,6 +375,16 @@ describe("SlashCommands", () => {
                 expect.objectContaining({
                     action: "view_room",
                     room_alias: "#test:server",
+                }),
+            );
+        });
+
+        it("should handle room aliases with no server component", () => {
+            command.run(client, roomId, null, "#test");
+            expect(dispatcher.dispatch).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    action: "view_room",
+                    room_alias: `#test:${client.getDomain()}`,
                 }),
             );
         });
