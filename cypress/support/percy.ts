@@ -55,7 +55,7 @@ Cypress.Commands.add("percySnapshotElement", { prevSubject: "element" }, (subjec
         selector = `[data-testid="${subject.attr("data-testid")}"]`;
     }
     cy.percySnapshot(name, {
-        domTransformation: (documentClone) => scope(documentClone, subject.selector),
+        domTransformation: (documentClone) => scope(documentClone, selector),
         ...options,
     });
 });
