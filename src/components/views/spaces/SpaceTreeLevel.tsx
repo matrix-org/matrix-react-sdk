@@ -47,6 +47,7 @@ import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { XOR } from "../../../@types/common";
 
 interface IButtonProps extends Omit<ComponentProps<typeof AccessibleTooltipButton>, "title" | "onClick"> {
     space?: Room;
@@ -55,7 +56,6 @@ interface IButtonProps extends Omit<ComponentProps<typeof AccessibleTooltipButto
     selected?: boolean;
     label: string;
     contextMenuTooltip?: string;
-    notificationState?: NotificationState;
     isNarrow?: boolean;
     avatarSize?: number;
     innerRef?: RefObject<HTMLElement>;
@@ -63,7 +63,16 @@ interface IButtonProps extends Omit<ComponentProps<typeof AccessibleTooltipButto
     onClick?(ev?: ButtonEvent): void;
 }
 
-export const SpaceButton: React.FC<IButtonProps> = ({
+type ButtonPropsWithNotification = IButtonProps & { notificationState: NotificationState } & XOR<
+        {
+            space: Room;
+        },
+        {
+            spaceKey: SpaceKey;
+        }
+    >;
+
+export const SpaceButton: React.FC<XOR<ButtonPropsWithNotification, IButtonProps>> = ({
     space,
     spaceKey,
     className,
@@ -92,9 +101,9 @@ export const SpaceButton: React.FC<IButtonProps> = ({
     }
 
     let notifBadge;
-    if (space && notificationState) {
+    if (notificationState) {
         let ariaLabel = _t("Jump to first unread room.");
-        if (space.getMyMembership() === "invite") {
+        if (space?.getMyMembership() === "invite") {
             ariaLabel = _t("Jump to first invite.");
         }
 
