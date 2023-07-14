@@ -32,7 +32,6 @@ import MultiInviter from "./utils/MultiInviter";
 import { Linkify, topicToHtml } from "./HtmlUtils";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import WidgetUtils from "./utils/WidgetUtils";
-import { textToHtmlRainbow } from "./utils/colour";
 import { AddressType, getAddressType } from "./UserAddress";
 import { abbreviateUrl } from "./utils/UrlUtils";
 import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "./utils/IdentityServerUtils";
@@ -67,6 +66,7 @@ import { CommandCategories } from "./slash-commands/interface";
 import { Command } from "./slash-commands/command";
 import { lenny, shrug, tableflip, unflip } from "./slash-commands/canned-messages";
 import { discardsession, remakeolm, verify } from "./slash-commands/crypto";
+import { rainbow, rainbowme } from "./slash-commands/rainbow";
 
 export { CommandCategories, Command };
 
@@ -746,26 +746,8 @@ export const Commands = [
     verify,
     discardsession,
     remakeolm,
-    new Command({
-        command: "rainbow",
-        description: _td("Sends the given message coloured as a rainbow"),
-        args: "<message>",
-        runFn: function (cli, roomId, threadId, args) {
-            if (!args) return reject(this.getUsage());
-            return successSync(ContentHelpers.makeHtmlMessage(args, textToHtmlRainbow(args)));
-        },
-        category: CommandCategories.messages,
-    }),
-    new Command({
-        command: "rainbowme",
-        description: _td("Sends the given emote coloured as a rainbow"),
-        args: "<message>",
-        runFn: function (cli, roomId, threadId, args) {
-            if (!args) return reject(this.getUsage());
-            return successSync(ContentHelpers.makeHtmlEmote(args, textToHtmlRainbow(args)));
-        },
-        category: CommandCategories.messages,
-    }),
+    rainbow,
+    rainbowme,
     new Command({
         command: "help",
         description: _td("Displays list of commands with usages and descriptions"),
