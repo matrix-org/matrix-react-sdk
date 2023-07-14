@@ -66,6 +66,7 @@ import { isCurrentLocalRoom, reject, singleMxcUpload, success, successSync } fro
 import { deop, op } from "./slash-commands/op";
 import { CommandCategories } from "./slash-commands/interface";
 import { Command } from "./slash-commands/command";
+import { lenny, shrug, tableflip, unflip } from "./slash-commands/canned-messages";
 
 export { CommandCategories, Command };
 
@@ -79,58 +80,10 @@ export const Commands = [
         },
         category: CommandCategories.messages,
     }),
-    new Command({
-        command: "shrug",
-        args: "<message>",
-        description: _td("Prepends ¯\\_(ツ)_/¯ to a plain-text message"),
-        runFn: function (cli, roomId, threadId, args) {
-            let message = "¯\\_(ツ)_/¯";
-            if (args) {
-                message = message + " " + args;
-            }
-            return successSync(ContentHelpers.makeTextMessage(message));
-        },
-        category: CommandCategories.messages,
-    }),
-    new Command({
-        command: "tableflip",
-        args: "<message>",
-        description: _td("Prepends (╯°□°）╯︵ ┻━┻ to a plain-text message"),
-        runFn: function (cli, roomId, threadId, args) {
-            let message = "(╯°□°）╯︵ ┻━┻";
-            if (args) {
-                message = message + " " + args;
-            }
-            return successSync(ContentHelpers.makeTextMessage(message));
-        },
-        category: CommandCategories.messages,
-    }),
-    new Command({
-        command: "unflip",
-        args: "<message>",
-        description: _td("Prepends ┬──┬ ノ( ゜-゜ノ) to a plain-text message"),
-        runFn: function (cli, roomId, threadId, args) {
-            let message = "┬──┬ ノ( ゜-゜ノ)";
-            if (args) {
-                message = message + " " + args;
-            }
-            return successSync(ContentHelpers.makeTextMessage(message));
-        },
-        category: CommandCategories.messages,
-    }),
-    new Command({
-        command: "lenny",
-        args: "<message>",
-        description: _td("Prepends ( ͡° ͜ʖ ͡°) to a plain-text message"),
-        runFn: function (cli, roomId, threadId, args) {
-            let message = "( ͡° ͜ʖ ͡°)";
-            if (args) {
-                message = message + " " + args;
-            }
-            return successSync(ContentHelpers.makeTextMessage(message));
-        },
-        category: CommandCategories.messages,
-    }),
+    shrug,
+    tableflip,
+    unflip,
+    lenny,
     new Command({
         command: "plain",
         args: "<message>",
