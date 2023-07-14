@@ -38,7 +38,6 @@ import SdkConfig from "./SdkConfig";
 import { UIComponent } from "./settings/UIFeature";
 import { CHAT_EFFECTS } from "./effects";
 import DevtoolsDialog from "./components/views/dialogs/DevtoolsDialog";
-import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from "./contexts/RoomContext";
@@ -60,6 +59,7 @@ import { myavatar, myroomavatar, myroomnick, nick } from "./slash-commands/profi
 import { roomavatar, roomname, topic, upgraderoom } from "./slash-commands/room-settings";
 import { html, me, plain, spoiler } from "./slash-commands/messages";
 import { jumptodate } from "./slash-commands/jumptodate";
+import { ignore, unignore } from "./slash-commands/ignore";
 
 export { CommandCategories, Command };
 
@@ -313,65 +313,8 @@ export const Commands = [
     remove,
     ban,
     unban,
-    new Command({
-        command: "ignore",
-        args: "<user-id>",
-        description: _td("Ignores a user, hiding their messages from you"),
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                const matches = args.match(/^(@[^:]+:\S+)$/);
-                if (matches) {
-                    const userId = matches[1];
-                    const ignoredUsers = cli.getIgnoredUsers();
-                    ignoredUsers.push(userId); // de-duped internally in the js-sdk
-                    return success(
-                        cli.setIgnoredUsers(ignoredUsers).then(() => {
-                            Modal.createDialog(InfoDialog, {
-                                title: _t("Ignored user"),
-                                description: (
-                                    <div>
-                                        <p>{_t("You are now ignoring %(userId)s", { userId })}</p>
-                                    </div>
-                                ),
-                            });
-                        }),
-                    );
-                }
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.actions,
-    }),
-    new Command({
-        command: "unignore",
-        args: "<user-id>",
-        description: _td("Stops ignoring a user, showing their messages going forward"),
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                const matches = args.match(/(^@[^:]+:\S+$)/);
-                if (matches) {
-                    const userId = matches[1];
-                    const ignoredUsers = cli.getIgnoredUsers();
-                    const index = ignoredUsers.indexOf(userId);
-                    if (index !== -1) ignoredUsers.splice(index, 1);
-                    return success(
-                        cli.setIgnoredUsers(ignoredUsers).then(() => {
-                            Modal.createDialog(InfoDialog, {
-                                title: _t("Unignored user"),
-                                description: (
-                                    <div>
-                                        <p>{_t("You are no longer ignoring %(userId)s", { userId })}</p>
-                                    </div>
-                                ),
-                            });
-                        }),
-                    );
-                }
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.actions,
-    }),
+    ignore,
+    unignore,
     op,
     deop,
     new Command({
