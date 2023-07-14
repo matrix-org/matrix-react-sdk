@@ -62,6 +62,7 @@ import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 import { Caret } from "../../../editor/caret";
 import { IDiff } from "../../../editor/diff";
 import { getBlobSafeMimeType } from "../../../utils/blobs";
+import { trackSlashCommandAnalyticEvent } from "./wysiwyg_composer/utils/message";
 
 /**
  * Build the mentions information based on the editor model (and any related events):
@@ -181,6 +182,7 @@ export function createMessageContent(
     const isEmote = containsEmote(model);
     if (isEmote) {
         model = stripEmoteCommand(model);
+        trackSlashCommandAnalyticEvent("me", "Legacy");
     }
     if (startsWith(model, "//")) {
         model = stripPrefix(model, "/");
@@ -449,6 +451,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             isEditing: false,
             isReply: !!this.props.replyToEvent,
             inThread: this.props.relation?.rel_type === THREAD_RELATION_TYPE.name,
+            isLocation: false,
+            editor: "Legacy",
+            isMarkdownEnabled: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
         };
         if (posthogEvent.inThread && this.props.relation!.event_id) {
             const threadRoot = this.props.room.findEventById(this.props.relation!.event_id);
@@ -487,6 +492,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 if (!commandSuccessful) {
                     return; // errored
                 }
+
+                trackSlashCommandAnalyticEvent(cmd.command, "Legacy");
 
                 if (content && [CommandCategories.messages, CommandCategories.effects].includes(cmd.category)) {
                     // Attach any mentions which might be contained in the command content.

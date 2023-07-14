@@ -30,6 +30,7 @@ import * as Commands from "../../../../../../src/editor/commands";
 import * as Reply from "../../../../../../src/utils/Reply";
 import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
 import { Action } from "../../../../../../src/dispatcher/actions";
+import * as mockPosthogAnalytics from "../../../../../../src/PosthogAnalytics";
 
 describe("message", () => {
     const permalinkCreator = {
@@ -240,7 +241,7 @@ describe("message", () => {
             expect(spyDispatcher).toHaveBeenCalledWith({ action: "effects.confetti" });
         });
 
-        describe("slash commands", () => {
+        describe("Slash commands", () => {
             const getCommandSpy = jest.spyOn(SlashCommands, "getCommand");
 
             it("calls getCommand for a message starting with a valid command", async () => {
@@ -384,6 +385,83 @@ describe("message", () => {
                 });
 
                 expect(result).toBeUndefined();
+            });
+        });
+
+        describe.only("Analytics - Slash commands", () => {
+            beforeEach(async () => {
+                jest.spyOn(mockPosthogAnalytics.PosthogAnalytics.instance, "trackEvent").mockImplementation(() => {});
+            });
+            afterEach(() => {
+                jest.restoreAllMocks();
+            });
+
+            it("Should fire the correct analytic event for a slash command from the rich text editor", async () => {
+                const message = "/rainbow some rainbow text";
+                await sendMessage(message, true, {
+                    roomContext: defaultRoomContext,
+                    mxClient: mockClient,
+                    permalinkCreator,
+                });
+
+                // note we expect two analytics events here - one for sending a message, one for the slash command
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(2);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenLastCalledWith({
+                    eventName: "SlashCommand",
+                    editor: "RteFormatting",
+                    command: "rainbow",
+                });
+            });
+
+            it("Should fire the correct analytic event for a slash command from the plain text editor", async () => {
+                const message = "/rainbow some rainbow text";
+                await sendMessage(message, false, {
+                    roomContext: defaultRoomContext,
+                    mxClient: mockClient,
+                    permalinkCreator,
+                });
+
+                // note we expect two analytics events here - one for sending a message, one for the slash command
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(2);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenLastCalledWith({
+                    eventName: "SlashCommand",
+                    editor: "RtePlain",
+                    command: "rainbow",
+                });
+            });
+
+            it("Should fire the correct analytic event for a /me command from the rich text editor", async () => {
+                const message = "/me says something";
+                await sendMessage(message, true, {
+                    roomContext: defaultRoomContext,
+                    mxClient: mockClient,
+                    permalinkCreator,
+                });
+
+                // note we expect two analytics events here - one for sending a message, one for the slash command
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(2);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenLastCalledWith({
+                    eventName: "SlashCommand",
+                    editor: "RteFormatting",
+                    command: "me",
+                });
+            });
+
+            it("Should fire the correct analytic event for a /me command from the plain text editor", async () => {
+                const message = "/me says something";
+                await sendMessage(message, false, {
+                    roomContext: defaultRoomContext,
+                    mxClient: mockClient,
+                    permalinkCreator,
+                });
+
+                // note we expect two analytics events here - one for sending a message, one for the slash command
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(2);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenLastCalledWith({
+                    eventName: "SlashCommand",
+                    editor: "RtePlain",
+                    command: "me",
+                });
             });
         });
     });

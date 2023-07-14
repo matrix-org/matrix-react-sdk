@@ -21,6 +21,7 @@ import { ActionState, ActionTypes, AllActionStates, FormattingFunctions } from "
 
 import { FormattingButtons } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/FormattingButtons";
 import * as LinkModal from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/LinkModal";
+import * as mockPosthogAnalytics from "../../../../../../src/PosthogAnalytics";
 
 const mockWysiwyg = {
     bold: jest.fn(),
@@ -34,7 +35,7 @@ const mockWysiwyg = {
     unorderedList: jest.fn(),
     quote: jest.fn(),
     indent: jest.fn(),
-    unIndent: jest.fn(),
+    unindent: jest.fn(),
 } as unknown as FormattingFunctions;
 
 const openLinkModalSpy = jest.spyOn(LinkModal, "openLinkModal");
@@ -183,5 +184,46 @@ describe("FormattingButtons", () => {
 
         expect(screen.getByLabelText("Indent increase")).toBeInTheDocument();
         expect(screen.getByLabelText("Indent decrease")).toBeInTheDocument();
+    });
+
+    describe("Analytics", () => {
+        // We test analytics for the indent and unindent buttons here due to difficulty simulating their use in
+        // the composer. The other analytics tests can be found in `WysiwygComposer-test.tsx`
+        beforeEach(async () => {
+            jest.spyOn(mockPosthogAnalytics.PosthogAnalytics.instance, "trackEvent").mockImplementation(() => {});
+        });
+        afterEach(() => {
+            jest.restoreAllMocks();
+        });
+
+        it("Clicking the indent button fires an analytic event", async () => {
+            const orderedListActive = { ...defaultActionStates, orderedList: "reversed" };
+            renderComponent({ actionStates: orderedListActive });
+
+            await userEvent.click(screen.getByLabelText("Indent increase"));
+
+            // check that the analytics tracking has fired once with the expected formattingAction
+            expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+            expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledWith({
+                eventName: "FormattedMessage",
+                editor: "RteFormatting",
+                formatAction: "Indent",
+            });
+        });
+
+        it("Clicking the unindent button fires an analytic event", async () => {
+            const orderedListActive = { ...defaultActionStates, orderedList: "reversed" };
+            renderComponent({ actionStates: orderedListActive });
+
+            await userEvent.click(screen.getByLabelText("Indent decrease"));
+
+            // check that the analytics tracking has fired once with the expected formattingAction
+            expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(1);
+            expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledWith({
+                eventName: "FormattedMessage",
+                editor: "RteFormatting",
+                formatAction: "Unindent",
+            });
+        });
     });
 });

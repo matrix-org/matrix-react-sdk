@@ -87,6 +87,7 @@ export function PlainTextComposer({
             onSelect={onSelect}
         >
             <WysiwygAutocomplete
+                analyticsEditor="RtePlain"
                 ref={autocompleteRef}
                 suggestion={suggestion}
                 handleMention={handleMention}

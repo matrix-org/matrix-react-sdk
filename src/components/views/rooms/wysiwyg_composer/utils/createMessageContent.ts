@@ -21,6 +21,7 @@ import SettingsStore from "../../../../../settings/SettingsStore";
 import { parsePermalink, RoomPermalinkCreator } from "../../../../../utils/permalinks/Permalinks";
 import { addReplyToMessageContent } from "../../../../../utils/Reply";
 import { isNotNull } from "../../../../../Typeguards";
+import { trackSlashCommandAnalyticEvent } from "./message";
 
 export const EMOTE_PREFIX = "/me ";
 
@@ -85,6 +86,7 @@ export async function createMessageContent(
     if (isEmote) {
         // if we are dealing with an emote we want to remove the prefix so that `/me` does not
         // appear after the `* <userName>` text in the timeline
+        trackSlashCommandAnalyticEvent("me", isHTML ? "RteFormatting" : "RtePlain");
         message = message.slice(EMOTE_PREFIX.length);
     }
     if (message.startsWith("//")) {

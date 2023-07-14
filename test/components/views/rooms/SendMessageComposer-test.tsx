@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import { IContent, MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 import userEvent from "@testing-library/user-event";
@@ -41,6 +41,7 @@ import { doMaybeLocalRoomAction } from "../../../../src/utils/local-room";
 import { addTextToComposer } from "../../../test-utils/composer";
 import dis from "../../../../src/dispatcher/dispatcher";
 import SettingsStore from "../../../../src/settings/SettingsStore";
+import * as mockPosthogAnalytics from "../../../../src/PosthogAnalytics";
 
 jest.mock("../../../../src/utils/local-room", () => ({
     doMaybeLocalRoomAction: jest.fn(),
@@ -538,6 +539,30 @@ describe("<SendMessageComposer/>", () => {
             });
 
             expect(dis.dispatch).not.toHaveBeenCalledWith({ action: `effects.confetti` });
+        });
+
+        describe.only("Analytics", () => {
+            beforeEach(async () => {
+                jest.spyOn(mockPosthogAnalytics.PosthogAnalytics.instance, "trackEvent").mockImplementation(() => {});
+            });
+            afterEach(() => {
+                jest.restoreAllMocks();
+            });
+
+            it("does something", () => {
+                getComponent();
+
+                userEvent.type(screen.getByRole("textbox"), "/me says something{Enter}");
+                screen.debug();
+
+                // note we expect two analytics events here - one for sending a message, one for the slash command
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenCalledTimes(2);
+                expect(mockPosthogAnalytics.PosthogAnalytics.instance.trackEvent).toHaveBeenLastCalledWith({
+                    eventName: "SlashCommand",
+                    editor: "RtePlain",
+                    command: "me",
+                });
+            });
         });
     });
 

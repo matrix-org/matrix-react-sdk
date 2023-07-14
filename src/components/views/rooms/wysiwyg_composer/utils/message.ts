@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
+import { SlashCommand } from "@matrix-org/analytics-events/types/typescript/SlashCommand";
 import { IContent, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ISendEventResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
@@ -65,15 +66,16 @@ export async function sendMessage(
         eventName: "Composer",
         isEditing: false,
         isReply: Boolean(replyToEvent),
-        // TODO thread
         inThread: relation?.rel_type === THREAD_RELATION_TYPE.name,
+        isLocation: false,
+        editor: isHTML ? "RteFormatting" : "RtePlain",
+        isMarkdownEnabled: false,
     };
 
-    // TODO thread
-    /*if (posthogEvent.inThread) {
-        const threadRoot = room.findEventById(relation?.event_id);
+    if (posthogEvent.inThread) {
+        const threadRoot = room.findEventById(relation?.event_id ?? "");
         posthogEvent.startsThread = threadRoot?.getThread()?.events.length === 1;
-    }*/
+    }
     PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
 
     let content: IContent | null = null;
@@ -82,6 +84,7 @@ export async function sendMessage(
     // but note that the /me and // special cases are handled by the call to createMessageContent
     if (message.startsWith("/") && !message.startsWith("//") && !message.startsWith(EMOTE_PREFIX)) {
         const { cmd, args } = getCommand(message);
+
         if (cmd) {
             const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation?.event_id : null;
             let commandSuccessful: boolean;
@@ -90,6 +93,8 @@ export async function sendMessage(
             if (!commandSuccessful) {
                 return; // errored
             }
+
+            trackSlashCommandAnalyticEvent(cmd.command, isHTML ? "RteFormatting" : "RtePlain");
 
             if (
                 content &&
@@ -201,6 +206,9 @@ export async function editMessage(
         isEditing: true,
         inThread: Boolean(editedEvent?.getThread()),
         isReply: Boolean(editedEvent.replyEventId),
+        isLocation: false,
+        editor: "RteFormatting", // it is always the rich text mode when editing a message
+        isMarkdownEnabled: false,
     });
 
     // TODO emoji
@@ -247,4 +255,18 @@ export async function editMessage(
 
     endEditing(roomContext);
     return response;
+}
+
+/**
+ * Util function to fire a SlashCommand analytic event
+ *
+ * @param command - the slash command that will be recorded in the analytic event that is fired
+ * @returns void
+ */
+export function trackSlashCommandAnalyticEvent(command: string, editor: SlashCommand["editor"]): void {
+    PosthogAnalytics.instance.trackEvent<SlashCommand>({
+        eventName: "SlashCommand",
+        editor,
+        command,
+    });
 }

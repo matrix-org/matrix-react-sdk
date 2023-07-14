@@ -114,6 +114,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
             onBlur={onFocus}
         >
             <WysiwygAutocomplete
+                analyticsEditor="RteFormatting"
                 ref={autocompleteRef}
                 suggestion={suggestion}
                 handleMention={wysiwyg.mention}
