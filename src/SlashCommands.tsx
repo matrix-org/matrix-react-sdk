@@ -27,7 +27,7 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import { successSync } from "./slash-commands/utils";
 import { deop, op } from "./slash-commands/op";
 import { CommandCategories } from "./slash-commands/interface";
-import { Command } from "./slash-commands/command";
+import { Command, ICommandOpts } from "./slash-commands/command";
 import { lenny, shrug, tableflip, unflip } from "./slash-commands/canned-messages";
 import { discardsession, remakeolm, verify } from "./slash-commands/crypto";
 import { rainbow, rainbowme } from "./slash-commands/rainbow";
@@ -40,7 +40,6 @@ import { roomavatar, roomname, topic, upgraderoom } from "./slash-commands/room-
 import { html, me, plain, spoiler } from "./slash-commands/messages";
 import { jumptodate } from "./slash-commands/jumptodate";
 import { ignore, unignore } from "./slash-commands/ignore";
-import { devtools } from "./slash-commands/devtools";
 import { rageshake } from "./slash-commands/rageshake";
 import { whois } from "./slash-commands/whois";
 import { help } from "./slash-commands/help";
@@ -75,7 +74,6 @@ export const Commands = [
     unignore,
     op,
     deop,
-    devtools,
     addwidget,
     verify,
     discardsession,
@@ -119,12 +117,23 @@ export const Commands = [
 
 // build a map from names and aliases to the Command objects.
 export const CommandMap = new Map<string, Command>();
-Commands.forEach((cmd) => {
+Commands.forEach(addCommandToMap);
+
+function addCommandToMap(cmd: Command): void {
     CommandMap.set(cmd.command, cmd);
     cmd.aliases.forEach((alias) => {
         CommandMap.set(alias, cmd);
     });
-});
+}
+
+export function registerSlashCommand(cmd: ICommandOpts): void {
+    if (CommandMap.has(cmd.command)) {
+        throw new Error("Command has already been registered");
+    }
+    const command = new Command(cmd);
+    Commands.push(command);
+    addCommandToMap(command);
+}
 
 export function parseCommandString(input: string): { cmd?: string; args?: string } {
     // trim any trailing whitespace, as it can confuse the parser for IRC-style commands

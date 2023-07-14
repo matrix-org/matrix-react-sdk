@@ -34,6 +34,9 @@ import ServerInfo from "./devtools/ServerInfo";
 import { Features } from "../../../settings/Settings";
 import CopyableText from "../elements/CopyableText";
 import RoomNotifications from "./devtools/RoomNotifications";
+import { CommandCategories, registerSlashCommand } from "../../../SlashCommands";
+import Modal from "../../../Modal";
+import { success } from "../../../slash-commands/utils";
 
 enum Category {
     Room,
@@ -147,5 +150,15 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, threadRootId, onFinished }) 
         </BaseDialog>
     );
 };
+
+registerSlashCommand({
+    command: "devtools",
+    description: _td("Opens the Developer Tools dialog"),
+    runFn: function (cli, roomId, threadRootId) {
+        Modal.createDialog(DevtoolsDialog, { roomId, threadRootId }, "mx_DevtoolsDialog_wrapper");
+        return success();
+    },
+    category: CommandCategories.advanced,
+});
 
 export default DevtoolsDialog;

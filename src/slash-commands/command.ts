@@ -34,7 +34,7 @@ type RunFn = (
     args?: string,
 ) => RunResult;
 
-interface ICommandOpts {
+export interface ICommandOpts {
     command: string;
     aliases?: string[];
     args?: string;
