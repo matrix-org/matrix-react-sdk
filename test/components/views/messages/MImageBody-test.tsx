@@ -229,7 +229,7 @@ describe("<MImageBody/>", () => {
         mocked(global.URL.createObjectURL).mockReturnValue("blob:generated-thumb");
 
         fetchMock.getOnce(
-            url,
+            "https://server/_matrix/media/r0/download/server/image",
             {
                 body: fs.readFileSync(path.resolve(__dirname, "..", "..", "..", "images", "animated-logo.webp")),
             },
