@@ -18,7 +18,6 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { User } from "matrix-js-sdk/src/models/user";
 import * as ContentHelpers from "matrix-js-sdk/src/content-helpers";
 import { IContent } from "matrix-js-sdk/src/models/event";
 
@@ -31,13 +30,9 @@ import { AddressType, getAddressType } from "./UserAddress";
 import { abbreviateUrl } from "./utils/UrlUtils";
 import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "./utils/IdentityServerUtils";
 import { isPermalinkHost, parsePermalink } from "./utils/permalinks/Permalinks";
-import BugReportDialog from "./components/views/dialogs/BugReportDialog";
-import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { Action } from "./dispatcher/actions";
-import SdkConfig from "./SdkConfig";
 import { UIComponent } from "./settings/UIFeature";
 import { CHAT_EFFECTS } from "./effects";
-import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from "./contexts/RoomContext";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
@@ -60,6 +55,9 @@ import { html, me, plain, spoiler } from "./slash-commands/messages";
 import { jumptodate } from "./slash-commands/jumptodate";
 import { ignore, unignore } from "./slash-commands/ignore";
 import { devtools } from "./slash-commands/devtools";
+import { rageshake } from "./slash-commands/rageshake";
+import { whois } from "./slash-commands/whois";
+import { help } from "./slash-commands/help";
 
 export { CommandCategories, Command };
 
@@ -324,50 +322,9 @@ export const Commands = [
     remakeolm,
     rainbow,
     rainbowme,
-    new Command({
-        command: "help",
-        description: _td("Displays list of commands with usages and descriptions"),
-        runFn: function () {
-            Modal.createDialog(SlashCommandHelpDialog);
-            return success();
-        },
-        category: CommandCategories.advanced,
-    }),
-    new Command({
-        command: "whois",
-        description: _td("Displays information about a user"),
-        args: "<user-id>",
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, userId) {
-            if (!userId || !userId.startsWith("@") || !userId.includes(":")) {
-                return reject(this.getUsage());
-            }
-
-            const member = cli.getRoom(roomId)?.getMember(userId);
-            dis.dispatch<ViewUserPayload>({
-                action: Action.ViewUser,
-                // XXX: We should be using a real member object and not assuming what the receiver wants.
-                member: member || ({ userId } as User),
-            });
-            return success();
-        },
-        category: CommandCategories.advanced,
-    }),
-    new Command({
-        command: "rageshake",
-        aliases: ["bugreport"],
-        description: _td("Send a bug report with logs"),
-        isEnabled: () => !!SdkConfig.get().bug_report_endpoint_url,
-        args: "<description>",
-        runFn: function (cli, roomId, threadId, args) {
-            return success(
-                Modal.createDialog(BugReportDialog, {
-                    initialText: args,
-                }).finished,
-            );
-        },
-        category: CommandCategories.advanced,
-    }),
+    help,
+    whois,
+    rageshake,
     tovirtual,
     query,
     msg,
