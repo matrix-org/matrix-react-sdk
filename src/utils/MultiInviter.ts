@@ -175,7 +175,12 @@ export default class MultiInviter {
             } else if (member?.membership === "ban") {
                 let proceed = false;
                 const ourMember = room.getMember(this.matrixClient.getSafeUserId());
-                if (!!ourMember && room.currentState.hasSufficientPowerLevelFor("ban", ourMember.powerLevel)) {
+                if (
+                    !!ourMember &&
+                    member.powerLevel < ourMember.powerLevel &&
+                    room.currentState.hasSufficientPowerLevelFor("ban", ourMember.powerLevel) &&
+                    room.currentState.hasSufficientPowerLevelFor("kick", ourMember.powerLevel)
+                ) {
                     const { finished } = Modal.createDialog(ConfirmUserActionDialog, {
                         member,
                         action: _t("Unban"),
