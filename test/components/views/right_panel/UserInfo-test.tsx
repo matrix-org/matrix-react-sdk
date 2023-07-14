@@ -509,18 +509,23 @@ describe("<DeviceItem />", () => {
     });
 
     it("when userId is the same as userId from client, uses isCrossSigningVerified to determine if button is shown", async () => {
+        const deferred = defer<DeviceVerificationStatus>();
+        mockCrypto.getDeviceVerificationStatus.mockReturnValue(deferred.promise);
+
         mockClient.getSafeUserId.mockReturnValueOnce(defaultUserId);
         mockClient.getUserId.mockReturnValueOnce(defaultUserId);
         renderComponent();
         await act(flushPromises);
 
         // set trust to be false for isVerified, true for isCrossSigningVerified
-        setMockDeviceTrust(false, true);
+        deferred.resolve({
+            isVerified: () => false,
+            crossSigningVerified: true,
+        } as DeviceVerificationStatus);
 
+        await expect(screen.findByText(device.displayName!)).resolves.toBeInTheDocument();
         // expect to see no button in this case
-        // TODO `toBeInTheDocument` is not called, if called the test is failing
-        expect(screen.queryByRole("button")).not.toBeInTheDocument;
-        expect(screen.getByText(device.displayName!)).toBeInTheDocument();
+        expect(screen.queryByRole("button")).not.toBeInTheDocument();
     });
 
     it("with verified user and device, displays no button and a 'Trusted' label", async () => {
@@ -902,7 +907,13 @@ describe("<RoomKickButton />", () => {
 
     let defaultProps: Parameters<typeof RoomKickButton>[0];
     beforeEach(() => {
-        defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+        defaultProps = {
+            room: mockRoom,
+            member: defaultMember,
+            startUpdating: jest.fn(),
+            stopUpdating: jest.fn(),
+            isUpdating: false,
+        };
     });
 
     const renderComponent = (props = {}) => {
@@ -1003,7 +1014,13 @@ describe("<BanToggleButton />", () => {
     const memberWithBanMembership = { ...defaultMember, membership: "ban" };
     let defaultProps: Parameters<typeof BanToggleButton>[0];
     beforeEach(() => {
-        defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+        defaultProps = {
+            room: mockRoom,
+            member: defaultMember,
+            startUpdating: jest.fn(),
+            stopUpdating: jest.fn(),
+            isUpdating: false,
+        };
     });
 
     const renderComponent = (props = {}) => {
@@ -1131,6 +1148,7 @@ describe("<RoomAdminToolsContainer />", () => {
         defaultProps = {
             room: mockRoom,
             member: defaultMember,
+            isUpdating: false,
             startUpdating: jest.fn(),
             stopUpdating: jest.fn(),
             powerLevels: {},
@@ -1193,7 +1211,43 @@ describe("<RoomAdminToolsContainer />", () => {
             powerLevels: { events: { "m.room.power_levels": 1 } },
         });
 
-        expect(screen.getByText(/mute/i)).toBeInTheDocument();
+        const button = screen.getByText(/mute/i);
+        expect(button).toBeInTheDocument();
+        fireEvent.click(button);
+        expect(defaultProps.startUpdating).toHaveBeenCalled();
+    });
+
+    it("should disable buttons when isUpdating=true", () => {
+        const mockMeMember = new RoomMember(mockRoom.roomId, "arbitraryId");
+        mockMeMember.powerLevel = 51; // defaults to 50
+        mockRoom.getMember.mockReturnValueOnce(mockMeMember);
+
+        const defaultMemberWithPowerLevelAndJoinMembership = { ...defaultMember, powerLevel: 0, membership: "join" };
+
+        renderComponent({
+            member: defaultMemberWithPowerLevelAndJoinMembership,
+            powerLevels: { events: { "m.room.power_levels": 1 } },
+            isUpdating: true,
+        });
+
+        const button = screen.getByText(/mute/i);
+        expect(button).toBeInTheDocument();
+        expect(button).toHaveAttribute("disabled");
+        expect(button).toHaveAttribute("aria-disabled", "true");
+    });
+
+    it("should not show mute button for one's own member", () => {
+        const mockMeMember = new RoomMember(mockRoom.roomId, mockClient.getSafeUserId());
+        mockMeMember.powerLevel = 51; // defaults to 50
+        mockRoom.getMember.mockReturnValueOnce(mockMeMember);
+
+        renderComponent({
+            member: mockMeMember,
+            powerLevels: { events: { "m.room.power_levels": 100 } },
+        });
+
+        const button = screen.queryByText(/mute/i);
+        expect(button).not.toBeInTheDocument();
     });
 });
 
