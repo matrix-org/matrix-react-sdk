@@ -32,7 +32,6 @@ import { parseEvent } from "../../../editor/deserialize";
 import { CommandPartCreator, Part, PartCreator, SerializedPart } from "../../../editor/parts";
 import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
-import { CommandCategories } from "../../../SlashCommands";
 import { Action } from "../../../dispatcher/actions";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import SendHistoryManager from "../../../SendHistoryManager";
@@ -51,6 +50,7 @@ import DocumentOffset from "../../../editor/offset";
 import { attachMentions, attachRelation } from "./SendMessageComposer";
 import { filterBoolean } from "../../../utils/arrays";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { CommandCategories } from "../../../slash-commands/interface";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;

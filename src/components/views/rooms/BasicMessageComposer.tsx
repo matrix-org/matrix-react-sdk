@@ -38,7 +38,7 @@ import { renderModel } from "../../../editor/render";
 import SettingsStore from "../../../settings/SettingsStore";
 import { IS_MAC, Key } from "../../../Keyboard";
 import { EMOTICON_TO_EMOJI } from "../../../emoji";
-import { CommandCategories, CommandMap, parseCommandString } from "../../../SlashCommands";
+import { CommandMap, parseCommandString } from "../../../SlashCommands";
 import Range from "../../../editor/range";
 import MessageComposerFormatBar, { Formatting } from "./MessageComposerFormatBar";
 import DocumentOffset from "../../../editor/offset";
@@ -52,6 +52,7 @@ import { _t } from "../../../languageHandler";
 import { linkify } from "../../../linkify-matrix";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { CommandCategories } from "../../../slash-commands/interface";
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp("(?:^|\\s)(" + EMOTICON_REGEX.source + ")\\s|:^$");

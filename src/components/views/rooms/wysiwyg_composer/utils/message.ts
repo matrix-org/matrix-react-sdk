@@ -33,11 +33,12 @@ import { endEditing, cancelPreviousPendingEdit } from "./editing";
 import EditorStateTransfer from "../../../../../utils/EditorStateTransfer";
 import { createMessageContent, EMOTE_PREFIX } from "./createMessageContent";
 import { isContentModified } from "./isContentModified";
-import { CommandCategories, getCommand } from "../../../../../SlashCommands";
+import { getCommand } from "../../../../../SlashCommands";
 import { runSlashCommand, shouldSendAnyway } from "../../../../../editor/commands";
 import { Action } from "../../../../../dispatcher/actions";
 import { addReplyToMessageContent } from "../../../../../utils/Reply";
 import { attachRelation } from "../../SendMessageComposer";
+import { CommandCategories } from "../../../../../slash-commands/interface";
 
 export interface SendMessageParams {
     mxClient: MatrixClient;

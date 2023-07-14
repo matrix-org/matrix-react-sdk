@@ -45,8 +45,6 @@ import { whois } from "./slash-commands/whois";
 import { help } from "./slash-commands/help";
 import { invite, join, part } from "./slash-commands/membership";
 
-export { CommandCategories, Command };
-
 export const Commands = [
     spoiler,
     shrug,

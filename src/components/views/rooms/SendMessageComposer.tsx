@@ -39,7 +39,6 @@ import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
 import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from "../../../editor/parts";
 import { findEditableEvent } from "../../../utils/EventUtils";
 import SendHistoryManager from "../../../SendHistoryManager";
-import { CommandCategories } from "../../../SlashCommands";
 import ContentMessages from "../../../ContentMessages";
 import { withMatrixClientHOC, MatrixClientProps } from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
@@ -62,6 +61,7 @@ import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 import { Caret } from "../../../editor/caret";
 import { IDiff } from "../../../editor/diff";
 import { getBlobSafeMimeType } from "../../../utils/blobs";
+import { CommandCategories } from "../../../slash-commands/interface";
 
 /**
  * Build the mentions information based on the editor model (and any related events):

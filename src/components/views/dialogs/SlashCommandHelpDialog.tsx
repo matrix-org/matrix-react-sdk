@@ -17,9 +17,11 @@ limitations under the License.
 import React from "react";
 
 import { _t } from "../../../languageHandler";
-import { Command, CommandCategories, Commands } from "../../../SlashCommands";
+import { Commands } from "../../../SlashCommands";
 import InfoDialog from "./InfoDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { CommandCategories } from "../../../slash-commands/interface";
+import { Command } from "../../../slash-commands/command";
 
 interface IProps {
     onFinished(): void;

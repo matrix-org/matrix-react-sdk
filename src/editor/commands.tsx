@@ -21,11 +21,13 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import EditorModel from "./model";
 import { Type } from "./parts";
-import { Command, CommandCategories, getCommand } from "../SlashCommands";
+import { getCommand } from "../SlashCommands";
 import { UserFriendlyError, _t, _td } from "../languageHandler";
 import Modal from "../Modal";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 import QuestionDialog from "../components/views/dialogs/QuestionDialog";
+import { Command } from "../slash-commands/command";
+import { CommandCategories } from "../slash-commands/interface";
 
 export function isSlashCommand(model: EditorModel): boolean {
     const parts = model.parts;

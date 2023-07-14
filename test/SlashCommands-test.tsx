@@ -17,7 +17,7 @@ limitations under the License.
 import { MatrixClient, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
-import { Command, Commands, getCommand } from "../src/SlashCommands";
+import { Commands, getCommand } from "../src/SlashCommands";
 import { createTestClient } from "./test-utils";
 import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../src/models/LocalRoom";
 import SettingsStore from "../src/settings/SettingsStore";
@@ -27,6 +27,7 @@ import Modal from "../src/Modal";
 import WidgetUtils from "../src/utils/WidgetUtils";
 import { WidgetType } from "../src/widgets/WidgetType";
 import { warnSelfDemote } from "../src/components/views/right_panel/UserInfo";
+import { Command } from "../src/slash-commands/command";
 
 jest.mock("../src/components/views/right_panel/UserInfo");
 

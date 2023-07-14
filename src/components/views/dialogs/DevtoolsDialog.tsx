@@ -34,9 +34,10 @@ import ServerInfo from "./devtools/ServerInfo";
 import { Features } from "../../../settings/Settings";
 import CopyableText from "../elements/CopyableText";
 import RoomNotifications from "./devtools/RoomNotifications";
-import { CommandCategories, registerSlashCommand } from "../../../SlashCommands";
+import { registerSlashCommand } from "../../../SlashCommands";
 import Modal from "../../../Modal";
 import { success } from "../../../slash-commands/utils";
+import { CommandCategories } from "../../../slash-commands/interface";
 
 enum Category {
     Room,

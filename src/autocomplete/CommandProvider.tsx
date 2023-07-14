@@ -25,9 +25,10 @@ import AutocompleteProvider from "./AutocompleteProvider";
 import QueryMatcher from "./QueryMatcher";
 import { TextualCompletion } from "./Components";
 import { ICompletion, ISelectionRange } from "./Autocompleter";
-import { Command, Commands, CommandMap } from "../SlashCommands";
+import { Commands, CommandMap } from "../SlashCommands";
 import { TimelineRenderingType } from "../contexts/RoomContext";
 import { MatrixClientPeg } from "../MatrixClientPeg";
+import { Command } from "../slash-commands/command";
 
 const COMMAND_RE = /(^\/\w*)(?: .*)?/g;
 
