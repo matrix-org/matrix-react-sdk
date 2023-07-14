@@ -18,7 +18,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
     videoUploadOnPasses: false,
-    projectId: "ppvnzg",
+    projectId: "zofqdy",
     experimentalInteractiveRunEvents: true,
     defaultCommandTimeout: 10000,
     chromeWebSecurity: false,
