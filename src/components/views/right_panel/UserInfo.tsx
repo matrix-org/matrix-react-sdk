@@ -902,14 +902,8 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({
         const target = member.userId;
 
         const powerLevelEvent = room.currentState.getStateEvents("m.room.power_levels", "");
-        if (!powerLevelEvent) {
-            stopUpdating();
-            return;
-        }
-
-        const powerLevels = powerLevelEvent.getContent();
-        const levelToSend =
-            (powerLevels.events ? powerLevels.events["m.room.message"] : null) || powerLevels.events_default;
+        const powerLevels = powerLevelEvent?.getContent();
+        const levelToSend = powerLevels?.events?.["m.room.message"] ?? powerLevels?.events_default;
         let level;
         if (muted) {
             // unmute
