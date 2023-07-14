@@ -879,6 +879,7 @@ interface IBaseRoomProps extends IBaseProps {
     children?: ReactNode;
 }
 
+// We do not show a Mute button for ourselves so it doesn't need to handle warning self demotion
 const MuteToggleButton: React.FC<IBaseRoomProps> = ({
     member,
     room,
@@ -899,20 +900,6 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({
 
         const roomId = member.roomId;
         const target = member.userId;
-
-        // if muting self, warn as it may be irreversible
-        if (target === cli.getUserId()) {
-            try {
-                if (!(await warnSelfDemote(room?.isSpaceRoom()))) {
-                    stopUpdating();
-                    return;
-                }
-            } catch (e) {
-                logger.error("Failed to warn about self demotion: ", e);
-                stopUpdating();
-                return;
-            }
-        }
 
         const powerLevelEvent = room.currentState.getStateEvents("m.room.power_levels", "");
         if (!powerLevelEvent) {
