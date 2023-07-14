@@ -63,41 +63,18 @@ import { holdcall, tovirtual, unholdcall } from "./slash-commands/call";
 import { addwidget } from "./slash-commands/widget";
 import { myavatar, myroomavatar, myroomnick, nick } from "./slash-commands/profile";
 import { roomavatar, roomname, topic, upgraderoom } from "./slash-commands/room-settings";
+import { html, me, plain, spoiler } from "./slash-commands/messages";
 
 export { CommandCategories, Command };
 
 export const Commands = [
-    new Command({
-        command: "spoiler",
-        args: "<message>",
-        description: _td("Sends the given message as a spoiler"),
-        runFn: function (cli, roomId, threadId, message = "") {
-            return successSync(ContentHelpers.makeHtmlMessage(message, `<span data-mx-spoiler>${message}</span>`));
-        },
-        category: CommandCategories.messages,
-    }),
+    spoiler,
     shrug,
     tableflip,
     unflip,
     lenny,
-    new Command({
-        command: "plain",
-        args: "<message>",
-        description: _td("Sends a message as plain text, without interpreting it as markdown"),
-        runFn: function (cli, roomId, threadId, messages = "") {
-            return successSync(ContentHelpers.makeTextMessage(messages));
-        },
-        category: CommandCategories.messages,
-    }),
-    new Command({
-        command: "html",
-        args: "<message>",
-        description: _td("Sends a message as html, without interpreting it as markdown"),
-        runFn: function (cli, roomId, threadId, messages = "") {
-            return successSync(ContentHelpers.makeHtmlMessage(messages, messages));
-        },
-        category: CommandCategories.messages,
-    }),
+    plain,
+    html,
     upgraderoom,
     new Command({
         command: "jumptodate",
@@ -577,17 +554,7 @@ export const Commands = [
     unholdcall,
     converttodm,
     converttoroom,
-
-    // Command definitions for autocompletion ONLY:
-    // /me is special because its not handled by SlashCommands.js and is instead done inside the Composer classes
-    new Command({
-        command: "me",
-        args: "<message>",
-        description: _td("Displays action"),
-        category: CommandCategories.messages,
-        hideCompletionAfterSpace: true,
-    }),
-
+    me,
     ...CHAT_EFFECTS.map((effect) => {
         return new Command({
             command: effect.command,
