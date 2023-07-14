@@ -34,14 +34,12 @@ import { abbreviateUrl } from "./utils/UrlUtils";
 import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "./utils/IdentityServerUtils";
 import { isPermalinkHost, parsePermalink } from "./utils/permalinks/Permalinks";
 import BugReportDialog from "./components/views/dialogs/BugReportDialog";
-import { ensureDMExists } from "./createRoom";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { Action } from "./dispatcher/actions";
 import SdkConfig from "./SdkConfig";
 import SettingsStore from "./settings/SettingsStore";
 import { UIComponent } from "./settings/UIFeature";
 import { CHAT_EFFECTS } from "./effects";
-import LegacyCallHandler from "./LegacyCallHandler";
 import DevtoolsDialog from "./components/views/dialogs/DevtoolsDialog";
 import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
@@ -58,7 +56,7 @@ import { lenny, shrug, tableflip, unflip } from "./slash-commands/canned-message
 import { discardsession, remakeolm, verify } from "./slash-commands/crypto";
 import { rainbow, rainbowme } from "./slash-commands/rainbow";
 import { ban, remove, unban } from "./slash-commands/moderation";
-import { converttodm, converttoroom } from "./slash-commands/dm";
+import { converttodm, converttoroom, msg, query } from "./slash-commands/dm";
 import { holdcall, tovirtual, unholdcall } from "./slash-commands/call";
 import { addwidget } from "./slash-commands/widget";
 import { myavatar, myroomavatar, myroomnick, nick } from "./slash-commands/profile";
@@ -479,77 +477,8 @@ export const Commands = [
         category: CommandCategories.advanced,
     }),
     tovirtual,
-    new Command({
-        command: "query",
-        description: _td("Opens chat with the given user"),
-        args: "<user-id>",
-        runFn: function (cli, roomId, threadId, userId) {
-            // easter-egg for now: look up phone numbers through the thirdparty API
-            // (very dumb phone number detection...)
-            const isPhoneNumber = userId && /^\+?[0123456789]+$/.test(userId);
-            if (!userId || ((!userId.startsWith("@") || !userId.includes(":")) && !isPhoneNumber)) {
-                return reject(this.getUsage());
-            }
-
-            return success(
-                (async (): Promise<void> => {
-                    if (isPhoneNumber) {
-                        const results = await LegacyCallHandler.instance.pstnLookup(userId);
-                        if (!results || results.length === 0 || !results[0].userid) {
-                            throw new UserFriendlyError("Unable to find Matrix ID for phone number");
-                        }
-                        userId = results[0].userid;
-                    }
-
-                    const roomId = await ensureDMExists(cli, userId);
-                    if (!roomId) throw new Error("Failed to ensure DM exists");
-
-                    dis.dispatch<ViewRoomPayload>({
-                        action: Action.ViewRoom,
-                        room_id: roomId,
-                        metricsTrigger: "SlashCommand",
-                        metricsViaKeyboard: true,
-                    });
-                })(),
-            );
-        },
-        category: CommandCategories.actions,
-    }),
-    new Command({
-        command: "msg",
-        description: _td("Sends a message to the given user"),
-        args: "<user-id> [<message>]",
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                // matches the first whitespace delimited group and then the rest of the string
-                const matches = args.match(/^(\S+?)(?: +(.*))?$/s);
-                if (matches) {
-                    const [userId, msg] = matches.slice(1);
-                    if (userId && userId.startsWith("@") && userId.includes(":")) {
-                        return success(
-                            (async (): Promise<void> => {
-                                const roomId = await ensureDMExists(cli, userId);
-                                if (!roomId) throw new Error("Failed to ensure DM exists");
-
-                                dis.dispatch<ViewRoomPayload>({
-                                    action: Action.ViewRoom,
-                                    room_id: roomId,
-                                    metricsTrigger: "SlashCommand",
-                                    metricsViaKeyboard: true,
-                                });
-                                if (msg) {
-                                    cli.sendTextMessage(roomId, msg);
-                                }
-                            })(),
-                        );
-                    }
-                }
-            }
-
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.actions,
-    }),
+    query,
+    msg,
     holdcall,
     unholdcall,
     converttodm,
