@@ -58,7 +58,11 @@ describe("<MImageBody/>", () => {
     });
     const url = "https://server/_matrix/media/r0/download/server/encrypted-image";
     // eslint-disable-next-line no-restricted-properties
-    cli.mxcUrlToHttp.mockReturnValue(url);
+    cli.mxcUrlToHttp.mockImplementation(
+        (mxcUrl: string, width?: number, height?: number, resizeMethod?: string, allowDirectLinks?: boolean) => {
+            return getHttpUriForMxc("https://server", mxcUrl, width, height, resizeMethod, allowDirectLinks);
+        },
+    );
     const encryptedMediaEvent = new MatrixEvent({
         room_id: "!room:server",
         sender: userId,
@@ -177,12 +181,6 @@ describe("<MImageBody/>", () => {
     it("should fall back to /download/ if /thumbnail/ fails", async () => {
         const thumbUrl = "https://server/_matrix/media/r0/thumbnail/server/image?width=800&height=600&method=scale";
         const downloadUrl = "https://server/_matrix/media/r0/download/server/image";
-        // eslint-disable-next-line no-restricted-properties
-        cli.mxcUrlToHttp.mockImplementation(
-            (mxcUrl: string, width?: number, height?: number, resizeMethod?: string, allowDirectLinks?: boolean) => {
-                return getHttpUriForMxc("https://server", mxcUrl, width, height, resizeMethod, allowDirectLinks);
-            },
-        );
 
         const event = new MatrixEvent({
             room_id: "!room:server",

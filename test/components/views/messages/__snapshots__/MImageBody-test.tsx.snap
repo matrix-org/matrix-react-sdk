@@ -6,7 +6,7 @@ exports[`<MImageBody/> should generate a thumbnail if one isn't included for ani
     class="mx_MImageBody"
   >
     <a
-      href="https://server/_matrix/media/r0/download/server/encrypted-image"
+      href="https://server/_matrix/media/r0/download/server/image"
     >
       <div
         class="mx_MImageBody_thumbnail_container"
@@ -33,7 +33,7 @@ exports[`<MImageBody/> should generate a thumbnail if one isn't included for ani
           <img
             alt="alt for a test image"
             class="mx_MImageBody_thumbnail"
-            src="https://server/_matrix/media/r0/download/server/encrypted-image"
+            src="blob:generated-thumb"
           />
           <p
             class="mx_MImageBody_gifLabel"
