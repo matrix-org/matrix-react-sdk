@@ -67,6 +67,7 @@ import { Command } from "./slash-commands/command";
 import { lenny, shrug, tableflip, unflip } from "./slash-commands/canned-messages";
 import { discardsession, remakeolm, verify } from "./slash-commands/crypto";
 import { rainbow, rainbowme } from "./slash-commands/rainbow";
+import { ban, remove, unban } from "./slash-commands/moderation";
 
 export { CommandCategories, Command };
 
@@ -563,59 +564,9 @@ export const Commands = [
         category: CommandCategories.actions,
         renderingTypes: [TimelineRenderingType.Room],
     }),
-    new Command({
-        command: "remove",
-        aliases: ["kick"],
-        args: "<user-id> [reason]",
-        description: _td("Removes user with given id from this room"),
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                const matches = args.match(/^(\S+?)( +(.*))?$/);
-                if (matches) {
-                    return success(cli.kick(roomId, matches[1], matches[3]));
-                }
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.admin,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
-    new Command({
-        command: "ban",
-        args: "<user-id> [reason]",
-        description: _td("Bans user with given id"),
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                const matches = args.match(/^(\S+?)( +(.*))?$/);
-                if (matches) {
-                    return success(cli.ban(roomId, matches[1], matches[3]));
-                }
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.admin,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
-    new Command({
-        command: "unban",
-        args: "<user-id>",
-        description: _td("Unbans user with given ID"),
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                const matches = args.match(/^(\S+)$/);
-                if (matches) {
-                    // Reset the user membership to "leave" to unban him
-                    return success(cli.unban(roomId, matches[1]));
-                }
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.admin,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    remove,
+    ban,
+    unban,
     new Command({
         command: "ignore",
         args: "<user-id>",
