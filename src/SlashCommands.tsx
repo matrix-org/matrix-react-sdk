@@ -55,7 +55,6 @@ import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpD
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from "./contexts/RoomContext";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
-import VoipUserMapper from "./VoipUserMapper";
 import { htmlSerializeFromMdIfNeeded } from "./editor/serialize";
 import { leaveRoomBehaviour } from "./utils/leave-behaviour";
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -68,6 +67,7 @@ import { discardsession, remakeolm, verify } from "./slash-commands/crypto";
 import { rainbow, rainbowme } from "./slash-commands/rainbow";
 import { ban, remove, unban } from "./slash-commands/moderation";
 import { converttodm, converttoroom } from "./slash-commands/dm";
+import { holdcall, tovirtual, unholdcall } from "./slash-commands/call";
 
 export { CommandCategories, Command };
 
@@ -743,28 +743,7 @@ export const Commands = [
         },
         category: CommandCategories.advanced,
     }),
-    new Command({
-        command: "tovirtual",
-        description: _td("Switches to this room's virtual room, if it has one"),
-        category: CommandCategories.advanced,
-        isEnabled(cli): boolean {
-            return !!LegacyCallHandler.instance.getSupportsVirtualRooms() && !isCurrentLocalRoom(cli);
-        },
-        runFn: (cli, roomId) => {
-            return success(
-                (async (): Promise<void> => {
-                    const room = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(roomId);
-                    if (!room) throw new UserFriendlyError("No virtual room for this room");
-                    dis.dispatch<ViewRoomPayload>({
-                        action: Action.ViewRoom,
-                        room_id: room.roomId,
-                        metricsTrigger: "SlashCommand",
-                        metricsViaKeyboard: true,
-                    });
-                })(),
-            );
-        },
-    }),
+    tovirtual,
     new Command({
         command: "query",
         description: _td("Opens chat with the given user"),
@@ -836,36 +815,8 @@ export const Commands = [
         },
         category: CommandCategories.actions,
     }),
-    new Command({
-        command: "holdcall",
-        description: _td("Places the call in the current room on hold"),
-        category: CommandCategories.other,
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            const call = LegacyCallHandler.instance.getCallForRoom(roomId);
-            if (!call) {
-                return reject(new UserFriendlyError("No active call in this room"));
-            }
-            call.setRemoteOnHold(true);
-            return success();
-        },
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
-    new Command({
-        command: "unholdcall",
-        description: _td("Takes the call in the current room off hold"),
-        category: CommandCategories.other,
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            const call = LegacyCallHandler.instance.getCallForRoom(roomId);
-            if (!call) {
-                return reject(new UserFriendlyError("No active call in this room"));
-            }
-            call.setRemoteOnHold(false);
-            return success();
-        },
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    holdcall,
+    unholdcall,
     converttodm,
     converttoroom,
 
