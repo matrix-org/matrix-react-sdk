@@ -31,20 +31,17 @@ import Modal from "./Modal";
 import MultiInviter from "./utils/MultiInviter";
 import { Linkify, topicToHtml } from "./HtmlUtils";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
-import WidgetUtils from "./utils/WidgetUtils";
 import { AddressType, getAddressType } from "./UserAddress";
 import { abbreviateUrl } from "./utils/UrlUtils";
 import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "./utils/IdentityServerUtils";
 import { isPermalinkHost, parsePermalink } from "./utils/permalinks/Permalinks";
-import { WidgetType } from "./widgets/WidgetType";
-import { Jitsi } from "./widgets/Jitsi";
 import BugReportDialog from "./components/views/dialogs/BugReportDialog";
 import { ensureDMExists } from "./createRoom";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { Action } from "./dispatcher/actions";
 import SdkConfig from "./SdkConfig";
 import SettingsStore from "./settings/SettingsStore";
-import { UIComponent, UIFeature } from "./settings/UIFeature";
+import { UIComponent } from "./settings/UIFeature";
 import { CHAT_EFFECTS } from "./effects";
 import LegacyCallHandler from "./LegacyCallHandler";
 import { upgradeRoom } from "./utils/RoomUpgrade";
@@ -68,6 +65,7 @@ import { rainbow, rainbowme } from "./slash-commands/rainbow";
 import { ban, remove, unban } from "./slash-commands/moderation";
 import { converttodm, converttoroom } from "./slash-commands/dm";
 import { holdcall, tovirtual, unholdcall } from "./slash-commands/call";
+import { addwidget } from "./slash-commands/widget";
 
 export { CommandCategories, Command };
 
@@ -637,63 +635,7 @@ export const Commands = [
         },
         category: CommandCategories.advanced,
     }),
-    new Command({
-        command: "addwidget",
-        args: "<url | embed code | Jitsi url>",
-        description: _td("Adds a custom widget by URL to the room"),
-        isEnabled: (cli) =>
-            SettingsStore.getValue(UIFeature.Widgets) &&
-            shouldShowComponent(UIComponent.AddIntegrations) &&
-            !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, widgetUrl) {
-            if (!widgetUrl) {
-                return reject(new UserFriendlyError("Please supply a widget URL or embed code"));
-            }
-
-            // Try and parse out a widget URL from iframes
-            if (widgetUrl.toLowerCase().startsWith("<iframe ")) {
-                const embed = new DOMParser().parseFromString(widgetUrl, "text/html").body;
-                if (embed?.childNodes?.length === 1) {
-                    const iframe = embed.firstElementChild;
-                    if (iframe?.tagName.toLowerCase() === "iframe") {
-                        logger.log("Pulling URL out of iframe (embed code)");
-                        if (!iframe.hasAttribute("src")) {
-                            return reject(new UserFriendlyError("iframe has no src attribute"));
-                        }
-                        widgetUrl = iframe.getAttribute("src")!;
-                    }
-                }
-            }
-
-            if (!widgetUrl.startsWith("https://") && !widgetUrl.startsWith("http://")) {
-                return reject(new UserFriendlyError("Please supply a https:// or http:// widget URL"));
-            }
-            if (WidgetUtils.canUserModifyWidgets(cli, roomId)) {
-                const userId = cli.getUserId();
-                const nowMs = new Date().getTime();
-                const widgetId = encodeURIComponent(`${roomId}_${userId}_${nowMs}`);
-                let type = WidgetType.CUSTOM;
-                let name = "Custom";
-                let data = {};
-
-                // Make the widget a Jitsi widget if it looks like a Jitsi widget
-                const jitsiData = Jitsi.getInstance().parsePreferredConferenceUrl(widgetUrl);
-                if (jitsiData) {
-                    logger.log("Making /addwidget widget a Jitsi conference");
-                    type = WidgetType.JITSI;
-                    name = "Jitsi";
-                    data = jitsiData;
-                    widgetUrl = WidgetUtils.getLocalJitsiWrapperUrl();
-                }
-
-                return success(WidgetUtils.setRoomWidget(cli, roomId, widgetId, type, widgetUrl, name, data));
-            } else {
-                return reject(new UserFriendlyError("You cannot modify widgets in this room."));
-            }
-        },
-        category: CommandCategories.admin,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    addwidget,
     verify,
     discardsession,
     remakeolm,
