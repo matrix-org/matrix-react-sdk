@@ -47,7 +47,6 @@ import SettingsStore from "./settings/SettingsStore";
 import { UIComponent, UIFeature } from "./settings/UIFeature";
 import { CHAT_EFFECTS } from "./effects";
 import LegacyCallHandler from "./LegacyCallHandler";
-import { guessAndSetDMRoom } from "./Rooms";
 import { upgradeRoom } from "./utils/RoomUpgrade";
 import DevtoolsDialog from "./components/views/dialogs/DevtoolsDialog";
 import RoomUpgradeWarningDialog from "./components/views/dialogs/RoomUpgradeWarningDialog";
@@ -68,6 +67,7 @@ import { lenny, shrug, tableflip, unflip } from "./slash-commands/canned-message
 import { discardsession, remakeolm, verify } from "./slash-commands/crypto";
 import { rainbow, rainbowme } from "./slash-commands/rainbow";
 import { ban, remove, unban } from "./slash-commands/moderation";
+import { converttodm, converttoroom } from "./slash-commands/dm";
 
 export { CommandCategories, Command };
 
@@ -866,30 +866,8 @@ export const Commands = [
         },
         renderingTypes: [TimelineRenderingType.Room],
     }),
-    new Command({
-        command: "converttodm",
-        description: _td("Converts the room to a DM"),
-        category: CommandCategories.other,
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            const room = cli.getRoom(roomId);
-            if (!room) return reject(new UserFriendlyError("Could not find room"));
-            return success(guessAndSetDMRoom(room, true));
-        },
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
-    new Command({
-        command: "converttoroom",
-        description: _td("Converts the DM to a room"),
-        category: CommandCategories.other,
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            const room = cli.getRoom(roomId);
-            if (!room) return reject(new UserFriendlyError("Could not find room"));
-            return success(guessAndSetDMRoom(room, false));
-        },
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    converttodm,
+    converttoroom,
 
     // Command definitions for autocompletion ONLY:
     // /me is special because its not handled by SlashCommands.js and is instead done inside the Composer classes
