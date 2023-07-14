@@ -19,9 +19,7 @@ limitations under the License.
 
 import * as React from "react";
 import { User } from "matrix-js-sdk/src/models/user";
-import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import * as ContentHelpers from "matrix-js-sdk/src/content-helpers";
-import { logger } from "matrix-js-sdk/src/logger";
 import { IContent } from "matrix-js-sdk/src/models/event";
 
 import dis from "./dispatcher/dispatcher";
@@ -37,7 +35,6 @@ import BugReportDialog from "./components/views/dialogs/BugReportDialog";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { Action } from "./dispatcher/actions";
 import SdkConfig from "./SdkConfig";
-import SettingsStore from "./settings/SettingsStore";
 import { UIComponent } from "./settings/UIFeature";
 import { CHAT_EFFECTS } from "./effects";
 import DevtoolsDialog from "./components/views/dialogs/DevtoolsDialog";
@@ -62,6 +59,7 @@ import { addwidget } from "./slash-commands/widget";
 import { myavatar, myroomavatar, myroomnick, nick } from "./slash-commands/profile";
 import { roomavatar, roomname, topic, upgraderoom } from "./slash-commands/room-settings";
 import { html, me, plain, spoiler } from "./slash-commands/messages";
+import { jumptodate } from "./slash-commands/jumptodate";
 
 export { CommandCategories, Command };
 
@@ -74,48 +72,7 @@ export const Commands = [
     plain,
     html,
     upgraderoom,
-    new Command({
-        command: "jumptodate",
-        args: "<YYYY-MM-DD>",
-        description: _td("Jump to the given date in the timeline"),
-        isEnabled: () => SettingsStore.getValue("feature_jump_to_date"),
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                return success(
-                    (async (): Promise<void> => {
-                        const unixTimestamp = Date.parse(args);
-                        if (!unixTimestamp) {
-                            throw new UserFriendlyError(
-                                "We were unable to understand the given date (%(inputDate)s). " +
-                                    "Try using the format YYYY-MM-DD.",
-                                { inputDate: args, cause: undefined },
-                            );
-                        }
-
-                        const { event_id: eventId, origin_server_ts: originServerTs } = await cli.timestampToEvent(
-                            roomId,
-                            unixTimestamp,
-                            Direction.Forward,
-                        );
-                        logger.log(
-                            `/timestamp_to_event: found ${eventId} (${originServerTs}) for timestamp=${unixTimestamp}`,
-                        );
-                        dis.dispatch<ViewRoomPayload>({
-                            action: Action.ViewRoom,
-                            event_id: eventId,
-                            highlighted: true,
-                            room_id: roomId,
-                            metricsTrigger: "SlashCommand",
-                            metricsViaKeyboard: true,
-                        });
-                    })(),
-                );
-            }
-
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.actions,
-    }),
+    jumptodate,
     nick,
     myroomnick,
     roomavatar,
