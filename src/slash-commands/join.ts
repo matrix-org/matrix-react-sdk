@@ -29,6 +29,7 @@ import { TimelineRenderingType } from "../contexts/RoomContext";
 import { Command } from "./command";
 import { CommandCategories, RunResult } from "./interface";
 
+// A return of undefined here signals a usage error, where the command should return `reject(this.getUsage());`
 function openRoom(cli: MatrixClient, args: string | undefined, autoJoin: boolean): RunResult | undefined {
     if (!args) return;
     const params = args.split(" ");
@@ -123,6 +124,8 @@ function openRoom(cli: MatrixClient, args: string | undefined, autoJoin: boolean
         dis.dispatch(dispatch);
         return success();
     }
+
+    // Otherwise, it's a usage error. Return `undefined`.
 }
 
 // Note: we support 2 versions of this command. The first is
