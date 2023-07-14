@@ -37,7 +37,6 @@ import { Action } from "./dispatcher/actions";
 import SdkConfig from "./SdkConfig";
 import { UIComponent } from "./settings/UIFeature";
 import { CHAT_EFFECTS } from "./effects";
-import DevtoolsDialog from "./components/views/dialogs/DevtoolsDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from "./contexts/RoomContext";
@@ -60,6 +59,7 @@ import { roomavatar, roomname, topic, upgraderoom } from "./slash-commands/room-
 import { html, me, plain, spoiler } from "./slash-commands/messages";
 import { jumptodate } from "./slash-commands/jumptodate";
 import { ignore, unignore } from "./slash-commands/ignore";
+import { devtools } from "./slash-commands/devtools";
 
 export { CommandCategories, Command };
 
@@ -317,15 +317,7 @@ export const Commands = [
     unignore,
     op,
     deop,
-    new Command({
-        command: "devtools",
-        description: _td("Opens the Developer Tools dialog"),
-        runFn: function (cli, roomId, threadRootId) {
-            Modal.createDialog(DevtoolsDialog, { roomId, threadRootId }, "mx_DevtoolsDialog_wrapper");
-            return success();
-        },
-        category: CommandCategories.advanced,
-    }),
+    devtools,
     addwidget,
     verify,
     discardsession,
