@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { AutoDiscovery, ClientConfig } from "matrix-js-sdk/src/autodiscovery";
+import { AutoDiscovery, ClientConfig, OidcClientConfig } from "matrix-js-sdk/src/autodiscovery";
 import { M_AUTHENTICATION } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
 import { _t, UserFriendlyError } from "../languageHandler";
 import SdkConfig from "../SdkConfig";
-import { ValidatedDelegatedAuthConfig, ValidatedServerConfig } from "./ValidatedServerConfig";
+import { ValidatedServerConfig } from "./ValidatedServerConfig";
 
 const LIVELINESS_DISCOVERY_ERRORS: string[] = [
     AutoDiscovery.ERROR_INVALID_HOMESERVER,
@@ -43,11 +43,9 @@ export default class AutoDiscoveryUtils {
      * @param {string | Error} error The error to check
      * @returns {boolean} True if the error is a liveliness error.
      */
-    public static isLivelinessError(error?: string | Error | null): boolean {
+    public static isLivelinessError(error: unknown): boolean {
         if (!error) return false;
-        return !!LIVELINESS_DISCOVERY_ERRORS.find((e) =>
-            typeof error === "string" ? e === error : e === error.message,
-        );
+        return !!LIVELINESS_DISCOVERY_ERRORS.find((e) => (error instanceof Error ? e === error.message : e === error));
     }
 
     /**
@@ -58,7 +56,7 @@ export default class AutoDiscoveryUtils {
      * implementation for known values.
      * @returns {*} The state for the component, given the error.
      */
-    public static authComponentStateForError(err: string | Error | null, pageName = "login"): IAuthComponentState {
+    public static authComponentStateForError(err: unknown, pageName = "login"): IAuthComponentState {
         if (!err) {
             return {
                 serverIsAlive: true,
@@ -93,7 +91,7 @@ export default class AutoDiscoveryUtils {
         }
 
         let isFatalError = true;
-        const errorMessage = typeof err === "string" ? err : err.message;
+        const errorMessage = err instanceof Error ? err.message : err;
         if (errorMessage === AutoDiscovery.ERROR_INVALID_IDENTITY_SERVER) {
             isFatalError = false;
             title = _t("Cannot reach identity server");
@@ -261,25 +259,25 @@ export default class AutoDiscoveryUtils {
             throw new UserFriendlyError("Unexpected error resolving homeserver configuration");
         }
 
-        let delegatedAuthentication:
-            | {
-                  authorizationEndpoint: string;
-                  registrationEndpoint?: string;
-                  tokenEndpoint: string;
-                  account?: string;
-                  issuer: string;
-              }
-            | undefined;
+        let delegatedAuthentication: OidcClientConfig | undefined;
         if (discoveryResult[M_AUTHENTICATION.stable!]?.state === AutoDiscovery.SUCCESS) {
-            const { authorizationEndpoint, registrationEndpoint, tokenEndpoint, account, issuer } = discoveryResult[
-                M_AUTHENTICATION.stable!
-            ] as ValidatedDelegatedAuthConfig;
+            const {
+                authorizationEndpoint,
+                registrationEndpoint,
+                tokenEndpoint,
+                account,
+                issuer,
+                metadata,
+                signingKeys,
+            } = discoveryResult[M_AUTHENTICATION.stable!] as OidcClientConfig;
             delegatedAuthentication = Object.freeze({
                 authorizationEndpoint,
                 registrationEndpoint,
                 tokenEndpoint,
                 account,
                 issuer,
+                metadata,
+                signingKeys,
             });
         }
 
