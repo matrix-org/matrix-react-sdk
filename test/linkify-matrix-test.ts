@@ -329,6 +329,26 @@ describe("linkify-matrix", () => {
 
     describe("roomalias plugin", () => {
         genTests("#");
+
+        it("should intercept clicks with a ViewRoom dispatch", () => {
+            const dispatchSpy = jest.spyOn(dispatcher, "dispatch");
+
+            const handlers = (options.events as (href: string, type: string) => EventListeners)(
+                "#room:server.com",
+                "roomalias",
+            );
+
+            const event = new MouseEvent("mousedown");
+            event.preventDefault = jest.fn();
+            handlers.click(event);
+            expect(event.preventDefault).toHaveBeenCalled();
+            expect(dispatchSpy).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    action: Action.ViewRoom,
+                    room_alias: "#room:server.com",
+                }),
+            );
+        });
     });
 
     describe("userid plugin", () => {
