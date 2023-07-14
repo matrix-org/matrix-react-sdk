@@ -139,7 +139,6 @@ export const options: Opts = {
                     const permalink = parsePermalink(href);
                     if (permalink?.userId) {
                         return {
-                            // @ts-ignore see https://linkify.js.org/docs/options.html
                             click: function (e: MouseEvent) {
                                 onUserClick(e, permalink.userId!);
                             },
@@ -150,7 +149,6 @@ export const options: Opts = {
                         if (localHref !== href) {
                             // it could be converted to a localHref -> therefore handle locally
                             return {
-                                // @ts-ignore see https://linkify.js.org/docs/options.html
                                 click: function (e: MouseEvent) {
                                     e.preventDefault();
                                     window.location.hash = localHref;
@@ -165,17 +163,19 @@ export const options: Opts = {
             }
             case Type.UserId:
                 return {
-                    // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function (e: MouseEvent) {
-                        const userId = parsePermalink(href)?.userId;
+                        const userId =
+                            parsePermalink(href)?.userId ??
+                            tryTransformEntityToPermalink(MatrixClientPeg.safeGet(), href);
                         if (userId) onUserClick(e, userId);
                     },
                 };
             case Type.RoomAlias:
                 return {
-                    // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function (e: MouseEvent) {
-                        const alias = parsePermalink(href)?.roomIdOrAlias;
+                        const alias =
+                            parsePermalink(href)?.roomIdOrAlias ??
+                            tryTransformEntityToPermalink(MatrixClientPeg.safeGet(), href);
                         if (alias) onAliasClick(e, alias);
                     },
                 };
