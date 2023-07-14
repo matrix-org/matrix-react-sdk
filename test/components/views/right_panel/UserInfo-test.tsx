@@ -61,6 +61,7 @@ import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
 import { clearAllModals, flushPromises } from "../../../test-utils";
 import ErrorDialog from "../../../../src/components/views/dialogs/ErrorDialog";
+import QuestionDialog from "../../../../src/components/views/dialogs/QuestionDialog";
 
 jest.mock("../../../../src/utils/direct-messages", () => ({
     ...jest.requireActual("../../../../src/utils/direct-messages"),
@@ -1228,6 +1229,31 @@ describe("<RoomAdminToolsContainer />", () => {
         expect(button).toBeInTheDocument();
         expect(button).toHaveAttribute("disabled");
         expect(button).toHaveAttribute("aria-disabled", "true");
+    });
+
+    it("should warn when muting self", () => {
+        const spy = jest.spyOn(Modal, "createDialog").mockImplementation(() => ({
+            finished: Promise.resolve([false]),
+            close: jest.fn(),
+        }));
+
+        const mockMeMember = new RoomMember(mockRoom.roomId, mockClient.getSafeUserId());
+        mockMeMember.powerLevel = 51; // defaults to 50
+        mockRoom.getMember.mockReturnValueOnce(mockMeMember);
+
+        renderComponent({
+            member: mockMeMember,
+            powerLevels: { events: { "m.room.power_levels": 1 } },
+        });
+
+        const button = screen.getByText(/mute/i);
+        fireEvent.click(button);
+        expect(spy).toHaveBeenCalledWith(
+            QuestionDialog,
+            expect.objectContaining({
+                title: "Demote yourself?",
+            }),
+        );
     });
 });
 
