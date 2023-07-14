@@ -263,10 +263,7 @@ export async function editMessage(
  * @param command - the slash command that will be recorded in the analytic event that is fired
  * @returns void
  */
-export function trackSlashCommandAnalyticEvent(
-    command: string,
-    editor: Exclude<SlashCommand["editor"], "Legacy">,
-): void {
+export function trackSlashCommandAnalyticEvent(command: string, editor: SlashCommand["editor"]): void {
     PosthogAnalytics.instance.trackEvent<SlashCommand>({
         eventName: "SlashCommand",
         editor,
