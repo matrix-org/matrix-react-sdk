@@ -66,6 +66,7 @@ import { ban, remove, unban } from "./slash-commands/moderation";
 import { converttodm, converttoroom } from "./slash-commands/dm";
 import { holdcall, tovirtual, unholdcall } from "./slash-commands/call";
 import { addwidget } from "./slash-commands/widget";
+import { myavatar, myroomavatar, myroomnick, nick } from "./slash-commands/profile";
 
 export { CommandCategories, Command };
 
@@ -177,39 +178,8 @@ export const Commands = [
         },
         category: CommandCategories.actions,
     }),
-    new Command({
-        command: "nick",
-        args: "<display_name>",
-        description: _td("Changes your display nickname"),
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                return success(cli.setDisplayName(args));
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.actions,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
-    new Command({
-        command: "myroomnick",
-        aliases: ["roomnick"],
-        args: "<display_name>",
-        description: _td("Changes your display nickname in the current room only"),
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                const ev = cli.getRoom(roomId)?.currentState.getStateEvents("m.room.member", cli.getSafeUserId());
-                const content = {
-                    ...(ev ? ev.getContent() : { membership: "join" }),
-                    displayname: args,
-                };
-                return success(cli.sendStateEvent(roomId, "m.room.member", content, cli.getSafeUserId()));
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.actions,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    nick,
+    myroomnick,
     new Command({
         command: "roomavatar",
         args: "[<mxc_url>]",
@@ -231,55 +201,8 @@ export const Commands = [
         category: CommandCategories.actions,
         renderingTypes: [TimelineRenderingType.Room],
     }),
-    new Command({
-        command: "myroomavatar",
-        args: "[<mxc_url>]",
-        description: _td("Changes your profile picture in this current room only"),
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            const room = cli.getRoom(roomId);
-            const userId = cli.getSafeUserId();
-
-            let promise = Promise.resolve(args ?? null);
-            if (!args) {
-                promise = singleMxcUpload(cli);
-            }
-
-            return success(
-                promise.then((url) => {
-                    if (!url) return;
-                    const ev = room?.currentState.getStateEvents("m.room.member", userId);
-                    const content = {
-                        ...(ev ? ev.getContent() : { membership: "join" }),
-                        avatar_url: url,
-                    };
-                    return cli.sendStateEvent(roomId, "m.room.member", content, userId);
-                }),
-            );
-        },
-        category: CommandCategories.actions,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
-    new Command({
-        command: "myavatar",
-        args: "[<mxc_url>]",
-        description: _td("Changes your profile picture in all rooms"),
-        runFn: function (cli, roomId, threadId, args) {
-            let promise = Promise.resolve(args ?? null);
-            if (!args) {
-                promise = singleMxcUpload(cli);
-            }
-
-            return success(
-                promise.then((url) => {
-                    if (!url) return;
-                    return cli.setAvatarUrl(url);
-                }),
-            );
-        },
-        category: CommandCategories.actions,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    myroomavatar,
+    myavatar,
     new Command({
         command: "topic",
         args: "[<topic>]",
