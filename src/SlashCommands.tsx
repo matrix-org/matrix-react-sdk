@@ -23,13 +23,11 @@ import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import * as ContentHelpers from "matrix-js-sdk/src/content-helpers";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IContent } from "matrix-js-sdk/src/models/event";
-import { MRoomTopicEventContent } from "matrix-js-sdk/src/@types/topic";
 
 import dis from "./dispatcher/dispatcher";
 import { _t, _td, UserFriendlyError } from "./languageHandler";
 import Modal from "./Modal";
 import MultiInviter from "./utils/MultiInviter";
-import { Linkify, topicToHtml } from "./HtmlUtils";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import { AddressType, getAddressType } from "./UserAddress";
 import { abbreviateUrl } from "./utils/UrlUtils";
@@ -44,18 +42,15 @@ import SettingsStore from "./settings/SettingsStore";
 import { UIComponent } from "./settings/UIFeature";
 import { CHAT_EFFECTS } from "./effects";
 import LegacyCallHandler from "./LegacyCallHandler";
-import { upgradeRoom } from "./utils/RoomUpgrade";
 import DevtoolsDialog from "./components/views/dialogs/DevtoolsDialog";
-import RoomUpgradeWarningDialog from "./components/views/dialogs/RoomUpgradeWarningDialog";
 import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from "./contexts/RoomContext";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
-import { htmlSerializeFromMdIfNeeded } from "./editor/serialize";
 import { leaveRoomBehaviour } from "./utils/leave-behaviour";
 import { MatrixClientPeg } from "./MatrixClientPeg";
-import { isCurrentLocalRoom, reject, singleMxcUpload, success, successSync } from "./slash-commands/utils";
+import { isCurrentLocalRoom, reject, success, successSync } from "./slash-commands/utils";
 import { deop, op } from "./slash-commands/op";
 import { CommandCategories } from "./slash-commands/interface";
 import { Command } from "./slash-commands/command";
@@ -67,6 +62,7 @@ import { converttodm, converttoroom } from "./slash-commands/dm";
 import { holdcall, tovirtual, unholdcall } from "./slash-commands/call";
 import { addwidget } from "./slash-commands/widget";
 import { myavatar, myroomavatar, myroomnick, nick } from "./slash-commands/profile";
+import { roomavatar, roomname, topic, upgraderoom } from "./slash-commands/room-settings";
 
 export { CommandCategories, Command };
 
@@ -102,40 +98,7 @@ export const Commands = [
         },
         category: CommandCategories.messages,
     }),
-    new Command({
-        command: "upgraderoom",
-        args: "<new_version>",
-        description: _td("Upgrades a room to a new version"),
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                const room = cli.getRoom(roomId);
-                if (!room?.currentState.mayClientSendStateEvent("m.room.tombstone", cli)) {
-                    return reject(
-                        new UserFriendlyError("You do not have the required permissions to use this command."),
-                    );
-                }
-
-                const { finished } = Modal.createDialog(
-                    RoomUpgradeWarningDialog,
-                    { roomId: roomId, targetVersion: args },
-                    /*className=*/ undefined,
-                    /*isPriority=*/ false,
-                    /*isStatic=*/ true,
-                );
-
-                return success(
-                    finished.then(async ([resp]): Promise<void> => {
-                        if (!resp?.continue) return;
-                        await upgradeRoom(room, args, resp.invite);
-                    }),
-                );
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.admin,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    upgraderoom,
     new Command({
         command: "jumptodate",
         args: "<YYYY-MM-DD>",
@@ -180,81 +143,11 @@ export const Commands = [
     }),
     nick,
     myroomnick,
-    new Command({
-        command: "roomavatar",
-        args: "[<mxc_url>]",
-        description: _td("Changes the avatar of the current room"),
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            let promise = Promise.resolve(args ?? null);
-            if (!args) {
-                promise = singleMxcUpload(cli);
-            }
-
-            return success(
-                promise.then((url) => {
-                    if (!url) return;
-                    return cli.sendStateEvent(roomId, "m.room.avatar", { url }, "");
-                }),
-            );
-        },
-        category: CommandCategories.actions,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    roomavatar,
     myroomavatar,
     myavatar,
-    new Command({
-        command: "topic",
-        args: "[<topic>]",
-        description: _td("Gets or sets the room topic"),
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                const html = htmlSerializeFromMdIfNeeded(args, { forceHTML: false });
-                return success(cli.setRoomTopic(roomId, args, html));
-            }
-            const room = cli.getRoom(roomId);
-            if (!room) {
-                return reject(
-                    new UserFriendlyError("Failed to get room topic: Unable to find room (%(roomId)s", {
-                        roomId,
-                        cause: undefined,
-                    }),
-                );
-            }
-
-            const content = room.currentState.getStateEvents("m.room.topic", "")?.getContent<MRoomTopicEventContent>();
-            const topic = !!content
-                ? ContentHelpers.parseTopicContent(content)
-                : { text: _t("This room has no topic.") };
-
-            const body = topicToHtml(topic.text, topic.html, undefined, true);
-
-            Modal.createDialog(InfoDialog, {
-                title: room.name,
-                description: <Linkify>{body}</Linkify>,
-                hasCloseButton: true,
-                className: "markdown-body",
-            });
-            return success();
-        },
-        category: CommandCategories.admin,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
-    new Command({
-        command: "roomname",
-        args: "<name>",
-        description: _td("Sets the room name"),
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            if (args) {
-                return success(cli.setRoomName(roomId, args));
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.admin,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    topic,
+    roomname,
     new Command({
         command: "invite",
         args: "<user-id> [<reason>]",
