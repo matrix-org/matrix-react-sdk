@@ -164,18 +164,14 @@ export const options: Opts = {
             case Type.UserId:
                 return {
                     click: function (e: MouseEvent) {
-                        const userId =
-                            parsePermalink(href)?.userId ??
-                            tryTransformEntityToPermalink(MatrixClientPeg.safeGet(), href);
+                        const userId = parsePermalink(href)?.userId ?? href;
                         if (userId) onUserClick(e, userId);
                     },
                 };
             case Type.RoomAlias:
                 return {
                     click: function (e: MouseEvent) {
-                        const alias =
-                            parsePermalink(href)?.roomIdOrAlias ??
-                            tryTransformEntityToPermalink(MatrixClientPeg.safeGet(), href);
+                        const alias = parsePermalink(href)?.roomIdOrAlias ?? href;
                         if (alias) onAliasClick(e, alias);
                     },
                 };
