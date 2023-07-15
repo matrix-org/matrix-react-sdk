@@ -22,10 +22,10 @@ export function useDebouncedCallback<T extends any[]>(
     enabled: boolean,
     callback: (...params: T) => void,
     params: T,
-) {
+): void {
     useEffect(() => {
         let handle: number | null = null;
-        const doSearch = () => {
+        const doSearch = (): void => {
             handle = null;
             callback(...params);
         };

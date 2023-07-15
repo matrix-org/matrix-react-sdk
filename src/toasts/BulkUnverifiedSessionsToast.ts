@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _t } from '../languageHandler';
+import { _t } from "../languageHandler";
 import dis from "../dispatcher/dispatcher";
-import DeviceListener from '../DeviceListener';
+import DeviceListener from "../DeviceListener";
 import GenericToast from "../components/views/toasts/GenericToast";
 import ToastStore from "../stores/ToastStore";
 import { Action } from "../dispatcher/actions";
-import { snoozeBulkUnverifiedDeviceReminder } from '../utils/device/snoozeBulkUnverifiedDeviceReminder';
+import { snoozeBulkUnverifiedDeviceReminder } from "../utils/device/snoozeBulkUnverifiedDeviceReminder";
 
 const TOAST_KEY = "reviewsessions";
 
-export const showToast = (deviceIds: Set<string>) => {
-    const onAccept = () => {
+export const showToast = (deviceIds: Set<string>): void => {
+    const onAccept = (): void => {
         DeviceListener.sharedInstance().dismissUnverifiedSessions(deviceIds);
 
         dis.dispatch({
@@ -33,7 +33,7 @@ export const showToast = (deviceIds: Set<string>) => {
         });
     };
 
-    const onReject = () => {
+    const onReject = (): void => {
         DeviceListener.sharedInstance().dismissUnverifiedSessions(deviceIds);
         snoozeBulkUnverifiedDeviceReminder();
     };
@@ -54,6 +54,6 @@ export const showToast = (deviceIds: Set<string>) => {
     });
 };
 
-export const hideToast = () => {
+export const hideToast = (): void => {
     ToastStore.sharedInstance().dismissToast(TOAST_KEY);
 };

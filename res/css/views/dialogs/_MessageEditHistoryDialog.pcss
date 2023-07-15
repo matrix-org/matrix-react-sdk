@@ -31,11 +31,12 @@ limitations under the License.
 
 .mx_MessageEditHistoryDialog_edits {
     list-style-type: none;
-    font-size: $font-14px;
+    font: var(--cpd-font-body-md-regular);
     padding: 0;
     color: $primary-content;
 
-    span.mx_EditHistoryMessage_deletion, span.mx_EditHistoryMessage_insertion {
+    span.mx_EditHistoryMessage_deletion,
+    span.mx_EditHistoryMessage_insertion {
         padding: 0px 2px;
     }
 
@@ -53,7 +54,7 @@ limitations under the License.
 
     /* Emulate mx_EventTile[data-layout="group"] */
     .mx_EventTile {
-        padding-top: 0 !important; /* Override mx_EventTile:not([data-layout="bubble"]) */
+        padding-top: 0;
 
         .mx_MessageTimestamp {
             position: absolute;

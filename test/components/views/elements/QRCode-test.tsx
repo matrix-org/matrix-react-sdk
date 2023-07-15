@@ -22,15 +22,20 @@ describe("<QRCode />", () => {
         cleanup();
     });
 
+    it("shows a spinner when data is null", async () => {
+        const { container } = render(<QRCode data={null} />);
+        expect(container.querySelector(".mx_Spinner")).toBeDefined();
+    });
+
     it("renders a QR with defaults", async () => {
         const { container, getAllByAltText } = render(<QRCode data="asd" />);
-        await waitFor(() => getAllByAltText('QR Code').length === 1);
+        await waitFor(() => getAllByAltText("QR Code").length === 1);
         expect(container).toMatchSnapshot();
     });
 
     it("renders a QR with high error correction level", async () => {
         const { container, getAllByAltText } = render(<QRCode data="asd" errorCorrectionLevel="high" />);
-        await waitFor(() => getAllByAltText('QR Code').length === 1);
+        await waitFor(() => getAllByAltText("QR Code").length === 1);
         expect(container).toMatchSnapshot();
     });
 });

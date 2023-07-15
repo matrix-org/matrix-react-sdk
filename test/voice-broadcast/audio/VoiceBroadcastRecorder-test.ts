@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
+import { Optional } from "matrix-events-sdk";
 
 import { VoiceRecording } from "../../../src/audio/VoiceRecording";
 import SdkConfig from "../../../src/SdkConfig";
@@ -39,6 +40,8 @@ jest.mock("../../../src/audio/VoiceRecording", () => ({
         destroy: jest.fn(),
     }),
 }));
+
+jest.mock("../../../src/settings/SettingsStore");
 
 describe("VoiceBroadcastRecorder", () => {
     describe("createVoiceBroadcastRecorder", () => {
@@ -65,8 +68,10 @@ describe("VoiceBroadcastRecorder", () => {
 
     describe("instance", () => {
         const chunkLength = 30;
-        const headers1 = new Uint8Array([1, 2]);
-        const headers2 = new Uint8Array([3, 4]);
+        // 0... OpusHead
+        const headers1 = new Uint8Array([...Array(28).fill(0), 79, 112, 117, 115, 72, 101, 97, 100]);
+        // 0... OpusTags
+        const headers2 = new Uint8Array([...Array(28).fill(0), 79, 112, 117, 115, 84, 97, 103, 115]);
         const chunk1 = new Uint8Array([5, 6]);
         const chunk2a = new Uint8Array([7, 8]);
         const chunk2b = new Uint8Array([9, 10]);
@@ -77,22 +82,23 @@ describe("VoiceBroadcastRecorder", () => {
         let onChunkRecorded: (chunk: ChunkRecordedPayload) => void;
 
         const simulateFirstChunk = (): void => {
-            voiceRecording.onDataAvailable(headers1);
-            voiceRecording.onDataAvailable(headers2);
+            // send headers in wrong order and multiple times to test robustness for that
+            voiceRecording.onDataAvailable!(headers2);
+            voiceRecording.onDataAvailable!(headers1);
+            voiceRecording.onDataAvailable!(headers1);
+            voiceRecording.onDataAvailable!(headers2);
             // set recorder seconds to something greater than the test chunk length of 30
             // @ts-ignore
             voiceRecording.recorderSeconds = 42;
-            voiceRecording.onDataAvailable(chunk1);
+            voiceRecording.onDataAvailable!(chunk1);
+            voiceRecording.onDataAvailable!(headers1);
         };
 
         const expectOnFirstChunkRecorded = (): void => {
-            expect(onChunkRecorded).toHaveBeenNthCalledWith(
-                1,
-                {
-                    buffer: concat(headers1, headers2, chunk1),
-                    length: 42,
-                },
-            );
+            expect(onChunkRecorded).toHaveBeenNthCalledWith(1, {
+                buffer: concat(headers1, headers2, chunk1),
+                length: 42,
+            });
         };
 
         const itShouldNotEmitAChunkRecordedEvent = (): void => {
@@ -156,18 +162,18 @@ describe("VoiceBroadcastRecorder", () => {
             expect(voiceBroadcastRecorder.contentType).toBe(contentType);
         });
 
-        describe("when the first page from recorder has been received", () => {
+        describe("when the first header from recorder has been received", () => {
             beforeEach(() => {
-                voiceRecording.onDataAvailable(headers1);
+                voiceRecording.onDataAvailable!(headers1);
             });
 
             itShouldNotEmitAChunkRecordedEvent();
         });
 
-        describe("when a second page from recorder has been received", () => {
+        describe("when the second header from recorder has been received", () => {
             beforeEach(() => {
-                voiceRecording.onDataAvailable(headers1);
-                voiceRecording.onDataAvailable(headers2);
+                voiceRecording.onDataAvailable!(headers1);
+                voiceRecording.onDataAvailable!(headers2);
             });
 
             itShouldNotEmitAChunkRecordedEvent();
@@ -175,15 +181,15 @@ describe("VoiceBroadcastRecorder", () => {
 
         describe("when a third page from recorder has been received", () => {
             beforeEach(() => {
-                voiceRecording.onDataAvailable(headers1);
-                voiceRecording.onDataAvailable(headers2);
-                voiceRecording.onDataAvailable(chunk1);
+                voiceRecording.onDataAvailable!(headers1);
+                voiceRecording.onDataAvailable!(headers2);
+                voiceRecording.onDataAvailable!(chunk1);
             });
 
             itShouldNotEmitAChunkRecordedEvent();
 
             describe("and calling stop", () => {
-                let stopPayload: ChunkRecordedPayload;
+                let stopPayload: Optional<ChunkRecordedPayload>;
 
                 beforeEach(async () => {
                     stopPayload = await voiceBroadcastRecorder.stop();
@@ -206,6 +212,22 @@ describe("VoiceBroadcastRecorder", () => {
                     });
                 });
             });
+
+            describe("and calling stop() with recording.stop error)", () => {
+                let stopPayload: Optional<ChunkRecordedPayload>;
+
+                beforeEach(async () => {
+                    mocked(voiceRecording.stop).mockRejectedValue("Error");
+                    stopPayload = await voiceBroadcastRecorder.stop();
+                });
+
+                it("should return the remaining chunk", () => {
+                    expect(stopPayload).toEqual({
+                        buffer: concat(headers1, headers2, chunk1),
+                        length: 23,
+                    });
+                });
+            });
         });
 
         describe("when some chunks have been received", () => {
@@ -213,23 +235,24 @@ describe("VoiceBroadcastRecorder", () => {
                 simulateFirstChunk();
 
                 // simulate a second chunk
-                voiceRecording.onDataAvailable(chunk2a);
+                voiceRecording.onDataAvailable!(chunk2a);
+
+                // send headers again to test robustness for that
+                voiceRecording.onDataAvailable!(headers2);
+
                 // add another 30 seconds for the next chunk
                 // @ts-ignore
                 voiceRecording.recorderSeconds = 72;
-                voiceRecording.onDataAvailable(chunk2b);
+                voiceRecording.onDataAvailable!(chunk2b);
             });
 
             it("should emit ChunkRecorded events", () => {
                 expectOnFirstChunkRecorded();
 
-                expect(onChunkRecorded).toHaveBeenNthCalledWith(
-                    2,
-                    {
-                        buffer: concat(headers1, headers2, chunk2a, chunk2b),
-                        length: 72 - 42, // 72 (position at second chunk) - 42 (position of first chunk)
-                    },
-                );
+                expect(onChunkRecorded).toHaveBeenNthCalledWith(2, {
+                    buffer: concat(headers1, headers2, chunk2a, chunk2b),
+                    length: 72 - 42, // 72 (position at second chunk) - 42 (position of first chunk)
+                });
             });
         });
     });

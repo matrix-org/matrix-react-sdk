@@ -20,14 +20,13 @@ declare module "diff-dom" {
         name: string;
         text?: string;
         route: number[];
-        value: string;
-        element: unknown;
-        oldValue: string;
-        newValue: string;
+        value: HTMLElement | string;
+        element: HTMLElement | string;
+        oldValue: HTMLElement | string;
+        newValue: HTMLElement | string;
     }
 
-    interface IOpts {
-    }
+    interface IOpts {}
 
     export class DiffDOM {
         public constructor(opts?: IOpts);

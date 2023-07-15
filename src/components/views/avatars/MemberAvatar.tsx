@@ -15,17 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from 'react';
+import React, { ReactNode, useContext } from "react";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
+import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import BaseAvatar from "./BaseAvatar";
 import { mediaFromMxc } from "../../../customisations/Media";
-import { CardContext } from '../right_panel/context';
-import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
-import { useRoomMemberProfile } from '../../../hooks/room/useRoomMemberProfile';
+import { CardContext } from "../right_panel/context";
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
+import { useRoomMemberProfile } from "../../../hooks/room/useRoomMemberProfile";
+import { _t } from "../../../languageHandler";
 
 interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url"> {
     member: RoomMember | null;
@@ -33,8 +34,6 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     width: number;
     height: number;
     resizeMethod?: ResizeMethod;
-    // The onClick to give the avatar
-    onClick?: React.MouseEventHandler;
     // Whether the onClick of the avatar should be overridden to dispatch `Action.ViewUser`
     viewUserOnClick?: boolean;
     pushUserOnClick?: boolean;
@@ -42,19 +41,20 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     style?: any;
     forceHistorical?: boolean; // true to deny `useOnlyCurrentProfiles` usage. Default false.
     hideTitle?: boolean;
+    children?: ReactNode;
 }
 
 export default function MemberAvatar({
     width,
     height,
-    resizeMethod = 'crop',
+    resizeMethod = "crop",
     viewUserOnClick,
     forceHistorical,
     fallbackUserId,
     hideTitle,
     member: propsMember,
     ...props
-}: IProps) {
+}: IProps): JSX.Element {
     const card = useContext(CardContext);
 
     const member = useRoomMemberProfile({
@@ -65,7 +65,7 @@ export default function MemberAvatar({
 
     const name = member?.name ?? fallbackUserId;
     let title: string | undefined = props.title;
-    let imageUrl: string | undefined;
+    let imageUrl: string | null | undefined;
     if (member?.name) {
         if (member.getMxcAvatarUrl()) {
             imageUrl = mediaFromMxc(member.getMxcAvatarUrl() ?? "").getThumbnailOfSourceHttp(
@@ -76,35 +76,42 @@ export default function MemberAvatar({
         }
 
         if (!title) {
-            title = UserIdentifierCustomisations.getDisplayUserIdentifier(
-                member?.userId ?? "", { roomId: member?.roomId ?? "" },
-            ) ?? fallbackUserId;
+            title =
+                UserIdentifierCustomisations.getDisplayUserIdentifier(member?.userId ?? "", {
+                    roomId: member?.roomId ?? "",
+                }) ?? fallbackUserId;
         }
     }
 
-    return <BaseAvatar
-        {...props}
-        width={width}
-        height={height}
-        resizeMethod={resizeMethod}
-        name={name ?? ""}
-        title={hideTitle ? undefined : title}
-        idName={member?.userId ?? fallbackUserId}
-        url={imageUrl}
-        onClick={viewUserOnClick ? () => {
-            dis.dispatch({
-                action: Action.ViewUser,
-                member: propsMember,
-                push: card.isCard,
-            });
-        } : props.onClick}
-    />;
+    return (
+        <BaseAvatar
+            {...props}
+            width={width}
+            height={height}
+            resizeMethod={resizeMethod}
+            name={name ?? ""}
+            title={hideTitle ? undefined : title}
+            idName={member?.userId ?? fallbackUserId}
+            url={imageUrl}
+            onClick={
+                viewUserOnClick
+                    ? () => {
+                          dis.dispatch({
+                              action: Action.ViewUser,
+                              member: propsMember,
+                              push: card.isCard,
+                          });
+                      }
+                    : props.onClick
+            }
+            altText={_t("Profile picture")}
+            ariaLabel={_t("Profile picture")}
+        />
+    );
 }
 
 export class LegacyMemberAvatar extends React.Component<IProps> {
-    public render(): JSX.Element {
-        return <MemberAvatar {...this.props}>
-            { this.props.children }
-        </MemberAvatar>;
+    public render(): React.ReactNode {
+        return <MemberAvatar {...this.props}>{this.props.children}</MemberAvatar>;
     }
 }

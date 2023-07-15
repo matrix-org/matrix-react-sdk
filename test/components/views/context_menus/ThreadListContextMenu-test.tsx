@@ -38,17 +38,14 @@ describe("ThreadListContextMenu", () => {
     let event: MatrixEvent;
 
     function getComponent(props: Partial<ThreadListContextMenuProps>) {
-        return render(<ThreadListContextMenu
-            mxEvent={event}
-            {...props}
-        />);
+        return render(<ThreadListContextMenu mxEvent={event} {...props} />);
     }
 
     beforeEach(() => {
         jest.clearAllMocks();
 
         stubClient();
-        mockClient = mocked(MatrixClientPeg.get());
+        mockClient = mocked(MatrixClientPeg.safeGet());
 
         room = new Room(ROOM_ID, mockClient, mockClient.getUserId() ?? "", {
             pendingEventOrdering: PendingEventOrdering.Detached,
@@ -57,8 +54,8 @@ describe("ThreadListContextMenu", () => {
         const res = mkThread({
             room,
             client: mockClient,
-            authorId: mockClient.getUserId(),
-            participantUserIds: [mockClient.getUserId()],
+            authorId: mockClient.getUserId()!,
+            participantUserIds: [mockClient.getUserId()!],
         });
 
         event = res.rootEvent;

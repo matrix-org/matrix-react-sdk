@@ -20,7 +20,7 @@ limitations under the License.
 import { IWidget } from "matrix-widget-api/src/interfaces/IWidget";
 
 import type { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
 
 const DEMO_WIDGET_ID = "demo-widget-id";
@@ -57,7 +57,7 @@ function waitForRoomWidget(win: Cypress.AUTWindow, widgetId: string, roomId: str
     return new Promise((resolve, reject) => {
         function eventsInIntendedState(evList) {
             const widgetPresent = evList.some((ev) => {
-                return ev.getContent() && ev.getContent()['id'] === widgetId;
+                return ev.getContent() && ev.getContent()["id"] === widgetId;
             });
             if (add) {
                 return widgetPresent;
@@ -68,7 +68,7 @@ function waitForRoomWidget(win: Cypress.AUTWindow, widgetId: string, roomId: str
 
         const room = matrixClient.getRoom(roomId);
 
-        const startingWidgetEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
+        const startingWidgetEvents = room.currentState.getStateEvents("im.vector.modular.widgets");
         if (eventsInIntendedState(startingWidgetEvents)) {
             resolve();
             return;
@@ -77,7 +77,7 @@ function waitForRoomWidget(win: Cypress.AUTWindow, widgetId: string, roomId: str
         function onRoomStateEvents(ev: MatrixEvent) {
             if (ev.getRoomId() !== roomId || ev.getType() !== "im.vector.modular.widgets") return;
 
-            const currentWidgetEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
+            const currentWidgetEvents = room.currentState.getStateEvents("im.vector.modular.widgets");
 
             if (eventsInIntendedState(currentWidgetEvents)) {
                 matrixClient.removeListener(win.matrixcs.RoomStateEvent.Events, onRoomStateEvents);
@@ -90,40 +90,44 @@ function waitForRoomWidget(win: Cypress.AUTWindow, widgetId: string, roomId: str
 }
 
 describe("Widget PIP", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
     let user: UserCredentials;
     let bot: MatrixClient;
     let demoWidgetUrl: string;
 
-    function roomCreateAddWidgetPip(userRemove: 'leave' | 'kick' | 'ban') {
+    function roomCreateAddWidgetPip(userRemove: "leave" | "kick" | "ban") {
         cy.createRoom({
             name: ROOM_NAME,
             invite: [bot.getUserId()],
-        }).then(roomId => {
+        }).then((roomId) => {
             // sets bot to Admin and user to Moderator
-            cy.getClient().then(matrixClient => {
-                return matrixClient.sendStateEvent(roomId, 'm.room.power_levels', {
-                    users: {
-                        [user.userId]: 50,
-                        [bot.getUserId()]: 100,
-                    },
-                });
-            }).as('powerLevelsChanged');
+            cy.getClient()
+                .then((matrixClient) => {
+                    return matrixClient.sendStateEvent(roomId, "m.room.power_levels", {
+                        users: {
+                            [user.userId]: 50,
+                            [bot.getUserId()]: 100,
+                        },
+                    });
+                })
+                .as("powerLevelsChanged");
 
             // bot joins the room
-            cy.botJoinRoom(bot, roomId).as('botJoined');
+            cy.botJoinRoom(bot, roomId).as("botJoined");
 
             // setup widget via state event
-            cy.getClient().then(async matrixClient => {
-                const content: IWidget = {
-                    id: DEMO_WIDGET_ID,
-                    creatorUserId: 'somebody',
-                    type: DEMO_WIDGET_TYPE,
-                    name: DEMO_WIDGET_NAME,
-                    url: demoWidgetUrl,
-                };
-                await matrixClient.sendStateEvent(roomId, 'im.vector.modular.widgets', content, DEMO_WIDGET_ID);
-            }).as('widgetEventSent');
+            cy.getClient()
+                .then(async (matrixClient) => {
+                    const content: IWidget = {
+                        id: DEMO_WIDGET_ID,
+                        creatorUserId: "somebody",
+                        type: DEMO_WIDGET_TYPE,
+                        name: DEMO_WIDGET_NAME,
+                        url: demoWidgetUrl,
+                    };
+                    await matrixClient.sendStateEvent(roomId, "im.vector.modular.widgets", content, DEMO_WIDGET_ID);
+                })
+                .as("widgetEventSent");
 
             // open the room
             cy.viewRoomByName(ROOM_NAME);
@@ -133,7 +137,7 @@ describe("Widget PIP", () => {
                 cy.get<string>("@botJoined"),
                 cy.get<string>("@widgetEventSent"),
             ]).then(() => {
-                cy.window().then(async win => {
+                cy.window().then(async (win) => {
                     // wait for widget state event
                     await waitForRoomWidget(win, DEMO_WIDGET_ID, roomId, true);
 
@@ -141,25 +145,27 @@ describe("Widget PIP", () => {
                     win.mxActiveWidgetStore.setWidgetPersistence(DEMO_WIDGET_ID, roomId, true);
 
                     // checks that pip window is opened
-                    cy.get(".mx_LegacyCallView_pip").should("exist");
+                    cy.get(".mx_WidgetPip").should("exist");
 
                     // checks that widget is opened in pip
                     cy.accessIframe(`iframe[title="${DEMO_WIDGET_NAME}"]`).within({}, () => {
-                        cy.get("#demo").should('exist').then(async () => {
-                            const userId = user.userId;
-                            if (userRemove == 'leave') {
-                                cy.getClient().then(async matrixClient => {
-                                    await matrixClient.leave(roomId);
-                                });
-                            } else if (userRemove == 'kick') {
-                                await bot.kick(roomId, userId);
-                            } else if (userRemove == 'ban') {
-                                await bot.ban(roomId, userId);
-                            }
+                        cy.get("#demo")
+                            .should("exist")
+                            .then(async () => {
+                                const userId = user.userId;
+                                if (userRemove == "leave") {
+                                    cy.getClient().then(async (matrixClient) => {
+                                        await matrixClient.leave(roomId);
+                                    });
+                                } else if (userRemove == "kick") {
+                                    await bot.kick(roomId, userId);
+                                } else if (userRemove == "ban") {
+                                    await bot.ban(roomId, userId);
+                                }
 
-                            // checks that pip window is closed
-                            cy.get(".mx_LegacyCallView_pip").should("not.exist");
-                        });
+                                // checks that pip window is closed
+                                cy.get(".mx_WidgetPip").should("not.exist");
+                            });
                     });
                 });
             });
@@ -167,35 +173,35 @@ describe("Widget PIP", () => {
     }
 
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Mike").then(_user => {
+            cy.initTestUser(homeserver, "Mike").then((_user) => {
                 user = _user;
             });
-            cy.getBot(synapse, { displayName: "Bot", autoAcceptInvites: false }).then(_bot => {
+            cy.getBot(homeserver, { displayName: "Bot", autoAcceptInvites: false }).then((_bot) => {
                 bot = _bot;
             });
         });
-        cy.serveHtmlFile(DEMO_WIDGET_HTML).then(url => {
+        cy.serveHtmlFile(DEMO_WIDGET_HTML).then((url) => {
             demoWidgetUrl = url;
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
         cy.stopWebServers();
     });
 
-    it('should be closed on leave', () => {
-        roomCreateAddWidgetPip('leave');
+    it("should be closed on leave", () => {
+        roomCreateAddWidgetPip("leave");
     });
 
-    it('should be closed on kick', () => {
-        roomCreateAddWidgetPip('kick');
+    it("should be closed on kick", () => {
+        roomCreateAddWidgetPip("kick");
     });
 
-    it('should be closed on ban', () => {
-        roomCreateAddWidgetPip('ban');
+    it("should be closed on ban", () => {
+        roomCreateAddWidgetPip("ban");
     });
 });

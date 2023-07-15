@@ -14,27 +14,46 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import { IThreepid, ThreepidMedium } from 'matrix-js-sdk/src/@types/threepids';
+import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 
-import { PhoneNumber } from "../../../../../src/components/views/settings/discovery/PhoneNumbers";
+import PhoneNumbers, { PhoneNumber } from "../../../../../src/components/views/settings/discovery/PhoneNumbers";
 
+const msisdn: IThreepid = {
+    medium: ThreepidMedium.Phone,
+    address: "+441111111111",
+    validated_at: 12345,
+    added_at: 12342,
+    bound: false,
+};
 describe("<PhoneNumber/>", () => {
     it("should track props.msisdn.bound changes", async () => {
-        const msisdn: IThreepid = {
-            medium: ThreepidMedium.Phone,
-            address: "+441111111111",
-            validated_at: 12345,
-            added_at: 12342,
-            bound: false,
-        };
-
         const { rerender } = render(<PhoneNumber msisdn={msisdn} />);
         await screen.findByText("Share");
 
         msisdn.bound = true;
         rerender(<PhoneNumber msisdn={{ ...msisdn }} />);
         await screen.findByText("Revoke");
+    });
+});
+
+describe("<PhoneNumbers />", () => {
+    it("should render a loader while loading", async () => {
+        const { container } = render(<PhoneNumbers msisdns={[msisdn]} isLoading={true} />);
+
+        expect(container).toMatchSnapshot();
+    });
+
+    it("should render phone numbers", async () => {
+        const { container } = render(<PhoneNumbers msisdns={[msisdn]} isLoading={false} />);
+
+        expect(container).toMatchSnapshot();
+    });
+
+    it("should handle no numbers", async () => {
+        const { container } = render(<PhoneNumbers msisdns={[]} isLoading={false} />);
+
+        expect(container).toMatchSnapshot();
     });
 });

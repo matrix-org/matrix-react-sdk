@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { MatrixClient } from "../../global";
 import { UserCredentials } from "../../support/login";
 
@@ -62,15 +62,13 @@ const INTEGRATION_MANAGER_HTML = `
 `;
 
 function openIntegrationManager() {
-    cy.get(".mx_RightPanel_roomSummaryButton").click();
-    cy.get(".mx_RoomSummaryCard_appsGroup").within(() => {
-        cy.contains("Add widgets, bridges & bots").click();
-    });
+    cy.findByRole("button", { name: "Room info" }).click();
+    cy.findByRole("button", { name: "Add widgets, bridges & bots" }).click();
 }
 
 function closeIntegrationManager(integrationManagerUrl: string) {
     cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
-        cy.get("#close").should("exist").click();
+        cy.findByRole("button", { name: "Press to close" }).should("exist").click();
     });
 }
 
@@ -78,37 +76,56 @@ function sendActionFromIntegrationManager(integrationManagerUrl: string, targetR
     cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
         cy.get("#target-room-id").should("exist").type(targetRoomId);
         cy.get("#target-user-id").should("exist").type(targetUserId);
-        cy.get("#send-action").should("exist").click();
+        cy.findByRole("button", { name: "Press to send action" }).should("exist").click();
     });
 }
 
+function clickUntilGone(selector: string, attempt = 0) {
+    if (attempt === 11) {
+        throw new Error("clickUntilGone attempt count exceeded");
+    }
+
+    cy.get(selector)
+        .last()
+        .click()
+        .then(($button) => {
+            const exists = Cypress.$(selector).length > 0;
+            if (exists) {
+                clickUntilGone(selector, ++attempt);
+            }
+        });
+}
+
 function expectKickedMessage(shouldExist: boolean) {
-    // Expand any event summaries
-    cy.get(".mx_GenericEventListSummary_toggle[aria-expanded=false]").click({ multiple: true });
+    // Expand any event summaries, we can't use a click multiple here because clicking one might de-render others
+    // This is quite horrible but seems the most stable way of clicking 0-N buttons,
+    // one at a time with a full re-evaluation after each click
+    clickUntilGone(".mx_GenericEventListSummary_toggle[aria-expanded=false]");
 
     // Check for the event message (or lack thereof)
-    cy.contains(".mx_EventTile_line", `${USER_DISPLAY_NAME} removed ${BOT_DISPLAY_NAME}: ${KICK_REASON}`)
-        .should(shouldExist ? "exist" : "not.exist");
+    cy.findByText(`${USER_DISPLAY_NAME} removed ${BOT_DISPLAY_NAME}: ${KICK_REASON}`).should(
+        shouldExist ? "exist" : "not.exist",
+    );
 }
 
 describe("Integration Manager: Kick", () => {
     let testUser: UserCredentials;
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
     let integrationManagerUrl: string;
 
     beforeEach(() => {
-        cy.serveHtmlFile(INTEGRATION_MANAGER_HTML).then(url => {
+        cy.serveHtmlFile(INTEGRATION_MANAGER_HTML).then((url) => {
             integrationManagerUrl = url;
         });
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, USER_DISPLAY_NAME, () => {
-                cy.window().then(win => {
+            cy.initTestUser(homeserver, USER_DISPLAY_NAME, () => {
+                cy.window().then((win) => {
                     win.localStorage.setItem("mx_scalar_token", INTEGRATION_MANAGER_TOKEN);
                     win.localStorage.setItem(`mx_scalar_token_at_${integrationManagerUrl}`, INTEGRATION_MANAGER_TOKEN);
                 });
-            }).then(user => {
+            }).then((user) => {
                 testUser = user;
             });
 
@@ -127,8 +144,8 @@ describe("Integration Manager: Kick", () => {
             }).as("integrationManager");
 
             // Succeed when checking the token is valid
-            cy.intercept(`${integrationManagerUrl}/account?scalar_token=${INTEGRATION_MANAGER_TOKEN}*`, req => {
-                req.continue(res => {
+            cy.intercept(`${integrationManagerUrl}/account?scalar_token=${INTEGRATION_MANAGER_TOKEN}*`, (req) => {
+                req.continue((res) => {
                     return res.send(200, {
                         user_id: testUser.userId,
                     });
@@ -139,113 +156,110 @@ describe("Integration Manager: Kick", () => {
                 name: ROOM_NAME,
             }).as("roomId");
 
-            cy.getBot(synapse, { displayName: BOT_DISPLAY_NAME, autoAcceptInvites: true }).as("bob");
+            cy.getBot(homeserver, { displayName: BOT_DISPLAY_NAME, autoAcceptInvites: true }).as("bob");
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
         cy.stopWebServers();
     });
 
     it("should kick the target", () => {
-        cy.all([
-            cy.get<MatrixClient>("@bob"),
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([targetUser, roomId]) => {
-            const targetUserId = targetUser.getUserId();
-            cy.viewRoomByName(ROOM_NAME);
-            cy.inviteUser(roomId, targetUserId);
-            cy.contains(`${BOT_DISPLAY_NAME} joined the room`).should('exist');
+        cy.all([cy.get<MatrixClient>("@bob"), cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(
+            ([targetUser, roomId]) => {
+                const targetUserId = targetUser.getUserId();
+                cy.viewRoomByName(ROOM_NAME);
+                cy.inviteUser(roomId, targetUserId);
+                cy.findByText(`${BOT_DISPLAY_NAME} joined the room`).should("exist");
 
-            openIntegrationManager();
-            sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-            closeIntegrationManager(integrationManagerUrl);
-            expectKickedMessage(true);
-        });
+                openIntegrationManager();
+                sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
+                closeIntegrationManager(integrationManagerUrl);
+                expectKickedMessage(true);
+            },
+        );
     });
 
     it("should not kick the target if lacking permissions", () => {
-        cy.all([
-            cy.get<MatrixClient>("@bob"),
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([targetUser, roomId]) => {
-            const targetUserId = targetUser.getUserId();
-            cy.viewRoomByName(ROOM_NAME);
-            cy.inviteUser(roomId, targetUserId);
-            cy.contains(`${BOT_DISPLAY_NAME} joined the room`).should('exist');
-            cy.getClient().then(async client => {
-                await client.sendStateEvent(roomId, 'm.room.power_levels', {
-                    kick: 50,
-                    users: {
-                        [testUser.userId]: 0,
-                    },
-                });
-            }).then(() => {
-                openIntegrationManager();
-                sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-                closeIntegrationManager(integrationManagerUrl);
-                expectKickedMessage(false);
-            });
-        });
+        cy.all([cy.get<MatrixClient>("@bob"), cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(
+            ([targetUser, roomId]) => {
+                const targetUserId = targetUser.getUserId();
+                cy.viewRoomByName(ROOM_NAME);
+                cy.inviteUser(roomId, targetUserId);
+                cy.findByText(`${BOT_DISPLAY_NAME} joined the room`).should("exist");
+                cy.getClient()
+                    .then(async (client) => {
+                        await client.sendStateEvent(roomId, "m.room.power_levels", {
+                            kick: 50,
+                            users: {
+                                [testUser.userId]: 0,
+                            },
+                        });
+                    })
+                    .then(() => {
+                        openIntegrationManager();
+                        sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
+                        closeIntegrationManager(integrationManagerUrl);
+                        expectKickedMessage(false);
+                    });
+            },
+        );
     });
 
     it("should no-op if the target already left", () => {
-        cy.all([
-            cy.get<MatrixClient>("@bob"),
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([targetUser, roomId]) => {
-            const targetUserId = targetUser.getUserId();
-            cy.viewRoomByName(ROOM_NAME);
-            cy.inviteUser(roomId, targetUserId);
-            cy.contains(`${BOT_DISPLAY_NAME} joined the room`).should('exist').then(async () => {
-                await targetUser.leave(roomId);
-            }).then(() => {
-                openIntegrationManager();
-                sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-                closeIntegrationManager(integrationManagerUrl);
-                expectKickedMessage(false);
-            });
-        });
+        cy.all([cy.get<MatrixClient>("@bob"), cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(
+            ([targetUser, roomId]) => {
+                const targetUserId = targetUser.getUserId();
+                cy.viewRoomByName(ROOM_NAME);
+                cy.inviteUser(roomId, targetUserId);
+                cy.findByText(`${BOT_DISPLAY_NAME} joined the room`)
+                    .should("exist")
+                    .then(async () => {
+                        await targetUser.leave(roomId);
+                    })
+                    .then(() => {
+                        openIntegrationManager();
+                        sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
+                        closeIntegrationManager(integrationManagerUrl);
+                        expectKickedMessage(false);
+                    });
+            },
+        );
     });
 
     it("should no-op if the target was banned", () => {
-        cy.all([
-            cy.get<MatrixClient>("@bob"),
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([targetUser, roomId]) => {
-            const targetUserId = targetUser.getUserId();
-            cy.viewRoomByName(ROOM_NAME);
-            cy.inviteUser(roomId, targetUserId);
-            cy.contains(`${BOT_DISPLAY_NAME} joined the room`).should('exist');
-            cy.getClient().then(async client => {
-                await client.ban(roomId, targetUserId);
-            }).then(() => {
+        cy.all([cy.get<MatrixClient>("@bob"), cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(
+            ([targetUser, roomId]) => {
+                const targetUserId = targetUser.getUserId();
+                cy.viewRoomByName(ROOM_NAME);
+                cy.inviteUser(roomId, targetUserId);
+                cy.findByText(`${BOT_DISPLAY_NAME} joined the room`).should("exist");
+                cy.getClient()
+                    .then(async (client) => {
+                        await client.ban(roomId, targetUserId);
+                    })
+                    .then(() => {
+                        openIntegrationManager();
+                        sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
+                        closeIntegrationManager(integrationManagerUrl);
+                        expectKickedMessage(false);
+                    });
+            },
+        );
+    });
+
+    it("should no-op if the target was never a room member", () => {
+        cy.all([cy.get<MatrixClient>("@bob"), cy.get<string>("@roomId"), cy.get<{}>("@integrationManager")]).then(
+            ([targetUser, roomId]) => {
+                const targetUserId = targetUser.getUserId();
+                cy.viewRoomByName(ROOM_NAME);
+
                 openIntegrationManager();
                 sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
                 closeIntegrationManager(integrationManagerUrl);
                 expectKickedMessage(false);
-            });
-        });
-    });
-
-    it("should no-op if the target was never a room member", () => {
-        cy.all([
-            cy.get<MatrixClient>("@bob"),
-            cy.get<string>("@roomId"),
-            cy.get<{}>("@integrationManager"),
-        ]).then(([targetUser, roomId]) => {
-            const targetUserId = targetUser.getUserId();
-            cy.viewRoomByName(ROOM_NAME);
-
-            openIntegrationManager();
-            sendActionFromIntegrationManager(integrationManagerUrl, roomId, targetUserId);
-            closeIntegrationManager(integrationManagerUrl);
-            expectKickedMessage(false);
-        });
+            },
+        );
     });
 });

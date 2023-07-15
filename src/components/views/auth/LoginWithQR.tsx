@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MSC3906Rendezvous, MSC3906RendezvousPayload, RendezvousFailureReason } from 'matrix-js-sdk/src/rendezvous';
-import { MSC3886SimpleHttpRendezvousTransport } from 'matrix-js-sdk/src/rendezvous/transports';
-import { MSC3903ECDHPayload, MSC3903ECDHv1RendezvousChannel } from 'matrix-js-sdk/src/rendezvous/channels';
-import { logger } from 'matrix-js-sdk/src/logger';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import React from "react";
+import { MSC3906Rendezvous, MSC3906RendezvousPayload, RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
+import { MSC3886SimpleHttpRendezvousTransport } from "matrix-js-sdk/src/rendezvous/transports";
+import { MSC3903ECDHPayload, MSC3903ECDHv2RendezvousChannel } from "matrix-js-sdk/src/rendezvous/channels";
+import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { _t } from "../../../languageHandler";
-import { wrapRequestWithDialog } from '../../../utils/UserInteractiveAuth';
-import LoginWithQRFlow from './LoginWithQRFlow';
+import { wrapRequestWithDialog } from "../../../utils/UserInteractiveAuth";
+import LoginWithQRFlow from "./LoginWithQRFlow";
 
 /**
  * The intention of this enum is to have a mode that scans a QR code instead of generating one.
@@ -75,7 +75,7 @@ interface IState {
  * This uses the unstable feature of MSC3906: https://github.com/matrix-org/matrix-spec-proposals/pull/3906
  */
 export default class LoginWithQR extends React.Component<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -93,7 +93,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
     }
 
-    private async updateMode(mode: Mode) {
+    private async updateMode(mode: Mode): Promise<void> {
         this.setState({ phase: Phase.Loading });
         if (this.state.rendezvous) {
             const rendezvous = this.state.rendezvous;
@@ -117,7 +117,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
     private approveLogin = async (): Promise<void> => {
         if (!this.state.rendezvous) {
-            throw new Error('Rendezvous not found');
+            throw new Error("Rendezvous not found");
         }
         this.setState({ phase: Phase.Loading });
 
@@ -145,12 +145,12 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             await this.state.rendezvous.verifyNewDeviceOnExistingDevice();
             this.props.onFinished(true);
         } catch (e) {
-            logger.error('Error whilst approving sign in', e);
+            logger.error("Error whilst approving sign in", e);
             this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
         }
     };
 
-    private generateCode = async () => {
+    private generateCode = async (): Promise<void> => {
         let rendezvous: MSC3906Rendezvous;
         try {
             const transport = new MSC3886SimpleHttpRendezvousTransport<MSC3903ECDHPayload>({
@@ -158,8 +158,10 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 client: this.props.client,
             });
 
-            const channel = new MSC3903ECDHv1RendezvousChannel<MSC3906RendezvousPayload>(
-                transport, undefined, this.onFailure,
+            const channel = new MSC3903ECDHv2RendezvousChannel<MSC3906RendezvousPayload>(
+                transport,
+                undefined,
+                this.onFailure,
             );
 
             rendezvous = new MSC3906Rendezvous(channel, this.props.client, this.onFailure);
@@ -171,7 +173,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 failureReason: undefined,
             });
         } catch (e) {
-            logger.error('Error whilst generating QR code', e);
+            logger.error("Error whilst generating QR code", e);
             this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.HomeserverLacksSupport });
             return;
         }
@@ -180,7 +182,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             const confirmationDigits = await rendezvous.startAfterShowingCode();
             this.setState({ phase: Phase.Connected, confirmationDigits });
         } catch (e) {
-            logger.error('Error whilst doing QR login', e);
+            logger.error("Error whilst doing QR login", e);
             // only set to error phase if it hasn't already been set by onFailure or similar
             if (this.state.phase !== Phase.Error) {
                 this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
@@ -188,12 +190,12 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
     };
 
-    private onFailure = (reason: RendezvousFailureReason) => {
+    private onFailure = (reason: RendezvousFailureReason): void => {
         logger.info(`Rendezvous failed: ${reason}`);
         this.setState({ phase: Phase.Error, failureReason: reason });
     };
 
-    public reset() {
+    public reset(): void {
         this.setState({
             rendezvous: undefined,
             confirmationDigits: undefined,
@@ -201,7 +203,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         });
     }
 
-    private onClick = async (type: Click) => {
+    private onClick = async (type: Click): Promise<void> => {
         switch (type) {
             case Click.Cancel:
                 await this.state.rendezvous?.cancel(RendezvousFailureReason.UserCancelled);
@@ -227,7 +229,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
     };
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <LoginWithQRFlow
                 onClick={this.onClick}

@@ -18,26 +18,26 @@ limitations under the License.
 
 import { SinonStub } from "cypress/types/sinon";
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 describe("Consent", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.startSynapse("consent").then(data => {
-            synapse = data;
+        cy.startHomeserver("consent").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Bob");
+            cy.initTestUser(homeserver, "Bob");
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     it("should prompt the user to consent to terms when server deems it necessary", () => {
         // Attempt to create a room using the js-sdk which should return an error with `M_CONSENT_NOT_GIVEN`
-        cy.window().then(win => {
+        cy.window().then((win) => {
             win.mxMatrixClientPeg.matrixClient.createRoom({}).catch(() => {});
 
             // Stub `window.open` - clicking the primary button below will call it
@@ -46,19 +46,21 @@ describe("Consent", () => {
 
         // Accept terms & conditions
         cy.get(".mx_QuestionDialog").within(() => {
-            cy.contains("#mx_BaseDialog_title", "Terms and Conditions");
-            cy.get(".mx_Dialog_primary").click();
+            cy.get("#mx_BaseDialog_title").within(() => {
+                cy.findByText("Terms and Conditions");
+            });
+            cy.findByRole("button", { name: "Review terms and conditions" }).click();
         });
 
-        cy.get<SinonStub>("@windowOpen").then(stub => {
+        cy.get<SinonStub>("@windowOpen").then((stub) => {
             const url = stub.getCall(0).args[0];
 
-            // Go to Synapse's consent page and accept it
-            cy.origin(synapse.baseUrl, { args: { url } }, ({ url }) => {
+            // Go to Homeserver's consent page and accept it
+            cy.origin(homeserver.baseUrl, { args: { url } }, ({ url }) => {
                 cy.visit(url);
 
                 cy.get('[type="submit"]').click();
-                cy.contains("p", "Danke schon");
+                cy.contains("p", "Danke schoen");
             });
         });
 

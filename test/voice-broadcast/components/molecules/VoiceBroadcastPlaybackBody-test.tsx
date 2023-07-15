@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,14 +28,19 @@ import {
     VoiceBroadcastPlaybackEvent,
     VoiceBroadcastPlaybackState,
 } from "../../../../src/voice-broadcast";
-import { stubClient } from "../../../test-utils";
+import { filterConsole, stubClient } from "../../../test-utils";
 import { mkVoiceBroadcastInfoStateEvent } from "../../utils/test-utils";
+import dis from "../../../../src/dispatcher/dispatcher";
+import { Action } from "../../../../src/dispatcher/actions";
+import { SdkContextClass } from "../../../../src/contexts/SDKContext";
+
+jest.mock("../../../../src/dispatcher/dispatcher");
 
 // mock RoomAvatar, because it is doing too much fancy stuff
 jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
     __esModule: true,
     default: jest.fn().mockImplementation(({ room }) => {
-        return <div data-testid="room-avatar">room avatar: { room.name }</div>;
+        return <div data-testid="room-avatar">room avatar: {room.name}</div>;
     }),
 }));
 
@@ -47,6 +52,11 @@ describe("VoiceBroadcastPlaybackBody", () => {
     let infoEvent: MatrixEvent;
     let playback: VoiceBroadcastPlayback;
     let renderResult: RenderResult;
+
+    filterConsole(
+        // expected for some tests
+        "voice broadcast chunk event to skip to not found",
+    );
 
     beforeAll(() => {
         client = stubClient();
@@ -62,7 +72,11 @@ describe("VoiceBroadcastPlaybackBody", () => {
     });
 
     beforeEach(() => {
-        playback = new VoiceBroadcastPlayback(infoEvent, client);
+        playback = new VoiceBroadcastPlayback(
+            infoEvent,
+            client,
+            SdkContextClass.instance.voiceBroadcastRecordingsStore,
+        );
         jest.spyOn(playback, "toggle").mockImplementation(() => Promise.resolve());
         jest.spyOn(playback, "getLiveness");
         jest.spyOn(playback, "getState");
@@ -128,6 +142,42 @@ describe("VoiceBroadcastPlaybackBody", () => {
                 });
             });
         });
+
+        describe("and clicking the room name", () => {
+            beforeEach(async () => {
+                await userEvent.click(screen.getByText("My room"));
+            });
+
+            it("should not view the room", () => {
+                expect(dis.dispatch).not.toHaveBeenCalled();
+            });
+        });
+    });
+
+    describe("when rendering a playing broadcast in pip mode", () => {
+        beforeEach(() => {
+            mocked(playback.getState).mockReturnValue(VoiceBroadcastPlaybackState.Playing);
+            mocked(playback.getLiveness).mockReturnValue("not-live");
+            renderResult = render(<VoiceBroadcastPlaybackBody pip={true} playback={playback} />);
+        });
+
+        it("should render as expected", () => {
+            expect(renderResult.container).toMatchSnapshot();
+        });
+
+        describe("and clicking the room name", () => {
+            beforeEach(async () => {
+                await userEvent.click(screen.getByText("My room"));
+            });
+
+            it("should view the room", () => {
+                expect(dis.dispatch).toHaveBeenCalledWith({
+                    action: Action.ViewRoom,
+                    room_id: roomId,
+                    metricsTrigger: undefined,
+                });
+            });
+        });
     });
 
     describe(`when rendering a stopped broadcast`, () => {
@@ -169,18 +219,39 @@ describe("VoiceBroadcastPlaybackBody", () => {
         });
     });
 
-    describe.each([
-        [VoiceBroadcastPlaybackState.Paused, "not-live"],
-        [VoiceBroadcastPlaybackState.Playing, "live"],
-    ])("when rendering a %s/%s broadcast", (state: VoiceBroadcastPlaybackState, liveness: VoiceBroadcastLiveness) => {
+    describe("when rendering an error broadcast", () => {
         beforeEach(() => {
-            mocked(playback.getState).mockReturnValue(state);
-            mocked(playback.getLiveness).mockReturnValue(liveness);
+            mocked(playback.getState).mockReturnValue(VoiceBroadcastPlaybackState.Error);
             renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
         });
 
         it("should render as expected", () => {
             expect(renderResult.container).toMatchSnapshot();
         });
+    });
+
+    describe.each([
+        [VoiceBroadcastPlaybackState.Paused, "not-live"],
+        [VoiceBroadcastPlaybackState.Playing, "live"],
+    ] satisfies [VoiceBroadcastPlaybackState, VoiceBroadcastLiveness][])(
+        "when rendering a %s/%s broadcast",
+        (state: VoiceBroadcastPlaybackState, liveness: VoiceBroadcastLiveness) => {
+            beforeEach(() => {
+                mocked(playback.getState).mockReturnValue(state);
+                mocked(playback.getLiveness).mockReturnValue(liveness);
+                renderResult = render(<VoiceBroadcastPlaybackBody playback={playback} />);
+            });
+
+            it("should render as expected", () => {
+                expect(renderResult.container).toMatchSnapshot();
+            });
+        },
+    );
+
+    it("when there is a broadcast without sender, it should raise an error", () => {
+        infoEvent.sender = null;
+        expect(() => {
+            render(<VoiceBroadcastPlaybackBody playback={playback} />);
+        }).toThrow(`Voice Broadcast sender not found (event ${playback.infoEvent.getId()})`);
     });
 });

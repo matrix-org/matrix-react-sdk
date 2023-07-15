@@ -20,19 +20,19 @@ import { mocked } from "jest-mock";
 import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import {
-    VoiceBroadcastBody,
+    VoiceBroadcastBody as UnwrappedVoiceBroadcastBody,
     VoiceBroadcastInfoState,
     VoiceBroadcastRecordingBody,
-    VoiceBroadcastRecordingsStore,
     VoiceBroadcastRecording,
     VoiceBroadcastPlaybackBody,
     VoiceBroadcastPlayback,
-    VoiceBroadcastPlaybacksStore,
+    VoiceBroadcastRecordingsStore,
 } from "../../../src/voice-broadcast";
-import { stubClient } from "../../test-utils";
+import { withClientContextRenderOptions, stubClient, wrapInSdkContext } from "../../test-utils";
 import { mkVoiceBroadcastInfoStateEvent } from "../utils/test-utils";
 import { MediaEventHelper } from "../../../src/utils/MediaEventHelper";
 import { RoomPermalinkCreator } from "../../../src/utils/permalinks/Permalinks";
+import { SdkContextClass } from "../../../src/contexts/SDKContext";
 
 jest.mock("../../../src/voice-broadcast/components/molecules/VoiceBroadcastRecordingBody", () => ({
     VoiceBroadcastRecordingBody: jest.fn(),
@@ -57,14 +57,18 @@ describe("VoiceBroadcastBody", () => {
     let testPlayback: VoiceBroadcastPlayback;
 
     const renderVoiceBroadcast = () => {
-        render(<VoiceBroadcastBody
-            mxEvent={infoEvent}
-            mediaEventHelper={new MediaEventHelper(infoEvent)}
-            onHeightChanged={() => {}}
-            onMessageAllowed={() => {}}
-            permalinkCreator={new RoomPermalinkCreator(room)}
-        />);
-        testRecording = VoiceBroadcastRecordingsStore.instance().getByInfoEvent(infoEvent, client);
+        const VoiceBroadcastBody = wrapInSdkContext(UnwrappedVoiceBroadcastBody, SdkContextClass.instance);
+        render(
+            <VoiceBroadcastBody
+                mxEvent={infoEvent}
+                mediaEventHelper={new MediaEventHelper(infoEvent)}
+                onHeightChanged={() => {}}
+                onMessageAllowed={() => {}}
+                permalinkCreator={new RoomPermalinkCreator(room)}
+            />,
+            withClientContextRenderOptions(client),
+        );
+        testRecording = SdkContextClass.instance.voiceBroadcastRecordingsStore.getByInfoEvent(infoEvent, client);
     };
 
     beforeEach(() => {
@@ -79,12 +83,7 @@ describe("VoiceBroadcastBody", () => {
             return null;
         });
 
-        infoEvent = mkVoiceBroadcastInfoStateEvent(
-            roomId,
-            VoiceBroadcastInfoState.Started,
-            userId,
-            deviceId,
-        );
+        infoEvent = mkVoiceBroadcastInfoStateEvent(roomId, VoiceBroadcastInfoState.Started, userId, deviceId);
         stoppedEvent = mkVoiceBroadcastInfoStateEvent(
             roomId,
             VoiceBroadcastInfoState.Stopped,
@@ -94,7 +93,7 @@ describe("VoiceBroadcastBody", () => {
         );
         room.addEventsToTimeline([infoEvent], true, room.getLiveTimeline());
         testRecording = new VoiceBroadcastRecording(infoEvent, client);
-        testPlayback = new VoiceBroadcastPlayback(infoEvent, client);
+        testPlayback = new VoiceBroadcastPlayback(infoEvent, client, new VoiceBroadcastRecordingsStore());
         mocked(VoiceBroadcastRecordingBody).mockImplementation(({ recording }): ReactElement | null => {
             if (testRecording === recording) {
                 return <div data-testid="voice-broadcast-recording-body" />;
@@ -111,7 +110,7 @@ describe("VoiceBroadcastBody", () => {
             return null;
         });
 
-        jest.spyOn(VoiceBroadcastRecordingsStore.instance(), "getByInfoEvent").mockImplementation(
+        jest.spyOn(SdkContextClass.instance.voiceBroadcastRecordingsStore, "getByInfoEvent").mockImplementation(
             (getEvent: MatrixEvent, getClient: MatrixClient): VoiceBroadcastRecording => {
                 if (getEvent === infoEvent && getClient === client) {
                     return testRecording;
@@ -121,7 +120,7 @@ describe("VoiceBroadcastBody", () => {
             },
         );
 
-        jest.spyOn(VoiceBroadcastPlaybacksStore.instance(), "getByInfoEvent").mockImplementation(
+        jest.spyOn(SdkContextClass.instance.voiceBroadcastPlaybacksStore, "getByInfoEvent").mockImplementation(
             (getEvent: MatrixEvent): VoiceBroadcastPlayback => {
                 if (getEvent === infoEvent) {
                     return testPlayback;

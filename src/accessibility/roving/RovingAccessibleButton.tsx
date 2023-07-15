@@ -22,19 +22,31 @@ import { Ref } from "./types";
 
 interface IProps extends Omit<React.ComponentProps<typeof AccessibleButton>, "inputRef" | "tabIndex"> {
     inputRef?: Ref;
+    focusOnMouseOver?: boolean;
 }
 
 // Wrapper to allow use of useRovingTabIndex for simple AccessibleButtons outside of React Functional Components.
-export const RovingAccessibleButton: React.FC<IProps> = ({ inputRef, onFocus, ...props }) => {
+export const RovingAccessibleButton: React.FC<IProps> = ({
+    inputRef,
+    onFocus,
+    onMouseOver,
+    focusOnMouseOver,
+    ...props
+}) => {
     const [onFocusInternal, isActive, ref] = useRovingTabIndex(inputRef);
-    return <AccessibleButton
-        {...props}
-        onFocus={event => {
-            onFocusInternal();
-            onFocus?.(event);
-        }}
-        inputRef={ref}
-        tabIndex={isActive ? 0 : -1}
-    />;
+    return (
+        <AccessibleButton
+            {...props}
+            onFocus={(event: React.FocusEvent) => {
+                onFocusInternal();
+                onFocus?.(event);
+            }}
+            onMouseOver={(event: React.MouseEvent) => {
+                if (focusOnMouseOver) onFocusInternal();
+                onMouseOver?.(event);
+            }}
+            inputRef={ref}
+            tabIndex={isActive ? 0 : -1}
+        />
+    );
 };
-

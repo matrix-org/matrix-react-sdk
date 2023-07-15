@@ -30,35 +30,62 @@ describe("SeekBar", () => {
 
     beforeEach(() => {
         seekBarRef = createRef();
-        jest.spyOn(window, "requestAnimationFrame").mockImplementation(
-            (callback: FrameRequestCallback) => { frameRequestCallback = callback; return 0; },
-        );
-        playback = createTestPlayback();
+        jest.spyOn(window, "requestAnimationFrame").mockImplementation((callback: FrameRequestCallback) => {
+            frameRequestCallback = callback;
+            return 0;
+        });
     });
 
     afterEach(() => {
         mocked(window.requestAnimationFrame).mockRestore();
     });
 
-    describe("when rendering a SeekBar", () => {
-        beforeEach(async () => {
-            renderResult = render(<SeekBar ref={seekBarRef} playback={playback} />);
-            act(() => {
-                playback.liveData.update([playback.timeSeconds, playback.durationSeconds]);
-                frameRequestCallback(0);
+    describe("when rendering a SeekBar for an empty playback", () => {
+        beforeEach(() => {
+            playback = createTestPlayback({
+                durationSeconds: 0,
+                timeSeconds: 0,
             });
+            renderResult = render(<SeekBar ref={seekBarRef} playback={playback} />);
         });
 
-        it("should render as expected", () => {
+        it("should render correctly", () => {
+            expect(renderResult.container).toMatchSnapshot();
+        });
+    });
+
+    describe("when rendering a SeekBar", () => {
+        beforeEach(() => {
+            playback = createTestPlayback();
+            renderResult = render(<SeekBar ref={seekBarRef} playback={playback} />);
+        });
+
+        it("should render the initial position", () => {
             // expected value 3141 / 31415 ~ 0.099984084
             expect(renderResult.container).toMatchSnapshot();
+        });
+
+        describe("and the playback proceeds", () => {
+            beforeEach(async () => {
+                // @ts-ignore
+                playback.timeSeconds = 6969;
+                act(() => {
+                    playback.liveData.update([playback.timeSeconds, playback.durationSeconds]);
+                    frameRequestCallback(0);
+                });
+            });
+
+            it("should render as expected", () => {
+                // expected value 6969 / 31415 ~ 0.221836702
+                expect(renderResult.container).toMatchSnapshot();
+            });
         });
 
         describe("and seeking position with the slider", () => {
             beforeEach(() => {
                 const rangeInput = renderResult.container.querySelector("[type='range']");
                 act(() => {
-                    fireEvent.change(rangeInput, { target: { value: 0.5 } });
+                    fireEvent.change(rangeInput!, { target: { value: 0.5 } });
                 });
             });
 
@@ -70,7 +97,7 @@ describe("SeekBar", () => {
                 beforeEach(() => {
                     mocked(playback.skipTo).mockClear();
                     act(() => {
-                        seekBarRef.current.left();
+                        seekBarRef.current!.left();
                     });
                 });
 
@@ -83,7 +110,7 @@ describe("SeekBar", () => {
                 beforeEach(() => {
                     mocked(playback.skipTo).mockClear();
                     act(() => {
-                        seekBarRef.current.right();
+                        seekBarRef.current!.right();
                     });
                 });
 

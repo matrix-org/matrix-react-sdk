@@ -40,8 +40,8 @@ describe("VoiceBroadcastPreRecording", () => {
         client = stubClient();
         room = new Room(roomId, client, client.getUserId() || "");
         sender = new RoomMember(roomId, client.getUserId() || "");
-        playbacksStore = new VoiceBroadcastPlaybacksStore();
         recordingsStore = new VoiceBroadcastRecordingsStore();
+        playbacksStore = new VoiceBroadcastPlaybacksStore(recordingsStore);
     });
 
     beforeEach(() => {
@@ -56,12 +56,7 @@ describe("VoiceBroadcastPreRecording", () => {
         });
 
         it("should start a new voice broadcast recording", () => {
-            expect(startNewVoiceBroadcastRecording).toHaveBeenCalledWith(
-                room,
-                client,
-                playbacksStore,
-                recordingsStore,
-            );
+            expect(startNewVoiceBroadcastRecording).toHaveBeenCalledWith(room, client, playbacksStore, recordingsStore);
         });
 
         it("should emit a dismiss event", () => {

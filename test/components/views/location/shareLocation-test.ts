@@ -47,15 +47,13 @@ describe("shareLocation", () => {
         } as unknown as MatrixClient;
 
         mocked(makeLocationContent).mockReturnValue(content);
-        mocked(doMaybeLocalRoomAction).mockImplementation(<T>(
-            roomId: string,
-            fn: (actualRoomId: string) => Promise<T>,
-            client?: MatrixClient,
-        ) => {
-            return fn(roomId);
-        });
+        mocked(doMaybeLocalRoomAction).mockImplementation(
+            <T>(roomId: string, fn: (actualRoomId: string) => Promise<T>, client?: MatrixClient) => {
+                return fn(roomId);
+            },
+        );
 
-        shareLocationFn = shareLocation(client, roomId, shareType, null, () => {});
+        shareLocationFn = shareLocation(client, roomId, shareType, undefined, () => {});
     });
 
     it("should forward the call to doMaybeLocalRoomAction", () => {

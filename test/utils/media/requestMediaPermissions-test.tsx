@@ -28,10 +28,7 @@ describe("requestMediaPermissions", () => {
 
     const itShouldLogTheErrorAndShowTheNoMediaPermissionsModal = () => {
         it("should log the error and show the »No media permissions« modal", () => {
-            expect(logger.log).toHaveBeenCalledWith(
-                "Failed to list userMedia devices",
-                error,
-            );
+            expect(logger.log).toHaveBeenCalledWith("Failed to list userMedia devices", error);
             screen.getByText("No media permissions");
         });
     };
@@ -44,7 +41,7 @@ describe("requestMediaPermissions", () => {
     describe("when an audio and video device is available", () => {
         beforeEach(() => {
             mocked(navigator.mediaDevices.getUserMedia).mockImplementation(
-                async ({ audio, video }): Promise<MediaStream> => {
+                async ({ audio, video }: MediaStreamConstraints): Promise<MediaStream> => {
                     if (audio && video) return audioVideoStream;
                     return audioStream;
                 },
@@ -59,7 +56,7 @@ describe("requestMediaPermissions", () => {
     describe("when calling with video = false and an audio device is available", () => {
         beforeEach(() => {
             mocked(navigator.mediaDevices.getUserMedia).mockImplementation(
-                async ({ audio, video }): Promise<MediaStream> => {
+                async ({ audio, video }: MediaStreamConstraints): Promise<MediaStream> => {
                     if (audio && !video) return audioStream;
                     return audioVideoStream;
                 },
@@ -75,7 +72,7 @@ describe("requestMediaPermissions", () => {
         beforeEach(() => {
             error.name = "NotFoundError";
             mocked(navigator.mediaDevices.getUserMedia).mockImplementation(
-                async ({ audio, video }): Promise<MediaStream> => {
+                async ({ audio, video }: MediaStreamConstraints): Promise<MediaStream> => {
                     if (audio && video) throw error;
                     if (audio) return audioStream;
                     return audioVideoStream;
@@ -91,11 +88,9 @@ describe("requestMediaPermissions", () => {
     describe("when no device is available", () => {
         beforeEach(async () => {
             error.name = "NotFoundError";
-            mocked(navigator.mediaDevices.getUserMedia).mockImplementation(
-                async (): Promise<MediaStream> => {
-                    throw error;
-                },
-            );
+            mocked(navigator.mediaDevices.getUserMedia).mockImplementation(async (): Promise<MediaStream> => {
+                throw error;
+            });
             await requestMediaPermissions();
             // required for the modal to settle
             await flushPromises();
@@ -108,7 +103,7 @@ describe("requestMediaPermissions", () => {
     describe("when an Error is raised", () => {
         beforeEach(async () => {
             mocked(navigator.mediaDevices.getUserMedia).mockImplementation(
-                async ({ audio, video }): Promise<MediaStream> => {
+                async ({ audio, video }: MediaStreamConstraints): Promise<MediaStream> => {
                     if (audio && video) throw error;
                     return audioVideoStream;
                 },

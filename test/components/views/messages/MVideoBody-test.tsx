@@ -14,25 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src/matrix';
-import { render, RenderResult } from '@testing-library/react';
+import React, { ComponentProps } from "react";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { render, RenderResult } from "@testing-library/react";
 
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
-import { getMockClientWithEventEmitter } from '../../../test-utils';
-import MVideoBody from '../../../../src/components/views/messages/MVideoBody';
+import { getMockClientWithEventEmitter } from "../../../test-utils";
+import MVideoBody from "../../../../src/components/views/messages/MVideoBody";
 
-jest.mock(
-    "../../../../src/customisations/Media",
-    () => {
-        return { mediaFromContent: () => { return { isEncrypted: false }; } };
-    },
-);
+jest.mock("../../../../src/customisations/Media", () => {
+    return {
+        mediaFromContent: () => {
+            return { isEncrypted: false };
+        },
+    };
+});
 
 describe("MVideoBody", () => {
-    it('does not crash when given a portrait image', () => {
+    it("does not crash when given a portrait image", () => {
         // Check for an unreliable crash caused by a fractional-sized
         // image dimension being used for a CanvasImageData.
         const { asFragment } = makeMVideoBody(720, 1280);
@@ -42,7 +43,7 @@ describe("MVideoBody", () => {
 });
 
 function makeMVideoBody(w: number, h: number): RenderResult {
-    const content = {
+    const content: IContent = {
         info: {
             "w": w,
             "h": h,
@@ -65,10 +66,10 @@ function makeMVideoBody(w: number, h: number): RenderResult {
         content,
     });
 
-    const defaultProps = {
+    const defaultProps: ComponentProps<typeof MVideoBody> = {
         mxEvent: event,
         highlights: [],
-        highlightLink: '',
+        highlightLink: "",
         onHeightChanged: jest.fn(),
         onMessageAllowed: jest.fn(),
         permalinkCreator: {} as RoomPermalinkCreator,

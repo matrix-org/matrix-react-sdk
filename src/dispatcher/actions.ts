@@ -78,7 +78,7 @@ export enum Action {
     /**
      * Clear the  to the send message composer. Should be used with a FocusComposerPayload.
      */
-     ClearAndFocusSendMessageComposer = "clear_focus_send_message_composer",
+    ClearAndFocusSendMessageComposer = "clear_focus_send_message_composer",
 
     /**
      * Focuses the user's cursor to the edit message composer. Should be used with a FocusComposerPayload.
@@ -100,6 +100,11 @@ export enum Action {
      * Toggles the Space panel. No additional payload information required.
      */
     ToggleSpacePanel = "toggle_space_panel",
+
+    /**
+     * Sets the apps root font size. Should be used with UpdateFontSizePayload
+     */
+    MigrateBaseFontSize = "migrate_base_font_size",
 
     /**
      * Sets the apps root font size. Should be used with UpdateFontSizePayload
