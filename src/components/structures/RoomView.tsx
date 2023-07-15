@@ -121,7 +121,7 @@ import { isNotUndefined } from "../../Typeguards";
 
 const DEBUG = false;
 const PREVENT_MULTIPLE_JITSI_WITHIN = 30_000;
-let debuglog = function (msg: string): void { };
+let debuglog = function (msg: string): void {};
 
 const BROWSER_SUPPORTS_SANDBOX = "sandbox" in document.createElement("iframe");
 
@@ -631,8 +631,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showRightPanel: roomId ? this.context.rightPanelStore.isOpenForRoom(roomId) : false,
             threadRightPanel: roomId
                 ? [RightPanelPhases.ThreadView, RightPanelPhases.ThreadPanel].includes(
-                    this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
-                )
+                      this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
+                  )
                 : false,
             activeCall: roomId ? CallStore.instance.getActiveCall(roomId) : null,
         };
@@ -1041,8 +1041,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showRightPanel: roomId ? this.context.rightPanelStore.isOpenForRoom(roomId) : false,
             threadRightPanel: roomId
                 ? [RightPanelPhases.ThreadView, RightPanelPhases.ThreadPanel].includes(
-                    this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
-                )
+                      this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
+                  )
                 : false,
         });
     };
