@@ -222,6 +222,31 @@ describe("ContentMessages", () => {
             );
         });
 
+        it("should fall back to m.file for invalid audio files", async () => {
+            jest.spyOn(document, "createElement").mockImplementation((tagName) => {
+                const element = createElement(tagName);
+                if (tagName === "audio") {
+                    Object.defineProperty(element, "src", {
+                        set() {
+                            element.onerror!("fail");
+                        },
+                    });
+                }
+                return element;
+            });
+            mocked(client.uploadContent).mockResolvedValue({ content_uri: "mxc://server/file" });
+            const file = new File([], "fileName", { type: "audio/mp3" });
+            await contentMessages.sendContentToRoom(file, roomId, undefined, client, undefined);
+            expect(client.sendMessage).toHaveBeenCalledWith(
+                roomId,
+                null,
+                expect.objectContaining({
+                    url: "mxc://server/file",
+                    msgtype: "m.file",
+                }),
+            );
+        });
+
         it("should default to name 'Attachment' if file doesn't have a name", async () => {
             mocked(client.uploadContent).mockResolvedValue({ content_uri: "mxc://server/file" });
             const file = new File([], "", { type: "text/plain" });
