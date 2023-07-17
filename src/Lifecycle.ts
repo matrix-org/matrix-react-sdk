@@ -223,7 +223,7 @@ export async function attemptDelegatedAuthLogin(
  */
 async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
     try {
-        const { accessToken, refreshToken, homeserverUrl, identityServerUrl } = await completeOidcLogin(queryParams);
+        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, oidcClientSettings } = await completeOidcLogin(queryParams);
 
         const {
             user_id: userId,
@@ -242,7 +242,7 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
         };
 
         logger.debug("Logged in via OIDC native flow");
-        await onSuccessfulDelegatedAuthLogin(credentials);
+        await onSuccessfulDelegatedAuthLogin(credentials, oidcClientSettings);
         return true;
     } catch (error) {
         logger.error("Failed to login via OIDC", error);
@@ -348,9 +348,10 @@ export function attemptTokenLogin(
  * Clear storage then save new credentials in storage
  * @param credentials as returned from login
  */
-async function onSuccessfulDelegatedAuthLogin(credentials: IMatrixClientCreds): Promise<void> {
+async function onSuccessfulDelegatedAuthLogin(credentials: IMatrixClientCreds, settings): Promise<void> {
     await clearStorage();
     await persistCredentials(credentials);
+    await persistOidcClientSettings(settings);
 
     // remember that we just logged in
     sessionStorage.setItem("mx_fresh_login", String(true));
@@ -617,6 +618,9 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
 
+        const oidcClientSettingsRaw = sessionStorage.getItem("oidcClientSettings");
+        const oidcClientSettings = oidcClientSettingsRaw ? JSON.parse(oidcClientSettingsRaw) : undefined;
+
         logger.log(`Restoring session for ${userId}`);
         await doSetLoggedIn(
             {
@@ -629,6 +633,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
                 guest: isGuest,
                 pickleKey: pickleKey ?? undefined,
                 freshLogin: freshLogin,
+                oidcClientSettings,
             },
             false,
         );
@@ -764,7 +769,7 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
         await abortLogin();
     }
 
-    MatrixClientPeg.replaceUsingCreds(credentials);
+    MatrixClientPeg.replaceUsingCreds(credentials, credentials.oidcClientSettings);
     const client = MatrixClientPeg.safeGet();
 
     setSentryUser(credentials.userId);
@@ -877,6 +882,10 @@ async function persistTokenInStorage(
             }
         }
     }
+}
+
+async function persistOidcClientSettings(settings): Promise<void> {
+    sessionStorage.setItem("oidcClientSettings", JSON.stringify(settings));
 }
 
 async function persistCredentials(credentials: IMatrixClientCreds): Promise<void> {

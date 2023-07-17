@@ -26,6 +26,7 @@ import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
 import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import { logger } from "matrix-js-sdk/src/logger";
+import { OidcTokenRefresher } from "matrix-js-sdk/src/oidc/tokenRefresher";
 
 import createMatrixClient from "./utils/createMatrixClient";
 import SettingsStore from "./settings/SettingsStore";
@@ -189,8 +190,17 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
     }
 
-    public replaceUsingCreds(creds: IMatrixClientCreds): void {
+    public replaceUsingCreds(creds: IMatrixClientCreds, oidcClientSettings): void {
+        console.log('hhhh replaceUsingcreds', creds, oidcClientSettings);
+        const tokenRefresher = new OidcTokenRefresher(
+            creds.refreshToken,
+            oidcClientSettings,
+            oidcClientSettings.clientId,
+            window.location.origin,
+            creds.deviceId,
+        )
         this.createClient(creds);
+        this.matrixClient!.http.opts.tokenRefresher = tokenRefresher;
     }
 
     private onUnexpectedStoreClose = async (): Promise<void> => {
