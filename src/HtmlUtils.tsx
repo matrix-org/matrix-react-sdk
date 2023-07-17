@@ -93,9 +93,10 @@ export function sanitizedHtmlNode(insaneHtml: string): ReactNode {
     return <div dangerouslySetInnerHTML={{ __html: saneHtml }} dir="auto" />;
 }
 
-export function getHtmlText(insaneHtml: string): string {
+export function sanitizeForPreview(insaneHtml: string): string {
+    // Allows del tags through for strikethrough
     return sanitizeHtml(insaneHtml, {
-        allowedTags: [],
+        allowedTags: ["del"],
         allowedAttributes: {},
         selfClosing: [],
         allowedSchemes: [],

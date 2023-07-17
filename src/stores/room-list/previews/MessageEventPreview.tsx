@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React, { ReactNode } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 
@@ -21,12 +22,12 @@ import { IPreview } from "./IPreview";
 import { TagID } from "../models";
 import { _t, sanitizeForTranslation } from "../../../languageHandler";
 import { getSenderName, isSelf, shouldPrefixMessagesIn } from "./utils";
-import { getHtmlText } from "../../../HtmlUtils";
+import { sanitizeForPreview } from "../../../HtmlUtils";
 import { stripHTMLReply, stripPlainReply } from "../../../utils/Reply";
 import { VoiceBroadcastChunkEventType } from "../../../voice-broadcast/types";
 
 export class MessageEventPreview implements IPreview {
-    public getTextFor(event: MatrixEvent, tagId?: TagID, isThread?: boolean): string | null {
+    public getTextFor(event: MatrixEvent, tagId?: TagID, isThread?: boolean): ReactNode | null {
         let eventContent = event.getContent();
 
         // no preview for broadcast chunks
@@ -61,15 +62,16 @@ export class MessageEventPreview implements IPreview {
         }
 
         if (hasHtml) {
-            const sanitised = getHtmlText(body.replace(/<br\/?>/gi, "\n")); // replace line breaks before removing them
+            const sanitised = sanitizeForPreview(body.replace(/<br\/?>/gi, "\n")); // replace line breaks before removing them
             // run it through DOMParser to fixup encoded html entities
-            body = new DOMParser().parseFromString(sanitised, "text/html").documentElement.textContent;
+            const saneHtml = new DOMParser().parseFromString(sanitised, "text/html").documentElement.outerHTML;
+            body = <span dangerouslySetInnerHTML={{ __html: saneHtml }} dir="auto" />;
+        } else {
+            body = sanitizeForTranslation(body);
         }
 
-        body = sanitizeForTranslation(body);
-
         if (msgtype === MsgType.Emote) {
-            return _t("* %(senderName)s %(emote)s", { senderName: getSenderName(event), emote: body });
+            return _t("* %(senderName)s <emote/>", { senderName: getSenderName(event) }, { emote: () => body });
         }
 
         const roomId = event.getRoomId();
@@ -77,7 +79,7 @@ export class MessageEventPreview implements IPreview {
         if (isThread || isSelf(event) || (roomId && !shouldPrefixMessagesIn(roomId, tagId))) {
             return body;
         } else {
-            return _t("%(senderName)s: %(message)s", { senderName: getSenderName(event), message: body });
+            return _t("%(senderName)s: <message/>", { senderName: getSenderName(event) }, { message: () => body });
         }
     }
 }

@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { ReactNode } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { TagID } from "../models";
@@ -29,5 +30,5 @@ export interface IPreview {
      * @param isThread Optional. Whether the preview being generated is for a thread summary.
      * @returns The preview.
      */
-    getTextFor(event: MatrixEvent, tagId?: TagID, isThread?: boolean): string | null;
+    getTextFor(event: MatrixEvent, tagId?: TagID, isThread?: boolean): ReactNode | null;
 }
