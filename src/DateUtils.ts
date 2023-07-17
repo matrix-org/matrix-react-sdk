@@ -16,6 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Optional } from "matrix-events-sdk";
+
 import { _t } from "./languageHandler";
 
 function getDaysArray(): string[] {
@@ -186,14 +188,15 @@ function withinPast24Hours(prevDate: Date, nextDate: Date): boolean {
     return Math.abs(prevDate.getTime() - nextDate.getTime()) <= MILLIS_IN_DAY;
 }
 
+function withinCurrentDay(prevDate: Date, nextDate: Date): boolean {
+    return withinPast24Hours(prevDate, nextDate) && prevDate.getDay() === nextDate.getDay();
+}
+
 function withinCurrentYear(prevDate: Date, nextDate: Date): boolean {
     return prevDate.getFullYear() === nextDate.getFullYear();
 }
 
-export function wantsDateSeparator(
-    prevEventDate: Date | null | undefined,
-    nextEventDate: Date | null | undefined,
-): boolean {
+export function wantsDateSeparator(prevEventDate: Optional<Date>, nextEventDate: Optional<Date>): boolean {
     if (!nextEventDate || !prevEventDate) {
         return false;
     }
@@ -229,7 +232,7 @@ export function formatFullDateNoDayNoTime(date: Date): string {
 
 export function formatRelativeTime(date: Date, showTwelveHour = false): string {
     const now = new Date(Date.now());
-    if (withinPast24Hours(date, now)) {
+    if (withinCurrentDay(date, now)) {
         return formatTime(date, showTwelveHour);
     } else {
         const months = getMonthsArray();

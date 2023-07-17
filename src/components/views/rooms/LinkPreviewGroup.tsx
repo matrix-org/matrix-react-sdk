@@ -32,7 +32,7 @@ interface IProps {
     links: string[]; // the URLs to be previewed
     mxEvent: MatrixEvent; // the Event associated with the preview
     onCancelClick(): void; // called when the preview's cancel ('hide') button is clicked
-    onHeightChanged(): void; // called when the preview's contents has loaded
+    onHeightChanged?(): void; // called when the preview's contents has loaded
 }
 
 const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onHeightChanged }) => {
@@ -49,7 +49,7 @@ const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onH
     );
 
     useEffect(() => {
-        onHeightChanged();
+        onHeightChanged?.();
     }, [onHeightChanged, expanded, previews]);
 
     const showPreviews = expanded ? previews : previews.slice(0, INITIAL_NUM_PREVIEWS);
@@ -97,7 +97,12 @@ const fetchPreviews = (cli: MatrixClient, links: string[], ts: number): Promise<
         links.map(async (link): Promise<[string, IPreviewUrlResponse] | undefined> => {
             try {
                 const preview = await cli.getUrlPreview(link, ts);
-                if (preview && Object.keys(preview).length > 0) {
+                // Ensure at least one of the rendered fields is truthy
+                if (
+                    preview?.["og:image"]?.startsWith("mxc://") ||
+                    !!preview?.["og:description"] ||
+                    !!preview?.["og:title"]
+                ) {
                     return [link, preview];
                 }
             } catch (error) {

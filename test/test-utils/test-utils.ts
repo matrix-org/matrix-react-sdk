@@ -34,8 +34,8 @@ import {
     RoomType,
     KNOWN_SAFE_ROOM_VERSION,
     ConditionKind,
-    PushRuleActionName,
     IPushRules,
+    RelationType,
 } from "matrix-js-sdk/src/matrix";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
@@ -47,8 +47,7 @@ import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
 
 import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
-import { makeType } from "../../src/utils/TypeUtils";
-import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
+import { ValidatedDelegatedAuthConfig, ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
@@ -60,6 +59,8 @@ import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/Matri
  * TODO: once the components are updated to get their MatrixClients from
  * the react context, we can get rid of this and just inject a test client
  * via the context instead.
+ *
+ * See also `getMockClientWithEventEmitter` which does something similar but different.
  */
 export function stubClient(): MatrixClient {
     const client = createTestClient();
@@ -69,13 +70,13 @@ export function stubClient(): MatrixClient {
     // 'sandbox.restore()' doesn't work correctly on inherited methods,
     // so we do this for each method
     jest.spyOn(peg, "get");
+    jest.spyOn(peg, "safeGet");
     jest.spyOn(peg, "unset");
     jest.spyOn(peg, "replaceUsingCreds");
-    // MatrixClientPeg.get() is called a /lot/, so implement it with our own
+    // MatrixClientPeg.safeGet() is called a /lot/, so implement it with our own
     // fast stub function rather than a sinon stub
-    peg.get = function () {
-        return client;
-    };
+    peg.get = () => client;
+    peg.safeGet = () => client;
     MatrixClientBackedSettingsHandler.matrixClient = client;
     return client;
 }
@@ -121,6 +122,7 @@ export function createTestClient(): MatrixClient {
                 downloadKeys: jest.fn(),
             },
         },
+        getCrypto: jest.fn().mockReturnValue({ getUserDeviceInfo: jest.fn() }),
 
         getPushActionsForEvent: jest.fn(),
         getRoom: jest.fn().mockImplementation((roomId) => mkStubRoom(roomId, "My room", client)),
@@ -156,6 +158,7 @@ export function createTestClient(): MatrixClient {
             });
         }),
         mxcUrlToHttp: (mxc: string) => `http://this.is.a.url/${mxc.substring(6)}`,
+        scheduleAllGroupSessionsForBackup: jest.fn().mockResolvedValue(undefined),
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
         setRoomTopic: jest.fn(),
@@ -175,7 +178,7 @@ export function createTestClient(): MatrixClient {
         decryptEventIfNeeded: () => Promise.resolve(),
         isUserIgnored: jest.fn().mockReturnValue(false),
         getCapabilities: jest.fn().mockResolvedValue({}),
-        supportsThreads: () => false,
+        supportsThreads: jest.fn().mockReturnValue(false),
         supportsIntentionalMentions: () => false,
         getRoomUpgradeHistory: jest.fn().mockReturnValue([]),
         getOpenIdToken: jest.fn().mockResolvedValue(undefined),
@@ -234,6 +237,10 @@ export function createTestClient(): MatrixClient {
         }),
 
         searchUserDirectory: jest.fn().mockResolvedValue({ limited: false, results: [] }),
+        setDeviceVerified: jest.fn(),
+        joinRoom: jest.fn(),
+        getSyncStateData: jest.fn(),
+        getDehydratedDevice: jest.fn(),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -471,6 +478,29 @@ export type MessageEventProps = MakeEventPassThruProps & {
 };
 
 /**
+ * Creates a "🙃" reaction for the given event.
+ * Uses the same room and user as for the event.
+ *
+ * @returns The reaction event
+ */
+export const mkReaction = (event: MatrixEvent, opts: Partial<MakeEventProps> = {}): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        room: event.getRoomId(),
+        type: EventType.Reaction,
+        user: event.getSender()!,
+        content: {
+            "m.relates_to": {
+                rel_type: RelationType.Annotation,
+                event_id: event.getId(),
+                key: "🙃",
+            },
+        },
+        ...opts,
+    });
+};
+
+/**
  * Create an m.room.message event.
  * @param {Object} opts Values for the message
  * @param {string} opts.room The room ID for the event.
@@ -536,7 +566,7 @@ export function mkStubRoom(
             on: jest.fn(),
             off: jest.fn(),
         } as unknown as RoomState,
-        eventShouldLiveIn: jest.fn().mockReturnValue({}),
+        eventShouldLiveIn: jest.fn().mockReturnValue({ shouldLiveInRoom: true, shouldLiveInThread: false }),
         fetchRoomThreads: jest.fn().mockReturnValue(Promise.resolve()),
         findEventById: jest.fn().mockReturnValue(undefined),
         findPredecessor: jest.fn().mockReturnValue({ roomId: "", eventId: null }),
@@ -591,13 +621,18 @@ export function mkStubRoom(
     } as unknown as Room;
 }
 
-export function mkServerConfig(hsUrl: string, isUrl: string) {
-    return makeType(ValidatedServerConfig, {
+export function mkServerConfig(
+    hsUrl: string,
+    isUrl: string,
+    delegatedAuthentication?: ValidatedDelegatedAuthConfig,
+): ValidatedServerConfig {
+    return {
         hsUrl,
         hsName: "TEST_ENVIRONMENT",
         hsNameIsDifferent: false, // yes, we lie
         isUrl,
-    });
+        delegatedAuthentication,
+    } as ValidatedServerConfig;
 }
 
 // These methods make some use of some private methods on the AsyncStoreWithClient to simplify getting into a consistent
@@ -760,7 +795,7 @@ export function muteRoom(room: Room): void {
                     pattern: room.roomId,
                 },
             ],
-            actions: [PushRuleActionName.DontNotify],
+            actions: [],
         },
     ];
 }

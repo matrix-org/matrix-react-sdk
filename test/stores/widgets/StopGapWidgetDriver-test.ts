@@ -61,8 +61,9 @@ describe("StopGapWidgetDriver", () => {
 
     beforeEach(() => {
         stubClient();
-        client = mocked(MatrixClientPeg.get());
+        client = mocked(MatrixClientPeg.safeGet());
         client.getUserId.mockReturnValue("@alice:example.org");
+        client.getSafeUserId.mockReturnValue("@alice:example.org");
     });
 
     it("auto-approves capabilities of virtual Element Call widgets", async () => {
@@ -185,10 +186,18 @@ describe("StopGapWidgetDriver", () => {
             const aliceMobile = new DeviceInfo("aliceMobile");
             const bobDesktop = new DeviceInfo("bobDesktop");
 
-            mocked(client.crypto!.deviceList).downloadKeys.mockResolvedValue({
-                "@alice:example.org": { aliceWeb, aliceMobile },
-                "@bob:example.org": { bobDesktop },
-            });
+            mocked(client.crypto!.deviceList).downloadKeys.mockResolvedValue(
+                new Map([
+                    [
+                        "@alice:example.org",
+                        new Map([
+                            ["aliceWeb", aliceWeb],
+                            ["aliceMobile", aliceMobile],
+                        ]),
+                    ],
+                    ["@bob:example.org", new Map([["bobDesktop", bobDesktop]])],
+                ]),
+            );
 
             await driver.sendToDevice("org.example.foo", true, contentMap);
             expect(client.encryptAndSendToDevices.mock.calls).toMatchSnapshot();

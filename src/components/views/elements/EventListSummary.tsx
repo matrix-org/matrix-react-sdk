@@ -78,7 +78,9 @@ enum TransitionType {
 
 const SEP = ",";
 
-export default class EventListSummary extends React.Component<IProps> {
+export default class EventListSummary extends React.Component<
+    IProps & Required<Pick<IProps, "summaryLength" | "threshold" | "avatarsMaxLength" | "layout">>
+> {
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
@@ -187,8 +189,8 @@ export default class EventListSummary extends React.Component<IProps> {
 
             let transition = t;
 
-            if (i < transitions.length - 1 && modMap[t] && modMap[t].after === t2) {
-                transition = modMap[t].newTransition;
+            if (i < transitions.length - 1 && modMap[t] && modMap[t]!.after === t2) {
+                transition = modMap[t]!.newTransition;
                 i++;
             }
 
@@ -322,8 +324,11 @@ export default class EventListSummary extends React.Component<IProps> {
             case TransitionType.ChangedAvatar:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)schanged their avatar %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)schanged their avatar %(count)s times", { oneUser: "", count });
+                        ? _t("%(severalUsers)schanged their profile picture %(count)s times", {
+                              severalUsers: "",
+                              count,
+                          })
+                        : _t("%(oneUser)schanged their profile picture %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.NoChange:
                 res =
@@ -380,7 +385,7 @@ export default class EventListSummary extends React.Component<IProps> {
         return res ?? null;
     }
 
-    private static getTransitionSequence(events: IUserEvents[]): TransitionType[] {
+    private static getTransitionSequence(events: IUserEvents[]): Array<TransitionType | null> {
         return events.map(EventListSummary.getTransition);
     }
 
@@ -508,12 +513,12 @@ export default class EventListSummary extends React.Component<IProps> {
             const type = e.getType();
 
             let userKey = e.getSender()!;
-            if (type === EventType.RoomThirdPartyInvite) {
+            if (e.isState() && type === EventType.RoomThirdPartyInvite) {
                 userKey = e.getContent().display_name;
-            } else if (type === EventType.RoomMember) {
-                userKey = e.getStateKey();
-            } else if (e.isRedacted()) {
-                userKey = e.getUnsigned()?.redacted_because?.sender;
+            } else if (e.isState() && type === EventType.RoomMember) {
+                userKey = e.getStateKey()!;
+            } else if (e.isRedacted() && e.getUnsigned()?.redacted_because) {
+                userKey = e.getUnsigned().redacted_because!.sender;
             }
 
             // Initialise a user's events

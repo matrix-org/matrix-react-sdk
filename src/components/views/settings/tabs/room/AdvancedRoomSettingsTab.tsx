@@ -16,9 +16,9 @@ limitations under the License.
 
 import React from "react";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../../languageHandler";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import RoomUpgradeDialog from "../../../dialogs/RoomUpgradeDialog";
 import Modal from "../../../../../Modal";
@@ -27,9 +27,12 @@ import { Action } from "../../../../../dispatcher/actions";
 import CopyableText from "../../../elements/CopyableText";
 import { ViewRoomPayload } from "../../../../../dispatcher/payloads/ViewRoomPayload";
 import SettingsStore from "../../../../../settings/SettingsStore";
+import SettingsTab from "../SettingsTab";
+import { SettingsSection } from "../../shared/SettingsSection";
+import SettingsSubsection from "../../shared/SettingsSubsection";
 
 interface IProps {
-    roomId: string;
+    room: Room;
     closeSettingsFn(): void;
 }
 
@@ -42,8 +45,16 @@ interface IRecommendedVersion {
 interface IState {
     // This is eventually set to the value of room.getRecommendedVersion()
     upgradeRecommendation?: IRecommendedVersion;
+
+    /** The room ID of this room's predecessor, if it exists. */
     oldRoomId?: string;
+
+    /** The ID of tombstone event in this room's predecessor, if it exists. */
     oldEventId?: string;
+
+    /** The via servers to use to find this room's predecessor, if it exists. */
+    oldViaServers?: string[];
+
     upgraded?: boolean;
 }
 
@@ -56,8 +67,8 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
         this.state = {};
 
         // we handle lack of this object gracefully later, so don't worry about it failing here.
-        const room = MatrixClientPeg.get().getRoom(this.props.roomId);
-        room?.getRecommendedVersion().then((v) => {
+        const room = this.props.room;
+        room.getRecommendedVersion().then((v) => {
             const tombstone = room.currentState.getStateEvents(EventType.RoomTombstone, "");
 
             const additionalStateChanges: Partial<IState> = {};
@@ -65,6 +76,7 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
             if (predecessor) {
                 additionalStateChanges.oldRoomId = predecessor.roomId;
                 additionalStateChanges.oldEventId = predecessor.eventId;
+                additionalStateChanges.oldViaServers = predecessor.viaServers;
             }
 
             this.setState({
@@ -76,8 +88,7 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
     }
 
     private upgradeRoom = (): void => {
-        const room = MatrixClientPeg.get().getRoom(this.props.roomId);
-        Modal.createDialog(RoomUpgradeDialog, { room });
+        Modal.createDialog(RoomUpgradeDialog, { room: this.props.room });
     };
 
     private onOldRoomClicked = (e: ButtonEvent): void => {
@@ -88,6 +99,7 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
             action: Action.ViewRoom,
             room_id: this.state.oldRoomId,
             event_id: this.state.oldEventId,
+            via_servers: this.state.oldViaServers,
             metricsTrigger: "WebPredecessorSettings",
             metricsViaKeyboard: e.type !== "click",
         });
@@ -95,12 +107,11 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
     };
 
     public render(): React.ReactNode {
-        const client = MatrixClientPeg.get();
-        const room = client.getRoom(this.props.roomId);
-        const isSpace = room?.isSpaceRoom();
+        const room = this.props.room;
+        const isSpace = room.isSpaceRoom();
 
         let unfederatableSection: JSX.Element | undefined;
-        if (room?.currentState.getStateEvents(EventType.RoomCreate, "")?.getContent()["m.federate"] === false) {
+        if (room.currentState.getStateEvents(EventType.RoomCreate, "")?.getContent()["m.federate"] === false) {
             unfederatableSection = <div>{_t("This room is not accessible by remote Matrix servers")}</div>;
         }
 
@@ -133,9 +144,9 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
         if (this.state.oldRoomId) {
             let copy: string;
             if (isSpace) {
-                copy = _t("View older version of %(spaceName)s.", { spaceName: room?.name ?? this.state.oldRoomId });
+                copy = _t("View older version of %(spaceName)s.", { spaceName: room.name ?? this.state.oldRoomId });
             } else {
-                copy = _t("View older messages in %(roomName)s.", { roomName: room?.name ?? this.state.oldRoomId });
+                copy = _t("View older messages in %(roomName)s.", { roomName: room.name ?? this.state.oldRoomId });
             }
 
             oldRoomLink = (
@@ -146,28 +157,27 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
         }
 
         return (
-            <div className="mx_SettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Advanced")}</div>
-                <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">
-                    <span className="mx_SettingsTab_subheading">
-                        {room?.isSpaceRoom() ? _t("Space information") : _t("Room information")}
-                    </span>
-                    <div>
-                        <span>{_t("Internal room ID")}</span>
-                        <CopyableText getTextToCopy={() => this.props.roomId}>{this.props.roomId}</CopyableText>
-                    </div>
-                    {unfederatableSection}
-                </div>
-                <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">
-                    <span className="mx_SettingsTab_subheading">{_t("Room version")}</span>
-                    <div>
-                        <span>{_t("Room version:")}</span>&nbsp;
-                        {room?.getVersion()}
-                    </div>
-                    {oldRoomLink}
-                    {roomUpgradeButton}
-                </div>
-            </div>
+            <SettingsTab>
+                <SettingsSection heading={_t("Advanced")}>
+                    <SettingsSubsection heading={room.isSpaceRoom() ? _t("Space information") : _t("Room information")}>
+                        <div>
+                            <span>{_t("Internal room ID")}</span>
+                            <CopyableText getTextToCopy={() => this.props.room.roomId}>
+                                {this.props.room.roomId}
+                            </CopyableText>
+                        </div>
+                        {unfederatableSection}
+                    </SettingsSubsection>
+                    <SettingsSubsection heading={_t("Room version")}>
+                        <div>
+                            <span>{_t("Room version:")}</span>&nbsp;
+                            {room.getVersion()}
+                        </div>
+                        {oldRoomLink}
+                        {roomUpgradeButton}
+                    </SettingsSubsection>
+                </SettingsSection>
+            </SettingsTab>
         );
     }
 }

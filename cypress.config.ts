@@ -27,7 +27,7 @@ export default defineConfig({
             return require("./cypress/plugins/index.ts").default(on, config);
         },
         baseUrl: "http://localhost:8080",
-        specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
+        specPattern: "cypress/e2e/**/*.spec.{js,jsx,ts,tsx}",
     },
     env: {
         // Docker tag to use for `ghcr.io/matrix-org/sliding-sync` image.
@@ -38,4 +38,8 @@ export default defineConfig({
         runMode: 4,
         openMode: 0,
     },
+
+    // disable logging of HTTP requests made to the Cypress server. They are noisy and not very helpful.
+    // @ts-ignore https://github.com/cypress-io/cypress/issues/26284
+    morgan: false,
 });

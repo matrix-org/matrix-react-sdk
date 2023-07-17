@@ -59,7 +59,7 @@ const determineInitialRoom = (
  * @returns Room if found, else null.
  */
 const findRoom = (roomIdOrAlias: string): Room | null => {
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
 
     return roomIdOrAlias[0] === "#"
         ? client.getRooms().find((r) => {
@@ -83,7 +83,7 @@ const findRoom = (roomIdOrAlias: string): Room | null => {
 export const usePermalinkTargetRoom = (
     type: PillType | null,
     parseResult: PermalinkParts | null,
-    permalinkRoom: Room | null,
+    permalinkRoom: Room | undefined,
 ): Room | null => {
     // The listed permalink types require a room.
     // If it cannot be initially determined, it will be looked up later by a memo hook.

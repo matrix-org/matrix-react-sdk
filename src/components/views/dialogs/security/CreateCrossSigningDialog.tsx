@@ -18,7 +18,8 @@ limitations under the License.
 import React from "react";
 import { CrossSigningKeys } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { UIAFlow } from "matrix-js-sdk/src/matrix";
+import { AuthDict, MatrixError, UIAFlow } from "matrix-js-sdk/src/matrix";
+import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
@@ -32,12 +33,12 @@ import InteractiveAuthDialog from "../InteractiveAuthDialog";
 interface IProps {
     accountPassword?: string;
     tokenLogin?: boolean;
-    onFinished?: (success?: boolean) => void;
+    onFinished: (success?: boolean) => void;
 }
 
 interface IState {
-    error: Error | null;
-    canUploadKeysWithPasswordOnly?: boolean;
+    error: boolean;
+    canUploadKeysWithPasswordOnly: boolean | null;
     accountPassword: string;
 }
 
@@ -51,7 +52,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
         super(props);
 
         this.state = {
-            error: null,
+            error: false,
             // Does the server offer a UI auth flow with just m.login.password
             // for /keys/device_signing/upload?
             // If we have an account password in memory, let's simplify and
@@ -73,13 +74,13 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
 
     private async queryKeyUploadAuth(): Promise<void> {
         try {
-            await MatrixClientPeg.get().uploadDeviceSigningKeys(null, {} as CrossSigningKeys);
+            await MatrixClientPeg.safeGet().uploadDeviceSigningKeys(undefined, {} as CrossSigningKeys);
             // We should never get here: the server should always require
             // UI auth to upload device signing keys. If we do, we upload
             // no keys which would be a no-op.
             logger.log("uploadDeviceSigningKeys unexpectedly succeeded without UI auth!");
         } catch (error) {
-            if (!error.data || !error.data.flows) {
+            if (!(error instanceof MatrixError) || !error.data || !error.data.flows) {
                 logger.log("uploadDeviceSigningKeys advertised no flows!");
                 return;
             }
@@ -92,17 +93,19 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
         }
     }
 
-    private doBootstrapUIAuth = async (makeRequest: (authData: any) => Promise<{}>): Promise<void> => {
+    private doBootstrapUIAuth = async (
+        makeRequest: (authData: AuthDict) => Promise<UIAResponse<void>>,
+    ): Promise<void> => {
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
             await makeRequest({
                 type: "m.login.password",
                 identifier: {
                     type: "m.id.user",
-                    user: MatrixClientPeg.get().getUserId(),
+                    user: MatrixClientPeg.safeGet().getUserId(),
                 },
                 // TODO: Remove `user` once servers support proper UIA
                 // See https://github.com/matrix-org/synapse/issues/5665
-                user: MatrixClientPeg.get().getUserId(),
+                user: MatrixClientPeg.safeGet().getUserId(),
                 password: this.state.accountPassword,
             });
         } else if (this.props.tokenLogin) {
@@ -126,7 +129,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
 
             const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                 title: _t("Setting up keys"),
-                matrixClient: MatrixClientPeg.get(),
+                matrixClient: MatrixClientPeg.safeGet(),
                 makeRequest,
                 aestheticsForStagePhases: {
                     [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
@@ -142,12 +145,11 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
 
     private bootstrapCrossSigning = async (): Promise<void> => {
         this.setState({
-            error: null,
+            error: false,
         });
 
-        const cli = MatrixClientPeg.get();
-
         try {
+            const cli = MatrixClientPeg.safeGet();
             await cli.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: this.doBootstrapUIAuth,
             });
@@ -159,7 +161,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                 return;
             }
 
-            this.setState({ error: e });
+            this.setState({ error: true });
             logger.error("Error bootstrapping cross-signing", e);
         }
     };

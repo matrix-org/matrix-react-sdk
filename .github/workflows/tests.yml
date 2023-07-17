@@ -1,6 +1,8 @@
 name: Tests
 on:
     pull_request: {}
+    merge_group:
+        types: [checks_requested]
     push:
         branches: [develop, master]
     repository_dispatch:
@@ -15,10 +17,15 @@ on:
                 type: string
                 required: false
                 description: "The matrix-js-sdk SHA to use"
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+    cancel-in-progress: true
+
 env:
-    # These must be set for fetchdep.sh to get the right branch
-    REPOSITORY: ${{ github.repository }}
+    ENABLE_COVERAGE: ${{ github.event_name != 'merge_group' && inputs.disable_coverage != 'true' }}
+    # fetchdep.sh needs to know our PR number
     PR_NUMBER: ${{ github.event.pull_request.number }}
+
 jobs:
     jest:
         name: Jest
@@ -49,28 +56,38 @@ jobs:
               id: cpu-cores
               uses: SimenB/github-actions-cpu-cores@410541432439795d30db6501fb1d8178eb41e502 # v1
 
-            - name: Load metrics reporter
-              id: metrics
-              if: github.ref == 'refs/heads/develop'
-              run: |
-                  echo "extra-reporter='--reporters=<rootDir>/test/slowReporter.js'" >> $GITHUB_OUTPUT
-
             - name: Run tests
               run: |
-                  yarn ${{ inputs.disable_coverage != 'true' && 'coverage' || 'test' }} \
+                  yarn test \
+                      --coverage=${{ env.ENABLE_COVERAGE }} \
                       --ci \
-                      --reporters github-actions ${{ steps.metrics.outputs.extra-reporter }} \
                       --max-workers ${{ steps.cpu-cores.outputs.count }} \
                       --cacheDirectory /tmp/jest_cache
 
             - name: Upload Artifact
-              if: inputs.disable_coverage != 'true'
+              if: env.ENABLE_COVERAGE == 'true'
               uses: actions/upload-artifact@v3
               with:
                   name: coverage
                   path: |
                       coverage
                       !coverage/lcov-report
+
+    skip_sonar:
+        name: Skip SonarCloud in merge queue
+        if: github.event_name == 'merge_group' || inputs.disable_coverage == 'true'
+        runs-on: ubuntu-latest
+        needs: jest
+        steps:
+            - name: Skip SonarCloud
+              uses: Sibz/github-status-action@faaa4d96fecf273bd762985e0e7f9f933c774918 # v1
+              with:
+                  authToken: ${{ secrets.GITHUB_TOKEN }}
+                  state: success
+                  description: SonarCloud skipped
+                  context: SonarCloud Code Analysis
+                  sha: ${{ github.sha }}
+                  target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
     app-tests:
         name: Element Web Integration Tests

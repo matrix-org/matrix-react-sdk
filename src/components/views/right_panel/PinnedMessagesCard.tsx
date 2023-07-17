@@ -71,7 +71,7 @@ export const usePinnedEvents = (room?: Room): string[] => {
 };
 
 function getReadPinnedEventIds(room?: Room): Set<string> {
-    return new Set(room.getAccountData(ReadPinsEventId)?.getContent()?.event_ids ?? []);
+    return new Set(room?.getAccountData(ReadPinsEventId)?.getContent()?.event_ids ?? []);
 }
 
 export const useReadPinnedEvents = (room?: Room): Set<string> => {
@@ -103,6 +103,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
     const readPinnedEvents = useReadPinnedEvents(room);
 
     useEffect(() => {
+        if (!cli || cli.isGuest()) return; // nothing to do
         const newlyRead = pinnedEventIds.filter((id) => !readPinnedEvents.has(id));
         if (newlyRead.length > 0) {
             // clear out any read pinned events which no longer are pinned
@@ -179,7 +180,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
                         </div>
                     </div>
 
-                    <Heading size="h4" className="mx_PinnedMessagesCard_empty_header">
+                    <Heading size="4" className="mx_PinnedMessagesCard_empty_header">
                         {_t("Nothing pinned, yet")}
                     </Heading>
                     {_t(
@@ -225,7 +226,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
         <BaseCard
             header={
                 <div className="mx_BaseCard_header_title">
-                    <Heading size="h4" className="mx_BaseCard_header_title_heading">
+                    <Heading size="4" className="mx_BaseCard_header_title_heading">
                         {_t("Pinned messages")}
                     </Heading>
                 </div>

@@ -138,7 +138,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 WidgetEventCapability.forStateEvent(
                     EventDirection.Send,
                     "org.matrix.msc3401.call.member",
-                    MatrixClientPeg.get().getUserId()!,
+                    MatrixClientPeg.safeGet().getSafeUserId(),
                 ).raw,
             );
             this.allowedCapabilities.add(
@@ -165,6 +165,14 @@ export class StopGapWidgetDriver extends WidgetDriver {
                     WidgetEventCapability.forToDeviceEvent(EventDirection.Receive, eventType).raw,
                 );
             }
+
+            // To always allow OIDC requests for element call, the widgetPermissionStore is used:
+            SdkContextClass.instance.widgetPermissionStore.setOIDCState(
+                forWidget,
+                forWidgetKind,
+                inRoomId,
+                OIDCState.Allowed,
+            );
         }
     }
 
@@ -266,7 +274,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         encrypted: boolean,
         contentMap: { [userId: string]: { [deviceId: string]: object } },
     ): Promise<void> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
         if (encrypted) {
             const deviceInfoMap = await client.crypto!.deviceList.downloadKeys(Object.keys(contentMap), false);
@@ -274,19 +282,22 @@ export class StopGapWidgetDriver extends WidgetDriver {
             await Promise.all(
                 Object.entries(contentMap).flatMap(([userId, userContentMap]) =>
                     Object.entries(userContentMap).map(async ([deviceId, content]): Promise<void> => {
+                        const devices = deviceInfoMap.get(userId);
+                        if (!devices) return;
+
                         if (deviceId === "*") {
                             // Send the message to all devices we have keys for
                             await client.encryptAndSendToDevices(
-                                Object.values(deviceInfoMap[userId]).map((deviceInfo) => ({
+                                Array.from(devices.values()).map((deviceInfo) => ({
                                     userId,
                                     deviceInfo,
                                 })),
                                 content,
                             );
-                        } else {
+                        } else if (devices.has(deviceId)) {
                             // Send the message to a specific device
                             await client.encryptAndSendToDevices(
-                                [{ userId, deviceInfo: deviceInfoMap[userId][deviceId] }],
+                                [{ userId, deviceInfo: devices.get(deviceId)! }],
                                 content,
                             );
                         }
@@ -379,7 +390,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         if (opts.approved) {
             return observer.update({
                 state: OpenIDRequestState.Allowed,
-                token: await MatrixClientPeg.get().getOpenIdToken(),
+                token: await MatrixClientPeg.safeGet().getOpenIdToken(),
             });
         }
 
@@ -390,7 +401,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         );
 
         const getToken = (): Promise<IOpenIDCredentials> => {
-            return MatrixClientPeg.get().getOpenIdToken();
+            return MatrixClientPeg.safeGet().getOpenIdToken();
         };
 
         if (oidcState === OIDCState.Denied) {
@@ -422,7 +433,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
     }
 
     public async *getTurnServers(): AsyncGenerator<ITurnServer> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         if (!client.pollingTurnServers || !client.getTurnServers().length) return;
 
         let setTurnServer: (server: ITurnServer) => void;
@@ -465,7 +476,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         limit?: number,
         direction?: "f" | "b",
     ): Promise<IReadEventRelationsResult> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const dir = direction as Direction;
         roomId = roomId ?? SdkContextClass.instance.roomViewStore.getRoomId() ?? undefined;
 
@@ -489,7 +500,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
     }
 
     public async searchUserDirectory(searchTerm: string, limit?: number): Promise<ISearchUserDirectoryResult> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
         const { limited, results } = await client.searchUserDirectory({ term: searchTerm, limit });
 

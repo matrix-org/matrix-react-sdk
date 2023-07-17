@@ -26,7 +26,7 @@ import PluginConfigOptions = Cypress.PluginConfigOptions;
 
 // A cypress plugin to run docker commands
 
-export function dockerRun(opts: {
+export async function dockerRun(opts: {
     image: string;
     containerName: string;
     params?: string[];
@@ -36,8 +36,22 @@ export function dockerRun(opts: {
     const params = opts.params ?? [];
 
     if (params?.includes("-v") && userInfo.uid >= 0) {
-        // On *nix we run the docker container as our uid:gid otherwise cleaning it up its media_store can be difficult
-        params.push("-u", `${userInfo.uid}:${userInfo.gid}`);
+        // Run the docker container as our uid:gid to prevent problems with permissions.
+        if (await isPodman()) {
+            // Note: this setup is for podman rootless containers.
+
+            // In podman, run as root in the container, which maps to the current
+            // user on the host. This is probably the default since Synapse's
+            // Dockerfile doesn't specify, but we're being explicit here
+            // because it's important for the permissions to work.
+            params.push("-u", "0:0");
+
+            // Tell Synapse not to switch UID
+            params.push("-e", "UID=0");
+            params.push("-e", "GID=0");
+        } else {
+            params.push("-u", `${userInfo.uid}:${userInfo.gid}`);
+        }
     }
 
     const args = [
@@ -126,6 +140,19 @@ export function dockerIp(args: { containerId: string }): Promise<string> {
                 else resolve(stdout.trim());
             },
         );
+    });
+}
+
+/**
+ * Detects whether the docker command is actually podman.
+ * To do this, it looks for "podman" in the output of "docker --help".
+ */
+export function isPodman(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+        childProcess.execFile("docker", ["--help"], (err, stdout) => {
+            if (err) reject(err);
+            else resolve(stdout.toLowerCase().includes("podman"));
+        });
     });
 }
 

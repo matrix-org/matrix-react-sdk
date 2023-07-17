@@ -74,9 +74,9 @@ export const usePermalinkEvent = (
 
         const fetchRoomEvent = async (): Promise<void> => {
             try {
-                const eventData = await MatrixClientPeg.get().fetchRoomEvent(
-                    parseResult.roomIdOrAlias,
-                    parseResult.eventId,
+                const eventData = await MatrixClientPeg.safeGet().fetchRoomEvent(
+                    parseResult.roomIdOrAlias!,
+                    parseResult.eventId!,
                 );
                 setEvent(new MatrixEvent(eventData));
             } catch {}

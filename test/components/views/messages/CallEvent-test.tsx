@@ -58,7 +58,7 @@ describe("CallEvent", () => {
         jest.setSystemTime(0);
 
         stubClient();
-        client = mocked(MatrixClientPeg.get());
+        client = mocked(MatrixClientPeg.safeGet());
         client.getUserId.mockReturnValue("@alice:example.org");
 
         room = new Room("!1:example.org", client, "@alice:example.org", {
@@ -112,6 +112,14 @@ describe("CallEvent", () => {
 
         screen.getByText("Video call ended");
         screen.getByText("1m 30s");
+    });
+
+    it("shows a message if the call was redacted", () => {
+        const event = room.currentState.getStateEvents(MockedCall.EVENT_TYPE, "1")!;
+        jest.spyOn(event, "isRedacted").mockReturnValue(true);
+        renderEvent();
+
+        screen.getByText("Video call ended");
     });
 
     it("shows placeholder info if the call isn't loaded yet", () => {
