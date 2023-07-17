@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -53,9 +53,10 @@ const SpacePublicShare: React.FC<IProps> = ({ space, onFinished }) => {
                 }}
             >
                 {_t("Share invite link")}
-                <span>{copiedText}</span>
+                <div>{copiedText}</div>
             </AccessibleButton>
-            {space.canInvite(MatrixClientPeg.get()?.getUserId()) && shouldShowComponent(UIComponent.InviteUsers) ? (
+            {space.canInvite(MatrixClientPeg.safeGet().getSafeUserId()) &&
+            shouldShowComponent(UIComponent.InviteUsers) ? (
                 <AccessibleButton
                     className="mx_SpacePublicShare_inviteButton"
                     onClick={() => {

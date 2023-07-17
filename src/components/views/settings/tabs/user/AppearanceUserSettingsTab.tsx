@@ -19,7 +19,6 @@ import React, { ChangeEvent, ReactNode } from "react";
 
 import { _t } from "../../../../../languageHandler";
 import SdkConfig from "../../../../../SdkConfig";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import SettingsFlag from "../../../elements/SettingsFlag";
 import Field from "../../../elements/Field";
@@ -31,6 +30,10 @@ import LayoutSwitcher from "../../LayoutSwitcher";
 import FontScalingPanel from "../../FontScalingPanel";
 import ThemeChoicePanel from "../../ThemeChoicePanel";
 import ImageSizePanel from "../../ImageSizePanel";
+import SettingsTab from "../SettingsTab";
+import { SettingsSection } from "../../shared/SettingsSection";
+import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
+import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 
 interface IProps {}
 
@@ -46,6 +49,9 @@ interface IState {
 }
 
 export default class AppearanceUserSettingsTab extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public declare context: React.ContextType<typeof MatrixClientContext>;
+
     private readonly MESSAGE_PREVIEW_TEXT = _t("Hey you. You're the best!");
 
     private unmounted = false;
@@ -63,7 +69,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
 
     public async componentDidMount(): Promise<void> {
         // Fetch the current user profile for the message preview
-        const client = MatrixClientPeg.get();
+        const client = this.context;
         const userId = client.getUserId()!;
         const profileInfo = await client.getProfileInfo(userId);
         if (this.unmounted) return;
@@ -115,7 +121,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                         onChange={(checked) => this.setState({ useSystemFont: checked })}
                     />
                     <Field
-                        className="mx_AppearanceUserSettingsTab_systemFont"
+                        className="mx_AppearanceUserSettingsTab_checkboxControlledField"
                         label={SettingsStore.getDisplayName("systemFont")!}
                         onChange={(value: ChangeEvent<HTMLInputElement>) => {
                             this.setState({
@@ -133,10 +139,10 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
             );
         }
         return (
-            <div className="mx_SettingsTab_section mx_AppearanceUserSettingsTab_Advanced">
+            <SettingsSubsection>
                 {toggle}
                 {advanced}
-            </div>
+            </SettingsSubsection>
         );
     }
 
@@ -144,23 +150,24 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         const brand = SdkConfig.get().brand;
 
         return (
-            <div className="mx_SettingsTab mx_AppearanceUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Customise your appearance")}</div>
-                <div className="mx_SettingsTab_subsectionText">
-                    {_t("Appearance Settings only affect this %(brand)s session.", { brand })}
-                </div>
-                <ThemeChoicePanel />
-                <LayoutSwitcher
-                    userId={this.state.userId}
-                    displayName={this.state.displayName}
-                    avatarUrl={this.state.avatarUrl}
-                    messagePreviewText={this.MESSAGE_PREVIEW_TEXT}
-                    onLayoutChanged={this.onLayoutChanged}
-                />
-                <FontScalingPanel />
-                {this.renderAdvancedSection()}
-                <ImageSizePanel />
-            </div>
+            <SettingsTab data-testid="mx_AppearanceUserSettingsTab">
+                <SettingsSection heading={_t("Customise your appearance")}>
+                    <SettingsSubsectionText>
+                        {_t("Appearance Settings only affect this %(brand)s session.", { brand })}
+                    </SettingsSubsectionText>
+                    <ThemeChoicePanel />
+                    <LayoutSwitcher
+                        userId={this.state.userId}
+                        displayName={this.state.displayName}
+                        avatarUrl={this.state.avatarUrl}
+                        messagePreviewText={this.MESSAGE_PREVIEW_TEXT}
+                        onLayoutChanged={this.onLayoutChanged}
+                    />
+                    <FontScalingPanel />
+                    {this.renderAdvancedSection()}
+                    <ImageSizePanel />
+                </SettingsSection>
+            </SettingsTab>
         );
     }
 }

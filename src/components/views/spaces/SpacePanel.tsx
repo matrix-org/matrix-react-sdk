@@ -243,7 +243,7 @@ const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed"
                 label={menuDisplayed ? _t("Cancel") : _t("Create a space")}
                 onClick={onNewClick}
                 isNarrow={isPanelCollapsed}
-                ref={handle}
+                innerRef={handle}
             />
 
             {contextMenu}
@@ -330,6 +330,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
 );
 
 const SpacePanel: React.FC = () => {
+    const [dragging, setDragging] = useState(false);
     const [isPanelCollapsed, setPanelCollapsed] = useState(true);
     const ref = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
@@ -344,14 +345,19 @@ const SpacePanel: React.FC = () => {
     });
 
     return (
-        <DragDropContext
-            onDragEnd={(result) => {
-                if (!result.destination) return; // dropped outside the list
-                SpaceStore.instance.moveRootSpace(result.source.index, result.destination.index);
-            }}
-        >
-            <RovingTabIndexProvider handleHomeEnd handleUpDown>
-                {({ onKeyDownHandler }) => (
+        <RovingTabIndexProvider handleHomeEnd handleUpDown={!dragging}>
+            {({ onKeyDownHandler, onDragEndHandler }) => (
+                <DragDropContext
+                    onDragStart={() => {
+                        setDragging(true);
+                    }}
+                    onDragEnd={(result) => {
+                        setDragging(false);
+                        if (!result.destination) return; // dropped outside the list
+                        SpaceStore.instance.moveRootSpace(result.source.index, result.destination.index);
+                        onDragEndHandler();
+                    }}
+                >
                     <div
                         className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
                         onKeyDown={onKeyDownHandler}
@@ -395,9 +401,9 @@ const SpacePanel: React.FC = () => {
 
                         <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
                     </div>
-                )}
-            </RovingTabIndexProvider>
-        </DragDropContext>
+                </DragDropContext>
+            )}
+        </RovingTabIndexProvider>
     );
 };
 

@@ -35,12 +35,13 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
             aria-hidden="true"
             class="mx_BaseAvatar_image"
             data-testid="avatar-img"
+            loading="lazy"
             src="data:image/png;base64,00"
             style="width: 54px; height: 54px;"
           />
         </span>
         <div
-          aria-label="Not encrypted"
+          aria-describedby="mx_TooltipTarget_abdefghi"
           class="mx_TextWithTooltip_target mx_RoomSummaryCard_e2ee"
           tabindex="0"
         />

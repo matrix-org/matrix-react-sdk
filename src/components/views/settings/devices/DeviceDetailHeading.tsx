@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { _t } from "../../../../languageHandler";
-import AccessibleButton from "../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 import Field from "../../elements/Field";
 import LearnMore from "../../elements/LearnMore";
 import Spinner from "../../elements/Spinner";
@@ -41,7 +41,7 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({ devic
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => setDeviceName(event.target.value);
 
-    const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+    const onSubmit = async (event: ButtonEvent): Promise<void> => {
         setIsLoading(true);
         setError(null);
         event.preventDefault();
@@ -134,7 +134,7 @@ export const DeviceDetailHeading: React.FC<Props> = ({ device, saveDeviceName })
         <DeviceNameEditor device={device} saveDeviceName={saveDeviceName} stopEditing={() => setIsEditing(false)} />
     ) : (
         <div className="mx_DeviceDetailHeading" data-testid="device-detail-heading">
-            <Heading size="h4">{device.display_name || device.device_id}</Heading>
+            <Heading size="4">{device.display_name || device.device_id}</Heading>
             <AccessibleButton
                 kind="link_inline"
                 onClick={() => setIsEditing(true)}

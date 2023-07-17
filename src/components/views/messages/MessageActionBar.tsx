@@ -28,7 +28,6 @@ import { Icon as EmojiIcon } from "../../../../res/img/element-icons/room/messag
 import { Icon as ResendIcon } from "../../../../res/img/element-icons/retry.svg";
 import { Icon as ThreadIcon } from "../../../../res/img/element-icons/message/thread.svg";
 import { Icon as TrashcanIcon } from "../../../../res/img/element-icons/trashcan.svg";
-import { Icon as StarIcon } from "../../../../res/img/element-icons/room/message-bar/star.svg";
 import { Icon as ReplyIcon } from "../../../../res/img/element-icons/room/message-bar/reply.svg";
 import { Icon as ExpandMessageIcon } from "../../../../res/img/element-icons/expand-message.svg";
 import { Icon as CollapseMessageIcon } from "../../../../res/img/element-icons/collapse-message.svg";
@@ -45,7 +44,6 @@ import Resend from "../../../Resend";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import DownloadActionButton from "./DownloadActionButton";
-import SettingsStore from "../../../settings/SettingsStore";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import ReplyChain from "../elements/ReplyChain";
 import ReactionPicker from "../emojipicker/ReactionPicker";
@@ -55,16 +53,15 @@ import { Key } from "../../../Keyboard";
 import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
 import { Action } from "../../../dispatcher/actions";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
-import useFavouriteMessages from "../../../hooks/useFavouriteMessages";
-import { GetRelationsForEvent } from "../rooms/EventTile";
+import { GetRelationsForEvent, IEventTileType } from "../rooms/EventTile";
 import { VoiceBroadcastInfoEventType } from "../../../voice-broadcast/types";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
-    // TODO: Types
-    getTile: () => any | null;
+    getTile: () => IEventTileType | null;
     getReplyChain: () => ReplyChain | null;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     onFocusChange: (menuDisplayed: boolean) => void;
     getRelationsForEvent?: GetRelationsForEvent;
 }
@@ -84,7 +81,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
     }, [onFocusChange, menuDisplayed]);
 
     const onOptionsClick = useCallback(
-        (e: React.MouseEvent): void => {
+        (e: ButtonEvent): void => {
             // Don't open the regular browser or our context menu on right-click
             e.preventDefault();
             e.stopPropagation();
@@ -99,7 +96,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
 
     let contextMenu: ReactElement | undefined;
     if (menuDisplayed && button.current) {
-        const tile = getTile && getTile();
+        const tile = getTile?.();
         const replyChain = getReplyChain();
 
         const buttonRect = button.current.getBoundingClientRect();
@@ -159,7 +156,7 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
     }
 
     const onClick = useCallback(
-        (e: React.MouseEvent) => {
+        (e: ButtonEvent) => {
             // Don't open the regular browser or our context menu on right-click
             e.preventDefault();
             e.stopPropagation();
@@ -203,15 +200,16 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
     const relationType = mxEvent?.getRelation()?.rel_type;
     const hasARelation = !!relationType && relationType !== RelationType.Thread;
 
-    const onClick = (e: React.MouseEvent): void => {
+    const onClick = (e: ButtonEvent): void => {
         // Don't open the regular browser or our context menu on right-click
         e.preventDefault();
         e.stopPropagation();
 
-        if (mxEvent.getThread() && !mxEvent.isThreadRoot) {
+        const thread = mxEvent.getThread();
+        if (thread?.rootEvent && !mxEvent.isThreadRoot) {
             defaultDispatcher.dispatch<ShowThreadPayload>({
                 action: Action.ShowThread,
-                rootEvent: mxEvent.getThread()!.rootEvent,
+                rootEvent: thread.rootEvent,
                 initialEvent: mxEvent,
                 scroll_into_view: true,
                 highlighted: true,
@@ -252,47 +250,10 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
     );
 };
 
-interface IFavouriteButtonProp {
-    mxEvent: MatrixEvent;
-}
-
-const FavouriteButton: React.FC<IFavouriteButtonProp> = ({ mxEvent }) => {
-    const { isFavourite, toggleFavourite } = useFavouriteMessages();
-
-    const eventId = mxEvent.getId()!;
-    const classes = classNames("mx_MessageActionBar_iconButton mx_MessageActionBar_favouriteButton", {
-        mx_MessageActionBar_favouriteButton_fillstar: isFavourite(eventId),
-    });
-
-    const onClick = useCallback(
-        (e: React.MouseEvent) => {
-            // Don't open the regular browser or our context menu on right-click
-            e.preventDefault();
-            e.stopPropagation();
-
-            toggleFavourite(eventId);
-        },
-        [toggleFavourite, eventId],
-    );
-
-    return (
-        <RovingAccessibleTooltipButton
-            className={classes}
-            title={_t("Favourite")}
-            onClick={onClick}
-            onContextMenu={onClick}
-            data-testid={eventId}
-        >
-            <StarIcon />
-        </RovingAccessibleTooltipButton>
-    );
-};
-
 interface IMessageActionBarProps {
     mxEvent: MatrixEvent;
     reactions?: Relations | null | undefined;
-    // TODO: Types
-    getTile: () => any | null;
+    getTile: () => IEventTileType | null;
     getReplyChain: () => ReplyChain | null;
     permalinkCreator?: RoomPermalinkCreator;
     onFocusChange?: (menuDisplayed: boolean) => void;
@@ -310,7 +271,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             this.props.mxEvent.on(MatrixEventEvent.Status, this.onSent);
         }
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         client.decryptEventIfNeeded(this.props.mxEvent);
 
         if (this.props.mxEvent.isBeingDecrypted()) {
@@ -345,7 +306,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         this.props.onFocusChange?.(focused);
     };
 
-    private onReplyClick = (e: React.MouseEvent): void => {
+    private onReplyClick = (e: ButtonEvent): void => {
         // Don't open the regular browser or our context menu on right-click
         e.preventDefault();
         e.stopPropagation();
@@ -357,12 +318,17 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         });
     };
 
-    private onEditClick = (e: React.MouseEvent): void => {
+    private onEditClick = (e: ButtonEvent): void => {
         // Don't open the regular browser or our context menu on right-click
         e.preventDefault();
         e.stopPropagation();
 
-        editEvent(this.props.mxEvent, this.context.timelineRenderingType, this.props.getRelationsForEvent);
+        editEvent(
+            MatrixClientPeg.safeGet(),
+            this.props.mxEvent,
+            this.context.timelineRenderingType,
+            this.props.getRelationsForEvent,
+        );
     };
 
     private readonly forbiddenThreadHeadMsgType = [MsgType.KeyVerificationRequest];
@@ -406,24 +372,24 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         }
     }
 
-    private onResendClick = (ev: React.MouseEvent): void => {
+    private onResendClick = (ev: ButtonEvent): void => {
         // Don't open the regular browser or our context menu on right-click
         ev.preventDefault();
         ev.stopPropagation();
 
-        this.runActionOnFailedEv((tarEv) => Resend.resend(tarEv));
+        this.runActionOnFailedEv((tarEv) => Resend.resend(MatrixClientPeg.safeGet(), tarEv));
     };
 
-    private onCancelClick = (ev: React.MouseEvent): void => {
+    private onCancelClick = (ev: ButtonEvent): void => {
         this.runActionOnFailedEv(
-            (tarEv) => Resend.removeFromQueue(tarEv),
+            (tarEv) => Resend.removeFromQueue(MatrixClientPeg.safeGet(), tarEv),
             (testEv) => canCancel(testEv.status),
         );
     };
 
     public render(): React.ReactNode {
         const toolbarOpts: JSX.Element[] = [];
-        if (canEditContent(this.props.mxEvent)) {
+        if (canEditContent(MatrixClientPeg.safeGet(), this.props.mxEvent)) {
             toolbarOpts.push(
                 <RovingAccessibleTooltipButton
                     className="mx_MessageActionBar_iconButton"
@@ -512,9 +478,6 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                         />,
                     );
                 }
-                if (SettingsStore.getValue("feature_favourite_messages")) {
-                    toolbarOpts.splice(-1, 0, <FavouriteButton key="favourite" mxEvent={this.props.mxEvent} />);
-                }
 
                 // XXX: Assuming that the underlying tile will be a media event if it is eligible media.
                 if (MediaEventHelper.isEligible(this.props.mxEvent)) {
@@ -523,7 +486,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                         0,
                         <DownloadActionButton
                             mxEvent={this.props.mxEvent}
-                            mediaEventHelperGet={() => this.props.getTile?.().getMediaHelper?.()}
+                            mediaEventHelperGet={() => this.props.getTile()?.getMediaHelper?.()}
                             key="download"
                         />,
                     );

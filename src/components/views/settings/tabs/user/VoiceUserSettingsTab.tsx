@@ -16,16 +16,21 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+import { FALLBACK_ICE_SERVER } from "matrix-js-sdk/src/webrtc/call";
 
 import { _t } from "../../../../../languageHandler";
 import MediaDeviceHandler, { IMediaDevices, MediaDeviceKindEnum } from "../../../../../MediaDeviceHandler";
 import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SettingsFlag from "../../../elements/SettingsFlag";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import { requestMediaPermissions } from "../../../../../utils/media/requestMediaPermissions";
+import SettingsTab from "../SettingsTab";
+import { SettingsSection } from "../../shared/SettingsSection";
+import SettingsSubsection from "../../shared/SettingsSubsection";
+import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 
 interface IState {
     mediaDevices: IMediaDevices | null;
@@ -37,7 +42,25 @@ interface IState {
     audioNoiseSuppression: boolean;
 }
 
+/**
+ * Maps deviceKind to the right get method on MediaDeviceHandler
+ * Helpful for setting state
+ */
+const mapDeviceKindToHandlerValue = (deviceKind: MediaDeviceKindEnum): string | null => {
+    switch (deviceKind) {
+        case MediaDeviceKindEnum.AudioOutput:
+            return MediaDeviceHandler.getAudioOutput();
+        case MediaDeviceKindEnum.AudioInput:
+            return MediaDeviceHandler.getAudioInput();
+        case MediaDeviceKindEnum.VideoInput:
+            return MediaDeviceHandler.getVideoInput();
+    }
+};
+
 export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
+    public static contextType = MatrixClientContext;
+    public declare context: React.ContextType<typeof MatrixClientContext>;
+
     public constructor(props: {}) {
         super(props);
 
@@ -55,16 +78,16 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
     public async componentDidMount(): Promise<void> {
         const canSeeDeviceLabels = await MediaDeviceHandler.hasAnyLabeledDevices();
         if (canSeeDeviceLabels) {
-            this.refreshMediaDevices();
+            await this.refreshMediaDevices();
         }
     }
 
     private refreshMediaDevices = async (stream?: MediaStream): Promise<void> => {
         this.setState({
             mediaDevices: (await MediaDeviceHandler.getDevices()) ?? null,
-            [MediaDeviceKindEnum.AudioOutput]: MediaDeviceHandler.getAudioOutput(),
-            [MediaDeviceKindEnum.AudioInput]: MediaDeviceHandler.getAudioInput(),
-            [MediaDeviceKindEnum.VideoInput]: MediaDeviceHandler.getVideoInput(),
+            [MediaDeviceKindEnum.AudioOutput]: mapDeviceKindToHandlerValue(MediaDeviceKindEnum.AudioOutput),
+            [MediaDeviceKindEnum.AudioInput]: mapDeviceKindToHandlerValue(MediaDeviceKindEnum.AudioInput),
+            [MediaDeviceKindEnum.VideoInput]: mapDeviceKindToHandlerValue(MediaDeviceKindEnum.VideoInput),
         });
         if (stream) {
             // kill stream (after we've enumerated the devices, otherwise we'd get empty labels again)
@@ -77,21 +100,28 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
     private requestMediaPermissions = async (): Promise<void> => {
         const stream = await requestMediaPermissions();
         if (stream) {
-            this.refreshMediaDevices(stream);
+            await this.refreshMediaDevices(stream);
         }
     };
 
-    private setDevice = (deviceId: string, kind: MediaDeviceKindEnum): void => {
-        MediaDeviceHandler.instance.setDevice(deviceId, kind);
+    private setDevice = async (deviceId: string, kind: MediaDeviceKindEnum): Promise<void> => {
+        // set state immediately so UI is responsive
         this.setState<any>({ [kind]: deviceId });
+        try {
+            await MediaDeviceHandler.instance.setDevice(deviceId, kind);
+        } catch (error) {
+            logger.error(`Failed to set device ${kind}: ${deviceId}`);
+            // reset state to current value
+            this.setState<any>({ [kind]: mapDeviceKindToHandlerValue(kind) });
+        }
     };
 
     private changeWebRtcMethod = (p2p: boolean): void => {
-        MatrixClientPeg.get().setForceTURN(!p2p);
+        this.context.setForceTURN(!p2p);
     };
 
     private changeFallbackICEServerAllowed = (allow: boolean): void => {
-        MatrixClientPeg.get().setFallbackICEServerAllowed(allow);
+        this.context.setFallbackICEServerAllowed(allow);
     };
 
     private renderDeviceOptions(devices: Array<MediaDeviceInfo>, category: MediaDeviceKindEnum): Array<JSX.Element> {
@@ -128,7 +158,7 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
         let webcamDropdown: ReactNode | undefined;
         if (!this.state.mediaDevices) {
             requestButton = (
-                <div className="mx_VoiceUserSettingsTab_missingMediaPermissions">
+                <div>
                     <p>{_t("Missing media permissions, click the button below to request.")}</p>
                     <AccessibleButton onClick={this.requestMediaPermissions} kind="primary">
                         {_t("Request media permissions")}
@@ -148,33 +178,30 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
         }
 
         return (
-            <div className="mx_SettingsTab mx_VoiceUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Voice & Video")}</div>
-                {requestButton}
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{_t("Voice settings")}</span>
-                    {speakerDropdown}
-                    {microphoneDropdown}
-                    <LabelledToggleSwitch
-                        value={this.state.audioAutoGainControl}
-                        onChange={async (v): Promise<void> => {
-                            await MediaDeviceHandler.setAudioAutoGainControl(v);
-                            this.setState({ audioAutoGainControl: MediaDeviceHandler.getAudioAutoGainControl() });
-                        }}
-                        label={_t("Automatically adjust the microphone volume")}
-                        data-testid="voice-auto-gain"
-                    />
-                </div>
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{_t("Video settings")}</span>
-                    {webcamDropdown}
-                    <SettingsFlag name="VideoView.flipVideoHorizontally" level={SettingLevel.ACCOUNT} />
-                </div>
+            <SettingsTab>
+                <SettingsSection heading={_t("Voice & Video")}>
+                    {requestButton}
+                    <SettingsSubsection heading={_t("Voice settings")} stretchContent>
+                        {speakerDropdown}
+                        {microphoneDropdown}
+                        <LabelledToggleSwitch
+                            value={this.state.audioAutoGainControl}
+                            onChange={async (v): Promise<void> => {
+                                await MediaDeviceHandler.setAudioAutoGainControl(v);
+                                this.setState({ audioAutoGainControl: MediaDeviceHandler.getAudioAutoGainControl() });
+                            }}
+                            label={_t("Automatically adjust the microphone volume")}
+                            data-testid="voice-auto-gain"
+                        />
+                    </SettingsSubsection>
+                    <SettingsSubsection heading={_t("Video settings")} stretchContent>
+                        {webcamDropdown}
+                        <SettingsFlag name="VideoView.flipVideoHorizontally" level={SettingLevel.ACCOUNT} />
+                    </SettingsSubsection>
+                </SettingsSection>
 
-                <div className="mx_SettingsTab_heading">{_t("Advanced")}</div>
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{_t("Voice processing")}</span>
-                    <div className="mx_SettingsTab_section">
+                <SettingsSection heading={_t("Advanced")}>
+                    <SettingsSubsection heading={_t("Voice processing")}>
                         <LabelledToggleSwitch
                             value={this.state.audioNoiseSuppression}
                             onChange={async (v): Promise<void> => {
@@ -193,9 +220,8 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
                             label={_t("Echo cancellation")}
                             data-testid="voice-echo-cancellation"
                         />
-                    </div>
-                    <div className="mx_SettingsTab_section">
-                        <span className="mx_SettingsTab_subheading">{_t("Connection")}</span>
+                    </SettingsSubsection>
+                    <SettingsSubsection heading={_t("Connection")}>
                         <SettingsFlag
                             name="webRtcAllowPeerToPeer"
                             level={SettingLevel.DEVICE}
@@ -203,12 +229,15 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
                         />
                         <SettingsFlag
                             name="fallbackICEServerAllowed"
+                            label={_t("Allow fallback call assist server (%(server)s)", {
+                                server: new URL(FALLBACK_ICE_SERVER).pathname,
+                            })}
                             level={SettingLevel.DEVICE}
                             onChange={this.changeFallbackICEServerAllowed}
                         />
-                    </div>
-                </div>
-            </div>
+                    </SettingsSubsection>
+                </SettingsSection>
+            </SettingsTab>
         );
     }
 }

@@ -190,7 +190,7 @@ describe("SlidingRoomListStore", () => {
                 },
             },
         };
-        mocked(context._SlidingSyncManager!.slidingSync.getListData).mockImplementation((key: string) => {
+        mocked(context._SlidingSyncManager!.slidingSync!.getListData).mockImplementation((key: string) => {
             return keyToListData[key] || null;
         });
 
@@ -233,7 +233,7 @@ describe("SlidingRoomListStore", () => {
             return null;
         });
         const p = untilEmission(store, RoomListStoreEvent.ListsUpdate);
-        context.slidingSyncManager.slidingSync.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
+        context.slidingSyncManager.slidingSync!.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
         await p;
         expect(store.getCount(tagId)).toEqual(joinCount);
         expect(store.orderedLists[tagId]).toEqual(rooms);
@@ -267,7 +267,7 @@ describe("SlidingRoomListStore", () => {
             }
             return null;
         });
-        mocked(context._SlidingSyncManager!.slidingSync.getListData).mockImplementation((key: string) => {
+        mocked(context._SlidingSyncManager!.slidingSync!.getListData).mockImplementation((key: string) => {
             if (key !== tagId) {
                 return null;
             }
@@ -277,7 +277,7 @@ describe("SlidingRoomListStore", () => {
             };
         });
         let p = untilEmission(store, RoomListStoreEvent.ListsUpdate);
-        context.slidingSyncManager.slidingSync.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
+        context.slidingSyncManager.slidingSync!.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
         await p;
         expect(store.orderedLists[tagId]).toEqual([roomA, roomB, roomC]);
 
@@ -290,7 +290,7 @@ describe("SlidingRoomListStore", () => {
         roomIndexToRoomId[1] = roomIdA;
         roomIndexToRoomId[2] = roomIdB;
         p = untilEmission(store, RoomListStoreEvent.ListsUpdate);
-        context.slidingSyncManager.slidingSync.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
+        context.slidingSyncManager.slidingSync!.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
         await p;
 
         // check that B didn't move and that A was put below B
@@ -328,7 +328,7 @@ describe("SlidingRoomListStore", () => {
             }
             return null;
         });
-        mocked(context._SlidingSyncManager!.slidingSync.getListData).mockImplementation((key: string) => {
+        mocked(context._SlidingSyncManager!.slidingSync!.getListData).mockImplementation((key: string) => {
             if (key !== tagId) {
                 return null;
             }
@@ -338,7 +338,7 @@ describe("SlidingRoomListStore", () => {
             };
         });
         const p = untilEmission(store, RoomListStoreEvent.ListsUpdate);
-        context.slidingSyncManager.slidingSync.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
+        context.slidingSyncManager.slidingSync!.emit(SlidingSyncEvent.List, tagId, joinCount, roomIndexToRoomId);
         await p;
         expect(store.orderedLists[tagId]).toEqual([roomA, roomC]);
     });

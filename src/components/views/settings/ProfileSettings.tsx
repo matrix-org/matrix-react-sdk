@@ -24,11 +24,12 @@ import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import Modal from "../../../Modal";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import { mediaFromMxc } from "../../../customisations/Media";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import AvatarSetting from "./AvatarSetting";
 import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import PosthogTrackers from "../../../PosthogTrackers";
+import { SettingsSubsectionHeading } from "./shared/SettingsSubsectionHeading";
 
 interface IState {
     originalDisplayName: string;
@@ -46,7 +47,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
     public constructor(props: {}) {
         super(props);
 
-        this.userId = MatrixClientPeg.get().getSafeUserId();
+        this.userId = MatrixClientPeg.safeGet().getSafeUserId();
         let avatarUrl = OwnProfileStore.instance.avatarMxc;
         if (avatarUrl) avatarUrl = mediaFromMxc(avatarUrl).getSquareThumbnailHttp(96);
         this.state = {
@@ -75,7 +76,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
         });
     };
 
-    private cancelProfileChanges = async (e: React.MouseEvent): Promise<void> => {
+    private cancelProfileChanges = async (e: ButtonEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -88,18 +89,18 @@ export default class ProfileSettings extends React.Component<{}, IState> {
         });
     };
 
-    private saveProfile = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    private saveProfile = async (e: ButtonEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
         if (!this.state.enableProfileSave) return;
         this.setState({ enableProfileSave: false });
 
-        const client = MatrixClientPeg.get();
         const newState: Partial<IState> = {};
 
         const displayName = this.state.displayName.trim();
         try {
+            const client = MatrixClientPeg.safeGet();
             if (this.state.originalDisplayName !== this.state.displayName) {
                 await client.setDisplayName(displayName);
                 newState.originalDisplayName = displayName;
@@ -123,7 +124,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
             logger.log("Failed to save profile", err);
             Modal.createDialog(ErrorDialog, {
                 title: _t("Failed to save your profile"),
-                description: err && err.message ? err.message : _t("The operation could not be completed"),
+                description: err instanceof Error ? err.message : _t("The operation could not be completed"),
             });
         }
 
@@ -183,7 +184,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                 />
                 <div className="mx_ProfileSettings_profile">
                     <div className="mx_ProfileSettings_profile_controls">
-                        <span className="mx_SettingsTab_subheading">{_t("Profile")}</span>
+                        <SettingsSubsectionHeading heading={_t("Profile")} />
                         <Field
                             label={_t("Display Name")}
                             type="text"
