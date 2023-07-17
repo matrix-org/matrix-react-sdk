@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EditorModel from "./model";
-import DocumentPosition, { Predicate } from "./position";
-import { Part } from "./parts";
+import type EditorModel from "./model";
+import type DocumentPosition from "./position";
+import type { Predicate } from "./position";
+import type { Part } from "./parts";
 
 const whitespacePredicate: Predicate = (index, offset, part) => {
     return part.text[offset].trim() === "";

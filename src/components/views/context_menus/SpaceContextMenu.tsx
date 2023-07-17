@@ -24,7 +24,6 @@ import { _t } from "../../../languageHandler";
 import {
     shouldShowSpaceSettings,
     showCreateNewRoom,
-    showCreateNewSubspace,
     showSpaceInvite,
     showSpacePreferences,
     showSpaceSettings,
@@ -41,6 +40,7 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { UIComponent } from "../../../settings/UIFeature";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { showCreateNewSubspace } from "../dialogs/CreateSubspaceDialog";
 
 interface IProps extends IContextMenuProps {
     space: Room;

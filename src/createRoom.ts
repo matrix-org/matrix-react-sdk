@@ -34,8 +34,6 @@ import dis from "./dispatcher/dispatcher";
 import * as Rooms from "./Rooms";
 import { getAddressType } from "./UserAddress";
 import { VIRTUAL_ROOM_EVENT_TYPE } from "./call-types";
-import SpaceStore from "./stores/spaces/SpaceStore";
-import { makeSpaceParentEvent } from "./utils/space";
 import { JitsiCall, ElementCall } from "./models/Call";
 import { Action } from "./dispatcher/actions";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
@@ -47,6 +45,7 @@ import { shouldForceDisableEncryption } from "./utils/crypto/shouldForceDisableE
 import { waitForMember } from "./utils/membership";
 import { PreferredRoomVersions } from "./utils/PreferredRoomVersions";
 import SettingsStore from "./settings/SettingsStore";
+import { addRoomToSpace, makeSpaceParentEvent } from "./utils/space";
 
 // we define a number of interfaces which take their names from the js-sdk
 /* eslint-disable camelcase */
@@ -330,12 +329,7 @@ export default async function createRoom(client: MatrixClient, opts: IOpts): Pro
         })
         .then(() => {
             if (opts.parentSpace) {
-                return SpaceStore.instance.addRoomToSpace(
-                    opts.parentSpace,
-                    roomId,
-                    [client.getDomain()!],
-                    opts.suggested,
-                );
+                return addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()!], opts.suggested);
             }
         })
         .then(async (): Promise<void> => {

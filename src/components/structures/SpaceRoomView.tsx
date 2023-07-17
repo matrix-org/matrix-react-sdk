@@ -46,7 +46,6 @@ import {
     shouldShowSpaceSettings,
     showAddExistingRooms,
     showCreateNewRoom,
-    showCreateNewSubspace,
     showSpaceInvite,
     showSpaceSettings,
 } from "../../utils/space";
@@ -77,6 +76,7 @@ import MainSplit from "./MainSplit";
 import RightPanel from "./RightPanel";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
+import { showCreateNewSubspace } from "../views/dialogs/CreateSubspaceDialog";
 
 interface IProps {
     space: Room;
@@ -616,7 +616,7 @@ const SpaceSetupPrivateInvite: React.FC<{
 
 export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
     public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
+    public declare context: React.ContextType<typeof MatrixClientContext>;
 
     private readonly dispatcherRef: string;
 

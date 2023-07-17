@@ -98,13 +98,12 @@ interface IState {
 
 export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
+    public declare context: React.ContextType<typeof MatrixClientContext>;
 
     private readonly dispatcherRef: string;
 
     public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props);
-        this.context = context;
 
         this.state = {
             language: languageHandler.getCurrentLanguage(),

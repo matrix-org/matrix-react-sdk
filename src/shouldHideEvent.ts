@@ -18,7 +18,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 
 import SettingsStore from "./settings/SettingsStore";
-import { IRoomState } from "./components/structures/RoomView";
+import type { IRoomState } from "./components/structures/RoomView";
 
 interface IDiff {
     isMemberEvent: boolean;

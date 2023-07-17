@@ -38,13 +38,7 @@ import {
     UPDATE_SELECTED_SPACE,
 } from "../../../stores/spaces";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
-import {
-    shouldShowSpaceInvite,
-    showAddExistingRooms,
-    showCreateNewRoom,
-    showCreateNewSubspace,
-    showSpaceInvite,
-} from "../../../utils/space";
+import { shouldShowSpaceInvite, showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu, MenuProps } from "../../structures/ContextMenu";
 import { BetaPill } from "../beta/BetaCard";
 import IconizedContextMenu, {
@@ -55,6 +49,7 @@ import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import InlineSpinner from "../elements/InlineSpinner";
 import TooltipTarget from "../elements/TooltipTarget";
 import { HomeButtonContextMenu } from "../spaces/SpacePanel";
+import { showCreateNewSubspace } from "../dialogs/CreateSubspaceDialog";
 
 const contextMenuBelow = (elementRect: DOMRect): MenuProps => {
     // align the context menu's icons with the icon which opened the context menu

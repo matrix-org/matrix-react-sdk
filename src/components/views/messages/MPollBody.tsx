@@ -27,11 +27,11 @@ import { Poll, PollEvent } from "matrix-js-sdk/src/models/poll";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
-import { IBodyProps } from "./IBodyProps";
+import type { IBodyProps } from "./IBodyProps";
 import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import ErrorDialog from "../dialogs/ErrorDialog";
-import { GetRelationsForEvent } from "../rooms/EventTile";
+import type { GetRelationsForEvent } from "../rooms/EventTile";
 import PollCreateDialog from "../elements/PollCreateDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Spinner from "../elements/Spinner";
@@ -141,7 +141,7 @@ export function launchPollEditor(mxEvent: MatrixEvent, getRelationsForEvent?: Ge
 
 export default class MPollBody extends React.Component<IBodyProps, IState> {
     public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
+    public declare context: React.ContextType<typeof MatrixClientContext>;
     private seenEventIds: string[] = []; // Events we have already seen
 
     public constructor(props: IBodyProps) {

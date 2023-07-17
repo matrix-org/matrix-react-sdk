@@ -18,10 +18,10 @@ limitations under the License.
 import { diffAtCaret, diffDeletion, IDiff } from "./diff";
 import DocumentPosition, { IPosition } from "./position";
 import Range from "./range";
-import { SerializedPart, Part, PartCreator } from "./parts";
+import type { SerializedPart, Part, PartCreator } from "./parts";
 import AutocompleteWrapperModel, { ICallback } from "./autocomplete";
-import DocumentOffset from "./offset";
-import { Caret } from "./caret";
+import type DocumentOffset from "./offset";
+import type { Caret } from "./caret";
 
 /**
  * @callback ModelCallback

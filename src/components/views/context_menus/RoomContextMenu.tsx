@@ -28,7 +28,7 @@ import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
-import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
+import RoomListStore from "../../../stores/room-list/RoomListStore";
 import dis from "../../../dispatcher/dispatcher";
 import RoomListActions from "../../../actions/RoomListActions";
 import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
@@ -52,6 +52,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { DeveloperToolsOption } from "./DeveloperToolsOption";
+import { RoomListStoreEvent } from "../../../stores/room-list/Interface";
 
 interface IProps extends IContextMenuProps {
     room: Room;
@@ -62,7 +63,7 @@ interface IProps extends IContextMenuProps {
  */
 const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     const cli = useContext(MatrixClientContext);
-    const roomTags = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () =>
+    const roomTags = useEventEmitterState(RoomListStore.instance, RoomListStoreEvent.ListsUpdate, () =>
         RoomListStore.instance.getTagsForRoom(room),
     );
 

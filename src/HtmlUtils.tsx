@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import React, { LegacyRef, ReactElement, ReactNode } from "react";
-import sanitizeHtml from "sanitize-html";
+import sanitizeHtml, { IOptions } from "sanitize-html";
 import classNames from "classnames";
 import EMOJIBASE_REGEX from "emojibase-regex";
 import { merge } from "lodash";
@@ -36,7 +36,6 @@ import {
     ELEMENT_URL_PATTERN,
     options as linkifyMatrixOptions,
 } from "./linkify-matrix";
-import { IExtendedSanitizeOptions } from "./@types/sanitize-html";
 import SettingsStore from "./settings/SettingsStore";
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
 import { getEmojiFromUnicode } from "./emoji";
@@ -120,7 +119,7 @@ export function isUrlPermitted(inputUrl: string): boolean {
     }
 }
 
-const transformTags: IExtendedSanitizeOptions["transformTags"] = {
+const transformTags: IOptions["transformTags"] = {
     // custom to matrix
     // add blank targets to all hyperlinks except vector URLs
     "a": function (tagName: string, attribs: sanitizeHtml.Attributes) {
@@ -231,7 +230,7 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = {
     },
 };
 
-const sanitizeHtmlParams: IExtendedSanitizeOptions = {
+const sanitizeHtmlParams: IOptions = {
     allowedTags: [
         "font", // custom to matrix for IRC-style font coloring
         "del", // for markdown
@@ -297,7 +296,7 @@ const sanitizeHtmlParams: IExtendedSanitizeOptions = {
 };
 
 // this is the same as the above except with less rewriting
-const composerSanitizeHtmlParams: IExtendedSanitizeOptions = {
+const composerSanitizeHtmlParams: IOptions = {
     ...sanitizeHtmlParams,
     transformTags: {
         "code": transformTags["code"],
@@ -306,7 +305,7 @@ const composerSanitizeHtmlParams: IExtendedSanitizeOptions = {
 };
 
 // reduced set of allowed tags to avoid turning topics into Myspace
-const topicSanitizeHtmlParams: IExtendedSanitizeOptions = {
+const topicSanitizeHtmlParams: IOptions = {
     ...sanitizeHtmlParams,
     allowedTags: [
         "font", // custom to matrix for IRC-style font coloring

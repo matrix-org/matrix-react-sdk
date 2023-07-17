@@ -50,7 +50,7 @@ interface IState {
 
 export default class AppearanceUserSettingsTab extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
+    public declare context: React.ContextType<typeof MatrixClientContext>;
 
     private readonly MESSAGE_PREVIEW_TEXT = _t("Hey you. You're the best!");
 

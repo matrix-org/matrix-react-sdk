@@ -18,10 +18,10 @@ import React, { createRef, KeyboardEvent } from "react";
 import classNames from "classnames";
 import { EventStatus, IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
-import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 
+import type { Room } from "matrix-js-sdk/src/models/room";
+import type { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import EditorModel from "../../../editor/model";
@@ -126,7 +126,7 @@ interface IState {
 
 class EditMessageComposer extends React.Component<IEditMessageComposerProps, IState> {
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     private readonly editorRef = createRef<BasicMessageComposer>();
     private readonly dispatcherRef: string;
@@ -135,7 +135,6 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
 
     public constructor(props: IEditMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
         super(props);
-        this.context = context; // otherwise React will only set it prior to render due to type def above
 
         const isRestored = this.createEditorModel();
         const ev = this.props.editState.getEvent();

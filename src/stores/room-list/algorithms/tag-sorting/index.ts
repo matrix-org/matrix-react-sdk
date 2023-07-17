@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-
+import type { Room } from "matrix-js-sdk/src/models/room";
 import { SortAlgorithm } from "../models";
 import { ManualAlgorithm } from "./ManualAlgorithm";
-import { IAlgorithm } from "./IAlgorithm";
-import { TagID } from "../../models";
+import type { IAlgorithm } from "./IAlgorithm";
+import type { TagID } from "../../models";
 import { RecentAlgorithm } from "./RecentAlgorithm";
 import { AlphabeticAlgorithm } from "./AlphabeticAlgorithm";
 

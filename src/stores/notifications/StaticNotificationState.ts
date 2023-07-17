@@ -18,7 +18,15 @@ import { NotificationColor } from "./NotificationColor";
 import { NotificationState } from "./NotificationState";
 
 export class StaticNotificationState extends NotificationState {
-    public static readonly RED_EXCLAMATION = StaticNotificationState.forSymbol("!", NotificationColor.Red);
+    // Defer creation until it is needed as it needs SettingsStore which can cause import cycles
+    private static _RED_EXCLAMATION: StaticNotificationState;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    public static get RED_EXCLAMATION(): StaticNotificationState {
+        if (!StaticNotificationState._RED_EXCLAMATION) {
+            StaticNotificationState._RED_EXCLAMATION = StaticNotificationState.forSymbol("!", NotificationColor.Red);
+        }
+        return StaticNotificationState._RED_EXCLAMATION;
+    }
 
     public constructor(symbol: string | null, count: number, color: NotificationColor) {
         super();

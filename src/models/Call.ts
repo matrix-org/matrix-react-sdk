@@ -109,8 +109,8 @@ interface CallEventHandlerMap {
  * A group call accessed through a widget.
  */
 export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandlerMap> {
-    protected readonly widgetUid = WidgetUtils.getWidgetUid(this.widget);
-    protected readonly room = this.client.getRoom(this.roomId)!;
+    protected readonly widgetUid;
+    protected readonly room: Room;
 
     /**
      * The time after which device member state should be considered expired.
@@ -159,7 +159,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         this.emit(CallEvent.Participants, value, prevValue);
     }
 
-    public constructor(
+    protected constructor(
         /**
          * The widget used to access this call.
          */
@@ -167,6 +167,8 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         protected readonly client: MatrixClient,
     ) {
         super();
+        this.room = this.client.getRoom(this.roomId)!;
+        this.widgetUid = WidgetUtils.getWidgetUid(this.widget);
     }
 
     /**

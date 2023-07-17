@@ -16,9 +16,9 @@ limitations under the License.
 
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 
+import SettingsStore from "../../settings/SettingsStore";
 import { NotificationColor } from "./NotificationColor";
 import { IDestroyable } from "../../utils/IDestroyable";
-import SettingsStore from "../../settings/SettingsStore";
 
 export interface INotificationStateSnapshotParams {
     symbol: string | null;

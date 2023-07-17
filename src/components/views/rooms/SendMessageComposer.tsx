@@ -20,10 +20,10 @@ import { IContent, MatrixEvent, IEventRelation, IMentions } from "matrix-js-sdk/
 import { DebouncedFunc, throttle } from "lodash";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
+import type { Room } from "matrix-js-sdk/src/models/room";
+import type { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 import dis from "../../../dispatcher/dispatcher";
 import EditorModel from "../../../editor/model";
 import {
@@ -247,7 +247,7 @@ interface ISendMessageComposerProps extends MatrixClientProps {
 
 export class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     private readonly prepareToEncrypt?: DebouncedFunc<() => void>;
     private readonly editorRef = createRef<BasicMessageComposer>();
@@ -262,7 +262,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     public constructor(props: ISendMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
-        this.context = context; // otherwise React will only set it prior to render due to type def above
 
         if (this.props.mxClient.isCryptoEnabled() && this.props.mxClient.isRoomEncrypted(this.props.room.roomId)) {
             this.prepareToEncrypt = throttle(

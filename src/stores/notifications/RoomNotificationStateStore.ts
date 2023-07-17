@@ -18,9 +18,9 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 
+import defaultDispatcher, { MatrixDispatcher } from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
-import defaultDispatcher, { MatrixDispatcher } from "../../dispatcher/dispatcher";
 import { DefaultTagID, TagID } from "../room-list/models";
 import { FetchRoomFn, ListNotificationState } from "./ListNotificationState";
 import { RoomNotificationState } from "./RoomNotificationState";
@@ -35,7 +35,7 @@ export const UPDATE_STATUS_INDICATOR = Symbol("update-status-indicator");
 
 export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     private static readonly internalInstance = (() => {
-        const instance = new RoomNotificationStateStore();
+        const instance = new RoomNotificationStateStore(defaultDispatcher);
         instance.start();
         return instance;
     })();
@@ -46,13 +46,6 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
 
     private constructor(dispatcher = defaultDispatcher) {
         super(dispatcher, {});
-        SettingsStore.watchSetting("feature_dynamic_room_predecessors", null, () => {
-            // We pass SyncState.Syncing here to "simulate" a sync happening.
-            // The code that receives these events actually doesn't care
-            // what state we pass, except that it behaves differently if we
-            // pass SyncState.Error.
-            this.emitUpdateIfStateChanged(SyncState.Syncing, false);
-        });
     }
 
     /**
@@ -151,6 +144,13 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
 
     protected async onReady(): Promise<void> {
         this.matrixClient?.on(ClientEvent.Sync, this.onSync);
+        SettingsStore.watchSetting("feature_dynamic_room_predecessors", null, () => {
+            // We pass SyncState.Syncing here to "simulate" a sync happening.
+            // The code that receives these events actually doesn't care
+            // what state we pass, except that it behaves differently if we
+            // pass SyncState.Error.
+            this.emitUpdateIfStateChanged(SyncState.Syncing, false);
+        });
     }
 
     protected async onNotReady(): Promise<any> {

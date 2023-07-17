@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
-import { IContent, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { ISendEventResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
+import type { ISendEventResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
+import type { IContent, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import type { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../../../sendTimePerformanceMetrics";

@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
-
-import { ActionPayload } from "../payloads";
-import { Action } from "../actions";
+import type { JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
+import type { ActionPayload } from "../payloads";
+import type { Action } from "../actions";
 
 /* eslint-disable camelcase */
 export interface JoinRoomReadyPayload extends Pick<ActionPayload, "action"> {

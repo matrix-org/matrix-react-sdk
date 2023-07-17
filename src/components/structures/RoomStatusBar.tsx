@@ -16,9 +16,9 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { SyncState, ISyncStateData } from "matrix-js-sdk/src/sync";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
+import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { ClientEvent, MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { Icon as WarningIcon } from "../../../res/img/feather-customised/warning-triangle.svg";
 import { _t, _td } from "../../languageHandler";
@@ -82,8 +82,8 @@ interface IProps {
 }
 
 interface IState {
-    syncState: SyncState;
-    syncStateData: ISyncStateData;
+    syncState: SyncState | null;
+    syncStateData: ISyncStateData | null;
     unsentMessages: MatrixEvent[];
     isResending: boolean;
 }
@@ -91,6 +91,7 @@ interface IState {
 export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
     private unmounted = false;
     public static contextType = MatrixClientContext;
+    public declare context: React.ContextType<typeof MatrixClientContext>;
 
     public constructor(props: IProps, context: typeof MatrixClientContext) {
         super(props, context);
@@ -105,8 +106,8 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
 
     public componentDidMount(): void {
         const client = this.context;
-        client.on("sync", this.onSyncStateChange);
-        client.on("Room.localEchoUpdated", this.onRoomLocalEchoUpdated);
+        client.on(ClientEvent.Sync, this.onSyncStateChange);
+        client.on(RoomEvent.LocalEchoUpdated, this.onRoomLocalEchoUpdated);
 
         this.checkSize();
     }
@@ -120,19 +121,19 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         // we may have entirely lost our client as we're logging out before clicking login on the guest bar...
         const client = this.context;
         if (client) {
-            client.removeListener("sync", this.onSyncStateChange);
-            client.removeListener("Room.localEchoUpdated", this.onRoomLocalEchoUpdated);
+            client.removeListener(ClientEvent.Sync, this.onSyncStateChange);
+            client.removeListener(RoomEvent.LocalEchoUpdated, this.onRoomLocalEchoUpdated);
         }
     }
 
-    private onSyncStateChange = (state: SyncState, prevState: SyncState, data: ISyncStateData): void => {
+    private onSyncStateChange = (state: SyncState, prevState: SyncState | null, data?: ISyncStateData): void => {
         if (state === "SYNCING" && prevState === "SYNCING") {
             return;
         }
         if (this.unmounted) return;
         this.setState({
             syncState: state,
-            syncStateData: data,
+            syncStateData: data ?? null,
         });
     };
 
