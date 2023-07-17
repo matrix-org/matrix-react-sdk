@@ -210,6 +210,7 @@ describe("FilePanel", () => {
                             cy.findByRole("button", { name: "Play" }).click();
 
                             // Assert that the pause button is rendered
+                            cy.wait(100);
                             cy.findByRole("button", { name: "Pause" }).should("exist");
 
                             // Assert that the timer is reset when the audio file finished playing
