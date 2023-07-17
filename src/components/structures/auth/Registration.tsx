@@ -473,6 +473,12 @@ export default class Registration extends React.Component<IProps, IState> {
             inhibit_login: undefined,
         };
         if (auth) registerParams.auth = auth;
+
+        // Inhibit login if we're trying to register with an email address and password:
+        // we defer to the tab that opens the email verification link to initiate the new Matrix session
+        if (!!this.state.formVals.email && !!this.state.formVals.password) {
+            registerParams.inhibit_login = true;
+        }
         debuglog("Registration: sending registration request:", auth);
         return this.state.matrixClient.registerRequest(registerParams);
     };
