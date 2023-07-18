@@ -245,13 +245,9 @@ const findVisibleRooms = (cli: MatrixClient, msc3946ProcessDynamicPredecessor: b
     });
 };
 
-const findVisibleRoomMembers = (
-    cli: MatrixClient,
-    msc3946ProcessDynamicPredecessor: boolean,
-    filterDMs = true,
-): RoomMember[] => {
+const findVisibleRoomMembers = (visibleRooms: Room[], cli: MatrixClient, filterDMs = true): RoomMember[] => {
     return Object.values(
-        findVisibleRooms(cli, msc3946ProcessDynamicPredecessor)
+        visibleRooms
             .filter((room) => !filterDMs || !DMRoomMap.shared().getUserIdForRoomId(room.roomId))
             .reduce((members, room) => {
                 for (const member of room.getJoinedMembers()) {
@@ -336,8 +332,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     useDebouncedCallback(filter === Filter.People, searchProfileInfo, searchParams);
 
     const possibleResults = useMemo<Result[]>(() => {
+        const visibleRooms = findVisibleRooms(cli, msc3946ProcessDynamicPredecessor);
+        const roomResults = visibleRooms.map(toRoomResult);
         const userResults: IMemberResult[] = [];
-        const roomResults = findVisibleRooms(cli, msc3946ProcessDynamicPredecessor).map(toRoomResult);
 
         // If we already have a DM with the user we're looking for, we will show that DM instead of the user themselves
         const alreadyAddedUserIds = roomResults.reduce((userIds, result) => {
@@ -365,7 +362,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 userResults.push(result);
             }
         }
-        addUserResults(findVisibleRoomMembers(cli, msc3946ProcessDynamicPredecessor), false);
+        addUserResults(findVisibleRoomMembers(visibleRooms, cli), false);
         addUserResults(users, true);
         if (profile) {
             addUserResults([new DirectoryMember(profile)], true);
