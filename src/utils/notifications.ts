@@ -73,7 +73,7 @@ export async function clearRoomNotification(room: Room, client: MatrixClient): P
             const receiptType = SettingsStore.getValue("sendReadReceipts", room.roomId)
                 ? ReceiptType.Read
                 : ReceiptType.ReadPrivate;
-            return await client.sendReadReceipt(lastEvent, receiptType, true);
+            return await client.sendReadReceipt(lastEvent, receiptType, null);
         } else {
             return {};
         }

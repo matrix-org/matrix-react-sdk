@@ -28,7 +28,7 @@ import { debounce, findLastIndex, throttle } from "lodash";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
-import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
+import { MAIN_ROOM_TIMELINE, ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 
@@ -1187,7 +1187,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const receiptType = await this.determineReceiptType(client);
 
         try {
-            await client.sendReadReceipt(event, receiptType);
+            await client.sendReadReceipt(event, receiptType, this.context.threadId ?? MAIN_ROOM_TIMELINE);
         } catch (err) {
             // it failed, so allow retries next time the user is active
             this.lastRRSentEventId = undefined;
