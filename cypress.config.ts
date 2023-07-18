@@ -31,11 +31,15 @@ export default defineConfig({
     },
     env: {
         // Docker tag to use for `ghcr.io/matrix-org/sliding-sync` image.
-        SLIDING_SYNC_PROXY_TAG: "v0.99.0-rc1",
+        SLIDING_SYNC_PROXY_TAG: "v0.99.3",
         HOMESERVER: "synapse",
     },
     retries: {
         runMode: 4,
         openMode: 0,
     },
+
+    // disable logging of HTTP requests made to the Cypress server. They are noisy and not very helpful.
+    // @ts-ignore https://github.com/cypress-io/cypress/issues/26284
+    morgan: false,
 });
