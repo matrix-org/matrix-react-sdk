@@ -359,6 +359,31 @@ describe("Spotlight Dialog", () => {
         expect(options[1]).toHaveTextContent("User Beta");
     });
 
+    it("should not filter out users sent by the server even if a local suggestion gets filtered out", async () => {
+        const member = new RoomMember(testRoom.roomId, testPerson.user_id);
+        member.name = member.rawDisplayName = testPerson.display_name!;
+        member.getMxcAvatarUrl = jest.fn().mockReturnValue("mxc://0/avatar");
+        mocked(testRoom.getJoinedMembers).mockReturnValue([member]);
+        mocked(mockedClient.searchUserDirectory).mockResolvedValue({
+            results: [
+                { user_id: "@janedoe:matrix.org", display_name: "User Alpha", avatar_url: "mxc://1/avatar" },
+                { user_id: "@johndoe:matrix.org", display_name: "User Beta", avatar_url: "mxc://2/avatar" },
+            ],
+            limited: false,
+        });
+
+        render(<SpotlightDialog initialFilter={Filter.People} initialText="Beta" onFinished={() => null} />);
+        // search is debounced
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        const content = document.querySelector("#mx_SpotlightDialog_content")!;
+        const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
+        expect(options.length).toBeGreaterThanOrEqual(2);
+        expect(options[0]).toHaveTextContent(testPerson.display_name!);
+        expect(options[1]).toHaveTextContent("User Beta");
+    });
+
     it("should start a DM when clicking a person", async () => {
         render(
             <SpotlightDialog
