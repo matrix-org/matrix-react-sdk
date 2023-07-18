@@ -142,6 +142,10 @@ interface IRoomResult extends IBaseResult {
 
 interface IMemberResult extends IBaseResult {
     member: Member | RoomMember;
+    /**
+     * If the result is from a filtered server API then we set true here to avoid locally culling it in our own filters
+     */
+    alreadyFiltered: boolean;
 }
 
 interface IResult extends IBaseResult {
@@ -201,7 +205,8 @@ const toRoomResult = (room: Room): IRoomResult => {
     }
 };
 
-const toMemberResult = (member: Member | RoomMember): IMemberResult => ({
+const toMemberResult = (member: Member | RoomMember, alreadyFiltered: boolean): IMemberResult => ({
+    alreadyFiltered,
     member,
     section: Section.Suggestions,
     filter: [Filter.People],
@@ -333,21 +338,37 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     const possibleResults = useMemo<Result[]>(() => {
         const userResults: IMemberResult[] = [];
         const roomResults = findVisibleRooms(cli, msc3946ProcessDynamicPredecessor).map(toRoomResult);
-        // If we already have a DM with the user we're looking for, we will
-        // show that DM instead of the user themselves
+
+        // If we already have a DM with the user we're looking for, we will show that DM instead of the user themselves
         const alreadyAddedUserIds = roomResults.reduce((userIds, result) => {
             const userId = DMRoomMap.shared().getUserIdForRoomId(result.room.roomId);
             if (!userId) return userIds;
             if (result.room.getJoinedMemberCount() > 2) return userIds;
-            userIds.add(userId);
+            userIds.set(userId, result);
             return userIds;
-        }, new Set<string>());
-        for (const user of [...findVisibleRoomMembers(cli, msc3946ProcessDynamicPredecessor), ...users]) {
-            // Make sure we don't have any user more than once
-            if (alreadyAddedUserIds.has(user.userId)) continue;
-            alreadyAddedUserIds.add(user.userId);
+        }, new Map<string, IMemberResult | IRoomResult>());
 
-            userResults.push(toMemberResult(user));
+        function addUserResults(users: Array<Member | RoomMember>, alreadyFiltered: boolean): void {
+            for (const user of users) {
+                // Make sure we don't have any user more than once
+                if (alreadyAddedUserIds.has(user.userId)) {
+                    const result = alreadyAddedUserIds.get(user.userId)!;
+                    if (alreadyFiltered && isMemberResult(result) && !result.alreadyFiltered) {
+                        // But if they were added as not yet filtered then mark them as already filtered to avoid
+                        // culling this result based on local filtering.
+                        result.alreadyFiltered = true;
+                    }
+                    continue;
+                }
+                const result = toMemberResult(user, alreadyFiltered);
+                alreadyAddedUserIds.set(user.userId, result);
+                userResults.push(result);
+            }
+        }
+        addUserResults(findVisibleRoomMembers(cli, msc3946ProcessDynamicPredecessor), false);
+        addUserResults(users, true);
+        if (profile) {
+            addUserResults([new DirectoryMember(profile)], true);
         }
 
         return [
@@ -369,9 +390,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             })),
             ...roomResults,
             ...userResults,
-            ...(profile && !alreadyAddedUserIds.has(profile.user_id) ? [new DirectoryMember(profile)] : []).map(
-                toMemberResult,
-            ),
             ...publicRooms.map(toPublicRoomResult),
         ].filter((result) => filter === null || result.filter.includes(filter));
     }, [cli, users, profile, publicRooms, filter, msc3946ProcessDynamicPredecessor]);
@@ -399,7 +417,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     )
                         return; // bail, does not match query
                 } else if (isMemberResult(entry)) {
-                    if (!entry.query?.some((q) => q.includes(lcQuery))) return; // bail, does not match query
+                    if (!entry.alreadyFiltered && !entry.query?.some((q) => q.includes(lcQuery))) return; // bail, does not match query
                 } else if (isPublicRoomResult(entry)) {
                     if (!entry.query?.some((q) => q.includes(lcQuery))) return; // bail, does not match query
                 } else {
