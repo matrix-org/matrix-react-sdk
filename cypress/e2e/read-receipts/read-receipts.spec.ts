@@ -110,6 +110,76 @@ describe("Read receipts", () => {
         });
     });
 
+    {
+        /*
+        tst("Editing a message makes a room unread", () => {
+            // Given I am not in the room
+            goTo("room1");
+
+            // When an edit appears in the room
+            sendMessages("room2", ["Msg1", editOf("Msg1")]);
+
+            // Then it becomes unread
+            assertUnread("room2");
+        });
+        */
+        /*
+        tst("Reading an edit makes the room read", () => {
+            // Given an edit made a room unread
+            goTo("room1");
+            sendMessages("room2", ["Msg1", editOf("Msg1")]);
+            assertUnread("room2"); // (Sanity)
+
+            // When I read it
+            goTo("room2");
+
+            // Then the room becomes unread and stays unread
+            assertRead("room2");
+            goTo("room1");
+            assertRead("room2");
+        });
+         */
+        /*
+        tst("Reading the main timeline does not mark a thread message as read", () => {
+            // Given a thread exists
+            goTo("room1");
+            sendMessages("room2", ["Msg1", threadedOff("Msg1"), threadedOff("Msg1")]);
+            assertUnread("room2"); // (Sanity)
+
+            // When I read the main timeline
+            goTo("room2");
+
+            // Then the room briefly appears read (!)
+            assertRead("room2");
+
+            // But when I switch away, it is unread again because we didn't read the thread
+            goTo("room1");
+            assertUnread("room2");
+        });
+         */
+        /*
+        tst("Reading an edit of a thread root makes the room read", () => {
+            // Given a fully-read thread exists
+            goTo("room2");
+            sendMessages("room2", ["Msg1", threadedOff("Msg1")]);
+            openThread("Msg1");
+            goTo("room1");
+            assertRead("room2");
+
+            // When the thread root is edited
+            sendMessages("room2", [editOf("Msg1")]);
+
+            // And I read that edit
+            goTo("room2");
+
+            // Then the room becomes unread and stays unread
+            assertRead("room2");
+            goTo("room1");
+            assertRead("room2");
+        });
+         */
+    }
+
     afterEach(() => {
         cy.stopHomeserver(homeserver);
     });
