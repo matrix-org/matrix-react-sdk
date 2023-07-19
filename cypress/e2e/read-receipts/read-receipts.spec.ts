@@ -110,76 +110,6 @@ describe("Read receipts", () => {
         });
     });
 
-    {
-        /*
-        tst("Editing a message makes a room unread", () => {
-            // Given I am not in the room
-            goTo("room1");
-
-            // When an edit appears in the room
-            sendMessages("room2", ["Msg1", editOf("Msg1")]);
-
-            // Then it becomes unread
-            assertUnread("room2");
-        });
-        */
-        /*
-        tst("Reading an edit makes the room read", () => {
-            // Given an edit made a room unread
-            goTo("room1");
-            sendMessages("room2", ["Msg1", editOf("Msg1")]);
-            assertUnread("room2"); // (Sanity)
-
-            // When I read it
-            goTo("room2");
-
-            // Then the room becomes unread and stays unread
-            assertRead("room2");
-            goTo("room1");
-            assertRead("room2");
-        });
-         */
-        /*
-        tst("Reading the main timeline does not mark a thread message as read", () => {
-            // Given a thread exists
-            goTo("room1");
-            sendMessages("room2", ["Msg1", threadedOff("Msg1"), threadedOff("Msg1")]);
-            assertUnread("room2"); // (Sanity)
-
-            // When I read the main timeline
-            goTo("room2");
-
-            // Then the room briefly appears read (!)
-            assertRead("room2");
-
-            // But when I switch away, it is unread again because we didn't read the thread
-            goTo("room1");
-            assertUnread("room2");
-        });
-         */
-        /*
-        tst("Reading an edit of a thread root makes the room read", () => {
-            // Given a fully-read thread exists
-            goTo("room2");
-            sendMessages("room2", ["Msg1", threadedOff("Msg1")]);
-            openThread("Msg1");
-            goTo("room1");
-            assertRead("room2");
-
-            // When the thread root is edited
-            sendMessages("room2", [editOf("Msg1")]);
-
-            // And I read that edit
-            goTo("room2");
-
-            // Then the room becomes unread and stays unread
-            assertRead("room2");
-            goTo("room1");
-            assertRead("room2");
-        });
-         */
-    }
-
     afterEach(() => {
         cy.stopHomeserver(homeserver);
     });
@@ -422,6 +352,110 @@ describe("Read receipts", () => {
                     ["m.fully_read"]: sendMessageResponses.at(-1).event_id,
                 });
             });
+        });
+    });
+
+    class MessageSpec {}
+
+    type Message = string | MessageSpec;
+
+    function goTo(room: string) {
+        throw new Error("todo");
+    }
+
+    function openThread(rootMessage: string) {
+        throw new Error("todo");
+    }
+
+    function sendMessages(room: string, messages: Message[]) {
+        throw new Error("todo");
+    }
+
+    function editOf(originalMessage: string): MessageSpec {
+        throw new Error("todo");
+    }
+
+    function threadedOff(rootMessage: string): MessageSpec {
+        throw new Error("todo");
+    }
+
+    function assertRead(room: string) {
+        throw new Error("todo");
+    }
+
+    function assertUnread(room: string) {
+        throw new Error("todo");
+    }
+
+    describe("editing messages", () => {
+        describe("in the main timeline", () => {
+            test("Editing a message makes a room unread", () => {
+                // Given I am not in the room
+                goTo("room1");
+
+                // When an edit appears in the room
+                sendMessages("room2", ["Msg1", editOf("Msg1")]);
+
+                // Then it becomes unread
+                assertUnread("room2");
+            });
+            test("Reading an edit makes the room read", () => {
+                // Given an edit made a room unread
+                goTo("room1");
+                sendMessages("room2", ["Msg1", editOf("Msg1")]);
+                assertUnread("room2"); // (Sanity)
+
+                // When I read it
+                goTo("room2");
+
+                // Then the room becomes unread and stays unread
+                assertRead("room2");
+                goTo("room1");
+                assertRead("room2");
+            });
+        });
+        describe("in threads", () => {
+            test("Reading an edit of a thread root makes the room read", () => {
+                // Given a fully-read thread exists
+                goTo("room2");
+                sendMessages("room2", ["Msg1", threadedOff("Msg1")]);
+                openThread("Msg1");
+                goTo("room1");
+                assertRead("room2");
+
+                // When the thread root is edited
+                sendMessages("room2", [editOf("Msg1")]);
+
+                // And I read that edit
+                goTo("room2");
+
+                // Then the room becomes unread and stays unread
+                assertRead("room2");
+                goTo("room1");
+                assertRead("room2");
+            });
+        });
+    });
+
+    describe("threads", () => {
+        // Thread-specific variants live inside other sections, but when thread
+        // tests don't live anywhere else, they live here.
+
+        test("Reading the main timeline does not mark a thread message as read", () => {
+            // Given a thread exists
+            goTo("room1");
+            sendMessages("room2", ["Msg1", threadedOff("Msg1"), threadedOff("Msg1")]);
+            assertUnread("room2"); // (Sanity)
+
+            // When I read the main timeline
+            goTo("room2");
+
+            // Then the room briefly appears read (!)
+            assertRead("room2");
+
+            // But when I switch away, it is unread again because we didn't read the thread
+            goTo("room1");
+            assertUnread("room2");
         });
     });
 });
