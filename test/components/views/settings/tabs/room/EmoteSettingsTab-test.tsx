@@ -269,6 +269,9 @@ describe("EmoteSettingsTab", () => {
                         url: "http://this.is.a.url/server/custom-emote-123.png",
                     },
                 },
+                pack: {
+                    display_name: "Element Compatible Emotes",
+                },
             },
             "Element Compatible Emotes",
         );
@@ -295,13 +298,16 @@ describe("EmoteSettingsTab", () => {
                 return new MatrixEvent({
                     sender: "@sender:server",
                     room_id: roomId,
-                    type: EMOTES_STATE.name,
+                    type: EMOTES_COMP.name,
                     state_key: "Element Compatible Emotes",
                     content: {
                         images: {
                             testEmote: {
                                 url: "http://this.is.a.url/server/custom-emote-123.png",
                             },
+                        },
+                        pack: {
+                            display_name: "Element Compatible Emotes",
                         },
                     },
                 });
@@ -324,6 +330,9 @@ describe("EmoteSettingsTab", () => {
                     changed: {
                         url: "http://this.is.a.url/server/custom-emote-123.png",
                     },
+                },
+                pack: {
+                    display_name: "Element Compatible Emotes",
                 },
             },
             "Element Compatible Emotes",
@@ -354,7 +363,12 @@ describe("EmoteSettingsTab", () => {
         expect(cli.sendStateEvent).toHaveBeenLastCalledWith(
             roomId,
             EMOTES_COMP.name,
-            { images: { coolnewemotecustomname: { url: "http://this.is.a.url/server/custom-emote-123.png" } } },
+            {
+                images: { coolnewemotecustomname: { url: "http://this.is.a.url/server/custom-emote-123.png" } },
+                pack: {
+                    display_name: "Element Compatible Emotes",
+                },
+            },
             "Element Compatible Emotes",
         );
     });

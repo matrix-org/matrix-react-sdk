@@ -42,7 +42,7 @@ import { Ref } from "../../../accessibility/roving/types";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { decryptFile } from "../../../utils/DecryptFile";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { IEncryptedFile } from "../../../customisations/models/IMediaEventContent";
+import { EncryptedFile } from "../../../customisations/models/IMediaEventContent";
 import SettingsStore from "../../../settings/SettingsStore";
 
 export const CATEGORY_HEADER_HEIGHT = 20;
@@ -242,7 +242,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
     }
 
     private async decryptEmotes(
-        emotes: Map<string, string | IEncryptedFile>,
+        emotes: Map<string, string | EncryptedFile>,
         roomId: string,
     ): Promise<Map<string, JSX.Element>> {
         const decryptedemotes = new Map<string, JSX.Element>();
@@ -250,7 +250,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
         const isEnc = MatrixClientPeg.get()?.isRoomEncrypted(roomId);
         for (const [shortcode, val] of emotes) {
             if (isEnc) {
-                const blob = await decryptFile(val as IEncryptedFile);
+                const blob = await decryptFile(val as EncryptedFile);
                 decryptedurl = URL.createObjectURL(blob);
             } else {
                 decryptedurl = mediaFromMxc(val as string).srcHttp!;

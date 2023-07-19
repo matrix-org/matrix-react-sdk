@@ -26,7 +26,7 @@ import { decryptFile } from "../../../utils/DecryptFile";
 import { mediaFromMxc } from "../../../customisations/Media";
 import SettingsFieldset from "../settings/SettingsFieldset";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
-import { IEncryptedFile } from "../../../customisations/models/IMediaEventContent";
+import { EncryptedFile } from "../../../customisations/models/IMediaEventContent";
 const EMOTES_STATE = new UnstableValue("m.room.emotes", "org.matrix.msc3892.emotes");
 const COMPAT_STATE = new UnstableValue(
     "m.room.clientemote_compatibility",
@@ -39,7 +39,7 @@ interface IProps {
 }
 
 interface IState {
-    emotes: Map<string, string | IEncryptedFile>;
+    emotes: Map<string, string | EncryptedFile>;
     decryptedemotes: Map<string, string>;
     EmoteFieldsTouched: Record<string, string>;
     newEmoteFileAdded: boolean;
@@ -48,7 +48,7 @@ interface IState {
     newEmoteFile: Array<File>;
     canAddEmote: boolean;
     deleted: boolean;
-    deletedItems: Map<string, string | IEncryptedFile>;
+    deletedItems: Map<string, string | EncryptedFile>;
     value: Map<string, string>;
     compatibility: boolean;
 }
@@ -183,7 +183,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         if (!this.isSaveEnabled()) return;
         const client = MatrixClientPeg.safeGet();
         const newState: Partial<IState> = {};
-        const emotesMxcs: { [key: string]: IEncryptedFile | string } = {};
+        const emotesMxcs: { [key: string]: EncryptedFile | string } = {};
         const value = new Map();
         const newPack: Map<string, Record<string, string>> = new Map();
 
@@ -330,7 +330,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
             for (const [shortcode, val] of this.state.emotes) {
                 if (!this.imagePack["images"][shortcode]) {
                     if (client.isRoomEncrypted(this.props.roomId)) {
-                        const blob = await decryptFile(val as IEncryptedFile);
+                        const blob = await decryptFile(val as EncryptedFile);
                         const uploadedEmote = await client.uploadContent(blob);
                         this.imagePack["images"][shortcode] = { url: uploadedEmote.content_uri };
                     } else {
@@ -355,7 +355,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
         const decryptedemotes = new Map();
         for (const [shortcode, val] of this.state.emotes) {
             if (isEnc) {
-                const blob = await decryptFile(val as IEncryptedFile);
+                const blob = await decryptFile(val as EncryptedFile);
                 decryptedemotes.set(shortcode, URL.createObjectURL(blob));
             } else {
                 decryptedemotes.set(shortcode, mediaFromMxc(val as string).srcHttp);
@@ -384,7 +384,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 }
             }
             if (newCompatUploaded) {
-                const emotesMxcs: { [key: string]: IEncryptedFile | string } = {};
+                const emotesMxcs: { [key: string]: EncryptedFile | string } = {};
                 for (const [shortcode, val] of this.state.emotes) {
                     emotesMxcs[shortcode] = val;
                 }

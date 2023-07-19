@@ -37,7 +37,7 @@ import * as recent from "../emojipicker/recent";
 import { filterBoolean } from "../utils/arrays";
 import { decryptFile } from "../utils/DecryptFile";
 import { mediaFromMxc } from "../customisations/Media";
-import { IEncryptedFile } from "../customisations/models/IMediaEventContent";
+import { EncryptedFile } from "../customisations/models/IMediaEventContent";
 
 const LIMIT = 20;
 
@@ -116,7 +116,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     }
 
     private async decryptEmotes(
-        emotes: Map<string, string | IEncryptedFile>,
+        emotes: Map<string, string | EncryptedFile>,
         roomId: string,
     ): Promise<Map<string, string>> {
         const decryptedEmoteMap = new Map<string, string>();
@@ -124,7 +124,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         const isEnc = MatrixClientPeg.get()?.isRoomEncrypted(roomId);
         for (const [shortcode, val] of emotes) {
             if (isEnc) {
-                const blob = await decryptFile(val as IEncryptedFile);
+                const blob = await decryptFile(val as EncryptedFile);
                 decryptedurl = URL.createObjectURL(blob);
             } else {
                 decryptedurl = mediaFromMxc(val as string).srcHttp!;
