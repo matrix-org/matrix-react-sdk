@@ -50,6 +50,21 @@ export class OidcClientStore {
         return this._accountManagementEndpoint;
     }
 
+    public async revokeTokens(accessToken: string, refreshToken: string): Promise<void> {
+        try {
+            const client = await this.getOidcClient();
+
+            if (!client) {
+                throw new Error("No OIDC client")
+            }
+
+            await client.revokeToken(accessToken!, 'access_token');
+            await client.revokeToken(refreshToken!, 'refresh_token');
+        } catch (error) {
+            throw error;
+        }
+    }
+
     private async getOidcClient(): Promise<OidcClient | undefined> {
         if (!this.oidcClient && !this.initialisingOidcClientPromise) {
             this.initialisingOidcClientPromise = this.initOidcClient();

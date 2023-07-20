@@ -67,6 +67,7 @@ import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
 import { completeOidcLogin } from "./utils/oidc/authorize";
 import { persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettings";
+import { OidcClientStore } from "./stores/oidc/OidcClientStore";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -486,22 +487,6 @@ async function getStoredToken(storageKey: string): Promise<string | undefined> {
 }
 
 /**
- * Retrieve access token, as stored by `persistCredentials`
- * @returns Promise that resolves to token or undefined
- */
-export async function getStoredAccessToken(): Promise<string | undefined> {
-    return getStoredToken(ACCESS_TOKEN_STORAGE_KEY);
-}
-
-/**
- * Retrieve refresh token, as stored by `persistCredentials`
- * @returns Promise that resolves to token or undefined
- */
-export async function getStoredRefreshToken(): Promise<string | undefined> {
-    return getStoredToken(REFRESH_TOKEN_STORAGE_KEY);
-}
-
-/**
  * Retrieves information about the stored session from the browser's storage. The session
  * may not be valid, as it is not tested for consistency here.
  * @returns {Object} Information about the session - see implementation for variables.
@@ -510,8 +495,8 @@ export async function getStoredSessionVars(): Promise<Partial<IStoredSession>> {
     const hsUrl = localStorage.getItem(HOMESERVER_URL_KEY) ?? undefined;
     const isUrl = localStorage.getItem(ID_SERVER_URL_KEY) ?? undefined;
 
-    const accessToken = await getStoredAccessToken();
-    const refreshToken = await getStoredRefreshToken();
+    const accessToken = await getStoredToken(ACCESS_TOKEN_STORAGE_KEY);
+    const refreshToken = await getStoredToken(REFRESH_TOKEN_STORAGE_KEY);
 
     // if we pre-date storing "mx_has_access_token", but we retrieved an access
     // token, then we should say we have an access token
@@ -945,9 +930,35 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
 let _isLoggingOut = false;
 
 /**
+ * Logs out the current session
+ * When user has authenticated using OIDC native flow, revoke tokens with OIDC provider
+ * Otherwise, call /logout on the homeserver
+ * @param client 
+ * @param oidcClientStore 
+ */
+async function doLogout(client: MatrixClient, oidcClientStore?: OidcClientStore): Promise<void> {
+    if (oidcClientStore?.isUserAuthenticatedWithOidc) {
+        const accessToken = client.http.opts.accessToken;
+
+        // @TODO(kerrya) https://github.com/vector-im/element-web/issues/25444
+        // refresh token will be set somewhere better after refreshToken work
+        // and we can avoid decrypting here
+        const refreshToken = await getStoredToken(REFRESH_TOKEN_STORAGE_KEY);
+        const pickleKey = (await PlatformPeg.get()?.getPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "")) || undefined;
+        const decryptedRefreshToken = await tryDecryptToken(pickleKey, refreshToken, REFRESH_TOKEN_NAME);
+        if (!accessToken) {
+            throw new Error("Unexpectedly found no access token");
+        }
+        await oidcClientStore.revokeTokens(accessToken, decryptedRefreshToken!);
+    } else {
+        await client.logout(true);
+    }
+}
+
+/**
  * Logs the current session out and transitions to the logged-out state
  */
-export function logout(): void {
+export function logout(oidcClientStore?: OidcClientStore): void {
     const client = MatrixClientPeg.get();
     if (!client) return;
 
@@ -962,9 +973,11 @@ export function logout(): void {
     }
 
     _isLoggingOut = true;
-    PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
-
-    client.logout(true).then(onLoggedOut, (err) => {
+    
+    doLogout(client, oidcClientStore).then(onLoggedOut, (err) => {
+        // we need the pickle key to decrypt stored access/refresh tokens to revoke them
+        // so clear it after logging out
+        PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
         // Just throwing an error here is going to be very unhelpful
         // if you're trying to log out because your server's down and
         // you want to log into a different server, so just forget the
