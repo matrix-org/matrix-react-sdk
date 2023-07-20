@@ -70,13 +70,22 @@ import { completeOidcLogin } from "./utils/oidc/authorize";
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
 
+/**
+ * Used as storage key
+ */
 const ACCESS_TOKEN_STORAGE_KEY = "mx_access_token";
 const REFRESH_TOKEN_STORAGE_KEY = "mx_refresh_token";
 /**
- * Used during encryption/decryption of token
+ * Used as initialization vector during encryption in persistTokenInStorage
+ * And decryption in restoreFromLocalStorage
  */
 const ACCESS_TOKEN_NAME = "access_token";
 const REFRESH_TOKEN_NAME = "refresh_token";
+/**
+ * Used in localstorage to store whether we expect a token in idb
+ */
+const HAS_ACCESS_TOKEN_STORAGE_KEY = "mx_has_access_token";
+const HAS_REFRESH_TOKEN_STORAGE_KEY = "mx_has_refresh_token";
 
 dis.register((payload) => {
     if (payload.action === Action.TriggerLogout) {
@@ -479,7 +488,7 @@ export async function getStoredSessionVars(): Promise<Partial<IStoredSession>> {
     }
     // if we pre-date storing "mx_has_access_token", but we retrieved an access
     // token, then we should say we have an access token
-    const hasAccessToken = localStorage.getItem(`mx_has_${ACCESS_TOKEN_NAME}`) === "true" || !!accessToken;
+    const hasAccessToken = localStorage.getItem(HAS_ACCESS_TOKEN_STORAGE_KEY) === "true" || !!accessToken;
     const userId = localStorage.getItem("mx_user_id") ?? undefined;
     const deviceId = localStorage.getItem("mx_device_id") ?? undefined;
 
@@ -496,7 +505,7 @@ export async function getStoredSessionVars(): Promise<Partial<IStoredSession>> {
 
 // The pickle key is a string of unspecified length and format.  For AES, we
 // need a 256-bit Uint8Array. So we HKDF the pickle key to generate the AES
-// key.  The AES key should be zeroed after it is used.
+// key.  The AES key should be zeroed after it is used
 async function pickleKeyToAesKey(pickleKey: string): Promise<Uint8Array> {
     const pickleKeyBuffer = new Uint8Array(pickleKey.length);
     for (let i = 0; i < pickleKey.length; i++) {
@@ -777,16 +786,18 @@ class AbortLoginAndRebuildStorage extends Error {}
  *
  * @param storageKey key used to store the token
  * @param name eg "access_token" used as initialization vector during encryption
- * @param token
+ *              only used when pickleKey is present to encrypt with
+ * @param token the token to store, when undefined any existing token at the storageKey is removed from storage
  * @param pickleKey optional pickle key used to encrypt token
+ * @param hasTokenStorageKey used to store in localstorage whether we expect to have a token in idb, eg "mx_has_access_token"
  */
 async function persistTokenInStorage(
     storageKey: string,
     name: string,
     token: string | undefined,
     pickleKey: IMatrixClientCreds["pickleKey"],
+    hasTokenStorageKey: string,
 ): Promise<void> {
-    const hasTokenStorageKey = `mx_has_${name}`;
     // store whether we expect to find a token, to detect the case
     // where IndexedDB is blown away
     if (token) {
@@ -849,12 +860,14 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
         ACCESS_TOKEN_NAME,
         credentials.accessToken,
         credentials.pickleKey,
+        HAS_ACCESS_TOKEN_STORAGE_KEY,
     );
     await persistTokenInStorage(
         REFRESH_TOKEN_STORAGE_KEY,
         REFRESH_TOKEN_NAME,
         credentials.refreshToken,
         credentials.pickleKey,
+        HAS_REFRESH_TOKEN_STORAGE_KEY,
     );
 
     if (credentials.pickleKey) {
