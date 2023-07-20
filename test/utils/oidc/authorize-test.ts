@@ -133,6 +133,8 @@ describe("OIDC authorization", () => {
                 refreshToken: tokenResponse.refresh_token,
                 homeserverUrl,
                 identityServerUrl,
+                issuer,
+                clientId,
             });
         });
     });
