@@ -387,6 +387,52 @@ describe("Read receipts", () => {
         throw new Error("todo");
     }
 
+    describe("new messages", () => {
+        describe("in the main timeline", () => {
+            test("Sending a message makes a room unread", () => {});
+            test("Reading latest message makes the room read", () => {});
+            test("Reading an older message leaves the room unread", () => {});
+            test("Marking a room as read makes it read", () => {});
+            test("Sending a new message after marking as read makes it unread", () => {});
+            test("A room with a new message is still unread after restart", () => {});
+            test("A room where all messages are read is still read after restart", () => {});
+        });
+
+        describe("in threads", () => {
+            test("Sending a message makes a room unread", () => {});
+            test("Reading the last threaded message makes the room read", () => {});
+            test("Reading a thread message makes the thread read", () => {});
+            test("Reading an older thread message (via permalink) leaves the thread unread", () => {});
+            test("Reading only one thread's message does not make the room read", () => {});
+            test("Reading only one thread's message make that thread read but not others", () => {});
+            test("Reading the main timeline does not mark a thread message as read", () => {
+                // Given a thread exists
+                goTo("room1");
+                sendMessages("room2", ["Msg1", threadedOff("Msg1"), threadedOff("Msg1")]);
+                assertUnread("room2"); // (Sanity)
+
+                // When I read the main timeline
+                goTo("room2");
+
+                // Then the room briefly appears read (!)
+                assertRead("room2");
+
+                // But when I switch away, it is unread again because we didn't read the thread
+                goTo("room1");
+                assertUnread("room2");
+            });
+            test("Marking a room with unread threads as read makes it read", () => {});
+            test("Sending a new thread message after marking as read makes it unread", () => {});
+            test("A room with a new threaded message is still unread after restart", () => {});
+            test("A room where all threaded messages are read is still read after restart", () => {});
+        });
+
+        describe("thread roots", () => {
+            test("Reading a thread root does not mark the thread as read", () => {});
+            test("Reading a thread root within the thread view marks it as read in the main timeline", () => {});
+        });
+    });
+
     describe("editing messages", () => {
         describe("in the main timeline", () => {
             test("Editing a message makes a room unread", () => {
@@ -413,8 +459,23 @@ describe("Read receipts", () => {
                 goTo("room1");
                 assertRead("room2");
             });
+            test("Marking a room as read after an edit makes it read", () => {});
+            test("Editing a message after marking as read makes the room unread", () => {});
+            test("A room with an edit is still unread after restart", () => {});
+            test("A room where all edits are read is still read after restart", () => {});
         });
+
         describe("in threads", () => {
+            test("An edit of a threaded message makes the room unread", () => {});
+            test("Reading an edit of a threaded message makes the room read", () => {});
+            test("Marking a room as read after an edit in a thread makes it read", () => {});
+            test("Editing a thread message after marking as read makes the room unread", () => {});
+            test("A room with an edited threaded message is still unread after restart", () => {});
+            test("A room where all threaded edits are read is still read after restart", () => {});
+        });
+
+        describe("thread roots", () => {
+            test("An edit of a thread root makes the room unread", () => {});
             test("Reading an edit of a thread root makes the room read", () => {
                 // Given a fully-read thread exists
                 goTo("room2");
@@ -434,28 +495,103 @@ describe("Read receipts", () => {
                 goTo("room1");
                 assertRead("room2");
             });
+            test("Marking a room as read after an edit of a thread root makes it read", () => {});
+            test("Editing a thread root after marking as read makes the room unread", () => {});
         });
     });
 
-    describe("threads", () => {
-        // Thread-specific variants live inside other sections, but when thread
-        // tests don't live anywhere else, they live here.
+    describe("reactions", () => {
+        // Justification for this section: edits an reactions are similar, so we
+        // might choose to miss this section, but I have included it because
+        // edits replace the content of the original event in our code and
+        // reactions don't, so it seems possible that bugs could creep in that
+        // affect only one or the other.
 
-        test("Reading the main timeline does not mark a thread message as read", () => {
-            // Given a thread exists
-            goTo("room1");
-            sendMessages("room2", ["Msg1", threadedOff("Msg1"), threadedOff("Msg1")]);
-            assertUnread("room2"); // (Sanity)
-
-            // When I read the main timeline
-            goTo("room2");
-
-            // Then the room briefly appears read (!)
-            assertRead("room2");
-
-            // But when I switch away, it is unread again because we didn't read the thread
-            goTo("room1");
-            assertUnread("room2");
+        describe("in the main timeline", () => {
+            test("Reacting to a message makes a room unread", () => {});
+            test("Reading a reaction makes the room read", () => {});
+            test("Marking a room as read after a reaction makes it read", () => {});
+            test("Reacting to a message after marking as read makes the room unread", () => {});
+            test("A room with a reaction is still unread after restart", () => {});
+            test("A room where all reactions are read is still read after restart", () => {});
         });
+
+        describe("in threads", () => {
+            test("A reaction to a threaded message makes the room unread", () => {});
+            test("Reading a reaction to a threaded message makes the room read", () => {});
+            test("Marking a room as read after a reaction in a thread makes it read", () => {});
+            test("Reacting to a thread message after marking as read makes the room unread", () => {});
+            test("A room with a reaction to a threaded message is still unread after restart", () => {});
+            test("A room where all reactions in threads are read is still read after restart", () => {});
+        });
+
+        describe("thread roots", () => {
+            test("A reaction to a thread root makes the room unread", () => {});
+            test("Reading a reaction to a thread root makes the room read", () => {});
+            test("Marking a room as read after a reaction to a thread root makes it read", () => {});
+            test("Reacting to a thread root after marking as read makes the room unread", () => {});
+        });
+    });
+
+    describe("orphan messages", () => {
+        test("A message in an unknown thread is not visible and the room is read", () => {});
+        test("When a message's thread root appears later the thread appears and the room is unread", () => {});
+        test("An edit of an unknown message is not visible and the room is read", () => {});
+        test("When an edit's message appears later the edited version appears and the room is unread", () => {});
+        test("A reaction to an unknown message is not visible and the room is read", () => {});
+        test("When an reactions's message appears later it appears and the room is unread", () => {});
+        // Harder: validate that we request the messages we are missing?
+    });
+
+    describe("orphan receipts", () => {
+        // Later: when we have order in receipts, we can change these tests to
+        // make receipts still work, even when their message is not found.
+        test("A receipt for an unknown message does not change the state of an unread room", () => {});
+        test("A receipt for an unknown message does not change the state of a read room", () => {});
+        test("A threaded receipt for an unknown message does not change the state of an unread thread", () => {});
+        test("A threaded receipt for an unknown message does not change the state of a read thread", () => {});
+        test("A threaded receipt for an unknown thread does not change the state of an unread thread", () => {});
+        test("A threaded receipt for an unknown thread does not change the state of a read thread", () => {});
+        test("A threaded receipt for a message on main does not change the state of an unread room", () => {});
+        test("A threaded receipt for a message on main does not change the state of a read room", () => {});
+        test("A main receipt for a message on a thread does not change the state of an unread room", () => {});
+        test("A main receipt for a message on a thread does not change the state of a read room", () => {});
+        test("A threaded receipt for a thread root does not mark it as read", () => {});
+        // Harder: validate that we request the messages we are missing?
+    });
+
+    describe("Message ordering", () => {
+        describe("in the main timeline", () => {
+            test("A receipt for the last event in sync order (even with wrong ts) marks a room as read", () => {});
+            test("A receipt for a non-last event in sync order (even when ts makes it last) leaves room unread", () => {});
+        });
+
+        describe("in threads", () => {
+            // These don't pass yet - we need MSC4033 - we don't even know the Sync order yet
+            test.skip("A receipt for the last event in sync order (even with wrong ts) marks a thread as read", () => {});
+            test.skip("A receipt for a non-last event in sync order (even when ts makes it last) leaves thread unread", () => {});
+
+            // These pass now and should not later - we should use order from MSC4033 instead of ts
+            // These are broken out
+            test("A receipt for last threaded event in ts order (even when it was received non-last) marks a thread as read", () => {});
+            test("A receipt for non-last threaded event in ts order (even when it was received last) leaves thread unread", () => {});
+            test("A receipt for last threaded edit in ts order (even when it was received non-last) marks a thread as read", () => {});
+            test("A receipt for non-last threaded edit in ts order (even when it was received last) leaves thread unread", () => {});
+            test("A receipt for last threaded reaction in ts order (even when it was received non-last) marks a thread as read", () => {});
+            test("A receipt for non-last threaded reaction in ts order (even when it was received last) leaves thread unread", () => {});
+        });
+
+        describe("thread roots", () => {
+            test("A receipt for last reaction to thread root in sync order (even when ts makes it last) marks room as read", () => {});
+            test("A receipt for non-last reaction to thread root in sync order (even when ts makes it last) leaves room unread", () => {});
+            test("A receipt for last edit to thread root in sync order (even when ts makes it last) marks room as read", () => {});
+            test("A receipt for non-last edit to thread root in sync order (even when ts makes it last) leaves room unread", () => {});
+        });
+    });
+
+    describe("Ignored events", () => {
+        test("If all events after receipt are unimportant, the room is read", () => {});
+        test("Sending an important event after unimportant ones makes the room unread", () => {});
+        test("A receipt for the last unimportant event makes the room read, even if all are unimportant", () => {});
     });
 });
