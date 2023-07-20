@@ -71,6 +71,14 @@ import { persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettin
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
 
+const ACCESS_TOKEN_STORAGE_KEY = "mx_access_token";
+const REFRESH_TOKEN_STORAGE_KEY = "mx_refresh_token";
+/**
+ * Used during encryption/decryption of token
+ */
+const ACCESS_TOKEN_NAME = "access_token";
+const REFRESH_TOKEN_NAME = "refresh_token";
+
 dis.register((payload) => {
     if (payload.action === Action.TriggerLogout) {
         // noinspection JSIgnoredPromiseFromCall - we don't care if it fails
@@ -216,7 +224,7 @@ export async function attemptDelegatedAuthLogin(
  */
 async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
     try {
-        const { accessToken, homeserverUrl, identityServerUrl, clientId, issuer } = await completeOidcLogin(
+        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId, issuer } = await completeOidcLogin(
             queryParams,
         );
 
@@ -228,6 +236,7 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
 
         const credentials = {
             accessToken,
+            refreshToken,
             homeserverUrl,
             identityServerUrl,
             deviceId,
@@ -442,9 +451,39 @@ export interface IStoredSession {
     isUrl: string;
     hasAccessToken: boolean;
     accessToken: string | IEncryptedPayload;
+    hasRefreshToken: boolean;
+    refreshToken?: string | IEncryptedPayload;
     userId: string;
     deviceId: string;
     isGuest: boolean;
+}
+
+/**
+ * Retrieve a token, as stored by `persistCredentials`
+ * Attempts to migrate token from localStorage to idb
+ * @param storageKey key used to store the token, eg ACCESS_TOKEN_STORAGE_KEY
+ * @returns Promise that resolves to token or undefined
+ */
+async function getStoredToken(storageKey: string): Promise<string | undefined> {
+    let token: string | undefined;
+    try {
+        token = await StorageManager.idbLoad("account", storageKey);
+    } catch (e) {
+        logger.error(`StorageManager.idbLoad failed for account:${storageKey}`, e);
+    }
+    if (!token) {
+        token = localStorage.getItem(storageKey) ?? undefined;
+        if (token) {
+            try {
+                // try to migrate access token to IndexedDB if we can
+                await StorageManager.idbSave("account", storageKey, token);
+                localStorage.removeItem(storageKey);
+            } catch (e) {
+                logger.error(`migration of token ${storageKey} to IndexedDB failed`, e);
+            }
+        }
+    }
+    return token;
 }
 
 /**
@@ -455,27 +494,14 @@ export interface IStoredSession {
 export async function getStoredSessionVars(): Promise<Partial<IStoredSession>> {
     const hsUrl = localStorage.getItem(HOMESERVER_URL_KEY) ?? undefined;
     const isUrl = localStorage.getItem(ID_SERVER_URL_KEY) ?? undefined;
-    let accessToken: string | undefined;
-    try {
-        accessToken = await StorageManager.idbLoad("account", "mx_access_token");
-    } catch (e) {
-        logger.error("StorageManager.idbLoad failed for account:mx_access_token", e);
-    }
-    if (!accessToken) {
-        accessToken = localStorage.getItem("mx_access_token") ?? undefined;
-        if (accessToken) {
-            try {
-                // try to migrate access token to IndexedDB if we can
-                await StorageManager.idbSave("account", "mx_access_token", accessToken);
-                localStorage.removeItem("mx_access_token");
-            } catch (e) {
-                logger.error("migration of access token to IndexedDB failed", e);
-            }
-        }
-    }
+
+    const accessToken = await getStoredToken(ACCESS_TOKEN_STORAGE_KEY);
+    const refreshToken = await getStoredToken(REFRESH_TOKEN_STORAGE_KEY);
+
     // if we pre-date storing "mx_has_access_token", but we retrieved an access
     // token, then we should say we have an access token
-    const hasAccessToken = localStorage.getItem("mx_has_access_token") === "true" || !!accessToken;
+    const hasAccessToken = localStorage.getItem(`mx_has_${ACCESS_TOKEN_NAME}`) === "true" || !!accessToken;
+    const hasRefreshToken = localStorage.getItem(`mx_has_${REFRESH_TOKEN_NAME}`) === "true" || !!refreshToken;
     const userId = localStorage.getItem("mx_user_id") ?? undefined;
     const deviceId = localStorage.getItem("mx_device_id") ?? undefined;
 
@@ -487,7 +513,7 @@ export async function getStoredSessionVars(): Promise<Partial<IStoredSession>> {
         isGuest = localStorage.getItem("matrix-is-guest") === "true";
     }
 
-    return { hsUrl, isUrl, hasAccessToken, accessToken, userId, deviceId, isGuest };
+    return { hsUrl, isUrl, hasAccessToken, accessToken, refreshToken, hasRefreshToken, userId, deviceId, isGuest };
 }
 
 // The pickle key is a string of unspecified length and format.  For AES, we
@@ -526,6 +552,34 @@ async function abortLogin(): Promise<void> {
     }
 }
 
+const isEncryptedPayload = (token?: IEncryptedPayload | string | undefined): token is IEncryptedPayload => {
+    return !!token && typeof token !== "string";
+};
+/**
+ * Try to decrypt a token retrieved from storage
+ * @param pickleKey pickle key used during encryption of token, or undefined
+ * @param token
+ * @param tokenName token name used during encryption of token eg ACCESS_TOKEN_NAME
+ * @returns the decrypted token, or the plain text token, returns undefined when token cannot be decrypted
+ */
+async function tryDecryptToken(
+    pickleKey: string | undefined,
+    token: IEncryptedPayload | string | undefined,
+    tokenName: string,
+): Promise<string | undefined> {
+    if (pickleKey && isEncryptedPayload(token)) {
+        const encrKey = await pickleKeyToAesKey(pickleKey);
+        const decryptedToken = await decryptAES(token, encrKey, tokenName);
+        encrKey.fill(0);
+        return decryptedToken;
+    }
+    // if the token wasn't encrypted (plain string) just return it back
+    if (typeof token === "string") {
+        return token;
+    }
+    // otherwise return undefined
+}
+
 // returns a promise which resolves to true if a session is found in
 // localstorage
 //
@@ -543,7 +597,8 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
         return false;
     }
 
-    const { hsUrl, isUrl, hasAccessToken, accessToken, userId, deviceId, isGuest } = await getStoredSessionVars();
+    const { hsUrl, isUrl, hasAccessToken, accessToken, refreshToken, userId, deviceId, isGuest } =
+        await getStoredSessionVars();
 
     if (hasAccessToken && !accessToken) {
         await abortLogin();
@@ -555,18 +610,14 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             return false;
         }
 
-        let decryptedAccessToken = accessToken;
-        const pickleKey = await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "");
+        const pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) || undefined;
         if (pickleKey) {
             logger.log("Got pickle key");
-            if (typeof accessToken !== "string") {
-                const encrKey = await pickleKeyToAesKey(pickleKey);
-                decryptedAccessToken = await decryptAES(accessToken, encrKey, "access_token");
-                encrKey.fill(0);
-            }
         } else {
             logger.log("No pickle key available");
         }
+        const decryptedAccessToken = await tryDecryptToken(pickleKey, accessToken, ACCESS_TOKEN_NAME);
+        const decryptedRefreshToken = await tryDecryptToken(pickleKey, refreshToken, REFRESH_TOKEN_NAME);
 
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
@@ -576,7 +627,8 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             {
                 userId: userId,
                 deviceId: deviceId,
-                accessToken: decryptedAccessToken as string,
+                accessToken: decryptedAccessToken!,
+                refreshToken: decryptedRefreshToken,
                 homeserverUrl: hsUrl,
                 identityServerUrl: isUrl,
                 guest: isGuest,
@@ -766,28 +818,40 @@ async function showStorageEvictedDialog(): Promise<boolean> {
 // `instanceof`. Babel 7 supports this natively in their class handling.
 class AbortLoginAndRebuildStorage extends Error {}
 
-async function persistCredentials(credentials: IMatrixClientCreds): Promise<void> {
-    localStorage.setItem(HOMESERVER_URL_KEY, credentials.homeserverUrl);
-    if (credentials.identityServerUrl) {
-        localStorage.setItem(ID_SERVER_URL_KEY, credentials.identityServerUrl);
-    }
-    localStorage.setItem("mx_user_id", credentials.userId);
-    localStorage.setItem("mx_is_guest", JSON.stringify(credentials.guest));
-
-    // store whether we expect to find an access token, to detect the case
+/**
+ * Persist a token in storage
+ * When pickle key is present, will attempt to encrypt the token
+ * Stores in idb, falling back to localStorage
+ *
+ * @param storageKey key used to store the token
+ * @param name eg "access_token" used as initialization vector during encryption
+ * @param token
+ * @param pickleKey optional pickle key used to encrypt token
+ */
+async function persistTokenInStorage(
+    storageKey: string,
+    name: string,
+    token: string | undefined,
+    pickleKey: IMatrixClientCreds["pickleKey"],
+): Promise<void> {
+    const hasTokenStorageKey = `mx_has_${name}`;
+    // store whether we expect to find a token, to detect the case
     // where IndexedDB is blown away
-    if (credentials.accessToken) {
-        localStorage.setItem("mx_has_access_token", "true");
+    if (token) {
+        localStorage.setItem(hasTokenStorageKey, "true");
     } else {
-        localStorage.removeItem("mx_has_access_token");
+        localStorage.removeItem(hasTokenStorageKey);
     }
 
-    if (credentials.pickleKey) {
-        let encryptedAccessToken: IEncryptedPayload | undefined;
+    if (pickleKey) {
+        let encryptedToken: IEncryptedPayload | undefined;
         try {
+            if (!token) {
+                throw new Error("No token: not attempting encryption");
+            }
             // try to encrypt the access token using the pickle key
-            const encrKey = await pickleKeyToAesKey(credentials.pickleKey);
-            encryptedAccessToken = await encryptAES(credentials.accessToken, encrKey, "access_token");
+            const encrKey = await pickleKeyToAesKey(pickleKey);
+            encryptedToken = await encryptAES(token, encrKey, name);
             encrKey.fill(0);
         } catch (e) {
             logger.warn("Could not encrypt access token", e);
@@ -796,28 +860,54 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
             // save either the encrypted access token, or the plain access
             // token if we were unable to encrypt (e.g. if the browser doesn't
             // have WebCrypto).
-            await StorageManager.idbSave("account", "mx_access_token", encryptedAccessToken || credentials.accessToken);
+            await StorageManager.idbSave("account", storageKey, encryptedToken || token);
         } catch (e) {
             // if we couldn't save to indexedDB, fall back to localStorage.  We
             // store the access token unencrypted since localStorage only saves
             // strings.
-            if (!!credentials.accessToken) {
-                localStorage.setItem("mx_access_token", credentials.accessToken);
+            if (!!token) {
+                localStorage.setItem(storageKey, token);
             } else {
-                localStorage.removeItem("mx_access_token");
+                localStorage.removeItem(storageKey);
             }
         }
-        localStorage.setItem("mx_has_pickle_key", String(true));
     } else {
         try {
-            await StorageManager.idbSave("account", "mx_access_token", credentials.accessToken);
+            await StorageManager.idbSave("account", storageKey, token);
         } catch (e) {
-            if (!!credentials.accessToken) {
-                localStorage.setItem("mx_access_token", credentials.accessToken);
+            if (!!token) {
+                localStorage.setItem(storageKey, token);
             } else {
-                localStorage.removeItem("mx_access_token");
+                localStorage.removeItem(storageKey);
             }
         }
+    }
+}
+
+async function persistCredentials(credentials: IMatrixClientCreds): Promise<void> {
+    localStorage.setItem(HOMESERVER_URL_KEY, credentials.homeserverUrl);
+    if (credentials.identityServerUrl) {
+        localStorage.setItem(ID_SERVER_URL_KEY, credentials.identityServerUrl);
+    }
+    localStorage.setItem("mx_user_id", credentials.userId);
+    localStorage.setItem("mx_is_guest", JSON.stringify(credentials.guest));
+
+    await persistTokenInStorage(
+        ACCESS_TOKEN_STORAGE_KEY,
+        ACCESS_TOKEN_NAME,
+        credentials.accessToken,
+        credentials.pickleKey,
+    );
+    await persistTokenInStorage(
+        REFRESH_TOKEN_STORAGE_KEY,
+        REFRESH_TOKEN_NAME,
+        credentials.refreshToken,
+        credentials.pickleKey,
+    );
+
+    if (credentials.pickleKey) {
+        localStorage.setItem("mx_has_pickle_key", String(true));
+    } else {
         if (localStorage.getItem("mx_has_pickle_key") === "true") {
             logger.error("Expected a pickle key, but none provided.  Encryption may not work.");
         }
@@ -1009,7 +1099,7 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
         AbstractLocalStorageSettingsHandler.clear();
 
         try {
-            await StorageManager.idbDelete("account", "mx_access_token");
+            await StorageManager.idbDelete("account", ACCESS_TOKEN_STORAGE_KEY);
         } catch (e) {
             logger.error("idbDelete failed for account:mx_access_token", e);
         }

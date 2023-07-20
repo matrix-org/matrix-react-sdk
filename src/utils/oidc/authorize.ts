@@ -83,17 +83,17 @@ export const completeOidcLogin = async (
     accessToken: string;
     clientId: string;
     issuer: string;
+    refreshToken?: string;
 }> => {
     const { code, state } = getCodeAndStateFromQueryParams(queryParams);
     const { homeserverUrl, tokenResponse, identityServerUrl, oidcClientSettings } =
         await completeAuthorizationCodeGrant(code, state);
 
-    // @TODO(kerrya) do something with the refresh token https://github.com/vector-im/element-web/issues/25444
-
     return {
         homeserverUrl: homeserverUrl,
         identityServerUrl: identityServerUrl,
         accessToken: tokenResponse.access_token,
+        refreshToken: tokenResponse.refresh_token,
         clientId: oidcClientSettings.clientId,
         issuer: oidcClientSettings.issuer,
     };
