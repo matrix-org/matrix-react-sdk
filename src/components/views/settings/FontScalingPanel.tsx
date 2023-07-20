@@ -47,7 +47,7 @@ interface IState {
 
 export default class FontScalingPanel extends React.Component<IProps, IState> {
     private readonly MESSAGE_PREVIEW_TEXT = _t("Hey you. You're the best!");
-    private layoutWatcherRef!: string;
+    private layoutWatcherRef?: string;
     private unmounted = false;
 
     public constructor(props: IProps) {
@@ -84,7 +84,9 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
 
     public componentWillUnmount(): void {
         this.unmounted = true;
-        SettingsStore.unwatchSetting(this.layoutWatcherRef);
+        if (this.layoutWatcherRef) {
+            SettingsStore.unwatchSetting(this.layoutWatcherRef);
+        }
     }
 
     private onFontSizeChanged = (size: number): void => {
