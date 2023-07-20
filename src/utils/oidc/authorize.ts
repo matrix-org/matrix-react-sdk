@@ -78,6 +78,10 @@ type CompleteOidcLoginResponse = {
     accessToken: string;
     // refreshToken gained from OIDC token issuer, when falsy token cannot be refreshed
     refreshToken?: string;
+    // this client's id as registered with the OIDC issuer
+    clientId: string;
+    // issuer used during authentication
+    issuer: string;
 };
 /**
  * Attempt to complete authorization code flow to get an access token
@@ -87,12 +91,15 @@ type CompleteOidcLoginResponse = {
  */
 export const completeOidcLogin = async (queryParams: QueryDict): Promise<CompleteOidcLoginResponse> => {
     const { code, state } = getCodeAndStateFromQueryParams(queryParams);
-    const { homeserverUrl, tokenResponse, identityServerUrl } = await completeAuthorizationCodeGrant(code, state);
+    const { homeserverUrl, tokenResponse, identityServerUrl, oidcClientSettings } =
+        await completeAuthorizationCodeGrant(code, state);
 
     return {
-        homeserverUrl: homeserverUrl,
-        identityServerUrl: identityServerUrl,
+        homeserverUrl,
+        identityServerUrl,
         accessToken: tokenResponse.access_token,
         refreshToken: tokenResponse.refresh_token,
+        clientId: oidcClientSettings.clientId,
+        issuer: oidcClientSettings.issuer,
     };
 };
