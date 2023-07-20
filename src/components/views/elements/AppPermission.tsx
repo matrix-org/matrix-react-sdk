@@ -17,7 +17,6 @@ limitations under the License.
 */
 
 import React from "react";
-import url from "url";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import { _t } from "../../../languageHandler";
@@ -26,8 +25,11 @@ import WidgetUtils from "../../../utils/WidgetUtils";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import MemberAvatar from "../avatars/MemberAvatar";
 import BaseAvatar from "../avatars/BaseAvatar";
+import Heading from "../typography/Heading";
 import AccessibleButton from "./AccessibleButton";
 import TextWithTooltip from "./TextWithTooltip";
+import { parseUrl } from "../../../utils/UrlUtils";
+import { Icon as HelpIcon } from "../../../../res/img/feather-customised/help-circle.svg";
 
 interface IProps {
     url: string;
@@ -38,9 +40,9 @@ interface IProps {
 }
 
 interface IState {
-    roomMember: RoomMember;
+    roomMember: RoomMember | null;
     isWrapped: boolean;
-    widgetDomain: string;
+    widgetDomain: string | null;
 }
 
 export default class AppPermission extends React.Component<IProps, IState> {
@@ -55,8 +57,8 @@ export default class AppPermission extends React.Component<IProps, IState> {
         const urlInfo = this.parseWidgetUrl();
 
         // The second step is to find the user's profile so we can show it on the prompt
-        const room = MatrixClientPeg.get().getRoom(this.props.roomId);
-        let roomMember;
+        const room = MatrixClientPeg.safeGet().getRoom(this.props.roomId);
+        let roomMember: RoomMember | null = null;
         if (room) roomMember = room.getMember(this.props.creatorUserId);
 
         // Set all this into the initial state
@@ -66,14 +68,13 @@ export default class AppPermission extends React.Component<IProps, IState> {
         };
     }
 
-    private parseWidgetUrl(): { isWrapped: boolean; widgetDomain: string } {
-        const widgetUrl = url.parse(this.props.url);
-        const params = new URLSearchParams(widgetUrl.search);
+    private parseWidgetUrl(): { isWrapped: boolean; widgetDomain: string | null } {
+        const widgetUrl = parseUrl(this.props.url);
 
         // HACK: We're relying on the query params when we should be relying on the widget's `data`.
         // This is a workaround for Scalar.
-        if (WidgetUtils.isScalarUrl(this.props.url) && params && params.get("url")) {
-            const unwrappedUrl = url.parse(params.get("url"));
+        if (WidgetUtils.isScalarUrl(this.props.url) && widgetUrl.searchParams.has("url")) {
+            const unwrappedUrl = parseUrl(widgetUrl.searchParams.get("url")!);
             return {
                 widgetDomain: unwrappedUrl.host || unwrappedUrl.hostname,
                 isWrapped: true,
@@ -103,9 +104,11 @@ export default class AppPermission extends React.Component<IProps, IState> {
                 {_t("Any of the following data may be shared:")}
                 <ul>
                     <li>{_t("Your display name")}</li>
-                    <li>{_t("Your avatar URL")}</li>
+                    <li>{_t("Your profile picture URL")}</li>
                     <li>{_t("Your user ID")}</li>
+                    <li>{_t("Your device ID")}</li>
                     <li>{_t("Your theme")}</li>
+                    <li>{_t("Your language")}</li>
                     <li>{_t("%(brand)s URL", { brand })}</li>
                     <li>{_t("Room ID")}</li>
                     <li>{_t("Widget ID")}</li>
@@ -115,9 +118,10 @@ export default class AppPermission extends React.Component<IProps, IState> {
         const warningTooltip = (
             <TextWithTooltip
                 tooltip={warningTooltipText}
-                tooltipClass="mx_AppPermissionWarning_tooltip mx_Tooltip_dark"
+                tooltipClass="mx_Tooltip--appPermission mx_Tooltip--appPermission--dark"
+                class="mx_TextWithTooltip_target--helpIcon"
             >
-                <span className="mx_AppPermissionWarning_helpIcon" />
+                <HelpIcon className="mx_Icon mx_Icon_12" />
             </TextWithTooltip>
         );
 
@@ -137,23 +141,23 @@ export default class AppPermission extends React.Component<IProps, IState> {
         const encryptionWarning = this.props.isRoomEncrypted ? _t("Widgets do not use message encryption.") : null;
 
         return (
-            <div className="mx_AppPermissionWarning">
-                <div className="mx_AppPermissionWarning_row mx_AppPermissionWarning_bolder mx_AppPermissionWarning_smallText">
-                    {_t("Widget added by")}
-                </div>
-                <div className="mx_AppPermissionWarning_row">
-                    {avatar}
-                    <h4 className="mx_AppPermissionWarning_bolder">{displayName}</h4>
-                    <div className="mx_AppPermissionWarning_smallText">{userId}</div>
-                </div>
-                <div className="mx_AppPermissionWarning_row mx_AppPermissionWarning_smallText">{warning}</div>
-                <div className="mx_AppPermissionWarning_row mx_AppPermissionWarning_smallText">
-                    {_t("This widget may use cookies.")}&nbsp;{encryptionWarning}
-                </div>
-                <div className="mx_AppPermissionWarning_row">
-                    <AccessibleButton kind="primary_sm" onClick={this.props.onPermissionGranted}>
-                        {_t("Continue")}
-                    </AccessibleButton>
+            <div className="mx_AppPermission">
+                <div className="mx_AppPermission_content">
+                    <div className="mx_AppPermission_content_bolder">{_t("Widget added by")}</div>
+                    <div>
+                        {avatar}
+                        <Heading size="4">{displayName}</Heading>
+                        <div>{userId}</div>
+                    </div>
+                    <div>{warning}</div>
+                    <div>
+                        {_t("This widget may use cookies.")}&nbsp;{encryptionWarning}
+                    </div>
+                    <div>
+                        <AccessibleButton kind="primary_sm" onClick={this.props.onPermissionGranted}>
+                            {_t("Continue")}
+                        </AccessibleButton>
+                    </div>
                 </div>
             </div>
         );

@@ -21,9 +21,10 @@ import escapeHtml from "escape-html";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
-import { M_POLL_END } from "matrix-js-sdk/src/@types/polls";
+import { M_POLL_END, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
+import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
 
-import { PERMITTED_URL_SCHEMES } from "../HtmlUtils";
+import { PERMITTED_URL_SCHEMES } from "./UrlUtils";
 import { makeUserPermalink, RoomPermalinkCreator } from "./permalinks/Permalinks";
 import { isSelfLocation } from "./location";
 
@@ -56,7 +57,7 @@ export function stripHTMLReply(html: string): string {
     return sanitizeHtml(html, {
         allowedTags: false, // false means allow everything
         allowedAttributes: false,
-        allowVulnerableTags: false, // silence xss warning, we won't be rendering directly this, so it is safe to do
+        allowVulnerableTags: true, // silence xss warning, we won't be rendering directly this, so it is safe to do
         // we somehow can't allow all schemes, so we allow all that we
         // know of and mxc (for img tags)
         allowedSchemes: [...PERMITTED_URL_SCHEMES, "mxc"],
@@ -67,7 +68,7 @@ export function stripHTMLReply(html: string): string {
 // Part of Replies fallback support
 export function getNestedReplyText(
     ev: MatrixEvent,
-    permalinkCreator: RoomPermalinkCreator,
+    permalinkCreator?: RoomPermalinkCreator,
 ): { body: string; html: string } | null {
     if (!ev) return null;
 
@@ -98,7 +99,7 @@ export function getNestedReplyText(
 
     // dev note: do not rely on `body` being safe for HTML usage below.
 
-    const evLink = permalinkCreator.forEvent(ev.getId()!);
+    const evLink = permalinkCreator?.forEvent(ev.getId()!);
     const userLink = makeUserPermalink(ev.getSender()!);
     const mxid = ev.getSender();
 
@@ -112,6 +113,16 @@ export function getNestedReplyText(
         };
     }
 
+    if (M_POLL_START.matches(ev.getType())) {
+        const extensibleEvent = ev.unstableExtensibleEvent as PollStartEvent;
+        const question = extensibleEvent?.question?.text;
+        return {
+            html:
+                `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>` +
+                `<br>Poll: ${question}</blockquote></mx-reply>`,
+            body: `> <${mxid}> started poll: ${question}\n\n`,
+        };
+    }
     if (M_POLL_END.matches(ev.getType())) {
         return {
             html:
@@ -225,7 +236,7 @@ interface AddReplyOpts {
 }
 
 interface IncludeLegacyFeedbackOpts {
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     includeLegacyFallback: true;
 }
 

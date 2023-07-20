@@ -56,13 +56,13 @@ export const useSlidingSyncRoomSearch = (): {
                     },
                 });
                 const rooms: Room[] = [];
-                const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync.getListData(
+                const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync!.getListData(
                     SlidingSyncManager.ListSearch,
                 )!;
                 let i = 0;
                 while (roomIndexToRoomId[i]) {
                     const roomId = roomIndexToRoomId[i];
-                    const room = MatrixClientPeg.get().getRoom(roomId);
+                    const room = MatrixClientPeg.safeGet().getRoom(roomId);
                     if (room) {
                         rooms.push(room);
                     }

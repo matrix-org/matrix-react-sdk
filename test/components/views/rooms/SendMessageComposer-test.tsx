@@ -16,10 +16,12 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import { MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
+import { IContent, MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
+import userEvent from "@testing-library/user-event";
 
 import SendMessageComposer, {
+    attachMentions,
     createMessageContent,
     isQuickReaction,
 } from "../../../../src/components/views/rooms/SendMessageComposer";
@@ -27,7 +29,7 @@ import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 import EditorModel from "../../../../src/editor/model";
 import { createPartCreator } from "../../../editor/mock";
-import { createTestClient, mkEvent, mkStubRoom } from "../../../test-utils";
+import { createTestClient, mkEvent, mkStubRoom, stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import DocumentOffset from "../../../../src/editor/offset";
@@ -38,6 +40,7 @@ import { mockPlatformPeg } from "../../../test-utils/platform";
 import { doMaybeLocalRoomAction } from "../../../../src/utils/local-room";
 import { addTextToComposer } from "../../../test-utils/composer";
 import dis from "../../../../src/dispatcher/dispatcher";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 jest.mock("../../../../src/utils/local-room", () => ({
     doMaybeLocalRoomAction: jest.fn(),
@@ -54,6 +57,7 @@ describe("<SendMessageComposer/>", () => {
         showApps: false,
         isPeeking: false,
         showRightPanel: true,
+        threadRightPanel: false,
         joining: false,
         atEndOfLiveTimeline: true,
         showTopUnreadMessagesBar: false,
@@ -89,7 +93,7 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(11, true);
             model.update("hello world", "insertText", documentOffset);
 
-            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
+            const content = createMessageContent("@alice:test", model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "hello world",
@@ -102,7 +106,7 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(13, true);
             model.update("hello *world*", "insertText", documentOffset);
 
-            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
+            const content = createMessageContent("@alice:test", model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "hello *world*",
@@ -117,7 +121,7 @@ describe("<SendMessageComposer/>", () => {
             const documentOffset = new DocumentOffset(22, true);
             model.update("/me blinks __quickly__", "insertText", documentOffset);
 
-            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
+            const content = createMessageContent("@alice:test", model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "blinks __quickly__",
@@ -133,7 +137,7 @@ describe("<SendMessageComposer/>", () => {
             model.update("/me ✨sparkles✨", "insertText", documentOffset);
             expect(model.parts.length).toEqual(4); // Emoji count as non-text
 
-            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
+            const content = createMessageContent("@alice:test", model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "✨sparkles✨",
@@ -147,11 +151,201 @@ describe("<SendMessageComposer/>", () => {
 
             model.update("//dev/null is my favourite place", "insertText", documentOffset);
 
-            const content = createMessageContent(model, undefined, undefined, permalinkCreator);
+            const content = createMessageContent("@alice:test", model, undefined, undefined, permalinkCreator);
 
             expect(content).toEqual({
                 body: "/dev/null is my favourite place",
                 msgtype: "m.text",
+            });
+        });
+    });
+
+    describe("attachMentions", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "feature_intentional_mentions",
+            );
+        });
+
+        afterEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReset();
+        });
+
+        const partsCreator = createPartCreator();
+
+        it("no mentions", () => {
+            const model = new EditorModel([], partsCreator);
+            const content: IContent = {};
+            attachMentions("@alice:test", content, model, undefined);
+            expect(content).toEqual({
+                "m.mentions": {},
+            });
+        });
+
+        it("test user mentions", () => {
+            const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
+            const content: IContent = {};
+            attachMentions("@alice:test", content, model, undefined);
+            expect(content).toEqual({
+                "m.mentions": { user_ids: ["@bob:test"] },
+            });
+        });
+
+        it("test reply", () => {
+            // Replying to an event adds the sender to the list of mentioned users.
+            const model = new EditorModel([], partsCreator);
+            let replyToEvent = mkEvent({
+                type: "m.room.message",
+                user: "@bob:test",
+                room: "!abc:test",
+                content: { "m.mentions": {} },
+                event: true,
+            });
+            let content: IContent = {};
+            attachMentions("@alice:test", content, model, replyToEvent);
+            expect(content).toEqual({
+                "m.mentions": { user_ids: ["@bob:test"] },
+            });
+
+            // It also adds any other mentioned users, but removes yourself.
+            replyToEvent = mkEvent({
+                type: "m.room.message",
+                user: "@bob:test",
+                room: "!abc:test",
+                content: { "m.mentions": { user_ids: ["@alice:test", "@charlie:test"] } },
+                event: true,
+            });
+            content = {};
+            attachMentions("@alice:test", content, model, replyToEvent);
+            expect(content).toEqual({
+                "m.mentions": { user_ids: ["@bob:test", "@charlie:test"] },
+            });
+        });
+
+        it("test room mention", () => {
+            const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
+            const content: IContent = {};
+            attachMentions("@alice:test", content, model, undefined);
+            expect(content).toEqual({
+                "m.mentions": { room: true },
+            });
+        });
+
+        it("test reply to room mention", () => {
+            // Replying to a room mention shouldn't automatically be a room mention.
+            const model = new EditorModel([], partsCreator);
+            const replyToEvent = mkEvent({
+                type: "m.room.message",
+                user: "@alice:test",
+                room: "!abc:test",
+                content: { "m.mentions": { room: true } },
+                event: true,
+            });
+            const content: IContent = {};
+            attachMentions("@alice:test", content, model, replyToEvent);
+            expect(content).toEqual({
+                "m.mentions": {},
+            });
+        });
+
+        it("test broken mentions", () => {
+            // Replying to a room mention shouldn't automatically be a room mention.
+            const model = new EditorModel([], partsCreator);
+            const replyToEvent = mkEvent({
+                type: "m.room.message",
+                user: "@alice:test",
+                room: "!abc:test",
+                // @ts-ignore - Purposefully testing invalid data.
+                content: { "m.mentions": { user_ids: "@bob:test" } },
+                event: true,
+            });
+            const content: IContent = {};
+            attachMentions("@alice:test", content, model, replyToEvent);
+            expect(content).toEqual({
+                "m.mentions": {},
+            });
+        });
+
+        describe("attachMentions with edit", () => {
+            it("no mentions", () => {
+                const model = new EditorModel([], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = {};
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": {} },
+                });
+            });
+
+            it("mentions do not propagate", () => {
+                const model = new EditorModel([], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = {
+                    "m.mentions": { user_ids: ["@bob:test"], room: true },
+                };
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": {} },
+                });
+            });
+
+            it("test user mentions", () => {
+                const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = {};
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "m.mentions": { user_ids: ["@bob:test"] },
+                    "m.new_content": { "m.mentions": { user_ids: ["@bob:test"] } },
+                });
+            });
+
+            it("test prev user mentions", () => {
+                const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = { "m.mentions": { user_ids: ["@bob:test"] } };
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": { user_ids: ["@bob:test"] } },
+                });
+            });
+
+            it("test room mention", () => {
+                const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = {};
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "m.mentions": { room: true },
+                    "m.new_content": { "m.mentions": { room: true } },
+                });
+            });
+
+            it("test prev room mention", () => {
+                const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                const prevContent: IContent = { "m.mentions": { room: true } };
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": { room: true } },
+                });
+            });
+
+            it("test broken mentions", () => {
+                // Replying to a room mention shouldn't automatically be a room mention.
+                const model = new EditorModel([], partsCreator);
+                const content: IContent = { "m.new_content": {} };
+                // @ts-ignore - Purposefully testing invalid data.
+                const prevContent: IContent = { "m.mentions": { user_ids: "@bob:test" } };
+                attachMentions("@alice:test", content, model, undefined, prevContent);
+                expect(content).toEqual({
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": {} },
+                });
             });
         });
     });
@@ -381,5 +575,30 @@ describe("<SendMessageComposer/>", () => {
             expect(isQuickReaction(model3)).toBeFalsy();
             expect(isQuickReaction(model4)).toBeFalsy();
         });
+    });
+
+    it("should call prepareToEncrypt when the user is typing", async () => {
+        const cli = stubClient();
+        cli.isCryptoEnabled = jest.fn().mockReturnValue(true);
+        cli.isRoomEncrypted = jest.fn().mockReturnValue(true);
+        cli.prepareToEncrypt = jest.fn();
+        const room = mkStubRoom("!roomId:server", "Room", cli);
+
+        expect(cli.prepareToEncrypt).not.toHaveBeenCalled();
+
+        const { container } = render(
+            <MatrixClientContext.Provider value={cli}>
+                <SendMessageComposer room={room} toggleStickerPickerOpen={jest.fn()} />
+            </MatrixClientContext.Provider>,
+        );
+
+        const composer = container.querySelector<HTMLDivElement>(".mx_BasicMessageComposer_input")!;
+
+        // Does not trigger on keydown as that'll cause false negatives for global shortcuts
+        await userEvent.type(composer, "[ControlLeft>][KeyK][/ControlLeft]");
+        expect(cli.prepareToEncrypt).not.toHaveBeenCalled();
+
+        await userEvent.type(composer, "Hello");
+        expect(cli.prepareToEncrypt).toHaveBeenCalled();
     });
 });

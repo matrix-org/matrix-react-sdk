@@ -17,7 +17,7 @@ limitations under the License.
 import classNames from "classnames";
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import React, { createContext, MouseEventHandler, ReactElement, ReactNode, useContext, useRef } from "react";
+import React, { createContext, ReactElement, ReactNode, useContext, useRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
@@ -39,7 +39,9 @@ import { useDispatcher } from "../../../hooks/useDispatcher";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import IconizedContextMenu, { IconizedContextMenuOptionList } from "../context_menus/IconizedContextMenu";
 import { EmojiButton } from "./EmojiButton";
+import { filterBoolean } from "../../../utils/arrays";
 import { useSettingValue } from "../../../hooks/useSettings";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -64,17 +66,17 @@ type OverflowMenuCloser = () => void;
 export const OverflowMenuContext = createContext<OverflowMenuCloser | null>(null);
 
 const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
-    const matrixClient: MatrixClient = useContext(MatrixClientContext);
-    const { room, roomId, narrow } = useContext(RoomContext);
+    const matrixClient = useContext(MatrixClientContext);
+    const { room, narrow } = useContext(RoomContext);
 
     const isWysiwygLabEnabled = useSettingValue<boolean>("feature_wysiwyg_composer");
 
-    if (props.haveRecording) {
+    if (!matrixClient || !room || props.haveRecording) {
         return null;
     }
 
-    let mainButtons: ReactElement[];
-    let moreButtons: ReactElement[];
+    let mainButtons: ReactNode[];
+    let moreButtons: ReactNode[];
     if (narrow) {
         mainButtons = [
             isWysiwygLabEnabled ? (
@@ -93,7 +95,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             voiceRecordingButton(props, narrow),
             startVoiceBroadcastButton(props),
             props.showPollsButton ? pollButton(room, props.relation) : null,
-            showLocationButton(props, room, roomId, matrixClient),
+            showLocationButton(props, room, matrixClient),
         ];
     } else {
         mainButtons = [
@@ -113,12 +115,12 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             voiceRecordingButton(props, narrow),
             startVoiceBroadcastButton(props),
             props.showPollsButton ? pollButton(room, props.relation) : null,
-            showLocationButton(props, room, roomId, matrixClient),
+            showLocationButton(props, room, matrixClient),
         ];
     }
 
-    mainButtons = mainButtons.filter((x: ReactElement) => x);
-    moreButtons = moreButtons.filter((x: ReactElement) => x);
+    mainButtons = filterBoolean(mainButtons);
+    moreButtons = filterBoolean(moreButtons);
 
     const moreOptionsClasses = classNames({
         mx_MessageComposer_button: true,
@@ -127,7 +129,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     });
 
     return (
-        <UploadButtonContextProvider roomId={roomId} relation={props.relation}>
+        <UploadButtonContextProvider roomId={room.roomId} relation={props.relation}>
             {mainButtons}
             {moreButtons.length > 0 && (
                 <AccessibleTooltipButton
@@ -180,10 +182,10 @@ interface IUploadButtonProps {
 const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, relation, children }) => {
     const cli = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const uploadInput = useRef<HTMLInputElement>();
+    const uploadInput = useRef<HTMLInputElement>(null);
 
     const onUploadClick = (): void => {
-        if (cli.isGuest()) {
+        if (cli?.isGuest()) {
             dis.dispatch({ action: "require_registration" });
             return;
         }
@@ -307,7 +309,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         this.context?.(); // close overflow menu
         const canSend = this.props.room.currentState.maySendEvent(
             M_POLL_START.name,
-            MatrixClientPeg.get().getUserId()!,
+            MatrixClientPeg.safeGet().getSafeUserId(),
         );
         if (!canSend) {
             Modal.createDialog(ErrorDialog, {
@@ -346,18 +348,13 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
     }
 }
 
-function showLocationButton(
-    props: IProps,
-    room: Room,
-    roomId: string,
-    matrixClient: MatrixClient,
-): ReactElement | null {
-    const sender = room.getMember(matrixClient.getUserId()!);
+function showLocationButton(props: IProps, room: Room, matrixClient: MatrixClient): ReactElement | null {
+    const sender = room.getMember(matrixClient.getSafeUserId());
 
     return props.showLocationButton && sender ? (
         <LocationButton
             key="location"
-            roomId={roomId}
+            roomId={room.roomId}
             relation={props.relation}
             sender={sender}
             menuPosition={props.menuPosition}
@@ -367,7 +364,7 @@ function showLocationButton(
 
 interface WysiwygToggleButtonProps {
     isRichTextEnabled: boolean;
-    onClick: MouseEventHandler<HTMLDivElement>;
+    onClick: (ev: ButtonEvent) => void;
 }
 
 function ComposerModeButton({ isRichTextEnabled, onClick }: WysiwygToggleButtonProps): JSX.Element {

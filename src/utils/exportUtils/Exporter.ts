@@ -16,13 +16,11 @@ limitations under the License.
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Direction } from "matrix-js-sdk/src/models/event-timeline";
 import { saveAs } from "file-saver";
 import { logger } from "matrix-js-sdk/src/logger";
 import sanitizeFilename from "sanitize-filename";
 
-import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { ExportType, IExportOptions } from "./exportUtils";
 import { decryptFile } from "../DecryptFile";
 import { mediaFromContent } from "../../customisations/Media";
@@ -39,7 +37,6 @@ type BlobFile = {
 
 export default abstract class Exporter {
     protected files: BlobFile[] = [];
-    protected client: MatrixClient;
     protected cancelled = false;
 
     protected constructor(
@@ -51,11 +48,11 @@ export default abstract class Exporter {
         if (
             exportOptions.maxSize < 1 * 1024 * 1024 || // Less than 1 MB
             exportOptions.maxSize > 8000 * 1024 * 1024 || // More than 8 GB
-            exportOptions.numberOfMessages > 10 ** 8
+            (!!exportOptions.numberOfMessages && exportOptions.numberOfMessages > 10 ** 8) ||
+            (exportType === ExportType.LastNMessages && !exportOptions.numberOfMessages)
         ) {
             throw new Error("Invalid export options");
         }
-        this.client = MatrixClientPeg.get();
         window.addEventListener("beforeunload", this.onBeforeUnload);
     }
 
@@ -123,10 +120,11 @@ export default abstract class Exporter {
     }
 
     protected setEventMetadata(event: MatrixEvent): MatrixEvent {
-        const roomState = this.client.getRoom(this.room.roomId).currentState;
-        event.sender = roomState.getSentinelMember(event.getSender());
+        const roomState = this.room.currentState;
+        const sender = event.getSender();
+        event.sender = (!!sender && roomState?.getSentinelMember(sender)) || null;
         if (event.getType() === "m.room.member") {
-            event.target = roomState.getSentinelMember(event.getStateKey());
+            event.target = roomState?.getSentinelMember(event.getStateKey()!) ?? null;
         }
         return event;
     }
@@ -135,7 +133,9 @@ export default abstract class Exporter {
         let limit: number;
         switch (this.exportType) {
             case ExportType.LastNMessages:
-                limit = this.exportOptions.numberOfMessages;
+                // validated in constructor that numberOfMessages is defined
+                // when export type is LastNMessages
+                limit = this.exportOptions.numberOfMessages!;
                 break;
             case ExportType.Timeline:
                 limit = 40;
@@ -147,7 +147,7 @@ export default abstract class Exporter {
     }
 
     protected async getRequiredEvents(): Promise<MatrixEvent[]> {
-        const eventMapper = this.client.getEventMapper();
+        const eventMapper = this.room.client.getEventMapper();
 
         let prevToken: string | null = null;
         let limit = this.getLimit();
@@ -155,7 +155,7 @@ export default abstract class Exporter {
 
         while (limit) {
             const eventsPerCrawl = Math.min(limit, 1000);
-            const res = await this.client.createMessagesRequest(
+            const res = await this.room.client.createMessagesRequest(
                 this.room.roomId,
                 prevToken,
                 eventsPerCrawl,
@@ -197,7 +197,7 @@ export default abstract class Exporter {
                 );
             }
 
-            prevToken = res.end;
+            prevToken = res.end ?? null;
         }
         // Reverse the events so that we preserve the order
         for (let i = 0; i < Math.floor(events.length / 2); i++) {
@@ -207,7 +207,7 @@ export default abstract class Exporter {
         const decryptionPromises = events
             .filter((event) => event.isEncrypted())
             .map((event) => {
-                return this.client.decryptEventIfNeeded(event, {
+                return this.room.client.decryptEventIfNeeded(event, {
                     isRetry: true,
                     emit: false,
                 });
@@ -221,21 +221,33 @@ export default abstract class Exporter {
         return events;
     }
 
+    /**
+     * Decrypts if necessary, and fetches media from a matrix event
+     * @param event - matrix event with media event content
+     * @resolves when media has been fetched
+     * @throws if media was unable to be fetched
+     */
     protected async getMediaBlob(event: MatrixEvent): Promise<Blob> {
-        let blob: Blob;
+        let blob: Blob | undefined = undefined;
         try {
             const isEncrypted = event.isEncrypted();
-            const content: IMediaEventContent = event.getContent();
+            const content = event.getContent<IMediaEventContent>();
             const shouldDecrypt = isEncrypted && content.hasOwnProperty("file") && event.getType() !== "m.sticker";
             if (shouldDecrypt) {
                 blob = await decryptFile(content.file);
             } else {
                 const media = mediaFromContent(content);
+                if (!media.srcHttp) {
+                    throw new Error("Cannot fetch without srcHttp");
+                }
                 const image = await fetch(media.srcHttp);
                 blob = await image.blob();
             }
         } catch (err) {
             logger.log("Error decrypting media");
+        }
+        if (!blob) {
+            throw new Error("Unable to fetch file");
         }
         return blob;
     }

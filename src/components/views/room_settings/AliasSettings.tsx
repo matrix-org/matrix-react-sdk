@@ -1,5 +1,5 @@
 /*
-Copyright 2016 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2016 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,6 +41,8 @@ class EditableAliasesList extends EditableItemList<IEditableAliasesListProps> {
 
     private onAliasAdded = async (ev: SyntheticEvent): Promise<void> => {
         ev.preventDefault();
+
+        if (!this.aliasField.current) return;
         await this.aliasField.current.validate({ allowEmpty: false });
 
         if (this.aliasField.current.isValid) {
@@ -85,9 +87,12 @@ interface IProps {
 }
 
 interface IState {
+    // [ #alias:domain.tld, ... ]
     altAliases: string[];
+    // [ #alias:my-hs.tld, ... ]
     localAliases: string[];
-    canonicalAlias?: string;
+    // #canonical:domain.tld
+    canonicalAlias: string | null;
     updatingCanonicalAlias: boolean;
     localAliasesLoading: boolean;
     detailsOpen: boolean;
@@ -97,7 +102,7 @@ interface IState {
 
 export default class AliasSettings extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
-    public context: ContextType<typeof MatrixClientContext>;
+    public context!: ContextType<typeof MatrixClientContext>;
 
     public static defaultProps = {
         canSetAliases: false,
@@ -108,9 +113,9 @@ export default class AliasSettings extends React.Component<IProps, IState> {
         super(props, context);
 
         const state: IState = {
-            altAliases: [], // [ #alias:domain.tld, ... ]
-            localAliases: [], // [ #alias:my-hs.tld, ... ]
-            canonicalAlias: null, // #canonical:domain.tld
+            altAliases: [],
+            localAliases: [],
+            canonicalAlias: null,
             updatingCanonicalAlias: false,
             localAliasesLoading: false,
             detailsOpen: false,
@@ -156,7 +161,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
         }
     }
 
-    private changeCanonicalAlias(alias: string): void {
+    private changeCanonicalAlias(alias: string | null): void {
         if (!this.props.canSetCanonicalAlias) return;
 
         const oldAlias = this.state.canonicalAlias;
@@ -232,7 +237,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
         this.setState({ newAlias: value });
     };
 
-    private onLocalAliasAdded = (alias: string): void => {
+    private onLocalAliasAdded = (alias?: string): void => {
         if (!alias || alias.length === 0) return; // ignore attempts to create blank aliases
 
         const localDomain = this.context.getDomain();
@@ -242,11 +247,11 @@ export default class AliasSettings extends React.Component<IProps, IState> {
             .createAlias(alias, this.props.roomId)
             .then(() => {
                 this.setState({
-                    localAliases: this.state.localAliases.concat(alias),
-                    newAlias: null,
+                    localAliases: this.state.localAliases.concat(alias!),
+                    newAlias: undefined,
                 });
                 if (!this.state.canonicalAlias) {
-                    this.changeCanonicalAlias(alias);
+                    this.changeCanonicalAlias(alias!);
                 }
             })
             .catch((err) => {
@@ -338,7 +343,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
 
     public render(): React.ReactNode {
         const mxClient = this.context;
-        const localDomain = mxClient.getDomain();
+        const localDomain = mxClient.getDomain()!;
         const isSpaceRoom = mxClient.getRoom(this.props.roomId)?.isSpaceRoom();
 
         let found = false;
@@ -397,7 +402,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
         }
 
         return (
-            <div className="mx_AliasSettings">
+            <>
                 <SettingsFieldset
                     data-testid="published-address-fieldset"
                     legend={_t("Published Addresses")}
@@ -411,15 +416,6 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                         </>
                     }
                 >
-                    {/*
-                <span className='mx_SettingsTab_subheading'>{ _t("Published Addresses") }</span>
-                <p>
-                    { isSpaceRoom
-                        ? _t("Published addresses can be used by anyone on any server to join your space.")
-                        : _t("Published addresses can be used by anyone on any server to join your room.") }
-                    &nbsp;
-                    { _t("To publish an address, it needs to be set as a local address first.") }
-                </p> */}
                     {canonicalAliasSection}
                     {this.props.hidePublishSetting ? null : (
                         <RoomPublishSetting
@@ -467,11 +463,13 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                     }
                 >
                     <details onToggle={this.onLocalAliasesToggled} open={this.state.detailsOpen}>
-                        <summary>{this.state.detailsOpen ? _t("Show less") : _t("Show more")}</summary>
+                        <summary className="mx_AliasSettings_localAddresses">
+                            {this.state.detailsOpen ? _t("Show less") : _t("Show more")}
+                        </summary>
                         {localAliasesList}
                     </details>
                 </SettingsFieldset>
-            </div>
+            </>
         );
     }
 }

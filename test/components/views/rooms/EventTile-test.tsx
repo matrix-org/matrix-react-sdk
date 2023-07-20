@@ -15,20 +15,22 @@ limitations under the License.
 */
 
 import * as React from "react";
+import { render, waitFor, screen, act, fireEvent } from "@testing-library/react";
+import { mocked } from "jest-mock";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
+import { CryptoApi, TweakName } from "matrix-js-sdk/src/matrix";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
 import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { IEncryptedEventInfo } from "matrix-js-sdk/src/crypto/api";
-import { render, waitFor, screen, act, fireEvent } from "@testing-library/react";
 
 import EventTile, { EventTileProps } from "../../../../src/components/views/rooms/EventTile";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import { getRoomContext, mkEncryptedEvent, mkEvent, mkMessage, stubClient } from "../../../test-utils";
+import { flushPromises, getRoomContext, mkEncryptedEvent, mkEvent, mkMessage, stubClient } from "../../../test-utils";
 import { mkThread } from "../../../test-utils/threads";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import dis from "../../../../src/dispatcher/dispatcher";
@@ -71,9 +73,9 @@ describe("EventTile", () => {
         jest.clearAllMocks();
 
         stubClient();
-        client = MatrixClientPeg.get();
+        client = MatrixClientPeg.safeGet();
 
-        room = new Room(ROOM_ID, client, client.getUserId()!, {
+        room = new Room(ROOM_ID, client, client.getSafeUserId(), {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
 
@@ -129,16 +131,6 @@ describe("EventTile", () => {
     });
 
     describe("EventTile renderingType: ThreadsList", () => {
-        beforeEach(() => {
-            const { rootEvent } = mkThread({
-                room,
-                client,
-                authorId: "@alice:example.org",
-                participantUserIds: ["@alice:example.org"],
-            });
-            mxEvent = rootEvent;
-        });
-
         it("shows an unread notification badge", () => {
             const { container } = getComponent({}, TimelineRenderingType.ThreadsList);
 
@@ -219,13 +211,16 @@ describe("EventTile", () => {
             // a version of checkDeviceTrust which says that TRUSTED_DEVICE is trusted, and others are not.
             const trustedDeviceTrustLevel = DeviceTrustLevel.fromUserTrustLevel(trustedUserTrustLevel, true, false);
             const untrustedDeviceTrustLevel = DeviceTrustLevel.fromUserTrustLevel(trustedUserTrustLevel, false, false);
-            client.checkDeviceTrust = (userId, deviceId) => {
-                if (deviceId === TRUSTED_DEVICE.deviceId) {
-                    return trustedDeviceTrustLevel;
-                } else {
-                    return untrustedDeviceTrustLevel;
-                }
-            };
+            const mockCrypto = {
+                getDeviceVerificationStatus: async (userId: string, deviceId: string) => {
+                    if (deviceId === TRUSTED_DEVICE.deviceId) {
+                        return trustedDeviceTrustLevel;
+                    } else {
+                        return untrustedDeviceTrustLevel;
+                    }
+                },
+            } as unknown as CryptoApi;
+            client.getCrypto = () => mockCrypto;
         });
 
         it("shows a warning for an event from an unverified device", async () => {
@@ -241,6 +236,7 @@ describe("EventTile", () => {
             } as IEncryptedEventInfo);
 
             const { container } = getComponent();
+            await act(flushPromises);
 
             const eventTiles = container.getElementsByClassName("mx_EventTile");
             expect(eventTiles).toHaveLength(1);
@@ -268,6 +264,7 @@ describe("EventTile", () => {
             } as IEncryptedEventInfo);
 
             const { container } = getComponent();
+            await act(flushPromises);
 
             const eventTiles = container.getElementsByClassName("mx_EventTile");
             expect(eventTiles).toHaveLength(1);
@@ -293,6 +290,7 @@ describe("EventTile", () => {
             } as IEncryptedEventInfo);
 
             const { container } = getComponent();
+            await act(flushPromises);
 
             const eventTiles = container.getElementsByClassName("mx_EventTile");
             expect(eventTiles).toHaveLength(1);
@@ -315,8 +313,9 @@ describe("EventTile", () => {
                 sender: UNTRUSTED_DEVICE,
             } as IEncryptedEventInfo);
 
-            act(() => {
+            await act(async () => {
                 mxEvent.makeReplaced(replacementEvent);
+                flushPromises();
             });
 
             // check it was updated
@@ -343,6 +342,7 @@ describe("EventTile", () => {
             } as IEncryptedEventInfo);
 
             const { container } = getComponent();
+            await act(flushPromises);
 
             const eventTiles = container.getElementsByClassName("mx_EventTile");
             expect(eventTiles).toHaveLength(1);
@@ -361,8 +361,9 @@ describe("EventTile", () => {
                 event: true,
             });
 
-            act(() => {
+            await act(async () => {
                 mxEvent.makeReplaced(replacementEvent);
+                await flushPromises();
             });
 
             // check it was updated
@@ -371,6 +372,104 @@ describe("EventTile", () => {
             expect(container.getElementsByClassName("mx_EventTile_e2eIcon")[0].classList).toContain(
                 "mx_EventTile_e2eIcon_warning",
             );
+        });
+    });
+
+    describe("event highlighting", () => {
+        const isHighlighted = (container: HTMLElement): boolean =>
+            !!container.getElementsByClassName("mx_EventTile_highlight").length;
+
+        beforeEach(() => {
+            mocked(client.getPushActionsForEvent).mockReturnValue(null);
+        });
+
+        it("does not highlight message where message matches no push actions", () => {
+            const { container } = getComponent();
+
+            expect(client.getPushActionsForEvent).toHaveBeenCalledWith(mxEvent);
+            expect(isHighlighted(container)).toBeFalsy();
+        });
+
+        it(`does not highlight when message's push actions does not have a highlight tweak`, () => {
+            mocked(client.getPushActionsForEvent).mockReturnValue({ notify: true, tweaks: {} });
+            const { container } = getComponent();
+
+            expect(isHighlighted(container)).toBeFalsy();
+        });
+
+        it(`highlights when message's push actions have a highlight tweak`, () => {
+            mocked(client.getPushActionsForEvent).mockReturnValue({
+                notify: true,
+                tweaks: { [TweakName.Highlight]: true },
+            });
+            const { container } = getComponent();
+
+            expect(isHighlighted(container)).toBeTruthy();
+        });
+
+        describe("when a message has been edited", () => {
+            let editingEvent: MatrixEvent;
+
+            beforeEach(() => {
+                editingEvent = new MatrixEvent({
+                    type: "m.room.message",
+                    room_id: ROOM_ID,
+                    sender: "@alice:example.org",
+                    content: {
+                        "msgtype": "m.text",
+                        "body": "* edited body",
+                        "m.new_content": {
+                            msgtype: "m.text",
+                            body: "edited body",
+                        },
+                        "m.relates_to": {
+                            rel_type: "m.replace",
+                            event_id: mxEvent.getId(),
+                        },
+                    },
+                });
+                mxEvent.makeReplaced(editingEvent);
+            });
+
+            it("does not highlight message where no version of message matches any push actions", () => {
+                const { container } = getComponent();
+
+                // get push actions for both events
+                expect(client.getPushActionsForEvent).toHaveBeenCalledWith(mxEvent);
+                expect(client.getPushActionsForEvent).toHaveBeenCalledWith(editingEvent);
+                expect(isHighlighted(container)).toBeFalsy();
+            });
+
+            it(`does not highlight when no version of message's push actions have a highlight tweak`, () => {
+                mocked(client.getPushActionsForEvent).mockReturnValue({ notify: true, tweaks: {} });
+                const { container } = getComponent();
+
+                expect(isHighlighted(container)).toBeFalsy();
+            });
+
+            it(`highlights when previous version of message's push actions have a highlight tweak`, () => {
+                mocked(client.getPushActionsForEvent).mockImplementation((event: MatrixEvent) => {
+                    if (event === mxEvent) {
+                        return { notify: true, tweaks: { [TweakName.Highlight]: true } };
+                    }
+                    return { notify: false, tweaks: {} };
+                });
+                const { container } = getComponent();
+
+                expect(isHighlighted(container)).toBeTruthy();
+            });
+
+            it(`highlights when new version of message's push actions have a highlight tweak`, () => {
+                mocked(client.getPushActionsForEvent).mockImplementation((event: MatrixEvent) => {
+                    if (event === editingEvent) {
+                        return { notify: true, tweaks: { [TweakName.Highlight]: true } };
+                    }
+                    return { notify: false, tweaks: {} };
+                });
+                const { container } = getComponent();
+
+                expect(isHighlighted(container)).toBeTruthy();
+            });
         });
     });
 });

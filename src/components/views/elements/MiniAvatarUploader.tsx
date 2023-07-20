@@ -59,7 +59,7 @@ const MiniAvatarUploader: React.FC<IProps> = ({
         setShow(false);
     }, 13000); // hide after being shown for 10 seconds
 
-    const uploadRef = useRef<HTMLInputElement>();
+    const uploadRef = useRef<HTMLInputElement>(null);
 
     const label = hasAvatar || busy ? hasAvatarLabel : noAvatarLabel;
 
@@ -97,7 +97,7 @@ const MiniAvatarUploader: React.FC<IProps> = ({
                 })}
                 disabled={busy}
                 onClick={() => {
-                    uploadRef.current.click();
+                    uploadRef.current?.click();
                 }}
                 onMouseOver={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}

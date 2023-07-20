@@ -41,9 +41,9 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
 
     const [busy, setBusy] = useState<boolean>(false);
     const [name, setName] = useState("");
-    const spaceNameField = useRef<Field>();
+    const spaceNameField = useRef<Field>(null);
     const [alias, setAlias] = useState("");
-    const spaceAliasField = useRef<RoomAliasField>();
+    const spaceAliasField = useRef<RoomAliasField>(null);
     const [avatar, setAvatar] = useState<File | undefined>();
     const [topic, setTopic] = useState<string>("");
 
@@ -56,18 +56,22 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
 
     const onCreateSubspaceClick = async (e: ButtonEvent): Promise<void> => {
         e.preventDefault();
-        if (busy || !spaceNameField.current || !spaceAliasField.current) return;
+        if (busy) return;
 
         setBusy(true);
         // require & validate the space name field
-        if (!(await spaceNameField.current.validate({ allowEmpty: false }))) {
+        if (spaceNameField.current && !(await spaceNameField.current.validate({ allowEmpty: false }))) {
             spaceNameField.current.focus();
             spaceNameField.current.validate({ allowEmpty: false, focused: true });
             setBusy(false);
             return;
         }
         // validate the space name alias field but do not require it
-        if (joinRule === JoinRule.Public && !(await spaceAliasField.current.validate({ allowEmpty: true }))) {
+        if (
+            spaceAliasField.current &&
+            joinRule === JoinRule.Public &&
+            (await spaceAliasField.current.validate({ allowEmpty: true }))
+        ) {
             spaceAliasField.current.focus();
             spaceAliasField.current.validate({ allowEmpty: true, focused: true });
             setBusy(false);
@@ -75,7 +79,16 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
         }
 
         try {
-            await createSpace(name, joinRule === JoinRule.Public, alias, topic, avatar, {}, { parentSpace, joinRule });
+            await createSpace(
+                space.client,
+                name,
+                joinRule === JoinRule.Public,
+                alias,
+                topic,
+                avatar,
+                {},
+                { parentSpace, joinRule },
+            );
 
             onFinished(true);
         } catch (e) {

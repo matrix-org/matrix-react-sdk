@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,17 +35,23 @@ export const useVoiceBroadcastPlayback = (
         position: number;
         timeLeft: number;
     };
-    sender: RoomMember;
+    sender: RoomMember | null;
     liveness: VoiceBroadcastLiveness;
     playbackState: VoiceBroadcastPlaybackState;
     toggle(): void;
     room: Room;
 } => {
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
     const room = client.getRoom(playback.infoEvent.getRoomId());
 
     if (!room) {
         throw new Error(`Voice Broadcast room not found (event ${playback.infoEvent.getId()})`);
+    }
+
+    const sender = playback.infoEvent.sender;
+
+    if (!sender) {
+        throw new Error(`Voice Broadcast sender not found (event ${playback.infoEvent.getId()})`);
     }
 
     const playbackToggle = (): void => {
@@ -87,7 +93,7 @@ export const useVoiceBroadcastPlayback = (
         liveness: liveness,
         playbackState,
         room: room,
-        sender: playback.infoEvent.sender,
+        sender,
         toggle: playbackToggle,
     };
 };

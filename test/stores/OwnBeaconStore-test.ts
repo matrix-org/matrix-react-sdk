@@ -59,6 +59,7 @@ describe("OwnBeaconStore", () => {
     const bobId = "@bob:server.org";
     const mockClient = getMockClientWithEventEmitter({
         getUserId: jest.fn().mockReturnValue(aliceId),
+        getSafeUserId: jest.fn().mockReturnValue(aliceId),
         getVisibleRooms: jest.fn().mockReturnValue([]),
         unstable_setLiveBeacon: jest.fn().mockResolvedValue({ event_id: "1" }),
         sendEvent: jest.fn().mockResolvedValue({ event_id: "1" }),
@@ -1100,7 +1101,10 @@ describe("OwnBeaconStore", () => {
             // still sharing
             expect(mockClient.unstable_setLiveBeacon).not.toHaveBeenCalled();
             expect(store.isMonitoringLiveLocation).toEqual(true);
-            expect(errorLogSpy).toHaveBeenCalledWith("Geolocation failed", "error message");
+            expect(errorLogSpy).toHaveBeenCalledWith(
+                "Geolocation failed",
+                expect.objectContaining({ message: "error message" }),
+            );
         });
 
         it("publishes last known position after 30s of inactivity", async () => {

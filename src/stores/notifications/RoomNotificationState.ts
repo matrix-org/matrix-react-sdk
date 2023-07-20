@@ -59,7 +59,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
     };
 
     private handleReadReceipt = (event: MatrixEvent, room: Room): void => {
-        if (!readReceiptChangeIsFor(event, MatrixClientPeg.get())) return; // not our own - ignore
+        if (!readReceiptChangeIsFor(event, MatrixClientPeg.safeGet())) return; // not our own - ignore
         if (room.roomId !== this.room.roomId) return; // not for us - ignore
         this.updateNotificationState();
     };
@@ -93,9 +93,12 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         const snapshot = this.snapshot();
 
         const { color, symbol, count } = RoomNotifs.determineUnreadState(this.room);
+        const muted =
+            RoomNotifs.getRoomNotifsState(this.room.client, this.room.roomId) === RoomNotifs.RoomNotifState.Mute;
         this._color = color;
         this._symbol = symbol;
         this._count = count;
+        this._muted = muted;
 
         // finally, publish an update if needed
         this.emitIfUpdated(snapshot);

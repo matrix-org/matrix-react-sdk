@@ -45,9 +45,9 @@ export default class JSONExporter extends Exporter {
     protected createJSONString(): string {
         const exportDate = formatFullDateNoDayNoTime(new Date());
         const creator = this.room.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const creatorName = this.room?.getMember(creator)?.rawDisplayName || creator;
+        const creatorName = (creator && this.room?.getMember(creator)?.rawDisplayName) || creator;
         const topic = this.room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic || "";
-        const exporter = this.client.getUserId()!;
+        const exporter = this.room.client.getUserId()!;
         const exporterName = this.room?.getMember(exporter)?.rawDisplayName || exporter;
         const jsonObject = {
             room_name: this.room.name,
@@ -93,7 +93,7 @@ export default class JSONExporter extends Exporter {
                 true,
             );
             if (this.cancelled) return this.cleanUp();
-            if (!haveRendererForEvent(event, false)) continue;
+            if (!haveRendererForEvent(event, this.room.client, false)) continue;
             this.messages.push(await this.getJSONString(event));
         }
         return this.createJSONString();

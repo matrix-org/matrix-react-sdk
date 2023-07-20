@@ -60,6 +60,7 @@ import { setUpVoiceBroadcastPreRecording } from "../../../voice-broadcast/utils/
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
+import { UIFeature } from "../../../settings/UIFeature";
 
 let instanceCount = 0;
 
@@ -82,7 +83,7 @@ function SendButton(props: ISendButtonProps): JSX.Element {
 interface IProps extends MatrixClientProps {
     room: Room;
     resizeNotifier: ResizeNotifier;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     replyToEvent?: MatrixEvent;
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
@@ -106,6 +107,7 @@ interface IState {
 }
 
 export class MessageComposer extends React.Component<IProps, IState> {
+    private tooltipId = `mx_MessageComposer_${Math.random()}`;
     private dispatcherRef?: string;
     private messageComposerInput = createRef<SendMessageComposerClass>();
     private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
@@ -241,7 +243,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
     private waitForOwnMember(): void {
         // If we have the member already, do that
-        const me = this.props.room.getMember(MatrixClientPeg.get().getUserId()!);
+        const me = this.props.room.getMember(MatrixClientPeg.safeGet().getUserId()!);
         if (me) {
             this.setState({ me });
             return;
@@ -250,7 +252,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         // The members should already be loading, and loadMembersIfNeeded
         // will return the promise for the existing operation
         this.props.room.loadMembersIfNeeded().then(() => {
-            const me = this.props.room.getMember(MatrixClientPeg.get().getUserId()!);
+            const me = this.props.room.getMember(MatrixClientPeg.safeGet().getSafeUserId()) ?? undefined;
             this.setState({ me });
         });
     }
@@ -269,14 +271,15 @@ export class MessageComposer extends React.Component<IProps, IState> {
         ev.preventDefault();
 
         const replacementRoomId = this.context.tombstone?.getContent()["replacement_room"];
-        const replacementRoom = MatrixClientPeg.get().getRoom(replacementRoomId);
+        const replacementRoom = MatrixClientPeg.safeGet().getRoom(replacementRoomId);
         let createEventId: string | undefined;
         if (replacementRoom) {
             const createEvent = replacementRoom.currentState.getStateEvents(EventType.RoomCreate, "");
             if (createEvent?.getId()) createEventId = createEvent.getId();
         }
 
-        const viaServers = [this.context.tombstone.getSender().split(":").slice(1).join(":")];
+        const sender = this.context.tombstone?.getSender();
+        const viaServers = sender ? [sender.split(":").slice(1).join(":")] : undefined;
 
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
@@ -369,7 +372,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         const { isRichTextEnabled, composerContent } = this.state;
         const convertedContent = isRichTextEnabled
             ? await richToPlain(composerContent)
-            : await plainToRich(composerContent);
+            : await plainToRich(composerContent, false);
 
         this.setState({
             isRichTextEnabled: !isRichTextEnabled,
@@ -468,7 +471,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         const hasE2EIcon = Boolean(!this.state.isWysiwygLabEnabled && this.props.e2eStatus);
         const e2eIcon = hasE2EIcon && (
-            <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" />
+            <E2EIcon key="e2eIcon" status={this.props.e2eStatus!} className="mx_MessageComposer_e2eIcon" />
         );
 
         const controls: ReactNode[] = [];
@@ -524,7 +527,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
             const continuesLink = replacementRoomId ? (
                 <a
-                    href={makeRoomPermalink(replacementRoomId)}
+                    href={makeRoomPermalink(MatrixClientPeg.safeGet(), replacementRoomId)}
                     className="mx_MessageComposer_roomReplaced_link"
                     onClick={this.onTombstoneClick}
                 >
@@ -559,11 +562,15 @@ export class MessageComposer extends React.Component<IProps, IState> {
             );
         }
 
-        let recordingTooltip;
+        let recordingTooltip: JSX.Element | undefined;
         if (this.state.recordingTimeLeftSeconds) {
             const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
             recordingTooltip = (
-                <Tooltip label={_t("%(seconds)ss left", { seconds: secondsLeft })} alignment={Alignment.Top} />
+                <Tooltip
+                    id={this.tooltipId}
+                    label={_t("%(seconds)ss left", { seconds: secondsLeft })}
+                    alignment={Alignment.Top}
+                />
             );
         }
 
@@ -581,7 +588,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
             />,
         );
 
-        const showSendButton = !this.state.isComposerEmpty || this.state.haveRecording;
+        const showSendButton = canSendMessages && (!this.state.isComposerEmpty || this.state.haveRecording);
 
         const classes = classNames({
             "mx_MessageComposer": true,
@@ -591,7 +598,11 @@ export class MessageComposer extends React.Component<IProps, IState> {
         });
 
         return (
-            <div className={classes} ref={this.ref}>
+            <div
+                className={classes}
+                ref={this.ref}
+                aria-describedby={this.state.recordingTimeLeftSeconds ? this.tooltipId : undefined}
+            >
                 {recordingTooltip}
                 <div className="mx_MessageComposer_wrapper">
                     <ReplyPreview
@@ -613,7 +624,9 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                     relation={this.props.relation}
                                     onRecordStartEndClick={this.onRecordStartEndClick}
                                     setStickerPickerOpen={this.setStickerPickerOpen}
-                                    showLocationButton={!window.electron}
+                                    showLocationButton={
+                                        !window.electron && SettingsStore.getValue(UIFeature.LocationSharing)
+                                    }
                                     showPollsButton={this.state.showPollsButton}
                                     showStickersButton={this.showStickersButton}
                                     isRichTextEnabled={this.state.isRichTextEnabled}
@@ -623,7 +636,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                     onStartVoiceBroadcastClick={() => {
                                         setUpVoiceBroadcastPreRecording(
                                             this.props.room,
-                                            MatrixClientPeg.get(),
+                                            MatrixClientPeg.safeGet(),
                                             SdkContextClass.instance.voiceBroadcastPlaybacksStore,
                                             SdkContextClass.instance.voiceBroadcastRecordingsStore,
                                             SdkContextClass.instance.voiceBroadcastPreRecordingStore,

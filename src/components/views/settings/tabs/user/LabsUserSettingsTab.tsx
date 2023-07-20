@@ -23,41 +23,21 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SdkConfig from "../../../../../SdkConfig";
 import BetaCard from "../../../beta/BetaCard";
 import SettingsFlag from "../../../elements/SettingsFlag";
-import { defaultWatchManager, LabGroup, labGroupNames } from "../../../../../settings/Settings";
+import { LabGroup, labGroupNames } from "../../../../../settings/Settings";
 import { EnhancedMap } from "../../../../../utils/maps";
-import { arrayHasDiff } from "../../../../../utils/arrays";
+import { SettingsSection } from "../../shared/SettingsSection";
+import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
+import SettingsTab from "../SettingsTab";
 
-interface State {
-    labs: string[];
-    betas: string[];
-}
-
-export default class LabsUserSettingsTab extends React.Component<{}, State> {
-    private readonly features = SettingsStore.getFeatureSettingNames();
+export default class LabsUserSettingsTab extends React.Component<{}> {
+    private readonly labs: string[];
+    private readonly betas: string[];
 
     public constructor(props: {}) {
         super(props);
 
-        this.state = {
-            betas: [],
-            labs: [],
-        };
-    }
-
-    public componentDidMount(): void {
-        this.features.forEach((feature) => {
-            defaultWatchManager.watchSetting(feature, null, this.onChange);
-        });
-        this.onChange();
-    }
-
-    public componentWillUnmount(): void {
-        defaultWatchManager.unwatchSetting(this.onChange);
-    }
-
-    private onChange = (): void => {
-        const features = SettingsStore.getFeatureSettingNames().filter((f) => SettingsStore.isEnabled(f));
-        const [_labs, betas] = features.reduce(
+        const features = SettingsStore.getFeatureSettingNames();
+        const [labs, betas] = features.reduce(
             (arr, f) => {
                 arr[SettingsStore.getBetaInfo(f) ? 1 : 0].push(f);
                 return arr;
@@ -65,30 +45,32 @@ export default class LabsUserSettingsTab extends React.Component<{}, State> {
             [[], []] as [string[], string[]],
         );
 
-        const labs = SdkConfig.get("show_labs_settings") ? _labs : [];
-        if (arrayHasDiff(labs, this.state.labs) || arrayHasDiff(betas, this.state.betas)) {
-            this.setState({ labs, betas });
+        this.labs = labs;
+        this.betas = betas;
+
+        if (!SdkConfig.get("show_labs_settings")) {
+            this.labs = [];
         }
-    };
+    }
 
     public render(): React.ReactNode {
         let betaSection: JSX.Element | undefined;
-        if (this.state.betas.length) {
+        if (this.betas.length) {
             betaSection = (
-                <div data-testid="labs-beta-section" className="mx_SettingsTab_section">
-                    {this.state.betas.map((f) => (
+                <>
+                    {this.betas.map((f) => (
                         <BetaCard key={f} featureId={f} />
                     ))}
-                </div>
+                </>
             );
         }
 
         let labsSections: JSX.Element | undefined;
-        if (this.state.labs.length) {
+        if (this.labs.length) {
             const groups = new EnhancedMap<LabGroup, JSX.Element[]>();
-            this.state.labs.forEach((f) => {
+            this.labs.forEach((f) => {
                 groups
-                    .getOrCreate(SettingsStore.getLabGroup(f), [])
+                    .getOrCreate(SettingsStore.getLabGroup(f)!, [])
                     .push(<SettingsFlag level={SettingLevel.DEVICE} name={f} key={f} />);
             });
 
@@ -114,31 +96,35 @@ export default class LabsUserSettingsTab extends React.Component<{}, State> {
             labsSections = (
                 <>
                     {sortBy(Array.from(groups.entries()), "0").map(([group, flags]) => (
-                        <div className="mx_SettingsTab_section" key={group} data-testid={`labs-group-${group}`}>
-                            <span className="mx_SettingsTab_subheading">{_t(labGroupNames[group])}</span>
+                        <SettingsSubsection
+                            key={group}
+                            data-testid={`labs-group-${group}`}
+                            heading={_t(labGroupNames[group])}
+                        >
                             {flags}
-                        </div>
+                        </SettingsSubsection>
                     ))}
                 </>
             );
         }
 
         return (
-            <div className="mx_SettingsTab mx_LabsUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Upcoming features")}</div>
-                <div className="mx_SettingsTab_subsectionText">
-                    {_t(
-                        "What's next for %(brand)s? " +
-                            "Labs are the best way to get things early, " +
-                            "test out new features and help shape them before they actually launch.",
-                        { brand: SdkConfig.get("brand") },
-                    )}
-                </div>
-                {betaSection}
+            <SettingsTab>
+                <SettingsSection heading={_t("Upcoming features")}>
+                    <SettingsSubsectionText>
+                        {_t(
+                            "What's next for %(brand)s? " +
+                                "Labs are the best way to get things early, " +
+                                "test out new features and help shape them before they actually launch.",
+                            { brand: SdkConfig.get("brand") },
+                        )}
+                    </SettingsSubsectionText>
+                    {betaSection}
+                </SettingsSection>
+
                 {labsSections && (
-                    <>
-                        <div className="mx_SettingsTab_heading">{_t("Early previews")}</div>
-                        <div className="mx_SettingsTab_subsectionText">
+                    <SettingsSection heading={_t("Early previews")}>
+                        <SettingsSubsectionText>
                             {_t(
                                 "Feeling experimental? " +
                                     "Try out our latest ideas in development. " +
@@ -160,11 +146,11 @@ export default class LabsUserSettingsTab extends React.Component<{}, State> {
                                     },
                                 },
                             )}
-                        </div>
+                        </SettingsSubsectionText>
                         {labsSections}
-                    </>
+                    </SettingsSection>
                 )}
-            </div>
+            </SettingsTab>
         );
     }
 }

@@ -56,7 +56,7 @@ class FilePanel extends React.Component<IProps, IState> {
     // This is used to track if a decrypted event was a live event and should be
     // added to the timeline.
     private decryptingEvents = new Set<string>();
-    public noRoom: boolean;
+    public noRoom = false;
     private card = createRef<HTMLDivElement>();
 
     public state: IState = {
@@ -67,14 +67,14 @@ class FilePanel extends React.Component<IProps, IState> {
     private onRoomTimeline = (
         ev: MatrixEvent,
         room: Room | undefined,
-        toStartOfTimeline: boolean,
+        toStartOfTimeline: boolean | undefined,
         removed: boolean,
         data: IRoomTimelineData,
     ): void => {
-        if (room?.roomId !== this.props?.roomId) return;
+        if (room?.roomId !== this.props.roomId) return;
         if (toStartOfTimeline || !data || !data.liveEvent || ev.isRedacted()) return;
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         client.decryptEventIfNeeded(ev);
 
         if (ev.isBeingDecrypted()) {
@@ -109,11 +109,11 @@ class FilePanel extends React.Component<IProps, IState> {
     }
 
     public async componentDidMount(): Promise<void> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
         await this.updateTimelineSet(this.props.roomId);
 
-        if (!MatrixClientPeg.get().isRoomEncrypted(this.props.roomId)) return;
+        if (!client.isRoomEncrypted(this.props.roomId)) return;
 
         // The timelineSets filter makes sure that encrypted events that contain
         // URLs never get added to the timeline, even if they are live events.
@@ -133,7 +133,7 @@ class FilePanel extends React.Component<IProps, IState> {
         const client = MatrixClientPeg.get();
         if (client === null) return;
 
-        if (!MatrixClientPeg.get().isRoomEncrypted(this.props.roomId)) return;
+        if (!client.isRoomEncrypted(this.props.roomId)) return;
 
         if (EventIndexPeg.get() !== null) {
             client.removeListener(RoomEvent.Timeline, this.onRoomTimeline);
@@ -142,9 +142,9 @@ class FilePanel extends React.Component<IProps, IState> {
     }
 
     public async fetchFileEventsServer(room: Room): Promise<EventTimelineSet> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
-        const filter = new Filter(client.credentials.userId);
+        const filter = new Filter(client.getSafeUserId());
         filter.setDefinition({
             room: {
                 timeline: {
@@ -154,11 +154,8 @@ class FilePanel extends React.Component<IProps, IState> {
             },
         });
 
-        const filterId = await client.getOrCreateFilter("FILTER_FILES_" + client.credentials.userId, filter);
-        filter.filterId = filterId;
-        const timelineSet = room.getOrCreateFilteredTimelineSet(filter);
-
-        return timelineSet;
+        filter.filterId = await client.getOrCreateFilter("FILTER_FILES_" + client.credentials.userId, filter);
+        return room.getOrCreateFilteredTimelineSet(filter);
     }
 
     private onPaginationRequest = (
@@ -166,7 +163,7 @@ class FilePanel extends React.Component<IProps, IState> {
         direction: Direction,
         limit: number,
     ): Promise<boolean> => {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const eventIndex = EventIndexPeg.get();
         const roomId = this.props.roomId;
 
@@ -188,7 +185,7 @@ class FilePanel extends React.Component<IProps, IState> {
     };
 
     public async updateTimelineSet(roomId: string): Promise<void> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const room = client.getRoom(roomId);
         const eventIndex = EventIndexPeg.get();
 
@@ -224,7 +221,7 @@ class FilePanel extends React.Component<IProps, IState> {
     }
 
     public render(): React.ReactNode {
-        if (MatrixClientPeg.get().isGuest()) {
+        if (MatrixClientPeg.safeGet().isGuest()) {
             return (
                 <BaseCard className="mx_FilePanel mx_RoomView_messageListWrapper" onClose={this.props.onClose}>
                     <div className="mx_RoomView_empty">
@@ -259,7 +256,7 @@ class FilePanel extends React.Component<IProps, IState> {
             </div>
         );
 
-        const isRoomEncrypted = this.noRoom ? false : MatrixClientPeg.get().isRoomEncrypted(this.props.roomId);
+        const isRoomEncrypted = this.noRoom ? false : MatrixClientPeg.safeGet().isRoomEncrypted(this.props.roomId);
 
         if (this.state.timelineSet) {
             return (
@@ -276,7 +273,9 @@ class FilePanel extends React.Component<IProps, IState> {
                         withoutScrollContainer
                         ref={this.card}
                     >
-                        <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
+                        {this.card.current && (
+                            <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
+                        )}
                         <SearchWarning isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
                         <TimelinePanel
                             manageReadReceipts={false}

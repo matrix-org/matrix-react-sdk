@@ -75,7 +75,7 @@ export default abstract class BasePlatform {
         this.startUpdateCheck = this.startUpdateCheck.bind(this);
     }
 
-    public abstract getConfig(): Promise<IConfigOptions>;
+    public abstract getConfig(): Promise<IConfigOptions | undefined>;
 
     public abstract getDefaultDeviceDisplayName(): string;
 
@@ -441,5 +441,13 @@ export default abstract class BasePlatform {
         } catch (e) {
             logger.error("idbDelete failed in destroyPickleKey", e);
         }
+    }
+
+    /**
+     * Clear app storage, called when logging out to perform data clean up.
+     */
+    public async clearStorage(): Promise<void> {
+        window.sessionStorage.clear();
+        window.localStorage.clear();
     }
 }

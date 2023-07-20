@@ -22,7 +22,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 
-import { MatrixClientPeg } from "../MatrixClientPeg";
+import { filterValidMDirect } from "./dm/filterValidMDirect";
 
 /**
  * Class that takes a Matrix Client and flips the m.direct map
@@ -38,22 +38,22 @@ export default class DMRoomMap {
     private roomToUser: { [key: string]: string } | null = null;
     private userToRooms: { [key: string]: string[] } | null = null;
     private hasSentOutPatchDirectAccountDataPatch: boolean;
-    private mDirectEvent: { [key: string]: string[] };
+    private mDirectEvent!: { [key: string]: string[] };
 
     public constructor(private readonly matrixClient: MatrixClient) {
         // see onAccountData
         this.hasSentOutPatchDirectAccountDataPatch = false;
 
-        const mDirectEvent = matrixClient.getAccountData(EventType.Direct)?.getContent() ?? {};
-        this.mDirectEvent = { ...mDirectEvent }; // copy as we will mutate
+        const mDirectRawContent = matrixClient.getAccountData(EventType.Direct)?.getContent() ?? {};
+        this.setMDirectFromContent(mDirectRawContent);
     }
 
     /**
      * Makes and returns a new shared instance that can then be accessed
      * with shared(). This returned instance is not automatically started.
      */
-    public static makeShared(): DMRoomMap {
-        DMRoomMap.sharedInstance = new DMRoomMap(MatrixClientPeg.get());
+    public static makeShared(matrixClient: MatrixClient): DMRoomMap {
+        DMRoomMap.sharedInstance = new DMRoomMap(matrixClient);
         return DMRoomMap.sharedInstance;
     }
 
@@ -84,9 +84,26 @@ export default class DMRoomMap {
         this.matrixClient.removeListener(ClientEvent.AccountData, this.onAccountData);
     }
 
+    /**
+     * Filter m.direct content to contain only valid data and then sets it.
+     * Logs if invalid m.direct content occurs.
+     * {@link filterValidMDirect}
+     *
+     * @param content - Raw m.direct content
+     */
+    private setMDirectFromContent(content: unknown): void {
+        const { valid, filteredContent } = filterValidMDirect(content);
+
+        if (!valid) {
+            logger.warn("Invalid m.direct content occurred", content);
+        }
+
+        this.mDirectEvent = filteredContent;
+    }
+
     private onAccountData = (ev: MatrixEvent): void => {
         if (ev.getType() == EventType.Direct) {
-            this.mDirectEvent = { ...ev.getContent() }; // copy as we will mutate
+            this.setMDirectFromContent(ev.getContent());
             this.userToRooms = null;
             this.roomToUser = null;
         }
@@ -157,7 +174,7 @@ export default class DMRoomMap {
         }
 
         const joinedRooms = commonRooms
-            .map((r) => MatrixClientPeg.get().getRoom(r))
+            .map((r) => this.matrixClient.getRoom(r))
             .filter((r) => r && r.getMyMembership() === "join");
 
         return joinedRooms[0];
@@ -187,10 +204,16 @@ export default class DMRoomMap {
 
     public getUniqueRoomsWithIndividuals(): { [userId: string]: Room } {
         if (!this.roomToUser) return {}; // No rooms means no map.
-        return Object.keys(this.roomToUser)
-            .map((r) => ({ userId: this.getUserIdForRoomId(r), room: this.matrixClient.getRoom(r) }))
-            .filter((r) => r.userId && r.room && r.room.getInvitedAndJoinedMemberCount() === 2)
-            .reduce((obj, r) => (obj[r.userId] = r.room) && obj, {} as Record<string, Room>);
+        // map roomToUser to valid rooms with two participants
+        return Object.keys(this.roomToUser).reduce((acc, roomId: string) => {
+            const userId = this.getUserIdForRoomId(roomId);
+            const room = this.matrixClient.getRoom(roomId);
+            const hasTwoMembers = room?.getInvitedAndJoinedMemberCount() === 2;
+            if (userId && room && hasTwoMembers) {
+                acc[userId] = room;
+            }
+            return acc;
+        }, {} as Record<string, Room>);
     }
 
     /**
@@ -213,9 +236,7 @@ export default class DMRoomMap {
                 // to avoid multiple devices fighting to correct
                 // the account data, only try to send the corrected
                 // version once.
-                logger.warn(
-                    `Invalid m.direct account data detected ` + `(self-chats that shouldn't be), patching it up.`,
-                );
+                logger.warn(`Invalid m.direct account data detected (self-chats that shouldn't be), patching it up.`);
                 if (neededPatching && !this.hasSentOutPatchDirectAccountDataPatch) {
                     this.hasSentOutPatchDirectAccountDataPatch = true;
                     this.matrixClient.setAccountData(EventType.Direct, userToRooms);

@@ -35,20 +35,23 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
             aria-hidden="true"
             class="mx_BaseAvatar_image"
             data-testid="avatar-img"
+            loading="lazy"
             src="data:image/png;base64,00"
             style="width: 54px; height: 54px;"
           />
         </span>
         <div
+          aria-describedby="mx_TooltipTarget_abdefghi"
           class="mx_TextWithTooltip_target mx_RoomSummaryCard_e2ee"
           tabindex="0"
         />
       </div>
-      <h2
+      <h1
+        class="mx_RoomSummaryCard_roomName"
         title="!room:domain.org"
       >
         !room:domain.org
-      </h2>
+      </h1>
       <div
         class="mx_RoomSummaryCard_alias"
         title=""
@@ -61,9 +64,9 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
       <div
         class="mx_BaseCard_Group mx_RoomSummaryCard_aboutGroup"
       >
-        <h1>
+        <h2>
           About
-        </h1>
+        </h2>
         <div
           class="mx_AccessibleButton mx_BaseCard_Button mx_RoomSummaryCard_Button mx_RoomSummaryCard_icon_people"
           role="button"
@@ -82,6 +85,13 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
           tabindex="0"
         >
           Files
+        </div>
+        <div
+          class="mx_AccessibleButton mx_BaseCard_Button mx_RoomSummaryCard_Button mx_RoomSummaryCard_icon_poll"
+          role="button"
+          tabindex="0"
+        >
+          Poll history
         </div>
         <div
           class="mx_AccessibleButton mx_BaseCard_Button mx_RoomSummaryCard_Button mx_RoomSummaryCard_icon_export"
@@ -109,9 +119,9 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
       <div
         class="mx_BaseCard_Group mx_RoomSummaryCard_appsGroup"
       >
-        <h1>
+        <h2>
           Widgets
-        </h1>
+        </h2>
         <div
           class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
           role="button"

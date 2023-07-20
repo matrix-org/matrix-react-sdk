@@ -124,7 +124,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
     private buildReadReceiptInfo(target: IReadReceiptInfo = {}): IReadReceiptInfo {
         const element = this.avatar.current;
         // this is the mx_ReadReceiptsGroup_container
-        const horizontalContainer = element.offsetParent;
+        const horizontalContainer = element?.offsetParent;
         if (!horizontalContainer || !(horizontalContainer instanceof HTMLElement)) {
             // this seems to happen sometimes for reasons I don't understand
             // the docs for `offsetParent` say it may be null if `display` is
@@ -165,7 +165,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
             return 0;
         }
 
-        return info.top + info.parent.getBoundingClientRect().top;
+        return (info.top ?? 0) + info.parent.getBoundingClientRect().top;
     }
 
     private animateMarker(): void {

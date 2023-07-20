@@ -27,6 +27,7 @@ import { shouldFormContinuation } from "../../structures/MessagePanel";
 import { wantsDateSeparator } from "../../../DateUtils";
 import LegacyCallEventGrouper, { buildLegacyCallEventGroupers } from "../../structures/LegacyCallEventGrouper";
 import { haveRendererForEvent } from "../../../events/EventTileFactory";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     // a list of strings to be highlighted in the results
@@ -64,27 +65,34 @@ export default class SearchResultTile extends React.Component<IProps> {
         const eventId = resultEvent.getId();
 
         const ts1 = resultEvent.getTs();
-        const ret = [<DateSeparator key={ts1 + "-search"} roomId={resultEvent.getRoomId()} ts={ts1} />];
+        const ret = [<DateSeparator key={ts1 + "-search"} roomId={resultEvent.getRoomId()!} ts={ts1} />];
         const layout = SettingsStore.getValue("layout");
         const isTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
         const alwaysShowTimestamps = SettingsStore.getValue("alwaysShowTimestamps");
 
+        const cli = MatrixClientPeg.safeGet();
         for (let j = 0; j < timeline.length; j++) {
             const mxEv = timeline[j];
-            let highlights;
+            let highlights: string[] | undefined;
             const contextual = !this.props.ourEventsIndexes.includes(j);
             if (!contextual) {
                 highlights = this.props.searchHighlights;
             }
 
-            if (haveRendererForEvent(mxEv, this.context?.showHiddenEvents)) {
+            if (haveRendererForEvent(mxEv, cli, this.context?.showHiddenEvents)) {
                 // do we need a date separator since the last event?
                 const prevEv = timeline[j - 1];
                 // is this a continuation of the previous message?
                 const continuation =
                     prevEv &&
                     !wantsDateSeparator(prevEv.getDate() || undefined, mxEv.getDate() || undefined) &&
-                    shouldFormContinuation(prevEv, mxEv, this.context?.showHiddenEvents, TimelineRenderingType.Search);
+                    shouldFormContinuation(
+                        prevEv,
+                        mxEv,
+                        cli,
+                        this.context?.showHiddenEvents,
+                        TimelineRenderingType.Search,
+                    );
 
                 let lastInSection = true;
                 const nextEv = timeline[j + 1];
@@ -99,6 +107,7 @@ export default class SearchResultTile extends React.Component<IProps> {
                         !shouldFormContinuation(
                             mxEv,
                             nextEv,
+                            cli,
                             this.context?.showHiddenEvents,
                             TimelineRenderingType.Search,
                         );

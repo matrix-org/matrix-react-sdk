@@ -49,7 +49,7 @@ export const usePublicRoomDirectory = (): {
     publicRooms: IPublicRoomsChunkRoom[];
     protocols: Protocols | null;
     config?: IPublicRoomDirectoryConfig | null;
-    setConfig(config: IPublicRoomDirectoryConfig): void;
+    setConfig(config: IPublicRoomDirectoryConfig | null): void;
     search(opts: IPublicRoomsOpts): Promise<boolean>;
 } => {
     const [publicRooms, setPublicRooms] = useState<IPublicRoomsChunkRoom[]>([]);
@@ -72,7 +72,7 @@ export const usePublicRoomDirectory = (): {
         } else if (thirdParty) {
             setProtocols(thirdParty);
         } else {
-            const response = await MatrixClientPeg.get().getThirdpartyProtocols();
+            const response = await MatrixClientPeg.safeGet().getThirdpartyProtocols();
             thirdParty = response;
             setProtocols(response);
         }
@@ -103,18 +103,18 @@ export const usePublicRoomDirectory = (): {
             if (query || roomTypes) {
                 opts.filter = {
                     generic_search_term: query,
-                    room_types: (await MatrixClientPeg.get().doesServerSupportUnstableFeature(
-                        "org.matrix.msc3827.stable",
-                    ))
-                        ? Array.from<RoomType | null>(roomTypes)
-                        : undefined,
+                    room_types:
+                        roomTypes &&
+                        (await MatrixClientPeg.safeGet().doesServerSupportUnstableFeature("org.matrix.msc3827.stable"))
+                            ? Array.from<RoomType | null>(roomTypes)
+                            : undefined,
                 };
             }
 
             updateQuery(opts);
             try {
                 setLoading(true);
-                const { chunk } = await MatrixClientPeg.get().publicRooms(opts);
+                const { chunk } = await MatrixClientPeg.safeGet().publicRooms(opts);
                 updateResult(opts, showNsfwPublicRooms ? chunk : chunk.filter(cheapNsfwFilter));
                 return true;
             } catch (e) {
@@ -166,9 +166,10 @@ export const usePublicRoomDirectory = (): {
     }, [protocols]);
 
     useEffect(() => {
-        localStorage.setItem(LAST_SERVER_KEY, config?.roomServer);
-        if (config?.instanceId) {
-            localStorage.setItem(LAST_INSTANCE_KEY, config?.instanceId);
+        if (!config) return;
+        localStorage.setItem(LAST_SERVER_KEY, config.roomServer);
+        if (config.instanceId) {
+            localStorage.setItem(LAST_INSTANCE_KEY, config.instanceId);
         } else {
             localStorage.removeItem(LAST_INSTANCE_KEY);
         }

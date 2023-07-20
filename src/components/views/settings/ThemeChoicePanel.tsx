@@ -30,6 +30,7 @@ import Field from "../elements/Field";
 import StyledRadioGroup from "../elements/StyledRadioGroup";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import PosthogTrackers from "../../../PosthogTrackers";
+import SettingsSubsection from "./shared/SettingsSubsection";
 
 interface IProps {}
 
@@ -49,7 +50,7 @@ interface IState extends IThemeState {
 }
 
 export default class ThemeChoicePanel extends React.Component<IProps, IState> {
-    private themeTimer: number;
+    private themeTimer?: number;
 
     public constructor(props: IProps) {
         super(props);
@@ -197,7 +198,7 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
         let systemThemeSection: JSX.Element | undefined;
         if (themeWatcher.isSystemThemeSupported()) {
             systemThemeSection = (
-                <div>
+                <div data-testid="checkbox-use-system-theme">
                     <StyledCheckbox
                         checked={this.state.useSystemTheme}
                         onChange={(e) => this.onUseSystemThemeChanged(e.target.checked)}
@@ -245,10 +246,9 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
 
         const orderedThemes = getOrderedThemes();
         return (
-            <div className="mx_SettingsTab_section mx_ThemeChoicePanel">
-                <span className="mx_SettingsTab_subheading">{_t("Theme")}</span>
+            <SettingsSubsection heading={_t("Theme")} data-testid="mx_ThemeChoicePanel">
                 {systemThemeSection}
-                <div className="mx_ThemeSelectors">
+                <div className="mx_ThemeChoicePanel_themeSelectors" data-testid="theme-choice-panel-selectors">
                     <StyledRadioGroup
                         name="theme"
                         definitions={orderedThemes.map((t) => ({
@@ -264,7 +264,7 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
                 </div>
                 {this.renderHighContrastCheckbox()}
                 {customThemeForm}
-            </div>
+            </SettingsSubsection>
         );
     }
 

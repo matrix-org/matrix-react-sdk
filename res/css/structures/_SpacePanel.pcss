@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$topLevelHeight: 32px;
-$nestedHeight: 24px;
-$gutterSize: 16px;
-$activeBorderTransparentGap: 1px;
-
-$activeBackgroundColor: $panel-actions;
-$activeBorderColor: $primary-content;
-
 .mx_SpacePanel {
+    --activeBackground-color: $panel-actions;
+    --activeBorder-color: $primary-content;
+    --activeBorder-transparent-gap: 1px;
+    --gutterSize: 16px;
+    --height-nested: 24px;
+    --height-topLevel: 32px;
+
     background-color: $spacePanel-bg-color;
     flex: 0 0 auto;
     padding: 0;
@@ -101,6 +100,8 @@ $activeBorderColor: $primary-content;
 
     .mx_SpaceItem.collapsed {
         & > .mx_SpaceButton > .mx_SpaceButton_toggleCollapse {
+            padding: 0 10px;
+            margin: 0 -10px;
             transform: rotate(-90deg);
         }
 
@@ -114,7 +115,7 @@ $activeBorderColor: $primary-content;
     }
 
     .mx_SpaceItem:not(.hasSubSpaces) > .mx_SpaceButton {
-        margin-left: $gutterSize;
+        margin-left: var(--gutterSize);
         min-width: 40px;
     }
 
@@ -128,12 +129,12 @@ $activeBorderColor: $primary-content;
 
         &.mx_SpaceButton_active {
             &:not(.mx_SpaceButton_narrow) .mx_SpaceButton_selectionWrapper {
-                background-color: $activeBackgroundColor;
+                background-color: var(--activeBackground-color);
             }
 
             &.mx_SpaceButton_narrow .mx_SpaceButton_selectionWrapper {
-                padding: $activeBorderTransparentGap;
-                border: 3px $activeBorderColor solid;
+                padding: var(--activeBorder-transparent-gap);
+                border: 3px var(--activeBorder-color) solid;
             }
         }
 
@@ -155,13 +156,13 @@ $activeBorderColor: $primary-content;
             display: block;
             text-overflow: ellipsis;
             overflow: hidden;
-            font-size: $font-14px;
-            line-height: $font-18px;
+            font: var(--cpd-font-body-md-regular);
         }
 
         .mx_SpaceButton_toggleCollapse {
-            width: $gutterSize;
-            min-width: $gutterSize;
+            width: var(--gutterSize);
+            padding: 10px 0;
+            min-width: var(--gutterSize);
             height: 20px;
             mask-position: center;
             mask-size: 20px;
@@ -171,17 +172,17 @@ $activeBorderColor: $primary-content;
         }
 
         .mx_SpaceButton_icon {
-            width: $topLevelHeight;
-            min-width: $topLevelHeight;
-            height: $topLevelHeight;
+            width: var(--height-topLevel);
+            min-width: var(--height-topLevel);
+            height: var(--height-topLevel);
             border-radius: 8px;
             position: relative;
 
             &::before {
                 position: absolute;
                 content: "";
-                width: $topLevelHeight;
-                height: $topLevelHeight;
+                width: var(--height-topLevel);
+                height: var(--height-topLevel);
                 top: 0;
                 left: 0;
                 mask-position: center;
@@ -273,7 +274,7 @@ $activeBorderColor: $primary-content;
             border-radius: 8px;
             background-color: $panel-actions;
             font-size: $font-15px !important; /* override inline style */
-            font-weight: $font-semi-bold;
+            font-weight: var(--cpd-font-weight-semibold);
             line-height: $font-18px;
 
             & + .mx_BaseAvatar_image {
@@ -341,10 +342,10 @@ $activeBorderColor: $primary-content;
         padding: 0 8px 16px 0;
 
         & > .mx_SpaceButton {
-            height: $topLevelHeight;
+            height: var(--height-topLevel);
 
             &.mx_SpaceButton_active::before {
-                height: $topLevelHeight;
+                height: var(--height-topLevel);
             }
         }
 
@@ -367,8 +368,9 @@ $activeBorderColor: $primary-content;
 
     .mx_UserMenu {
         padding: 0 2px 8px;
-        border-bottom: 1px solid $quinary-content;
+        border-bottom: 1px solid $separator;
         margin: 12px 14px 4px 18px;
+        max-width: 226px;
     }
 }
 
@@ -377,7 +379,7 @@ $activeBorderColor: $primary-content;
 
     .mx_SpacePanel_contextMenu_header {
         margin: 12px 16px 12px;
-        font-weight: $font-semi-bold;
+        font-weight: var(--cpd-font-weight-semibold);
         font-size: $font-15px;
         line-height: $font-18px;
         overflow: hidden;
@@ -429,7 +431,7 @@ $activeBorderColor: $primary-content;
         color: $tertiary-content;
         font-size: $font-10px;
         line-height: $font-12px;
-        font-weight: $font-semi-bold;
+        font-weight: var(--cpd-font-weight-semibold);
         //margin-left: 8px;
     }
 }

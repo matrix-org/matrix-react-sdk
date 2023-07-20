@@ -64,14 +64,14 @@ const UnreadIndicator: React.FC<IUnreadIndicatorProps> = ({ color }) => {
 
     const classes = classNames({
         mx_Indicator: true,
-        mx_RightPanel_headerButton_unreadIndicator: true,
+        mx_RoomHeader_button_unreadIndicator: true,
         mx_Indicator_bold: color === NotificationColor.Bold,
         mx_Indicator_gray: color === NotificationColor.Grey,
         mx_Indicator_red: color === NotificationColor.Red,
     });
     return (
         <>
-            <div className="mx_RightPanel_headerButton_unreadIndicator_bg" />
+            <div className="mx_RoomHeader_button_unreadIndicator_bg" />
             <div className={classes} />
         </>
     );
@@ -231,7 +231,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     private onRoomSummaryClicked = (): void => {
         // use roomPanelPhase rather than this.state.phase as it remembers the latest one if we close
         const currentPhase = RightPanelStore.instance.currentCard.phase;
-        if (ROOM_INFO_PHASES.includes(currentPhase)) {
+        if (currentPhase && ROOM_INFO_PHASES.includes(currentPhase)) {
             if (this.state.phase === currentPhase) {
                 this.setPhase(currentPhase);
             } else {
@@ -257,7 +257,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     };
 
     private onThreadsPanelClicked = (ev: ButtonEvent): void => {
-        if (RoomHeaderButtons.THREAD_PHASES.includes(this.state.phase)) {
+        if (this.state.phase && RoomHeaderButtons.THREAD_PHASES.includes(this.state.phase)) {
             RightPanelStore.instance.togglePanel(this.props.room?.roomId ?? null);
         } else {
             showThreadPanel();
@@ -301,7 +301,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                 title={_t("Threads")}
                 onClick={this.onThreadsPanelClicked}
                 isHighlighted={this.isPhase(RoomHeaderButtons.THREAD_PHASES)}
-                isUnread={this.state.threadNotificationColor > 0}
+                isUnread={this.state.threadNotificationColor > NotificationColor.None}
             >
                 <UnreadIndicator color={this.state.threadNotificationColor} />
             </HeaderButton>,
