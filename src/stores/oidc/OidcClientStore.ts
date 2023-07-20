@@ -55,11 +55,11 @@ export class OidcClientStore {
             const client = await this.getOidcClient();
 
             if (!client) {
-                throw new Error("No OIDC client")
+                throw new Error("No OIDC client");
             }
 
-            await client.revokeToken(accessToken!, 'access_token');
-            await client.revokeToken(refreshToken!, 'refresh_token');
+            await client.revokeToken(accessToken!, "access_token");
+            await client.revokeToken(refreshToken!, "refresh_token");
         } catch (error) {
             throw error;
         }
