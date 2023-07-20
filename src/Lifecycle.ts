@@ -67,7 +67,6 @@ import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
 import { completeOidcLogin } from "./utils/oidc/authorize";
 import { persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettings";
-import { OidcClientStore } from "./stores/oidc/OidcClientStore";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
