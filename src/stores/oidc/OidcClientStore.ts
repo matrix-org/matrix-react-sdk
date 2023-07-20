@@ -23,6 +23,7 @@ import { getStoredOidcTokenIssuer, getStoredOidcClientId } from "../../utils/oid
 
 /**
  * @experimental
+ * Stores information about configured OIDC provider
  */
 export class OidcClientStore {
     private oidcClient?: OidcClient;
@@ -31,10 +32,16 @@ export class OidcClientStore {
     private _accountManagementEndpoint?: string;
 
     public constructor(private readonly matrixClient: MatrixClient) {
-        this.getOidcClient();
         this.authenticatedIssuer = getStoredOidcTokenIssuer();
+        // don't bother initialising store when we didnt authenticate via oidc
+        if (this.authenticatedIssuer) {
+            this.getOidcClient();
+        }
     }
 
+    /**
+     * True when the active user is authenticated via OIDC
+     */
     public get isUserAuthenticatedWithOidc(): boolean {
         return !!this.authenticatedIssuer;
     }

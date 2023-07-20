@@ -31,6 +31,7 @@ jest.mock("matrix-js-sdk/src/oidc/discovery", () => ({
 describe("OidcClientStore", () => {
     const clientId = "test-client-id";
     const metadata = mockOpenIdConfiguration();
+    const account = metadata.issuer + "account";
     const mockSessionStorage: Record<string, string> = {
         mx_oidc_client_id: clientId,
         mx_oidc_token_issuer: metadata.issuer,
@@ -46,11 +47,13 @@ describe("OidcClientStore", () => {
             .mockImplementation((key) => mockSessionStorage[key as string] ?? null);
         mocked(discoverAndValidateAuthenticationConfig).mockClear().mockResolvedValue({
             metadata,
+            account,
             issuer: metadata.issuer,
         });
         mockClient.getClientWellKnown.mockReturnValue({
             [M_AUTHENTICATION.stable!]: {
                 issuer: metadata.issuer,
+                account,
             },
         });
         jest.spyOn(logger, "error").mockClear();
@@ -92,7 +95,9 @@ describe("OidcClientStore", () => {
         });
 
         it("should log and return when no clientId is found in storage", async () => {
-            jest.spyOn(sessionStorage.__proto__, "getItem").mockClear().mockReturnValue(null);
+            jest.spyOn(sessionStorage.__proto__, "getItem").mockImplementation((key) =>
+                key === "mx_oidc_token_issuer" ? metadata.issuer : null,
+            );
 
             const store = new OidcClientStore(mockClient);
 
@@ -128,6 +133,29 @@ describe("OidcClientStore", () => {
 
             expect(client?.settings.client_id).toEqual(clientId);
             expect(client?.settings.authority).toEqual(metadata.issuer);
+        });
+
+        it("should set account management endpoint when configured", async () => {
+            const store = new OidcClientStore(mockClient);
+
+            // @ts-ignore private property
+            await store.getOidcClient();
+
+            expect(store.accountManagementEndpoint).toEqual(account);
+        });
+
+        it("should set account management endpoint to issuer when not configured", async () => {
+            mocked(discoverAndValidateAuthenticationConfig).mockClear().mockResolvedValue({
+                metadata,
+                account: undefined,
+                issuer: metadata.issuer,
+            });
+            const store = new OidcClientStore(mockClient);
+
+            // @ts-ignore private property
+            await store.getOidcClient();
+
+            expect(store.accountManagementEndpoint).toEqual(metadata.issuer);
         });
 
         it("should reuse initialised oidc client", async () => {
