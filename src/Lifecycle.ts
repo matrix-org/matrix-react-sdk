@@ -224,9 +224,8 @@ export async function attemptDelegatedAuthLogin(
  */
 async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
     try {
-        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId, issuer } = await completeOidcLogin(
-            queryParams,
-        );
+        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId, issuer } =
+            await completeOidcLogin(queryParams);
 
         const {
             user_id: userId,
@@ -487,6 +486,22 @@ async function getStoredToken(storageKey: string): Promise<string | undefined> {
 }
 
 /**
+ * Retrieve access token, as stored by `persistCredentials`
+ * @returns Promise that resolves to token or undefined
+ */
+export async function getStoredAccessToken(): Promise<string | undefined> {
+    return getStoredToken(ACCESS_TOKEN_STORAGE_KEY);
+}
+
+/**
+ * Retrieve refresh token, as stored by `persistCredentials`
+ * @returns Promise that resolves to token or undefined
+ */
+export async function getStoredRefreshToken(): Promise<string | undefined> {
+    return getStoredToken(REFRESH_TOKEN_STORAGE_KEY);
+}
+
+/**
  * Retrieves information about the stored session from the browser's storage. The session
  * may not be valid, as it is not tested for consistency here.
  * @returns {Object} Information about the session - see implementation for variables.
@@ -495,8 +510,8 @@ export async function getStoredSessionVars(): Promise<Partial<IStoredSession>> {
     const hsUrl = localStorage.getItem(HOMESERVER_URL_KEY) ?? undefined;
     const isUrl = localStorage.getItem(ID_SERVER_URL_KEY) ?? undefined;
 
-    const accessToken = await getStoredToken(ACCESS_TOKEN_STORAGE_KEY);
-    const refreshToken = await getStoredToken(REFRESH_TOKEN_STORAGE_KEY);
+    const accessToken = await getStoredAccessToken();
+    const refreshToken = await getStoredRefreshToken();
 
     // if we pre-date storing "mx_has_access_token", but we retrieved an access
     // token, then we should say we have an access token
