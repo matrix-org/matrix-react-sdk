@@ -233,9 +233,8 @@ export async function attemptDelegatedAuthLogin(
  */
 async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
     try {
-        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId, issuer } = await completeOidcLogin(
-            queryParams,
-        );
+        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId, issuer } =
+            await completeOidcLogin(queryParams);
 
         const {
             user_id: userId,
