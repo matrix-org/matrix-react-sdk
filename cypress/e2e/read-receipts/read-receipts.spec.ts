@@ -430,6 +430,8 @@ describe("Read receipts", () => {
         describe("thread roots", () => {
             test("Reading a thread root does not mark the thread as read", () => {});
             test("Reading a thread root within the thread view marks it as read in the main timeline", () => {});
+            test("Creating a new thread based on a reply makes the room unread", () => {});
+            test("Reading a thread whose root is a reply makes the room read", () => {});
         });
     });
 
@@ -461,6 +463,8 @@ describe("Read receipts", () => {
             });
             test("Marking a room as read after an edit makes it read", () => {});
             test("Editing a message after marking as read makes the room unread", () => {});
+            test("Editing a reply after reading it makes the room unread", () => {});
+            test("Editing a reply after marking as read makes the room unread", () => {});
             test("A room with an edit is still unread after restart", () => {});
             test("A room where all edits are read is still read after restart", () => {});
         });
@@ -497,6 +501,8 @@ describe("Read receipts", () => {
             });
             test("Marking a room as read after an edit of a thread root makes it read", () => {});
             test("Editing a thread root after marking as read makes the room unread", () => {});
+            test("Marking a room as read after an edit of a thread root that is a reply makes it read", () => {});
+            test("Editing a thread root that is a reply after marking as read makes the room unread but not the thread", () => {});
         });
     });
 
@@ -529,7 +535,7 @@ describe("Read receipts", () => {
             test("A reaction to a thread root makes the room unread", () => {});
             test("Reading a reaction to a thread root makes the room read", () => {});
             test("Marking a room as read after a reaction to a thread root makes it read", () => {});
-            test("Reacting to a thread root after marking as read makes the room unread", () => {});
+            test("Reacting to a thread root after marking as read makes the room unread but not the thread", () => {});
         });
     });
 
@@ -660,6 +666,29 @@ describe("Read receipts", () => {
         test("Paging up to find old threads that were previously read leaves the room read", () => {});
         test("?? Paging up to find old threads that were never read marks the room unread", () => {});
         test("After marking room as read, paging up to find old threads that were never read leaves the room read", () => {});
-        test("Notification count remains steady when reading threads that contain seen notificiations", () => {});
+    });
+
+    describe("Room list order", () => {
+        test("Rooms with unread threads appear at the top of room list if 'unread first' is selected", () => {});
+    });
+
+    describe("Notifications", () => {
+        describe("in the main timeline", () => {
+            test("A new message that mentions me shows a notification", () => {});
+            test("Reading a notifying message reduces the notification count in the room list, space and tab", () => {});
+            test("Reading the last notifying message removes the notification marker from room list, space and tab", () => {});
+            test("Editing a message to mentions me shows a notification", () => {});
+            test("Reading the last notifying edited message removes the notification marker", () => {});
+            test("Redacting a notifying message removes the notification marker", () => {});
+        });
+
+        describe("in threads", () => {
+            test("A new threaded message that mentions me shows a notification", () => {});
+            test("Reading a notifying threaded message removes the notification count", () => {});
+            test("Notification count remains steady when reading threads that contain seen notifications", () => {});
+            test("Notification count remains steady when paging up thread view even when threads contain seen notifications", () => {});
+            test("Notification count remains steady when paging up thread view after mark as unread even if older threads contain notifications", () => {});
+            test("Redacting a notifying threaded message removes the notification marker", () => {});
+        });
     });
 });
