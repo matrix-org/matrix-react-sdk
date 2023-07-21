@@ -533,7 +533,66 @@ describe("Read receipts", () => {
         });
     });
 
-    describe("orphan messages", () => {
+    describe("redactions", () => {
+        describe("in the main timeline", () => {
+            // One of the following two must be right:
+            test("Redacting the message pointed to by my receipt leaves the room read", () => {});
+            test("Redacting a message after it was read makes the room unread", () => {});
+
+            test("Reading an unread room after a redaction of the latest message makes it read", () => {});
+            test("Reading an unread room after a redaction of an older message makes it read", () => {});
+            test("Marking an unread room as read after a redaction makes it read", () => {});
+            test("Sending and redacting a message after marking the room as read makes it unread", () => {});
+            test("?? Redacting a message after marking the room as read makes it unread", () => {});
+            test("Reacting to a redacted message leaves the room read", () => {});
+            test("Editing a redacted message leaves the room read", () => {});
+
+            test("?? Reading a reaction to a redacted message marks the room as read", () => {});
+            test("?? Reading an edit of a redacted message marks the room as read", () => {});
+            test("Reading a reply to a redacted message marks the room as read", () => {});
+
+            test("A room with an unread redaction is still unread after restart", () => {});
+            test("A room with a read redaction is still read after restart", () => {});
+        });
+
+        describe("in threads", () => {
+            // One of the following two must be right:
+            test("Redacting the threaded message pointed to by my receipt leaves the room read", () => {});
+            test("Redacting a threaded message after it was read makes the room unread", () => {});
+
+            test("Reading an unread thread after a redaction of the latest message makes it read", () => {});
+            test("Reading an unread thread after a redaction of an older message makes it read", () => {});
+            test("Marking an unread thread as read after a redaction makes it read", () => {});
+            test("Sending and redacting a message after marking the thread as read makes it unread", () => {});
+            test("?? Redacting a message after marking the thread as read makes it unread", () => {});
+            test("Reacting to a redacted message leaves the thread read", () => {});
+            test("Editing a redacted message leaves the thread read", () => {});
+
+            test("?? Reading a reaction to a redacted message marks the thread as read", () => {});
+            test("?? Reading an edit of a redacted message marks the thread as read", () => {});
+            test("Reading a reply to a redacted message marks the thread as read", () => {});
+
+            test("A thread with an unread redaction is still unread after restart", () => {});
+            test("A thread with a read redaction is still read after restart", () => {});
+            test("A thread with an unread reply to a redacted message is still unread after restart", () => {});
+            test("A thread with a read replt to a redacted message is still read after restart", () => {});
+        });
+
+        describe("thread roots", () => {
+            // One of the following two must be right:
+            test("Redacting a thread root after it was read leaves the room read", () => {});
+            test("Redacting a thread root after it was read makes the room unread", () => {});
+
+            test("Redacting the root of an unread thread makes the room read", () => {});
+            test("Sending a threaded message onto a redacted thread root leaves the room read", () => {});
+            test("Reacting to a redacted thread root leaves the room read", () => {});
+            test("Editing a redacted thread root leaves the room read", () => {});
+            test("Replying to a redacted thread root makes the room unread", () => {});
+            test("Reading a reply to a redacted thread root makes the room read", () => {});
+        });
+    });
+
+    describe("messages with missing referents", () => {
         test("A message in an unknown thread is not visible and the room is read", () => {});
         test("When a message's thread root appears later the thread appears and the room is unread", () => {});
         test("An edit of an unknown message is not visible and the room is read", () => {});
@@ -543,7 +602,7 @@ describe("Read receipts", () => {
         // Harder: validate that we request the messages we are missing?
     });
 
-    describe("orphan receipts", () => {
+    describe("receipts with missing events", () => {
         // Later: when we have order in receipts, we can change these tests to
         // make receipts still work, even when their message is not found.
         test("A receipt for an unknown message does not change the state of an unread room", () => {});
