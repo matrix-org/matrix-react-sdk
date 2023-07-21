@@ -384,6 +384,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         this.state = {
             targets: [], // array of Member objects (see interface above)
             filterText: this.props.initialText || "",
+            // Mutates alreadyInvited set so that buildSuggestions doesn't duplicate any users
             recents: InviteDialog.buildRecents(alreadyInvited),
             numRecentsShown: INITIAL_ROOMS_SHOWN,
             suggestions: this.buildSuggestions(alreadyInvited),
@@ -476,6 +477,8 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             }
 
             recents.push({ userId, user: toMember(roomMember), lastActive: lastEventTs });
+            // We mutate the given set so that any later callers avoid duplicating these users
+            excludedTargetIds.add(userId);
         }
         if (!recents) logger.warn("[Invite:Recents] No recents to suggest!");
 
@@ -821,7 +824,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (!this.state.busy) {
             let filterText = this.state.filterText;
             let targets = this.state.targets.map((t) => t); // cheap clone for mutation
-            const idx = targets.indexOf(member);
+            const idx = targets.findIndex((m) => m.userId === member.userId);
             if (idx >= 0) {
                 targets.splice(idx, 1);
             } else {
@@ -945,11 +948,11 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (unableToAddMore) {
             this.setState({
                 filterText: unableToAddMore.join(" "),
-                targets: [...this.state.targets, ...toAdd],
+                targets: [...new Set([...this.state.targets, ...toAdd])],
             });
         } else {
             this.setState({
-                targets: [...this.state.targets, ...toAdd],
+                targets: [...new Set([...this.state.targets, ...toAdd])],
             });
         }
     };
@@ -1001,6 +1004,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             // The type of u is a pain to define but members of both mixins have the 'userId' property
             const notAlreadyExists = (u: any): boolean => {
                 return (
+                    !this.state.recents.some((m) => m.userId === u.userId) &&
                     !sourceMembers.some((m) => m.userId === u.userId) &&
                     !priorityAdditionalMembers.some((m) => m.userId === u.userId) &&
                     !otherAdditionalMembers.some((m) => m.userId === u.userId)
