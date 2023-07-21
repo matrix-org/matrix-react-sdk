@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import fetchMock from "fetch-mock-jest";
 import { mocked } from "jest-mock";
+import { OidcClient } from "oidc-client-ts";
 import { M_AUTHENTICATION } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { discoverAndValidateAuthenticationConfig } from "matrix-js-sdk/src/oidc/discovery";
@@ -57,6 +59,8 @@ describe("OidcClientStore", () => {
             },
         });
         jest.spyOn(logger, "error").mockClear();
+
+        fetchMock.get(`${metadata.issuer}.well-known/openid-configuration`, metadata);
     });
 
     describe("isUserAuthenticatedWithOidc()", () => {
@@ -178,6 +182,72 @@ describe("OidcClientStore", () => {
             // only called once for multiple calls to getOidcClient
             // before and after initialisation is complete
             expect(discoverAndValidateAuthenticationConfig).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe("revokeTokens()", () => {
+        const accessToken = "test-access-token";
+        const refreshToken = "test-refresh-token";
+
+        beforeEach(() => {
+            // spy and call through
+            jest.spyOn(OidcClient.prototype, "revokeToken").mockClear();
+
+            fetchMock.resetHistory();
+            fetchMock.post(
+                metadata.revocation_endpoint,
+                {
+                    status: 200,
+                },
+                { sendAsJson: true },
+            );
+        });
+
+        it("should throw when oidcClient could not be initialised", async () => {
+            // make oidcClient initialisation fail
+            mockClient.getClientWellKnown.mockReturnValue(undefined);
+
+            const store = new OidcClientStore(mockClient);
+
+            await expect(() => store.revokeTokens(accessToken, refreshToken)).rejects.toThrow("No OIDC client");
+        });
+
+        it("should revoke access and refresh tokens", async () => {
+            const store = new OidcClientStore(mockClient);
+
+            await store.revokeTokens(accessToken, refreshToken);
+
+            expect(fetchMock).toHaveFetchedTimes(2, metadata.revocation_endpoint);
+            expect(OidcClient.prototype.revokeToken).toHaveBeenCalledWith(accessToken, "access_token");
+            expect(OidcClient.prototype.revokeToken).toHaveBeenCalledWith(refreshToken, "refresh_token");
+        });
+
+        it("should still attempt to revoke refresh token when access token revocation fails", async () => {
+            // fail once, then succeed
+            fetchMock
+                .postOnce(
+                    metadata.revocation_endpoint,
+                    {
+                        status: 404,
+                    },
+                    { overwriteRoutes: true, sendAsJson: true },
+                )
+                .post(
+                    metadata.revocation_endpoint,
+                    {
+                        status: 200,
+                    },
+                    { sendAsJson: true },
+                );
+
+            const store = new OidcClientStore(mockClient);
+
+            await expect(() => store.revokeTokens(accessToken, refreshToken)).rejects.toThrow(
+                "Failed to revoke tokens",
+            );
+
+            expect(fetchMock).toHaveFetchedTimes(2, metadata.revocation_endpoint);
+            expect(OidcClient.prototype.revokeToken).toHaveBeenCalledWith(accessToken, "access_token");
         });
     });
 });

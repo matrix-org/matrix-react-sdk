@@ -50,18 +50,49 @@ export class OidcClientStore {
         return this._accountManagementEndpoint;
     }
 
+    /**
+     * Revokes provided access and refresh tokens with the configured OIDC provider
+     * @param accessToken
+     * @param refreshToken
+     * @returns Promise that resolves when tokens have been revoked
+     * @throws when OidcClient cannot be initialised, or revoking either token fails
+     */
     public async revokeTokens(accessToken: string, refreshToken: string): Promise<void> {
+        const client = await this.getOidcClient();
+
+        if (!client) {
+            throw new Error("No OIDC client");
+        }
+
+        const results = await Promise.all([
+            this.tryRevokeToken(client, accessToken, "access_token"),
+            this.tryRevokeToken(client, refreshToken, "refresh_token"),
+        ]);
+
+        if (results.some((success) => !success)) {
+            throw new Error("Failed to revoke tokens");
+        }
+    }
+
+    /**
+     * Try to revoke a given token
+     * @param oidcClient
+     * @param token
+     * @param tokenType passed to revocation endpoint as token type hint
+     * @returns Promise that resolved with boolean whether the token revocation succeeded or not
+     */
+    private async tryRevokeToken(
+        oidcClient: OidcClient,
+        token: string,
+        tokenType: "access_token" | "refresh_token",
+    ): Promise<boolean> {
         try {
-            const client = await this.getOidcClient();
-
-            if (!client) {
-                throw new Error("No OIDC client");
-            }
-
-            await client.revokeToken(accessToken!, "access_token");
-            await client.revokeToken(refreshToken!, "refresh_token");
+            console.log("here", tokenType);
+            await oidcClient.revokeToken(token, tokenType);
+            return true;
         } catch (error) {
-            throw error;
+            logger.error(`Failed to revoke ${tokenType}`, error);
+            return false;
         }
     }
 
@@ -74,6 +105,12 @@ export class OidcClientStore {
         return this.oidcClient;
     }
 
+    /**
+     * Tries to initialise an OidcClient using stored clientId and oidc discovery
+     * Assigns this.oidcClient and accountManagement endpoint
+     * Logs errors and does not throw when oidc client cannot be initialised
+     * @returns promise that resolves when initialising OidcClient succeeds or fails
+     */
     private async initOidcClient(): Promise<void> {
         const wellKnown = this.matrixClient.getClientWellKnown();
         if (!wellKnown) {
