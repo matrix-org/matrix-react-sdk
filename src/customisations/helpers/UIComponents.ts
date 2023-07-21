@@ -15,27 +15,21 @@ limitations under the License.
 */
 
 import {
-    ShouldShowUiComponentOps,
-    UiComponentLifecycle,
-} from "@matrix-org/react-sdk-module-api/lib/lifecycles/UiComponentLifecycle";
+    ShouldShowUIComponentOps,
+    UIComponentLifecycle,
+} from "@matrix-org/react-sdk-module-api/lib/lifecycles/UIComponentLifecycle";
 
 import { UIComponent } from "../../settings/UIFeature";
 import { ComponentVisibilityCustomisations } from "../ComponentVisibility";
 import { ModuleRunner } from "../../modules/ModuleRunner";
-import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 export function shouldShowComponent(component: UIComponent): boolean {
     let approved: boolean | undefined;
     if (ComponentVisibilityCustomisations.shouldShowComponent) {
         approved = ComponentVisibilityCustomisations.shouldShowComponent(component);
     } else {
-        const opts: ShouldShowUiComponentOps = { shouldShowComponent: undefined };
-        ModuleRunner.instance.invoke(
-            UiComponentLifecycle.ShouldShowComponent,
-            opts,
-            component,
-            MatrixClientPeg.get().getUserId(),
-        );
+        const opts: ShouldShowUIComponentOps = { shouldShowComponent: undefined };
+        ModuleRunner.instance.invoke(UIComponentLifecycle.ShouldShowComponent, opts, component);
         approved = opts.shouldShowComponent;
     }
     return approved ?? true;
