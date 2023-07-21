@@ -21,6 +21,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixError } from "matrix-js-sdk/src/matrix";
+import { uniqBy } from "lodash";
 
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/info.svg";
 import { Icon as EmailPillAvatarIcon } from "../../../../res/img/icon-email-pill-avatar.svg";
@@ -948,11 +949,11 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (unableToAddMore) {
             this.setState({
                 filterText: unableToAddMore.join(" "),
-                targets: [...new Set([...this.state.targets, ...toAdd])],
+                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
             });
         } else {
             this.setState({
-                targets: [...new Set([...this.state.targets, ...toAdd])],
+                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
             });
         }
     };

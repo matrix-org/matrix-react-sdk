@@ -366,6 +366,19 @@ describe("InviteDialog", () => {
         ]);
     });
 
+    it("should not allow pasting the same user multiple times", async () => {
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        const input = screen.getByTestId("invite-dialog-input");
+        input.focus();
+        await userEvent.paste(`${bobId}`);
+        await userEvent.paste(`${bobId}`);
+        await userEvent.paste(`${bobId}`);
+
+        expect(input).toHaveValue("");
+        await expect(screen.findAllByText(bobId, { selector: "a" })).resolves.toHaveLength(1);
+    });
+
     describe("when inviting a user with an unknown profile", () => {
         beforeEach(async () => {
             render(<InviteDialog kind={InviteKind.Dm} onFinished={jest.fn()} />);
