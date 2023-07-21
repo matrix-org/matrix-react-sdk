@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import type { ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import type { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import type { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import type { CypressBot } from "../../support/bot";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
-import { EmojiMapping, handleVerificationRequest, waitForVerificationRequest } from "./utils";
+import { doTwoWaySasVerification, waitForVerificationRequest } from "./utils";
+import { skipIfRustCrypto } from "../../support/util";
 
 interface CryptoTestContext extends Mocha.Context {
     homeserver: HomeserverInstance;
@@ -111,21 +112,14 @@ const verify = function (this: CryptoTestContext) {
         cy.findByText("Bob").click();
         cy.findByRole("button", { name: "Verify" }).click();
         cy.findByRole("button", { name: "Start Verification" }).click();
-        cy.wrap(bobsVerificationRequestPromise)
-            .then((verificationRequest: VerificationRequest) => {
-                verificationRequest.accept();
-                return verificationRequest;
-            })
-            .as("bobsVerificationRequest");
-        cy.findByRole("button", { name: "Verify by emoji" }).click();
-        cy.get<VerificationRequest>("@bobsVerificationRequest").then((request: VerificationRequest) => {
-            return cy.wrap(handleVerificationRequest(request)).then((emojis: EmojiMapping[]) => {
-                cy.get(".mx_VerificationShowSas_emojiSas_block").then((emojiBlocks) => {
-                    emojis.forEach((emoji: EmojiMapping, index: number) => {
-                        expect(emojiBlocks[index].textContent.toLowerCase()).to.eq(emoji[0] + emoji[1]);
-                    });
-                });
-            });
+
+        // this requires creating a DM, so can take a while. Give it a longer timeout.
+        cy.findByRole("button", { name: "Verify by emoji", timeout: 30000 }).click();
+
+        cy.wrap(bobsVerificationRequestPromise).then(async (request: VerificationRequest) => {
+            // the bot user races with the Element user to hit the "verify by emoji" button
+            const verifier = await request.startVerification("m.sas.v1");
+            doTwoWaySasVerification(verifier);
         });
         cy.findByRole("button", { name: "They match" }).click();
         cy.findByText("You've successfully verified Bob!").should("exist");
@@ -143,7 +137,11 @@ describe("Cryptography", function () {
                 cy.initTestUser(homeserver, "Alice", undefined, "alice_").then((credentials) => {
                     aliceCredentials = credentials;
                 });
-                cy.getBot(homeserver, { displayName: "Bob", autoAcceptInvites: false, userIdPrefix: "bob_" }).as("bob");
+                cy.getBot(homeserver, {
+                    displayName: "Bob",
+                    autoAcceptInvites: false,
+                    userIdPrefix: "bob_",
+                }).as("bob");
             });
     });
 
@@ -151,30 +149,113 @@ describe("Cryptography", function () {
         cy.stopHomeserver(this.homeserver);
     });
 
-    it("setting up secure key backup should work", () => {
-        cy.openUserSettings("Security & Privacy");
-        cy.findByRole("button", { name: "Set up Secure Backup" }).click();
-        cy.get(".mx_Dialog").within(() => {
-            cy.findByRole("button", { name: "Continue" }).click();
-            cy.get(".mx_CreateSecretStorageDialog_recoveryKey code").invoke("text").as("securityKey");
-            // Clicking download instead of Copy because of https://github.com/cypress-io/cypress/issues/2851
-            cy.findByRole("button", { name: "Download" }).click();
-            cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
-            cy.get(".mx_InteractiveAuthDialog").within(() => {
-                cy.get(".mx_Dialog_title").within(() => {
-                    cy.findByText("Setting up keys").should("exist");
-                    cy.findByText("Setting up keys").should("not.exist");
+    describe.each([{ isDeviceVerified: true }, { isDeviceVerified: false }])(
+        "setting up secure key backup should work %j",
+        ({ isDeviceVerified }) => {
+            /**
+             * Verify that the `m.cross_signing.${keyType}` key is available on the account data on the server
+             * @param keyType
+             */
+            function verifyKey(keyType: string) {
+                return cy
+                    .getClient()
+                    .then((cli) => cy.wrap(cli.getAccountDataFromServer(`m.cross_signing.${keyType}`)))
+                    .then((accountData: { encrypted: Record<string, Record<string, string>> }) => {
+                        expect(accountData.encrypted).to.exist;
+                        const keys = Object.keys(accountData.encrypted);
+                        const key = accountData.encrypted[keys[0]];
+                        expect(key.ciphertext).to.exist;
+                        expect(key.iv).to.exist;
+                        expect(key.mac).to.exist;
+                    });
+            }
+
+            /**
+             * Click on download button and continue
+             */
+            function downloadKey() {
+                // Clicking download instead of Copy because of https://github.com/cypress-io/cypress/issues/2851
+                cy.findByRole("button", { name: "Download" }).click();
+                cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+            }
+
+            it("by recovery code", () => {
+                skipIfRustCrypto();
+
+                // Verified the device
+                if (isDeviceVerified) {
+                    cy.bootstrapCrossSigning(aliceCredentials);
+                }
+
+                cy.openUserSettings("Security & Privacy");
+                cy.findByRole("button", { name: "Set up Secure Backup" }).click();
+                cy.get(".mx_Dialog").within(() => {
+                    // Recovery key is selected by default
+                    cy.findByRole("button", { name: "Continue" }).click();
+                    cy.get(".mx_CreateSecretStorageDialog_recoveryKey code").invoke("text").as("securityKey");
+
+                    downloadKey();
+
+                    // When the device is verified, the `Setting up keys` step is skipped
+                    if (!isDeviceVerified) {
+                        cy.get(".mx_InteractiveAuthDialog").within(() => {
+                            cy.get(".mx_Dialog_title").within(() => {
+                                cy.findByText("Setting up keys").should("exist");
+                                cy.findByText("Setting up keys").should("not.exist");
+                            });
+                        });
+                    }
+
+                    cy.findByText("Secure Backup successful").should("exist");
+                    cy.findByRole("button", { name: "Done" }).click();
+                    cy.findByText("Secure Backup successful").should("not.exist");
                 });
+
+                // Verify that the SSSS keys are in the account data stored in the server
+                verifyKey("master");
+                verifyKey("self_signing");
+                verifyKey("user_signing");
             });
 
-            cy.findByText("Secure Backup successful").should("exist");
-            cy.findByRole("button", { name: "Done" }).click();
-            cy.findByText("Secure Backup successful").should("not.exist");
-        });
-        return;
-    });
+            it("by passphrase", () => {
+                skipIfRustCrypto();
+
+                // Verified the device
+                if (isDeviceVerified) {
+                    cy.bootstrapCrossSigning(aliceCredentials);
+                }
+
+                cy.openUserSettings("Security & Privacy");
+                cy.findByRole("button", { name: "Set up Secure Backup" }).click();
+                cy.get(".mx_Dialog").within(() => {
+                    // Select passphrase option
+                    cy.findByText("Enter a Security Phrase").click();
+                    cy.findByRole("button", { name: "Continue" }).click();
+
+                    // Fill passphrase input
+                    cy.get("input").type("new passphrase for setting up a secure key backup");
+                    cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+                    // Confirm passphrase
+                    cy.get("input").type("new passphrase for setting up a secure key backup");
+                    cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+
+                    downloadKey();
+
+                    cy.findByText("Secure Backup successful").should("exist");
+                    cy.findByRole("button", { name: "Done" }).click();
+                    cy.findByText("Secure Backup successful").should("not.exist");
+                });
+
+                // Verify that the SSSS keys are in the account data stored in the server
+                verifyKey("master");
+                verifyKey("self_signing");
+                verifyKey("user_signing");
+            });
+        },
+    );
 
     it("creating a DM should work, being e2e-encrypted / user verification", function (this: CryptoTestContext) {
+        skipIfRustCrypto();
         cy.bootstrapCrossSigning(aliceCredentials);
         startDMWithBob.call(this);
         // send first message
@@ -196,6 +277,7 @@ describe("Cryptography", function () {
     });
 
     it("should allow verification when there is no existing DM", function (this: CryptoTestContext) {
+        skipIfRustCrypto();
         cy.bootstrapCrossSigning(aliceCredentials);
         autoJoin(this.bob);
 
@@ -214,6 +296,7 @@ describe("Cryptography", function () {
     });
 
     it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
+        skipIfRustCrypto();
         cy.bootstrapCrossSigning(aliceCredentials);
 
         // bob has a second, not cross-signed, device

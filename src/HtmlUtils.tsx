@@ -19,16 +19,16 @@ limitations under the License.
 
 import React, { LegacyRef, ReactElement, ReactNode } from "react";
 import sanitizeHtml from "sanitize-html";
-import { load as cheerio } from "cheerio";
 import classNames from "classnames";
 import EMOJIBASE_REGEX from "emojibase-regex";
-import { merge, split } from "lodash";
+import { merge } from "lodash";
 import katex from "katex";
 import { decode } from "html-entities";
 import { IContent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 import _Linkify from "linkify-react";
 import escapeHtml from "escape-html";
+import GraphemeSplitter from "graphemer";
 
 import {
     _linkifyElement,
@@ -42,6 +42,7 @@ import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks"
 import { getEmojiFromUnicode } from "./emoji";
 import { mediaFromMxc } from "./customisations/Media";
 import { stripHTMLReply, stripPlainReply } from "./utils/Reply";
+import { PERMITTED_URL_SCHEMES } from "./utils/UrlUtils";
 
 // Anything outside the basic multilingual plane will be a surrogate pair
 const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
@@ -51,40 +52,13 @@ const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
 // (with plenty of false positives, but that's OK)
 const SYMBOL_PATTERN = /([\u2100-\u2bff])/;
 
-// Regex pattern for non-emoji characters that can appear in an "all-emoji" message (Zero-Width Joiner, Zero-Width Space, other whitespace)
-const EMOJI_SEPARATOR_REGEX = /[\u200D\u200B\s]/g;
+// Regex pattern for non-emoji characters that can appear in an "all-emoji" message
+// (Zero-Width Joiner, Zero-Width Space, Emoji presentation character, other whitespace)
+const EMOJI_SEPARATOR_REGEX = /[\u200D\u200B\s]|\uFE0F/g;
 
 const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, "i");
 
 const COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
-
-export const PERMITTED_URL_SCHEMES = [
-    "bitcoin",
-    "ftp",
-    "geo",
-    "http",
-    "https",
-    "im",
-    "irc",
-    "ircs",
-    "magnet",
-    "mailto",
-    "matrix",
-    "mms",
-    "news",
-    "nntp",
-    "openpgp4fpr",
-    "sip",
-    "sftp",
-    "sms",
-    "smsto",
-    "ssh",
-    "tel",
-    "urn",
-    "webcal",
-    "wtai",
-    "xmpp",
-];
 
 const MEDIA_API_MXC_REGEX = /\/_matrix\/media\/r0\/(?:download|thumbnail)\/(.+?)\/(.+?)(?:[?/]|$)/;
 
@@ -464,14 +438,18 @@ const emojiToJsxSpan = (emoji: string, key: number): JSX.Element => (
  * @returns if isHtmlMessage is true, returns an array of strings, otherwise return an array of React Elements for emojis
  * and plain text for everything else
  */
-function formatEmojis(message: string | undefined, isHtmlMessage: boolean): (JSX.Element | string)[] {
+export function formatEmojis(message: string | undefined, isHtmlMessage?: false): JSX.Element[];
+export function formatEmojis(message: string | undefined, isHtmlMessage: true): string[];
+export function formatEmojis(message: string | undefined, isHtmlMessage?: boolean): (JSX.Element | string)[] {
     const emojiToSpan = isHtmlMessage ? emojiToHtmlSpan : emojiToJsxSpan;
     const result: (JSX.Element | string)[] = [];
+    if (!message) return result;
+
     let text = "";
     let key = 0;
 
-    // We use lodash's grapheme splitter to avoid breaking apart compound emojis
-    for (const char of split(message, "")) {
+    const splitter = new GraphemeSplitter();
+    for (const char of splitter.iterateGraphemes(message)) {
         if (EMOJIBASE_REGEX.test(char)) {
             if (text) {
                 result.push(text);
@@ -549,30 +527,19 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
             }
 
             safeBody = sanitizeHtml(formattedBody!, sanitizeParams);
-            const phtml = cheerio(safeBody, {
-                // @ts-ignore: The `_useHtmlParser2` internal option is the
-                // simplest way to both parse and render using `htmlparser2`.
-                _useHtmlParser2: true,
-                decodeEntities: false,
-            });
-            const isPlainText = phtml.html() === phtml.root().text();
+            const phtml = new DOMParser().parseFromString(safeBody, "text/html");
+            const isPlainText = phtml.body.innerHTML === phtml.body.textContent;
             isHtmlMessage = !isPlainText;
 
             if (isHtmlMessage && SettingsStore.getValue("feature_latex_maths")) {
-                // @ts-ignore - The types for `replaceWith` wrongly expect
-                // Cheerio instance to be returned.
-                phtml('div, span[data-mx-maths!=""]').replaceWith(function (i, e) {
-                    return katex.renderToString(decode(phtml(e).attr("data-mx-maths")), {
+                [...phtml.querySelectorAll<HTMLElement>("div, span[data-mx-maths]")].forEach((e) => {
+                    e.outerHTML = katex.renderToString(decode(e.getAttribute("data-mx-maths")), {
                         throwOnError: false,
-                        // @ts-ignore - `e` can be an Element, not just a Node
-                        displayMode: e.name == "div",
+                        displayMode: e.tagName == "DIV",
                         output: "htmlAndMathml",
                     });
                 });
-                safeBody = phtml.html();
-            }
-            if (bodyHasEmoji) {
-                safeBody = formatEmojis(safeBody, true).join("");
+                safeBody = phtml.body.innerHTML;
             }
         } else if (highlighter) {
             safeBody = highlighter.applyHighlights(escapeHtml(plainBody), safeHighlights!).join("");
@@ -581,13 +548,9 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         delete sanitizeParams.textFilter;
     }
 
-    const contentBody = safeBody ?? strippedBody;
-    if (opts.returnString) {
-        return contentBody;
-    }
-
     let emojiBody = false;
     if (!opts.disableBigEmoji && bodyHasEmoji) {
+        const contentBody = safeBody ?? strippedBody;
         let contentBodyTrimmed = contentBody !== undefined ? contentBody.trim() : "";
 
         // Remove zero width joiner, zero width spaces and other spaces in body
@@ -605,6 +568,15 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
             (strippedBody === safeBody || // replies have the html fallbacks, account for that here
                 content.formatted_body === undefined ||
                 (!content.formatted_body.includes("http:") && !content.formatted_body.includes("https:")));
+    }
+
+    if (isFormattedBody && bodyHasEmoji && safeBody) {
+        // This has to be done after the emojiBody check above as to not break big emoji on replies
+        safeBody = formatEmojis(safeBody, true).join("");
+    }
+
+    if (opts.returnString) {
+        return safeBody ?? strippedBody;
     }
 
     const className = classNames({
@@ -668,7 +640,7 @@ export function topicToHtml(
         isFormattedTopic = false; // Fall back to plain-text topic
     }
 
-    let emojiBodyElements: ReturnType<typeof formatEmojis> | undefined;
+    let emojiBodyElements: JSX.Element[] | undefined;
     if (!isFormattedTopic && topicHasEmoji) {
         emojiBodyElements = formatEmojis(topic, false);
     }

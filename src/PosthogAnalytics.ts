@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import posthog, { PostHog, Properties } from "posthog-js";
+import posthog, { CaptureOptions, PostHog, Properties } from "posthog-js";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { UserProperties } from "@matrix-org/analytics-events/types/typescript/UserProperties";
@@ -54,10 +54,6 @@ export interface IPosthogEvent {
     // do not allow these to be sent manually, we enqueue them all for caching purposes
     $set?: void;
     $set_once?: void;
-}
-
-export interface IPostHogEventOptions {
-    timestamp?: Date;
 }
 
 export enum Anonymity {
@@ -138,6 +134,7 @@ export class PosthogAnalytics {
     private propertiesForNextEvent: Partial<Record<"$set" | "$set_once", UserProperties>> = {};
     private userPropertyCache: UserProperties = {};
     private authenticationType: Signup["authenticationType"] = "Other";
+    private watchSettingRef?: string;
 
     public static get instance(): PosthogAnalytics {
         if (!this._instance) {
@@ -254,20 +251,14 @@ export class PosthogAnalytics {
         };
     }
 
-    // eslint-disable-nextline no-unused-varsx
-    private capture(eventName: string, properties: Properties, options?: IPostHogEventOptions): void {
+    // eslint-disable-nextline no-unused-vars
+    private capture(eventName: string, properties: Properties, options?: CaptureOptions): void {
         if (!this.enabled) {
             return;
         }
         const { origin, hash, pathname } = window.location;
         properties["redactedCurrentUrl"] = getRedactedCurrentLocation(origin, hash, pathname);
-        this.posthog.capture(
-            eventName,
-            { ...this.propertiesForNextEvent, ...properties },
-            // TODO: Uncomment below once https://github.com/PostHog/posthog-js/pull/391
-            // gets merged
-            /* options as any, */ // No proper type definition in the posthog library
-        );
+        this.posthog.capture(eventName, { ...this.propertiesForNextEvent, ...properties }, options);
         this.propertiesForNextEvent = {};
     }
 
@@ -324,7 +315,7 @@ export class PosthogAnalytics {
             } catch (e) {
                 // The above could fail due to network requests, but not essential to starting the application,
                 // so swallow it.
-                logger.log("Unable to identify user for tracking" + e.toString());
+                logger.log("Unable to identify user for tracking", e);
             }
         }
     }
@@ -337,10 +328,11 @@ export class PosthogAnalytics {
         if (this.enabled) {
             this.posthog.reset();
         }
+        if (this.watchSettingRef) SettingsStore.unwatchSetting(this.watchSettingRef);
         this.setAnonymity(Anonymity.Disabled);
     }
 
-    public trackEvent<E extends IPosthogEvent>({ eventName, ...properties }: E, options?: IPostHogEventOptions): void {
+    public trackEvent<E extends IPosthogEvent>({ eventName, ...properties }: E, options?: CaptureOptions): void {
         if (this.anonymity == Anonymity.Disabled || this.anonymity == Anonymity.Anonymous) return;
         this.capture(eventName, properties, options);
     }
@@ -375,12 +367,12 @@ export class PosthogAnalytics {
         this.registerSuperProperties(this.platformSuperProperties);
     }
 
-    public async updateAnonymityFromSettings(pseudonymousOptIn: boolean): Promise<void> {
+    public async updateAnonymityFromSettings(client: MatrixClient, pseudonymousOptIn: boolean): Promise<void> {
         // Update this.anonymity based on the user's analytics opt-in settings
         const anonymity = pseudonymousOptIn ? Anonymity.Pseudonymous : Anonymity.Disabled;
         this.setAnonymity(anonymity);
         if (anonymity === Anonymity.Pseudonymous) {
-            await this.identifyUser(MatrixClientPeg.get(), PosthogAnalytics.getRandomAnalyticsId);
+            await this.identifyUser(client, PosthogAnalytics.getRandomAnalyticsId);
             if (MatrixClientPeg.currentUserIsJustRegistered()) {
                 this.trackNewUserEvent();
             }
@@ -391,7 +383,7 @@ export class PosthogAnalytics {
         }
     }
 
-    public startListeningToSettingsChanges(): void {
+    public startListeningToSettingsChanges(client: MatrixClient): void {
         // Listen to account data changes from sync so we can observe changes to relevant flags and update.
         // This is called -
         //  * On page load, when the account data is first received by sync
@@ -400,11 +392,11 @@ export class PosthogAnalytics {
         //  * When the user changes their preferences on this device
         // Note that for new accounts, pseudonymousAnalyticsOptIn won't be set, so updateAnonymityFromSettings
         // won't be called (i.e. this.anonymity will be left as the default, until the setting changes)
-        SettingsStore.watchSetting(
+        this.watchSettingRef = SettingsStore.watchSetting(
             "pseudonymousAnalyticsOptIn",
             null,
             (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
-                this.updateAnonymityFromSettings(!!newValue);
+                this.updateAnonymityFromSettings(client, !!newValue);
             },
         );
     }
@@ -418,7 +410,7 @@ export class PosthogAnalytics {
         // that we want to accumulate before the user has given consent
         // All other scenarios should not track a user before they have given
         // explicit consent that they are ok with their analytics data being collected
-        const options: IPostHogEventOptions = {};
+        const options: CaptureOptions = {};
         const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time")!, 10);
         if (!isNaN(registrationTime)) {
             options.timestamp = new Date(registrationTime);

@@ -18,7 +18,6 @@ limitations under the License.
 import React from "react";
 import { EventEmitter } from "events";
 import { MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
-import FakeTimers from "@sinonjs/fake-timers";
 import { render } from "@testing-library/react";
 import { Thread } from "matrix-js-sdk/src/models/thread";
 
@@ -29,6 +28,7 @@ import RoomContext, { TimelineRenderingType } from "../../../src/contexts/RoomCo
 import DMRoomMap from "../../../src/utils/DMRoomMap";
 import * as TestUtilsMatrix from "../../test-utils";
 import {
+    createTestClient,
     getMockClientWithEventEmitter,
     makeBeaconInfoEvent,
     mockClientMethodsEvents,
@@ -45,7 +45,6 @@ jest.mock("../../../src/utils/beacon", () => ({
 const roomId = "!roomId:server_name";
 
 describe("MessagePanel", function () {
-    let clock: FakeTimers.InstalledClock;
     const events = mkEvents();
     const userId = "@me:here";
     const client = getMockClientWithEventEmitter({
@@ -112,11 +111,7 @@ describe("MessagePanel", function () {
             return arg === "showDisplaynameChanges";
         });
 
-        DMRoomMap.makeShared();
-    });
-
-    afterEach(function () {
-        clock?.uninstall();
+        DMRoomMap.makeShared(client);
     });
 
     function mkEvents() {
@@ -353,7 +348,7 @@ describe("MessagePanel", function () {
         const tiles = container.getElementsByClassName("mx_EventTile");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         // it should follow the <li> which wraps the event tile for event 4
         const eventContainer = tiles[4];
@@ -373,7 +368,7 @@ describe("MessagePanel", function () {
         const [summary] = container.getElementsByClassName("mx_GenericEventListSummary");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         expect(rm.previousSibling).toEqual(summary);
 
@@ -395,7 +390,7 @@ describe("MessagePanel", function () {
         const [summary] = container.getElementsByClassName("mx_GenericEventListSummary");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         expect(rm.previousSibling).toEqual(summary);
 
@@ -405,7 +400,7 @@ describe("MessagePanel", function () {
 
     it("shows a ghost read-marker when the read-marker moves", function () {
         // fake the clock so that we can test the velocity animation.
-        clock = FakeTimers.install();
+        jest.useFakeTimers();
 
         const { container, rerender } = render(
             <div>
@@ -420,7 +415,7 @@ describe("MessagePanel", function () {
         const tiles = container.getElementsByClassName("mx_EventTile");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
         expect(rm.previousSibling).toEqual(tiles[4]);
 
         rerender(
@@ -434,7 +429,7 @@ describe("MessagePanel", function () {
         );
 
         // now there should be two RM containers
-        const readMarkers = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const readMarkers = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         expect(readMarkers.length).toEqual(2);
 
@@ -446,7 +441,7 @@ describe("MessagePanel", function () {
         expect(readMarkers[1].previousSibling).toEqual(tiles[6]);
 
         // advance the clock, and then let the browser run an animation frame to let the animation start
-        clock.tick(1500);
+        jest.advanceTimersByTime(1500);
         expect(hr.style.opacity).toEqual("0");
     });
 
@@ -510,7 +505,7 @@ describe("MessagePanel", function () {
         );
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         const [messageList] = container.getElementsByClassName("mx_RoomView_MessageList");
         const rows = messageList.children;
@@ -773,16 +768,17 @@ describe("shouldFormContinuation", () => {
             msg: "And here's another message in the main timeline after the thread root",
         });
 
-        expect(shouldFormContinuation(message1, message2, false)).toEqual(true);
-        expect(shouldFormContinuation(message2, threadRoot, false)).toEqual(true);
-        expect(shouldFormContinuation(threadRoot, message3, false)).toEqual(true);
+        const client = createTestClient();
+        expect(shouldFormContinuation(message1, message2, client, false)).toEqual(true);
+        expect(shouldFormContinuation(message2, threadRoot, client, false)).toEqual(true);
+        expect(shouldFormContinuation(threadRoot, message3, client, false)).toEqual(true);
 
         const thread = {
             length: 1,
             replyToEvent: {},
         } as unknown as Thread;
         jest.spyOn(threadRoot, "getThread").mockReturnValue(thread);
-        expect(shouldFormContinuation(message2, threadRoot, false)).toEqual(false);
-        expect(shouldFormContinuation(threadRoot, message3, false)).toEqual(false);
+        expect(shouldFormContinuation(message2, threadRoot, client, false)).toEqual(false);
+        expect(shouldFormContinuation(threadRoot, message3, client, false)).toEqual(false);
     });
 });

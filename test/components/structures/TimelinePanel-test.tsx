@@ -22,6 +22,7 @@ import {
     MatrixClient,
     MatrixEvent,
     PendingEventOrdering,
+    RelationType,
     Room,
     RoomEvent,
     RoomMember,
@@ -37,16 +38,17 @@ import {
     ThreadFilterType,
 } from "matrix-js-sdk/src/models/thread";
 import React, { createRef } from "react";
-import { mocked } from "jest-mock";
+import { Mocked, mocked } from "jest-mock";
 import { forEachRight } from "lodash";
 
 import TimelinePanel from "../../../src/components/structures/TimelinePanel";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { isCallEvent } from "../../../src/components/structures/LegacyCallEventGrouper";
-import { flushPromises, mkMembership, mkRoom, stubClient } from "../../test-utils";
+import { filterConsole, flushPromises, mkMembership, mkRoom, stubClient } from "../../test-utils";
 import { mkThread } from "../../test-utils/threads";
 import { createMessageEventContent } from "../../test-utils/events";
+import SettingsStore from "../../../src/settings/SettingsStore";
 import ScrollPanel from "../../../src/components/structures/ScrollPanel";
 
 // ScrollPanel calls this, but jsdom doesn't mock it for us
@@ -68,7 +70,7 @@ const mkTimeline = (room: Room, events: MatrixEvent[]): [EventTimeline, EventTim
         room: room as Room,
         getLiveTimeline: () => timeline,
         getTimelineForEvent: () => timeline,
-        getPendingEvents: () => [],
+        getPendingEvents: () => [] as MatrixEvent[],
     } as unknown as EventTimelineSet;
     const timeline = new EventTimeline(timelineSet);
     events.forEach((event) => timeline.addEvent(event, { toStartOfTimeline: false }));
@@ -104,7 +106,7 @@ const mockEvents = (room: Room, count = 2): MatrixEvent[] => {
 };
 
 const setupTestData = (): [MatrixClient, Room, MatrixEvent[]] => {
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
     const room = mkRoom(client, "roomId");
     const events = mockEvents(room);
     return [client, room, events];
@@ -168,73 +170,214 @@ const setupPagination = (
 };
 
 describe("TimelinePanel", () => {
+    let client: Mocked<MatrixClient>;
+    let userId: string;
+
+    filterConsole("checkForPreJoinUISI: showing all messages, skipping check");
+
     beforeEach(() => {
-        stubClient();
+        client = mocked(stubClient());
+        userId = client.getSafeUserId();
     });
 
     describe("read receipts and markers", () => {
-        it("should forget the read marker when asked to", () => {
-            const cli = MatrixClientPeg.get();
-            const readMarkersSent: string[] = [];
+        const roomId = "#room:example.com";
+        let room: Room;
+        let timelineSet: EventTimelineSet;
+        let timelinePanel: TimelinePanel;
 
-            // Track calls to setRoomReadMarkers
-            cli.setRoomReadMarkers = (_roomId, rmEventId, _a, _b) => {
-                readMarkersSent.push(rmEventId);
-                return Promise.resolve({});
-            };
+        const ev1 = new MatrixEvent({
+            event_id: "ev1",
+            sender: "@u2:m.org",
+            origin_server_ts: 111,
+            type: EventType.RoomMessage,
+            content: createMessageEventContent("hello 1"),
+        });
 
-            const ev0 = new MatrixEvent({
-                event_id: "ev0",
-                sender: "@u2:m.org",
-                origin_server_ts: 111,
-                type: EventType.RoomMessage,
-                content: createMessageEventContent("hello 1"),
-            });
-            const ev1 = new MatrixEvent({
-                event_id: "ev1",
-                sender: "@u2:m.org",
-                origin_server_ts: 222,
-                type: EventType.RoomMessage,
-                content: createMessageEventContent("hello 2"),
-            });
+        const ev2 = new MatrixEvent({
+            event_id: "ev2",
+            sender: "@u2:m.org",
+            origin_server_ts: 222,
+            type: EventType.RoomMessage,
+            content: createMessageEventContent("hello 2"),
+        });
 
-            const roomId = "#room:example.com";
-            const userId = cli.credentials.userId!;
-            const room = new Room(roomId, cli, userId, { pendingEventOrdering: PendingEventOrdering.Detached });
-
-            // Create a TimelinePanel with ev0 already present
-            const timelineSet = new EventTimelineSet(room, {});
-            timelineSet.addLiveEvent(ev0);
+        const renderTimelinePanel = async (): Promise<void> => {
             const ref = createRef<TimelinePanel>();
             render(
                 <TimelinePanel
                     timelineSet={timelineSet}
                     manageReadMarkers={true}
                     manageReadReceipts={true}
-                    eventId={ev0.getId()}
                     ref={ref}
                 />,
             );
-            const timelinePanel = ref.current!;
+            await flushPromises();
+            timelinePanel = ref.current!;
+        };
 
-            // An event arrived, and we read it
-            timelineSet.addLiveEvent(ev1);
-            room.addEphemeralEvents([newReceipt("ev1", userId, 222, 220)]);
+        const setUpTimelineSet = (threadRoot?: MatrixEvent) => {
+            let thread: Thread | undefined = undefined;
 
-            // Sanity: We have not sent any read marker yet
-            expect(readMarkersSent).toEqual([]);
+            if (threadRoot) {
+                thread = new Thread(threadRoot.getId()!, threadRoot, {
+                    client: client,
+                    room,
+                });
+            }
 
-            // This is what we are testing: forget the read marker - this should
-            // update our read marker to match the latest receipt we sent
-            timelinePanel.forgetReadMarker();
+            timelineSet = new EventTimelineSet(room, {}, client, thread);
+            timelineSet.on(RoomEvent.Timeline, (...args) => {
+                // TimelinePanel listens for live events on the client.
+                // → Re-emit on the client.
+                client.emit(RoomEvent.Timeline, ...args);
+            });
+        };
 
-            // We sent off a read marker for the new event
-            expect(readMarkersSent).toEqual(["ev1"]);
+        beforeEach(() => {
+            room = new Room(roomId, client, userId, { pendingEventOrdering: PendingEventOrdering.Detached });
+        });
+
+        afterEach(() => {
+            TimelinePanel.roomReadMarkerTsMap = {};
+        });
+
+        it("when there is no event, it should not send any receipt", async () => {
+            setUpTimelineSet();
+            await renderTimelinePanel();
+            await flushPromises();
+
+            // @ts-ignore
+            await timelinePanel.sendReadReceipts();
+
+            expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
+            expect(client.sendReadReceipt).not.toHaveBeenCalled();
+        });
+
+        describe("when there is a non-threaded timeline", () => {
+            beforeEach(() => {
+                setUpTimelineSet();
+            });
+
+            describe("and reading the timeline", () => {
+                beforeEach(async () => {
+                    await renderTimelinePanel();
+                    timelineSet.addLiveEvent(ev1, {});
+                    await flushPromises();
+
+                    // @ts-ignore
+                    await timelinePanel.sendReadReceipts();
+                    // @ts-ignore Simulate user activity by calling updateReadMarker on the TimelinePanel.
+                    await timelinePanel.updateReadMarker();
+                });
+
+                it("should send a fully read marker and a public receipt", async () => {
+                    expect(client.setRoomReadMarkers).toHaveBeenCalledWith(roomId, ev1.getId());
+                    expect(client.sendReadReceipt).toHaveBeenCalledWith(ev1, ReceiptType.Read);
+                });
+
+                describe("and reading the timeline again", () => {
+                    beforeEach(async () => {
+                        client.sendReadReceipt.mockClear();
+                        client.setRoomReadMarkers.mockClear();
+
+                        // @ts-ignore Simulate user activity by calling updateReadMarker on the TimelinePanel.
+                        await timelinePanel.updateReadMarker();
+                    });
+
+                    it("should not send receipts again", () => {
+                        expect(client.sendReadReceipt).not.toHaveBeenCalled();
+                        expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
+                    });
+
+                    it("and forgetting the read markers, should send the stored marker again", async () => {
+                        timelineSet.addLiveEvent(ev2, {});
+                        room.addEphemeralEvents([newReceipt(ev2.getId()!, userId, 222, 200)]);
+                        await timelinePanel.forgetReadMarker();
+                        expect(client.setRoomReadMarkers).toHaveBeenCalledWith(roomId, ev2.getId());
+                    });
+                });
+            });
+
+            describe("and sending receipts is disabled", () => {
+                beforeEach(async () => {
+                    client.isVersionSupported.mockResolvedValue(true);
+                    client.doesServerSupportUnstableFeature.mockResolvedValue(true);
+
+                    jest.spyOn(SettingsStore, "getValue").mockImplementation((setting: string) => {
+                        if (setting === "sendReadReceipt") return false;
+
+                        return undefined;
+                    });
+                });
+
+                afterEach(() => {
+                    mocked(SettingsStore.getValue).mockReset();
+                });
+
+                it("should send a fully read marker and a private receipt", async () => {
+                    await renderTimelinePanel();
+                    timelineSet.addLiveEvent(ev1, {});
+                    await flushPromises();
+
+                    // @ts-ignore
+                    await timelinePanel.sendReadReceipts();
+
+                    // Expect the private reception to be sent directly
+                    expect(client.sendReadReceipt).toHaveBeenCalledWith(ev1, ReceiptType.ReadPrivate);
+                    // Expect the fully_read marker not to be send yet
+                    expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
+
+                    client.sendReadReceipt.mockClear();
+
+                    // @ts-ignore simulate user activity
+                    await timelinePanel.updateReadMarker();
+
+                    // It should not send the receipt again.
+                    expect(client.sendReadReceipt).not.toHaveBeenCalledWith(ev1, ReceiptType.ReadPrivate);
+                    // Expect the fully_read marker to be sent after user activity.
+                    expect(client.setRoomReadMarkers).toHaveBeenCalledWith(roomId, ev1.getId());
+                });
+            });
+        });
+
+        describe("and there is a thread timeline", () => {
+            const threadEv1 = new MatrixEvent({
+                event_id: "thread_ev1",
+                sender: "@u2:m.org",
+                origin_server_ts: 222,
+                type: EventType.RoomMessage,
+                content: {
+                    ...createMessageEventContent("hello 2"),
+                    "m.relates_to": {
+                        event_id: ev1.getId(),
+                        rel_type: RelationType.Thread,
+                    },
+                },
+            });
+
+            beforeEach(() => {
+                client.supportsThreads.mockReturnValue(true);
+                setUpTimelineSet(ev1);
+            });
+
+            it("should send receipts but no fully_read when reading the thread timeline", async () => {
+                await renderTimelinePanel();
+                timelineSet.addLiveEvent(threadEv1, {});
+                await flushPromises();
+
+                // @ts-ignore
+                await timelinePanel.sendReadReceipts();
+
+                // fully_read is not supported for threads per spec
+                expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
+                expect(client.sendReadReceipt).toHaveBeenCalledWith(threadEv1, ReceiptType.Read);
+            });
         });
     });
 
     it("should scroll event into view when props.eventId changes", () => {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const room = mkRoom(client, "roomId");
         const events = mockEvents(room);
 
@@ -655,7 +798,7 @@ describe("TimelinePanel", () => {
         let reply2: MatrixEvent;
 
         beforeEach(() => {
-            client = MatrixClientPeg.get();
+            client = MatrixClientPeg.safeGet();
 
             Thread.hasServerSideSupport = FeatureSupport.Stable;
             room = new Room("roomId", client, "userId");
@@ -708,22 +851,22 @@ describe("TimelinePanel", () => {
         });
 
         it("updates thread previews", async () => {
-            root.setUnsigned({
-                "m.relations": {
-                    [THREAD_RELATION_TYPE.name]: {
-                        latest_event: reply1.event,
-                        count: 1,
-                        current_user_participated: true,
-                    },
-                },
-            });
+            mocked(client.supportsThreads).mockReturnValue(true);
+            reply1.getContent()["m.relates_to"] = {
+                rel_type: RelationType.Thread,
+                event_id: root.getId(),
+            };
+            reply2.getContent()["m.relates_to"] = {
+                rel_type: RelationType.Thread,
+                event_id: root.getId(),
+            };
 
             const thread = room.createThread(root.getId()!, root, [], true);
             // So that we do not have to mock the thread loading
             thread.initialEventsFetched = true;
             // @ts-ignore
             thread.fetchEditsWhereNeeded = () => Promise.resolve();
-            await thread.addEvent(reply1, true);
+            await thread.addEvent(reply1, false, true);
             await allThreads.getLiveTimeline().addEvent(thread.rootEvent!, { toStartOfTimeline: true });
             const replyToEvent = jest.spyOn(thread, "replyToEvent", "get");
 
@@ -735,16 +878,6 @@ describe("TimelinePanel", () => {
             await dom.findByText("RootEvent");
             await dom.findByText("ReplyEvent1");
             expect(replyToEvent).toHaveBeenCalled();
-
-            root.setUnsigned({
-                "m.relations": {
-                    [THREAD_RELATION_TYPE.name]: {
-                        latest_event: reply2.event,
-                        count: 2,
-                        current_user_participated: true,
-                    },
-                },
-            });
 
             replyToEvent.mockClear();
             await thread.addEvent(reply2, false, true);
@@ -809,7 +942,7 @@ describe("TimelinePanel", () => {
     });
 
     it("renders when the last message is an undecryptable thread root", async () => {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         client.isRoomEncrypted = () => true;
         client.supportsThreads = () => true;
         client.decryptEventIfNeeded = () => Promise.resolve();
