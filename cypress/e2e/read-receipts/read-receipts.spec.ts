@@ -660,5 +660,6 @@ describe("Read receipts", () => {
         test("Paging up to find old threads that were previously read leaves the room read", () => {});
         test("?? Paging up to find old threads that were never read marks the room unread", () => {});
         test("After marking room as read, paging up to find old threads that were never read leaves the room read", () => {});
+        test("Notification count remains steady when reading threads that contain seen notificiations", () => {});
     });
 });
