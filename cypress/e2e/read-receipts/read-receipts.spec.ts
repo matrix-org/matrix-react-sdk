@@ -653,4 +653,12 @@ describe("Read receipts", () => {
         test("Sending an important event after unimportant ones makes the room unread", () => {});
         test("A receipt for the last unimportant event makes the room read, even if all are unimportant", () => {});
     });
+
+    describe("Paging up", () => {
+        test("Paging up through old messages after a room is read leaves the room read", () => {});
+        test("Paging up through old messages of an unread room leaves the room unread", () => {});
+        test("Paging up to find old threads that were previously read leaves the room read", () => {});
+        test("?? Paging up to find old threads that were never read marks the room unread", () => {});
+        test("After marking room as read, paging up to find old threads that were never read leaves the room read", () => {});
+    });
 });
