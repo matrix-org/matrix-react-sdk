@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import { useEffect, useState } from "react";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { EventType } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { Room } from "matrix-js-sdk/src/matrix";
+import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { parseTopicContent, TopicState } from "matrix-js-sdk/src/content-helpers";
 import { MRoomTopicEventContent } from "matrix-js-sdk/src/@types/topic";
 import { Optional } from "matrix-events-sdk";

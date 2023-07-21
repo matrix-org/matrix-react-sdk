@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, RelationType } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "./settings/SettingsStore";
 import { IRoomState } from "./components/structures/RoomView";

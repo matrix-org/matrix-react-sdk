@@ -16,9 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import type { GeneratedSecretStorageKey } from "matrix-js-sdk/src/crypto-api";
-import type { AddSecretStorageKeyOpts } from "matrix-js-sdk/src/secret-storage";
+import type { ISendEventResponse, MatrixClient, Room, SecretStorage, Crypto } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../plugins/utils/homeserver";
 import { Credentials } from "./homeserver";
 import Chainable = Cypress.Chainable;
@@ -64,7 +62,7 @@ const defaultCreateBotOptions = {
 
 export interface CypressBot extends MatrixClient {
     __cypress_password: string;
-    __cypress_recovery_key: GeneratedSecretStorageKey;
+    __cypress_recovery_key: Crypto.GeneratedSecretStorageKey;
 }
 
 declare global {
@@ -152,7 +150,11 @@ function setupBotClient(
 
             // Store the cached secret storage key and return it when `getSecretStorageKey` is called
             let cachedKey: { keyId: string; key: Uint8Array };
-            const cacheSecretStorageKey = (keyId: string, keyInfo: AddSecretStorageKeyOpts, key: Uint8Array) => {
+            const cacheSecretStorageKey = (
+                keyId: string,
+                keyInfo: SecretStorage.AddSecretStorageKeyOpts,
+                key: Uint8Array,
+            ) => {
                 cachedKey = {
                     keyId,
                     key,

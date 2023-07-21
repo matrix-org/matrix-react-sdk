@@ -17,16 +17,10 @@ limitations under the License.
 import React from "react";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
 import { SCAN_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
-import {
-    VerificationPhase as Phase,
-    VerificationRequest,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto-api";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { User } from "matrix-js-sdk/src/models/user";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { User } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ShowQrCodeCallbacks, ShowSasCallbacks, VerifierEvent } from "matrix-js-sdk/src/crypto-api/verification";
-import { Device } from "matrix-js-sdk/src/matrix";
+import { Device, Crypto } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import VerificationQRCode from "../elements/crypto/VerificationQRCode";
@@ -40,9 +34,9 @@ import { getDeviceCryptoInfo } from "../../../utils/crypto/deviceInfo";
 
 interface IProps {
     layout: string;
-    request: VerificationRequest;
+    request: Crypto.VerificationRequest;
     member: RoomMember | User;
-    phase?: Phase;
+    phase?: Crypto.VerificationPhase;
     onClose: () => void;
     isRoomEncrypted: boolean;
     inDialog: boolean;
@@ -57,10 +51,10 @@ interface IState {
      */
     qrCodeBytes: Buffer | undefined;
 
-    sasEvent: ShowSasCallbacks | null;
+    sasEvent: Crypto.ShowSasCallbacks | null;
     emojiButtonClicked?: boolean;
     reciprocateButtonClicked?: boolean;
-    reciprocateQREvent: ShowQrCodeCallbacks | null;
+    reciprocateQREvent: Crypto.ShowQrCodeCallbacks | null;
 
     /**
      * Details of the other device involved in the transaction.
@@ -373,9 +367,9 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         const displayName = (member as User).displayName || (member as RoomMember).name || member.userId;
 
         switch (phase) {
-            case Phase.Ready:
+            case Crypto.VerificationPhase.Ready:
                 return this.renderQRPhase();
-            case Phase.Started:
+            case Crypto.VerificationPhase.Started:
                 switch (request.chosenMethod) {
                     case verificationMethods.RECIPROCATE_QR_CODE:
                         return this.renderQRReciprocatePhase();
@@ -398,9 +392,9 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                     default:
                         return null;
                 }
-            case Phase.Done:
+            case Crypto.VerificationPhase.Done:
                 return this.renderVerifiedPhase();
-            case Phase.Cancelled:
+            case Crypto.VerificationPhase.Cancelled:
                 return this.renderCancelledPhase();
         }
         logger.error("VerificationPanel unhandled phase:", phase);
@@ -425,8 +419,8 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         const verifier = this.props.request.verifier!;
         const sasEvent = verifier.getShowSasCallbacks();
         const reciprocateQREvent = verifier.getReciprocateQrCodeCallbacks();
-        verifier.off(VerifierEvent.ShowSas, this.updateVerifierState);
-        verifier.off(VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
+        verifier.off(Crypto.VerifierEvent.ShowSas, this.updateVerifierState);
+        verifier.off(Crypto.VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
         this.setState({ sasEvent, reciprocateQREvent });
     };
 
@@ -438,7 +432,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
         // if we have had a reply from the other side (ie, the phase is "ready") and we have not
         // yet done so, fetch the QR code
-        if (request.phase === Phase.Ready && !this.haveFetchedQRCode) {
+        if (request.phase === Crypto.VerificationPhase.Ready && !this.haveFetchedQRCode) {
             this.haveFetchedQRCode = true;
             request.generateQRCode().then(
                 (buf) => {
@@ -453,8 +447,8 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         const hadVerifier = this.hasVerifier;
         this.hasVerifier = !!request.verifier;
         if (!hadVerifier && this.hasVerifier) {
-            request.verifier?.on(VerifierEvent.ShowSas, this.updateVerifierState);
-            request.verifier?.on(VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
+            request.verifier?.on(Crypto.VerifierEvent.ShowSas, this.updateVerifierState);
+            request.verifier?.on(Crypto.VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
             try {
                 // on the requester side, this is also awaited in startSAS,
                 // but that's ok as verify should return the same promise.
@@ -467,7 +461,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
     public componentDidMount(): void {
         const { request } = this.props;
-        request.on(VerificationRequestEvent.Change, this.onRequestChange);
+        request.on(Crypto.VerificationRequestEvent.Change, this.onRequestChange);
         if (request.verifier) {
             const sasEvent = request.verifier.getShowSasCallbacks();
             const reciprocateQREvent = request.verifier.getReciprocateQrCodeCallbacks();
@@ -479,9 +473,9 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     public componentWillUnmount(): void {
         const { request } = this.props;
         if (request.verifier) {
-            request.verifier.off(VerifierEvent.ShowSas, this.updateVerifierState);
-            request.verifier.off(VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
+            request.verifier.off(Crypto.VerifierEvent.ShowSas, this.updateVerifierState);
+            request.verifier.off(Crypto.VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
         }
-        request.off(VerificationRequestEvent.Change, this.onRequestChange);
+        request.off(Crypto.VerificationRequestEvent.Change, this.onRequestChange);
     }
 }

@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
-import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
+import { IRoomTimelineData } from "matrix-js-sdk/src/matrix";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import dis from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";

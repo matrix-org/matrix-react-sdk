@@ -25,12 +25,12 @@ import {
     PUSHER_DEVICE_ID,
     PUSHER_ENABLED,
     UNSTABLE_MSC3852_LAST_SEEN_UA,
+    Crypto,
+    CryptoEvent,
 } from "matrix-js-sdk/src/matrix";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { _t } from "../../../../languageHandler";
@@ -82,7 +82,7 @@ export type DevicesState = {
     currentDeviceId: string;
     isLoadingDeviceList: boolean;
     // not provided when current session cannot request verification
-    requestDeviceVerification?: (deviceId: ExtendedDevice["device_id"]) => Promise<VerificationRequest>;
+    requestDeviceVerification?: (deviceId: ExtendedDevice["device_id"]) => Promise<Crypto.VerificationRequest>;
     refreshDevices: () => Promise<void>;
     saveDeviceName: (deviceId: ExtendedDevice["device_id"], deviceName: string) => Promise<void>;
     setPushNotifications: (deviceId: ExtendedDevice["device_id"], enabled: boolean) => Promise<void>;
@@ -176,7 +176,7 @@ export const useOwnDevices = (): DevicesState => {
 
     const requestDeviceVerification =
         isCurrentDeviceVerified && userId
-            ? async (deviceId: ExtendedDevice["device_id"]): Promise<VerificationRequest> => {
+            ? async (deviceId: ExtendedDevice["device_id"]): Promise<Crypto.VerificationRequest> => {
                   return await matrixClient.getCrypto()!.requestDeviceVerification(userId, deviceId);
               }
             : undefined;

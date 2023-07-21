@@ -48,3 +48,16 @@ export async function retry<T, E extends Error>(
     }
     throw lastErr;
 }
+
+/**
+ * Wrapper for async functions to linearize their calls generically
+ * @param fun the async function to linearize calls to
+ */
+export function linear<F extends (...args: any[]) => Promise<any>>(fun: F): F {
+    let promise: Promise<Awaited<ReturnType<F>>> | undefined;
+    return (async (...args) => {
+        await promise;
+        promise = fun(...args);
+        return promise;
+    }) as F;
+}

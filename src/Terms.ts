@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
+import { SERVICE_TYPES } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
@@ -29,7 +29,7 @@ export class TermsNotSignedError extends Error {}
  * require agreement from the user before the user can use that service.
  */
 export class Service {
-    /**
+    /**aw
      * @param {MatrixClient.SERVICE_TYPES} serviceType The type of service
      * @param {string} baseUrl The Base URL of the service (ie. before '/_matrix')
      * @param {string} accessToken The user's access token for the service

@@ -17,10 +17,9 @@ limitations under the License.
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
-import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
+import type { MatrixCall, MatrixClient } from "matrix-js-sdk/src/matrix";
 import * as AvatarModule from "../../../../src/Avatar";
 import VideoFeed from "../../../../src/components/views/voip/VideoFeed";
 import { stubClient, useMockedCalls } from "../../../test-utils";

@@ -45,7 +45,7 @@ limitations under the License.
  */
 
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventType } from "matrix-js-sdk/src/matrix";
 import {
     MSC3575Filter,
     MSC3575List,

@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
-import { IContent, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { ISendEventResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/matrix";
 
 import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import SettingsStore from "../../../../../settings/SettingsStore";

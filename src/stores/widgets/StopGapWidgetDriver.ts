@@ -33,12 +33,12 @@ import {
     WidgetKind,
     ISearchUserDirectoryResult,
 } from "matrix-widget-api";
-import { ClientEvent, ITurnServer as IClientTurnServer } from "matrix-js-sdk/src/client";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { ClientEvent, ITurnServer as IClientTurnServer } from "matrix-js-sdk/src/matrix";
+import { EventType } from "matrix-js-sdk/src/matrix";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/matrix";
 import { Direction } from "matrix-js-sdk/src/matrix";
 import {
     ApprovalOpts,

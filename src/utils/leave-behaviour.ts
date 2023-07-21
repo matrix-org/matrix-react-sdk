@@ -16,9 +16,9 @@ limitations under the License.
 
 import { sleep } from "matrix-js-sdk/src/utils";
 import React, { ReactNode } from "react";
-import { EventStatus } from "matrix-js-sdk/src/models/event-status";
-import { MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { EventStatus } from "matrix-js-sdk/src/matrix";
+import { MatrixEventEvent } from "matrix-js-sdk/src/matrix";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 
 import Modal, { IHandle } from "../Modal";

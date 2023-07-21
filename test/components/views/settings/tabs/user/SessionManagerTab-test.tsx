@@ -18,7 +18,6 @@ import React from "react";
 import { act, fireEvent, render, RenderResult } from "@testing-library/react";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 import {
     ClientEvent,
@@ -32,6 +31,7 @@ import {
     CryptoApi,
     DeviceVerificationStatus,
     MatrixError,
+    Crypto,
 } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
@@ -85,7 +85,7 @@ describe("<SessionManagerTab />", () => {
     const mockVerificationRequest = {
         cancel: jest.fn(),
         on: jest.fn(),
-    } as unknown as VerificationRequest;
+    } as unknown as Crypto.VerificationRequest;
 
     const mockCrypto = mocked({
         getDeviceVerificationStatus: jest.fn(),

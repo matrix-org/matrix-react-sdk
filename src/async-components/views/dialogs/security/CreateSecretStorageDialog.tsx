@@ -18,13 +18,12 @@ limitations under the License.
 import React, { createRef } from "react";
 import FileSaver from "file-saver";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
-import { CrossSigningKeys, IAuthDict, MatrixError, UIAFlow } from "matrix-js-sdk/src/matrix";
+import { Crypto, CrossSigningKeys, IAuthDict, MatrixError, UIAFlow } from "matrix-js-sdk/src/matrix";
 import { IRecoveryKey } from "matrix-js-sdk/src/crypto/api";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { CryptoEvent } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
-import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
+import { UIAResponse } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t, _td } from "../../../../languageHandler";
@@ -82,7 +81,7 @@ interface IState {
     copied: boolean;
     downloaded: boolean;
     setPassphrase: boolean;
-    backupInfo: IKeyBackupInfo | null;
+    backupInfo: Crypto.KeyBackupInfo | null;
     backupSigStatus: TrustInfo | null;
     // does the server offer a UI auth flow with just m.login.password
     // for /keys/device_signing/upload?
@@ -175,7 +174,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         this.fetchBackupInfo();
     }
 
-    private async fetchBackupInfo(): Promise<{ backupInfo?: IKeyBackupInfo; backupSigStatus?: TrustInfo }> {
+    private async fetchBackupInfo(): Promise<{ backupInfo?: Crypto.KeyBackupInfo; backupSigStatus?: TrustInfo }> {
         try {
             const cli = MatrixClientPeg.safeGet();
             const backupInfo = await cli.getKeyBackupVersion();

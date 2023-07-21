@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/matrix";
 
 import EditorStateTransfer from "../../../../../utils/EditorStateTransfer";
 import { IRoomState } from "../../../../structures/RoomView";

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { GenericEchoChamber } from "./GenericEchoChamber";
 import { RoomEchoChamber } from "./RoomEchoChamber";
@@ -25,6 +25,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { ContextTransactionState, EchoContext } from "./EchoContext";
 import NonUrgentToastStore, { ToastReference } from "../NonUrgentToastStore";
 import NonUrgentEchoFailureToast from "../../components/views/toasts/NonUrgentEchoFailureToast";
+import { linear } from "../../utils/promise";
 
 interface IState {
     toastRef: ToastReference;
@@ -70,11 +71,14 @@ export class EchoStore extends AsyncStoreWithClient<IState> {
         return echo;
     }
 
-    private async checkContexts(): Promise<void> {
+    private checkContexts = linear(async (): Promise<void> => {
         let hasOrHadError = false;
         for (const echo of this.caches.values()) {
             hasOrHadError = echo.context.state === ContextTransactionState.PendingErrors;
-            if (hasOrHadError) break;
+            if (hasOrHadError) {
+                debugger;
+                break;
+            }
         }
 
         if (hasOrHadError && !this.state.toastRef) {
@@ -84,7 +88,7 @@ export class EchoStore extends AsyncStoreWithClient<IState> {
             NonUrgentToastStore.instance.removeToast(this.state.toastRef);
             await this.updateState({ toastRef: null });
         }
-    }
+    });
 
     protected async onReady(): Promise<any> {
         if (!this.caches) return; // can only happen during initialization

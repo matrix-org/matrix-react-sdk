@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { User } from "matrix-js-sdk/src/models/user";
+import { User } from "matrix-js-sdk/src/matrix";
 import { verificationMethods as VerificationMethods } from "matrix-js-sdk/src/crypto";
-import { MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
-import { CrossSigningKey, VerificationRequest } from "matrix-js-sdk/src/crypto-api";
+import { MatrixClient, RoomMember, Crypto } from "matrix-js-sdk/src/matrix";
 
 import dis from "./dispatcher/dispatcher";
 import Modal from "./Modal";
@@ -33,7 +32,7 @@ import { findDMForUser } from "./utils/dm/findDMForUser";
 async function enable4SIfNeeded(matrixClient: MatrixClient): Promise<boolean> {
     const crypto = matrixClient.getCrypto();
     if (!crypto) return false;
-    const usk = await crypto.getCrossSigningKeyId(CrossSigningKey.UserSigning);
+    const usk = await crypto.getCrossSigningKeyId(Crypto.CrossSigningKey.UserSigning);
     if (!usk) {
         await accessSecretStorage();
         return false;
@@ -117,7 +116,7 @@ function setRightPanel(state: IRightPanelCardState): void {
 export function pendingVerificationRequestForUser(
     matrixClient: MatrixClient,
     user: User | RoomMember,
-): VerificationRequest | undefined {
+): Crypto.VerificationRequest | undefined {
     const dmRoom = findDMForUser(matrixClient, user.userId);
     if (dmRoom) {
         return matrixClient.getCrypto()!.findVerificationRequestDMInProgress(dmRoom.roomId);

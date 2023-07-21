@@ -16,23 +16,24 @@ limitations under the License.
 
 import React, { createRef } from "react";
 import {
+    Crypto,
     ClientEvent,
     createClient,
     EventType,
     HttpApiEvent,
     MatrixClient,
     MatrixEventEvent,
+    CryptoEvent,
+    SyncStateData,
+    SyncState,
+    InvalidStoreError,
+    MatrixEvent,
+    RoomType,
 } from "matrix-js-sdk/src/matrix";
-import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
-import { InvalidStoreError } from "matrix-js-sdk/src/errors";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
 import "focus-visible";
@@ -1502,7 +1503,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return this.loggedInView.current.canResetTimelineInRoom(roomId);
         });
 
-        cli.on(ClientEvent.Sync, (state: SyncState, prevState: SyncState | null, data?: ISyncStateData) => {
+        cli.on(ClientEvent.Sync, (state: SyncState, prevState: SyncState | null, data?: SyncStateData) => {
             if (state === SyncState.Error || state === SyncState.Reconnecting) {
                 if (data?.error instanceof InvalidStoreError) {
                     Lifecycle.handleInvalidStoreError(data.error);
@@ -1629,7 +1630,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
         cli.on(CryptoEvent.KeyBackupFailed, async (errcode): Promise<void> => {
             let haveNewVersion: boolean | undefined;
-            let newVersionInfo: IKeyBackupInfo | null = null;
+            let newVersionInfo: Crypto.KeyBackupInfo | null = null;
             // if key backup is still enabled, there must be a new backup in place
             if (cli.getKeyBackupEnabled()) {
                 haveNewVersion = true;

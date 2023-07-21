@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { AuthType, IAuthData } from "matrix-js-sdk/src/interactive-auth";
+import { AuthType, IAuthData } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 

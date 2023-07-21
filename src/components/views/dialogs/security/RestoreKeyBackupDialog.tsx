@@ -16,8 +16,8 @@ limitations under the License.
 */
 
 import React, { ChangeEvent } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { IKeyBackupInfo, IKeyBackupRestoreResult } from "matrix-js-sdk/src/crypto/keybackup";
+import { MatrixClient, Crypto } from "matrix-js-sdk/src/matrix";
+import { IKeyBackupRestoreResult } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixError } from "matrix-js-sdk/src/matrix";
@@ -53,7 +53,7 @@ interface IProps {
 }
 
 interface IState {
-    backupInfo: IKeyBackupInfo | null;
+    backupInfo: Crypto.KeyBackupInfo | null;
     backupKeyStored: Record<string, ISecretStorageKeyInfo> | null;
     loading: boolean;
     loadError: boolean | null;
@@ -248,7 +248,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         }
     }
 
-    private async restoreWithCachedKey(backupInfo: IKeyBackupInfo | null): Promise<boolean> {
+    private async restoreWithCachedKey(backupInfo: Crypto.KeyBackupInfo | null): Promise<boolean> {
         if (!backupInfo) return false;
         try {
             const recoverInfo = await MatrixClientPeg.safeGet().restoreKeyBackupWithCache(

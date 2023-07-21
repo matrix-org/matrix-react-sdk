@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback, useEffect, useState } from "react";
-import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { User } from "matrix-js-sdk/src/models/user";
+import { Crypto, RoomMember, User } from "matrix-js-sdk/src/matrix";
 
 import EncryptionInfo from "./EncryptionInfo";
 import VerificationPanel from "./VerificationPanel";
@@ -36,8 +34,8 @@ const MISMATCHES = ["m.key_mismatch", "m.user_error", "m.mismatched_sas"];
 interface IProps {
     member: RoomMember | User;
     onClose: () => void;
-    verificationRequest?: VerificationRequest;
-    verificationRequestPromise?: Promise<VerificationRequest>;
+    verificationRequest?: Crypto.VerificationRequest;
+    verificationRequestPromise?: Promise<Crypto.VerificationRequest>;
     layout: string;
     isRoomEncrypted: boolean;
 }
@@ -74,7 +72,7 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
         // handle transitions -> cancelled for mismatches which fire a modal instead of showing a card
         if (
             request &&
-            request.phase === VerificationPhase.Cancelled &&
+            request.phase === Crypto.VerificationPhase.Cancelled &&
             MISMATCHES.includes(request.cancellationCode ?? "")
         ) {
             Modal.createDialog(ErrorDialog, {
@@ -101,11 +99,11 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
         }
     }, [onClose, request]);
 
-    useTypedEventEmitter(request, VerificationRequestEvent.Change, changeHandler);
+    useTypedEventEmitter(request, Crypto.VerificationRequestEvent.Change, changeHandler);
 
     const onStartVerification = useCallback(async (): Promise<void> => {
         setRequesting(true);
-        let verificationRequest_: VerificationRequest;
+        let verificationRequest_: Crypto.VerificationRequest;
         try {
             const roomId = await ensureDMExists(cli, member.userId);
             if (!roomId) {
@@ -138,7 +136,9 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
     const requested: boolean =
         (!request && isRequesting) ||
         (!!request &&
-            (phase === VerificationPhase.Requested || phase === VerificationPhase.Unsent || phase === undefined));
+            (phase === Crypto.VerificationPhase.Requested ||
+                phase === Crypto.VerificationPhase.Unsent ||
+                phase === undefined));
     const isSelfVerification = request ? request.isSelfVerification : member.userId === cli.getUserId();
 
     if (!request || requested) {

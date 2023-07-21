@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";

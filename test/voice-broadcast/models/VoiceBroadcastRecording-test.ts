@@ -26,9 +26,9 @@ import {
     MsgType,
     RelationType,
     Room,
+    SyncState,
 } from "matrix-js-sdk/src/matrix";
-import { Relations } from "matrix-js-sdk/src/models/relations";
-import { SyncState } from "matrix-js-sdk/src/sync";
+import { Relations } from "matrix-js-sdk/src/matrix";
 
 import { uploadFile } from "../../../src/ContentMessages";
 import { EncryptedFile } from "../../../src/customisations/models/IMediaEventContent";

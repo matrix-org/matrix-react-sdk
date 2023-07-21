@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 
 import {
     VoiceBroadcastInfoState,

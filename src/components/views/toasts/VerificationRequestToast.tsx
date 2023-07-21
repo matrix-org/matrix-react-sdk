@@ -15,13 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import {
-    canAcceptVerificationRequest,
-    VerificationRequest,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto-api";
 import { logger } from "matrix-js-sdk/src/logger";
-import { Device } from "matrix-js-sdk/src/matrix";
+import { Device, Crypto } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -39,7 +34,7 @@ import { getDeviceCryptoInfo } from "../../../utils/crypto/deviceInfo";
 
 interface IProps {
     toastKey: string;
-    request: VerificationRequest;
+    request: Crypto.VerificationRequest;
 }
 
 interface IState {
@@ -66,7 +61,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                 this.setState({ counter });
             }, 1000);
         }
-        request.on(VerificationRequestEvent.Change, this.checkRequestIsPending);
+        request.on(Crypto.VerificationRequestEvent.Change, this.checkRequestIsPending);
         // We should probably have a separate class managing the active verification toasts,
         // rather than monitoring this in the toast component itself, since we'll get problems
         // like the toast not going away when the verification is cancelled unless it's the
@@ -89,12 +84,12 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
     public componentWillUnmount(): void {
         clearInterval(this.intervalHandle);
         const { request } = this.props;
-        request.off(VerificationRequestEvent.Change, this.checkRequestIsPending);
+        request.off(Crypto.VerificationRequestEvent.Change, this.checkRequestIsPending);
     }
 
     private checkRequestIsPending = (): void => {
         const { request } = this.props;
-        if (!canAcceptVerificationRequest(request)) {
+        if (!Crypto.canAcceptVerificationRequest(request)) {
             ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         }
     };

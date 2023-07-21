@@ -16,9 +16,8 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { Crypto, CryptoEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import type CreateKeyBackupDialog from "../../../async-components/views/dialogs/security/CreateKeyBackupDialog";
@@ -41,7 +40,7 @@ interface IState {
     backupKeyWellFormed: boolean | null;
     secretStorageKeyInAccount: boolean | null;
     secretStorageReady: boolean | null;
-    backupInfo: IKeyBackupInfo | null;
+    backupInfo: Crypto.KeyBackupInfo | null;
     backupSigStatus: TrustInfo | null;
     sessionsRemaining: number;
 }

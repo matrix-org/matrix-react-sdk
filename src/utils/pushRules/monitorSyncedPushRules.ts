@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
-import { RuleId, IAnnotatedPushRule } from "matrix-js-sdk/src/@types/PushRules";
+import { RuleId, IAnnotatedPushRule } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { VectorPushRulesDefinitions, VectorPushRuleDefinition } from "../../notifications";

@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Device } from "matrix-js-sdk/src/matrix";
-import { GeneratedSas } from "matrix-js-sdk/src/crypto-api/verification";
+import { Crypto, Device } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td } from "../../../languageHandler";
 import { PendingActionSpinner } from "../right_panel/EncryptionInfo";
@@ -32,7 +31,7 @@ interface IProps {
 
     onDone: () => void;
     onCancel: () => void;
-    sas: GeneratedSas;
+    sas: Crypto.GeneratedSas;
     isSelf?: boolean;
     inDialog?: boolean; // whether this component is being shown in a dialog and to use DialogButtons
 }

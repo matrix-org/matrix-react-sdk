@@ -17,7 +17,7 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { Crypto } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
@@ -71,7 +71,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         this.setState({
             error: undefined,
         });
-        let info: IKeyBackupInfo | undefined;
+        let info: Crypto.KeyBackupInfo | undefined;
         const cli = MatrixClientPeg.safeGet();
         try {
             await accessSecretStorage(async (): Promise<void> => {

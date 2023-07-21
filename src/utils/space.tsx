@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomType, EventType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { Room } from "matrix-js-sdk/src/matrix";
+import { RoomType, EventType } from "matrix-js-sdk/src/matrix";
+import { JoinRule } from "matrix-js-sdk/src/matrix";
 import { ICreateRoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import { calculateRoomVia } from "./permalinks/Permalinks";

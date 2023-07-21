@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { CryptoEvent } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 
 import defaultDispatcher from "../../dispatcher/dispatcher";

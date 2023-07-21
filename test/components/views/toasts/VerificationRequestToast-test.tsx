@@ -21,8 +21,8 @@ import {
     VerificationRequest,
     VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { IMyDevice, MatrixClient } from "matrix-js-sdk/src/client";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { IMyDevice, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 import { Device } from "matrix-js-sdk/src/matrix";
 
 import VerificationRequestToast from "../../../../src/components/views/toasts/VerificationRequestToast";

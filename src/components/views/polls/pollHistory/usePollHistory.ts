@@ -16,7 +16,7 @@ limitations under the License.
 
 import { useEffect, useState } from "react";
 import { Poll, PollEvent } from "matrix-js-sdk/src/matrix";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { useEventEmitterState } from "../../../../hooks/useEventEmitter";
 

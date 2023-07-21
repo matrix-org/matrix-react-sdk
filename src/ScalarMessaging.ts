@@ -291,7 +291,7 @@ Response:
 
 */
 
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IEvent } from "matrix-js-sdk/src/matrix";
 

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { Room } from "matrix-js-sdk/src/matrix";
 
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";

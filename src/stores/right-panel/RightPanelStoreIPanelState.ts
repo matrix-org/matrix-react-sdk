@@ -14,18 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { User } from "matrix-js-sdk/src/models/user";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
+import { Crypto, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { User } from "matrix-js-sdk/src/matrix";
+import { Room } from "matrix-js-sdk/src/matrix";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 
 import { RightPanelPhases } from "./RightPanelStorePhases";
 
 export interface IRightPanelCardState {
     member?: RoomMember | User;
-    verificationRequest?: VerificationRequest;
-    verificationRequestPromise?: Promise<VerificationRequest>;
+    verificationRequest?: Crypto.VerificationRequest;
+    verificationRequestPromise?: Promise<Crypto.VerificationRequest>;
     widgetId?: string;
     spaceId?: string;
     // Room3pidMemberInfo, Space3pidMemberInfo,

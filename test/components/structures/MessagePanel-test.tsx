@@ -19,7 +19,7 @@ import React from "react";
 import { EventEmitter } from "events";
 import { MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { render } from "@testing-library/react";
-import { Thread } from "matrix-js-sdk/src/models/thread";
+import { Thread } from "matrix-js-sdk/src/matrix";
 
 import MessagePanel, { shouldFormContinuation } from "../../../src/components/structures/MessagePanel";
 import SettingsStore from "../../../src/settings/SettingsStore";

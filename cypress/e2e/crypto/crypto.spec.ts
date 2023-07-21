@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import type { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
+import type { ISendEventResponse, MatrixClient, Room, Crypto } from "matrix-js-sdk/src/matrix";
 import type { CypressBot } from "../../support/bot";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
@@ -116,7 +115,7 @@ const verify = function (this: CryptoTestContext) {
         // this requires creating a DM, so can take a while. Give it a longer timeout.
         cy.findByRole("button", { name: "Verify by emoji", timeout: 30000 }).click();
 
-        cy.wrap(bobsVerificationRequestPromise).then(async (request: VerificationRequest) => {
+        cy.wrap(bobsVerificationRequestPromise).then(async (request: Crypto.VerificationRequest) => {
             // the bot user races with the Element user to hit the "verify by emoji" button
             const verifier = await request.startVerification("m.sas.v1");
             doTwoWaySasVerification(verifier);

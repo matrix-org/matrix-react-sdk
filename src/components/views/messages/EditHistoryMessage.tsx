@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import { EventStatus, IContent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { EventStatus, IContent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { MsgType } from "matrix-js-sdk/src/matrix";
 
 import * as HtmlUtils from "../../../HtmlUtils";
 import { editBodyDiffToHtml } from "../../../utils/MessageDiffUtils";

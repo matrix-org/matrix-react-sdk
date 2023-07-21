@@ -15,15 +15,8 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import {
-    AuthType,
-    IAuthData,
-    IAuthDict,
-    IInputs,
-    InteractiveAuth,
-    IStageStatus,
-} from "matrix-js-sdk/src/interactive-auth";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { AuthType, IAuthData, IAuthDict, IInputs, InteractiveAuth, IStageStatus } from "matrix-js-sdk/src/matrix";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import getEntryComponentForLoginType, { IStageComponent } from "../views/auth/InteractiveAuthEntryComponents";

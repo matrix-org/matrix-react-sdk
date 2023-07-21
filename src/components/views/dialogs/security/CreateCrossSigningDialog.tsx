@@ -16,10 +16,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { CrossSigningKeys } from "matrix-js-sdk/src/client";
+import { CrossSigningKeys } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { AuthDict, MatrixError, UIAFlow } from "matrix-js-sdk/src/matrix";
-import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
+import { UIAResponse } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";

@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { Crypto } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import type CreateKeyBackupDialog from "../../../async-components/views/dialogs/security/CreateKeyBackupDialog";
@@ -38,7 +38,7 @@ interface IProps {
 interface IState {
     shouldLoadBackupStatus: boolean;
     loading: boolean;
-    backupInfo: IKeyBackupInfo | null;
+    backupInfo: Crypto.KeyBackupInfo | null;
 }
 
 export default class LogoutDialog extends React.Component<IProps, IState> {

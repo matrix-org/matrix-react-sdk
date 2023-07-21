@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { RoomType } from "matrix-js-sdk/src/@types/event";
-import { IRoomDirectoryOptions } from "matrix-js-sdk/src/@types/requests";
-import { IProtocol, IPublicRoomsChunkRoom } from "matrix-js-sdk/src/client";
+import { RoomType } from "matrix-js-sdk/src/matrix";
+import { IRoomDirectoryOptions } from "matrix-js-sdk/src/matrix";
+import { IProtocol, IPublicRoomsChunkRoom } from "matrix-js-sdk/src/matrix";
 import { useCallback, useEffect, useState } from "react";
 
 import { IPublicRoomDirectoryConfig } from "../components/views/directory/NetworkDropdown";

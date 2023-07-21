@@ -15,20 +15,20 @@ limitations under the License.
 */
 
 import { EventEmitter } from "events";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
-import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { TimelineIndex, TimelineWindow } from "matrix-js-sdk/src/timeline-window";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { Direction, EventTimeline } from "matrix-js-sdk/src/matrix";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/matrix";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { TimelineIndex, TimelineWindow } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { IEventWithRoomId, IMatrixProfile, IResultRoomEvents } from "matrix-js-sdk/src/@types/search";
+import { IEventWithRoomId, IMatrixProfile, IResultRoomEvents } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
-import { HTTPError } from "matrix-js-sdk/src/http-api";
+import { EventType } from "matrix-js-sdk/src/matrix";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { SyncState } from "matrix-js-sdk/src/matrix";
+import { HTTPError } from "matrix-js-sdk/src/matrix";
 
 import PlatformPeg from "../PlatformPeg";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -161,7 +161,7 @@ export default class EventIndex extends EventEmitter {
      *     - Every other sync, tell the event index to commit all the queued up
      *         live events
      */
-    private onSync = async (state: SyncState, prevState: SyncState | null, data?: ISyncStateData): Promise<void> => {
+    private onSync = async (state: SyncState, prevState: SyncState | null): Promise<void> => {
         const indexManager = PlatformPeg.get()?.getEventIndexingManager();
         if (!indexManager) return;
 

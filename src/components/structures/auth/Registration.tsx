@@ -16,10 +16,10 @@ limitations under the License.
 
 import { AuthType, createClient, IAuthData, IAuthDict, IInputs, MatrixError } from "matrix-js-sdk/src/matrix";
 import React, { Fragment, ReactNode } from "react";
-import { IRegisterRequestParams, IRequestTokenResponse, MatrixClient } from "matrix-js-sdk/src/client";
+import { IRegisterRequestParams, IRequestTokenResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ISSOFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { SSOFlow, SSOAction } from "matrix-js-sdk/src/matrix";
 import { RegisterResponse } from "matrix-js-sdk/src/@types/registration";
 
 import { _t } from "../../../languageHandler";
@@ -120,7 +120,7 @@ interface IState {
     differentLoggedInUserId?: string;
     // the SSO flow definition, this is fetched from /login as that's the only
     // place it is exposed.
-    ssoFlow?: ISSOFlow;
+    ssoFlow?: SSOFlow;
 }
 
 export default class Registration extends React.Component<IProps, IState> {
@@ -218,11 +218,11 @@ export default class Registration extends React.Component<IProps, IState> {
         this.loginLogic.setHomeserverUrl(hsUrl);
         this.loginLogic.setIdentityServerUrl(isUrl);
 
-        let ssoFlow: ISSOFlow | undefined;
+        let ssoFlow: SSOFlow | undefined;
         try {
             const loginFlows = await this.loginLogic.getFlows();
             if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
-            ssoFlow = loginFlows.find((f) => f.type === "m.login.sso" || f.type === "m.login.cas") as ISSOFlow;
+            ssoFlow = loginFlows.find((f) => f.type === "m.login.sso" || f.type === "m.login.cas") as SSOFlow;
         } catch (e) {
             if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             logger.error("Failed to get login flows to check for SSO support", e);

@@ -17,19 +17,15 @@ limitations under the License.
 import React from "react";
 import { render, screen, act, fireEvent, waitFor, getByRole, RenderResult } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
-import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { PendingEventOrdering } from "matrix-js-sdk/src/client";
+import { EventType, RoomType } from "matrix-js-sdk/src/matrix";
+import { Room } from "matrix-js-sdk/src/matrix";
+import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { PendingEventOrdering } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
 import EventEmitter from "events";
-import { ISearchResults } from "matrix-js-sdk/src/@types/search";
 
-import type { MatrixClient } from "matrix-js-sdk/src/client";
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import type { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import type { ISearchResults, MatrixClient, MatrixEvent, RoomMember, MatrixCall } from "matrix-js-sdk/src/matrix";
 import {
     stubClient,
     mkRoomMember,

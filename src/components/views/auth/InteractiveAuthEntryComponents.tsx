@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { AuthType, IAuthDict, IInputs, IStageStatus } from "matrix-js-sdk/src/interactive-auth";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { AuthType, IAuthDict, IInputs, IStageStatus } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import React, { ChangeEvent, createRef, FormEvent, Fragment } from "react";
 

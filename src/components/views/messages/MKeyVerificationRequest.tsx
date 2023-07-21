@@ -15,13 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent, User } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, User, Crypto } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import {
-    canAcceptVerificationRequest,
-    VerificationPhase,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto-api";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -40,14 +35,14 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
     public componentDidMount(): void {
         const request = this.props.mxEvent.verificationRequest;
         if (request) {
-            request.on(VerificationRequestEvent.Change, this.onRequestChanged);
+            request.on(Crypto.VerificationRequestEvent.Change, this.onRequestChanged);
         }
     }
 
     public componentWillUnmount(): void {
         const request = this.props.mxEvent.verificationRequest;
         if (request) {
-            request.off(VerificationRequestEvent.Change, this.onRequestChanged);
+            request.off(Crypto.VerificationRequestEvent.Change, this.onRequestChanged);
         }
     }
 
@@ -132,7 +127,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
         const { mxEvent } = this.props;
         const request = mxEvent.verificationRequest;
 
-        if (!request || request.phase === VerificationPhase.Unsent) {
+        if (!request || request.phase === Crypto.VerificationPhase.Unsent) {
             return null;
         }
 
@@ -140,19 +135,19 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
         let subtitle: string;
         let stateNode: JSX.Element | undefined;
 
-        if (!canAcceptVerificationRequest(request)) {
+        if (!Crypto.canAcceptVerificationRequest(request)) {
             let stateLabel;
             const accepted =
-                request.phase === VerificationPhase.Ready ||
-                request.phase === VerificationPhase.Started ||
-                request.phase === VerificationPhase.Done;
+                request.phase === Crypto.VerificationPhase.Ready ||
+                request.phase === Crypto.VerificationPhase.Started ||
+                request.phase === Crypto.VerificationPhase.Done;
             if (accepted) {
                 stateLabel = (
                     <AccessibleButton onClick={this.openRequest}>
                         {this.acceptedLabel(request.initiatedByMe ? request.otherUserId : client.getSafeUserId())}
                     </AccessibleButton>
                 );
-            } else if (request.phase === VerificationPhase.Cancelled) {
+            } else if (request.phase === Crypto.VerificationPhase.Cancelled) {
                 stateLabel = this.cancelledLabel(request.cancellingUserId!);
             } else if (request.accepting) {
                 stateLabel = _t("Accepting…");
@@ -166,7 +161,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
             const name = getNameForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!);
             title = _t("%(name)s wants to verify", { name });
             subtitle = userLabelForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!);
-            if (canAcceptVerificationRequest(request)) {
+            if (Crypto.canAcceptVerificationRequest(request)) {
                 stateNode = (
                     <div className="mx_cryptoEvent_buttons">
                         <AccessibleButton kind="danger" onClick={this.onRejectClicked}>

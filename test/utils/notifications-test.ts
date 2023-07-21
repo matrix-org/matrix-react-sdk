@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Mocked, mocked } from "jest-mock";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { NotificationCountType, Room } from "matrix-js-sdk/src/matrix";
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 
 import {

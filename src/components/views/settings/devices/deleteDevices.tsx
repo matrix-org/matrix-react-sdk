@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
-import { IAuthDict, IAuthData } from "matrix-js-sdk/src/interactive-auth";
+import { IAuthDict, IAuthData } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";

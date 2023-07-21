@@ -18,13 +18,10 @@ limitations under the License.
 */
 
 import { ReactNode } from "react";
-import { createClient } from "matrix-js-sdk/src/matrix";
-import { InvalidStoreError } from "matrix-js-sdk/src/errors";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { createClient, SSOAction, InvalidStoreError, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
-import { SSOAction } from "matrix-js-sdk/src/@types/auth";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";

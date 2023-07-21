@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
-import type { MatrixClient } from "matrix-js-sdk/src/matrix";
-import type { VerificationRequest, Verifier } from "matrix-js-sdk/src/crypto-api";
+import type { MatrixClient, Crypto } from "matrix-js-sdk/src/matrix";
+import { ShowSasCallbacks } from "matrix-js-sdk/src/crypto-api/verification";
 
 export type EmojiMapping = [emoji: string, name: string];
 
@@ -25,9 +24,9 @@ export type EmojiMapping = [emoji: string, name: string];
  *
  * @param cli - matrix client we expect to receive a request
  */
-export function waitForVerificationRequest(cli: MatrixClient): Promise<VerificationRequest> {
-    return new Promise<VerificationRequest>((resolve) => {
-        const onVerificationRequestEvent = async (request: VerificationRequest) => {
+export function waitForVerificationRequest(cli: MatrixClient): Promise<Crypto.VerificationRequest> {
+    return new Promise<Crypto.VerificationRequest>((resolve) => {
+        const onVerificationRequestEvent = async (request: Crypto.VerificationRequest) => {
             await request.accept();
             resolve(request);
         };
@@ -45,9 +44,9 @@ export function waitForVerificationRequest(cli: MatrixClient): Promise<Verificat
  * @param verifier - verifier
  * @returns A promise that resolves, with the emoji list, once we confirm the emojis
  */
-export function handleSasVerification(verifier: Verifier): Promise<EmojiMapping[]> {
+export function handleSasVerification(verifier: Crypto.Verifier): Promise<EmojiMapping[]> {
     return new Promise<EmojiMapping[]>((resolve) => {
-        const onShowSas = (event: ISasEvent) => {
+        const onShowSas = (event: Crypto.ShowSasCallbacks) => {
             // @ts-ignore VerifierEvent is a pain to get at here as we don't have a reference to matrixcs;
             // using the string value here
             verifier.off("show_sas", onShowSas);
@@ -123,7 +122,7 @@ export function logIntoElement(homeserverUrl: string, username: string, password
  *
  * @param botVerificationRequest - a verification request in a bot client
  */
-export function doTwoWaySasVerification(verifier: Verifier): void {
+export function doTwoWaySasVerification(verifier: Crypto.Verifier): void {
     // on the bot side, wait for the emojis, confirm they match, and return them
     const emojiPromise = handleSasVerification(verifier);
 

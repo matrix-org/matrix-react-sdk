@@ -17,14 +17,8 @@ limitations under the License.
 import { act, render } from "@testing-library/react";
 import React from "react";
 import { Mocked } from "jest-mock";
-import {
-    EmojiMapping,
-    ShowSasCallbacks,
-    Verifier,
-    VerifierEvent,
-    VerifierEventHandlerMap,
-} from "matrix-js-sdk/src/crypto-api/verification";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
+import { Crypto } from "matrix-js-sdk/src/matrix";
 
 import IncomingSasDialog from "../../../../src/components/views/dialogs/IncomingSasDialog";
 import { stubClient } from "../../../test-utils";
@@ -47,7 +41,7 @@ describe("IncomingSasDialog", () => {
         // fire the ShowSas event
         const sasEvent = makeMockSasCallbacks();
         act(() => {
-            mockVerifier.emit(VerifierEvent.ShowSas, sasEvent);
+            mockVerifier.emit(Crypto.VerifierEvent.ShowSas, sasEvent);
         });
 
         const emojis = container.getElementsByClassName("mx_VerificationShowSas_emojiSas_block");
@@ -58,23 +52,23 @@ describe("IncomingSasDialog", () => {
     });
 });
 
-function renderComponent(verifier: Verifier, onFinished = () => true) {
+function renderComponent(verifier: Crypto.Verifier, onFinished = () => true) {
     return render(<IncomingSasDialog verifier={verifier} onFinished={onFinished} />);
 }
 
-function makeMockVerifier(): Mocked<Verifier> {
-    const verifier = new TypedEventEmitter<VerifierEvent, VerifierEventHandlerMap>();
+function makeMockVerifier(): Mocked<Crypto.Verifier> {
+    const verifier = new TypedEventEmitter<Crypto.VerifierEvent, Crypto.VerifierEventHandlerMap>();
     Object.assign(verifier, {
         cancel: jest.fn(),
     });
-    return verifier as unknown as Mocked<Verifier>;
+    return verifier as unknown as Mocked<Crypto.Verifier>;
 }
 
-function makeMockSasCallbacks(): ShowSasCallbacks {
-    const unicorn: EmojiMapping = ["🦄", "unicorn"];
+function makeMockSasCallbacks(): Crypto.ShowSasCallbacks {
+    const unicorn: Crypto.EmojiMapping = ["🦄", "unicorn"];
     return {
         sas: {
-            emoji: new Array<EmojiMapping>(7).fill(unicorn),
+            emoji: new Array<Crypto.EmojiMapping>(7).fill(unicorn),
         },
         cancel: jest.fn(),
         confirm: jest.fn(),

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { LocalStorageCryptoStore } from "matrix-js-sdk/src/crypto/store/localStorage-crypto-store";
-import { IndexedDBStore } from "matrix-js-sdk/src/store/indexeddb";
+import { IndexedDBStore } from "matrix-js-sdk/src/matrix";
 import { IndexedDBCryptoStore } from "matrix-js-sdk/src/crypto/store/indexeddb-crypto-store";
 import { logger } from "matrix-js-sdk/src/logger";
 

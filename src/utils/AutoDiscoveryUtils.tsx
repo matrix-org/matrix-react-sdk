@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { AutoDiscovery, ClientConfig, OidcClientConfig } from "matrix-js-sdk/src/autodiscovery";
-import { M_AUTHENTICATION } from "matrix-js-sdk/src/client";
+import { M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IClientWellKnown } from "matrix-js-sdk/src/matrix";
 

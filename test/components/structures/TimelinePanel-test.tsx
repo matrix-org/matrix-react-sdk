@@ -29,14 +29,8 @@ import {
     RoomState,
     TimelineWindow,
 } from "matrix-js-sdk/src/matrix";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import {
-    FeatureSupport,
-    Thread,
-    THREAD_RELATION_TYPE,
-    ThreadEvent,
-    ThreadFilterType,
-} from "matrix-js-sdk/src/models/thread";
+import { EventTimeline } from "matrix-js-sdk/src/matrix";
+import { FeatureSupport, Thread, THREAD_RELATION_TYPE, ThreadEvent, ThreadFilterType } from "matrix-js-sdk/src/matrix";
 import React, { createRef } from "react";
 import { Mocked, mocked } from "jest-mock";
 import { forEachRight } from "lodash";

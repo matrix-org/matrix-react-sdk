@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { fireEvent, render, RenderResult } from "@testing-library/react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { Relations } from "matrix-js-sdk/src/models/relations";
+import { Relations } from "matrix-js-sdk/src/matrix";
 import {
     M_POLL_KIND_DISCLOSED,
     M_POLL_KIND_UNDISCLOSED,

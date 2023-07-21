@@ -31,9 +31,9 @@ import {
 } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
 import EventEmitter from "events";
-import { RuleId, TweakName } from "matrix-js-sdk/src/@types/PushRules";
+import { RuleId, TweakName } from "matrix-js-sdk/src/matrix";
 import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
-import { SyncState } from "matrix-js-sdk/src/sync";
+import { SyncState } from "matrix-js-sdk/src/matrix";
 import { CallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/callEventHandler";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";

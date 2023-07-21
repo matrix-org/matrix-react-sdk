@@ -14,12 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { ClientEvent, EventType, MatrixClient, RoomStateEvent } from "matrix-js-sdk/src/matrix";
-import { SyncState } from "matrix-js-sdk/src/sync";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import {
+    MatrixEvent,
+    CryptoEvent,
+    ClientEvent,
+    EventType,
+    MatrixClient,
+    RoomStateEvent,
+    SyncState,
+    Crypto,
+} from "matrix-js-sdk/src/matrix";
 
 import dis from "./dispatcher/dispatcher";
 import {
@@ -57,7 +62,7 @@ export default class DeviceListener {
     // has the user dismissed any of the various nag toasts to setup encryption on this device?
     private dismissedThisDeviceToast = false;
     // cache of the key backup info
-    private keyBackupInfo: IKeyBackupInfo | null = null;
+    private keyBackupInfo: Crypto.KeyBackupInfo | null = null;
     private keyBackupFetchedAt: number | null = null;
     private keyBackupStatusChecked = false;
     // We keep a list of our own device IDs so we can batch ones that were already
@@ -239,7 +244,7 @@ export default class DeviceListener {
 
     // The server doesn't tell us when key backup is set up, so we poll
     // & cache the result
-    private async getKeyBackupInfo(): Promise<IKeyBackupInfo | null> {
+    private async getKeyBackupInfo(): Promise<Crypto.KeyBackupInfo | null> {
         if (!this.client) return null;
         const now = new Date().getTime();
         if (

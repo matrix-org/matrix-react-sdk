@@ -18,7 +18,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { EventEmitter } from "events";
 import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { CryptoEvent } from "matrix-js-sdk/src/matrix";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import {
     Phase as VerificationPhase,

@@ -16,10 +16,9 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { Crypto, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { EventType } from "matrix-js-sdk/src/matrix";
+import { CryptoEvent } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -40,7 +39,7 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
     public componentDidMount(): void {
         const request = this.props.mxEvent.verificationRequest;
         if (request) {
-            request.on(VerificationRequestEvent.Change, this.onRequestChanged);
+            request.on(Crypto.VerificationRequestEvent.Change, this.onRequestChanged);
         }
         MatrixClientPeg.safeGet().on(CryptoEvent.UserTrustStatusChanged, this.onTrustChanged);
     }
@@ -48,7 +47,7 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
     public componentWillUnmount(): void {
         const request = this.props.mxEvent.verificationRequest;
         if (request) {
-            request.off(VerificationRequestEvent.Change, this.onRequestChanged);
+            request.off(Crypto.VerificationRequestEvent.Change, this.onRequestChanged);
         }
         const cli = MatrixClientPeg.get();
         if (cli) {
@@ -69,17 +68,20 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
         this.forceUpdate();
     };
 
-    public static shouldRender(mxEvent: MatrixEvent, request?: VerificationRequest): boolean {
+    public static shouldRender(mxEvent: MatrixEvent, request?: Crypto.VerificationRequest): boolean {
         // normally should not happen
         if (!request) {
             return false;
         }
         // .cancel event that was sent after the verification finished, ignore
-        if (mxEvent.getType() === EventType.KeyVerificationCancel && request.phase !== VerificationPhase.Cancelled) {
+        if (
+            mxEvent.getType() === EventType.KeyVerificationCancel &&
+            request.phase !== Crypto.VerificationPhase.Cancelled
+        ) {
             return false;
         }
         // .done event that was sent after the verification cancelled, ignore
-        if (mxEvent.getType() === EventType.KeyVerificationDone && request.phase !== VerificationPhase.Done) {
+        if (mxEvent.getType() === EventType.KeyVerificationDone && request.phase !== Crypto.VerificationPhase.Done) {
             return false;
         }
 
@@ -109,11 +111,11 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
 
         let title: string | undefined;
 
-        if (request.phase === VerificationPhase.Done) {
+        if (request.phase === Crypto.VerificationPhase.Done) {
             title = _t("You verified %(name)s", {
                 name: getNameForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!),
             });
-        } else if (request.phase === VerificationPhase.Cancelled) {
+        } else if (request.phase === Crypto.VerificationPhase.Cancelled) {
             const userId = request.cancellingUserId;
             if (userId === myUserId) {
                 title = _t("You cancelled verifying %(name)s", {
@@ -128,7 +130,7 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
 
         if (title) {
             const classes = classNames("mx_cryptoEvent mx_cryptoEvent_icon", {
-                mx_cryptoEvent_icon_verified: request.phase === VerificationPhase.Done,
+                mx_cryptoEvent_icon_verified: request.phase === Crypto.VerificationPhase.Done,
             });
             return (
                 <EventTileBubble

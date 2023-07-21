@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import BaseDialog from "../dialogs/BaseDialog";
 import { locationEventGeoUri, isSelfLocation } from "../../../utils/location";

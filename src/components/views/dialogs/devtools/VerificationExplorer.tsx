@@ -17,8 +17,7 @@ limitations under the License.
 
 import React, { useContext, useEffect, useState } from "react";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { VerificationPhase as Phase, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { CryptoEvent, Crypto } from "matrix-js-sdk/src/matrix";
 
 import { useTypedEventEmitter, useTypedEventEmitterState } from "../../../../hooks/useEventEmitter";
 import { _t, _td } from "../../../../languageHandler";
@@ -26,13 +25,13 @@ import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import BaseTool, { DevtoolsContext, IDevtoolsProps } from "./BaseTool";
 import { Tool } from "../DevtoolsDialog";
 
-const PHASE_MAP: Record<Phase, string> = {
-    [Phase.Unsent]: _td("Unsent"),
-    [Phase.Requested]: _td("Requested"),
-    [Phase.Ready]: _td("Ready"),
-    [Phase.Done]: _td("Done"),
-    [Phase.Started]: _td("Started"),
-    [Phase.Cancelled]: _td("Cancelled"),
+const PHASE_MAP: Record<Crypto.VerificationPhase, string> = {
+    [Crypto.VerificationPhase.Unsent]: _td("Unsent"),
+    [Crypto.VerificationPhase.Requested]: _td("Requested"),
+    [Crypto.VerificationPhase.Ready]: _td("Ready"),
+    [Crypto.VerificationPhase.Done]: _td("Done"),
+    [Crypto.VerificationPhase.Started]: _td("Started"),
+    [Crypto.VerificationPhase.Cancelled]: _td("Cancelled"),
 };
 
 const VerificationRequestExplorer: React.FC<{
@@ -43,7 +42,7 @@ const VerificationRequestExplorer: React.FC<{
     const [timeout, setRequestTimeout] = useState(request.timeout);
 
     /* Re-render if something changes state */
-    useTypedEventEmitter(request, VerificationRequestEvent.Change, updateState);
+    useTypedEventEmitter(request, Crypto.VerificationRequestEvent.Change, updateState);
 
     /* Keep re-rendering if there's a timeout */
     useEffect(() => {

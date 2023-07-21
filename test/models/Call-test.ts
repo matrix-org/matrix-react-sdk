@@ -17,17 +17,17 @@ limitations under the License.
 import EventEmitter from "events";
 import { mocked } from "jest-mock";
 import { waitFor } from "@testing-library/react";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
-import { PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { RoomType } from "matrix-js-sdk/src/matrix";
+import { PendingEventOrdering } from "matrix-js-sdk/src/matrix";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
+import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { Widget } from "matrix-widget-api";
-import { GroupCallIntent } from "matrix-js-sdk/src/webrtc/groupCall";
+import { GroupCallIntent } from "matrix-js-sdk/src/matrix";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import type { Mocked } from "jest-mock";
-import type { MatrixClient, IMyDevice } from "matrix-js-sdk/src/client";
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { MatrixClient, IMyDevice } from "matrix-js-sdk/src/matrix";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import type { ClientWidgetApi } from "matrix-widget-api";
 import { JitsiCallMemberContent, Layout } from "../../src/models/Call";
 import { stubClient, mkEvent, mkRoomMember, setupAsyncStoreWithClient, mockPlatformPeg } from "../test-utils";

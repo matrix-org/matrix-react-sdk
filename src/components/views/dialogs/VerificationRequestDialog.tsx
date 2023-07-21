@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
-import { User } from "matrix-js-sdk/src/models/user";
+import { Crypto, User } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -24,14 +23,14 @@ import BaseDialog from "./BaseDialog";
 import EncryptionPanel from "../right_panel/EncryptionPanel";
 
 interface IProps {
-    verificationRequest?: VerificationRequest;
-    verificationRequestPromise?: Promise<VerificationRequest>;
+    verificationRequest?: Crypto.VerificationRequest;
+    verificationRequestPromise?: Promise<Crypto.VerificationRequest>;
     onFinished: () => void;
     member?: User;
 }
 
 interface IState {
-    verificationRequest?: VerificationRequest;
+    verificationRequest?: Crypto.VerificationRequest;
 }
 
 export default class VerificationRequestDialog extends React.Component<IProps, IState> {

@@ -16,7 +16,7 @@ limitations under the License.
 
 import jsQR from "jsqr";
 
-import type { VerificationRequest, Verifier } from "matrix-js-sdk/src/crypto-api/verification";
+import type { Crypto } from "matrix-js-sdk/src/matrix";
 import { CypressBot } from "../../support/bot";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { emitPromise, skipIfRustCrypto } from "../../support/util";
@@ -95,13 +95,15 @@ describe("Device verification", () => {
 
         // Handle emoji SAS verification
         cy.get(".mx_InfoDialog").within(() => {
-            cy.get<VerificationRequest>("@verificationRequest").then(async (request: VerificationRequest) => {
-                // the bot chooses to do an emoji verification
-                const verifier = await request.startVerification("m.sas.v1");
+            cy.get<Crypto.VerificationRequest>("@verificationRequest").then(
+                async (request: Crypto.VerificationRequest) => {
+                    // the bot chooses to do an emoji verification
+                    const verifier = await request.startVerification("m.sas.v1");
 
-                // Handle emoji request and check that emojis are matching
-                doTwoWaySasVerification(verifier);
-            });
+                    // Handle emoji request and check that emojis are matching
+                    doTwoWaySasVerification(verifier);
+                },
+            );
 
             cy.findByRole("button", { name: "They match" }).click();
             cy.findByRole("button", { name: "Got it" }).click();
@@ -120,8 +122,8 @@ describe("Device verification", () => {
         cy.get(".mx_InfoDialog").within(() => {
             cy.get('[alt="QR Code"]').then((qrCode) => {
                 /* the bot scans the QR code */
-                cy.get<VerificationRequest>("@verificationRequest")
-                    .then(async (request: VerificationRequest) => {
+                cy.get<Crypto.VerificationRequest>("@verificationRequest")
+                    .then(async (request: Crypto.VerificationRequest) => {
                         // because I don't know how to scrape the imagedata from the cypress browser window,
                         // we extract the data url and render it to a new canvas.
                         const imageData = await renderQRCode(qrCode.attr("src"));
@@ -143,7 +145,7 @@ describe("Device verification", () => {
         });
 
         // wait for the bot to see we have finished
-        cy.get<Verifier>("@verifier").then(async (verifier) => {
+        cy.get<Crypto.Verifier>("@verifier").then(async (verifier) => {
             await verifier.verify();
         });
 
@@ -222,7 +224,7 @@ describe("Device verification", () => {
         });
 
         /* Now initiate a verification request from the *bot* device. */
-        let botVerificationRequest: VerificationRequest;
+        let botVerificationRequest: Crypto.VerificationRequest;
         cy.then(() => {
             async function initVerification() {
                 botVerificationRequest = await aliceBotClient
@@ -256,7 +258,7 @@ describe("Device verification", () => {
             return botVerificationRequest.verifier;
         }
 
-        cy.then(() => cy.wrap(awaitVerifier())).then((verifier: Verifier) => {
+        cy.then(() => cy.wrap(awaitVerifier())).then((verifier: Crypto.Verifier) => {
             // ... confirm ...
             botVerificationRequest.verifier.verify();
 

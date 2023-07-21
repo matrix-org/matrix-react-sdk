@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AuthDict } from "matrix-js-sdk/src/interactive-auth";
-import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
+import { AuthDict, UIAResponse } from "matrix-js-sdk/src/matrix";
 
 import Modal from "../Modal";
 import InteractiveAuthDialog, { InteractiveAuthDialogProps } from "../components/views/dialogs/InteractiveAuthDialog";

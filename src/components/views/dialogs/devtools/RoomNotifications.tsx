@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { Thread } from "matrix-js-sdk/src/models/thread";
+import { NotificationCountType, Room } from "matrix-js-sdk/src/matrix";
+import { Thread } from "matrix-js-sdk/src/matrix";
 import React, { useContext } from "react";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";

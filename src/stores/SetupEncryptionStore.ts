@@ -15,12 +15,10 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
-import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { Device } from "matrix-js-sdk/src/models/device";
+import { CryptoEvent } from "matrix-js-sdk/src/matrix";
+import { Crypto, Device } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { AccessCancelledError, accessSecretStorage } from "../SecurityManager";
@@ -43,8 +41,8 @@ export enum Phase {
 export class SetupEncryptionStore extends EventEmitter {
     private started?: boolean;
     public phase?: Phase;
-    public verificationRequest: VerificationRequest | null = null;
-    public backupInfo: IKeyBackupInfo | null = null;
+    public verificationRequest: Crypto.VerificationRequest | null = null;
+    public backupInfo: Crypto.KeyBackupInfo | null = null;
     // ID of the key that the secrets we want are encrypted with
     public keyId: string | null = null;
     // Descriptor of the key that the secrets we want are encrypted with
@@ -83,7 +81,7 @@ export class SetupEncryptionStore extends EventEmitter {
             return;
         }
         this.started = false;
-        this.verificationRequest?.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
+        this.verificationRequest?.off(Crypto.VerificationRequestEvent.Change, this.onVerificationRequestChange);
 
         const cli = MatrixClientPeg.get();
         if (!!cli) {
@@ -178,17 +176,17 @@ export class SetupEncryptionStore extends EventEmitter {
         }
     };
 
-    public onVerificationRequest = (request: VerificationRequest): void => {
+    public onVerificationRequest = (request: Crypto.VerificationRequest): void => {
         this.setActiveVerificationRequest(request);
     };
 
     public onVerificationRequestChange = async (): Promise<void> => {
-        if (this.verificationRequest?.phase === VerificationPhase.Cancelled) {
-            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
+        if (this.verificationRequest?.phase === Crypto.VerificationPhase.Cancelled) {
+            this.verificationRequest.off(Crypto.VerificationRequestEvent.Change, this.onVerificationRequestChange);
             this.verificationRequest = null;
             this.emit("update");
-        } else if (this.verificationRequest?.phase === VerificationPhase.Done) {
-            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
+        } else if (this.verificationRequest?.phase === Crypto.VerificationPhase.Done) {
+            this.verificationRequest.off(Crypto.VerificationRequestEvent.Change, this.onVerificationRequestChange);
             this.verificationRequest = null;
             // At this point, the verification has finished, we just need to wait for
             // cross signing to be ready to use, so wait for the user trust status to
@@ -277,16 +275,16 @@ export class SetupEncryptionStore extends EventEmitter {
         MatrixClientPeg.safeGet().crypto?.cancelAndResendAllOutgoingKeyRequests();
     }
 
-    private async setActiveVerificationRequest(request: VerificationRequest): Promise<void> {
+    private async setActiveVerificationRequest(request: Crypto.VerificationRequest): Promise<void> {
         if (!this.started) return; // bail if we were stopped
         if (request.otherUserId !== MatrixClientPeg.safeGet().getUserId()) return;
 
         if (this.verificationRequest) {
-            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
+            this.verificationRequest.off(Crypto.VerificationRequestEvent.Change, this.onVerificationRequestChange);
         }
         this.verificationRequest = request;
         await request.accept();
-        request.on(VerificationRequestEvent.Change, this.onVerificationRequestChange);
+        request.on(Crypto.VerificationRequestEvent.Change, this.onVerificationRequestChange);
         this.emit("update");
     }
 

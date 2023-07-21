@@ -15,12 +15,18 @@ limitations under the License.
 */
 
 import { Mocked, mocked } from "jest-mock";
-import { MatrixEvent, Room, MatrixClient, DeviceVerificationStatus, CryptoApi } from "matrix-js-sdk/src/matrix";
+import {
+    Device,
+    CryptoEvent,
+    Crypto,
+    MatrixEvent,
+    Room,
+    MatrixClient,
+    DeviceVerificationStatus,
+    CryptoApi,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { Device } from "matrix-js-sdk/src/models/device";
 
 import DeviceListener from "../src/DeviceListener";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
@@ -327,7 +333,7 @@ describe("DeviceListener", () => {
 
                 it("shows upgrade encryption toast when user has a key backup available", async () => {
                     // non falsy response
-                    mockClient!.getKeyBackupVersion.mockResolvedValue({} as unknown as IKeyBackupInfo);
+                    mockClient!.getKeyBackupVersion.mockResolvedValue({} as unknown as Crypto.KeyBackupInfo);
                     await createAndStart();
 
                     expect(SetupEncryptionToast.showToast).toHaveBeenCalledWith(

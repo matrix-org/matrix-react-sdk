@@ -21,7 +21,7 @@ import {
     MemoryStore,
 } from "matrix-js-sdk/src/matrix";
 import { IndexedDBCryptoStore } from "matrix-js-sdk/src/crypto/store/indexeddb-crypto-store";
-import { IndexedDBStore } from "matrix-js-sdk/src/store/indexeddb";
+import { IndexedDBStore } from "matrix-js-sdk/src/matrix";
 import { LocalStorageCryptoStore } from "matrix-js-sdk/src/crypto/store/localStorage-crypto-store";
 
 // @ts-ignore - `.ts` is needed here to make TS happy

@@ -17,8 +17,7 @@ limitations under the License.
 import React from "react";
 import { render, within } from "@testing-library/react";
 import { EventEmitter } from "events";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { VerificationPhase } from "matrix-js-sdk/src/crypto-api/verification";
+import { Crypto, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -30,7 +29,7 @@ describe("MKeyVerificationRequest", () => {
     const getMockVerificationRequest = (props: Partial<VerificationRequest>) => {
         const res = new EventEmitter();
         Object.assign(res, {
-            phase: VerificationPhase.Requested,
+            phase: Crypto.VerificationPhase.Requested,
             canAccept: false,
             initiatedByMe: true,
             ...props,
@@ -59,7 +58,7 @@ describe("MKeyVerificationRequest", () => {
     it("should not render if the request is unsent", () => {
         const event = new MatrixEvent({ type: "m.key.verification.request" });
         event.verificationRequest = getMockVerificationRequest({
-            phase: VerificationPhase.Unsent,
+            phase: Crypto.VerificationPhase.Unsent,
         });
         const { container } = render(<MKeyVerificationRequest mxEvent={event} />);
         expect(container).toBeEmptyDOMElement();
@@ -75,7 +74,7 @@ describe("MKeyVerificationRequest", () => {
     it("should render appropriately when the request was initiated by me and has been accepted", () => {
         const event = new MatrixEvent({ type: "m.key.verification.request" });
         event.verificationRequest = getMockVerificationRequest({
-            phase: VerificationPhase.Ready,
+            phase: Crypto.VerificationPhase.Ready,
             otherUserId: "@other:user",
         });
         const { container } = render(<MKeyVerificationRequest mxEvent={event} />);
@@ -86,7 +85,7 @@ describe("MKeyVerificationRequest", () => {
     it("should render appropriately when the request was initiated by the other user and has not yet been accepted", () => {
         const event = new MatrixEvent({ type: "m.key.verification.request" });
         event.verificationRequest = getMockVerificationRequest({
-            phase: VerificationPhase.Requested,
+            phase: Crypto.VerificationPhase.Requested,
             initiatedByMe: false,
             otherUserId: "@other:user",
         });
@@ -98,7 +97,7 @@ describe("MKeyVerificationRequest", () => {
     it("should render appropriately when the request was initiated by the other user and has been accepted", () => {
         const event = new MatrixEvent({ type: "m.key.verification.request" });
         event.verificationRequest = getMockVerificationRequest({
-            phase: VerificationPhase.Ready,
+            phase: Crypto.VerificationPhase.Ready,
             initiatedByMe: false,
             otherUserId: "@other:user",
         });
@@ -110,7 +109,7 @@ describe("MKeyVerificationRequest", () => {
     it("should render appropriately when the request was cancelled", () => {
         const event = new MatrixEvent({ type: "m.key.verification.request" });
         event.verificationRequest = getMockVerificationRequest({
-            phase: VerificationPhase.Cancelled,
+            phase: Crypto.VerificationPhase.Cancelled,
             cancellingUserId: userId,
         });
         const { container } = render(<MKeyVerificationRequest mxEvent={event} />);
