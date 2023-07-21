@@ -987,11 +987,9 @@ export function logout(oidcClientStore?: OidcClientStore): void {
     }
 
     _isLoggingOut = true;
+    PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
 
     doLogout(client, oidcClientStore).then(onLoggedOut, (err) => {
-        // we need the pickle key to decrypt stored access/refresh tokens to revoke them
-        // so clear it after logging out
-        PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
         // Just throwing an error here is going to be very unhelpful
         // if you're trying to log out because your server's down and
         // you want to log into a different server, so just forget the
