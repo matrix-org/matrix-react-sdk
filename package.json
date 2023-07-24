@@ -1,6 +1,6 @@
 {
     "name": "matrix-react-sdk",
-    "version": "3.75.0",
+    "version": "3.76.0",
     "description": "SDK for matrix.org using React",
     "author": "matrix.org",
     "repository": {
@@ -101,6 +101,7 @@
         "matrix-widget-api": "^1.4.0",
         "memoize-one": "^6.0.0",
         "minimist": "^1.2.5",
+        "oidc-client-ts": "^2.2.4",
         "opus-recorder": "^8.0.3",
         "pako": "^2.0.3",
         "png-chunks-extract": "^1.0.0",
@@ -143,7 +144,6 @@
         "@peculiar/webcrypto": "^1.4.3",
         "@percy/cli": "^1.11.0",
         "@percy/cypress": "^3.1.2",
-        "@sinonjs/fake-timers": "^9.1.2",
         "@testing-library/cypress": "^9.0.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^12.1.5",
