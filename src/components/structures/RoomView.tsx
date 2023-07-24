@@ -743,7 +743,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             }
         }
 
-        if (this.state.roomId === null && newState.roomId !== null) {
+        if (this.state.roomId === undefined && newState.roomId !== undefined) {
             // Get the scroll state for the new room
 
             // If an event ID wasn't specified, default to the one saved for this room
@@ -2433,23 +2433,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // Simplify the header for other main split types
         switch (this.state.mainSplitContentType) {
             case MainSplitContentType.MaximisedWidget:
-                excludedRightPanelPhaseButtons = [RightPanelPhases.ThreadPanel, RightPanelPhases.PinnedMessages];
+                excludedRightPanelPhaseButtons = [];
                 onAppsClick = null;
                 onForgetClick = null;
                 onSearchClick = null;
                 break;
             case MainSplitContentType.Call:
-                excludedRightPanelPhaseButtons = [
-                    RightPanelPhases.ThreadPanel,
-                    RightPanelPhases.PinnedMessages,
-                    RightPanelPhases.NotificationPanel,
-                ];
-                if (!isVideoRoom(this.state.room)) {
-                    excludedRightPanelPhaseButtons.push(RightPanelPhases.RoomSummary);
-                    if (this.state.activeCall === null) {
-                        excludedRightPanelPhaseButtons.push(RightPanelPhases.Timeline);
-                    }
-                }
+                excludedRightPanelPhaseButtons = [];
                 onAppsClick = null;
                 onForgetClick = null;
                 onSearchClick = null;
