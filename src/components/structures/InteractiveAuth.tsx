@@ -259,10 +259,6 @@ export default class InteractiveAuthComponent<T> extends React.Component<Interac
         this.props.onAuthFinished(false, e);
     };
 
-    private setEmailSid = (sid: string): void => {
-        this.authLogic.setEmailSid(sid);
-    };
-
     public render(): React.ReactNode {
         const stage = this.state.authStage;
         if (!stage) {
@@ -289,7 +285,6 @@ export default class InteractiveAuthComponent<T> extends React.Component<Interac
                 inputs={this.props.inputs}
                 stageState={this.state.stageState}
                 fail={this.onAuthStageFailed}
-                setEmailSid={this.setEmailSid}
                 showContinue={!this.props.continueIsManaged}
                 onPhaseChange={this.onPhaseChange}
                 requestEmailToken={this.authLogic.requestEmailToken}

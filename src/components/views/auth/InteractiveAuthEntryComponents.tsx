@@ -63,8 +63,6 @@ import CaptchaForm from "./CaptchaForm";
  * fail:                   a function which should be called with an error object if an
  *                         error occurred during the auth stage. This will cause the auth
  *                         session to be failed and the process to go back to the start.
- * setEmailSid:            m.login.email.identity only: a function to be called with the
- *                         email sid after a token is requested.
  * onPhaseChange:          A function which is called when the stage's phase changes. If
  *                         the stage has no phases, call this with DEFAULT_PHASE. Takes
  *                         one argument, the phase, and is always defined/required.
@@ -987,7 +985,6 @@ export interface IStageComponentProps extends IAuthEntryProps {
     stageState?: IStageStatus;
     continueText?: string;
     continueKind?: string;
-    setEmailSid?(sid: string): void;
     onCancel?(): void;
     requestEmailToken?(): Promise<void>;
 }
