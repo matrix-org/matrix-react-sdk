@@ -468,8 +468,6 @@ export default class Registration extends React.Component<IProps, IState> {
             password: this.state.formVals.password,
             initial_device_display_name: this.props.defaultDeviceDisplayName,
             auth: undefined,
-            // we still want to avoid the race conditions involved with multiple clients handling registration, but
-            // we'll handle these after we've received the access_token in onUIAuthFinished
             inhibit_login: undefined,
         };
         if (auth) registerParams.auth = auth;
