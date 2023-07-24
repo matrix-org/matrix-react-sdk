@@ -352,7 +352,6 @@ export default class Registration extends React.Component<IProps, IState> {
 
         const userId = (response as RegisterResponse).user_id;
         const accessToken = (response as RegisterResponse).access_token;
-        if (!userId || !accessToken) throw new Error("Registration failed");
 
         MatrixClientPeg.setJustRegisteredUserId(userId);
 
@@ -392,7 +391,7 @@ export default class Registration extends React.Component<IProps, IState> {
         const hasAccessToken = Boolean(accessToken);
         debuglog("Registration: ui auth finished:", { hasEmail, hasAccessToken });
         // don’t log in if we found a session for a different user
-        if (!hasEmail && hasAccessToken && !newState.differentLoggedInUserId) {
+        if (!hasEmail && !!accessToken && !newState.differentLoggedInUserId) {
             // we'll only try logging in if we either have no email to verify at all or we're the client that verified
             // the email, not the client that started the registration flow
             await this.props.onLoggedIn(
@@ -468,15 +467,12 @@ export default class Registration extends React.Component<IProps, IState> {
             password: this.state.formVals.password,
             initial_device_display_name: this.props.defaultDeviceDisplayName,
             auth: undefined,
+            // we still want to avoid the race conditions involved with multiple clients handling registration, but
+            // we'll handle these after we've received the access_token in onUIAuthFinished
             inhibit_login: undefined,
         };
         if (auth) registerParams.auth = auth;
 
-        // Inhibit login if we're trying to register with an email address and password:
-        // we defer to the tab that opens the email verification link to initiate the new Matrix session
-        if (!!this.state.formVals.email && !!this.state.formVals.password) {
-            registerParams.inhibit_login = true;
-        }
         debuglog("Registration: sending registration request:", auth);
         return this.state.matrixClient.registerRequest(registerParams);
     };
