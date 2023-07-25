@@ -34,7 +34,12 @@ import SettingsStore from "../../settings/SettingsStore";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { Layout } from "../../settings/enums/Layout";
 import { _t } from "../../languageHandler";
-import EventTile, { GetRelationsForEvent, IReadReceiptProps, UnwrappedEventTile } from "../views/rooms/EventTile";
+import EventTile, {
+    GetRelationsForEvent,
+    IReadReceiptProps,
+    isEligibleForSpecialReceipt,
+    UnwrappedEventTile,
+} from "../views/rooms/EventTile";
 import { hasText } from "../../TextForEvent";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import DMRoomMap from "../../utils/DMRoomMap";
@@ -608,6 +613,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
     }
 
+    private isSentState(ev: MatrixEvent): boolean {
+        const status = ev.getAssociatedStatus();
+        return !status || status === EventStatus.SENT;
+    }
+
     private getEventTiles(): ReactNode[] {
         // first figure out which is the last event in the list which we're
         // actually going to show; this allows us to behave slightly
@@ -620,7 +630,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             return { event, shouldShow: this.shouldShowEvent(event) };
         });
 
+        const userId = MatrixClientPeg.safeGet().getSafeUserId();
+
+        let lastSuccessfulEventIndex = -1;
         let lastShownNonLocalEchoIndex = -1;
+        // Find the indices of the last successful event we sent and the last non-local-echo events shown
         for (let i = events.length - 1; i >= 0; i--) {
             const { event, shouldShow } = events[i];
             if (!shouldShow) {
@@ -631,13 +645,17 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 lastShownEvent = event;
             }
 
-            if (event.status) {
-                // this is a local echo
-                continue;
+            if (lastSuccessfulEventIndex < 0 && this.isSentState(event) && isEligibleForSpecialReceipt(event, userId)) {
+                lastSuccessfulEventIndex = i;
             }
 
-            lastShownNonLocalEchoIndex = i;
-            break;
+            if (lastShownNonLocalEchoIndex < 0 && !event.status) {
+                lastShownNonLocalEchoIndex = i;
+            }
+
+            if (lastShownNonLocalEchoIndex >= 0 && lastSuccessfulEventIndex >= 0) {
+                break;
+            }
         }
 
         const ret: ReactNode[] = [];
@@ -692,7 +710,17 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     // make sure we unpack the array returned by getTilesForEvent,
                     // otherwise React will auto-generate keys, and we will end up
                     // replacing all the DOM elements every time we paginate.
-                    ret.push(...this.getTilesForEvent(prevEvent, event, last, false, nextEventAndShouldShow, nextTile));
+                    ret.push(
+                        ...this.getTilesForEvent(
+                            prevEvent,
+                            event,
+                            last,
+                            false,
+                            nextEventAndShouldShow,
+                            nextTile,
+                            i === lastSuccessfulEventIndex,
+                        ),
+                    );
                     prevEvent = event;
                 }
 
@@ -715,6 +743,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         isGrouped = false,
         nextEvent: EventAndShouldShow | null = null,
         nextEventWithTile: MatrixEvent | null = null,
+        isLastSuccessful = false,
     ): ReactNode[] {
         const ret: ReactNode[] = [];
 
@@ -759,30 +788,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         const highlight = eventId === this.props.highlightedEventId;
 
         const readReceipts = this.readReceiptsByEvent.get(eventId);
-
-        let isLastSuccessful = false;
-        const isSentState = (s: EventStatus | null): boolean => !s || s === EventStatus.SENT;
-        const isSent = isSentState(mxEv.getAssociatedStatus());
-        const hasNextEvent = nextEvent?.shouldShow;
-        if (!hasNextEvent && isSent) {
-            isLastSuccessful = true;
-        } else if (hasNextEvent && isSent && !isSentState(nextEvent.event.getAssociatedStatus())) {
-            isLastSuccessful = true;
-        }
-
-        // This is a bit nuanced, but if our next event is hidden but a future event is not
-        // hidden then we're not the last successful.
-        if (
-            nextEventWithTile &&
-            nextEventWithTile !== nextEvent?.event &&
-            isSentState(nextEventWithTile.getAssociatedStatus())
-        ) {
-            isLastSuccessful = false;
-        }
-
-        // We only want to consider "last successful" if the event is sent by us, otherwise of course
-        // it's successful: we received it.
-        isLastSuccessful = isLastSuccessful && mxEv.getSender() === MatrixClientPeg.safeGet().getUserId();
 
         const callEventGrouper = this.props.callEventGroupers.get(mxEv.getContent().call_id);
         // use txnId as key if available so that we don't remount during sending
