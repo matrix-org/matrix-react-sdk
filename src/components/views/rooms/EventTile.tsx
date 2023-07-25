@@ -255,17 +255,10 @@ export function isEligibleForSpecialReceipt(event: MatrixEvent, myUserId: string
     // Check to see if the event was sent by us. If it wasn't, it won't qualify for special read receipts.
     if (event.getSender() !== myUserId) return false;
 
-    // Determine if the type is relevant to the user. This notably excludes state
-    // events and pretty much anything that can't be sent by the composer as a message. For
-    // those we rely on local echo giving the impression of things changing, and expect them
-    // to be quick.
-    const simpleSendableEvents = [
-        EventType.Sticker,
-        EventType.RoomMessage,
-        EventType.RoomMessageEncrypted,
-        EventType.PollStart,
-    ];
-    if (!simpleSendableEvents.includes(event.getType() as EventType)) return false;
+    // Determine if the type is relevant to the user.
+    // This notably excludes state events and pretty much anything that can't be sent by the composer as a message.
+    // For those we rely on local echo giving the impression of things changing, and expect them to be quick.
+    if (!isMessageEvent(event) && event.getType() !== EventType.RoomMessageEncrypted) return false;
 
     // Default case
     return true;
