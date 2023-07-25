@@ -23,6 +23,8 @@ import { emitPromise, skipIfRustCrypto } from "../../support/util";
 import { checkDeviceIsCrossSigned, doTwoWaySasVerification, logIntoElement, waitForVerificationRequest } from "./utils";
 import { getToast } from "../../support/toasts";
 
+// trigger CI
+
 /** Render a data URL and return the rendered image data */
 async function renderQRCode(dataUrl: string): Promise<ImageData> {
     // create a new image and set the source to the data url
