@@ -615,6 +615,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     private isSentState(ev: MatrixEvent): boolean {
         const status = ev.getAssociatedStatus();
+        // A falsey state applies to events which have come down sync, including remote echoes
         return !status || status === EventStatus.SENT;
     }
 
@@ -1066,8 +1067,10 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 }
 
 /**
- * Holds on to an event, caching the information about whether it should be
- * shown. Avoids calling shouldShowEvent more times than we need to.
+ * Holds on to an event, caching the information about it in the context of the current messages list.
+ * Avoids calling shouldShowEvent more times than we need to.
+ * Simplifies threading of event context like whether it's the last successful event we sent which cannot be determined
+ * by a consumer from the event alone, so has to be done by the event list processing code earlier.
  */
 interface WrappedEvent {
     event: MatrixEvent;
