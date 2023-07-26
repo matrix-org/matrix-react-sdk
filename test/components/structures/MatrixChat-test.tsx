@@ -137,10 +137,10 @@ describe("<MatrixChat />", () => {
     };
     const getComponent = (props: Partial<ComponentProps<typeof MatrixChat>> = {}) =>
         render(<MatrixChat {...defaultProps} {...props} />);
-    const localStorageSetSpy = jest.spyOn(localStorage.__proto__, "setItem");
-    const localStorageGetSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
-    const localStorageClearSpy = jest.spyOn(localStorage.__proto__, "clear");
-    const sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem");
+    let localStorageSetSpy = jest.spyOn(localStorage.__proto__, "setItem");
+    let localStorageGetSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
+    let localStorageClearSpy = jest.spyOn(localStorage.__proto__, "clear");
+    let sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem");
 
     // make test results readable
     filterConsole("Failed to parse localStorage object");
@@ -182,14 +182,20 @@ describe("<MatrixChat />", () => {
             unstable_features: {},
             versions: [],
         });
-        localStorageGetSpy.mockReset();
-        localStorageSetSpy.mockReset();
-        sessionStorageSetSpy.mockReset();
+        localStorageSetSpy = jest.spyOn(localStorage.__proto__, "setItem");
+        localStorageGetSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
+        localStorageClearSpy = jest.spyOn(localStorage.__proto__, "clear");
+        sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem");
+
         jest.spyOn(StorageManager, "idbLoad").mockReset();
         jest.spyOn(StorageManager, "idbSave").mockResolvedValue(undefined);
         jest.spyOn(defaultDispatcher, "dispatch").mockClear();
 
         await clearAllModals();
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it("should render spinner while app is loading", () => {
@@ -284,12 +290,12 @@ describe("<MatrixChat />", () => {
                 const spaceId = "!spaceRoom:server.org";
                 const room = new Room(roomId, mockClient, userId);
                 const spaceRoom = new Room(spaceId, mockClient, userId);
-                jest.spyOn(spaceRoom, "isSpaceRoom").mockReturnValue(true);
 
                 beforeEach(() => {
                     mockClient.getRoom.mockImplementation(
                         (id) => [room, spaceRoom].find((room) => room.roomId === id) || null,
                     );
+                    jest.spyOn(spaceRoom, "isSpaceRoom").mockReturnValue(true);
                 });
 
                 describe("leave_room", () => {
