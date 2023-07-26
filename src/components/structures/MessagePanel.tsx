@@ -633,7 +633,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         const userId = MatrixClientPeg.safeGet().getSafeUserId();
 
-        let foundLastSuccessfulWeSent = false;
+        let foundLastSuccessfulEvent = false;
         let lastShownNonLocalEchoIndex = -1;
         // Find the indices of the last successful event we sent and the last non-local-echo events shown
         for (let i = events.length - 1; i >= 0; i--) {
@@ -646,16 +646,18 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 lastShownEvent = event;
             }
 
-            if (!foundLastSuccessfulWeSent && this.isSentState(event) && isEligibleForSpecialReceipt(event, userId)) {
-                events[i].lastSuccessfulWeSent = true;
-                foundLastSuccessfulWeSent = true;
+            if (!foundLastSuccessfulEvent && this.isSentState(event) && isEligibleForSpecialReceipt(event)) {
+                foundLastSuccessfulEvent = true;
+                if (event.getSender() === userId) {
+                    events[i].lastSuccessfulWeSent = true;
+                }
             }
 
             if (lastShownNonLocalEchoIndex < 0 && !event.status) {
                 lastShownNonLocalEchoIndex = i;
             }
 
-            if (lastShownNonLocalEchoIndex >= 0 && foundLastSuccessfulWeSent) {
+            if (lastShownNonLocalEchoIndex >= 0 && foundLastSuccessfulEvent) {
                 break;
             }
         }
