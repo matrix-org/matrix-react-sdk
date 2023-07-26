@@ -69,11 +69,11 @@ export default class ExportE2eKeysDialog extends React.Component<IProps, IState>
     }
 
     private async verifyFieldsBeforeSubmit(): Promise<boolean> {
-        const fieldIdsInDisplayOrder = [this.fieldPassword, this.fieldPasswordConfirm];
+        const fieldsInDisplayOrder = [this.fieldPassword, this.fieldPasswordConfirm];
 
         const invalidFields: Field[] = [];
 
-        for (const field of fieldIdsInDisplayOrder) {
+        for (const field of fieldsInDisplayOrder) {
             if (!field) continue;
 
             const valid = await field.validate({ allowEmpty: false });
