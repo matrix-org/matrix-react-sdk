@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { screen, fireEvent, render } from "@testing-library/react";
+import { screen, fireEvent, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import ExportE2eKeysDialog from "../../../../../src/async-components/views/dialogs/security/ExportE2eKeysDialog";
@@ -57,5 +57,16 @@ describe("ExportE2eKeysDialog", () => {
         await userEvent.type(screen.getByLabelText("Confirm passphrase"), "ThisIsAMoreSecurePW124$$");
         fireEvent.click(container.querySelector("[type=submit]")!);
         await expect(screen.findByText("Passphrases must match")).resolves.toBeInTheDocument();
+    });
+
+    it("should export if everything is fine", async () => {
+        const cli = createTestClient();
+        const onFinished = jest.fn();
+
+        const { container } = render(<ExportE2eKeysDialog matrixClient={cli} onFinished={onFinished} />);
+        await userEvent.type(screen.getByLabelText("Enter passphrase"), "ThisIsAMoreSecurePW123$$");
+        await userEvent.type(screen.getByLabelText("Confirm passphrase"), "ThisIsAMoreSecurePW123$$");
+        fireEvent.click(container.querySelector("[type=submit]")!);
+        await waitFor(() => expect(cli.exportRoomKeys).toHaveBeenCalled());
     });
 });
