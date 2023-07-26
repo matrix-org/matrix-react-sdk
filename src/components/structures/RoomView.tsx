@@ -2433,23 +2433,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // Simplify the header for other main split types
         switch (this.state.mainSplitContentType) {
             case MainSplitContentType.MaximisedWidget:
-                excludedRightPanelPhaseButtons = [RightPanelPhases.ThreadPanel, RightPanelPhases.PinnedMessages];
+                excludedRightPanelPhaseButtons = [];
                 onAppsClick = null;
                 onForgetClick = null;
                 onSearchClick = null;
                 break;
             case MainSplitContentType.Call:
-                excludedRightPanelPhaseButtons = [
-                    RightPanelPhases.ThreadPanel,
-                    RightPanelPhases.PinnedMessages,
-                    RightPanelPhases.NotificationPanel,
-                ];
-                if (!isVideoRoom(this.state.room)) {
-                    excludedRightPanelPhaseButtons.push(RightPanelPhases.RoomSummary);
-                    if (this.state.activeCall === null) {
-                        excludedRightPanelPhaseButtons.push(RightPanelPhases.Timeline);
-                    }
-                }
+                excludedRightPanelPhaseButtons = [];
                 onAppsClick = null;
                 onForgetClick = null;
                 onSearchClick = null;
@@ -2458,6 +2448,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 }
                 viewingCall = true;
         }
+
+        const myMember = this.state.room!.getMember(this.context.client!.getSafeUserId());
+        const showForgetButton =
+            !this.context.client.isGuest() && (["leave", "ban"].includes(myMembership) || myMember?.isKicked());
 
         return (
             <RoomContext.Provider value={this.state}>
@@ -2473,7 +2467,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             inRoom={myMembership === "join"}
                             onSearchClick={onSearchClick}
                             onInviteClick={onInviteClick}
-                            onForgetClick={myMembership === "leave" ? onForgetClick : null}
+                            onForgetClick={showForgetButton ? onForgetClick : null}
                             e2eStatus={this.state.e2eStatus}
                             onAppsClick={this.state.hasPinnedWidgets ? onAppsClick : null}
                             appsShown={this.state.showApps}
