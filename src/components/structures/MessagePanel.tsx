@@ -648,6 +648,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
             if (!foundLastSuccessfulEvent && this.isSentState(event) && isEligibleForSpecialReceipt(event)) {
                 foundLastSuccessfulEvent = true;
+                // If we are not sender of this last successful event eligible for special receipt then we stop here
+                // As we do not want to render our sent receipt if there are more receipts below it and events sent
+                // by other users get a synthetic read receipt for their sent events.
                 if (event.getSender() === userId) {
                     events[i].lastSuccessfulWeSent = true;
                 }
