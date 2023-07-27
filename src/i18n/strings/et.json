@@ -3722,5 +3722,16 @@
     "Enable new native OIDC flows (Under active development)": "Luba OIDC liidestus (aktiivselt arendamisel)",
     "Your server requires encryption to be disabled.": "Sinu server eeldab, et krüptimine on välja lülitatud.",
     "Are you sure you wish to remove (delete) this event?": "Kas sa oled kindel, et soovid kustutada selle sündmuse?",
-    "Note that removing room changes like this could undo the change.": "Palun arvesta jututoa muudatuste eemaldamine võib eemaldada ka selle muutuse."
+    "Note that removing room changes like this could undo the change.": "Palun arvesta jututoa muudatuste eemaldamine võib eemaldada ka selle muutuse.",
+    "Something went wrong.": "Midagi läks nüüd valesti.",
+    "Changes your profile picture in this current room only": "Sellega muudad sinu tunnuspilti vaid selles jututoas",
+    "%(senderDisplayName)s changed the join rule to ask to join.": "%(senderDisplayName)s muutis liitumisreegleid nii, et liitumiseks peab luba küsima.",
+    "User cannot be invited until they are unbanned": "Kasutajale ei saa kutset saata enne, kui temalt on suhtluskeeld eemaldatud",
+    "Previous group of messages": "Eelmine sõnumite grupp",
+    "Views room with given address": "Vaata sellise aadressiga jututuba",
+    "New Notification Settings": "Uued teavituste seadistused",
+    "Changes your profile picture in all rooms": "Sellega muudad sinu tunnuspilti kõikides jututubades",
+    "Next group of messages": "Järgmine sõnumite grupp",
+    "Exported Data": "Eksporditud andmed",
+    "Notification Settings": "Teavituste seadistused"
 }
