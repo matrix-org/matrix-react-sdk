@@ -1261,7 +1261,6 @@
     "%(count)s people you know have already joined|one": "%(count)s نفر از افرادی که می شناسید قبلاً پیوسته‌اند",
     "%(count)s people you know have already joined|other": "%(count)s نفر از افرادی که می شناسید قبلاً به آن پیوسته‌اند",
     "Including %(commaSeparatedMembers)s": "شامل %(commaSeparatedMembers)s",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "فایل استخراج‌شده به هر کسی که به آن دسترسی داشته باشد اجازه می‌دهد تا تمام پیام‌هایی که شما می‌توانید آن‌ها را ببینید، مشاهده کند؛ پس باید مراقب باشید و آن را امن نگه دارید. به این منظور، شما باید عبارت امنیتی را در زیر وارد کنید.. این عبارت برای رمزکردن داده‌های استخراج‌شده‌ی شما استفاده می‌شود. در این صورت تنها راه واردکردن (Import) این داده‌ها و مشاهده‌ی آن‌ها استفاده از همین عبارت امنیتی خواهد بود.",
     "View all %(count)s members|one": "نمایش ۱ عضو",
     "View all %(count)s members|other": "نمایش همه %(count)s عضو",
     "expand": "گشودن",

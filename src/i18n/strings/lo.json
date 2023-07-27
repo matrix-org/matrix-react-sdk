@@ -1259,7 +1259,6 @@
     "Import room keys": "ນຳເຂົ້າກະແຈຫ້ອງ",
     "Confirm passphrase": "ຢືນຢັນລະຫັດຜ່ານ",
     "Enter passphrase": "ໃສ່ລະຫັດຜ່ານ",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "ໄຟລ໌ທີ່ສົ່ງອອກຈະຊ່ວຍໃຫ້ທຸກຄົນສາມາດອ່ານຖອດລະຫັດຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດທີ່ທ່ານສາມາດເບິ່ງເຫັນໄດ້, ດັ່ງນັ້ນທ່ານຄວນລະມັດລະວັງເພື່ອຮັກສາໃຫ້ປອດໄພ. ເພື່ອຊ່ວຍໃນເລື່ອງນີ້, ທ່ານຄວນໃສ່ລະຫັດຜ່ານຂ້າງລຸ່ມນີ້, ເຊິ່ງຈະຖືກນໍາໃຊ້ເພື່ອເຂົ້າລະຫັດຂໍ້ມູນທີ່ສົ່ງອອກ. ຈະເປັນໄປໄດ້ພຽງແຕ່ການນໍາເຂົ້າຂໍ້ມູນໂດຍການໃຊ້ລະຫັດຜ່ານດຽວກັນ.",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "ຂະບວນການນີ້ຊ່ວຍໃຫ້ທ່ານສາມາດສົ່ງອອກລະຫັດສໍາລັບຂໍ້ຄວາມທີ່ທ່ານໄດ້ຮັບໃນຫ້ອງທີ່ຖືກເຂົ້າລະຫັດໄປຫາໄຟລ໌ໃນຊ່ອງເກັບຂໍ້ມູນ. ຫຼັງຈາກນັ້ນທ່ານຈະສາມາດນໍາເຂົ້າໄຟລ໌ເຂົ້າໄປໃນລູກຄ້າ Matrix ອື່ນໃນອະນາຄົດ, ດັ່ງນັ້ນລູກຄ້ານັ້ນຈະສາມາດຖອດລະຫັດຂໍ້ຄວາມເຫຼົ່ານີ້ໄດ້.",
     "Export room keys": "ສົ່ງກະແຈຫ້ອງອອກ",
     "Unknown error": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",

@@ -513,7 +513,6 @@
     "Start automatically after system login": "Nisu vetvetiu pas hyrjes në sistem",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Lypset të lejoni dorazi %(brand)s-in të përdorë mikrofonin/kamerën tuaj web",
     "No Audio Outputs detected": "S’u pikasën Sinjale Audio Në Dalje",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Kartela e eksportuar do t’i lejojë kujtdo që e lexon të shfshehtëzojë çfarëdo mesazhesh të fshehtëzuar që mund të shihni, ndaj duhet të jeni i kujdesshëm për ta mbajtur të parrezikuar. Si ndihmë për këtë, duhet të jepni më poshtë një frazëkalim, që do të përdoret për të fshehtëzuar të dhënat e eksportuara. Importimi i të dhënave do të jetë i mundur vetëm duke përdorur të njëjtin frazëkalim.",
     "Not a valid %(brand)s keyfile": "S’është kartelë kyçesh %(brand)s e vlefshme",
     "Historical": "Të dikurshme",
     "Please review and accept all of the homeserver's policies": "Ju lutemi, shqyrtoni dhe pranoni krejt rregullat e këtij shërbyesi home",
