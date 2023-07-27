@@ -384,7 +384,6 @@
     "Opens the Developer Tools dialog": "打开开发者工具窗口",
     "Notify the whole room": "通知房间全体成员",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "此操作允许你将加密房间中收到的消息的密钥导出为本地文件。你可以将文件导入其他 Matrix 客户端，以便让别的客户端在未收到密钥的情况下解密这些消息。",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "导出的文件将允许任何可以读取它的人解密任何你可以看到的加密消息，所以你应该注意保护它的安全。为帮助实现此目标，你应当在下面输入口令词组，口令词组将用于加密导出的数据。只有输入相同的口令词组才能导入数据。",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "导出文件受口令词组保护。你应该在此输入口令词组以解密此文件。",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "此操作允许你导入之前从另一个 Matrix 客户端中导出的加密密钥文件。导入完成后，你将能够解密那个客户端可以解密的加密消息。",
     "Ignores a user, hiding their messages from you": "忽略用户，隐藏他们发送的消息",

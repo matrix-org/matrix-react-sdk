@@ -1942,7 +1942,6 @@
     "Export": "ייצוא",
     "Confirm passphrase": "אשר ביטוי",
     "Enter passphrase": "הזן ביטוי סיסמה",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "הקובץ המיוצא יאפשר לכל מי שיוכל לקרוא אותו לפענח את כל ההודעות המוצפנות שאתה יכול לראות, לכן עליך להקפיד לשמור עליו מאובטח. כדי לעזור בכך, עליך להזין משפט סיסמה למטה, שישמש להצפנת הנתונים המיוצאים. ניתן יהיה לייבא את הנתונים רק באמצעות אותו ביטוי סיסמה.",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "תהליך זה מאפשר לך לייצא את המפתחות להודעות שקיבלת בחדרים מוצפנים לקובץ מקומי. לאחר מכן תוכל לייבא את הקובץ ללקוח מטריקס אחר בעתיד, כך שלקוח יוכל גם לפענח הודעות אלה.",
     "Export room keys": "ייצא מפתחות לחדר",
     "Unknown error": "שגיאה לא ידועה",

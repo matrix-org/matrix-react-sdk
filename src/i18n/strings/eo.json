@@ -374,7 +374,6 @@
     "Passphrase must not be empty": "Pasfrazoj maldevas esti malplenaj",
     "Export room keys": "Elporti ĉambrajn ŝlosilojn",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Tio ĉi permesos al vi elporti al loka dosiero ŝlosilojn por la mesaĝoj ricevitaj en ĉifritaj ĉambroj. Poste vi povos enporti la dosieron en alian klienton de Matrix, por povigi ĝin malĉifri tiujn mesaĝojn.",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "La elportita dosiero permesos al ajna havanto malĉifradon de ĉiuj ĉifritaj mesaĝoj videblaj al vi; tenu ĝin do sekure. Tial vi enigu sube pasfrazon, uzotan por ĉifri la elportitajn datumojn. Tiuj nur enporteblos kun la sama pasfrazo.",
     "Enter passphrase": "Enigu pasfrazon",
     "Confirm passphrase": "Konfirmu pasfrazon",
     "Export": "Elporti",
