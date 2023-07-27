@@ -197,12 +197,12 @@ $dialog-shadow-color: rgba(0, 0, 0, 0.48);
 /* ******************** */
 $imagebody-giflabel: rgba(0, 0, 0, 0.7);
 $imagebody-giflabel-border: rgba(0, 0, 0, 0.2);
-$imagebody-giflabel-color: $background;
+$imagebody-giflabel-color: $accent-fg-color;
 /* ******************** */
 
 /* RoomList */
 /* ******************** */
-$roomlist-bg-color: var(--cpd-color-bg-subtle-secondary);
+$roomlist-bg-color: rgba(245, 245, 245, 0.9);
 $roomsublist-skeleton-ui-bg: linear-gradient(180deg, $background 0%, #ffffff00 100%);
 $roomtile-default-badge-bg-color: $muted-fg-color;
 /* ******************** */
@@ -283,7 +283,10 @@ $eventbubble-reply-color: $quaternary-content;
 
 /* Lightbox */
 /* ******************** */
-$lightbox-fg-color: $background;
+/* not using a compound color here for now as we want to have the same color in
+   light and dark theme. Until we have a non-symetrical token for it, let's keep
+   it hardcoded to the following value */
+$lightbox-fg-color: #fff;
 $lightbox-background-bg-color: #000;
 $lightbox-background-bg-opacity: 0.95;
 /* ******************** */
