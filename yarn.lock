@@ -1801,7 +1801,7 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/matrix-sdk-crypto-wasm/-/matrix-sdk-crypto-wasm-1.0.1.tgz#21a0557a7bb3f60b37c6d412be8906c056fe79b8"
   integrity sha512-VTwV5IowvhhLXwAsDDAv02bC5/qBQbG2YtpYAije11253sQ3MePIoSR+dS40Ih3lAlEzqQ00GU3O+i45jMzIRQ==
 
-"@matrix-org/matrix-wysiwyg@^2.3.1":
+"@matrix-org/matrix-wysiwyg@^2.4.1":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-2.4.1.tgz#e1325a42366a1c891b2ba90c88e597b39187b2cb"
   integrity sha512-RyUijZXVKenE9s3LczDUhWFeOfIyLcsOrAyHqYxnizXX5nxMkHxTgLeoTvaIJ+1dOhI+H2SS9G4VcN6odZ0aNg==
