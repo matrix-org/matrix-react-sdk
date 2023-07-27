@@ -208,7 +208,6 @@
     "Import room keys": "Raum-Schlüssel importieren",
     "File to import": "Zu importierende Datei",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Dieser Prozess erlaubt es dir, die Schlüssel für die in verschlüsselten Räumen empfangenen Nachrichten in eine lokale Datei zu exportieren. In Zukunft wird es möglich sein, diese Datei in eine andere Matrix-Anwendung zu importieren, sodass diese die Nachrichten ebenfalls entschlüsseln kann.",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Mit der exportierten Datei können alle, die diese Datei lesen können, jede verschlüsselte Nachricht entschlüsseln, die für dich lesbar ist. Du solltest die Datei also unbedingt sicher verwahren. Um den Vorgang sicherer zu gestalten, solltest du unten eine Passphrase eingeben, die dazu verwendet wird, die exportierten Daten zu verschlüsseln. Anschließend wird es nur möglich sein, die Daten zu importieren, wenn dieselbe Passphrase verwendet wird.",
     "Analytics": "Analysedaten",
     "Add an Integration": "Eine Integration hinzufügen",
     "URL Previews": "URL-Vorschau",

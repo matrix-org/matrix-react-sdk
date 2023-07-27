@@ -250,7 +250,6 @@
     "Import room keys": "匯入聊天室金鑰",
     "File to import": "要匯入的檔案",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "這個過程讓您可以匯出您在加密聊天室裡收到訊息的金鑰到一個本機檔案。您將可以在未來匯入檔案到其他的 Matrix 客戶端，這樣客戶端就可以解密此訊息。",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "匯出的檔案將會讓任何可以讀取它的人解密任何您可以看到的加密訊息，所以您必須謹慎地保管好它。為了協助您，您應該輸入下面的安全密語，其將會被用於加密匯出的資料。其只能使用相同的密碼來匯入資料。",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "這個過程讓您可以匯入您先前從其他 Matrix 客戶端匯出的加密金鑰。您將可以解密在其他客戶端可以解密的訊息。",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "匯出檔案被安全密語所保護。您應該在這裡輸入安全密語來解密檔案。",
     "You must join the room to see its files": "您必須加入聊天室來檢視它的檔案",

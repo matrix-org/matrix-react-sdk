@@ -940,7 +940,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>.",
     "Emoji": "Jaustukai",
     "Emoji Autocomplete": "Jaustukų automatinis užbaigimas",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Eksportuotas failas leis visiems, kurie gali jį perskaityti, iššifruoti visas užšifruotas žinutes, kurias jūs galite matyti, todėl turėtumėte būti atsargūs, kad jis būtų saugus. Tam padėti, jūs turėtumėte žemiau įvesti slaptafrazę, kuri bus naudojama eksportuotų duomenų užšifravimui. Duomenis bus galima importuoti tik naudojant tą pačią slaptafrazę.",
     "Select room from the room list": "Pasirinkti kambarį iš kambarių sąrašo",
     "Collapse room list section": "Sutraukti kambarių sąrašo skyrių",
     "Expand room list section": "Išplėsti kambarių sąrašo skyrių",

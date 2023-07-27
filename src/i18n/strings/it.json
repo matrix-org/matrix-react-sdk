@@ -382,7 +382,6 @@
     "Passphrase must not be empty": "La password non può essere vuota",
     "Export room keys": "Esporta chiavi della stanza",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Questa procedura ti permette di esportare in un file locale le chiavi per i messaggi che hai ricevuto nelle stanze criptate. Potrai poi importare il file in un altro client Matrix in futuro, in modo che anche quel client possa decifrare quei messaggi.",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Il file esportato permetterà a chiunque possa leggerlo di decifrare tutti i messaggi criptati che vedi, quindi dovresti conservarlo in modo sicuro. Per aiutarti, potresti inserire una password sotto, che verrà usata per criptare i dati esportati. Sarà possibile importare i dati solo usando la stessa password.",
     "Enter passphrase": "Inserisci password",
     "Confirm passphrase": "Conferma password",
     "Export": "Esporta",

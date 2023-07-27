@@ -273,7 +273,6 @@
     "Error decrypting image": "Błąd deszyfrowania obrazu",
     "Error decrypting video": "Błąd deszyfrowania wideo",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Próbowano załadować konkretny punkt na osi czasu w tym pokoju, ale nie można go znaleźć.",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Wyeksportowany plik pozwoli każdej osobie będącej w stanie go odczytać na deszyfrację jakichkolwiek zaszyfrowanych wiadomości, które możesz zobaczyć, tak więc zalecane jest zachowanie ostrożności. Aby w tym pomóc, powinieneś/aś wpisać hasło poniżej; hasło to będzie użyte do zaszyfrowania wyeksportowanych danych. Późniejsze zaimportowanie tych danych będzie możliwe tylko po uprzednim podaniu owego hasła.",
     "Idle": "Bezczynny",
     "Check for update": "Sprawdź aktualizacje",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s zmienił awatar pokoju na <img/>",
