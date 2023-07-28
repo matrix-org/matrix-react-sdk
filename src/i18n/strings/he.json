@@ -665,7 +665,6 @@
     "Algorithm:": "אלגוריתם:",
     "Backup version:": "גירסת גיבוי:",
     "This backup is trusted because it has been restored on this session": "ניתן לסמוך על גיבוי זה מכיוון שהוא שוחזר בהפעלה זו",
-    "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "לגיבוי יש חתימה מ- <verify> לא ידוע </verify> עם %(deviceId)s",
     "All keys backed up": "כל המפתחות מגובים",
     "Connect this session to Key Backup": "חבר את התחברות הזו לגיבוי מפתח",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "חבר את ההפעלה הזו לגיבוי המפתח לפני היציאה, כדי למנוע אובדן מפתחות שיכולים להיות רק בפגישה זו.",

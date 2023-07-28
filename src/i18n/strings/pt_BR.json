@@ -948,7 +948,6 @@
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Autorize esta sessão a fazer o backup de chaves antes de se desconectar, para evitar perder chaves que possam estar apenas nesta sessão.",
     "Connect this session to Key Backup": "Autorize esta sessão a fazer o backup de chaves",
     "not stored": "não armazenado",
-    "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "O backup tem uma assinatura <validity>válida</validity> de uma sessão <verify>não confirmada</verify> <device></device>",
     "This backup is trusted because it has been restored on this session": "Este backup é confiável, pois foi restaurado nesta sessão",
     "Your keys are <b>not being backed up from this session</b>.": "Suas chaves <b>não estão sendo copiadas desta sessão</b>.",
     "wait and try again later": "aguarde e tente novamente mais tarde",
