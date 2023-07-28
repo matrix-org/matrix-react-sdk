@@ -238,7 +238,9 @@ export default class AutoDiscoveryUtils {
                     throw new UserFriendlyError(String(hsResult.error));
                 }
                 if (hsResult.error === AutoDiscovery.ERROR_HOMESERVER_TOO_OLD) {
-                    throw new UserFriendlyError(_td("Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server."));
+                    throw new UserFriendlyError(
+                        "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.",
+                    );
                 }
                 throw new UserFriendlyError("Unexpected error resolving homeserver configuration");
             } // else the error is not related to syntax - continue anyways.
