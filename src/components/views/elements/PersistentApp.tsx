@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ContextType, MutableRefObject } from "react";
+import React, { ContextType, CSSProperties, MutableRefObject } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import WidgetUtils from "../../../utils/WidgetUtils";
@@ -26,13 +26,13 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 interface IProps {
     persistentWidgetId: string;
     persistentRoomId: string;
-    pointerEvents?: string;
-    movePersistedElement: MutableRefObject<() => void>;
+    pointerEvents?: CSSProperties["pointerEvents"];
+    movePersistedElement: MutableRefObject<(() => void) | undefined>;
 }
 
 export default class PersistentApp extends React.Component<IProps> {
     public static contextType = MatrixClientContext;
-    public context: ContextType<typeof MatrixClientContext>;
+    public context!: ContextType<typeof MatrixClientContext>;
     private room: Room;
 
     public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
@@ -50,7 +50,7 @@ export default class PersistentApp extends React.Component<IProps> {
                 app={app}
                 fullWidth={true}
                 room={this.room}
-                userId={this.context.credentials.userId}
+                userId={this.context.getSafeUserId()}
                 creatorUserId={app.creatorUserId}
                 widgetPageTitle={WidgetUtils.getWidgetDataTitle(app)}
                 waitForIframeLoad={app.waitForIframeLoad}

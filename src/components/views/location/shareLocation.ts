@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { IContent } from "matrix-js-sdk/src/matrix";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { makeLocationContent, makeBeaconInfoContent } from "matrix-js-sdk/src/content-helpers";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -94,7 +95,7 @@ const getDefaultErrorParams = (
     return { modalParams, errorMessage };
 };
 
-const handleShareError = (error: Error, openMenu: () => void, shareType: LocationShareType): void => {
+const handleShareError = (error: unknown, openMenu: () => void, shareType: LocationShareType): void => {
     const { modalParams, errorMessage } =
         (error as MatrixError).errcode === "M_FORBIDDEN"
             ? getPermissionsErrorParams(shareType)
@@ -107,7 +108,7 @@ const handleShareError = (error: Error, openMenu: () => void, shareType: Locatio
 
 export const shareLiveLocation =
     (client: MatrixClient, roomId: string, displayName: string, openMenu: () => void): ShareLocationFn =>
-    async ({ timeout }) => {
+    async ({ timeout }): Promise<void> => {
         const description = _t(`%(displayName)s's live location`, { displayName });
         try {
             await OwnBeaconStore.instance.createLiveBeacon(
@@ -132,12 +133,12 @@ export const shareLocation =
         relation: IEventRelation | undefined,
         openMenu: () => void,
     ): ShareLocationFn =>
-    async ({ uri, timestamp }) => {
+    async ({ uri, timestamp }): Promise<void> => {
         if (!uri) return;
         try {
-            const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
+            const threadId = (relation?.rel_type === THREAD_RELATION_TYPE.name && relation?.event_id) || null;
             const assetType = shareType === LocationShareType.Pin ? LocationAssetType.Pin : LocationAssetType.Self;
-            const content = makeLocationContent(undefined, uri, timestamp, undefined, assetType);
+            const content = makeLocationContent(undefined, uri, timestamp, undefined, assetType) as IContent;
             await doMaybeLocalRoomAction(
                 roomId,
                 (actualRoomId: string) => client.sendMessage(actualRoomId, threadId, content),

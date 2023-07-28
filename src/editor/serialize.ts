@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import { encode } from "html-entities";
-import cheerio from "cheerio";
 import escapeHtml from "escape-html";
 
 import Markdown from "../Markdown";
@@ -37,20 +36,20 @@ export function mdSerialize(model: EditorModel): string {
             case Type.PillCandidate:
             case Type.AtRoomPill:
                 return html + part.text;
-            case Type.RoomPill:
+            case Type.RoomPill: {
+                const url = makeGenericPermalink(part.resourceId);
+                // Escape square brackets and backslashes
                 // Here we use the resourceId for compatibility with non-rich text clients
                 // See https://github.com/vector-im/element-web/issues/16660
-                return (
-                    html +
-                    `[${part.resourceId.replace(/[[\\\]]/g, (c) => "\\" + c)}](${makeGenericPermalink(
-                        part.resourceId,
-                    )})`
-                );
-            case Type.UserPill:
-                return (
-                    html +
-                    `[${part.text.replace(/[[\\\]]/g, (c) => "\\" + c)}](${makeGenericPermalink(part.resourceId)})`
-                );
+                const title = part.resourceId.replace(/[[\\\]]/g, (c) => "\\" + c);
+                return html + `[${title}](${url})`;
+            }
+            case Type.UserPill: {
+                const url = makeGenericPermalink(part.resourceId);
+                // Escape square brackets and backslashes; convert newlines to HTML
+                const title = part.text.replace(/[[\\\]]/g, (c) => "\\" + c).replace(/\n/g, "<br>");
+                return html + `[${title}](${url})`;
+            }
         }
     }, "");
 }
@@ -63,7 +62,7 @@ interface ISerializeOpts {
 export function htmlSerializeIfNeeded(
     model: EditorModel,
     { forceHTML = false, useMarkdown = true }: ISerializeOpts = {},
-): string {
+): string | undefined {
     if (!useMarkdown) {
         return escapeHtml(textSerialize(model)).replace(/\n/g, "<br/>");
     }
@@ -72,13 +71,13 @@ export function htmlSerializeIfNeeded(
     return htmlSerializeFromMdIfNeeded(md, { forceHTML });
 }
 
-export function htmlSerializeFromMdIfNeeded(md: string, { forceHTML = false } = {}): string {
+export function htmlSerializeFromMdIfNeeded(md: string, { forceHTML = false } = {}): string | undefined {
     // copy of raw input to remove unwanted math later
     const orig = md;
 
     if (SettingsStore.getValue("feature_latex_maths")) {
-        const patternNames = ["tex", "latex"];
-        const patternTypes = ["display", "inline"];
+        const patternNames = ["tex", "latex"] as const;
+        const patternTypes = ["display", "inline"] as const;
         const patternDefaults = {
             tex: {
                 // detect math with tex delimiters, inline: $...$, display $$...$$
@@ -118,7 +117,7 @@ export function htmlSerializeFromMdIfNeeded(md: string, { forceHTML = false } = 
             patternTypes.forEach(function (patternType) {
                 // get the regex replace pattern from config or use the default
                 const pattern =
-                    (((SdkConfig.get("latex_maths_delims") || {})[patternType] || {})["pattern"] || {})[patternName] ||
+                    SdkConfig.get("latex_maths_delims")?.[patternType]?.["pattern"]?.[patternName] ||
                     patternDefaults[patternName][patternType];
 
                 md = md.replace(RegExp(pattern, "gms"), function (m, p1, p2) {
@@ -133,8 +132,7 @@ export function htmlSerializeFromMdIfNeeded(md: string, { forceHTML = false } = 
             });
         });
 
-        // make sure div tags always start on a new line, otherwise it will confuse
-        // the markdown parser
+        // make sure div tags always start on a new line, otherwise it will confuse the markdown parser
         md = md.replace(/(.)<div/g, function (m, p1) {
             return `${p1}\n<div`;
         });
@@ -143,39 +141,29 @@ export function htmlSerializeFromMdIfNeeded(md: string, { forceHTML = false } = 
     const parser = new Markdown(md);
     if (!parser.isPlainText() || forceHTML) {
         // feed Markdown output to HTML parser
-        const phtml = cheerio.load(parser.toHTML(), {
-            // @ts-ignore: The `_useHtmlParser2` internal option is the
-            // simplest way to both parse and render using `htmlparser2`.
-            _useHtmlParser2: true,
-            decodeEntities: false,
-        });
+        const phtml = new DOMParser().parseFromString(parser.toHTML(), "text/html");
 
         if (SettingsStore.getValue("feature_latex_maths")) {
             // original Markdown without LaTeX replacements
             const parserOrig = new Markdown(orig);
-            const phtmlOrig = cheerio.load(parserOrig.toHTML(), {
-                // @ts-ignore: The `_useHtmlParser2` internal option is the
-                // simplest way to both parse and render using `htmlparser2`.
-                _useHtmlParser2: true,
-                decodeEntities: false,
-            });
+            const phtmlOrig = new DOMParser().parseFromString(parserOrig.toHTML(), "text/html");
 
             // since maths delimiters are handled before Markdown,
             // code blocks could contain mangled content.
             // replace code blocks with original content
-            phtmlOrig("code").each(function (i) {
-                phtml("code").eq(i).text(phtmlOrig("code").eq(i).text());
+            [...phtmlOrig.getElementsByTagName("code")].forEach((e, i) => {
+                phtml.getElementsByTagName("code").item(i)!.textContent = e.textContent;
             });
 
             // add fallback output for latex math, which should not be interpreted as markdown
-            phtml("div, span").each(function (i, e) {
-                const tex = phtml(e).attr("data-mx-maths");
+            [...phtml.querySelectorAll("div, span")].forEach((e, i) => {
+                const tex = e.getAttribute("data-mx-maths");
                 if (tex) {
-                    phtml(e).html(`<code>${tex}</code>`);
+                    e.innerHTML = `<code>${tex}</code>`;
                 }
             });
         }
-        return phtml.html();
+        return phtml.body.innerHTML;
     }
     // ensure removal of escape backslashes in non-Markdown messages
     if (md.indexOf("\\") > -1) {

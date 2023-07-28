@@ -30,6 +30,7 @@ import Field from "../elements/Field";
 import StyledRadioGroup from "../elements/StyledRadioGroup";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import PosthogTrackers from "../../../PosthogTrackers";
+import SettingsSubsection from "./shared/SettingsSubsection";
 
 interface IProps {}
 
@@ -49,7 +50,7 @@ interface IState extends IThemeState {
 }
 
 export default class ThemeChoicePanel extends React.Component<IProps, IState> {
-    private themeTimer: number;
+    private themeTimer?: number;
 
     public constructor(props: IProps) {
         super(props);
@@ -162,7 +163,7 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
         this.setState({ customThemeUrl: e.target.value });
     };
 
-    private renderHighContrastCheckbox(): React.ReactElement<HTMLDivElement> {
+    private renderHighContrastCheckbox(): React.ReactElement<HTMLDivElement> | undefined {
         if (
             !this.state.useSystemTheme &&
             (findHighContrastTheme(this.state.theme) || isHighContrastTheme(this.state.theme))
@@ -181,7 +182,7 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
     }
 
     private highContrastThemeChanged(checked: boolean): void {
-        let newTheme: string;
+        let newTheme: string | undefined;
         if (checked) {
             newTheme = findHighContrastTheme(this.state.theme);
         } else {
@@ -194,10 +195,10 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
 
     public render(): React.ReactElement<HTMLDivElement> {
         const themeWatcher = new ThemeWatcher();
-        let systemThemeSection: JSX.Element;
+        let systemThemeSection: JSX.Element | undefined;
         if (themeWatcher.isSystemThemeSupported()) {
             systemThemeSection = (
-                <div>
+                <div data-testid="checkbox-use-system-theme">
                     <StyledCheckbox
                         checked={this.state.useSystemTheme}
                         onChange={(e) => this.onUseSystemThemeChanged(e.target.checked)}
@@ -208,9 +209,9 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
             );
         }
 
-        let customThemeForm: JSX.Element;
+        let customThemeForm: JSX.Element | undefined;
         if (SettingsStore.getValue("feature_custom_themes")) {
-            let messageElement = null;
+            let messageElement: JSX.Element | undefined;
             if (this.state.customThemeMessage.text) {
                 if (this.state.customThemeMessage.isError) {
                     messageElement = <div className="text-error">{this.state.customThemeMessage.text}</div>;
@@ -245,10 +246,9 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
 
         const orderedThemes = getOrderedThemes();
         return (
-            <div className="mx_SettingsTab_section mx_ThemeChoicePanel">
-                <span className="mx_SettingsTab_subheading">{_t("Theme")}</span>
+            <SettingsSubsection heading={_t("Theme")} data-testid="mx_ThemeChoicePanel">
                 {systemThemeSection}
-                <div className="mx_ThemeSelectors">
+                <div className="mx_ThemeChoicePanel_themeSelectors" data-testid="theme-choice-panel-selectors">
                     <StyledRadioGroup
                         name="theme"
                         definitions={orderedThemes.map((t) => ({
@@ -264,11 +264,11 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
                 </div>
                 {this.renderHighContrastCheckbox()}
                 {customThemeForm}
-            </div>
+            </SettingsSubsection>
         );
     }
 
-    public apparentSelectedThemeId() {
+    public apparentSelectedThemeId(): string | undefined {
         if (this.state.useSystemTheme) {
             return undefined;
         }

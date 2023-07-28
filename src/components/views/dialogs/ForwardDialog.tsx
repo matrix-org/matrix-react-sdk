@@ -29,7 +29,6 @@ import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { Layout } from "../../../settings/enums/Layout";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import { avatarUrlForUser } from "../../../Avatar";
 import EventTile from "../rooms/EventTile";
@@ -52,16 +51,18 @@ import { ButtonEvent } from "../elements/AccessibleButton";
 import { isLocationEvent } from "../../../utils/EventUtils";
 import { isSelfLocation, locationEventGeoUri } from "../../../utils/location";
 import { RoomContextDetails } from "../rooms/RoomContextDetails";
+import { filterBoolean } from "../../../utils/arrays";
 
 const AVATAR_SIZE = 30;
 
-interface IProps extends IDialogProps {
+interface IProps {
     matrixClient: MatrixClient;
     // The event to forward
     event: MatrixEvent;
     // We need a permalink creator for the source room to pass through to EventTile
     // in case the event is a reply (even though the user can't get at the link)
     permalinkCreator: RoomPermalinkCreator;
+    onFinished(): void;
 }
 
 interface IEntryProps {
@@ -82,7 +83,7 @@ enum SendState {
 const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, onFinished }) => {
     const [sendState, setSendState] = useState<SendState>(SendState.CanSend);
 
-    const jumpToRoom = (ev: ButtonEvent) => {
+    const jumpToRoom = (ev: ButtonEvent): void => {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
@@ -91,7 +92,7 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
         });
         onFinished(true);
     };
-    const send = async () => {
+    const send = async (): Promise<void> => {
         setSendState(SendState.Sending);
         try {
             await cli.sendEvent(room.roomId, type, content);
@@ -194,7 +195,7 @@ const transformEvent = (event: MatrixEvent): { type: string; content: IContent }
 };
 
 const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCreator, onFinished }) => {
-    const userId = cli.getUserId();
+    const userId = cli.getSafeUserId();
     const [profileInfo, setProfileInfo] = useState<any>({});
     useEffect(() => {
         cli.getProfileInfo(userId).then((info) => setProfileInfo(info));
@@ -227,23 +228,28 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     const lcQuery = query.toLowerCase();
 
     const previewLayout = useSettingValue<Layout>("layout");
+    const msc3946DynamicRoomPredecessors = useSettingValue<boolean>("feature_dynamic_room_predecessors");
 
     let rooms = useMemo(
         () =>
-            sortRooms(cli.getVisibleRooms().filter((room) => room.getMyMembership() === "join" && !room.isSpaceRoom())),
-        [cli],
+            sortRooms(
+                cli
+                    .getVisibleRooms(msc3946DynamicRoomPredecessors)
+                    .filter((room) => room.getMyMembership() === "join" && !room.isSpaceRoom()),
+            ),
+        [cli, msc3946DynamicRoomPredecessors],
     );
 
     if (lcQuery) {
         rooms = new QueryMatcher<Room>(rooms, {
             keys: ["name"],
-            funcs: [(r) => [r.getCanonicalAlias(), ...r.getAltAliases()].filter(Boolean)],
+            funcs: [(r) => filterBoolean([r.getCanonicalAlias(), ...r.getAltAliases()])],
             shouldMatchWordsOnly: false,
         }).match(lcQuery);
     }
 
     const [truncateAt, setTruncateAt] = useState(20);
-    function overflowTile(overflowCount, totalCount) {
+    function overflowTile(overflowCount: number, totalCount: number): JSX.Element {
         const text = _t("and %(count)s others...", { count: overflowCount });
         return (
             <EntityTile
@@ -278,7 +284,13 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                     mx_IRCLayout: previewLayout == Layout.IRC,
                 })}
             >
-                <EventTile mxEvent={mockEvent} layout={previewLayout} permalinkCreator={permalinkCreator} as="div" />
+                <EventTile
+                    mxEvent={mockEvent}
+                    layout={previewLayout}
+                    permalinkCreator={permalinkCreator}
+                    as="div"
+                    inhibitInteraction
+                />
             </div>
             <hr />
             <div className="mx_ForwardList" id="mx_ForwardList">

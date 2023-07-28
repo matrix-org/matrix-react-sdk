@@ -22,7 +22,7 @@ import type { EventEmitter } from "events";
 type Handler = (...args: any[]) => void;
 
 export function useTypedEventEmitter<Events extends string, Arguments extends ListenerMap<Events>>(
-    emitter: TypedEventEmitter<Events, Arguments>,
+    emitter: TypedEventEmitter<Events, Arguments> | undefined,
     eventName: Events,
     handler: Handler,
 ): void {
@@ -47,7 +47,7 @@ export function useEventEmitter(emitter: EventEmitter | undefined, eventName: st
             if (!emitter) return;
 
             // Create event listener that calls handler function stored in ref
-            const eventListener = (...args) => savedHandler.current(...args);
+            const eventListener = (...args: any[]): void => savedHandler.current(...args);
 
             // Add event listener
             emitter.on(eventName, eventListener);
@@ -63,14 +63,27 @@ export function useEventEmitter(emitter: EventEmitter | undefined, eventName: st
 
 type Mapper<T> = (...args: any[]) => T;
 
+/**
+ * {@link useEventEmitterState}
+ */
 export function useTypedEventEmitterState<T, Events extends string, Arguments extends ListenerMap<Events>>(
-    emitter: TypedEventEmitter<Events, Arguments>,
+    emitter: TypedEventEmitter<Events, Arguments> | undefined,
     eventName: Events,
     fn: Mapper<T>,
 ): T {
     return useEventEmitterState<T>(emitter, eventName, fn);
 }
 
+/**
+ * Creates a state, that can be updated by events.
+ *
+ * @param emitter The emitter sending the event
+ * @param eventName Event name to listen for
+ * @param fn The callback function, that should return the state value.
+ *           It should have the signature of the event callback, except that all parameters are optional.
+ *           If the params are not set, a default value for the state should be returned.
+ * @returns State
+ */
 export function useEventEmitterState<T>(
     emitter: EventEmitter | undefined,
     eventName: string | symbol,

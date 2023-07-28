@@ -19,7 +19,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { uniq, sortBy } from "lodash";
+import { uniq, sortBy, uniqBy, ListIteratee } from "lodash";
 import EMOTICON_REGEX from "emojibase-regex/emoticon";
 import { Room } from "matrix-js-sdk/src/models/room";
 
@@ -32,6 +32,7 @@ import SettingsStore from "../settings/SettingsStore";
 import { EMOJI, IEmoji, getEmojiFromUnicode } from "../emoji";
 import { TimelineRenderingType } from "../contexts/RoomContext";
 import * as recent from "../emojipicker/recent";
+import { filterBoolean } from "../utils/arrays";
 
 const LIMIT = 20;
 
@@ -46,16 +47,20 @@ interface ISortedEmoji {
 
 const SORTED_EMOJI: ISortedEmoji[] = EMOJI.sort((a, b) => {
     if (a.group === b.group) {
-        return a.order - b.order;
+        return a.order! - b.order!;
     }
-    return a.group - b.group;
+    return a.group! - b.group!;
 }).map((emoji, index) => ({
     emoji,
     // Include the index so that we can preserve the original order
     _orderBy: index,
 }));
 
-function score(query, space) {
+function score(query: string, space: string[] | string): number {
+    if (Array.isArray(space)) {
+        return Math.min(...space.map((s) => score(query, s)));
+    }
+
     const index = space.indexOf(query);
     if (index === -1) {
         return Infinity;
@@ -90,7 +95,7 @@ export default class EmojiProvider extends AutocompleteProvider {
             shouldMatchWordsOnly: true,
         });
 
-        this.recentlyUsed = Array.from(new Set(recent.get().map(getEmojiFromUnicode).filter(Boolean)));
+        this.recentlyUsed = Array.from(new Set(filterBoolean(recent.get().map(getEmojiFromUnicode))));
     }
 
     public async getCompletions(
@@ -113,7 +118,7 @@ export default class EmojiProvider extends AutocompleteProvider {
             // Do second match with shouldMatchWordsOnly in order to match against 'name'
             completions = completions.concat(this.nameMatcher.match(matchedString));
 
-            let sorters = [];
+            const sorters: ListIteratee<ISortedEmoji>[] = [];
             // make sure that emoticons come first
             sorters.push((c) => score(matchedString, c.emoji.emoticon || ""));
 
@@ -135,11 +140,27 @@ export default class EmojiProvider extends AutocompleteProvider {
             completions = completions.slice(0, LIMIT);
 
             // Do a second sort to place emoji matching with frequently used one on top
-            sorters = [];
+            const recentlyUsedAutocomplete: ISortedEmoji[] = [];
             this.recentlyUsed.forEach((emoji) => {
-                sorters.push((c) => score(emoji.shortcodes[0], c.emoji.shortcodes[0]));
+                if (emoji.shortcodes[0].indexOf(trimmedMatch) === 0) {
+                    recentlyUsedAutocomplete.push({ emoji: emoji, _orderBy: 0 });
+                }
             });
-            completions = sortBy<ISortedEmoji>(uniq(completions), sorters);
+
+            //if there is an exact shortcode match in the frequently used emojis, it goes before everything
+            for (let i = 0; i < recentlyUsedAutocomplete.length; i++) {
+                if (recentlyUsedAutocomplete[i].emoji.shortcodes[0] === trimmedMatch) {
+                    const exactMatchEmoji = recentlyUsedAutocomplete[i];
+                    for (let j = i; j > 0; j--) {
+                        recentlyUsedAutocomplete[j] = recentlyUsedAutocomplete[j - 1];
+                    }
+                    recentlyUsedAutocomplete[0] = exactMatchEmoji;
+                    break;
+                }
+            }
+
+            completions = recentlyUsedAutocomplete.concat(completions);
+            completions = uniqBy(completions, "emoji");
 
             return completions.map((c) => ({
                 completion: c.emoji.unicode,
@@ -148,13 +169,13 @@ export default class EmojiProvider extends AutocompleteProvider {
                         <span>{c.emoji.unicode}</span>
                     </PillCompletion>
                 ),
-                range,
+                range: range!,
             }));
         }
         return [];
     }
 
-    public getName() {
+    public getName(): string {
         return "😃 " + _t("Emoji");
     }
 

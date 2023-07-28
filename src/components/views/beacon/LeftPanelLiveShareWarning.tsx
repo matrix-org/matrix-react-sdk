@@ -25,7 +25,7 @@ import { Icon as LiveLocationIcon } from "../../../../res/img/location/live-loca
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
 import dispatcher from "../../../dispatcher/dispatcher";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface Props {
     isMinimized?: boolean;
@@ -65,7 +65,7 @@ const useLivenessMonitor = (liveBeaconIds: BeaconIdentifier[], beacons: Map<Beac
         // chromium sets the minimum timer interval to 1000ms
         // for inactive tabs
         // refresh beacon monitors when the tab becomes active again
-        const onPageVisibilityChanged = () => {
+        const onPageVisibilityChanged = (): void => {
             if (document.visibilityState === "visible") {
                 liveBeaconIds.forEach((identifier) => beacons.get(identifier)?.monitorLiveness());
             }
@@ -121,7 +121,7 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
     );
 
     const onWarningClick = relevantBeacon
-        ? () => {
+        ? (_e: ButtonEvent) => {
               dispatcher.dispatch<ViewRoomPayload>({
                   action: Action.ViewRoom,
                   room_id: relevantBeacon.roomId,
@@ -131,7 +131,7 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
                   highlighted: true,
               });
           }
-        : undefined;
+        : null;
 
     const label = getLabel(hasStoppingErrors, hasLocationPublishErrors);
 

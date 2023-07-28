@@ -16,23 +16,23 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { MatrixClient } from "../../global";
 
 describe("UserView", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.startSynapse("default").then((data) => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Violet");
-            cy.getBot(synapse, { displayName: "Usman" }).as("bot");
+            cy.initTestUser(homeserver, "Violet");
+            cy.getBot(homeserver, { displayName: "Usman" }).as("bot");
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     it("should render the user view as expected", () => {
@@ -40,8 +40,10 @@ describe("UserView", () => {
             cy.visit(`/#/user/${bot.getUserId()}`);
         });
 
-        cy.get("#mx_RightPanel .mx_UserInfo_profile h2").should("contain", "Usman");
-        cy.get(".mx_RightPanel .mx_Spinner").should("not.exist"); // wait for spinners to finish
+        cy.get(".mx_RightPanel .mx_UserInfo_profile h2").within(() => {
+            cy.findByText("Usman").should("exist");
+        });
+
         cy.get(".mx_RightPanel").percySnapshotElement("User View", {
             // Hide the MXID field as it'll vary on each test
             percyCSS: ".mx_UserInfo_profile_mxid { visibility: hidden !important; }",

@@ -41,18 +41,18 @@ interface IProps {
  * This uses the unstable feature of MSC3906: https://github.com/matrix-org/matrix-spec-proposals/pull/3906
  */
 export default class LoginWithQRFlow extends React.Component<IProps> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
     }
 
-    private handleClick = (type: Click) => {
-        return async (e: React.FormEvent) => {
+    private handleClick = (type: Click): ((e: React.FormEvent) => Promise<void>) => {
+        return async (e: React.FormEvent): Promise<void> => {
             e.preventDefault();
             await this.props.onClick(type);
         };
     };
 
-    private cancelButton = () => (
+    private cancelButton = (): JSX.Element => (
         <AccessibleButton data-testid="cancel-button" kind="primary_outline" onClick={this.handleClick(Click.Cancel)}>
             {_t("Cancel")}
         </AccessibleButton>
@@ -69,7 +69,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
         );
     };
 
-    public render() {
+    public render(): React.ReactNode {
         let title = "";
         let titleIcon: JSX.Element | undefined;
         let main: JSX.Element | undefined;
@@ -184,7 +184,11 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                             <p>{_t("Scan the QR code below with your device that's signed out.")}</p>
                             <ol>
                                 <li>{_t("Start at the sign in screen")}</li>
-                                <li>{_t("Select 'Scan QR code'")}</li>
+                                <li>
+                                    {_t("Select '%(scanQRCode)s'", {
+                                        scanQRCode: _t("Scan QR code"),
+                                    })}
+                                </li>
                                 <li>{_t("Review and approve the sign in")}</li>
                             </ol>
                             {code}
@@ -199,7 +203,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 main = this.simpleSpinner();
                 break;
             case Phase.Connecting:
-                main = this.simpleSpinner(_t("Connecting..."));
+                main = this.simpleSpinner(_t("Connecting…"));
                 buttons = this.cancelButton();
                 break;
             case Phase.WaitingForDevice:

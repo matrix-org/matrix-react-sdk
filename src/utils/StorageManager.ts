@@ -32,15 +32,15 @@ try {
 const SYNC_STORE_NAME = "riot-web-sync";
 const CRYPTO_STORE_NAME = "matrix-js-sdk:crypto";
 
-function log(msg: string) {
+function log(msg: string): void {
     logger.log(`StorageManager: ${msg}`);
 }
 
-function error(msg: string, ...args: string[]) {
+function error(msg: string, ...args: any[]): void {
     logger.error(`StorageManager: ${msg}`, ...args);
 }
 
-export function tryPersistStorage() {
+export function tryPersistStorage(): void {
     if (navigator.storage && navigator.storage.persist) {
         navigator.storage.persist().then((persistent) => {
             logger.log("StorageManager: Persistent?", persistent);
@@ -56,7 +56,12 @@ export function tryPersistStorage() {
     }
 }
 
-export async function checkConsistency() {
+export async function checkConsistency(): Promise<{
+    healthy: boolean;
+    cryptoInited: boolean;
+    dataInCryptoStore: boolean;
+    dataInLocalStorage: boolean;
+}> {
     log("Checking storage consistency");
     log(`Local storage supported? ${!!localStorage}`);
     log(`IndexedDB supported? ${!!indexedDB}`);
@@ -121,7 +126,12 @@ export async function checkConsistency() {
     };
 }
 
-async function checkSyncStore() {
+interface StoreCheck {
+    exists: boolean;
+    healthy: boolean;
+}
+
+async function checkSyncStore(): Promise<StoreCheck> {
     let exists = false;
     try {
         exists = await IndexedDBStore.exists(indexedDB, SYNC_STORE_NAME);
@@ -134,7 +144,7 @@ async function checkSyncStore() {
     return { exists, healthy: false };
 }
 
-async function checkCryptoStore() {
+async function checkCryptoStore(): Promise<StoreCheck> {
     let exists = false;
     try {
         exists = await IndexedDBCryptoStore.exists(indexedDB, CRYPTO_STORE_NAME);
@@ -164,14 +174,14 @@ async function checkCryptoStore() {
  *
  * @param {boolean} cryptoInited True if crypto has been set up
  */
-export function setCryptoInitialised(cryptoInited: boolean) {
+export function setCryptoInitialised(cryptoInited: boolean): void {
     localStorage.setItem("mx_crypto_initialised", String(cryptoInited));
 }
 
 /* Simple wrapper functions around IndexedDB.
  */
 
-let idb: IDBDatabase = null;
+let idb: IDBDatabase | null = null;
 
 async function idbInit(): Promise<void> {
     if (!indexedDB) {
@@ -180,10 +190,10 @@ async function idbInit(): Promise<void> {
     idb = await new Promise((resolve, reject) => {
         const request = indexedDB.open("matrix-react-sdk", 1);
         request.onerror = reject;
-        request.onsuccess = () => {
+        request.onsuccess = (): void => {
             resolve(request.result);
         };
-        request.onupgradeneeded = () => {
+        request.onupgradeneeded = (): void => {
             const db = request.result;
             db.createObjectStore("pickleKey");
             db.createObjectStore("account");
@@ -196,13 +206,13 @@ export async function idbLoad(table: string, key: string | string[]): Promise<an
         await idbInit();
     }
     return new Promise((resolve, reject) => {
-        const txn = idb.transaction([table], "readonly");
+        const txn = idb!.transaction([table], "readonly");
         txn.onerror = reject;
 
         const objectStore = txn.objectStore(table);
         const request = objectStore.get(key);
         request.onerror = reject;
-        request.onsuccess = (event) => {
+        request.onsuccess = (event): void => {
             resolve(request.result);
         };
     });
@@ -213,13 +223,13 @@ export async function idbSave(table: string, key: string | string[], data: any):
         await idbInit();
     }
     return new Promise((resolve, reject) => {
-        const txn = idb.transaction([table], "readwrite");
+        const txn = idb!.transaction([table], "readwrite");
         txn.onerror = reject;
 
         const objectStore = txn.objectStore(table);
         const request = objectStore.put(data, key);
         request.onerror = reject;
-        request.onsuccess = (event) => {
+        request.onsuccess = (event): void => {
             resolve();
         };
     });
@@ -230,13 +240,13 @@ export async function idbDelete(table: string, key: string | string[]): Promise<
         await idbInit();
     }
     return new Promise((resolve, reject) => {
-        const txn = idb.transaction([table], "readwrite");
+        const txn = idb!.transaction([table], "readwrite");
         txn.onerror = reject;
 
         const objectStore = txn.objectStore(table);
         const request = objectStore.delete(key);
         request.onerror = reject;
-        request.onsuccess = () => {
+        request.onsuccess = (): void => {
             resolve();
         };
     });

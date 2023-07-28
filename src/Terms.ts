@@ -17,8 +17,8 @@ limitations under the License.
 import classNames from "classnames";
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { MatrixClientPeg } from "./MatrixClientPeg";
 import Modal from "./Modal";
 import TermsDialog from "./components/views/dialogs/TermsDialog";
 
@@ -52,11 +52,13 @@ export type Policies = {
     [policy: string]: Policy;
 };
 
+export type ServicePolicyPair = {
+    policies: Policies;
+    service: Service;
+};
+
 export type TermsInteractionCallback = (
-    policiesAndServicePairs: {
-        service: Service;
-        policies: Policies;
-    }[],
+    policiesAndServicePairs: ServicePolicyPair[],
     agreedUrls: string[],
     extraClassNames?: string,
 ) => Promise<string[]>;
@@ -64,6 +66,7 @@ export type TermsInteractionCallback = (
 /**
  * Start a flow where the user is presented with terms & conditions for some services
  *
+ * @param client The Matrix Client instance of the logged-in user
  * @param {Service[]} services Object with keys 'serviceType', 'baseUrl', 'accessToken'
  * @param {function} interactionCallback Function called with:
  *      * an array of { service: {Service}, policies: {terms response from API} }
@@ -73,10 +76,11 @@ export type TermsInteractionCallback = (
  *     if they cancel.
  */
 export async function startTermsFlow(
+    client: MatrixClient,
     services: Service[],
     interactionCallback: TermsInteractionCallback = dialogTermsInteractionCallback,
-) {
-    const termsPromises = services.map((s) => MatrixClientPeg.get().getTerms(s.serviceType, s.baseUrl));
+): Promise<void> {
+    const termsPromises = services.map((s) => client.getTerms(s.serviceType, s.baseUrl));
 
     /*
      * a /terms response looks like:
@@ -103,7 +107,7 @@ export async function startTermsFlow(
     });
 
     // fetch the set of agreed policy URLs from account data
-    const currentAcceptedTerms = await MatrixClientPeg.get().getAccountData("m.accepted_terms");
+    const currentAcceptedTerms = await client.getAccountData("m.accepted_terms");
     let agreedUrlSet: Set<string>;
     if (!currentAcceptedTerms || !currentAcceptedTerms.getContent() || !currentAcceptedTerms.getContent().accepted) {
         agreedUrlSet = new Set();
@@ -117,9 +121,9 @@ export async function startTermsFlow(
     // but then they'd assume they can un-check the boxes to un-agree to a policy,
     // but that is not a thing the API supports, so probably best to just show
     // things they've not agreed to yet.
-    const unagreedPoliciesAndServicePairs = [];
+    const unagreedPoliciesAndServicePairs: ServicePolicyPair[] = [];
     for (const { service, policies } of policiesAndServicePairs) {
-        const unagreedPolicies = {};
+        const unagreedPolicies: Policies = {};
         for (const [policyName, policy] of Object.entries(policies)) {
             let policyAgreed = false;
             for (const lang of Object.keys(policy)) {
@@ -150,7 +154,7 @@ export async function startTermsFlow(
     // We only ever add to the set of URLs, so if anything has changed then we'd see a different length
     if (agreedUrlSet.size !== numAcceptedBeforeAgreement) {
         const newAcceptedTerms = { accepted: Array.from(agreedUrlSet) };
-        await MatrixClientPeg.get().setAccountData("m.accepted_terms", newAcceptedTerms);
+        await client.setAccountData("m.accepted_terms", newAcceptedTerms);
     }
 
     const agreePromises = policiesAndServicePairs.map((policiesAndService) => {
@@ -169,14 +173,14 @@ export async function startTermsFlow(
 
         if (urlsForService.length === 0) return Promise.resolve();
 
-        return MatrixClientPeg.get().agreeToTerms(
+        return client.agreeToTerms(
             policiesAndService.service.serviceType,
             policiesAndService.service.baseUrl,
             policiesAndService.service.accessToken,
             urlsForService,
         );
     });
-    return Promise.all(agreePromises);
+    await Promise.all(agreePromises);
 }
 
 export async function dialogTermsInteractionCallback(
@@ -189,7 +193,7 @@ export async function dialogTermsInteractionCallback(
 ): Promise<string[]> {
     logger.log("Terms that need agreement", policiesAndServicePairs);
 
-    const { finished } = Modal.createDialog<[boolean, string[]]>(
+    const { finished } = Modal.createDialog(
         TermsDialog,
         {
             policiesAndServicePairs,
@@ -199,7 +203,7 @@ export async function dialogTermsInteractionCallback(
     );
 
     const [done, _agreedUrls] = await finished;
-    if (!done) {
+    if (!done || !_agreedUrls) {
         throw new TermsNotSignedError();
     }
     return _agreedUrls;

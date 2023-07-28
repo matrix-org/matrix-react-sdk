@@ -62,12 +62,14 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
 
     // eat events from buttons so navigate to tile
     // is not triggered
-    const stopPropagationWrapper = (callback: () => void) => (e?: ButtonEvent) => {
-        e?.stopPropagation();
-        callback();
-    };
+    const stopPropagationWrapper =
+        (callback: () => void) =>
+        (e?: ButtonEvent): void => {
+            e?.stopPropagation();
+            callback();
+        };
 
-    const onButtonClick = () => {
+    const onButtonClick = (): void => {
         if (hasLocationPublishError) {
             onResetLocationPublishError();
         } else {
@@ -75,7 +77,7 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
         }
     };
 
-    const onClick = () => {
+    const onClick = (): void => {
         dispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: beacon.roomId,
@@ -103,7 +105,7 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
 
             <AccessibleButton
                 className="mx_RoomLiveShareWarning_stopButton"
-                data-test-id="room-live-share-primary-button"
+                data-testid="room-live-share-primary-button"
                 onClick={stopPropagationWrapper(onButtonClick)}
                 kind="danger"
                 element="button"
@@ -113,7 +115,7 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
             </AccessibleButton>
             {hasLocationPublishError && (
                 <AccessibleButton
-                    data-test-id="room-live-share-wire-error-close-button"
+                    data-testid="room-live-share-wire-error-close-button"
                     title={_t("Stop and close")}
                     element="button"
                     className="mx_RoomLiveShareWarning_closeButton"

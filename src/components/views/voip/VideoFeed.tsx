@@ -23,7 +23,9 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
 
 import SettingsStore from "../../../settings/SettingsStore";
-import MemberAvatar from "../avatars/MemberAvatar";
+import LegacyCallHandler from "../../../LegacyCallHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import RoomAvatar from "../avatars/RoomAvatar";
 
 interface IProps {
     call: MatrixCall;
@@ -50,7 +52,7 @@ interface IState {
 }
 
 export default class VideoFeed extends React.PureComponent<IProps, IState> {
-    private element: HTMLVideoElement;
+    private element?: HTMLVideoElement;
 
     public constructor(props: IProps) {
         super(props);
@@ -61,16 +63,16 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.updateFeed(null, this.props.feed);
         this.playMedia();
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.updateFeed(this.props.feed, null);
     }
 
-    public componentDidUpdate(prevProps: IProps, prevState: IState) {
+    public componentDidUpdate(prevProps: IProps, prevState: IState): void {
         this.updateFeed(prevProps.feed, this.props.feed);
         // If the mutes state has changed, we try to playMedia()
         if (prevState.videoMuted !== this.state.videoMuted || prevProps.feed.stream !== this.props.feed.stream) {
@@ -78,7 +80,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         }
     }
 
-    public static getDerivedStateFromProps(props: IProps) {
+    public static getDerivedStateFromProps(props: IProps): IState {
         return {
             audioMuted: props.feed.isAudioMuted(),
             videoMuted: props.feed.isVideoMuted(),
@@ -95,7 +97,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         element.addEventListener("resize", this.onResize);
     };
 
-    private updateFeed(oldFeed: CallFeed, newFeed: CallFeed) {
+    private updateFeed(oldFeed: CallFeed | null, newFeed: CallFeed | null): void {
         if (oldFeed === newFeed) return;
 
         if (oldFeed) {
@@ -116,7 +118,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private async playMedia() {
+    private async playMedia(): Promise<void> {
         const element = this.element;
         if (!element) return;
         // We play audio in AudioFeed, not here
@@ -143,12 +145,12 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private stopMedia() {
+    private stopMedia(): void {
         const element = this.element;
         if (!element) return;
 
         element.pause();
-        element.src = null;
+        element.removeAttribute("src");
 
         // As per comment in componentDidMount, setting the sink ID back to the
         // default once the call is over makes setSinkId work reliably. - Dave
@@ -156,7 +158,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         // seem to be necessary - Šimon
     }
 
-    private onNewStream = () => {
+    private onNewStream = (): void => {
         this.setState({
             audioMuted: this.props.feed.isAudioMuted(),
             videoMuted: this.props.feed.isVideoMuted(),
@@ -164,20 +166,20 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
         this.playMedia();
     };
 
-    private onMuteStateChanged = () => {
+    private onMuteStateChanged = (): void => {
         this.setState({
             audioMuted: this.props.feed.isAudioMuted(),
             videoMuted: this.props.feed.isVideoMuted(),
         });
     };
 
-    private onResize = (e) => {
+    private onResize = (e: Event): void => {
         if (this.props.onResize && !this.props.feed.isLocal()) {
             this.props.onResize(e);
         }
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const { pipMode, primary, secondary, feed } = this.props;
 
         const wrapperClasses = classnames("mx_VideoFeed", {
@@ -197,7 +199,8 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
 
         let content;
         if (this.state.videoMuted) {
-            const member = this.props.feed.getMember();
+            const callRoomId = LegacyCallHandler.instance.roomIdForCall(this.props.call);
+            const callRoom = (callRoomId ? MatrixClientPeg.safeGet().getRoom(callRoomId) : undefined) ?? undefined;
 
             let avatarSize;
             if (pipMode && primary) avatarSize = 76;
@@ -205,7 +208,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             else if (!pipMode && primary) avatarSize = 160;
             else; // TBD
 
-            content = <MemberAvatar member={member} height={avatarSize} width={avatarSize} />;
+            content = <RoomAvatar room={callRoom} height={avatarSize} width={avatarSize} />;
         } else {
             const videoClasses = classnames("mx_VideoFeed_video", {
                 mx_VideoFeed_video_mirror:

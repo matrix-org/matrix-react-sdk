@@ -16,7 +16,7 @@ limitations under the License.
 
 import fetchMock from "fetch-mock-jest";
 import { TextDecoder, TextEncoder } from "util";
-import fetch from "node-fetch";
+import { Response } from "node-fetch";
 
 // jest 27 removes setImmediate from jsdom
 // polyfill until setImmediate use in client can be removed
@@ -85,10 +85,12 @@ window.HTMLElement.prototype.scrollIntoView = jest.fn();
 fetchMock.config.overwriteRoutes = false;
 fetchMock.catch("");
 fetchMock.get("/image-file-stub", "image file stub");
+fetchMock.get("/_matrix/client/versions", {});
 // @ts-ignore
 window.fetch = fetchMock.sandbox();
 
-window.Response = fetch.Response;
+// @ts-ignore
+window.Response = Response;
 
 // set up mediaDevices mock
 Object.defineProperty(navigator, "mediaDevices", {

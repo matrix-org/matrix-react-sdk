@@ -46,7 +46,8 @@ interface IProps {
     widgetDefinition: IModalWidgetOpenRequestData;
     widgetRoomId?: string;
     sourceWidgetId: string;
-    onFinished(success: boolean, data?: IModalWidgetReturnData): void;
+    onFinished(success: true, data: IModalWidgetReturnData): void;
+    onFinished(success?: false, data?: void): void;
 }
 
 interface IState {
@@ -65,48 +66,50 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
         disabledButtonIds: (this.props.widgetDefinition.buttons || []).filter((b) => b.disabled).map((b) => b.id),
     };
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.widget = new ElementWidget({
             ...this.props.widgetDefinition,
-            creatorUserId: MatrixClientPeg.get().getUserId(),
+            creatorUserId: MatrixClientPeg.safeGet().getSafeUserId(),
             id: `modal_${this.props.sourceWidgetId}`,
         });
         this.possibleButtons = (this.props.widgetDefinition.buttons || []).map((b) => b.id);
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         const driver = new StopGapWidgetDriver([], this.widget, WidgetKind.Modal, false);
-        const messaging = new ClientWidgetApi(this.widget, this.appFrame.current, driver);
+        const messaging = new ClientWidgetApi(this.widget, this.appFrame.current!, driver);
         this.setState({ messaging });
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
+        if (!this.state.messaging) return;
         this.state.messaging.off("ready", this.onReady);
         this.state.messaging.off(`action:${WidgetApiFromWidgetAction.CloseModalWidget}`, this.onWidgetClose);
         this.state.messaging.stop();
     }
 
-    private onReady = () => {
-        this.state.messaging.sendWidgetConfig(this.props.widgetDefinition);
+    private onReady = (): void => {
+        this.state.messaging?.sendWidgetConfig(this.props.widgetDefinition);
     };
 
-    private onLoad = () => {
+    private onLoad = (): void => {
+        if (!this.state.messaging) return;
         this.state.messaging.once("ready", this.onReady);
         this.state.messaging.on(`action:${WidgetApiFromWidgetAction.CloseModalWidget}`, this.onWidgetClose);
         this.state.messaging.on(`action:${WidgetApiFromWidgetAction.SetModalButtonEnabled}`, this.onButtonEnableToggle);
     };
 
-    private onWidgetClose = (ev: CustomEvent<IModalWidgetCloseRequest>) => {
+    private onWidgetClose = (ev: CustomEvent<IModalWidgetCloseRequest>): void => {
         this.props.onFinished(true, ev.detail.data);
     };
 
-    private onButtonEnableToggle = (ev: CustomEvent<ISetModalButtonEnabledActionRequest>) => {
+    private onButtonEnableToggle = (ev: CustomEvent<ISetModalButtonEnabledActionRequest>): void => {
         ev.preventDefault();
         const isClose = ev.detail.data.button === BuiltInModalButtonID.Close;
         if (isClose || !this.possibleButtons.includes(ev.detail.data.button)) {
-            return this.state.messaging.transport.reply(ev.detail, {
+            return this.state.messaging?.transport.reply(ev.detail, {
                 error: { message: "Invalid button" },
             } as IWidgetApiErrorResponseData);
         }
@@ -121,15 +124,15 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
             buttonIds = Array.from(tempSet);
         }
         this.setState({ disabledButtonIds: buttonIds });
-        this.state.messaging.transport.reply(ev.detail, {} as IWidgetApiAcknowledgeResponseData);
+        this.state.messaging?.transport.reply(ev.detail, {} as IWidgetApiAcknowledgeResponseData);
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const templated = this.widget.getCompleteUrl({
             widgetRoomId: this.props.widgetRoomId,
-            currentUserId: MatrixClientPeg.get().getUserId(),
-            userDisplayName: OwnProfileStore.instance.displayName,
-            userHttpAvatarUrl: OwnProfileStore.instance.getHttpAvatarUrl(),
+            currentUserId: MatrixClientPeg.safeGet().getSafeUserId(),
+            userDisplayName: OwnProfileStore.instance.displayName ?? undefined,
+            userHttpAvatarUrl: OwnProfileStore.instance.getHttpAvatarUrl() ?? undefined,
             clientId: ELEMENT_CLIENT_ID,
             clientTheme: SettingsStore.getValue("theme"),
             clientLanguage: getUserLanguage(),
@@ -167,8 +170,8 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
                             break;
                     }
 
-                    const onClick = () => {
-                        this.state.messaging.notifyModalWidgetButtonClicked(def.id);
+                    const onClick = (): void => {
+                        this.state.messaging?.notifyModalWidgetButtonClicked(def.id);
                     };
 
                     const isDisabled = this.state.disabledButtonIds.includes(def.id);
@@ -201,7 +204,7 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
                 </div>
                 <div>
                     <iframe
-                        title={this.widget.name}
+                        title={this.widget.name ?? undefined}
                         ref={this.appFrame}
                         sandbox="allow-forms allow-scripts allow-same-origin"
                         src={widgetUrl}

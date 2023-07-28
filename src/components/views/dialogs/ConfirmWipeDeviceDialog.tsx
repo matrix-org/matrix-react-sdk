@@ -21,7 +21,7 @@ import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 
 interface IProps {
-    onFinished: (success: boolean) => void;
+    onFinished: (success?: boolean) => void;
 }
 
 export default class ConfirmWipeDeviceDialog extends React.Component<IProps> {
@@ -33,7 +33,7 @@ export default class ConfirmWipeDeviceDialog extends React.Component<IProps> {
         this.props.onFinished(false);
     };
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 className="mx_ConfirmWipeDeviceDialog"

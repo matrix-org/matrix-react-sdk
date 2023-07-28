@@ -34,11 +34,23 @@ interface IProps {}
 export default class Welcome extends React.PureComponent<IProps> {
     public render(): React.ReactNode {
         const pagesConfig = SdkConfig.getObject("embedded_pages");
-        let pageUrl = null;
+        let pageUrl: string | undefined;
         if (pagesConfig) {
             pageUrl = pagesConfig.get("welcome_url");
         }
+
+        const replaceMap: Record<string, string> = {
+            "$riot:ssoUrl": "#/start_sso",
+            "$riot:casUrl": "#/start_cas",
+            "$matrixLogo": MATRIX_LOGO_HTML,
+            "[matrix]": MATRIX_LOGO_HTML,
+        };
+
         if (!pageUrl) {
+            // Fall back to default and replace $logoUrl in welcome.html
+            const brandingConfig = SdkConfig.getObject("branding");
+            const logoUrl = brandingConfig?.get("auth_header_logo_url") ?? "themes/element/img/logos/element-logo.svg";
+            replaceMap["$logoUrl"] = logoUrl;
             pageUrl = "welcome.html";
         }
 
@@ -49,16 +61,7 @@ export default class Welcome extends React.PureComponent<IProps> {
                         mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
                     })}
                 >
-                    <EmbeddedPage
-                        className="mx_WelcomePage"
-                        url={pageUrl}
-                        replaceMap={{
-                            "$riot:ssoUrl": "#/start_sso",
-                            "$riot:casUrl": "#/start_cas",
-                            "$matrixLogo": MATRIX_LOGO_HTML,
-                            "[matrix]": MATRIX_LOGO_HTML,
-                        }}
-                    />
+                    <EmbeddedPage className="mx_WelcomePage" url={pageUrl} replaceMap={replaceMap} />
                     <LanguageSelector />
                 </div>
             </AuthPage>

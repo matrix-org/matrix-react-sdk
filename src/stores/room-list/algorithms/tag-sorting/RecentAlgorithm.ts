@@ -56,7 +56,7 @@ export const sortRooms = (rooms: Room[]): Room[] => {
     // See https://github.com/vector-im/element-web/issues/14458
     let myUserId = "";
     if (MatrixClientPeg.get()) {
-        myUserId = MatrixClientPeg.get().getUserId();
+        myUserId = MatrixClientPeg.get()!.getSafeUserId();
     }
 
     const tsCache: { [roomId: string]: number } = {};
@@ -72,8 +72,8 @@ export const sortRooms = (rooms: Room[]): Room[] => {
     });
 };
 
-const getLastTs = (r: Room, userId: string) => {
-    const mainTimelineLastTs = (() => {
+const getLastTs = (r: Room, userId: string): number => {
+    const mainTimelineLastTs = ((): number => {
         // Apparently we can have rooms without timelines, at least under testing
         // environments. Just return MAX_INT when this happens.
         if (!r?.timeline) {
@@ -95,7 +95,10 @@ const getLastTs = (r: Room, userId: string) => {
             const ev = r.timeline[i];
             if (!ev.getTs()) continue; // skip events that don't have timestamps (tests only?)
 
-            if ((ev.getSender() === userId && shouldCauseReorder(ev)) || Unread.eventTriggersUnreadCount(ev)) {
+            if (
+                (ev.getSender() === userId && shouldCauseReorder(ev)) ||
+                Unread.eventTriggersUnreadCount(r.client, ev)
+            ) {
                 return ev.getTs();
             }
         }

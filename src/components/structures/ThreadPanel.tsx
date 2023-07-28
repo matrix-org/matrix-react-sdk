@@ -1,5 +1,5 @@
 /*
-Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Optional } from "matrix-events-sdk";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
 import { Thread } from "matrix-js-sdk/src/models/thread";
@@ -31,16 +32,9 @@ import { Layout } from "../../settings/enums/Layout";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import Measured from "../views/elements/Measured";
 import PosthogTrackers from "../../PosthogTrackers";
-import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
-import { BetaPill } from "../views/beta/BetaCard";
-import Modal from "../../Modal";
-import BetaFeedbackDialog from "../views/dialogs/BetaFeedbackDialog";
-import { Action } from "../../dispatcher/actions";
-import { UserTab } from "../views/dialogs/UserTab";
-import dis from "../../dispatcher/dispatcher";
+import { ButtonEvent } from "../views/elements/AccessibleButton";
 import Spinner from "../views/elements/Spinner";
 import Heading from "../views/typography/Heading";
-import { shouldShowFeedback } from "../../utils/Feedback";
 
 interface IProps {
     roomId: string;
@@ -60,15 +54,12 @@ type ThreadPanelHeaderOption = {
     key: ThreadFilterType;
 };
 
-export const ThreadPanelHeaderFilterOptionItem = ({
-    label,
-    description,
-    onClick,
-    isSelected,
-}: ThreadPanelHeaderOption & {
-    onClick: () => void;
-    isSelected: boolean;
-}) => {
+export const ThreadPanelHeaderFilterOptionItem: React.FC<
+    ThreadPanelHeaderOption & {
+        onClick: () => void;
+        isSelected: boolean;
+    }
+> = ({ label, description, onClick, isSelected }) => {
     return (
         <MenuItemRadio active={isSelected} className="mx_ThreadPanel_Header_FilterOptionItem" onClick={onClick}>
             <span>{label}</span>
@@ -77,15 +68,11 @@ export const ThreadPanelHeaderFilterOptionItem = ({
     );
 };
 
-export const ThreadPanelHeader = ({
-    filterOption,
-    setFilterOption,
-    empty,
-}: {
+export const ThreadPanelHeader: React.FC<{
     filterOption: ThreadFilterType;
     setFilterOption: (filterOption: ThreadFilterType) => void;
     empty: boolean;
-}) => {
+}> = ({ filterOption, setFilterOption, empty }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
     const options: readonly ThreadPanelHeaderOption[] = [
         {
@@ -126,7 +113,7 @@ export const ThreadPanelHeader = ({
     ) : null;
     return (
         <div className="mx_BaseCard_header_title">
-            <Heading size="h4" className="mx_BaseCard_header_title_heading">
+            <Heading size="4" className="mx_BaseCard_header_title_heading">
                 {_t("Threads")}
             </Heading>
             {!empty && (
@@ -140,7 +127,7 @@ export const ThreadPanelHeader = ({
                             PosthogTrackers.trackInteraction("WebRightPanelThreadPanelFilterDropdown", ev);
                         }}
                     >
-                        {`${_t("Show:")} ${value.label}`}
+                        {`${_t("Show:")} ${value?.label}`}
                     </ContextMenuButton>
                     {contextMenu}
                 </>
@@ -210,20 +197,21 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
 const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) => {
     const mxClient = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const timelinePanel = useRef<TimelinePanel>();
-    const card = useRef<HTMLDivElement>();
+    const timelinePanel = useRef<TimelinePanel | null>(null);
+    const card = useRef<HTMLDivElement | null>(null);
 
     const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
     const [room, setRoom] = useState<Room | null>(null);
-    const [timelineSet, setTimelineSet] = useState<EventTimelineSet | null>(null);
     const [narrow, setNarrow] = useState<boolean>(false);
+
+    const timelineSet: Optional<EventTimelineSet> =
+        filterOption === ThreadFilterType.My ? room?.threadsTimelineSets[1] : room?.threadsTimelineSets[0];
+    const hasThreads = Boolean(room?.threadsTimelineSets?.[0]?.getLiveTimeline()?.getEvents()?.length);
 
     useEffect(() => {
         const room = mxClient.getRoom(roomId);
-        room.createThreadsTimelineSets()
-            .then(() => {
-                return room.fetchRoomThreads();
-            })
+        room?.createThreadsTimelineSets()
+            .then(() => room.fetchRoomThreads())
             .then(() => {
                 setFilterOption(ThreadFilterType.All);
                 setRoom(room);
@@ -231,28 +219,10 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     }, [mxClient, roomId]);
 
     useEffect(() => {
-        if (room) {
-            if (filterOption === ThreadFilterType.My) {
-                setTimelineSet(room.threadsTimelineSets[1]);
-            } else {
-                setTimelineSet(room.threadsTimelineSets[0]);
-            }
-        }
-    }, [room, filterOption]);
-
-    useEffect(() => {
         if (timelineSet && !Thread.hasServerSideSupport) {
-            timelinePanel.current.refreshTimeline();
+            timelinePanel.current?.refreshTimeline();
         }
     }, [timelineSet, timelinePanel]);
-
-    const openFeedback = shouldShowFeedback()
-        ? () => {
-              Modal.createDialog(BetaFeedbackDialog, {
-                  featureId: "feature_threadstable",
-              });
-          }
-        : null;
 
     return (
         <RoomContext.Provider
@@ -268,41 +238,15 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                     <ThreadPanelHeader
                         filterOption={filterOption}
                         setFilterOption={setFilterOption}
-                        empty={!timelineSet?.getLiveTimeline()?.getEvents().length}
+                        empty={!hasThreads}
                     />
-                }
-                footer={
-                    <>
-                        <BetaPill
-                            tooltipTitle={_t("Threads are a beta feature")}
-                            tooltipCaption={_t("Click for more info")}
-                            onClick={() => {
-                                dis.dispatch({
-                                    action: Action.ViewUserSettings,
-                                    initialTabId: UserTab.Labs,
-                                });
-                            }}
-                        />
-                        {openFeedback &&
-                            _t(
-                                "<a>Give feedback</a>",
-                                {},
-                                {
-                                    a: (sub) => (
-                                        <AccessibleButton kind="link_inline" onClick={openFeedback}>
-                                            {sub}
-                                        </AccessibleButton>
-                                    ),
-                                },
-                            )}
-                    </>
                 }
                 className="mx_ThreadPanel"
                 onClose={onClose}
                 withoutScrollContainer={true}
                 ref={card}
             >
-                <Measured sensor={card.current} onMeasurement={setNarrow} />
+                {card.current && <Measured sensor={card.current} onMeasurement={setNarrow} />}
                 {timelineSet ? (
                     <TimelinePanel
                         key={filterOption + ":" + (timelineSet.getFilter()?.filterId ?? roomId)}
@@ -315,7 +259,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                         showUrlPreview={false} // No URL previews at the threads list level
                         empty={
                             <EmptyThread
-                                hasThreads={room.threadsTimelineSets?.[0]?.getLiveTimeline().getEvents().length > 0}
+                                hasThreads={hasThreads}
                                 filterOption={filterOption}
                                 showAllThreadsCallback={() => setFilterOption(ThreadFilterType.All)}
                             />

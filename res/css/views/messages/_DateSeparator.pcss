@@ -19,7 +19,7 @@ limitations under the License.
     margin: 4px 0;
     display: flex;
     align-items: center;
-    font-size: $font-14px;
+    font: var(--cpd-font-body-md-regular);
     color: $roomtopic-color;
 }
 
@@ -30,9 +30,13 @@ limitations under the License.
     border-bottom: 1px solid $menu-selected-color;
 }
 
-.mx_DateSeparator > h2 {
-    margin: 0 25px;
+.mx_DateSeparator_dateContent {
+    padding: 0 25px;
+}
+
+.mx_DateSeparator_dateHeading {
     flex: 0 0 auto;
+    margin: 0;
     font-size: inherit;
     font-weight: inherit;
     color: inherit;

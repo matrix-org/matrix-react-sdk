@@ -25,22 +25,32 @@ import {
 import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 import { SimpleObservable } from "matrix-widget-api";
 import { logger } from "matrix-js-sdk/src/logger";
+import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 
 import { Playback, PlaybackInterface, PlaybackState } from "../../audio/Playback";
 import { PlaybackManager } from "../../audio/PlaybackManager";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { MediaEventHelper } from "../../utils/MediaEventHelper";
 import { IDestroyable } from "../../utils/IDestroyable";
-import { VoiceBroadcastLiveness, VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "..";
+import {
+    VoiceBroadcastLiveness,
+    VoiceBroadcastInfoEventType,
+    VoiceBroadcastInfoState,
+    VoiceBroadcastInfoEventContent,
+    VoiceBroadcastRecordingsStore,
+    showConfirmListenBroadcastStopCurrentDialog,
+} from "..";
 import { RelationsHelper, RelationsHelperEvent } from "../../events/RelationsHelper";
 import { VoiceBroadcastChunkEvents } from "../utils/VoiceBroadcastChunkEvents";
 import { determineVoiceBroadcastLiveness } from "../utils/determineVoiceBroadcastLiveness";
+import { _t } from "../../languageHandler";
 
 export enum VoiceBroadcastPlaybackState {
-    Paused,
-    Playing,
-    Stopped,
-    Buffering,
+    Paused = "pause",
+    Playing = "playing",
+    Stopped = "stopped",
+    Buffering = "buffering",
+    Error = "error",
 }
 
 export enum VoiceBroadcastPlaybackEvent {
@@ -50,7 +60,7 @@ export enum VoiceBroadcastPlaybackEvent {
     InfoStateChanged = "info_state_changed",
 }
 
-type VoiceBroadcastPlaybackTimes = {
+export type VoiceBroadcastPlaybackTimes = {
     duration: number;
     position: number;
     timeLeft: number;
@@ -72,6 +82,8 @@ export class VoiceBroadcastPlayback
 {
     private state = VoiceBroadcastPlaybackState.Stopped;
     private chunkEvents = new VoiceBroadcastChunkEvents();
+    /** @var Map: event Id → undecryptable event */
+    private utdChunkEvents: Map<string, MatrixEvent> = new Map();
     private playbacks = new Map<string, Playback>();
     private currentlyPlaying: MatrixEvent | null = null;
     /** @var total duration of all chunks in milliseconds */
@@ -81,7 +93,7 @@ export class VoiceBroadcastPlayback
     public readonly liveData = new SimpleObservable<number[]>();
     private liveness: VoiceBroadcastLiveness = "not-live";
 
-    // set vial addInfoEvent() in constructor
+    // set via addInfoEvent() in constructor
     private infoState!: VoiceBroadcastInfoState;
     private lastInfoEvent!: MatrixEvent;
 
@@ -89,7 +101,14 @@ export class VoiceBroadcastPlayback
     private chunkRelationHelper!: RelationsHelper;
     private infoRelationHelper!: RelationsHelper;
 
-    public constructor(public readonly infoEvent: MatrixEvent, private client: MatrixClient) {
+    private skipToNext?: number;
+    private skipToDeferred?: IDeferred<void>;
+
+    public constructor(
+        public readonly infoEvent: MatrixEvent,
+        private client: MatrixClient,
+        private recordings: VoiceBroadcastRecordingsStore,
+    ) {
         super();
         this.addInfoEvent(this.infoEvent);
         this.infoEvent.on(MatrixEventEvent.BeforeRedaction, this.onBeforeRedaction);
@@ -137,13 +156,18 @@ export class VoiceBroadcastPlayback
     }
 
     private addChunkEvent = async (event: MatrixEvent): Promise<boolean> => {
-        if (event.getContent()?.msgtype !== MsgType.Audio) {
-            // skip non-audio event
+        if (!event.getId() && !event.getTxnId()) {
+            // skip events without id and txn id
             return false;
         }
 
-        if (!event.getId() && !event.getTxnId()) {
-            // skip events without id and txn id
+        if (event.isDecryptionFailure()) {
+            this.onChunkEventDecryptionFailure(event);
+            return false;
+        }
+
+        if (event.getContent()?.msgtype !== MsgType.Audio) {
+            // skip non-audio event
             return false;
         }
 
@@ -151,10 +175,57 @@ export class VoiceBroadcastPlayback
         this.setDuration(this.chunkEvents.getLength());
 
         if (this.getState() === VoiceBroadcastPlaybackState.Buffering) {
-            await this.start();
+            await this.startOrPlayNext();
         }
 
         return true;
+    };
+
+    private onChunkEventDecryptionFailure = (event: MatrixEvent): void => {
+        const eventId = event.getId();
+
+        if (!eventId) {
+            // This should not happen, as the existence of the Id is checked before the call.
+            // Log anyway and return.
+            logger.warn("Broadcast chunk decryption failure for event without Id", {
+                broadcast: this.infoEvent.getId(),
+            });
+            return;
+        }
+
+        if (!this.utdChunkEvents.has(eventId)) {
+            event.once(MatrixEventEvent.Decrypted, this.onChunkEventDecrypted);
+        }
+
+        this.utdChunkEvents.set(eventId, event);
+        this.setError();
+    };
+
+    private onChunkEventDecrypted = async (event: MatrixEvent): Promise<void> => {
+        const eventId = event.getId();
+
+        if (!eventId) {
+            // This should not happen, as the existence of the Id is checked before the call.
+            // Log anyway and return.
+            logger.warn("Broadcast chunk decrypted for event without Id", { broadcast: this.infoEvent.getId() });
+            return;
+        }
+
+        this.utdChunkEvents.delete(eventId);
+        await this.addChunkEvent(event);
+
+        if (this.utdChunkEvents.size === 0) {
+            // no more UTD events, recover from error to paused
+            this.setState(VoiceBroadcastPlaybackState.Paused);
+        }
+    };
+
+    private startOrPlayNext = async (): Promise<void> => {
+        if (this.currentlyPlaying) {
+            return this.playNext();
+        }
+
+        return await this.start();
     };
 
     private addInfoEvent = (event: MatrixEvent): void => {
@@ -174,7 +245,7 @@ export class VoiceBroadcastPlayback
         this.setInfoState(state);
     };
 
-    private onBeforeRedaction = () => {
+    private onBeforeRedaction = (): void => {
         if (this.getState() !== VoiceBroadcastPlaybackState.Stopped) {
             this.stop();
             // destroy cleans up everything
@@ -182,12 +253,24 @@ export class VoiceBroadcastPlayback
         }
     };
 
+    private async tryLoadPlayback(chunkEvent: MatrixEvent): Promise<void> {
+        try {
+            return await this.loadPlayback(chunkEvent);
+        } catch (err: any) {
+            logger.warn("Unable to load broadcast playback", {
+                message: err.message,
+                broadcastId: this.infoEvent.getId(),
+                chunkId: chunkEvent.getId(),
+            });
+            this.setError();
+        }
+    }
+
     private async loadPlayback(chunkEvent: MatrixEvent): Promise<void> {
         const eventId = chunkEvent.getId();
 
         if (!eventId) {
-            logger.warn("got voice broadcast chunk event without ID", this.infoEvent, chunkEvent);
-            return;
+            throw new Error("Broadcast chunk event without Id occurred");
         }
 
         const helper = new MediaEventHelper(chunkEvent);
@@ -263,7 +346,10 @@ export class VoiceBroadcastPlayback
             return this.playEvent(next);
         }
 
-        if (this.getInfoState() === VoiceBroadcastInfoState.Stopped) {
+        if (
+            this.getInfoState() === VoiceBroadcastInfoState.Stopped &&
+            this.chunkEvents.getSequenceForEvent(this.currentlyPlaying) === this.lastChunkSequence
+        ) {
             this.stop();
         } else {
             // No more chunks available, although the broadcast is not finished → enter buffering state.
@@ -271,35 +357,61 @@ export class VoiceBroadcastPlayback
         }
     }
 
+    /**
+     * @returns {number} The last chunk sequence from the latest info event.
+     *                   Falls back to the length of received chunks if the info event does not provide the number.
+     */
+    private get lastChunkSequence(): number {
+        return (
+            this.lastInfoEvent.getContent<VoiceBroadcastInfoEventContent>()?.last_chunk_sequence ||
+            this.chunkEvents.getNumberOfEvents()
+        );
+    }
+
     private async playEvent(event: MatrixEvent): Promise<void> {
         this.setState(VoiceBroadcastPlaybackState.Playing);
         this.currentlyPlaying = event;
-        const playback = await this.getOrLoadPlaybackForEvent(event);
+        const playback = await this.tryGetOrLoadPlaybackForEvent(event);
         playback?.play();
+    }
+
+    private async tryGetOrLoadPlaybackForEvent(event: MatrixEvent): Promise<Playback | undefined> {
+        try {
+            return await this.getOrLoadPlaybackForEvent(event);
+        } catch (err: any) {
+            logger.warn("Unable to load broadcast playback", {
+                message: err.message,
+                broadcastId: this.infoEvent.getId(),
+                chunkId: event.getId(),
+            });
+            this.setError();
+        }
     }
 
     private async getOrLoadPlaybackForEvent(event: MatrixEvent): Promise<Playback | undefined> {
         const eventId = event.getId();
 
         if (!eventId) {
-            logger.warn("event without id occurred");
-            return;
+            throw new Error("Broadcast chunk event without Id occurred");
         }
 
         if (!this.playbacks.has(eventId)) {
+            // set to buffering while loading the chunk data
+            const currentState = this.getState();
+            this.setState(VoiceBroadcastPlaybackState.Buffering);
             await this.loadPlayback(event);
+            this.setState(currentState);
         }
 
         const playback = this.playbacks.get(eventId);
 
         if (!playback) {
-            // logging error, because this should not happen
-            logger.warn("unable to find playback for event", event);
+            throw new Error(`Unable to find playback for event ${event.getId()}`);
         }
 
         // try to load the playback for the next event for a smooth(er) playback
         const nextEvent = this.chunkEvents.getNext(event);
-        if (nextEvent) this.loadPlayback(nextEvent);
+        if (nextEvent) this.tryLoadPlayback(nextEvent);
 
         return playback;
     }
@@ -333,10 +445,34 @@ export class VoiceBroadcastPlayback
     }
 
     public get timeLeftSeconds(): number {
-        return Math.round(this.durationSeconds) - this.timeSeconds;
+        // Sometimes the meta data and the audio files are a little bit out of sync.
+        // Be sure it never returns a negative value.
+        return Math.max(0, Math.round(this.durationSeconds) - this.timeSeconds);
     }
 
     public async skipTo(timeSeconds: number): Promise<void> {
+        this.skipToNext = timeSeconds;
+
+        if (this.skipToDeferred) {
+            // Skip to position is already in progress. Return the promise for that.
+            return this.skipToDeferred.promise;
+        }
+
+        this.skipToDeferred = defer();
+
+        while (this.skipToNext !== undefined) {
+            // Skip to position until skipToNext is undefined.
+            // skipToNext can be set if skipTo is called while already skipping.
+            const skipToNext = this.skipToNext;
+            this.skipToNext = undefined;
+            await this.doSkipTo(skipToNext);
+        }
+
+        this.skipToDeferred.resolve();
+        this.skipToDeferred = undefined;
+    }
+
+    private async doSkipTo(timeSeconds: number): Promise<void> {
         const time = timeSeconds * 1000;
         const event = this.chunkEvents.findByTime(time);
 
@@ -346,7 +482,8 @@ export class VoiceBroadcastPlayback
         }
 
         const currentPlayback = this.getCurrentPlayback();
-        const skipToPlayback = await this.getOrLoadPlaybackForEvent(event);
+        const skipToPlayback = await this.tryGetOrLoadPlaybackForEvent(event);
+        const currentPlaybackEvent = this.currentlyPlaying;
 
         if (!skipToPlayback) {
             logger.warn("voice broadcast chunk to skip to not found", event);
@@ -355,10 +492,12 @@ export class VoiceBroadcastPlayback
 
         this.currentlyPlaying = event;
 
-        if (currentPlayback && currentPlayback !== skipToPlayback) {
+        if (currentPlayback && currentPlaybackEvent && currentPlayback !== skipToPlayback) {
+            // only stop and unload the playback here without triggering other effects, e.g. play next
             currentPlayback.off(UPDATE_EVENT, this.onPlaybackStateChange);
             await currentPlayback.stop();
             currentPlayback.on(UPDATE_EVENT, this.onPlaybackStateChange);
+            this.unloadPlayback(currentPlaybackEvent);
         }
 
         const offsetInChunk = time - this.chunkEvents.getLengthTo(event);
@@ -372,6 +511,21 @@ export class VoiceBroadcastPlayback
     }
 
     public async start(): Promise<void> {
+        if (this.state === VoiceBroadcastPlaybackState.Playing) return;
+
+        const currentRecording = this.recordings.getCurrent();
+
+        if (currentRecording && currentRecording.getState() !== VoiceBroadcastInfoState.Stopped) {
+            const shouldStopRecording = await showConfirmListenBroadcastStopCurrentDialog();
+
+            if (!shouldStopRecording) {
+                // keep recording
+                return;
+            }
+
+            await this.recordings.getCurrent()?.stop();
+        }
+
         const chunkEvents = this.chunkEvents.getEvents();
 
         const toPlay =
@@ -387,6 +541,9 @@ export class VoiceBroadcastPlayback
     }
 
     public stop(): void {
+        // error is a final state
+        if (this.getState() === VoiceBroadcastPlaybackState.Error) return;
+
         this.setState(VoiceBroadcastPlaybackState.Stopped);
         this.getCurrentPlayback()?.stop();
         this.currentlyPlaying = null;
@@ -394,6 +551,9 @@ export class VoiceBroadcastPlayback
     }
 
     public pause(): void {
+        // error is a final state
+        if (this.getState() === VoiceBroadcastPlaybackState.Error) return;
+
         // stopped voice broadcasts cannot be paused
         if (this.getState() === VoiceBroadcastPlaybackState.Stopped) return;
 
@@ -402,6 +562,9 @@ export class VoiceBroadcastPlayback
     }
 
     public resume(): void {
+        // error is a final state
+        if (this.getState() === VoiceBroadcastPlaybackState.Error) return;
+
         if (!this.currentlyPlaying) {
             // no playback to resume, start from the beginning
             this.start();
@@ -418,7 +581,10 @@ export class VoiceBroadcastPlayback
      * playing → paused
      * paused → playing
      */
-    public async toggle() {
+    public async toggle(): Promise<void> {
+        // error is a final state
+        if (this.getState() === VoiceBroadcastPlaybackState.Error) return;
+
         if (this.state === VoiceBroadcastPlaybackState.Stopped) {
             await this.start();
             return;
@@ -445,6 +611,16 @@ export class VoiceBroadcastPlayback
         this.emit(VoiceBroadcastPlaybackEvent.StateChanged, state, this);
     }
 
+    /**
+     * Set error state. Stop current playback, if any.
+     */
+    private setError(): void {
+        this.setState(VoiceBroadcastPlaybackState.Error);
+        this.getCurrentPlayback()?.stop();
+        this.currentlyPlaying = null;
+        this.setPosition(0);
+    }
+
     public getInfoState(): VoiceBroadcastInfoState {
         return this.infoState;
     }
@@ -459,7 +635,19 @@ export class VoiceBroadcastPlayback
         this.setLiveness(determineVoiceBroadcastLiveness(this.infoState));
     }
 
+    public get errorMessage(): string {
+        if (this.getState() !== VoiceBroadcastPlaybackState.Error) return "";
+        if (this.utdChunkEvents.size) return _t("Unable to decrypt voice broadcast");
+        return _t("Unable to play this voice broadcast");
+    }
+
     public destroy(): void {
+        for (const [, utdEvent] of this.utdChunkEvents) {
+            utdEvent.off(MatrixEventEvent.Decrypted, this.onChunkEventDecrypted);
+        }
+
+        this.utdChunkEvents.clear();
+
         this.chunkRelationHelper.destroy();
         this.infoRelationHelper.destroy();
         this.removeAllListeners();

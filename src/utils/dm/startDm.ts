@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { IInvite3PID, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { Optional } from "matrix-events-sdk";
 
 import { Action } from "../../dispatcher/actions";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
@@ -24,7 +25,7 @@ import { isLocalRoom } from "../localRoom/isLocalRoom";
 import { findDMForUser } from "./findDMForUser";
 import dis from "../../dispatcher/dispatcher";
 import { getAddressType } from "../../UserAddress";
-import createRoom from "../../createRoom";
+import createRoom, { IOpts } from "../../createRoom";
 
 /**
  * Start a DM.
@@ -35,11 +36,11 @@ export async function startDm(client: MatrixClient, targets: Member[], showSpinn
     const targetIds = targets.map((t) => t.userId);
 
     // Check if there is already a DM with these people and reuse it if possible.
-    let existingRoom: Room;
+    let existingRoom: Optional<Room>;
     if (targetIds.length === 1) {
         existingRoom = findDMForUser(client, targetIds[0]);
     } else {
-        existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds);
+        existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds) ?? undefined;
     }
     if (existingRoom && !isLocalRoom(existingRoom)) {
         dis.dispatch<ViewRoomPayload>({
@@ -52,7 +53,7 @@ export async function startDm(client: MatrixClient, targets: Member[], showSpinn
         return Promise.resolve(existingRoom.roomId);
     }
 
-    const createRoomOptions = { inlineErrors: true } as any; // XXX: Type out `createRoomOptions`
+    const createRoomOptions: IOpts = { inlineErrors: true };
 
     if (await determineCreateRoomEncryptionOption(client, targets)) {
         createRoomOptions.encryption = true;
@@ -66,12 +67,15 @@ export async function startDm(client: MatrixClient, targets: Member[], showSpinn
     }
 
     if (targetIds.length > 1) {
-        createRoomOptions.createOpts = targetIds.reduce(
+        createRoomOptions.createOpts = targetIds.reduce<{
+            invite_3pid: IInvite3PID[];
+            invite: string[];
+        }>(
             (roomOptions, address) => {
                 const type = getAddressType(address);
                 if (type === "email") {
                     const invite: IInvite3PID = {
-                        id_server: client.getIdentityServerUrl(true),
+                        id_server: client.getIdentityServerUrl(true)!,
                         medium: "email",
                         address,
                     };
@@ -86,5 +90,5 @@ export async function startDm(client: MatrixClient, targets: Member[], showSpinn
     }
 
     createRoomOptions.spinner = showSpinner;
-    return createRoom(createRoomOptions);
+    return createRoom(client, createRoomOptions);
 }

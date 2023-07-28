@@ -358,7 +358,7 @@ function inviteUser(event: MessageEvent<any>, roomId: string, userId: string): v
     if (room) {
         // if they are already invited or joined we can resolve immediately.
         const member = room.getMember(userId);
-        if (member && ["join", "invite"].includes(member.membership)) {
+        if (member && ["join", "invite"].includes(member.membership!)) {
             sendResponse(event, {
                 success: true,
             });
@@ -389,7 +389,7 @@ function kickUser(event: MessageEvent<any>, roomId: string, userId: string): voi
     if (room) {
         // if they are already not in the room we can resolve immediately.
         const member = room.getMember(userId);
-        if (!member || getEffectiveMembership(member.membership) === EffectiveMembership.Leave) {
+        if (!member || getEffectiveMembership(member.membership!) === EffectiveMembership.Leave) {
             sendResponse(event, {
                 success: true,
             });
@@ -411,6 +411,7 @@ function kickUser(event: MessageEvent<any>, roomId: string, userId: string): voi
 }
 
 function setWidget(event: MessageEvent<any>, roomId: string | null): void {
+    const client = MatrixClientPeg.safeGet();
     const widgetId = event.data.widget_id;
     let widgetType = event.data.type;
     const widgetUrl = event.data.url;
@@ -458,7 +459,7 @@ function setWidget(event: MessageEvent<any>, roomId: string | null): void {
     widgetType = WidgetType.fromString(widgetType);
 
     if (userWidget) {
-        WidgetUtils.setUserWidget(widgetId, widgetType, widgetUrl, widgetName, widgetData)
+        WidgetUtils.setUserWidget(client, widgetId, widgetType, widgetUrl, widgetName, widgetData)
             .then(() => {
                 sendResponse(event, {
                     success: true,
@@ -472,10 +473,11 @@ function setWidget(event: MessageEvent<any>, roomId: string | null): void {
     } else {
         // Room widget
         if (!roomId) {
-            sendError(event, _t("Missing roomId."), null);
+            sendError(event, _t("Missing roomId."));
             return;
         }
         WidgetUtils.setRoomWidget(
+            client,
             roomId,
             widgetId,
             widgetType,
@@ -516,7 +518,7 @@ function getWidgets(event: MessageEvent<any>, roomId: string | null): void {
     }
 
     // Add user widgets (not linked to a specific room)
-    const userWidgets = WidgetUtils.getUserWidgetsArray();
+    const userWidgets = WidgetUtils.getUserWidgetsArray(client);
     widgetStateEvents = widgetStateEvents.concat(userWidgets);
 
     sendResponse(event, widgetStateEvents);
@@ -533,7 +535,7 @@ function getRoomEncState(event: MessageEvent<any>, roomId: string): void {
         sendError(event, _t("This room is not recognised."));
         return;
     }
-    const roomIsEncrypted = MatrixClientPeg.get().isRoomEncrypted(roomId);
+    const roomIsEncrypted = MatrixClientPeg.safeGet().isRoomEncrypted(roomId);
 
     sendResponse(event, roomIsEncrypted);
 }
@@ -624,7 +626,8 @@ async function setBotPower(
             success: true,
         });
     } catch (err) {
-        sendError(event, err.message ? err.message : _t("Failed to send request."), err);
+        const error = err instanceof Error ? err : undefined;
+        sendError(event, error?.message ?? _t("Failed to send request."), error);
     }
 }
 
@@ -675,7 +678,7 @@ function canSendEvent(event: MessageEvent<any>, roomId: string): void {
         sendError(event, _t("You are not in this room."));
         return;
     }
-    const me = client.credentials.userId;
+    const me = client.credentials.userId!;
 
     let canSend = false;
     if (isState) {
@@ -711,9 +714,9 @@ function returnStateEvent(event: MessageEvent<any>, roomId: string, eventType: s
     sendResponse(event, stateEvent.getContent());
 }
 
-async function getOpenIdToken(event: MessageEvent<any>) {
+async function getOpenIdToken(event: MessageEvent<any>): Promise<void> {
     try {
-        const tokenObject = await MatrixClientPeg.get().getOpenIdToken();
+        const tokenObject = await MatrixClientPeg.safeGet().getOpenIdToken();
         sendResponse(event, tokenObject);
     } catch (ex) {
         logger.warn("Unable to fetch openId token.", ex);
@@ -728,7 +731,7 @@ async function sendEvent(
         content?: IContent;
     }>,
     roomId: string,
-) {
+): Promise<void> {
     const eventType = event.data.type;
     const stateKey = event.data.state_key;
     const content = event.data.content;
@@ -786,7 +789,7 @@ async function readEvents(
         limit?: number;
     }>,
     roomId: string,
-) {
+): Promise<void> {
     const eventType = event.data.type;
     const stateKey = event.data.state_key;
     const limit = event.data.limit;
@@ -858,8 +861,7 @@ async function readEvents(
 
 const onMessage = function (event: MessageEvent<any>): void {
     if (!event.origin) {
-        // stupid chrome
-        // @ts-ignore
+        // @ts-ignore - stupid chrome
         event.origin = event.originalEvent.origin;
     }
 
@@ -867,15 +869,15 @@ const onMessage = function (event: MessageEvent<any>): void {
     // This means the URL could contain a path (like /develop) and still be used
     // to validate event origins, which do not specify paths.
     // (See https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
-    let configUrl;
+    let configUrl: URL | undefined;
     try {
-        if (!openManagerUrl) openManagerUrl = IntegrationManagers.sharedInstance().getPrimaryManager().uiUrl;
-        configUrl = new URL(openManagerUrl);
+        if (!openManagerUrl) openManagerUrl = IntegrationManagers.sharedInstance().getPrimaryManager()?.uiUrl;
+        configUrl = new URL(openManagerUrl!);
     } catch (e) {
         // No integrations UI URL, ignore silently.
         return;
     }
-    let eventOriginUrl;
+    let eventOriginUrl: URL;
     try {
         eventOriginUrl = new URL(event.origin);
     } catch (e) {
@@ -987,7 +989,7 @@ const onMessage = function (event: MessageEvent<any>): void {
 };
 
 let listenerCount = 0;
-let openManagerUrl: string | null = null;
+let openManagerUrl: string | undefined;
 
 export function startListening(): void {
     if (listenerCount === 0) {

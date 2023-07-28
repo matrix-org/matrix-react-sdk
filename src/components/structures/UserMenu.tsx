@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
+import React, { createRef, ReactNode } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -22,7 +22,7 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { _t } from "../../languageHandler";
-import { ChevronFace, ContextMenuButton } from "./ContextMenu";
+import { ChevronFace, ContextMenuButton, MenuProps } from "./ContextMenu";
 import { UserTab } from "../views/dialogs/UserTab";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import FeedbackDialog from "../views/dialogs/FeedbackDialog";
@@ -43,21 +43,19 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../views/context_menus/IconizedContextMenu";
 import { UIFeature } from "../../settings/UIFeature";
-import HostSignupAction from "./HostSignupAction";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
-import { Icon as LiveIcon } from "../../../res/img/element-icons/live.svg";
-import {
-    VoiceBroadcastRecording,
-    VoiceBroadcastRecordingsStore,
-    VoiceBroadcastRecordingsStoreEvent,
-} from "../../voice-broadcast";
+import { Icon as LiveIcon } from "../../../res/img/compound/live-8px.svg";
+import { VoiceBroadcastRecording, VoiceBroadcastRecordingsStoreEvent } from "../../voice-broadcast";
+import { SDKContext } from "../../contexts/SDKContext";
+import { shouldShowFeedback } from "../../utils/Feedback";
 
 interface IProps {
     isPanelCollapsed: boolean;
+    children?: ReactNode;
 }
 
 type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
@@ -70,7 +68,7 @@ interface IState {
     showLiveAvatarAddon: boolean;
 }
 
-const toRightOf = (rect: PartialDOMRect) => {
+const toRightOf = (rect: PartialDOMRect): MenuProps => {
     return {
         left: rect.width + rect.left + 8,
         top: rect.top,
@@ -78,7 +76,7 @@ const toRightOf = (rect: PartialDOMRect) => {
     };
 };
 
-const below = (rect: PartialDOMRect) => {
+const below = (rect: PartialDOMRect): MenuProps => {
     return {
         left: rect.left,
         top: rect.top + rect.height,
@@ -87,21 +85,24 @@ const below = (rect: PartialDOMRect) => {
 };
 
 export default class UserMenu extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
-    private themeWatcherRef: string;
-    private readonly dndWatcherRef: string;
+    public static contextType = SDKContext;
+    public context!: React.ContextType<typeof SDKContext>;
+
+    private dispatcherRef?: string;
+    private themeWatcherRef?: string;
+    private readonly dndWatcherRef?: string;
     private buttonRef: React.RefObject<HTMLButtonElement> = createRef();
-    private voiceBroadcastRecordingStore = VoiceBroadcastRecordingsStore.instance();
 
-    public constructor(props: IProps) {
-        super(props);
+    public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
+        super(props, context);
 
+        this.context = context;
         this.state = {
             contextMenuPosition: null,
             isDarkTheme: this.isUserOnDarkTheme(),
             isHighContrast: this.isUserOnHighContrastTheme(),
             selectedSpace: SpaceStore.instance.activeSpaceRoom,
-            showLiveAvatarAddon: this.voiceBroadcastRecordingStore.hasCurrent(),
+            showLiveAvatarAddon: this.context.voiceBroadcastRecordingsStore.hasCurrent(),
         };
 
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onProfileUpdate);
@@ -109,17 +110,17 @@ export default class UserMenu extends React.Component<IProps, IState> {
     }
 
     private get hasHomePage(): boolean {
-        return !!getHomePageUrl(SdkConfig.get());
+        return !!getHomePageUrl(SdkConfig.get(), this.context.client!);
     }
 
-    private onCurrentVoiceBroadcastRecordingChanged = (recording: VoiceBroadcastRecording): void => {
+    private onCurrentVoiceBroadcastRecordingChanged = (recording: VoiceBroadcastRecording | null): void => {
         this.setState({
             showLiveAvatarAddon: recording !== null,
         });
     };
 
-    public componentDidMount() {
-        this.voiceBroadcastRecordingStore.on(
+    public componentDidMount(): void {
+        this.context.voiceBroadcastRecordingsStore.on(
             VoiceBroadcastRecordingsStoreEvent.CurrentChanged,
             this.onCurrentVoiceBroadcastRecordingChanged,
         );
@@ -127,13 +128,13 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.themeWatcherRef = SettingsStore.watchSetting("theme", null, this.onThemeChanged);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         if (this.themeWatcherRef) SettingsStore.unwatchSetting(this.themeWatcherRef);
         if (this.dndWatcherRef) SettingsStore.unwatchSetting(this.dndWatcherRef);
         if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.onProfileUpdate);
         SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
-        this.voiceBroadcastRecordingStore.off(
+        this.context.voiceBroadcastRecordingsStore.off(
             VoiceBroadcastRecordingsStoreEvent.CurrentChanged,
             this.onCurrentVoiceBroadcastRecordingChanged,
         );
@@ -145,7 +146,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         } else {
             const theme = SettingsStore.getValue("theme");
             if (theme.startsWith("custom-")) {
-                return getCustomTheme(theme.substring("custom-".length)).is_dark;
+                return !!getCustomTheme(theme.substring("custom-".length)).is_dark;
             }
             return theme === "dark";
         }
@@ -163,26 +164,26 @@ export default class UserMenu extends React.Component<IProps, IState> {
         }
     }
 
-    private onProfileUpdate = async () => {
+    private onProfileUpdate = async (): Promise<void> => {
         // the store triggered an update, so force a layout update. We don't
         // have any state to store here for that to magically happen.
         this.forceUpdate();
     };
 
-    private onSelectedSpaceUpdate = async () => {
+    private onSelectedSpaceUpdate = async (): Promise<void> => {
         this.setState({
             selectedSpace: SpaceStore.instance.activeSpaceRoom,
         });
     };
 
-    private onThemeChanged = () => {
+    private onThemeChanged = (): void => {
         this.setState({
             isDarkTheme: this.isUserOnDarkTheme(),
             isHighContrast: this.isUserOnHighContrastTheme(),
         });
     };
 
-    private onAction = (payload: ActionPayload) => {
+    private onAction = (payload: ActionPayload): void => {
         switch (payload.action) {
             case Action.ToggleUserMenu:
                 if (this.state.contextMenuPosition) {
@@ -194,13 +195,13 @@ export default class UserMenu extends React.Component<IProps, IState> {
         }
     };
 
-    private onOpenMenuClick = (ev: React.MouseEvent) => {
+    private onOpenMenuClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
         this.setState({ contextMenuPosition: ev.currentTarget.getBoundingClientRect() });
     };
 
-    private onContextMenu = (ev: React.MouseEvent) => {
+    private onContextMenu = (ev: React.MouseEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
         this.setState({
@@ -213,11 +214,11 @@ export default class UserMenu extends React.Component<IProps, IState> {
         });
     };
 
-    private onCloseMenu = () => {
+    private onCloseMenu = (): void => {
         this.setState({ contextMenuPosition: null });
     };
 
-    private onSwitchThemeClick = (ev: React.MouseEvent) => {
+    private onSwitchThemeClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -236,7 +237,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme); // set at same level as Appearance tab
     };
 
-    private onSettingsOpen = (ev: ButtonEvent, tabId: string) => {
+    private onSettingsOpen = (ev: ButtonEvent, tabId?: string): void => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -245,7 +246,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
-    private onProvideFeedback = (ev: ButtonEvent) => {
+    private onProvideFeedback = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -253,7 +254,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
-    private onSignOutClick = async (ev: ButtonEvent) => {
+    private onSignOutClick = async (ev: ButtonEvent): Promise<void> => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -268,17 +269,17 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
-    private onSignInClick = () => {
+    private onSignInClick = (): void => {
         defaultDispatcher.dispatch({ action: "start_login" });
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
-    private onRegisterClick = () => {
+    private onRegisterClick = (): void => {
         defaultDispatcher.dispatch({ action: "start_registration" });
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
-    private onHomeClick = (ev: ButtonEvent) => {
+    private onHomeClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -289,9 +290,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
     private renderContextMenu = (): React.ReactNode => {
         if (!this.state.contextMenuPosition) return null;
 
-        let topSection;
-        const hostSignupConfig = SdkConfig.getObject("host_signup");
-        if (MatrixClientPeg.get().isGuest()) {
+        let topSection: JSX.Element | undefined;
+        if (MatrixClientPeg.safeGet().isGuest()) {
             topSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
                     {_t(
@@ -305,31 +305,24 @@ export default class UserMenu extends React.Component<IProps, IState> {
                             ),
                         },
                     )}
-                    {_t(
-                        "New here? <a>Create an account</a>",
-                        {},
-                        {
-                            a: (sub) => (
-                                <AccessibleButton kind="link_inline" onClick={this.onRegisterClick}>
-                                    {sub}
-                                </AccessibleButton>
-                            ),
-                        },
-                    )}
+                    {SettingsStore.getValue(UIFeature.Registration)
+                        ? _t(
+                              "New here? <a>Create an account</a>",
+                              {},
+                              {
+                                  a: (sub) => (
+                                      <AccessibleButton kind="link_inline" onClick={this.onRegisterClick}>
+                                          {sub}
+                                      </AccessibleButton>
+                                  ),
+                              },
+                          )
+                        : null}
                 </div>
             );
-        } else if (hostSignupConfig?.get("url")) {
-            // If hostSignup.domains is set to a non-empty array, only show
-            // dialog if the user is on the domain or a subdomain.
-            const hostSignupDomains = hostSignupConfig.get("domains") || [];
-            const mxDomain = MatrixClientPeg.get().getDomain();
-            const validDomains = hostSignupDomains.filter((d) => d === mxDomain || mxDomain.endsWith(`.${d}`));
-            if (!hostSignupConfig.get("domains") || validDomains.length > 0) {
-                topSection = <HostSignupAction onClick={this.onCloseMenu} />;
-            }
         }
 
-        let homeButton = null;
+        let homeButton: JSX.Element | undefined;
         if (this.hasHomePage) {
             homeButton = (
                 <IconizedContextMenuOption
@@ -340,8 +333,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
             );
         }
 
-        let feedbackButton;
-        if (SettingsStore.getValue(UIFeature.Feedback)) {
+        let feedbackButton: JSX.Element | undefined;
+        if (shouldShowFeedback()) {
             feedbackButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconMessage"
@@ -367,7 +360,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconSettings"
                     label={_t("All settings")}
-                    onClick={(e) => this.onSettingsOpen(e, null)}
+                    onClick={(e) => this.onSettingsOpen(e)}
                 />
                 {feedbackButton}
                 <IconizedContextMenuOption
@@ -379,14 +372,14 @@ export default class UserMenu extends React.Component<IProps, IState> {
             </IconizedContextMenuOptionList>
         );
 
-        if (MatrixClientPeg.get().isGuest()) {
+        if (MatrixClientPeg.safeGet().isGuest()) {
             primaryOptionList = (
                 <IconizedContextMenuOptionList>
                     {homeButton}
                     <IconizedContextMenuOption
                         iconClassName="mx_UserMenu_iconSettings"
                         label={_t("Settings")}
-                        onClick={(e) => this.onSettingsOpen(e, null)}
+                        onClick={(e) => this.onSettingsOpen(e)}
                     />
                     {feedbackButton}
                 </IconizedContextMenuOptionList>
@@ -405,9 +398,12 @@ export default class UserMenu extends React.Component<IProps, IState> {
                             {OwnProfileStore.instance.displayName}
                         </span>
                         <span className="mx_UserMenu_contextMenu_userId">
-                            {UserIdentifierCustomisations.getDisplayUserIdentifier(MatrixClientPeg.get().getUserId(), {
-                                withDisplayName: true,
-                            })}
+                            {UserIdentifierCustomisations.getDisplayUserIdentifier(
+                                MatrixClientPeg.safeGet().getSafeUserId(),
+                                {
+                                    withDisplayName: true,
+                                },
+                            )}
                         </span>
                     </div>
 
@@ -429,14 +425,14 @@ export default class UserMenu extends React.Component<IProps, IState> {
         );
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const avatarSize = 32; // should match border-radius of the avatar
 
-        const userId = MatrixClientPeg.get().getUserId();
+        const userId = MatrixClientPeg.safeGet().getSafeUserId();
         const displayName = OwnProfileStore.instance.displayName || userId;
         const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
 
-        let name: JSX.Element;
+        let name: JSX.Element | undefined;
         if (!this.props.isPanelCollapsed) {
             name = <div className="mx_UserMenu_name">{displayName}</div>;
         }
@@ -450,6 +446,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         return (
             <div className="mx_UserMenu">
                 <ContextMenuButton
+                    className="mx_UserMenu_contextMenuButton"
                     onClick={this.onOpenMenuClick}
                     inputRef={this.buttonRef}
                     label={_t("User menu")}

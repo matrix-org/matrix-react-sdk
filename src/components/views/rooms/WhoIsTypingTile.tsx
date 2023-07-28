@@ -51,17 +51,17 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         whoIsTypingLimit: 3,
     };
 
-    public state = {
+    public state: IState = {
         usersTyping: WhoIsTyping.usersTypingApartFromMe(this.props.room),
         delayedStopTypingTimers: {},
     };
 
-    public componentDidMount() {
-        MatrixClientPeg.get().on(RoomMemberEvent.Typing, this.onRoomMemberTyping);
-        MatrixClientPeg.get().on(RoomEvent.Timeline, this.onRoomTimeline);
+    public componentDidMount(): void {
+        MatrixClientPeg.safeGet().on(RoomMemberEvent.Typing, this.onRoomMemberTyping);
+        MatrixClientPeg.safeGet().on(RoomEvent.Timeline, this.onRoomTimeline);
     }
 
-    public componentDidUpdate(_, prevState) {
+    public componentDidUpdate(prevProps: IProps, prevState: IState): void {
         const wasVisible = WhoIsTypingTile.isVisible(prevState);
         const isVisible = WhoIsTypingTile.isVisible(this.state);
         if (this.props.onShown && !wasVisible && isVisible) {
@@ -71,7 +71,7 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         }
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         // we may have entirely lost our client as we're logging out before clicking login on the guest bar...
         const client = MatrixClientPeg.get();
         if (client) {
@@ -89,9 +89,9 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         return WhoIsTypingTile.isVisible(this.state);
     };
 
-    private onRoomTimeline = (event: MatrixEvent, room: Room | null): void => {
+    private onRoomTimeline = (event: MatrixEvent, room?: Room): void => {
         if (room?.roomId === this.props.room.roomId) {
-            const userId = event.getSender();
+            const userId = event.getSender()!;
             // remove user from usersTyping
             const usersTyping = this.state.usersTyping.filter((m) => m.userId !== userId);
             if (usersTyping.length !== this.state.usersTyping.length) {
@@ -199,15 +199,16 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         return avatars;
     }
 
-    public render() {
-        let usersTyping = this.state.usersTyping;
-        const stoppedUsersOnTimer = Object.keys(this.state.delayedStopTypingTimers).map((userId) =>
-            this.props.room.getMember(userId),
-        );
+    public render(): React.ReactNode {
+        const usersTyping = [...this.state.usersTyping];
         // append the users that have been reported not typing anymore
         // but have a timeout timer running so they can disappear
         // when a message comes in
-        usersTyping = usersTyping.concat(stoppedUsersOnTimer);
+        for (const userId in this.state.delayedStopTypingTimers) {
+            const member = this.props.room.getMember(userId);
+            if (member) usersTyping.push(member);
+        }
+
         // sort them so the typing members don't change order when
         // moved to delayedStopTypingTimers
         usersTyping.sort((a, b) => compare(a.name, b.name));

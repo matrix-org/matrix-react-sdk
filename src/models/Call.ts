@@ -48,11 +48,9 @@ import { ElementWidgetActions } from "../stores/widgets/ElementWidgetActions";
 import WidgetStore from "../stores/WidgetStore";
 import { WidgetMessagingStore, WidgetMessagingStoreEvent } from "../stores/widgets/WidgetMessagingStore";
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../stores/ActiveWidgetStore";
-import PlatformPeg from "../PlatformPeg";
 import { getCurrentLanguage } from "../languageHandler";
-import DesktopCapturerSourcePicker from "../components/views/elements/DesktopCapturerSourcePicker";
-import Modal from "../Modal";
 import { FontWatcher } from "../settings/watchers/FontWatcher";
+import { PosthogAnalytics } from "../PosthogAnalytics";
 
 const TIMEOUT_MS = 16000;
 
@@ -212,7 +210,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         this.connectionState = ConnectionState.Connecting;
 
         const { [MediaDeviceKindEnum.AudioInput]: audioInputs, [MediaDeviceKindEnum.VideoInput]: videoInputs } =
-            await MediaDeviceHandler.getDevices();
+            (await MediaDeviceHandler.getDevices())!;
 
         let audioInput: MediaDeviceInfo | null = null;
         if (!MediaDeviceHandler.startWithAudioMuted) {
@@ -226,7 +224,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         }
 
         const messagingStore = WidgetMessagingStore.instance;
-        this.messaging = messagingStore.getMessagingForUid(this.widgetUid);
+        this.messaging = messagingStore.getMessagingForUid(this.widgetUid) ?? null;
         if (!this.messaging) {
             // The widget might still be initializing, so wait for it
             try {
@@ -254,6 +252,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         }
 
         this.room.on(RoomEvent.MyMembership, this.onMyMembership);
+        WidgetMessagingStore.instance.on(WidgetMessagingStoreEvent.StopMessaging, this.onStopMessaging);
         window.addEventListener("beforeunload", this.beforeUnload);
         this.connectionState = ConnectionState.Connected;
     }
@@ -272,8 +271,9 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     /**
      * Manually marks the call as disconnected and cleans up.
      */
-    public setDisconnected() {
+    public setDisconnected(): void {
         this.room.off(RoomEvent.MyMembership, this.onMyMembership);
+        WidgetMessagingStore.instance.off(WidgetMessagingStoreEvent.StopMessaging, this.onStopMessaging);
         window.removeEventListener("beforeunload", this.beforeUnload);
         this.messaging = null;
         this.connectionState = ConnectionState.Disconnected;
@@ -282,16 +282,23 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     /**
      * Stops all internal timers and tasks to prepare for garbage collection.
      */
-    public destroy() {
+    public destroy(): void {
         if (this.connected) this.setDisconnected();
         this.emit(CallEvent.Destroy);
     }
 
-    private onMyMembership = async (_room: Room, membership: string) => {
+    private onMyMembership = async (_room: Room, membership: string): Promise<void> => {
         if (membership !== "join") this.setDisconnected();
     };
 
-    private beforeUnload = () => this.setDisconnected();
+    private onStopMessaging = (uid: string): void => {
+        if (uid === this.widgetUid) {
+            logger.log("The widget died; treating this as a user hangup");
+            this.setDisconnected();
+        }
+    };
+
+    private beforeUnload = (): void => this.setDisconnected();
 }
 
 export interface JitsiCallMemberContent {
@@ -332,10 +339,10 @@ export class JitsiCall extends Call {
     }
 
     public static async create(room: Room): Promise<void> {
-        await WidgetUtils.addJitsiWidget(room.roomId, CallType.Video, "Group call", true, room.name);
+        await WidgetUtils.addJitsiWidget(room.client, room.roomId, CallType.Video, "Group call", true, room.name);
     }
 
-    private updateParticipants() {
+    private updateParticipants(): void {
         if (this.participantsExpirationTimer !== null) {
             clearTimeout(this.participantsExpirationTimer);
             this.participantsExpirationTimer = null;
@@ -454,17 +461,17 @@ export class JitsiCall extends Call {
         const dontStopMessaging = new Promise<void>((resolve, reject) => {
             const messagingStore = WidgetMessagingStore.instance;
 
-            const listener = (uid: string) => {
+            const listener = (uid: string): void => {
                 if (uid === this.widgetUid) {
                     cleanup();
                     reject(new Error("Messaging stopped"));
                 }
             };
-            const done = () => {
+            const done = (): void => {
                 cleanup();
                 resolve();
             };
-            const cleanup = () => {
+            const cleanup = (): void => {
                 messagingStore.off(WidgetMessagingStoreEvent.StopMessaging, listener);
                 this.off(CallEvent.ConnectionState, done);
             };
@@ -528,7 +535,7 @@ export class JitsiCall extends Call {
         }
     }
 
-    public setDisconnected() {
+    public setDisconnected(): void {
         this.messaging!.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Dock, this.onDock);
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Undock, this.onUndock);
@@ -536,7 +543,7 @@ export class JitsiCall extends Call {
         super.setDisconnected();
     }
 
-    public destroy() {
+    public destroy(): void {
         this.room.off(RoomStateEvent.Update, this.onRoomState);
         this.on(CallEvent.ConnectionState, this.onConnectionState);
         if (this.participantsExpirationTimer !== null) {
@@ -551,16 +558,16 @@ export class JitsiCall extends Call {
         super.destroy();
     }
 
-    private onRoomState = () => this.updateParticipants();
+    private onRoomState = (): void => this.updateParticipants();
 
-    private onConnectionState = async (state: ConnectionState, prevState: ConnectionState) => {
+    private onConnectionState = async (state: ConnectionState, prevState: ConnectionState): Promise<void> => {
         if (state === ConnectionState.Connected && !isConnected(prevState)) {
             this.updateParticipants(); // Local echo
 
             // Tell others that we're connected, by adding our device to room state
             await this.addOurDevice();
             // Re-add this device every so often so our video member event doesn't become stale
-            this.resendDevicesTimer = window.setInterval(async () => {
+            this.resendDevicesTimer = window.setInterval(async (): Promise<void> => {
                 logger.log(`Resending video member event for ${this.roomId}`);
                 await this.addOurDevice();
             }, (this.STUCK_DEVICE_TIMEOUT_MS * 3) / 4);
@@ -576,18 +583,18 @@ export class JitsiCall extends Call {
         }
     };
 
-    private onDock = async () => {
+    private onDock = async (): Promise<void> => {
         // The widget is no longer a PiP, so let's restore the default layout
         await this.messaging!.transport.send(ElementWidgetActions.TileLayout, {});
     };
 
-    private onUndock = async () => {
+    private onUndock = async (): Promise<void> => {
         // The widget has become a PiP, so let's switch Jitsi to spotlight mode
         // to only show the active speaker and economize on space
         await this.messaging!.transport.send(ElementWidgetActions.SpotlightLayout, {});
     };
 
-    private onHangup = async (ev: CustomEvent<IWidgetApiRequest>) => {
+    private onHangup = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
         // If we're already in the middle of a client-initiated disconnection,
         // ignore the event
         if (this.connectionState === ConnectionState.Disconnecting) return;
@@ -626,6 +633,15 @@ export class ElementCall extends Call {
     }
 
     private constructor(public readonly groupCall: GroupCall, client: MatrixClient) {
+        const accountAnalyticsData = client.getAccountData(PosthogAnalytics.ANALYTICS_EVENT_TYPE);
+        // The analyticsID is passed directly to element call (EC) since this codepath is only for EC and no other widget.
+        // We really don't want the same analyticID's for the EC and EW posthog instances (Data on posthog should be limited/anonymized as much as possible).
+        // This is prohibited in EC where a hashed version of the analyticsID is used for the actual posthog identification.
+        // We can pass the raw EW analyticsID here since we need to trust EC with not sending sensitive data to posthog (EC has access to more sensible data than the analyticsID e.g. the username)
+        const analyticsID: string = accountAnalyticsData?.getContent().pseudonymousAnalyticsOptIn
+            ? accountAnalyticsData?.getContent().id
+            : "";
+
         // Splice together the Element Call URL for this call
         const params = new URLSearchParams({
             embed: "",
@@ -636,8 +652,12 @@ export class ElementCall extends Call {
             roomId: groupCall.room.roomId,
             baseUrl: client.baseUrl,
             lang: getCurrentLanguage().replace("_", "-"),
-            fontScale: `${SettingsStore.getValue("baseFontSize") / FontWatcher.DEFAULT_SIZE}`,
+            fontScale: `${(SettingsStore.getValue("baseFontSizeV2") ?? 16) / FontWatcher.DEFAULT_SIZE}`,
+            analyticsID,
         });
+
+        if (SettingsStore.getValue("fallbackICEServerAllowed")) params.append("allowIceFallback", "");
+        if (SettingsStore.getValue("feature_allow_screen_share_only_mode")) params.append("allowVoipWithNoMedia", "");
 
         // Set custom fonts
         if (SettingsStore.getValue("useSystemFont")) {
@@ -666,6 +686,13 @@ export class ElementCall extends Call {
                     name: "Element Call",
                     type: MatrixWidgetType.Custom,
                     url: url.toString(),
+                    // This option makes the widget API wait for the 'contentLoaded' event instead
+                    // of waiting for a 'load' event from the iframe, which means the widget code isn't
+                    // racing to set up its listener before the 'load' event is fired. EC sends this event
+                    // of of https://github.com/matrix-org/matrix-js-sdk/pull/3556 so we should uncomment
+                    // the line below once we've made both livekit and full-mesh releases that include that
+                    // PR, and everything will be less racy.
+                    //waitForIframeLoad: false,
                 },
                 groupCall.room.roomId,
             ),
@@ -732,7 +759,6 @@ export class ElementCall extends Call {
         this.messaging!.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.messaging!.on(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
         this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
-        this.messaging!.on(`action:${ElementWidgetActions.ScreenshareRequest}`, this.onScreenshareRequest);
     }
 
     protected async performDisconnection(): Promise<void> {
@@ -743,16 +769,16 @@ export class ElementCall extends Call {
         }
     }
 
-    public setDisconnected() {
+    public setDisconnected(): void {
         this.messaging!.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.messaging!.off(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
         this.messaging!.off(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
-        this.messaging!.off(`action:${ElementWidgetActions.ScreenshareRequest}`, this.onScreenshareRequest);
         super.setDisconnected();
         this.groupCall.enteredViaAnotherSession = false;
     }
 
-    public destroy() {
+    public destroy(): void {
+        ActiveWidgetStore.instance.destroyPersistentWidget(this.widget.id, this.groupCall.room.roomId);
         WidgetStore.instance.removeVirtualWidget(this.widget.id, this.groupCall.room.roomId);
         this.off(CallEvent.Participants, this.onParticipants);
         this.groupCall.off(GroupCallEvent.ParticipantsChanged, this.onGroupCallParticipants);
@@ -776,7 +802,7 @@ export class ElementCall extends Call {
         await this.messaging!.transport.send(action, {});
     }
 
-    private updateParticipants() {
+    private updateParticipants(): void {
         const participants = new Map<RoomMember, Set<string>>();
 
         for (const [member, deviceMap] of this.groupCall.participants) {
@@ -796,7 +822,7 @@ export class ElementCall extends Call {
     private onParticipants = async (
         participants: Map<RoomMember, Set<string>>,
         prevParticipants: Map<RoomMember, Set<string>>,
-    ) => {
+    ): Promise<void> => {
         let participantCount = 0;
         for (const devices of participants.values()) participantCount += devices.size;
 
@@ -824,48 +850,27 @@ export class ElementCall extends Call {
         }
     };
 
-    private onGroupCallParticipants = () => this.updateParticipants();
+    private onGroupCallParticipants = (): void => this.updateParticipants();
 
-    private onGroupCallState = (state: GroupCallState) => {
+    private onGroupCallState = (state: GroupCallState): void => {
         if (state === GroupCallState.Ended) this.destroy();
     };
 
-    private onHangup = async (ev: CustomEvent<IWidgetApiRequest>) => {
+    private onHangup = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
         ev.preventDefault();
         await this.messaging!.transport.reply(ev.detail, {}); // ack
         this.setDisconnected();
     };
 
-    private onTileLayout = async (ev: CustomEvent<IWidgetApiRequest>) => {
+    private onTileLayout = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
         ev.preventDefault();
         this.layout = Layout.Tile;
         await this.messaging!.transport.reply(ev.detail, {}); // ack
     };
 
-    private onSpotlightLayout = async (ev: CustomEvent<IWidgetApiRequest>) => {
+    private onSpotlightLayout = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
         ev.preventDefault();
         this.layout = Layout.Spotlight;
         await this.messaging!.transport.reply(ev.detail, {}); // ack
-    };
-
-    private onScreenshareRequest = async (ev: CustomEvent<IWidgetApiRequest>) => {
-        ev.preventDefault();
-
-        if (PlatformPeg.get().supportsDesktopCapturer()) {
-            await this.messaging!.transport.reply(ev.detail, { pending: true });
-
-            const { finished } = Modal.createDialog(DesktopCapturerSourcePicker);
-            const [source] = await finished;
-
-            if (source) {
-                await this.messaging!.transport.send(ElementWidgetActions.ScreenshareStart, {
-                    desktopCapturerSourceId: source,
-                });
-            } else {
-                await this.messaging!.transport.send(ElementWidgetActions.ScreenshareStop, {});
-            }
-        } else {
-            await this.messaging!.transport.reply(ev.detail, { pending: false });
-        }
     };
 }

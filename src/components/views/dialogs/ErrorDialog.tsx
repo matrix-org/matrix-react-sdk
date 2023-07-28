@@ -27,11 +27,28 @@ limitations under the License.
 
 import React from "react";
 
-import { _t } from "../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 
+/**
+ * Get a user friendly error message string from a given error. Useful for the
+ * `description` prop of the `ErrorDialog`
+ * @param err Error object in question to extract a useful message from. To make it easy
+ * to use with try/catch, this is typed as `any` because try/catch will type
+ * the error as `unknown`. And in any case we can use the fallback message.
+ * @param translatedFallbackMessage The fallback message to be used if the error doesn't have any message
+ * @returns a user friendly error message string from a given error
+ */
+export function extractErrorMessageFromError(err: any, translatedFallbackMessage: string): string {
+    return (
+        (err instanceof UserFriendlyError && err.translatedMessage) ||
+        (err instanceof Error && err.message) ||
+        translatedFallbackMessage
+    );
+}
+
 interface IProps {
-    onFinished: (success: boolean) => void;
+    onFinished: (success?: boolean) => void;
     title?: string;
     description?: React.ReactNode;
     button?: string;
@@ -44,18 +61,15 @@ interface IState {
 }
 
 export default class ErrorDialog extends React.Component<IProps, IState> {
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         focus: true,
-        title: null,
-        description: null,
-        button: null,
     };
 
-    private onClick = () => {
+    private onClick = (): void => {
         this.props.onFinished(true);
     };
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 className="mx_ErrorDialog"

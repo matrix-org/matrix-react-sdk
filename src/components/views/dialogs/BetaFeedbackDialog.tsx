@@ -17,7 +17,6 @@ limitations under the License.
 import React from "react";
 
 import { _t } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -27,17 +26,19 @@ import GenericFeatureFeedbackDialog from "./GenericFeatureFeedbackDialog";
 
 // XXX: Keep this around for re-use in future Betas
 
-interface IProps extends IDialogProps {
+interface IProps {
     featureId: string;
+    onFinished(sendFeedback?: boolean): void;
 }
 
 const BetaFeedbackDialog: React.FC<IProps> = ({ featureId, onFinished }) => {
     const info = SettingsStore.getBetaInfo(featureId);
+    if (!info) return null;
 
     return (
         <GenericFeatureFeedbackDialog
             title={_t("%(featureName)s Beta feedback", { featureName: info.title })}
-            subheading={_t(info.feedbackSubheading)}
+            subheading={info.feedbackSubheading ? _t(info.feedbackSubheading) : undefined}
             onFinished={onFinished}
             rageshakeLabel={info.feedbackLabel}
             rageshakeData={Object.fromEntries(
@@ -49,7 +50,7 @@ const BetaFeedbackDialog: React.FC<IProps> = ({ featureId, onFinished }) => {
             <AccessibleButton
                 kind="link_inline"
                 onClick={() => {
-                    onFinished(false);
+                    onFinished();
                     defaultDispatcher.dispatch({
                         action: Action.ViewUserSettings,
                         initialTabId: UserTab.Labs,

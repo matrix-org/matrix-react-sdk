@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from "react";
+import React, { ReactNode } from "react";
 
 import BaseDialog from "./BaseDialog";
 import { _t } from "../../../languageHandler";
@@ -28,27 +28,29 @@ import Spinner from "../elements/Spinner";
 import AccessibleButton from "../elements/AccessibleButton";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { IDialogProps } from "./IDialogProps";
 
-interface IProps extends IDialogProps {}
+interface IProps {
+    onFinished(): void;
+}
 
 export default class ServerOfflineDialog extends React.PureComponent<IProps> {
-    public componentDidMount() {
+    public componentDidMount(): void {
         EchoStore.instance.on(UPDATE_EVENT, this.onEchosUpdated);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         EchoStore.instance.off(UPDATE_EVENT, this.onEchosUpdated);
     }
 
-    private onEchosUpdated = () => {
+    private onEchosUpdated = (): void => {
         this.forceUpdate(); // no state to worry about
     };
 
-    private renderTimeline(): React.ReactElement[] {
+    private renderTimeline(): ReactNode[] {
         return EchoStore.instance.contexts.map((c, i) => {
             if (!c.firstFailedTime) return null; // not useful
-            if (!(c instanceof RoomEchoContext)) throw new Error("Cannot render unknown context: " + c);
+            if (!(c instanceof RoomEchoContext))
+                throw new Error("Cannot render unknown context: " + c.constructor.name);
             const header = (
                 <div className="mx_ServerOfflineDialog_content_context_timeline_header">
                     <RoomAvatar width={24} height={24} room={c.room} />
@@ -87,7 +89,7 @@ export default class ServerOfflineDialog extends React.PureComponent<IProps> {
         });
     }
 
-    public render() {
+    public render(): React.ReactNode {
         let timeline = this.renderTimeline().filter((c) => !!c); // remove nulls for next check
         if (timeline.length === 0) {
             timeline = [<div key={1}>{_t("You're all caught up.")}</div>];

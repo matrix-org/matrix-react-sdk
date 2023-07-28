@@ -23,14 +23,17 @@ import { SlidingSyncManager } from "../SlidingSyncManager";
 
 export interface SlidingSyncRoomSearchOpts {
     limit: number;
-    query?: string;
+    query: string;
 }
 
-export const useSlidingSyncRoomSearch = () => {
+export const useSlidingSyncRoomSearch = (): {
+    loading: boolean;
+    rooms: Room[];
+    search(opts: SlidingSyncRoomSearchOpts): Promise<boolean>;
+} => {
     const [rooms, setRooms] = useState<Room[]>([]);
 
     const [loading, setLoading] = useState(false);
-    const listIndex = SlidingSyncManager.instance.getOrAllocateListIndex(SlidingSyncManager.ListSearch);
 
     const [updateQuery, updateResult] = useLatestResult<{ term: string; limit?: number }, Room[]>(setRooms);
 
@@ -46,18 +49,20 @@ export const useSlidingSyncRoomSearch = () => {
 
             try {
                 setLoading(true);
-                await SlidingSyncManager.instance.ensureListRegistered(listIndex, {
+                await SlidingSyncManager.instance.ensureListRegistered(SlidingSyncManager.ListSearch, {
                     ranges: [[0, limit]],
                     filters: {
                         room_name_like: term,
                     },
                 });
-                const rooms = [];
-                const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync.getListData(listIndex);
+                const rooms: Room[] = [];
+                const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync!.getListData(
+                    SlidingSyncManager.ListSearch,
+                )!;
                 let i = 0;
                 while (roomIndexToRoomId[i]) {
                     const roomId = roomIndexToRoomId[i];
-                    const room = MatrixClientPeg.get().getRoom(roomId);
+                    const room = MatrixClientPeg.safeGet().getRoom(roomId);
                     if (room) {
                         rooms.push(room);
                     }
@@ -74,7 +79,7 @@ export const useSlidingSyncRoomSearch = () => {
                 // TODO: delete the list?
             }
         },
-        [updateQuery, updateResult, listIndex],
+        [updateQuery, updateResult],
     );
 
     return {

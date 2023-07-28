@@ -23,6 +23,7 @@ import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { Widget } from "matrix-widget-api";
 import { GroupCallIntent } from "matrix-js-sdk/src/webrtc/groupCall";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import type { Mocked } from "jest-mock";
 import type { MatrixClient, IMyDevice } from "matrix-js-sdk/src/client";
@@ -38,8 +39,7 @@ import { WidgetMessagingStore } from "../../src/stores/widgets/WidgetMessagingSt
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../../src/stores/ActiveWidgetStore";
 import { ElementWidgetActions } from "../../src/stores/widgets/ElementWidgetActions";
 import SettingsStore from "../../src/settings/SettingsStore";
-import Modal, { IHandle } from "../../src/Modal";
-import PlatformPeg from "../../src/PlatformPeg";
+import { PosthogAnalytics } from "../../src/PosthogAnalytics";
 
 jest.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
     [MediaDeviceKindEnum.AudioInput]: [
@@ -66,7 +66,7 @@ const setUpClientRoomAndStores = (): {
     carol: RoomMember;
 } => {
     stubClient();
-    const client = mocked<MatrixClient>(MatrixClientPeg.get());
+    const client = mocked<MatrixClient>(MatrixClientPeg.safeGet());
 
     const room = new Room("!1:example.org", client, "@alice:example.org", {
         pendingEventOrdering: PendingEventOrdering.Detached,
@@ -105,7 +105,7 @@ const setUpClientRoomAndStores = (): {
             content,
         });
         room.addLiveEvents([event]);
-        return { event_id: event.getId() };
+        return { event_id: event.getId()! };
     });
 
     setupAsyncStoreWithClient(WidgetStore.instance, client);
@@ -381,7 +381,7 @@ describe("JitsiCall", () => {
             await waitFor(
                 () =>
                     expect(
-                        room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
+                        room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId)?.getContent(),
                     ).toEqual({
                         devices: [client.getDeviceId()],
                         expires_ts: now1 + call.STUCK_DEVICE_TIMEOUT_MS,
@@ -394,7 +394,7 @@ describe("JitsiCall", () => {
             await waitFor(
                 () =>
                     expect(
-                        room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
+                        room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId)?.getContent(),
                     ).toEqual({
                         devices: [],
                         expires_ts: now2 + call.STUCK_DEVICE_TIMEOUT_MS,
@@ -493,7 +493,7 @@ describe("JitsiCall", () => {
             });
             const expectDevices = (devices: IMyDevice[]) =>
                 expect(
-                    room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId).getContent(),
+                    room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, alice.userId)?.getContent(),
                 ).toEqual({
                     expires_ts: expect.any(Number),
                     devices: devices.map((d) => d.device_id),
@@ -601,7 +601,7 @@ describe("ElementCall", () => {
             const originalGetValue = SettingsStore.getValue;
             SettingsStore.getValue = <T>(name: string, roomId?: string, excludeDefault?: boolean) => {
                 switch (name) {
-                    case "baseFontSize":
+                    case "baseFontSizeV2":
                         return 12 as T;
                     case "useSystemFont":
                         return true as T;
@@ -617,10 +617,87 @@ describe("ElementCall", () => {
             if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
 
             const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
-            expect(urlParams.get("fontScale")).toBe("1.2");
+            expect(urlParams.get("fontScale")).toBe("0.75");
             expect(urlParams.getAll("font")).toEqual(["OpenDyslexic", "DejaVu Sans"]);
 
             SettingsStore.getValue = originalGetValue;
+        });
+
+        it("passes ICE fallback preference through widget URL", async () => {
+            // Test with the preference set to false
+            await ElementCall.create(room);
+            const call1 = Call.get(room);
+            if (!(call1 instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams1 = new URLSearchParams(new URL(call1.widget.url).hash.slice(1));
+            expect(urlParams1.has("allowIceFallback")).toBe(false);
+
+            // Now test with the preference set to true
+            const originalGetValue = SettingsStore.getValue;
+            SettingsStore.getValue = <T>(name: string, roomId?: string, excludeDefault?: boolean) => {
+                switch (name) {
+                    case "fallbackICEServerAllowed":
+                        return true as T;
+                    default:
+                        return originalGetValue<T>(name, roomId, excludeDefault);
+                }
+            };
+
+            await ElementCall.create(room);
+            const call2 = Call.get(room);
+            if (!(call2 instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams2 = new URLSearchParams(new URL(call2.widget.url).hash.slice(1));
+            expect(urlParams2.has("allowIceFallback")).toBe(true);
+
+            SettingsStore.getValue = originalGetValue;
+        });
+
+        it("passes analyticsID through widget URL", async () => {
+            client.getAccountData.mockImplementation((eventType: string) => {
+                if (eventType === PosthogAnalytics.ANALYTICS_EVENT_TYPE) {
+                    return new MatrixEvent({ content: { id: "123456789987654321", pseudonymousAnalyticsOptIn: true } });
+                }
+                return undefined;
+            });
+            await ElementCall.create(room);
+            const call = Call.get(room);
+            if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
+            expect(urlParams.get("analyticsID")).toBe("123456789987654321");
+        });
+
+        it("does not pass analyticsID if `pseudonymousAnalyticsOptIn` set to false", async () => {
+            client.getAccountData.mockImplementation((eventType: string) => {
+                if (eventType === PosthogAnalytics.ANALYTICS_EVENT_TYPE) {
+                    return new MatrixEvent({
+                        content: { id: "123456789987654321", pseudonymousAnalyticsOptIn: false },
+                    });
+                }
+                return undefined;
+            });
+            await ElementCall.create(room);
+            const call = Call.get(room);
+            if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
+            expect(urlParams.get("analyticsID")).toBe("");
+        });
+
+        it("passes empty analyticsID if the id is not in the account data", async () => {
+            client.getAccountData.mockImplementation((eventType: string) => {
+                if (eventType === PosthogAnalytics.ANALYTICS_EVENT_TYPE) {
+                    return new MatrixEvent({ content: {} });
+                }
+                return undefined;
+            });
+            await ElementCall.create(room);
+            const call = Call.get(room);
+            if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
+            expect(urlParams.get("analyticsID")).toBe("");
         });
     });
 
@@ -733,6 +810,13 @@ describe("ElementCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Connected);
             room.emit(RoomEvent.MyMembership, room, "join");
             expect(call.connectionState).toBe(ConnectionState.Connected);
+        });
+
+        it("disconnects if the widget dies", async () => {
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
         it("tracks participants in room state", async () => {
@@ -861,83 +945,6 @@ describe("ElementCall", () => {
             call.off(CallEvent.Layout, onLayout);
         });
 
-        describe("screensharing", () => {
-            it("passes source id if we can get it", async () => {
-                const sourceId = "source_id";
-                jest.spyOn(Modal, "createDialog").mockReturnValue({
-                    finished: new Promise((r) => r([sourceId])),
-                } as IHandle<any[]>);
-                jest.spyOn(PlatformPeg.get(), "supportsDesktopCapturer").mockReturnValue(true);
-
-                await call.connect();
-
-                messaging.emit(
-                    `action:${ElementWidgetActions.ScreenshareRequest}`,
-                    new CustomEvent("widgetapirequest", { detail: {} }),
-                );
-
-                await waitFor(() => {
-                    expect(messaging!.transport.reply).toHaveBeenCalledWith(
-                        expect.objectContaining({}),
-                        expect.objectContaining({ pending: true }),
-                    );
-                });
-
-                await waitFor(() => {
-                    expect(messaging!.transport.send).toHaveBeenCalledWith(
-                        "io.element.screenshare_start",
-                        expect.objectContaining({ desktopCapturerSourceId: sourceId }),
-                    );
-                });
-            });
-
-            it("sends ScreenshareStop if we couldn't get a source id", async () => {
-                jest.spyOn(Modal, "createDialog").mockReturnValue({
-                    finished: new Promise((r) => r([null])),
-                } as IHandle<any[]>);
-                jest.spyOn(PlatformPeg.get(), "supportsDesktopCapturer").mockReturnValue(true);
-
-                await call.connect();
-
-                messaging.emit(
-                    `action:${ElementWidgetActions.ScreenshareRequest}`,
-                    new CustomEvent("widgetapirequest", { detail: {} }),
-                );
-
-                await waitFor(() => {
-                    expect(messaging!.transport.reply).toHaveBeenCalledWith(
-                        expect.objectContaining({}),
-                        expect.objectContaining({ pending: true }),
-                    );
-                });
-
-                await waitFor(() => {
-                    expect(messaging!.transport.send).toHaveBeenCalledWith(
-                        "io.element.screenshare_stop",
-                        expect.objectContaining({}),
-                    );
-                });
-            });
-
-            it("replies with pending: false if we don't support desktop capturer", async () => {
-                jest.spyOn(PlatformPeg.get(), "supportsDesktopCapturer").mockReturnValue(false);
-
-                await call.connect();
-
-                messaging.emit(
-                    `action:${ElementWidgetActions.ScreenshareRequest}`,
-                    new CustomEvent("widgetapirequest", { detail: {} }),
-                );
-
-                await waitFor(() => {
-                    expect(messaging!.transport.reply).toHaveBeenCalledWith(
-                        expect.objectContaining({}),
-                        expect.objectContaining({ pending: false }),
-                    );
-                });
-            });
-        });
-
         it("ends the call immediately if we're the last participant to leave", async () => {
             await call.connect();
             const onDestroy = jest.fn();
@@ -993,6 +1000,12 @@ describe("ElementCall", () => {
             expect(onDestroy).toHaveBeenCalled();
 
             call.off(CallEvent.Destroy, onDestroy);
+        });
+
+        it("clears widget persistence when destroyed", async () => {
+            const destroyPersistentWidgetSpy = jest.spyOn(ActiveWidgetStore.instance, "destroyPersistentWidget");
+            call.destroy();
+            expect(destroyPersistentWidgetSpy).toHaveBeenCalled();
         });
     });
 

@@ -24,13 +24,16 @@ import { useDispatcher } from "../../../../../hooks/useDispatcher";
 import { focusComposer } from "./utils";
 import { ComposerFunctions } from "../types";
 import { ComposerType } from "../../../../../dispatcher/payloads/ComposerInsertPayload";
+import { useComposerContext } from "../ComposerContext";
+import { setSelection } from "../utils/selection";
 
 export function useWysiwygSendActionHandler(
     disabled: boolean,
     composerElement: MutableRefObject<HTMLElement>,
     composerFunctions: ComposerFunctions,
-) {
+): void {
     const roomContext = useRoomContext();
+    const composerContext = useComposerContext();
     const timeoutId = useRef<number | null>(null);
 
     const handler = useCallback(
@@ -43,10 +46,14 @@ export function useWysiwygSendActionHandler(
 
             switch (payload.action) {
                 case "reply_to_event":
+                case Action.FocusAComposer:
                 case Action.FocusSendMessageComposer:
                     focusComposer(composerElement, context, roomContext, timeoutId);
                     break;
                 case Action.ClearAndFocusSendMessageComposer:
+                    // When a thread is opened, prevent the main composer to steal the thread composer focus
+                    if (payload.timelineRenderingType !== roomContext.timelineRenderingType) break;
+
                     composerFunctions.clear();
                     focusComposer(composerElement, context, roomContext, timeoutId);
                     break;
@@ -59,12 +66,12 @@ export function useWysiwygSendActionHandler(
                     } else if (payload.event) {
                         // TODO insert quote message - see SendMessageComposer
                     } else if (payload.text) {
-                        composerFunctions.insertText(payload.text);
+                        setSelection(composerContext.selection).then(() => composerFunctions.insertText(payload.text));
                     }
                     break;
             }
         },
-        [disabled, composerElement, composerFunctions, timeoutId, roomContext],
+        [disabled, composerElement, roomContext, composerFunctions, composerContext],
     );
 
     useDispatcher(defaultDispatcher, handler);

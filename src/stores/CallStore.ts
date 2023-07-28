@@ -53,6 +53,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
     }
 
     protected async onReady(): Promise<any> {
+        if (!this.matrixClient) return;
         // We assume that the calls present in a room are a function of room
         // widgets and group calls, so we initialize the room map here and then
         // update it whenever those change
@@ -69,7 +70,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         const uncleanlyDisconnectedRoomIds = SettingsStore.getValue<string[]>("activeCallRoomIds");
         if (uncleanlyDisconnectedRoomIds.length) {
             await Promise.all([
-                ...uncleanlyDisconnectedRoomIds.map(async (uncleanlyDisconnectedRoomId) => {
+                ...uncleanlyDisconnectedRoomIds.map(async (uncleanlyDisconnectedRoomId): Promise<void> => {
                     logger.log(`Cleaning up call state for room ${uncleanlyDisconnectedRoomId}`);
                     await this.getCall(uncleanlyDisconnectedRoomId)?.clean();
                 }),
@@ -90,9 +91,11 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         this.calls.clear();
         this._activeCalls.clear();
 
-        this.matrixClient.off(GroupCallEventHandlerEvent.Incoming, this.onGroupCall);
-        this.matrixClient.off(GroupCallEventHandlerEvent.Outgoing, this.onGroupCall);
-        this.matrixClient.off(GroupCallEventHandlerEvent.Ended, this.onGroupCall);
+        if (this.matrixClient) {
+            this.matrixClient.off(GroupCallEventHandlerEvent.Incoming, this.onGroupCall);
+            this.matrixClient.off(GroupCallEventHandlerEvent.Outgoing, this.onGroupCall);
+            this.matrixClient.off(GroupCallEventHandlerEvent.Ended, this.onGroupCall);
+        }
         WidgetStore.instance.off(UPDATE_EVENT, this.onWidgets);
     }
 
@@ -119,19 +122,19 @@ export class CallStore extends AsyncStoreWithClient<{}> {
     private calls = new Map<string, Call>(); // Key is room ID
     private callListeners = new Map<Call, Map<CallEvent, (...args: unknown[]) => unknown>>();
 
-    private updateRoom(room: Room) {
+    private updateRoom(room: Room): void {
         if (!this.calls.has(room.roomId)) {
             const call = Call.get(room);
 
             if (call) {
-                const onConnectionState = (state: ConnectionState) => {
+                const onConnectionState = (state: ConnectionState): void => {
                     if (state === ConnectionState.Connected) {
                         this.activeCalls = new Set([...this.activeCalls, call]);
                     } else if (state === ConnectionState.Disconnected) {
                         this.activeCalls = new Set([...this.activeCalls].filter((c) => c !== call));
                     }
                 };
-                const onDestroy = () => {
+                const onDestroy = (): void => {
                     this.calls.delete(room.roomId);
                     for (const [event, listener] of this.callListeners.get(call)!) call.off(event, listener);
                     this.updateRoom(room);
@@ -143,7 +146,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
                 this.calls.set(room.roomId, call);
                 this.callListeners.set(
                     call,
-                    new Map<CallEvent, (...args: unknown[]) => unknown>([
+                    new Map<CallEvent, (...args: any[]) => unknown>([
                         [CallEvent.ConnectionState, onConnectionState],
                         [CallEvent.Destroy, onDestroy],
                     ]),
@@ -173,7 +176,8 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         return call !== null && this.activeCalls.has(call) ? call : null;
     }
 
-    private onWidgets = (roomId: string | null) => {
+    private onWidgets = (roomId: string | null): void => {
+        if (!this.matrixClient) return;
         if (roomId === null) {
             // This store happened to start before the widget store was done
             // loading all rooms, so we need to initialize each room again
@@ -187,5 +191,5 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         }
     };
 
-    private onGroupCall = (groupCall: GroupCall) => this.updateRoom(groupCall.room);
+    private onGroupCall = (groupCall: GroupCall): void => this.updateRoom(groupCall.room);
 }

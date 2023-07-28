@@ -47,10 +47,10 @@ interface IProps {
     room: Room;
     onClose: () => void;
     resizeNotifier: ResizeNotifier;
-    permalinkCreator?: RoomPermalinkCreator;
+    permalinkCreator: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
     classNames?: string;
-    timelineSet?: EventTimelineSet;
+    timelineSet: EventTimelineSet;
     timelineRenderingType?: TimelineRenderingType;
     showComposer?: boolean;
     composerRelation?: IEventRelation;
@@ -73,11 +73,11 @@ interface IState {
 export default class TimelineCard extends React.Component<IProps, IState> {
     public static contextType = RoomContext;
 
-    private dispatcherRef: string;
-    private layoutWatcherRef: string;
+    private dispatcherRef?: string;
+    private layoutWatcherRef?: string;
     private timelinePanel = React.createRef<TimelinePanel>();
     private card = React.createRef<HTMLDivElement>();
-    private readReceiptsSettingWatcher: string;
+    private readReceiptsSettingWatcher: string | undefined;
 
     public constructor(props: IProps) {
         super(props);
@@ -87,7 +87,6 @@ export default class TimelineCard extends React.Component<IProps, IState> {
             atEndOfLiveTimeline: true,
             narrow: false,
         };
-        this.readReceiptsSettingWatcher = null;
     }
 
     public componentDidMount(): void {
@@ -111,10 +110,10 @@ export default class TimelineCard extends React.Component<IProps, IState> {
             SettingsStore.unwatchSetting(this.layoutWatcherRef);
         }
 
-        dis.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
     }
 
-    private onRoomViewStoreUpdate = async (initial?: boolean): Promise<void> => {
+    private onRoomViewStoreUpdate = async (_initial?: boolean): Promise<void> => {
         const newState: Pick<IState, any> = {
             initialEventId: SdkContextClass.instance.roomViewStore.getInitialEventId(),
             isInitialEventHighlighted: SdkContextClass.instance.roomViewStore.isInitialEventHighlighted(),
@@ -129,7 +128,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
             case Action.EditEvent:
                 this.setState(
                     {
-                        editState: payload.event ? new EditorStateTransfer(payload.event) : null,
+                        editState: payload.event ? new EditorStateTransfer(payload.event) : undefined,
                     },
                     () => {
                         if (payload.event) {
@@ -172,7 +171,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
         this.setState({ narrow });
     };
 
-    private jumpToLiveTimeline = () => {
+    private jumpToLiveTimeline = (): void => {
         if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
             // If we were viewing a highlighted event, firing view_room without
             // an event will take care of both clearing the URL fragment and
@@ -191,15 +190,15 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     private renderTimelineCardHeader = (): JSX.Element => {
         return (
             <div className="mx_BaseCard_header_title">
-                <Heading size="h4" className="mx_BaseCard_header_title_heading">
+                <Heading size="4" className="mx_BaseCard_header_title_heading">
                     {_t("Chat")}
                 </Heading>
             </div>
         );
     };
 
-    public render(): JSX.Element {
-        const highlightedEventId = this.state.isInitialEventHighlighted ? this.state.initialEventId : null;
+    public render(): React.ReactNode {
+        const highlightedEventId = this.state.isInitialEventHighlighted ? this.state.initialEventId : undefined;
 
         let jumpToBottom;
         if (!this.state.atEndOfLiveTimeline) {
@@ -221,7 +220,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 value={{
                     ...this.context,
                     timelineRenderingType: this.props.timelineRenderingType ?? this.context.timelineRenderingType,
-                    liveTimeline: this.props.timelineSet.getLiveTimeline(),
+                    liveTimeline: this.props.timelineSet?.getLiveTimeline(),
                     narrow: this.state.narrow,
                 }}
             >
@@ -232,7 +231,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                     header={this.renderTimelineCardHeader()}
                     ref={this.card}
                 >
-                    <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />
+                    {this.card.current && <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />}
                     <div className="mx_TimelineCard_timeline">
                         {jumpToBottom}
                         <TimelinePanel

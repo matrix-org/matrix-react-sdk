@@ -19,7 +19,7 @@ import { mocked } from "jest-mock";
 import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import React from "react";
+import React, { ComponentProps } from "react";
 
 import MemberAvatar from "../../../../src/components/views/avatars/MemberAvatar";
 import RoomContext from "../../../../src/contexts/RoomContext";
@@ -35,7 +35,7 @@ describe("MemberAvatar", () => {
     let room: Room;
     let member: RoomMember;
 
-    function getComponent(props) {
+    function getComponent(props: Partial<ComponentProps<typeof MemberAvatar>>) {
         return (
             <RoomContext.Provider value={getRoomContext(room, {})}>
                 <MemberAvatar member={null} width={35} height={35} {...props} />
@@ -47,7 +47,7 @@ describe("MemberAvatar", () => {
         jest.clearAllMocks();
 
         stubClient();
-        mockClient = mocked(MatrixClientPeg.get());
+        mockClient = mocked(MatrixClientPeg.safeGet());
 
         room = new Room(ROOM_ID, mockClient, mockClient.getUserId() ?? "", {
             pendingEventOrdering: PendingEventOrdering.Detached,

@@ -18,14 +18,15 @@ import React, { ReactElement } from "react";
 import classNames from "classnames";
 
 import {
+    VoiceBroadcastError,
     VoiceBroadcastHeader,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybackControl,
     VoiceBroadcastPlaybackState,
 } from "../..";
 import { useVoiceBroadcastPlayback } from "../../hooks/useVoiceBroadcastPlayback";
-import { Icon as Back30sIcon } from "../../../../res/img/element-icons/Back30s.svg";
-import { Icon as Forward30sIcon } from "../../../../res/img/element-icons/Forward30s.svg";
+import { Icon as Back30sIcon } from "../../../../res/img/compound/back-30s-24px.svg";
+import { Icon as Forward30sIcon } from "../../../../res/img/compound/forward-30s-24px.svg";
 import { _t } from "../../../languageHandler";
 import Clock from "../../../components/views/audio_messages/Clock";
 import SeekBar from "../../../components/views/audio_messages/SeekBar";
@@ -45,7 +46,7 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
     let seekForwardButton: ReactElement | null = null;
 
     if (playbackState !== VoiceBroadcastPlaybackState.Stopped) {
-        const onSeekBackwardButtonClick = () => {
+        const onSeekBackwardButtonClick = (): void => {
             playback.skipTo(Math.max(0, times.position - SEEK_TIME));
         };
 
@@ -53,7 +54,7 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
             <SeekButton icon={Back30sIcon} label={_t("30s backward")} onClick={onSeekBackwardButtonClick} />
         );
 
-        const onSeekForwardButtonClick = () => {
+        const onSeekForwardButtonClick = (): void => {
             playback.skipTo(Math.min(times.duration, times.position + SEEK_TIME));
         };
 
@@ -67,6 +68,24 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
         ["mx_VoiceBroadcastBody--pip"]: pip,
     });
 
+    const content =
+        playbackState === VoiceBroadcastPlaybackState.Error ? (
+            <VoiceBroadcastError message={playback.errorMessage} />
+        ) : (
+            <>
+                <div className="mx_VoiceBroadcastBody_controls">
+                    {seekBackwardButton}
+                    <VoiceBroadcastPlaybackControl state={playbackState} onClick={toggle} />
+                    {seekForwardButton}
+                </div>
+                <SeekBar playback={playback} />
+                <div className="mx_VoiceBroadcastBody_timerow">
+                    <Clock seconds={times.position} />
+                    <Clock seconds={-times.timeLeft} />
+                </div>
+            </>
+        );
+
     return (
         <div className={classes}>
             <VoiceBroadcastHeader
@@ -77,16 +96,7 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
                 showBroadcast={playbackState !== VoiceBroadcastPlaybackState.Buffering}
                 showBuffering={playbackState === VoiceBroadcastPlaybackState.Buffering}
             />
-            <div className="mx_VoiceBroadcastBody_controls">
-                {seekBackwardButton}
-                <VoiceBroadcastPlaybackControl state={playbackState} onClick={toggle} />
-                {seekForwardButton}
-            </div>
-            <SeekBar playback={playback} />
-            <div className="mx_VoiceBroadcastBody_timerow">
-                <Clock seconds={times.position} />
-                <Clock seconds={-times.timeLeft} />
-            </div>
+            {content}
         </div>
     );
 };

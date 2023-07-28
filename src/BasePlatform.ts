@@ -22,6 +22,7 @@ import { encodeUnpaddedBase64 } from "matrix-js-sdk/src/crypto/olmlib";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { SSOAction } from "matrix-js-sdk/src/@types/auth";
 
 import dis from "./dispatcher/dispatcher";
 import BaseEventIndexManager from "./indexing/BaseEventIndexManager";
@@ -74,7 +75,7 @@ export default abstract class BasePlatform {
         this.startUpdateCheck = this.startUpdateCheck.bind(this);
     }
 
-    public abstract getConfig(): Promise<IConfigOptions>;
+    public abstract getConfig(): Promise<IConfigOptions | undefined>;
 
     public abstract getDefaultDeviceDisplayName(): string;
 
@@ -129,7 +130,7 @@ export default abstract class BasePlatform {
         if (MatrixClientPeg.userRegisteredWithinLastHours(24)) return false;
 
         try {
-            const [version, deferUntil] = JSON.parse(localStorage.getItem(UPDATE_DEFER_KEY));
+            const [version, deferUntil] = JSON.parse(localStorage.getItem(UPDATE_DEFER_KEY)!);
             return newVersion !== version || Date.now() > deferUntil;
         } catch (e) {
             return true;
@@ -192,11 +193,11 @@ export default abstract class BasePlatform {
     public displayNotification(
         title: string,
         msg: string,
-        avatarUrl: string,
+        avatarUrl: string | null,
         room: Room,
         ev?: MatrixEvent,
     ): Notification {
-        const notifBody = {
+        const notifBody: NotificationOptions = {
             body: msg,
             silent: true, // we play our own sounds
         };
@@ -210,7 +211,7 @@ export default abstract class BasePlatform {
                 metricsTrigger: "Notification",
             };
 
-            if (ev.getThread()) {
+            if (ev?.getThread()) {
                 payload.event_id = ev.getId();
             }
 
@@ -254,7 +255,7 @@ export default abstract class BasePlatform {
         return false;
     }
 
-    public getSettingValue(settingName: string): Promise<any> {
+    public async getSettingValue(settingName: string): Promise<any> {
         return undefined;
     }
 
@@ -272,15 +273,15 @@ export default abstract class BasePlatform {
         return null;
     }
 
-    public setLanguage(preferredLangs: string[]) {}
+    public setLanguage(preferredLangs: string[]): void {}
 
     public setSpellCheckEnabled(enabled: boolean): void {}
 
     public async getSpellCheckEnabled(): Promise<boolean> {
-        return null;
+        return false;
     }
 
-    public setSpellCheckLanguages(preferredLangs: string[]) {}
+    public setSpellCheckLanguages(preferredLangs: string[]): void {}
 
     public getSpellCheckLanguages(): Promise<string[]> | null {
         return null;
@@ -308,9 +309,9 @@ export default abstract class BasePlatform {
         return null;
     }
 
-    protected getSSOCallbackUrl(fragmentAfterLogin: string): URL {
+    protected getSSOCallbackUrl(fragmentAfterLogin = ""): URL {
         const url = new URL(window.location.href);
-        url.hash = fragmentAfterLogin || "";
+        url.hash = fragmentAfterLogin;
         return url;
     }
 
@@ -319,24 +320,26 @@ export default abstract class BasePlatform {
      * @param {MatrixClient} mxClient the matrix client using which we should start the flow
      * @param {"sso"|"cas"} loginType the type of SSO it is, CAS/SSO.
      * @param {string} fragmentAfterLogin the hash to pass to the app during sso callback.
+     * @param {SSOAction} action the SSO flow to indicate to the IdP, optional.
      * @param {string} idpId The ID of the Identity Provider being targeted, optional.
      */
     public startSingleSignOn(
         mxClient: MatrixClient,
         loginType: "sso" | "cas",
-        fragmentAfterLogin: string,
+        fragmentAfterLogin?: string,
         idpId?: string,
+        action?: SSOAction,
     ): void {
         // persist hs url and is url for when the user is returned to the app with the login token
         localStorage.setItem(SSO_HOMESERVER_URL_KEY, mxClient.getHomeserverUrl());
         if (mxClient.getIdentityServerUrl()) {
-            localStorage.setItem(SSO_ID_SERVER_URL_KEY, mxClient.getIdentityServerUrl());
+            localStorage.setItem(SSO_ID_SERVER_URL_KEY, mxClient.getIdentityServerUrl()!);
         }
         if (idpId) {
             localStorage.setItem(SSO_IDP_ID_KEY, idpId);
         }
         const callbackUrl = this.getSSOCallbackUrl(fragmentAfterLogin);
-        window.location.href = mxClient.getSsoLoginUrl(callbackUrl.toString(), loginType, idpId); // redirect to SSO
+        window.location.href = mxClient.getSsoLoginUrl(callbackUrl.toString(), loginType, idpId, action); // redirect to SSO
     }
 
     /**
@@ -438,5 +441,13 @@ export default abstract class BasePlatform {
         } catch (e) {
             logger.error("idbDelete failed in destroyPickleKey", e);
         }
+    }
+
+    /**
+     * Clear app storage, called when logging out to perform data clean up.
+     */
+    public async clearStorage(): Promise<void> {
+        window.sessionStorage.clear();
+        window.localStorage.clear();
     }
 }

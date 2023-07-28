@@ -25,10 +25,10 @@ import QuestionDialog from "./QuestionDialog";
 import BugReportDialog from "./BugReportDialog";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
-import { IDialogProps } from "./IDialogProps";
 
-interface IProps extends IDialogProps {
-    error: Error;
+interface IProps {
+    error: unknown;
+    onFinished(clear?: boolean): void;
 }
 
 export default class SessionRestoreErrorDialog extends React.Component<IProps> {
@@ -54,7 +54,7 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
         window.location.reload();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const brand = SdkConfig.get().brand;
 
         const clearStorageButton = (

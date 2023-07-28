@@ -17,7 +17,8 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 /**
  * Approximation of a membership status for a given room.
@@ -43,10 +44,9 @@ export enum EffectiveMembership {
     Leave = "LEAVE",
 }
 
-export interface MembershipSplit {
-    // @ts-ignore - TS wants this to be a string key, but we know better.
-    [state: EffectiveMembership]: Room[];
-}
+export type MembershipSplit = {
+    [state in EffectiveMembership]: Room[];
+};
 
 export function splitRoomsByMembership(rooms: Room[]): MembershipSplit {
     const split: MembershipSplit = {
@@ -56,7 +56,11 @@ export function splitRoomsByMembership(rooms: Room[]): MembershipSplit {
     };
 
     for (const room of rooms) {
-        split[getEffectiveMembership(room.getMyMembership())].push(room);
+        const membership = room.getMyMembership();
+        // Filter out falsey relationship as this will be peeked rooms
+        if (!!membership) {
+            split[getEffectiveMembership(membership)].push(room);
+        }
     }
 
     return split;
@@ -80,14 +84,23 @@ export function isJoinedOrNearlyJoined(membership: string): boolean {
 }
 
 /**
- * Try to ensure the user is already in the megolm session before continuing
- * NOTE: this assumes you've just created the room and there's not been an opportunity
- * for other code to run, so we shouldn't miss RoomState.newMember when it comes by.
+ * Try to ensure the user is in the room (invited or joined) before continuing
  */
-export async function waitForMember(client: MatrixClient, roomId: string, userId: string, opts = { timeout: 1500 }) {
+export async function waitForMember(
+    client: MatrixClient,
+    roomId: string,
+    userId: string,
+    opts = { timeout: 1500 },
+): Promise<boolean> {
     const { timeout } = opts;
-    let handler;
-    return new Promise((resolve) => {
+    let handler: (event: MatrixEvent, state: RoomState, member: RoomMember) => void;
+
+    // check if the user is in the room before we start -- in which case, no need to wait.
+    if ((client.getRoom(roomId)?.getMember(userId) ?? null) !== null) {
+        return true;
+    }
+
+    return new Promise<boolean>((resolve) => {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         handler = function (_, __, member: RoomMember) {
             if (member.userId !== userId) return;
@@ -97,7 +110,7 @@ export async function waitForMember(client: MatrixClient, roomId: string, userId
         client.on(RoomStateEvent.NewMember, handler);
 
         /* We don't want to hang if this goes wrong, so we proceed and hope the other
-           user is already in the megolm session */
+           user is already in the room */
         window.setTimeout(resolve, timeout, false);
     }).finally(() => {
         client.removeListener(RoomStateEvent.NewMember, handler);

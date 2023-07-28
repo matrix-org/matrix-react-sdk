@@ -104,6 +104,10 @@ export default class PasswordReset {
         );
     }
 
+    public setLogoutDevices(logoutDevices: boolean): void {
+        this.logoutDevices = logoutDevices;
+    }
+
     public async setNewPassword(password: string): Promise<void> {
         this.password = password;
         await this.checkEmailLinkClicked();
@@ -142,7 +146,7 @@ export default class PasswordReset {
                 err.message = _t("Failed to verify email address: make sure you clicked the link in the email");
             } else if (err.httpStatus === 404) {
                 err.message = _t(
-                    "Your email address does not appear to be associated with a Matrix ID on this Homeserver.",
+                    "Your email address does not appear to be associated with a Matrix ID on this homeserver.",
                 );
             } else if (err.httpStatus) {
                 err.message += ` (Status ${err.httpStatus})`;

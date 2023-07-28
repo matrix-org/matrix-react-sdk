@@ -36,7 +36,7 @@ export class SpaceNotificationState extends NotificationState {
         return this._color === NotificationColor.Unsent ? "!" : null;
     }
 
-    public setRooms(rooms: Room[]) {
+    public setRooms(rooms: Room[]): void {
         const oldRooms = this.rooms;
         const diff = arrayDiff(oldRooms, rooms);
         this.rooms = rooms;
@@ -55,11 +55,11 @@ export class SpaceNotificationState extends NotificationState {
         this.calculateTotalState();
     }
 
-    public getFirstRoomWithNotifications() {
+    public getFirstRoomWithNotifications(): string | undefined {
         return Object.values(this.states).find((state) => state.color >= this.color)?.room.roomId;
     }
 
-    public destroy() {
+    public destroy(): void {
         super.destroy();
         for (const state of Object.values(this.states)) {
             state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
@@ -67,17 +67,18 @@ export class SpaceNotificationState extends NotificationState {
         this.states = {};
     }
 
-    private onRoomNotificationStateUpdate = () => {
+    private onRoomNotificationStateUpdate = (): void => {
         this.calculateTotalState();
     };
 
-    private calculateTotalState() {
+    private calculateTotalState(): void {
         const snapshot = this.snapshot();
 
         this._count = 0;
         this._color = NotificationColor.None;
         for (const [roomId, state] of Object.entries(this.states)) {
-            const roomTags = RoomListStore.instance.getTagsForRoom(this.rooms.find((r) => r.roomId === roomId));
+            const room = this.rooms.find((r) => r.roomId === roomId);
+            const roomTags = room ? RoomListStore.instance.getTagsForRoom(room) : [];
 
             // We ignore unreads in LowPriority rooms, see https://github.com/vector-im/element-web/issues/16836
             if (roomTags.includes(DefaultTagID.LowPriority) && state.color === NotificationColor.Bold) continue;

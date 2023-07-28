@@ -13,7 +13,7 @@ jobs:
         environment: Netlify
         steps:
             - name: 📝 Create Deployment
-              uses: bobheadxi/deployments@v1
+              uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1
               id: deployment
               with:
                   step: start
@@ -25,7 +25,7 @@ jobs:
                       Exercise caution. Use test accounts.
 
             - id: prdetails
-              uses: matrix-org/pr-details-action@v1.2
+              uses: matrix-org/pr-details-action@v1.3
               with:
                   owner: ${{ github.event.workflow_run.head_repository.owner.login }}
                   branch: ${{ github.event.workflow_run.head_branch }}
@@ -33,16 +33,15 @@ jobs:
             # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
             # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
             - name: 📥 Download artifact
-              uses: dawidd6/action-download-artifact@v2
+              uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
               with:
-                  workflow: element-build-and-test.yaml
                   run_id: ${{ github.event.workflow_run.id }}
                   name: previewbuild
                   path: webapp
 
             - name: ☁️ Deploy to Netlify
               id: netlify
-              uses: nwtgck/actions-netlify@v1.2
+              uses: nwtgck/actions-netlify@5da65c9f74c7961c5501a3ba329b8d0912f39c03 # v2.0
               with:
                   publish-dir: webapp
                   deploy-message: "Deploy from GitHub Actions"
@@ -56,7 +55,7 @@ jobs:
               timeout-minutes: 1
 
             - name: 🚦 Update deployment status
-              uses: bobheadxi/deployments@v1
+              uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1
               if: always()
               with:
                   step: finish

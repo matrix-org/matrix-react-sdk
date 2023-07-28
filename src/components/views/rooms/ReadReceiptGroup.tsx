@@ -42,9 +42,9 @@ export const READ_AVATAR_SIZE = 16;
 interface Props {
     readReceipts: IReadReceiptProps[];
     readReceiptMap: { [userId: string]: IReadReceiptInfo };
-    checkUnmounting: () => boolean;
+    checkUnmounting?: () => boolean;
     suppressAnimation: boolean;
-    isTwelveHour: boolean;
+    isTwelveHour?: boolean;
 }
 
 interface IAvatarPosition {
@@ -66,7 +66,7 @@ export function determineAvatarPosition(index: number, max: number): IAvatarPosi
     }
 }
 
-export function readReceiptTooltip(members: string[], hasMore: boolean): string | null {
+export function readReceiptTooltip(members: string[], hasMore: boolean): string | undefined {
     if (hasMore) {
         return _t("%(members)s and more", {
             members: members.join(", "),
@@ -78,8 +78,6 @@ export function readReceiptTooltip(members: string[], hasMore: boolean): string 
         });
     } else if (members.length) {
         return members[0];
-    } else {
-        return null;
     }
 }
 
@@ -89,7 +87,7 @@ export function ReadReceiptGroup({
     checkUnmounting,
     suppressAnimation,
     isTwelveHour,
-}: Props) {
+}: Props): JSX.Element {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     // If we are above MAX_READ_AVATARS, we’ll have to remove a few to have space for the +n count.
@@ -134,7 +132,7 @@ export function ReadReceiptGroup({
             const { hidden, position } = determineAvatarPosition(index, maxAvatars);
 
             const userId = receipt.userId;
-            let readReceiptInfo: IReadReceiptInfo;
+            let readReceiptInfo: IReadReceiptInfo | undefined;
 
             if (readReceiptMap) {
                 readReceiptInfo = readReceiptMap[userId];
@@ -161,7 +159,7 @@ export function ReadReceiptGroup({
         })
         .reverse();
 
-    let remText: JSX.Element;
+    let remText: JSX.Element | undefined;
     const remainder = readReceipts.length - maxAvatars;
     if (remainder > 0) {
         remText = (
@@ -171,8 +169,8 @@ export function ReadReceiptGroup({
         );
     }
 
-    let contextMenu;
-    if (menuDisplayed) {
+    let contextMenu: JSX.Element | undefined;
+    if (menuDisplayed && button.current) {
         const buttonRect = button.current.getBoundingClientRect();
         contextMenu = (
             <ContextMenu menuClassName="mx_ReadReceiptGroup_popup" onFinished={closeMenu} {...aboveLeftOf(buttonRect)}>
@@ -228,11 +226,17 @@ export function ReadReceiptGroup({
 }
 
 interface ReadReceiptPersonProps extends IReadReceiptProps {
-    isTwelveHour: boolean;
+    isTwelveHour?: boolean;
     onAfterClick?: () => void;
 }
 
-function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick }: ReadReceiptPersonProps) {
+function ReadReceiptPerson({
+    userId,
+    roomMember,
+    ts,
+    isTwelveHour,
+    onAfterClick,
+}: ReadReceiptPersonProps): JSX.Element {
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
         alignment: Alignment.Top,
         tooltipClassName: "mx_ReadReceiptGroup_person--tooltip",
@@ -288,8 +292,8 @@ interface ISectionHeaderProps {
     className?: string;
 }
 
-function SectionHeader({ className, children }: PropsWithChildren<ISectionHeaderProps>) {
-    const ref = useRef<HTMLHeadingElement>();
+function SectionHeader({ className, children }: PropsWithChildren<ISectionHeaderProps>): JSX.Element {
+    const ref = useRef<HTMLHeadingElement>(null);
     const [onFocus] = useRovingTabIndex(ref);
 
     return (

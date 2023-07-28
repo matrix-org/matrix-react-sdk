@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,11 +23,14 @@ import RoomListActions from "../../../actions/RoomListActions";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import dis from "../../../dispatcher/dispatcher";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useUnreadNotifications } from "../../../hooks/useUnreadNotifications";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { _t } from "../../../languageHandler";
+import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import DMRoomMap from "../../../utils/DMRoomMap";
+import { clearRoomNotification } from "../../../utils/notifications";
 import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
 import IconizedContextMenu, {
     IconizedContextMenuCheckbox,
@@ -35,8 +38,12 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
 import { ButtonEvent } from "../elements/AccessibleButton";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
+import { DeveloperToolsOption } from "./DeveloperToolsOption";
+import { useSettingValue } from "../../../hooks/useSettings";
 
-interface IProps extends IContextMenuProps {
+export interface RoomGeneralContextMenuProps extends IContextMenuProps {
     room: Room;
     onPostFavoriteClick?: (event: ButtonEvent) => void;
     onPostLowPriorityClick?: (event: ButtonEvent) => void;
@@ -47,7 +54,10 @@ interface IProps extends IContextMenuProps {
     onPostLeaveClick?: (event: ButtonEvent) => void;
 }
 
-export const RoomGeneralContextMenu = ({
+/**
+ * Room context menu accessible via the room list.
+ */
+export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
     room,
     onFinished,
     onPostFavoriteClick,
@@ -58,7 +68,7 @@ export const RoomGeneralContextMenu = ({
     onPostLeaveClick,
     onPostForgetClick,
     ...props
-}: IProps) => {
+}) => {
     const cli = useContext(MatrixClientContext);
     const roomTags = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () =>
         RoomListStore.instance.getTagsForRoom(room),
@@ -83,13 +93,14 @@ export const RoomGeneralContextMenu = ({
         };
     };
 
-    const onTagRoom = (ev: ButtonEvent, tagId: TagID) => {
+    const onTagRoom = (ev: ButtonEvent, tagId: TagID): void => {
+        if (!cli) return;
         if (tagId === DefaultTagID.Favourite || tagId === DefaultTagID.LowPriority) {
             const inverseTag = tagId === DefaultTagID.Favourite ? DefaultTagID.LowPriority : DefaultTagID.Favourite;
             const isApplied = RoomListStore.instance.getTagsForRoom(room).includes(tagId);
             const removeTag = isApplied ? tagId : inverseTag;
             const addTag = isApplied ? null : tagId;
-            dis.dispatch(RoomListActions.tagRoom(cli, room, removeTag, addTag, undefined, 0));
+            dis.dispatch(RoomListActions.tagRoom(cli, room, removeTag, addTag, 0));
         } else {
             logger.warn(`Unexpected tag ${tagId} applied to ${room.roomId}`);
         }
@@ -115,8 +126,8 @@ export const RoomGeneralContextMenu = ({
         />
     );
 
-    let inviteOption: JSX.Element;
-    if (room.canInvite(cli.getUserId()) && !isDm) {
+    let inviteOption: JSX.Element | null = null;
+    if (room.canInvite(cli.getUserId()!) && !isDm && shouldShowComponent(UIComponent.InviteUsers)) {
         inviteOption = (
             <IconizedContextMenuOption
                 onClick={wrapHandler(
@@ -133,7 +144,7 @@ export const RoomGeneralContextMenu = ({
         );
     }
 
-    let copyLinkOption: JSX.Element;
+    let copyLinkOption: JSX.Element | null = null;
     if (!isDm) {
         copyLinkOption = (
             <IconizedContextMenuOption
@@ -201,17 +212,40 @@ export const RoomGeneralContextMenu = ({
         );
     }
 
+    const { color } = useUnreadNotifications(room);
+    const markAsReadOption: JSX.Element | null =
+        color > NotificationColor.None ? (
+            <IconizedContextMenuCheckbox
+                onClick={() => {
+                    clearRoomNotification(room, cli);
+                    onFinished?.();
+                }}
+                active={false}
+                label={_t("Mark as read")}
+                iconClassName="mx_RoomGeneralContextMenu_iconMarkAsRead"
+            />
+        ) : null;
+
+    const developerModeEnabled = useSettingValue<boolean>("developerMode");
+    const developerToolsOption = developerModeEnabled ? (
+        <DeveloperToolsOption onFinished={onFinished} roomId={room.roomId} />
+    ) : null;
+
     return (
         <IconizedContextMenu {...props} onFinished={onFinished} className="mx_RoomGeneralContextMenu" compact>
-            {!roomTags.includes(DefaultTagID.Archived) && (
-                <IconizedContextMenuOptionList>
-                    {favoriteOption}
-                    {lowPriorityOption}
-                    {inviteOption}
-                    {copyLinkOption}
-                    {settingsOption}
-                </IconizedContextMenuOptionList>
-            )}
+            <IconizedContextMenuOptionList>
+                {markAsReadOption}
+                {!roomTags.includes(DefaultTagID.Archived) && (
+                    <>
+                        {favoriteOption}
+                        {lowPriorityOption}
+                        {inviteOption}
+                        {copyLinkOption}
+                        {settingsOption}
+                    </>
+                )}
+                {developerToolsOption}
+            </IconizedContextMenuOptionList>
             <IconizedContextMenuOptionList red>{leaveOption}</IconizedContextMenuOptionList>
         </IconizedContextMenu>
     );

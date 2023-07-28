@@ -19,8 +19,6 @@ import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { logger } from "matrix-js-sdk/src/logger";
-import { M_POLL_START, M_POLL_RESPONSE, M_POLL_END } from "matrix-events-sdk";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -45,8 +43,9 @@ const AVATAR_SIZE = 24;
 
 export default class PinnedEventTile extends React.Component<IProps> {
     public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
-    private onTileClicked = () => {
+    private onTileClicked = (): void => {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             event_id: this.props.event.getId(),
@@ -63,57 +62,20 @@ export default class PinnedEventTile extends React.Component<IProps> {
         eventId: string,
         relationType: RelationType | string,
         eventType: EventType | string,
-    ): Relations => {
+    ): Relations | undefined => {
         if (eventId === this.props.event.getId()) {
             return this.relations.get(relationType)?.get(eventType);
         }
     };
 
-    public async componentDidMount() {
-        // Fetch poll responses
-        if (M_POLL_START.matches(this.props.event.getType())) {
-            const eventId = this.props.event.getId();
-            const roomId = this.props.event.getRoomId();
-            const room = this.context.getRoom(roomId);
-
-            try {
-                await Promise.all(
-                    [M_POLL_RESPONSE.name, M_POLL_RESPONSE.altName, M_POLL_END.name, M_POLL_END.altName].map(
-                        async (eventType) => {
-                            const relations = new Relations(RelationType.Reference, eventType, room);
-                            relations.setTargetEvent(this.props.event);
-
-                            if (!this.relations.has(RelationType.Reference)) {
-                                this.relations.set(RelationType.Reference, new Map<string, Relations>());
-                            }
-                            this.relations.get(RelationType.Reference).set(eventType, relations);
-
-                            let nextBatch: string | undefined;
-                            do {
-                                const page = await this.context.relations(
-                                    roomId,
-                                    eventId,
-                                    RelationType.Reference,
-                                    eventType,
-                                    { from: nextBatch },
-                                );
-                                nextBatch = page.nextBatch;
-                                page.events.forEach((event) => relations.addEvent(event));
-                            } while (nextBatch);
-                        },
-                    ),
-                );
-            } catch (err) {
-                logger.error(`Error fetching responses to pinned poll ${eventId} in room ${roomId}`);
-                logger.error(err);
-            }
-        }
-    }
-
-    public render() {
+    public render(): React.ReactNode {
         const sender = this.props.event.getSender();
 
-        let unpinButton = null;
+        if (!sender) {
+            throw new Error("Pinned event unexpectedly has no sender");
+        }
+
+        let unpinButton: JSX.Element | undefined;
         if (this.props.onUnpinClicked) {
             unpinButton = (
                 <AccessibleTooltipButton

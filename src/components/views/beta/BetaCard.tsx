@@ -43,11 +43,11 @@ interface IBetaPillProps {
     tooltipCaption?: string;
 }
 
-export const BetaPill = ({
+export const BetaPill: React.FC<IBetaPillProps> = ({
     onClick,
     tooltipTitle = _t("This is a beta feature"),
     tooltipCaption = _t("Click for more info"),
-}: IBetaPillProps) => {
+}) => {
     if (onClick) {
         return (
             <AccessibleTooltipButton
@@ -69,7 +69,7 @@ export const BetaPill = ({
     return <span className="mx_BetaCard_betaPill">{_t("Beta")}</span>;
 };
 
-const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
+const BetaCard: React.FC<IProps> = ({ title: titleOverride, featureId }) => {
     const info = SettingsStore.getBetaInfo(featureId);
     const value = useFeatureEnabled(featureId);
     const [busy, setBusy] = useState(false);
@@ -91,7 +91,7 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
         );
     }
 
-    let refreshWarning: string;
+    let refreshWarning: string | undefined;
     if (requiresRefresh) {
         const brand = SdkConfig.get().brand;
         refreshWarning = value
@@ -120,7 +120,7 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                     <div className="mx_BetaCard_buttons">
                         {feedbackButton}
                         <AccessibleButton
-                            onClick={async () => {
+                            onClick={async (): Promise<void> => {
                                 setBusy(true);
                                 // make it look like we're doing something for two seconds,
                                 // otherwise users think clicking did nothing

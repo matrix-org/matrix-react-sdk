@@ -14,13 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// eslint-disable-next-line deprecate/import
-import { ReactWrapper } from "enzyme";
 import EventEmitter from "events";
 
 import { ActionPayload } from "../../src/dispatcher/payloads";
 import defaultDispatcher from "../../src/dispatcher/dispatcher";
 import { DispatcherAction } from "../../src/dispatcher/actions";
+import Modal from "../../src/Modal";
 
 export const emitPromise = (e: EventEmitter, k: string | symbol) => new Promise((r) => e.once(k, r));
 
@@ -37,7 +36,7 @@ export function untilDispatch(
     dispatcher = defaultDispatcher,
     timeout = 1000,
 ): Promise<ActionPayload> {
-    const callerLine = new Error().stack.toString().split("\n")[2];
+    const callerLine = new Error().stack!.toString().split("\n")[2];
     if (typeof waitForAction === "string") {
         const action = waitForAction;
         waitForAction = (payload) => {
@@ -47,7 +46,7 @@ export function untilDispatch(
     const callback = waitForAction as (payload: ActionPayload) => boolean;
     return new Promise((resolve, reject) => {
         let fulfilled = false;
-        let timeoutId;
+        let timeoutId: number;
         // set a timeout handler if needed
         if (timeout > 0) {
             timeoutId = window.setTimeout(() => {
@@ -89,13 +88,13 @@ export function untilDispatch(
 export function untilEmission(
     emitter: EventEmitter,
     eventName: string,
-    check: (...args: any[]) => boolean = undefined,
+    check?: (...args: any[]) => boolean,
     timeout = 1000,
 ): Promise<void> {
-    const callerLine = new Error().stack.toString().split("\n")[2];
+    const callerLine = new Error().stack!.toString().split("\n")[2];
     return new Promise((resolve, reject) => {
         let fulfilled = false;
-        let timeoutId;
+        let timeoutId: number;
         // set a timeout handler if needed
         if (timeout > 0) {
             timeoutId = window.setTimeout(() => {
@@ -128,18 +127,7 @@ export function untilEmission(
     });
 }
 
-export const findByAttr = (attr: string) => (component: ReactWrapper, value: string) =>
-    component.find(`[${attr}="${value}"]`);
-export const findByTestId = findByAttr("data-test-id");
-export const findById = findByAttr("id");
-export const findByAriaLabel = findByAttr("aria-label");
-
-const findByTagAndAttr = (attr: string) => (component: ReactWrapper, value: string, tag: string) =>
-    component.find(`${tag}[${attr}="${value}"]`);
-
-export const findByTagAndTestId = findByTagAndAttr("data-test-id");
-
-export const flushPromises = async () => await new Promise((resolve) => window.setTimeout(resolve));
+export const flushPromises = async () => await new Promise<void>((resolve) => window.setTimeout(resolve));
 
 // with jest's modern fake timers process.nextTick is also mocked,
 // flushing promises in the normal way then waits for some advancement
@@ -186,4 +174,54 @@ export function waitForUpdate(inst: React.Component, updates = 1): Promise<void>
 export const advanceDateAndTime = (ms: number) => {
     jest.spyOn(global.Date, "now").mockReturnValue(Date.now() + ms);
     jest.advanceTimersByTime(ms);
+};
+
+/**
+ * A horrible hack necessary to wait enough time to ensure any modal is shown after a
+ * `Modal.createDialog(...)` call. We have to contend with the Modal code which renders
+ * things asyncronhously and has weird sleeps which we should strive to remove.
+ */
+export const waitEnoughCyclesForModal = async ({
+    useFakeTimers = false,
+}: {
+    useFakeTimers?: boolean;
+} = {}): Promise<void> => {
+    // XXX: Maybe in the future with Jest 29.5.0+, we could use `runAllTimersAsync` instead.
+    const flushFunc = useFakeTimers ? flushPromisesWithFakeTimers : flushPromises;
+
+    await flushFunc();
+    await flushFunc();
+    await flushFunc();
+};
+
+/**
+ * A horrible hack necessary to make sure modals don't leak and pollute tests.
+ * `@testing-library/react` automatic cleanup function does not pick up the async modal
+ * rendering and the modals don't unmount when the component unmounts. We should strive
+ * to fix this.
+ */
+export const clearAllModals = async (): Promise<void> => {
+    // Prevent modals from leaking and polluting other tests
+    let keepClosingModals = true;
+    while (keepClosingModals) {
+        keepClosingModals = Modal.closeCurrentModal("End of test (clean-up)");
+
+        // Then wait for the screen to update (probably React rerender and async/await).
+        // Important for tests using Jest fake timers to not get into an infinite loop
+        // of removing the same modal because the promises don't flush otherwise.
+        //
+        // XXX: Maybe in the future with Jest 29.5.0+, we could use `runAllTimersAsync` instead.
+
+        // this is called in some places where timers are not faked
+        // which causes a lot of noise in the console
+        // to make a hack even hackier check if timers are faked using a weird trick from github
+        // then call the appropriate promise flusher
+        // https://github.com/facebook/jest/issues/10555#issuecomment-1136466942
+        const jestTimersFaked = setTimeout.name === "setTimeout";
+        if (jestTimersFaked) {
+            await flushPromisesWithFakeTimers();
+        } else {
+            await flushPromises();
+        }
+    }
 };

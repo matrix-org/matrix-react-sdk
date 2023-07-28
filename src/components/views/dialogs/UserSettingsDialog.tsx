@@ -32,38 +32,34 @@ import SdkConfig from "../../../SdkConfig";
 import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
 import { UIFeature } from "../../../settings/UIFeature";
 import BaseDialog from "./BaseDialog";
-import { IDialogProps } from "./IDialogProps";
 import SidebarUserSettingsTab from "../settings/tabs/user/SidebarUserSettingsTab";
 import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsTab";
 import SessionManagerTab from "../settings/tabs/user/SessionManagerTab";
 import { UserTab } from "./UserTab";
+import { NonEmptyArray } from "../../../@types/common";
 
-interface IProps extends IDialogProps {
+interface IProps {
     initialTabId?: UserTab;
+    onFinished(): void;
 }
 
 interface IState {
     mjolnirEnabled: boolean;
-    newSessionManagerEnabled: boolean;
 }
 
 export default class UserSettingsDialog extends React.Component<IProps, IState> {
     private settingsWatchers: string[] = [];
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
             mjolnirEnabled: SettingsStore.getValue("feature_mjolnir"),
-            newSessionManagerEnabled: SettingsStore.getValue("feature_new_device_manager"),
         };
     }
 
     public componentDidMount(): void {
-        this.settingsWatchers = [
-            SettingsStore.watchSetting("feature_mjolnir", null, this.mjolnirChanged),
-            SettingsStore.watchSetting("feature_new_device_manager", null, this.sessionManagerChanged),
-        ];
+        this.settingsWatchers = [SettingsStore.watchSetting("feature_mjolnir", null, this.mjolnirChanged)];
     }
 
     public componentWillUnmount(): void {
@@ -75,13 +71,8 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         this.setState({ mjolnirEnabled: newValue });
     };
 
-    private sessionManagerChanged: CallbackFn = (settingName, roomId, atLevel, newValue) => {
-        // We can cheat because we know what levels a feature is tracked at, and how it is tracked
-        this.setState({ newSessionManagerEnabled: newValue });
-    };
-
-    private getTabs() {
-        const tabs: Tab[] = [];
+    private getTabs(): NonEmptyArray<Tab<UserTab>> {
+        const tabs: Tab<UserTab>[] = [];
 
         tabs.push(
             new Tab(
@@ -159,18 +150,16 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 "UserSettingsSecurityPrivacy",
             ),
         );
-        if (this.state.newSessionManagerEnabled) {
-            tabs.push(
-                new Tab(
-                    UserTab.SessionManager,
-                    _td("Sessions"),
-                    "mx_UserSettingsDialog_securityIcon",
-                    <SessionManagerTab />,
-                    // don't track with posthog while under construction
-                    undefined,
-                ),
-            );
-        }
+        tabs.push(
+            new Tab(
+                UserTab.SessionManager,
+                _td("Sessions"),
+                "mx_UserSettingsDialog_sessionsIcon",
+                <SessionManagerTab />,
+                // don't track with posthog while under construction
+                undefined,
+            ),
+        );
         // Show the Labs tab if enabled or if there are any active betas
         if (
             SdkConfig.get("show_labs_settings") ||
@@ -202,15 +191,15 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 UserTab.Help,
                 _td("Help & About"),
                 "mx_UserSettingsDialog_helpIcon",
-                <HelpUserSettingsTab closeSettingsFn={() => this.props.onFinished(true)} />,
+                <HelpUserSettingsTab closeSettingsFn={() => this.props.onFinished()} />,
                 "UserSettingsHelpAbout",
             ),
         );
 
-        return tabs;
+        return tabs as NonEmptyArray<Tab<UserTab>>;
     }
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 className="mx_UserSettingsDialog"

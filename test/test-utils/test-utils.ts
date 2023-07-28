@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,6 +33,9 @@ import {
     IPusher,
     RoomType,
     KNOWN_SAFE_ROOM_VERSION,
+    ConditionKind,
+    IPushRules,
+    RelationType,
 } from "matrix-js-sdk/src/matrix";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
@@ -40,11 +43,11 @@ import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
 import { IEventDecryptionResult } from "matrix-js-sdk/src/@types/crypto";
+import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
 
 import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
-import { makeType } from "../../src/utils/TypeUtils";
-import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
+import { ValidatedDelegatedAuthConfig, ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
@@ -56,6 +59,8 @@ import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/Matri
  * TODO: once the components are updated to get their MatrixClients from
  * the react context, we can get rid of this and just inject a test client
  * via the context instead.
+ *
+ * See also `getMockClientWithEventEmitter` which does something similar but different.
  */
 export function stubClient(): MatrixClient {
     const client = createTestClient();
@@ -65,13 +70,13 @@ export function stubClient(): MatrixClient {
     // 'sandbox.restore()' doesn't work correctly on inherited methods,
     // so we do this for each method
     jest.spyOn(peg, "get");
+    jest.spyOn(peg, "safeGet");
     jest.spyOn(peg, "unset");
     jest.spyOn(peg, "replaceUsingCreds");
-    // MatrixClientPeg.get() is called a /lot/, so implement it with our own
+    // MatrixClientPeg.safeGet() is called a /lot/, so implement it with our own
     // fast stub function rather than a sinon stub
-    peg.get = function () {
-        return client;
-    };
+    peg.get = () => client;
+    peg.safeGet = () => client;
     MatrixClientBackedSettingsHandler.matrixClient = client;
     return client;
 }
@@ -92,12 +97,18 @@ export function createTestClient(): MatrixClient {
         getUserId: jest.fn().mockReturnValue("@userId:matrix.org"),
         getSafeUserId: jest.fn().mockReturnValue("@userId:matrix.org"),
         getUserIdLocalpart: jest.fn().mockResolvedValue("userId"),
-        getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
+        getUser: jest.fn().mockReturnValue({ on: jest.fn(), off: jest.fn() }),
+        getDevice: jest.fn(),
         getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
+        getStoredCrossSigningForUser: jest.fn(),
+        getStoredDevice: jest.fn(),
+        requestVerification: jest.fn(),
         deviceId: "ABCDEFGHI",
         getDevices: jest.fn().mockResolvedValue({ devices: [{ device_id: "ABCDEFGHI" }] }),
         getSessionId: jest.fn().mockReturnValue("iaszphgvfku"),
         credentials: { userId: "@userId:matrix.org" },
+        bootstrapCrossSigning: jest.fn(),
+        hasSecretStorageKey: jest.fn(),
 
         store: {
             getPendingEvents: jest.fn().mockResolvedValue([]),
@@ -111,6 +122,7 @@ export function createTestClient(): MatrixClient {
                 downloadKeys: jest.fn(),
             },
         },
+        getCrypto: jest.fn().mockReturnValue({ getUserDeviceInfo: jest.fn() }),
 
         getPushActionsForEvent: jest.fn(),
         getRoom: jest.fn().mockImplementation((roomId) => mkStubRoom(roomId, "My room", client)),
@@ -136,16 +148,17 @@ export function createTestClient(): MatrixClient {
         getTurnServers: jest.fn().mockReturnValue([]),
         getTurnServersExpiry: jest.fn().mockReturnValue(2 ^ 32),
         getThirdpartyUser: jest.fn().mockResolvedValue([]),
-        getAccountData: (type) => {
+        getAccountData: jest.fn().mockImplementation((type) => {
             return mkEvent({
-                user: undefined,
+                user: "@user:example.com",
                 room: undefined,
                 type,
                 event: true,
                 content: {},
             });
-        },
-        mxcUrlToHttp: (mxc) => `http://this.is.a.url/${mxc.substring(6)}`,
+        }),
+        mxcUrlToHttp: (mxc: string) => `http://this.is.a.url/${mxc.substring(6)}`,
+        scheduleAllGroupSessionsForBackup: jest.fn().mockResolvedValue(undefined),
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
         setRoomTopic: jest.fn(),
@@ -165,7 +178,8 @@ export function createTestClient(): MatrixClient {
         decryptEventIfNeeded: () => Promise.resolve(),
         isUserIgnored: jest.fn().mockReturnValue(false),
         getCapabilities: jest.fn().mockResolvedValue({}),
-        supportsExperimentalThreads: () => false,
+        supportsThreads: jest.fn().mockReturnValue(false),
+        supportsIntentionalMentions: () => false,
         getRoomUpgradeHistory: jest.fn().mockReturnValue([]),
         getOpenIdToken: jest.fn().mockResolvedValue(undefined),
         registerWithIdentityServer: jest.fn().mockResolvedValue({}),
@@ -176,6 +190,7 @@ export function createTestClient(): MatrixClient {
         getPushRules: jest.fn().mockResolvedValue(undefined),
         getPushers: jest.fn().mockResolvedValue({ pushers: [] }),
         getThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
+        bulkLookupThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
         setPusher: jest.fn().mockResolvedValue(undefined),
         setPushRuleEnabled: jest.fn().mockResolvedValue(undefined),
         setPushRuleActions: jest.fn().mockResolvedValue(undefined),
@@ -186,7 +201,7 @@ export function createTestClient(): MatrixClient {
         hasLazyLoadMembersEnabled: jest.fn().mockReturnValue(false),
         isInitialSyncComplete: jest.fn().mockReturnValue(true),
         downloadKeys: jest.fn(),
-        fetchRoomEvent: jest.fn(),
+        fetchRoomEvent: jest.fn().mockRejectedValue({}),
         makeTxnId: jest.fn().mockImplementation(() => `t${txnId++}`),
         sendToDevice: jest.fn().mockResolvedValue(undefined),
         queueToDevice: jest.fn().mockResolvedValue(undefined),
@@ -200,12 +215,33 @@ export function createTestClient(): MatrixClient {
             stopAllStreams: jest.fn(),
         } as unknown as MediaHandler),
         uploadContent: jest.fn(),
-        getEventMapper: () => (opts) => new MatrixEvent(opts),
+        getEventMapper: (_options?: MapperOpts) => (event: Partial<IEvent>) => new MatrixEvent(event),
         leaveRoomChain: jest.fn((roomId) => ({ [roomId]: null })),
         doesServerSupportLogoutDevices: jest.fn().mockReturnValue(true),
         requestPasswordEmailToken: jest.fn().mockRejectedValue({}),
         setPassword: jest.fn().mockRejectedValue({}),
         groupCallEventHandler: { groupCalls: new Map<string, GroupCall>() },
+        redactEvent: jest.fn(),
+
+        createMessagesRequest: jest.fn().mockResolvedValue({
+            chunk: [],
+        }),
+        sendEvent: jest.fn().mockImplementation((roomId, type, content) => {
+            return new MatrixEvent({
+                type,
+                sender: "@me:localhost",
+                content,
+                event_id: "$9999999999999999999999999999999999999999999",
+                room_id: roomId,
+            });
+        }),
+
+        searchUserDirectory: jest.fn().mockResolvedValue({ limited: false, results: [] }),
+        setDeviceVerified: jest.fn(),
+        joinRoom: jest.fn(),
+        getSyncStateData: jest.fn(),
+        getDehydratedDevice: jest.fn(),
+        exportRoomKeys: jest.fn(),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -230,6 +266,8 @@ type MakeEventPassThruProps = {
     skey?: string;
 };
 type MakeEventProps = MakeEventPassThruProps & {
+    /** If provided will be used as event Id. Else an Id is generated. */
+    id?: string;
     type: string;
     redacts?: string;
     content: IContent;
@@ -276,7 +314,7 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
         sender: opts.user,
         content: opts.content,
         prev_content: opts.prev_content,
-        event_id: "$" + Math.random() + "-" + Math.random(),
+        event_id: opts.id ?? "$" + Math.random() + "-" + Math.random(),
         origin_server_ts: opts.ts ?? 0,
         unsigned: opts.unsigned,
         redacts: opts.redacts,
@@ -430,6 +468,7 @@ export function mkRoomMember(roomId: string, userId: string, membership = "join"
         getAvatarUrl: () => {},
         getMxcAvatarUrl: () => {},
         getDMInviter: () => {},
+        off: () => {},
     } as unknown as RoomMember;
 }
 
@@ -440,6 +479,29 @@ export type MessageEventProps = MakeEventPassThruProps & {
 };
 
 /**
+ * Creates a "🙃" reaction for the given event.
+ * Uses the same room and user as for the event.
+ *
+ * @returns The reaction event
+ */
+export const mkReaction = (event: MatrixEvent, opts: Partial<MakeEventProps> = {}): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        room: event.getRoomId(),
+        type: EventType.Reaction,
+        user: event.getSender()!,
+        content: {
+            "m.relates_to": {
+                rel_type: RelationType.Annotation,
+                event_id: event.getId(),
+                key: "🙃",
+            },
+        },
+        ...opts,
+    });
+};
+
+/**
  * Create an m.room.message event.
  * @param {Object} opts Values for the message
  * @param {string} opts.room The room ID for the event.
@@ -447,16 +509,23 @@ export type MessageEventProps = MakeEventPassThruProps & {
  * @param {number} opts.ts The timestamp for the event.
  * @param {boolean} opts.event True to make a MatrixEvent.
  * @param {string=} opts.msg Optional. The content.body for the event.
+ * @param {string=} opts.format Optional. The content.format for the event.
+ * @param {string=} opts.formattedMsg Optional. The content.formatted_body for the event.
  * @return {Object|MatrixEvent} The event
  */
 export function mkMessage({
     msg,
+    format,
+    formattedMsg,
     relatesTo,
     ...opts
-}: MakeEventPassThruProps & {
-    room: Room["roomId"];
-    msg?: string;
-}): MatrixEvent {
+}: MakeEventPassThruProps &
+    Pick<MakeEventProps, "id"> & {
+        room: Room["roomId"];
+        msg?: string;
+        format?: string;
+        formattedMsg?: string;
+    }): MatrixEvent {
     if (!opts.room || !opts.user) {
         throw new Error("Missing .room or .user from options");
     }
@@ -467,6 +536,7 @@ export function mkMessage({
         content: {
             msgtype: "m.text",
             body: message,
+            ...(format && formattedMsg ? { format, formatted_body: formattedMsg } : {}),
             ["m.relates_to"]: relatesTo,
         },
     };
@@ -474,35 +544,17 @@ export function mkMessage({
     return mkEvent(event);
 }
 
-export function mkStubRoom(roomId: string = null, name: string, client: MatrixClient): Room {
-    const stubTimeline = { getEvents: () => [] } as unknown as EventTimeline;
+export function mkStubRoom(
+    roomId: string | null | undefined = null,
+    name: string | undefined,
+    client: MatrixClient | undefined,
+): Room {
+    const stubTimeline = { getEvents: (): MatrixEvent[] => [] } as unknown as EventTimeline;
     return {
-        roomId,
-        getReceiptsForEvent: jest.fn().mockReturnValue([]),
-        getMember: jest.fn().mockReturnValue({
-            userId: "@member:domain.bla",
-            name: "Member",
-            rawDisplayName: "Member",
-            roomId: roomId,
-            getAvatarUrl: () => "mxc://avatar.url/image.png",
-            getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
-        }),
-        getMembersWithMembership: jest.fn().mockReturnValue([]),
-        getJoinedMembers: jest.fn().mockReturnValue([]),
-        getJoinedMemberCount: jest.fn().mockReturnValue(1),
-        getInvitedAndJoinedMemberCount: jest.fn().mockReturnValue(1),
-        setUnreadNotificationCount: jest.fn(),
-        getMembers: jest.fn().mockReturnValue([]),
-        getPendingEvents: () => [],
-        getLiveTimeline: jest.fn().mockReturnValue(stubTimeline),
-        getUnfilteredTimelineSet: jest.fn(),
-        findEventById: () => null,
-        getAccountData: () => null,
-        hasMembershipState: () => null,
-        getVersion: () => "1",
-        shouldUpgradeToVersion: () => null,
-        getMyMembership: jest.fn().mockReturnValue("join"),
-        maySendMessage: jest.fn().mockReturnValue(true),
+        canInvite: jest.fn(),
+        client,
+        findThreadForEvent: jest.fn(),
+        createThreadsTimelineSets: jest.fn().mockReturnValue(new Promise(() => {})),
         currentState: {
             getStateEvents: jest.fn((_type, key) => (key === undefined ? [] : null)),
             getMember: jest.fn(),
@@ -515,64 +567,97 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
             on: jest.fn(),
             off: jest.fn(),
         } as unknown as RoomState,
-        tags: {},
-        setBlacklistUnverifiedDevices: jest.fn(),
-        on: jest.fn(),
-        off: jest.fn(),
-        removeListener: jest.fn(),
+        eventShouldLiveIn: jest.fn().mockReturnValue({ shouldLiveInRoom: true, shouldLiveInThread: false }),
+        fetchRoomThreads: jest.fn().mockReturnValue(Promise.resolve()),
+        findEventById: jest.fn().mockReturnValue(undefined),
+        findPredecessor: jest.fn().mockReturnValue({ roomId: "", eventId: null }),
+        getAccountData: (_: EventType | string) => undefined as MatrixEvent | undefined,
+        getAltAliases: jest.fn().mockReturnValue([]),
+        getAvatarUrl: () => "mxc://avatar.url/room.png",
+        getCanonicalAlias: jest.fn(),
         getDMInviter: jest.fn(),
+        getEventReadUpTo: jest.fn(() => null),
+        getInvitedAndJoinedMemberCount: jest.fn().mockReturnValue(1),
+        getJoinRule: jest.fn().mockReturnValue("invite"),
+        getJoinedMemberCount: jest.fn().mockReturnValue(1),
+        getJoinedMembers: jest.fn().mockReturnValue([]),
+        getLiveTimeline: jest.fn().mockReturnValue(stubTimeline),
+        getMember: jest.fn().mockReturnValue({
+            userId: "@member:domain.bla",
+            name: "Member",
+            rawDisplayName: "Member",
+            roomId: roomId,
+            getAvatarUrl: () => "mxc://avatar.url/image.png",
+            getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
+        }),
+        getMembers: jest.fn().mockReturnValue([]),
+        getMembersWithMembership: jest.fn().mockReturnValue([]),
+        getMxcAvatarUrl: () => "mxc://avatar.url/room.png",
+        getMyMembership: jest.fn().mockReturnValue("join"),
+        getPendingEvents: () => [] as MatrixEvent[],
+        getReceiptsForEvent: jest.fn().mockReturnValue([]),
+        getRecommendedVersion: jest.fn().mockReturnValue(Promise.resolve("")),
+        getThreads: jest.fn().mockReturnValue([]),
+        getType: jest.fn().mockReturnValue(undefined),
+        getUnfilteredTimelineSet: jest.fn(),
+        getUnreadNotificationCount: jest.fn(() => 0),
+        getVersion: jest.fn().mockReturnValue("1"),
+        hasMembershipState: () => false,
+        isElementVideoRoom: jest.fn().mockReturnValue(false),
+        isSpaceRoom: jest.fn().mockReturnValue(false),
+        loadMembersIfNeeded: jest.fn(),
+        maySendMessage: jest.fn().mockReturnValue(true),
+        myUserId: client?.getUserId(),
         name,
         normalizedName: normalize(name || ""),
-        getAvatarUrl: () => "mxc://avatar.url/room.png",
-        getMxcAvatarUrl: () => "mxc://avatar.url/room.png",
-        isSpaceRoom: jest.fn().mockReturnValue(false),
-        getType: jest.fn().mockReturnValue(undefined),
-        isElementVideoRoom: jest.fn().mockReturnValue(false),
-        getUnreadNotificationCount: jest.fn(() => 0),
-        getEventReadUpTo: jest.fn(() => null),
-        getCanonicalAlias: jest.fn(),
-        getAltAliases: jest.fn().mockReturnValue([]),
+        off: jest.fn(),
+        on: jest.fn(),
+        removeListener: jest.fn(),
+        roomId,
+        setBlacklistUnverifiedDevices: jest.fn(),
+        setUnreadNotificationCount: jest.fn(),
+        shouldUpgradeToVersion: (() => null) as () => string | null,
+        tags: {},
         timeline: [],
-        getJoinRule: jest.fn().mockReturnValue("invite"),
-        loadMembersIfNeeded: jest.fn(),
-        client,
-        myUserId: client?.getUserId(),
-        canInvite: jest.fn(),
-        getThreads: jest.fn().mockReturnValue([]),
-        eventShouldLiveIn: jest.fn().mockReturnValue({}),
-        createThreadsTimelineSets: jest.fn().mockReturnValue(new Promise(() => {})),
-        fetchRoomThreads: jest.fn().mockReturnValue(new Promise(() => {})),
     } as unknown as Room;
 }
 
-export function mkServerConfig(hsUrl, isUrl) {
-    return makeType(ValidatedServerConfig, {
+export function mkServerConfig(
+    hsUrl: string,
+    isUrl: string,
+    delegatedAuthentication?: ValidatedDelegatedAuthConfig,
+): ValidatedServerConfig {
+    return {
         hsUrl,
         hsName: "TEST_ENVIRONMENT",
         hsNameIsDifferent: false, // yes, we lie
         isUrl,
-    });
+        delegatedAuthentication,
+    } as ValidatedServerConfig;
 }
 
 // These methods make some use of some private methods on the AsyncStoreWithClient to simplify getting into a consistent
 // ready state without needing to wire up a dispatcher and pretend to be a js-sdk client.
 
-export const setupAsyncStoreWithClient = async <T = unknown>(store: AsyncStoreWithClient<T>, client: MatrixClient) => {
-    // @ts-ignore
+export const setupAsyncStoreWithClient = async <T extends Object = any>(
+    store: AsyncStoreWithClient<T>,
+    client: MatrixClient,
+) => {
+    // @ts-ignore protected access
     store.readyStore.useUnitTestClient(client);
-    // @ts-ignore
+    // @ts-ignore protected access
     await store.onReady();
 };
 
-export const resetAsyncStoreWithClient = async <T = unknown>(store: AsyncStoreWithClient<T>) => {
-    // @ts-ignore
+export const resetAsyncStoreWithClient = async <T extends Object = any>(store: AsyncStoreWithClient<T>) => {
+    // @ts-ignore protected access
     await store.onNotReady();
 };
 
 export const mockStateEventImplementation = (events: MatrixEvent[]) => {
     const stateMap = new EnhancedMap<string, Map<string, MatrixEvent>>();
     events.forEach((event) => {
-        stateMap.getOrCreate(event.getType(), new Map()).set(event.getStateKey(), event);
+        stateMap.getOrCreate(event.getType(), new Map()).set(event.getStateKey()!, event);
     });
 
     // recreate the overloading in RoomState
@@ -609,7 +694,7 @@ export const upsertRoomStateEvents = (room: Room, events: MatrixEvent[]): void =
         if (!acc.has(eventType)) {
             acc.set(eventType, new Map());
         }
-        acc.get(eventType).set(event.getStateKey(), event);
+        acc.get(eventType)?.set(event.getStateKey()!, event);
         return acc;
     }, room.currentState.events || new Map<string, Map<string, MatrixEvent>>());
 
@@ -643,14 +728,41 @@ export const mkSpace = (
     return space;
 };
 
-export const mkRoomMemberJoinEvent = (user: string, room: string): MatrixEvent => {
+export const mkRoomMemberJoinEvent = (user: string, room: string, content?: IContent): MatrixEvent => {
     return mkEvent({
         event: true,
         type: EventType.RoomMember,
         content: {
             membership: "join",
+            ...content,
         },
         skey: user,
+        user,
+        room,
+    });
+};
+
+export const mkRoomCanonicalAliasEvent = (userId: string, roomId: string, alias: string): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        type: EventType.RoomCanonicalAlias,
+        content: {
+            alias,
+        },
+        skey: "",
+        user: userId,
+        room: roomId,
+    });
+};
+
+export const mkThirdPartyInviteEvent = (user: string, displayName: string, room: string): MatrixEvent => {
+    return mkEvent({
+        event: true,
+        type: EventType.RoomThirdPartyInvite,
+        content: {
+            display_name: displayName,
+        },
+        skey: "test" + Math.random(),
         user,
         room,
     });
@@ -666,3 +778,25 @@ export const mkPusher = (extra: Partial<IPusher> = {}): IPusher => ({
     pushkey: "pushpush",
     ...extra,
 });
+
+/** Add a mute rule for a room. */
+export function muteRoom(room: Room): void {
+    const client = room.client!;
+    client.pushRules = client.pushRules ?? ({ global: [] } as IPushRules);
+    client.pushRules.global = client.pushRules.global ?? {};
+    client.pushRules.global.override = [
+        {
+            default: true,
+            enabled: true,
+            rule_id: "rule_id",
+            conditions: [
+                {
+                    kind: ConditionKind.EventMatch,
+                    key: "room_id",
+                    pattern: room.roomId,
+                },
+            ],
+            actions: [],
+        },
+    ];
+}

@@ -37,24 +37,9 @@ import TextWithTooltip from "../components/views/elements/TextWithTooltip";
 type GENERIC_WIDGET_KIND = "generic"; // eslint-disable-line @typescript-eslint/naming-convention
 const GENERIC_WIDGET_KIND: GENERIC_WIDGET_KIND = "generic";
 
-interface ISendRecvStaticCapText {
-    // @ts-ignore - TS wants the key to be a string, but we know better
-    [eventType: EventType]: {
-        // @ts-ignore - TS wants the key to be a string, but we know better
-        [widgetKind: WidgetKind | GENERIC_WIDGET_KIND]: {
-            // @ts-ignore - TS wants the key to be a string, but we know better
-            [direction: EventDirection]: string;
-        };
-    };
-}
-
-interface IStaticCapText {
-    // @ts-ignore - TS wants the key to be a string, but we know better
-    [capability: Capability]: {
-        // @ts-ignore - TS wants the key to be a string, but we know better
-        [widgetKind: WidgetKind | GENERIC_WIDGET_KIND]: string;
-    };
-}
+type SendRecvStaticCapText = Partial<
+    Record<EventType | string, Partial<Record<WidgetKind | GENERIC_WIDGET_KIND, Record<EventDirection, string>>>>
+>;
 
 export interface TranslatedCapabilityText {
     primary: TranslatedString;
@@ -62,7 +47,7 @@ export interface TranslatedCapabilityText {
 }
 
 export class CapabilityText {
-    private static simpleCaps: IStaticCapText = {
+    private static simpleCaps: Record<Capability, Partial<Record<WidgetKind | GENERIC_WIDGET_KIND, string>>> = {
         [MatrixCapabilities.AlwaysOnScreen]: {
             [WidgetKind.Room]: _td("Remain on your screen when viewing another room, when running"),
             [GENERIC_WIDGET_KIND]: _td("Remain on your screen while running"),
@@ -79,7 +64,7 @@ export class CapabilityText {
         },
     };
 
-    private static stateSendRecvCaps: ISendRecvStaticCapText = {
+    private static stateSendRecvCaps: SendRecvStaticCapText = {
         [EventType.RoomTopic]: {
             [WidgetKind.Room]: {
                 [EventDirection.Send]: _td("Change the topic of this room"),
@@ -122,7 +107,7 @@ export class CapabilityText {
         },
     };
 
-    private static nonStateSendRecvCaps: ISendRecvStaticCapText = {
+    private static nonStateSendRecvCaps: SendRecvStaticCapText = {
         [EventType.Sticker]: {
             [WidgetKind.Room]: {
                 [EventDirection.Send]: _td("Send stickers to this room as you"),
@@ -150,7 +135,7 @@ export class CapabilityText {
         // First see if we have a super simple line of text to provide back
         if (CapabilityText.simpleCaps[capability]) {
             const textForKind = CapabilityText.simpleCaps[capability];
-            if (textForKind[kind]) return { primary: _t(textForKind[kind]) };
+            if (textForKind[kind]) return { primary: _t(textForKind[kind]!) };
             if (textForKind[GENERIC_WIDGET_KIND]) return { primary: _t(textForKind[GENERIC_WIDGET_KIND]) };
 
             // ... we'll fall through to the generic capability processing at the end of this
@@ -164,7 +149,7 @@ export class CapabilityText {
                 return { primary: _t("The above, but in any room you are joined or invited to as well") };
             } else {
                 const roomId = getTimelineRoomIDFromCapability(capability);
-                const room = MatrixClientPeg.get().getRoom(roomId);
+                const room = MatrixClientPeg.safeGet().getRoom(roomId);
                 return {
                     primary: _t(
                         "The above, but in <Room /> as well",
@@ -210,8 +195,8 @@ export class CapabilityText {
                     : CapabilityText.nonStateSendRecvCaps;
             if (evSendRecv[eventCap.eventType]) {
                 const textForKind = evSendRecv[eventCap.eventType];
-                const textForDirection = textForKind[kind] || textForKind[GENERIC_WIDGET_KIND];
-                if (textForDirection && textForDirection[eventCap.direction]) {
+                const textForDirection = textForKind?.[kind] || textForKind?.[GENERIC_WIDGET_KIND];
+                if (textForDirection?.[eventCap.direction]) {
                     return {
                         primary: _t(textForDirection[eventCap.direction]),
                         // no byline because we would have already represented the event properly

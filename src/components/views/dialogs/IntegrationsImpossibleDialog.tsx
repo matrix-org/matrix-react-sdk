@@ -18,18 +18,19 @@ import React from "react";
 
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 
-interface IProps extends IDialogProps {}
+interface IProps {
+    onFinished(): void;
+}
 
 export default class IntegrationsImpossibleDialog extends React.Component<IProps> {
     private onAcknowledgeClick = (): void => {
         this.props.onFinished();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const brand = SdkConfig.get().brand;
 
         return (

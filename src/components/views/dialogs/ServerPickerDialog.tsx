@@ -14,20 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
+import React, { ChangeEvent, createRef, SyntheticEvent } from "react";
 import { AutoDiscovery } from "matrix-js-sdk/src/autodiscovery";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import BaseDialog from "./BaseDialog";
-import { _t } from "../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import SdkConfig from "../../../SdkConfig";
 import Field from "../elements/Field";
 import StyledRadioButton from "../elements/StyledRadioButton";
 import TextWithTooltip from "../elements/TextWithTooltip";
-import withValidation, { IFieldState } from "../elements/Validation";
+import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
+import ExternalLink from "../elements/ExternalLink";
 
 interface IProps {
     title?: string;
@@ -43,13 +44,13 @@ interface IState {
 export default class ServerPickerDialog extends React.PureComponent<IProps, IState> {
     private readonly defaultServer: ValidatedServerConfig;
     private readonly fieldRef = createRef<Field>();
-    private validatedConf: ValidatedServerConfig;
+    private validatedConf?: ValidatedServerConfig;
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         const config = SdkConfig.get();
-        this.defaultServer = config["validated_server_config"];
+        this.defaultServer = config["validated_server_config"]!;
         const { serverConfig } = this.props;
 
         let otherHomeserver = "";
@@ -67,15 +68,15 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         };
     }
 
-    private onDefaultChosen = () => {
+    private onDefaultChosen = (): void => {
         this.setState({ defaultChosen: true });
     };
 
-    private onOtherChosen = () => {
+    private onOtherChosen = (): void => {
         this.setState({ defaultChosen: false });
     };
 
-    private onHomeserverChange = (ev) => {
+    private onHomeserverChange = (ev: ChangeEvent<HTMLInputElement>): void => {
         this.setState({ otherHomeserver: ev.target.value });
     };
 
@@ -83,8 +84,8 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
     // If for some reason someone enters "matrix.org" for a URL, we could do a lookup to
     // find their homeserver without demanding they use "https://matrix.org"
     private validate = withValidation<this, { error?: string }>({
-        deriveData: async ({ value }) => {
-            let hsUrl = value.trim(); // trim to account for random whitespace
+        deriveData: async ({ value }): Promise<{ error?: string }> => {
+            let hsUrl = (value ?? "").trim(); // trim to account for random whitespace
 
             // if the URL has no protocol, try validate it as a serverName via well-known
             if (!hsUrl.includes("://")) {
@@ -112,7 +113,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                 const stateForError = AutoDiscoveryUtils.authComponentStateForError(e);
                 if (stateForError.serverErrorIsFatal) {
                     let error = _t("Unable to validate homeserver");
-                    if (e.translatedMessage) {
+                    if (e instanceof UserFriendlyError && e.translatedMessage) {
                         error = e.translatedMessage;
                     }
                     return { error };
@@ -120,7 +121,11 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
 
                 // try to carry on anyway
                 try {
-                    this.validatedConf = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl, null, true);
+                    this.validatedConf = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
+                        hsUrl,
+                        undefined,
+                        true,
+                    );
                     return {};
                 } catch (e) {
                     logger.error(e);
@@ -136,35 +141,40 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
             },
             {
                 key: "valid",
-                test: async function ({ value }, { error }) {
+                test: async function ({ value }, { error }): Promise<boolean> {
                     if (!value) return true;
                     return !error;
                 },
                 invalid: function ({ error }) {
-                    return error;
+                    return error ?? null;
                 },
             },
         ],
     });
 
-    private onHomeserverValidate = (fieldState: IFieldState) => this.validate(fieldState);
+    private onHomeserverValidate = (fieldState: IFieldState): Promise<IValidationResult> => this.validate(fieldState);
 
-    private onSubmit = async (ev) => {
+    private onSubmit = async (ev: SyntheticEvent): Promise<void> => {
         ev.preventDefault();
 
-        const valid = await this.fieldRef.current.validate({ allowEmpty: false });
-
-        if (!valid && !this.state.defaultChosen) {
-            this.fieldRef.current.focus();
-            this.fieldRef.current.validate({ allowEmpty: false, focused: true });
+        if (this.state.defaultChosen) {
+            this.props.onFinished(this.defaultServer);
             return;
         }
 
-        this.props.onFinished(this.state.defaultChosen ? this.defaultServer : this.validatedConf);
+        const valid = await this.fieldRef.current?.validate({ allowEmpty: false });
+
+        if (!valid) {
+            this.fieldRef.current?.focus();
+            this.fieldRef.current?.validate({ allowEmpty: false, focused: true });
+            return;
+        }
+
+        this.props.onFinished(this.validatedConf);
     };
 
-    public render() {
-        let text;
+    public render(): React.ReactNode {
+        let text: string | undefined;
         if (this.defaultServer.hsName === "matrix.org") {
             text = _t("Matrix.org is the biggest public homeserver in the world, so it's a good place for many.");
         }
@@ -197,6 +207,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                         value="true"
                         checked={this.state.defaultChosen}
                         onChange={this.onDefaultChosen}
+                        data-testid="defaultHomeserver"
                     >
                         {defaultServerName}
                     </StyledRadioButton>
@@ -232,9 +243,13 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                     </AccessibleButton>
 
                     <h2>{_t("Learn more")}</h2>
-                    <a href="https://matrix.org/faq/#what-is-a-homeserver%3F" target="_blank" rel="noreferrer noopener">
+                    <ExternalLink
+                        href="https://matrix.org/faq/#what-is-a-homeserver%3F"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                    >
                         {_t("About homeservers")}
-                    </a>
+                    </ExternalLink>
                 </form>
             </BaseDialog>
         );

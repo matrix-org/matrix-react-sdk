@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
+import classNames from "classnames";
 import { IPusher } from "matrix-js-sdk/src/@types/PushRules";
 import { PUSHER_ENABLED } from "matrix-js-sdk/src/@types/event";
 import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
@@ -30,14 +31,16 @@ import { ExtendedDevice } from "./types";
 
 interface Props {
     device: ExtendedDevice;
-    pusher?: IPusher | undefined;
-    localNotificationSettings?: LocalNotificationSettings | undefined;
+    pusher?: IPusher;
+    localNotificationSettings?: LocalNotificationSettings;
     isSigningOut: boolean;
     onVerifyDevice?: () => void;
     onSignOutDevice: () => void;
     saveDeviceName: (deviceName: string) => Promise<void>;
-    setPushNotifications?: (deviceId: string, enabled: boolean) => Promise<void> | undefined;
-    supportsMSC3881?: boolean | undefined;
+    setPushNotifications?: (deviceId: string, enabled: boolean) => Promise<void>;
+    supportsMSC3881?: boolean;
+    className?: string;
+    isCurrentDevice?: boolean;
 }
 
 interface MetadataTable {
@@ -56,6 +59,8 @@ const DeviceDetails: React.FC<Props> = ({
     saveDeviceName,
     setPushNotifications,
     supportsMSC3881,
+    className,
+    isCurrentDevice,
 }) => {
     const metadata: MetadataTable[] = [
         {
@@ -100,23 +105,23 @@ const DeviceDetails: React.FC<Props> = ({
 
     const showPushNotificationSection = !!pusher || !!localNotificationSettings;
 
-    function isPushNotificationsEnabled(pusher: IPusher, notificationSettings: LocalNotificationSettings): boolean {
-        if (pusher) return pusher[PUSHER_ENABLED.name];
+    function isPushNotificationsEnabled(pusher?: IPusher, notificationSettings?: LocalNotificationSettings): boolean {
+        if (pusher) return !!pusher[PUSHER_ENABLED.name];
         if (localNotificationSettings) return !localNotificationSettings.is_silenced;
         return true;
     }
 
-    function isCheckboxDisabled(pusher: IPusher, notificationSettings: LocalNotificationSettings): boolean {
+    function isCheckboxDisabled(pusher?: IPusher, notificationSettings?: LocalNotificationSettings): boolean {
         if (localNotificationSettings) return false;
         if (pusher && !supportsMSC3881) return true;
         return false;
     }
 
     return (
-        <div className="mx_DeviceDetails" data-testid={`device-detail-${device.device_id}`}>
+        <div className={classNames("mx_DeviceDetails", className)} data-testid={`device-detail-${device.device_id}`}>
             <section className="mx_DeviceDetails_section">
                 <DeviceDetailHeading device={device} saveDeviceName={saveDeviceName} />
-                <DeviceVerificationStatusCard device={device} onVerifyDevice={onVerifyDevice} />
+                <DeviceVerificationStatusCard device={device} onVerifyDevice={onVerifyDevice} isCurrentDevice />
             </section>
             <section className="mx_DeviceDetails_section">
                 <p className="mx_DeviceDetails_sectionHeading">{_t("Session details")}</p>

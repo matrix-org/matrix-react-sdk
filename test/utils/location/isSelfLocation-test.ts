@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { TEXT_NODE_TYPE } from "matrix-js-sdk/src/@types/extensible_events";
+import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
 import {
     ILocationContent,
     LocationAssetType,
@@ -38,11 +38,11 @@ describe("isSelfLocation", () => {
             msgtype: "m.location",
             geo_uri: "",
             [M_LOCATION.name]: { uri: "" },
-            [TEXT_NODE_TYPE.name]: "",
+            [M_TEXT.name]: "",
             [M_TIMESTAMP.name]: 0,
             // Note: no m.asset!
-        };
-        expect(isSelfLocation(content as ILocationContent)).toBe(true);
+        } as unknown as ILocationContent;
+        expect(isSelfLocation(content)).toBe(true);
     });
 
     it("Returns true for a missing m.asset type", () => {
@@ -51,13 +51,13 @@ describe("isSelfLocation", () => {
             msgtype: "m.location",
             geo_uri: "",
             [M_LOCATION.name]: { uri: "" },
-            [TEXT_NODE_TYPE.name]: "",
+            [M_TEXT.name]: "",
             [M_TIMESTAMP.name]: 0,
             [M_ASSET.name]: {
                 // Note: no type!
             },
-        };
-        expect(isSelfLocation(content as ILocationContent)).toBe(true);
+        } as unknown as ILocationContent;
+        expect(isSelfLocation(content)).toBe(true);
     });
 
     it("Returns false for an unknown asset type", () => {

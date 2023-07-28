@@ -16,20 +16,21 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { HTMLAttributes, ReactHTML, WheelEvent } from "react";
+import React, { HTMLAttributes, ReactHTML, ReactNode, WheelEvent } from "react";
 
 type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
     JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
 type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<Omit<JSX.IntrinsicElements[T], "ref">>;
 
-export type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
-    element?: T;
+export type IProps<T extends keyof JSX.IntrinsicElements> = Omit<DynamicHtmlElementProps<T>, "onScroll"> & {
+    element: T;
     className?: string;
     onScroll?: (event: Event) => void;
     onWheel?: (event: WheelEvent) => void;
     style?: React.CSSProperties;
     tabIndex?: number;
-    wrappedRef?: (ref: HTMLDivElement) => void;
+    wrappedRef?: (ref: HTMLDivElement | null) => void;
+    children: ReactNode;
 };
 
 export default class AutoHideScrollbar<T extends keyof JSX.IntrinsicElements> extends React.Component<IProps<T>> {
@@ -39,7 +40,7 @@ export default class AutoHideScrollbar<T extends keyof JSX.IntrinsicElements> ex
 
     public readonly containerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         if (this.containerRef.current && this.props.onScroll) {
             // Using the passive option to not block the main thread
             // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
@@ -49,13 +50,15 @@ export default class AutoHideScrollbar<T extends keyof JSX.IntrinsicElements> ex
         this.props.wrappedRef?.(this.containerRef.current);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         if (this.containerRef.current && this.props.onScroll) {
             this.containerRef.current.removeEventListener("scroll", this.props.onScroll);
         }
+
+        this.props.wrappedRef?.(null);
     }
 
-    public render() {
+    public render(): React.ReactNode {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { element, className, onScroll, tabIndex, wrappedRef, children, ...otherProps } = this.props;
 

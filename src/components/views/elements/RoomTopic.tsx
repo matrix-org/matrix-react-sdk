@@ -29,17 +29,17 @@ import InfoDialog from "../dialogs/InfoDialog";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton from "./AccessibleButton";
-import { Linkify } from "./Linkify";
 import TooltipTarget from "./TooltipTarget";
-import { topicToHtml } from "../../../HtmlUtils";
+import { Linkify, topicToHtml } from "../../../HtmlUtils";
+import { tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 
 interface IProps extends React.HTMLProps<HTMLDivElement> {
-    room?: Room;
+    room: Room;
 }
 
-export default function RoomTopic({ room, ...props }: IProps) {
+export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
     const client = useContext(MatrixClientContext);
-    const ref = useRef<HTMLDivElement>();
+    const ref = useRef<HTMLDivElement>(null);
 
     const topic = useTopic(room);
     const body = topicToHtml(topic?.text, topic?.html, ref);
@@ -47,12 +47,22 @@ export default function RoomTopic({ room, ...props }: IProps) {
     const onClick = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
             props.onClick?.(e);
+
             const target = e.target as HTMLElement;
-            if (target.tagName.toUpperCase() === "A") {
+
+            if (target.tagName.toUpperCase() !== "A") {
+                dis.fire(Action.ShowRoomTopic);
                 return;
             }
 
-            dis.fire(Action.ShowRoomTopic);
+            const anchor = e.target as HTMLLinkElement;
+            const localHref = tryTransformPermalinkToLocalHref(anchor.href);
+
+            if (localHref !== anchor.href) {
+                // it could be converted to a localHref -> therefore handle locally
+                e.preventDefault();
+                window.location.hash = localHref;
+            }
         },
         [props],
     );
@@ -63,7 +73,7 @@ export default function RoomTopic({ room, ...props }: IProps) {
 
     useDispatcher(dis, (payload) => {
         if (payload.action === Action.ShowRoomTopic) {
-            const canSetTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, client.getUserId());
+            const canSetTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, client.getSafeUserId());
             const body = topicToHtml(topic?.text, topic?.html, ref, true);
 
             const modal = Modal.createDialog(InfoDialog, {
@@ -71,12 +81,14 @@ export default function RoomTopic({ room, ...props }: IProps) {
                 description: (
                     <div>
                         <Linkify
-                            as="p"
-                            onClick={(ev: MouseEvent) => {
-                                if ((ev.target as HTMLElement).tagName.toUpperCase() === "A") {
-                                    modal.close();
-                                }
+                            options={{
+                                attributes: {
+                                    onClick() {
+                                        modal.close();
+                                    },
+                                },
                             }}
+                            as="p"
                         >
                             {body}
                         </Linkify>
@@ -102,10 +114,17 @@ export default function RoomTopic({ room, ...props }: IProps) {
     const className = classNames(props.className, "mx_RoomTopic");
 
     return (
-        <div {...props} ref={ref} onClick={onClick} dir="auto" className={className}>
-            <TooltipTarget label={_t("Click to read topic")} alignment={Alignment.Bottom} ignoreHover={ignoreHover}>
-                <Linkify>{body}</Linkify>
-            </TooltipTarget>
-        </div>
+        <TooltipTarget
+            {...props}
+            ref={ref}
+            onClick={onClick}
+            dir="auto"
+            tooltipTargetClassName={className}
+            label={_t("Click to read topic")}
+            alignment={Alignment.Bottom}
+            ignoreHover={ignoreHover}
+        >
+            <Linkify>{body}</Linkify>
+        </TooltipTarget>
     );
 }

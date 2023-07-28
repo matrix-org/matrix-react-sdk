@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/matrix";
+import { mocked } from "jest-mock";
+import { MatrixError, Room } from "matrix-js-sdk/src/matrix";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 import { RoomViewStore } from "../../src/stores/RoomViewStore";
 import { Action } from "../../src/dispatcher/actions";
@@ -79,6 +81,7 @@ jest.mock("../../src/utils/DMRoomMap", () => {
 describe("RoomViewStore", function () {
     const userId = "@alice:server";
     const roomId = "!randomcharacters:aser.ver";
+    const roomId2 = "!room2:example.com";
     // we need to change the alias to ensure cache misses as the cache exists
     // through all tests.
     let alias = "#somealias2:aser.ver";
@@ -87,9 +90,16 @@ describe("RoomViewStore", function () {
         getRoom: jest.fn(),
         getRoomIdForAlias: jest.fn(),
         isGuest: jest.fn(),
-        getSafeUserId: jest.fn(),
+        getUserId: jest.fn().mockReturnValue(userId),
+        getSafeUserId: jest.fn().mockReturnValue(userId),
+        getDeviceId: jest.fn().mockReturnValue("ABC123"),
+        sendStateEvent: jest.fn().mockResolvedValue({}),
+        supportsThreads: jest.fn(),
+        isInitialSyncComplete: jest.fn().mockResolvedValue(false),
+        relations: jest.fn(),
     });
     const room = new Room(roomId, mockClient, userId);
+    const room2 = new Room(roomId2, mockClient, userId);
 
     const viewCall = async (): Promise<void> => {
         dis.dispatch<ViewRoomPayload>({
@@ -110,7 +120,11 @@ describe("RoomViewStore", function () {
         jest.clearAllMocks();
         mockClient.credentials = { userId: userId };
         mockClient.joinRoom.mockResolvedValue(room);
-        mockClient.getRoom.mockReturnValue(room);
+        mockClient.getRoom.mockImplementation((roomId: string): Room | null => {
+            if (roomId === room.roomId) return room;
+            if (roomId === room2.roomId) return room2;
+            return null;
+        });
         mockClient.isGuest.mockReturnValue(false);
         mockClient.getSafeUserId.mockReturnValue(userId);
 
@@ -118,10 +132,11 @@ describe("RoomViewStore", function () {
         dis = new MatrixDispatcher();
         slidingSyncManager = new MockSlidingSyncManager();
         stores = new TestSdkContext();
+        stores.client = mockClient;
         stores._SlidingSyncManager = slidingSyncManager;
         stores._PosthogAnalytics = new MockPosthogAnalytics();
         stores._SpaceStore = new MockSpaceStore();
-        stores._VoiceBroadcastPlaybacksStore = new VoiceBroadcastPlaybacksStore();
+        stores._VoiceBroadcastPlaybacksStore = new VoiceBroadcastPlaybacksStore(stores.voiceBroadcastRecordingsStore);
         roomViewStore = new RoomViewStore(dis, stores);
         stores._RoomViewStore = roomViewStore;
     });
@@ -142,7 +157,6 @@ describe("RoomViewStore", function () {
     });
 
     it("emits ActiveRoomChanged when the viewed room changes", async () => {
-        const roomId2 = "!roomid:2";
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
         let payload = (await untilDispatch(Action.ActiveRoomChanged, dis)) as ActiveRoomChangedPayload;
         expect(payload.newRoomId).toEqual(roomId);
@@ -155,7 +169,6 @@ describe("RoomViewStore", function () {
     });
 
     it("invokes room activity listeners when the viewed room changes", async () => {
-        const roomId2 = "!roomid:2";
         const callback = jest.fn();
         roomViewStore.addRoomListener(roomId, callback);
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
@@ -225,7 +238,6 @@ describe("RoomViewStore", function () {
     });
 
     it("swaps to the replied event room if it is not the current room", async () => {
-        const roomId2 = "!room2:bar";
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
         await untilDispatch(Action.ActiveRoomChanged, dis);
         const replyToEvent = {
@@ -236,6 +248,28 @@ describe("RoomViewStore", function () {
         expect(roomViewStore.getQuotingEvent()).toEqual(replyToEvent);
         expect(roomViewStore.getRoomId()).toEqual(roomId2);
     });
+
+    it("should ignore reply_to_event for Thread panels", async () => {
+        expect(roomViewStore.getQuotingEvent()).toBeFalsy();
+        const replyToEvent = {
+            getRoomId: () => roomId2,
+        };
+        dis.dispatch({ action: "reply_to_event", event: replyToEvent, context: TimelineRenderingType.Thread });
+        await sleep(100);
+        expect(roomViewStore.getQuotingEvent()).toBeFalsy();
+    });
+
+    it.each([TimelineRenderingType.Room, TimelineRenderingType.File, TimelineRenderingType.Notification])(
+        "Should respect reply_to_event for %s rendering context",
+        async (context) => {
+            const replyToEvent = {
+                getRoomId: () => roomId,
+            };
+            dis.dispatch({ action: "reply_to_event", event: replyToEvent, context });
+            await untilDispatch(Action.ViewRoom, dis);
+            expect(roomViewStore.getQuotingEvent()).toEqual(replyToEvent);
+        },
+    );
 
     it("removes the roomId on ViewHomePage", async () => {
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
@@ -251,6 +285,29 @@ describe("RoomViewStore", function () {
         await viewCall();
     });
 
+    it("should display an error message when the room is unreachable via the roomId", async () => {
+        // When
+        // View and wait for the room
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        await untilDispatch(Action.ActiveRoomChanged, dis);
+        // Generate error to display the expected error message
+        const error = new MatrixError(undefined, 404);
+        roomViewStore.showJoinRoomError(error, roomId);
+
+        // Check the modal props
+        expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
+    });
+
+    it("should display the generic error message when the roomId doesnt match", async () => {
+        // When
+        // Generate error to display the expected error message
+        const error = new MatrixError({ error: "my 404 error" }, 404);
+        roomViewStore.showJoinRoomError(error, roomId);
+
+        // Check the modal props
+        expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
+    });
+
     describe("when listening to a voice broadcast", () => {
         let voiceBroadcastPlayback: VoiceBroadcastPlayback;
 
@@ -263,6 +320,7 @@ describe("RoomViewStore", function () {
                     "d42",
                 ),
                 mockClient,
+                stores.voiceBroadcastRecordingsStore,
             );
             stores.voiceBroadcastPlaybacksStore.setCurrent(voiceBroadcastPlayback);
             jest.spyOn(voiceBroadcastPlayback, "pause").mockImplementation();
@@ -294,6 +352,41 @@ describe("RoomViewStore", function () {
             await viewCall();
             expect(Modal.createDialog).toMatchSnapshot();
             expect(roomViewStore.isViewingCall()).toBe(false);
+        });
+
+        describe("and viewing a room with a broadcast", () => {
+            beforeEach(async () => {
+                const broadcastEvent = mkVoiceBroadcastInfoStateEvent(
+                    roomId2,
+                    VoiceBroadcastInfoState.Started,
+                    mockClient.getSafeUserId(),
+                    "ABC123",
+                );
+                room2.addLiveEvents([broadcastEvent]);
+
+                stores.voiceBroadcastPlaybacksStore.getByInfoEvent(broadcastEvent, mockClient);
+                dis.dispatch({ action: Action.ViewRoom, room_id: roomId2 });
+                await untilDispatch(Action.ActiveRoomChanged, dis);
+            });
+
+            it("should continue recording", () => {
+                expect(stores.voiceBroadcastPlaybacksStore.getCurrent()).toBeNull();
+                expect(stores.voiceBroadcastRecordingsStore.getCurrent()?.getState()).toBe(
+                    VoiceBroadcastInfoState.Started,
+                );
+            });
+
+            describe("and stopping the recording", () => {
+                beforeEach(async () => {
+                    await stores.voiceBroadcastRecordingsStore.getCurrent()?.stop();
+                    // check test precondition
+                    expect(stores.voiceBroadcastRecordingsStore.getCurrent()).toBeNull();
+                });
+
+                it("should view the broadcast", () => {
+                    expect(stores.voiceBroadcastPlaybacksStore.getCurrent()?.infoEvent.getRoomId()).toBe(roomId2);
+                });
+            });
         });
     });
 

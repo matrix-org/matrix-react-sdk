@@ -18,7 +18,8 @@ import React, { createRef } from "react";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
+import Toolbar from "../../../accessibility/Toolbar";
 
 export enum Formatting {
     Bold = "bold",
@@ -46,12 +47,12 @@ export default class MessageComposerFormatBar extends React.PureComponent<IProps
         this.state = { visible: false };
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const classes = classNames("mx_MessageComposerFormatBar", {
             mx_MessageComposerFormatBar_shown: this.state.visible,
         });
         return (
-            <div className={classes} ref={this.formatBarRef}>
+            <Toolbar className={classes} ref={this.formatBarRef} aria-label={_t("Formatting")}>
                 <FormatButton
                     label={_t("Bold")}
                     onClick={() => this.props.onAction(Formatting.Bold)}
@@ -93,12 +94,12 @@ export default class MessageComposerFormatBar extends React.PureComponent<IProps
                     shortcut={this.props.shortcuts.insert_link}
                     visible={this.state.visible}
                 />
-            </div>
+            </Toolbar>
         );
     }
 
     public showAt(selectionRect: DOMRect): void {
-        if (!this.formatBarRef.current) return;
+        if (!this.formatBarRef.current?.parentElement) return;
 
         this.setState({ visible: true });
         const parentRect = this.formatBarRef.current.parentElement.getBoundingClientRect();
@@ -124,7 +125,7 @@ interface IFormatButtonProps {
 }
 
 class FormatButton extends React.PureComponent<IFormatButtonProps> {
-    public render() {
+    public render(): React.ReactNode {
         const className = `mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIcon${this.props.icon}`;
         let shortcut;
         if (this.props.shortcut) {
@@ -140,7 +141,7 @@ class FormatButton extends React.PureComponent<IFormatButtonProps> {
         // element="button" and type="button" are necessary for the buttons to work on WebKit,
         // otherwise the text is deselected before onClick can ever be called
         return (
-            <AccessibleTooltipButton
+            <RovingAccessibleTooltipButton
                 element="button"
                 type="button"
                 onClick={this.props.onClick}

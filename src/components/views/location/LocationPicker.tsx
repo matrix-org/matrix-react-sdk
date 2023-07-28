@@ -23,10 +23,9 @@ import { ClientEvent, IClientWellKnown } from "matrix-js-sdk/src/client";
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import Modal from "../../../Modal";
-import SdkConfig from "../../../SdkConfig";
 import { tileServerFromWellKnown } from "../../../utils/WellKnownUtils";
 import { GenericPosition, genericPositionFromGeolocation, getGeoUri } from "../../../utils/beacon";
-import { LocationShareError, findMapStyleUrl } from "../../../utils/location";
+import { LocationShareError, findMapStyleUrl, positionFailureMessage } from "../../../utils/location";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import { MapError } from "./MapError";
@@ -53,9 +52,9 @@ const isSharingOwnLocation = (shareType: LocationShareType): boolean =>
 class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
-    private map?: maplibregl.Map = null;
-    private geolocate?: maplibregl.GeolocateControl = null;
-    private marker?: maplibregl.Marker = null;
+    private map?: maplibregl.Map;
+    private geolocate?: maplibregl.GeolocateControl;
+    private marker?: maplibregl.Marker;
 
     public constructor(props: ILocationPickerProps) {
         super(props);
@@ -67,17 +66,17 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         };
     }
 
-    private getMarkerId = () => {
+    private getMarkerId = (): string => {
         return "mx_MLocationPicker_marker";
     };
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.context.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
 
         try {
             this.map = new maplibregl.Map({
                 container: "mx_LocationPicker_map",
-                style: findMapStyleUrl(),
+                style: findMapStyleUrl(this.context),
                 center: [0, 0],
                 zoom: 1,
             });
@@ -94,14 +93,14 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
 
             this.map.on("error", (e) => {
                 logger.error(
-                    "Failed to load map: check map_style_url in config.json " + "has a valid URL and API key",
+                    "Failed to load map: check map_style_url in config.json has a valid URL and API key",
                     e.error,
                 );
                 this.setState({ error: LocationShareError.MapStyleUrlNotReachable });
             });
 
             this.map.on("load", () => {
-                this.geolocate.trigger();
+                this.geolocate?.trigger();
             });
 
             this.geolocate.on("error", this.onGeolocateError);
@@ -120,39 +119,42 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
             }
         } catch (e) {
             logger.error("Failed to render map", e);
-            const errorType =
-                e?.message === LocationShareError.MapStyleUrlNotConfigured
-                    ? LocationShareError.MapStyleUrlNotConfigured
-                    : LocationShareError.Default;
+            const errorMessage = (e as Error)?.message;
+            let errorType;
+            if (errorMessage === LocationShareError.MapStyleUrlNotConfigured)
+                errorType = LocationShareError.MapStyleUrlNotConfigured;
+            else if (errorMessage.includes("Failed to initialize WebGL"))
+                errorType = LocationShareError.WebGLNotEnabled;
+            else errorType = LocationShareError.Default;
             this.setState({ error: errorType });
         }
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.geolocate?.off("error", this.onGeolocateError);
         this.geolocate?.off("geolocate", this.onGeolocate);
         this.map?.off("click", this.onClick);
         this.context.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
     }
 
-    private addMarkerToMap = () => {
+    private addMarkerToMap = (): void => {
         this.marker = new maplibregl.Marker({
             element: document.getElementById(this.getMarkerId()) ?? undefined,
             anchor: "bottom",
             offset: [0, -1],
         })
             .setLngLat(new maplibregl.LngLat(0, 0))
-            .addTo(this.map);
+            .addTo(this.map!);
     };
 
-    private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
+    private updateStyleUrl = (clientWellKnown: IClientWellKnown): void => {
         const style = tileServerFromWellKnown(clientWellKnown)?.["map_style_url"];
         if (style) {
             this.map?.setStyle(style);
         }
     };
 
-    private onGeolocate = (position: GeolocationPosition) => {
+    private onGeolocate = (position: GeolocationPosition): void => {
         if (!this.marker) {
             this.addMarkerToMap();
         }
@@ -160,7 +162,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         this.marker?.setLngLat(new maplibregl.LngLat(position.coords.longitude, position.coords.latitude));
     };
 
-    private onClick = (event: MapMouseEvent) => {
+    private onClick = (event: MapMouseEvent): void => {
         if (!this.marker) {
             this.addMarkerToMap();
         }
@@ -174,7 +176,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         });
     };
 
-    private onGeolocateError = (e: GeolocationPositionError) => {
+    private onGeolocateError = (e: GeolocationPositionError): void => {
         logger.error("Could not fetch location", e);
         // close the dialog and show an error when trying to share own location
         // pin drop location without permissions is ok
@@ -195,7 +197,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         this.setState({ timeout });
     };
 
-    private onOk = () => {
+    private onOk = (): void => {
         const { timeout, position } = this.state;
 
         this.props.onChoose(
@@ -208,7 +210,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         this.props.onFinished();
     };
 
-    public render() {
+    public render(): React.ReactNode {
         if (this.state.error) {
             return (
                 <div className="mx_LocationPicker mx_LocationPicker_hasError">
@@ -232,7 +234,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                             <LiveDurationDropdown onChange={this.onTimeoutChange} timeout={this.state.timeout} />
                         )}
                         <AccessibleButton
-                            data-test-id="location-picker-submit-button"
+                            data-testid="location-picker-submit-button"
                             type="submit"
                             element="button"
                             kind="primary"
@@ -266,21 +268,3 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
 }
 
 export default LocationPicker;
-
-function positionFailureMessage(code: number): string {
-    const brand = SdkConfig.get().brand;
-    switch (code) {
-        case 1:
-            return _t(
-                "%(brand)s was denied permission to fetch your location. " +
-                    "Please allow location access in your browser settings.",
-                { brand },
-            );
-        case 2:
-            return _t("Failed to fetch your location. Please try again later.");
-        case 3:
-            return _t("Timed out trying to fetch your location. Please try again later.");
-        case 4:
-            return _t("Unknown error fetching location. Please try again later.");
-    }
-}

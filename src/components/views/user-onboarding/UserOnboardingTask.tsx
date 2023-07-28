@@ -17,21 +17,22 @@ limitations under the License.
 import classNames from "classnames";
 import * as React from "react";
 
-import { UserOnboardingTask as Task } from "../../../hooks/useUserOnboardingTasks";
+import { UserOnboardingTaskWithResolvedCompletion } from "../../../hooks/useUserOnboardingTasks";
 import AccessibleButton from "../../views/elements/AccessibleButton";
 import Heading from "../../views/typography/Heading";
 
 interface Props {
-    task: Task;
+    task: UserOnboardingTaskWithResolvedCompletion;
     completed?: boolean;
 }
 
-export function UserOnboardingTask({ task, completed = false }: Props) {
+export function UserOnboardingTask({ task, completed = false }: Props): JSX.Element {
     const title = typeof task.title === "function" ? task.title() : task.title;
     const description = typeof task.description === "function" ? task.description() : task.description;
 
     return (
         <li
+            data-testid="user-onboarding-task"
             className={classNames("mx_UserOnboardingTask", {
                 mx_UserOnboardingTask_completed: completed,
             })}
@@ -44,7 +45,7 @@ export function UserOnboardingTask({ task, completed = false }: Props) {
                 aria-labelledby={`mx_UserOnboardingTask_${task.id}`}
             />
             <div id={`mx_UserOnboardingTask_${task.id}`} className="mx_UserOnboardingTask_content">
-                <Heading size="h4" className="mx_UserOnboardingTask_title">
+                <Heading size="4" className="mx_UserOnboardingTask_title">
                     {title}
                 </Heading>
                 <div className="mx_UserOnboardingTask_description">{description}</div>
@@ -56,7 +57,7 @@ export function UserOnboardingTask({ task, completed = false }: Props) {
                     kind="primary_outline"
                     href={task.action.href}
                     target="_blank"
-                    onClick={task.action.onClick}
+                    onClick={task.action.onClick ?? null}
                 >
                     {task.action.label}
                 </AccessibleButton>

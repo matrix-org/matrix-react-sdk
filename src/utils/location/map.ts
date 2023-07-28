@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import * as maplibregl from "maplibre-gl";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -24,9 +24,14 @@ import { parseGeoUri } from "./parseGeoUri";
 import { findMapStyleUrl } from "./findMapStyleUrl";
 import { LocationShareError } from "./LocationShareErrors";
 
-export const createMap = (interactive: boolean, bodyId: string, onError: (error: Error) => void): maplibregl.Map => {
+export const createMap = (
+    client: MatrixClient,
+    interactive: boolean,
+    bodyId: string,
+    onError?: (error: Error) => void,
+): maplibregl.Map => {
     try {
-        const styleUrl = findMapStyleUrl();
+        const styleUrl = findMapStyleUrl(client);
 
         const map = new maplibregl.Map({
             container: bodyId,
@@ -50,16 +55,15 @@ export const createMap = (interactive: boolean, bodyId: string, onError: (error:
         map.addControl(new maplibregl.AttributionControl(), "top-right");
 
         map.on("error", (e) => {
-            logger.error(
-                "Failed to load map: check map_style_url in config.json has a " + "valid URL and API key",
-                e.error,
-            );
-            onError(new Error(LocationShareError.MapStyleUrlNotReachable));
+            logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
+            onError?.(new Error(LocationShareError.MapStyleUrlNotReachable));
         });
 
         return map;
     } catch (e) {
         logger.error("Failed to render map", e);
+        const errorMessage = (e as Error)?.message;
+        if (errorMessage.includes("Failed to initialize WebGL")) throw new Error(LocationShareError.WebGLNotEnabled);
         throw e;
     }
 };
@@ -82,18 +86,20 @@ export const makeMapSiteLink = (coords: GeolocationCoordinates): string => {
     );
 };
 
-export const createMapSiteLinkFromEvent = (event: MatrixEvent): string => {
-    const content: Object = event.getContent();
+export const createMapSiteLinkFromEvent = (event: MatrixEvent): string | null => {
+    const content = event.getContent();
     const mLocation = content[M_LOCATION.name];
     if (mLocation !== undefined) {
         const uri = mLocation["uri"];
         if (uri !== undefined) {
-            return makeMapSiteLink(parseGeoUri(uri));
+            const geoCoords = parseGeoUri(uri);
+            return geoCoords ? makeMapSiteLink(geoCoords) : null;
         }
     } else {
         const geoUri = content["geo_uri"];
         if (geoUri) {
-            return makeMapSiteLink(parseGeoUri(geoUri));
+            const geoCoords = parseGeoUri(geoUri);
+            return geoCoords ? makeMapSiteLink(geoCoords) : null;
         }
     }
     return null;

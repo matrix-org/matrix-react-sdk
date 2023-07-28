@@ -20,7 +20,7 @@ limitations under the License.
 import { IWidget } from "matrix-widget-api/src/interfaces/IWidget";
 
 import type { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
 
 const DEMO_WIDGET_ID = "demo-widget-id";
@@ -90,7 +90,7 @@ function waitForRoomWidget(win: Cypress.AUTWindow, widgetId: string, roomId: str
 }
 
 describe("Widget PIP", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
     let user: UserCredentials;
     let bot: MatrixClient;
     let demoWidgetUrl: string;
@@ -145,7 +145,7 @@ describe("Widget PIP", () => {
                     win.mxActiveWidgetStore.setWidgetPersistence(DEMO_WIDGET_ID, roomId, true);
 
                     // checks that pip window is opened
-                    cy.get(".mx_LegacyCallView_pip").should("exist");
+                    cy.get(".mx_WidgetPip").should("exist");
 
                     // checks that widget is opened in pip
                     cy.accessIframe(`iframe[title="${DEMO_WIDGET_NAME}"]`).within({}, () => {
@@ -164,7 +164,7 @@ describe("Widget PIP", () => {
                                 }
 
                                 // checks that pip window is closed
-                                cy.get(".mx_LegacyCallView_pip").should("not.exist");
+                                cy.get(".mx_WidgetPip").should("not.exist");
                             });
                     });
                 });
@@ -173,13 +173,13 @@ describe("Widget PIP", () => {
     }
 
     beforeEach(() => {
-        cy.startSynapse("default").then((data) => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Mike").then((_user) => {
+            cy.initTestUser(homeserver, "Mike").then((_user) => {
                 user = _user;
             });
-            cy.getBot(synapse, { displayName: "Bot", autoAcceptInvites: false }).then((_bot) => {
+            cy.getBot(homeserver, { displayName: "Bot", autoAcceptInvites: false }).then((_bot) => {
                 bot = _bot;
             });
         });
@@ -189,7 +189,7 @@ describe("Widget PIP", () => {
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
         cy.stopWebServers();
     });
 

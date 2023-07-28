@@ -17,15 +17,14 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
-import { MatrixClientPeg } from "./MatrixClientPeg";
 import { _t } from "./languageHandler";
 
 export function usersTypingApartFromMeAndIgnored(room: Room): RoomMember[] {
-    return usersTyping(room, [MatrixClientPeg.get().getUserId()].concat(MatrixClientPeg.get().getIgnoredUsers()));
+    return usersTyping(room, [room.client.getSafeUserId()].concat(room.client.getIgnoredUsers()));
 }
 
 export function usersTypingApartFromMe(room: Room): RoomMember[] {
-    return usersTyping(room, [MatrixClientPeg.get().getUserId()]);
+    return usersTyping(room, [room.client.getSafeUserId()]);
 }
 
 /**
@@ -36,7 +35,7 @@ export function usersTypingApartFromMe(room: Room): RoomMember[] {
  * @returns {RoomMember[]} list of user objects who are typing.
  */
 export function usersTyping(room: Room, exclude: string[] = []): RoomMember[] {
-    const whoIsTyping = [];
+    const whoIsTyping: RoomMember[] = [];
 
     const memberKeys = Object.keys(room.currentState.members);
     for (const userId of memberKeys) {

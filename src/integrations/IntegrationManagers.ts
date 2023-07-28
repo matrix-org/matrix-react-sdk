@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from "url";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { ClientEvent, IClientWellKnown, MatrixClient } from "matrix-js-sdk/src/client";
 import { compare } from "matrix-js-sdk/src/utils";
 
 import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -27,6 +26,7 @@ import IntegrationsImpossibleDialog from "../components/views/dialogs/Integratio
 import IntegrationsDisabledDialog from "../components/views/dialogs/IntegrationsDisabledDialog";
 import WidgetUtils from "../utils/WidgetUtils";
 import { MatrixClientPeg } from "../MatrixClientPeg";
+import { parseUrl } from "../utils/UrlUtils";
 
 const KIND_PREFERENCE = [
     // Ordered: first is most preferred, last is least preferred.
@@ -36,11 +36,11 @@ const KIND_PREFERENCE = [
 ];
 
 export class IntegrationManagers {
-    private static instance;
+    private static instance?: IntegrationManagers;
 
     private managers: IntegrationManagerInstance[] = [];
-    private client: MatrixClient;
-    private primaryManager: IntegrationManagerInstance;
+    private client?: MatrixClient;
+    private primaryManager: IntegrationManagerInstance | null = null;
 
     public static sharedInstance(): IntegrationManagers {
         if (!IntegrationManagers.instance) {
@@ -55,7 +55,7 @@ export class IntegrationManagers {
 
     public startWatching(): void {
         this.stopWatching();
-        this.client = MatrixClientPeg.get();
+        this.client = MatrixClientPeg.safeGet();
         this.client.on(ClientEvent.AccountData, this.onAccountData);
         this.client.on(ClientEvent.ClientWellKnown, this.setupHomeserverManagers);
         this.compileManagers();
@@ -67,15 +67,15 @@ export class IntegrationManagers {
         this.client.removeListener(ClientEvent.ClientWellKnown, this.setupHomeserverManagers);
     }
 
-    private compileManagers() {
+    private compileManagers(): void {
         this.managers = [];
         this.setupConfiguredManager();
         this.setupAccountManagers();
     }
 
-    private setupConfiguredManager() {
-        const apiUrl: string = SdkConfig.get("integrations_rest_url");
-        const uiUrl: string = SdkConfig.get("integrations_ui_url");
+    private setupConfiguredManager(): void {
+        const apiUrl = SdkConfig.get("integrations_rest_url");
+        const uiUrl = SdkConfig.get("integrations_ui_url");
 
         if (apiUrl && uiUrl) {
             this.managers.push(new IntegrationManagerInstance(Kind.Config, apiUrl, uiUrl));
@@ -83,7 +83,7 @@ export class IntegrationManagers {
         }
     }
 
-    private setupHomeserverManagers = async (discoveryResponse) => {
+    private setupHomeserverManagers = async (discoveryResponse: IClientWellKnown): Promise<void> => {
         logger.log("Updating homeserver-configured integration managers...");
         if (discoveryResponse && discoveryResponse["m.integrations"]) {
             let managers = discoveryResponse["m.integrations"]["managers"];
@@ -113,9 +113,9 @@ export class IntegrationManagers {
         }
     };
 
-    private setupAccountManagers() {
+    private setupAccountManagers(): void {
         if (!this.client || !this.client.getUserId()) return; // not logged in
-        const widgets = WidgetUtils.getIntegrationManagerWidgets();
+        const widgets = WidgetUtils.getIntegrationManagerWidgets(this.client);
         widgets.forEach((w) => {
             const data = w.content["data"];
             if (!data) return;
@@ -146,14 +146,14 @@ export class IntegrationManagers {
     }
 
     public getOrderedManagers(): IntegrationManagerInstance[] {
-        const ordered = [];
+        const ordered: IntegrationManagerInstance[] = [];
         for (const kind of KIND_PREFERENCE) {
             const managers = this.managers.filter((m) => m.kind === kind);
             if (!managers || !managers.length) continue;
 
             if (kind === Kind.Account) {
                 // Order by state_keys (IDs)
-                managers.sort((a, b) => compare(a.id, b.id));
+                managers.sort((a, b) => compare(a.id ?? "", b.id ?? ""));
             }
 
             ordered.push(...managers);
@@ -161,7 +161,7 @@ export class IntegrationManagers {
         return ordered;
     }
 
-    public getPrimaryManager(): IntegrationManagerInstance {
+    public getPrimaryManager(): IntegrationManagerInstance | null {
         if (this.hasManager()) {
             if (this.primaryManager) return this.primaryManager;
 
@@ -180,14 +180,6 @@ export class IntegrationManagers {
         Modal.createDialog(IntegrationsDisabledDialog);
     }
 
-    public async overwriteManagerOnAccount(manager: IntegrationManagerInstance) {
-        // TODO: TravisR - We should be logging out of scalar clients.
-        await WidgetUtils.removeIntegrationManagerWidgets();
-
-        // TODO: TravisR - We should actually be carrying over the discovery response verbatim.
-        await WidgetUtils.addIntegrationManagerWidget(manager.name, manager.uiUrl, manager.apiUrl);
-    }
-
     /**
      * Attempts to discover an integration manager using only its name. This will not validate that
      * the integration manager is functional - that is the caller's responsibility.
@@ -195,14 +187,14 @@ export class IntegrationManagers {
      * @returns {Promise<IntegrationManagerInstance>} Resolves to an integration manager instance,
      * or null if none was found.
      */
-    public async tryDiscoverManager(domainName: string): Promise<IntegrationManagerInstance> {
+    public async tryDiscoverManager(domainName: string): Promise<IntegrationManagerInstance | null> {
         logger.log("Looking up integration manager via .well-known");
         if (domainName.startsWith("http:") || domainName.startsWith("https:")) {
             // trim off the scheme and just use the domain
-            domainName = url.parse(domainName).host;
+            domainName = parseUrl(domainName).host;
         }
 
-        let wkConfig: object;
+        let wkConfig: IClientWellKnown;
         try {
             const result = await fetch(`https://${domainName}/.well-known/matrix/integrations`);
             wkConfig = await result.json();

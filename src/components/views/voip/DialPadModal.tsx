@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from "react";
-import { createRef } from "react";
+import React, { ChangeEvent } from "react";
+import { createRef, SyntheticEvent } from "react";
 
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import Field from "../elements/Field";
@@ -24,7 +24,7 @@ import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
 import LegacyCallHandler from "../../../LegacyCallHandler";
 
 interface IProps {
-    onFinished: (boolean) => void;
+    onFinished: (dialled: boolean) => void;
 }
 
 interface IState {
@@ -34,27 +34,27 @@ interface IState {
 export default class DialpadModal extends React.PureComponent<IProps, IState> {
     private numberEntryFieldRef: React.RefObject<Field> = createRef();
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             value: "",
         };
     }
 
-    public onCancelClick = () => {
+    public onCancelClick = (): void => {
         this.props.onFinished(false);
     };
 
-    public onChange = (ev) => {
+    public onChange = (ev: ChangeEvent<HTMLInputElement>): void => {
         this.setState({ value: ev.target.value });
     };
 
-    public onFormSubmit = (ev) => {
+    public onFormSubmit = (ev: SyntheticEvent): void => {
         ev.preventDefault();
         this.onDialPress();
     };
 
-    public onDigitPress = (digit: string, ev: ButtonEvent) => {
+    public onDigitPress = (digit: string, ev: ButtonEvent): void => {
         this.setState({ value: this.state.value + digit });
 
         // Keep the number field focused so that keyboard entry is still available.
@@ -65,7 +65,7 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         }
     };
 
-    public onDeletePress = (ev: ButtonEvent) => {
+    public onDeletePress = (ev: ButtonEvent): void => {
         if (this.state.value.length === 0) return;
         this.setState({ value: this.state.value.slice(0, -1) });
 
@@ -77,12 +77,12 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         }
     };
 
-    public onDialPress = async () => {
+    public onDialPress = async (): Promise<void> => {
         LegacyCallHandler.instance.dialNumber(this.state.value);
         this.props.onFinished(true);
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const backspaceButton = <DialPadBackspaceButton onBackspacePress={this.onDeletePress} />;
 
         // Only show the backspace button if the field has content

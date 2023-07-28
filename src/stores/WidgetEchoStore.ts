@@ -55,12 +55,12 @@ class WidgetEchoStore extends EventEmitter {
      * @returns {MatrixEvent[]} List of widgets in the room, minus any pending removal
      */
     public getEchoedRoomWidgets(roomId: string, currentRoomWidgets: MatrixEvent[]): MatrixEvent[] {
-        const echoedWidgets = [];
+        const echoedWidgets: MatrixEvent[] = [];
 
         const roomEchoState = Object.assign({}, this.roomWidgetEcho[roomId]);
 
         for (const w of currentRoomWidgets) {
-            const widgetId = w.getStateKey();
+            const widgetId = w.getStateKey()!;
             // If there's no echo, or the echo still has a widget present, show the *old* widget
             // we don't include widgets that have changed for the same reason we don't include new ones,
             // ie. we'd need to fake matrix events to do so and there's currently no need.
@@ -79,7 +79,7 @@ class WidgetEchoStore extends EventEmitter {
         // any widget IDs that are already in the room are not pending, so
         // echoes for them don't count as pending.
         for (const w of currentRoomWidgets) {
-            const widgetId = w.getStateKey();
+            const widgetId = w.getStateKey()!;
             delete roomEchoState[widgetId];
         }
 
@@ -97,14 +97,14 @@ class WidgetEchoStore extends EventEmitter {
         return this.roomHasPendingWidgetsOfType(roomId, currentRoomWidgets);
     }
 
-    public setRoomWidgetEcho(roomId: string, widgetId: string, state: IWidget) {
+    public setRoomWidgetEcho(roomId: string, widgetId: string, state: IWidget): void {
         if (this.roomWidgetEcho[roomId] === undefined) this.roomWidgetEcho[roomId] = {};
 
         this.roomWidgetEcho[roomId][widgetId] = state;
         this.emit("update", roomId, widgetId);
     }
 
-    public removeRoomWidgetEcho(roomId: string, widgetId: string) {
+    public removeRoomWidgetEcho(roomId: string, widgetId: string): void {
         delete this.roomWidgetEcho[roomId][widgetId];
         if (Object.keys(this.roomWidgetEcho[roomId]).length === 0) delete this.roomWidgetEcho[roomId];
         this.emit("update", roomId, widgetId);
@@ -115,4 +115,4 @@ let singletonWidgetEchoStore: WidgetEchoStore | null = null;
 if (!singletonWidgetEchoStore) {
     singletonWidgetEchoStore = new WidgetEchoStore();
 }
-export default singletonWidgetEchoStore;
+export default singletonWidgetEchoStore!;

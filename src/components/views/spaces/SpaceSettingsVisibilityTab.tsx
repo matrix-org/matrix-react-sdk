@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,6 +30,8 @@ import JoinRuleSettings from "../settings/JoinRuleSettings";
 import { useRoomState } from "../../../hooks/useRoomState";
 import SettingsFieldset from "../settings/SettingsFieldset";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
+import { SettingsSection } from "../settings/shared/SettingsSection";
+import SettingsTab from "../settings/tabs/SettingsTab";
 
 interface IProps {
     matrixClient: MatrixClient;
@@ -37,17 +39,17 @@ interface IProps {
     closeSettingsFn(): void;
 }
 
-const SpaceSettingsVisibilityTab = ({ matrixClient: cli, space, closeSettingsFn }: IProps) => {
+const SpaceSettingsVisibilityTab: React.FC<IProps> = ({ matrixClient: cli, space, closeSettingsFn }) => {
     const [error, setError] = useState("");
     const serverSupportsExploringSpaces = useAsyncMemo<boolean>(
-        async () => {
+        async (): Promise<boolean> => {
             return cli.doesServerSupportUnstableFeature("org.matrix.msc3827.stable");
         },
         [cli],
         false,
     );
 
-    const userId = cli.getUserId();
+    const userId = cli.getUserId()!;
 
     const joinRule = useRoomState(space, (state) => state.getJoinRule());
     const [guestAccessEnabled, setGuestAccessEnabled] = useLocalEcho<boolean>(
@@ -93,10 +95,11 @@ const SpaceSettingsVisibilityTab = ({ matrixClient: cli, space, closeSettingsFn 
         advancedSection = (
             <div>
                 <AccessibleButton
-                    data-test-id="toggle-guest-access-btn"
+                    data-testid="toggle-guest-access-btn"
                     onClick={toggleAdvancedSection}
                     kind="link"
                     className="mx_SettingsTab_showAdvanced"
+                    aria-expanded={showAdvancedSection}
                 >
                     {showAdvancedSection ? _t("Hide advanced") : _t("Show advanced")}
                 </AccessibleButton>
@@ -120,62 +123,63 @@ const SpaceSettingsVisibilityTab = ({ matrixClient: cli, space, closeSettingsFn 
         );
     }
 
-    let addressesSection;
+    let addressesSection: JSX.Element | undefined;
     if (space.getJoinRule() === JoinRule.Public) {
         addressesSection = (
-            <>
-                <span className="mx_SettingsTab_subheading">{_t("Address")}</span>
+            <SettingsSection heading={_t("Address")}>
                 <AliasSettings
                     roomId={space.roomId}
                     canSetCanonicalAlias={canSetCanonical}
                     canSetAliases={true}
-                    canonicalAliasEvent={canonicalAliasEv}
+                    canonicalAliasEvent={canonicalAliasEv ?? undefined}
                     hidePublishSetting={!serverSupportsExploringSpaces}
                 />
-            </>
+            </SettingsSection>
         );
     }
 
     return (
-        <div className="mx_SettingsTab">
-            <div className="mx_SettingsTab_heading">{_t("Visibility")}</div>
+        <SettingsTab>
+            <SettingsSection heading={_t("Visibility")}>
+                {error && (
+                    <div data-testid="space-settings-error" className="mx_SpaceRoomView_errorText">
+                        {error}
+                    </div>
+                )}
 
-            {error && (
-                <div data-test-id="space-settings-error" className="mx_SpaceRoomView_errorText">
-                    {error}
-                </div>
-            )}
-
-            <SettingsFieldset
-                data-test-id="access-fieldset"
-                legend={_t("Access")}
-                description={_t("Decide who can view and join %(spaceName)s.", { spaceName: space.name })}
-            >
-                <JoinRuleSettings
-                    room={space}
-                    onError={() => setError(_t("Failed to update the visibility of this space"))}
-                    closeSettingsFn={closeSettingsFn}
-                />
-                {advancedSection}
-                <div className="mx_SettingsTab_toggleWithDescription">
-                    <LabelledToggleSwitch
-                        value={historyVisibility === HistoryVisibility.WorldReadable}
-                        onChange={(checked: boolean) => {
-                            setHistoryVisibility(checked ? HistoryVisibility.WorldReadable : HistoryVisibility.Shared);
-                        }}
-                        disabled={!canSetHistoryVisibility}
-                        label={_t("Preview Space")}
+                <SettingsFieldset
+                    data-testid="access-fieldset"
+                    legend={_t("Access")}
+                    description={_t("Decide who can view and join %(spaceName)s.", { spaceName: space.name })}
+                >
+                    <JoinRuleSettings
+                        room={space}
+                        onError={(): void => setError(_t("Failed to update the visibility of this space"))}
+                        closeSettingsFn={closeSettingsFn}
                     />
-                    <p>
-                        {_t("Allow people to preview your space before they join.")}
-                        <br />
-                        <b>{_t("Recommended for public spaces.")}</b>
-                    </p>
-                </div>
-            </SettingsFieldset>
+                    {advancedSection}
+                    <div className="mx_SettingsTab_toggleWithDescription">
+                        <LabelledToggleSwitch
+                            value={historyVisibility === HistoryVisibility.WorldReadable}
+                            onChange={(checked: boolean): void => {
+                                setHistoryVisibility(
+                                    checked ? HistoryVisibility.WorldReadable : HistoryVisibility.Shared,
+                                );
+                            }}
+                            disabled={!canSetHistoryVisibility}
+                            label={_t("Preview Space")}
+                        />
+                        <p>
+                            {_t("Allow people to preview your space before they join.")}
+                            <br />
+                            <b>{_t("Recommended for public spaces.")}</b>
+                        </p>
+                    </div>
+                </SettingsFieldset>
 
-            {addressesSection}
-        </div>
+                {addressesSection}
+            </SettingsSection>
+        </SettingsTab>
     );
 };
 

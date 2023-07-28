@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import { Beacon, RoomMember, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
-import { act } from "react-dom/test-utils";
 
 import BeaconListItem from "../../../../src/components/views/beacon/BeaconListItem";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
@@ -28,6 +27,11 @@ import {
     makeBeaconInfoEvent,
     makeRoomWithBeacons,
 } from "../../../test-utils";
+
+// Fake random strings to give a predictable snapshot for IDs
+jest.mock("matrix-js-sdk/src/randomstring", () => ({
+    randomString: () => "abdefghi",
+}));
 
 describe("<BeaconListItem />", () => {
     // 14.03.2022 16:15
@@ -84,7 +88,7 @@ describe("<BeaconListItem />", () => {
 
         const member = new RoomMember(roomId, aliceId);
         member.name = `Alice`;
-        const room = mockClient.getRoom(roomId);
+        const room = mockClient.getRoom(roomId)!;
         jest.spyOn(room, "getMember").mockReturnValue(member);
 
         return beacons;
@@ -185,7 +189,7 @@ describe("<BeaconListItem />", () => {
                 const { container } = getComponent({ beacon, onClick });
 
                 // click the beacon name
-                fireEvent.click(container.querySelector(".mx_BeaconStatus_description"));
+                fireEvent.click(container.querySelector(".mx_BeaconStatus_description")!);
                 expect(onClick).toHaveBeenCalled();
             });
         });

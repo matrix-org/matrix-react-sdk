@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { IGeneratedSas } from "matrix-js-sdk/src/crypto/verification/SAS";
-import { DeviceInfo } from "matrix-js-sdk/src//crypto/deviceinfo";
+import { Device } from "matrix-js-sdk/src/matrix";
+import { GeneratedSas } from "matrix-js-sdk/src/crypto-api/verification";
 
 import { _t, _td } from "../../../languageHandler";
 import { PendingActionSpinner } from "../right_panel/EncryptionInfo";
@@ -26,10 +26,13 @@ import { fixupColorFonts } from "../../../utils/FontManager";
 interface IProps {
     pending?: boolean;
     displayName?: string; // required if pending is true
-    device?: DeviceInfo;
+
+    /** Details of the other device involved in the verification, if known */
+    otherDeviceDetails?: Device;
+
     onDone: () => void;
     onCancel: () => void;
-    sas: IGeneratedSas;
+    sas: GeneratedSas;
     isSelf?: boolean;
     inDialog?: boolean; // whether this component is being shown in a dialog and to use DialogButtons
 }
@@ -39,8 +42,19 @@ interface IState {
     cancelling?: boolean;
 }
 
-function capFirst(s) {
-    return s.charAt(0).toUpperCase() + s.slice(1);
+/** Convert the names of emojis returned by the js-sdk into the display names, which we use as
+ * a base for our translations.
+ */
+function capFirst(s: string): string {
+    // Our translations (currently) have names like "Thumbs up".
+    //
+    // With legacy crypto, the js-sdk returns lower-case names ("thumbs up"). With Rust crypto, the js-sdk follows
+    // the spec and returns title-case names ("Thumbs Up"). So, to convert both into names that match our i18n data,
+    // we upcase the first character and downcase the rest.
+    //
+    // Once legacy crypto is dead, we could consider getting rid of this and just making the i18n data use the
+    // title-case names (which would also match the spec).
+    return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 }
 
 export default class VerificationShowSas extends React.Component<IProps, IState> {
@@ -69,7 +83,7 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
         this.props.onCancel();
     };
 
-    public render() {
+    public render(): React.ReactNode {
         let sasDisplay;
         let sasCaption;
         if (this.props.sas.emoji) {
@@ -111,10 +125,11 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
             let text;
             // device shouldn't be null in this situation but it can be, eg. if the device is
             // logged out during verification
-            if (this.props.device) {
+            const otherDevice = this.props.otherDeviceDetails;
+            if (otherDevice) {
                 text = _t("Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…", {
-                    deviceName: this.props.device ? this.props.device.getDisplayName() : "",
-                    deviceId: this.props.device ? this.props.device.deviceId : "",
+                    deviceName: otherDevice.displayName,
+                    deviceId: otherDevice.deviceId,
                 });
             } else {
                 text = _t("Waiting for you to verify on your other device…");

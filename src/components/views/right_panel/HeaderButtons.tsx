@@ -26,6 +26,7 @@ import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePha
 import { IRightPanelCardState } from "../../../stores/right-panel/RightPanelStoreIPanelState";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
+import { ActionPayload } from "../../../dispatcher/payloads";
 
 export enum HeaderKind {
     Room = "room",
@@ -33,7 +34,7 @@ export enum HeaderKind {
 
 interface IState {
     headerKind: HeaderKind;
-    phase: RightPanelPhases;
+    phase: RightPanelPhases | null;
     threadNotificationColor: NotificationColor;
     globalNotificationColor: NotificationColor;
 }
@@ -42,7 +43,7 @@ interface IProps {}
 
 export default abstract class HeaderButtons<P = {}> extends React.Component<IProps & P, IState> {
     private unmounted = false;
-    private dispatcherRef: string;
+    private dispatcherRef?: string = undefined;
 
     public constructor(props: IProps & P, kind: HeaderKind) {
         super(props);
@@ -56,20 +57,20 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
         };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         this.dispatcherRef = dis.register(this.onAction.bind(this)); // used by subclasses
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.unmounted = true;
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
     }
 
-    protected abstract onAction(payload);
+    protected abstract onAction(payload: ActionPayload): void;
 
-    public setPhase(phase: RightPanelPhases, cardState?: Partial<IRightPanelCardState>) {
+    public setPhase(phase: RightPanelPhases, cardState?: Partial<IRightPanelCardState>): void {
         const rps = RightPanelStore.instance;
         if (rps.currentCard.phase == phase && !cardState && rps.isOpen) {
             rps.togglePanel(null);
@@ -82,13 +83,13 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     public isPhase(phases: string | string[]): boolean {
         if (!RightPanelStore.instance.isOpen) return false;
         if (Array.isArray(phases)) {
-            return phases.includes(this.state.phase);
+            return !!this.state.phase && phases.includes(this.state.phase);
         } else {
             return phases === this.state.phase;
         }
     }
 
-    private onRightPanelStoreUpdate = () => {
+    private onRightPanelStoreUpdate = (): void => {
         if (this.unmounted) return;
         this.setState({ phase: RightPanelStore.instance.currentCard.phase });
     };
@@ -96,11 +97,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
     // XXX: Make renderButtons a prop
     public abstract renderButtons(): JSX.Element;
 
-    public render() {
-        return (
-            <div className="mx_HeaderButtons" role="tablist">
-                {this.renderButtons()}
-            </div>
-        );
+    public render(): React.ReactNode {
+        return this.renderButtons();
     }
 }

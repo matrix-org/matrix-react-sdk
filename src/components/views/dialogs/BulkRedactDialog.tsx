@@ -21,28 +21,29 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "../dialogs/BaseDialog";
 import InfoDialog from "../dialogs/InfoDialog";
 import DialogButtons from "../elements/DialogButtons";
 import StyledCheckbox from "../elements/StyledCheckbox";
 
-interface IBulkRedactDialogProps extends IDialogProps {
+interface Props {
     matrixClient: MatrixClient;
     room: Room;
     member: RoomMember;
+    onFinished(redact?: boolean): void;
 }
 
-const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = (props) => {
+const BulkRedactDialog: React.FC<Props> = (props) => {
     const { matrixClient: cli, room, member, onFinished } = props;
     const [keepStateEvents, setKeepStateEvents] = useState(true);
 
-    let timeline = room.getLiveTimeline();
-    let eventsToRedact = [];
+    let timeline: EventTimeline | null = room.getLiveTimeline();
+    let eventsToRedact: MatrixEvent[] = [];
     while (timeline) {
         eventsToRedact = [
             ...eventsToRedact,
@@ -79,7 +80,7 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = (props) => {
         const count = eventsToRedact.length;
         const user = member.name;
 
-        const redact = async () => {
+        const redact = async (): Promise<void> => {
             logger.info(`Started redacting recent ${count} messages for ${member.userId} in ${room.roomId}`);
             dis.dispatch({
                 action: Action.BulkRedactStart,
@@ -90,9 +91,9 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = (props) => {
             // so first yield to allow to rerender after closing the dialog.
             await Promise.resolve();
             await Promise.all(
-                eventsToRedact.reverse().map(async (event) => {
+                eventsToRedact.reverse().map(async (event): Promise<void> => {
                     try {
-                        await cli.redactEvent(room.roomId, event.getId());
+                        await cli.redactEvent(room.roomId, event.getId()!);
                     } catch (err) {
                         // log and swallow errors
                         logger.error("Could not redact", event.getId());

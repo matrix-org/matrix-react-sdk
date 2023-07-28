@@ -25,8 +25,10 @@ import { SortAlgorithm } from "../models";
  * `cachedOrderedRooms` field.
  */
 export abstract class OrderingAlgorithm {
-    protected cachedOrderedRooms: Room[];
-    protected sortingAlgorithm: SortAlgorithm;
+    protected cachedOrderedRooms: Room[] = [];
+
+    // set by setSortAlgorithm() in ctor
+    protected sortingAlgorithm!: SortAlgorithm;
 
     protected constructor(protected tagId: TagID, initialSortingAlgorithm: SortAlgorithm) {
         // noinspection JSIgnoredPromiseFromCall
@@ -37,7 +39,11 @@ export abstract class OrderingAlgorithm {
      * The rooms as ordered by the algorithm.
      */
     public get orderedRooms(): Room[] {
-        return this.cachedOrderedRooms || [];
+        return this.cachedOrderedRooms;
+    }
+
+    public get isMutedToBottom(): boolean {
+        return this.sortingAlgorithm === SortAlgorithm.Recent;
     }
 
     /**
@@ -45,7 +51,7 @@ export abstract class OrderingAlgorithm {
      * @param newAlgorithm The new algorithm. Must be defined.
      * @returns Resolves when complete.
      */
-    public setSortAlgorithm(newAlgorithm: SortAlgorithm) {
+    public setSortAlgorithm(newAlgorithm: SortAlgorithm): void {
         if (!newAlgorithm) throw new Error("A sorting algorithm must be defined");
         this.sortingAlgorithm = newAlgorithm;
 

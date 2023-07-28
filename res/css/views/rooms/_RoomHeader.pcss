@@ -14,6 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+:root {
+    --RoomHeader-indicator-dot-size: 8px;
+    --RoomHeader-indicator-dot-offset: -3px;
+    --RoomHeader-indicator-pulseColor: $alert;
+}
+
 .mx_RoomHeader {
     flex: 0 0 50px;
     border-bottom: 1px solid $primary-hairline-color;
@@ -50,7 +56,7 @@ limitations under the License.
     min-width: 0;
     margin: 0 20px 0 16px;
     padding-top: 6px;
-    border-bottom: 1px solid $system;
+    border-bottom: 1px solid $separator;
 
     .mx_InviteOnlyIcon_large {
         margin: 0;
@@ -61,45 +67,12 @@ limitations under the License.
     }
 }
 
-.mx_RoomHeader_spinner {
-    flex: 1;
-    height: 36px;
-    padding-left: 12px;
-    padding-right: 12px;
-}
-
-.mx_RoomHeader_textButton {
-    @mixin mx_DialogButton;
-    margin-right: 8px;
-    margin-top: -5px;
-}
-
-.mx_RoomHeader_textButton:hover {
-    @mixin mx_DialogButton_hover;
-}
-
-.mx_RoomHeader_textButton_danger {
-    background-color: $alert;
-}
-
-.mx_RoomHeader_cancelButton {
-    cursor: pointer;
-    padding-left: 12px;
-    padding-right: 12px;
-}
-
-.mx_RoomHeader_info {
-    display: flex;
-    flex: 1;
-    align-items: center;
-}
-
 .mx_RoomHeader_name {
     flex: 0 1 auto;
     overflow: hidden;
     color: $primary-content;
-    font-weight: $font-semi-bold;
-    font-size: $font-15px;
+    font: var(--cpd-font-heading-sm-semibold);
+    font-weight: var(--cpd-font-weight-semibold);
     min-height: 24px;
     align-items: center;
     border-radius: 6px;
@@ -107,8 +80,9 @@ limitations under the License.
     padding: 1px 4px;
     display: flex;
     user-select: none;
+    cursor: pointer;
 
-    &:not(.mx_RoomHeader_name--textonly):hover {
+    &:hover {
         background-color: $quinary-content;
     }
 
@@ -129,8 +103,16 @@ limitations under the License.
         background-color: $tertiary-content;
     }
 
+    &.mx_RoomHeader_name--textonly {
+        cursor: unset;
+
+        &:hover {
+            background-color: unset;
+        }
+    }
+
     &[aria-expanded="true"] {
-        background-color: $quinary-content;
+        background-color: $separator;
 
         .mx_RoomHeader_chevron {
             transform: rotate(180deg);
@@ -147,26 +129,19 @@ limitations under the License.
     opacity: 0.6;
 }
 
-.mx_RoomHeader_name:not(.mx_RoomHeader_name--textonly),
-.mx_RoomHeader_avatar {
-    cursor: pointer;
-}
-
 .mx_RoomTopic {
     position: relative;
     cursor: pointer;
 }
 
 .mx_RoomHeader_topic {
-    $lineHeight: $font-16px;
     $lines: 2;
 
     flex: 1;
-    color: $roomtopic-color;
-    font-weight: 400;
-    font-size: $font-13px;
-    line-height: $lineHeight;
-    max-height: calc($lineHeight * $lines);
+    color: $secondary-content;
+    font: var(--cpd-font-body-sm-regular);
+    line-height: 1rem;
+    max-height: calc(1rem * $lines);
 
     overflow: hidden;
     -webkit-line-clamp: $lines; /* See: https://drafts.csswg.org/css-overflow-3/#webkit-line-clamp */
@@ -184,6 +159,7 @@ limitations under the License.
     flex: 0;
     margin: 0 7px;
     position: relative;
+    cursor: pointer;
 }
 
 .mx_RoomHeader_avatar .mx_BaseAvatar_image {
@@ -191,12 +167,13 @@ limitations under the License.
 }
 
 .mx_RoomHeader_button {
-    position: relative;
+    cursor: pointer;
+    flex: 0 0 auto;
     margin-left: 1px;
     margin-right: 1px;
-    cursor: pointer;
     height: 32px;
     width: 32px;
+    position: relative;
     border-radius: 100%;
 
     &::before {
@@ -211,12 +188,60 @@ limitations under the License.
         mask-size: contain;
     }
 
-    &:not(.mx_RoomHeader_closeButton):hover {
-        background: rgba($accent, 0.1);
+    &:hover {
+        background: $accent-300;
 
         &::before {
             background-color: $accent;
         }
+    }
+}
+
+.mx_RoomHeader_button_unreadIndicator_bg {
+    position: absolute;
+    right: var(--RoomHeader-indicator-dot-offset);
+    top: var(--RoomHeader-indicator-dot-offset);
+    margin: 4px;
+    width: var(--RoomHeader-indicator-dot-size);
+    height: var(--RoomHeader-indicator-dot-size);
+    border-radius: 50%;
+    transform: scale(1.6);
+    transform-origin: center center;
+    background: $background;
+}
+
+.mx_RoomHeader_button_unreadIndicator {
+    position: absolute;
+    right: var(--RoomHeader-indicator-dot-offset);
+    top: var(--RoomHeader-indicator-dot-offset);
+    margin: 4px;
+
+    &.mx_Indicator_red {
+        background: $alert;
+        box-shadow: $alert;
+    }
+
+    &.mx_Indicator_gray {
+        background: $room-icon-unread-color;
+        box-shadow: $room-icon-unread-color;
+    }
+
+    &.mx_Indicator_bold {
+        background: $primary-content;
+        box-shadow: $primary-content;
+    }
+}
+
+.mx_RoomHeader_button--unread {
+    &::before {
+        background-color: $room-icon-unread-color !important;
+    }
+}
+
+.mx_RoomHeader_button--highlight,
+.mx_RoomHeader_button:hover {
+    &::before {
+        background-color: $accent !important;
     }
 }
 
@@ -264,10 +289,20 @@ limitations under the License.
     mask-image: url("$(res)/img/element-icons/call/spotlight.svg");
 }
 
-.mx_RoomHeader_closeButton::before {
-    mask-image: url("$(res)/img/cancel.svg");
-    mask-size: 20px;
-    mask-position: center;
+.mx_RoomHeader_closeButton {
+    &::before {
+        mask-image: url("$(res)/img/cancel.svg");
+        mask-size: 20px;
+        mask-position: center;
+    }
+
+    &:hover {
+        background: unset; /* remove background color on hover */
+
+        &::before {
+            background-color: $icon-button-color; /* set the default background color */
+        }
+    }
 }
 
 .mx_RoomHeader_minimiseButton::before {

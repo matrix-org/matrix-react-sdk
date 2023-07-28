@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,19 +33,23 @@ import { Icon as PinUprightIcon } from "../../../../res/img/element-icons/room/p
 import { Icon as EllipsisIcon } from "../../../../res/img/element-icons/room/ellipsis.svg";
 import { Icon as MembersIcon } from "../../../../res/img/element-icons/room/members.svg";
 import { Icon as FavoriteIcon } from "../../../../res/img/element-icons/roomlist/favorite.svg";
-import SettingsStore from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import DevtoolsDialog from "../dialogs/DevtoolsDialog";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 
-const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
+const QuickSettingsButton: React.FC<{
+    isPanelCollapsed: boolean;
+}> = ({ isPanelCollapsed = false }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
 
     const { [MetaSpace.Favourites]: favouritesEnabled, [MetaSpace.People]: peopleEnabled } =
         useSettingValue<Record<MetaSpace, boolean>>("Spaces.enabledMetaSpaces");
 
-    let contextMenu: JSX.Element;
-    if (menuDisplayed) {
+    const currentRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
+    const developerModeEnabled = useSettingValue("developerMode");
+
+    let contextMenu: JSX.Element | undefined;
+    if (menuDisplayed && handle.current) {
         contextMenu = (
             <ContextMenu
                 {...alwaysAboveRightOf(handle.current.getBoundingClientRect(), ChevronFace.None, 16)}
@@ -66,14 +70,14 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
                     {_t("All settings")}
                 </AccessibleButton>
 
-                {SettingsStore.getValue("developerMode") && (
+                {currentRoomId && developerModeEnabled && (
                     <AccessibleButton
                         onClick={() => {
                             closeMenu();
                             Modal.createDialog(
                                 DevtoolsDialog,
                                 {
-                                    roomId: SdkContextClass.instance.roomViewStore.getRoomId(),
+                                    roomId: currentRoomId,
                                 },
                                 "mx_DevtoolsDialog_wrapper",
                             );
@@ -132,6 +136,7 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
                 title={_t("Quick settings")}
                 inputRef={handle}
                 forceHide={!isPanelCollapsed}
+                aria-expanded={!isPanelCollapsed}
             >
                 {!isPanelCollapsed ? _t("Settings") : null}
             </AccessibleTooltipButton>

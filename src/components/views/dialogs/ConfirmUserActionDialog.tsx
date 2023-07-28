@@ -39,7 +39,7 @@ interface IProps {
     children?: ReactNode;
     className?: string;
     roomId?: string;
-    onFinished: (success: boolean, reason?: string) => void;
+    onFinished: (success?: boolean, reason?: string) => void;
 }
 
 interface IState {
@@ -55,7 +55,7 @@ interface IState {
  * Also tweaks the style for 'dangerous' actions (albeit only with colour)
  */
 export default class ConfirmUserActionDialog extends React.Component<IProps, IState> {
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         danger: false,
         askReason: false,
     };
@@ -77,13 +77,13 @@ export default class ConfirmUserActionDialog extends React.Component<IProps, ISt
         this.props.onFinished(false);
     };
 
-    private onReasonChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    private onReasonChange = (ev: ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             reason: ev.target.value,
         });
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const confirmButtonClass = this.props.danger ? "danger" : "";
 
         let reasonBox;

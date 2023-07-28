@@ -14,21 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ICryptoCallbacks } from "matrix-js-sdk/src/matrix";
+import { DeviceVerificationStatus, ICryptoCallbacks } from "matrix-js-sdk/src/matrix";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { deriveKey } from "matrix-js-sdk/src/crypto/key_passphrase";
 import { decodeRecoveryKey } from "matrix-js-sdk/src/crypto/recoverykey";
 import { encodeBase64 } from "matrix-js-sdk/src/crypto/olmlib";
-import { DeviceTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ComponentType } from "react";
 
+import type CreateSecretStorageDialog from "./async-components/views/dialogs/security/CreateSecretStorageDialog";
 import Modal from "./Modal";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { _t } from "./languageHandler";
 import { isSecureBackupRequired } from "./utils/WellKnownUtils";
-import AccessSecretStorageDialog from "./components/views/dialogs/security/AccessSecretStorageDialog";
+import AccessSecretStorageDialog, { KeyParams } from "./components/views/dialogs/security/AccessSecretStorageDialog";
 import RestoreKeyBackupDialog from "./components/views/dialogs/security/RestoreKeyBackupDialog";
 import SettingsStore from "./settings/SettingsStore";
 import SecurityCustomisations from "./customisations/Security";
@@ -83,15 +82,14 @@ async function confirmToDismiss(): Promise<boolean> {
     return !sure;
 }
 
-type KeyParams = { passphrase: string; recoveryKey: string };
-
 function makeInputToKey(keyInfo: ISecretStorageKeyInfo): (keyParams: KeyParams) => Promise<Uint8Array> {
-    return async ({ passphrase, recoveryKey }) => {
+    return async ({ passphrase, recoveryKey }): Promise<Uint8Array> => {
         if (passphrase) {
             return deriveKey(passphrase, keyInfo.passphrase.salt, keyInfo.passphrase.iterations);
-        } else {
+        } else if (recoveryKey) {
             return decodeRecoveryKey(recoveryKey);
         }
+        throw new Error("Invalid input, passphrase or recoveryKey need to be provided");
     };
 }
 
@@ -100,16 +98,16 @@ async function getSecretStorageKey({
 }: {
     keys: Record<string, ISecretStorageKeyInfo>;
 }): Promise<[string, Uint8Array]> {
-    const cli = MatrixClientPeg.get();
+    const cli = MatrixClientPeg.safeGet();
     let keyId = await cli.getDefaultSecretStorageKeyId();
-    let keyInfo: ISecretStorageKeyInfo;
+    let keyInfo!: ISecretStorageKeyInfo;
     if (keyId) {
         // use the default SSSS key if set
         keyInfo = keyInfos[keyId];
         if (!keyInfo) {
             // if the default key is not available, pretend the default key
             // isn't set
-            keyId = undefined;
+            keyId = null;
         }
     }
     if (!keyId) {
@@ -128,7 +126,7 @@ async function getSecretStorageKey({
     }
 
     if (dehydrationCache.key) {
-        if (await MatrixClientPeg.get().checkSecretStorageKey(dehydrationCache.key, keyInfo)) {
+        if (await MatrixClientPeg.safeGet().checkSecretStorageKey(dehydrationCache.key, keyInfo)) {
             cacheSecretStorageKey(keyId, keyInfo, dehydrationCache.key);
             return [keyId, dehydrationCache.key];
         }
@@ -151,16 +149,16 @@ async function getSecretStorageKey({
         /* props= */
         {
             keyInfo,
-            checkPrivateKey: async (input: KeyParams) => {
+            checkPrivateKey: async (input: KeyParams): Promise<boolean> => {
                 const key = await inputToKey(input);
-                return MatrixClientPeg.get().checkSecretStorageKey(key, keyInfo);
+                return MatrixClientPeg.safeGet().checkSecretStorageKey(key, keyInfo);
             },
         },
-        /* className= */ null,
+        /* className= */ undefined,
         /* isPriorityModal= */ false,
         /* isStaticModal= */ false,
         /* options= */ {
-            onBeforeClose: async (reason) => {
+            onBeforeClose: async (reason): Promise<boolean> => {
                 if (reason === "backgroundClick") {
                     return confirmToDismiss();
                 }
@@ -182,7 +180,7 @@ async function getSecretStorageKey({
 
 export async function getDehydrationKey(
     keyInfo: ISecretStorageKeyInfo,
-    checkFunc: (Uint8Array) => void,
+    checkFunc: (data: Uint8Array) => void,
 ): Promise<Uint8Array> {
     const keyFromCustomisations = SecurityCustomisations.getSecretStorageKey?.();
     if (keyFromCustomisations) {
@@ -196,7 +194,7 @@ export async function getDehydrationKey(
         /* props= */
         {
             keyInfo,
-            checkPrivateKey: async (input) => {
+            checkPrivateKey: async (input: KeyParams): Promise<boolean> => {
                 const key = await inputToKey(input);
                 try {
                     checkFunc(key);
@@ -206,11 +204,11 @@ export async function getDehydrationKey(
                 }
             },
         },
-        /* className= */ null,
+        /* className= */ undefined,
         /* isPriorityModal= */ false,
         /* isStaticModal= */ false,
         /* options= */ {
-            onBeforeClose: async (reason) => {
+            onBeforeClose: async (reason): Promise<boolean> => {
                 if (reason === "backgroundClick") {
                     return confirmToDismiss();
                 }
@@ -242,10 +240,10 @@ async function onSecretRequested(
     deviceId: string,
     requestId: string,
     name: string,
-    deviceTrust: DeviceTrustLevel,
-): Promise<string> {
+    deviceTrust: DeviceVerificationStatus,
+): Promise<string | undefined> {
     logger.log("onSecretRequested", userId, deviceId, requestId, name, deviceTrust);
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
     if (userId !== client.getUserId()) {
         return;
     }
@@ -259,19 +257,19 @@ async function onSecretRequested(
         name === "m.cross_signing.user_signing"
     ) {
         const callbacks = client.getCrossSigningCacheCallbacks();
-        if (!callbacks.getCrossSigningKeyCache) return;
+        if (!callbacks?.getCrossSigningKeyCache) return;
         const keyId = name.replace("m.cross_signing.", "");
         const key = await callbacks.getCrossSigningKeyCache(keyId);
         if (!key) {
             logger.log(`${keyId} requested by ${deviceId}, but not found in cache`);
         }
-        return key && encodeBase64(key);
+        return key ? encodeBase64(key) : undefined;
     } else if (name === "m.megolm_backup.v1") {
-        const key = await client.crypto.getSessionBackupPrivateKey();
+        const key = await client.crypto?.getSessionBackupPrivateKey();
         if (!key) {
             logger.log(`session backup key requested by ${deviceId}, but not found in cache`);
         }
-        return key && encodeBase64(key);
+        return key ? encodeBase64(key) : undefined;
     }
     logger.warn("onSecretRequested didn't recognise the secret named ", name);
 }
@@ -284,15 +282,15 @@ export const crossSigningCallbacks: ICryptoCallbacks = {
 };
 
 export async function promptForBackupPassphrase(): Promise<Uint8Array> {
-    let key: Uint8Array;
+    let key!: Uint8Array;
 
     const { finished } = Modal.createDialog(
         RestoreKeyBackupDialog,
         {
             showSummary: false,
-            keyCallback: (k) => (key = k),
+            keyCallback: (k: Uint8Array) => (key = k),
         },
-        null,
+        undefined,
         /* priority = */ false,
         /* static = */ true,
     );
@@ -324,28 +322,28 @@ export async function promptForBackupPassphrase(): Promise<Uint8Array> {
  * bootstrapped. Optional.
  * @param {bool} [forceReset] Reset secret storage even if it's already set up
  */
-export async function accessSecretStorage(func = async () => {}, forceReset = false) {
-    const cli = MatrixClientPeg.get();
+export async function accessSecretStorage(func = async (): Promise<void> => {}, forceReset = false): Promise<void> {
     secretStorageBeingAccessed = true;
     try {
+        const cli = MatrixClientPeg.safeGet();
         if (!(await cli.hasSecretStorageKey()) || forceReset) {
             // This dialog calls bootstrap itself after guiding the user through
             // passphrase creation.
             const { finished } = Modal.createDialogAsync(
                 import("./async-components/views/dialogs/security/CreateSecretStorageDialog") as unknown as Promise<
-                    ComponentType<{}>
+                    typeof CreateSecretStorageDialog
                 >,
                 {
                     forceReset,
                 },
-                null,
+                undefined,
                 /* priority = */ false,
                 /* static = */ true,
                 /* options = */ {
-                    onBeforeClose: async (reason) => {
+                    onBeforeClose: async (reason): Promise<boolean> => {
                         // If Secure Backup is required, you cannot leave the modal.
                         if (reason === "backgroundClick") {
-                            return !isSecureBackupRequired();
+                            return !isSecureBackupRequired(cli);
                         }
                         return true;
                     },
@@ -357,7 +355,7 @@ export async function accessSecretStorage(func = async () => {}, forceReset = fa
             }
         } else {
             await cli.bootstrapCrossSigning({
-                authUploadDeviceSigningKeys: async (makeRequest) => {
+                authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
                     const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                         title: _t("Setting up keys"),
                         matrixClient: cli,

@@ -16,6 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Optional } from "matrix-events-sdk";
+
 import { _t } from "./languageHandler";
 
 function getDaysArray(): string[] {
@@ -102,6 +104,21 @@ export function formatFullDate(date: Date, showTwelveHour = false, showSeconds =
     });
 }
 
+/**
+ * Formats dates to be compatible with attributes of a `<input type="date">`. Dates
+ * should be formatted like "2020-06-23" (formatted according to ISO8601)
+ *
+ * @param date The date to format.
+ * @returns The date string in ISO8601 format ready to be used with an `<input>`
+ */
+export function formatDateForInput(date: Date): string {
+    const year = `${date.getFullYear()}`.padStart(4, "0");
+    const month = `${date.getMonth() + 1}`.padStart(2, "0");
+    const day = `${date.getDate()}`.padStart(2, "0");
+    const dateInputValue = `${year}-${month}-${day}`;
+    return dateInputValue;
+}
+
 export function formatFullTime(date: Date, showTwelveHour = false): string {
     if (showTwelveHour) {
         return twelveHourTime(date, true);
@@ -171,11 +188,15 @@ function withinPast24Hours(prevDate: Date, nextDate: Date): boolean {
     return Math.abs(prevDate.getTime() - nextDate.getTime()) <= MILLIS_IN_DAY;
 }
 
+function withinCurrentDay(prevDate: Date, nextDate: Date): boolean {
+    return withinPast24Hours(prevDate, nextDate) && prevDate.getDay() === nextDate.getDay();
+}
+
 function withinCurrentYear(prevDate: Date, nextDate: Date): boolean {
     return prevDate.getFullYear() === nextDate.getFullYear();
 }
 
-export function wantsDateSeparator(prevEventDate: Date, nextEventDate: Date): boolean {
+export function wantsDateSeparator(prevEventDate: Optional<Date>, nextEventDate: Optional<Date>): boolean {
     if (!nextEventDate || !prevEventDate) {
         return false;
     }
@@ -188,7 +209,7 @@ export function wantsDateSeparator(prevEventDate: Date, nextEventDate: Date): bo
     return prevEventDate.getDay() !== nextEventDate.getDay();
 }
 
-export function formatFullDateNoDay(date: Date) {
+export function formatFullDateNoDay(date: Date): string {
     return _t("%(date)s at %(time)s", {
         date: date.toLocaleDateString().replace(/\//g, "-"),
         time: date.toLocaleTimeString().replace(/:/g, "-"),
@@ -205,13 +226,13 @@ export function formatFullDateNoDayISO(date: Date): string {
     return date.toISOString();
 }
 
-export function formatFullDateNoDayNoTime(date: Date) {
+export function formatFullDateNoDayNoTime(date: Date): string {
     return date.getFullYear() + "/" + pad(date.getMonth() + 1) + "/" + pad(date.getDate());
 }
 
 export function formatRelativeTime(date: Date, showTwelveHour = false): string {
     const now = new Date(Date.now());
-    if (withinPast24Hours(date, now)) {
+    if (withinCurrentDay(date, now)) {
         return formatTime(date, showTwelveHour);
     } else {
         const months = getMonthsArray();
@@ -269,3 +290,16 @@ export function formatPreciseDuration(durationMs: number): string {
     }
     return _t("%(value)ss", { value: seconds });
 }
+
+/**
+ * Formats a timestamp to a short date
+ * (eg 25/12/22 in uk locale)
+ * localised by system locale
+ * @param timestamp - epoch timestamp
+ * @returns {string} formattedDate
+ */
+export const formatLocalDateShort = (timestamp: number): string =>
+    new Intl.DateTimeFormat(
+        undefined, // locales
+        { day: "2-digit", month: "2-digit", year: "2-digit" },
+    ).format(timestamp);

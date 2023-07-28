@@ -16,13 +16,14 @@ limitations under the License.
 
 import React from "react";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { SyncState } from "matrix-js-sdk/src/sync";
 
 import { hasRoomLiveVoiceBroadcast, VoiceBroadcastInfoEventType, VoiceBroadcastRecordingsStore } from "..";
 import InfoDialog from "../../components/views/dialogs/InfoDialog";
 import { _t } from "../../languageHandler";
 import Modal from "../../Modal";
 
-const showAlreadyRecordingDialog = () => {
+const showAlreadyRecordingDialog = (): void => {
     Modal.createDialog(InfoDialog, {
         title: _t("Can't start a new voice broadcast"),
         description: (
@@ -37,7 +38,7 @@ const showAlreadyRecordingDialog = () => {
     });
 };
 
-const showInsufficientPermissionsDialog = () => {
+const showInsufficientPermissionsDialog = (): void => {
     Modal.createDialog(InfoDialog, {
         title: _t("Can't start a new voice broadcast"),
         description: (
@@ -52,7 +53,7 @@ const showInsufficientPermissionsDialog = () => {
     });
 };
 
-const showOthersAlreadyRecordingDialog = () => {
+const showOthersAlreadyRecordingDialog = (): void => {
     Modal.createDialog(InfoDialog, {
         title: _t("Can't start a new voice broadcast"),
         description: (
@@ -67,11 +68,19 @@ const showOthersAlreadyRecordingDialog = () => {
     });
 };
 
-export const checkVoiceBroadcastPreConditions = (
+const showNoConnectionDialog = (): void => {
+    Modal.createDialog(InfoDialog, {
+        title: _t("Connection error"),
+        description: <p>{_t("Unfortunately we're unable to start a recording right now. Please try again later.")}</p>,
+        hasCloseButton: true,
+    });
+};
+
+export const checkVoiceBroadcastPreConditions = async (
     room: Room,
     client: MatrixClient,
     recordingsStore: VoiceBroadcastRecordingsStore,
-): boolean => {
+): Promise<boolean> => {
     if (recordingsStore.getCurrent()) {
         showAlreadyRecordingDialog();
         return false;
@@ -86,7 +95,12 @@ export const checkVoiceBroadcastPreConditions = (
         return false;
     }
 
-    const { hasBroadcast, startedByUser } = hasRoomLiveVoiceBroadcast(room, currentUserId);
+    if (client.getSyncState() === SyncState.Error) {
+        showNoConnectionDialog();
+        return false;
+    }
+
+    const { hasBroadcast, startedByUser } = await hasRoomLiveVoiceBroadcast(client, room, currentUserId);
 
     if (hasBroadcast && startedByUser) {
         showAlreadyRecordingDialog();

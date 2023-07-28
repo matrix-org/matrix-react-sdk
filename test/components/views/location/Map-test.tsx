@@ -15,17 +15,18 @@ limitations under the License.
 */
 
 import React from "react";
-// eslint-disable-next-line deprecate/import
-import { mount } from "enzyme";
-import { act } from "react-dom/test-utils";
+import { act, fireEvent, getByTestId, render } from "@testing-library/react";
 import * as maplibregl from "maplibre-gl";
 import { ClientEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+import { mocked } from "jest-mock";
 
 import Map from "../../../../src/components/views/location/Map";
-import { findByTestId, getMockClientWithEventEmitter } from "../../../test-utils";
+import { getMockClientWithEventEmitter, getMockGeolocationPositionError } from "../../../test-utils";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
+import Modal from "../../../../src/Modal";
+import ErrorDialog from "../../../../src/components/views/dialogs/ErrorDialog";
 
 describe("<Map />", () => {
     const defaultProps = {
@@ -39,11 +40,12 @@ describe("<Map />", () => {
             [TILE_SERVER_WK_KEY.name]: { map_style_url: "maps.com" },
         }),
     });
-    const getComponent = (props = {}) =>
-        mount(<Map {...defaultProps} {...props} />, {
-            wrappingComponent: MatrixClientContext.Provider,
-            wrappingComponentProps: { value: matrixClient },
-        });
+    const getComponent = (props = {}, renderingFn?: any) =>
+        (renderingFn ?? render)(
+            <MatrixClientContext.Provider value={matrixClient}>
+                <Map {...defaultProps} {...props} />
+            </MatrixClientContext.Provider>,
+        );
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -52,14 +54,19 @@ describe("<Map />", () => {
         });
 
         jest.spyOn(logger, "error").mockRestore();
+        mocked(maplibregl.GeolocateControl).mockClear();
+    });
+
+    afterEach(() => {
+        jest.spyOn(logger, "error").mockRestore();
     });
 
     const mapOptions = { container: {} as unknown as HTMLElement, style: "" };
     const mockMap = new maplibregl.Map(mapOptions);
 
     it("renders", () => {
-        const component = getComponent();
-        expect(component).toBeTruthy();
+        const { container } = getComponent();
+        expect(container.firstChild).not.toBeNull();
     });
 
     describe("onClientWellKnown emits", () => {
@@ -107,10 +114,10 @@ describe("<Map />", () => {
         });
 
         it("updates map center when centerGeoUri prop changes", () => {
-            const component = getComponent({ centerGeoUri: "geo:51,42" });
+            const { rerender } = getComponent({ centerGeoUri: "geo:51,42" });
 
-            component.setProps({ centerGeoUri: "geo:53,45" });
-            component.setProps({ centerGeoUri: "geo:56,47" });
+            getComponent({ centerGeoUri: "geo:53,45" }, rerender);
+            getComponent({ centerGeoUri: "geo:56,47" }, rerender);
             expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 51, lon: 42 });
             expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 53, lon: 45 });
             expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 56, lon: 47 });
@@ -141,12 +148,13 @@ describe("<Map />", () => {
         });
 
         it("updates map bounds when bounds prop changes", () => {
-            const component = getComponent({ centerGeoUri: "geo:51,42" });
+            const { rerender } = getComponent({ centerGeoUri: "geo:51,42" });
 
             const bounds = { north: 51, south: 50, east: 42, west: 41 };
             const bounds2 = { north: 53, south: 51, east: 45, west: 44 };
-            component.setProps({ bounds });
-            component.setProps({ bounds: bounds2 });
+
+            getComponent({ bounds }, rerender);
+            getComponent({ bounds: bounds2 }, rerender);
             expect(mockMap.fitBounds).toHaveBeenCalledTimes(2);
         });
     });
@@ -154,31 +162,28 @@ describe("<Map />", () => {
     describe("children", () => {
         it("renders without children", () => {
             const component = getComponent({ children: null });
-
-            component.setProps({});
-
             // no error
             expect(component).toBeTruthy();
         });
 
         it("renders children with map renderProp", () => {
-            const children = ({ map }) => (
-                <div data-test-id="test-child" data-map={map}>
+            const children = ({ map }: { map: maplibregl.Map }) => (
+                <div data-testid="test-child" data-map={map}>
                     Hello, world
                 </div>
             );
 
-            const component = getComponent({ children });
+            const { container } = getComponent({ children });
 
-            // renders child with map instance
-            expect(findByTestId(component, "test-child").props()["data-map"]).toEqual(mockMap);
+            // passes the map instance to the react children
+            expect(getByTestId(container, "test-child").dataset.map).toBeTruthy();
         });
     });
 
     describe("onClick", () => {
         it("eats clicks to maplibre attribution button", () => {
             const onClick = jest.fn();
-            const component = getComponent({ onClick });
+            getComponent({ onClick });
 
             act(() => {
                 // this is added to the dom by maplibregl
@@ -186,7 +191,7 @@ describe("<Map />", () => {
                 // just fake the target
                 const fakeEl = document.createElement("div");
                 fakeEl.className = "maplibregl-ctrl-attrib-button";
-                component.simulate("click", { target: fakeEl });
+                fireEvent.click(fakeEl);
             });
 
             expect(onClick).not.toHaveBeenCalled();
@@ -194,13 +199,79 @@ describe("<Map />", () => {
 
         it("calls onClick", () => {
             const onClick = jest.fn();
-            const component = getComponent({ onClick });
+            const { container } = getComponent({ onClick });
 
             act(() => {
-                component.simulate("click");
+                fireEvent.click(container.firstChild);
             });
 
             expect(onClick).toHaveBeenCalled();
+        });
+    });
+
+    describe("geolocate", () => {
+        it("does not add a geolocate control when allowGeolocate is falsy", () => {
+            getComponent({ allowGeolocate: false });
+
+            // didn't create a geolocation control
+            expect(maplibregl.GeolocateControl).not.toHaveBeenCalled();
+        });
+
+        it("creates a geolocate control and adds it to the map when allowGeolocate is truthy", () => {
+            getComponent({ allowGeolocate: true });
+
+            // didn't create a geolocation control
+            expect(maplibregl.GeolocateControl).toHaveBeenCalledWith({
+                positionOptions: {
+                    enableHighAccuracy: true,
+                },
+                trackUserLocation: false,
+            });
+
+            // mocked maplibregl shares mock for each mocked instance
+            // so we can assert the geolocate control was added using this static mock
+            const mockGeolocate = new maplibregl.GeolocateControl({});
+            expect(mockMap.addControl).toHaveBeenCalledWith(mockGeolocate);
+        });
+
+        it("logs and opens a dialog on a geolocation error", () => {
+            const mockGeolocate = new maplibregl.GeolocateControl({});
+            jest.spyOn(mockGeolocate, "on");
+            const logSpy = jest.spyOn(logger, "error").mockImplementation(() => {});
+            jest.spyOn(Modal, "createDialog");
+
+            const { rerender } = getComponent({ allowGeolocate: true });
+
+            // wait for component to settle
+            getComponent({ allowGeolocate: true }, rerender);
+            expect(mockGeolocate.on).toHaveBeenCalledWith("error", expect.any(Function));
+            const error = getMockGeolocationPositionError(1, "Test");
+
+            // @ts-ignore pretend to have geolocate emit an error
+            mockGeolocate.emit("error", error);
+
+            expect(logSpy).toHaveBeenCalledWith("Could not fetch location", error);
+
+            expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
+                title: "Could not fetch location",
+                description:
+                    "Element was denied permission to fetch your location. Please allow location access in your browser settings.",
+            });
+        });
+
+        it("unsubscribes from geolocate errors on destroy", () => {
+            const mockGeolocate = new maplibregl.GeolocateControl({});
+            jest.spyOn(mockGeolocate, "on");
+            jest.spyOn(mockGeolocate, "off");
+            jest.spyOn(Modal, "createDialog");
+
+            const { unmount } = getComponent({ allowGeolocate: true });
+
+            expect(mockGeolocate.on).toHaveBeenCalled();
+
+            unmount();
+
+            expect(mockGeolocate.off).toHaveBeenCalled();
         });
     });
 });

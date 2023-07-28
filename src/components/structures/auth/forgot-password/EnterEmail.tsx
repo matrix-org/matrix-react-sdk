@@ -22,14 +22,14 @@ import EmailField from "../../../views/auth/EmailField";
 import { ErrorMessage } from "../../ErrorMessage";
 import Spinner from "../../../views/elements/Spinner";
 import Field from "../../../views/elements/Field";
-import AccessibleButton from "../../../views/elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../../views/elements/AccessibleButton";
 
 interface EnterEmailProps {
     email: string;
     errorText: string | ReactNode | null;
     homeserver: string;
     loading: boolean;
-    onInputChanged: (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => void;
+    onInputChanged: (stateKey: "email", ev: React.FormEvent<HTMLInputElement>) => void;
     onLoginClick: () => void;
     onSubmitForm: (ev: React.FormEvent) => void;
 }
@@ -50,7 +50,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
 
     const emailFieldRef = useRef<Field>(null);
 
-    const onSubmit = async (event: React.FormEvent) => {
+    const onSubmit = async (event: React.FormEvent): Promise<void> => {
         if (await emailFieldRef.current?.validate({ allowEmpty: false })) {
             onSubmitForm(event);
             return;
@@ -94,7 +94,10 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
                             className="mx_AuthBody_sign-in-instead-button"
                             element="button"
                             kind="link"
-                            onClick={onLoginClick}
+                            onClick={(e: ButtonEvent) => {
+                                e.preventDefault();
+                                onLoginClick();
+                            }}
                         >
                             {_t("Sign in instead")}
                         </AccessibleButton>

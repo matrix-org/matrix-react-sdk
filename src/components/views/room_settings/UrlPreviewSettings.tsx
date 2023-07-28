@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { _t, _td } from "../../../languageHandler";
@@ -28,25 +28,25 @@ import { Action } from "../../../dispatcher/actions";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import SettingsFlag from "../elements/SettingsFlag";
 import SettingsFieldset from "../settings/SettingsFieldset";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     room: Room;
 }
 
 export default class UrlPreviewSettings extends React.Component<IProps> {
-    private onClickUserSettings = (e: React.MouseEvent): void => {
+    private onClickUserSettings = (e: ButtonEvent): void => {
         e.preventDefault();
         e.stopPropagation();
         dis.fire(Action.ViewUserSettings);
     };
 
-    public render(): JSX.Element {
+    public render(): ReactNode {
         const roomId = this.props.room.roomId;
-        const isEncrypted = MatrixClientPeg.get().isRoomEncrypted(roomId);
+        const isEncrypted = MatrixClientPeg.safeGet().isRoomEncrypted(roomId);
 
-        let previewsForAccount = null;
-        let previewsForRoom = null;
+        let previewsForAccount: ReactNode | undefined;
+        let previewsForRoom: ReactNode | undefined;
 
         if (!isEncrypted) {
             // Only show account setting state and room state setting state in non-e2ee rooms where they apply
@@ -79,21 +79,19 @@ export default class UrlPreviewSettings extends React.Component<IProps> {
 
             if (SettingsStore.canSetValue("urlPreviewsEnabled", roomId, SettingLevel.ROOM)) {
                 previewsForRoom = (
-                    <label>
-                        <SettingsFlag
-                            name="urlPreviewsEnabled"
-                            level={SettingLevel.ROOM}
-                            roomId={roomId}
-                            isExplicit={true}
-                        />
-                    </label>
+                    <SettingsFlag
+                        name="urlPreviewsEnabled"
+                        level={SettingLevel.ROOM}
+                        roomId={roomId}
+                        isExplicit={true}
+                    />
                 );
             } else {
                 let str = _td("URL previews are enabled by default for participants in this room.");
                 if (!SettingsStore.getValueAt(SettingLevel.ROOM, "urlPreviewsEnabled", roomId, /*explicit=*/ true)) {
                     str = _td("URL previews are disabled by default for participants in this room.");
                 }
-                previewsForRoom = <label>{_t(str)}</label>;
+                previewsForRoom = <div>{_t(str)}</div>;
             }
         } else {
             previewsForAccount = _t(
@@ -127,7 +125,7 @@ export default class UrlPreviewSettings extends React.Component<IProps> {
         return (
             <SettingsFieldset legend={_t("URL Previews")} description={description}>
                 {previewsForRoom}
-                <label>{previewsForRoomAccount}</label>
+                {previewsForRoomAccount}
             </SettingsFieldset>
         );
     }

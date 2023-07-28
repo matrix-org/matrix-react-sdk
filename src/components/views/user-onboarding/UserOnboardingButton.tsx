@@ -34,18 +34,18 @@ interface Props {
     minimized: boolean;
 }
 
-export function UserOnboardingButton({ selected, minimized }: Props) {
+export function UserOnboardingButton({ selected, minimized }: Props): JSX.Element {
     const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection");
     const visible = useSettingValue<boolean>("FTUE.userOnboardingButton");
 
     if (!visible || minimized || !showUserOnboardingPage(useCase)) {
-        return null;
+        return <></>;
     }
 
     return <UserOnboardingButtonInternal selected={selected} minimized={minimized} />;
 }
 
-function UserOnboardingButtonInternal({ selected, minimized }: Props) {
+function UserOnboardingButtonInternal({ selected, minimized }: Props): JSX.Element {
     const onDismiss = useCallback((ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
@@ -73,7 +73,7 @@ function UserOnboardingButtonInternal({ selected, minimized }: Props) {
             {!minimized && (
                 <>
                     <div className="mx_UserOnboardingButton_content">
-                        <Heading size="h4" className="mx_Heading_h4">
+                        <Heading size="4" className="mx_Heading_h4">
                             {_t("Welcome")}
                         </Heading>
                         <AccessibleButton className="mx_UserOnboardingButton_close" onClick={onDismiss} />

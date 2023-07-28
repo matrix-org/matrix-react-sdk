@@ -22,12 +22,12 @@ import { normalize } from "matrix-js-sdk/src/utils";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 
-export const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[], boolean] => {
+export const useSpaceResults = (space: Room | undefined, query: string): [IHierarchyRoom[], boolean] => {
     const [rooms, setRooms] = useState<IHierarchyRoom[]>([]);
     const [hierarchy, setHierarchy] = useState<RoomHierarchy>();
 
     const resetHierarchy = useCallback(() => {
-        setHierarchy(space ? new RoomHierarchy(space, 50) : null);
+        setHierarchy(space ? new RoomHierarchy(space, 50) : undefined);
     }, [space]);
     useEffect(resetHierarchy, [resetHierarchy]);
 
@@ -36,11 +36,11 @@ export const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[]
 
         let unmounted = false;
 
-        (async () => {
+        (async (): Promise<void> => {
             while (hierarchy?.canLoadMore && !unmounted && space === hierarchy.root) {
                 await hierarchy.load();
                 if (hierarchy.canLoadMore) hierarchy.load(); // start next load so that the loading attribute is right
-                setRooms(hierarchy.rooms);
+                setRooms(hierarchy.rooms!);
             }
         })();
 
@@ -54,7 +54,7 @@ export const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[]
         const lcQuery = trimmedQuery.toLowerCase();
         const normalizedQuery = normalize(trimmedQuery);
 
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         return rooms?.filter((r) => {
             return (
                 r.room_type !== RoomType.Space &&

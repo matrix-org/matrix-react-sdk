@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { HTTPError, MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import ConfirmRedactDialog from "./ConfirmRedactDialog";
@@ -23,13 +25,14 @@ import BaseDialog from "./BaseDialog";
 import Spinner from "../elements/Spinner";
 
 interface IProps {
+    event: MatrixEvent;
     redact: () => Promise<void>;
-    onFinished: (success: boolean) => void;
+    onFinished: (success?: boolean) => void;
 }
 
 interface IState {
     isRedacting: boolean;
-    redactionErrorCode: string | number;
+    redactionErrorCode: string | number | null;
 }
 
 /*
@@ -45,7 +48,7 @@ interface IState {
  * To avoid this, we keep the dialog open as long as /redact is in progress.
  */
 export default class ConfirmAndWaitRedactDialog extends React.PureComponent<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             isRedacting: false,
@@ -53,14 +56,20 @@ export default class ConfirmAndWaitRedactDialog extends React.PureComponent<IPro
         };
     }
 
-    public onParentFinished = async (proceed: boolean): Promise<void> => {
+    public onParentFinished = async (proceed?: boolean): Promise<void> => {
         if (proceed) {
             this.setState({ isRedacting: true });
             try {
                 await this.props.redact();
                 this.props.onFinished(true);
             } catch (error) {
-                const code = error.errcode || error.statusCode;
+                let code: string | number | undefined;
+                if (error instanceof MatrixError) {
+                    code = error.errcode;
+                } else if (error instanceof HTTPError) {
+                    code = error.httpStatus;
+                }
+
                 if (typeof code !== "undefined") {
                     this.setState({ redactionErrorCode: code });
                 } else {
@@ -72,7 +81,7 @@ export default class ConfirmAndWaitRedactDialog extends React.PureComponent<IPro
         }
     };
 
-    public render() {
+    public render(): React.ReactNode {
         if (this.state.isRedacting) {
             if (this.state.redactionErrorCode) {
                 const code = this.state.redactionErrorCode;
@@ -91,7 +100,7 @@ export default class ConfirmAndWaitRedactDialog extends React.PureComponent<IPro
                 );
             }
         } else {
-            return <ConfirmRedactDialog onFinished={this.onParentFinished} />;
+            return <ConfirmRedactDialog event={this.props.event} onFinished={this.onParentFinished} />;
         }
     }
 }

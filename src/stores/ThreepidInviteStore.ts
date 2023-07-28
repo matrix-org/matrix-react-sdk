@@ -82,8 +82,12 @@ export default class ThreepidInviteStore extends EventEmitter {
         const results: IPersistedThreepidInvite[] = [];
         for (let i = 0; i < localStorage.length; i++) {
             const keyName = localStorage.key(i);
-            if (!keyName.startsWith(STORAGE_PREFIX)) continue;
-            results.push(JSON.parse(localStorage.getItem(keyName)) as IPersistedThreepidInvite);
+            if (!keyName?.startsWith(STORAGE_PREFIX)) continue;
+            try {
+                results.push(JSON.parse(localStorage.getItem(keyName)!) as IPersistedThreepidInvite);
+            } catch (e) {
+                console.warn("Failed to parse 3pid invite", e);
+            }
         }
         return results;
     }
@@ -97,7 +101,7 @@ export default class ThreepidInviteStore extends EventEmitter {
         return this.getInvites()[0];
     }
 
-    public resolveInvite(invite: IThreepidInvite) {
+    public resolveInvite(invite: IThreepidInvite): void {
         localStorage.removeItem(`${STORAGE_PREFIX}${invite.id}`);
     }
 

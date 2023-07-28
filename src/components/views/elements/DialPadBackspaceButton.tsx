@@ -25,7 +25,7 @@ interface IProps {
 }
 
 export default class DialPadBackspaceButton extends React.PureComponent<IProps> {
-    public render() {
+    public render(): React.ReactNode {
         return (
             <div className="mx_DialPadBackspaceButtonWrapper">
                 <AccessibleButton

@@ -22,19 +22,13 @@ describe("Singleflight", () => {
     });
 
     it("should throw for bad context variables", () => {
-        const permutations: [Object, string][] = [
+        const permutations: [Object | null, string | null][] = [
             [null, null],
             [{}, null],
             [null, "test"],
         ];
         for (const p of permutations) {
-            try {
-                Singleflight.for(p[0], p[1]);
-                // noinspection ExceptionCaughtLocallyJS
-                throw new Error("failed to fail: " + JSON.stringify(p));
-            } catch (e) {
-                expect(e.message).toBe("An instance and key must be supplied");
-            }
+            expect(() => Singleflight.for(p[0], p[1])).toThrow("An instance and key must be supplied");
         }
     });
 

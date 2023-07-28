@@ -26,27 +26,27 @@ interface IProps extends IContextMenuProps {
 }
 
 export default class LegacyCallContextMenu extends React.Component<IProps> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
     }
 
-    public onHoldClick = () => {
+    public onHoldClick = (): void => {
         this.props.call.setRemoteOnHold(true);
         this.props.onFinished();
     };
 
-    public onUnholdClick = () => {
+    public onUnholdClick = (): void => {
         LegacyCallHandler.instance.setActiveCallRoomId(this.props.call.roomId);
 
         this.props.onFinished();
     };
 
-    public onTransferClick = () => {
+    public onTransferClick = (): void => {
         LegacyCallHandler.instance.showTransferDialog(this.props.call);
         this.props.onFinished();
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const holdUnholdCaption = this.props.call.isRemoteOnHold() ? _t("Resume") : _t("Hold");
         const handler = this.props.call.isRemoteOnHold() ? this.onUnholdClick : this.onHoldClick;
 

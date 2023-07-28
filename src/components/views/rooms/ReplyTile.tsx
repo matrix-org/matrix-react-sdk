@@ -34,6 +34,7 @@ import MVoiceMessageBody from "../messages/MVoiceMessageBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { renderReplyTile } from "../../../events/EventTileFactory";
 import { GetRelationsForEvent } from "../rooms/EventTile";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -52,13 +53,13 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         onHeightChanged: () => {},
     };
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.props.mxEvent.on(MatrixEventEvent.Decrypted, this.onDecrypted);
         this.props.mxEvent.on(MatrixEventEvent.BeforeRedaction, this.onEventRequiresUpdate);
         this.props.mxEvent.on(MatrixEventEvent.Replaced, this.onEventRequiresUpdate);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
         this.props.mxEvent.removeListener(MatrixEventEvent.BeforeRedaction, this.onEventRequiresUpdate);
         this.props.mxEvent.removeListener(MatrixEventEvent.Replaced, this.onEventRequiresUpdate);
@@ -104,12 +105,13 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         }
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const mxEvent = this.props.mxEvent;
         const msgType = mxEvent.getContent().msgtype;
         const evType = mxEvent.getType();
 
         const { hasRenderer, isInfoMessage, isSeeingThroughMessageHiddenForModeration } = getEventDisplayInfo(
+            MatrixClientPeg.safeGet(),
             mxEvent,
             false /* Replies are never hidden, so this should be fine */,
         );
@@ -134,7 +136,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
         let permalink = "#";
         if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId());
+            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId()!);
         }
 
         let sender;
@@ -168,7 +170,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
                             ...this.props,
 
                             // overrides
-                            ref: null,
+                            ref: undefined,
                             showUrlPreview: false,
                             overrideBodyTypes: msgtypeOverrides,
                             overrideEventTypes: evOverrides,

@@ -20,7 +20,7 @@ import { mockPlatformPeg, unmockPlatformPeg } from "../test-utils";
 const PATH_TO_KEYBOARD_SHORTCUTS = "../../src/accessibility/KeyboardShortcuts";
 const PATH_TO_KEYBOARD_SHORTCUT_UTILS = "../../src/accessibility/KeyboardShortcutUtils";
 
-const mockKeyboardShortcuts = (override) => {
+const mockKeyboardShortcuts = (override: Record<string, any>) => {
     jest.doMock(PATH_TO_KEYBOARD_SHORTCUTS, () => {
         const original = jest.requireActual(PATH_TO_KEYBOARD_SHORTCUTS);
         return {
@@ -59,7 +59,7 @@ describe("KeyboardShortcutUtils", () => {
     });
 
     describe("correctly filters shortcuts", () => {
-        it("when on web and not on macOS ", async () => {
+        it("when on web and not on macOS", async () => {
             mockKeyboardShortcuts({
                 KEYBOARD_SHORTCUTS: {
                     Keybind1: {},

@@ -28,7 +28,7 @@ import { SettingLevel } from "../SettingLevel";
 // default action on this rule is dont_notify, but it could be something else
 export function isPushNotifyDisabled(): boolean {
     // Return the value of the master push rule as a default
-    const processor = new PushProcessor(MatrixClientPeg.get());
+    const processor = new PushProcessor(MatrixClientPeg.safeGet());
     const masterRule = processor.getPushRuleById(".m.rule.master");
 
     if (!masterRule) {
@@ -53,7 +53,7 @@ export class NotificationsEnabledController extends SettingController {
         level: SettingLevel,
         roomId: string,
         calculatedValue: any,
-        calculatedAtLevel: SettingLevel,
+        calculatedAtLevel: SettingLevel | null,
     ): any {
         if (!getNotifier().isPossible()) return false;
 
@@ -64,7 +64,7 @@ export class NotificationsEnabledController extends SettingController {
         return calculatedValue;
     }
 
-    public onChange(level: SettingLevel, roomId: string, newValue: any) {
+    public onChange(level: SettingLevel, roomId: string, newValue: any): void {
         if (getNotifier().supportsDesktopNotifications()) {
             getNotifier().setEnabled(newValue);
         }

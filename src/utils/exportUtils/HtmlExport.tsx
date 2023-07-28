@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { renderToStaticMarkup } from "react-dom/server";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
+import escapeHtml from "escape-html";
 
 import Exporter from "./Exporter";
-import SettingsStore from "../../settings/SettingsStore";
 import { mediaFromMxc } from "../../customisations/Media";
 import { Layout } from "../../settings/enums/Layout";
 import { shouldFormContinuation } from "../../components/structures/MessagePanel";
@@ -47,7 +47,6 @@ export default class HTMLExporter extends Exporter {
     protected permalinkCreator: RoomPermalinkCreator;
     protected totalSize: number;
     protected mediaOmitText: string;
-    private threadsEnabled: boolean;
 
     public constructor(
         room: Room,
@@ -62,11 +61,10 @@ export default class HTMLExporter extends Exporter {
         this.mediaOmitText = !this.exportOptions.attachmentsIncluded
             ? _t("Media omitted")
             : _t("Media omitted - file size limit exceeded");
-        this.threadsEnabled = SettingsStore.getValue("feature_threadstable");
     }
 
-    protected async getRoomAvatar() {
-        let blob: Blob;
+    protected async getRoomAvatar(): Promise<string> {
+        let blob: Blob | undefined = undefined;
         const avatarUrl = Avatar.avatarUrlForRoom(this.room, 32, 32, "crop");
         const avatarPath = "room.png";
         if (avatarUrl) {
@@ -85,26 +83,31 @@ export default class HTMLExporter extends Exporter {
                 height={32}
                 name={this.room.name}
                 title={this.room.name}
-                url={blob ? avatarPath : null}
+                url={blob ? avatarPath : ""}
                 resizeMethod="crop"
             />
         );
         return renderToStaticMarkup(avatar);
     }
 
-    protected async wrapHTML(content: string) {
+    protected async wrapHTML(content: string, currentPage: number, nbPages: number): Promise<string> {
         const roomAvatar = await this.getRoomAvatar();
         const exportDate = formatFullDateNoDayNoTime(new Date());
         const creator = this.room.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const creatorName = this.room?.getMember(creator)?.rawDisplayName || creator;
-        const exporter = this.client.getUserId();
-        const exporterName = this.room?.getMember(exporter)?.rawDisplayName;
+        const creatorName = (creator ? this.room.getMember(creator)?.rawDisplayName : creator) || creator;
+        const exporter = this.room.client.getSafeUserId();
+        const exporterName = this.room.getMember(exporter)?.rawDisplayName;
         const topic = this.room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic || "";
-        const createdText = _t("%(creatorName)s created this room.", {
-            creatorName,
-        });
 
-        const exportedText = renderToStaticMarkup(
+        const safeCreatedText = escapeHtml(
+            _t("%(creatorName)s created this room.", {
+                creatorName,
+            }),
+        );
+        const safeExporter = escapeHtml(exporter);
+        const safeRoomName = escapeHtml(this.room.name);
+        const safeTopic = escapeHtml(topic);
+        const safeExportedText = renderToStaticMarkup(
             <p>
                 {_t(
                     "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.",
@@ -112,16 +115,19 @@ export default class HTMLExporter extends Exporter {
                         exportDate,
                     },
                     {
-                        roomName: () => <b>{this.room.name}</b>,
+                        roomName: () => <b>{safeRoomName}</b>,
                         exporterDetails: () => (
-                            <a href={`https://matrix.to/#/${exporter}`} target="_blank" rel="noopener noreferrer">
+                            <a
+                                href={`https://matrix.to/#/${encodeURIComponent(exporter)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 {exporterName ? (
                                     <>
-                                        <b>{exporterName}</b>
-                                        {" (" + exporter + ")"}
+                                        <b>{escapeHtml(exporterName)}</b>I {" (" + safeExporter + ")"}
                                     </>
                                 ) : (
-                                    <b>{exporter}</b>
+                                    <b>{safeExporter}</b>
                                 )}
                             </a>
                         ),
@@ -130,7 +136,30 @@ export default class HTMLExporter extends Exporter {
             </p>,
         );
 
-        const topicText = topic ? _t("Topic: %(topic)s", { topic }) : "";
+        const safeTopicText = topic ? _t("Topic: %(topic)s", { topic: safeTopic }) : "";
+        const previousMessagesLink = renderToStaticMarkup(
+            currentPage !== 0 ? (
+                <div style={{ textAlign: "center" }}>
+                    <a href={`./messages${currentPage === 1 ? "" : currentPage}.html`} style={{ fontWeight: "bold" }}>
+                        {_t("Previous group of messages")}
+                    </a>
+                </div>
+            ) : (
+                <></>
+            ),
+        );
+
+        const nextMessagesLink = renderToStaticMarkup(
+            currentPage < nbPages - 1 ? (
+                <div style={{ textAlign: "center", margin: "10px" }}>
+                    <a href={"./messages" + (currentPage + 2) + ".html"} style={{ fontWeight: "bold" }}>
+                        {_t("Next group of messages")}
+                    </a>
+                </div>
+            ) : (
+                <></>
+            ),
+        );
 
         return `
           <!DOCTYPE html>
@@ -141,7 +170,7 @@ export default class HTMLExporter extends Exporter {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link href="css/style.css" rel="stylesheet" />
                 <script src="js/script.js"></script>
-                <title>Exported Data</title>
+                <title>${_t("Exported Data")}</title>
             </head>
             <body style="height: 100vh;">
                 <section
@@ -163,14 +192,15 @@ export default class HTMLExporter extends Exporter {
                             <div
                                 dir="auto"
                                 class="mx_RoomHeader_nametext"
-                                title="${this.room.name}"
+                                title="${safeRoomName}"
                             >
-                                ${this.room.name}
+                                ${safeRoomName}
                             </div>
                             </div>
-                            <div class="mx_RoomHeader_topic" dir="auto"> ${topic} </div>
+                            <div class="mx_RoomHeader_topic" dir="auto"> ${safeTopic} </div>
                         </div>
                         </div>
+                        ${previousMessagesLink}
                         <div class="mx_MainSplit">
                         <div class="mx_RoomView_body">
                             <div
@@ -189,13 +219,17 @@ export default class HTMLExporter extends Exporter {
                                     aria-live="polite"
                                     role="list"
                                 >
-                                <div class="mx_NewRoomIntro">
-                                    ${roomAvatar}
-                                    <h2> ${this.room.name} </h2>
-                                    <p> ${createdText} <br/><br/> ${exportedText} </p>
-                                    <br/>
-                                    <p> ${topicText} </p>
-                                </div>
+                                ${
+                                    currentPage == 0
+                                        ? `<div class="mx_NewRoomIntro">
+                                        ${roomAvatar}
+                                        <h2> ${safeRoomName} </h2>
+                                        <p> ${safeCreatedText} <br/><br/> ${safeExportedText} </p>
+                                        <br/>
+                                        <p> ${safeTopicText} </p>
+                                    </div>`
+                                        : ""
+                                }
                                 ${content}
                                 </ol>
                                 </div>
@@ -208,6 +242,7 @@ export default class HTMLExporter extends Exporter {
                             </div>
                         </div>
                         </div>
+                        ${nextMessagesLink}
                     </main>
                     </div>
                 </div>
@@ -217,20 +252,19 @@ export default class HTMLExporter extends Exporter {
         </html>`;
     }
 
-    protected getAvatarURL(event: MatrixEvent): string {
+    protected getAvatarURL(event: MatrixEvent): string | null {
         const member = event.sender;
-        return (
-            member.getMxcAvatarUrl() && mediaFromMxc(member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(30, 30, "crop")
-        );
+        const avatarUrl = member?.getMxcAvatarUrl();
+        return avatarUrl ? mediaFromMxc(avatarUrl).getThumbnailOfSourceHttp(30, 30, "crop") : null;
     }
 
-    protected async saveAvatarIfNeeded(event: MatrixEvent) {
-        const member = event.sender;
+    protected async saveAvatarIfNeeded(event: MatrixEvent): Promise<void> {
+        const member = event.sender!;
         if (!this.avatars.has(member.userId)) {
             try {
                 const avatarUrl = this.getAvatarURL(event);
                 this.avatars.set(member.userId, true);
-                const image = await fetch(avatarUrl);
+                const image = await fetch(avatarUrl!);
                 const blob = await image.blob();
                 this.addFile(`users/${member.userId.replace(/:/g, "-")}.png`, blob);
             } catch (err) {
@@ -239,34 +273,32 @@ export default class HTMLExporter extends Exporter {
         }
     }
 
-    protected getDateSeparator(event: MatrixEvent) {
+    protected getDateSeparator(event: MatrixEvent): string {
         const ts = event.getTs();
         const dateSeparator = (
             <li key={ts}>
-                <DateSeparator forExport={true} key={ts} roomId={event.getRoomId()} ts={ts} />
+                <DateSeparator forExport={true} key={ts} roomId={event.getRoomId()!} ts={ts} />
             </li>
         );
         return renderToStaticMarkup(dateSeparator);
     }
 
-    protected needsDateSeparator(event: MatrixEvent, prevEvent: MatrixEvent) {
-        if (prevEvent == null) return true;
-        return wantsDateSeparator(prevEvent.getDate(), event.getDate());
+    protected needsDateSeparator(event: MatrixEvent, prevEvent: MatrixEvent | null): boolean {
+        if (!prevEvent) return true;
+        return wantsDateSeparator(prevEvent.getDate() || undefined, event.getDate() || undefined);
     }
 
-    public getEventTile(mxEv: MatrixEvent, continuation: boolean) {
+    public getEventTile(mxEv: MatrixEvent, continuation: boolean): JSX.Element {
         return (
             <div className="mx_Export_EventWrapper" id={mxEv.getId()}>
-                <MatrixClientContext.Provider value={this.client}>
+                <MatrixClientContext.Provider value={this.room.client}>
                     <EventTile
                         mxEvent={mxEv}
                         continuation={continuation}
                         isRedacted={mxEv.isRedacted()}
                         replacingEventId={mxEv.replacingEventId()}
                         forExport={true}
-                        readReceipts={null}
                         alwaysShowTimestamps={true}
-                        readReceiptMap={null}
                         showUrlPreview={false}
                         checkUnmounting={() => false}
                         isTwelveHour={false}
@@ -275,7 +307,6 @@ export default class HTMLExporter extends Exporter {
                         permalinkCreator={this.permalinkCreator}
                         lastSuccessful={false}
                         isSelectedEvent={false}
-                        getRelationsForEvent={null}
                         showReactions={false}
                         layout={Layout.Group}
                         showReadReceipts={false}
@@ -285,8 +316,9 @@ export default class HTMLExporter extends Exporter {
         );
     }
 
-    protected async getEventTileMarkup(mxEv: MatrixEvent, continuation: boolean, filePath?: string) {
-        const hasAvatar = !!this.getAvatarURL(mxEv);
+    protected async getEventTileMarkup(mxEv: MatrixEvent, continuation: boolean, filePath?: string): Promise<string> {
+        const avatarUrl = this.getAvatarURL(mxEv);
+        const hasAvatar = !!avatarUrl;
         if (hasAvatar) await this.saveAvatarIfNeeded(mxEv);
         const EventTile = this.getEventTile(mxEv, continuation);
         let eventTileMarkup: string;
@@ -312,16 +344,16 @@ export default class HTMLExporter extends Exporter {
         eventTileMarkup = eventTileMarkup.replace(/<span class="mx_MFileBody_info_icon".*?>.*?<\/span>/, "");
         if (hasAvatar) {
             eventTileMarkup = eventTileMarkup.replace(
-                encodeURI(this.getAvatarURL(mxEv)).replace(/&/g, "&amp;"),
-                `users/${mxEv.sender.userId.replace(/:/g, "-")}.png`,
+                encodeURI(avatarUrl).replace(/&/g, "&amp;"),
+                `users/${mxEv.sender!.userId.replace(/:/g, "-")}.png`,
             );
         }
         return eventTileMarkup;
     }
 
-    protected createModifiedEvent(text: string, mxEv: MatrixEvent, italic = true) {
+    protected createModifiedEvent(text: string, mxEv: MatrixEvent, italic = true): MatrixEvent {
         const modifiedContent = {
-            msgtype: "m.text",
+            msgtype: MsgType.Text,
             body: `${text}`,
             format: "org.matrix.custom.html",
             formatted_body: `${text}`,
@@ -338,7 +370,7 @@ export default class HTMLExporter extends Exporter {
         return modifiedEvent;
     }
 
-    protected async createMessageBody(mxEv: MatrixEvent, joined = false) {
+    protected async createMessageBody(mxEv: MatrixEvent, joined = false): Promise<string> {
         let eventTile: string;
         try {
             if (this.isAttachment(mxEv)) {
@@ -379,7 +411,7 @@ export default class HTMLExporter extends Exporter {
             // TODO: Handle callEvent errors
             logger.error(e);
             eventTile = await this.getEventTileMarkup(
-                this.createModifiedEvent(textForEvent(mxEv), mxEv, false),
+                this.createModifiedEvent(textForEvent(mxEv, this.room.client), mxEv, false),
                 joined,
             );
         }
@@ -387,9 +419,14 @@ export default class HTMLExporter extends Exporter {
         return eventTile;
     }
 
-    protected async createHTML(events: MatrixEvent[], start: number) {
+    protected async createHTML(
+        events: MatrixEvent[],
+        start: number,
+        currentPage: number,
+        nbPages: number,
+    ): Promise<string> {
         let content = "";
-        let prevEvent = null;
+        let prevEvent: MatrixEvent | null = null;
         for (let i = start; i < Math.min(start + 1000, events.length); i++) {
             const event = events[i];
             this.updateProgress(
@@ -401,22 +438,22 @@ export default class HTMLExporter extends Exporter {
                 true,
             );
             if (this.cancelled) return this.cleanUp();
-            if (!haveRendererForEvent(event, false)) continue;
+            if (!haveRendererForEvent(event, this.room.client, false)) continue;
 
             content += this.needsDateSeparator(event, prevEvent) ? this.getDateSeparator(event) : "";
             const shouldBeJoined =
                 !this.needsDateSeparator(event, prevEvent) &&
-                shouldFormContinuation(prevEvent, event, false, this.threadsEnabled);
+                shouldFormContinuation(prevEvent, event, this.room.client, false);
             const body = await this.createMessageBody(event, shouldBeJoined);
             this.totalSize += Buffer.byteLength(body);
             content += body;
             prevEvent = event;
         }
-        return this.wrapHTML(content);
+        return this.wrapHTML(content, currentPage, nbPages);
     }
 
-    public async export() {
-        this.updateProgress(_t("Starting export..."));
+    public async export(): Promise<void> {
+        this.updateProgress(_t("Starting export…"));
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
@@ -431,11 +468,11 @@ export default class HTMLExporter extends Exporter {
             false,
         );
 
-        this.updateProgress(_t("Creating HTML..."));
+        this.updateProgress(_t("Creating HTML…"));
 
         const usedClasses = new Set<string>();
         for (let page = 0; page < res.length / 1000; page++) {
-            const html = await this.createHTML(res, page * 1000);
+            const html = await this.createHTML(res, page * 1000, page, res.length / 1000);
             const document = new DOMParser().parseFromString(html, "text/html");
             document.querySelectorAll("*").forEach((element) => {
                 element.classList.forEach((c) => usedClasses.add(c));

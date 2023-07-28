@@ -22,42 +22,33 @@ import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext
 import RoomContext from "../../../../../src/contexts/RoomContext";
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
-import { IRoomState } from "../../../../../src/components/structures/RoomView";
-import { createTestClient, flushPromises, getRoomContext, mkEvent, mkStubRoom } from "../../../../test-utils";
+import { flushPromises, mkEvent } from "../../../../test-utils";
 import { EditWysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer";
 import EditorStateTransfer from "../../../../../src/utils/EditorStateTransfer";
+import { Emoji } from "../../../../../src/components/views/rooms/wysiwyg_composer/components/Emoji";
+import { ChevronFace } from "../../../../../src/components/structures/ContextMenu";
+import dis from "../../../../../src/dispatcher/dispatcher";
+import { ComposerInsertPayload, ComposerType } from "../../../../../src/dispatcher/payloads/ComposerInsertPayload";
+import { ActionPayload } from "../../../../../src/dispatcher/payloads";
+import * as EmojiButton from "../../../../../src/components/views/rooms/EmojiButton";
+import { createMocks } from "./utils";
 
 describe("EditWysiwygComposer", () => {
     afterEach(() => {
         jest.resetAllMocks();
     });
 
-    const mockClient = createTestClient();
-    const mockEvent = mkEvent({
-        type: "m.room.message",
-        room: "myfakeroom",
-        user: "myfakeuser",
-        content: {
-            msgtype: "m.text",
-            body: "Replying to this",
-            format: "org.matrix.custom.html",
-            formatted_body: "Replying <b>to</b> this new content",
-        },
-        event: true,
-    });
-    const mockRoom = mkStubRoom("myfakeroom", "myfakeroom", mockClient) as any;
-    mockRoom.findEventById = jest.fn((eventId) => {
-        return eventId === mockEvent.getId() ? mockEvent : null;
-    });
+    const { editorStateTransfer, defaultRoomContext, mockClient, mockEvent } = createMocks();
 
-    const defaultRoomContext: IRoomState = getRoomContext(mockRoom, {});
-
-    const editorStateTransfer = new EditorStateTransfer(mockEvent);
-
-    const customRender = (disabled = false, _editorStateTransfer = editorStateTransfer) => {
+    const customRender = (
+        disabled = false,
+        _editorStateTransfer = editorStateTransfer,
+        client = mockClient,
+        roomContext = defaultRoomContext,
+    ) => {
         return render(
-            <MatrixClientContext.Provider value={mockClient}>
-                <RoomContext.Provider value={defaultRoomContext}>
+            <MatrixClientContext.Provider value={client}>
+                <RoomContext.Provider value={roomContext}>
                     <EditWysiwygComposer disabled={disabled} editorStateTransfer={_editorStateTransfer} />
                 </RoomContext.Provider>
             </MatrixClientContext.Provider>,
@@ -170,12 +161,13 @@ describe("EditWysiwygComposer", () => {
     });
 
     describe("Edit and save actions", () => {
+        let spyDispatcher: jest.SpyInstance<void, [payload: ActionPayload, sync?: boolean]>;
         beforeEach(async () => {
+            spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
             customRender();
             await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
         });
 
-        const spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
         afterEach(() => {
             spyDispatcher.mockRestore();
         });
@@ -185,12 +177,12 @@ describe("EditWysiwygComposer", () => {
             screen.getByText("Cancel").click();
 
             // Then
-            expect(spyDispatcher).toBeCalledWith({
+            expect(spyDispatcher).toHaveBeenCalledWith({
                 action: Action.EditEvent,
                 event: null,
                 timelineRenderingType: defaultRoomContext.timelineRenderingType,
             });
-            expect(spyDispatcher).toBeCalledWith({
+            expect(spyDispatcher).toHaveBeenCalledWith({
                 action: Action.FocusSendMessageComposer,
                 context: defaultRoomContext.timelineRenderingType,
             });
@@ -198,7 +190,6 @@ describe("EditWysiwygComposer", () => {
 
         it("Should send message on save button click", async () => {
             // When
-            const spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
             fireEvent.input(screen.getByRole("textbox"), {
                 data: "foo bar",
                 inputType: "insertText",
@@ -223,8 +214,11 @@ describe("EditWysiwygComposer", () => {
                 },
                 "msgtype": "m.text",
             };
-            expect(mockClient.sendMessage).toBeCalledWith(mockEvent.getRoomId(), null, expectedContent);
-            expect(spyDispatcher).toBeCalledWith({ action: "message_sent" });
+            await waitFor(() =>
+                expect(mockClient.sendMessage).toHaveBeenCalledWith(mockEvent.getRoomId(), null, expectedContent),
+            );
+
+            expect(spyDispatcher).toHaveBeenCalledWith({ action: "message_sent" });
         });
     });
 
@@ -251,22 +245,62 @@ describe("EditWysiwygComposer", () => {
         expect(screen.getByRole("textbox")).not.toHaveFocus();
 
         // When we send an action that would cause us to get focus
-        act(() => {
-            defaultDispatcher.dispatch({
-                action: Action.FocusEditMessageComposer,
-                context: null,
-            });
-            // (Send a second event to exercise the clearTimeout logic)
-            defaultDispatcher.dispatch({
-                action: Action.FocusEditMessageComposer,
-                context: null,
-            });
+        defaultDispatcher.dispatch({
+            action: Action.FocusEditMessageComposer,
+            context: null,
+        });
+        // (Send a second event to exercise the clearTimeout logic)
+        defaultDispatcher.dispatch({
+            action: Action.FocusEditMessageComposer,
+            context: null,
         });
 
         // Wait for event dispatch to happen
-        await flushPromises();
+        await act(async () => {
+            await flushPromises();
+        });
 
         // Then we don't get it because we are disabled
         expect(screen.getByRole("textbox")).not.toHaveFocus();
+    });
+
+    it("Should add emoji", async () => {
+        // When
+
+        // We are not testing here the emoji button (open modal, select emoji ...)
+        // Instead we are directly firing an emoji to make the test easier to write
+        jest.spyOn(EmojiButton, "EmojiButton").mockImplementation(
+            ({ addEmoji }: { addEmoji: (emoji: string) => void }) => {
+                return (
+                    <button aria-label="Emoji" type="button" onClick={() => addEmoji("🦫")}>
+                        Emoji
+                    </button>
+                );
+            },
+        );
+        render(
+            <MatrixClientContext.Provider value={mockClient}>
+                <RoomContext.Provider value={defaultRoomContext}>
+                    <EditWysiwygComposer editorStateTransfer={editorStateTransfer} />
+                    <Emoji menuPosition={{ chevronFace: ChevronFace.Top }} />
+                </RoomContext.Provider>
+            </MatrixClientContext.Provider>,
+        );
+        // Same behavior as in RoomView.tsx
+        // RoomView is re-dispatching the composer messages.
+        // It adds the composerType fields where the value refers if the composer is in editing or not
+        // The listeners in the RTE ignore the message if the composerType is missing in the payload
+        const dispatcherRef = dis.register((payload: ActionPayload) => {
+            dis.dispatch<ComposerInsertPayload>({
+                ...(payload as ComposerInsertPayload),
+                composerType: ComposerType.Edit,
+            });
+        });
+
+        screen.getByLabelText("Emoji").click();
+
+        // Then
+        await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(/🦫/));
+        dis.unregister(dispatcherRef);
     });
 });

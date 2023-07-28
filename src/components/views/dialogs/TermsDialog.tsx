@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from "url";
 import React from "react";
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 
 import { _t, pickBestLanguage } from "../../../languageHandler";
 import DialogButtons from "../elements/DialogButtons";
 import BaseDialog from "./BaseDialog";
+import { ServicePolicyPair } from "../../../Terms";
+import ExternalLink from "../elements/ExternalLink";
+import { parseUrl } from "../../../utils/UrlUtils";
 
 interface ITermsCheckboxProps {
     onChange: (url: string, checked: boolean) => void;
@@ -33,7 +35,7 @@ class TermsCheckbox extends React.PureComponent<ITermsCheckboxProps> {
         this.props.onChange(this.props.url, ev.currentTarget.checked);
     };
 
-    public render() {
+    public render(): React.ReactNode {
         return <input type="checkbox" onChange={this.onChange} checked={this.props.checked} />;
     }
 }
@@ -43,12 +45,12 @@ interface ITermsDialogProps {
      * Array of [Service, policies] pairs, where policies is the response from the
      * /terms endpoint for that service
      */
-    policiesAndServicePairs: any[];
+    policiesAndServicePairs: ServicePolicyPair[];
 
     /**
      * urls that the user has already agreed to
      */
-    agreedUrls?: string[];
+    agreedUrls: string[];
 
     /**
      * Called with:
@@ -63,7 +65,7 @@ interface IState {
 }
 
 export default class TermsDialog extends React.PureComponent<ITermsDialogProps, IState> {
-    public constructor(props) {
+    public constructor(props: ITermsDialogProps) {
         super(props);
         this.state = {
             // url -> boolean
@@ -119,23 +121,23 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
         }
     }
 
-    private onTermsCheckboxChange = (url: string, checked: boolean) => {
+    private onTermsCheckboxChange = (url: string, checked: boolean): void => {
         this.setState({
             agreedUrls: Object.assign({}, this.state.agreedUrls, { [url]: checked }),
         });
     };
 
-    public render() {
-        const rows = [];
+    public render(): React.ReactNode {
+        const rows: JSX.Element[] = [];
         for (const policiesAndService of this.props.policiesAndServicePairs) {
-            const parsedBaseUrl = url.parse(policiesAndService.service.baseUrl);
+            const parsedBaseUrl = parseUrl(policiesAndService.service.baseUrl);
 
             const policyValues = Object.values(policiesAndService.policies);
             for (let i = 0; i < policyValues.length; ++i) {
                 const termDoc = policyValues[i];
                 const termsLang = pickBestLanguage(Object.keys(termDoc).filter((k) => k !== "version"));
-                let serviceName;
-                let summary;
+                let serviceName: JSX.Element | undefined;
+                let summary: JSX.Element | undefined;
                 if (i === 0) {
                     serviceName = this.nameForServiceType(policiesAndService.service.serviceType, parsedBaseUrl.host);
                     summary = this.summaryForServiceType(policiesAndService.service.serviceType);
@@ -146,10 +148,9 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
                         <td className="mx_TermsDialog_service">{serviceName}</td>
                         <td className="mx_TermsDialog_summary">{summary}</td>
                         <td>
-                            {termDoc[termsLang].name}
-                            <a rel="noreferrer noopener" target="_blank" href={termDoc[termsLang].url}>
-                                <span className="mx_TermsDialog_link" />
-                            </a>
+                            <ExternalLink rel="noreferrer noopener" target="_blank" href={termDoc[termsLang].url}>
+                                {termDoc[termsLang].name}
+                            </ExternalLink>
                         </td>
                         <td>
                             <TermsCheckbox

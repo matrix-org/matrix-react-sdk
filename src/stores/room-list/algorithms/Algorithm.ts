@@ -62,12 +62,12 @@ interface IStickyRoom {
  */
 export class Algorithm extends EventEmitter {
     private _cachedRooms: ITagMap = {};
-    private _cachedStickyRooms: ITagMap = {}; // a clone of the _cachedRooms, with the sticky room
-    private _stickyRoom: IStickyRoom = null;
-    private _lastStickyRoom: IStickyRoom = null; // only not-null when changing the sticky room
-    private sortAlgorithms: ITagSortingMap;
-    private listAlgorithms: IListOrderingMap;
-    private algorithms: IOrderingAlgorithmMap;
+    private _cachedStickyRooms: ITagMap | null = {}; // a clone of the _cachedRooms, with the sticky room
+    private _stickyRoom: IStickyRoom | null = null;
+    private _lastStickyRoom: IStickyRoom | null = null; // only not-null when changing the sticky room
+    private sortAlgorithms: ITagSortingMap | null = null;
+    private listAlgorithms: IListOrderingMap | null = null;
+    private algorithms: IOrderingAlgorithmMap | null = null;
     private rooms: Room[] = [];
     private roomIdsToTags: {
         [roomId: string]: TagID[];
@@ -78,15 +78,15 @@ export class Algorithm extends EventEmitter {
      */
     public updatesInhibited = false;
 
-    public start() {
+    public start(): void {
         CallStore.instance.on(CallStoreEvent.ActiveCalls, this.onActiveCalls);
     }
 
-    public stop() {
+    public stop(): void {
         CallStore.instance.off(CallStoreEvent.ActiveCalls, this.onActiveCalls);
     }
 
-    public get stickyRoom(): Room {
+    public get stickyRoom(): Room | null {
         return this._stickyRoom ? this._stickyRoom.room : null;
     }
 
@@ -116,7 +116,7 @@ export class Algorithm extends EventEmitter {
      * Awaitable version of the sticky room setter.
      * @param val The new room to sticky.
      */
-    public setStickyRoom(val: Room) {
+    public setStickyRoom(val: Room | null): void {
         try {
             this.updateStickyRoom(val);
         } catch (e) {
@@ -124,14 +124,16 @@ export class Algorithm extends EventEmitter {
         }
     }
 
-    public getTagSorting(tagId: TagID): SortAlgorithm {
+    public getTagSorting(tagId: TagID): SortAlgorithm | null {
         if (!this.sortAlgorithms) return null;
         return this.sortAlgorithms[tagId];
     }
 
-    public setTagSorting(tagId: TagID, sort: SortAlgorithm) {
+    public setTagSorting(tagId: TagID, sort: SortAlgorithm): void {
         if (!tagId) throw new Error("Tag ID must be defined");
         if (!sort) throw new Error("Algorithm must be defined");
+        if (!this.sortAlgorithms) throw new Error("this.sortAlgorithms must be defined before calling setTagSorting");
+        if (!this.algorithms) throw new Error("this.algorithms must be defined before calling setTagSorting");
         this.sortAlgorithms[tagId] = sort;
 
         const algorithm: OrderingAlgorithm = this.algorithms[tagId];
@@ -141,14 +143,17 @@ export class Algorithm extends EventEmitter {
         this.recalculateActiveCallRooms(tagId);
     }
 
-    public getListOrdering(tagId: TagID): ListAlgorithm {
+    public getListOrdering(tagId: TagID): ListAlgorithm | null {
         if (!this.listAlgorithms) return null;
         return this.listAlgorithms[tagId];
     }
 
-    public setListOrdering(tagId: TagID, order: ListAlgorithm) {
+    public setListOrdering(tagId: TagID, order: ListAlgorithm): void {
         if (!tagId) throw new Error("Tag ID must be defined");
         if (!order) throw new Error("Algorithm must be defined");
+        if (!this.sortAlgorithms) throw new Error("this.sortAlgorithms must be defined before calling setListOrdering");
+        if (!this.listAlgorithms) throw new Error("this.listAlgorithms must be defined before calling setListOrdering");
+        if (!this.algorithms) throw new Error("this.algorithms must be defined before calling setListOrdering");
         this.listAlgorithms[tagId] = order;
 
         const algorithm = getListAlgorithmInstance(order, tagId, this.sortAlgorithms[tagId]);
@@ -160,12 +165,12 @@ export class Algorithm extends EventEmitter {
         this.recalculateActiveCallRooms(tagId);
     }
 
-    private updateStickyRoom(val: Room) {
+    private updateStickyRoom(val: Room | null): void {
         this.doUpdateStickyRoom(val);
         this._lastStickyRoom = null; // clear to indicate we're done changing
     }
 
-    private doUpdateStickyRoom(val: Room) {
+    private doUpdateStickyRoom(val: Room | null): void {
         if (val?.isSpaceRoom() && val.getMyMembership() !== "invite") {
             // no-op sticky rooms for spaces - they're effectively virtual rooms
             val = null;
@@ -237,6 +242,10 @@ export class Algorithm extends EventEmitter {
         // Lie to the algorithm and remove the room from it's field of view
         this.handleRoomUpdate(val, RoomUpdateCause.RoomRemoved);
 
+        // handleRoomUpdate may have modified this._stickyRoom. Convince the
+        // compiler of this fact.
+        this._stickyRoom = this.stickyRoomMightBeModified();
+
         // Check for tag & position changes while we're here. We also check the room to ensure
         // it is still the same room.
         if (this._stickyRoom) {
@@ -284,7 +293,14 @@ export class Algorithm extends EventEmitter {
         this.emit(LIST_UPDATED_EVENT);
     }
 
-    private onActiveCalls = () => {
+    /**
+     * Hack to prevent Typescript claiming this._stickyRoom is always null.
+     */
+    private stickyRoomMightBeModified(): IStickyRoom | null {
+        return this._stickyRoom;
+    }
+
+    private onActiveCalls = (): void => {
         // In case we're unsticking a room, sort it back into natural order
         this.recalculateStickyRoom();
 
@@ -297,7 +313,7 @@ export class Algorithm extends EventEmitter {
         this.emit(LIST_UPDATED_EVENT, true);
     };
 
-    private initCachedStickyRooms() {
+    private initCachedStickyRooms(): void {
         this._cachedStickyRooms = {};
         for (const tagId of Object.keys(this.cachedRooms)) {
             this._cachedStickyRooms[tagId] = [...this.cachedRooms[tagId]]; // shallow clone
@@ -310,7 +326,7 @@ export class Algorithm extends EventEmitter {
      * the call.
      * @param updatedTag The tag that was updated, if possible.
      */
-    protected recalculateStickyRoom(updatedTag: TagID = null): void {
+    protected recalculateStickyRoom(updatedTag: TagID | null = null): void {
         // 🐉 Here be dragons.
         // This function does far too much for what it should, and is called by many places.
         // Not only is this responsible for ensuring the sticky room is held in place at all
@@ -336,14 +352,16 @@ export class Algorithm extends EventEmitter {
         if (updatedTag) {
             // Update the tag indicated by the caller, if possible. This is mostly to ensure
             // our cache is up to date.
-            this._cachedStickyRooms[updatedTag] = [...this.cachedRooms[updatedTag]]; // shallow clone
+            if (this._cachedStickyRooms) {
+                this._cachedStickyRooms[updatedTag] = [...this.cachedRooms[updatedTag]]; // shallow clone
+            }
         }
 
         // Now try to insert the sticky room, if we need to.
         // We need to if there's no updated tag (we regenned the whole cache) or if the tag
         // we might have updated from the cache is also our sticky room.
         const sticky = this._stickyRoom;
-        if (!updatedTag || updatedTag === sticky.tag) {
+        if (sticky && (!updatedTag || updatedTag === sticky.tag) && this._cachedStickyRooms) {
             this._cachedStickyRooms[sticky.tag].splice(sticky.position, 0, sticky.room);
         }
 
@@ -362,7 +380,7 @@ export class Algorithm extends EventEmitter {
      *
      * @param updatedTag The tag that was updated, if possible.
      */
-    protected recalculateActiveCallRooms(updatedTag: TagID = null): void {
+    protected recalculateActiveCallRooms(updatedTag: TagID | null = null): void {
         if (!updatedTag) {
             // Assume all tags need updating
             // We're not modifying the map here, so can safely rely on the cached values
@@ -379,7 +397,7 @@ export class Algorithm extends EventEmitter {
         if (CallStore.instance.activeCalls.size) {
             // We operate on the sticky rooms map
             if (!this._cachedStickyRooms) this.initCachedStickyRooms();
-            const rooms = this._cachedStickyRooms[updatedTag];
+            const rooms = this._cachedStickyRooms![updatedTag];
 
             const activeRoomIds = new Set([...CallStore.instance.activeCalls].map((call) => call.roomId));
             const activeRooms: Room[] = [];
@@ -390,7 +408,7 @@ export class Algorithm extends EventEmitter {
             }
 
             // Stick rooms with active calls to the top
-            this._cachedStickyRooms[updatedTag] = [...activeRooms, ...inactiveRooms];
+            this._cachedStickyRooms![updatedTag] = [...activeRooms, ...inactiveRooms];
         }
     }
 
@@ -474,6 +492,7 @@ export class Algorithm extends EventEmitter {
 
         // Split out the easy rooms first (leave and invite)
         const memberships = splitRoomsByMembership(rooms);
+
         for (const room of memberships[EffectiveMembership.Invite]) {
             newTags[DefaultTagID.Invite].push(room);
         }
@@ -529,6 +548,8 @@ export class Algorithm extends EventEmitter {
         const tags: TagID[] = [];
 
         const membership = getEffectiveMembership(room.getMyMembership());
+        if (!membership) return []; // peeked room has no tags
+
         if (membership === EffectiveMembership.Invite) {
             tags.push(DefaultTagID.Invite);
         } else if (membership === EffectiveMembership.Leave) {
@@ -558,8 +579,8 @@ export class Algorithm extends EventEmitter {
     /**
      * Updates the roomsToTags map
      */
-    private updateTagsFromCache() {
-        const newMap = {};
+    private updateTagsFromCache(): void {
+        const newMap: Algorithm["roomIdsToTags"] = {};
 
         const tags = Object.keys(this.cachedRooms);
         for (const tagId of tags) {
@@ -638,7 +659,7 @@ export class Algorithm extends EventEmitter {
             }
 
             // Like above, update the reference to the sticky room if we need to
-            if (hasTags && isSticky) {
+            if (hasTags && isSticky && this._stickyRoom) {
                 // Go directly in and set the sticky room's new reference, being careful not
                 // to trigger a sticky room update ourselves.
                 this._stickyRoom.room = room;
