@@ -1249,7 +1249,6 @@
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "此工作階段<b>並未備份您的金鑰</b>，您可還原先前的備份後再繼續新增金鑰到備份內容中。",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "在登出前，請先將此工作階段連線到金鑰備份以避免遺失任何可能僅存在此工作階段中的金鑰。",
     "Connect this session to Key Backup": "將此工作階段連結至金鑰備份",
-    "Backup has a <validity>valid</validity> signature from <verify>verified</verify> session <device></device>": "備份含有一個 <validity>有效</validity>簽署來自 <verify>驗證過的</verify>工作階段<device></device>",
     "Backup is not signed by any of your sessions": "備份未被您的任何工作階段簽署",
     "This backup is trusted because it has been restored on this session": "此備份已受信任，因為它已在此工作階段上復原",
     "Your keys are <b>not being backed up from this session</b>.": "您<b>並未備份此裝置的金鑰</b>。",
