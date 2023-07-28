@@ -3702,5 +3702,15 @@
     "You do not have permission to invite users": "Vous n’avez pas la permission d’inviter des utilisateurs",
     "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s a changé son nom d’affichage et son image de profil",
     "Your language": "Votre langue",
-    "Your device ID": "Votre ID d’appareil"
+    "Your device ID": "Votre ID d’appareil",
+    "Something went wrong.": "Quelque chose s’est mal passé.",
+    "Changes your profile picture in this current room only": "Modifie votre image de profil seulement dans le salon actuel",
+    "Changes your profile picture in all rooms": "Modifier votre image de profil dans tous les salons",
+    "User cannot be invited until they are unbanned": "L’utilisateur ne peut pas être invité tant qu’il est banni",
+    "Previous group of messages": "Groupe précédent de messages",
+    "Next group of messages": "Groupe suivant de messages",
+    "Try using %(server)s": "Essayer d’utiliser %(server)s",
+    "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Vous pouvez sinon essayer d’utiliser le serveur public <server/>, mais ça ne sera pas aussi fiable et votre adresse IP sera partagée avec ce serveur. Vous pouvez aussi gérer ce réglage dans les paramètres.",
+    "%(senderDisplayName)s changed the join rule to ask to join.": "%(senderDisplayName)s a changé la règle pour venir : il faut demander à venir.",
+    "User is not logged in": "L’utilisateur n’est pas identifié"
 }
