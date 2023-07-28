@@ -106,7 +106,7 @@
     "We couldn't log you in": "We couldn't log you in",
     "Try again": "Try again",
     "Your server is unsupported": "Your server is unsupported",
-    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s.": "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s.",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.",
     "User is not logged in": "User is not logged in",
     "Database unexpectedly closed": "Database unexpectedly closed",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "This may be caused by having the app open in multiple tabs or due to clearing browser data.",
