@@ -2114,7 +2114,6 @@
     "%(targetName)s left the room: %(reason)s": "%(targetName)s đã rời khỏi phòng: %(reason)s",
     "%(targetName)s rejected the invitation": "%(targetName)s đã từ chối lời mời",
     "%(targetName)s joined the room": "%(targetName)s đã tham gia phòng",
-    "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "Sao lưu có chữ ký <validity>hợp lệ</validity> từ phiên <verify>chưa được xác thực</verify> <device></device>",
     "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "Bản sao lưu có chữ ký từ phiên <verify>unknown</verify> với ID %(deviceId)s",
     "All keys backed up": "Tất cả các khóa được sao lưu",
     "Connect this session to Key Backup": "Kết nối phiên này với Khóa Sao lưu",

@@ -1023,7 +1023,6 @@
     "exists": "yella",
     "Unable to load key backup status": "Asali n waddad n uḥraz n tsarut ur yeddi ara",
     "not stored": "ur yettusekles ara",
-    "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "Aḥraz ɣer-s azmul seg <verify>tiɣimit</verify> arussin s usulay %(deviceId)s",
     "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "Aḥraz ɣer-s <validity>azmul</validity> ameɣtu seg <verify>tɣimit</verify> ur yettwasneqden ara <device></device>",
     "Your keys are <b>not being backed up from this session</b>.": "Tisura-inek·inem <b>ur ttwaḥrazent ara seg tɣimit-a</b>.",
     "Start using Key Backup": "Bdu aseqdec n uḥraz n tsarut",

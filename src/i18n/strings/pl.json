@@ -2477,7 +2477,6 @@
     "This backup is trusted because it has been restored on this session": "Ta kopia jest zaufana, ponieważ została przywrócona w tej sesji",
     "Master private key:": "Główny klucz prywatny:",
     "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Zmiana hasła na tym serwerze domowym wyloguje Cię z wszystkich pozostałych urządzeń. Ta akcja usunie wszystkie klucze szyfrujące znajdujące się na nich, uniemożliwiając czytanie historii wiadomości szyfrowanych.",
-    "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "Kopia zapasowa ma <validity>prawidłową</validity> sygnaturę z <verify>niezweryfikowanej</verify> sesji <device></device>",
     "Backing up %(sessionsRemaining)s keys…": "Tworzenie kopii zapasowej %(sessionsRemaining)s kluczy…",
     "This session is backing up your keys.": "Ta sesja tworzy kopię zapasową kluczy.",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Wystąpił błąd podczas aktualizowania Twoich preferencji powiadomień. Przełącz opcję ponownie.",

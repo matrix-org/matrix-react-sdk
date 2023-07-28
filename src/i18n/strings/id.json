@@ -1201,7 +1201,6 @@
     "Your keys are <b>not being backed up from this session</b>.": "Kunci Anda <b>tidak dicadangan dari sesi ini</b>.",
     "Backup version:": "Versi cadangan:",
     "This backup is trusted because it has been restored on this session": "Cadangan ini dipercayai karena telah dipulihkan di sesi ini",
-    "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "Cadangan mempunyai tanda tangan yang <validity>absah</validity> dari sesi yang <verify>belum diverifikasi</verify> <device></device>",
     "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "Cadangan mempunyai tanda tangan dari <verify>sesi tidak dikenal</verify> dengan ID %(deviceId)s",
     "All keys backed up": "Semua kunci telah dicadangkan",
     "Connect this session to Key Backup": "Hubungkan sesi ini ke Pencadangan Kunci",

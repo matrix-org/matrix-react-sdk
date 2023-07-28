@@ -626,7 +626,6 @@
     "Algorithm:": "الخوارزمية:",
     "Backup version:": "نسخة الاحتياطي:",
     "This backup is trusted because it has been restored on this session": "هذا الاحتياطي موثوق به لأنه تمت استعادته في هذا الاتصال",
-    "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "الاحتياطي له توقيع <validity>مقبول</validity> من اتصال <verify>لم يتم التحقق منه</verify> <device></device>",
     "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "الاحتياطي له توقيع من اتصال <verify>مجهول</verify> له المعرّف %(deviceId)s",
     "All keys backed up": "جميع المفاتيح منسوخة في الاحتياطي",
     "Connect this session to Key Backup": "اربط هذا الاتصال باحتياطي مفتاح",

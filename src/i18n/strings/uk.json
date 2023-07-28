@@ -2506,7 +2506,6 @@
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Радимо вилучити адреси е-пошти й номери телефонів із сервера ідентифікації, перш ніж від'єднатися.",
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Сервер ідентифікації <idserver /> досі <b>поширює ваші особисті дані</b>.",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Слід <b>вилучити ваші особисті дані</b> з сервера ідентифікації <idserver />, перш ніж від'єднатися. На жаль, сервер ідентифікації <idserver /> зараз офлайн чи недоступний.",
-    "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "Резервна копія має підпис <verify>невідомого</verify> сеансу з ID %(deviceId)s",
     "Connect this session to Key Backup": "Налаштувати цьому сеансу резервне копіювання ключів",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ця кімната належить до просторів, які ви не адмініструєте. Ці простори показуватимуть стару кімнату, але пропонуватимуть людям приєднатись до нової.",
     "Use between %(min)s pt and %(max)s pt": "Введіть від %(min)s пт до %(max)s пт",

@@ -1174,7 +1174,6 @@
     "exists": "existiert",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Alle Sitzungen einzeln verifizieren, anstatt auch Sitzungen zu vertrauen, die durch Quersignierungen verifiziert sind.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "Um verschlüsselte Nachrichten lokal zu durchsuchen, benötigt %(brand)s weitere Komponenten. Wenn du diese Funktion testen möchtest, kannst du dir deine eigene Version von %(brand)s Desktop mit der <nativeLink>integrierten Suchfunktion kompilieren</nativeLink>.",
-    "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "Die Sicherung hat eine <validity>gültige</validity> Signatur von der <verify>nicht verifizierten</verify> Sitzung \"<device></device>\"",
     "Your keys are <b>not being backed up from this session</b>.": "Deine Schlüssel werden von dieser Sitzung <b>nicht gesichert</b>.",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Zurzeit verwendest du <server></server>, um Kontakte zu finden und von anderen gefunden zu werden. Du kannst deinen Identitäts-Server nachfolgend wechseln.",
     "Invalid theme schema.": "Ungültiges Designschema.",

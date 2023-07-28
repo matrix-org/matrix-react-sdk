@@ -2776,7 +2776,6 @@
     "Algorithm:": "ສູດການຄິດໄລ່:",
     "Backup version:": "ເວີຊັ້ນສໍາຮອງຂໍ້ມູນ:",
     "This backup is trusted because it has been restored on this session": "ການສຳຮອງຂໍ້ມູນນີ້ແມ່ນເຊື່ອຖືໄດ້ເນື່ອງຈາກຖືກກູ້ຄືນໃນລະບົບນີ້",
-    "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "ການສຳຮອງຂໍ້ມູນມີ <validity>ຖືກຕ້ອງ</validity> ລາຍເຊັນຈາກ <verify>ຍັງບໍ່ໄດ້ກວດສອບ</verify> ລະບົບ <device></device>",
     "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "ສຳຮອງຂໍ້ມູນ ມີລາຍເຊັນຈາກ <verify>unknown</verify> ລະບົບ ID %(deviceId)s",
     "All keys backed up": "ກະແຈທັງໝົດຖືກສຳຮອງໄວ້",
     "Connect this session to Key Backup": "ເຊື່ອມຕໍ່ລະບົບນີ້ກັບ ກະເເຈສຳຮອງ",

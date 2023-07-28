@@ -889,7 +889,6 @@
     "Connect this session to Key Backup": "Conecta esta sesión a Copia de Apoio de chaves",
     "not stored": "non gardado",
     "All keys backed up": "Copiaronse todas as chaves",
-    "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "A copia ten unha sinatura dunha sesión <verify>descoñecida</verify> con ID %(deviceId)s",
     "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "A copia ten unha sinatura <validity>válida</validity> desde a sesión <verify>non verificada</verify> en <device></device>",
     "This backup is trusted because it has been restored on this session": "Esta copia é de confianza porque foi restaurada nesta sesión",
     "Your keys are <b>not being backed up from this session</b>.": "As túas chaves <b>non están a ser copiadas desde esta sesión</b>.",

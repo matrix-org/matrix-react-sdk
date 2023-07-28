@@ -825,7 +825,6 @@
     "Message deleted by %(name)s": "%(name)sによってメッセージが削除されました",
     "Show less": "詳細を非表示",
     "Show more": "さらに表示",
-    "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "バックアップには、ID %(deviceId)s の<verify>不明な</verify>セッションによる署名があります",
     "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "バックアップには、<verify>未認証</verify>のセッションの<device></device>による<validity>有効</validity>な署名があります",
     "This backup is trusted because it has been restored on this session": "このバックアップは、このセッションで復元されたため信頼されています",
     "Enable end-to-end encryption": "エンドツーエンド暗号化を有効にする",

@@ -1474,7 +1474,6 @@
     "Algorithm:": "الگوریتم:",
     "Backup version:": "نسخه‌ی پشتیبان:",
     "This backup is trusted because it has been restored on this session": "این نسخه‌ی پشتیبان قابل اعتماد است چرا که بر روی این نشست بازیابی شد",
-    "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "نسخه پشتیبان دارای <validity>امضاء معتبر</validity> از <verify>نشست تائيد نشده‌ی</verify> <device></device> می‌باشد",
     "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "نسخه پشتیبان دارای امضاء از <verify>نشست ناشناس</verify> با شناسه‌ی %(deviceId)s است",
     "All keys backed up": "از همه کلیدها نسخه‌ی پشتیبان گرفته شد",
     "Connect this session to Key Backup": "این نشست را به کلید پشتیبان‌گیر متصل کن",
