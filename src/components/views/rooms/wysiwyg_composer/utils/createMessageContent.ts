@@ -96,7 +96,7 @@ export async function createMessageContent(
 
     // if we're editing rich text, the message content is pure html
     // BUT if we're not, the message content will be plain text where we need to convert the mentions
-    const body = isHTML ? await richToPlain(message) : convertPlainTextToBody(message);
+    const body = isHTML ? await richToPlain(message, false) : convertPlainTextToBody(message);
     const bodyPrefix = (isReplyAndEditing && getTextReplyFallback(editedEvent)) || "";
     const formattedBodyPrefix = (isReplyAndEditing && getHtmlReplyFallback(editedEvent)) || "";
 
@@ -108,7 +108,7 @@ export async function createMessageContent(
     // TODO markdown support
 
     const isMarkdownEnabled = SettingsStore.getValue<boolean>("MessageComposerInput.useMarkdown");
-    const formattedBody = isHTML ? message : isMarkdownEnabled ? await plainToRich(message) : null;
+    const formattedBody = isHTML ? message : isMarkdownEnabled ? await plainToRich(message, true) : null;
 
     if (formattedBody) {
         content.format = "org.matrix.custom.html";
