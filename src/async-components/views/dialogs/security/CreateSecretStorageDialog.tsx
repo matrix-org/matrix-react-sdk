@@ -576,12 +576,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     }
 
     private renderPhaseMigrate(): JSX.Element {
-        // TODO: This is a temporary screen so people who have the labs flag turned on and
-        // click the button are aware they're making a change to their account.
-        // Once we're confident enough in this (and it's supported enough) we can do
-        // it automatically.
-        // https://github.com/vector-im/element-web/issues/11696
-
         let authPrompt;
         let nextCaption = _t("Next");
         if (this.state.canUploadKeysWithPasswordOnly) {
