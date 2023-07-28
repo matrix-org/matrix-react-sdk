@@ -199,6 +199,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             const lists = RoomListStore.instance.orderedLists;
             tagLoop: for (let i = 0; i < TAG_ORDER.length; i++) {
                 const t = TAG_ORDER[i];
+                if (!lists[t]) continue;
                 for (const room of lists[t]) {
                     const state = RoomNotificationStateStore.instance.getRoomState(room);
                     if (hasMentions ? state.hasMentions : state.isUnread) {
