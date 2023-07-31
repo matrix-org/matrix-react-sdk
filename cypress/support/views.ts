@@ -63,7 +63,10 @@ declare global {
 }
 
 Cypress.Commands.add("viewRoomByName", (name: string): Chainable<JQuery<HTMLElement>> => {
-    return cy.findByRole("treeitem", { name: name }).should("have.class", "mx_RoomTile").click();
+    return cy
+        .findByRole("treeitem", { name: new RegExp("^" + name) })
+        .should("have.class", "mx_RoomTile")
+        .click();
 });
 
 Cypress.Commands.add("viewRoomById", (id: string): void => {
