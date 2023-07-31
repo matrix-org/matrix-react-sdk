@@ -496,7 +496,23 @@ describe("Read receipts", () => {
                 assertRead(room2);
             });
             it.skip("Marking a room with unread threads as read makes it read", () => {});
-            it.skip("Sending a new thread message after marking as read makes it unread", () => {});
+            it("Sending a new thread message after marking as read makes it unread", () => {
+                // Given a thread exists
+                goTo(room1);
+                sendMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), threadedOff("Msg1", "Resp2")]);
+
+                // When I read the main timeline
+                goTo(room2);
+
+                // And the thread
+                openThread("Msg1");
+
+                goTo(room1);
+                // Receive additional response to thread whilst not looking at room
+                sendMessages(room2, [threadedOff("Msg1", "Resp3")]);
+
+                assertUnread(room2);
+            });
             it.skip("A room with a new threaded message is still unread after restart", () => {});
             it.skip("A room where all threaded messages are read is still read after restart", () => {});
         });
