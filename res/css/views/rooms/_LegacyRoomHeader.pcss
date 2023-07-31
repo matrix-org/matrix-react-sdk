@@ -1,5 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,16 +21,16 @@ limitations under the License.
     --RoomHeader-indicator-pulseColor: $alert;
 }
 
-.mx_RoomHeader {
+.mx_LegacyRoomHeader {
     flex: 0 0 50px;
     border-bottom: 1px solid $primary-hairline-color;
     background-color: $background;
 
-    .mx_RoomHeader_icon {
+    .mx_LegacyRoomHeader_icon {
         height: 12px;
         width: 12px;
 
-        &.mx_RoomHeader_icon_video {
+        &.mx_LegacyRoomHeader_icon_video {
             height: 14px;
             width: 14px;
             background-color: $secondary-content;
@@ -49,7 +50,7 @@ limitations under the License.
     }
 }
 
-.mx_RoomHeader_wrapper {
+.mx_LegacyRoomHeader_wrapper {
     height: 44px;
     display: flex;
     align-items: center;
@@ -67,7 +68,7 @@ limitations under the License.
     }
 }
 
-.mx_RoomHeader_name {
+.mx_LegacyRoomHeader_name {
     flex: 0 1 auto;
     overflow: hidden;
     color: $primary-content;
@@ -86,13 +87,13 @@ limitations under the License.
         background-color: $quinary-content;
     }
 
-    .mx_RoomHeader_nametext {
+    .mx_LegacyRoomHeader_nametext {
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
     }
 
-    .mx_RoomHeader_chevron {
+    .mx_LegacyRoomHeader_chevron {
         align-self: center;
         width: 20px;
         height: 20px;
@@ -103,7 +104,7 @@ limitations under the License.
         background-color: $tertiary-content;
     }
 
-    &.mx_RoomHeader_name--textonly {
+    &.mx_LegacyRoomHeader_name--textonly {
         cursor: unset;
 
         &:hover {
@@ -114,17 +115,17 @@ limitations under the License.
     &[aria-expanded="true"] {
         background-color: $separator;
 
-        .mx_RoomHeader_chevron {
+        .mx_LegacyRoomHeader_chevron {
             transform: rotate(180deg);
         }
     }
 }
 
-.mx_RoomHeader_settingsHint {
+.mx_LegacyRoomHeader_settingsHint {
     color: $settings-grey-fg-color !important;
 }
 
-.mx_RoomHeader_searchStatus {
+.mx_LegacyRoomHeader_searchStatus {
     font-weight: normal;
     opacity: 0.6;
 }
@@ -134,7 +135,7 @@ limitations under the License.
     cursor: pointer;
 }
 
-.mx_RoomHeader_topic {
+.mx_LegacyRoomHeader_topic {
     $lines: 2;
 
     flex: 1;
@@ -149,24 +150,24 @@ limitations under the License.
     display: -webkit-box;
 }
 
-.mx_RoomHeader_topic .mx_Emoji {
+.mx_LegacyRoomHeader_topic .mx_Emoji {
     /* Undo font size increase to prevent vertical cropping and ensure the same size */
     /* as in plain text emojis */
     font-size: inherit;
 }
 
-.mx_RoomHeader_avatar {
+.mx_LegacyRoomHeader_avatar {
     flex: 0;
     margin: 0 7px;
     position: relative;
     cursor: pointer;
 }
 
-.mx_RoomHeader_avatar .mx_BaseAvatar_image {
+.mx_LegacyRoomHeader_avatar .mx_BaseAvatar_image {
     object-fit: cover;
 }
 
-.mx_RoomHeader_button {
+.mx_LegacyRoomHeader_button {
     cursor: pointer;
     flex: 0 0 auto;
     margin-left: 1px;
@@ -197,7 +198,7 @@ limitations under the License.
     }
 }
 
-.mx_RoomHeader_button_unreadIndicator_bg {
+.mx_LegacyRoomHeader_button_unreadIndicator_bg {
     position: absolute;
     right: var(--RoomHeader-indicator-dot-offset);
     top: var(--RoomHeader-indicator-dot-offset);
@@ -210,7 +211,7 @@ limitations under the License.
     background: $background;
 }
 
-.mx_RoomHeader_button_unreadIndicator {
+.mx_LegacyRoomHeader_button_unreadIndicator {
     position: absolute;
     right: var(--RoomHeader-indicator-dot-offset);
     top: var(--RoomHeader-indicator-dot-offset);
@@ -232,41 +233,41 @@ limitations under the License.
     }
 }
 
-.mx_RoomHeader_button--unread {
+.mx_LegacyRoomHeader_button--unread {
     &::before {
         background-color: $room-icon-unread-color !important;
     }
 }
 
-.mx_RoomHeader_button--highlight,
-.mx_RoomHeader_button:hover {
+.mx_LegacyRoomHeader_button--highlight,
+.mx_LegacyRoomHeader_button:hover {
     &::before {
         background-color: $accent !important;
     }
 }
 
-.mx_RoomHeader_forgetButton::before {
+.mx_LegacyRoomHeader_forgetButton::before {
     mask-image: url("$(res)/img/element-icons/leave.svg");
     width: 26px;
 }
 
-.mx_RoomHeader_appsButton::before {
+.mx_LegacyRoomHeader_appsButton::before {
     mask-image: url("$(res)/img/element-icons/room/apps.svg");
 }
 
-.mx_RoomHeader_appsButton_highlight::before {
+.mx_LegacyRoomHeader_appsButton_highlight::before {
     background-color: $accent;
 }
 
-.mx_RoomHeader_searchButton::before {
+.mx_LegacyRoomHeader_searchButton::before {
     mask-image: url("$(res)/img/element-icons/room/search-inset.svg");
 }
 
-.mx_RoomHeader_inviteButton::before {
+.mx_LegacyRoomHeader_inviteButton::before {
     mask-image: url("$(res)/img/element-icons/room/invite.svg");
 }
 
-.mx_RoomHeader_voiceCallButton::before {
+.mx_LegacyRoomHeader_voiceCallButton::before {
     mask-image: url("$(res)/img/element-icons/call/voice-call.svg");
 
     /* The call button SVG is padded slightly differently, so match it up to the size */
@@ -275,21 +276,21 @@ limitations under the License.
     mask-position: center;
 }
 
-.mx_RoomHeader_videoCallButton::before {
+.mx_LegacyRoomHeader_videoCallButton::before {
     mask-image: url("$(res)/img/element-icons/call/video-call.svg");
 }
 
-.mx_RoomHeader_layoutButton--freedom::before,
-.mx_RoomHeader_freedomIcon::before {
+.mx_LegacyRoomHeader_layoutButton--freedom::before,
+.mx_LegacyRoomHeader_freedomIcon::before {
     mask-image: url("$(res)/img/element-icons/call/freedom.svg");
 }
 
-.mx_RoomHeader_layoutButton--spotlight::before,
-.mx_RoomHeader_spotlightIcon::before {
+.mx_LegacyRoomHeader_layoutButton--spotlight::before,
+.mx_LegacyRoomHeader_spotlightIcon::before {
     mask-image: url("$(res)/img/element-icons/call/spotlight.svg");
 }
 
-.mx_RoomHeader_closeButton {
+.mx_LegacyRoomHeader_closeButton {
     &::before {
         mask-image: url("$(res)/img/cancel.svg");
         mask-size: 20px;
@@ -305,11 +306,11 @@ limitations under the License.
     }
 }
 
-.mx_RoomHeader_minimiseButton::before {
+.mx_LegacyRoomHeader_minimiseButton::before {
     mask-image: url("$(res)/img/element-icons/reduce.svg");
 }
 
-.mx_RoomHeader_layoutMenu .mx_IconizedContextMenu_icon::before {
+.mx_LegacyRoomHeader_layoutMenu .mx_IconizedContextMenu_icon::before {
     content: "";
     width: 16px;
     height: 16px;
@@ -321,12 +322,12 @@ limitations under the License.
 }
 
 @media only screen and (max-width: 480px) {
-    .mx_RoomHeader_wrapper {
+    .mx_LegacyRoomHeader_wrapper {
         padding: 0;
         margin: 0;
     }
 
-    .mx_RoomHeader {
+    .mx_LegacyRoomHeader {
         overflow: hidden;
     }
 }

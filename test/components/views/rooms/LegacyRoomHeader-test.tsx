@@ -39,7 +39,7 @@ import {
 } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
-import RoomHeader, { IProps as RoomHeaderProps } from "../../../../src/components/views/rooms/RoomHeader";
+import RoomHeader, { IProps as RoomHeaderProps } from "../../../../src/components/views/rooms/LegacyRoomHeader";
 import { SearchScope } from "../../../../src/components/views/rooms/SearchBar";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { mkEvent } from "../../../test-utils";
@@ -64,7 +64,7 @@ jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),
 }));
 
-describe("RoomHeader", () => {
+describe("LegacyRoomHeader", () => {
     let client: Mocked<MatrixClient>;
     let room: Room;
     let alice: RoomMember;
@@ -726,13 +726,13 @@ describe("RoomHeader", () => {
     it("should render buttons if not passing showButtons (default true)", () => {
         const room = createRoom({ name: "Room", isDm: false, userIds: [] });
         const wrapper = mountHeader(room);
-        expect(wrapper.container.querySelector(".mx_RoomHeader_button")).toBeDefined();
+        expect(wrapper.container.querySelector(".mx_LegacyRoomHeader_button")).toBeDefined();
     });
 
     it("should not render buttons if passing showButtons = false", () => {
         const room = createRoom({ name: "Room", isDm: false, userIds: [] });
         const wrapper = mountHeader(room, { showButtons: false });
-        expect(wrapper.container.querySelector(".mx_RoomHeader_button")).toBeFalsy();
+        expect(wrapper.container.querySelector(".mx_LegacyRoomHeader_button")).toBeFalsy();
     });
 
     it("should render the room options context menu if not passing enableRoomOptionsMenu (default true) and UIComponent customisations room options enabled", () => {
@@ -740,7 +740,7 @@ describe("RoomHeader", () => {
         const room = createRoom({ name: "Room", isDm: false, userIds: [] });
         const wrapper = mountHeader(room);
         expect(shouldShowComponent).toHaveBeenCalledWith(UIComponent.RoomOptionsMenu);
-        expect(wrapper.container.querySelector(".mx_RoomHeader_name.mx_AccessibleButton")).toBeDefined();
+        expect(wrapper.container.querySelector(".mx_LegacyRoomHeader_name.mx_AccessibleButton")).toBeDefined();
     });
 
     it.each([
@@ -752,7 +752,7 @@ describe("RoomHeader", () => {
             mocked(shouldShowComponent).mockReturnValue(showRoomOptionsMenu);
             const room = createRoom({ name: "Room", isDm: false, userIds: [] });
             const wrapper = mountHeader(room, { enableRoomOptionsMenu });
-            expect(wrapper.container.querySelector(".mx_RoomHeader_name.mx_AccessibleButton")).toBeFalsy();
+            expect(wrapper.container.querySelector(".mx_LegacyRoomHeader_name.mx_AccessibleButton")).toBeFalsy();
         },
     );
 });

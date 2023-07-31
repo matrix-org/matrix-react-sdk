@@ -111,7 +111,7 @@ const VoiceCallButton: FC<VoiceCallButtonProps> = ({ room, busy, setBusy, behavi
 
     return (
         <AccessibleTooltipButton
-            className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
+            className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_voiceCallButton"
             onClick={onClick}
             title={_t("Voice call")}
             tooltip={tooltip ?? _t("Voice call")}
@@ -227,7 +227,7 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
         <>
             <AccessibleTooltipButton
                 inputRef={buttonRef}
-                className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
+                className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_videoCallButton"
                 onClick={onClick}
                 title={_t("Video call")}
                 tooltip={tooltip ?? _t("Video call")}
@@ -408,19 +408,19 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
         const buttonRect = buttonRef.current!.getBoundingClientRect();
         menu = (
             <IconizedContextMenu
-                className="mx_RoomHeader_layoutMenu"
+                className="mx_LegacyRoomHeader_layoutMenu"
                 {...aboveLeftOf(buttonRect)}
                 onFinished={closeMenu}
             >
                 <IconizedContextMenuOptionList>
                     <IconizedContextMenuRadio
-                        iconClassName="mx_RoomHeader_freedomIcon"
+                        iconClassName="mx_LegacyRoomHeader_freedomIcon"
                         label={_t("Freedom")}
                         active={layout === Layout.Tile}
                         onClick={onFreedomClick}
                     />
                     <IconizedContextMenuRadio
-                        iconClassName="mx_RoomHeader_spotlightIcon"
+                        iconClassName="mx_LegacyRoomHeader_spotlightIcon"
                         label={_t("Spotlight")}
                         active={layout === Layout.Spotlight}
                         onClick={onSpotlightClick}
@@ -434,9 +434,9 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
         <>
             <AccessibleTooltipButton
                 inputRef={buttonRef}
-                className={classNames("mx_RoomHeader_button", {
-                    "mx_RoomHeader_layoutButton--freedom": layout === Layout.Tile,
-                    "mx_RoomHeader_layoutButton--spotlight": layout === Layout.Spotlight,
+                className={classNames("mx_LegacyRoomHeader_button", {
+                    "mx_LegacyRoomHeader_layoutButton--freedom": layout === Layout.Tile,
+                    "mx_LegacyRoomHeader_layoutButton--spotlight": layout === Layout.Spotlight,
                 })}
                 onClick={onClick}
                 title={_t("Change layout")}
@@ -576,7 +576,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (!this.props.viewingCall && this.props.onForgetClick) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className="mx_RoomHeader_button mx_RoomHeader_forgetButton"
+                    className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_forgetButton"
                     onClick={this.props.onForgetClick}
                     title={_t("Forget room")}
                     alignment={Alignment.Bottom}
@@ -588,8 +588,8 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (!this.props.viewingCall && this.props.onAppsClick) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className={classNames("mx_RoomHeader_button mx_RoomHeader_appsButton", {
-                        mx_RoomHeader_appsButton_highlight: this.props.appsShown,
+                    className={classNames("mx_LegacyRoomHeader_button mx_LegacyRoomHeader_appsButton", {
+                        mx_LegacyRoomHeader_appsButton_highlight: this.props.appsShown,
                     })}
                     onClick={this.props.onAppsClick}
                     title={this.props.appsShown ? _t("Hide Widgets") : _t("Show Widgets")}
@@ -603,7 +603,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (!this.props.viewingCall && this.props.onSearchClick && this.props.inRoom) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className="mx_RoomHeader_button mx_RoomHeader_searchButton"
+                    className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_searchButton"
                     onClick={this.props.onSearchClick}
                     title={_t("Search")}
                     alignment={Alignment.Bottom}
@@ -615,7 +615,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (this.props.onInviteClick && (!this.props.viewingCall || isVideoRoom) && this.props.inRoom) {
             startButtons.push(
                 <AccessibleTooltipButton
-                    className="mx_RoomHeader_button mx_RoomHeader_inviteButton"
+                    className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_inviteButton"
                     onClick={this.props.onInviteClick}
                     title={_t("Invite")}
                     alignment={Alignment.Bottom}
@@ -630,7 +630,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             if (this.props.activeCall === null) {
                 endButtons.push(
                     <AccessibleButton
-                        className="mx_RoomHeader_button mx_RoomHeader_closeButton"
+                        className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_closeButton"
                         onClick={this.onHideCallClick}
                         title={_t("Close call")}
                         key="close"
@@ -639,7 +639,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             } else {
                 endButtons.push(
                     <AccessibleTooltipButton
-                        className="mx_RoomHeader_button mx_RoomHeader_minimiseButton"
+                        className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_minimiseButton"
                         onClick={this.onHideCallClick}
                         title={_t("View chat timeline")}
                         alignment={Alignment.Bottom}
@@ -685,7 +685,9 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             }
         }
 
-        const textClasses = classNames("mx_RoomHeader_nametext", { mx_RoomHeader_settingsHint: settingsHint });
+        const textClasses = classNames("mx_LegacyRoomHeader_nametext", {
+            mx_LegacyRoomHeader_settingsHint: settingsHint,
+        });
         const roomName = (
             <RoomName room={this.props.room}>
                 {(name) => {
@@ -702,20 +704,20 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (this.props.enableRoomOptionsMenu && shouldShowComponent(UIComponent.RoomOptionsMenu)) {
             return (
                 <ContextMenuTooltipButton
-                    className="mx_RoomHeader_name"
+                    className="mx_LegacyRoomHeader_name"
                     onClick={this.onContextMenuOpenClick}
                     isExpanded={!!this.state.contextMenuPosition}
                     title={_t("Room options")}
                     alignment={Alignment.Bottom}
                 >
                     {roomName}
-                    {this.props.room && <div className="mx_RoomHeader_chevron" />}
+                    {this.props.room && <div className="mx_LegacyRoomHeader_chevron" />}
                     {contextMenu}
                 </ContextMenuTooltipButton>
             );
         }
 
-        return <div className="mx_RoomHeader_name mx_RoomHeader_name--textonly">{roomName}</div>;
+        return <div className="mx_LegacyRoomHeader_name mx_LegacyRoomHeader_name--textonly">{roomName}</div>;
     }
 
     public render(): React.ReactNode {
@@ -734,13 +736,17 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         }
 
         const icon = this.props.viewingCall ? (
-            <div className="mx_RoomHeader_icon mx_RoomHeader_icon_video" />
+            <div className="mx_LegacyRoomHeader_icon mx_LegacyRoomHeader_icon_video" />
         ) : this.props.e2eStatus ? (
-            <E2EIcon className="mx_RoomHeader_icon" status={this.props.e2eStatus} tooltipAlignment={Alignment.Bottom} />
+            <E2EIcon
+                className="mx_LegacyRoomHeader_icon"
+                status={this.props.e2eStatus}
+                tooltipAlignment={Alignment.Bottom}
+            />
         ) : // If we're expecting an E2EE status to come in, but it hasn't
         // yet been loaded, insert a blank div to reserve space
         this.client.isRoomEncrypted(this.props.room.roomId) && this.client.isCryptoEnabled() ? (
-            <div className="mx_RoomHeader_icon" />
+            <div className="mx_LegacyRoomHeader_icon" />
         ) : null;
 
         const buttons = this.props.showButtons ? this.renderButtons(isVideoRoom) : null;
@@ -754,19 +760,19 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         if (this.props.viewingCall && !isVideoRoom) {
             return (
-                <header className="mx_RoomHeader light-panel">
+                <header className="mx_LegacyRoomHeader light-panel">
                     <div
-                        className="mx_RoomHeader_wrapper"
+                        className="mx_LegacyRoomHeader_wrapper"
                         aria-owns={this.state.rightPanelOpen ? "mx_RightPanel" : undefined}
                     >
-                        <div className="mx_RoomHeader_avatar">{roomAvatar}</div>
+                        <div className="mx_LegacyRoomHeader_avatar">{roomAvatar}</div>
                         {icon}
                         {name}
                         {this.props.activeCall instanceof ElementCall && (
                             <GroupCallDuration groupCall={this.props.activeCall.groupCall} />
                         )}
                         {/* Empty topic element to fill out space */}
-                        <div className="mx_RoomHeader_topic" />
+                        <div className="mx_LegacyRoomHeader_topic" />
                         {buttons}
                     </div>
                 </header>
@@ -779,14 +785,14 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         // gives us a valid (possibly zero) searchCount.
         if (typeof this.props.searchInfo?.count === "number") {
             searchStatus = (
-                <div className="mx_RoomHeader_searchStatus">
+                <div className="mx_LegacyRoomHeader_searchStatus">
                     &nbsp;
                     {_t("(~%(count)s results)", { count: this.props.searchInfo.count })}
                 </div>
             );
         }
 
-        const topicElement = <RoomTopic room={this.props.room} className="mx_RoomHeader_topic" />;
+        const topicElement = <RoomTopic room={this.props.room} className="mx_LegacyRoomHeader_topic" />;
 
         const viewLabs = (): void =>
             defaultDispatcher.dispatch({
@@ -798,12 +804,12 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         ) : null;
 
         return (
-            <header className="mx_RoomHeader light-panel">
+            <header className="mx_LegacyRoomHeader light-panel">
                 <div
-                    className="mx_RoomHeader_wrapper"
+                    className="mx_LegacyRoomHeader_wrapper"
                     aria-owns={this.state.rightPanelOpen ? "mx_RightPanel" : undefined}
                 >
-                    <div className="mx_RoomHeader_avatar">{roomAvatar}</div>
+                    <div className="mx_LegacyRoomHeader_avatar">{roomAvatar}</div>
                     {icon}
                     {name}
                     {searchStatus}
