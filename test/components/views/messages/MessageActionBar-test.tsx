@@ -165,7 +165,12 @@ describe("<MessageActionBar />", () => {
                 // ''decrypt'' the event
                 decryptingEvent.event.type = alicesMessageEvent.getType();
                 decryptingEvent.event.content = alicesMessageEvent.getContent();
-                decryptingEvent.emit(MatrixEventEvent.Decrypted, decryptingEvent);
+                decryptingEvent.emit(
+                    MatrixEventEvent.Decrypted,
+                    decryptingEvent,
+                    undefined,
+                    decryptingEvent.getPushDetails(),
+                );
             });
 
             // new available actions after decryption

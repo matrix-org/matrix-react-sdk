@@ -88,7 +88,7 @@ describe("RoomNotificationState", () => {
             getRoomId: () => room.roomId,
         } as unknown as MatrixEvent;
         room.getUnreadNotificationCount = jest.fn().mockReturnValue(1);
-        client.emit(MatrixEventEvent.Decrypted, testEvent);
+        client.emit(MatrixEventEvent.Decrypted, testEvent, undefined, testEvent.getPushDetails());
         expect(listener).toHaveBeenCalled();
     });
 

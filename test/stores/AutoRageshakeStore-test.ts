@@ -68,7 +68,7 @@ describe("AutoRageshakeStore", () => {
 
         describe("and an undecryptable event occurs", () => {
             beforeEach(() => {
-                client.emit(MatrixEventEvent.Decrypted, utdEvent);
+                client.emit(MatrixEventEvent.Decrypted, utdEvent, undefined, utdEvent.getPushDetails());
                 // simulate event grace period
                 jest.advanceTimersByTime(5500);
             });

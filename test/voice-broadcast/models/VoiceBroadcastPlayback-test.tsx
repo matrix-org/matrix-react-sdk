@@ -316,7 +316,12 @@ describe("VoiceBroadcastPlayback", () => {
                 describe("and the chunk is decrypted", () => {
                     beforeEach(() => {
                         mocked(chunk1Event.isDecryptionFailure).mockReturnValue(false);
-                        chunk1Event.emit(MatrixEventEvent.Decrypted, chunk1Event);
+                        chunk1Event.emit(
+                            MatrixEventEvent.Decrypted,
+                            chunk1Event,
+                            undefined,
+                            chunk1Event.getPushDetails(),
+                        );
                     });
 
                     itShouldSetTheStateTo(VoiceBroadcastPlaybackState.Paused);
