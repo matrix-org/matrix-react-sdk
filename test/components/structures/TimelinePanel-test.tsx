@@ -176,6 +176,7 @@ describe("TimelinePanel", () => {
     filterConsole("checkForPreJoinUISI: showing all messages, skipping check");
 
     beforeEach(() => {
+        jest.spyOn(SettingsStore, "getValue").mockReturnValue((name: string) => name === "feature_threads_again");
         client = mocked(stubClient());
         userId = client.getSafeUserId();
     });
@@ -305,6 +306,7 @@ describe("TimelinePanel", () => {
                     client.doesServerSupportUnstableFeature.mockResolvedValue(true);
 
                     jest.spyOn(SettingsStore, "getValue").mockImplementation((setting: string) => {
+                        if (setting === "feature_threads_again") return true;
                         if (setting === "sendReadReceipt") return false;
 
                         return undefined;

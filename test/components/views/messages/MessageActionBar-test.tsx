@@ -118,7 +118,7 @@ describe("<MessageActionBar />", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         alicesMessageEvent.setStatus(EventStatus.SENT);
-        jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        jest.spyOn(SettingsStore, "getValue").mockReturnValue((name: string) => name === "feature_threads_again");
         jest.spyOn(SettingsStore, "setValue").mockResolvedValue(undefined);
     });
 

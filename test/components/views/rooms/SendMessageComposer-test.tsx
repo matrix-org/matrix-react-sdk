@@ -163,7 +163,8 @@ describe("<SendMessageComposer/>", () => {
     describe("attachMentions", () => {
         beforeEach(() => {
             jest.spyOn(SettingsStore, "getValue").mockImplementation(
-                (settingName) => settingName === "feature_intentional_mentions",
+                (settingName) =>
+                    settingName === "feature_intentional_mentions" || settingName === "feature_threads_again",
             );
         });
 
@@ -514,6 +515,7 @@ describe("<SendMessageComposer/>", () => {
         });
 
         it("not to send chat effects on message sending for threads", () => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue((name: string) => name === "feature_threads_again");
             mocked(doMaybeLocalRoomAction).mockImplementation(
                 <T,>(roomId: string, fn: (actualRoomId: string) => Promise<T>, _client?: MatrixClient) => {
                     return fn(roomId);
