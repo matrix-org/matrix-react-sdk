@@ -371,7 +371,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
         const { isRichTextEnabled, composerContent } = this.state;
         const convertedContent = isRichTextEnabled
-            ? await richToPlain(composerContent)
+            ? await richToPlain(composerContent, false)
             : await plainToRich(composerContent, false);
 
         this.setState({
@@ -588,7 +588,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
             />,
         );
 
-        const showSendButton = !this.state.isComposerEmpty || this.state.haveRecording;
+        const showSendButton = canSendMessages && (!this.state.isComposerEmpty || this.state.haveRecording);
 
         const classes = classNames({
             "mx_MessageComposer": true,

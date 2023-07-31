@@ -20,6 +20,7 @@ export default defineConfig({
     videoUploadOnPasses: false,
     projectId: "ppvnzg",
     experimentalInteractiveRunEvents: true,
+    experimentalMemoryManagement: true,
     defaultCommandTimeout: 10000,
     chromeWebSecurity: false,
     e2e: {
@@ -31,7 +32,7 @@ export default defineConfig({
     },
     env: {
         // Docker tag to use for `ghcr.io/matrix-org/sliding-sync` image.
-        SLIDING_SYNC_PROXY_TAG: "v0.99.0-rc1",
+        SLIDING_SYNC_PROXY_TAG: "v0.99.3",
         HOMESERVER: "synapse",
     },
     retries: {
