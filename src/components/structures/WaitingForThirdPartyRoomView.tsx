@@ -50,6 +50,9 @@ export const WaitingForThirdPartyRoomView: React.FC<Props> = ({ roomView, resize
     return (
         <div className="mx_RoomView mx_RoomView--local">
             <ErrorBoundary>
+                {SettingsStore.getValue("feature_new_room_decoration_ui") ? (
+                    <RoomHeader room={context.room} />
+                ) : (
                     <LegacyRoomHeader
                         room={context.room}
                         inRoom={true}
@@ -65,6 +68,7 @@ export const WaitingForThirdPartyRoomView: React.FC<Props> = ({ roomView, resize
                         viewingCall={false}
                         activeCall={null}
                     />
+                )}
                 <main className="mx_RoomView_body" ref={roomView}>
                     <div className="mx_RoomView_timeline">
                         <ScrollPanel className="mx_RoomView_messagePanel" resizeNotifier={resizeNotifier}>
