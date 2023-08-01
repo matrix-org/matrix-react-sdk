@@ -15,11 +15,13 @@ limitations under the License.
 */
 
 import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { IOOBData } from "../stores/ThreepidInviteStore";
 import { useTypedEventEmitter } from "./useEventEmitter";
 import { _t } from "../languageHandler";
+
+const getRoomName = (room?: Room, oobName = "") => room?.name || oobName;
 
 /**
  * Determines the room name from a combination of the room model and potential
@@ -34,18 +36,14 @@ export default function useRoomName(room?: Room, oobData?: IOOBData): string {
         oobName = oobData.name;
     }
 
-    const [name, setName] = useState<string>(room?.name || oobName || "");
-
-    const setRoomName = useCallback(() => {
-        setName(room?.name || oobName || "");
-    }, [room?.name, oobName]);
+    const [name, setName] = useState<string>(getRoomName(room, oobName));
 
     useTypedEventEmitter(room, RoomEvent.Name, () => {
-        setRoomName();
+        setName(getRoomName(room, oobName));
     });
 
     useEffect(() => {
-        setRoomName();
+        setName(getRoomName(room, oobName));
     });
 
     return name;
