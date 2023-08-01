@@ -21,7 +21,7 @@ import { IOOBData } from "../stores/ThreepidInviteStore";
 import { useTypedEventEmitter } from "./useEventEmitter";
 import { _t } from "../languageHandler";
 
-const getRoomName = (room?: Room, oobName = "") => room?.name || oobName;
+const getRoomName = (room?: Room, oobName = ""): string => room?.name || oobName;
 
 /**
  * Determines the room name from a combination of the room model and potential
@@ -44,7 +44,7 @@ export function useRoomName(room?: Room, oobData?: IOOBData): string {
 
     useEffect(() => {
         setName(getRoomName(room, oobName));
-    });
+    }, [room, oobName]);
 
     return name;
 }
