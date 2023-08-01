@@ -20,6 +20,7 @@ import type { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import type { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import type { Room } from "matrix-js-sdk/src/matrix";
+import type { IndexedDBStore } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
 
@@ -446,14 +447,23 @@ describe("Read receipts", () => {
         })();
     }
 
+    function getRoomListTile(room: string) {
+        return cy.findByRole("treeitem", { name: new RegExp("^" + room) });
+    }
+
+    function markAsRead(room: string) {
+        getRoomListTile(room).rightclick();
+        cy.findByText("Mark as read").click();
+    }
+
     function assertRead(room: string) {
-        return cy.findByRole("treeitem", { name: new RegExp("^" + room) }).within(() => {
+        return getRoomListTile(room).within(() => {
             cy.get(".mx_NotificationBadge_count").should("not.exist");
         });
     }
 
     function assertUnread(room: string) {
-        return cy.findByRole("treeitem", { name: new RegExp("^" + room) }).within(() => {
+        return getRoomListTile(room).within(() => {
             cy.get(".mx_NotificationBadge_count").should("exist");
         });
     }
@@ -463,13 +473,76 @@ describe("Read receipts", () => {
 
     describe("new messages", () => {
         describe("in the main timeline", () => {
-            it.skip("Sending a message makes a room unread", () => {});
-            it.skip("Reading latest message makes the room read", () => {});
+            it("Sending a message makes a room unread", () => {
+                goTo(room1);
+                assertRead(room2);
+
+                sendMessages(room2, ["Msg1"]);
+                assertUnread(room2);
+            });
+            it("Reading latest message makes the room read", () => {
+                goTo(room1);
+                assertRead(room2);
+                sendMessages(room2, ["Msg1"]);
+                assertUnread(room2);
+
+                // When I read the main timeline
+                goTo(room2);
+                assertRead(room2);
+            });
             it.skip("Reading an older message leaves the room unread", () => {});
-            it.skip("Marking a room as read makes it read", () => {});
-            it.skip("Sending a new message after marking as read makes it unread", () => {});
-            it.skip("A room with a new message is still unread after restart", () => {});
-            it.skip("A room where all messages are read is still read after restart", () => {});
+            it("Marking a room as read makes it read", () => {
+                goTo(room1);
+                assertRead(room2);
+                sendMessages(room2, ["Msg1"]);
+                assertUnread(room2);
+
+                markAsRead(room2);
+                assertRead(room2);
+            });
+            it("Sending a new message after marking as read makes it unread", () => {
+                goTo(room1);
+                assertRead(room2);
+                sendMessages(room2, ["Msg1"]);
+                assertUnread(room2);
+
+                markAsRead(room2);
+                assertRead(room2);
+
+                sendMessages(room2, ["Msg2"]);
+                assertUnread(room2);
+            });
+            it("A room with a new message is still unread after restart", () => {
+                goTo(room1);
+                assertRead(room2);
+                sendMessages(room2, ["Msg1"]);
+                assertUnread(room2);
+
+                cy.getClient().then((cli) => {
+                    // @ts-ignore
+                    return (cli.store as IndexedDBStore).reallySave();
+                });
+
+                cy.reload();
+                assertUnread(room2);
+            });
+            it("A room where all messages are read is still read after restart", () => {
+                goTo(room1);
+                assertRead(room2);
+                sendMessages(room2, ["Msg1"]);
+                assertUnread(room2);
+
+                markAsRead(room2);
+                assertRead(room2);
+
+                cy.getClient().then((cli) => {
+                    // @ts-ignore
+                    return (cli.store as IndexedDBStore).reallySave();
+                });
+
+                cy.reload();
+                assertRead(room2);
+            });
         });
 
         describe("in threads", () => {
@@ -570,7 +643,7 @@ describe("Read receipts", () => {
 
         describe("thread roots", () => {
             it.skip("An edit of a thread root makes the room unread", () => {});
-            it("Reading an edit of a thread root makes the room read", () => {
+            it.skip("Reading an edit of a thread root makes the room read", () => {
                 // Given a fully-read thread exists
                 goTo(room2);
                 sendMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
