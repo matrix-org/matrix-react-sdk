@@ -3766,5 +3766,6 @@
     "Thread Root ID: %(threadRootId)s": "Thread-Ursprungs-ID: %(threadRootId)s",
     "See history": "Verlauf anzeigen",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Die exportierte Datei erlaubt Unbefugten, jede Nachricht zu entschlüsseln, sei also vorsichtig und halte sie versteckt. Um dies zu verhindern, empfiehlt es sich eine einzigartige Passphrase unten einzugeben, die nur für das Entschlüsseln der exportierten Datei genutzt wird. Es ist nur möglich, diese Datei mit der selben Passphrase zu importieren.",
-    "Under active development, new room header & details interface": "In aktiver Entwicklung, neue Raumkopfzeile & Detailoberfläche"
+    "Under active development, new room header & details interface": "In aktiver Entwicklung, neue Raumkopfzeile & Detailoberfläche",
+    "People cannot join unless access is granted.": "Nutzer können nicht beitreten solange kein Zugriff gewährt ist."
 }
