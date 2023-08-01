@@ -30,7 +30,7 @@ const getRoomName = (room?: Room, oobName = "") => room?.name || oobName;
  * @param oobData - out-of-band information about the room
  * @returns {string} the room name
  */
-export default function useRoomName(room?: Room, oobData?: IOOBData): string {
+export function useRoomName(room?: Room, oobData?: IOOBData): string {
     let oobName = _t("Join Room");
     if (oobData && oobData.name) {
         oobName = oobData.name;

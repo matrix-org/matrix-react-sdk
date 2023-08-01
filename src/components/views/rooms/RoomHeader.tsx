@@ -18,7 +18,7 @@ import React from "react";
 
 import type { Room } from "matrix-js-sdk/src/models/room";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
-import useRoomName from "../../../hooks/useRoomName";
+import { useRoomName } from "../../../hooks/useRoomName";
 
 export default function RoomHeader({ room, oobData }: { room?: Room; oobData?: IOOBData }): JSX.Element {
     const roomName = useRoomName(room, oobData);
