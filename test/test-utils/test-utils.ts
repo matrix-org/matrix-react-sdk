@@ -242,6 +242,7 @@ export function createTestClient(): MatrixClient {
         getSyncStateData: jest.fn(),
         getDehydratedDevice: jest.fn(),
         exportRoomKeys: jest.fn(),
+        getVersions: jest.fn().mockResolvedValue({ versions: ["v1.1"] }),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);

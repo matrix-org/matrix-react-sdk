@@ -50,6 +50,7 @@ describe("Lifecycle", () => {
         store: {
             destroy: jest.fn(),
         },
+        getVersions: jest.fn().mockResolvedValue({ versions: ["v1.1"] }),
     });
 
     beforeEach(() => {
