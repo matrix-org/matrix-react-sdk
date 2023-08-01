@@ -468,6 +468,14 @@ describe("Read receipts", () => {
         });
     }
 
+    function saveAndReload() {
+        cy.getClient().then((cli) => {
+            // @ts-ignore
+            return (cli.store as IndexedDBStore).reallySave();
+        });
+        cy.reload();
+    }
+
     const room1 = selectedRoomName;
     const room2 = otherRoomName;
 
@@ -518,12 +526,7 @@ describe("Read receipts", () => {
                 sendMessages(room2, ["Msg1"]);
                 assertUnread(room2);
 
-                cy.getClient().then((cli) => {
-                    // @ts-ignore
-                    return (cli.store as IndexedDBStore).reallySave();
-                });
-
-                cy.reload();
+                saveAndReload();
                 assertUnread(room2);
             });
             it("A room where all messages are read is still read after restart", () => {
@@ -535,12 +538,7 @@ describe("Read receipts", () => {
                 markAsRead(room2);
                 assertRead(room2);
 
-                cy.getClient().then((cli) => {
-                    // @ts-ignore
-                    return (cli.store as IndexedDBStore).reallySave();
-                });
-
-                cy.reload();
+                saveAndReload();
                 assertRead(room2);
             });
         });
