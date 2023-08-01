@@ -429,6 +429,24 @@ describe("Read receipts", () => {
         })();
     }
 
+    function replyTo(targetMessage: string, newMessage: string): MessageSpec {
+        return new (class extends MessageSpec {
+            public async getContent(room: Room): Promise<Record<string, unknown>> {
+                const ev = await getMessage(room, targetMessage);
+
+                return {
+                    "msgtype": "m.text",
+                    "body": newMessage,
+                    "m.relates_to": {
+                        "m.in_reply_to": {
+                            event_id: ev.getId(),
+                        },
+                    },
+                };
+            }
+        })();
+    }
+
     function threadedOff(rootMessage: string, newMessage: string): MessageSpec {
         return new (class extends MessageSpec {
             public async getContent(room: Room): Promise<Record<string, unknown>> {
@@ -719,8 +737,23 @@ describe("Read receipts", () => {
                 assertUnreadThread("Msg1");
             });
             it.skip("Reading a thread root within the thread view marks it as read in the main timeline", () => {});
-            it.skip("Creating a new thread based on a reply makes the room unread", () => {});
-            it.skip("Reading a thread whose root is a reply makes the room read", () => {});
+            it("Creating a new thread based on a reply makes the room unread", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1"), threadedOff("Reply1", "Resp1")]);
+                assertUnread(room2);
+            });
+            it("Reading a thread whose root is a reply makes the room read", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1"), threadedOff("Reply1", "Resp1")]);
+                assertUnread(room2);
+
+                goTo(room2);
+                assertUnread(room2);
+                assertUnreadThread("Reply1");
+
+                openThread("Reply1");
+                assertRead(room2);
+            });
         });
     });
 
