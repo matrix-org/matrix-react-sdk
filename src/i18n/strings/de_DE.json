@@ -2868,7 +2868,7 @@
     "Internal room ID": "Interne Raum-ID",
     "Group all your rooms that aren't part of a space in one place.": "Gruppiere all deine Räume, die nicht Teil eines Spaces sind, an einem Ort.",
     "Group all your people in one place.": "Gruppiere all deine Direktnachrichten an einem Ort.",
-    "Group all your favourite rooms and people in one place.": "Chats all deine favorisierten Unterhaltungen an einem Ort.",
+    "Group all your favourite rooms and people in one place.": "Gruppiere all deine favorisierten Unterhaltungen an einem Ort.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Mit Spaces kannst du deine Unterhaltungen organisieren. Neben Spaces, in denen du dich befindest, kannst du dir auch dynamische anzeigen lassen.",
     "IRC (Experimental)": "IRC (Experimentell)",
     "Call": "Anruf",
@@ -3765,5 +3765,6 @@
     "Ask to join": "Beitrittsanfragen",
     "Thread Root ID: %(threadRootId)s": "Thread-Ursprungs-ID: %(threadRootId)s",
     "See history": "Verlauf anzeigen",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Die exportierte Datei erlaubt Unbefugten, jede Nachricht zu entschlüsseln, sei also vorsichtig und halte sie versteckt. Um dies zu verhindern, empfiehlt es sich eine einzigartige Passphrase unten einzugeben, die nur für das Entschlüsseln der exportierten Datei genutzt wird. Es ist nur möglich, diese Datei mit der selben Passphrase zu importieren."
+    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Die exportierte Datei erlaubt Unbefugten, jede Nachricht zu entschlüsseln, sei also vorsichtig und halte sie versteckt. Um dies zu verhindern, empfiehlt es sich eine einzigartige Passphrase unten einzugeben, die nur für das Entschlüsseln der exportierten Datei genutzt wird. Es ist nur möglich, diese Datei mit der selben Passphrase zu importieren.",
+    "Under active development, new room header & details interface": "In aktiver Entwicklung, neue Raumkopfzeile & Detailoberfläche"
 }
