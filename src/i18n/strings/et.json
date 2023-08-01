@@ -3771,5 +3771,6 @@
     "User read up to (m.read.private): ": "Kasutaja luges kuni sõnumini (m.read.private): ",
     "See history": "Vaata ajalugu",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Kes iganes saab kätte selle ekspordifaili, saab ka lugeda sinu krüptitud sõnumeid, seega ole hoolikas selle faili talletamisel. Andmaks lisakihi turvalisust, peaksid sa alljärgnevalt sisestama unikaalse paroolifraasi, millega krüptitakse eksporditavad andmed. Faili hilisem importimine õnnestub vaid sama paroolifraasi sisestamisel.",
-    "Great! This passphrase looks strong enough": "Suurepärane! See paroolifraas on piisavalt kange"
+    "Great! This passphrase looks strong enough": "Suurepärane! See paroolifraas on piisavalt kange",
+    "Under active development, new room header & details interface": "Uus jututoa päis ja infovaade on hetkel aktiivses arenduses"
 }
