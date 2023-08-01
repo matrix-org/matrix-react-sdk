@@ -15,19 +15,16 @@ limitations under the License.
 */
 
 import React from "react";
-import { Mocked } from "jest-mock";
 import { render } from "@testing-library/react";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { stubClient } from "../../../test-utils";
 import RoomHeader from "../../../../src/components/views/rooms/RoomHeader";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 
 describe("Roomeader", () => {
-    let client: Mocked<MatrixClient>;
     let room: Room;
 
     const ROOM_ID = "!1:example.org";
