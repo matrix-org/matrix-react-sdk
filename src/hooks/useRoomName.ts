@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room, RoomEvent } from "matrix-js-sdk";
-import { IOOBData } from "../stores/ThreepidInviteStore";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import { useCallback, useEffect, useState } from "react";
+
+import { IOOBData } from "../stores/ThreepidInviteStore";
 import { useTypedEventEmitter } from "./useEventEmitter";
 import { _t } from "../languageHandler";
 
@@ -37,7 +38,7 @@ export default function useRoomName(room?: Room, oobData?: IOOBData): string {
 
     const setRoomName = useCallback(() => {
         setName(room?.name || oobName || "");
-    }, [room?.name, oobData]);
+    }, [room?.name, oobName]);
 
     useTypedEventEmitter(room, RoomEvent.Name, () => {
         setRoomName();
@@ -45,7 +46,7 @@ export default function useRoomName(room?: Room, oobData?: IOOBData): string {
 
     useEffect(() => {
         setRoomName();
-    }, [room?.name, oobData]);
+    });
 
     return name;
 }

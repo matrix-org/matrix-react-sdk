@@ -17,7 +17,6 @@ limitations under the License.
 import React from "react";
 
 import type { Room } from "matrix-js-sdk/src/models/room";
-import { _t } from "../../../languageHandler";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
 import useRoomName from "../../../hooks/useRoomName";
 
