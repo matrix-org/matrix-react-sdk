@@ -86,7 +86,9 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         super(props);
 
         this.state = {
-            notificationState: RoomNotificationStateStore.instance.getRoomState(this.props.room),
+            notificationState: props.displayBadge
+                ? RoomNotificationStateStore.instance.getRoomState(this.props.room)
+                : undefined,
             icon: this.calculateIcon(),
         };
     }

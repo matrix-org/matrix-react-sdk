@@ -21,7 +21,10 @@ import { Room } from "matrix-js-sdk/src/models/room";
 
 import { stubClient } from "../../../test-utils";
 import RoomHeader from "../../../../src/components/views/rooms/RoomHeader";
-import type { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 
 describe("Roomeader", () => {
     let client: Mocked<MatrixClient>;
@@ -31,7 +34,10 @@ describe("Roomeader", () => {
 
     beforeEach(async () => {
         stubClient();
-        room = new Room(ROOM_ID, client, "@alice:example.org");
+        room = new Room(ROOM_ID, MatrixClientPeg.get()!, "@alice:example.org");
+        DMRoomMap.setShared({
+            getUserIdForRoomId: jest.fn(),
+        } as unknown as DMRoomMap);
     });
 
     it("renders with no props", () => {
@@ -54,5 +60,23 @@ describe("Roomeader", () => {
             />,
         );
         expect(container).toHaveTextContent(OOB_NAME);
+    });
+
+    it("renders the room topic", async () => {
+        const TOPIC = "Hello World!";
+
+        const roomTopic = new MatrixEvent({
+            type: EventType.RoomTopic,
+            event_id: "$00002",
+            room_id: room.roomId,
+            sender: "@alice:example.com",
+            origin_server_ts: 1,
+            content: { topic: TOPIC },
+            state_key: "",
+        });
+        await room.addLiveEvents([roomTopic]);
+
+        const { container } = render(<RoomHeader room={room} />);
+        expect(container).toHaveTextContent(TOPIC);
     });
 });
