@@ -677,10 +677,11 @@ describe("Read receipts", () => {
                 // Then thread does appear unread
                 assertUnreadThread("Msg1");
             });
+            // XXX: this failure seems legit
             it.skip("Marking a room with unread threads as read makes it read", () => {
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), threadedOff("Msg1", "Resp2")]);
-                assertUnread(room2, 2); // (Sanity)
+                assertUnread(room2, 3); // (Sanity)
 
                 markAsRead(room2);
                 assertRead(room2);
