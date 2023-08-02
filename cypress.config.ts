@@ -25,15 +25,6 @@ export default defineConfig({
     chromeWebSecurity: false,
     e2e: {
         setupNodeEvents(on, config) {
-            // Mute browser to improve local development experience
-            on("before:browser:launch", (browser, launchOptions) => {
-                if (browser.name === "chrome" || browser.name === "chromium") {
-                    launchOptions.args.push("--mute-audio");
-                }
-
-                return launchOptions;
-            });
-
             return require("./cypress/plugins/index.ts").default(on, config);
         },
         baseUrl: "http://localhost:8080",
