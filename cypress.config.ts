@@ -27,7 +27,7 @@ export default defineConfig({
         setupNodeEvents(on, config) {
             // Mute browser to improve local development experience
             on("before:browser:launch", (browser, launchOptions) => {
-                if (browser.family === "chromium") {
+                if (browser.name === "chrome" || browser.name === "chromium") {
                     launchOptions.args.push("--mute-audio");
                 }
 
