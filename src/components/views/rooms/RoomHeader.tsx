@@ -23,9 +23,8 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { useTopic } from "../../../hooks/room/useTopic";
-import RoomAvatar from "../avatars/RoomAvatar";
 
-export default function RoomHeader({ room }: { room?: Room }): JSX.Element {
+export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const roomName = useRoomName(room);
     const roomTopic = useTopic(room);
 
@@ -39,11 +38,7 @@ export default function RoomHeader({ room }: { room?: Room }): JSX.Element {
                     : rightPanel.setCard({ phase: RightPanelPhases.RoomSummary });
             }}
         >
-            {room ? (
-                <DecoratedRoomAvatar room={room} avatarSize={40} displayBadge={false} />
-            ) : (
-                <RoomAvatar width={40} height={40} />
-            )}
+            <DecoratedRoomAvatar room={room} avatarSize={40} displayBadge={false} />
             <div className="mx_RoomHeader_info">
                 <BodyText
                     as="div"

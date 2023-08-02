@@ -46,11 +46,6 @@ describe("Roomeader", () => {
         setCardSpy = jest.spyOn(RightPanelStore.instance, "setCard");
     });
 
-    it("renders with no props", () => {
-        const { asFragment } = render(<RoomHeader />);
-        expect(asFragment()).toMatchSnapshot();
-    });
-
     it("renders the room header", () => {
         const { container } = render(<RoomHeader room={room} />);
         expect(container).toHaveTextContent(ROOM_ID);
