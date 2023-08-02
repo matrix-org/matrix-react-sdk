@@ -491,8 +491,13 @@ describe("Read receipts", () => {
     }
 
     function openThreadList() {
-        // We don't use `cy.get` here as these are inherently conditional to deal more generically with more app states
-        Cypress.$('[data-testid="threadsButton"][aria-current=false]')?.trigger("click");
+        cy.findByTestId("threadsButton").then((button) => {
+            if (button?.attr("aria-current") !== "true") {
+                button.trigger("click");
+            }
+        });
+        cy.get(".mx_ThreadPanel").should("exist");
+        // If the Threads back button is present then click it, the threads button can open either threads list or thread panel
         Cypress.$('.mx_BaseCard_back[title="Threads"]')?.trigger("click");
     }
 
