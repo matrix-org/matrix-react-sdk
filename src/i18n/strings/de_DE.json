@@ -3770,5 +3770,6 @@
     "People cannot join unless access is granted.": "Personen können den Raum nur betreten, wenn sie Zutritt erhalten.",
     "Upgrade room": "Raum aktualisieren",
     "Great! This passphrase looks strong enough": "Super! Diese Passphrase wirkt stark genug",
-    "User read up to (ignoreSynthetic): ": "Der Benutzer hat gelesen bis (ignoreSynthetic): "
+    "User read up to (ignoreSynthetic): ": "Der Benutzer hat gelesen bis (ignoreSynthetic): ",
+    "User read up to (m.read.private): ": "Der Benutzer hat gelesen bis (m.read.private): "
 }
