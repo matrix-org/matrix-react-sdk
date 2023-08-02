@@ -31,7 +31,9 @@ describe("Roomeader", () => {
 
     beforeEach(async () => {
         stubClient();
-        room = new Room(ROOM_ID, MatrixClientPeg.get()!, "@alice:example.org");
+        room = new Room(ROOM_ID, MatrixClientPeg.get()!, "@alice:example.org", {
+            pendingEventOrdering: PendingEventOrdering.Detached,
+        });
         DMRoomMap.setShared({
             getUserIdForRoomId: jest.fn(),
         } as unknown as DMRoomMap);
