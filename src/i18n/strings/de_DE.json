@@ -3771,5 +3771,6 @@
     "Upgrade room": "Raum aktualisieren",
     "Great! This passphrase looks strong enough": "Super! Diese Passphrase wirkt stark genug",
     "User read up to (ignoreSynthetic): ": "Der Benutzer hat gelesen bis (ignoreSynthetic): ",
-    "User read up to (m.read.private): ": "Benutzer las bis (m.read.private): "
+    "User read up to (m.read.private): ": "Benutzer las bis (m.read.private): ",
+    "User read up to (m.read.private;ignoreSynthetic): ": "Der Benutzer hat gelesen bis (m.read.private;ignoreSynthetic): "
 }
