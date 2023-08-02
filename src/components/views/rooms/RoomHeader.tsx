@@ -18,7 +18,6 @@ import React from "react";
 import { Body as BodyText } from "@vector-im/compound-web";
 
 import type { Room } from "matrix-js-sdk/src/models/room";
-import { IOOBData } from "../../../stores/ThreepidInviteStore";
 import { useRoomName } from "../../../hooks/useRoomName";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
@@ -26,8 +25,8 @@ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { useTopic } from "../../../hooks/room/useTopic";
 import RoomAvatar from "../avatars/RoomAvatar";
 
-export default function RoomHeader({ room, oobData }: { room?: Room; oobData?: IOOBData }): JSX.Element {
-    const roomName = useRoomName(room, oobData);
+export default function RoomHeader({ room }: { room?: Room }): JSX.Element {
+    const roomName = useRoomName(room);
     const roomTopic = useTopic(room);
 
     return (
@@ -41,9 +40,9 @@ export default function RoomHeader({ room, oobData }: { room?: Room; oobData?: I
             }}
         >
             {room ? (
-                <DecoratedRoomAvatar room={room} oobData={oobData} avatarSize={40} displayBadge={false} />
+                <DecoratedRoomAvatar room={room} avatarSize={40} displayBadge={false} />
             ) : (
-                <RoomAvatar oobData={oobData} width={40} height={40} />
+                <RoomAvatar width={40} height={40} />
             )}
             <div className="mx_RoomHeader_info">
                 <BodyText

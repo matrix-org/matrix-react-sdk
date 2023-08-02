@@ -56,18 +56,6 @@ describe("Roomeader", () => {
         expect(container).toHaveTextContent(ROOM_ID);
     });
 
-    it("display the out-of-band room name", () => {
-        const OOB_NAME = "My private room";
-        const { container } = render(
-            <RoomHeader
-                oobData={{
-                    name: OOB_NAME,
-                }}
-            />,
-        );
-        expect(container).toHaveTextContent(OOB_NAME);
-    });
-
     it("renders the room topic", async () => {
         const TOPIC = "Hello World!";
 
