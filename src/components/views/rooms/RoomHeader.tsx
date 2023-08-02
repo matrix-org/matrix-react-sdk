@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Body } from "@vector-im/compound-web";
+import { Body as BodyText } from "@vector-im/compound-web";
 
 import type { Room } from "matrix-js-sdk/src/models/room";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
@@ -24,6 +24,7 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { useTopic } from "../../../hooks/room/useTopic";
+import RoomAvatar from "../avatars/RoomAvatar";
 
 export default function RoomHeader({ room, oobData }: { room?: Room; oobData?: IOOBData }): JSX.Element {
     const roomName = useRoomName(room, oobData);
@@ -39,15 +40,27 @@ export default function RoomHeader({ room, oobData }: { room?: Room; oobData?: I
                     : rightPanel.setCard({ phase: RightPanelPhases.RoomSummary });
             }}
         >
-            {room && <DecoratedRoomAvatar room={room} oobData={oobData} avatarSize={40} displayBadge={false} />}
+            {room ? (
+                <DecoratedRoomAvatar room={room} oobData={oobData} avatarSize={40} displayBadge={false} />
+            ) : (
+                <RoomAvatar oobData={oobData} width={40} height={40} />
+            )}
             <div className="mx_RoomHeader_info">
-                <Body as="div" size="lg" weight="semibold" dir="auto" title={roomName} role="heading" aria-level={1}>
+                <BodyText
+                    as="div"
+                    size="lg"
+                    weight="semibold"
+                    dir="auto"
+                    title={roomName}
+                    role="heading"
+                    aria-level={1}
+                >
                     {roomName}
-                </Body>
+                </BodyText>
                 {roomTopic && (
-                    <Body as="div" size="sm" className="mx_RoomHeader_topic">
+                    <BodyText as="div" size="sm" className="mx_RoomHeader_topic">
                         {roomTopic.text}
-                    </Body>
+                    </BodyText>
                 )}
             </div>
         </header>
