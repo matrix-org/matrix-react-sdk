@@ -17,17 +17,22 @@ limitations under the License.
 import React from "react";
 import { render } from "@testing-library/react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, MatrixEvent, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
+import userEvent from "@testing-library/user-event";
 
 import { stubClient } from "../../../test-utils";
 import RoomHeader from "../../../../src/components/views/rooms/RoomHeader";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import RightPanelStore from "../../../../src/stores/right-panel/RightPanelStore";
+import { RightPanelPhases } from "../../../../src/stores/right-panel/RightPanelStorePhases";
 
 describe("Roomeader", () => {
     let room: Room;
 
     const ROOM_ID = "!1:example.org";
+
+    let setCardSpy: jest.SpyInstance | undefined;
 
     beforeEach(async () => {
         stubClient();
@@ -37,6 +42,8 @@ describe("Roomeader", () => {
         DMRoomMap.setShared({
             getUserIdForRoomId: jest.fn(),
         } as unknown as DMRoomMap);
+
+        setCardSpy = jest.spyOn(RightPanelStore.instance, "setCard");
     });
 
     it("renders with no props", () => {
@@ -77,5 +84,12 @@ describe("Roomeader", () => {
 
         const { container } = render(<RoomHeader room={room} />);
         expect(container).toHaveTextContent(TOPIC);
+    });
+
+    it("opens the room summary", async () => {
+        const { container } = render(<RoomHeader room={room} />);
+
+        await userEvent.click(container.firstChild! as Element);
+        expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.RoomSummary });
     });
 });
