@@ -780,32 +780,63 @@ describe("Read receipts", () => {
 
     describe("editing messages", () => {
         describe("in the main timeline", () => {
-            it.skip("Editing a message makes a room unread", () => {
+            it("Editing a message makes a room unread", () => {
                 // Given I am not in the room
                 goTo(room1);
 
+                receiveMessages(room2, ["Msg1"]);
+                assertUnread(room2, 1);
+                markAsRead(room2);
+
                 // When an edit appears in the room
-                receiveMessages(room2, ["Msg1", editOf("Msg1", "Msg1 Edit1")]);
+                receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
 
                 // Then it becomes unread
                 assertUnread(room2, 1);
             });
-            it.skip("Reading an edit makes the room read", () => {
-                // Given an edit made a room unread
+            it("Reading an edit makes the room read", () => {
                 goTo(room1);
-                receiveMessages(room2, ["Msg1", editOf("Msg1", "Msg1 Edit1")]);
-                assertUnread(room2, 1); // (Sanity)
+                receiveMessages(room2, ["Msg1"]);
+                assertUnread(room2, 1);
+                markAsRead(room2);
+                receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
+                assertUnread(room2, 1);
 
                 // When I read it
                 goTo(room2);
 
-                // Then the room becomes unread and stays unread
+                // Then the room becomes read and stays read
                 assertRead(room2);
                 goTo(room1);
                 assertRead(room2);
             });
-            it.skip("Marking a room as read after an edit makes it read", () => {});
-            it.skip("Editing a message after marking as read makes the room unread", () => {});
+            it("Marking a room as read after an edit makes it read", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1"]);
+                assertUnread(room2, 1);
+                markAsRead(room2);
+                receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
+                assertUnread(room2, 1);
+
+                // When I mark it as read
+                markAsRead(room2);
+
+                // Then the room becomes read
+                assertRead(room2);
+            });
+            it("Editing a message after marking as read makes the room unread", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1"]);
+                assertUnread(room2, 1);
+
+                // When I mark it as read
+                markAsRead(room2);
+
+                receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
+
+                // Then the room becomes unread
+                assertUnread(room2, 1);
+            });
             it.skip("Editing a reply after reading it makes the room unread", () => {});
             it.skip("Editing a reply after marking as read makes the room unread", () => {});
             it.skip("A room with an edit is still unread after restart", () => {});
