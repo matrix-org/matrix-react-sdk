@@ -480,26 +480,31 @@ describe("Read receipts", () => {
         });
     }
 
-    function assertUnread(room: string) {
+    function assertUnread(room: string, count: number | ".") {
         return getRoomListTile(room).within(() => {
-            cy.get(".mx_NotificationBadge_count").should("exist");
+            if (count === ".") {
+                cy.get(".mx_NotificationBadge_dot").should("exist");
+            } else {
+                cy.get(".mx_NotificationBadge_count").should("have.text", count);
+            }
         });
     }
 
     function openThreadList() {
-        cy.findByTestId("threadsButton").then((button) => {
-            if (button?.attr("aria-current") !== "true") {
-                button.trigger("click");
-            }
-        });
-        Cypress.$('.mx_BaseCard_back[title="Threads"]')?.trigger("click");
+        cy.findByTestId("threadsButton")
+            .then((button) => {
+                if (button?.attr("aria-current") !== "true") {
+                    button.trigger("click");
+                }
+            })
+            .then(() => {
+                Cypress.$('.mx_BaseCard_back[title="Threads"]')?.trigger("click");
+            });
     }
 
     function getThreadListTile(rootMessage: string) {
         openThreadList();
-        return cy.get(".mx_ThreadPanel").within(() => {
-            return cy.contains(".mx_EventTile_body", rootMessage).closest("li");
-        });
+        return cy.contains(".mx_ThreadPanel .mx_EventTile_body", rootMessage).closest("li");
     }
 
     function assertReadThread(rootMessage: string) {
@@ -520,6 +525,8 @@ describe("Read receipts", () => {
             return (cli.store as IndexedDBStore).reallySave();
         });
         cy.reload();
+        // Wait for the app to reload
+        cy.get(".mx_RoomView").should("exist");
     }
 
     const room1 = selectedRoomName;
@@ -532,13 +539,13 @@ describe("Read receipts", () => {
                 assertRead(room2);
 
                 receiveMessages(room2, ["Msg1"]);
-                assertUnread(room2);
+                assertUnread(room2, 1);
             });
             it("Reading latest message makes the room read", () => {
                 goTo(room1);
                 assertRead(room2);
                 receiveMessages(room2, ["Msg1"]);
-                assertUnread(room2);
+                assertUnread(room2, 1);
 
                 // When I read the main timeline
                 goTo(room2);
@@ -549,7 +556,7 @@ describe("Read receipts", () => {
                 goTo(room1);
                 assertRead(room2);
                 receiveMessages(room2, ["Msg1"]);
-                assertUnread(room2);
+                assertUnread(room2, 1);
 
                 markAsRead(room2);
                 assertRead(room2);
@@ -558,28 +565,28 @@ describe("Read receipts", () => {
                 goTo(room1);
                 assertRead(room2);
                 receiveMessages(room2, ["Msg1"]);
-                assertUnread(room2);
+                assertUnread(room2, 1);
 
                 markAsRead(room2);
                 assertRead(room2);
 
                 receiveMessages(room2, ["Msg2"]);
-                assertUnread(room2);
+                assertUnread(room2, 1);
             });
             it("A room with a new message is still unread after restart", () => {
                 goTo(room1);
                 assertRead(room2);
                 receiveMessages(room2, ["Msg1"]);
-                assertUnread(room2);
+                assertUnread(room2, 1);
 
                 saveAndReload();
-                assertUnread(room2);
+                assertUnread(room2, 1);
             });
             it("A room where all messages are read is still read after restart", () => {
                 goTo(room1);
                 assertRead(room2);
                 receiveMessages(room2, ["Msg1"]);
-                assertUnread(room2);
+                assertUnread(room2, 1);
 
                 markAsRead(room2);
                 assertRead(room2);
@@ -594,20 +601,20 @@ describe("Read receipts", () => {
                 // Given a thread exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1"]);
-                assertUnread(room2);
+                assertUnread(room2, 1);
                 goTo(room2);
 
                 assertRead(room2);
                 goTo(room1);
 
                 receiveMessages(room2, [threadedOff("Msg1", "Resp1")]);
-                assertUnread(room2);
+                assertUnread(room2, 1);
             });
             it("Reading the last threaded message makes the room read", () => {
                 // Given a thread exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
-                assertUnread(room2);
+                assertUnread(room2, 1);
                 goTo(room2);
 
                 openThread("Msg1");
@@ -617,13 +624,13 @@ describe("Read receipts", () => {
                 // Given a thread exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), threadedOff("Msg1", "Resp2")]);
-                assertUnread(room2); // (Sanity)
+                assertUnread(room2, 2); // (Sanity)
 
                 // When I read the main timeline
                 goTo(room2);
 
                 // Then room does appear unread
-                assertUnread(room2);
+                assertUnread(room2, 2);
 
                 // Until we open the thread
                 openThread("Msg1");
@@ -634,33 +641,46 @@ describe("Read receipts", () => {
             it("Reading only one thread's message does not make the room read", () => {
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), "Msg2", threadedOff("Msg2", "Resp2")]);
-                assertUnread(room2);
+                assertUnread(room2, 4);
                 goTo(room2);
-                assertUnread(room2);
+                assertUnread(room2, 4);
 
                 openThread("Msg1");
-                assertUnread(room2);
+                assertUnread(room2, 1);
             });
-            it.skip("Reading only one thread's message make that thread read but not others", () => {});
-            it("Reading the main timeline does not mark a thread message as read", () => {
-                // Given a thread exists
+            it("Reading only one thread's message make that thread read but not others", () => {
                 goTo(room1);
-                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), threadedOff("Msg1", "Resp2")]);
-                assertUnread(room2); // (Sanity)
+                receiveMessages(room2, ["Msg1", "Msg2", threadedOff("Msg1", "Resp1"), threadedOff("Msg2", "Resp2")]);
+                assertUnread(room2, 4); // (Sanity)
 
                 // When I read the main timeline
                 goTo(room2);
 
-                // Then room does appear unread
-                assertUnread(room2);
+                assertUnread(room2, 2);
+                assertUnreadThread("Msg1");
+                assertUnreadThread("Msg2");
+
+                openThread("Msg1");
+                assertReadThread("Msg1");
+                assertUnreadThread("Msg2");
             });
-            it("Marking a room with unread threads as read makes it read", () => {
+            it("Reading the main timeline does not mark a thread message as read", () => {
+                // Given a thread exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), threadedOff("Msg1", "Resp2")]);
-                assertUnread(room2); // (Sanity)
+                assertUnread(room2, 3); // (Sanity)
 
+                // When I read the main timeline
                 goTo(room2);
-                assertUnread(room2);
+
+                assertUnread(room2, 2);
+                // Then thread does appear unread
+                assertUnreadThread("Msg1");
+            });
+            it.skip("Marking a room with unread threads as read makes it read", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), threadedOff("Msg1", "Resp2")]);
+                assertUnread(room2, 2); // (Sanity)
 
                 markAsRead(room2);
                 assertRead(room2);
@@ -680,22 +700,22 @@ describe("Read receipts", () => {
                 // Receive additional response to thread whilst not looking at room
                 receiveMessages(room2, [threadedOff("Msg1", "Resp3")]);
 
-                assertUnread(room2);
+                assertUnread(room2, 1);
             });
             it("A room with a new threaded message is still unread after restart", () => {
                 // Given a thread exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), threadedOff("Msg1", "Resp2")]);
-                assertUnread(room2); // (Sanity)
+                assertUnread(room2, 2); // (Sanity)
 
                 // When I read the main timeline
                 goTo(room2);
 
                 // Then room does appear unread
-                assertUnread(room2);
+                assertUnread(room2, 2);
 
                 saveAndReload();
-                assertUnread(room2);
+                assertUnread(room2, 2);
 
                 // Until we open the thread
                 openThread("Msg1");
@@ -705,13 +725,13 @@ describe("Read receipts", () => {
                 // Given a thread exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), threadedOff("Msg1", "Resp2")]);
-                assertUnread(room2); // (Sanity)
+                assertUnread(room2, 3); // (Sanity)
 
                 // When I read the main timeline
                 goTo(room2);
 
                 // Then room does appear unread
-                assertUnread(room2);
+                assertUnread(room2, 2);
 
                 // Until we open the thread
                 openThread("Msg1");
@@ -727,28 +747,28 @@ describe("Read receipts", () => {
                 // Given a thread exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
-                assertUnread(room2); // (Sanity)
+                assertUnread(room2, 1); // (Sanity)
 
                 // When I read the main timeline
                 goTo(room2);
 
                 // Then room does appear unread
-                assertUnread(room2);
+                assertUnread(room2, 2);
                 assertUnreadThread("Msg1");
             });
             it.skip("Reading a thread root within the thread view marks it as read in the main timeline", () => {});
             it("Creating a new thread based on a reply makes the room unread", () => {
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1"), threadedOff("Reply1", "Resp1")]);
-                assertUnread(room2);
+                assertUnread(room2, 3);
             });
             it("Reading a thread whose root is a reply makes the room read", () => {
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1"), threadedOff("Reply1", "Resp1")]);
-                assertUnread(room2);
+                assertUnread(room2, 3);
 
                 goTo(room2);
-                assertUnread(room2);
+                assertUnread(room2, 1);
                 assertUnreadThread("Reply1");
 
                 openThread("Reply1");
@@ -767,13 +787,13 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1", editOf("Msg1", "Msg1 Edit1")]);
 
                 // Then it becomes unread
-                assertUnread(room2);
+                assertUnread(room2, 1);
             });
             it.skip("Reading an edit makes the room read", () => {
                 // Given an edit made a room unread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", editOf("Msg1", "Msg1 Edit1")]);
-                assertUnread(room2); // (Sanity)
+                assertUnread(room2, 1); // (Sanity)
 
                 // When I read it
                 goTo(room2);
