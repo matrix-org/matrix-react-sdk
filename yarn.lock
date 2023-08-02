@@ -2867,10 +2867,10 @@
   dependencies:
     svg2vectordrawable "^2.9.1"
 
-"@vector-im/compound-web@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-0.2.1.tgz#60676a64dc2098da2bc780c15f28fbc3e7dfe6b2"
-  integrity sha512-vZZnl1cyxCRfW1ToPtjyMvhbLLdjoNb5m7gnY5Cvs7WyPurCV2+FeRVVYdnN2YRB37aPqlYwWXa0XV1jh4rFUQ==
+"@vector-im/compound-web@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-0.2.2.tgz#4ffa2f5863dad667cbf55a22cd0f6c24b5264e9c"
+  integrity sha512-4zPBYSMr+8d6UnZQM8h8txvk9eDzamWqXstLvVZCGLUp6UwyxCZJGP3qRqN54vg79XgDqIlcX36j65x4/N5Q+Q==
   dependencies:
     "@radix-ui/react-form" "^0.0.3"
     classnames "^2.3.2"

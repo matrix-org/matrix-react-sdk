@@ -15,19 +15,19 @@ limitations under the License.
 */
 
 import React from "react";
-import { render } from "@testing-library/react";
+import { getByLabelText, render } from "@testing-library/react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType, MatrixEvent, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
 
-import { stubClient } from "../../../test-utils";
+import { mkEvent, stubClient, withClientContextRenderOptions } from "../../../test-utils";
 import RoomHeader from "../../../../src/components/views/rooms/RoomHeader";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import RightPanelStore from "../../../../src/stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../../../src/stores/right-panel/RightPanelStorePhases";
 
-describe("Roomeader", () => {
+describe("RoomHeader", () => {
     let room: Room;
 
     const ROOM_ID = "!1:example.org";
@@ -47,7 +47,10 @@ describe("Roomeader", () => {
     });
 
     it("renders the room header", () => {
-        const { container } = render(<RoomHeader room={room} />);
+        const { container } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
         expect(container).toHaveTextContent(ROOM_ID);
     });
 
@@ -65,14 +68,111 @@ describe("Roomeader", () => {
         });
         await room.addLiveEvents([roomTopic]);
 
-        const { container } = render(<RoomHeader room={room} />);
+        const { container } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
         expect(container).toHaveTextContent(TOPIC);
     });
 
     it("opens the room summary", async () => {
-        const { container } = render(<RoomHeader room={room} />);
+        const { container } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
 
         await userEvent.click(container.firstChild! as Element);
         expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.RoomSummary });
+    });
+
+    it("does not show the face pile for DMs", () => {
+        const client = MatrixClientPeg.get()!;
+
+        jest.spyOn(client, "getAccountData").mockReturnValue(
+            mkEvent({
+                event: true,
+                type: EventType.Direct,
+                user: client.getSafeUserId(),
+                content: {
+                    "user@example.com": [room.roomId],
+                },
+            }),
+        );
+
+        room.getJoinedMembers = jest.fn().mockReturnValue([
+            {
+                userId: "@me:example.org",
+                name: "Member",
+                rawDisplayName: "Member",
+                roomId: room.roomId,
+                membership: "join",
+                getAvatarUrl: () => "mxc://avatar.url/image.png",
+                getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
+            },
+        ]);
+
+        const { asFragment } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
+
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("shows a face pile for rooms", async () => {
+        const members = [
+            {
+                userId: "@me:example.org",
+                name: "Member",
+                rawDisplayName: "Member",
+                roomId: room.roomId,
+                membership: "join",
+                getAvatarUrl: () => "mxc://avatar.url/image.png",
+                getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
+            },
+            {
+                userId: "@you:example.org",
+                name: "Member",
+                rawDisplayName: "Member",
+                roomId: room.roomId,
+                membership: "join",
+                getAvatarUrl: () => "mxc://avatar.url/image.png",
+                getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
+            },
+            {
+                userId: "@them:example.org",
+                name: "Member",
+                rawDisplayName: "Member",
+                roomId: room.roomId,
+                membership: "join",
+                getAvatarUrl: () => "mxc://avatar.url/image.png",
+                getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
+            },
+            {
+                userId: "@bot:example.org",
+                name: "Bot user",
+                rawDisplayName: "Bot user",
+                roomId: room.roomId,
+                membership: "join",
+                getAvatarUrl: () => "mxc://avatar.url/image.png",
+                getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
+            },
+        ];
+        room.currentState.setJoinedMemberCount(members.length);
+        room.getJoinedMembers = jest.fn().mockReturnValue(members);
+
+        const { container } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
+
+        expect(container).toHaveTextContent("4");
+
+        const facePile = getByLabelText(container, "4 members");
+        expect(facePile).toHaveTextContent("4");
+
+        await userEvent.click(facePile);
+
+        expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.RoomMemberList });
     });
 });
