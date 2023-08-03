@@ -3602,5 +3602,6 @@
     "Starting export…": "エクスポートを開始しています…",
     "Unable to connect to Homeserver. Retrying…": "ホームサーバーに接続できません。 再試行しています…",
     "Secure Backup successful": "セキュアバックアップに成功しました",
-    "Your keys are now being backed up from this device.": "鍵はこの端末からバックアップされています。"
+    "Your keys are now being backed up from this device.": "鍵はこの端末からバックアップされています。",
+    "Show avatars in user, room and event mentions": "アバターをユーザー、ルーム、イベントのメンションに表示"
 }
