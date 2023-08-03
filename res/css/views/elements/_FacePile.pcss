@@ -30,7 +30,7 @@ limitations under the License.
         }
 
         .mx_BaseAvatar_image {
-            border: 1px solid $background;
+            border: 1px solid var(--facepile-background, $background);
         }
 
         .mx_BaseAvatar_initial {
@@ -56,14 +56,14 @@ limitations under the License.
                 mask-position: center;
                 mask-size: 20px;
                 mask-repeat: no-repeat;
-                mask-image: url('$(res)/img/element-icons/room/ellipsis.svg');
+                mask-image: url("$(res)/img/element-icons/room/ellipsis.svg");
             }
         }
     }
 
     .mx_FacePile_summary {
         margin-left: 12px;
-        font-size: $font-14px;
+        font: var(--cpd-font-body-md-regular);
         line-height: $font-24px;
         color: $tertiary-content;
     }

@@ -16,20 +16,26 @@ limitations under the License.
     display: flex;
     gap: $spacing-8;
     line-height: 20px;
-    margin-bottom: $spacing-8;
-    width: 266px;
+    margin-bottom: $spacing-16;
+    min-width: 0;
 }
 
-.mx_VoiceBroadcastHeader_sender {
-    font-size: $font-12px;
-    font-weight: $font-semi-bold;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.mx_VoiceBroadcastHeader_content {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.mx_VoiceBroadcastHeader_room_wrapper {
+    align-items: center;
+    display: flex;
+    gap: 4px;
+    justify-content: flex-start;
 }
 
 .mx_VoiceBroadcastHeader_room {
     font-size: $font-12px;
+    font-weight: var(--cpd-font-weight-semibold);
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -41,4 +47,19 @@ limitations under the License.
     font-size: $font-12px;
     display: flex;
     gap: $spacing-4;
+
+    .mx_Spinner {
+        flex: 0 0 14px;
+        padding: 1px;
+    }
+
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.mx_VoiceBroadcastHeader_mic--clickable {
+    cursor: pointer;
 }

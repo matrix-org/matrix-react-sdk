@@ -20,9 +20,10 @@ import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
 import { dockerExec, dockerIp, dockerRun, dockerStop } from "../docker";
 import { getFreePort } from "../utils/port";
-import { SynapseInstance } from "../synapsedocker";
+import { HomeserverInstance } from "../utils/homeserver";
 
-// A cypress plugins to add command to start & stop https://github.com/matrix-org/sliding-sync
+// A cypress plugin to add command to start & stop https://github.com/matrix-org/sliding-sync
+// SLIDING_SYNC_PROXY_TAG env used as the docker tag to use for `ghcr.io/matrix-org/sliding-sync` image.
 
 export interface ProxyInstance {
     containerId: string;
@@ -34,33 +35,27 @@ const instances = new Map<string, ProxyInstance>();
 
 const PG_PASSWORD = "p4S5w0rD";
 
-async function proxyStart(synapse: SynapseInstance): Promise<ProxyInstance> {
+async function proxyStart(dockerTag: string, homeserver: HomeserverInstance): Promise<ProxyInstance> {
     console.log(new Date(), "Starting sliding sync proxy...");
 
     const postgresId = await dockerRun({
         image: "postgres",
         containerName: "react-sdk-cypress-sliding-sync-postgres",
-        params: [
-            "--rm",
-            "-e", `POSTGRES_PASSWORD=${PG_PASSWORD}`,
-        ],
+        params: ["--rm", "-e", `POSTGRES_PASSWORD=${PG_PASSWORD}`],
     });
 
     const postgresIp = await dockerIp({ containerId: postgresId });
-    const synapseIp = await dockerIp({ containerId: synapse.synapseId });
+    const homeserverIp = await dockerIp({ containerId: homeserver.serverId });
     console.log(new Date(), "postgres container up");
 
     const waitTimeMillis = 30000;
     const startTime = new Date().getTime();
     let lastErr: Error;
-    while ((new Date().getTime() - startTime) < waitTimeMillis) {
+    while (new Date().getTime() - startTime < waitTimeMillis) {
         try {
             await dockerExec({
                 containerId: postgresId,
-                params: [
-                    "pg_isready",
-                    "-U", "postgres",
-                ],
+                params: ["pg_isready", "-U", "postgres"],
             });
             lastErr = null;
             break;
@@ -75,16 +70,20 @@ async function proxyStart(synapse: SynapseInstance): Promise<ProxyInstance> {
     }
 
     const port = await getFreePort();
-    console.log(new Date(), "starting proxy container...");
+    console.log(new Date(), "starting proxy container...", dockerTag);
     const containerId = await dockerRun({
-        image: "ghcr.io/matrix-org/sliding-sync-proxy:v0.4.0",
+        image: "ghcr.io/matrix-org/sliding-sync:" + dockerTag,
         containerName: "react-sdk-cypress-sliding-sync-proxy",
         params: [
             "--rm",
-            "-p", `${port}:8008/tcp`,
-            "-e", "SYNCV3_SECRET=bwahahaha",
-            "-e", `SYNCV3_SERVER=http://${synapseIp}:8008`,
-            "-e", `SYNCV3_DB=user=postgres dbname=postgres password=${PG_PASSWORD} host=${postgresIp} sslmode=disable`,
+            "-p",
+            `${port}:8008/tcp`,
+            "-e",
+            "SYNCV3_SECRET=bwahahaha",
+            "-e",
+            `SYNCV3_SERVER=http://${homeserverIp}:8008`,
+            "-e",
+            `SYNCV3_DB=user=postgres dbname=postgres password=${PG_PASSWORD} host=${postgresIp} sslmode=disable`,
         ],
     });
     console.log(new Date(), "started!");
@@ -114,8 +113,10 @@ async function proxyStop(instance: ProxyInstance): Promise<void> {
  * @type {Cypress.PluginConfig}
  */
 export function slidingSyncProxyDocker(on: PluginEvents, config: PluginConfigOptions) {
+    const dockerTag = config.env["SLIDING_SYNC_PROXY_TAG"];
+
     on("task", {
-        proxyStart,
+        proxyStart: proxyStart.bind(null, dockerTag),
         proxyStop,
     });
 

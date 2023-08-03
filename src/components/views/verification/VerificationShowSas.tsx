@@ -14,22 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { IGeneratedSas } from "matrix-js-sdk/src/crypto/verification/SAS";
-import { DeviceInfo } from "matrix-js-sdk/src//crypto/deviceinfo";
+import React from "react";
+import { Device } from "matrix-js-sdk/src/matrix";
+import { GeneratedSas } from "matrix-js-sdk/src/crypto-api/verification";
 
-import { _t, _td } from '../../../languageHandler';
+import { _t, _td } from "../../../languageHandler";
 import { PendingActionSpinner } from "../right_panel/EncryptionInfo";
 import AccessibleButton from "../elements/AccessibleButton";
-import { fixupColorFonts } from '../../../utils/FontManager';
+import { fixupColorFonts } from "../../../utils/FontManager";
 
 interface IProps {
     pending?: boolean;
     displayName?: string; // required if pending is true
-    device?: DeviceInfo;
+
+    /** Details of the other device involved in the verification, if known */
+    otherDeviceDetails?: Device;
+
     onDone: () => void;
     onCancel: () => void;
-    sas: IGeneratedSas;
+    sas: GeneratedSas;
     isSelf?: boolean;
     inDialog?: boolean; // whether this component is being shown in a dialog and to use DialogButtons
 }
@@ -39,12 +42,23 @@ interface IState {
     cancelling?: boolean;
 }
 
-function capFirst(s) {
-    return s.charAt(0).toUpperCase() + s.slice(1);
+/** Convert the names of emojis returned by the js-sdk into the display names, which we use as
+ * a base for our translations.
+ */
+function capFirst(s: string): string {
+    // Our translations (currently) have names like "Thumbs up".
+    //
+    // With legacy crypto, the js-sdk returns lower-case names ("thumbs up"). With Rust crypto, the js-sdk follows
+    // the spec and returns title-case names ("Thumbs Up"). So, to convert both into names that match our i18n data,
+    // we upcase the first character and downcase the rest.
+    //
+    // Once legacy crypto is dead, we could consider getting rid of this and just making the i18n data use the
+    // title-case names (which would also match the spec).
+    return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 }
 
 export default class VerificationShowSas extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -69,53 +83,41 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
         this.props.onCancel();
     };
 
-    render() {
+    public render(): React.ReactNode {
         let sasDisplay;
         let sasCaption;
         if (this.props.sas.emoji) {
-            const emojiBlocks = this.props.sas.emoji.map(
-                (emoji, i) => <div className="mx_VerificationShowSas_emojiSas_block" key={i}>
-                    <div className="mx_VerificationShowSas_emojiSas_emoji">
-                        { emoji[0] }
-                    </div>
-                    <div className="mx_VerificationShowSas_emojiSas_label">
-                        { _t(capFirst(emoji[1])) }
-                    </div>
-                </div>,
+            const emojiBlocks = this.props.sas.emoji.map((emoji, i) => (
+                <div className="mx_VerificationShowSas_emojiSas_block" key={i}>
+                    <div className="mx_VerificationShowSas_emojiSas_emoji">{emoji[0]}</div>
+                    <div className="mx_VerificationShowSas_emojiSas_label">{_t(capFirst(emoji[1]))}</div>
+                </div>
+            ));
+            sasDisplay = (
+                <div className="mx_VerificationShowSas_emojiSas">
+                    {emojiBlocks.slice(0, 4)}
+                    <div className="mx_VerificationShowSas_emojiSas_break" />
+                    {emojiBlocks.slice(4)}
+                </div>
             );
-            sasDisplay = <div className="mx_VerificationShowSas_emojiSas">
-                { emojiBlocks.slice(0, 4) }
-                <div className="mx_VerificationShowSas_emojiSas_break" />
-                { emojiBlocks.slice(4) }
-            </div>;
-            sasCaption = this.props.isSelf ?
-                _t(
-                    "Confirm the emoji below are displayed on both devices, in the same order:",
-                ):
-                _t(
-                    "Verify this user by confirming the following emoji appear on their screen.",
-                );
+            sasCaption = this.props.isSelf
+                ? _t("Confirm the emoji below are displayed on both devices, in the same order:")
+                : _t("Verify this user by confirming the following emoji appear on their screen.");
         } else if (this.props.sas.decimal) {
-            const numberBlocks = this.props.sas.decimal.map((num, i) => <span key={i}>
-                { num }
-            </span>);
-            sasDisplay = <div className="mx_VerificationShowSas_decimalSas">
-                { numberBlocks }
-            </div>;
-            sasCaption = this.props.isSelf ?
-                _t(
-                    "Verify this device by confirming the following number appears on its screen.",
-                ):
-                _t(
-                    "Verify this user by confirming the following number appears on their screen.",
-                );
+            const numberBlocks = this.props.sas.decimal.map((num, i) => <span key={i}>{num}</span>);
+            sasDisplay = <div className="mx_VerificationShowSas_decimalSas">{numberBlocks}</div>;
+            sasCaption = this.props.isSelf
+                ? _t("Verify this device by confirming the following number appears on its screen.")
+                : _t("Verify this user by confirming the following number appears on their screen.");
         } else {
-            return <div>
-                { _t("Unable to find a supported verification method.") }
-                <AccessibleButton kind="primary" onClick={this.props.onCancel}>
-                    { _t('Cancel') }
-                </AccessibleButton>
-            </div>;
+            return (
+                <div>
+                    {_t("Unable to find a supported verification method.")}
+                    <AccessibleButton kind="primary" onClick={this.props.onCancel}>
+                        {_t("Cancel")}
+                    </AccessibleButton>
+                </div>
+            );
         }
 
         let confirm;
@@ -123,15 +125,16 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
             let text;
             // device shouldn't be null in this situation but it can be, eg. if the device is
             // logged out during verification
-            if (this.props.device) {
+            const otherDevice = this.props.otherDeviceDetails;
+            if (otherDevice) {
                 text = _t("Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…", {
-                    deviceName: this.props.device ? this.props.device.getDisplayName() : '',
-                    deviceId: this.props.device ? this.props.device.deviceId : '',
+                    deviceName: otherDevice.displayName,
+                    deviceId: otherDevice.deviceId,
                 });
             } else {
                 text = _t("Waiting for you to verify on your other device…");
             }
-            confirm = <p>{ text }</p>;
+            confirm = <p>{text}</p>;
         } else if (this.state.pending || this.state.cancelling) {
             let text;
             if (this.state.pending) {
@@ -142,24 +145,30 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
             }
             confirm = <PendingActionSpinner text={text} />;
         } else {
-            confirm = <div className="mx_VerificationShowSas_buttonRow">
-                <AccessibleButton onClick={this.onDontMatchClick} kind="danger">
-                    { _t("They don't match") }
-                </AccessibleButton>
-                <AccessibleButton onClick={this.onMatchClick} kind="primary">
-                    { _t("They match") }
-                </AccessibleButton>
-            </div>;
+            confirm = (
+                <div className="mx_VerificationShowSas_buttonRow">
+                    <AccessibleButton onClick={this.onDontMatchClick} kind="danger">
+                        {_t("They don't match")}
+                    </AccessibleButton>
+                    <AccessibleButton onClick={this.onMatchClick} kind="primary">
+                        {_t("They match")}
+                    </AccessibleButton>
+                </div>
+            );
         }
 
-        return <div className="mx_VerificationShowSas">
-            <p>{ sasCaption }</p>
-            { sasDisplay }
-            <p>{ this.props.isSelf ?
-                "":
-                _t("To be secure, do this in person or use a trusted way to communicate.") }</p>
-            { confirm }
-        </div>;
+        return (
+            <div className="mx_VerificationShowSas">
+                <p>{sasCaption}</p>
+                {sasDisplay}
+                <p>
+                    {this.props.isSelf
+                        ? ""
+                        : _t("To be secure, do this in person or use a trusted way to communicate.")}
+                </p>
+                {confirm}
+            </div>
+        );
     }
 }
 

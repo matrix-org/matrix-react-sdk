@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,78 +14,74 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import { render, RenderResult } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-import { VoiceBroadcastHeader, VoiceBroadcastRecordingBody } from "../../../../src/voice-broadcast";
+import {
+    VoiceBroadcastInfoEventType,
+    VoiceBroadcastInfoState,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingBody,
+} from "../../../../src/voice-broadcast";
+import { mkEvent, stubClient } from "../../../test-utils";
 
-jest.mock("../../../../src/voice-broadcast/components/atoms/VoiceBroadcastHeader", () => ({
-    VoiceBroadcastHeader: ({ live, sender, roomName }: React.ComponentProps<typeof VoiceBroadcastHeader>) => {
-        return <div data-testid="voice-broadcast-header">
-            live: { live },
-            sender: { sender.userId },
-            room name: { roomName }
-        </div>;
-    },
+// mock RoomAvatar, because it is doing too much fancy stuff
+jest.mock("../../../../src/components/views/avatars/RoomAvatar", () => ({
+    __esModule: true,
+    default: jest.fn().mockImplementation(({ room }) => {
+        return <div data-testid="room-avatar">room avatar: {room.name}</div>;
+    }),
 }));
 
 describe("VoiceBroadcastRecordingBody", () => {
-    const testRoomName = "test room name";
     const userId = "@user:example.com";
-    const roomMember = new RoomMember("!room:example.com", userId);
-    let onClick: MouseEventHandler<HTMLDivElement>;
+    const roomId = "!room:example.com";
+    let client: MatrixClient;
+    let infoEvent: MatrixEvent;
+    let recording: VoiceBroadcastRecording;
 
-    beforeEach(() => {
-        onClick = jest.fn();
+    beforeAll(() => {
+        client = stubClient();
+        infoEvent = mkEvent({
+            event: true,
+            type: VoiceBroadcastInfoEventType,
+            content: {},
+            room: roomId,
+            user: userId,
+        });
+        recording = new VoiceBroadcastRecording(infoEvent, client, VoiceBroadcastInfoState.Resumed);
     });
 
-    describe("when rendered", () => {
+    describe("when rendering a live broadcast", () => {
         let renderResult: RenderResult;
 
         beforeEach(() => {
-            renderResult = render(
-                <VoiceBroadcastRecordingBody
-                    onClick={onClick}
-                    roomName={testRoomName}
-                    live={true}
-                    sender={roomMember}
-                />,
-            );
+            renderResult = render(<VoiceBroadcastRecordingBody recording={recording} />);
         });
 
-        it("should render the expected HTML", () => {
+        it("should render with a red live badge", () => {
             expect(renderResult.container).toMatchSnapshot();
         });
+    });
 
-        describe("and clicked", () => {
-            beforeEach(async () => {
-                await userEvent.click(renderResult.getByTestId("voice-broadcast-header"));
-            });
+    describe("when rendering a paused broadcast", () => {
+        let renderResult: RenderResult;
 
-            it("should call the onClick prop", () => {
-                expect(onClick).toHaveBeenCalled();
-            });
+        beforeEach(async () => {
+            await recording.pause();
+            renderResult = render(<VoiceBroadcastRecordingBody recording={recording} />);
+        });
+
+        it("should render with a grey live badge", () => {
+            expect(renderResult.container).toMatchSnapshot();
         });
     });
 
-    describe("when non-live rendered", () => {
-        let renderResult: RenderResult;
-
-        beforeEach(() => {
-            renderResult = render(
-                <VoiceBroadcastRecordingBody
-                    onClick={onClick}
-                    roomName={testRoomName}
-                    live={false}
-                    sender={roomMember}
-                />,
-            );
-        });
-
-        it("should not render the live badge", () => {
-            expect(renderResult.queryByText("Live")).toBeFalsy();
-        });
+    it("when there is a broadcast without sender, it should raise an error", () => {
+        infoEvent.sender = null;
+        expect(() => {
+            render(<VoiceBroadcastRecordingBody recording={recording} />);
+        }).toThrow(`Voice Broadcast sender not found (event ${recording.infoEvent.getId()})`);
     });
 });

@@ -26,6 +26,7 @@ export enum ElementWidgetActions {
     MuteVideo = "io.element.mute_video",
     UnmuteVideo = "io.element.unmute_video",
     StartLiveStream = "im.vector.start_live_stream",
+
     // Actions for switching layouts
     TileLayout = "io.element.tile_layout",
     SpotlightLayout = "io.element.spotlight_layout",

@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 /// <reference types="cypress" />
-import { SnapshotOptions as PercySnapshotOptions } from '@percy/core';
+import { SnapshotOptions as PercySnapshotOptions } from "@percy/core";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface SnapshotOptions extends PercySnapshotOptions {
             domTransformation?: (documentClone: Document) => void;
+            allowSpinners?: boolean;
         }
 
         interface Chainable {
@@ -38,17 +39,32 @@ declare global {
 }
 
 Cypress.Commands.add("percySnapshotElement", { prevSubject: "element" }, (subject, name, options) => {
+    if (!options?.allowSpinners) {
+        // Await spinners to vanish
+        cy.get(".mx_Spinner", { log: false }).should("not.exist");
+        // But like really no more spinners please
+        cy.get(".mx_Spinner", { log: false }).should("not.exist");
+        // Await inline spinners to vanish
+        cy.get(".mx_InlineSpinner", { log: false }).should("not.exist");
+    }
+
+    let selector = subject.selector;
+    // cy.findByTestId sets the selector to `findByTestId(<testId>)`
+    // which is not usable as a scope
+    if (selector.startsWith("findByTestId")) {
+        selector = `[data-testid="${subject.attr("data-testid")}"]`;
+    }
     cy.percySnapshot(name, {
-        domTransformation: documentClone => scope(documentClone, subject.selector),
+        domTransformation: (documentClone) => scope(documentClone, selector),
         ...options,
     });
 });
 
 function scope(documentClone: Document, selector: string): Document {
     const element = documentClone.querySelector(selector);
-    documentClone.querySelector('body').innerHTML = element.outerHTML;
+    documentClone.querySelector("body").innerHTML = element.outerHTML;
 
     return documentClone;
 }
 
-export { };
+export {};

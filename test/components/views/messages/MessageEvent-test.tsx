@@ -16,11 +16,9 @@ limitations under the License.
 
 import React from "react";
 import { render, RenderResult } from "@testing-library/react";
-import { mocked } from "jest-mock";
 import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
-import { Features } from "../../../../src/settings/Settings";
-import SettingsStore, { CallbackFn } from "../../../../src/settings/SettingsStore";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "../../../../src/voice-broadcast";
 import { mkEvent, mkRoom, stubClient } from "../../../test-utils";
 import MessageEvent from "../../../../src/components/views/messages/MessageEvent";
@@ -28,11 +26,11 @@ import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalink
 
 jest.mock("../../../../src/components/views/messages/UnknownBody", () => ({
     __esModule: true,
-    default: () => (<div data-testid="unknown-body" />),
+    default: () => <div data-testid="unknown-body" />,
 }));
 
 jest.mock("../../../../src/voice-broadcast/components/VoiceBroadcastBody", () => ({
-    VoiceBroadcastBody: () => (<div data-testid="voice-broadcast-body" />),
+    VoiceBroadcastBody: () => <div data-testid="voice-broadcast-body" />,
 }));
 
 describe("MessageEvent", () => {
@@ -41,11 +39,13 @@ describe("MessageEvent", () => {
     let event: MatrixEvent;
 
     const renderMessageEvent = (): RenderResult => {
-        return render(<MessageEvent
-            mxEvent={event}
-            onHeightChanged={jest.fn()}
-            permalinkCreator={new RoomPermalinkCreator(room)}
-        />);
+        return render(
+            <MessageEvent
+                mxEvent={event}
+                onHeightChanged={jest.fn()}
+                permalinkCreator={new RoomPermalinkCreator(room)}
+            />,
+        );
     };
 
     beforeEach(() => {
@@ -57,77 +57,23 @@ describe("MessageEvent", () => {
     });
 
     describe("when a voice broadcast start event occurs", () => {
-        const voiceBroadcastSettingWatcherRef = "vb ref";
-        let onVoiceBroadcastSettingChanged: CallbackFn;
+        let result: RenderResult;
 
         beforeEach(() => {
             event = mkEvent({
                 event: true,
                 type: VoiceBroadcastInfoEventType,
-                user: client.getUserId(),
+                user: client.getUserId()!,
                 room: room.roomId,
                 content: {
                     state: VoiceBroadcastInfoState.Started,
                 },
             });
-
-            mocked(SettingsStore.watchSetting).mockImplementation(
-                (settingName: string, roomId: string | null, callbackFn: CallbackFn) => {
-                    if (settingName === Features.VoiceBroadcast) {
-                        onVoiceBroadcastSettingChanged = callbackFn;
-                        return voiceBroadcastSettingWatcherRef;
-                    }
-                },
-            );
+            result = renderMessageEvent();
         });
 
-        describe("and the voice broadcast feature is enabled", () => {
-            let result: RenderResult;
-
-            beforeEach(() => {
-                mocked(SettingsStore.getValue).mockImplementation((settingName: string) => {
-                    return settingName === Features.VoiceBroadcast;
-                });
-                result = renderMessageEvent();
-            });
-
-            it("should render a VoiceBroadcast component", () => {
-                result.getByTestId("voice-broadcast-body");
-            });
-
-            describe("and switching the voice broadcast feature off", () => {
-                beforeEach(() => {
-                    onVoiceBroadcastSettingChanged(Features.VoiceBroadcast, null, null, null, false);
-                });
-
-                it("should render an UnknownBody component", () => {
-                    const result = renderMessageEvent();
-                    result.getByTestId("unknown-body");
-                });
-            });
-
-            describe("and unmounted", () => {
-                beforeEach(() => {
-                    result.unmount();
-                });
-
-                it("should unregister the settings watcher", () => {
-                    expect(SettingsStore.unwatchSetting).toHaveBeenCalled();
-                });
-            });
-        });
-
-        describe("and the voice broadcast feature is disabled", () => {
-            beforeEach(() => {
-                mocked(SettingsStore.getValue).mockImplementation((settingName: string) => {
-                    return false;
-                });
-            });
-
-            it("should render an UnknownBody component", () => {
-                const result = renderMessageEvent();
-                result.getByTestId("unknown-body");
-            });
+        it("should render a VoiceBroadcast component", () => {
+            result.getByTestId("voice-broadcast-body");
         });
     });
 });

@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { render } from '@testing-library/react';
-import React from 'react';
+import { render } from "@testing-library/react";
+import React from "react";
 
 import SecurityUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/SecurityUserSettingsTab";
-import SettingsStore from '../../../../../../src/settings/SettingsStore';
+import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import {
     getMockClientWithEventEmitter,
     mockClientMethodsServer,
@@ -25,17 +25,16 @@ import {
     mockClientMethodsCrypto,
     mockClientMethodsDevice,
     mockPlatformPeg,
-} from '../../../../../test-utils';
+} from "../../../../../test-utils";
 
-describe('<SecurityUserSettingsTab />', () => {
+describe("<SecurityUserSettingsTab />", () => {
     const defaultProps = {
         closeSettingsFn: jest.fn(),
     };
-    const getComponent = () => <SecurityUserSettingsTab {...defaultProps} />;
 
-    const userId = '@alice:server.org';
-    const deviceId = 'alices-device';
-    getMockClientWithEventEmitter({
+    const userId = "@alice:server.org";
+    const deviceId = "alices-device";
+    const mockClient = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
         ...mockClientMethodsServer(),
         ...mockClientMethodsDevice(deviceId),
@@ -44,25 +43,20 @@ describe('<SecurityUserSettingsTab />', () => {
         getIgnoredUsers: jest.fn(),
     });
 
-    const settingsValueSpy = jest.spyOn(SettingsStore, 'getValue');
+    const getComponent = () => (
+        <MatrixClientContext.Provider value={mockClient}>
+            <SecurityUserSettingsTab {...defaultProps} />
+        </MatrixClientContext.Provider>
+    );
 
     beforeEach(() => {
         mockPlatformPeg();
         jest.clearAllMocks();
-        settingsValueSpy.mockReturnValue(false);
     });
 
-    it('renders sessions section when new session manager is disabled', () => {
-        settingsValueSpy.mockReturnValue(false);
-        const { getByTestId } = render(getComponent());
+    it("renders security section", () => {
+        const { container } = render(getComponent());
 
-        expect(getByTestId('devices-section')).toBeTruthy();
-    });
-
-    it('does not render sessions section when new session manager is enabled', () => {
-        settingsValueSpy.mockReturnValue(true);
-        const { queryByTestId } = render(getComponent());
-
-        expect(queryByTestId('devices-section')).toBeFalsy();
+        expect(container).toMatchSnapshot();
     });
 });

@@ -15,19 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ReactNode, useContext } from "react";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
-import { logger } from "matrix-js-sdk/src/logger";
+import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import BaseAvatar from "./BaseAvatar";
 import { mediaFromMxc } from "../../../customisations/Media";
-import { CardContext } from '../right_panel/context';
-import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
-import SettingsStore from "../../../settings/SettingsStore";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { CardContext } from "../right_panel/context";
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
+import { useRoomMemberProfile } from "../../../hooks/room/useRoomMemberProfile";
+import { _t } from "../../../languageHandler";
 
 interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url"> {
     member: RoomMember | null;
@@ -35,8 +34,6 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     width: number;
     height: number;
     resizeMethod?: ResizeMethod;
-    // The onClick to give the avatar
-    onClick?: React.MouseEventHandler;
     // Whether the onClick of the avatar should be overridden to dispatch `Action.ViewUser`
     viewUserOnClick?: boolean;
     pushUserOnClick?: boolean;
@@ -44,102 +41,77 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     style?: any;
     forceHistorical?: boolean; // true to deny `useOnlyCurrentProfiles` usage. Default false.
     hideTitle?: boolean;
+    children?: ReactNode;
 }
 
-interface IState {
-    name: string;
-    title: string;
-    imageUrl?: string;
-}
+export default function MemberAvatar({
+    width,
+    height,
+    resizeMethod = "crop",
+    viewUserOnClick,
+    forceHistorical,
+    fallbackUserId,
+    hideTitle,
+    member: propsMember,
+    ...props
+}: IProps): JSX.Element {
+    const card = useContext(CardContext);
 
-export default class MemberAvatar extends React.PureComponent<IProps, IState> {
-    public static defaultProps = {
-        width: 40,
-        height: 40,
-        resizeMethod: 'crop',
-        viewUserOnClick: false,
-    };
+    const member = useRoomMemberProfile({
+        userId: propsMember?.userId,
+        member: propsMember,
+        forceHistorical: forceHistorical,
+    });
 
-    constructor(props: IProps) {
-        super(props);
-
-        this.state = MemberAvatar.getState(props);
-    }
-
-    public static getDerivedStateFromProps(nextProps: IProps): IState {
-        return MemberAvatar.getState(nextProps);
-    }
-
-    private static getState(props: IProps): IState {
-        let member = props.member;
-        if (member && !props.forceHistorical && SettingsStore.getValue("useOnlyCurrentProfiles")) {
-            const room = MatrixClientPeg.get().getRoom(member.roomId);
-            if (room) {
-                member = room.getMember(member.userId);
-            }
-        }
-        if (member?.name) {
-            let imageUrl = null;
-            const userTitle = UserIdentifierCustomisations.getDisplayUserIdentifier(
-                member.userId, { roomId: member?.roomId },
+    const name = member?.name ?? fallbackUserId;
+    let title: string | undefined = props.title;
+    let imageUrl: string | null | undefined;
+    if (member?.name) {
+        if (member.getMxcAvatarUrl()) {
+            imageUrl = mediaFromMxc(member.getMxcAvatarUrl() ?? "").getThumbnailOfSourceHttp(
+                width,
+                height,
+                resizeMethod,
             );
-            if (member.getMxcAvatarUrl()) {
-                imageUrl = mediaFromMxc(member.getMxcAvatarUrl()).getThumbnailOfSourceHttp(
-                    props.width,
-                    props.height,
-                    props.resizeMethod,
-                );
+        }
+
+        if (!title) {
+            title =
+                UserIdentifierCustomisations.getDisplayUserIdentifier(member?.userId ?? "", {
+                    roomId: member?.roomId ?? "",
+                }) ?? fallbackUserId;
+        }
+    }
+
+    return (
+        <BaseAvatar
+            {...props}
+            width={width}
+            height={height}
+            resizeMethod={resizeMethod}
+            name={name ?? ""}
+            title={hideTitle ? undefined : title}
+            idName={member?.userId ?? fallbackUserId}
+            url={imageUrl}
+            onClick={
+                viewUserOnClick
+                    ? () => {
+                          dis.dispatch({
+                              action: Action.ViewUser,
+                              member: propsMember,
+                              push: card.isCard,
+                          });
+                      }
+                    : props.onClick
             }
-            return {
-                name: member.name,
-                title: props.title || userTitle,
-                imageUrl: imageUrl,
-            };
-        } else if (props.fallbackUserId) {
-            return {
-                name: props.fallbackUserId,
-                title: props.fallbackUserId,
-            };
-        } else {
-            logger.error("MemberAvatar called somehow with null member or fallbackUserId");
-            return {} as IState; // prevent an explosion
-        }
-    }
-
-    render() {
-        let {
-            member,
-            fallbackUserId,
-            onClick,
-            viewUserOnClick,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            forceHistorical,
-            hideTitle,
-            ...otherProps
-        } = this.props;
-        const userId = member ? member.userId : fallbackUserId;
-
-        if (viewUserOnClick) {
-            onClick = () => {
-                dis.dispatch({
-                    action: Action.ViewUser,
-                    member: this.props.member,
-                    push: this.context.isCard,
-                });
-            };
-        }
-
-        return (
-            <BaseAvatar
-                {...otherProps}
-                name={this.state.name}
-                title={hideTitle ? undefined : this.state.title}
-                idName={userId}
-                url={this.state.imageUrl}
-                onClick={onClick}
-            />
-        );
-    }
+            altText={_t("Profile picture")}
+            ariaLabel={_t("Profile picture")}
+        />
+    );
 }
 
-MemberAvatar.contextType = CardContext;
+export class LegacyMemberAvatar extends React.Component<IProps> {
+    public render(): React.ReactNode {
+        return <MemberAvatar {...this.props}>{this.props.children}</MemberAvatar>;
+    }
+}

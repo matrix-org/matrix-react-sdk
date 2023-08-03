@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { sleep } from 'matrix-js-sdk/src/utils';
+import { sleep } from "matrix-js-sdk/src/utils";
 
-import SettingsStore from '../../../src/settings/SettingsStore';
-import { SettingLevel } from '../../../src/settings/SettingLevel';
+import SettingsStore from "../../../src/settings/SettingsStore";
+import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { FontWatcher } from "../../../src/settings/watchers/FontWatcher";
 import { Action } from "../../../src/dispatcher/actions";
 import { untilDispatch } from "../../test-utils";
@@ -31,53 +31,80 @@ async function setSystemFont(font: string): Promise<void> {
     await sleep(1); // await the FontWatcher doing its action
 }
 
-describe('FontWatcher', function() {
+const getFontFamily = () => {
+    return document.body.style.getPropertyValue(FontWatcher.FONT_FAMILY_CUSTOM_PROPERTY);
+};
+
+describe("FontWatcher", function () {
     it("should load font on start()", async () => {
         const watcher = new FontWatcher();
         await setSystemFont("Font Name");
-        expect(document.body.style.fontFamily).toBe("");
-        watcher.start();
-        expect(document.body.style.fontFamily).toBe('"Font Name"');
+        expect(getFontFamily()).toBe("");
+        await watcher.start();
+        expect(getFontFamily()).toBe('"Font Name"');
     });
 
     it("should load font on Action.OnLoggedIn", async () => {
         await setSystemFont("Font Name");
-        new FontWatcher().start();
-        document.body.style.fontFamily = ""; // clear the fontFamily which was set by start which we tested already
+        await new FontWatcher().start();
+        document.body.style.removeProperty(FontWatcher.FONT_FAMILY_CUSTOM_PROPERTY); // clear the fontFamily which was  by start which we tested already
         defaultDispatcher.fire(Action.OnLoggedIn, true);
-        expect(document.body.style.fontFamily).toBe('"Font Name"');
+        expect(getFontFamily()).toBe('"Font Name"');
     });
 
     it("should reset font on Action.OnLoggedOut", async () => {
         await setSystemFont("Font Name");
         const watcher = new FontWatcher();
-        watcher.start();
-        expect(document.body.style.fontFamily).toBe('"Font Name"');
+        await watcher.start();
+        expect(getFontFamily()).toBe('"Font Name"');
         defaultDispatcher.fire(Action.OnLoggedOut, true);
-        expect(document.body.style.fontFamily).toBe("");
+        expect(getFontFamily()).toBe("");
     });
 
     describe("Sets font as expected", () => {
         let fontWatcher: FontWatcher;
-        beforeEach(() => {
+        beforeEach(async () => {
             fontWatcher = new FontWatcher();
-            fontWatcher.start();
+            await fontWatcher.start();
         });
         afterEach(() => {
             fontWatcher.stop();
         });
 
-        it('encloses the fonts by double quotes and sets them as the system font', async () => {
+        it("encloses the fonts by double quotes and sets them as the system font", async () => {
             await setSystemFont("Fira Sans Thin, Commodore 64");
-            expect(document.body.style.fontFamily).toBe(`"Fira Sans Thin","Commodore 64"`);
+            expect(getFontFamily()).toBe(`"Fira Sans Thin","Commodore 64"`);
         });
-        it('does not add double quotes if already present and sets the font as the system font', async () => {
+        it("does not add double quotes if already present and sets the font as the system font", async () => {
             await setSystemFont(`"Commodore 64"`);
-            expect(document.body.style.fontFamily).toBe(`"Commodore 64"`);
+            expect(getFontFamily()).toBe(`"Commodore 64"`);
         });
-        it('trims whitespace, encloses the fonts by double quotes, and sets them as the system font', async () => {
+        it("trims whitespace, encloses the fonts by double quotes, and sets them as the system font", async () => {
             await setSystemFont(`  Fira Code  ,  "Commodore 64" `);
-            expect(document.body.style.fontFamily).toBe(`"Fira Code","Commodore 64"`);
+            expect(getFontFamily()).toBe(`"Fira Code","Commodore 64"`);
+        });
+    });
+
+    describe("Migrates baseFontSize", () => {
+        let watcher: FontWatcher | undefined;
+
+        beforeEach(() => {
+            watcher = new FontWatcher();
+        });
+
+        afterEach(() => {
+            watcher!.stop();
+        });
+
+        it("should not run the migration", async () => {
+            await watcher!.start();
+            expect(SettingsStore.getValue("baseFontSizeV2")).toBe(16);
+        });
+
+        it("should migrate to default font size", async () => {
+            await SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, 13);
+            await watcher!.start();
+            expect(SettingsStore.getValue("baseFontSizeV2")).toBe(19);
         });
     });
 });

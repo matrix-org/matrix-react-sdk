@@ -29,7 +29,11 @@ export enum TimelineRenderingType {
     Pinned = "Pinned",
 }
 
-const RoomContext = createContext<IRoomState>({
+const RoomContext = createContext<
+    IRoomState & {
+        threadId?: string;
+    }
+>({
     roomLoading: true,
     peekLoading: false,
     shouldPeek: true,
@@ -39,13 +43,13 @@ const RoomContext = createContext<IRoomState>({
     showApps: false,
     isPeeking: false,
     showRightPanel: true,
+    threadRightPanel: false,
     joining: false,
     showTopUnreadMessagesBar: false,
     statusBarVisible: false,
     canReact: false,
     canSelfRedact: false,
     canSendMessages: false,
-    canSendVoiceBroadcasts: false,
     resizing: false,
     layout: Layout.Group,
     lowBandwidth: false,
@@ -66,9 +70,10 @@ const RoomContext = createContext<IRoomState>({
     liveTimeline: undefined,
     narrow: false,
     activeCall: null,
+    msc3946ProcessDynamicPredecessor: false,
 });
 RoomContext.displayName = "RoomContext";
 export default RoomContext;
-export function useRoomContext() {
+export function useRoomContext(): IRoomState {
     return useContext(RoomContext);
 }

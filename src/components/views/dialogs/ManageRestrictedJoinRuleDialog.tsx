@@ -17,8 +17,7 @@ limitations under the License.
 import React, { useMemo, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { _t } from '../../../languageHandler';
-import { IDialogProps } from "./IDialogProps";
+import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import SearchBox from "../../structures/SearchBox";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
@@ -27,13 +26,19 @@ import AccessibleButton from "../elements/AccessibleButton";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { filterBoolean } from "../../../utils/arrays";
 
-interface IProps extends IDialogProps {
+interface IProps {
     room: Room;
     selected?: string[];
+    onFinished(rooms?: string[]): void;
 }
 
-const Entry = ({ room, checked, onChange }) => {
+const Entry: React.FC<{
+    room: Room;
+    checked: boolean;
+    onChange(value: boolean): void;
+}> = ({ room, checked, onChange }) => {
     const localRoom = room instanceof Room;
 
     let description;
@@ -45,33 +50,38 @@ const Entry = ({ room, checked, onChange }) => {
         }
     }
 
-    return <label className="mx_ManageRestrictedJoinRuleDialog_entry">
-        <div>
+    return (
+        <label className="mx_ManageRestrictedJoinRuleDialog_entry">
             <div>
-                { localRoom
-                    ? <RoomAvatar room={room} height={20} width={20} />
-                    : <RoomAvatar oobData={room} height={20} width={20} />
-                }
-                <span className="mx_ManageRestrictedJoinRuleDialog_entry_name">{ room.name }</span>
+                <div>
+                    {localRoom ? (
+                        <RoomAvatar room={room} height={20} width={20} />
+                    ) : (
+                        <RoomAvatar oobData={room} height={20} width={20} />
+                    )}
+                    <span className="mx_ManageRestrictedJoinRuleDialog_entry_name">{room.name}</span>
+                </div>
+                {description && (
+                    <div className="mx_ManageRestrictedJoinRuleDialog_entry_description">{description}</div>
+                )}
             </div>
-            { description && <div className="mx_ManageRestrictedJoinRuleDialog_entry_description">
-                { description }
-            </div> }
-        </div>
-        <StyledCheckbox
-            onChange={onChange ? (e) => onChange(e.target.checked) : null}
-            checked={checked}
-            disabled={!onChange}
-        />
-    </label>;
+            <StyledCheckbox
+                onChange={onChange ? (e) => onChange(e.target.checked) : undefined}
+                checked={checked}
+                disabled={!onChange}
+            />
+        </label>
+    );
 };
 
 const addAllParents = (set: Set<Room>, room: Room): void => {
     const cli = room.client;
-    const parents = Array.from(SpaceStore.instance.getKnownParents(room.roomId)).map(parentId => cli.getRoom(parentId));
+    const parents = Array.from(SpaceStore.instance.getKnownParents(room.roomId)).map((parentId) =>
+        cli.getRoom(parentId),
+    );
 
-    parents.forEach(parent => {
-        if (set.has(parent)) return;
+    parents.forEach((parent) => {
+        if (!parent || set.has(parent)) return;
         set.add(parent);
         addAllParents(set, parent);
     });
@@ -85,35 +95,33 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
 
     const [spacesContainingRoom, otherJoinedSpaces, otherEntries] = useMemo(() => {
         const parents = new Set<Room>();
-
-        // Add the known parents first so the user can see them more easily
         addAllParents(parents, room);
-
-        // Add all the other known spaces second. We cheat and rely on the Set not
-        // allowing duplicates here, which should maintain our insertion order from
-        // above.
-        // SpaceStore.instance.spacePanelSpaces.forEach(s => parents.add(s));
 
         return [
             Array.from(parents),
-            SpaceStore.instance.spacePanelSpaces.filter(s => !parents.has(s)),
-            selected.map(roomId => {
-                const room = cli.getRoom(roomId);
-                if (!room) {
-                    return { roomId, name: roomId } as Room;
-                }
-                if (room.getMyMembership() !== "join" || !room.isSpaceRoom()) {
-                    return room;
-                }
-            }).filter(Boolean),
+            SpaceStore.instance.spacePanelSpaces.filter((s) => !parents.has(s)),
+            filterBoolean(
+                selected.map((roomId) => {
+                    const room = cli.getRoom(roomId);
+                    if (!room) {
+                        return { roomId, name: roomId } as Room;
+                    }
+                    if (room.getMyMembership() !== "join" || !room.isSpaceRoom()) {
+                        return room;
+                    }
+                }),
+            ),
         ];
     }, [cli, selected, room]);
 
-    const [filteredSpacesContainingRoom, filteredOtherJoinedSpaces, filteredOtherEntries] = useMemo(() => [
-        spacesContainingRoom.filter(r => r.name.toLowerCase().includes(lcQuery)),
-        otherJoinedSpaces.filter(r => r.name.toLowerCase().includes(lcQuery)),
-        otherEntries.filter(r => r.name.toLowerCase().includes(lcQuery)),
-    ], [spacesContainingRoom, otherJoinedSpaces, otherEntries, lcQuery]);
+    const [filteredSpacesContainingRoom, filteredOtherJoinedSpaces, filteredOtherEntries] = useMemo(
+        () => [
+            spacesContainingRoom.filter((r) => r.name.toLowerCase().includes(lcQuery)),
+            otherJoinedSpaces.filter((r) => r.name.toLowerCase().includes(lcQuery)),
+            otherEntries.filter((r) => r.name.toLowerCase().includes(lcQuery)),
+        ],
+        [spacesContainingRoom, otherJoinedSpaces, otherEntries, lcQuery],
+    );
 
     const onChange = (checked: boolean, room: Room): void => {
         if (checked) {
@@ -126,112 +134,120 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
 
     let inviteOnlyWarning;
     if (newSelected.size < 1) {
-        inviteOnlyWarning = <div className="mx_ManageRestrictedJoinRuleDialog_section_info">
-            { _t("You're removing all spaces. Access will default to invite only") }
-        </div>;
+        inviteOnlyWarning = (
+            <div className="mx_ManageRestrictedJoinRuleDialog_section_info">
+                {_t("You're removing all spaces. Access will default to invite only")}
+            </div>
+        );
     }
 
     const totalResults =
-        filteredSpacesContainingRoom.length
-        + filteredOtherJoinedSpaces.length
-        + filteredOtherEntries.length;
-    return <BaseDialog
-        title={_t("Select spaces")}
-        className="mx_ManageRestrictedJoinRuleDialog"
-        onFinished={onFinished}
-        fixedWidth={false}
-    >
-        <p>
-            { _t("Decide which spaces can access this room. " +
-                "If a space is selected, its members can find and join <RoomName/>.", {}, {
-                RoomName: () => <b>{ room.name }</b>,
-            }) }
-        </p>
-        <MatrixClientContext.Provider value={cli}>
-            <SearchBox
-                className="mx_textinput_icon mx_textinput_search"
-                placeholder={_t("Search spaces")}
-                onSearch={setQuery}
-                autoFocus={true}
-            />
-            <AutoHideScrollbar className="mx_ManageRestrictedJoinRuleDialog_content">
-                { filteredSpacesContainingRoom.length > 0 ? (
-                    <div className="mx_ManageRestrictedJoinRuleDialog_section">
-                        <h3>
-                            { room.isSpaceRoom()
-                                ? _t("Spaces you know that contain this space")
-                                : _t("Spaces you know that contain this room") }
-                        </h3>
-                        { filteredSpacesContainingRoom.map(space => {
-                            return <Entry
-                                key={space.roomId}
-                                room={space}
-                                checked={newSelected.has(space.roomId)}
-                                onChange={(checked: boolean) => {
-                                    onChange(checked, space);
-                                }}
-                            />;
-                        }) }
-                    </div>
-                ) : undefined }
-
-                { filteredOtherEntries.length > 0 ? (
-                    <div className="mx_ManageRestrictedJoinRuleDialog_section">
-                        <h3>{ _t("Other spaces or rooms you might not know") }</h3>
-                        <div className="mx_ManageRestrictedJoinRuleDialog_section_info">
-                            <div>{ _t("These are likely ones other room admins are a part of.") }</div>
+        filteredSpacesContainingRoom.length + filteredOtherJoinedSpaces.length + filteredOtherEntries.length;
+    return (
+        <BaseDialog
+            title={_t("Select spaces")}
+            className="mx_ManageRestrictedJoinRuleDialog"
+            onFinished={onFinished}
+            fixedWidth={false}
+        >
+            <p>
+                {_t(
+                    "Decide which spaces can access this room. " +
+                        "If a space is selected, its members can find and join <RoomName/>.",
+                    {},
+                    {
+                        RoomName: () => <b>{room.name}</b>,
+                    },
+                )}
+            </p>
+            <MatrixClientContext.Provider value={cli}>
+                <SearchBox
+                    className="mx_textinput_icon mx_textinput_search"
+                    placeholder={_t("Search spaces")}
+                    onSearch={setQuery}
+                    autoFocus={true}
+                />
+                <AutoHideScrollbar className="mx_ManageRestrictedJoinRuleDialog_content">
+                    {filteredSpacesContainingRoom.length > 0 ? (
+                        <div className="mx_ManageRestrictedJoinRuleDialog_section">
+                            <h3>
+                                {room.isSpaceRoom()
+                                    ? _t("Spaces you know that contain this space")
+                                    : _t("Spaces you know that contain this room")}
+                            </h3>
+                            {filteredSpacesContainingRoom.map((space) => {
+                                return (
+                                    <Entry
+                                        key={space.roomId}
+                                        room={space}
+                                        checked={newSelected.has(space.roomId)}
+                                        onChange={(checked: boolean) => {
+                                            onChange(checked, space);
+                                        }}
+                                    />
+                                );
+                            })}
                         </div>
-                        { filteredOtherEntries.map(space => {
-                            return <Entry
-                                key={space.roomId}
-                                room={space}
-                                checked={newSelected.has(space.roomId)}
-                                onChange={(checked: boolean) => {
-                                    onChange(checked, space);
-                                }}
-                            />;
-                        }) }
+                    ) : undefined}
+
+                    {filteredOtherEntries.length > 0 ? (
+                        <div className="mx_ManageRestrictedJoinRuleDialog_section">
+                            <h3>{_t("Other spaces or rooms you might not know")}</h3>
+                            <div className="mx_ManageRestrictedJoinRuleDialog_section_info">
+                                <div>{_t("These are likely ones other room admins are a part of.")}</div>
+                            </div>
+                            {filteredOtherEntries.map((space) => {
+                                return (
+                                    <Entry
+                                        key={space.roomId}
+                                        room={space}
+                                        checked={newSelected.has(space.roomId)}
+                                        onChange={(checked: boolean) => {
+                                            onChange(checked, space);
+                                        }}
+                                    />
+                                );
+                            })}
+                        </div>
+                    ) : null}
+
+                    {filteredOtherJoinedSpaces.length > 0 ? (
+                        <div className="mx_ManageRestrictedJoinRuleDialog_section">
+                            <h3>{_t("Other spaces you know")}</h3>
+                            {filteredOtherJoinedSpaces.map((space) => {
+                                return (
+                                    <Entry
+                                        key={space.roomId}
+                                        room={space}
+                                        checked={newSelected.has(space.roomId)}
+                                        onChange={(checked: boolean) => {
+                                            onChange(checked, space);
+                                        }}
+                                    />
+                                );
+                            })}
+                        </div>
+                    ) : null}
+
+                    {totalResults < 1 ? (
+                        <span className="mx_ManageRestrictedJoinRuleDialog_noResults">{_t("No results")}</span>
+                    ) : undefined}
+                </AutoHideScrollbar>
+
+                <div className="mx_ManageRestrictedJoinRuleDialog_footer">
+                    {inviteOnlyWarning}
+                    <div className="mx_ManageRestrictedJoinRuleDialog_footer_buttons">
+                        <AccessibleButton kind="primary_outline" onClick={() => onFinished()}>
+                            {_t("Cancel")}
+                        </AccessibleButton>
+                        <AccessibleButton kind="primary" onClick={() => onFinished(Array.from(newSelected))}>
+                            {_t("Confirm")}
+                        </AccessibleButton>
                     </div>
-                ) : null }
-
-                { filteredOtherJoinedSpaces.length > 0 ? (
-                    <div className="mx_ManageRestrictedJoinRuleDialog_section">
-                        <h3>{ _t("Other spaces you know") }</h3>
-                        { filteredOtherJoinedSpaces.map(space => {
-                            return <Entry
-                                key={space.roomId}
-                                room={space}
-                                checked={newSelected.has(space.roomId)}
-                                onChange={(checked: boolean) => {
-                                    onChange(checked, space);
-                                }}
-                            />;
-                        }) }
-                    </div>
-                ) : null }
-
-                { totalResults < 1
-                    ? <span className="mx_ManageRestrictedJoinRuleDialog_noResults">
-                        { _t("No results") }
-                    </span>
-                    : undefined
-                }
-            </AutoHideScrollbar>
-
-            <div className="mx_ManageRestrictedJoinRuleDialog_footer">
-                { inviteOnlyWarning }
-                <div className="mx_ManageRestrictedJoinRuleDialog_footer_buttons">
-                    <AccessibleButton kind="primary_outline" onClick={() => onFinished()}>
-                        { _t("Cancel") }
-                    </AccessibleButton>
-                    <AccessibleButton kind="primary" onClick={() => onFinished(Array.from(newSelected))}>
-                        { _t("Confirm") }
-                    </AccessibleButton>
                 </div>
-            </div>
-        </MatrixClientContext.Provider>
-    </BaseDialog>;
+            </MatrixClientContext.Provider>
+        </BaseDialog>
+    );
 };
 
 export default ManageRestrictedJoinRuleDialog;
-

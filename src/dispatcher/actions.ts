@@ -76,6 +76,11 @@ export enum Action {
     FocusSendMessageComposer = "focus_send_message_composer",
 
     /**
+     * Clear the  to the send message composer. Should be used with a FocusComposerPayload.
+     */
+    ClearAndFocusSendMessageComposer = "clear_focus_send_message_composer",
+
+    /**
      * Focuses the user's cursor to the edit message composer. Should be used with a FocusComposerPayload.
      */
     FocusEditMessageComposer = "focus_edit_message_composer",
@@ -99,6 +104,11 @@ export enum Action {
     /**
      * Sets the apps root font size. Should be used with UpdateFontSizePayload
      */
+    MigrateBaseFontSize = "migrate_base_font_size",
+
+    /**
+     * Sets the apps root font size. Should be used with UpdateFontSizePayload
+     */
     UpdateFontSize = "update_font_size",
 
     /**
@@ -110,6 +120,11 @@ export enum Action {
      * Changes room based on payload parameters. Should be used with JoinRoomPayload.
      */
     ViewRoom = "view_room",
+
+    /**
+     * Changes thread based on payload parameters. Should be used with ThreadPayload.
+     */
+    ViewThread = "view_thread",
 
     /**
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
