@@ -193,35 +193,32 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (!isMetaSpace(space) && !this.matrixClient?.getRoom(space)?.isSpaceRoom()) return;
         if (space !== this.activeSpace) this.setActiveSpace(space, false);
 
-        if (space) {
-            const roomId = this.getNotificationState(space).getFirstRoomWithNotifications();
+        let roomId: string | undefined;
+        if (space === MetaSpace.Home && this.allRoomsInHome) {
+            const hasMentions = RoomNotificationStateStore.instance.globalState.hasMentions;
+            const lists = RoomListStore.instance.orderedLists;
+            tagLoop: for (let i = 0; i < TAG_ORDER.length; i++) {
+                const t = TAG_ORDER[i];
+                if (!lists[t]) continue;
+                for (const room of lists[t]) {
+                    const state = RoomNotificationStateStore.instance.getRoomState(room);
+                    if (hasMentions ? state.hasMentions : state.isUnread) {
+                        roomId = room.roomId;
+                        break tagLoop;
+                    }
+                }
+            }
+        } else {
+            roomId = this.getNotificationState(space).getFirstRoomWithNotifications();
+        }
+
+        if (!!roomId) {
             defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: roomId,
                 context_switch: true,
                 metricsTrigger: "WebSpacePanelNotificationBadge",
             });
-        } else {
-            const lists = RoomListStore.instance.orderedLists;
-            for (let i = 0; i < TAG_ORDER.length; i++) {
-                const t = TAG_ORDER[i];
-                const listRooms = lists[t];
-                const unreadRoom = listRooms.find((r: Room) => {
-                    if (this.showInHomeSpace(r)) {
-                        const state = RoomNotificationStateStore.instance.getRoomState(r);
-                        return state.isUnread;
-                    }
-                });
-                if (unreadRoom) {
-                    defaultDispatcher.dispatch<ViewRoomPayload>({
-                        action: Action.ViewRoom,
-                        room_id: unreadRoom.roomId,
-                        context_switch: true,
-                        metricsTrigger: "WebSpacePanelNotificationBadge",
-                    });
-                    break;
-                }
-            }
         }
     }
 
@@ -929,6 +926,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 this._suggestedRooms = this._suggestedRooms.filter((r) => r.room_id !== room.roomId);
                 if (numSuggestedRooms !== this._suggestedRooms.length) {
                     this.emit(UPDATE_SUGGESTED_ROOMS, this._suggestedRooms);
+                    // If the suggested room was present in the list then we know we don't need to switch space
+                    return;
                 }
 
                 // if the room currently being viewed was just joined then switch to its related space
