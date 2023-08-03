@@ -3746,5 +3746,11 @@
     "Invited to a room": "Zaproszono do pokoju",
     "Under active development, new room header & details interface": "W trakcie aktywnego rozwoju, nowy nagłówek pokoju & interfejs szczegółów",
     "Select which emails you want to send summaries to. Manage your emails in <button>General</button>.": "Wybierz, które e-maile mają otrzymać podsumowania. Zarządzaj swoimi e-mailami w sekcji <button>Ogólne</button>.",
-    "Messages sent by bots": "Wiadomości wysłane przez boty"
+    "Messages sent by bots": "Wiadomości wysłane przez boty",
+    "Mark all messages as read": "Oznacz wszystkie wiadomości jako przeczytane",
+    "Other spaces you know": "Inne przestrzenie, które znasz",
+    "Your profile picture URL": "URL Twojego zdjęcia profilowego",
+    "Reset to default settings": "Resetuj do ustawień domyślnych",
+    "Unable to find user by email": "Nie udało się znaleźć użytkownika za pomocą e-maila",
+    "Great! This passphrase looks strong enough": "Świetnie! To hasło wygląda na wystarczająco silne"
 }
