@@ -3772,5 +3772,6 @@
     "Great! This passphrase looks strong enough": "Super! Diese Passphrase wirkt stark genug",
     "User read up to (ignoreSynthetic): ": "Der Benutzer hat gelesen bis (ignoreSynthetic): ",
     "User read up to (m.read.private): ": "Benutzer las bis (m.read.private): ",
-    "User read up to (m.read.private;ignoreSynthetic): ": "Benutzer las bis (m.read.private;ignoreSynthetic): "
+    "User read up to (m.read.private;ignoreSynthetic): ": "Benutzer las bis (m.read.private;ignoreSynthetic): ",
+    "Other spaces you know": "Andere dir bekannte Spaces"
 }
