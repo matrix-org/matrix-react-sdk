@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import * as CypressAxe from "cypress-axe";
+import "cypress-axe";
 import * as axe from "axe-core";
 
 import type { Options } from "cypress-axe";
@@ -46,7 +46,7 @@ Cypress.Commands.overwrite(
     (
         originalFn: Chainable["checkA11y"],
         context?: string | Node | axe.ContextObject | undefined,
-        options: CypressAxe.Options = {},
+        options: Options = {},
         violationCallback?: ((violations: axe.Result[]) => void) | undefined,
         skipFailures?: boolean,
     ): void => {
