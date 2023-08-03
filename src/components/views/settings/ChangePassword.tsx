@@ -69,9 +69,9 @@ interface IState {
 }
 
 export default class ChangePassword extends React.Component<IProps, IState> {
-    private [FIELD_OLD_PASSWORD]: Field | null;
-    private [FIELD_NEW_PASSWORD]: Field | null;
-    private [FIELD_NEW_PASSWORD_CONFIRM]: Field | null;
+    private [FIELD_OLD_PASSWORD]: Field | null = null;
+    private [FIELD_NEW_PASSWORD]: Field | null = null;
+    private [FIELD_NEW_PASSWORD_CONFIRM]: Field | null = null;
 
     public static defaultProps: Partial<IProps> = {
         onFinished() {},
@@ -93,7 +93,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     }
 
     private async onChangePassword(oldPassword: string, newPassword: string): Promise<void> {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
 
         // if the server supports it then don't sign user out of all devices
         const serverSupportsControlOfDevicesLogout = await cli.doesServerSupportLogoutDevices();
@@ -235,7 +235,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                 typeof ExportE2eKeysDialog
             >,
             {
-                matrixClient: MatrixClientPeg.get(),
+                matrixClient: MatrixClientPeg.safeGet(),
             },
         );
     };

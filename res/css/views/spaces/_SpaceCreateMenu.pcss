@@ -14,14 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$spacePanelWidth: 68px;
-
 .mx_SpaceCreateMenu_wrapper {
     /* background blur everything except SpacePanel */
     .mx_ContextualMenu_background {
         background-color: $dialog-backdrop-color;
         opacity: 0.6;
-        left: $spacePanelWidth;
+        left: 68px;
     }
 
     .mx_ContextualMenu {
@@ -33,7 +31,7 @@ $spacePanelWidth: 68px;
 
         > div {
             > h2 {
-                font-weight: var(--font-semi-bold);
+                font-weight: var(--cpd-font-weight-semibold);
                 font-size: $font-18px;
                 margin-top: 4px;
             }

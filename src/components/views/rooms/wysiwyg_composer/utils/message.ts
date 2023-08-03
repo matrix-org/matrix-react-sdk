@@ -64,6 +64,7 @@ export async function sendMessage(
     const posthogEvent: ComposerEvent = {
         eventName: "Composer",
         isEditing: false,
+        isLocation: false,
         isReply: Boolean(replyToEvent),
         // TODO thread
         inThread: relation?.rel_type === THREAD_RELATION_TYPE.name,
@@ -85,7 +86,7 @@ export async function sendMessage(
         if (cmd) {
             const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation?.event_id : null;
             let commandSuccessful: boolean;
-            [content, commandSuccessful] = await runSlashCommand(cmd, args, roomId, threadId ?? null);
+            [content, commandSuccessful] = await runSlashCommand(mxClient, cmd, args, roomId, threadId ?? null);
 
             if (!commandSuccessful) {
                 return; // errored
@@ -199,6 +200,7 @@ export async function editMessage(
     PosthogAnalytics.instance.trackEvent<ComposerEvent>({
         eventName: "Composer",
         isEditing: true,
+        isLocation: false,
         inThread: Boolean(editedEvent?.getThread()),
         isReply: Boolean(editedEvent.replyEventId),
     });

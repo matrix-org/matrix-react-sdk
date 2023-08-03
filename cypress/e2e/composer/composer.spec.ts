@@ -15,9 +15,11 @@ limitations under the License.
 */
 
 /// <reference types="cypress" />
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
+import { MatrixClient } from "../../global";
 
 describe("Composer", () => {
     let homeserver: HomeserverInstance;
@@ -34,10 +36,8 @@ describe("Composer", () => {
 
     describe("CIDER", () => {
         beforeEach(() => {
-            cy.initTestUser(homeserver, "Janet").then(() => {
-                cy.createRoom({ name: "Composing Room" });
-            });
-            cy.viewRoomByName("Composing Room");
+            cy.initTestUser(homeserver, "Janet");
+            cy.createRoom({ name: "Composing Room" }).then((roomId) => cy.viewRoomById(roomId));
         });
 
         it("sends a message when you click send or press Enter", () => {
@@ -111,10 +111,8 @@ describe("Composer", () => {
     describe("Rich text editor", () => {
         beforeEach(() => {
             cy.enableLabsFeature("feature_wysiwyg_composer");
-            cy.initTestUser(homeserver, "Janet").then(() => {
-                cy.createRoom({ name: "Composing Room" });
-            });
-            cy.viewRoomByName("Composing Room");
+            cy.initTestUser(homeserver, "Janet");
+            cy.createRoom({ name: "Composing Room" }).then((roomId) => cy.viewRoomById(roomId));
         });
 
         describe("Commands", () => {
@@ -177,6 +175,84 @@ describe("Composer", () => {
                     // Check that a spoiler item has appeared in the timeline and contains the spoiler command text
                     cy.get("span.mx_EventTile_spoiler").should("exist");
                     cy.findByText("this is the spoiler text").should("exist");
+                });
+            });
+        });
+
+        describe("Mentions", () => {
+            // TODO add tests for rich text mode
+
+            describe("Plain text mode", () => {
+                it("autocomplete behaviour tests", () => {
+                    // Set up a private room so we have another user to mention
+                    const otherUserName = "Bob";
+                    let bobClient: MatrixClient;
+                    cy.getBot(homeserver, {
+                        displayName: otherUserName,
+                    }).then((bob) => {
+                        bobClient = bob;
+                    });
+                    // create DM with bob
+                    cy.getClient()
+                        .then(async (cli) => {
+                            const bobRoom = await cli.createRoom({ is_direct: true });
+                            await cli.invite(bobRoom.room_id, bobClient.getUserId());
+                            await cli.setAccountData("m.direct" as EventType, {
+                                [bobClient.getUserId()]: [bobRoom.room_id],
+                            });
+                            return bobRoom.room_id;
+                        })
+                        .then((bobRoomId) => cy.viewRoomById(bobRoomId));
+
+                    // Select plain text mode after composer is ready
+                    cy.get("div[contenteditable=true]").should("exist");
+                    cy.findByRole("button", { name: "Hide formatting" }).click();
+
+                    // Typing a single @ does not display the autocomplete menu and contents
+                    cy.findByRole("textbox").type("@");
+                    cy.findByTestId("autocomplete-wrapper").should("be.empty");
+
+                    // Entering the first letter of the other user's name opens the autocomplete...
+                    cy.findByRole("textbox").type(otherUserName.slice(0, 1));
+                    cy.findByTestId("autocomplete-wrapper")
+                        .should("not.be.empty")
+                        .within(() => {
+                            // ...with the other user name visible, and clicking that username...
+                            cy.findByText(otherUserName).should("exist").click();
+                        });
+                    // ...inserts the username into the composer
+                    cy.findByRole("textbox").within(() => {
+                        cy.findByText(otherUserName, { exact: false })
+                            .should("exist")
+                            .should("have.attr", "contenteditable", "false")
+                            .should("have.attr", "data-mention-type", "user");
+                    });
+
+                    // Send the message to clear the composer
+                    cy.findByRole("button", { name: "Send message" }).click();
+
+                    // Typing an @, then other user's name, then trailing space closes the autocomplete
+                    cy.findByRole("textbox").type(`@${otherUserName} `);
+                    cy.findByTestId("autocomplete-wrapper").should("be.empty");
+
+                    // Send the message to clear the composer
+                    cy.findByRole("button", { name: "Send message" }).click();
+
+                    // Moving the cursor back to an "incomplete" mention opens the autocomplete
+                    cy.findByRole("textbox").type(`initial text @${otherUserName.slice(0, 1)} abc`);
+                    cy.findByTestId("autocomplete-wrapper").should("be.empty");
+                    // Move the cursor left by 4 to put it to: `@B| abc`, check autocomplete displays
+                    cy.findByRole("textbox").type(`${"{leftArrow}".repeat(4)}`);
+                    cy.findByTestId("autocomplete-wrapper").should("not.be.empty");
+
+                    // Selecting the autocomplete option using Enter inserts it into the composer
+                    cy.findByRole("textbox").type(`{Enter}`);
+                    cy.findByRole("textbox").within(() => {
+                        cy.findByText(otherUserName, { exact: false })
+                            .should("exist")
+                            .should("have.attr", "contenteditable", "false")
+                            .should("have.attr", "data-mention-type", "user");
+                    });
                 });
             });
         });

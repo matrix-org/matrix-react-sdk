@@ -6,13 +6,13 @@ exports[`RoomView for a local room in state CREATING should match the snapshot 1
     class="mx_RoomView mx_RoomView--local"
   >
     <header
-      class="mx_RoomHeader light-panel"
+      class="mx_LegacyRoomHeader light-panel"
     >
       <div
-        class="mx_RoomHeader_wrapper"
+        class="mx_LegacyRoomHeader_wrapper"
       >
         <div
-          class="mx_RoomHeader_avatar"
+          class="mx_LegacyRoomHeader_avatar"
         >
           <div
             class="mx_DecoratedRoomAvatar"
@@ -33,6 +33,7 @@ exports[`RoomView for a local room in state CREATING should match the snapshot 1
                 aria-hidden="true"
                 class="mx_BaseAvatar_image"
                 data-testid="avatar-img"
+                loading="lazy"
                 src="data:image/png;base64,00"
                 style="width: 24px; height: 24px;"
               />
@@ -40,11 +41,11 @@ exports[`RoomView for a local room in state CREATING should match the snapshot 1
           </div>
         </div>
         <div
-          class="mx_RoomHeader_name mx_RoomHeader_name--textonly"
+          class="mx_LegacyRoomHeader_name mx_LegacyRoomHeader_name--textonly"
         >
           <div
             aria-level="1"
-            class="mx_RoomHeader_nametext"
+            class="mx_LegacyRoomHeader_nametext"
             dir="auto"
             role="heading"
             title="@user:example.com"
@@ -53,7 +54,8 @@ exports[`RoomView for a local room in state CREATING should match the snapshot 1
           </div>
         </div>
         <div
-          class="mx_RoomHeader_topic mx_RoomTopic"
+          aria-describedby="mx_TooltipTarget_abdefghi"
+          class="mx_LegacyRoomHeader_topic mx_RoomTopic"
           dir="auto"
           tabindex="0"
         >
@@ -97,13 +99,13 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
     class="mx_RoomView mx_RoomView--local"
   >
     <header
-      class="mx_RoomHeader light-panel"
+      class="mx_LegacyRoomHeader light-panel"
     >
       <div
-        class="mx_RoomHeader_wrapper"
+        class="mx_LegacyRoomHeader_wrapper"
       >
         <div
-          class="mx_RoomHeader_avatar"
+          class="mx_LegacyRoomHeader_avatar"
         >
           <div
             class="mx_DecoratedRoomAvatar"
@@ -124,6 +126,7 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
                 aria-hidden="true"
                 class="mx_BaseAvatar_image"
                 data-testid="avatar-img"
+                loading="lazy"
                 src="data:image/png;base64,00"
                 style="width: 24px; height: 24px;"
               />
@@ -131,11 +134,11 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
           </div>
         </div>
         <div
-          class="mx_RoomHeader_name mx_RoomHeader_name--textonly"
+          class="mx_LegacyRoomHeader_name mx_LegacyRoomHeader_name--textonly"
         >
           <div
             aria-level="1"
-            class="mx_RoomHeader_nametext"
+            class="mx_LegacyRoomHeader_nametext"
             dir="auto"
             role="heading"
             title="@user:example.com"
@@ -144,7 +147,8 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
           </div>
         </div>
         <div
-          class="mx_RoomHeader_topic mx_RoomTopic"
+          aria-describedby="mx_TooltipTarget_abdefghi"
+          class="mx_LegacyRoomHeader_topic mx_RoomTopic"
           dir="auto"
           tabindex="0"
         >
@@ -213,6 +217,7 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
                     aria-hidden="true"
                     class="mx_BaseAvatar_image"
                     data-testid="avatar-img"
+                    loading="lazy"
                     src="data:image/png;base64,00"
                     style="width: 52px; height: 52px;"
                   />
@@ -284,13 +289,13 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
     class="mx_RoomView mx_RoomView--local"
   >
     <header
-      class="mx_RoomHeader light-panel"
+      class="mx_LegacyRoomHeader light-panel"
     >
       <div
-        class="mx_RoomHeader_wrapper"
+        class="mx_LegacyRoomHeader_wrapper"
       >
         <div
-          class="mx_RoomHeader_avatar"
+          class="mx_LegacyRoomHeader_avatar"
         >
           <div
             class="mx_DecoratedRoomAvatar"
@@ -311,6 +316,7 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                 aria-hidden="true"
                 class="mx_BaseAvatar_image"
                 data-testid="avatar-img"
+                loading="lazy"
                 src="data:image/png;base64,00"
                 style="width: 24px; height: 24px;"
               />
@@ -318,11 +324,11 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
           </div>
         </div>
         <div
-          class="mx_RoomHeader_name mx_RoomHeader_name--textonly"
+          class="mx_LegacyRoomHeader_name mx_LegacyRoomHeader_name--textonly"
         >
           <div
             aria-level="1"
-            class="mx_RoomHeader_nametext"
+            class="mx_LegacyRoomHeader_nametext"
             dir="auto"
             role="heading"
             title="@user:example.com"
@@ -331,7 +337,8 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
           </div>
         </div>
         <div
-          class="mx_RoomHeader_topic mx_RoomTopic"
+          aria-describedby="mx_TooltipTarget_abdefghi"
+          class="mx_LegacyRoomHeader_topic mx_RoomTopic"
           dir="auto"
           tabindex="0"
         >
@@ -400,6 +407,7 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                     aria-hidden="true"
                     class="mx_BaseAvatar_image"
                     data-testid="avatar-img"
+                    loading="lazy"
                     src="data:image/png;base64,00"
                     style="width: 52px; height: 52px;"
                   />
@@ -497,6 +505,7 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                   role="textbox"
                   style="--placeholder: 'Send a message…';"
                   tabindex="0"
+                  translate="no"
                 >
                   <div>
                     <br />
@@ -545,13 +554,13 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
     class="mx_RoomView mx_RoomView--local"
   >
     <header
-      class="mx_RoomHeader light-panel"
+      class="mx_LegacyRoomHeader light-panel"
     >
       <div
-        class="mx_RoomHeader_wrapper"
+        class="mx_LegacyRoomHeader_wrapper"
       >
         <div
-          class="mx_RoomHeader_avatar"
+          class="mx_LegacyRoomHeader_avatar"
         >
           <div
             class="mx_DecoratedRoomAvatar"
@@ -572,6 +581,7 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                 aria-hidden="true"
                 class="mx_BaseAvatar_image"
                 data-testid="avatar-img"
+                loading="lazy"
                 src="data:image/png;base64,00"
                 style="width: 24px; height: 24px;"
               />
@@ -579,14 +589,15 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
           </div>
         </div>
         <div
-          class="mx_E2EIcon mx_E2EIcon_normal mx_RoomHeader_icon"
+          aria-label="This room is end-to-end encrypted"
+          class="mx_E2EIcon mx_E2EIcon_normal mx_LegacyRoomHeader_icon"
         />
         <div
-          class="mx_RoomHeader_name mx_RoomHeader_name--textonly"
+          class="mx_LegacyRoomHeader_name mx_LegacyRoomHeader_name--textonly"
         >
           <div
             aria-level="1"
-            class="mx_RoomHeader_nametext"
+            class="mx_LegacyRoomHeader_nametext"
             dir="auto"
             role="heading"
             title="@user:example.com"
@@ -595,7 +606,8 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
           </div>
         </div>
         <div
-          class="mx_RoomHeader_topic mx_RoomTopic"
+          aria-describedby="mx_TooltipTarget_abdefghi"
+          class="mx_LegacyRoomHeader_topic mx_RoomTopic"
           dir="auto"
           tabindex="0"
         >
@@ -659,6 +671,7 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                     aria-hidden="true"
                     class="mx_BaseAvatar_image"
                     data-testid="avatar-img"
+                    loading="lazy"
                     src="data:image/png;base64,00"
                     style="width: 52px; height: 52px;"
                   />
@@ -756,6 +769,7 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                   role="textbox"
                   style="--placeholder: 'Send a message…';"
                   tabindex="0"
+                  translate="no"
                 >
                   <div>
                     <br />
@@ -796,4 +810,33 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
     </main>
   </div>
 </div>
+`;
+
+exports[`RoomView should show error view if failed to look up room alias 1`] = `
+<DocumentFragment>
+  <div
+    class="mx_RoomView"
+  >
+    <div
+      class="mx_RoomPreviewBar dark-panel mx_RoomPreviewBar_RoomNotFound mx_RoomPreviewBar_dialog"
+    >
+      <div
+        class="mx_RoomPreviewBar_message"
+      >
+        <h3>
+          #addy:server does not exist.
+        </h3>
+        <p>
+          Are you sure you're at the right place?
+        </p>
+      </div>
+      <div
+        class="mx_RoomPreviewBar_actions"
+      />
+      <div
+        class="mx_RoomPreviewBar_footer"
+      />
+    </div>
+  </div>
+</DocumentFragment>
 `;

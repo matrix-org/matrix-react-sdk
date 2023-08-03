@@ -95,11 +95,11 @@ interface IState {
  * A pure UI component which displays a registration form.
  */
 export default class RegistrationForm extends React.PureComponent<IProps, IState> {
-    private [RegistrationField.Email]: Field | null;
-    private [RegistrationField.Password]: Field | null;
-    private [RegistrationField.PasswordConfirm]: Field | null;
-    private [RegistrationField.Username]: Field | null;
-    private [RegistrationField.PhoneNumber]: Field | null;
+    private [RegistrationField.Email]: Field | null = null;
+    private [RegistrationField.Password]: Field | null = null;
+    private [RegistrationField.PasswordConfirm]: Field | null = null;
+    private [RegistrationField.Username]: Field | null = null;
+    private [RegistrationField.PhoneNumber]: Field | null = null;
 
     public static defaultProps = {
         onValidationChange: logger.error,
@@ -433,7 +433,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     }
 
     private showEmail(): boolean {
-        if (!this.authStepIsUsed("m.login.email.identity")) {
+        const threePidLogin = !SdkConfig.get().disable_3pid_login;
+        if (!threePidLogin || !this.authStepIsUsed("m.login.email.identity")) {
             return false;
         }
         return true;
@@ -473,6 +474,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 value={this.state.password}
                 onChange={this.onPasswordChange}
                 onValidate={this.onPasswordValidate}
+                userInputs={[this.state.username]}
             />
         );
     }

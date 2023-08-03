@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2022 The Matrix.org Foundation C.I.C.
+Copyright 2019-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,6 +41,11 @@ import SettingsFieldset from "../../SettingsFieldset";
 import ExternalLink from "../../../elements/ExternalLink";
 import PosthogTrackers from "../../../../../PosthogTrackers";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+import { SettingsSection } from "../../shared/SettingsSection";
+import SettingsTab from "../SettingsTab";
+import SdkConfig from "../../../../../SdkConfig";
+import { shouldForceDisableEncryption } from "../../../../../utils/crypto/shouldForceDisableEncryption";
+import { Caption } from "../../../typography/Caption";
 
 interface IProps {
     room: Room;
@@ -161,7 +166,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                     "may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>",
                 {},
                 {
-                    a: (sub) => <ExternalLink href="https://element.io/help#encryption">{sub}</ExternalLink>,
+                    a: (sub) => <ExternalLink href={SdkConfig.get("help_encryption_url")}>{sub}</ExternalLink>,
                 },
             ),
             onFinished: (confirm) => {
@@ -213,7 +218,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
         const [shouldCreate, opts] = await modal.finished;
         if (shouldCreate) {
-            await createRoom(opts);
+            await createRoom(this.context, opts);
         }
         return shouldCreate;
     };
@@ -265,6 +270,23 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             roomName: room.name,
         });
 
+        let advanced: JSX.Element | undefined;
+        if (room.getJoinRule() === JoinRule.Public) {
+            advanced = (
+                <div>
+                    <AccessibleButton
+                        onClick={this.toggleAdvancedSection}
+                        kind="link"
+                        className="mx_SettingsTab_showAdvanced"
+                        aria-expanded={this.state.showAdvancedSection}
+                    >
+                        {this.state.showAdvancedSection ? _t("Hide advanced") : _t("Show advanced")}
+                    </AccessibleButton>
+                    {this.state.showAdvancedSection && this.renderAdvanced()}
+                </div>
+            );
+        }
+
         return (
             <SettingsFieldset legend={_t("Access")} description={description}>
                 <JoinRuleSettings
@@ -275,6 +297,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                     promptUpgrade={true}
                     aliasWarning={aliasWarning}
                 />
+                {advanced}
             </SettingsFieldset>
         );
     }
@@ -399,7 +422,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         const canSetGuestAccess = state?.mayClientSendStateEvent(EventType.RoomGuestAccess, client);
 
         return (
-            <>
+            <div className="mx_SecurityRoomSettingsTab_advancedSection">
                 <LabelledToggleSwitch
                     value={guestAccess === GuestAccess.CanJoin}
                     onChange={this.onGuestAccessChange}
@@ -412,7 +435,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                             "the room without having a registered account.",
                     )}
                 </p>
-            </>
+            </div>
         );
     }
 
@@ -421,7 +444,8 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         const room = this.props.room;
         const isEncrypted = this.state.encrypted;
         const hasEncryptionPermission = room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
-        const canEnableEncryption = !isEncrypted && hasEncryptionPermission;
+        const isEncryptionForceDisabled = shouldForceDisableEncryption(client);
+        const canEnableEncryption = !isEncrypted && !isEncryptionForceDisabled && hasEncryptionPermission;
 
         let encryptionSettings: JSX.Element | undefined;
         if (isEncrypted && SettingsStore.isEnabled("blacklistUnverifiedDevices")) {
@@ -437,45 +461,33 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
         const historySection = this.renderHistory();
 
-        let advanced: JSX.Element | undefined;
-        if (room.getJoinRule() === JoinRule.Public) {
-            advanced = (
-                <div className="mx_SettingsTab_section">
-                    <AccessibleButton
-                        onClick={this.toggleAdvancedSection}
-                        kind="link"
-                        className="mx_SettingsTab_showAdvanced"
-                        aria-expanded={this.state.showAdvancedSection}
-                    >
-                        {this.state.showAdvancedSection ? _t("Hide advanced") : _t("Show advanced")}
-                    </AccessibleButton>
-                    {this.state.showAdvancedSection && this.renderAdvanced()}
-                </div>
-            );
-        }
-
         return (
-            <div className="mx_SettingsTab mx_SecurityRoomSettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Security & Privacy")}</div>
+            <SettingsTab>
+                <SettingsSection heading={_t("Security & Privacy")}>
+                    <SettingsFieldset
+                        legend={_t("Encryption")}
+                        description={
+                            isEncryptionForceDisabled && !isEncrypted
+                                ? undefined
+                                : _t("Once enabled, encryption cannot be disabled.")
+                        }
+                    >
+                        <LabelledToggleSwitch
+                            value={isEncrypted}
+                            onChange={this.onEncryptionChange}
+                            label={_t("Encrypted")}
+                            disabled={!canEnableEncryption}
+                        />
+                        {isEncryptionForceDisabled && !isEncrypted && (
+                            <Caption>{_t("Your server requires encryption to be disabled.")}</Caption>
+                        )}
+                        {encryptionSettings}
+                    </SettingsFieldset>
 
-                <SettingsFieldset
-                    legend={_t("Encryption")}
-                    description={_t("Once enabled, encryption cannot be disabled.")}
-                >
-                    <LabelledToggleSwitch
-                        value={isEncrypted}
-                        onChange={this.onEncryptionChange}
-                        label={_t("Encrypted")}
-                        disabled={!canEnableEncryption}
-                    />
-                    {encryptionSettings}
-                </SettingsFieldset>
-
-                {this.renderJoinRule()}
-
-                {advanced}
-                {historySection}
-            </div>
+                    {this.renderJoinRule()}
+                    {historySection}
+                </SettingsSection>
+            </SettingsTab>
         );
     }
 }

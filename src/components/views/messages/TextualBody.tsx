@@ -48,6 +48,7 @@ import { options as linkifyOpts } from "../../../linkify-matrix";
 import { getParentEventId } from "../../../utils/Reply";
 import { EditWysiwygComposer } from "../rooms/wysiwyg_composer";
 import { IEventTileOps } from "../rooms/EventTile";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -92,7 +93,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         this.activateSpoilers([content]);
 
         HtmlUtils.linkifyElement(content);
-        pillifyLinks([content], this.props.mxEvent, this.pills);
+        pillifyLinks(MatrixClientPeg.safeGet(), [content], this.props.mxEvent, this.pills);
 
         this.calculateUrlPreview();
 
@@ -173,7 +174,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
             // By expanding/collapsing we changed
             // the height, therefore we call this
-            this.props.onHeightChanged();
+            this.props.onHeightChanged?.();
         };
 
         div.appendChild(button);
@@ -294,6 +295,9 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         this.unmounted = true;
         unmountPills(this.pills);
         unmountTooltips(this.tooltips);
+
+        this.pills = [];
+        this.tooltips = [];
     }
 
     public shouldComponentUpdate(nextProps: Readonly<IBodyProps>, nextState: Readonly<IState>): boolean {
@@ -384,6 +388,14 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             return false;
         }
 
+        const url = node.getAttribute("href");
+        const host = url?.match(/^https?:\/\/(.*?)(\/|$)/)?.[1];
+
+        // never preview permalinks (if anything we should give a smart
+        // preview of the room/user they point to: nobody needs to be reminded
+        // what the matrix.to site looks like).
+        if (!host || isPermalinkHost(host)) return false;
+
         // as a random heuristic to avoid highlighting things like "foo.pl"
         // we require the linked text to either include a / (either from http://
         // or from a full foo.bar/baz style schemeless URL) - or be a markdown-style
@@ -392,14 +404,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         if (node.textContent?.includes("/")) {
             return true;
         }
-
-        const url = node.getAttribute("href");
-        const host = url?.match(/^https?:\/\/(.*?)(\/|$)/)?.[1];
-
-        // never preview permalinks (if anything we should give a smart
-        // preview of the room/user they point to: nobody needs to be reminded
-        // what the matrix.to site looks like).
-        if (!host || isPermalinkHost(host)) return false;
 
         if (node.textContent?.toLowerCase().trim().startsWith(host.toLowerCase())) {
             // it's a "foo.pl" style link

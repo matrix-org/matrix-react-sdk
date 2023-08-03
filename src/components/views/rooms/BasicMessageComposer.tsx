@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { createRef, ClipboardEvent } from "react";
+import React, { createRef, ClipboardEvent, SyntheticEvent } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import EMOTICON_REGEX from "emojibase-regex/emoticon";
@@ -51,6 +51,7 @@ import { ALTERNATE_KEY_NAME, KeyBindingAction } from "../../../accessibility/Key
 import { _t } from "../../../languageHandler";
 import { linkify } from "../../../linkify-matrix";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp("(?:^|\\s)(" + EMOTICON_REGEX.source + ")\\s|:^$");
@@ -107,8 +108,8 @@ interface IProps {
     initialCaret?: DocumentOffset;
     disabled?: boolean;
 
-    onChange?(): void;
-    onPaste?(event: ClipboardEvent<HTMLDivElement>, model: EditorModel): boolean;
+    onChange?(selection?: Caret, inputType?: string, diff?: IDiff): void;
+    onPaste?(event: Event | SyntheticEvent, data: DataTransfer, model: EditorModel): boolean;
 }
 
 interface IState {
@@ -130,9 +131,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private isIMEComposing = false;
     private hasTextSelected = false;
 
-    private _isCaretAtEnd: boolean;
-    private lastCaret: DocumentOffset;
-    private lastSelection: ReturnType<typeof cloneSelection> | null;
+    private _isCaretAtEnd = false;
+    private lastCaret!: DocumentOffset;
+    private lastSelection: ReturnType<typeof cloneSelection> | null = null;
 
     private readonly useMarkdownHandle: string;
     private readonly emoticonSettingHandle: string;
@@ -230,7 +231,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
     }
 
-    private updateEditorState = (selection: Caret, inputType?: string, diff?: IDiff): void => {
+    private updateEditorState = (selection?: Caret, inputType?: string, diff?: IDiff): void => {
         if (!this.editorRef.current) return;
         renderModel(this.editorRef.current, this.props.model);
         if (selection) {
@@ -268,7 +269,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         if (isTyping && this.props.model.parts[0].type === "command") {
             const { cmd } = parseCommandString(this.props.model.parts[0].text);
             const command = CommandMap.get(cmd!);
-            if (!command?.isEnabled() || command.category !== CommandCategories.messages) {
+            if (!command?.isEnabled(MatrixClientPeg.get()) || command.category !== CommandCategories.messages) {
                 isTyping = false;
             }
         }
@@ -278,9 +279,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             isTyping,
         );
 
-        if (this.props.onChange) {
-            this.props.onChange();
-        }
+        this.props.onChange?.(selection, inputType, diff);
     };
 
     private showPlaceholder(): void {
@@ -357,18 +356,18 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.onCutCopy(event, "cut");
     };
 
-    private onPaste = (event: ClipboardEvent<HTMLDivElement>): boolean | undefined => {
+    private onPasteHandler = (event: Event | SyntheticEvent, data: DataTransfer): boolean | undefined => {
         event.preventDefault(); // we always handle the paste ourselves
         if (!this.editorRef.current) return;
-        if (this.props.onPaste?.(event, this.props.model)) {
+        if (this.props.onPaste?.(event, data, this.props.model)) {
             // to prevent double handling, allow props.onPaste to skip internal onPaste
             return true;
         }
 
         const { model } = this.props;
         const { partCreator } = model;
-        const plainText = event.clipboardData.getData("text/plain");
-        const partsText = event.clipboardData.getData("application/x-element-composer");
+        const plainText = data.getData("text/plain");
+        const partsText = data.getData("application/x-element-composer");
 
         let parts: Part[];
         if (partsText) {
@@ -386,6 +385,21 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             formatRangeAsLink(range, plainText);
         } else {
             replaceRangeAndMoveCaret(range, parts);
+        }
+    };
+
+    private onPaste = (event: ClipboardEvent<HTMLDivElement>): boolean | undefined => {
+        return this.onPasteHandler(event, event.clipboardData);
+    };
+
+    private onBeforeInput = (event: InputEvent): void => {
+        // ignore any input while doing IME compositions
+        if (this.isIMEComposing) {
+            return;
+        }
+
+        if (event.inputType === "insertFromPaste" && event.dataTransfer) {
+            this.onPasteHandler(event, event.dataTransfer);
         }
     };
 
@@ -540,8 +554,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                     autoComplete.onEscape(event);
                     handled = true;
                     break;
-                default:
-                    return; // don't preventDefault on anything else
             }
         } else if (autocompleteAction === KeyBindingAction.ForceCompleteAutocomplete && !this.state.showVisualBell) {
             // there is no current autocomplete window, try to open it
@@ -705,6 +717,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
     public componentWillUnmount(): void {
         document.removeEventListener("selectionchange", this.onSelectionChange);
+        this.editorRef.current?.removeEventListener("beforeinput", this.onBeforeInput, true);
         this.editorRef.current?.removeEventListener("input", this.onInput, true);
         this.editorRef.current?.removeEventListener("compositionstart", this.onCompositionStart, true);
         this.editorRef.current?.removeEventListener("compositionend", this.onCompositionEnd, true);
@@ -730,6 +743,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.updateEditorState(this.getInitialCaretPosition());
         // attach input listener by hand so React doesn't proxy the events,
         // as the proxied event doesn't support inputType, which we need.
+        this.editorRef.current?.addEventListener("beforeinput", this.onBeforeInput, true);
         this.editorRef.current?.addEventListener("input", this.onInput, true);
         this.editorRef.current?.addEventListener("compositionstart", this.onCompositionStart, true);
         this.editorRef.current?.addEventListener("compositionend", this.onCompositionEnd, true);
@@ -834,6 +848,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                     dir="auto"
                     aria-disabled={this.props.disabled}
                     data-testid="basicmessagecomposer"
+                    translate="no"
                 />
             </div>
         );

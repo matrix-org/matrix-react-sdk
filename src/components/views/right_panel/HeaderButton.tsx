@@ -45,9 +45,9 @@ export default class HeaderButton extends React.Component<IProps> {
         const { isHighlighted, isUnread = false, onClick, name, title, ...props } = this.props;
 
         const classes = classNames({
-            mx_RightPanel_headerButton: true,
-            mx_RightPanel_headerButton_highlight: isHighlighted,
-            mx_RightPanel_headerButton_unread: isUnread,
+            "mx_LegacyRoomHeader_button": true,
+            "mx_LegacyRoomHeader_button--highlight": isHighlighted,
+            "mx_LegacyRoomHeader_button--unread": isUnread,
             [`mx_RightPanel_${name}`]: true,
         });
 

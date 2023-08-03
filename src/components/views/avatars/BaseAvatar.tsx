@@ -24,7 +24,7 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import * as AvatarLogic from "../../../Avatar";
 import SettingsStore from "../../../settings/SettingsStore";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import RoomContext from "../../../contexts/RoomContext";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
@@ -42,10 +42,12 @@ interface IProps {
     // XXX: resizeMethod not actually used.
     resizeMethod?: ResizeMethod;
     defaultToInitialLetter?: boolean; // true to add default url
-    onClick?: React.MouseEventHandler;
+    onClick?: (ev: ButtonEvent) => void;
     inputRef?: React.RefObject<HTMLImageElement & HTMLSpanElement>;
     className?: string;
     tabIndex?: number;
+    altText?: string;
+    ariaLabel?: string;
 }
 
 const calculateUrls = (url?: string | null, urls?: string[], lowBandwidth = false): string[] => {
@@ -113,6 +115,8 @@ const BaseAvatar: React.FC<IProps> = (props) => {
         onClick,
         inputRef,
         className,
+        altText = _t("Avatar"),
+        ariaLabel = _t("Avatar"),
         ...otherProps
     } = props;
 
@@ -135,6 +139,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
         );
         const imgNode = (
             <img
+                loading="lazy"
                 className="mx_BaseAvatar_image"
                 src={AvatarLogic.defaultAvatarUrlForString(idName || name)}
                 alt=""
@@ -152,7 +157,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
         if (onClick) {
             return (
                 <AccessibleButton
-                    aria-label={_t("Avatar")}
+                    aria-label={ariaLabel}
                     aria-live="off"
                     {...otherProps}
                     element="span"
@@ -192,7 +197,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                     height: toPx(height),
                 }}
                 title={title}
-                alt={_t("Avatar")}
+                alt={altText}
                 inputRef={inputRef}
                 data-testid="avatar-img"
                 {...otherProps}
@@ -201,6 +206,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
     } else {
         return (
             <img
+                loading="lazy"
                 className={classNames("mx_BaseAvatar mx_BaseAvatar_image", className)}
                 src={imageUrl}
                 onError={onError}

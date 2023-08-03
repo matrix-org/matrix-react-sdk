@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Key, ReactElement, ReactInstance } from "react";
+import React, { Key, ReactElement, ReactFragment, ReactInstance, ReactPortal } from "react";
 import ReactDom from "react-dom";
 
 interface IChildProps {
@@ -33,6 +33,10 @@ interface IProps {
     startStyles: React.CSSProperties[];
 }
 
+function isReactElement(c: ReactElement | ReactFragment | ReactPortal): c is ReactElement {
+    return typeof c === "object" && "type" in c;
+}
+
 /**
  * The NodeAnimator contains components and animates transitions.
  * It will only pick up direct changes to properties ('left', currently), and so
@@ -42,7 +46,7 @@ interface IProps {
  */
 export default class NodeAnimator extends React.Component<IProps> {
     private nodes: Record<string, ReactInstance> = {};
-    private children: { [key: string]: ReactElement };
+    private children: { [key: string]: ReactElement } = {};
     public static defaultProps: Partial<IProps> = {
         startStyles: [],
     };
@@ -72,7 +76,8 @@ export default class NodeAnimator extends React.Component<IProps> {
     private updateChildren(newChildren: React.ReactNode): void {
         const oldChildren = this.children || {};
         this.children = {};
-        React.Children.toArray(newChildren).forEach((c: ReactElement) => {
+        React.Children.toArray(newChildren).forEach((c) => {
+            if (!isReactElement(c)) return;
             if (oldChildren[c.key!]) {
                 const old = oldChildren[c.key!];
                 const oldNode = ReactDom.findDOMNode(this.nodes[old.key!]);

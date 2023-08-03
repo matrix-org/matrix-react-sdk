@@ -63,8 +63,8 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
             </div>
         );
 
-        let content;
-        const timelineSet = MatrixClientPeg.get().getNotifTimelineSet();
+        let content: JSX.Element;
+        const timelineSet = MatrixClientPeg.safeGet().getNotifTimelineSet();
         if (timelineSet) {
             // wrap a TimelinePanel with the jump-to-event bits turned off.
             content = (
@@ -93,9 +93,11 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
             >
                 <BaseCard
                     header={
-                        <Heading size="h4" className="mx_BaseCard_header_title_heading">
-                            {_t("Notifications")}
-                        </Heading>
+                        <div className="mx_BaseCard_header_title">
+                            <Heading size="4" className="mx_BaseCard_header_title_heading">
+                                {_t("Notifications")}
+                            </Heading>
+                        </div>
                     }
                     /**
                      * Need to rename this CSS class to something more generic

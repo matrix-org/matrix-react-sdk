@@ -30,12 +30,9 @@ import VideoFeed from "./VideoFeed";
 import RoomAvatar from "../avatars/RoomAvatar";
 import AccessibleButton from "../elements/AccessibleButton";
 import { avatarUrlForMember } from "../../../Avatar";
-import DesktopCapturerSourcePicker from "../elements/DesktopCapturerSourcePicker";
-import Modal from "../../../Modal";
 import LegacyCallViewSidebar from "./LegacyCallViewSidebar";
 import LegacyCallViewHeader from "./LegacyCallView/LegacyCallViewHeader";
 import LegacyCallViewButtons from "./LegacyCallView/LegacyCallViewButtons";
-import PlatformPeg from "../../../PlatformPeg";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
@@ -100,7 +97,7 @@ function exitFullscreen(): void {
 }
 
 export default class LegacyCallView extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
     private contentWrapperRef = createRef<HTMLDivElement>();
     private buttonsRef = createRef<LegacyCallViewButtons>();
 
@@ -137,7 +134,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
 
         document.removeEventListener("keydown", this.onNativeKeyDown);
         this.updateCallListeners(this.props.call, null);
-        dis.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
     }
 
     public static getDerivedStateFromProps(props: IProps): Partial<IState> {
@@ -289,17 +286,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
         if (this.state.screensharing) {
             isScreensharing = await this.props.call.setScreensharingEnabled(false);
         } else {
-            if (PlatformPeg.get()?.supportsDesktopCapturer()) {
-                const { finished } = Modal.createDialog(DesktopCapturerSourcePicker);
-                const [source] = await finished;
-                if (!source) return;
-
-                isScreensharing = await this.props.call.setScreensharingEnabled(true, {
-                    desktopCapturerSourceId: source,
-                });
-            } else {
-                isScreensharing = await this.props.call.setScreensharingEnabled(true);
-            }
+            isScreensharing = await this.props.call.setScreensharingEnabled(true);
         }
 
         this.setState({
@@ -432,7 +419,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
         const { isLocalOnHold, isRemoteOnHold, sidebarShown, primaryFeed, secondaryFeed, sidebarFeeds } = this.state;
 
         const callRoomId = LegacyCallHandler.instance.roomIdForCall(call);
-        const callRoom = (callRoomId ? MatrixClientPeg.get().getRoom(callRoomId) : undefined) ?? undefined;
+        const callRoom = (callRoomId ? MatrixClientPeg.safeGet().getRoom(callRoomId) : undefined) ?? undefined;
         const avatarSize = pipMode ? 76 : 160;
         const transfereeCall = LegacyCallHandler.instance.getTransfereeForCallId(call.callId);
         const isOnHold = isLocalOnHold || isRemoteOnHold;
@@ -452,7 +439,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
 
             let holdTransferContent: React.ReactNode;
             if (transfereeCall) {
-                const cli = MatrixClientPeg.get();
+                const cli = MatrixClientPeg.safeGet();
                 const callRoomId = LegacyCallHandler.instance.roomIdForCall(call);
                 const transferTargetRoom = callRoomId ? cli.getRoom(callRoomId) : null;
                 const transferTargetName = transferTargetRoom ? transferTargetRoom.name : _t("unknown person");
@@ -575,7 +562,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
         const { call, secondaryCall, pipMode, showApps, onMouseDownOnHeader } = this.props;
         const { sidebarShown, sidebarFeeds } = this.state;
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const callRoomId = LegacyCallHandler.instance.roomIdForCall(call);
         const secondaryCallRoomId = LegacyCallHandler.instance.roomIdForCall(secondaryCall);
         const callRoom = callRoomId ? client.getRoom(callRoomId) : null;

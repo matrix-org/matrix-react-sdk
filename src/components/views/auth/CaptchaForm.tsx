@@ -94,7 +94,7 @@ export default class CaptchaForm extends React.Component<ICaptchaFormProps, ICap
             throw new Error("This server has not supplied enough information for Recaptcha authentication");
         }
 
-        logger.info("Rendering to %s", divId);
+        logger.info(`Rendering to ${divId}`);
         this.captchaWidgetId = global.grecaptcha?.render(divId, {
             sitekey: publicKey,
             callback: this.props.onCaptchaResponse,
@@ -117,7 +117,7 @@ export default class CaptchaForm extends React.Component<ICaptchaFormProps, ICap
             });
         } catch (e) {
             this.setState({
-                errorText: e.toString(),
+                errorText: e instanceof Error ? e.message : String(e),
             });
         }
     }

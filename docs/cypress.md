@@ -45,6 +45,16 @@ To launch it:
 yarn run test:cypress:open
 ```
 
+### Running with Rust cryptography
+
+`matrix-js-sdk` is currently in the
+[process](https://github.com/vector-im/element-web/issues/21972) of being
+updated to replace its end-to-end encryption implementation to use the [Matrix
+Rust SDK](https://github.com/matrix-org/matrix-rust-sdk). This is not currently
+enabled by default, but it is possible to have Cypress configure Element to use
+the Rust crypto implementation by setting the environment variable
+`CYPRESS_RUST_CRYPTO=1`.
+
 ## How the Tests Work
 
 Everything Cypress-related lives in the `cypress/` subdirectory of react-sdk
@@ -220,3 +230,10 @@ having to figure it out later after the nightly build. If you don't have
 permission to add a label, please ask your reviewer to do it. Note: it's best to
 add this label when the change is nearly ready, because the screenshots will be
 re-created every time you make a change to your PR.
+
+Some UI elements render differently between test runs, such as BaseAvatar when
+there is no avatar set, choosing a colour from the theme palette based on the
+hash of the user/room's Matrix ID. To avoid this creating flaky tests we can use
+the `@media only percy` CSS query to override the variable colour into a fixed one
+for tests where it is not feasible to fix the underlying identifiers issued by the
+server. See https://docs.percy.io/docs/percy-specific-css#percy-css-media-query.

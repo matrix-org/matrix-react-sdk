@@ -25,7 +25,7 @@ import { RoomPreviewOpts, RoomViewLifecycle } from "@matrix-org/react-sdk-module
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
-import { _t } from "../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
 import IdentityAuthClient from "../../../IdentityAuthClient";
 import InviteReason from "../elements/InviteReason";
@@ -136,33 +136,36 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             this.setState({ busy: true });
             try {
                 // Gather the account 3PIDs
-                const account3pids = await MatrixClientPeg.get().getThreePids();
+                const account3pids = await MatrixClientPeg.safeGet().getThreePids();
                 this.setState({
                     accountEmails: account3pids.threepids.filter((b) => b.medium === "email").map((b) => b.address),
                 });
                 // If we have an IS connected, use that to lookup the email and
                 // check the bound MXID.
-                if (!MatrixClientPeg.get().getIdentityServerUrl()) {
+                if (!MatrixClientPeg.safeGet().getIdentityServerUrl()) {
                     this.setState({ busy: false });
                     return;
                 }
                 const authClient = new IdentityAuthClient();
                 const identityAccessToken = await authClient.getAccessToken();
-                const result = await MatrixClientPeg.get().lookupThreePid(
+                const result = await MatrixClientPeg.safeGet().lookupThreePid(
                     "email",
                     this.props.invitedEmail,
                     identityAccessToken!,
                 );
+                if (!("mxid" in result)) {
+                    throw new UserFriendlyError("Unable to find user by email");
+                }
                 this.setState({ invitedEmailMxid: result.mxid });
             } catch (err) {
-                this.setState({ threePidFetchError: err });
+                this.setState({ threePidFetchError: err as MatrixError });
             }
             this.setState({ busy: false });
         }
     }
 
     private getMessageCase(): MessageCase {
-        const isGuest = MatrixClientPeg.get().isGuest();
+        const isGuest = MatrixClientPeg.safeGet().isGuest();
 
         if (isGuest) {
             return MessageCase.NotLoggedIn;
@@ -192,9 +195,9 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                     return MessageCase.OtherThreePIDError;
                 } else if (this.state.accountEmails && !this.state.accountEmails.includes(this.props.invitedEmail)) {
                     return MessageCase.InvitedEmailNotFoundInAccount;
-                } else if (!MatrixClientPeg.get().getIdentityServerUrl()) {
+                } else if (!MatrixClientPeg.safeGet().getIdentityServerUrl()) {
                     return MessageCase.InvitedEmailNoIdentityServer;
-                } else if (this.state.invitedEmailMxid != MatrixClientPeg.get().getUserId()) {
+                } else if (this.state.invitedEmailMxid != MatrixClientPeg.safeGet().getUserId()) {
                     return MessageCase.InvitedEmailMismatch;
                 }
             }
@@ -215,8 +218,10 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         if (!myMember) {
             return {};
         }
-        const kickerMember = this.props.room?.currentState.getMember(myMember.events.member.getSender());
-        const memberName = kickerMember?.name ?? myMember.events.member?.getSender();
+
+        const kickerUserId = myMember.events.member?.getSender();
+        const kickerMember = kickerUserId ? this.props.room?.currentState.getMember(kickerUserId) : undefined;
+        const memberName = kickerMember?.name ?? kickerUserId;
         const reason = myMember.events.member?.getContent().reason;
         return { memberName, reason };
     }
@@ -230,7 +235,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
     }
 
     private getMyMember(): RoomMember | null {
-        return this.props.room?.getMember(MatrixClientPeg.get().getUserId()!) ?? null;
+        return this.props.room?.getMember(MatrixClientPeg.safeGet().getSafeUserId()) ?? null;
     }
 
     private getInviteMember(): RoomMember | null {
@@ -238,7 +243,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         if (!room) {
             return null;
         }
-        const myUserId = MatrixClientPeg.get().getUserId()!;
+        const myUserId = MatrixClientPeg.safeGet().getSafeUserId();
         const inviteEvent = room.currentState.getMember(myUserId);
         if (!inviteEvent) {
             return null;
@@ -491,7 +496,9 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
 
                 const isDM = this.isDMInvite();
                 if (isDM) {
-                    title = _t("Do you want to chat with %(user)s?", { user: inviteMember.name });
+                    title = _t("Do you want to chat with %(user)s?", {
+                        user: inviteMember?.name ?? this.props.inviterName,
+                    });
                     subTitle = [avatar, _t("<userName/> wants to chat", {}, { userName: () => inviterElement })];
                     primaryActionLabel = _t("Start chatting");
                 } else {
@@ -500,7 +507,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                     primaryActionLabel = _t("Accept");
                 }
 
-                const myUserId = MatrixClientPeg.get().getUserId()!;
+                const myUserId = MatrixClientPeg.safeGet().getSafeUserId();
                 const member = this.props.room?.currentState.getMember(myUserId);
                 const memberEventContent = member?.events.member?.getContent();
 
@@ -559,7 +566,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                         "%(errcode)s was returned while trying to access the room or space. " +
                             "If you think you're seeing this message in error, please " +
                             "<issueLink>submit a bug report</issueLink>.",
-                        { errcode: this.props.error.errcode },
+                        { errcode: String(this.props.error?.errcode) },
                         {
                             issueLink: (label) => (
                                 <a

@@ -70,6 +70,16 @@ describe("FilePanel", () => {
     });
 
     describe("render", () => {
+        it("should render empty state", () => {
+            // Wait until the information about the empty state is rendered
+            cy.get(".mx_FilePanel_empty").should("exist");
+
+            // Take a snapshot of RightPanel - fix https://github.com/vector-im/element-web/issues/25332
+            cy.get(".mx_RightPanel").percySnapshotElement("File Panel - empty", {
+                widths: [264], // Emulate the UI. The value is based on minWidth specified on MainSplit.tsx
+            });
+        });
+
         it("should list tiles on the panel", () => {
             // Upload multiple files
             uploadFile("cypress/fixtures/riot.png"); // Image
@@ -164,7 +174,7 @@ describe("FilePanel", () => {
             // FIXME: hide mx_SeekBar because flaky - see https://github.com/vector-im/element-web/issues/24897
             //   Remove this once https://github.com/vector-im/element-web/issues/24898 is fixed.
             const percyCSS =
-                ".mx_MessageTimestamp, .mx_RoomView_myReadMarker, .mx_SeekBar { visibility: hidden !important; }";
+                ".mx_MessageTimestamp, .mx_MessagePanel_myReadMarker, .mx_SeekBar { visibility: hidden !important; }";
 
             // Take a snapshot of file tiles list on FilePanel
             cy.get(".mx_FilePanel .mx_RoomView_MessageList").percySnapshotElement("File tiles list on FilePanel", {
@@ -173,7 +183,7 @@ describe("FilePanel", () => {
             });
         });
 
-        it("should render the audio pleyer and play the audio file on the panel", () => {
+        it("should render the audio player and play the audio file on the panel", () => {
             // Upload an image file
             uploadFile("cypress/fixtures/1sec.ogg");
 
@@ -192,10 +202,14 @@ describe("FilePanel", () => {
                                 cy.contains(".mx_AudioPlayer_byline", "(3.56 KB)").should("exist"); // actual size
                             });
 
+                            // Assert that the duration counter is 00:01 before clicking the play button
+                            cy.contains(".mx_AudioPlayer_mediaInfo time", "00:01").should("exist");
+
                             // Assert that the counter is zero before clicking the play button
                             cy.contains(".mx_AudioPlayer_seek [role='timer']", "00:00").should("exist");
 
                             // Click the play button
+                            cy.wait(500);
                             cy.findByRole("button", { name: "Play" }).click();
 
                             // Assert that the pause button is rendered
@@ -226,22 +240,6 @@ describe("FilePanel", () => {
                     cy.contains("a", size).should("exist");
                     cy.contains(".mx_MImageBody_size", size).should("exist");
                 });
-            });
-        });
-
-        it("should not add inline padding to a tile when it is selected with right click", () => {
-            // Upload a file
-            uploadFile("cypress/fixtures/1sec.ogg");
-
-            cy.get(".mx_FilePanel .mx_RoomView_MessageList").within(() => {
-                // Wait until the spinner of the audio player vanishes
-                cy.get(".mx_InlineSpinner").should("not.exist");
-
-                // Right click the uploaded file to select the tile
-                cy.get(".mx_EventTile").rightclick();
-
-                // Assert that inline padding is not applied
-                cy.get(".mx_EventTile_selected .mx_EventTile_line").should("have.css", "padding-inline", "0px");
             });
         });
     });

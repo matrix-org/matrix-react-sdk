@@ -55,7 +55,7 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { Action } from "../../dispatcher/actions";
 import { ElementWidgetActions, IHangupCallApiRequest, IViewRoomApiRequest } from "./ElementWidgetActions";
 import { ModalWidgetStore } from "../ModalWidgetStore";
-import { IApp } from "../WidgetStore";
+import { IApp, isAppWidget } from "../WidgetStore";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { getCustomTheme } from "../../theme";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
@@ -72,7 +72,7 @@ import { SdkContextClass } from "../../contexts/SDKContext";
 
 interface IAppTileProps {
     // Note: these are only the props we care about
-    app: IApp;
+    app: IApp | IWidget;
     room?: Room; // without a room it is a user widget
     userId: string;
     creatorUserId: string;
@@ -157,9 +157,9 @@ export class ElementWidget extends Widget {
 
 export class StopGapWidget extends EventEmitter {
     private client: MatrixClient;
-    private messaging: ClientWidgetApi | null;
+    private messaging: ClientWidgetApi | null = null;
     private mockWidget: ElementWidget;
-    private scalarToken: string;
+    private scalarToken?: string;
     private roomId?: string;
     private kind: WidgetKind;
     private readonly virtual: boolean;
@@ -167,7 +167,7 @@ export class StopGapWidget extends EventEmitter {
 
     public constructor(private appTileProps: IAppTileProps) {
         super();
-        this.client = MatrixClientPeg.get();
+        this.client = MatrixClientPeg.safeGet();
 
         let app = appTileProps.app;
         // Backwards compatibility: not all old widgets have a creatorUserId
@@ -179,7 +179,7 @@ export class StopGapWidget extends EventEmitter {
         this.mockWidget = new ElementWidget(app);
         this.roomId = appTileProps.room?.roomId;
         this.kind = appTileProps.userWidget ? WidgetKind.Account : WidgetKind.Room; // probably
-        this.virtual = app.eventId === undefined;
+        this.virtual = isAppWidget(app) && app.eventId === undefined;
     }
 
     private get eventListenerRoomId(): Optional<string> {
@@ -221,6 +221,7 @@ export class StopGapWidget extends EventEmitter {
             clientId: ELEMENT_CLIENT_ID,
             clientTheme: SettingsStore.getValue("theme"),
             clientLanguage: getUserLanguage(),
+            deviceId: this.client.getDeviceId() ?? undefined,
         };
         const templated = this.mockWidget.getCompleteUrl(Object.assign(defaults, fromCustomisation), opts?.asPopout);
 
@@ -284,6 +285,7 @@ export class StopGapWidget extends EventEmitter {
 
         this.messaging = new ClientWidgetApi(this.mockWidget, iframe, driver);
         this.messaging.on("preparing", () => this.emit("preparing"));
+        this.messaging.on("error:preparing", (err: unknown) => this.emit("error:preparing", err));
         this.messaging.on("ready", () => {
             WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.roomId, this.messaging!);
             this.emit("ready");

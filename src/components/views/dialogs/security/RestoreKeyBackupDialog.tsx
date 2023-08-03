@@ -20,6 +20,7 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IKeyBackupInfo, IKeyBackupRestoreResult } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
@@ -55,10 +56,8 @@ interface IState {
     backupInfo: IKeyBackupInfo | null;
     backupKeyStored: Record<string, ISecretStorageKeyInfo> | null;
     loading: boolean;
-    loadError: string | null;
-    restoreError: {
-        errcode: string;
-    } | null;
+    loadError: boolean | null;
+    restoreError: unknown | null;
     recoveryKey: string;
     recoverInfo: IKeyBackupRestoreResult | null;
     recoveryKeyValid: boolean;
@@ -66,7 +65,7 @@ interface IState {
     passPhrase: string;
     restoreType: RestoreType | null;
     progress: {
-        stage: ProgressState;
+        stage: ProgressState | string;
         total?: number;
         successes?: number;
         failures?: number;
@@ -131,7 +130,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
     private onRecoveryKeyChange = (e: ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             recoveryKey: e.target.value,
-            recoveryKeyValid: MatrixClientPeg.get().isValidRecoveryKey(e.target.value),
+            recoveryKeyValid: MatrixClientPeg.safeGet().isValidRecoveryKey(e.target.value),
         });
     };
 
@@ -145,7 +144,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         try {
             // We do still restore the key backup: we must ensure that the key backup key
             // is the right one and restoring it is currently the only way we can do this.
-            const recoverInfo = await MatrixClientPeg.get().restoreKeyBackupWithPassword(
+            const recoverInfo = await MatrixClientPeg.safeGet().restoreKeyBackupWithPassword(
                 this.state.passPhrase,
                 undefined,
                 undefined,
@@ -153,7 +152,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 { progressCallback: this.progressCallback },
             );
             if (this.props.keyCallback) {
-                const key = await MatrixClientPeg.get().keyBackupKeyFromPassword(
+                const key = await MatrixClientPeg.safeGet().keyBackupKeyFromPassword(
                     this.state.passPhrase,
                     this.state.backupInfo,
                 );
@@ -186,7 +185,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             restoreType: RestoreType.RecoveryKey,
         });
         try {
-            const recoverInfo = await MatrixClientPeg.get().restoreKeyBackupWithRecoveryKey(
+            const recoverInfo = await MatrixClientPeg.safeGet().restoreKeyBackupWithRecoveryKey(
                 this.state.recoveryKey,
                 undefined,
                 undefined,
@@ -194,7 +193,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 { progressCallback: this.progressCallback },
             );
             if (this.props.keyCallback) {
-                const key = MatrixClientPeg.get().keyBackupKeyFromRecoveryKey(this.state.recoveryKey);
+                const key = MatrixClientPeg.safeGet().keyBackupKeyFromRecoveryKey(this.state.recoveryKey);
                 this.props.keyCallback(key);
             }
             if (!this.props.showSummary) {
@@ -230,7 +229,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             // `accessSecretStorage` may prompt for storage access as needed.
             await accessSecretStorage(async (): Promise<void> => {
                 if (!this.state.backupInfo) return;
-                await MatrixClientPeg.get().restoreKeyBackupWithSecretStorage(
+                await MatrixClientPeg.safeGet().restoreKeyBackupWithSecretStorage(
                     this.state.backupInfo,
                     undefined,
                     undefined,
@@ -252,7 +251,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
     private async restoreWithCachedKey(backupInfo: IKeyBackupInfo | null): Promise<boolean> {
         if (!backupInfo) return false;
         try {
-            const recoverInfo = await MatrixClientPeg.get().restoreKeyBackupWithCache(
+            const recoverInfo = await MatrixClientPeg.safeGet().restoreKeyBackupWithCache(
                 undefined /* targetRoomId */,
                 undefined /* targetSessionId */,
                 backupInfo,
@@ -274,7 +273,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             loadError: null,
         });
         try {
-            const cli = MatrixClientPeg.get();
+            const cli = MatrixClientPeg.safeGet();
             const backupInfo = await cli.getKeyBackupVersion();
             const has4S = await cli.hasSecretStorageKey();
             const backupKeyStored = has4S ? await cli.isKeyBackupKeyStored() : null;
@@ -304,7 +303,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         } catch (e) {
             logger.log("Error loading backup status", e);
             this.setState({
-                loadError: e,
+                loadError: true,
                 loading: false,
             });
         }
@@ -343,7 +342,10 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             title = _t("Error");
             content = _t("Unable to load backup status");
         } else if (this.state.restoreError) {
-            if (this.state.restoreError.errcode === MatrixClient.RESTORE_BACKUP_ERROR_BAD_KEY) {
+            if (
+                this.state.restoreError instanceof MatrixError &&
+                this.state.restoreError.errcode === MatrixClient.RESTORE_BACKUP_ERROR_BAD_KEY
+            ) {
                 if (this.state.restoreType === RestoreType.RecoveryKey) {
                     title = _t("Security Key mismatch");
                     content = (

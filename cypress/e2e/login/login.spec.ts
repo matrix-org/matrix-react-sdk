@@ -21,10 +21,6 @@ import { HomeserverInstance } from "../../plugins/utils/homeserver";
 describe("Login", () => {
     let homeserver: HomeserverInstance;
 
-    beforeEach(() => {
-        cy.stubDefaultServer();
-    });
-
     afterEach(() => {
         cy.stopHomeserver(homeserver);
     });
@@ -44,16 +40,41 @@ describe("Login", () => {
         it("logs in with an existing account and lands on the home screen", () => {
             cy.injectAxe();
 
-            cy.findByRole("textbox", { name: "Username", timeout: 15000 }).should("be.visible");
-            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24688
-            //cy.percySnapshot("Login");
-            cy.checkA11y();
+            // first pick the homeserver, as otherwise the user picker won't be visible
+            cy.findByRole("button", { name: "Edit" }).click();
+            cy.findByRole("textbox", { name: "Other homeserver" }).type(homeserver.baseUrl);
+            cy.findByRole("button", { name: "Continue" }).click();
+            // wait for the dialog to go away
+            cy.get(".mx_ServerPickerDialog").should("not.exist");
+
+            cy.get(".mx_Spinner").should("not.exist");
+            cy.get(".mx_ServerPicker_server").should("have.text", homeserver.baseUrl);
+
+            cy.findByRole("button", { name: "Edit" }).click();
+
+            // select the default server again
+            cy.get(".mx_StyledRadioButton").first().click();
+            cy.findByRole("button", { name: "Continue" }).click();
+            cy.get(".mx_ServerPickerDialog").should("not.exist");
+            cy.get(".mx_Spinner").should("not.exist");
+            // name of default server
+            cy.get(".mx_ServerPicker_server").should("have.text", "server.invalid");
+
+            // switch back to the custom homeserver
 
             cy.findByRole("button", { name: "Edit" }).click();
             cy.findByRole("textbox", { name: "Other homeserver" }).type(homeserver.baseUrl);
             cy.findByRole("button", { name: "Continue" }).click();
             // wait for the dialog to go away
             cy.get(".mx_ServerPickerDialog").should("not.exist");
+
+            cy.get(".mx_Spinner").should("not.exist");
+            cy.get(".mx_ServerPicker_server").should("have.text", homeserver.baseUrl);
+
+            cy.findByRole("textbox", { name: "Username", timeout: 15000 }).should("be.visible");
+            // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24688
+            //cy.percySnapshot("Login");
+            cy.checkA11y();
 
             cy.findByRole("textbox", { name: "Username" }).type(username);
             cy.findByPlaceholderText("Password").type(password);

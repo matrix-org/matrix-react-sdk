@@ -15,14 +15,19 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { EventType, GuestAccess, HistoryVisibility, JoinRule, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import SecurityRoomSettingsTab from "../../../../../../src/components/views/settings/tabs/room/SecurityRoomSettingsTab";
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
-import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../../../test-utils";
+import {
+    clearAllModals,
+    flushPromises,
+    getMockClientWithEventEmitter,
+    mockClientMethodsUser,
+} from "../../../../../test-utils";
 import { filterBoolean } from "../../../../../../src/utils/arrays";
 
 describe("<SecurityRoomSettingsTab />", () => {
@@ -33,6 +38,7 @@ describe("<SecurityRoomSettingsTab />", () => {
         isRoomEncrypted: jest.fn(),
         getLocalAliases: jest.fn().mockReturnValue([]),
         sendStateEvent: jest.fn(),
+        getClientWellKnown: jest.fn(),
     });
     const roomId = "!room:server.org";
 
@@ -86,10 +92,13 @@ describe("<SecurityRoomSettingsTab />", () => {
         room.currentState.setStateEvents(events);
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
         client.sendStateEvent.mockReset().mockResolvedValue({ event_id: "test" });
         client.isRoomEncrypted.mockReturnValue(false);
+        client.getClientWellKnown.mockReturnValue(undefined);
         jest.spyOn(SettingsStore, "getValue").mockRestore();
+
+        await clearAllModals();
     });
 
     describe("join rule", () => {
@@ -343,11 +352,14 @@ describe("<SecurityRoomSettingsTab />", () => {
 
             const dialog = await screen.findByRole("dialog");
 
+            expect(within(dialog).getByText("Enable encryption?")).toBeInTheDocument();
             fireEvent.click(within(dialog).getByText("OK"));
 
-            expect(client.sendStateEvent).toHaveBeenCalledWith(room.roomId, EventType.RoomEncryption, {
-                algorithm: "m.megolm.v1.aes-sha2",
-            });
+            await waitFor(() =>
+                expect(client.sendStateEvent).toHaveBeenCalledWith(room.roomId, EventType.RoomEncryption, {
+                    algorithm: "m.megolm.v1.aes-sha2",
+                }),
+            );
         });
 
         it("renders world readable option when room is encrypted and history is already set to world readable", () => {
@@ -397,6 +409,40 @@ describe("<SecurityRoomSettingsTab />", () => {
             // reset to before updated value
             expect(screen.getByDisplayValue(HistoryVisibility.Shared)).toBeChecked();
             expect(logger.error).toHaveBeenCalledWith("oups");
+        });
+
+        describe("when encryption is force disabled by e2ee well-known config", () => {
+            beforeEach(() => {
+                client.getClientWellKnown.mockReturnValue({
+                    "io.element.e2ee": {
+                        force_disable: true,
+                    },
+                });
+            });
+
+            it("displays encrypted rooms as encrypted", () => {
+                // rooms that are already encrypted still show encrypted
+                const room = new Room(roomId, client, userId);
+                client.isRoomEncrypted.mockReturnValue(true);
+                setRoomStateEvents(room);
+                getComponent(room);
+
+                expect(screen.getByLabelText("Encrypted")).toBeChecked();
+                expect(screen.getByLabelText("Encrypted").getAttribute("aria-disabled")).toEqual("true");
+                expect(screen.getByText("Once enabled, encryption cannot be disabled.")).toBeInTheDocument();
+            });
+
+            it("displays unencrypted rooms with toggle disabled", () => {
+                const room = new Room(roomId, client, userId);
+                client.isRoomEncrypted.mockReturnValue(false);
+                setRoomStateEvents(room);
+                getComponent(room);
+
+                expect(screen.getByLabelText("Encrypted")).not.toBeChecked();
+                expect(screen.getByLabelText("Encrypted").getAttribute("aria-disabled")).toEqual("true");
+                expect(screen.queryByText("Once enabled, encryption cannot be disabled.")).not.toBeInTheDocument();
+                expect(screen.getByText("Your server requires encryption to be disabled.")).toBeInTheDocument();
+            });
         });
     });
 });

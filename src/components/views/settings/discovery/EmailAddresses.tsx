@@ -16,16 +16,17 @@ limitations under the License.
 */
 
 import React from "react";
-import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from "../../../../Modal";
-import AddThreepid, { Binding } from "../../../../AddThreepid";
+import AddThreepid, { Binding, ThirdPartyIdentifier } from "../../../../AddThreepid";
 import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
-import AccessibleButton from "../../elements/AccessibleButton";
+import SettingsSubsection from "../shared/SettingsSubsection";
+import InlineSpinner from "../../elements/InlineSpinner";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -44,7 +45,7 @@ TODO: Reduce all the copying between account vs. discovery components.
 */
 
 interface IEmailAddressProps {
-    email: IThreepid;
+    email: ThirdPartyIdentifier;
 }
 
 interface IEmailAddressState {
@@ -76,7 +77,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
     }
 
     private async changeBinding({ bind, label, errorTitle }: Binding): Promise<void> {
-        if (!(await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind())) {
+        if (!(await MatrixClientPeg.safeGet().doesServerSupportSeparateAddAndBind())) {
             return this.changeBindingTangledAddBind({ bind, label, errorTitle });
         }
 
@@ -84,7 +85,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
 
         try {
             if (bind) {
-                const task = new AddThreepid();
+                const task = new AddThreepid(MatrixClientPeg.safeGet());
                 this.setState({
                     verifying: true,
                     continueDisabled: true,
@@ -95,7 +96,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                     continueDisabled: false,
                 });
             } else {
-                await MatrixClientPeg.get().unbindThreePid(medium, address);
+                await MatrixClientPeg.safeGet().unbindThreePid(medium, address);
             }
             this.setState({ bound: bind });
         } catch (err) {
@@ -115,7 +116,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
     private async changeBindingTangledAddBind({ bind, label, errorTitle }: Binding): Promise<void> {
         const { medium, address } = this.props.email;
 
-        const task = new AddThreepid();
+        const task = new AddThreepid(MatrixClientPeg.safeGet());
         this.setState({
             verifying: true,
             continueDisabled: true,
@@ -123,7 +124,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         });
 
         try {
-            await MatrixClientPeg.get().deleteThreePid(medium, address);
+            await MatrixClientPeg.safeGet().deleteThreePid(medium, address);
             if (bind) {
                 await task.bindEmailAddress(address);
             } else {
@@ -147,7 +148,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         }
     }
 
-    private onRevokeClick = (e: React.MouseEvent): void => {
+    private onRevokeClick = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
         this.changeBinding({
@@ -157,7 +158,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         });
     };
 
-    private onShareClick = (e: React.MouseEvent): void => {
+    private onShareClick = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
         this.changeBinding({
@@ -167,7 +168,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         });
     };
 
-    private onContinueClick = async (e: React.MouseEvent): Promise<void> => {
+    private onContinueClick = async (e: ButtonEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -217,7 +218,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 <span>
                     {_t("Verify the link in your inbox")}
                     <AccessibleButton
-                        className="mx_ExistingEmailAddress_confirmBtn"
+                        className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                         kind="primary_sm"
                         onClick={this.onContinueClick}
                         disabled={this.state.continueDisabled}
@@ -229,7 +230,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         } else if (bound) {
             status = (
                 <AccessibleButton
-                    className="mx_ExistingEmailAddress_confirmBtn"
+                    className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     kind="danger_sm"
                     onClick={this.onRevokeClick}
                 >
@@ -239,7 +240,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         } else {
             status = (
                 <AccessibleButton
-                    className="mx_ExistingEmailAddress_confirmBtn"
+                    className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     kind="primary_sm"
                     onClick={this.onShareClick}
                 >
@@ -249,32 +250,41 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         }
 
         return (
-            <div className="mx_ExistingEmailAddress">
-                <span className="mx_ExistingEmailAddress_email">{address}</span>
+            <div className="mx_GeneralUserSettingsTab_section--discovery_existing">
+                <span className="mx_GeneralUserSettingsTab_section--discovery_existing_address">{address}</span>
                 {status}
             </div>
         );
     }
 }
 interface IProps {
-    emails: IThreepid[];
+    emails: ThirdPartyIdentifier[];
+    isLoading?: boolean;
 }
 
 export default class EmailAddresses extends React.Component<IProps> {
     public render(): React.ReactNode {
         let content;
-        if (this.props.emails.length > 0) {
+        if (this.props.isLoading) {
+            content = <InlineSpinner />;
+        } else if (this.props.emails.length > 0) {
             content = this.props.emails.map((e) => {
                 return <EmailAddress email={e} key={e.address} />;
             });
-        } else {
-            content = (
-                <span className="mx_SettingsTab_subsectionText">
-                    {_t("Discovery options will appear once you have added an email above.")}
-                </span>
-            );
         }
 
-        return <div className="mx_EmailAddresses">{content}</div>;
+        const hasEmails = !!this.props.emails.length;
+
+        return (
+            <SettingsSubsection
+                heading={_t("Email addresses")}
+                description={
+                    (!hasEmails && _t("Discovery options will appear once you have added an email above.")) || undefined
+                }
+                stretchContent
+            >
+                {content}
+            </SettingsSubsection>
+        );
     }
 }
