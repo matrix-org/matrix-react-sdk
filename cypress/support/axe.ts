@@ -16,9 +16,8 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import "cypress-axe";
-import * as axe from "axe-core";
 import { Options } from "cypress-axe";
+import * as axe from "axe-core";
 
 import Chainable = Cypress.Chainable;
 

@@ -78,6 +78,7 @@ module.exports = {
                 ],
             },
         ],
+        "import/no-duplicates": ["error"],
 
         // There are too many a11y violations to fix at once
         // Turn violated rules off until they are fixed
