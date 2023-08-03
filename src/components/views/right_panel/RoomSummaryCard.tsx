@@ -109,7 +109,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
 
     useEffect(() => {
         setCanModifyWidget(WidgetUtils.canUserModifyWidgets(room.client, room.roomId));
-    }, [room.roomId]);
+    }, [room.client, room.roomId]);
 
     const onOpenWidgetClick = (): void => {
         RightPanelStore.instance.pushCard({

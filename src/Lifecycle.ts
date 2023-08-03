@@ -2,7 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
 Copyright 2018 New Vector Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020, 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { ReactNode } from "react";
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixClient } from "matrix-js-sdk/src/client";
@@ -64,6 +65,8 @@ import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLoc
 import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
 import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
+import { completeOidcLogin } from "./utils/oidc/authorize";
+import { persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettings";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -181,7 +184,100 @@ export async function getStoredSessionOwner(): Promise<[string, boolean] | [null
 }
 
 /**
+ * If query string includes OIDC authorization code flow parameters attempt to login using oidc flow
+ * Else, we may be returning from SSO - attempt token login
+ *
  * @param {Object} queryParams    string->string map of the
+ *     query-parameters extracted from the real query-string of the starting
+ *     URI.
+ *
+ * @param {string} defaultDeviceDisplayName
+ * @param {string} fragmentAfterLogin path to go to after a successful login, only used for "Try again"
+ *
+ * @returns {Promise} promise which resolves to true if we completed the delegated auth login
+ *      else false
+ */
+export async function attemptDelegatedAuthLogin(
+    queryParams: QueryDict,
+    defaultDeviceDisplayName?: string,
+    fragmentAfterLogin?: string,
+): Promise<boolean> {
+    if (queryParams.code && queryParams.state) {
+        return attemptOidcNativeLogin(queryParams);
+    }
+
+    return attemptTokenLogin(queryParams, defaultDeviceDisplayName, fragmentAfterLogin);
+}
+
+/**
+ * Attempt to login by completing OIDC authorization code flow
+ * @param queryParams string->string map of the query-parameters extracted from the real query-string of the starting URI.
+ * @returns Promise that resolves to true when login succceeded, else false
+ */
+async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
+    try {
+        const { accessToken, homeserverUrl, identityServerUrl, clientId, issuer } = await completeOidcLogin(
+            queryParams,
+        );
+
+        const {
+            user_id: userId,
+            device_id: deviceId,
+            is_guest: isGuest,
+        } = await getUserIdFromAccessToken(accessToken, homeserverUrl, identityServerUrl);
+
+        const credentials = {
+            accessToken,
+            homeserverUrl,
+            identityServerUrl,
+            deviceId,
+            userId,
+            isGuest,
+        };
+
+        logger.debug("Logged in via OIDC native flow");
+        await onSuccessfulDelegatedAuthLogin(credentials);
+        // this needs to happen after success handler which clears storages
+        persistOidcAuthenticatedSettings(clientId, issuer);
+        return true;
+    } catch (error) {
+        logger.error("Failed to login via OIDC", error);
+
+        // TODO(kerrya) nice error messages https://github.com/vector-im/element-web/issues/25665
+        await onFailedDelegatedAuthLogin(_t("Something went wrong."));
+        return false;
+    }
+}
+
+/**
+ * Gets information about the owner of a given access token.
+ * @param accessToken
+ * @param homeserverUrl
+ * @param identityServerUrl
+ * @returns Promise that resolves with whoami response
+ * @throws when whoami request fails
+ */
+async function getUserIdFromAccessToken(
+    accessToken: string,
+    homeserverUrl: string,
+    identityServerUrl?: string,
+): Promise<ReturnType<MatrixClient["whoami"]>> {
+    try {
+        const client = createClient({
+            baseUrl: homeserverUrl,
+            accessToken: accessToken,
+            idBaseUrl: identityServerUrl,
+        });
+
+        return await client.whoami();
+    } catch (error) {
+        logger.error("Failed to retrieve userId using accessToken", error);
+        throw new Error("Failed to retrieve userId using accessToken");
+    }
+}
+
+/**
+ * @param {QueryDict} queryParams    string->string map of the
  *     query-parameters extracted from the real query-string of the starting
  *     URI.
  *
@@ -204,14 +300,12 @@ export function attemptTokenLogin(
     const identityServer = localStorage.getItem(SSO_ID_SERVER_URL_KEY) ?? undefined;
     if (!homeserver) {
         logger.warn("Cannot log in with token: can't determine HS URL to use");
-        Modal.createDialog(ErrorDialog, {
-            title: _t("We couldn't log you in"),
-            description: _t(
+        onFailedDelegatedAuthLogin(
+            _t(
                 "We asked the browser to remember which homeserver you use to let you sign in, " +
                     "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
             ),
-            button: _t("Try again"),
-        });
+        );
         return Promise.resolve(false);
     }
 
@@ -219,38 +313,59 @@ export function attemptTokenLogin(
         token: queryParams.loginToken as string,
         initial_device_display_name: defaultDeviceDisplayName,
     })
-        .then(function (creds) {
+        .then(async function (creds) {
             logger.log("Logged in with token");
-            return clearStorage().then(async (): Promise<boolean> => {
-                await persistCredentials(creds);
-                // remember that we just logged in
-                sessionStorage.setItem("mx_fresh_login", String(true));
-                return true;
-            });
+            await onSuccessfulDelegatedAuthLogin(creds);
+            return true;
         })
-        .catch((err) => {
-            Modal.createDialog(ErrorDialog, {
-                title: _t("We couldn't log you in"),
-                description: messageForLoginError(err, {
+        .catch((error) => {
+            const tryAgainCallback: TryAgainFunction = () => {
+                const cli = createClient({
+                    baseUrl: homeserver,
+                    idBaseUrl: identityServer,
+                });
+                const idpId = localStorage.getItem(SSO_IDP_ID_KEY) || undefined;
+                PlatformPeg.get()?.startSingleSignOn(cli, "sso", fragmentAfterLogin, idpId, SSOAction.LOGIN);
+            };
+            onFailedDelegatedAuthLogin(
+                messageForLoginError(error, {
                     hsUrl: homeserver,
                     hsName: homeserver,
                 }),
-                button: _t("Try again"),
-                onFinished: (tryAgain) => {
-                    if (tryAgain) {
-                        const cli = createClient({
-                            baseUrl: homeserver,
-                            idBaseUrl: identityServer,
-                        });
-                        const idpId = localStorage.getItem(SSO_IDP_ID_KEY) || undefined;
-                        PlatformPeg.get()?.startSingleSignOn(cli, "sso", fragmentAfterLogin, idpId, SSOAction.LOGIN);
-                    }
-                },
-            });
-            logger.error("Failed to log in with login token:");
-            logger.error(err);
+                tryAgainCallback,
+            );
+            logger.error("Failed to log in with login token:", error);
             return false;
         });
+}
+
+/**
+ * Called after a successful token login or OIDC authorization.
+ * Clear storage then save new credentials in storage
+ * @param credentials as returned from login
+ */
+async function onSuccessfulDelegatedAuthLogin(credentials: IMatrixClientCreds): Promise<void> {
+    await clearStorage();
+    await persistCredentials(credentials);
+
+    // remember that we just logged in
+    sessionStorage.setItem("mx_fresh_login", String(true));
+}
+
+type TryAgainFunction = () => void;
+/**
+ * Display a friendly error to the user when token login or OIDC authorization fails
+ * @param description error description
+ * @param tryAgain OPTIONAL function to call on try again button from error dialog
+ */
+async function onFailedDelegatedAuthLogin(description: string | ReactNode, tryAgain?: TryAgainFunction): Promise<void> {
+    Modal.createDialog(ErrorDialog, {
+        title: _t("We couldn't log you in"),
+        description,
+        button: _t("Try again"),
+        // if we have a tryAgain callback, call it the primary 'try again' button was clicked in the dialog
+        onFinished: tryAgain ? (shouldTryAgain?: boolean) => shouldTryAgain && tryAgain() : undefined,
+    });
 }
 
 export function handleInvalidStoreError(e: InvalidStoreError): Promise<void> | void {
@@ -278,7 +393,7 @@ export function handleInvalidStoreError(e: InvalidStoreError): Promise<void> | v
                 }
             })
             .then(() => {
-                return MatrixClientPeg.get().store.deleteAllData();
+                return MatrixClientPeg.safeGet().store.deleteAllData();
             })
             .then(() => {
                 PlatformPeg.get()?.reload();
@@ -307,7 +422,7 @@ function registerAsGuest(hsUrl: string, isUrl?: string, defaultDeviceDisplayName
                     {
                         userId: creds.user_id,
                         deviceId: creds.device_id,
-                        accessToken: creds.access_token,
+                        accessToken: creds.access_token!,
                         homeserverUrl: hsUrl,
                         identityServerUrl: isUrl,
                         guest: true,
@@ -477,7 +592,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
     }
 }
 
-async function handleLoadSessionFailure(e: Error): Promise<boolean> {
+async function handleLoadSessionFailure(e: unknown): Promise<boolean> {
     logger.error("Unable to load session", e);
 
     const modal = Modal.createDialog(SessionRestoreErrorDialog, {
@@ -541,8 +656,8 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
 export async function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixClient> {
-    const oldUserId = MatrixClientPeg.get().getUserId();
-    const oldDeviceId = MatrixClientPeg.get().getDeviceId();
+    const oldUserId = MatrixClientPeg.safeGet().getUserId();
+    const oldDeviceId = MatrixClientPeg.safeGet().getDeviceId();
 
     stopMatrixClient(); // unsets MatrixClientPeg.get()
     localStorage.removeItem("mx_soft_logout");
@@ -553,7 +668,7 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
         logger.warn("Clearing all data: Old session belongs to a different user/session");
     }
 
-    if (!credentials.pickleKey) {
+    if (!credentials.pickleKey && credentials.deviceId !== undefined) {
         logger.info("Lifecycle#hydrateSession: Pickle key not provided - trying to get one");
         credentials.pickleKey =
             (await PlatformPeg.get()?.getPickleKey(credentials.userId, credentials.deviceId)) ?? undefined;
@@ -603,14 +718,14 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     }
 
     MatrixClientPeg.replaceUsingCreds(credentials);
+    const client = MatrixClientPeg.safeGet();
 
     setSentryUser(credentials.userId);
 
     if (PosthogAnalytics.instance.isEnabled()) {
-        PosthogAnalytics.instance.startListeningToSettingsChanges();
+        PosthogAnalytics.instance.startListeningToSettingsChanges(client);
     }
 
-    const client = MatrixClientPeg.get();
     if (credentials.freshLogin && SettingsStore.getValue("feature_dehydration")) {
         // If we just logged in, try to rehydrate a device instead of using a
         // new device.  If it succeeds, we'll get a new device ID, so make sure
@@ -664,7 +779,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     if (credentials.accessToken) {
         localStorage.setItem("mx_has_access_token", "true");
     } else {
-        localStorage.deleteItem("mx_has_access_token");
+        localStorage.removeItem("mx_has_access_token");
     }
 
     if (credentials.pickleKey) {
@@ -686,14 +801,22 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
             // if we couldn't save to indexedDB, fall back to localStorage.  We
             // store the access token unencrypted since localStorage only saves
             // strings.
-            localStorage.setItem("mx_access_token", credentials.accessToken);
+            if (!!credentials.accessToken) {
+                localStorage.setItem("mx_access_token", credentials.accessToken);
+            } else {
+                localStorage.removeItem("mx_access_token");
+            }
         }
         localStorage.setItem("mx_has_pickle_key", String(true));
     } else {
         try {
             await StorageManager.idbSave("account", "mx_access_token", credentials.accessToken);
         } catch (e) {
-            localStorage.setItem("mx_access_token", credentials.accessToken);
+            if (!!credentials.accessToken) {
+                localStorage.setItem("mx_access_token", credentials.accessToken);
+            } else {
+                localStorage.removeItem("mx_access_token");
+            }
         }
         if (localStorage.getItem("mx_has_pickle_key") === "true") {
             logger.error("Expected a pickle key, but none provided.  Encryption may not work.");
@@ -720,11 +843,12 @@ let _isLoggingOut = false;
  * Logs the current session out and transitions to the logged-out state
  */
 export function logout(): void {
-    if (!MatrixClientPeg.get()) return;
+    const client = MatrixClientPeg.get();
+    if (!client) return;
 
     PosthogAnalytics.instance.logout();
 
-    if (MatrixClientPeg.get().isGuest()) {
+    if (client.isGuest()) {
         // logout doesn't work for guest sessions
         // Also we sometimes want to re-log in a guest session if we abort the login.
         // defer until next tick because it calls a synchronous dispatch, and we are likely here from a dispatch.
@@ -733,7 +857,6 @@ export function logout(): void {
     }
 
     _isLoggingOut = true;
-    const client = MatrixClientPeg.get();
     PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
     client.logout(true).then(onLoggedOut, (err) => {
         // Just throwing an error here is going to be very unhelpful
@@ -780,7 +903,7 @@ export function isLoggingOut(): boolean {
 /**
  * Starts the matrix client and all other react-sdk services that
  * listen for events while a session is logged in.
- * @param client the Matrix client instance to start
+ * @param client the matrix client to start
  * @param {boolean} startSyncing True (default) to actually start
  * syncing the client.
  */
@@ -892,10 +1015,8 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
 
         // now restore those invites and registration time
         if (!opts?.deleteEverything) {
-            pendingInvites.forEach((i) => {
-                const roomId = i.roomId;
-                delete i.roomId; // delete to avoid confusing the store
-                ThreepidInviteStore.instance.storeInvite(roomId, i);
+            pendingInvites.forEach(({ roomId, ...invite }) => {
+                ThreepidInviteStore.instance.storeInvite(roomId, invite);
             });
 
             if (registrationTime) {
@@ -941,6 +1062,7 @@ export function stopMatrixClient(unsetClient = true): void {
         if (unsetClient) {
             MatrixClientPeg.unset();
             EventIndexPeg.unset();
+            cli.store.destroy();
         }
     }
 }

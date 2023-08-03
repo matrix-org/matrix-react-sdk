@@ -14,8 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Attributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
+import { AllowedMentionAttributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { SyntheticEvent, useState } from "react";
+
+import { isNotNull } from "../../../../../Typeguards";
 
 /**
  * Information about the current state of the `useSuggestion` hook.
@@ -49,9 +51,10 @@ type SuggestionState = Suggestion | null;
  */
 export function useSuggestion(
     editorRef: React.RefObject<HTMLDivElement>,
-    setText: (text: string) => void,
+    setText: (text?: string) => void,
 ): {
-    handleMention: (href: string, displayName: string, attributes: Attributes) => void;
+    handleMention: (href: string, displayName: string, attributes: AllowedMentionAttributes) => void;
+    handleAtRoomMention: (attributes: AllowedMentionAttributes) => void;
     handleCommand: (text: string) => void;
     onSelect: (event: SyntheticEvent<HTMLDivElement>) => void;
     suggestion: MappedSuggestion | null;
@@ -62,8 +65,11 @@ export function useSuggestion(
     // we can not depend on input events only
     const onSelect = (): void => processSelectionChange(editorRef, setSuggestionData);
 
-    const handleMention = (href: string, displayName: string, attributes: Attributes): void =>
+    const handleMention = (href: string, displayName: string, attributes: AllowedMentionAttributes): void =>
         processMention(href, displayName, attributes, suggestionData, setSuggestionData, setText);
+
+    const handleAtRoomMention = (attributes: AllowedMentionAttributes): void =>
+        processMention("#", "@room", attributes, suggestionData, setSuggestionData, setText);
 
     const handleCommand = (replacementText: string): void =>
         processCommand(replacementText, suggestionData, setSuggestionData, setText);
@@ -72,6 +78,7 @@ export function useSuggestion(
         suggestion: suggestionData?.mappedSuggestion ?? null,
         handleCommand,
         handleMention,
+        handleAtRoomMention,
         onSelect,
     };
 }
@@ -141,10 +148,10 @@ export function processSelectionChange(
 export function processMention(
     href: string,
     displayName: string,
-    attributes: Attributes, // these will be used when formatting the link as a pill
+    attributes: AllowedMentionAttributes, // these will be used when formatting the link as a pill
     suggestionData: SuggestionState,
     setSuggestionData: React.Dispatch<React.SetStateAction<SuggestionState>>,
-    setText: (text: string) => void,
+    setText: (text?: string) => void,
 ): void {
     // if we do not have a suggestion, return early
     if (suggestionData === null) {
@@ -153,18 +160,36 @@ export function processMention(
 
     const { node } = suggestionData;
 
-    const textBeforeReplacement = node.textContent?.slice(0, suggestionData.startOffset) ?? "";
-    const textAfterReplacement = node.textContent?.slice(suggestionData.endOffset) ?? "";
+    // create an <a> element with the required attributes to allow us to interpret the mention as being a pill
+    const linkElement = document.createElement("a");
+    const linkTextNode = document.createTextNode(displayName);
+    linkElement.setAttribute("href", href);
+    linkElement.setAttribute("contenteditable", "false");
 
-    // TODO replace this markdown style text insertion with a pill representation
-    const newText = `[${displayName}](<${href}>) `;
-    const newCursorOffset = textBeforeReplacement.length + newText.length;
-    const newContent = textBeforeReplacement + newText + textAfterReplacement;
+    for (const [attr, value] of attributes.entries()) {
+        linkElement.setAttribute(attr, value);
+    }
 
-    // insert the new text, move the cursor, set the text state, clear the suggestion state
-    node.textContent = newContent;
-    document.getSelection()?.setBaseAndExtent(node, newCursorOffset, node, newCursorOffset);
-    setText(newContent);
+    linkElement.appendChild(linkTextNode);
+
+    // create text nodes to go before and after the link
+    const leadingTextNode = document.createTextNode(node.textContent?.slice(0, suggestionData.startOffset) || "\u200b");
+    const trailingTextNode = document.createTextNode(` ${node.textContent?.slice(suggestionData.endOffset) ?? ""}`);
+
+    // now add the leading text node, link element and trailing text node before removing the node we are replacing
+    const parentNode = node.parentNode;
+    if (isNotNull(parentNode)) {
+        parentNode.insertBefore(leadingTextNode, node);
+        parentNode.insertBefore(linkElement, node);
+        parentNode.insertBefore(trailingTextNode, node);
+        parentNode.removeChild(node);
+    }
+
+    // move the selection to the trailing text node
+    document.getSelection()?.setBaseAndExtent(trailingTextNode, 1, trailingTextNode, 1);
+
+    // set the text content to be the innerHTML of the current editor ref and clear the suggestion state
+    setText();
     setSuggestionData(null);
 }
 
@@ -181,7 +206,7 @@ export function processCommand(
     replacementText: string,
     suggestionData: SuggestionState,
     setSuggestionData: React.Dispatch<React.SetStateAction<SuggestionState>>,
-    setText: (text: string) => void,
+    setText: (text?: string) => void,
 ): void {
     // if we do not have a suggestion, return early
     if (suggestionData === null) {

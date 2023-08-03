@@ -152,8 +152,6 @@ function setRoomNotifsStateUnmuted(cli: MatrixClient, roomId: string, newState: 
                 actions: [PushRuleActionName.DontNotify],
             }),
         );
-        // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled("global", PushRuleKind.RoomSpecific, roomId, true));
     } else if (newState === RoomNotifState.AllMessagesLoud) {
         promises.push(
             cli.addPushRule("global", PushRuleKind.RoomSpecific, roomId, {
@@ -166,8 +164,6 @@ function setRoomNotifsStateUnmuted(cli: MatrixClient, roomId: string, newState: 
                 ],
             }),
         );
-        // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled("global", PushRuleKind.RoomSpecific, roomId, true));
     }
 
     return Promise.all(promises);
@@ -219,7 +215,10 @@ function isRuleRoomMuteRuleForRoomId(roomId: string, rule: IPushRule): boolean {
 }
 
 function isMuteRule(rule: IPushRule): boolean {
-    return rule.actions.length === 1 && rule.actions[0] === PushRuleActionName.DontNotify;
+    // DontNotify is equivalent to the empty actions array
+    return (
+        rule.actions.length === 0 || (rule.actions.length === 1 && rule.actions[0] === PushRuleActionName.DontNotify)
+    );
 }
 
 export function determineUnreadState(

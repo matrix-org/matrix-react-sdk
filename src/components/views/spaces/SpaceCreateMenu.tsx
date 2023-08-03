@@ -44,7 +44,6 @@ import withValidation from "../elements/Validation";
 import RoomAliasField from "../elements/RoomAliasField";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 export const createSpace = async (
     client: MatrixClient,
@@ -61,7 +60,7 @@ export const createSpace = async (
             name,
             preset: isPublic ? Preset.PublicChat : Preset.PrivateChat,
             visibility:
-                isPublic && (await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3827.stable"))
+                isPublic && (await client.doesServerSupportUnstableFeature("org.matrix.msc3827.stable"))
                     ? Visibility.Public
                     : Visibility.Private,
             power_level_content_override: {

@@ -20,6 +20,7 @@ import React from "react";
 import { _t } from "../../../languageHandler";
 import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
+import Heading from "../typography/Heading";
 
 interface IProps {
     newVersion: string;
@@ -60,7 +61,7 @@ export default class ChangelogDialog extends React.Component<IProps, State> {
             const body = await res.json();
             this.setState({ [repo]: body.commits });
         } catch (err) {
-            this.setState({ [repo]: err.message });
+            this.setState({ [repo]: err instanceof Error ? err.message : _t("Unknown error") });
         }
     }
 
@@ -100,7 +101,9 @@ export default class ChangelogDialog extends React.Component<IProps, State> {
             }
             return (
                 <div key={repo}>
-                    <h2>{repo}</h2>
+                    <Heading as="h2" size="4">
+                        {repo}
+                    </Heading>
                     <ul>{content}</ul>
                 </div>
             );

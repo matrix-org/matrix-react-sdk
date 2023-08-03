@@ -34,40 +34,6 @@ limitations under the License.
 
 /** Fixme - factor this out with the main header **/
 
-/* See: mx_RoomHeader_button, of which this is a copy.
- * TODO: factor out a common component to avoid this duplication.
- */
-.mx_RightPanel_headerButton {
-    cursor: pointer;
-    flex: 0 0 auto;
-    margin-left: 1px;
-    margin-right: 1px;
-    height: 32px;
-    width: 32px;
-    position: relative;
-    border-radius: 100%;
-
-    &::before {
-        content: "";
-        position: absolute;
-        top: 4px; /* center with parent of 32px */
-        left: 4px; /* center with parent of 32px */
-        height: 24px;
-        width: 24px;
-        background-color: $icon-button-color;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-    }
-
-    &:hover {
-        background: rgba($accent, 0.1);
-
-        &::before {
-            background-color: $accent;
-        }
-    }
-}
-
 .mx_RightPanel_threadsButton::before {
     mask-image: url("$(res)/img/element-icons/room/thread.svg");
 }
@@ -82,10 +48,6 @@ limitations under the License.
     mask-position: center;
 }
 
-$dot-size: 8px;
-$dot-offset: -3px;
-$pulse-color: $alert;
-
 .mx_RightPanel_pinnedMessagesButton {
     &::before {
         mask-image: url("$(res)/img/element-icons/room/pin.svg");
@@ -93,58 +55,10 @@ $pulse-color: $alert;
     }
 }
 
-.mx_RightPanel_headerButton_unreadIndicator_bg {
-    position: absolute;
-    right: $dot-offset;
-    top: $dot-offset;
-    margin: 4px;
-    width: $dot-size;
-    height: $dot-size;
-    border-radius: 50%;
-    transform: scale(1.6);
-    transform-origin: center center;
-    background: rgba($background, 1);
-}
-
-.mx_RightPanel_headerButton_unreadIndicator {
-    position: absolute;
-    right: $dot-offset;
-    top: $dot-offset;
-    margin: 4px;
-
-    &.mx_Indicator_red {
-        background: rgba($alert, 1);
-        box-shadow: rgba($alert, 1);
-    }
-
-    &.mx_Indicator_gray {
-        background: rgba($room-icon-unread-color, 1);
-        box-shadow: rgba($room-icon-unread-color, 1);
-    }
-
-    &.mx_Indicator_bold {
-        background: rgba($primary-content, 1);
-        box-shadow: rgba($primary-content, 1);
-    }
-}
-
 .mx_RightPanel_timelineCardButton {
     &::before {
         mask-image: url("$(res)/img/element-icons/feedback.svg");
         mask-position: center;
-    }
-}
-
-.mx_RightPanel_headerButton_unread {
-    &::before {
-        background-color: $room-icon-unread-color !important;
-    }
-}
-
-.mx_RightPanel_headerButton_highlight,
-.mx_RightPanel_headerButton:hover {
-    &::before {
-        background-color: $accent !important;
     }
 }
 
@@ -169,7 +83,7 @@ $pulse-color: $alert;
 
     h2,
     p {
-        font-size: $font-14px;
+        font: var(--cpd-font-body-md-regular);
     }
 
     &::before {
@@ -189,7 +103,7 @@ $pulse-color: $alert;
 .mx_RightPanel_scopeHeader {
     margin: 24px;
     text-align: center;
-    font-weight: var(--font-semi-bold);
+    font-weight: var(--cpd-font-weight-semibold);
     font-size: $font-18px;
     line-height: $font-22px;
 

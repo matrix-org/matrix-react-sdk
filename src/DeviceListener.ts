@@ -46,6 +46,7 @@ import { recordClientInformation, removeClientInformation } from "./utils/device
 import SettingsStore, { CallbackFn } from "./settings/SettingsStore";
 import { UIFeature } from "./settings/UIFeature";
 import { isBulkUnverifiedDeviceReminderSnoozed } from "./utils/device/snoozeBulkUnverifiedDeviceReminder";
+import { getUserDeviceIds } from "./utils/crypto/deviceInfo";
 
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
 
@@ -66,27 +67,28 @@ export default class DeviceListener {
     // The set of device IDs we're currently displaying toasts for
     private displayingToastsForDeviceIds = new Set<string>();
     private running = false;
+    // The client with which the instance is running. Only set if `running` is true, otherwise undefined.
+    private client?: MatrixClient;
     private shouldRecordClientInformation = false;
     private enableBulkUnverifiedSessionsReminder = true;
     private deviceClientInformationSettingWatcherRef: string | undefined;
-    private matrixClient?: MatrixClient;
 
     public static sharedInstance(): DeviceListener {
         if (!window.mxDeviceListener) window.mxDeviceListener = new DeviceListener();
         return window.mxDeviceListener;
     }
 
-    public start(client: MatrixClient): void {
-        this.matrixClient = client;
+    public start(matrixClient: MatrixClient): void {
         this.running = true;
-        client.on(CryptoEvent.WillUpdateDevices, this.onWillUpdateDevices);
-        client.on(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
-        client.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
-        client.on(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
-        client.on(CryptoEvent.KeysChanged, this.onCrossSingingKeysChanged);
-        client.on(ClientEvent.AccountData, this.onAccountData);
-        client.on(ClientEvent.Sync, this.onSync);
-        client.on(RoomStateEvent.Events, this.onRoomStateEvents);
+        this.client = matrixClient;
+        this.client.on(CryptoEvent.WillUpdateDevices, this.onWillUpdateDevices);
+        this.client.on(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
+        this.client.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+        this.client.on(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
+        this.client.on(CryptoEvent.KeysChanged, this.onCrossSingingKeysChanged);
+        this.client.on(ClientEvent.AccountData, this.onAccountData);
+        this.client.on(ClientEvent.Sync, this.onSync);
+        this.client.on(RoomStateEvent.Events, this.onRoomStateEvents);
         this.shouldRecordClientInformation = SettingsStore.getValue("deviceClientInformationOptIn");
         // only configurable in config, so we don't need to watch the value
         this.enableBulkUnverifiedSessionsReminder = SettingsStore.getValue(UIFeature.BulkUnverifiedSessionsReminder);
@@ -102,15 +104,15 @@ export default class DeviceListener {
 
     public stop(): void {
         this.running = false;
-        if (this.matrixClient) {
-            this.matrixClient.removeListener(CryptoEvent.WillUpdateDevices, this.onWillUpdateDevices);
-            this.matrixClient.removeListener(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
-            this.matrixClient.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
-            this.matrixClient.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
-            this.matrixClient.removeListener(CryptoEvent.KeysChanged, this.onCrossSingingKeysChanged);
-            this.matrixClient.removeListener(ClientEvent.AccountData, this.onAccountData);
-            this.matrixClient.removeListener(ClientEvent.Sync, this.onSync);
-            this.matrixClient.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
+        if (this.client) {
+            this.client.removeListener(CryptoEvent.WillUpdateDevices, this.onWillUpdateDevices);
+            this.client.removeListener(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
+            this.client.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+            this.client.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
+            this.client.removeListener(CryptoEvent.KeysChanged, this.onCrossSingingKeysChanged);
+            this.client.removeListener(ClientEvent.AccountData, this.onAccountData);
+            this.client.removeListener(ClientEvent.Sync, this.onSync);
+            this.client.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         }
         if (this.deviceClientInformationSettingWatcherRef) {
             SettingsStore.unwatchSetting(this.deviceClientInformationSettingWatcherRef);
@@ -126,6 +128,7 @@ export default class DeviceListener {
         this.keyBackupStatusChecked = false;
         this.ourDeviceIdsAtStart = null;
         this.displayingToastsForDeviceIds = new Set();
+        this.client = undefined;
     }
 
     /**
@@ -158,21 +161,19 @@ export default class DeviceListener {
      * @returns the set of device IDs
      */
     private async getDeviceIds(): Promise<Set<string>> {
-        const crypto = this.matrixClient.getCrypto();
-        if (crypto === undefined) return new Set();
-
-        const userId = this.matrixClient.getSafeUserId();
-        const devices = await crypto.getUserDeviceInfo([userId]);
-        return new Set(devices.get(userId)?.keys() ?? []);
+        const cli = this.client;
+        if (!cli) return new Set();
+        return await getUserDeviceIds(cli, cli.getSafeUserId());
     }
 
     private onWillUpdateDevices = async (users: string[], initialFetch?: boolean): Promise<void> => {
+        if (!this.client) return;
         // If we didn't know about *any* devices before (ie. it's fresh login),
         // then they are all pre-existing devices, so ignore this and set the
         // devicesAtStart list to the devices that we see after the fetch.
         if (initialFetch) return;
 
-        const myUserId = this.matrixClient.getSafeUserId();
+        const myUserId = this.client.getSafeUserId();
         if (users.includes(myUserId)) await this.ensureDeviceIdsAtStartPopulated();
 
         // No need to do a recheck here: we just need to get a snapshot of our devices
@@ -180,17 +181,20 @@ export default class DeviceListener {
     };
 
     private onDevicesUpdated = (users: string[]): void => {
-        if (!users.includes(this.matrixClient.getSafeUserId())) return;
+        if (!this.client) return;
+        if (!users.includes(this.client.getSafeUserId())) return;
         this.recheck();
     };
 
     private onDeviceVerificationChanged = (userId: string): void => {
-        if (userId !== this.matrixClient.getUserId()) return;
+        if (!this.client) return;
+        if (userId !== this.client.getUserId()) return;
         this.recheck();
     };
 
     private onUserTrustStatusChanged = (userId: string): void => {
-        if (userId !== this.matrixClient.getUserId()) return;
+        if (!this.client) return;
+        if (userId !== this.client.getUserId()) return;
         this.recheck();
     };
 
@@ -236,13 +240,14 @@ export default class DeviceListener {
     // The server doesn't tell us when key backup is set up, so we poll
     // & cache the result
     private async getKeyBackupInfo(): Promise<IKeyBackupInfo | null> {
+        if (!this.client) return null;
         const now = new Date().getTime();
         if (
             !this.keyBackupInfo ||
             !this.keyBackupFetchedAt ||
             this.keyBackupFetchedAt < now - KEY_BACKUP_POLL_INTERVAL
         ) {
-            this.keyBackupInfo = await this.matrixClient.getKeyBackupVersion();
+            this.keyBackupInfo = await this.client.getKeyBackupVersion();
             this.keyBackupFetchedAt = now;
         }
         return this.keyBackupInfo;
@@ -253,13 +258,13 @@ export default class DeviceListener {
         // modifying the state involved here, so don't add new toasts to setup.
         if (isSecretStorageBeingAccessed()) return false;
         // Show setup toasts once the user is in at least one encrypted room.
-        const cli = this.matrixClient;
-        return cli && cli.getRooms().some((r) => cli.isRoomEncrypted(r.roomId));
+        const cli = this.client;
+        return cli?.getRooms().some((r) => cli.isRoomEncrypted(r.roomId)) ?? false;
     }
 
     private async recheck(): Promise<void> {
-        if (!this.running) return; // we have been stopped
-        const cli = this.matrixClient;
+        if (!this.running || !this.client) return; // we have been stopped
+        const cli = this.client;
 
         // cross-signing support was added to Matrix in MSC1756, which landed in spec v1.1
         if (!(await cli.isVersionSupported("v1.1"))) return;
@@ -282,19 +287,19 @@ export default class DeviceListener {
             this.checkKeyBackupStatus();
         } else if (this.shouldShowSetupEncryptionToast()) {
             // make sure our keys are finished downloading
-            await crypto.getUserDeviceInfo([cli.getUserId()!]);
+            await crypto.getUserDeviceInfo([cli.getSafeUserId()]);
 
             // cross signing isn't enabled - nag to enable it
             // There are 3 different toasts for:
-            if (!(await crypto.getCrossSigningKeyId()) && cli.getStoredCrossSigningForUser(cli.getUserId()!)) {
+            if (!(await crypto.getCrossSigningKeyId()) && cli.getStoredCrossSigningForUser(cli.getSafeUserId())) {
                 // Cross-signing on account but this device doesn't trust the master key (verify this session)
-                showSetupEncryptionToast(cli, SetupKind.VERIFY_THIS_SESSION);
+                showSetupEncryptionToast(SetupKind.VERIFY_THIS_SESSION);
                 this.checkKeyBackupStatus();
             } else {
                 const backupInfo = await this.getKeyBackupInfo();
                 if (backupInfo) {
                     // No cross-signing on account but key backup available (upgrade encryption)
-                    showSetupEncryptionToast(cli, SetupKind.UPGRADE_ENCRYPTION);
+                    showSetupEncryptionToast(SetupKind.UPGRADE_ENCRYPTION);
                 } else {
                     // No cross-signing or key backup on account (set up encryption)
                     await cli.waitForClientWellKnown();
@@ -302,9 +307,9 @@ export default class DeviceListener {
                         // If we're meant to set up, and Secure Backup is required,
                         // trigger the flow directly without a toast once logged in.
                         hideSetupEncryptionToast();
-                        accessSecretStorage(this.matrixClient);
+                        accessSecretStorage();
                     } else {
-                        showSetupEncryptionToast(cli, SetupKind.SET_UP_ENCRYPTION);
+                        showSetupEncryptionToast(SetupKind.SET_UP_ENCRYPTION);
                     }
                 }
             }
@@ -324,7 +329,9 @@ export default class DeviceListener {
 
         const isCurrentDeviceTrusted =
             crossSigningReady &&
-            Boolean((await crypto.getDeviceVerificationStatus(cli.getUserId()!, cli.deviceId!))?.crossSigningVerified);
+            Boolean(
+                (await crypto.getDeviceVerificationStatus(cli.getSafeUserId(), cli.deviceId!))?.crossSigningVerified,
+            );
 
         // as long as cross-signing isn't ready,
         // you can't see or dismiss any device toasts
@@ -333,7 +340,7 @@ export default class DeviceListener {
             for (const deviceId of devices) {
                 if (deviceId === cli.deviceId) continue;
 
-                const deviceTrust = await crypto.getDeviceVerificationStatus(cli.getUserId()!, deviceId);
+                const deviceTrust = await crypto.getDeviceVerificationStatus(cli.getSafeUserId(), deviceId);
                 if (!deviceTrust?.crossSigningVerified && !this.dismissed.has(deviceId)) {
                     if (this.ourDeviceIdsAtStart?.has(deviceId)) {
                         oldUnverifiedDeviceIds.add(deviceId);
@@ -380,11 +387,11 @@ export default class DeviceListener {
     }
 
     private checkKeyBackupStatus = async (): Promise<void> => {
-        if (this.keyBackupStatusChecked) {
+        if (this.keyBackupStatusChecked || !this.client) {
             return;
         }
         // returns null when key backup status hasn't finished being checked
-        const isKeyBackupEnabled = this.matrixClient.getKeyBackupEnabled();
+        const isKeyBackupEnabled = this.client.getKeyBackupEnabled();
         this.keyBackupStatusChecked = isKeyBackupEnabled !== null;
 
         if (isKeyBackupEnabled === false) {
@@ -409,11 +416,12 @@ export default class DeviceListener {
     };
 
     private updateClientInformation = async (): Promise<void> => {
+        if (!this.client) return;
         try {
             if (this.shouldRecordClientInformation) {
-                await recordClientInformation(this.matrixClient, SdkConfig.get(), PlatformPeg.get() ?? undefined);
+                await recordClientInformation(this.client, SdkConfig.get(), PlatformPeg.get() ?? undefined);
             } else {
-                await removeClientInformation(this.matrixClient);
+                await removeClientInformation(this.client);
             }
         } catch (error) {
             // this is a best effort operation

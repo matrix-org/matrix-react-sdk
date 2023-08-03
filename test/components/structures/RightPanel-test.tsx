@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-// eslint-disable-next-line deprecate/import
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { jest } from "@jest/globals";
@@ -47,7 +46,7 @@ describe("RightPanel", () => {
     let RightPanel: React.ComponentType<React.ComponentProps<typeof RightPanelBase>>;
     beforeEach(() => {
         stubClient();
-        cli = mocked(MatrixClientPeg.get());
+        cli = mocked(MatrixClientPeg.safeGet());
         DMRoomMap.makeShared(cli);
         context = new SdkContextClass();
         context.client = cli;

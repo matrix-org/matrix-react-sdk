@@ -66,6 +66,7 @@ export type TermsInteractionCallback = (
 /**
  * Start a flow where the user is presented with terms & conditions for some services
  *
+ * @param client The Matrix Client instance of the logged-in user
  * @param {Service[]} services Object with keys 'serviceType', 'baseUrl', 'accessToken'
  * @param {function} interactionCallback Function called with:
  *      * an array of { service: {Service}, policies: {terms response from API} }

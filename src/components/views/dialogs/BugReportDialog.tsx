@@ -37,7 +37,7 @@ interface IProps {
     onFinished: (success: boolean) => void;
     initialText?: string;
     label?: string;
-    error?: Error;
+    error?: unknown;
 }
 
 interface IState {
@@ -160,7 +160,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             if (!this.unmounted) {
                 this.setState({
                     downloadBusy: false,
-                    downloadProgress: _t("Failed to send logs: ") + `${err.message}`,
+                    downloadProgress: _t("Failed to send logs: ") + `${err instanceof Error ? err.message : ""}`,
                 });
             }
         }

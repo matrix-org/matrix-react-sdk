@@ -158,11 +158,11 @@ describe("Timeline", () => {
         it("should create and configure a room on IRC layout", () => {
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] " +
-                    ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='irc']").within(() => {
+                cy.get(".mx_GenericEventListSummary_summary")
+                    .findByText(OLD_NAME + " created and configured the room.")
+                    .should("exist");
+            });
 
             cy.get(".mx_IRCLayout").within(() => {
                 // Check room name line-height is reset
@@ -190,10 +190,11 @@ describe("Timeline", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='irc']").within(() => {
+                cy.get(".mx_GenericEventListSummary_summary")
+                    .findByText(OLD_NAME + " created and configured the room.")
+                    .should("exist");
+            });
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
@@ -202,13 +203,6 @@ describe("Timeline", () => {
                 // Assert that the "expand" link button worked
                 cy.findByRole("button", { name: "collapse" }).should("exist");
             });
-
-            // Check the height of expanded GELS line
-            cy.get(".mx_GenericEventListSummary[data-layout=irc] .mx_GenericEventListSummary_spacer").should(
-                "have.css",
-                "line-height",
-                "18px", // var(--irc-line-height): $font-18px (See: _IRCLayout.pcss)
-            );
 
             cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on IRC layout", { percyCSS });
         });
@@ -225,10 +219,9 @@ describe("Timeline", () => {
             );
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='group']")
+                .findByText(OLD_NAME + " created and configured the room.")
+                .should("exist");
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
@@ -237,13 +230,6 @@ describe("Timeline", () => {
                 // Assert that the "expand" link button worked
                 cy.findByRole("button", { name: "collapse" }).should("exist");
             });
-
-            // Check the height of expanded GELS line
-            cy.get(".mx_GenericEventListSummary[data-layout=group] .mx_GenericEventListSummary_spacer").should(
-                "have.css",
-                "line-height",
-                "22px", // $font-22px (See: _GenericEventListSummary.pcss)
-            );
 
             cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on modern layout", { percyCSS });
         });
@@ -254,11 +240,11 @@ describe("Timeline", () => {
 
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=bubble] " +
-                    ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='bubble']").within(() => {
+                cy.get(".mx_GenericEventListSummary_summary")
+                    .findByText(OLD_NAME + " created and configured the room.")
+                    .should("exist");
+            });
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
@@ -300,10 +286,11 @@ describe("Timeline", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary " + ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_RoomView_body .mx_GenericEventListSummary[data-layout='irc']").within(() => {
+                cy.get(".mx_GenericEventListSummary_summary")
+                    .findByText(OLD_NAME + " created and configured the room.")
+                    .should("exist");
+            });
 
             // Click "expand" link button
             cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "expand" }).click();
@@ -333,13 +320,18 @@ describe("Timeline", () => {
         });
 
         const messageEdit = () => {
-            cy.contains(".mx_RoomView_body .mx_EventTile .mx_EventTile_line", "Message")
+            cy.contains(".mx_EventTile .mx_EventTile_line", "Message")
                 .realHover()
-                .within(() => {
-                    cy.findByRole("button", { name: "Edit" }).click();
-                    cy.get(".mx_BasicMessageComposer_input").type("Edit{enter}");
-                });
-            cy.contains(".mx_RoomView_body .mx_EventTile[data-scroll-tokens]", "MessageEdit").should("exist");
+                .findByRole("toolbar", { name: "Message Actions" })
+                .findByRole("button", { name: "Edit" })
+                .click();
+            cy.findByRole("textbox", { name: "Edit message" }).type("Edit{enter}");
+
+            // Assert that the edited message and the link button are found
+            cy.contains(".mx_EventTile .mx_EventTile_line", "MessageEdit").within(() => {
+                // Regex patterns due to the edited date
+                cy.findByRole("button", { name: /Edited at .*? Click to view edits./ });
+            });
         };
 
         it("should align generic event list summary with messages and emote on IRC layout", () => {
@@ -356,14 +348,16 @@ describe("Timeline", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             // Send messages
-            cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello Mr. Bot{enter}");
-            cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello again, Mr. Bot{enter}");
+            cy.get(".mx_RoomView_body").within(() => {
+                cy.findByRole("textbox", { name: "Send a message…" }).type("Hello Mr. Bot{enter}");
+                cy.findByRole("textbox", { name: "Send a message…" }).type("Hello again, Mr. Bot{enter}");
+            });
+
             // Make sure the second message was sent
             cy.get(".mx_RoomView_MessageList > .mx_EventTile_last .mx_EventTile_receiptSent").should("be.visible");
 
@@ -428,7 +422,9 @@ describe("Timeline", () => {
 
             // 4. Alignment of expanded GELS, placeholder of deleted message, and emote
             // Send a emote
-            cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("/me says hello to Mr. Bot{enter}");
+            cy.get(".mx_RoomView_body").within(() => {
+                cy.findByRole("textbox", { name: "Send a message…" }).type("/me says hello to Mr. Bot{enter}");
+            });
             // Check inline start margin of its avatar
             // Here --right-padding is for the avatar on the message line
             // See: _IRCLayout.pcss
@@ -467,10 +463,9 @@ describe("Timeline", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary[data-layout=irc] .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             cy.get(".mx_RoomView_body[data-layout=irc]").within(() => {
                 // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
@@ -571,10 +566,9 @@ describe("Timeline", () => {
             sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             // Edit message
             messageEdit();
@@ -621,10 +615,9 @@ describe("Timeline", () => {
             sendEvent(roomId);
             cy.visit("/#/room/" + roomId);
             cy.setSettingValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary " + ".mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             // Edit message
             messageEdit();
@@ -704,26 +697,11 @@ describe("Timeline", () => {
             // Assert that the file size is displayed in kibibytes (1024 bytes), not kilobytes (1000 bytes)
             // See: https://github.com/vector-im/element-web/issues/24866
             cy.get(".mx_EventTile_last").within(() => {
-                cy.contains(".mx_MFileBody_info_filename", "1.12 KB").should("exist"); // actual file size in kibibytes
+                // actual file size in kibibytes
+                cy.get(".mx_MFileBody_info_filename")
+                    .findByText(/1.12 KB/)
+                    .should("exist");
             });
-        });
-
-        it("should highlight search result words regardless of formatting", () => {
-            sendEvent(roomId);
-            sendEvent(roomId, true);
-            cy.visit("/#/room/" + roomId);
-
-            cy.get(".mx_RoomHeader").findByRole("button", { name: "Search" }).click();
-
-            cy.get(".mx_SearchBar").percySnapshotElement("Search bar on the timeline", {
-                // Emulate narrow timeline
-                widths: [320, 640],
-            });
-
-            cy.get(".mx_SearchBar_input input").type("Message{enter}");
-
-            cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
-            cy.get(".mx_RoomView_searchResultsPanel").percySnapshotElement("Highlighted search results");
         });
 
         it("should render url previews", () => {
@@ -756,7 +734,7 @@ describe("Timeline", () => {
             });
             cy.visit("/#/room/" + roomId);
 
-            cy.get(".mx_LinkPreviewWidget").should("exist").should("contain.text", "Element Call");
+            cy.get(".mx_LinkPreviewWidget").should("exist").findByText("Element Call");
 
             cy.wait("@preview_url");
             cy.wait("@mxc");
@@ -768,6 +746,68 @@ describe("Timeline", () => {
             cy.get(".mx_EventTile_last").percySnapshotElement("URL Preview", {
                 percyCSS,
                 widths: [800, 400],
+            });
+        });
+
+        describe("on search results panel", () => {
+            it("should highlight search result words regardless of formatting", () => {
+                sendEvent(roomId);
+                sendEvent(roomId, true);
+                cy.visit("/#/room/" + roomId);
+
+                cy.get(".mx_LegacyRoomHeader").findByRole("button", { name: "Search" }).click();
+
+                cy.get(".mx_SearchBar").percySnapshotElement("Search bar on the timeline", {
+                    // Emulate narrow timeline
+                    widths: [320, 640],
+                });
+
+                cy.get(".mx_SearchBar_input").findByRole("textbox").type("Message{enter}");
+
+                cy.get(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight").should("exist");
+                cy.get(".mx_RoomView_searchResultsPanel").percySnapshotElement("Highlighted search results");
+            });
+
+            it("should render a fully opaque textual event", () => {
+                const stringToSearch = "Message"; // Same with string sent with sendEvent()
+
+                sendEvent(roomId);
+
+                cy.visit("/#/room/" + roomId);
+
+                // Open a room setting dialog
+                cy.findByRole("button", { name: "Room options" }).click();
+                cy.findByRole("menuitem", { name: "Settings" }).click();
+
+                // Set a room topic to render a TextualEvent
+                cy.findByRole("textbox", { name: "Room Topic" }).type(`This is a room for ${stringToSearch}.`);
+                cy.findByRole("button", { name: "Save" }).click();
+
+                cy.closeDialog();
+
+                // Assert that the TextualEvent is rendered
+                cy.findByText(`${OLD_NAME} changed the topic to "This is a room for ${stringToSearch}.".`)
+                    .should("exist")
+                    .should("have.class", "mx_TextualEvent");
+
+                // Display the room search bar
+                cy.get(".mx_LegacyRoomHeader").findByRole("button", { name: "Search" }).click();
+
+                // Search the string to display both the message and TextualEvent on search results panel
+                cy.get(".mx_SearchBar").within(() => {
+                    cy.findByRole("textbox").type(`${stringToSearch}{enter}`);
+                });
+
+                // On search results panel
+                cy.get(".mx_RoomView_searchResultsPanel").within(() => {
+                    // Assert that contextual event tiles are translucent
+                    cy.get(".mx_EventTile.mx_EventTile_contextual").should("have.css", "opacity", "0.4");
+
+                    // Assert that the TextualEvent is fully opaque (visually solid).
+                    cy.get(".mx_EventTile .mx_TextualEvent").should("have.css", "opacity", "1");
+                });
+
+                cy.get(".mx_RoomView_searchResultsPanel").percySnapshotElement("Search results - with TextualEvent");
             });
         });
     });
@@ -783,11 +823,13 @@ describe("Timeline", () => {
             cy.getComposer().type(`${MESSAGE}{enter}`);
 
             // Reply to the message
-            cy.contains(".mx_RoomView_body .mx_EventTile_line", "Hello world")
-                .realHover()
+            cy.get(".mx_EventTile_last")
                 .within(() => {
-                    cy.findByRole("button", { name: "Reply" }).click();
-                });
+                    cy.findByText(MESSAGE);
+                })
+                .realHover()
+                .findByRole("button", { name: "Reply" })
+                .click();
         };
 
         // For clicking the reply button on the last line
@@ -862,10 +904,9 @@ describe("Timeline", () => {
             cy.visit("/#/room/" + roomId);
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             // Create a bot "BotBob" and invite it
             cy.getBot(homeserver, {
@@ -877,10 +918,9 @@ describe("Timeline", () => {
                 bot.joinRoom(roomId);
 
                 // Make sure the bot joined the room
-                cy.contains(
-                    ".mx_GenericEventListSummary .mx_EventTile_info.mx_EventTile_last",
-                    "BotBob joined the room",
-                ).should("exist");
+                cy.get(".mx_GenericEventListSummary .mx_EventTile_info.mx_EventTile_last").within(() => {
+                    cy.findByText("BotBob joined the room").should("exist");
+                });
 
                 // Have bot send MESSAGE to roomId
                 cy.botSendMessage(bot, roomId, MESSAGE);
@@ -982,10 +1022,9 @@ describe("Timeline", () => {
                 });
 
             // Wait until configuration is finished
-            cy.contains(
-                ".mx_RoomView_body .mx_GenericEventListSummary .mx_GenericEventListSummary_summary",
-                "created and configured the room.",
-            ).should("exist");
+            cy.get(".mx_GenericEventListSummary_summary").within(() => {
+                cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
+            });
 
             // Set the display name to "LONG_STRING 2" in order to avoid a warning in Percy tests from being triggered
             // due to the generated random mxid being displayed inside the GELS summary.

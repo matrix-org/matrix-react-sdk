@@ -47,8 +47,8 @@ const calcIsInfoMessage = (
 };
 
 export function getEventDisplayInfo(
-    mxEvent: MatrixEvent,
     matrixClient: MatrixClient,
+    mxEvent: MatrixEvent,
     showHiddenEvents: boolean,
     hideEvent?: boolean,
 ): {
@@ -101,7 +101,7 @@ export function getEventDisplayInfo(
     // source tile when there's no regular tile for an event and also for
     // replace relations (which otherwise would display as a confusing
     // duplicate of the thing they are replacing).
-    if (hideEvent || !haveRendererForEvent(mxEvent, showHiddenEvents)) {
+    if (hideEvent || !haveRendererForEvent(mxEvent, matrixClient, showHiddenEvents)) {
         // forcefully ask for a factory for a hidden event (hidden event setting is checked internally)
         factory = pickFactory(mxEvent, matrixClient, showHiddenEvents, true);
         if (factory === JSONEventFactory) {

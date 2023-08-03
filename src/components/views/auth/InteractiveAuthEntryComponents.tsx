@@ -91,6 +91,9 @@ interface IAuthEntryProps {
     onPhaseChange: (phase: number) => void;
     submitAuthDict: (auth: IAuthDict) => void;
     requestEmailToken?: () => Promise<void>;
+    fail: (error: Error) => void;
+    clientSecret: string;
+    showContinue: boolean;
 }
 
 interface IPasswordAuthEntryState {
@@ -214,7 +217,7 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
 
         let errorText = this.props.errorText;
 
-        let sitePublicKey;
+        let sitePublicKey: string | undefined;
         if (!this.props.stageParams || !this.props.stageParams.public_key) {
             errorText = _t(
                 "Missing captcha public key in homeserver configuration. Please report " +
@@ -224,7 +227,7 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
             sitePublicKey = this.props.stageParams.public_key;
         }
 
-        let errorSection;
+        let errorSection: JSX.Element | undefined;
         if (errorText) {
             errorSection = (
                 <div className="error" role="alert">
@@ -235,7 +238,9 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
 
         return (
             <div>
-                <CaptchaForm sitePublicKey={sitePublicKey} onCaptchaResponse={this.onCaptchaResponse} />
+                {sitePublicKey && (
+                    <CaptchaForm sitePublicKey={sitePublicKey} onCaptchaResponse={this.onCaptchaResponse} />
+                )}
                 {errorSection}
             </div>
         );
@@ -246,7 +251,6 @@ interface ITermsAuthEntryProps extends IAuthEntryProps {
     stageParams?: {
         policies?: Policies;
     };
-    showContinue: boolean;
 }
 
 interface LocalisedPolicyWithId extends LocalisedPolicy {
@@ -414,7 +418,7 @@ interface IEmailIdentityAuthEntryProps extends IAuthEntryProps {
         emailAddress?: string;
     };
     stageState?: {
-        emailSid: string;
+        emailSid?: string;
     };
 }
 
@@ -538,12 +542,10 @@ export class EmailIdentityAuthEntry extends React.Component<
 }
 
 interface IMsisdnAuthEntryProps extends IAuthEntryProps {
-    inputs: {
-        phoneCountry: string;
-        phoneNumber: string;
+    inputs?: {
+        phoneCountry?: string;
+        phoneNumber?: string;
     };
-    clientSecret: string;
-    fail: (error: Error) => void;
 }
 
 interface IMsisdnAuthEntryState {
@@ -588,8 +590,8 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
     private requestMsisdnToken(): Promise<void> {
         return this.props.matrixClient
             .requestRegisterMsisdnToken(
-                this.props.inputs.phoneCountry,
-                this.props.inputs.phoneNumber,
+                this.props.inputs?.phoneCountry ?? "",
+                this.props.inputs?.phoneNumber ?? "",
                 this.props.clientSecret,
                 1, // TODO: Multiple send attempts?
             )
@@ -645,7 +647,7 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
                 });
             }
         } catch (e) {
-            this.props.fail(e);
+            this.props.fail(e instanceof Error ? e : new Error("Failed to submit msisdn token"));
             logger.log("Failed to submit msisdn token");
         }
     };
@@ -980,14 +982,11 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
 }
 
 export interface IStageComponentProps extends IAuthEntryProps {
-    clientSecret?: string;
     stageParams?: Record<string, any>;
     inputs?: IInputs;
     stageState?: IStageStatus;
-    showContinue?: boolean;
     continueText?: string;
     continueKind?: string;
-    fail?(e: Error): void;
     setEmailSid?(sid: string): void;
     onCancel?(): void;
     requestEmailToken?(): Promise<void>;

@@ -214,7 +214,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
         let thread = this.props.room.getThread(eventId);
 
         if (!thread) {
-            thread = this.props.room.createThread(eventId, mxEv, [mxEv], true);
+            const events = [];
+            // if the event is still being sent, don't include it in the Thread yet - otherwise the timeline panel
+            // will attempt to show it twice (once as a regular event, once as a pending event) and everything will
+            // blow up
+            if (mxEv.status === null) events.push(mxEv);
+            thread = this.props.room.createThread(eventId, mxEv, events, true);
         }
 
         this.updateThread(thread);
@@ -329,7 +334,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 Array.from(dataTransfer.files),
                 roomId,
                 this.threadRelation,
-                MatrixClientPeg.get(),
+                MatrixClientPeg.safeGet(),
                 TimelineRenderingType.Thread,
             );
         } else {
@@ -357,7 +362,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     private renderThreadViewHeader = (): JSX.Element => {
         return (
             <div className="mx_BaseCard_header_title">
-                <Heading size="h4" className="mx_BaseCard_header_title_heading">
+                <Heading size="4" className="mx_BaseCard_header_title_heading">
                     {_t("Thread")}
                 </Heading>
                 <ThreadListContextMenu mxEvent={this.props.mxEvent} permalinkCreator={this.props.permalinkCreator} />

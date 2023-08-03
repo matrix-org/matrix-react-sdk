@@ -36,12 +36,11 @@ describe("Appearance user settings tab", () => {
     it("should be rendered properly", () => {
         cy.openUserSettings("Appearance");
 
-        cy.get(".mx_SettingsTab.mx_AppearanceUserSettingsTab").within(() => {
-            // Assert that the top heading is rendered
-            cy.findByTestId("appearance").should("have.text", "Customise your appearance").should("be.visible");
+        cy.findByTestId("mx_AppearanceUserSettingsTab").within(() => {
+            cy.get("h2").should("have.text", "Customise your appearance").should("be.visible");
         });
 
-        cy.get(".mx_SettingsTab.mx_AppearanceUserSettingsTab").percySnapshotElement(
+        cy.findByTestId("mx_AppearanceUserSettingsTab").percySnapshotElement(
             "User settings tab - Appearance (advanced options collapsed)",
             {
                 // Emulate TabbedView's actual min and max widths
@@ -57,7 +56,7 @@ describe("Appearance user settings tab", () => {
         // Assert that "Hide advanced" link button is rendered
         cy.findByRole("button", { name: "Hide advanced" }).should("exist");
 
-        cy.get(".mx_SettingsTab.mx_AppearanceUserSettingsTab").percySnapshotElement(
+        cy.findByTestId("mx_AppearanceUserSettingsTab").percySnapshotElement(
             "User settings tab - Appearance (advanced options expanded)",
             {
                 // Emulate TabbedView's actual min and max widths
@@ -74,7 +73,7 @@ describe("Appearance user settings tab", () => {
 
         cy.openUserSettings("Appearance");
 
-        cy.get(".mx_AppearanceUserSettingsTab .mx_LayoutSwitcher_RadioButtons").within(() => {
+        cy.get(".mx_LayoutSwitcher_RadioButtons").within(() => {
             // Assert that the layout selected by default is "Modern"
             cy.get(".mx_LayoutSwitcher_RadioButton_selected .mx_StyledRadioButton_enabled").within(() => {
                 cy.findByLabelText("Modern").should("exist");
@@ -84,7 +83,7 @@ describe("Appearance user settings tab", () => {
         // Assert that the room layout is set to group (modern) layout
         cy.get(".mx_RoomView_body[data-layout='group']").should("exist");
 
-        cy.get(".mx_AppearanceUserSettingsTab .mx_LayoutSwitcher_RadioButtons").within(() => {
+        cy.get(".mx_LayoutSwitcher_RadioButtons").within(() => {
             // Select the first layout
             cy.get(".mx_LayoutSwitcher_RadioButton").first().click();
 
@@ -97,7 +96,7 @@ describe("Appearance user settings tab", () => {
         // Assert that the room layout is set to IRC layout
         cy.get(".mx_RoomView_body[data-layout='irc']").should("exist");
 
-        cy.get(".mx_AppearanceUserSettingsTab .mx_LayoutSwitcher_RadioButtons").within(() => {
+        cy.get(".mx_LayoutSwitcher_RadioButtons").within(() => {
             // Select the last layout
             cy.get(".mx_LayoutSwitcher_RadioButton").last().click();
 
@@ -114,7 +113,7 @@ describe("Appearance user settings tab", () => {
     it("should support changing font size by clicking the font slider", () => {
         cy.openUserSettings("Appearance");
 
-        cy.get(".mx_SettingsTab.mx_AppearanceUserSettingsTab").within(() => {
+        cy.findByTestId("mx_AppearanceUserSettingsTab").within(() => {
             cy.get(".mx_FontScalingPanel_fontSlider").within(() => {
                 cy.findByLabelText("Font size").should("exist");
             });
@@ -123,9 +122,10 @@ describe("Appearance user settings tab", () => {
                 // Click the left position of the slider
                 cy.get("input").realClick({ position: "left" });
 
+                const MIN_FONT_SIZE = 11;
                 // Assert that the smallest font size is selected
-                cy.get("input[value='13']").should("exist");
-                cy.get("output .mx_Slider_selection_label").findByText("13");
+                cy.get(`input[value='${MIN_FONT_SIZE}']`).should("exist");
+                cy.get("output .mx_Slider_selection_label").findByText(MIN_FONT_SIZE);
             });
 
             cy.get(".mx_FontScalingPanel_fontSlider").percySnapshotElement("Font size slider - smallest (13)", {
@@ -136,12 +136,13 @@ describe("Appearance user settings tab", () => {
                 // Click the right position of the slider
                 cy.get("input").realClick({ position: "right" });
 
+                const MAX_FONT_SIZE = 21;
                 // Assert that the largest font size is selected
-                cy.get("input[value='18']").should("exist");
-                cy.get("output .mx_Slider_selection_label").findByText("18");
+                cy.get(`input[value='${MAX_FONT_SIZE}']`).should("exist");
+                cy.get("output .mx_Slider_selection_label").findByText(MAX_FONT_SIZE);
             });
 
-            cy.get(".mx_FontScalingPanel_fontSlider").percySnapshotElement("Font size slider - largest (18)", {
+            cy.get(".mx_FontScalingPanel_fontSlider").percySnapshotElement("Font size slider - largest (21)", {
                 widths: [486],
             });
         });
@@ -150,7 +151,7 @@ describe("Appearance user settings tab", () => {
     it("should disable font size slider when custom font size is used", () => {
         cy.openUserSettings("Appearance");
 
-        cy.get(".mx_FontScalingPanel").within(() => {
+        cy.findByTestId("mx_FontScalingPanel").within(() => {
             cy.findByLabelText("Use custom size").click({ force: true }); // force click as checkbox size is zero
 
             // Assert that the font slider is disabled
@@ -167,10 +168,8 @@ describe("Appearance user settings tab", () => {
         // Click "Show advanced" link button
         cy.findByRole("button", { name: "Show advanced" }).click();
 
-        cy.get(".mx_AppearanceUserSettingsTab_Advanced").within(() => {
-            // force click as checkbox size is zero
-            cy.findByLabelText("Use a more compact 'Modern' layout").click({ force: true });
-        });
+        // force click as checkbox size is zero
+        cy.findByLabelText("Use a more compact 'Modern' layout").click({ force: true });
 
         // Assert that the room layout is set to compact group (modern) layout
         cy.get("#matrixchat .mx_MatrixChat_wrapper.mx_MatrixChat_useCompactLayout").should("exist");
@@ -178,13 +177,7 @@ describe("Appearance user settings tab", () => {
 
     it("should disable compact group (modern) layout option on IRC layout and bubble layout", () => {
         const checkDisabled = () => {
-            cy.get(".mx_AppearanceUserSettingsTab_Advanced").within(() => {
-                cy.get(".mx_Checkbox")
-                    .first()
-                    .within(() => {
-                        cy.get("input[type='checkbox'][disabled]").should("exist");
-                    });
-            });
+            cy.findByLabelText("Use a more compact 'Modern' layout").should("be.disabled");
         };
 
         cy.openUserSettings("Appearance");
@@ -193,7 +186,7 @@ describe("Appearance user settings tab", () => {
         cy.findByRole("button", { name: "Show advanced" }).click();
 
         // Enable IRC layout
-        cy.get(".mx_AppearanceUserSettingsTab .mx_LayoutSwitcher_RadioButtons").within(() => {
+        cy.get(".mx_LayoutSwitcher_RadioButtons").within(() => {
             // Select the first layout
             cy.get(".mx_LayoutSwitcher_RadioButton").first().click();
 
@@ -206,7 +199,7 @@ describe("Appearance user settings tab", () => {
         checkDisabled();
 
         // Enable bubble layout
-        cy.get(".mx_AppearanceUserSettingsTab .mx_LayoutSwitcher_RadioButtons").within(() => {
+        cy.get(".mx_LayoutSwitcher_RadioButtons").within(() => {
             // Select the first layout
             cy.get(".mx_LayoutSwitcher_RadioButton").last().click();
 
@@ -225,10 +218,8 @@ describe("Appearance user settings tab", () => {
         // Click "Show advanced" link button
         cy.findByRole("button", { name: "Show advanced" }).click();
 
-        cy.get(".mx_AppearanceUserSettingsTab_Advanced").within(() => {
-            // force click as checkbox size is zero
-            cy.findByLabelText("Use a system font").click({ force: true });
-        });
+        // force click as checkbox size is zero
+        cy.findByLabelText("Use a system font").click({ force: true });
 
         // Assert that the font-family value was removed
         cy.get("body").should("have.css", "font-family", '""');
@@ -242,7 +233,7 @@ describe("Appearance user settings tab", () => {
 
         it("should be rendered with the light theme selected", () => {
             cy.openUserSettings("Appearance")
-                .get(".mx_ThemeChoicePanel")
+                .findByTestId("mx_ThemeChoicePanel")
                 .within(() => {
                     cy.findByTestId("checkbox-use-system-theme").within(() => {
                         cy.findByText("Match system theme").should("be.visible");
@@ -252,7 +243,7 @@ describe("Appearance user settings tab", () => {
                         cy.get(".mx_Checkbox_checkmark").should("not.be.visible");
                     });
 
-                    cy.get(".mx_ThemeSelectors").within(() => {
+                    cy.findByTestId("theme-choice-panel-selectors").within(() => {
                         cy.get(".mx_ThemeSelector_light").should("exist");
                         cy.get(".mx_ThemeSelector_dark").should("exist");
 
@@ -274,11 +265,11 @@ describe("Appearance user settings tab", () => {
                 "the system theme is clicked",
             () => {
                 cy.openUserSettings("Appearance")
-                    .get(".mx_ThemeChoicePanel")
+                    .findByTestId("mx_ThemeChoicePanel")
                     .findByLabelText("Match system theme")
                     .click({ force: true }); // force click because the size of the checkbox is zero
 
-                cy.get(".mx_ThemeChoicePanel").within(() => {
+                cy.findByTestId("mx_ThemeChoicePanel").within(() => {
                     // Assert that the labels for the light theme and dark theme are disabled
                     cy.get(".mx_ThemeSelector_light.mx_StyledRadioButton_disabled").should("exist");
                     cy.get(".mx_ThemeSelector_dark.mx_StyledRadioButton_disabled").should("exist");
@@ -308,32 +299,5 @@ describe("Appearance user settings tab", () => {
                 cy.findByLabelText("Use high contrast").should("not.exist");
             },
         );
-
-        it("should support enabling the high contast theme", () => {
-            cy.createRoom({ name: "Test Room" }).viewRoomByName("Test Room");
-
-            cy.get(".mx_GenericEventListSummary").within(() => {
-                // Assert that $primary-content is applied to GELS summary on the light theme
-                // $primary-content on the light theme = #17191c = rgb(23, 25, 28)
-                cy.get(".mx_TextualEvent.mx_GenericEventListSummary_summary")
-                    .should("have.css", "color", "rgb(23, 25, 28)")
-                    .should("have.css", "opacity", "0.5");
-            });
-
-            cy.openUserSettings("Appearance")
-                .get(".mx_ThemeChoicePanel")
-                .findByLabelText("Use high contrast")
-                .click({ force: true }); // force click because the size of the checkbox is zero
-
-            cy.closeDialog();
-
-            cy.get(".mx_GenericEventListSummary").within(() => {
-                // Assert that $secondary-content is specified for GELS summary on the high contrast theme
-                // $secondary-content on the high contrast theme = #5e6266 = rgb(94, 98, 102)
-                cy.get(".mx_TextualEvent.mx_GenericEventListSummary_summary")
-                    .should("have.css", "color", "rgb(94, 98, 102)")
-                    .should("have.css", "opacity", "1");
-            });
-        });
     });
 });

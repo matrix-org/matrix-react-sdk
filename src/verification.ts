@@ -17,8 +17,7 @@ limitations under the License.
 import { User } from "matrix-js-sdk/src/models/user";
 import { verificationMethods as VerificationMethods } from "matrix-js-sdk/src/crypto";
 import { MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { CrossSigningKey } from "matrix-js-sdk/src/crypto-api";
+import { CrossSigningKey, VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 
 import dis from "./dispatcher/dispatcher";
 import Modal from "./Modal";
@@ -31,26 +30,26 @@ import RightPanelStore from "./stores/right-panel/RightPanelStore";
 import { IRightPanelCardState } from "./stores/right-panel/RightPanelStoreIPanelState";
 import { findDMForUser } from "./utils/dm/findDMForUser";
 
-async function enable4SIfNeeded(cli: MatrixClient): Promise<boolean> {
-    const crypto = cli.getCrypto();
+async function enable4SIfNeeded(matrixClient: MatrixClient): Promise<boolean> {
+    const crypto = matrixClient.getCrypto();
     if (!crypto) return false;
     const usk = await crypto.getCrossSigningKeyId(CrossSigningKey.UserSigning);
     if (!usk) {
-        await accessSecretStorage(cli);
+        await accessSecretStorage();
         return false;
     }
 
     return true;
 }
 
-export async function verifyDevice(cli: MatrixClient, user: User, device: IDevice): Promise<void> {
-    if (cli.isGuest()) {
+export async function verifyDevice(matrixClient: MatrixClient, user: User, device: IDevice): Promise<void> {
+    if (matrixClient.isGuest()) {
         dis.dispatch({ action: "require_registration" });
         return;
     }
     // if cross-signing is not explicitly disabled, check if it should be enabled first.
-    if (cli.getCryptoTrustCrossSignedDevices()) {
-        if (!(await enable4SIfNeeded(cli))) {
+    if (matrixClient.getCryptoTrustCrossSignedDevices()) {
+        if (!(await enable4SIfNeeded(matrixClient))) {
             return;
         }
     }
@@ -60,7 +59,7 @@ export async function verifyDevice(cli: MatrixClient, user: User, device: IDevic
         device,
         onFinished: async (action): Promise<void> => {
             if (action === "sas") {
-                const verificationRequestPromise = cli.legacyDeviceVerification(
+                const verificationRequestPromise = matrixClient.legacyDeviceVerification(
                     user.userId,
                     device.deviceId,
                     VerificationMethods.SAS,
@@ -76,30 +75,30 @@ export async function verifyDevice(cli: MatrixClient, user: User, device: IDevic
     });
 }
 
-export async function legacyVerifyUser(cli: MatrixClient, user: User): Promise<void> {
-    if (cli.isGuest()) {
+export async function legacyVerifyUser(matrixClient: MatrixClient, user: User): Promise<void> {
+    if (matrixClient.isGuest()) {
         dis.dispatch({ action: "require_registration" });
         return;
     }
     // if cross-signing is not explicitly disabled, check if it should be enabled first.
-    if (cli.getCryptoTrustCrossSignedDevices()) {
-        if (!(await enable4SIfNeeded(cli))) {
+    if (matrixClient.getCryptoTrustCrossSignedDevices()) {
+        if (!(await enable4SIfNeeded(matrixClient))) {
             return;
         }
     }
-    const verificationRequestPromise = cli.requestVerification(user.userId);
+    const verificationRequestPromise = matrixClient.requestVerification(user.userId);
     setRightPanel({ member: user, verificationRequestPromise });
 }
 
-export async function verifyUser(cli: MatrixClient, user: User): Promise<void> {
-    if (cli.isGuest()) {
+export async function verifyUser(matrixClient: MatrixClient, user: User): Promise<void> {
+    if (matrixClient.isGuest()) {
         dis.dispatch({ action: "require_registration" });
         return;
     }
-    if (!(await enable4SIfNeeded(cli))) {
+    if (!(await enable4SIfNeeded(matrixClient))) {
         return;
     }
-    const existingRequest = pendingVerificationRequestForUser(cli, user);
+    const existingRequest = pendingVerificationRequestForUser(matrixClient, user);
     setRightPanel({ member: user, verificationRequest: existingRequest });
 }
 
@@ -116,11 +115,11 @@ function setRightPanel(state: IRightPanelCardState): void {
 }
 
 export function pendingVerificationRequestForUser(
-    cli: MatrixClient,
+    matrixClient: MatrixClient,
     user: User | RoomMember,
 ): VerificationRequest | undefined {
-    const dmRoom = findDMForUser(cli, user.userId);
+    const dmRoom = findDMForUser(matrixClient, user.userId);
     if (dmRoom) {
-        return cli.findVerificationRequestDMInProgress(dmRoom.roomId);
+        return matrixClient.getCrypto()!.findVerificationRequestDMInProgress(dmRoom.roomId, user.userId);
     }
 }

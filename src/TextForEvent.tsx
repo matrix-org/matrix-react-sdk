@@ -32,7 +32,6 @@ import { ALL_RULE_TYPES, ROOM_RULE_TYPES, SERVER_RULE_TYPES, USER_RULE_TYPES } f
 import { WIDGET_LAYOUT_EVENT_TYPE } from "./stores/widgets/WidgetLayoutStore";
 import { RightPanelPhases } from "./stores/right-panel/RightPanelStorePhases";
 import defaultDispatcher from "./dispatcher/dispatcher";
-import { MatrixClientPeg } from "./MatrixClientPeg";
 import { RoomSettingsTab } from "./components/views/dialogs/RoomSettingsDialog";
 import AccessibleButton, { ButtonEvent } from "./components/views/elements/AccessibleButton";
 import RightPanelStore from "./stores/right-panel/RightPanelStore";
@@ -47,10 +46,9 @@ function getRoomMemberDisplayname(client: MatrixClient, event: MatrixEvent, user
     return member?.name || member?.rawDisplayName || userId || _t("Someone");
 }
 
-function textForCallEvent(event: MatrixEvent): () => string {
-    const cli = MatrixClientPeg.get();
-    const roomName = cli.getRoom(event.getRoomId()!)?.name;
-    const isSupported = cli.supportsVoip();
+function textForCallEvent(event: MatrixEvent, client: MatrixClient): () => string {
+    const roomName = client.getRoom(event.getRoomId()!)?.name;
+    const isSupported = client.supportsVoip();
 
     return isSupported
         ? () => _t("Video call started in %(roomName)s.", { roomName })
@@ -61,11 +59,11 @@ function textForCallEvent(event: MatrixEvent): () => string {
 // any text to display at all. For this reason they return deferred values
 // to avoid the expense of looking up translations when they're not needed.
 
-function textForCallInviteEvent(event: MatrixEvent): (() => string) | null {
+function textForCallInviteEvent(event: MatrixEvent, client: MatrixClient): (() => string) | null {
     const senderName = getSenderName(event);
     // FIXME: Find a better way to determine this from the event?
     const isVoice = !event.getContent().offer?.sdp?.includes("m=video");
-    const isSupported = MatrixClientPeg.get().supportsVoip();
+    const isSupported = client.supportsVoip();
 
     // This ladder could be reduced down to a couple string variables, however other languages
     // can have a hard time translating those strings. In an effort to make translations easier
@@ -104,10 +102,15 @@ function getModification(prev?: string, value?: string): Modification {
     return Modification.None;
 }
 
-function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean): (() => string) | null {
+function textForMemberEvent(
+    ev: MatrixEvent,
+    client: MatrixClient,
+    allowJSX: boolean,
+    showHiddenEvents?: boolean,
+): (() => string) | null {
     // XXX: SYJS-16 "sender is sometimes null for join messages"
-    const senderName = ev.sender?.name || getRoomMemberDisplayname(MatrixClientPeg.get(), ev);
-    const targetName = ev.target?.name || getRoomMemberDisplayname(MatrixClientPeg.get(), ev, ev.getStateKey());
+    const senderName = ev.sender?.name || getRoomMemberDisplayname(client, ev);
+    const targetName = ev.target?.name || getRoomMemberDisplayname(client, ev, ev.getStateKey());
     const prevContent = ev.getPrevContent();
     const content = ev.getContent();
     const reason = content.reason;
@@ -270,7 +273,7 @@ const onViewJoinRuleSettingsClick = (): void => {
     });
 };
 
-function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => Renderable {
+function textForJoinRulesEvent(ev: MatrixEvent, client: MatrixClient, allowJSX: boolean): () => Renderable {
     const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
     switch (ev.getContent().join_rule) {
         case JoinRule.Public:
@@ -283,6 +286,8 @@ function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => Render
                 _t("%(senderDisplayName)s made the room invite only.", {
                     senderDisplayName,
                 });
+        case JoinRule.Knock:
+            return () => _t("%(senderDisplayName)s changed the join rule to ask to join.", { senderDisplayName });
         case JoinRule.Restricted:
             if (allowJSX) {
                 return () => (
@@ -362,7 +367,7 @@ function textForServerACLEvent(ev: MatrixEvent): (() => string) | null {
     return getText;
 }
 
-function textForMessageEvent(ev: MatrixEvent): (() => string) | null {
+function textForMessageEvent(ev: MatrixEvent, client: MatrixClient): (() => string) | null {
     if (isLocationEvent(ev)) {
         return textForLocationEvent(ev);
     }
@@ -371,7 +376,7 @@ function textForMessageEvent(ev: MatrixEvent): (() => string) | null {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
         let message = ev.getContent().body;
         if (ev.isRedacted()) {
-            message = textForRedactedPollAndMessageEvent(MatrixClientPeg.get(), ev);
+            message = textForRedactedPollAndMessageEvent(ev, client);
         }
 
         if (ev.getContent().msgtype === MsgType.Emote) {
@@ -497,7 +502,7 @@ function textForHistoryVisibilityEvent(event: MatrixEvent): (() => string) | nul
 }
 
 // Currently will only display a change if a user's power level is changed
-function textForPowerEvent(event: MatrixEvent): (() => string) | null {
+function textForPowerEvent(event: MatrixEvent, client: MatrixClient): (() => string) | null {
     const senderName = getSenderName(event);
     if (!event.getPrevContent()?.users || !event.getContent()?.users) {
         return null;
@@ -534,7 +539,7 @@ function textForPowerEvent(event: MatrixEvent): (() => string) | null {
             return;
         }
         if (to !== from) {
-            const name = getRoomMemberDisplayname(MatrixClientPeg.get(), event, userId);
+            const name = getRoomMemberDisplayname(client, event, userId);
             diffs.push({ userId, name, from, to });
         }
     });
@@ -562,7 +567,7 @@ const onPinnedMessagesClick = (): void => {
     RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
 };
 
-function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): (() => Renderable) | null {
+function textForPinnedEvent(event: MatrixEvent, client: MatrixClient, allowJSX: boolean): (() => Renderable) | null {
     if (!SettingsStore.getValue("feature_pinning")) return null;
     const senderName = getSenderName(event);
     const roomId = event.getRoomId()!;
@@ -836,7 +841,7 @@ export function textForLocationEvent(event: MatrixEvent): () => string {
         });
 }
 
-function textForRedactedPollAndMessageEvent(client: MatrixClient, ev: MatrixEvent): string {
+function textForRedactedPollAndMessageEvent(ev: MatrixEvent, client: MatrixClient): string {
     let message = _t("Message deleted");
     const unsigned = ev.getUnsigned();
     const redactedBecauseUserId = unsigned?.redacted_because?.sender;
@@ -851,12 +856,12 @@ function textForRedactedPollAndMessageEvent(client: MatrixClient, ev: MatrixEven
     return message;
 }
 
-function textForPollStartEvent(event: MatrixEvent): (() => string) | null {
+function textForPollStartEvent(event: MatrixEvent, client: MatrixClient): (() => string) | null {
     return () => {
         let message = "";
 
         if (event.isRedacted()) {
-            message = textForRedactedPollAndMessageEvent(MatrixClientPeg.get(), event);
+            message = textForRedactedPollAndMessageEvent(event, client);
             const senderDisplayName = event.sender?.name ?? event.getSender();
             message = senderDisplayName + ": " + message;
         } else {
@@ -880,7 +885,12 @@ function textForPollEndEvent(event: MatrixEvent): (() => string) | null {
 type Renderable = string | React.ReactNode | null;
 
 interface IHandlers {
-    [type: string]: (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean) => (() => Renderable) | null;
+    [type: string]: (
+        ev: MatrixEvent,
+        client: MatrixClient,
+        allowJSX: boolean,
+        showHiddenEvents?: boolean,
+    ) => (() => Renderable) | null;
 }
 
 const handlers: IHandlers = {
@@ -926,25 +936,39 @@ for (const evType of ElementCall.CALL_EVENT_TYPE.names) {
 
 /**
  * Determines whether the given event has text to display.
+ *
+ * @param client The Matrix Client instance for the logged-in user
  * @param ev The event
  * @param showHiddenEvents An optional cached setting value for showHiddenEventsInTimeline
  *     to avoid hitting the settings store
  */
-export function hasText(ev: MatrixEvent, showHiddenEvents?: boolean): boolean {
+export function hasText(ev: MatrixEvent, client: MatrixClient, showHiddenEvents?: boolean): boolean {
     const handler = (ev.isState() ? stateHandlers : handlers)[ev.getType()];
-    return Boolean(handler?.(ev, false, showHiddenEvents));
+    return Boolean(handler?.(ev, client, false, showHiddenEvents));
 }
 
 /**
  * Gets the textual content of the given event.
+ *
  * @param ev The event
+ * @param client The Matrix Client instance for the logged-in user
  * @param allowJSX Whether to output rich JSX content
  * @param showHiddenEvents An optional cached setting value for showHiddenEventsInTimeline
  *     to avoid hitting the settings store
  */
-export function textForEvent(ev: MatrixEvent): string;
-export function textForEvent(ev: MatrixEvent, allowJSX: true, showHiddenEvents?: boolean): string | React.ReactNode;
-export function textForEvent(ev: MatrixEvent, allowJSX = false, showHiddenEvents?: boolean): string | React.ReactNode {
+export function textForEvent(ev: MatrixEvent, client: MatrixClient): string;
+export function textForEvent(
+    ev: MatrixEvent,
+    client: MatrixClient,
+    allowJSX: true,
+    showHiddenEvents?: boolean,
+): string | React.ReactNode;
+export function textForEvent(
+    ev: MatrixEvent,
+    client: MatrixClient,
+    allowJSX = false,
+    showHiddenEvents?: boolean,
+): string | React.ReactNode {
     const handler = (ev.isState() ? stateHandlers : handlers)[ev.getType()];
-    return handler?.(ev, allowJSX, showHiddenEvents)?.() || "";
+    return handler?.(ev, client, allowJSX, showHiddenEvents)?.() || "";
 }

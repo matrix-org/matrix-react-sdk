@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
-import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { createClient, MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -59,12 +59,16 @@ export default class IdentityAuthClient {
     }
 
     private get matrixClient(): MatrixClient {
-        return this.tempClient ? this.tempClient : MatrixClientPeg.get();
+        return this.tempClient ? this.tempClient : MatrixClientPeg.safeGet();
     }
 
     private writeToken(): void {
         if (this.tempClient) return; // temporary client: ignore
-        window.localStorage.setItem("mx_is_access_token", this.accessToken);
+        if (this.accessToken) {
+            window.localStorage.setItem("mx_is_access_token", this.accessToken);
+        } else {
+            window.localStorage.removeItem("mx_is_access_token");
+        }
     }
 
     private readToken(): string | null {
@@ -123,7 +127,7 @@ export default class IdentityAuthClient {
         try {
             await this.matrixClient.getIdentityAccount(token);
         } catch (e) {
-            if (e.errcode === "M_TERMS_NOT_SIGNED") {
+            if (e instanceof MatrixError && e.errcode === "M_TERMS_NOT_SIGNED") {
                 logger.log("Identity server requires new terms to be agreed to");
                 await startTermsFlow(this.matrixClient, [new Service(SERVICE_TYPES.IS, identityServerUrl, token)]);
                 return;
@@ -172,7 +176,7 @@ export default class IdentityAuthClient {
     }
 
     public async registerForToken(check = true): Promise<string> {
-        const hsOpenIdToken = await MatrixClientPeg.get().getOpenIdToken();
+        const hsOpenIdToken = await MatrixClientPeg.safeGet().getOpenIdToken();
         // XXX: The spec is `token`, but we used `access_token` for a Sydent release.
         const { access_token: accessToken, token } = await this.matrixClient.registerWithIdentityServer(hsOpenIdToken);
         const identityAccessToken = token ? token : accessToken;

@@ -5,7 +5,7 @@ exports[`<LabsUserSettingsTab /> renders settings marked as beta as beta cards 1
   class="mx_SettingsSection"
 >
   <h2
-    class="mx_Heading_h2"
+    class="mx_Heading_h3"
   >
     Upcoming features
   </h2>
@@ -92,7 +92,7 @@ exports[`<LabsUserSettingsTab /> renders settings marked as beta as beta cards 1
             class="mx_BetaCard_title"
           >
             <span>
-              New session manager
+              Notification Settings
             </span>
             <span
               class="mx_BetaCard_betaPill"
@@ -104,10 +104,7 @@ exports[`<LabsUserSettingsTab /> renders settings marked as beta as beta cards 1
             class="mx_BetaCard_caption"
           >
             <p>
-              Have greater visibility and control over all your sessions.
-            </p>
-            <p>
-              Our new sessions manager provides better visibility of all your sessions, and greater control over them including the ability to remotely toggle push notifications.
+              Introducing a simpler way to change your notification settings. Customize your , just the way you like.
             </p>
           </div>
           <div
