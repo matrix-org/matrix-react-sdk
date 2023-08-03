@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useMemo } from "react";
+import React, { ReactElement, useMemo } from "react";
 
 import { _t } from "../../../languageHandler";
 import { Action } from "../../../dispatcher/actions";
@@ -26,6 +26,7 @@ import { SettingLevel } from "../../../settings/SettingLevel";
 import dis from "../../../dispatcher/dispatcher";
 import { RecheckThemePayload } from "../../../dispatcher/payloads/RecheckThemePayload";
 import PosthogTrackers from "../../../PosthogTrackers";
+import { NonEmptyArray } from "../../../@types/common";
 
 type Props = {
     requestClose: () => void;
@@ -51,7 +52,7 @@ const QuickThemeSwitcher: React.FC<Props> = ({ requestClose }) => {
 
     const selectedTheme = useSystemTheme ? MATCH_SYSTEM_THEME_ID : theme;
 
-    const onOptionChange = async (newTheme: string) => {
+    const onOptionChange = async (newTheme: string): Promise<void> => {
         PosthogTrackers.trackInteraction("WebQuickSettingsThemeDropdown");
 
         try {
@@ -86,9 +87,11 @@ const QuickThemeSwitcher: React.FC<Props> = ({ requestClose }) => {
                 value={selectedTheme}
                 label={_t("Space selection")}
             >
-                {themeOptions.map((theme) => (
-                    <div key={theme.id}>{theme.name}</div>
-                ))}
+                {
+                    themeOptions.map((theme) => <div key={theme.id}>{theme.name}</div>) as NonEmptyArray<
+                        ReactElement & { key: string }
+                    >
+                }
             </Dropdown>
         </div>
     );

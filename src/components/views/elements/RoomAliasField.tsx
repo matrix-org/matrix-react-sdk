@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import React, { createRef, KeyboardEventHandler } from "react";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
-import withValidation from "./Validation";
+import withValidation, { IFieldState, IValidationResult } from "./Validation";
 import Field, { IValidateOpts } from "./Field";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
@@ -44,7 +45,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
 
     private fieldRef = createRef<Field>();
 
-    public constructor(props, context) {
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
         this.state = {
@@ -60,19 +61,24 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
         return hashAlias;
     }
 
-    private get domainProps() {
+    private get domainProps(): {
+        prefix: JSX.Element;
+        postfix: JSX.Element;
+        value: string;
+        maxlength: number;
+    } {
         const { domain } = this.props;
         const prefix = <span>#</span>;
         const postfix = domain ? <span title={`:${domain}`}>{`:${domain}`}</span> : <span />;
         const maxlength = domain ? 255 - domain.length - 2 : 255 - 1; // 2 for # and :
         const value = domain
-            ? this.props.value.substring(1, this.props.value.length - this.props.domain.length - 1)
+            ? this.props.value.substring(1, this.props.value.length - domain.length - 1)
             : this.props.value.substring(1);
 
         return { prefix, postfix, value, maxlength };
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { prefix, postfix, value, maxlength } = this.domainProps;
         return (
             <Field
@@ -93,15 +99,13 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
         );
     }
 
-    private onChange = (ev) => {
-        if (this.props.onChange) {
-            this.props.onChange(this.asFullAlias(ev.target.value));
-        }
+    private onChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
+        this.props.onChange?.(this.asFullAlias(ev.target.value));
     };
 
-    private onValidate = async (fieldState) => {
+    private onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validationRules(fieldState);
-        this.setState({ isValid: result.valid });
+        this.setState({ isValid: !!result.valid });
         return result;
     };
 
@@ -109,7 +113,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
         rules: [
             {
                 key: "hasDomain",
-                test: async ({ value }) => {
+                test: async ({ value }): Promise<boolean> => {
                     // Ignore if we have passed domain
                     if (!value || this.props.domain) {
                         return true;
@@ -124,7 +128,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
             },
             {
                 key: "hasLocalpart",
-                test: async ({ value }) => {
+                test: async ({ value }): Promise<boolean> => {
                     if (!value || this.props.domain) {
                         return true;
                     }
@@ -144,7 +148,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
             },
             {
                 key: "safeLocalpart",
-                test: async ({ value }) => {
+                test: async ({ value }): Promise<boolean> => {
                     if (!value) {
                         return true;
                     }
@@ -174,7 +178,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                 ? {
                       key: "matches",
                       final: true,
-                      test: async ({ value }) => {
+                      test: async ({ value }): Promise<boolean> => {
                           if (!value) {
                               return true;
                           }
@@ -192,7 +196,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                 : {
                       key: "taken",
                       final: true,
-                      test: async ({ value }) => {
+                      test: async ({ value }): Promise<boolean> => {
                           if (!value) {
                               return true;
                           }
@@ -206,7 +210,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                               // any server error code will do,
                               // either it M_NOT_FOUND or the alias is invalid somehow,
                               // in which case we don't want to show the invalid message
-                              return !!err.errcode;
+                              return err instanceof MatrixError;
                           }
                       },
                       valid: () => _t("This address is available to use"),
@@ -218,15 +222,16 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
         ],
     });
 
-    public get isValid() {
+    public get isValid(): boolean {
         return this.state.isValid;
     }
 
-    public validate(options: IValidateOpts) {
-        return this.fieldRef.current?.validate(options);
+    public async validate(options: IValidateOpts): Promise<boolean> {
+        const val = await this.fieldRef.current?.validate(options);
+        return val ?? false;
     }
 
-    public focus() {
+    public focus(): void {
         this.fieldRef.current?.focus();
     }
 }

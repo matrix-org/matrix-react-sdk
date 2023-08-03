@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import React, {
     createRef,
     InputHTMLAttributes,
     LegacyRef,
-    forwardRef,
     RefObject,
 } from "react";
 import classNames from "classnames";
@@ -59,122 +58,125 @@ interface IButtonProps extends Omit<ComponentProps<typeof AccessibleTooltipButto
     notificationState?: NotificationState;
     isNarrow?: boolean;
     avatarSize?: number;
+    innerRef?: RefObject<HTMLElement>;
     ContextMenuComponent?: ComponentType<ComponentProps<typeof SpaceContextMenu>>;
     onClick?(ev?: ButtonEvent): void;
 }
 
-export const SpaceButton = forwardRef<HTMLElement, IButtonProps>(
-    (
-        {
-            space,
-            spaceKey,
-            className,
-            selected,
-            label,
-            contextMenuTooltip,
-            notificationState,
-            avatarSize,
-            isNarrow,
-            children,
-            ContextMenuComponent,
-            ...props
-        },
-        ref: RefObject<HTMLElement>,
-    ) => {
-        const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLElement>(ref);
-        const [onFocus, isActive] = useRovingTabIndex(handle);
-        const tabIndex = isActive ? 0 : -1;
+export const SpaceButton: React.FC<IButtonProps> = ({
+    space,
+    spaceKey: _spaceKey,
+    className,
+    selected,
+    label,
+    contextMenuTooltip,
+    notificationState,
+    avatarSize,
+    isNarrow,
+    children,
+    innerRef,
+    ContextMenuComponent,
+    ...props
+}) => {
+    const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLElement>(innerRef);
+    const [onFocus, isActive] = useRovingTabIndex(handle);
+    const tabIndex = isActive ? 0 : -1;
 
-        let avatar = (
-            <div className="mx_SpaceButton_avatarPlaceholder">
-                <div className="mx_SpaceButton_icon" />
+    const spaceKey = _spaceKey ?? space?.roomId;
+
+    let avatar = (
+        <div className="mx_SpaceButton_avatarPlaceholder">
+            <div className="mx_SpaceButton_icon" />
+        </div>
+    );
+    if (space) {
+        avatar = <RoomAvatar width={avatarSize} height={avatarSize} room={space} />;
+    }
+
+    let notifBadge;
+    if (spaceKey && notificationState) {
+        let ariaLabel = _t("Jump to first unread room.");
+        if (space?.getMyMembership() === "invite") {
+            ariaLabel = _t("Jump to first invite.");
+        }
+
+        const jumpToNotification = (ev: MouseEvent): void => {
+            ev.stopPropagation();
+            ev.preventDefault();
+            SpaceStore.instance.setActiveRoomInSpace(spaceKey);
+        };
+
+        notifBadge = (
+            <div className="mx_SpacePanel_badgeContainer">
+                <NotificationBadge
+                    onClick={jumpToNotification}
+                    forceCount={false}
+                    notification={notificationState}
+                    aria-label={ariaLabel}
+                    tabIndex={tabIndex}
+                    showUnsentTooltip={true}
+                />
             </div>
         );
-        if (space) {
-            avatar = <RoomAvatar width={avatarSize} height={avatarSize} room={space} />;
-        }
+    }
 
-        let notifBadge;
-        if (notificationState) {
-            let ariaLabel = _t("Jump to first unread room.");
-            if (space?.getMyMembership() === "invite") {
-                ariaLabel = _t("Jump to first invite.");
-            }
-
-            const jumpToNotification = (ev: MouseEvent) => {
-                ev.stopPropagation();
-                ev.preventDefault();
-                SpaceStore.instance.setActiveRoomInSpace(spaceKey ?? space.roomId);
-            };
-
-            notifBadge = (
-                <div className="mx_SpacePanel_badgeContainer">
-                    <NotificationBadge
-                        onClick={jumpToNotification}
-                        forceCount={false}
-                        notification={notificationState}
-                        aria-label={ariaLabel}
-                        tabIndex={tabIndex}
-                        showUnsentTooltip={true}
-                    />
-                </div>
-            );
-        }
-
-        let contextMenu: JSX.Element;
-        if (menuDisplayed && ContextMenuComponent) {
-            contextMenu = (
-                <ContextMenuComponent
-                    {...toRightOf(handle.current?.getBoundingClientRect(), 0)}
-                    space={space}
-                    onFinished={closeMenu}
-                />
-            );
-        }
-
-        const viewSpaceHome = () => defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: space.roomId });
-        const activateSpace = () => SpaceStore.instance.setActiveSpace(spaceKey ?? space.roomId);
-        const onClick = props.onClick ?? (selected && space ? viewSpaceHome : activateSpace);
-
-        return (
-            <AccessibleTooltipButton
-                {...props}
-                className={classNames("mx_SpaceButton", className, {
-                    mx_SpaceButton_active: selected,
-                    mx_SpaceButton_hasMenuOpen: menuDisplayed,
-                    mx_SpaceButton_narrow: isNarrow,
-                })}
-                title={label}
-                onClick={onClick}
-                onContextMenu={openMenu}
-                forceHide={!isNarrow || menuDisplayed}
-                inputRef={handle}
-                tabIndex={tabIndex}
-                onFocus={onFocus}
-            >
-                {children}
-                <div className="mx_SpaceButton_selectionWrapper">
-                    <div className="mx_SpaceButton_avatarWrapper">
-                        {avatar}
-                        {notifBadge}
-                    </div>
-                    {!isNarrow && <span className="mx_SpaceButton_name">{label}</span>}
-
-                    {ContextMenuComponent && (
-                        <ContextMenuTooltipButton
-                            className="mx_SpaceButton_menuButton"
-                            onClick={openMenu}
-                            title={contextMenuTooltip}
-                            isExpanded={menuDisplayed}
-                        />
-                    )}
-
-                    {contextMenu}
-                </div>
-            </AccessibleTooltipButton>
+    let contextMenu: JSX.Element | undefined;
+    if (menuDisplayed && handle.current && ContextMenuComponent) {
+        contextMenu = (
+            <ContextMenuComponent
+                {...toRightOf(handle.current.getBoundingClientRect(), 0)}
+                space={space}
+                onFinished={closeMenu}
+            />
         );
-    },
-);
+    }
+
+    const viewSpaceHome = (): void =>
+        // space is set here because of the assignment condition of onClick
+        defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: space!.roomId });
+    const activateSpace = (): void => {
+        if (spaceKey) SpaceStore.instance.setActiveSpace(spaceKey);
+    };
+    const onClick = props.onClick ?? (selected && space ? viewSpaceHome : activateSpace);
+
+    return (
+        <AccessibleTooltipButton
+            {...props}
+            className={classNames("mx_SpaceButton", className, {
+                mx_SpaceButton_active: selected,
+                mx_SpaceButton_hasMenuOpen: menuDisplayed,
+                mx_SpaceButton_narrow: isNarrow,
+            })}
+            title={label}
+            onClick={onClick}
+            onContextMenu={openMenu}
+            forceHide={!isNarrow || menuDisplayed}
+            inputRef={handle}
+            tabIndex={tabIndex}
+            onFocus={onFocus}
+        >
+            {children}
+            <div className="mx_SpaceButton_selectionWrapper">
+                <div className="mx_SpaceButton_avatarWrapper">
+                    {avatar}
+                    {notifBadge}
+                </div>
+                {!isNarrow && <span className="mx_SpaceButton_name">{label}</span>}
+
+                {ContextMenuComponent && (
+                    <ContextMenuTooltipButton
+                        className="mx_SpaceButton_menuButton"
+                        onClick={openMenu}
+                        title={contextMenuTooltip}
+                        isExpanded={menuDisplayed}
+                    />
+                )}
+
+                {contextMenu}
+            </div>
+        </AccessibleTooltipButton>
+    );
+};
 
 interface IItemProps extends InputHTMLAttributes<HTMLLIElement> {
     space: Room;
@@ -184,7 +186,7 @@ interface IItemProps extends InputHTMLAttributes<HTMLLIElement> {
     onExpand?: Function;
     parents?: Set<string>;
     innerRef?: LegacyRef<HTMLLIElement>;
-    dragHandleProps?: DraggableProvidedDragHandleProps;
+    dragHandleProps?: DraggableProvidedDragHandleProps | null;
 }
 
 interface IItemState {
@@ -198,7 +200,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
 
     private buttonRef = createRef<HTMLDivElement>();
 
-    public constructor(props) {
+    public constructor(props: IItemProps) {
         super(props);
 
         const collapsed = SpaceTreeLevelLayoutStore.instance.getSpaceCollapsedState(
@@ -217,34 +219,34 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         this.props.space.on(RoomEvent.Name, this.onRoomNameChange);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         SpaceStore.instance.off(this.props.space.roomId, this.onSpaceUpdate);
         this.props.space.off(RoomEvent.Name, this.onRoomNameChange);
     }
 
-    private onSpaceUpdate = () => {
+    private onSpaceUpdate = (): void => {
         this.setState({
             childSpaces: this.childSpaces,
         });
     };
 
-    private onRoomNameChange = () => {
+    private onRoomNameChange = (): void => {
         this.setState({
             name: this.props.space.name,
         });
     };
 
-    private get childSpaces() {
+    private get childSpaces(): Room[] {
         return SpaceStore.instance
             .getChildSpaces(this.props.space.roomId)
             .filter((s) => !this.props.parents?.has(s.roomId));
     }
 
-    private get isCollapsed() {
-        return this.state.collapsed || this.props.isPanelCollapsed;
+    private get isCollapsed(): boolean {
+        return this.state.collapsed || !!this.props.isPanelCollapsed;
     }
 
-    private toggleCollapse = (evt) => {
+    private toggleCollapse = (evt: ButtonEvent): void => {
         if (this.props.onExpand && this.isCollapsed) {
             this.props.onExpand();
         }
@@ -261,7 +263,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         evt.stopPropagation();
     };
 
-    private onKeyDown = (ev: React.KeyboardEvent) => {
+    private onKeyDown = (ev: React.KeyboardEvent): void => {
         let handled = true;
         const action = getKeyBindingsManager().getRoomListAction(ev);
         const hasChildren = this.state.childSpaces?.length;
@@ -298,7 +300,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         }
     };
 
-    public render() {
+    public render(): React.ReactNode {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const {
             space,

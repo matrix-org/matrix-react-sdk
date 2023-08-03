@@ -19,7 +19,6 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { _t, _td } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { useDispatcher } from "../../../hooks/useDispatcher";
@@ -31,6 +30,7 @@ import { UIFeature } from "../../../settings/UIFeature";
 import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsTab";
 import RolesRoomSettingsTab from "../settings/tabs/room/RolesRoomSettingsTab";
 import { Action } from "../../../dispatcher/actions";
+import { NonEmptyArray } from "../../../@types/common";
 
 export enum SpaceSettingsTab {
     General = "SPACE_GENERAL_TAB",
@@ -39,15 +39,16 @@ export enum SpaceSettingsTab {
     Advanced = "SPACE_ADVANCED_TAB",
 }
 
-interface IProps extends IDialogProps {
+interface IProps {
     matrixClient: MatrixClient;
     space: Room;
+    onFinished(): void;
 }
 
 const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFinished }) => {
     useDispatcher(defaultDispatcher, (payload) => {
         if (payload.action === Action.AfterLeaveRoom && payload.room_id === space.roomId) {
-            onFinished(false);
+            onFinished();
         }
     });
 
@@ -57,7 +58,7 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
                 SpaceSettingsTab.General,
                 _td("General"),
                 "mx_SpaceSettingsDialog_generalIcon",
-                <SpaceSettingsGeneralTab matrixClient={cli} space={space} onFinished={onFinished} />,
+                <SpaceSettingsGeneralTab matrixClient={cli} space={space} />,
             ),
             new Tab(
                 SpaceSettingsTab.Visibility,
@@ -69,32 +70,28 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
                 SpaceSettingsTab.Roles,
                 _td("Roles & Permissions"),
                 "mx_RoomSettingsDialog_rolesIcon",
-                <RolesRoomSettingsTab roomId={space.roomId} />,
+                <RolesRoomSettingsTab room={space} />,
             ),
             SettingsStore.getValue(UIFeature.AdvancedSettings)
                 ? new Tab(
                       SpaceSettingsTab.Advanced,
                       _td("Advanced"),
                       "mx_RoomSettingsDialog_warningIcon",
-                      <AdvancedRoomSettingsTab roomId={space.roomId} closeSettingsFn={onFinished} />,
+                      <AdvancedRoomSettingsTab room={space} closeSettingsFn={onFinished} />,
                   )
                 : null,
-        ].filter(Boolean);
+        ].filter(Boolean) as NonEmptyArray<Tab<SpaceSettingsTab>>;
     }, [cli, space, onFinished]);
 
     return (
         <BaseDialog
-            title={_t("Space settings")}
+            title={_t("Settings - %(spaceName)s", { spaceName: space.name || _t("Unnamed Space") })}
             className="mx_SpaceSettingsDialog"
             contentId="mx_SpaceSettingsDialog"
             onFinished={onFinished}
             fixedWidth={false}
         >
-            <div
-                className="mx_SpaceSettingsDialog_content"
-                id="mx_SpaceSettingsDialog"
-                title={_t("Settings - %(spaceName)s", { spaceName: space.name })}
-            >
+            <div className="mx_SpaceSettingsDialog_content" id="mx_SpaceSettingsDialog">
                 <TabbedView tabs={tabs} />
             </div>
         </BaseDialog>

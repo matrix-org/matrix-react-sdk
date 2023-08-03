@@ -19,7 +19,7 @@ import React, { useRef, useState } from "react";
 import { VoiceBroadcastHeader } from "../..";
 import AccessibleButton from "../../../components/views/elements/AccessibleButton";
 import { VoiceBroadcastPreRecording } from "../../models/VoiceBroadcastPreRecording";
-import { Icon as LiveIcon } from "../../../../res/img/element-icons/live.svg";
+import { Icon as LiveIcon } from "../../../../res/img/compound/live-16px.svg";
 import { _t } from "../../../languageHandler";
 import { useAudioDeviceSelection } from "../../../hooks/useAudioDeviceSelection";
 import { DevicesContextMenu } from "../../../components/views/audio_messages/DevicesContextMenu";
@@ -41,7 +41,7 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({ voiceBroadcastP
         disableStartButton: false,
     });
 
-    const onDeviceSelect = (device: MediaDeviceInfo) => {
+    const onDeviceSelect = (device: MediaDeviceInfo): void => {
         setState((state) => ({
             ...state,
             showDeviceSelect: false,
@@ -49,7 +49,7 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({ voiceBroadcastP
         setDevice(device);
     };
 
-    const onStartBroadcastClick = () => {
+    const onStartBroadcastClick = (): void => {
         setState((state) => ({
             ...state,
             disableStartButton: true,
@@ -63,7 +63,7 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({ voiceBroadcastP
             <VoiceBroadcastHeader
                 linkToRoom={true}
                 onCloseClick={voiceBroadcastPreRecording.cancel}
-                onMicrophoneLineClick={() => setState({ ...state, showDeviceSelect: true })}
+                onMicrophoneLineClick={(): void => setState({ ...state, showDeviceSelect: true })}
                 room={voiceBroadcastPreRecording.room}
                 microphoneLabel={currentDeviceLabel}
                 showClose={true}

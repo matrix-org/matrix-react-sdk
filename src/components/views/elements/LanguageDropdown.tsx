@@ -15,15 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactElement } from "react";
 
 import * as languageHandler from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
 import Spinner from "./Spinner";
 import Dropdown from "./Dropdown";
+import { NonEmptyArray } from "../../../@types/common";
 
-function languageMatchesSearchQuery(query, language) {
+type Languages = Awaited<ReturnType<typeof languageHandler.getAllLanguagesFromJson>>;
+
+function languageMatchesSearchQuery(query: string, language: Languages[0]): boolean {
     if (language.label.toUpperCase().includes(query.toUpperCase())) return true;
     if (language.value.toUpperCase() === query.toUpperCase()) return true;
     return false;
@@ -38,7 +41,7 @@ interface IProps {
 
 interface IState {
     searchQuery: string;
-    langs: Awaited<ReturnType<typeof languageHandler.getAllLanguagesFromJson>>;
+    langs: Languages | null;
 }
 
 export default class LanguageDropdown extends React.Component<IProps, IState> {
@@ -81,7 +84,7 @@ export default class LanguageDropdown extends React.Component<IProps, IState> {
         });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.langs === null) {
             return <Spinner />;
         }
@@ -97,12 +100,12 @@ export default class LanguageDropdown extends React.Component<IProps, IState> {
 
         const options = displayedLanguages.map((language) => {
             return <div key={language.value}>{language.label}</div>;
-        });
+        }) as NonEmptyArray<ReactElement & { key: string }>;
 
         // default value here too, otherwise we need to handle null / undefined
         // values between mounting and the initial value propagating
-        let language = SettingsStore.getValue("language", null, /*excludeDefault:*/ true);
-        let value = null;
+        let language = SettingsStore.getValue<string | undefined>("language", null, /*excludeDefault:*/ true);
+        let value: string | undefined;
         if (language) {
             value = this.props.value || language;
         } else {

@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// @ts-ignore
 import Recorder from "opus-recorder/dist/recorder.min.js";
 import encoderPath from "opus-recorder/dist/encoderWorker.min.js";
 import { SimpleObservable } from "matrix-widget-api";
@@ -67,25 +66,25 @@ export enum RecordingState {
 }
 
 export class VoiceRecording extends EventEmitter implements IDestroyable {
-    private recorder: Recorder;
-    private recorderContext: AudioContext;
-    private recorderSource: MediaStreamAudioSourceNode;
-    private recorderStream: MediaStream;
-    private recorderWorklet: AudioWorkletNode;
-    private recorderProcessor: ScriptProcessorNode;
+    private recorder?: Recorder;
+    private recorderContext?: AudioContext;
+    private recorderSource?: MediaStreamAudioSourceNode;
+    private recorderStream?: MediaStream;
+    private recorderWorklet?: AudioWorkletNode;
+    private recorderProcessor?: ScriptProcessorNode;
     private recording = false;
-    private observable: SimpleObservable<IRecordingUpdate>;
+    private observable?: SimpleObservable<IRecordingUpdate>;
     private targetMaxLength: number | null = TARGET_MAX_LENGTH;
     public amplitudes: number[] = []; // at each second mark, generated
     private liveWaveform = new FixedRollingArray(RECORDING_PLAYBACK_SAMPLES, 0);
-    public onDataAvailable: (data: ArrayBuffer) => void;
+    public onDataAvailable?: (data: ArrayBuffer) => void;
 
     public get contentType(): string {
         return "audio/ogg";
     }
 
     public get durationSeconds(): number {
-        if (!this.recorder) throw new Error("Duration not available without a recording");
+        if (!this.recorder || !this.recorderContext) throw new Error("Duration not available without a recording");
         return this.recorderContext.currentTime;
     }
 
@@ -110,7 +109,7 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         return !MediaDeviceHandler.getAudioNoiseSuppression();
     }
 
-    private async makeRecorder() {
+    private async makeRecorder(): Promise<void> {
         try {
             this.recorderStream = await navigator.mediaDevices.getUserMedia({
                 audio: {
@@ -182,7 +181,7 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
             });
 
             // not using EventEmitter here because it leads to detached bufferes
-            this.recorder.ondataavailable = (data: ArrayBuffer) => this?.onDataAvailable(data);
+            this.recorder.ondataavailable = (data: ArrayBuffer) => this.onDataAvailable?.(data);
         } catch (e) {
             logger.error("Error starting recording: ", e);
             if (e instanceof DOMException) {
@@ -204,7 +203,7 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
     }
 
     public get liveData(): SimpleObservable<IRecordingUpdate> {
-        if (!this.recording) throw new Error("No observable when not recording");
+        if (!this.recording || !this.observable) throw new Error("No observable when not recording");
         return this.observable;
     }
 
@@ -212,17 +211,17 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         return !!Recorder.isRecordingSupported();
     }
 
-    private onAudioProcess = (ev: AudioProcessingEvent) => {
+    private onAudioProcess = (ev: AudioProcessingEvent): void => {
         this.processAudioUpdate(ev.playbackTime);
 
         // We skip the functionality of the worklet regarding waveform calculations: we
         // should get that information pretty quick during the playback info.
     };
 
-    private processAudioUpdate = (timeSeconds: number) => {
+    private processAudioUpdate = (timeSeconds: number): void => {
         if (!this.recording) return;
 
-        this.observable.update({
+        this.observable!.update({
             waveform: this.liveWaveform.value.map((v) => clamp(v, 0, 1)),
             timeSeconds: timeSeconds,
         });
@@ -244,7 +243,7 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
             return;
         }
 
-        const secondsLeft = TARGET_MAX_LENGTH - this.recorderSeconds;
+        const secondsLeft = TARGET_MAX_LENGTH - this.recorderSeconds!;
         if (secondsLeft < 0) {
             // go over to make sure we definitely capture that last frame
             // noinspection JSIgnoredPromiseFromCall - we aren't concerned with it overlapping
@@ -260,7 +259,8 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
     /**
      * {@link https://github.com/chris-rudmin/opus-recorder#instance-fields ref for recorderSeconds}
      */
-    public get recorderSeconds() {
+    public get recorderSeconds(): number | undefined {
+        if (!this.recorder) return undefined;
         return this.recorder.encodedSamplePosition / 48000;
     }
 
@@ -273,20 +273,20 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
         }
         this.observable = new SimpleObservable<IRecordingUpdate>();
         await this.makeRecorder();
-        await this.recorder.start();
+        await this.recorder?.start();
         this.recording = true;
         this.emit(RecordingState.Started);
     }
 
     public async stop(): Promise<void> {
-        return Singleflight.for(this, "stop").do(async () => {
+        return Singleflight.for(this, "stop").do(async (): Promise<void> => {
             if (!this.recording) {
                 throw new Error("No recording to stop");
             }
 
             // Disconnect the source early to start shutting down resources
-            await this.recorder.stop(); // stop first to flush the last frame
-            this.recorderSource.disconnect();
+            await this.recorder!.stop(); // stop first to flush the last frame
+            this.recorderSource!.disconnect();
             if (this.recorderWorklet) this.recorderWorklet.disconnect();
             if (this.recorderProcessor) {
                 this.recorderProcessor.disconnect();
@@ -295,25 +295,25 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
 
             // close the context after the recorder so the recorder doesn't try to
             // connect anything to the context (this would generate a warning)
-            await this.recorderContext.close();
+            await this.recorderContext!.close();
 
             // Now stop all the media tracks so we can release them back to the user/OS
-            this.recorderStream.getTracks().forEach((t) => t.stop());
+            this.recorderStream!.getTracks().forEach((t) => t.stop());
 
             // Finally do our post-processing and clean up
             this.recording = false;
-            await this.recorder.close();
+            await this.recorder!.close();
             this.emit(RecordingState.Ended);
         });
     }
 
-    public destroy() {
+    public destroy(): void {
         // noinspection JSIgnoredPromiseFromCall - not concerned about stop() being called async here
         this.stop();
         this.removeAllListeners();
         this.onDataAvailable = undefined;
         Singleflight.forgetAllFor(this);
         // noinspection JSIgnoredPromiseFromCall - not concerned about being called async here
-        this.observable.close();
+        this.observable?.close();
     }
 }

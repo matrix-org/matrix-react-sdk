@@ -35,8 +35,8 @@ const ALGORITHM = "m.megolm.v1.aes-sha2";
 
 const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp }, ref) => {
     const cli = useContext(MatrixClientContext);
-    const roomId = mxEvent.getRoomId();
-    const isRoomEncrypted = MatrixClientPeg.get().isRoomEncrypted(roomId);
+    const roomId = mxEvent.getRoomId()!;
+    const isRoomEncrypted = MatrixClientPeg.safeGet().isRoomEncrypted(roomId);
 
     const prevContent = mxEvent.getPrevContent() as IRoomEncryption;
     const content = mxEvent.getContent<IRoomEncryption>();
@@ -51,18 +51,18 @@ const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp
         if (prevContent.algorithm === ALGORITHM) {
             subtitle = _t("Some encryption parameters have been changed.");
         } else if (dmPartner) {
-            const displayName = room.getMember(dmPartner)?.rawDisplayName || dmPartner;
+            const displayName = room?.getMember(dmPartner)?.rawDisplayName || dmPartner;
             subtitle = _t(
                 "Messages here are end-to-end encrypted. " +
-                    "Verify %(displayName)s in their profile - tap on their avatar.",
+                    "Verify %(displayName)s in their profile - tap on their profile picture.",
                 { displayName },
             );
-        } else if (isLocalRoom(room)) {
+        } else if (room && isLocalRoom(room)) {
             subtitle = _t("Messages in this chat will be end-to-end encrypted.");
         } else {
             subtitle = _t(
                 "Messages in this room are end-to-end encrypted. " +
-                    "When people join, you can verify them in their profile, just tap on their avatar.",
+                    "When people join, you can verify them in their profile, just tap on their profile picture.",
             );
         }
 

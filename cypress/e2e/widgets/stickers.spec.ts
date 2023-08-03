@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 const STICKER_PICKER_WIDGET_ID = "fake-sticker-picker";
 const STICKER_PICKER_WIDGET_NAME = "Fake Stickers";
@@ -67,8 +67,7 @@ const WIDGET_HTML = `
 `;
 
 function openStickerPicker() {
-    cy.get(".mx_MessageComposer_buttonMenu").click();
-    cy.get("#stickersButton").click();
+    cy.openMessageComposerOptions().findByRole("menuitem", { name: "Sticker" }).click();
 }
 
 function sendStickerFromPicker() {
@@ -102,13 +101,14 @@ describe("Stickers", () => {
     // See sendStickerFromPicker() for more detail on iframe comms.
 
     let stickerPickerUrl: string;
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
+    let userId: string;
 
     beforeEach(() => {
-        cy.startSynapse("default").then((data) => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Sally");
+            cy.initTestUser(homeserver, "Sally").then((user) => (userId = user.userId));
         });
         cy.serveHtmlFile(WIDGET_HTML).then((url) => {
             stickerPickerUrl = url;
@@ -116,7 +116,7 @@ describe("Stickers", () => {
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
         cy.stopWebServers();
     });
 
@@ -133,7 +133,11 @@ describe("Stickers", () => {
                     type: "m.stickerpicker",
                     name: STICKER_PICKER_WIDGET_NAME,
                     url: stickerPickerUrl,
+                    creatorUserId: userId,
                 },
+                sender: userId,
+                state_key: STICKER_PICKER_WIDGET_ID,
+                type: "m.widget",
                 id: STICKER_PICKER_WIDGET_ID,
             },
         }).as("stickers");
@@ -156,6 +160,34 @@ describe("Stickers", () => {
             openStickerPicker();
             sendStickerFromPicker();
             expectTimelineSticker(roomId2);
+        });
+    });
+
+    it("should handle a sticker picker widget missing creatorUserId", () => {
+        cy.createRoom({
+            name: ROOM_NAME_1,
+        }).as("roomId1");
+        cy.setAccountData("m.widgets", {
+            [STICKER_PICKER_WIDGET_ID]: {
+                content: {
+                    type: "m.stickerpicker",
+                    name: STICKER_PICKER_WIDGET_NAME,
+                    url: stickerPickerUrl,
+                    // No creatorUserId
+                },
+                sender: userId,
+                state_key: STICKER_PICKER_WIDGET_ID,
+                type: "m.widget",
+                id: STICKER_PICKER_WIDGET_ID,
+            },
+        }).as("stickers");
+
+        cy.all([cy.get<string>("@roomId1"), cy.get<{}>("@stickers")]).then(([roomId1]) => {
+            cy.viewRoomByName(ROOM_NAME_1);
+            cy.url().should("contain", `/#/room/${roomId1}`);
+            openStickerPicker();
+            sendStickerFromPicker();
+            expectTimelineSticker(roomId1);
         });
     });
 });

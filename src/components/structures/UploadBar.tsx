@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { filesize } from "filesize";
 import { IEventRelation } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 
@@ -29,6 +28,7 @@ import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButto
 import { RoomUpload } from "../../models/RoomUpload";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { UploadPayload } from "../../dispatcher/payloads/UploadPayload";
+import { fileSize } from "../../utils/FileUtils";
 
 interface IProps {
     room: Room;
@@ -57,7 +57,7 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
     private dispatcherRef: Optional<string>;
     private mounted = false;
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         // Set initial state to any available upload in this room - we might be mounting
@@ -65,12 +65,12 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
         this.state = this.calculateState();
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
         this.mounted = true;
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.mounted = false;
         dis.unregister(this.dispatcherRef!);
     }
@@ -91,19 +91,19 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
         };
     }
 
-    private onAction = (payload: ActionPayload) => {
+    private onAction = (payload: ActionPayload): void => {
         if (!this.mounted) return;
         if (isUploadPayload(payload)) {
             this.setState(this.calculateState());
         }
     };
 
-    private onCancelClick = (ev: ButtonEvent) => {
+    private onCancelClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ContentMessages.sharedInstance().cancelUpload(this.state.currentUpload!);
     };
 
-    public render() {
+    public render(): React.ReactNode {
         if (!this.state.currentFile) {
             return null;
         }
@@ -114,7 +114,7 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
             count: this.state.countFiles - 1,
         });
 
-        const uploadSize = filesize(this.state.currentTotal!);
+        const uploadSize = fileSize(this.state.currentTotal!);
         return (
             <div className="mx_UploadBar">
                 <div className="mx_UploadBar_filename">

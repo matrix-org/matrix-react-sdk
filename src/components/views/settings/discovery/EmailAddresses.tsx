@@ -16,15 +16,17 @@ limitations under the License.
 */
 
 import React from "react";
-import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 
-import { _t } from "../../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from "../../../../Modal";
-import AddThreepid from "../../../../AddThreepid";
-import ErrorDialog from "../../dialogs/ErrorDialog";
-import AccessibleButton from "../../elements/AccessibleButton";
+import AddThreepid, { Binding, ThirdPartyIdentifier } from "../../../../AddThreepid";
+import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
+import SettingsSubsection from "../shared/SettingsSubsection";
+import InlineSpinner from "../../elements/InlineSpinner";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -43,14 +45,14 @@ TODO: Reduce all the copying between account vs. discovery components.
 */
 
 interface IEmailAddressProps {
-    email: IThreepid;
+    email: ThirdPartyIdentifier;
 }
 
 interface IEmailAddressState {
     verifying: boolean;
-    addTask: any; // FIXME: When AddThreepid is TSfied
+    addTask: AddThreepid | null;
     continueDisabled: boolean;
-    bound: boolean;
+    bound?: boolean;
 }
 
 export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddressState> {
@@ -67,15 +69,15 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         };
     }
 
-    public componentDidUpdate(prevProps: Readonly<IEmailAddressProps>) {
+    public componentDidUpdate(prevProps: Readonly<IEmailAddressProps>): void {
         if (this.props.email !== prevProps.email) {
             const { bound } = this.props.email;
             this.setState({ bound });
         }
     }
 
-    private async changeBinding({ bind, label, errorTitle }): Promise<void> {
-        if (!(await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind())) {
+    private async changeBinding({ bind, label, errorTitle }: Binding): Promise<void> {
+        if (!(await MatrixClientPeg.safeGet().doesServerSupportSeparateAddAndBind())) {
             return this.changeBindingTangledAddBind({ bind, label, errorTitle });
         }
 
@@ -83,7 +85,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
 
         try {
             if (bind) {
-                const task = new AddThreepid();
+                const task = new AddThreepid(MatrixClientPeg.safeGet());
                 this.setState({
                     verifying: true,
                     continueDisabled: true,
@@ -94,11 +96,11 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                     continueDisabled: false,
                 });
             } else {
-                await MatrixClientPeg.get().unbindThreePid(medium, address);
+                await MatrixClientPeg.safeGet().unbindThreePid(medium, address);
             }
             this.setState({ bound: bind });
         } catch (err) {
-            logger.error(`Unable to ${label} email address ${address} ${err}`);
+            logger.error(`changeBinding: Unable to ${label} email address ${address}`, err);
             this.setState({
                 verifying: false,
                 continueDisabled: false,
@@ -106,15 +108,15 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err && err.message ? err.message : _t("Operation failed"),
+                description: extractErrorMessageFromError(err, _t("Operation failed")),
             });
         }
     }
 
-    private async changeBindingTangledAddBind({ bind, label, errorTitle }): Promise<void> {
+    private async changeBindingTangledAddBind({ bind, label, errorTitle }: Binding): Promise<void> {
         const { medium, address } = this.props.email;
 
-        const task = new AddThreepid();
+        const task = new AddThreepid(MatrixClientPeg.safeGet());
         this.setState({
             verifying: true,
             continueDisabled: true,
@@ -122,7 +124,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         });
 
         try {
-            await MatrixClientPeg.get().deleteThreePid(medium, address);
+            await MatrixClientPeg.safeGet().deleteThreePid(medium, address);
             if (bind) {
                 await task.bindEmailAddress(address);
             } else {
@@ -133,7 +135,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 bound: bind,
             });
         } catch (err) {
-            logger.error(`Unable to ${label} email address ${address} ${err}`);
+            logger.error(`changeBindingTangledAddBind: Unable to ${label} email address ${address}`, err);
             this.setState({
                 verifying: false,
                 continueDisabled: false,
@@ -141,12 +143,12 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: err && err.message ? err.message : _t("Operation failed"),
+                description: extractErrorMessageFromError(err, _t("Operation failed")),
             });
         }
     }
 
-    private onRevokeClick = (e: React.MouseEvent): void => {
+    private onRevokeClick = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
         this.changeBinding({
@@ -156,7 +158,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         });
     };
 
-    private onShareClick = (e: React.MouseEvent): void => {
+    private onShareClick = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
         this.changeBinding({
@@ -166,38 +168,47 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         });
     };
 
-    private onContinueClick = async (e: React.MouseEvent): Promise<void> => {
+    private onContinueClick = async (e: ButtonEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
+        // Prevent the continue button from being pressed multiple times while we're working
         this.setState({ continueDisabled: true });
         try {
-            await this.state.addTask.checkEmailLinkClicked();
+            await this.state.addTask?.checkEmailLinkClicked();
             this.setState({
                 addTask: null,
-                continueDisabled: false,
                 verifying: false,
             });
         } catch (err) {
-            this.setState({ continueDisabled: false });
-            if (err.errcode === "M_THREEPID_AUTH_FAILED") {
+            logger.error(`Unable to verify email address:`, err);
+
+            let underlyingError = err;
+            if (err instanceof UserFriendlyError) {
+                underlyingError = err.cause;
+            }
+
+            if (underlyingError instanceof MatrixError && underlyingError.errcode === "M_THREEPID_AUTH_FAILED") {
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Your email address hasn't been verified yet"),
                     description: _t(
-                        "Click the link in the email you received to verify " + "and then click continue again.",
+                        "Click the link in the email you received to verify and then click continue again.",
                     ),
                 });
             } else {
                 logger.error("Unable to verify email address: " + err);
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to verify email address."),
-                    description: err && err.message ? err.message : _t("Operation failed"),
+                    description: extractErrorMessageFromError(err, _t("Operation failed")),
                 });
             }
+        } finally {
+            // Re-enable the continue button so the user can retry
+            this.setState({ continueDisabled: false });
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { address } = this.props.email;
         const { verifying, bound } = this.state;
 
@@ -207,7 +218,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                 <span>
                     {_t("Verify the link in your inbox")}
                     <AccessibleButton
-                        className="mx_ExistingEmailAddress_confirmBtn"
+                        className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                         kind="primary_sm"
                         onClick={this.onContinueClick}
                         disabled={this.state.continueDisabled}
@@ -219,7 +230,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         } else if (bound) {
             status = (
                 <AccessibleButton
-                    className="mx_ExistingEmailAddress_confirmBtn"
+                    className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     kind="danger_sm"
                     onClick={this.onRevokeClick}
                 >
@@ -229,7 +240,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         } else {
             status = (
                 <AccessibleButton
-                    className="mx_ExistingEmailAddress_confirmBtn"
+                    className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     kind="primary_sm"
                     onClick={this.onShareClick}
                 >
@@ -239,32 +250,41 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         }
 
         return (
-            <div className="mx_ExistingEmailAddress">
-                <span className="mx_ExistingEmailAddress_email">{address}</span>
+            <div className="mx_GeneralUserSettingsTab_section--discovery_existing">
+                <span className="mx_GeneralUserSettingsTab_section--discovery_existing_address">{address}</span>
                 {status}
             </div>
         );
     }
 }
 interface IProps {
-    emails: IThreepid[];
+    emails: ThirdPartyIdentifier[];
+    isLoading?: boolean;
 }
 
 export default class EmailAddresses extends React.Component<IProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let content;
-        if (this.props.emails.length > 0) {
+        if (this.props.isLoading) {
+            content = <InlineSpinner />;
+        } else if (this.props.emails.length > 0) {
             content = this.props.emails.map((e) => {
                 return <EmailAddress email={e} key={e.address} />;
             });
-        } else {
-            content = (
-                <span className="mx_SettingsTab_subsectionText">
-                    {_t("Discovery options will appear once you have added an email above.")}
-                </span>
-            );
         }
 
-        return <div className="mx_EmailAddresses">{content}</div>;
+        const hasEmails = !!this.props.emails.length;
+
+        return (
+            <SettingsSubsection
+                heading={_t("Email addresses")}
+                description={
+                    (!hasEmails && _t("Discovery options will appear once you have added an email above.")) || undefined
+                }
+                stretchContent
+            >
+                {content}
+            </SettingsSubsection>
+        );
     }
 }

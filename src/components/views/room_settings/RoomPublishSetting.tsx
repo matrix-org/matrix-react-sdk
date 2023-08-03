@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Visibility } from "matrix-js-sdk/src/@types/partials";
+import { JoinRule, Visibility } from "matrix-js-sdk/src/@types/partials";
 
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { _t } from "../../../languageHandler";
@@ -33,19 +33,19 @@ interface IState {
 }
 
 export default class RoomPublishSetting extends React.PureComponent<IProps, IState> {
-    public constructor(props, context) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
             isRoomPublished: false,
         };
     }
 
-    private onRoomPublishChange = (e) => {
+    private onRoomPublishChange = (): void => {
         const valueBefore = this.state.isRoomPublished;
         const newValue = !valueBefore;
         this.setState({ isRoomPublished: newValue });
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
         client
             .setRoomDirectoryVisibility(this.props.roomId, newValue ? Visibility.Public : Visibility.Private)
@@ -55,18 +55,18 @@ export default class RoomPublishSetting extends React.PureComponent<IProps, ISta
             });
     };
 
-    public componentDidMount() {
-        const client = MatrixClientPeg.get();
+    public componentDidMount(): void {
+        const client = MatrixClientPeg.safeGet();
         client.getRoomDirectoryVisibility(this.props.roomId).then((result) => {
             this.setState({ isRoomPublished: result.visibility === "public" });
         });
     }
 
-    public render() {
-        const client = MatrixClientPeg.get();
+    public render(): React.ReactNode {
+        const client = MatrixClientPeg.safeGet();
 
         const room = client.getRoom(this.props.roomId);
-        const isRoomPublishable = room.getJoinRule() !== "invite";
+        const isRoomPublishable = room && room.getJoinRule() !== JoinRule.Invite;
 
         const enabled =
             (DirectoryCustomisations.requireCanonicalAliasAccessToPublish?.() === false ||

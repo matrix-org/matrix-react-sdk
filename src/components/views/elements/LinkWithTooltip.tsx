@@ -18,14 +18,16 @@ import React from "react";
 
 import TextWithTooltip from "./TextWithTooltip";
 
-interface IProps extends Omit<React.ComponentProps<typeof TextWithTooltip>, "tabIndex" | "onClick"> {}
+interface IProps extends Omit<React.ComponentProps<typeof TextWithTooltip>, "tabIndex" | "onClick" | "tooltip"> {
+    tooltip: string;
+}
 
 export default class LinkWithTooltip extends React.Component<IProps> {
     public constructor(props: IProps) {
         super(props);
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { children, tooltip, ...props } = this.props;
 
         return (

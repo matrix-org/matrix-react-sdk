@@ -16,6 +16,7 @@ limitations under the License.
 
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixError } from "matrix-js-sdk/src/http-api";
 
 import IdentityAuthClient from "./IdentityAuthClient";
 
@@ -35,6 +36,9 @@ export async function getThreepidsWithBindStatus(
         try {
             const authClient = new IdentityAuthClient();
             const identityAccessToken = await authClient.getAccessToken({ check: false });
+            if (!identityAccessToken) {
+                throw new Error("No identity access token found");
+            }
 
             // Restructure for lookup query
             const query = threepids.map(({ medium, address }): [string, string] => [medium, address]);
@@ -54,7 +58,7 @@ export async function getThreepidsWithBindStatus(
             }
         } catch (e) {
             // Ignore terms errors here and assume other flows handle this
-            if (e.errcode !== "M_TERMS_NOT_SIGNED") {
+            if (!(e instanceof MatrixError) || e.errcode !== "M_TERMS_NOT_SIGNED") {
                 throw e;
             }
         }

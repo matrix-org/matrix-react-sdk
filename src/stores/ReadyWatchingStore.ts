@@ -16,19 +16,19 @@
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { SyncState } from "matrix-js-sdk/src/sync";
-import { Dispatcher } from "flux";
 import { EventEmitter } from "events";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { ActionPayload } from "../dispatcher/payloads";
 import { IDestroyable } from "../utils/IDestroyable";
 import { Action } from "../dispatcher/actions";
+import { MatrixDispatcher } from "../dispatcher/dispatcher";
 
 export abstract class ReadyWatchingStore extends EventEmitter implements IDestroyable {
-    protected matrixClient: MatrixClient;
+    protected matrixClient: MatrixClient | null = null;
     private dispatcherRef: string | null = null;
 
-    public constructor(protected readonly dispatcher: Dispatcher<ActionPayload>) {
+    public constructor(protected readonly dispatcher: MatrixDispatcher) {
         super();
     }
 
@@ -42,31 +42,31 @@ export abstract class ReadyWatchingStore extends EventEmitter implements IDestro
         }
     }
 
-    public get mxClient(): MatrixClient {
+    public get mxClient(): MatrixClient | null {
         return this.matrixClient; // for external readonly access
     }
 
-    public useUnitTestClient(cli: MatrixClient) {
+    public useUnitTestClient(cli: MatrixClient): void {
         this.matrixClient = cli;
     }
 
-    public destroy() {
+    public destroy(): void {
         if (this.dispatcherRef !== null) this.dispatcher.unregister(this.dispatcherRef);
     }
 
-    protected async onReady() {
+    protected async onReady(): Promise<void> {
         // Default implementation is to do nothing.
     }
 
-    protected async onNotReady() {
+    protected async onNotReady(): Promise<void> {
         // Default implementation is to do nothing.
     }
 
-    protected onDispatcherAction(payload: ActionPayload) {
+    protected onDispatcherAction(payload: ActionPayload): void {
         // Default implementation is to do nothing.
     }
 
-    private onAction = async (payload: ActionPayload) => {
+    private onAction = async (payload: ActionPayload): Promise<void> => {
         this.onDispatcherAction(payload);
 
         if (payload.action === "MatrixActions.sync") {

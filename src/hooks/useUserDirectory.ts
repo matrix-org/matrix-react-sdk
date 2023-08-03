@@ -22,10 +22,15 @@ import { useLatestResult } from "./useLatestResult";
 
 export interface IUserDirectoryOpts {
     limit: number;
-    query?: string;
+    query: string;
 }
 
-export const useUserDirectory = () => {
+export const useUserDirectory = (): {
+    ready: boolean;
+    loading: boolean;
+    users: DirectoryMember[];
+    search(opts: IUserDirectoryOpts): Promise<boolean>;
+} => {
     const [users, setUsers] = useState<DirectoryMember[]>([]);
 
     const [loading, setLoading] = useState(false);
@@ -44,7 +49,7 @@ export const useUserDirectory = () => {
 
             try {
                 setLoading(true);
-                const { results } = await MatrixClientPeg.get().searchUserDirectory(opts);
+                const { results } = await MatrixClientPeg.safeGet().searchUserDirectory(opts);
                 updateResult(
                     opts,
                     results.map((user) => new DirectoryMember(user)),

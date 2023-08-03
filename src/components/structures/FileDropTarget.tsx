@@ -37,9 +37,10 @@ const FileDropTarget: React.FC<IProps> = ({ parent, onFileDrop }) => {
     useEffect(() => {
         if (!parent || parent.ondrop) return;
 
-        const onDragEnter = (ev: DragEvent) => {
+        const onDragEnter = (ev: DragEvent): void => {
             ev.stopPropagation();
             ev.preventDefault();
+            if (!ev.dataTransfer) return;
 
             setState((state) => ({
                 // We always increment the counter no matter the types, because dragging is
@@ -49,13 +50,14 @@ const FileDropTarget: React.FC<IProps> = ({ parent, onFileDrop }) => {
                 // https://docs.w3cub.com/dom/datatransfer/types
                 // https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Recommended_drag_types#file
                 dragging:
-                    ev.dataTransfer.types.includes("Files") || ev.dataTransfer.types.includes("application/x-moz-file")
+                    ev.dataTransfer!.types.includes("Files") ||
+                    ev.dataTransfer!.types.includes("application/x-moz-file")
                         ? true
                         : state.dragging,
             }));
         };
 
-        const onDragLeave = (ev: DragEvent) => {
+        const onDragLeave = (ev: DragEvent): void => {
             ev.stopPropagation();
             ev.preventDefault();
 
@@ -65,9 +67,10 @@ const FileDropTarget: React.FC<IProps> = ({ parent, onFileDrop }) => {
             }));
         };
 
-        const onDragOver = (ev: DragEvent) => {
+        const onDragOver = (ev: DragEvent): void => {
             ev.stopPropagation();
             ev.preventDefault();
+            if (!ev.dataTransfer) return;
 
             ev.dataTransfer.dropEffect = "none";
 
@@ -79,9 +82,10 @@ const FileDropTarget: React.FC<IProps> = ({ parent, onFileDrop }) => {
             }
         };
 
-        const onDrop = (ev: DragEvent) => {
+        const onDrop = (ev: DragEvent): void => {
             ev.stopPropagation();
             ev.preventDefault();
+            if (!ev.dataTransfer) return;
             onFileDrop(ev.dataTransfer);
 
             setState((state) => ({

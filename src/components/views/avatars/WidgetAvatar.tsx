@@ -15,14 +15,17 @@ limitations under the License.
 */
 
 import React, { ComponentProps } from "react";
+import { IWidget } from "matrix-widget-api";
 import classNames from "classnames";
 
-import { IApp } from "../../../stores/WidgetStore";
+import { IApp, isAppWidget } from "../../../stores/WidgetStore";
 import BaseAvatar, { BaseAvatarType } from "./BaseAvatar";
 import { mediaFromMxc } from "../../../customisations/Media";
 
-interface IProps extends Omit<ComponentProps<BaseAvatarType>, "name" | "url" | "urls"> {
-    app: IApp;
+interface IProps extends Omit<ComponentProps<BaseAvatarType>, "name" | "url" | "urls" | "height" | "width"> {
+    app: IApp | IWidget;
+    height?: number;
+    width?: number;
 }
 
 const WidgetAvatar: React.FC<IProps> = ({ app, className, width = 20, height = 20, ...props }) => {
@@ -44,7 +47,7 @@ const WidgetAvatar: React.FC<IProps> = ({ app, className, width = 20, height = 2
             name={app.id}
             className={classNames("mx_WidgetAvatar", className)}
             // MSC2765
-            url={app.avatar_url ? mediaFromMxc(app.avatar_url).getSquareThumbnailHttp(20) : undefined}
+            url={isAppWidget(app) && app.avatar_url ? mediaFromMxc(app.avatar_url).getSquareThumbnailHttp(20) : null}
             urls={iconUrls}
             width={width}
             height={height}

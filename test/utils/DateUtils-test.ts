@@ -19,10 +19,12 @@ import {
     formatRelativeTime,
     formatDuration,
     formatFullDateNoDayISO,
+    formatDateForInput,
     formatTimeLeft,
     formatPreciseDuration,
+    formatLocalDateShort,
 } from "../../src/DateUtils";
-import { REPEATABLE_DATE } from "../test-utils";
+import { REPEATABLE_DATE, mockIntlDateTimeFormat, unmockIntlDateTimeFormat } from "../test-utils";
 
 describe("formatSeconds", () => {
     it("correctly formats time with hours", () => {
@@ -41,7 +43,7 @@ describe("formatSeconds", () => {
 });
 
 describe("formatRelativeTime", () => {
-    let dateSpy;
+    let dateSpy: jest.SpyInstance<number, []>;
     beforeAll(() => {
         dateSpy = jest
             .spyOn(global.Date, "now")
@@ -53,9 +55,16 @@ describe("formatRelativeTime", () => {
         dateSpy.mockRestore();
     });
 
-    it("returns hour format for events created less than 24 hours ago", () => {
+    it("returns hour format for events created in the same day", () => {
+        // Tuesday, 2 November 2021 11:01:00 UTC
         const date = new Date(2021, 10, 2, 11, 1, 23, 0);
         expect(formatRelativeTime(date)).toBe("11:01");
+    });
+
+    it("returns month and day for events created less than 24h ago but on a different day", () => {
+        // Monday, 1 November 2021 23:01:00 UTC
+        const date = new Date(2021, 10, 1, 23, 1, 23, 0);
+        expect(formatRelativeTime(date)).toBe("Nov 1");
     });
 
     it("honours the hour format setting", () => {
@@ -125,6 +134,15 @@ describe("formatFullDateNoDayISO", () => {
     });
 });
 
+describe("formatDateForInput", () => {
+    it.each([["1993-11-01"], ["1066-10-14"], ["0571-04-22"], ["0062-02-05"]])(
+        "should format %s",
+        (dateString: string) => {
+            expect(formatDateForInput(new Date(dateString))).toBe(dateString);
+        },
+    );
+});
+
 describe("formatTimeLeft", () => {
     it.each([
         [0, "0s left"],
@@ -135,5 +153,24 @@ describe("formatTimeLeft", () => {
         [5 * 60 * 60 + 7 * 60 + 23, "5h 7m 23s left"],
     ])("should format %s to %s", (seconds: number, expected: string) => {
         expect(formatTimeLeft(seconds)).toBe(expected);
+    });
+});
+
+describe("formatLocalDateShort()", () => {
+    afterAll(() => {
+        unmockIntlDateTimeFormat();
+    });
+    const timestamp = new Date("Fri Dec 17 2021 09:09:00 GMT+0100 (Central European Standard Time)").getTime();
+    it("formats date correctly by locale", () => {
+        // format is DD/MM/YY
+        mockIntlDateTimeFormat("en-UK");
+        expect(formatLocalDateShort(timestamp)).toEqual("17/12/21");
+
+        // US date format is MM/DD/YY
+        mockIntlDateTimeFormat("en-US");
+        expect(formatLocalDateShort(timestamp)).toEqual("12/17/21");
+
+        mockIntlDateTimeFormat("de-DE");
+        expect(formatLocalDateShort(timestamp)).toEqual("17.12.21");
     });
 });

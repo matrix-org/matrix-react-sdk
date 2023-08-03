@@ -73,7 +73,7 @@ export default class PerformanceMonitor {
      * @param id Specify an identifier appended to the measurement name
      * @returns The measurement
      */
-    public stop(name: string, id?: string): PerformanceEntry {
+    public stop(name: string, id?: string): PerformanceEntry | undefined {
         if (!this.supportsPerformanceApi()) {
             return;
         }
@@ -88,7 +88,7 @@ export default class PerformanceMonitor {
 
         this.clear(name, id);
 
-        const measurement = performance.getEntriesByName(key).pop();
+        const measurement = performance.getEntriesByName(key).pop()!;
 
         // Keeping a reference to all PerformanceEntry created
         // by this abstraction for historical events collection
@@ -121,7 +121,7 @@ export default class PerformanceMonitor {
         });
     }
 
-    public addPerformanceDataCallback(listener: PerformanceDataListener, buffer = false) {
+    public addPerformanceDataCallback(listener: PerformanceDataListener, buffer = false): void {
         this.listeners.push(listener);
         if (buffer) {
             const toEmit = this.entries.filter((entry) => this.shouldEmit(listener, entry));
@@ -131,7 +131,7 @@ export default class PerformanceMonitor {
         }
     }
 
-    public removePerformanceDataCallback(callback?: PerformanceCallbackFunction) {
+    public removePerformanceDataCallback(callback?: PerformanceCallbackFunction): void {
         if (!callback) {
             this.listeners = [];
         } else {

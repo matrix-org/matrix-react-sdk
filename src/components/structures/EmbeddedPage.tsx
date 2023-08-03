@@ -46,7 +46,7 @@ interface IState {
 export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
     public static contextType = MatrixClientContext;
     private unmounted = false;
-    private dispatcherRef: string = null;
+    private dispatcherRef: string | null = null;
 
     public constructor(props: IProps, context: typeof MatrixClientContext) {
         super(props, context);
@@ -60,11 +60,11 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         return sanitizeHtml(_t(s));
     }
 
-    private async fetchEmbed() {
+    private async fetchEmbed(): Promise<void> {
         let res: Response;
 
         try {
-            res = await fetch(this.props.url, { method: "GET" });
+            res = await fetch(this.props.url!, { method: "GET" });
         } catch (err) {
             if (this.unmounted) return;
             logger.warn(`Error loading page: ${err}`);
@@ -84,7 +84,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
 
         if (this.props.replaceMap) {
             Object.keys(this.props.replaceMap).forEach((key) => {
-                body = body.split(key).join(this.props.replaceMap[key]);
+                body = body.split(key).join(this.props.replaceMap![key]);
             });
         }
 
@@ -118,13 +118,12 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         // HACK: Workaround for the context's MatrixClient not updating.
         const client = this.context || MatrixClientPeg.get();
         const isGuest = client ? client.isGuest() : true;
         const className = this.props.className;
-        const classes = classnames({
-            [className]: true,
+        const classes = classnames(className, {
             [`${className}_guest`]: isGuest,
             [`${className}_loggedIn`]: !!client,
         });

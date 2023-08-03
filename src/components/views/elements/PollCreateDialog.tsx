@@ -17,17 +17,16 @@ limitations under the License.
 import React, { ChangeEvent, createRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import {
-    IPartialEvent,
-    KNOWN_POLL_KIND,
+    KnownPollKind,
     M_POLL_KIND_DISCLOSED,
     M_POLL_KIND_UNDISCLOSED,
     M_POLL_START,
-    PollStartEvent,
-} from "matrix-events-sdk";
+} from "matrix-js-sdk/src/@types/polls";
+import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IPartialEvent } from "matrix-js-sdk/src/@types/extensible_events";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
-import { IDialogProps } from "../dialogs/IDialogProps";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import Modal from "../../../Modal";
 import { _t } from "../../../languageHandler";
@@ -37,10 +36,11 @@ import AccessibleButton from "./AccessibleButton";
 import Spinner from "./Spinner";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
-interface IProps extends IDialogProps {
+interface IProps {
     room: Room;
     threadId?: string;
     editingMxEvent?: MatrixEvent; // Truthy if we are editing an existing poll
+    onFinished(pollCreated?: boolean): void;
 }
 
 enum FocusTarget {
@@ -51,7 +51,7 @@ interface IState extends IScrollableBaseState {
     question: string;
     options: string[];
     busy: boolean;
-    kind: KNOWN_POLL_KIND;
+    kind: KnownPollKind;
     autoFocusTarget: FocusTarget;
 }
 
@@ -99,7 +99,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         this.state = props.editingMxEvent ? editingInitialState(props.editingMxEvent) : creatingInitialState();
     }
 
-    private checkCanSubmit() {
+    private checkCanSubmit(): void {
         this.setState({
             canSubmit:
                 !this.state.busy &&
@@ -108,23 +108,23 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         });
     }
 
-    private onQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
+    private onQuestionChange = (e: ChangeEvent<HTMLInputElement>): void => {
         this.setState({ question: e.target.value }, () => this.checkCanSubmit());
     };
 
-    private onOptionChange = (i: number, e: ChangeEvent<HTMLInputElement>) => {
+    private onOptionChange = (i: number, e: ChangeEvent<HTMLInputElement>): void => {
         const newOptions = arrayFastClone(this.state.options);
         newOptions[i] = e.target.value;
         this.setState({ options: newOptions }, () => this.checkCanSubmit());
     };
 
-    private onOptionRemove = (i: number) => {
+    private onOptionRemove = (i: number): void => {
         const newOptions = arrayFastClone(this.state.options);
         newOptions.splice(i, 1);
         this.setState({ options: newOptions }, () => this.checkCanSubmit());
     };
 
-    private onOptionAdd = () => {
+    private onOptionAdd = (): void => {
         const newOptions = arrayFastClone(this.state.options);
         newOptions.push("");
         this.setState({ options: newOptions, autoFocusTarget: FocusTarget.NewOption }, () => {
@@ -163,7 +163,12 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         doMaybeLocalRoomAction(
             this.props.room.roomId,
             (actualRoomId: string) =>
-                this.matrixClient.sendEvent(actualRoomId, this.props.threadId, pollEvent.type, pollEvent.content),
+                this.matrixClient.sendEvent(
+                    actualRoomId,
+                    this.props.threadId ?? null,
+                    pollEvent.type,
+                    pollEvent.content,
+                ),
             this.matrixClient,
         )
             .then(() => this.props.onFinished(true))
@@ -208,7 +213,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                     value={this.state.question}
                     maxLength={MAX_QUESTION_LENGTH}
                     label={_t("Question or topic")}
-                    placeholder={_t("Write something...")}
+                    placeholder={_t("Write something…")}
                     onChange={this.onQuestionChange}
                     usePlaceholderAsHint={true}
                     disabled={this.state.busy}
@@ -256,14 +261,14 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         );
     }
 
-    public onPollTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    public onPollTypeChange = (e: ChangeEvent<HTMLSelectElement>): void => {
         this.setState({
             kind: M_POLL_KIND_DISCLOSED.matches(e.target.value) ? M_POLL_KIND_DISCLOSED : M_POLL_KIND_UNDISCLOSED,
         });
     };
 }
 
-function pollTypeNotes(kind: KNOWN_POLL_KIND): string {
+function pollTypeNotes(kind: KnownPollKind): string {
     if (M_POLL_KIND_DISCLOSED.matches(kind.name)) {
         return _t("Voters see results as soon as they have voted");
     } else {

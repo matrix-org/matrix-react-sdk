@@ -18,6 +18,7 @@ limitations under the License.
 import React from "react";
 import { AuthType, IAuthData } from "matrix-js-sdk/src/interactive-auth";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -28,25 +29,35 @@ import BaseDialog from "./BaseDialog";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 
+type DialogAesthetics = Partial<{
+    [x in AuthType]: {
+        [x: number]: {
+            body: string;
+            continueText?: string;
+            continueKind?: string;
+        };
+    };
+}>;
+
 interface IProps {
-    onFinished: (success: boolean) => void;
+    onFinished: (success?: boolean) => void;
 }
 
 interface IState {
     shouldErase: boolean;
-    errStr: string;
+    errStr: string | null;
     authData: any; // for UIA
     authEnabled: boolean; // see usages for information
 
     // A few strings that are passed to InteractiveAuth for design or are displayed
     // next to the InteractiveAuth component.
-    bodyText: string;
-    continueText: string;
-    continueKind: string;
+    bodyText?: string;
+    continueText?: string;
+    continueKind?: string;
 }
 
 export default class DeactivateAccountDialog extends React.Component<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -54,18 +65,12 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             errStr: null,
             authData: null, // for UIA
             authEnabled: true, // see usages for information
-
-            // A few strings that are passed to InteractiveAuth for design or are displayed
-            // next to the InteractiveAuth component.
-            bodyText: null,
-            continueText: null,
-            continueKind: null,
         };
 
         this.initAuth(/* shouldErase= */ false);
     }
 
-    private onStagePhaseChange = (stage: AuthType, phase: string): void => {
+    private onStagePhaseChange = (stage: AuthType, phase: number): void => {
         const dialogAesthetics = {
             [SSOAuthEntry.PHASE_PREAUTH]: {
                 body: _t("Confirm your account deactivation by using Single Sign On to prove your identity."),
@@ -80,7 +85,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         };
 
         // This is the same as aestheticsForStagePhases in InteractiveAuthDialog minus the `title`
-        const DEACTIVATE_AESTHETICS = {
+        const DEACTIVATE_AESTHETICS: DialogAesthetics = {
             [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
             [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
             [PasswordAuthEntry.LOGIN_TYPE]: {
@@ -91,19 +96,24 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         };
 
         const aesthetics = DEACTIVATE_AESTHETICS[stage];
-        let bodyText = null;
-        let continueText = null;
-        let continueKind = null;
+        let bodyText: string | undefined;
+        let continueText: string | undefined;
+        let continueKind: string | undefined;
         if (aesthetics) {
             const phaseAesthetics = aesthetics[phase];
-            if (phaseAesthetics && phaseAesthetics.body) bodyText = phaseAesthetics.body;
-            if (phaseAesthetics && phaseAesthetics.continueText) continueText = phaseAesthetics.continueText;
-            if (phaseAesthetics && phaseAesthetics.continueKind) continueKind = phaseAesthetics.continueKind;
+            if (phaseAesthetics) {
+                if (phaseAesthetics.body) bodyText = phaseAesthetics.body;
+                if (phaseAesthetics.continueText) continueText = phaseAesthetics.continueText;
+                if (phaseAesthetics.continueKind) continueKind = phaseAesthetics.continueKind;
+            }
         }
         this.setState({ bodyText, continueText, continueKind });
     };
 
-    private onUIAuthFinished: InteractiveAuthCallback = (success, result) => {
+    private onUIAuthFinished: InteractiveAuthCallback<Awaited<ReturnType<MatrixClient["deactivateAccount"]>>> = (
+        success,
+        result,
+    ) => {
         if (success) return; // great! makeRequest() will be called too.
 
         if (result === ERROR_USER_CANCELLED) {
@@ -119,8 +129,8 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         // XXX: this should be returning a promise to maintain the state inside the state machine correct
         // but given that a deactivation is followed by a local logout and all object instances being thrown away
         // this isn't done.
-        MatrixClientPeg.get()
-            .deactivateAccount(auth, this.state.shouldErase)
+        MatrixClientPeg.safeGet()
+            .deactivateAccount(auth ?? undefined, this.state.shouldErase)
             .then((r) => {
                 // Deactivation worked - logout & close this dialog
                 defaultDispatcher.fire(Action.TriggerLogout);
@@ -152,8 +162,8 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
     }
 
     private initAuth(shouldErase: boolean): void {
-        MatrixClientPeg.get()
-            .deactivateAccount(null, shouldErase)
+        MatrixClientPeg.safeGet()
+            .deactivateAccount(undefined, shouldErase)
             .then((r) => {
                 // If we got here, oops. The server didn't require any auth.
                 // Our application lifecycle will catch the error and do the logout bits.
@@ -172,19 +182,19 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             });
     }
 
-    public render() {
-        let error = null;
+    public render(): React.ReactNode {
+        let error: JSX.Element | undefined;
         if (this.state.errStr) {
             error = <div className="error">{this.state.errStr}</div>;
         }
 
-        let auth = <div>{_t("Loading...")}</div>;
+        let auth = <div>{_t("Loading…")}</div>;
         if (this.state.authData && this.state.authEnabled) {
             auth = (
                 <div>
                     {this.state.bodyText}
                     <InteractiveAuth
-                        matrixClient={MatrixClientPeg.get()}
+                        matrixClient={MatrixClientPeg.safeGet()}
                         authData={this.state.authData}
                         // XXX: onUIAuthComplete breaches the expected method contract, it gets away with it because it
                         // knows the entire app is about to die as a result of the account deactivation.

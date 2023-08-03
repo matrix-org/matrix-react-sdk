@@ -19,23 +19,26 @@ import { DialogContent, DialogProps } from "@matrix-org/react-sdk-module-api/lib
 import { logger } from "matrix-js-sdk/src/logger";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "./ScrollableBaseModal";
-import { IDialogProps } from "./IDialogProps";
 import { _t } from "../../../languageHandler";
 
-interface IProps extends IDialogProps {
-    contentFactory: (props: DialogProps, ref: React.Ref<DialogContent>) => React.ReactNode;
-    contentProps: DialogProps;
+interface IProps<P extends DialogProps, C extends DialogContent<P>> {
+    contentFactory: (props: P, ref: React.RefObject<C>) => React.ReactNode;
+    contentProps: P;
     title: string;
+    onFinished(ok?: boolean, model?: Awaited<ReturnType<DialogContent<P>["trySubmit"]>>): void;
 }
 
 interface IState extends IScrollableBaseState {
     // nothing special
 }
 
-export class ModuleUiDialog extends ScrollableBaseModal<IProps, IState> {
-    private contentRef = createRef<DialogContent>();
+export class ModuleUiDialog<P extends DialogProps, C extends DialogContent<P>> extends ScrollableBaseModal<
+    IProps<P, C>,
+    IState
+> {
+    private contentRef = createRef<C>();
 
-    public constructor(props: IProps) {
+    public constructor(props: IProps<P, C>) {
         super(props);
 
         this.state = {
@@ -45,9 +48,9 @@ export class ModuleUiDialog extends ScrollableBaseModal<IProps, IState> {
         };
     }
 
-    protected async submit() {
+    protected async submit(): Promise<void> {
         try {
-            const model = await this.contentRef.current.trySubmit();
+            const model = await this.contentRef.current!.trySubmit();
             this.props.onFinished(true, model);
         } catch (e) {
             logger.error("Error during submission of module dialog:", e);

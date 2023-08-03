@@ -25,13 +25,16 @@ import AccessibleButton from "../elements/AccessibleButton";
 import QRCode from "../elements/QRCode";
 import Heading from "../typography/Heading";
 import BaseDialog from "./BaseDialog";
-import { IDialogProps } from "./IDialogProps";
 
 const fallbackAppStore = "https://apps.apple.com/app/vector/id1083446067";
 const fallbackGooglePlay = "https://play.google.com/store/apps/details?id=im.vector.app";
 const fallbackFDroid = "https://f-droid.org/repository/browse/?fdid=im.vector.app";
 
-export const AppDownloadDialog: FC<IDialogProps> = ({ onFinished }: IDialogProps) => {
+interface Props {
+    onFinished(): void;
+}
+
+export const AppDownloadDialog: FC<Props> = ({ onFinished }) => {
     const brand = SdkConfig.get("brand");
     const desktopBuilds = SdkConfig.getObject("desktop_builds");
     const mobileBuilds = SdkConfig.getObject("mobile_builds");
@@ -51,7 +54,7 @@ export const AppDownloadDialog: FC<IDialogProps> = ({ onFinished }: IDialogProps
         >
             {desktopBuilds?.get("available") && (
                 <div className="mx_AppDownloadDialog_desktop">
-                    <Heading size="h3">{_t("Download %(brand)s Desktop", { brand })}</Heading>
+                    <Heading size="3">{_t("Download %(brand)s Desktop", { brand })}</Heading>
                     <AccessibleButton
                         kind="primary"
                         element="a"
@@ -65,7 +68,7 @@ export const AppDownloadDialog: FC<IDialogProps> = ({ onFinished }: IDialogProps
             )}
             <div className="mx_AppDownloadDialog_mobile">
                 <div className="mx_AppDownloadDialog_app">
-                    <Heading size="h3">{_t("iOS")}</Heading>
+                    <Heading size="3">{_t("iOS")}</Heading>
                     <QRCode data={urlAppStore} margin={0} width={172} />
                     <div className="mx_AppDownloadDialog_info">
                         {_t("%(qrCode)s or %(appLinks)s", {
@@ -86,7 +89,7 @@ export const AppDownloadDialog: FC<IDialogProps> = ({ onFinished }: IDialogProps
                     </div>
                 </div>
                 <div className="mx_AppDownloadDialog_app">
-                    <Heading size="h3">{_t("Android")}</Heading>
+                    <Heading size="3">{_t("Android")}</Heading>
                     <QRCode data={urlAndroid} margin={0} width={172} />
                     <div className="mx_AppDownloadDialog_info">
                         {_t("%(qrCode)s or %(appLinks)s", {

@@ -118,9 +118,7 @@ limitations under the License.
                 min-width: 0;
 
                 .mx_LegacyCallEvent_sender {
-                    font-weight: 600;
-                    font-size: 1.5rem;
-                    line-height: 1.8rem;
+                    font-weight: var(--cpd-font-weight-semibold);
                     margin-bottom: $spacing-4;
 
                     overflow: hidden;
@@ -133,8 +131,6 @@ limitations under the License.
                     align-items: center;
                     font-weight: 400;
                     color: $secondary-content;
-                    font-size: 1.2rem;
-                    line-height: $font-13px;
 
                     .mx_LegacyCallEvent_type_icon {
                         height: 13px;
@@ -160,6 +156,7 @@ limitations under the License.
             flex-wrap: wrap;
             align-items: center;
             color: $secondary-content;
+            font-size: $font-12px;
             gap: $spacing-12; /* See mx_IncomingLegacyCallToast_buttons */
             margin-inline-start: 42px; /* avatar (32px) + mx_LegacyCallEvent_info_basic margin (10px) */
             word-break: break-word;
@@ -168,6 +165,7 @@ limitations under the License.
             .mx_LegacyCallEvent_content_button {
                 @mixin LegacyCallButton;
                 padding: 0 $spacing-12;
+                font-size: inherit;
 
                 span::before {
                     mask-size: 16px;

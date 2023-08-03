@@ -35,17 +35,19 @@ interface IProps {
     onKeyDown?(ev: KeyboardEvent): void;
     cardState?: any;
     ref?: Ref<HTMLDivElement>;
+    children: ReactNode;
 }
 
 interface IGroupProps {
     className?: string;
     title: string;
+    children: ReactNode;
 }
 
 export const Group: React.FC<IGroupProps> = ({ className, title, children }) => {
     return (
         <div className={classNames("mx_BaseCard_Group", className)}>
-            <h1>{title}</h1>
+            <h2>{title}</h2>
             {children}
         </div>
     );
@@ -57,7 +59,7 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
         const cardHistory = RightPanelStore.instance.roomPhaseHistory;
         if (cardHistory.length > 1) {
             const prevCard = cardHistory[cardHistory.length - 2];
-            const onBackClick = (ev: ButtonEvent) => {
+            const onBackClick = (ev: ButtonEvent): void => {
                 onBack?.(ev);
                 RightPanelStore.instance.popCard();
             };
@@ -69,7 +71,7 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
         if (onClose) {
             closeButton = (
                 <AccessibleButton
-                    data-test-id="base-card-close-button"
+                    data-testid="base-card-close-button"
                     className="mx_BaseCard_close"
                     onClick={onClose}
                     title={closeLabel || _t("Close")}

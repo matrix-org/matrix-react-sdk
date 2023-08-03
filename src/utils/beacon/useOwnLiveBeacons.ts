@@ -23,11 +23,11 @@ import { sortBeaconsByLatestExpiry } from "./duration";
 
 type LiveBeaconsState = {
     beacon?: Beacon;
-    onStopSharing?: () => void;
-    onResetLocationPublishError?: () => void;
-    stoppingInProgress?: boolean;
-    hasStopSharingError?: boolean;
-    hasLocationPublishError?: boolean;
+    onStopSharing: () => void;
+    onResetLocationPublishError: () => void;
+    stoppingInProgress: boolean;
+    hasStopSharingError: boolean;
+    hasLocationPublishError: boolean;
 };
 
 /**
@@ -65,11 +65,11 @@ export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[]): LiveBeacon
 
     // select the beacon with latest expiry to display expiry time
     const beacon = liveBeaconIds
-        .map((beaconId) => OwnBeaconStore.instance.getBeaconById(beaconId))
+        .map((beaconId) => OwnBeaconStore.instance.getBeaconById(beaconId)!)
         .sort(sortBeaconsByLatestExpiry)
         .shift();
 
-    const onStopSharing = async () => {
+    const onStopSharing = async (): Promise<void> => {
         setStoppingInProgress(true);
         try {
             await Promise.all(liveBeaconIds.map((beaconId) => OwnBeaconStore.instance.stopBeacon(beaconId)));
@@ -78,7 +78,7 @@ export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[]): LiveBeacon
         }
     };
 
-    const onResetLocationPublishError = () => {
+    const onResetLocationPublishError = (): void => {
         liveBeaconIds.forEach((beaconId) => {
             OwnBeaconStore.instance.resetLocationPublishError(beaconId);
         });

@@ -18,7 +18,6 @@ import React, { useMemo, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { _t } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import SearchBox from "../../structures/SearchBox";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
@@ -27,13 +26,19 @@ import AccessibleButton from "../elements/AccessibleButton";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { filterBoolean } from "../../../utils/arrays";
 
-interface IProps extends IDialogProps {
+interface IProps {
     room: Room;
     selected?: string[];
+    onFinished(rooms?: string[]): void;
 }
 
-const Entry = ({ room, checked, onChange }) => {
+const Entry: React.FC<{
+    room: Room;
+    checked: boolean;
+    onChange(value: boolean): void;
+}> = ({ room, checked, onChange }) => {
     const localRoom = room instanceof Room;
 
     let description;
@@ -61,7 +66,7 @@ const Entry = ({ room, checked, onChange }) => {
                 )}
             </div>
             <StyledCheckbox
-                onChange={onChange ? (e) => onChange(e.target.checked) : null}
+                onChange={onChange ? (e) => onChange(e.target.checked) : undefined}
                 checked={checked}
                 disabled={!onChange}
             />
@@ -76,7 +81,7 @@ const addAllParents = (set: Set<Room>, room: Room): void => {
     );
 
     parents.forEach((parent) => {
-        if (set.has(parent)) return;
+        if (!parent || set.has(parent)) return;
         set.add(parent);
         addAllParents(set, parent);
     });
@@ -93,8 +98,8 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
         addAllParents(parents, room);
         return [
             Array.from(parents),
-            selected
-                .map((roomId) => {
+            filterBoolean(
+                selected.map((roomId) => {
                     const room = cli.getRoom(roomId);
                     if (!room) {
                         return { roomId, name: roomId } as Room;
@@ -102,8 +107,8 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
                     if (room.getMyMembership() !== "join" || !room.isSpaceRoom()) {
                         return room;
                     }
-                })
-                .filter(Boolean),
+                }),
+            ),
         ];
     }, [cli, selected, room]);
 

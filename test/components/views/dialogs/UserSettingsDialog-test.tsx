@@ -22,7 +22,6 @@ import SettingsStore, { CallbackFn } from "../../../../src/settings/SettingsStor
 import SdkConfig from "../../../../src/SdkConfig";
 import { UserTab } from "../../../../src/components/views/dialogs/UserTab";
 import UserSettingsDialog from "../../../../src/components/views/dialogs/UserSettingsDialog";
-import { IDialogProps } from "../../../../src/components/views/dialogs/IDialogProps";
 import {
     getMockClientWithEventEmitter,
     mockClientMethodsUser,
@@ -62,7 +61,7 @@ describe("<UserSettingsDialog />", () => {
     });
 
     const defaultProps = { onFinished: jest.fn() };
-    const getComponent = (props: Partial<IDialogProps & { initialTabId?: UserTab }> = {}): ReactElement => (
+    const getComponent = (props: Partial<typeof defaultProps & { initialTabId?: UserTab }> = {}): ReactElement => (
         <UserSettingsDialog {...defaultProps} {...props} />
     );
 
@@ -73,8 +72,10 @@ describe("<UserSettingsDialog />", () => {
         mockSdkConfig.get.mockReturnValue({ brand: "Test" });
     });
 
-    const getActiveTabLabel = (container) => container.querySelector(".mx_TabbedView_tabLabel_active").textContent;
-    const getActiveTabHeading = (container) => container.querySelector(".mx_SettingsTab_heading").textContent;
+    const getActiveTabLabel = (container: Element) =>
+        container.querySelector(".mx_TabbedView_tabLabel_active")?.textContent;
+    const getActiveTabHeading = (container: Element) =>
+        container.querySelector(".mx_SettingsSection .mx_Heading_h3")?.textContent;
 
     it("should render general settings tab when no initialTabId", () => {
         const { container } = render(getComponent());
@@ -115,10 +116,7 @@ describe("<UserSettingsDialog />", () => {
         expect(getByTestId(`settings-tab-${UserTab.Voice}`)).toBeTruthy();
     });
 
-    it("renders session manager tab when enabled", () => {
-        mockSettingsStore.getValue.mockImplementation((settingName): any => {
-            return settingName === "feature_new_device_manager";
-        });
+    it("renders session manager tab", () => {
         const { getByTestId } = render(getComponent());
         expect(getByTestId(`settings-tab-${UserTab.SessionManager}`)).toBeTruthy();
     });
@@ -151,28 +149,15 @@ describe("<UserSettingsDialog />", () => {
         expect(queryByTestId(`settings-tab-${UserTab.Mjolnir}`)).toBeFalsy();
 
         expect(mockSettingsStore.watchSetting.mock.calls[0][0]).toEqual("feature_mjolnir");
-        expect(mockSettingsStore.watchSetting.mock.calls[1][0]).toEqual("feature_new_device_manager");
 
         // call the watch setting callback
         watchSettingCallbacks["feature_mjolnir"]("feature_mjolnir", "", SettingLevel.ACCOUNT, true, true);
         // tab is rendered now
         expect(queryByTestId(`settings-tab-${UserTab.Mjolnir}`)).toBeTruthy();
 
-        // call the watch setting callback
-        watchSettingCallbacks["feature_new_device_manager"](
-            "feature_new_device_manager",
-            "",
-            SettingLevel.ACCOUNT,
-            true,
-            true,
-        );
-        // tab is rendered now
-        expect(queryByTestId(`settings-tab-${UserTab.SessionManager}`)).toBeTruthy();
-
         unmount();
 
         // unwatches settings on unmount
         expect(mockSettingsStore.unwatchSetting).toHaveBeenCalledWith("mock-watcher-id-feature_mjolnir");
-        expect(mockSettingsStore.unwatchSetting).toHaveBeenCalledWith("mock-watcher-id-feature_new_device_manager");
     });
 });

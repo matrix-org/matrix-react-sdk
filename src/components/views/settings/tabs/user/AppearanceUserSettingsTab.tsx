@@ -15,11 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ChangeEvent, ReactNode } from "react";
 
 import { _t } from "../../../../../languageHandler";
 import SdkConfig from "../../../../../SdkConfig";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import SettingsFlag from "../../../elements/SettingsFlag";
 import Field from "../../../elements/Field";
@@ -31,6 +30,10 @@ import LayoutSwitcher from "../../LayoutSwitcher";
 import FontScalingPanel from "../../FontScalingPanel";
 import ThemeChoicePanel from "../../ThemeChoicePanel";
 import ImageSizePanel from "../../ImageSizePanel";
+import SettingsTab from "../SettingsTab";
+import { SettingsSection } from "../../shared/SettingsSection";
+import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
+import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 
 interface IProps {}
 
@@ -41,11 +44,14 @@ interface IState {
     layout: Layout;
     // User profile data for the message preview
     userId?: string;
-    displayName: string;
-    avatarUrl: string;
+    displayName?: string;
+    avatarUrl?: string;
 }
 
 export default class AppearanceUserSettingsTab extends React.Component<IProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     private readonly MESSAGE_PREVIEW_TEXT = _t("Hey you. You're the best!");
 
     private unmounted = false;
@@ -58,16 +64,13 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
             systemFont: SettingsStore.getValue("systemFont"),
             showAdvanced: false,
             layout: SettingsStore.getValue("layout"),
-            userId: null,
-            displayName: null,
-            avatarUrl: null,
         };
     }
 
-    public async componentDidMount() {
+    public async componentDidMount(): Promise<void> {
         // Fetch the current user profile for the message preview
-        const client = MatrixClientPeg.get();
-        const userId = client.getUserId();
+        const client = this.context;
+        const userId = client.getUserId()!;
         const profileInfo = await client.getProfileInfo(userId);
         if (this.unmounted) return;
 
@@ -78,7 +81,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         });
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.unmounted = true;
     }
 
@@ -86,12 +89,16 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         this.setState({ layout: layout });
     };
 
-    private renderAdvancedSection() {
+    private renderAdvancedSection(): ReactNode {
         if (!SettingsStore.getValue(UIFeature.AdvancedSettings)) return null;
 
         const brand = SdkConfig.get().brand;
         const toggle = (
-            <AccessibleButton kind="link" onClick={() => this.setState({ showAdvanced: !this.state.showAdvanced })}>
+            <AccessibleButton
+                kind="link"
+                onClick={() => this.setState({ showAdvanced: !this.state.showAdvanced })}
+                aria-expanded={this.state.showAdvanced}
+            >
                 {this.state.showAdvanced ? _t("Hide advanced") : _t("Show advanced")}
             </AccessibleButton>
         );
@@ -114,9 +121,9 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                         onChange={(checked) => this.setState({ useSystemFont: checked })}
                     />
                     <Field
-                        className="mx_AppearanceUserSettingsTab_systemFont"
-                        label={SettingsStore.getDisplayName("systemFont")}
-                        onChange={(value) => {
+                        className="mx_AppearanceUserSettingsTab_checkboxControlledField"
+                        label={SettingsStore.getDisplayName("systemFont")!}
+                        onChange={(value: ChangeEvent<HTMLInputElement>) => {
                             this.setState({
                                 systemFont: value.target.value,
                             });
@@ -132,34 +139,35 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
             );
         }
         return (
-            <div className="mx_SettingsTab_section mx_AppearanceUserSettingsTab_Advanced">
+            <SettingsSubsection>
                 {toggle}
                 {advanced}
-            </div>
+            </SettingsSubsection>
         );
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const brand = SdkConfig.get().brand;
 
         return (
-            <div className="mx_SettingsTab mx_AppearanceUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Customise your appearance")}</div>
-                <div className="mx_SettingsTab_subsectionText">
-                    {_t("Appearance Settings only affect this %(brand)s session.", { brand })}
-                </div>
-                <ThemeChoicePanel />
-                <LayoutSwitcher
-                    userId={this.state.userId}
-                    displayName={this.state.displayName}
-                    avatarUrl={this.state.avatarUrl}
-                    messagePreviewText={this.MESSAGE_PREVIEW_TEXT}
-                    onLayoutChanged={this.onLayoutChanged}
-                />
-                <FontScalingPanel />
-                {this.renderAdvancedSection()}
-                <ImageSizePanel />
-            </div>
+            <SettingsTab data-testid="mx_AppearanceUserSettingsTab">
+                <SettingsSection heading={_t("Customise your appearance")}>
+                    <SettingsSubsectionText>
+                        {_t("Appearance Settings only affect this %(brand)s session.", { brand })}
+                    </SettingsSubsectionText>
+                    <ThemeChoicePanel />
+                    <LayoutSwitcher
+                        userId={this.state.userId}
+                        displayName={this.state.displayName}
+                        avatarUrl={this.state.avatarUrl}
+                        messagePreviewText={this.MESSAGE_PREVIEW_TEXT}
+                        onLayoutChanged={this.onLayoutChanged}
+                    />
+                    <FontScalingPanel />
+                    {this.renderAdvancedSection()}
+                    <ImageSizePanel />
+                </SettingsSection>
+            </SettingsTab>
         );
     }
 }

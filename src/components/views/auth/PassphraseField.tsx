@@ -22,22 +22,25 @@ import SdkConfig from "../../../SdkConfig";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import { _t, _td } from "../../../languageHandler";
 import Field, { IInputProps } from "../elements/Field";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
-interface IProps extends Omit<IInputProps, "onValidate"> {
+interface IProps extends Omit<IInputProps, "onValidate" | "element"> {
     autoFocus?: boolean;
     id?: string;
     className?: string;
     minScore: 0 | 1 | 2 | 3 | 4;
     value: string;
     fieldRef?: RefCallback<Field> | RefObject<Field>;
+    // Additional strings such as a username used to catch bad passwords
+    userInputs?: string[];
 
-    label?: string;
-    labelEnterPassword?: string;
-    labelStrongPassword?: string;
-    labelAllowedButUnsafe?: string;
+    label: string;
+    labelEnterPassword: string;
+    labelStrongPassword: string;
+    labelAllowedButUnsafe: string;
 
-    onChange(ev: React.FormEvent<HTMLElement>);
-    onValidate?(result: IValidationResult);
+    onChange(ev: React.FormEvent<HTMLElement>): void;
+    onValidate?(result: IValidationResult): void;
 }
 
 class PassphraseField extends PureComponent<IProps> {
@@ -48,15 +51,15 @@ class PassphraseField extends PureComponent<IProps> {
         labelAllowedButUnsafe: _td("Password is allowed, but unsafe"),
     };
 
-    public readonly validate = withValidation<this, zxcvbn.ZXCVBNResult>({
+    public readonly validate = withValidation<this, zxcvbn.ZXCVBNResult | null>({
         description: function (complexity) {
             const score = complexity ? complexity.score : 0;
             return <progress className="mx_PassphraseField_progress" max={4} value={score} />;
         },
-        deriveData: async ({ value }) => {
+        deriveData: async ({ value }): Promise<zxcvbn.ZXCVBNResult | null> => {
             if (!value) return null;
             const { scorePassword } = await import("../../../utils/PasswordScorer");
-            return scorePassword(value);
+            return scorePassword(MatrixClientPeg.get(), value, this.props.userInputs);
         },
         rules: [
             {
@@ -66,8 +69,8 @@ class PassphraseField extends PureComponent<IProps> {
             },
             {
                 key: "complexity",
-                test: async function ({ value }, complexity) {
-                    if (!value) {
+                test: async function ({ value }, complexity): Promise<boolean> {
+                    if (!value || !complexity) {
                         return false;
                     }
                     const safe = complexity.score >= this.props.minScore;
@@ -78,7 +81,7 @@ class PassphraseField extends PureComponent<IProps> {
                     // Unsafe passwords that are valid are only possible through a
                     // configuration flag. We'll print some helper text to signal
                     // to the user that their password is allowed, but unsafe.
-                    if (complexity.score >= this.props.minScore) {
+                    if (complexity && complexity.score >= this.props.minScore) {
                         return _t(this.props.labelStrongPassword);
                     }
                     return _t(this.props.labelAllowedButUnsafe);
@@ -88,13 +91,14 @@ class PassphraseField extends PureComponent<IProps> {
                         return null;
                     }
                     const { feedback } = complexity;
-                    return feedback.warning || feedback.suggestions[0] || _t("Keep going...");
+                    return feedback.warning || feedback.suggestions[0] || _t("Keep going…");
                 },
             },
         ],
+        memoize: true,
     });
 
-    public onValidate = async (fieldState: IFieldState) => {
+    public onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validate(fieldState);
         if (this.props.onValidate) {
             this.props.onValidate(result);
@@ -102,7 +106,7 @@ class PassphraseField extends PureComponent<IProps> {
         return result;
     };
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <Field
                 id={this.props.id}

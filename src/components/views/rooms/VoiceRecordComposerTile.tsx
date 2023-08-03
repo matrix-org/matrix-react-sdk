@@ -39,7 +39,7 @@ import InlineSpinner from "../elements/InlineSpinner";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { attachRelation } from "./SendMessageComposer";
+import { attachMentions, attachRelation } from "./SendMessageComposer";
 import { addReplyToMessageContent } from "../../../utils/Reply";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import RoomContext from "../../../contexts/RoomContext";
@@ -70,14 +70,12 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
     public constructor(props: IProps) {
         super(props);
 
-        this.state = {
-            recorder: null, // no recording started by default
-        };
+        this.state = {};
 
         this.voiceRecordingId = VoiceRecordingStore.getVoiceRecordingId(this.props.room, this.props.relation);
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         const recorder = VoiceRecordingStore.instance.getActiveRecording(this.voiceRecordingId);
         if (recorder) {
             if (recorder.isRecording || !recorder.hasRecording) {
@@ -88,7 +86,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         }
     }
 
-    public async componentWillUnmount() {
+    public async componentWillUnmount(): Promise<void> {
         // Stop recording, but keep the recording memory (don't dispose it). This is to let the user
         // come back and finish working with it.
         const recording = VoiceRecordingStore.instance.getActiveRecording(this.voiceRecordingId);
@@ -99,7 +97,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
     }
 
     // called by composer
-    public async send() {
+    public async send(): Promise<void> {
         if (!this.state.recorder) {
             throw new Error("No recording started - cannot send anything");
         }
@@ -131,6 +129,8 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                 this.state.recorder.getPlayback().thumbnailWaveform.map((v) => Math.round(v * 1024)),
             );
 
+            // Attach mentions, which really only applies if there's a replyToEvent.
+            attachMentions(MatrixClientPeg.safeGet().getSafeUserId(), content, null, replyToEvent);
             attachRelation(content, relation);
             if (replyToEvent) {
                 addReplyToMessageContent(content, replyToEvent, {
@@ -146,8 +146,10 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                 });
             }
 
-            doMaybeLocalRoomAction(this.props.room.roomId, (actualRoomId: string) =>
-                MatrixClientPeg.get().sendMessage(actualRoomId, content),
+            doMaybeLocalRoomAction(
+                this.props.room.roomId,
+                (actualRoomId: string) => MatrixClientPeg.safeGet().sendMessage(actualRoomId, content),
+                this.props.room.client,
             );
         } catch (e) {
             logger.error("Error sending voice message:", e);
@@ -159,25 +161,25 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         await this.disposeRecording();
     }
 
-    private async disposeRecording() {
+    private async disposeRecording(): Promise<void> {
         await VoiceRecordingStore.instance.disposeRecording(this.voiceRecordingId);
 
         // Reset back to no recording, which means no phase (ie: restart component entirely)
-        this.setState({ recorder: null, recordingPhase: null, didUploadFail: false });
+        this.setState({ recorder: undefined, recordingPhase: undefined, didUploadFail: false });
     }
 
-    private onCancel = async () => {
+    private onCancel = async (): Promise<void> => {
         await this.disposeRecording();
     };
 
-    public onRecordStartEndClick = async () => {
+    public onRecordStartEndClick = async (): Promise<void> => {
         if (this.state.recorder) {
             await this.state.recorder.stop();
             return;
         }
 
         // The "microphone access error" dialogs are used a lot, so let's functionify them
-        const accessError = () => {
+        const accessError = (): void => {
             Modal.createDialog(ErrorDialog, {
                 title: _t("Unable to access your microphone"),
                 description: (
@@ -220,7 +222,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
         try {
             // stop any noises which might be happening
-            PlaybackManager.instance.pauseAllExcept(null);
+            PlaybackManager.instance.pauseAllExcept();
             const recorder = VoiceRecordingStore.instance.startRecording(this.voiceRecordingId);
             await recorder.start();
 
@@ -236,7 +238,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         }
     };
 
-    private bindNewRecorder(recorder: Optional<VoiceMessageRecording>) {
+    private bindNewRecorder(recorder: Optional<VoiceMessageRecording>): void {
         if (this.state.recorder) {
             this.state.recorder.off(UPDATE_EVENT, this.onRecordingUpdate);
         }
@@ -245,7 +247,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         }
     }
 
-    private onRecordingUpdate = (ev: RecordingState) => {
+    private onRecordingUpdate = (ev: RecordingState): void => {
         if (ev === RecordingState.EndingSoon) return; // ignore this state: it has no UI purpose here
         this.setState({ recordingPhase: ev });
     };

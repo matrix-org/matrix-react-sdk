@@ -31,14 +31,14 @@ import { ExtendedDevice } from "./types";
 
 interface Props {
     device: ExtendedDevice;
-    pusher?: IPusher | undefined;
-    localNotificationSettings?: LocalNotificationSettings | undefined;
+    pusher?: IPusher;
+    localNotificationSettings?: LocalNotificationSettings;
     isSigningOut: boolean;
     onVerifyDevice?: () => void;
     onSignOutDevice: () => void;
     saveDeviceName: (deviceName: string) => Promise<void>;
-    setPushNotifications?: (deviceId: string, enabled: boolean) => Promise<void> | undefined;
-    supportsMSC3881?: boolean | undefined;
+    setPushNotifications?: (deviceId: string, enabled: boolean) => Promise<void>;
+    supportsMSC3881?: boolean;
     className?: string;
     isCurrentDevice?: boolean;
 }
@@ -105,13 +105,13 @@ const DeviceDetails: React.FC<Props> = ({
 
     const showPushNotificationSection = !!pusher || !!localNotificationSettings;
 
-    function isPushNotificationsEnabled(pusher: IPusher, notificationSettings: LocalNotificationSettings): boolean {
-        if (pusher) return pusher[PUSHER_ENABLED.name];
+    function isPushNotificationsEnabled(pusher?: IPusher, notificationSettings?: LocalNotificationSettings): boolean {
+        if (pusher) return !!pusher[PUSHER_ENABLED.name];
         if (localNotificationSettings) return !localNotificationSettings.is_silenced;
         return true;
     }
 
-    function isCheckboxDisabled(pusher: IPusher, notificationSettings: LocalNotificationSettings): boolean {
+    function isCheckboxDisabled(pusher?: IPusher, notificationSettings?: LocalNotificationSettings): boolean {
         if (localNotificationSettings) return false;
         if (pusher && !supportsMSC3881) return true;
         return false;

@@ -28,22 +28,22 @@ import { OwnProfileStore } from "../../stores/OwnProfileStore";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { useEventEmitter } from "../../hooks/useEventEmitter";
-import MatrixClientContext from "../../contexts/MatrixClientContext";
+import MatrixClientContext, { useMatrixClientContext } from "../../contexts/MatrixClientContext";
 import MiniAvatarUploader, { AVATAR_SIZE } from "../views/elements/MiniAvatarUploader";
 import PosthogTrackers from "../../PosthogTrackers";
 import EmbeddedPage from "./EmbeddedPage";
 
-const onClickSendDm = (ev: ButtonEvent) => {
+const onClickSendDm = (ev: ButtonEvent): void => {
     PosthogTrackers.trackInteraction("WebHomeCreateChatButton", ev);
     dis.dispatch({ action: "view_create_chat" });
 };
 
-const onClickExplore = (ev: ButtonEvent) => {
+const onClickExplore = (ev: ButtonEvent): void => {
     PosthogTrackers.trackInteraction("WebHomeExploreRoomsButton", ev);
     dis.fire(Action.ViewRoomDirectory);
 };
 
-const onClickNewRoom = (ev: ButtonEvent) => {
+const onClickNewRoom = (ev: ButtonEvent): void => {
     PosthogTrackers.trackInteraction("WebHomeCreateRoomButton", ev);
     dis.dispatch({ action: "view_create_room" });
 };
@@ -52,14 +52,19 @@ interface IProps {
     justRegistered?: boolean;
 }
 
-const getOwnProfile = (userId: string) => ({
+const getOwnProfile = (
+    userId: string,
+): {
+    displayName: string;
+    avatarUrl?: string;
+} => ({
     displayName: OwnProfileStore.instance.displayName || userId,
-    avatarUrl: OwnProfileStore.instance.getHttpAvatarUrl(AVATAR_SIZE),
+    avatarUrl: OwnProfileStore.instance.getHttpAvatarUrl(AVATAR_SIZE) ?? undefined,
 });
 
-const UserWelcomeTop = () => {
+const UserWelcomeTop: React.FC = () => {
     const cli = useContext(MatrixClientContext);
-    const userId = cli.getUserId();
+    const userId = cli.getUserId()!;
     const [ownProfile, setOwnProfile] = useState(getOwnProfile(userId));
     useEventEmitter(OwnProfileStore.instance, UPDATE_EVENT, () => {
         setOwnProfile(getOwnProfile(userId));
@@ -92,8 +97,9 @@ const UserWelcomeTop = () => {
 };
 
 const HomePage: React.FC<IProps> = ({ justRegistered = false }) => {
+    const cli = useMatrixClientContext();
     const config = SdkConfig.get();
-    const pageUrl = getHomePageUrl(config);
+    const pageUrl = getHomePageUrl(config, cli);
 
     if (pageUrl) {
         return <EmbeddedPage className="mx_HomePage" url={pageUrl} scrollbar={true} />;

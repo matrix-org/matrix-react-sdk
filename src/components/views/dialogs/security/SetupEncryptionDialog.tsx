@@ -20,9 +20,8 @@ import SetupEncryptionBody from "../../../structures/auth/SetupEncryptionBody";
 import BaseDialog from "../BaseDialog";
 import { _t } from "../../../../languageHandler";
 import { SetupEncryptionStore, Phase } from "../../../../stores/SetupEncryptionStore";
-import { IDialogProps } from "../IDialogProps";
 
-function iconFromPhase(phase: Phase) {
+function iconFromPhase(phase?: Phase): string {
     if (phase === Phase.Done) {
         return require("../../../../../res/img/e2e/verified-deprecated.svg").default;
     } else {
@@ -30,7 +29,9 @@ function iconFromPhase(phase: Phase) {
     }
 }
 
-interface IProps extends IDialogProps {}
+interface IProps {
+    onFinished(): void;
+}
 interface IState {
     icon: string;
 }
@@ -45,11 +46,11 @@ export default class SetupEncryptionDialog extends React.Component<IProps, IStat
         this.state = { icon: iconFromPhase(this.store.phase) };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.store.on("update", this.onStoreUpdate);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.store.removeListener("update", this.onStoreUpdate);
     }
 
@@ -57,7 +58,7 @@ export default class SetupEncryptionDialog extends React.Component<IProps, IStat
         this.setState({ icon: iconFromPhase(this.store.phase) });
     };
 
-    public render() {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 headerImage={this.state.icon}

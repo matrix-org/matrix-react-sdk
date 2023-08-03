@@ -66,7 +66,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
     const cannotJoin =
         getEffectiveMembership(myMembership) === EffectiveMembership.Leave && joinRule !== JoinRule.Public;
 
-    const viewLabs = () =>
+    const viewLabs = (): void =>
         defaultDispatcher.dispatch({
             action: Action.ViewUserSettings,
             initialTabId: UserTab.Labs,
@@ -116,7 +116,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
         joinButtons = (
             <>
                 <AccessibleButton
-                    kind="secondary"
+                    kind="primary_outline"
                     onClick={() => {
                         setBusy(true);
                         onRejectButtonClicked();

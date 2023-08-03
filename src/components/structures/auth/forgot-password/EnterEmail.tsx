@@ -29,7 +29,7 @@ interface EnterEmailProps {
     errorText: string | ReactNode | null;
     homeserver: string;
     loading: boolean;
-    onInputChanged: (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => void;
+    onInputChanged: (stateKey: "email", ev: React.FormEvent<HTMLInputElement>) => void;
     onLoginClick: () => void;
     onSubmitForm: (ev: React.FormEvent) => void;
 }
@@ -50,7 +50,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
 
     const emailFieldRef = useRef<Field>(null);
 
-    const onSubmit = async (event: React.FormEvent) => {
+    const onSubmit = async (event: React.FormEvent): Promise<void> => {
         if (await emailFieldRef.current?.validate({ allowEmpty: false })) {
             onSubmitForm(event);
             return;

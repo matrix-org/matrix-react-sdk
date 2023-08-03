@@ -24,21 +24,18 @@ import SdkConfig from "../../../SdkConfig";
 import Modal from "../../../Modal";
 import BugReportDialog from "./BugReportDialog";
 import InfoDialog from "./InfoDialog";
-import { IDialogProps } from "./IDialogProps";
 import { submitFeedback } from "../../../rageshake/submit-rageshake";
 import { useStateToggle } from "../../../hooks/useStateToggle";
 import StyledCheckbox from "../elements/StyledCheckbox";
+import ExternalLink from "../elements/ExternalLink";
 
-const existingIssuesUrl =
-    "https://github.com/vector-im/element-web/issues" + "?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc";
-const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose";
-
-interface IProps extends IDialogProps {
+interface IProps {
     feature?: string;
+    onFinished(): void;
 }
 
 const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
-    const feedbackRef = useRef<Field>();
+    const feedbackRef = useRef<Field>(null);
     const [comment, setComment] = useState<string>("");
     const [canContact, toggleCanContact] = useStateToggle(false);
 
@@ -52,14 +49,11 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
         Modal.createDialog(BugReportDialog, {});
     };
 
-    const rageshakeUrl = SdkConfig.get().bug_report_endpoint_url;
-    const hasFeedback = !!rageshakeUrl;
+    const hasFeedback = !!SdkConfig.get().bug_report_endpoint_url;
     const onFinished = (sendFeedback: boolean): void => {
         if (hasFeedback && sendFeedback) {
-            if (rageshakeUrl) {
-                const label = props.feature ? `${props.feature}-feedback` : "feedback";
-                submitFeedback(rageshakeUrl, label, comment, canContact);
-            }
+            const label = props.feature ? `${props.feature}-feedback` : "feedback";
+            submitFeedback(label, comment, canContact);
 
             Modal.createDialog(InfoDialog, {
                 title: _t("Feedback sent"),
@@ -69,8 +63,8 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
         props.onFinished();
     };
 
-    let feedbackSection;
-    if (rageshakeUrl) {
+    let feedbackSection: JSX.Element | undefined;
+    if (hasFeedback) {
         feedbackSection = (
             <div className="mx_FeedbackDialog_section mx_FeedbackDialog_rateApp">
                 <h3>{_t("Comment")}</h3>
@@ -97,8 +91,8 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
         );
     }
 
-    let bugReports = null;
-    if (rageshakeUrl) {
+    let bugReports: JSX.Element | undefined;
+    if (hasFeedback) {
         bugReports = (
             <p className="mx_FeedbackDialog_section_microcopy">
                 {_t(
@@ -117,6 +111,9 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
         );
     }
 
+    const existingIssuesUrl = SdkConfig.getObject("feedback").get("existing_issues_url");
+    const newIssueUrl = SdkConfig.getObject("feedback").get("new_issue_url");
+
     return (
         <QuestionDialog
             className="mx_FeedbackDialog"
@@ -134,16 +131,20 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
                                 {
                                     existingIssuesLink: (sub) => {
                                         return (
-                                            <a target="_blank" rel="noreferrer noopener" href={existingIssuesUrl}>
+                                            <ExternalLink
+                                                target="_blank"
+                                                rel="noreferrer noopener"
+                                                href={existingIssuesUrl}
+                                            >
                                                 {sub}
-                                            </a>
+                                            </ExternalLink>
                                         );
                                     },
                                     newIssueLink: (sub) => {
                                         return (
-                                            <a target="_blank" rel="noreferrer noopener" href={newIssueUrl}>
+                                            <ExternalLink target="_blank" rel="noreferrer noopener" href={newIssueUrl}>
                                                 {sub}
-                                            </a>
+                                            </ExternalLink>
                                         );
                                     },
                                 },

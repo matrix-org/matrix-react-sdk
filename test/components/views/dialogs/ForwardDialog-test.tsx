@@ -15,11 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { act } from "react-dom/test-utils";
 import { MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { LocationAssetType, M_ASSET, M_LOCATION, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
-import { TEXT_NODE_TYPE } from "matrix-js-sdk/src/@types/extensible_events";
-import { fireEvent, getByTestId, render, RenderResult, screen } from "@testing-library/react";
+import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
+import { act, fireEvent, getByTestId, render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -37,6 +36,7 @@ import {
     mockPlatformPeg,
 } from "../../../test-utils";
 import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 describe("ForwardDialog", () => {
     const sourceRoom = "!111111111111111111:example.org";
@@ -54,6 +54,7 @@ describe("ForwardDialog", () => {
     });
     const mockClient = getMockClientWithEventEmitter({
         getUserId: jest.fn().mockReturnValue(aliceId),
+        getSafeUserId: jest.fn().mockReturnValue(aliceId),
         isGuest: jest.fn().mockReturnValue(false),
         getVisibleRooms: jest.fn().mockReturnValue([]),
         getRoom: jest.fn(),
@@ -74,13 +75,13 @@ describe("ForwardDialog", () => {
 
     const mountForwardDialog = (message = defaultMessage, rooms = defaultRooms) => {
         mockClient.getVisibleRooms.mockReturnValue(rooms);
-        mockClient.getRoom.mockImplementation((roomId) => rooms.find((room) => room.roomId === roomId));
+        mockClient.getRoom.mockImplementation((roomId) => rooms.find((room) => room.roomId === roomId) || null);
 
         const wrapper: RenderResult = render(
             <ForwardDialog
                 matrixClient={mockClient}
                 event={message}
-                permalinkCreator={new RoomPermalinkCreator(undefined, sourceRoom)}
+                permalinkCreator={new RoomPermalinkCreator(undefined!, sourceRoom)}
                 onFinished={jest.fn()}
             />,
         );
@@ -89,9 +90,10 @@ describe("ForwardDialog", () => {
     };
 
     beforeEach(() => {
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(mockClient);
         jest.clearAllMocks();
         mockClient.getUserId.mockReturnValue("@bob:example.org");
+        mockClient.getSafeUserId.mockReturnValue("@bob:example.org");
         mockClient.sendEvent.mockReset();
     });
 
@@ -125,8 +127,8 @@ describe("ForwardDialog", () => {
         const { container } = mountForwardDialog();
 
         // Make sendEvent require manual resolution so we can see the sending state
-        let finishSend;
-        let cancelSend;
+        let finishSend: (arg?: any) => void;
+        let cancelSend: () => void;
         mockClient.sendEvent.mockImplementation(
             <T extends {}>() =>
                 new Promise<T>((resolve, reject) => {
@@ -135,8 +137,8 @@ describe("ForwardDialog", () => {
                 }),
         );
 
-        let firstButton;
-        let secondButton;
+        let firstButton!: Element;
+        let secondButton!: Element;
         const update = () => {
             [firstButton, secondButton] = container.querySelectorAll(".mx_ForwardList_sendButton");
         };
@@ -248,12 +250,11 @@ describe("ForwardDialog", () => {
             const expectedStrippedContent = {
                 ...modernLocationEvent.getContent(),
                 body: text,
-                [TEXT_NODE_TYPE.name]: text,
+                [M_TEXT.name]: text,
                 [M_TIMESTAMP.name]: now,
                 [M_ASSET.name]: { type: LocationAssetType.Pin },
                 [M_LOCATION.name]: {
                     uri: geoUri,
-                    description: undefined,
                 },
             };
             expect(mockClient.sendEvent).toHaveBeenCalledWith(
@@ -269,18 +270,17 @@ describe("ForwardDialog", () => {
             expect(container.querySelector(".mx_MLocationBody")).toBeTruthy();
             sendToFirstRoom(container);
 
-            const timestamp = M_TIMESTAMP.findIn<number>(modernLocationEvent.getContent());
+            const timestamp = M_TIMESTAMP.findIn<number>(modernLocationEvent.getContent())!;
             // text and description from original event are removed
             // text gets new default message from event values
             const text = `Location ${geoUri} at ${new Date(timestamp).toISOString()}`;
             const expectedStrippedContent = {
                 ...modernLocationEvent.getContent(),
                 body: text,
-                [TEXT_NODE_TYPE.name]: text,
+                [M_TEXT.name]: text,
                 [M_ASSET.name]: { type: LocationAssetType.Pin },
                 [M_LOCATION.name]: {
                     uri: geoUri,
-                    description: undefined,
                 },
             };
             expect(mockClient.sendEvent).toHaveBeenCalledWith(
@@ -297,11 +297,10 @@ describe("ForwardDialog", () => {
             const expectedContent = {
                 msgtype: "m.location",
                 body: text,
-                [TEXT_NODE_TYPE.name]: text,
+                [M_TEXT.name]: text,
                 [M_ASSET.name]: { type: LocationAssetType.Pin },
                 [M_LOCATION.name]: {
                     uri: geoUri,
-                    description: undefined,
                 },
                 geo_uri: geoUri,
                 [M_TIMESTAMP.name]: timestamp,
@@ -327,6 +326,33 @@ describe("ForwardDialog", () => {
                 pinDropLocationEvent.getType(),
                 pinDropLocationEvent.getContent(),
             );
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors is not enabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        });
+
+        it("Passes through the dynamic predecessor setting", async () => {
+            mockClient.getVisibleRooms.mockClear();
+            mountForwardDialog();
+            expect(mockClient.getVisibleRooms).toHaveBeenCalledWith(false);
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors is enabled", () => {
+        beforeEach(() => {
+            // Turn on feature_dynamic_room_predecessors setting
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "feature_dynamic_room_predecessors",
+            );
+        });
+
+        it("Passes through the dynamic predecessor setting", async () => {
+            mockClient.getVisibleRooms.mockClear();
+            mountForwardDialog();
+            expect(mockClient.getVisibleRooms).toHaveBeenCalledWith(true);
         });
     });
 });

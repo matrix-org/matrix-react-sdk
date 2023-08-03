@@ -22,14 +22,14 @@ import { SettingLevel } from "../../../settings/SettingLevel";
 
 interface IProps {
     // Current room
-    roomId: string;
+    roomId: string | null;
     minWidth: number;
     maxWidth: number;
 }
 
 interface IState {
     width: number;
-    IRCLayoutRoot: HTMLElement;
+    IRCLayoutRoot: HTMLElement | null;
 }
 
 export default class IRCTimelineProfileResizer extends React.Component<IProps, IState> {
@@ -42,7 +42,7 @@ export default class IRCTimelineProfileResizer extends React.Component<IProps, I
         };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.setState(
             {
                 IRCLayoutRoot: document.querySelector(".mx_IRCLayout"),
@@ -76,11 +76,11 @@ export default class IRCTimelineProfileResizer extends React.Component<IProps, I
         };
     };
 
-    private updateCSSWidth(newWidth: number) {
-        this.state.IRCLayoutRoot.style.setProperty("--name-width", newWidth + "px");
+    private updateCSSWidth(newWidth: number): void {
+        this.state.IRCLayoutRoot?.style.setProperty("--name-width", newWidth + "px");
     }
 
-    private onMoueUp = () => {
+    private onMoueUp = (): void => {
         if (this.props.roomId) {
             SettingsStore.setValue(
                 "ircDisplayNameWidth",
@@ -91,7 +91,7 @@ export default class IRCTimelineProfileResizer extends React.Component<IProps, I
         }
     };
 
-    public render() {
+    public render(): React.ReactNode {
         return <Draggable className="mx_ProfileResizer" dragFunc={this.dragFunc} onMouseUp={this.onMoueUp} />;
     }
 }

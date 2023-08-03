@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { MutableRefObject } from "react";
+import React, { MutableRefObject, ReactNode } from "react";
 import ReactDOM from "react-dom";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 
@@ -23,7 +23,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ActionPayload } from "../../../dispatcher/payloads";
 
-export const getPersistKey = (appId: string) => "widget_" + appId;
+export const getPersistKey = (appId: string): string => "widget_" + appId;
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
@@ -58,6 +58,7 @@ interface IProps {
 
     // Handle to manually notify this PersistedElement that it needs to move
     moveRef?: MutableRefObject<(() => void) | undefined>;
+    children: ReactNode;
 }
 
 /**
@@ -74,8 +75,8 @@ interface IProps {
 export default class PersistedElement extends React.Component<IProps> {
     private resizeObserver: ResizeObserver;
     private dispatcherRef: string;
-    private childContainer: HTMLDivElement;
-    private child: HTMLDivElement;
+    private childContainer?: HTMLDivElement;
+    private child?: HTMLDivElement;
 
     public constructor(props: IProps) {
         super(props);
@@ -106,7 +107,7 @@ export default class PersistedElement extends React.Component<IProps> {
         }
     }
 
-    public static isMounted(persistKey) {
+    public static isMounted(persistKey: string): boolean {
         return Boolean(getContainer("mx_persistedElement_" + persistKey));
     }
 
@@ -161,7 +162,7 @@ export default class PersistedElement extends React.Component<IProps> {
 
     private renderApp(): void {
         const content = (
-            <MatrixClientContext.Provider value={MatrixClientPeg.get()}>
+            <MatrixClientContext.Provider value={MatrixClientPeg.safeGet()}>
                 <div ref={this.collectChild} style={this.props.style}>
                     {this.props.children}
                 </div>
@@ -171,12 +172,12 @@ export default class PersistedElement extends React.Component<IProps> {
         ReactDOM.render(content, getOrCreateContainer("mx_persistedElement_" + this.props.persistKey));
     }
 
-    private updateChildVisibility(child: HTMLDivElement, visible: boolean): void {
+    private updateChildVisibility(child?: HTMLDivElement, visible = false): void {
         if (!child) return;
         child.style.display = visible ? "block" : "none";
     }
 
-    private updateChildPosition(child: HTMLDivElement, parent: HTMLDivElement): void {
+    private updateChildPosition(child?: HTMLDivElement, parent?: HTMLDivElement): void {
         if (!child || !parent) return;
 
         const parentRect = parent.getBoundingClientRect();
@@ -191,7 +192,7 @@ export default class PersistedElement extends React.Component<IProps> {
         });
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return <div ref={this.collectChildContainer} />;
     }
 }

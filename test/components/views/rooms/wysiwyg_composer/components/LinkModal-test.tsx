@@ -27,21 +27,25 @@ import { SubSelection } from "../../../../../../src/components/views/rooms/wysiw
 describe("LinkModal", () => {
     const formattingFunctions = {
         link: jest.fn(),
+        removeLinks: jest.fn(),
+        getLink: jest.fn().mockReturnValue("my initial content"),
     } as unknown as FormattingFunctions;
     const defaultValue: SubSelection = {
         focusNode: null,
         anchorNode: null,
         focusOffset: 3,
         anchorOffset: 4,
+        isForward: true,
     };
 
-    const customRender = (isTextEnabled: boolean, onClose: () => void) => {
+    const customRender = (isTextEnabled: boolean, onFinished: () => void, isEditing = false) => {
         return render(
             <LinkModal
                 composer={formattingFunctions}
                 isTextEnabled={isTextEnabled}
-                onClose={onClose}
+                onFinished={onFinished}
                 composerContext={{ selection: defaultValue }}
+                isEditing={isEditing}
             />,
         );
     };
@@ -56,8 +60,8 @@ describe("LinkModal", () => {
 
     it("Should create a link", async () => {
         // When
-        const onClose = jest.fn();
-        customRender(false, onClose);
+        const onFinished = jest.fn();
+        customRender(false, onFinished);
 
         // Then
         expect(screen.getByLabelText("Link")).toBeTruthy();
@@ -75,13 +79,13 @@ describe("LinkModal", () => {
         // When
         jest.useFakeTimers();
         screen.getByText("Save").click();
+        jest.runAllTimers();
 
         // Then
-        expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
-        await waitFor(() => expect(onClose).toBeCalledTimes(1));
-
-        // When
-        jest.runAllTimers();
+        await waitFor(() => {
+            expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
+            expect(onFinished).toHaveBeenCalledTimes(1);
+        });
 
         // Then
         expect(formattingFunctions.link).toHaveBeenCalledWith("l", undefined);
@@ -89,8 +93,8 @@ describe("LinkModal", () => {
 
     it("Should create a link with text", async () => {
         // When
-        const onClose = jest.fn();
-        customRender(true, onClose);
+        const onFinished = jest.fn();
+        customRender(true, onFinished);
 
         // Then
         expect(screen.getByLabelText("Text")).toBeTruthy();
@@ -118,15 +122,41 @@ describe("LinkModal", () => {
         // When
         jest.useFakeTimers();
         screen.getByText("Save").click();
-
-        // Then
-        expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
-        await waitFor(() => expect(onClose).toBeCalledTimes(1));
-
-        // When
         jest.runAllTimers();
 
         // Then
+        await waitFor(() => {
+            expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
+            expect(onFinished).toHaveBeenCalledTimes(1);
+        });
+
+        // Then
         expect(formattingFunctions.link).toHaveBeenCalledWith("l", "t");
+    });
+
+    it("Should remove the link", async () => {
+        // When
+        const onFinished = jest.fn();
+        customRender(true, onFinished, true);
+        await userEvent.click(screen.getByText("Remove"));
+
+        // Then
+        expect(formattingFunctions.removeLinks).toHaveBeenCalledTimes(1);
+        expect(onFinished).toHaveBeenCalledTimes(1);
+    });
+
+    it("Should display the link in editing", async () => {
+        // When
+        customRender(true, jest.fn(), true);
+
+        // Then
+        expect(screen.getByLabelText("Link")).toContainHTML("my initial content");
+        expect(screen.getByText("Save")).toBeDisabled();
+
+        // When
+        await userEvent.type(screen.getByLabelText("Link"), "l");
+
+        // Then
+        await waitFor(() => expect(screen.getByText("Save")).toBeEnabled());
     });
 });

@@ -21,6 +21,14 @@ describe("parseGeoUri", () => {
         expect(parseGeoUri("")).toBeFalsy();
     });
 
+    it("returns undefined if latitude is not a number", () => {
+        expect(parseGeoUri("geo:ABCD,16.3695,183")).toBeUndefined();
+    });
+
+    it("returns undefined if longitude is not a number", () => {
+        expect(parseGeoUri("geo:48.2010,EFGH,183")).toBeUndefined();
+    });
+
     // We use some examples from the spec, but don't check semantics
     // like two textually-different URIs being equal, since we are
     // just a humble parser.
@@ -35,9 +43,9 @@ describe("parseGeoUri", () => {
             longitude: 16.3695,
             altitude: 183,
             accuracy: undefined,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
         });
     });
 
@@ -45,11 +53,11 @@ describe("parseGeoUri", () => {
         expect(parseGeoUri("geo:48.198634,16.371648;crs=wgs84;u=40")).toEqual({
             latitude: 48.198634,
             longitude: 16.371648,
-            altitude: undefined,
+            altitude: null,
             accuracy: 40,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
         });
     });
 
@@ -57,11 +65,11 @@ describe("parseGeoUri", () => {
         expect(parseGeoUri("geo:90,-22.43;crs=WGS84")).toEqual({
             latitude: 90,
             longitude: -22.43,
-            altitude: undefined,
+            altitude: null,
             accuracy: undefined,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
         });
     });
 
@@ -69,11 +77,11 @@ describe("parseGeoUri", () => {
         expect(parseGeoUri("geo:90,46")).toEqual({
             latitude: 90,
             longitude: 46,
-            altitude: undefined,
+            altitude: null,
             accuracy: undefined,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
         });
     });
 
@@ -81,11 +89,11 @@ describe("parseGeoUri", () => {
         expect(parseGeoUri("geo:66,30;u=6.500;FOo=this%2dthat")).toEqual({
             latitude: 66,
             longitude: 30,
-            altitude: undefined,
+            altitude: null,
             accuracy: 6.5,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
         });
     });
 
@@ -93,11 +101,11 @@ describe("parseGeoUri", () => {
         expect(parseGeoUri("geo:66.0,30;u=6.5;foo=this-that>")).toEqual({
             latitude: 66.0,
             longitude: 30,
-            altitude: undefined,
+            altitude: null,
             accuracy: 6.5,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
         });
     });
 
@@ -105,11 +113,11 @@ describe("parseGeoUri", () => {
         expect(parseGeoUri("geo:70,20;foo=1.00;bar=white")).toEqual({
             latitude: 70,
             longitude: 20,
-            altitude: undefined,
+            altitude: null,
             accuracy: undefined,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
         });
     });
 
@@ -117,11 +125,11 @@ describe("parseGeoUri", () => {
         expect(parseGeoUri("geo:-7.5,20")).toEqual({
             latitude: -7.5,
             longitude: 20,
-            altitude: undefined,
+            altitude: null,
             accuracy: undefined,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
         });
     });
 
@@ -131,9 +139,9 @@ describe("parseGeoUri", () => {
             longitude: -20,
             altitude: 0,
             accuracy: undefined,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
         });
     });
 });

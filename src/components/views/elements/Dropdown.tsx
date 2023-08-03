@@ -23,13 +23,14 @@ import { _t } from "../../../languageHandler";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { objectHasDiff } from "../../../utils/objects";
+import { NonEmptyArray } from "../../../@types/common";
 
 interface IMenuOptionProps {
     children: ReactElement;
     highlighted?: boolean;
     dropdownKey: string;
     id?: string;
-    inputRef?: Ref<HTMLDivElement>;
+    inputRef?: Ref<HTMLLIElement>;
     onClick(dropdownKey: string): void;
     onMouseEnter(dropdownKey: string): void;
 }
@@ -39,24 +40,24 @@ class MenuOption extends React.Component<IMenuOptionProps> {
         disabled: false,
     };
 
-    private onMouseEnter = () => {
+    private onMouseEnter = (): void => {
         this.props.onMouseEnter(this.props.dropdownKey);
     };
 
-    private onClick = (e: React.MouseEvent) => {
+    private onClick = (e: React.MouseEvent): void => {
         e.preventDefault();
         e.stopPropagation();
         this.props.onClick(this.props.dropdownKey);
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const optClasses = classnames({
             mx_Dropdown_option: true,
             mx_Dropdown_option_highlight: this.props.highlighted,
         });
 
         return (
-            <div
+            <li
                 id={this.props.id}
                 className={optClasses}
                 onClick={this.onClick}
@@ -66,7 +67,7 @@ class MenuOption extends React.Component<IMenuOptionProps> {
                 ref={this.props.inputRef}
             >
                 {this.props.children}
-            </div>
+            </li>
         );
     }
 }
@@ -77,7 +78,8 @@ export interface DropdownProps {
     label: string;
     value?: string;
     className?: string;
-    children: ReactElement[];
+    autoComplete?: string;
+    children: NonEmptyArray<ReactElement & { key: string }>;
     // negative for consistency with HTML
     disabled?: boolean;
     // The width that the dropdown should be. If specified,
@@ -102,7 +104,7 @@ export interface DropdownProps {
 
 interface IState {
     expanded: boolean;
-    highlightedOption: string | null;
+    highlightedOption: string;
     searchQuery: string;
 }
 
@@ -113,8 +115,8 @@ interface IState {
  */
 export default class Dropdown extends React.Component<DropdownProps, IState> {
     private readonly buttonRef = createRef<HTMLDivElement>();
-    private dropdownRootElement: HTMLDivElement = null;
-    private ignoreEvent: MouseEvent = null;
+    private dropdownRootElement: HTMLDivElement | null = null;
+    private ignoreEvent: MouseEvent | null = null;
     private childrenByKey: Record<string, ReactNode> = {};
 
     public constructor(props: DropdownProps) {
@@ -122,14 +124,14 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
 
         this.reindexChildren(this.props.children);
 
-        const firstChild = React.Children.toArray(props.children)[0] as ReactElement;
+        const firstChild = props.children[0];
 
         this.state = {
             // True if the menu is dropped-down
             expanded: false,
             // The key of the highlighted option
             // (the option that would become selected if you pressed enter)
-            highlightedOption: firstChild ? (firstChild.key as string) : null,
+            highlightedOption: firstChild.key,
             // the current search query
             searchQuery: "",
         };
@@ -139,28 +141,28 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         document.addEventListener("click", this.onDocumentClick, false);
     }
 
-    public componentDidUpdate(prevProps: Readonly<DropdownProps>) {
+    public componentDidUpdate(prevProps: Readonly<DropdownProps>): void {
         if (objectHasDiff(this.props, prevProps) && this.props.children?.length) {
             this.reindexChildren(this.props.children);
             const firstChild = this.props.children[0];
             this.setState({
-                highlightedOption: String(firstChild?.key) ?? null,
+                highlightedOption: firstChild.key,
             });
         }
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         document.removeEventListener("click", this.onDocumentClick, false);
     }
 
     private reindexChildren(children: ReactElement[]): void {
         this.childrenByKey = {};
         React.Children.forEach(children, (child) => {
-            this.childrenByKey[child.key] = child;
+            this.childrenByKey[(child as DropdownProps["children"][number]).key] = child;
         });
     }
 
-    private onDocumentClick = (ev: MouseEvent) => {
+    private onDocumentClick = (ev: MouseEvent): void => {
         // Close the dropdown if the user clicks anywhere that isn't
         // within our root element
         if (ev !== this.ignoreEvent) {
@@ -170,7 +172,7 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         }
     };
 
-    private onRootClick = (ev: MouseEvent) => {
+    private onRootClick = (ev: MouseEvent): void => {
         // This captures any clicks that happen within our elements,
         // such that we can then ignore them when they're seen by the
         // click listener on the document handler, ie. not close the
@@ -180,7 +182,7 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         this.ignoreEvent = ev;
     };
 
-    private onAccessibleButtonClick = (ev: ButtonEvent) => {
+    private onAccessibleButtonClick = (ev: ButtonEvent): void => {
         if (this.props.disabled) return;
 
         const action = getKeyBindingsManager().getAccessibilityAction(ev as React.KeyboardEvent);
@@ -199,7 +201,7 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         }
     };
 
-    private close() {
+    private close(): void {
         this.setState({
             expanded: false,
         });
@@ -209,12 +211,12 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         }
     }
 
-    private onMenuOptionClick = (dropdownKey: string) => {
+    private onMenuOptionClick = (dropdownKey: string): void => {
         this.close();
         this.props.onOptionChange(dropdownKey);
     };
 
-    private onKeyDown = (e: React.KeyboardEvent) => {
+    private onKeyDown = (e: React.KeyboardEvent): void => {
         let handled = true;
 
         // These keys don't generate keypress events and so needs to be on keyup
@@ -254,7 +256,7 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         }
     };
 
-    private onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    private onInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             searchQuery: e.currentTarget.value,
         });
@@ -263,7 +265,7 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         }
     };
 
-    private collectRoot = (e: HTMLDivElement) => {
+    private collectRoot = (e: HTMLDivElement): void => {
         if (this.dropdownRootElement) {
             this.dropdownRootElement.removeEventListener("click", this.onRootClick, false);
         }
@@ -273,7 +275,7 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         this.dropdownRootElement = e;
     };
 
-    private setHighlightedOption = (optionKey: string) => {
+    private setHighlightedOption = (optionKey: string): void => {
         this.setState({
             highlightedOption: optionKey,
         });
@@ -291,16 +293,14 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         return keys[index <= 0 ? keys.length - 1 : (index - 1) % keys.length];
     }
 
-    private scrollIntoView(node: Element) {
-        if (node) {
-            node.scrollIntoView({
-                block: "nearest",
-                behavior: "auto",
-            });
-        }
+    private scrollIntoView(node: Element | null): void {
+        node?.scrollIntoView({
+            block: "nearest",
+            behavior: "auto",
+        });
     }
 
-    private getMenuOptions() {
+    private getMenuOptions(): JSX.Element[] {
         const options = React.Children.map(this.props.children, (child: ReactElement) => {
             const highlighted = this.state.highlightedOption === child.key;
             return (
@@ -317,23 +317,23 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
                 </MenuOption>
             );
         });
-        if (options.length === 0) {
+        if (!options?.length) {
             return [
-                <div key="0" className="mx_Dropdown_option" role="option" aria-selected={false}>
+                <li key="0" className="mx_Dropdown_option" role="option" aria-selected={false}>
                     {_t("No results")}
-                </div>,
+                </li>,
             ];
         }
         return options;
     }
 
-    public render() {
-        let currentValue;
+    public render(): React.ReactNode {
+        let currentValue: JSX.Element | undefined;
 
         const menuStyle: CSSProperties = {};
         if (this.props.menuWidth) menuStyle.width = this.props.menuWidth;
 
-        let menu;
+        let menu: JSX.Element | undefined;
         if (this.state.expanded) {
             if (this.props.searchEnabled) {
                 currentValue = (
@@ -341,6 +341,7 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
                         id={`${this.props.id}_input`}
                         type="text"
                         autoFocus={true}
+                        autoComplete={this.props.autoComplete}
                         className="mx_Dropdown_option"
                         onChange={this.onInputChange}
                         value={this.state.searchQuery}
@@ -356,16 +357,20 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
                 );
             }
             menu = (
-                <div className="mx_Dropdown_menu" style={menuStyle} role="listbox" id={`${this.props.id}_listbox`}>
+                <ul className="mx_Dropdown_menu" style={menuStyle} role="listbox" id={`${this.props.id}_listbox`}>
                     {this.getMenuOptions()}
-                </div>
+                </ul>
             );
         }
 
         if (!currentValue) {
-            const selectedChild = this.props.getShortOption
-                ? this.props.getShortOption(this.props.value)
-                : this.childrenByKey[this.props.value];
+            let selectedChild: ReactNode | undefined;
+            if (this.props.value) {
+                selectedChild = this.props.getShortOption
+                    ? this.props.getShortOption(this.props.value)
+                    : this.childrenByKey[this.props.value];
+            }
+
             currentValue = (
                 <div className="mx_Dropdown_option" id={`${this.props.id}_value`}>
                     {selectedChild || this.props.placeholder}
@@ -373,18 +378,14 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
             );
         }
 
-        const dropdownClasses = {
-            mx_Dropdown: true,
-            mx_Dropdown_disabled: this.props.disabled,
-        };
-        if (this.props.className) {
-            dropdownClasses[this.props.className] = true;
-        }
+        const dropdownClasses = classnames("mx_Dropdown", this.props.className, {
+            mx_Dropdown_disabled: !!this.props.disabled,
+        });
 
         // Note the menu sits inside the AccessibleButton div so it's anchored
         // to the input, but overflows below it. The root contains both.
         return (
-            <div className={classnames(dropdownClasses)} ref={this.collectRoot}>
+            <div className={dropdownClasses} ref={this.collectRoot}>
                 <AccessibleButton
                     className="mx_Dropdown_input mx_no_textinput"
                     onClick={this.onAccessibleButtonClick}

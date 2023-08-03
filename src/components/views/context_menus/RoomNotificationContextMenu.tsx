@@ -33,7 +33,7 @@ interface IProps extends IContextMenuProps {
     room: Room;
 }
 
-export const RoomNotificationContextMenu = ({ room, onFinished, ...props }: IProps) => {
+export const RoomNotificationContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     const [notificationState, setNotificationState] = useNotificationState(room);
 
     const wrapHandler = (handler: (ev: ButtonEvent) => void, persistent = false): ((ev: ButtonEvent) => void) => {
@@ -52,7 +52,7 @@ export const RoomNotificationContextMenu = ({ room, onFinished, ...props }: IPro
 
     const defaultOption: JSX.Element = (
         <IconizedContextMenuRadio
-            label={_t("Use default")}
+            label={_t("Match default setting")}
             active={notificationState === RoomNotifState.AllMessages}
             iconClassName="mx_RoomNotificationContextMenu_iconBell"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.AllMessages))}
@@ -70,7 +70,7 @@ export const RoomNotificationContextMenu = ({ room, onFinished, ...props }: IPro
 
     const mentionsOption: JSX.Element = (
         <IconizedContextMenuRadio
-            label={_t("Mentions & Keywords")}
+            label={_t("Mentions & keywords")}
             active={notificationState === RoomNotifState.MentionsOnly}
             iconClassName="mx_RoomNotificationContextMenu_iconBellMentions"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.MentionsOnly))}
@@ -79,7 +79,7 @@ export const RoomNotificationContextMenu = ({ room, onFinished, ...props }: IPro
 
     const muteOption: JSX.Element = (
         <IconizedContextMenuRadio
-            label={_t("Off")}
+            label={_t("Mute room")}
             active={notificationState === RoomNotifState.Mute}
             iconClassName="mx_RoomNotificationContextMenu_iconBellCrossed"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.Mute))}

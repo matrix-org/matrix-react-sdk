@@ -26,22 +26,22 @@ import QRCode from "../elements/QRCode";
 import { RoomPermalinkCreator, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import { selectText } from "../../../utils/strings";
 import StyledCheckbox from "../elements/StyledCheckbox";
-import { IDialogProps } from "./IDialogProps";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import BaseDialog from "./BaseDialog";
 import CopyableText from "../elements/CopyableText";
+import { XOR } from "../../../@types/common";
 
 const socials = [
     {
         name: "Facebook",
         img: require("../../../../res/img/social/facebook.png"),
-        url: (url) => `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+        url: (url: String) => `https://www.facebook.com/sharer/sharer.php?u=${url}`,
     },
     {
         name: "Twitter",
         img: require("../../../../res/img/social/twitter-2.png"),
-        url: (url) => `https://twitter.com/home?status=${url}`,
+        url: (url: string) => `https://twitter.com/home?status=${url}`,
     },
     /* // icon missing
         name: 'Google Plus',
@@ -50,35 +50,44 @@ const socials = [
     },*/ {
         name: "LinkedIn",
         img: require("../../../../res/img/social/linkedin.png"),
-        url: (url) => `https://www.linkedin.com/shareArticle?mini=true&url=${url}`,
+        url: (url: string) => `https://www.linkedin.com/shareArticle?mini=true&url=${url}`,
     },
     {
         name: "Reddit",
         img: require("../../../../res/img/social/reddit.png"),
-        url: (url) => `https://www.reddit.com/submit?url=${url}`,
+        url: (url: string) => `https://www.reddit.com/submit?url=${url}`,
     },
     {
         name: "email",
         img: require("../../../../res/img/social/email-1.png"),
-        url: (url) => `mailto:?body=${url}`,
+        url: (url: string) => `mailto:?body=${url}`,
     },
 ];
 
-interface IProps extends IDialogProps {
-    target: Room | User | RoomMember | MatrixEvent;
+interface BaseProps {
+    onFinished(): void;
+}
+
+interface Props extends BaseProps {
+    target: Room | User | RoomMember;
+    permalinkCreator?: RoomPermalinkCreator;
+}
+
+interface EventProps extends BaseProps {
+    target: MatrixEvent;
     permalinkCreator: RoomPermalinkCreator;
 }
 
 interface IState {
     linkSpecificEvent: boolean;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator: RoomPermalinkCreator | null;
 }
 
-export default class ShareDialog extends React.PureComponent<IProps, IState> {
-    public constructor(props) {
+export default class ShareDialog extends React.PureComponent<XOR<Props, EventProps>, IState> {
+    public constructor(props: XOR<Props, EventProps>) {
         super(props);
 
-        let permalinkCreator: RoomPermalinkCreator = null;
+        let permalinkCreator: RoomPermalinkCreator | null = null;
         if (props.target instanceof Room) {
             permalinkCreator = new RoomPermalinkCreator(props.target);
             permalinkCreator.load();
@@ -91,42 +100,37 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
         };
     }
 
-    public static onLinkClick(e) {
+    public static onLinkClick(e: React.MouseEvent): void {
         e.preventDefault();
-        selectText(e.target);
+        selectText(e.currentTarget);
     }
 
-    private onLinkSpecificEventCheckboxClick = () => {
+    private onLinkSpecificEventCheckboxClick = (): void => {
         this.setState({
             linkSpecificEvent: !this.state.linkSpecificEvent,
         });
     };
 
-    private getUrl() {
-        let matrixToUrl;
-
+    private getUrl(): string {
         if (this.props.target instanceof Room) {
             if (this.state.linkSpecificEvent) {
                 const events = this.props.target.getLiveTimeline().getEvents();
-                matrixToUrl = this.state.permalinkCreator.forEvent(events[events.length - 1].getId());
+                return this.state.permalinkCreator!.forEvent(events[events.length - 1].getId()!);
             } else {
-                matrixToUrl = this.state.permalinkCreator.forShareableRoom();
+                return this.state.permalinkCreator!.forShareableRoom();
             }
         } else if (this.props.target instanceof User || this.props.target instanceof RoomMember) {
-            matrixToUrl = makeUserPermalink(this.props.target.userId);
-        } else if (this.props.target instanceof MatrixEvent) {
-            if (this.state.linkSpecificEvent) {
-                matrixToUrl = this.props.permalinkCreator.forEvent(this.props.target.getId());
-            } else {
-                matrixToUrl = this.props.permalinkCreator.forShareableRoom();
-            }
+            return makeUserPermalink(this.props.target.userId);
+        } else if (this.state.linkSpecificEvent) {
+            return this.props.permalinkCreator!.forEvent(this.props.target.getId()!);
+        } else {
+            return this.props.permalinkCreator!.forShareableRoom();
         }
-        return matrixToUrl;
     }
 
-    public render() {
-        let title;
-        let checkbox;
+    public render(): React.ReactNode {
+        let title: string | undefined;
+        let checkbox: JSX.Element | undefined;
 
         if (this.props.target instanceof Room) {
             title = _t("Share Room");

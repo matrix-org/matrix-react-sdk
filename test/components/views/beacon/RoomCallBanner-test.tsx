@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { act } from "react-dom/test-utils";
 import { Room, PendingEventOrdering, MatrixClient, RoomMember, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
-import { cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup, render, screen } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
 
 import { mkRoomMember, MockedCall, setupAsyncStoreWithClient, stubClient, useMockedCalls } from "../../../test-utils";
@@ -42,7 +41,7 @@ describe("<RoomCallBanner />", () => {
     beforeEach(() => {
         stubClient();
 
-        client = mocked(MatrixClientPeg.get());
+        client = mocked(MatrixClientPeg.safeGet());
 
         room = new Room("!1:example.org", client, "@alice:example.org", {
             pendingEventOrdering: PendingEventOrdering.Detached,

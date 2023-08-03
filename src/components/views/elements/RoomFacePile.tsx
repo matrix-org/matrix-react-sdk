@@ -27,7 +27,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 const DEFAULT_NUM_FACES = 5;
 
-const isKnownMember = (member: RoomMember) => !!DMRoomMap.shared().getDMRoomsForUserId(member.userId)?.length;
+const isKnownMember = (member: RoomMember): boolean => !!DMRoomMap.shared().getDMRoomsForUserId(member.userId)?.length;
 
 interface IProps extends HTMLAttributes<HTMLSpanElement> {
     room: Room;
@@ -42,7 +42,7 @@ const RoomFacePile: FC<IProps> = ({ room, onlyKnownUsers = true, numShown = DEFA
     const count = members.length;
 
     // sort users with an explicit avatar first
-    const iteratees = [(member) => (member.getMxcAvatarUrl() ? 0 : 1)];
+    const iteratees = [(member: RoomMember) => (member.getMxcAvatarUrl() ? 0 : 1)];
     if (onlyKnownUsers) {
         members = members.filter(isKnownMember);
     } else {

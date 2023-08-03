@@ -37,12 +37,14 @@ import { IBodyProps } from "./IBodyProps";
 import { createReconnectedListener } from "../../../utils/connection";
 
 interface IState {
-    error: Error;
+    error?: Error;
 }
 
 export default class MLocationBody extends React.Component<IBodyProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
+
+    private unmounted = false;
     private mapId: string;
     private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
 
@@ -56,12 +58,10 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
 
         this.reconnectedListener = createReconnectedListener(this.clearError);
 
-        this.state = {
-            error: undefined,
-        };
+        this.state = {};
     }
 
-    private onClick = () => {
+    private onClick = (): void => {
         Modal.createDialog(
             LocationViewDialog,
             {
@@ -74,17 +74,21 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         );
     };
 
-    private clearError = () => {
+    private clearError = (): void => {
         this.context.off(ClientEvent.Sync, this.reconnectedListener);
         this.setState({ error: undefined });
     };
 
-    private onError = (error: Error) => {
+    private onError = (error: Error): void => {
+        if (this.unmounted) return;
         this.setState({ error });
+        // Unregister first in case we already had it registered
+        this.context.off(ClientEvent.Sync, this.reconnectedListener);
         this.context.on(ClientEvent.Sync, this.reconnectedListener);
     };
 
     public componentWillUnmount(): void {
+        this.unmounted = true;
         this.context.off(ClientEvent.Sync, this.reconnectedListener);
     }
 
@@ -143,7 +147,12 @@ export const LocationBodyContent: React.FC<LocationBodyContentProps> = ({
     const mapElement = (
         <Map id={mapId} centerGeoUri={geoUri} onClick={onClick} onError={onError} className="mx_MLocationBody_map">
             {({ map }) => (
-                <SmartMarker map={map} id={`${mapId}-marker`} geoUri={geoUri} roomMember={markerRoomMember} />
+                <SmartMarker
+                    map={map}
+                    id={`${mapId}-marker`}
+                    geoUri={geoUri}
+                    roomMember={markerRoomMember ?? undefined}
+                />
             )}
         </Map>
     );

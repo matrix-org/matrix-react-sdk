@@ -18,35 +18,32 @@ import classNames from "classnames";
 import React, { useContext } from "react";
 
 import { _t } from "../../../languageHandler";
-import ContextMenu, { aboveLeftOf, AboveLeftOf, useContextMenu } from "../../structures/ContextMenu";
+import ContextMenu, { aboveLeftOf, MenuProps, useContextMenu } from "../../structures/ContextMenu";
 import EmojiPicker from "../emojipicker/EmojiPicker";
 import { CollapsibleButton } from "./CollapsibleButton";
 import { OverflowMenuContext } from "./MessageComposerButtons";
 
 interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
-    menuPosition: AboveLeftOf;
+    menuPosition?: MenuProps;
     className?: string;
 }
 
-export function EmojiButton({ addEmoji, menuPosition, className }: IEmojiButtonProps) {
+export function EmojiButton({ addEmoji, menuPosition, className }: IEmojiButtonProps): JSX.Element {
     const overflowMenuCloser = useContext(OverflowMenuContext);
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     let contextMenu: React.ReactElement | null = null;
     if (menuDisplayed && button.current) {
         const position = menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect());
+        const onFinished = (): void => {
+            closeMenu();
+            overflowMenuCloser?.();
+        };
 
         contextMenu = (
-            <ContextMenu
-                {...position}
-                onFinished={() => {
-                    closeMenu();
-                    overflowMenuCloser?.();
-                }}
-                managed={false}
-            >
-                <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
+            <ContextMenu {...position} onFinished={onFinished} managed={false}>
+                <EmojiPicker onChoose={addEmoji} onFinished={onFinished} />
             </ContextMenu>
         );
     }

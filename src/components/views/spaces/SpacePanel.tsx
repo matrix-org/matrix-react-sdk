@@ -88,11 +88,11 @@ const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     return [invites, metaSpaces, actualSpaces, activeSpace];
 };
 
-export const HomeButtonContextMenu = ({
+export const HomeButtonContextMenu: React.FC<ComponentProps<typeof SpaceContextMenu>> = ({
     onFinished,
     hideHeader,
     ...props
-}: ComponentProps<typeof SpaceContextMenu>) => {
+}) => {
     const allRoomsInHome = useSettingValue<boolean>("Spaces.allRoomsInHome");
 
     return (
@@ -119,7 +119,7 @@ interface IMetaSpaceButtonProps extends ComponentProps<typeof SpaceButton> {
 
 type MetaSpaceButtonProps = Pick<IMetaSpaceButtonProps, "selected" | "isPanelCollapsed">;
 
-const MetaSpaceButton = ({ selected, isPanelCollapsed, ...props }: IMetaSpaceButtonProps) => {
+const MetaSpaceButton: React.FC<IMetaSpaceButtonProps> = ({ selected, isPanelCollapsed, ...props }) => {
     return (
         <li
             className={classNames("mx_SpaceItem", {
@@ -139,7 +139,7 @@ const getHomeNotificationState = (): NotificationState => {
         : SpaceStore.instance.getNotificationState(MetaSpace.Home);
 };
 
-const HomeButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
+const HomeButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCollapsed }) => {
     const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
         return SpaceStore.instance.allRoomsInHome;
     });
@@ -164,7 +164,7 @@ const HomeButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
     );
 };
 
-const FavouritesButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
+const FavouritesButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCollapsed }) => {
     return (
         <MetaSpaceButton
             spaceKey={MetaSpace.Favourites}
@@ -177,7 +177,7 @@ const FavouritesButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) 
     );
 };
 
-const PeopleButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
+const PeopleButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCollapsed }) => {
     return (
         <MetaSpaceButton
             spaceKey={MetaSpace.People}
@@ -190,7 +190,7 @@ const PeopleButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
     );
 };
 
-const OrphansButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => {
+const OrphansButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCollapsed }) => {
     return (
         <MetaSpaceButton
             spaceKey={MetaSpace.Orphans}
@@ -203,10 +203,10 @@ const OrphansButton = ({ selected, isPanelCollapsed }: MetaSpaceButtonProps) => 
     );
 };
 
-const CreateSpaceButton = ({
+const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed" | "setPanelCollapsed">> = ({
     isPanelCollapsed,
     setPanelCollapsed,
-}: Pick<IInnerSpacePanelProps, "isPanelCollapsed" | "setPanelCollapsed">) => {
+}) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLElement>();
 
     useEffect(() => {
@@ -215,7 +215,7 @@ const CreateSpaceButton = ({
         }
     }, [isPanelCollapsed]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    let contextMenu = null;
+    let contextMenu: JSX.Element | undefined;
     if (menuDisplayed) {
         contextMenu = <SpaceCreateMenu onFinished={closeMenu} />;
     }
@@ -233,6 +233,7 @@ const CreateSpaceButton = ({
                 collapsed: isPanelCollapsed,
             })}
             role="treeitem"
+            aria-selected={false}
         >
             <SpaceButton
                 data-testid="create-space-button"
@@ -242,7 +243,7 @@ const CreateSpaceButton = ({
                 label={menuDisplayed ? _t("Cancel") : _t("Create a space")}
                 onClick={onNewClick}
                 isNarrow={isPanelCollapsed}
-                ref={handle}
+                innerRef={handle}
             />
 
             {contextMenu}
@@ -328,11 +329,12 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
     },
 );
 
-const SpacePanel = () => {
+const SpacePanel: React.FC = () => {
+    const [dragging, setDragging] = useState(false);
     const [isPanelCollapsed, setPanelCollapsed] = useState(true);
-    const ref = useRef<HTMLDivElement>();
+    const ref = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
-        UIStore.instance.trackElementDimensions("SpacePanel", ref.current);
+        if (ref.current) UIStore.instance.trackElementDimensions("SpacePanel", ref.current);
         return () => UIStore.instance.stopTrackingElementDimensions("SpacePanel");
     }, []);
 
@@ -343,14 +345,19 @@ const SpacePanel = () => {
     });
 
     return (
-        <DragDropContext
-            onDragEnd={(result) => {
-                if (!result.destination) return; // dropped outside the list
-                SpaceStore.instance.moveRootSpace(result.source.index, result.destination.index);
-            }}
-        >
-            <RovingTabIndexProvider handleHomeEnd handleUpDown>
-                {({ onKeyDownHandler }) => (
+        <RovingTabIndexProvider handleHomeEnd handleUpDown={!dragging}>
+            {({ onKeyDownHandler, onDragEndHandler }) => (
+                <DragDropContext
+                    onDragStart={() => {
+                        setDragging(true);
+                    }}
+                    onDragEnd={(result) => {
+                        setDragging(false);
+                        if (!result.destination) return; // dropped outside the list
+                        SpaceStore.instance.moveRootSpace(result.source.index, result.destination.index);
+                        onDragEndHandler();
+                    }}
+                >
                     <div
                         className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
                         onKeyDown={onKeyDownHandler}
@@ -394,9 +401,9 @@ const SpacePanel = () => {
 
                         <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
                     </div>
-                )}
-            </RovingTabIndexProvider>
-        </DragDropContext>
+                </DragDropContext>
+            )}
+        </RovingTabIndexProvider>
     );
 };
 

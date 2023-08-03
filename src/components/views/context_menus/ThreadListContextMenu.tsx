@@ -22,7 +22,7 @@ import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../../utils/strings";
-import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
+import { ChevronFace, ContextMenuTooltipButton, MenuProps, useContextMenu } from "../../structures/ContextMenu";
 import { _t } from "../../../languageHandler";
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
 import { WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
@@ -35,7 +35,7 @@ export interface ThreadListContextMenuProps {
     onMenuToggle?: (open: boolean) => void;
 }
 
-const contextMenuBelow = (elementRect: DOMRect) => {
+const contextMenuBelow = (elementRect: DOMRect): MenuProps => {
     // align the context menu's icons with the icon which opened the context menu
     const left = elementRect.left + window.scrollX + elementRect.width;
     const top = elementRect.bottom + window.scrollY;
@@ -68,11 +68,11 @@ const ThreadListContextMenu: React.FC<ThreadListContextMenuProps> = ({
     );
 
     const copyLinkToThread = useCallback(
-        async (evt: ButtonEvent | undefined) => {
+        async (evt: ButtonEvent | undefined): Promise<void> => {
             if (permalinkCreator) {
                 evt?.preventDefault();
                 evt?.stopPropagation();
-                const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId());
+                const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId()!);
                 await copyPlaintext(matrixToUrl);
                 closeThreadOptions();
             }
@@ -84,9 +84,8 @@ const ThreadListContextMenu: React.FC<ThreadListContextMenuProps> = ({
         onMenuToggle?.(menuDisplayed);
     }, [menuDisplayed, onMenuToggle]);
 
-    const isMainSplitTimelineShown = !WidgetLayoutStore.instance.hasMaximisedWidget(
-        MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),
-    );
+    const room = MatrixClientPeg.safeGet().getRoom(mxEvent.getRoomId());
+    const isMainSplitTimelineShown = !!room && !WidgetLayoutStore.instance.hasMaximisedWidget(room);
     return (
         <React.Fragment>
             <ContextMenuTooltipButton
@@ -104,7 +103,7 @@ const ThreadListContextMenu: React.FC<ThreadListContextMenuProps> = ({
                     className="mx_RoomTile_contextMenu"
                     compact
                     rightAligned
-                    {...contextMenuBelow(button.current.getBoundingClientRect())}
+                    {...contextMenuBelow(button.current!.getBoundingClientRect())}
                 >
                     <IconizedContextMenuOptionList>
                         {isMainSplitTimelineShown && (

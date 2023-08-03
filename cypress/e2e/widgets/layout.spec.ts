@@ -17,7 +17,7 @@ limitations under the License.
 
 import { IWidget } from "matrix-widget-api";
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 const ROOM_NAME = "Test Room";
 const WIDGET_ID = "fake-widget";
@@ -34,14 +34,14 @@ const WIDGET_HTML = `
 
 describe("Widget Layout", () => {
     let widgetUrl: string;
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
     let roomId: string;
 
     beforeEach(() => {
-        cy.startSynapse("default").then((data) => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Sally");
+            cy.initTestUser(homeserver, "Sally");
         });
         cy.serveHtmlFile(WIDGET_HTML).then((url) => {
             widgetUrl = url;
@@ -91,14 +91,18 @@ describe("Widget Layout", () => {
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
         cy.stopWebServers();
+    });
+
+    it("should be set properly", () => {
+        cy.get(".mx_AppsDrawer").percySnapshotElement("Widgets drawer on the timeline (AppsDrawer)");
     });
 
     it("manually resize the height of the top container layout", () => {
         cy.get('iframe[title="widget"]').invoke("height").should("be.lessThan", 250);
 
-        cy.get(".mx_AppsContainer_resizerHandle")
+        cy.get(".mx_AppsDrawer_resizer_container_handle")
             .trigger("mousedown")
             .trigger("mousemove", { clientX: 0, clientY: 550, force: true })
             .trigger("mouseup", { clientX: 0, clientY: 550, force: true });

@@ -31,7 +31,7 @@ export function useWysiwygSendActionHandler(
     disabled: boolean,
     composerElement: MutableRefObject<HTMLElement>,
     composerFunctions: ComposerFunctions,
-) {
+): void {
     const roomContext = useRoomContext();
     const composerContext = useComposerContext();
     const timeoutId = useRef<number | null>(null);
@@ -46,10 +46,14 @@ export function useWysiwygSendActionHandler(
 
             switch (payload.action) {
                 case "reply_to_event":
+                case Action.FocusAComposer:
                 case Action.FocusSendMessageComposer:
                     focusComposer(composerElement, context, roomContext, timeoutId);
                     break;
                 case Action.ClearAndFocusSendMessageComposer:
+                    // When a thread is opened, prevent the main composer to steal the thread composer focus
+                    if (payload.timelineRenderingType !== roomContext.timelineRenderingType) break;
+
                     composerFunctions.clear();
                     focusComposer(composerElement, context, roomContext, timeoutId);
                     break;

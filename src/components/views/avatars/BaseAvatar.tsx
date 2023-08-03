@@ -24,7 +24,7 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import * as AvatarLogic from "../../../Avatar";
 import SettingsStore from "../../../settings/SettingsStore";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import RoomContext from "../../../contexts/RoomContext";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
@@ -32,23 +32,25 @@ import { toPx } from "../../../utils/units";
 import { _t } from "../../../languageHandler";
 
 interface IProps {
-    name: string; // The name (first initial used as default)
+    name?: string; // The name (first initial used as default)
     idName?: string; // ID for generating hash colours
     title?: string; // onHover title text
-    url?: string; // highest priority of them all, shortcut to set in urls[0]
+    url?: string | null; // highest priority of them all, shortcut to set in urls[0]
     urls?: string[]; // [highest_priority, ... , lowest_priority]
-    width?: number;
-    height?: number;
+    width: number;
+    height: number;
     // XXX: resizeMethod not actually used.
     resizeMethod?: ResizeMethod;
     defaultToInitialLetter?: boolean; // true to add default url
-    onClick?: React.MouseEventHandler;
+    onClick?: (ev: ButtonEvent) => void;
     inputRef?: React.RefObject<HTMLImageElement & HTMLSpanElement>;
     className?: string;
     tabIndex?: number;
+    altText?: string;
+    ariaLabel?: string;
 }
 
-const calculateUrls = (url: string, urls: string[], lowBandwidth: boolean): string[] => {
+const calculateUrls = (url?: string | null, urls?: string[], lowBandwidth = false): string[] => {
     // work out the full set of urls to try to load. This is formed like so:
     // imageUrls: [ props.url, ...props.urls ]
 
@@ -66,7 +68,7 @@ const calculateUrls = (url: string, urls: string[], lowBandwidth: boolean): stri
     return Array.from(new Set(_urls));
 };
 
-const useImageUrl = ({ url, urls }): [string, () => void] => {
+const useImageUrl = ({ url, urls }: { url?: string | null; urls?: string[] }): [string, () => void] => {
     // Since this is a hot code path and the settings store can be slow, we
     // use the cached lowBandwidth value from the room context if it exists
     const roomContext = useContext(RoomContext);
@@ -99,7 +101,7 @@ const useImageUrl = ({ url, urls }): [string, () => void] => {
     return [imageUrl, onError];
 };
 
-const BaseAvatar = (props: IProps) => {
+const BaseAvatar: React.FC<IProps> = (props) => {
     const {
         name,
         idName,
@@ -113,6 +115,8 @@ const BaseAvatar = (props: IProps) => {
         onClick,
         inputRef,
         className,
+        altText = _t("Avatar"),
+        ariaLabel = _t("Avatar"),
         ...otherProps
     } = props;
 
@@ -135,6 +139,7 @@ const BaseAvatar = (props: IProps) => {
         );
         const imgNode = (
             <img
+                loading="lazy"
                 className="mx_BaseAvatar_image"
                 src={AvatarLogic.defaultAvatarUrlForString(idName || name)}
                 alt=""
@@ -152,7 +157,7 @@ const BaseAvatar = (props: IProps) => {
         if (onClick) {
             return (
                 <AccessibleButton
-                    aria-label={_t("Avatar")}
+                    aria-label={ariaLabel}
                     aria-live="off"
                     {...otherProps}
                     element="span"
@@ -192,7 +197,7 @@ const BaseAvatar = (props: IProps) => {
                     height: toPx(height),
                 }}
                 title={title}
-                alt={_t("Avatar")}
+                alt={altText}
                 inputRef={inputRef}
                 data-testid="avatar-img"
                 {...otherProps}
@@ -201,6 +206,7 @@ const BaseAvatar = (props: IProps) => {
     } else {
         return (
             <img
+                loading="lazy"
                 className={classNames("mx_BaseAvatar mx_BaseAvatar_image", className)}
                 src={imageUrl}
                 onError={onError}

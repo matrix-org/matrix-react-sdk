@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { ForwardedRef, forwardRef, MutableRefObject, useRef } from "react";
+import { IEventRelation } from "matrix-js-sdk/src/models/event";
 
 import { useWysiwygSendActionHandler } from "./hooks/useWysiwygSendActionHandler";
 import { WysiwygComposer } from "./components/WysiwygComposer";
@@ -22,7 +23,7 @@ import { PlainTextComposer } from "./components/PlainTextComposer";
 import { ComposerFunctions } from "./types";
 import { E2EStatus } from "../../../../utils/ShieldUtils";
 import E2EIcon from "../E2EIcon";
-import { AboveLeftOf } from "../../../structures/ContextMenu";
+import { MenuProps } from "../../../structures/ContextMenu";
 import { Emoji } from "./components/Emoji";
 import { ComposerContext, getDefaultContextValue } from "./ComposerContext";
 
@@ -39,7 +40,7 @@ const Content = forwardRef<HTMLElement, ContentProps>(function Content(
     return null;
 });
 
-interface SendWysiwygComposerProps {
+export interface SendWysiwygComposerProps {
     initialContent?: string;
     isRichTextEnabled: boolean;
     placeholder?: string;
@@ -47,7 +48,8 @@ interface SendWysiwygComposerProps {
     e2eStatus?: E2EStatus;
     onChange: (content: string) => void;
     onSend: () => void;
-    menuPosition: AboveLeftOf;
+    menuPosition: MenuProps;
+    eventRelation?: IEventRelation;
 }
 
 // Default needed for React.lazy
@@ -56,9 +58,9 @@ export default function SendWysiwygComposer({
     e2eStatus,
     menuPosition,
     ...props
-}: SendWysiwygComposerProps) {
+}: SendWysiwygComposerProps): JSX.Element {
     const Composer = isRichTextEnabled ? WysiwygComposer : PlainTextComposer;
-    const defaultContextValue = useRef(getDefaultContextValue());
+    const defaultContextValue = useRef(getDefaultContextValue({ eventRelation: props.eventRelation }));
 
     return (
         <ComposerContext.Provider value={defaultContextValue.current}>

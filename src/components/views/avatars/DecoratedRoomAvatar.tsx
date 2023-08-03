@@ -62,7 +62,7 @@ enum Icon {
     PresenceBusy = "BUSY",
 }
 
-function tooltipText(variant: Icon) {
+function tooltipText(variant: Icon): string | undefined {
     switch (variant) {
         case Icon.Globe:
             return _t("This room is public");
@@ -78,7 +78,7 @@ function tooltipText(variant: Icon) {
 }
 
 export default class DecoratedRoomAvatar extends React.PureComponent<IProps, IState> {
-    private _dmUser: User;
+    private _dmUser: User | null = null;
     private isUnmounted = false;
     private isWatchingTimeline = false;
 
@@ -91,7 +91,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         };
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.isUnmounted = true;
         if (this.isWatchingTimeline) this.props.room.off(RoomEvent.Timeline, this.onRoomTimeline);
         this.dmUser = null; // clear listeners, if any
@@ -103,11 +103,11 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         return joinRule === JoinRule.Public;
     }
 
-    private get dmUser(): User {
+    private get dmUser(): User | null {
         return this._dmUser;
     }
 
-    private set dmUser(val: User) {
+    private set dmUser(val: User | null) {
         const oldUser = this._dmUser;
         this._dmUser = val;
         if (oldUser && oldUser !== this._dmUser) {
@@ -120,7 +120,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         }
     }
 
-    private onRoomTimeline = (ev: MatrixEvent, room: Room | null) => {
+    private onRoomTimeline = (ev: MatrixEvent, room?: Room): void => {
         if (this.isUnmounted) return;
         if (this.props.room.roomId !== room?.roomId) return;
 
@@ -132,7 +132,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         }
     };
 
-    private onPresenceUpdate = () => {
+    private onPresenceUpdate = (): void => {
         if (this.isUnmounted) return;
 
         const newIcon = this.getPresenceIcon();
@@ -165,8 +165,8 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         const otherUserId = DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
         if (otherUserId && this.props.room.getJoinedMemberCount() === 2) {
             // Track presence, if available
-            if (isPresenceEnabled()) {
-                this.dmUser = MatrixClientPeg.get().getUser(otherUserId);
+            if (isPresenceEnabled(this.props.room.client)) {
+                this.dmUser = MatrixClientPeg.safeGet().getUser(otherUserId);
                 icon = this.getPresenceIcon();
             }
         } else {
@@ -182,7 +182,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
     public render(): React.ReactNode {
         let badge: React.ReactNode;
-        if (this.props.displayBadge) {
+        if (this.props.displayBadge && this.state.notificationState) {
             badge = (
                 <NotificationBadge
                     notification={this.state.notificationState}
@@ -192,7 +192,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             );
         }
 
-        let icon;
+        let icon: JSX.Element | undefined;
         if (this.state.icon !== Icon.None) {
             icon = (
                 <TextWithTooltip

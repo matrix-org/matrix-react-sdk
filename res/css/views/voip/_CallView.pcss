@@ -20,8 +20,8 @@ limitations under the License.
 
     display: flex;
     flex-direction: column;
-    margin: $container-gap-width;
-    margin-right: calc($container-gap-width / 2);
+    margin: var(--container-gap-width);
+    margin-right: calc(var(--container-gap-width) / 2);
 
     background-color: $header-panel-bg-color;
     padding: 8px;
@@ -104,7 +104,7 @@ limitations under the License.
                 left: 0;
                 right: 0;
 
-                background-color: rgba($call-background, 0.9);
+                background-color: $info-plinth-fg-color;
 
                 display: flex;
                 justify-content: center;
@@ -160,7 +160,7 @@ limitations under the License.
                             content: "";
                             display: inline-block;
                             mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
-                            mask-size: $size;
+                            mask-size: 20px;
                             mask-position: center;
                             background-color: $call-primary-content;
                             height: 100%;
@@ -181,7 +181,7 @@ limitations under the License.
                         .mx_CallView_deviceButton {
                             &.mx_CallView_deviceButton_audio::before {
                                 mask-image: url("$(res)/img/element-icons/Mic-off.svg");
-                                mask-size: 14px;
+                                mask-size: 18px;
                             }
 
                             &.mx_CallView_deviceButton_video::before {

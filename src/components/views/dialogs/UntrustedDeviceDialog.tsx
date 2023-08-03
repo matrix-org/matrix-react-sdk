@@ -22,19 +22,19 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import E2EIcon, { E2EState } from "../rooms/E2EIcon";
 import AccessibleButton from "../elements/AccessibleButton";
 import BaseDialog from "./BaseDialog";
-import { IDialogProps } from "./IDialogProps";
 import { IDevice } from "../right_panel/UserInfo";
 
-interface IProps extends IDialogProps {
+interface IProps {
     user: User;
     device: IDevice;
+    onFinished(mode?: "legacy" | "sas" | false): void;
 }
 
 const UntrustedDeviceDialog: React.FC<IProps> = ({ device, user, onFinished }) => {
-    let askToVerifyText;
-    let newSessionText;
+    let askToVerifyText: string;
+    let newSessionText: string;
 
-    if (MatrixClientPeg.get().getUserId() === user.userId) {
+    if (MatrixClientPeg.safeGet().getUserId() === user.userId) {
         newSessionText = _t("You signed in to a new session without verifying it:");
         askToVerifyText = _t("Verify your other session using one of the options below.");
     } else {
@@ -51,7 +51,7 @@ const UntrustedDeviceDialog: React.FC<IProps> = ({ device, user, onFinished }) =
             className="mx_UntrustedDeviceDialog"
             title={
                 <>
-                    <E2EIcon status={E2EState.Warning} size={24} hideTooltip={true} />
+                    <E2EIcon status={E2EState.Warning} isUser size={24} hideTooltip={true} />
                     {_t("Not Trusted")}
                 </>
             }
@@ -59,7 +59,7 @@ const UntrustedDeviceDialog: React.FC<IProps> = ({ device, user, onFinished }) =
             <div className="mx_Dialog_content" id="mx_Dialog_content">
                 <p>{newSessionText}</p>
                 <p>
-                    {device.getDisplayName()} ({device.deviceId})
+                    {device.displayName} ({device.deviceId})
                 </p>
                 <p>{askToVerifyText}</p>
             </div>

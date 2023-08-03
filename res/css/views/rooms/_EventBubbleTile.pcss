@@ -44,13 +44,6 @@ limitations under the License.
     --EventTile_bubble_line-margin-inline-end: -12px;
     --EventTile_bubble_gap-inline: 5px;
 
-    position: relative;
-    /* Other half of the gutter is provided by margin-bottom on the last tile
-    of the section */
-    margin-top: calc(var(--gutterSize) / 2);
-    margin-left: var(--EventTile_bubble-margin-inline-start);
-    font-size: $font-14px;
-
     .mx_MessageTimestamp {
         width: unset; /* Cancel the default width */
         max-width: var(--MessageTimestamp-max-width);
@@ -297,7 +290,7 @@ limitations under the License.
             /* we put the timestamps for media (other than stickers) atop the media */
             &.mx_EventTile_image {
                 .mx_MessageTimestamp {
-                    border-radius: $timeline-image-border-radius;
+                    border-radius: var(--MBody-border-radius);
                     /* Hardcoded colours because it's the same on all themes */
                     background-color: rgba(0, 0, 0, 0.6);
                     color: #ffffff;

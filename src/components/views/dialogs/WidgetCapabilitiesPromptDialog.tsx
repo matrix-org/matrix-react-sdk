@@ -20,26 +20,25 @@ import { lexicographicCompare } from "matrix-js-sdk/src/utils";
 
 import BaseDialog from "./BaseDialog";
 import { _t } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import { objectShallowClone } from "../../../utils/objects";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import DialogButtons from "../elements/DialogButtons";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { CapabilityText } from "../../../widgets/CapabilityText";
 
-interface IProps extends IDialogProps {
+interface IProps {
     requestedCapabilities: Set<Capability>;
     widget: Widget;
     widgetKind: WidgetKind; // TODO: Refactor into the Widget class
+    onFinished(result?: { approved: Capability[]; remember: boolean }): void;
 }
 
-interface IBooleanStates {
-    // @ts-ignore - TS wants a string key, but we know better
-    [capability: Capability]: boolean;
-}
+type BooleanStates = Partial<{
+    [capability in Capability]: boolean;
+}>;
 
 interface IState {
-    booleanStates: IBooleanStates;
+    booleanStates: BooleanStates;
     rememberSelection: boolean;
 }
 
@@ -52,7 +51,7 @@ export default class WidgetCapabilitiesPromptDialog extends React.PureComponent<
         const parsedEvents = WidgetEventCapability.findEventCapabilities(this.props.requestedCapabilities);
         parsedEvents.forEach((e) => this.eventPermissionsMap.set(e.raw, e));
 
-        const states: IBooleanStates = {};
+        const states: BooleanStates = {};
         this.props.requestedCapabilities.forEach((c) => (states[c] = true));
 
         this.state = {
@@ -61,17 +60,17 @@ export default class WidgetCapabilitiesPromptDialog extends React.PureComponent<
         };
     }
 
-    private onToggle = (capability: Capability) => {
+    private onToggle = (capability: Capability): void => {
         const newStates = objectShallowClone(this.state.booleanStates);
         newStates[capability] = !newStates[capability];
         this.setState({ booleanStates: newStates });
     };
 
-    private onRememberSelectionChange = (newVal: boolean) => {
+    private onRememberSelectionChange = (newVal: boolean): void => {
         this.setState({ rememberSelection: newVal });
     };
 
-    private onSubmit = async (ev) => {
+    private onSubmit = async (): Promise<void> => {
         this.closeAndTryRemember(
             Object.entries(this.state.booleanStates)
                 .filter(([_, isSelected]) => isSelected)
@@ -79,15 +78,15 @@ export default class WidgetCapabilitiesPromptDialog extends React.PureComponent<
         );
     };
 
-    private onReject = async (ev) => {
+    private onReject = async (): Promise<void> => {
         this.closeAndTryRemember([]); // nothing was approved
     };
 
-    private closeAndTryRemember(approved: Capability[]) {
+    private closeAndTryRemember(approved: Capability[]): void {
         this.props.onFinished({ approved, remember: this.state.rememberSelection });
     }
 
-    public render() {
+    public render(): React.ReactNode {
         // We specifically order the timeline capabilities down to the bottom. The capability text
         // generation cares strongly about this.
         const orderedCapabilities = Object.entries(this.state.booleanStates).sort(([capA], [capB]) => {

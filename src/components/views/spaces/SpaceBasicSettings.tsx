@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useRef, useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -24,21 +24,21 @@ import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 interface IProps {
     avatarUrl?: string;
     avatarDisabled?: boolean;
-    name?: string;
+    name: string;
     nameDisabled?: boolean;
     topic?: string;
     topicDisabled?: boolean;
-    setAvatar(avatar: File): void;
+    setAvatar(avatar?: File): void;
     setName(name: string): void;
     setTopic(topic: string): void;
 }
 
-export const SpaceAvatar = ({
+export const SpaceAvatar: React.FC<Pick<IProps, "avatarUrl" | "avatarDisabled" | "setAvatar">> = ({
     avatarUrl,
     avatarDisabled = false,
     setAvatar,
-}: Pick<IProps, "avatarUrl" | "avatarDisabled" | "setAvatar">) => {
-    const avatarUploadRef = useRef<HTMLInputElement>();
+}) => {
+    const avatarUploadRef = useRef<HTMLInputElement>(null);
     const [avatar, setAvatarDataUrl] = useState(avatarUrl); // avatar data url cache
 
     let avatarSection;
@@ -61,7 +61,7 @@ export const SpaceAvatar = ({
                     />
                     <AccessibleButton
                         onClick={() => {
-                            avatarUploadRef.current.value = "";
+                            if (avatarUploadRef.current) avatarUploadRef.current.value = "";
                             setAvatarDataUrl(undefined);
                             setAvatar(undefined);
                         }}
@@ -102,7 +102,7 @@ export const SpaceAvatar = ({
                     setAvatar(file);
                     const reader = new FileReader();
                     reader.onload = (ev) => {
-                        setAvatarDataUrl(ev.target.result as string);
+                        setAvatarDataUrl(ev.target?.result as string);
                     };
                     reader.readAsDataURL(file);
                 }}
@@ -112,7 +112,7 @@ export const SpaceAvatar = ({
     );
 };
 
-const SpaceBasicSettings = ({
+const SpaceBasicSettings: React.FC<IProps> = ({
     avatarUrl,
     avatarDisabled = false,
     setAvatar,
@@ -122,7 +122,7 @@ const SpaceBasicSettings = ({
     topic = "",
     topicDisabled = false,
     setTopic,
-}: IProps) => {
+}) => {
     return (
         <div className="mx_SpaceBasicSettings">
             <SpaceAvatar avatarUrl={avatarUrl} avatarDisabled={avatarDisabled} setAvatar={setAvatar} />
@@ -132,7 +132,7 @@ const SpaceBasicSettings = ({
                 label={_t("Name")}
                 autoFocus={true}
                 value={name}
-                onChange={(ev) => setName(ev.target.value)}
+                onChange={(ev: ChangeEvent<HTMLInputElement>) => setName(ev.target.value)}
                 disabled={nameDisabled}
             />
 
@@ -141,7 +141,7 @@ const SpaceBasicSettings = ({
                 element="textarea"
                 label={_t("Description")}
                 value={topic}
-                onChange={(ev) => setTopic(ev.target.value)}
+                onChange={(ev: ChangeEvent<HTMLTextAreaElement>) => setTopic(ev.target.value)}
                 rows={3}
                 disabled={topicDisabled}
             />

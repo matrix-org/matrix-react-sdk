@@ -30,7 +30,7 @@ interface IState {
 }
 
 export default class InviteReason extends React.PureComponent<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             // We hide the reason for invitation by default, since it can be a
@@ -39,13 +39,13 @@ export default class InviteReason extends React.PureComponent<IProps, IState> {
         };
     }
 
-    public onViewClick = () => {
+    public onViewClick = (): void => {
         this.setState({
             hidden: false,
         });
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const classes = classNames({
             mx_InviteReason: true,
             mx_InviteReason_hidden: this.state.hidden,

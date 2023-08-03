@@ -26,9 +26,9 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { SettingLevel } from "../SettingLevel";
 
 export default class ThemeWatcher {
-    private themeWatchRef: string;
-    private systemThemeWatchRef: string;
-    private dispatcherRef: string;
+    private themeWatchRef: string | null;
+    private systemThemeWatchRef: string | null;
+    private dispatcherRef: string | null;
 
     private preferDark: MediaQueryList;
     private preferLight: MediaQueryList;
@@ -50,33 +50,29 @@ export default class ThemeWatcher {
         this.currentTheme = this.getEffectiveTheme();
     }
 
-    public start() {
+    public start(): void {
         this.themeWatchRef = SettingsStore.watchSetting("theme", null, this.onChange);
         this.systemThemeWatchRef = SettingsStore.watchSetting("use_system_theme", null, this.onChange);
-        if (this.preferDark.addEventListener) {
-            this.preferDark.addEventListener("change", this.onChange);
-            this.preferLight.addEventListener("change", this.onChange);
-            this.preferHighContrast.addEventListener("change", this.onChange);
-        }
+        this.preferDark.addEventListener("change", this.onChange);
+        this.preferLight.addEventListener("change", this.onChange);
+        this.preferHighContrast.addEventListener("change", this.onChange);
         this.dispatcherRef = dis.register(this.onAction);
     }
 
-    public stop() {
-        if (this.preferDark.addEventListener) {
-            this.preferDark.removeEventListener("change", this.onChange);
-            this.preferLight.removeEventListener("change", this.onChange);
-            this.preferHighContrast.removeEventListener("change", this.onChange);
-        }
-        SettingsStore.unwatchSetting(this.systemThemeWatchRef);
-        SettingsStore.unwatchSetting(this.themeWatchRef);
-        dis.unregister(this.dispatcherRef);
+    public stop(): void {
+        this.preferDark.removeEventListener("change", this.onChange);
+        this.preferLight.removeEventListener("change", this.onChange);
+        this.preferHighContrast.removeEventListener("change", this.onChange);
+        if (this.systemThemeWatchRef) SettingsStore.unwatchSetting(this.systemThemeWatchRef);
+        if (this.themeWatchRef) SettingsStore.unwatchSetting(this.themeWatchRef);
+        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
     }
 
-    private onChange = () => {
+    private onChange = (): void => {
         this.recheck();
     };
 
-    private onAction = (payload: ActionPayload) => {
+    private onAction = (payload: ActionPayload): void => {
         if (payload.action === Action.RecheckTheme) {
             // XXX forceTheme
             this.recheck(payload.forceTheme);
@@ -85,7 +81,7 @@ export default class ThemeWatcher {
 
     // XXX: forceTheme param added here as local echo appears to be unreliable
     // https://github.com/vector-im/element-web/issues/11443
-    public recheck(forceTheme?: string) {
+    public recheck(forceTheme?: string): void {
         const oldTheme = this.currentTheme;
         this.currentTheme = forceTheme === undefined ? this.getEffectiveTheme() : forceTheme;
         if (oldTheme !== this.currentTheme) {
@@ -144,14 +140,14 @@ export default class ThemeWatcher {
         return SettingsStore.getValue("theme");
     }
 
-    private themeBasedOnSystem() {
-        let newTheme: string;
+    private themeBasedOnSystem(): string | undefined {
+        let newTheme: string | undefined;
         if (this.preferDark.matches) {
             newTheme = "dark";
         } else if (this.preferLight.matches) {
             newTheme = "light";
         }
-        if (this.preferHighContrast.matches) {
+        if (newTheme && this.preferHighContrast.matches) {
             const hcTheme = findHighContrastTheme(newTheme);
             if (hcTheme) {
                 newTheme = hcTheme;
@@ -160,7 +156,7 @@ export default class ThemeWatcher {
         return newTheme;
     }
 
-    public isSystemThemeSupported() {
+    public isSystemThemeSupported(): boolean {
         return this.preferDark.matches || this.preferLight.matches;
     }
 }

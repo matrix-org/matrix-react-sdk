@@ -15,6 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { ReactElement, ReactNode } from "react";
+
 import { _t } from "../languageHandler";
 import { jsxJoin } from "./ReactUtils";
 
@@ -64,7 +66,7 @@ export function formatBytes(bytes: number, decimals = 2): string {
  * @return {string}
  */
 export function formatCryptoKey(key: string): string {
-    return key.match(/.{1,4}/g).join(" ");
+    return key.match(/.{1,4}/g)!.join(" ");
 }
 /**
  * calculates a numeric hash for a given string
@@ -73,14 +75,13 @@ export function formatCryptoKey(key: string): string {
  *
  * @return {number}
  */
-export function hashCode(str: string): number {
+export function hashCode(str?: string): number {
     let hash = 0;
-    let i;
-    let chr;
-    if (str.length === 0) {
+    let chr: number;
+    if (!str?.length) {
         return hash;
     }
-    for (i = 0; i < str.length; i++) {
+    for (let i = 0; i < str.length; i++) {
         chr = str.charCodeAt(i);
         hash = (hash << 5) - hash + chr;
         hash |= 0;
@@ -88,7 +89,7 @@ export function hashCode(str: string): number {
     return Math.abs(hash);
 }
 
-export function getUserNameColorClass(userId: string): string {
+export function getUserNameColorClass(userId?: string): string {
     const colorNumber = (hashCode(userId) % 8) + 1;
     return `mx_Username_color${colorNumber}`;
 }
@@ -105,9 +106,9 @@ export function getUserNameColorClass(userId: string): string {
  * between each item, but with the last item appended as " and [lastItem]".
  */
 export function formatCommaSeparatedList(items: string[], itemLimit?: number): string;
-export function formatCommaSeparatedList(items: JSX.Element[], itemLimit?: number): JSX.Element;
-export function formatCommaSeparatedList(items: Array<JSX.Element | string>, itemLimit?: number): JSX.Element | string;
-export function formatCommaSeparatedList(items: Array<JSX.Element | string>, itemLimit?: number): JSX.Element | string {
+export function formatCommaSeparatedList(items: ReactElement[], itemLimit?: number): ReactElement;
+export function formatCommaSeparatedList(items: ReactNode[], itemLimit?: number): ReactNode;
+export function formatCommaSeparatedList(items: ReactNode[], itemLimit?: number): ReactNode {
     const remaining = itemLimit === undefined ? 0 : Math.max(items.length - itemLimit, 0);
     if (items.length === 0) {
         return "";

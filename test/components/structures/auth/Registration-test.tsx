@@ -17,8 +17,7 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
-import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
-import { MatrixError } from "matrix-js-sdk/src/http-api/errors";
+import { createClient, MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 import fetchMock from "fetch-mock-jest";
 
@@ -26,7 +25,10 @@ import SdkConfig, { DEFAULTS } from "../../../../src/SdkConfig";
 import { mkServerConfig, mockPlatformPeg, unmockPlatformPeg } from "../../../test-utils";
 import Registration from "../../../../src/components/structures/auth/Registration";
 
-jest.mock("matrix-js-sdk/src/matrix");
+jest.mock("matrix-js-sdk/src/matrix", () => ({
+    ...jest.requireActual("matrix-js-sdk/src/matrix"),
+    createClient: jest.fn(),
+}));
 jest.useFakeTimers();
 
 describe("Registration", function () {
@@ -66,7 +68,7 @@ describe("Registration", function () {
 
     afterEach(function () {
         fetchMock.restore();
-        SdkConfig.unset(); // we touch the config, so clean up
+        SdkConfig.reset(); // we touch the config, so clean up
         unmockPlatformPeg();
     });
 
@@ -93,14 +95,14 @@ describe("Registration", function () {
 
     it("should show form when custom URLs disabled", async function () {
         const { container } = getComponent();
-        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
         expect(container.querySelector("form")).toBeTruthy();
     });
 
     it("should show SSO options if those are available", async () => {
         mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.sso" }] });
         const { container } = getComponent();
-        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
         const ssoButton = container.querySelector(".mx_SSOButton");
         expect(ssoButton).toBeTruthy();
@@ -116,9 +118,9 @@ describe("Registration", function () {
         });
 
         const { container, rerender } = render(getRawComponent());
-        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
-        fireEvent.click(container.querySelector(".mx_SSOButton"));
+        fireEvent.click(container.querySelector(".mx_SSOButton")!);
         expect(registerRequest.mock.instances[0].baseUrl).toBe("https://matrix.org");
 
         fetchMock.get("https://server2/_matrix/client/versions", {
@@ -126,9 +128,9 @@ describe("Registration", function () {
             versions: [],
         });
         rerender(getRawComponent("https://server2"));
-        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading..."));
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
-        fireEvent.click(container.querySelector(".mx_SSOButton"));
+        fireEvent.click(container.querySelector(".mx_SSOButton")!);
         expect(registerRequest.mock.instances[1].baseUrl).toBe("https://server2");
     });
 });

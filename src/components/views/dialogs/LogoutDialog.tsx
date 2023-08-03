@@ -15,10 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from "react";
+import React from "react";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { logger } from "matrix-js-sdk/src/logger";
 
+import type CreateKeyBackupDialog from "../../../async-components/views/dialogs/security/CreateKeyBackupDialog";
+import type ExportE2eKeysDialog from "../../../async-components/views/dialogs/security/ExportE2eKeysDialog";
 import Modal from "../../../Modal";
 import dis from "../../../dispatcher/dispatcher";
 import { _t } from "../../../languageHandler";
@@ -36,8 +38,7 @@ interface IProps {
 interface IState {
     shouldLoadBackupStatus: boolean;
     loading: boolean;
-    backupInfo: IKeyBackupInfo;
-    error?: string;
+    backupInfo: IKeyBackupInfo | null;
 }
 
 export default class LogoutDialog extends React.Component<IProps, IState> {
@@ -45,17 +46,16 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
         onFinished: function () {},
     };
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const shouldLoadBackupStatus = cli.isCryptoEnabled() && !cli.getKeyBackupEnabled();
 
         this.state = {
             shouldLoadBackupStatus: shouldLoadBackupStatus,
             loading: shouldLoadBackupStatus,
             backupInfo: null,
-            error: null,
         };
 
         if (shouldLoadBackupStatus) {
@@ -63,9 +63,9 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
         }
     }
 
-    private async loadBackupStatus() {
+    private async loadBackupStatus(): Promise<void> {
         try {
-            const backupInfo = await MatrixClientPeg.get().getKeyBackupVersion();
+            const backupInfo = await MatrixClientPeg.safeGet().getKeyBackupVersion();
             this.setState({
                 loading: false,
                 backupInfo,
@@ -74,7 +74,6 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             logger.log("Unable to fetch key backup status", e);
             this.setState({
                 loading: false,
-                error: e,
             });
         }
     }
@@ -82,20 +81,20 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
     private onExportE2eKeysClicked = (): void => {
         Modal.createDialogAsync(
             import("../../../async-components/views/dialogs/security/ExportE2eKeysDialog") as unknown as Promise<
-                ComponentType<{}>
+                typeof ExportE2eKeysDialog
             >,
             {
-                matrixClient: MatrixClientPeg.get(),
+                matrixClient: MatrixClientPeg.safeGet(),
             },
         );
     };
 
-    private onFinished = (confirmed: boolean): void => {
+    private onFinished = (confirmed?: boolean): void => {
         if (confirmed) {
             dis.dispatch({ action: "logout" });
         }
         // close dialog
-        this.props.onFinished(confirmed);
+        this.props.onFinished(!!confirmed);
     };
 
     private onSetRecoveryMethodClick = (): void => {
@@ -103,14 +102,20 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             // A key backup exists for this account, but the creating device is not
             // verified, so restore the backup which will give us the keys from it and
             // allow us to trust it (ie. upload keys to it)
-            Modal.createDialog(RestoreKeyBackupDialog, null, null, /* priority = */ false, /* static = */ true);
+            Modal.createDialog(
+                RestoreKeyBackupDialog,
+                undefined,
+                undefined,
+                /* priority = */ false,
+                /* static = */ true,
+            );
         } else {
             Modal.createDialogAsync(
                 import("../../../async-components/views/dialogs/security/CreateKeyBackupDialog") as unknown as Promise<
-                    ComponentType<{}>
+                    typeof CreateKeyBackupDialog
                 >,
-                null,
-                null,
+                undefined,
+                undefined,
                 /* priority = */ false,
                 /* static = */ true,
             );
@@ -127,7 +132,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
         this.props.onFinished(true);
     };
 
-    public render() {
+    public render(): React.ReactNode {
         if (this.state.shouldLoadBackupStatus) {
             const description = (
                 <div>

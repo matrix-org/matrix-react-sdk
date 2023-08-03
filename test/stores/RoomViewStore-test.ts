@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/matrix";
+import { mocked } from "jest-mock";
+import { MatrixError, Room } from "matrix-js-sdk/src/matrix";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 import { RoomViewStore } from "../../src/stores/RoomViewStore";
 import { Action } from "../../src/dispatcher/actions";
@@ -92,7 +94,9 @@ describe("RoomViewStore", function () {
         getSafeUserId: jest.fn().mockReturnValue(userId),
         getDeviceId: jest.fn().mockReturnValue("ABC123"),
         sendStateEvent: jest.fn().mockResolvedValue({}),
-        supportsExperimentalThreads: jest.fn(),
+        supportsThreads: jest.fn(),
+        isInitialSyncComplete: jest.fn().mockResolvedValue(false),
+        relations: jest.fn(),
     });
     const room = new Room(roomId, mockClient, userId);
     const room2 = new Room(roomId2, mockClient, userId);
@@ -245,6 +249,28 @@ describe("RoomViewStore", function () {
         expect(roomViewStore.getRoomId()).toEqual(roomId2);
     });
 
+    it("should ignore reply_to_event for Thread panels", async () => {
+        expect(roomViewStore.getQuotingEvent()).toBeFalsy();
+        const replyToEvent = {
+            getRoomId: () => roomId2,
+        };
+        dis.dispatch({ action: "reply_to_event", event: replyToEvent, context: TimelineRenderingType.Thread });
+        await sleep(100);
+        expect(roomViewStore.getQuotingEvent()).toBeFalsy();
+    });
+
+    it.each([TimelineRenderingType.Room, TimelineRenderingType.File, TimelineRenderingType.Notification])(
+        "Should respect reply_to_event for %s rendering context",
+        async (context) => {
+            const replyToEvent = {
+                getRoomId: () => roomId,
+            };
+            dis.dispatch({ action: "reply_to_event", event: replyToEvent, context });
+            await untilDispatch(Action.ViewRoom, dis);
+            expect(roomViewStore.getQuotingEvent()).toEqual(replyToEvent);
+        },
+    );
+
     it("removes the roomId on ViewHomePage", async () => {
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
         await untilDispatch(Action.ActiveRoomChanged, dis);
@@ -257,6 +283,29 @@ describe("RoomViewStore", function () {
 
     it("when viewing a call without a broadcast, it should not raise an error", async () => {
         await viewCall();
+    });
+
+    it("should display an error message when the room is unreachable via the roomId", async () => {
+        // When
+        // View and wait for the room
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        await untilDispatch(Action.ActiveRoomChanged, dis);
+        // Generate error to display the expected error message
+        const error = new MatrixError(undefined, 404);
+        roomViewStore.showJoinRoomError(error, roomId);
+
+        // Check the modal props
+        expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
+    });
+
+    it("should display the generic error message when the roomId doesnt match", async () => {
+        // When
+        // Generate error to display the expected error message
+        const error = new MatrixError({ error: "my 404 error" }, 404);
+        roomViewStore.showJoinRoomError(error, roomId);
+
+        // Check the modal props
+        expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
     });
 
     describe("when listening to a voice broadcast", () => {

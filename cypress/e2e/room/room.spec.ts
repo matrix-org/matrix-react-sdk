@@ -18,34 +18,34 @@ limitations under the License.
 
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { MatrixClient } from "../../global";
 
 describe("Room Directory", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.startSynapse("default").then((data) => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Alice");
+            cy.initTestUser(homeserver, "Alice");
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     it("should switch between existing dm rooms without a loader", () => {
         let bobClient: MatrixClient;
         let charlieClient: MatrixClient;
-        cy.getBot(synapse, {
+        cy.getBot(homeserver, {
             displayName: "Bob",
         }).then((bob) => {
             bobClient = bob;
         });
 
-        cy.getBot(synapse, {
+        cy.getBot(homeserver, {
             displayName: "Charlie",
         }).then((charlie) => {
             charlieClient = charlie;
@@ -71,11 +71,11 @@ describe("Room Directory", () => {
         // we want to make sure it is never displayed when switching these rooms
         cy.get(".mx_RoomPreviewBar_spinnerTitle", { timeout: 1 }).should("not.exist");
         // confirm the room was loaded
-        cy.contains("Bob joined the room").should("exist");
+        cy.findByText("Bob joined the room").should("exist");
 
         cy.viewRoomByName("Charlie");
         cy.get(".mx_RoomPreviewBar_spinnerTitle", { timeout: 1 }).should("not.exist");
         // confirm the room was loaded
-        cy.contains("Charlie joined the room").should("exist");
+        cy.findByText("Charlie joined the room").should("exist");
     });
 });

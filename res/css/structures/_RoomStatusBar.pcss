@@ -115,6 +115,7 @@ limitations under the License.
             padding-left: 30px; /* 18px for the icon, 2px margin to text, 10px regular padding */
             display: inline-block;
             position: relative;
+            user-select: none;
 
             &:nth-child(2) {
                 border-left: 1px solid $resend-button-divider-color;
@@ -159,7 +160,7 @@ limitations under the License.
     }
 }
 
-.mx_RoomStatusBar_connectionLostBar img {
+.mx_RoomStatusBar_connectionLostBar svg {
     padding-left: 10px;
     padding-right: 10px;
     vertical-align: middle;
@@ -185,7 +186,7 @@ limitations under the License.
 
 .mx_RoomStatusBar_typingBar {
     height: 50px;
-    line-height: $font-50px;
+    line-height: 50px;
 
     color: $primary-content;
     opacity: 0.5;
@@ -204,6 +205,6 @@ limitations under the License.
 
     .mx_RoomStatusBar_typingBar {
         height: 40px;
-        line-height: $font-40px;
+        line-height: 40px;
     }
 }

@@ -22,30 +22,30 @@ import { _t } from "../../../languageHandler";
 import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
 import Tooltip from "../elements/Tooltip";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-
 interface IProps {
     // The event we're displaying reactions for
     mxEvent: MatrixEvent;
     // The reaction content / key / emoji
     content: string;
-    // A Set of Matrix reaction events for this key
-    reactionEvents: Set<MatrixEvent>;
+    // A list of Matrix reaction events for this key
+    reactionEvents: MatrixEvent[];
     visible: boolean;
 }
 
 export default class ReactionsRowButtonTooltip extends React.PureComponent<IProps> {
     public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
-    public render() {
+    public render(): React.ReactNode {
         const { content, reactionEvents, mxEvent, visible } = this.props;
 
         const room = this.context.getRoom(mxEvent.getRoomId());
-        let tooltipLabel;
+        let tooltipLabel: JSX.Element | undefined;
         if (room) {
-            const senders = [];
+            const senders: string[] = [];
             for (const reactionEvent of reactionEvents) {
-                const member = room.getMember(reactionEvent.getSender());
-                const name = member ? member.name : reactionEvent.getSender();
+                const member = room.getMember(reactionEvent.getSender()!);
+                const name = member?.name ?? reactionEvent.getSender()!;
                 senders.push(name);
             }
             const shortName = unicodeToShortcode(content);
@@ -72,7 +72,7 @@ export default class ReactionsRowButtonTooltip extends React.PureComponent<IProp
             );
         }
 
-        let tooltip;
+        let tooltip: JSX.Element | undefined;
         if (tooltipLabel) {
             tooltip = <Tooltip visible={visible} label={tooltipLabel} />;
         }

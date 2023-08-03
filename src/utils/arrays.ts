@@ -57,6 +57,7 @@ export function arrayFastResample(input: number[], points: number): number[] {
  * @param {number} points The number of samples to end up with.
  * @returns {number[]} The resampled array.
  */
+// ts-prune-ignore-next
 export function arraySmoothingResample(input: number[], points: number): number[] {
     if (input.length === points) return input; // short-circuit a complicated call
 
@@ -99,6 +100,7 @@ export function arraySmoothingResample(input: number[], points: number): number[
  * @param {number} newMax The maximum value to scale to.
  * @returns {number[]} The rescaled array.
  */
+// ts-prune-ignore-next
 export function arrayRescale(input: number[], newMin: number, newMax: number): number[] {
     const min: number = Math.min(...input);
     const max: number = Math.max(...input);
@@ -266,7 +268,7 @@ export class ArrayUtil<T> {
         const obj = this.a.reduce((rv: Map<K, T[]>, val: T) => {
             const k = fn(val);
             if (!rv.has(k)) rv.set(k, []);
-            rv.get(k).push(val);
+            rv.get(k)!.push(val);
             return rv;
         }, new Map<K, T[]>());
         return new GroupedArray(obj);
@@ -299,7 +301,7 @@ export class GroupedArray<K, T> {
         const a: T[] = [];
         for (const k of keyOrder) {
             if (!this.val.has(k)) continue;
-            a.push(...this.val.get(k));
+            a.push(...this.val.get(k)!);
         }
         return new ArrayUtil(a);
     }
@@ -317,9 +319,23 @@ export const concat = (...arrays: Uint8Array[]): Uint8Array => {
 /**
  * Async version of Array.every.
  */
-export async function asyncEvery<T>(values: T[], predicate: (value: T) => Promise<boolean>): Promise<boolean> {
+export async function asyncEvery<T>(values: Iterable<T>, predicate: (value: T) => Promise<boolean>): Promise<boolean> {
     for (const value of values) {
         if (!(await predicate(value))) return false;
     }
     return true;
+}
+
+/**
+ * Async version of Array.some.
+ */
+export async function asyncSome<T>(values: Iterable<T>, predicate: (value: T) => Promise<boolean>): Promise<boolean> {
+    for (const value of values) {
+        if (await predicate(value)) return true;
+    }
+    return false;
+}
+
+export function filterBoolean<T>(values: Array<T | null | undefined>): T[] {
+    return values.filter(Boolean) as T[];
 }

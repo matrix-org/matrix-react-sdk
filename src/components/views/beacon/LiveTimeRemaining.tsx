@@ -25,7 +25,7 @@ import { getBeaconMsUntilExpiry } from "../../../utils/beacon";
 
 const MINUTE_MS = 60000;
 const HOUR_MS = MINUTE_MS * 60;
-const getUpdateInterval = (ms: number) => {
+const getUpdateInterval = (ms: number): number => {
     // every 10 mins when more than an hour
     if (ms > HOUR_MS) {
         return MINUTE_MS * 10;
@@ -40,13 +40,19 @@ const getUpdateInterval = (ms: number) => {
 const useMsRemaining = (beacon: Beacon): number => {
     const beaconInfo = useEventEmitterState(beacon, BeaconEvent.Update, () => beacon.beaconInfo);
 
-    const [msRemaining, setMsRemaining] = useState(() => getBeaconMsUntilExpiry(beaconInfo));
+    const [msRemaining, setMsRemaining] = useState(() => (beaconInfo ? getBeaconMsUntilExpiry(beaconInfo) : 0));
 
     useEffect(() => {
+        if (!beaconInfo) {
+            return;
+        }
         setMsRemaining(getBeaconMsUntilExpiry(beaconInfo));
     }, [beaconInfo]);
 
     const updateMsRemaining = useCallback(() => {
+        if (!beaconInfo) {
+            return;
+        }
         const ms = getBeaconMsUntilExpiry(beaconInfo);
         setMsRemaining(ms);
     }, [beaconInfo]);
@@ -63,7 +69,7 @@ const LiveTimeRemaining: React.FC<{ beacon: Beacon }> = ({ beacon }) => {
     const liveTimeRemaining = _t(`%(timeRemaining)s left`, { timeRemaining });
 
     return (
-        <span data-test-id="room-live-share-expiry" className="mx_LiveTimeRemaining">
+        <span data-testid="room-live-share-expiry" className="mx_LiveTimeRemaining">
             {liveTimeRemaining}
         </span>
     );

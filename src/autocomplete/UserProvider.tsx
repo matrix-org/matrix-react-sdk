@@ -44,7 +44,7 @@ const FORCED_USER_REGEX = /[^/,:; \t\n]\S*/g;
 
 export default class UserProvider extends AutocompleteProvider {
     public matcher: QueryMatcher<RoomMember>;
-    public users: RoomMember[];
+    public users?: RoomMember[];
     public room: Room;
 
     public constructor(room: Room, renderingType?: TimelineRenderingType) {
@@ -54,30 +54,28 @@ export default class UserProvider extends AutocompleteProvider {
             renderingType,
         });
         this.room = room;
-        this.matcher = new QueryMatcher([], {
+        this.matcher = new QueryMatcher<RoomMember>([], {
             keys: ["name"],
             funcs: [(obj) => obj.userId.slice(1)], // index by user id minus the leading '@'
             shouldMatchWordsOnly: false,
         });
 
-        MatrixClientPeg.get().on(RoomEvent.Timeline, this.onRoomTimeline);
-        MatrixClientPeg.get().on(RoomStateEvent.Update, this.onRoomStateUpdate);
+        MatrixClientPeg.safeGet().on(RoomEvent.Timeline, this.onRoomTimeline);
+        MatrixClientPeg.safeGet().on(RoomStateEvent.Update, this.onRoomStateUpdate);
     }
 
-    public destroy() {
-        if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener(RoomEvent.Timeline, this.onRoomTimeline);
-            MatrixClientPeg.get().removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
-        }
+    public destroy(): void {
+        MatrixClientPeg.get()?.removeListener(RoomEvent.Timeline, this.onRoomTimeline);
+        MatrixClientPeg.get()?.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
     }
 
     private onRoomTimeline = (
         ev: MatrixEvent,
-        room: Room | null,
-        toStartOfTimeline: boolean,
+        room: Room | undefined,
+        toStartOfTimeline: boolean | undefined,
         removed: boolean,
         data: IRoomTimelineData,
-    ) => {
+    ): void => {
         if (!room) return; // notification timeline, we'll get this event again with a room specific timeline
         if (removed) return;
         if (room.roomId !== this.room.roomId) return;
@@ -93,12 +91,12 @@ export default class UserProvider extends AutocompleteProvider {
         this.onUserSpoke(ev.sender);
     };
 
-    private onRoomStateUpdate = (state: RoomState) => {
+    private onRoomStateUpdate = (state: RoomState): void => {
         // ignore updates in other rooms
         if (state.roomId !== this.room.roomId) return;
 
         // blow away the users cache
-        this.users = null;
+        this.users = undefined;
     };
 
     public async getCompletions(
@@ -110,18 +108,15 @@ export default class UserProvider extends AutocompleteProvider {
         // lazy-load user list into matcher
         if (!this.users) this.makeUsers();
 
-        let completions = [];
         const { command, range } = this.getCurrentCommand(rawQuery, selection, force);
 
-        if (!command) return completions;
-
-        const fullMatch = command[0];
+        const fullMatch = command?.[0];
         // Don't search if the query is a single "@"
         if (fullMatch && fullMatch !== "@") {
             // Don't include the '@' in our search query - it's only used as a way to trigger completion
             const query = fullMatch.startsWith("@") ? fullMatch.substring(1) : fullMatch;
-            completions = this.matcher.match(query, limit).map((user) => {
-                const description = UserIdentifierCustomisations.getDisplayUserIdentifier(user.userId, {
+            return this.matcher.match(query, limit).map((user) => {
+                const description = UserIdentifierCustomisations.getDisplayUserIdentifier?.(user.userId, {
                     roomId: this.room.roomId,
                     withDisplayName: true,
                 });
@@ -132,33 +127,33 @@ export default class UserProvider extends AutocompleteProvider {
                     completion: user.rawDisplayName,
                     completionId: user.userId,
                     type: "user",
-                    suffix: selection.beginning && range.start === 0 ? ": " : " ",
+                    suffix: selection.beginning && range!.start === 0 ? ": " : " ",
                     href: makeUserPermalink(user.userId),
                     component: (
                         <PillCompletion title={displayName} description={description}>
                             <MemberAvatar member={user} width={24} height={24} />
                         </PillCompletion>
                     ),
-                    range,
+                    range: range!,
                 };
             });
         }
-        return completions;
+        return [];
     }
 
     public getName(): string {
         return _t("Users");
     }
 
-    private makeUsers() {
+    private makeUsers(): void {
         const events = this.room.getLiveTimeline().getEvents();
-        const lastSpoken = {};
+        const lastSpoken: Record<string, number> = {};
 
         for (const event of events) {
-            lastSpoken[event.getSender()] = event.getTs();
+            lastSpoken[event.getSender()!] = event.getTs();
         }
 
-        const currentUserId = MatrixClientPeg.get().credentials.userId;
+        const currentUserId = MatrixClientPeg.safeGet().credentials.userId;
         this.users = this.room.getJoinedMembers().filter(({ userId }) => userId !== currentUserId);
         this.users = this.users.concat(this.room.getMembersWithMembership("invite"));
 
@@ -167,10 +162,10 @@ export default class UserProvider extends AutocompleteProvider {
         this.matcher.setObjects(this.users);
     }
 
-    public onUserSpoke(user: RoomMember) {
+    public onUserSpoke(user: RoomMember | null): void {
         if (!this.users) return;
         if (!user) return;
-        if (user.userId === MatrixClientPeg.get().credentials.userId) return;
+        if (user.userId === MatrixClientPeg.safeGet().getSafeUserId()) return;
 
         // Move the user that spoke to the front of the array
         this.users.splice(

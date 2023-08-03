@@ -25,7 +25,7 @@ import LegacyCallContextMenu from "../../context_menus/LegacyCallContextMenu";
 import DialpadContextMenu from "../../context_menus/DialpadContextMenu";
 import { Alignment } from "../../elements/Tooltip";
 import {
-    alwaysAboveLeftOf,
+    alwaysMenuProps,
     alwaysAboveRightOf,
     ChevronFace,
     ContextMenuTooltipButton,
@@ -34,6 +34,7 @@ import {
 import { _t } from "../../../../languageHandler";
 import DeviceContextMenu from "../../context_menus/DeviceContextMenu";
 import { MediaDeviceKindEnum } from "../../../../MediaDeviceHandler";
+import { ButtonEvent } from "../../elements/AccessibleButton";
 
 // Height of the header duplicated from CSS because we need to subtract it from our max
 // height to get the max height of the video
@@ -46,7 +47,6 @@ interface IButtonProps extends Omit<React.ComponentProps<typeof AccessibleToolti
     className: string;
     onLabel?: string;
     offLabel?: string;
-    onClick: (event: React.MouseEvent) => void;
 }
 
 const LegacyCallViewToggleButton: React.FC<IButtonProps> = ({
@@ -86,7 +86,7 @@ const LegacyCallViewDropdownButton: React.FC<IDropdownButtonProps> = ({ state, d
         mx_LegacyCallViewButtons_dropdownButton_collapsed: !menuDisplayed,
     });
 
-    const onClick = (event: React.MouseEvent): void => {
+    const onClick = (event: ButtonEvent): void => {
         event.stopPropagation();
         openMenu();
     };
@@ -104,9 +104,9 @@ const LegacyCallViewDropdownButton: React.FC<IDropdownButtonProps> = ({ state, d
                 onHover={(hovering) => setHoveringDropdown(hovering)}
                 state={state}
             />
-            {menuDisplayed && (
+            {menuDisplayed && buttonRef.current && (
                 <DeviceContextMenu
-                    {...alwaysAboveRightOf(buttonRef.current?.getBoundingClientRect())}
+                    {...alwaysAboveRightOf(buttonRef.current.getBoundingClientRect())}
                     onFinished={closeMenu}
                     deviceKinds={deviceKinds}
                 />
@@ -117,7 +117,7 @@ const LegacyCallViewDropdownButton: React.FC<IDropdownButtonProps> = ({ state, d
 
 interface IProps {
     call: MatrixCall;
-    pipMode: boolean;
+    pipMode?: boolean;
     handlers: {
         onHangupClick: () => void;
         onScreenshareClick: () => void;
@@ -150,7 +150,7 @@ interface IState {
 export default class LegacyCallViewButtons extends React.Component<IProps, IState> {
     private dialpadButton = createRef<HTMLDivElement>();
     private contextMenuButton = createRef<HTMLDivElement>();
-    private controlsHideTimer: number = null;
+    private controlsHideTimer: number | null = null;
 
     public constructor(props: IProps) {
         super(props);
@@ -217,21 +217,21 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
         this.setState({ showMoreMenu: false });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const callControlsClasses = classNames("mx_LegacyCallViewButtons", {
             mx_LegacyCallViewButtons_hidden: !this.state.visible,
         });
 
         let dialPad;
-        if (this.state.showDialpad) {
+        if (this.state.showDialpad && this.dialpadButton.current) {
             dialPad = (
                 <DialpadContextMenu
-                    {...alwaysAboveLeftOf(
+                    {...alwaysMenuProps(
                         this.dialpadButton.current.getBoundingClientRect(),
                         ChevronFace.None,
                         CONTEXT_MENU_VPADDING,
                     )}
-                    // We mount the context menus as a as a child typically in order to include the
+                    // We mount the context menus as a child typically in order to include the
                     // context menus when fullscreening the call content.
                     // However, this does not work as well when the call is embedded in a
                     // picture-in-picture frame. Thus, only mount as child when we are *not* in PiP.
@@ -243,10 +243,10 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
         }
 
         let contextMenu;
-        if (this.state.showMoreMenu) {
+        if (this.state.showMoreMenu && this.contextMenuButton.current) {
             contextMenu = (
                 <LegacyCallContextMenu
-                    {...alwaysAboveLeftOf(
+                    {...alwaysMenuProps(
                         this.contextMenuButton.current.getBoundingClientRect(),
                         ChevronFace.None,
                         CONTEXT_MENU_VPADDING,

@@ -23,6 +23,7 @@ import DialogButtons from "./DialogButtons";
 import AccessibleButton from "./AccessibleButton";
 import TabbedView, { Tab, TabLocation } from "../../structures/TabbedView";
 import PlatformPeg from "../../../PlatformPeg";
+import { NonEmptyArray } from "../../../@types/common";
 
 export function getDesktopCapturerSources(): Promise<Array<DesktopCapturerSource>> {
     const options: GetSourcesOptions = {
@@ -32,7 +33,8 @@ export function getDesktopCapturerSources(): Promise<Array<DesktopCapturerSource
         },
         types: ["screen", "window"],
     };
-    return PlatformPeg.get().getDesktopCapturerSources(options);
+    const plaf = PlatformPeg.get();
+    return plaf ? plaf?.getDesktopCapturerSources(options) : Promise.resolve<DesktopCapturerSource[]>([]);
 }
 
 export enum Tabs {
@@ -55,7 +57,7 @@ export class ExistingSource extends React.Component<ExistingSourceIProps> {
         this.props.onSelect(this.props.source);
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const thumbnailClasses = classNames({
             mx_desktopCapturerSourcePicker_source_thumbnail: true,
             mx_desktopCapturerSourcePicker_source_thumbnail_selected: this.props.selected,
@@ -67,7 +69,7 @@ export class ExistingSource extends React.Component<ExistingSourceIProps> {
                 title={this.props.source.name}
                 onClick={this.onClick}
             >
-                <img className={thumbnailClasses} src={this.props.source.thumbnailURL} />
+                <img alt={this.props.source.name} className={thumbnailClasses} src={this.props.source.thumbnailURL} />
                 <span className="mx_desktopCapturerSourcePicker_source_name">{this.props.source.name}</span>
             </AccessibleButton>
         );
@@ -77,14 +79,16 @@ export class ExistingSource extends React.Component<ExistingSourceIProps> {
 export interface PickerIState {
     selectedTab: Tabs;
     sources: Array<DesktopCapturerSource>;
-    selectedSource: DesktopCapturerSource | null;
+    selectedSource?: DesktopCapturerSource;
 }
 export interface PickerIProps {
-    onFinished(sourceId: string): void;
+    onFinished(source?: DesktopCapturerSource): void;
 }
 
+type TabId = "screen" | "window";
+
 export default class DesktopCapturerSourcePicker extends React.Component<PickerIProps, PickerIState> {
-    public interval: number;
+    public interval?: number;
 
     public constructor(props: PickerIProps) {
         super(props);
@@ -92,11 +96,10 @@ export default class DesktopCapturerSourcePicker extends React.Component<PickerI
         this.state = {
             selectedTab: Tabs.Screens,
             sources: [],
-            selectedSource: null,
         };
     }
 
-    public async componentDidMount() {
+    public async componentDidMount(): Promise<void> {
         // window.setInterval() first waits and then executes, therefore
         // we call getDesktopCapturerSources() here without any delay.
         // Otherwise the dialog would be left empty for some time.
@@ -105,14 +108,14 @@ export default class DesktopCapturerSourcePicker extends React.Component<PickerI
         });
 
         // We update the sources every 500ms to get newer thumbnails
-        this.interval = window.setInterval(async () => {
+        this.interval = window.setInterval(async (): Promise<void> => {
             this.setState({
                 sources: await getDesktopCapturerSources(),
             });
         }, 500);
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         clearInterval(this.interval);
     }
 
@@ -121,18 +124,18 @@ export default class DesktopCapturerSourcePicker extends React.Component<PickerI
     };
 
     private onShare = (): void => {
-        this.props.onFinished(this.state.selectedSource.id);
+        this.props.onFinished(this.state.selectedSource);
     };
 
     private onTabChange = (): void => {
-        this.setState({ selectedSource: null });
+        this.setState({ selectedSource: undefined });
     };
 
     private onCloseClick = (): void => {
-        this.props.onFinished(null);
+        this.props.onFinished();
     };
 
-    private getTab(type: "screen" | "window", label: string): Tab {
+    private getTab(type: TabId, label: string): Tab<TabId> {
         const sources = this.state.sources
             .filter((source) => source.id.startsWith(type))
             .map((source) => {
@@ -149,8 +152,8 @@ export default class DesktopCapturerSourcePicker extends React.Component<PickerI
         return new Tab(type, label, null, <div className="mx_desktopCapturerSourcePicker_tab">{sources}</div>);
     }
 
-    public render() {
-        const tabs = [
+    public render(): React.ReactNode {
+        const tabs: NonEmptyArray<Tab<TabId>> = [
             this.getTab("screen", _t("Share entire screen")),
             this.getTab("window", _t("Application window")),
         ];

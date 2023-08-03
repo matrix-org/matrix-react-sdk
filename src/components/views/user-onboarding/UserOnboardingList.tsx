@@ -21,10 +21,15 @@ import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
 import ProgressBar from "../../views/elements/ProgressBar";
 import Heading from "../../views/typography/Heading";
-import { UserOnboardingFeedback } from "./UserOnboardingFeedback";
 import { UserOnboardingTask } from "./UserOnboardingTask";
 
-export const getUserOnboardingCounters = (tasks: UserOnboardingTaskWithResolvedCompletion[]) => {
+export const getUserOnboardingCounters = (
+    tasks: UserOnboardingTaskWithResolvedCompletion[],
+): {
+    completed: number;
+    waiting: number;
+    total: number;
+} => {
     const completed = tasks.filter((task) => task.completed === true).length;
     const waiting = tasks.filter((task) => task.completed === false).length;
 
@@ -39,13 +44,13 @@ interface Props {
     tasks: UserOnboardingTaskWithResolvedCompletion[];
 }
 
-export function UserOnboardingList({ tasks }: Props) {
+export function UserOnboardingList({ tasks }: Props): JSX.Element {
     const { completed, waiting, total } = getUserOnboardingCounters(tasks);
 
     return (
         <div className="mx_UserOnboardingList" data-testid="user-onboarding-list">
             <div className="mx_UserOnboardingList_header">
-                <Heading size="h3" className="mx_UserOnboardingList_title">
+                <Heading size="3" className="mx_UserOnboardingList_title">
                     {waiting > 0
                         ? _t("Only %(count)s steps to go", {
                               count: waiting,
@@ -60,7 +65,6 @@ export function UserOnboardingList({ tasks }: Props) {
             </div>
             <div className="mx_UserOnboardingList_progress">
                 <ProgressBar value={completed} max={total} animated />
-                {waiting === 0 && <UserOnboardingFeedback />}
             </div>
             <ol className="mx_UserOnboardingList_list">
                 {tasks.map((task) => (

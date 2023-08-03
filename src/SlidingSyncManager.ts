@@ -55,7 +55,7 @@ import {
     SlidingSync,
 } from "matrix-js-sdk/src/sliding-sync";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IDeferred, defer, sleep } from "matrix-js-sdk/src/utils";
+import { defer, sleep } from "matrix-js-sdk/src/utils";
 
 // how long to long poll for
 const SLIDING_SYNC_TIMEOUT_MS = 20 * 1000;
@@ -117,16 +117,10 @@ export class SlidingSyncManager {
     public static readonly ListSearch = "search_list";
     private static readonly internalInstance = new SlidingSyncManager();
 
-    public slidingSync: SlidingSync;
-    private client: MatrixClient;
-    private listIdToIndex: Record<string, number>;
+    public slidingSync?: SlidingSync;
+    private client?: MatrixClient;
 
-    private configureDefer: IDeferred<void>;
-
-    public constructor() {
-        this.listIdToIndex = {};
-        this.configureDefer = defer<void>();
-    }
+    private configureDefer = defer<void>();
 
     public static get instance(): SlidingSyncManager {
         return SlidingSyncManager.internalInstance;
@@ -134,13 +128,18 @@ export class SlidingSyncManager {
 
     public configure(client: MatrixClient, proxyUrl: string): SlidingSync {
         this.client = client;
-        this.listIdToIndex = {};
         // by default use the encrypted subscription as that gets everything, which is a safer
         // default than potentially missing member events.
-        this.slidingSync = new SlidingSync(proxyUrl, [], ENCRYPTED_SUBSCRIPTION, client, SLIDING_SYNC_TIMEOUT_MS);
+        this.slidingSync = new SlidingSync(
+            proxyUrl,
+            new Map(),
+            ENCRYPTED_SUBSCRIPTION,
+            client,
+            SLIDING_SYNC_TIMEOUT_MS,
+        );
         this.slidingSync.addCustomSubscription(UNENCRYPTED_SUBSCRIPTION_NAME, UNENCRYPTED_SUBSCRIPTION);
         // set the space list
-        this.slidingSync.setList(this.getOrAllocateListIndex(SlidingSyncManager.ListSpaces), {
+        this.slidingSync.setList(SlidingSyncManager.ListSpaces, {
             ranges: [[0, 20]],
             sort: ["by_name"],
             slow_get_all_rooms: true,
@@ -173,47 +172,16 @@ export class SlidingSyncManager {
         return this.slidingSync;
     }
 
-    public listIdForIndex(index: number): string | null {
-        for (const listId in this.listIdToIndex) {
-            if (this.listIdToIndex[listId] === index) {
-                return listId;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Allocate or retrieve the list index for an arbitrary list ID. For example SlidingSyncManager.ListSpaces
-     * @param listId A string which represents the list.
-     * @returns The index to use when registering lists or listening for callbacks.
-     */
-    public getOrAllocateListIndex(listId: string): number {
-        let index = this.listIdToIndex[listId];
-        if (index === undefined) {
-            // assign next highest index
-            index = -1;
-            for (const id in this.listIdToIndex) {
-                const listIndex = this.listIdToIndex[id];
-                if (listIndex > index) {
-                    index = listIndex;
-                }
-            }
-            index++;
-            this.listIdToIndex[listId] = index;
-        }
-        return index;
-    }
-
     /**
      * Ensure that this list is registered.
-     * @param listIndex The list index to register
+     * @param listKey The list key to register
      * @param updateArgs The fields to update on the list.
      * @returns The complete list request params
      */
-    public async ensureListRegistered(listIndex: number, updateArgs: PartialSlidingSyncRequest): Promise<MSC3575List> {
-        logger.debug("ensureListRegistered:::", listIndex, updateArgs);
+    public async ensureListRegistered(listKey: string, updateArgs: PartialSlidingSyncRequest): Promise<MSC3575List> {
+        logger.debug("ensureListRegistered:::", listKey, updateArgs);
         await this.configureDefer.promise;
-        let list = this.slidingSync.getList(listIndex);
+        let list = this.slidingSync!.getListParams(listKey);
         if (!list) {
             list = {
                 ranges: [[0, 20]],
@@ -252,26 +220,26 @@ export class SlidingSyncManager {
         try {
             // if we only have range changes then call a different function so we don't nuke the list from before
             if (updateArgs.ranges && Object.keys(updateArgs).length === 1) {
-                await this.slidingSync.setListRanges(listIndex, updateArgs.ranges);
+                await this.slidingSync!.setListRanges(listKey, updateArgs.ranges);
             } else {
-                await this.slidingSync.setList(listIndex, list);
+                await this.slidingSync!.setList(listKey, list);
             }
         } catch (err) {
             logger.debug("ensureListRegistered: update failed txn_id=", err);
         }
-        return this.slidingSync.getList(listIndex);
+        return this.slidingSync!.getListParams(listKey)!;
     }
 
     public async setRoomVisible(roomId: string, visible: boolean): Promise<string> {
         await this.configureDefer.promise;
-        const subscriptions = this.slidingSync.getRoomSubscriptions();
+        const subscriptions = this.slidingSync!.getRoomSubscriptions();
         if (visible) {
             subscriptions.add(roomId);
         } else {
             subscriptions.delete(roomId);
         }
-        const room = this.client.getRoom(roomId);
-        let shouldLazyLoad = !this.client.isRoomEncrypted(roomId);
+        const room = this.client?.getRoom(roomId);
+        let shouldLazyLoad = !this.client?.isRoomEncrypted(roomId);
         if (!room) {
             // default to safety: request all state if we can't work it out. This can happen if you
             // refresh the app whilst viewing a room: we call setRoomVisible before we know anything
@@ -281,9 +249,9 @@ export class SlidingSyncManager {
         logger.log("SlidingSync setRoomVisible:", roomId, visible, "shouldLazyLoad:", shouldLazyLoad);
         if (shouldLazyLoad) {
             // lazy load this room
-            this.slidingSync.useCustomSubscription(roomId, UNENCRYPTED_SUBSCRIPTION_NAME);
+            this.slidingSync!.useCustomSubscription(roomId, UNENCRYPTED_SUBSCRIPTION_NAME);
         }
-        const p = this.slidingSync.modifyRoomSubscriptions(subscriptions);
+        const p = this.slidingSync!.modifyRoomSubscriptions(subscriptions);
         if (room) {
             return roomId; // we have data already for this room, show immediately e.g it's in a list
         }
@@ -302,9 +270,8 @@ export class SlidingSyncManager {
      * @param batchSize The number of rooms to return in each request.
      * @param gapBetweenRequestsMs The number of milliseconds to wait between requests.
      */
-    public async startSpidering(batchSize: number, gapBetweenRequestsMs: number) {
+    public async startSpidering(batchSize: number, gapBetweenRequestsMs: number): Promise<void> {
         await sleep(gapBetweenRequestsMs); // wait a bit as this is called on first render so let's let things load
-        const listIndex = this.getOrAllocateListIndex(SlidingSyncManager.ListSearch);
         let startIndex = batchSize;
         let hasMore = true;
         let firstTime = true;
@@ -316,7 +283,7 @@ export class SlidingSyncManager {
                     [startIndex, endIndex],
                 ];
                 if (firstTime) {
-                    await this.slidingSync.setList(listIndex, {
+                    await this.slidingSync!.setList(SlidingSyncManager.ListSearch, {
                         // e.g [0,19] [20,39] then [0,19] [40,59]. We keep [0,20] constantly to ensure
                         // any changes to the list whilst spidering are caught.
                         ranges: ranges,
@@ -342,15 +309,17 @@ export class SlidingSyncManager {
                         },
                     });
                 } else {
-                    await this.slidingSync.setListRanges(listIndex, ranges);
+                    await this.slidingSync!.setListRanges(SlidingSyncManager.ListSearch, ranges);
                 }
-                // gradually request more over time
-                await sleep(gapBetweenRequestsMs);
             } catch (err) {
                 // do nothing, as we reject only when we get interrupted but that's fine as the next
                 // request will include our data
+            } finally {
+                // gradually request more over time, even on errors.
+                await sleep(gapBetweenRequestsMs);
             }
-            hasMore = endIndex + 1 < this.slidingSync.getListData(listIndex)?.joinedCount;
+            const listData = this.slidingSync!.getListData(SlidingSyncManager.ListSearch)!;
+            hasMore = endIndex + 1 < listData.joinedCount;
             startIndex += batchSize;
             firstTime = false;
         }

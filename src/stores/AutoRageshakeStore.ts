@@ -66,14 +66,14 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
         return AutoRageshakeStore.internalInstance;
     }
 
-    protected async onAction(payload: ActionPayload) {
+    protected async onAction(payload: ActionPayload): Promise<void> {
         switch (payload.action) {
             case Action.ReportKeyBackupNotEnabled:
                 this.onReportKeyBackupNotEnabled();
         }
     }
 
-    protected async onReady() {
+    protected async onReady(): Promise<void> {
         if (!SettingsStore.getValue("automaticDecryptionErrorReporting")) return;
 
         if (this.matrixClient) {
@@ -83,7 +83,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
         }
     }
 
-    protected async onNotReady() {
+    protected async onNotReady(): Promise<void> {
         if (this.matrixClient) {
             this.matrixClient.removeListener(ClientEvent.ToDeviceEvent, this.onDeviceMessage);
             this.matrixClient.removeListener(MatrixEventEvent.Decrypted, this.onDecryptionAttempt);
@@ -119,7 +119,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 room_id: ev.getRoomId(),
                 session_id: sessionId,
                 device_id: wireContent.device_id,
-                user_id: ev.getSender(),
+                user_id: ev.getSender()!,
                 sender_key: wireContent.sender_key,
             };
 
@@ -135,15 +135,20 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 ...eventInfo,
                 recipient_rageshake: rageshakeURL,
             };
-            this.matrixClient.sendToDevice(AUTO_RS_REQUEST, {
-                [messageContent.user_id]: { [messageContent.device_id]: messageContent },
-            });
+            this.matrixClient?.sendToDevice(
+                AUTO_RS_REQUEST,
+                new Map([["messageContent.user_id", new Map([[messageContent.device_id, messageContent]])]]),
+            );
         }
     }
 
-    private async onSyncStateChange(_state: SyncState, _prevState: SyncState, data: ISyncStateData) {
+    private async onSyncStateChange(
+        _state: SyncState,
+        _prevState: SyncState | null,
+        data?: ISyncStateData,
+    ): Promise<void> {
         if (!this.state.initialSyncCompleted) {
-            await this.updateState({ initialSyncCompleted: !!data.nextSyncToken });
+            await this.updateState({ initialSyncCompleted: !!data?.nextSyncToken });
         }
     }
 

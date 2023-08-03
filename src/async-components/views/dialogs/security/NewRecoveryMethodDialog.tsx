@@ -24,12 +24,12 @@ import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";
 import RestoreKeyBackupDialog from "../../../../components/views/dialogs/security/RestoreKeyBackupDialog";
 import { Action } from "../../../../dispatcher/actions";
-import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
 import DialogButtons from "../../../../components/views/elements/DialogButtons";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 
-interface IProps extends IDialogProps {
+interface IProps {
     newVersionInfo: IKeyBackupInfo;
+    onFinished(): void;
 }
 
 export default class NewRecoveryMethodDialog extends React.PureComponent<IProps> {
@@ -48,13 +48,13 @@ export default class NewRecoveryMethodDialog extends React.PureComponent<IProps>
             {
                 onFinished: this.props.onFinished,
             },
-            null,
+            undefined,
             /* priority = */ false,
             /* static = */ true,
         );
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const title = <span className="mx_KeyBackupFailedDialog_title">{_t("New Recovery Method")}</span>;
 
         const newMethodDetected = <p>{_t("A new Security Phrase and key for Secure Messages have been detected.")}</p>;
@@ -70,8 +70,8 @@ export default class NewRecoveryMethodDialog extends React.PureComponent<IProps>
             </p>
         );
 
-        let content;
-        if (MatrixClientPeg.get().getKeyBackupEnabled()) {
+        let content: JSX.Element | undefined;
+        if (MatrixClientPeg.safeGet().getKeyBackupEnabled()) {
             content = (
                 <div>
                     {newMethodDetected}

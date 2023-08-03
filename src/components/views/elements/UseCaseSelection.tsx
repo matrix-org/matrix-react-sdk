@@ -29,7 +29,7 @@ interface Props {
 
 const TIMEOUT = 1500;
 
-export function UseCaseSelection({ onFinished }: Props) {
+export function UseCaseSelection({ onFinished }: Props): JSX.Element {
     const [selection, setSelected] = useState<UseCase | null>(null);
 
     // Call onFinished 1.5s after `selection` becomes truthy, to give time for the animation to run
@@ -40,7 +40,7 @@ export function UseCaseSelection({ onFinished }: Props) {
                 onFinished(selection);
             }, TIMEOUT);
             return () => {
-                clearTimeout(handler);
+                if (handler !== null) clearTimeout(handler);
                 handler = null;
             };
         }

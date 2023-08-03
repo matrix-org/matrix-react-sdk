@@ -30,6 +30,15 @@ declare global {
             viewRoomByName(name: string): Chainable<JQuery<HTMLElement>>;
 
             /**
+             * Opens the given room by room ID.
+             *
+             * This works by browsing to `/#/room/${id}`, so it will also work for room aliases.
+             *
+             * @param id
+             */
+            viewRoomById(id: string): void;
+
+            /**
              * Returns the space panel space button based on a name. The space
              * must be visible in the space panel
              * @param name The space name to find
@@ -54,11 +63,15 @@ declare global {
 }
 
 Cypress.Commands.add("viewRoomByName", (name: string): Chainable<JQuery<HTMLElement>> => {
-    return cy.get(`.mx_RoomTile[aria-label="${name}"]`).click();
+    return cy.findByRole("treeitem", { name: name }).should("have.class", "mx_RoomTile").click();
+});
+
+Cypress.Commands.add("viewRoomById", (id: string): void => {
+    cy.visit(`/#/room/${id}`);
 });
 
 Cypress.Commands.add("getSpacePanelButton", (name: string): Chainable<JQuery<HTMLElement>> => {
-    return cy.get(`.mx_SpaceButton[aria-label="${name}"]`);
+    return cy.findByRole("button", { name: name }).should("have.class", "mx_SpaceButton");
 });
 
 Cypress.Commands.add("viewSpaceByName", (name: string): Chainable<JQuery<HTMLElement>> => {

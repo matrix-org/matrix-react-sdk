@@ -17,14 +17,14 @@ limitations under the License.
 import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { M_POLL_START, Optional } from "matrix-events-sdk";
+import { Optional } from "matrix-events-sdk";
+import { M_POLL_END, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { GroupCallIntent } from "matrix-js-sdk/src/webrtc/groupCall";
 
-import EditorStateTransfer from "../utils/EditorStateTransfer";
-import { RoomPermalinkCreator } from "../utils/permalinks/Permalinks";
+import SettingsStore from "../settings/SettingsStore";
 import LegacyCallEventGrouper from "../components/structures/LegacyCallEventGrouper";
-import { GetRelationsForEvent } from "../components/views/rooms/EventTile";
+import { EventTileProps } from "../components/views/rooms/EventTile";
 import { TimelineRenderingType } from "../contexts/RoomContext";
 import MessageEvent from "../components/views/messages/MessageEvent";
 import MKeyVerificationConclusion from "../components/views/messages/MKeyVerificationConclusion";
@@ -32,7 +32,7 @@ import LegacyCallEvent from "../components/views/messages/LegacyCallEvent";
 import { CallEvent } from "../components/views/messages/CallEvent";
 import TextualEvent from "../components/views/messages/TextualEvent";
 import EncryptionEvent from "../components/views/messages/EncryptionEvent";
-import RoomCreate from "../components/views/messages/RoomCreate";
+import { RoomPredecessorTile } from "../components/views/messages/RoomPredecessorTile";
 import RoomAvatarEvent from "../components/views/messages/RoomAvatarEvent";
 import { WIDGET_LAYOUT_EVENT_TYPE } from "../stores/widgets/WidgetLayoutStore";
 import { ALL_RULE_TYPES } from "../mjolnir/BanList";
@@ -47,23 +47,31 @@ import ViewSourceEvent from "../components/views/messages/ViewSourceEvent";
 import { shouldDisplayAsBeaconTile } from "../utils/beacon/timeline";
 import { shouldDisplayAsVoiceBroadcastTile } from "../voice-broadcast/utils/shouldDisplayAsVoiceBroadcastTile";
 import { ElementCall } from "../models/Call";
-import { shouldDisplayAsVoiceBroadcastStoppedText, VoiceBroadcastChunkEventType } from "../voice-broadcast";
+import {
+    isRelatedToVoiceBroadcast,
+    shouldDisplayAsVoiceBroadcastStoppedText,
+    VoiceBroadcastChunkEventType,
+} from "../voice-broadcast";
 
 // Subset of EventTile's IProps plus some mixins
-export interface EventTileTypeProps {
+export interface EventTileTypeProps
+    extends Pick<
+        EventTileProps,
+        | "mxEvent"
+        | "highlights"
+        | "highlightLink"
+        | "showUrlPreview"
+        | "onHeightChanged"
+        | "forExport"
+        | "getRelationsForEvent"
+        | "editState"
+        | "replacingEventId"
+        | "permalinkCreator"
+        | "callEventGrouper"
+        | "isSeeingThroughMessageHiddenForModeration"
+        | "inhibitInteraction"
+    > {
     ref?: React.RefObject<any>; // `any` because it's effectively impossible to convince TS of a reasonable type
-    mxEvent: MatrixEvent;
-    highlights?: string[];
-    highlightLink?: string;
-    showUrlPreview?: boolean;
-    onHeightChanged: () => void;
-    forExport?: boolean;
-    getRelationsForEvent?: GetRelationsForEvent;
-    editState?: EditorStateTransfer;
-    replacingEventId?: string;
-    permalinkCreator: RoomPermalinkCreator;
-    callEventGrouper?: LegacyCallEventGrouper;
-    isSeeingThroughMessageHiddenForModeration?: boolean;
     timestamp?: JSX.Element;
     maxImageHeight?: number; // pixels
     overrideBodyTypes?: Record<string, typeof React.Component>;
@@ -73,34 +81,37 @@ export interface EventTileTypeProps {
 type FactoryProps = Omit<EventTileTypeProps, "ref">;
 type Factory<X = FactoryProps> = (ref: Optional<React.RefObject<any>>, props: X) => JSX.Element;
 
-const MessageEventFactory: Factory = (ref, props) => <MessageEvent ref={ref} {...props} />;
+export const MessageEventFactory: Factory = (ref, props) => <MessageEvent ref={ref} {...props} />;
 const KeyVerificationConclFactory: Factory = (ref, props) => <MKeyVerificationConclusion ref={ref} {...props} />;
 const LegacyCallEventFactory: Factory<FactoryProps & { callEventGrouper: LegacyCallEventGrouper }> = (ref, props) => (
     <LegacyCallEvent ref={ref} {...props} />
 );
 const CallEventFactory: Factory = (ref, props) => <CallEvent ref={ref} {...props} />;
-const TextualEventFactory: Factory = (ref, props) => <TextualEvent ref={ref} {...props} />;
+export const TextualEventFactory: Factory = (ref, props) => <TextualEvent ref={ref} {...props} />;
 const VerificationReqFactory: Factory = (ref, props) => <MKeyVerificationRequest ref={ref} {...props} />;
 const HiddenEventFactory: Factory = (ref, props) => <HiddenBody ref={ref} {...props} />;
 
 // These factories are exported for reference comparison against pickFactory()
 export const JitsiEventFactory: Factory = (ref, props) => <MJitsiWidgetEvent ref={ref} {...props} />;
 export const JSONEventFactory: Factory = (ref, props) => <ViewSourceEvent ref={ref} {...props} />;
+export const RoomCreateEventFactory: Factory = (_ref, props) => <RoomPredecessorTile {...props} />;
 
 const EVENT_TILE_TYPES = new Map<string, Factory>([
     [EventType.RoomMessage, MessageEventFactory], // note that verification requests are handled in pickFactory()
     [EventType.Sticker, MessageEventFactory],
     [M_POLL_START.name, MessageEventFactory],
     [M_POLL_START.altName, MessageEventFactory],
+    [M_POLL_END.name, MessageEventFactory],
+    [M_POLL_END.altName, MessageEventFactory],
     [EventType.KeyVerificationCancel, KeyVerificationConclFactory],
     [EventType.KeyVerificationDone, KeyVerificationConclFactory],
-    [EventType.CallInvite, LegacyCallEventFactory], // note that this requires a special factory type
+    [EventType.CallInvite, LegacyCallEventFactory as Factory], // note that this requires a special factory type
 ]);
 
 const STATE_EVENT_TILE_TYPES = new Map<string, Factory>([
     [EventType.RoomEncryption, (ref, props) => <EncryptionEvent ref={ref} {...props} />],
     [EventType.RoomCanonicalAlias, TextualEventFactory],
-    [EventType.RoomCreate, (ref, props) => <RoomCreate ref={ref} {...props} />],
+    [EventType.RoomCreate, RoomCreateEventFactory],
     [EventType.RoomMember, TextualEventFactory],
     [EventType.RoomName, TextualEventFactory],
     [EventType.RoomAvatar, (ref, props) => <RoomAvatarEvent ref={ref} {...props} />],
@@ -208,6 +219,14 @@ export function pickFactory(
         }
     }
 
+    if (evType === EventType.RoomCreate) {
+        const dynamicPredecessorsEnabled = SettingsStore.getValue("feature_dynamic_room_predecessors");
+        const predecessor = cli.getRoom(mxEvent.getRoomId())?.findPredecessor(dynamicPredecessorsEnabled);
+        if (!predecessor) {
+            return noEventFactoryFactory();
+        }
+    }
+
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     if (evType === "im.vector.modular.widgets") {
         let type = mxEvent.getContent()["type"];
@@ -238,7 +257,7 @@ export function pickFactory(
             return noEventFactoryFactory(); // improper event type to render
         }
 
-        if (STATE_EVENT_TILE_TYPES.get(evType) === TextualEventFactory && !hasText(mxEvent, showHiddenEvents)) {
+        if (STATE_EVENT_TILE_TYPES.get(evType) === TextualEventFactory && !hasText(mxEvent, cli, showHiddenEvents)) {
             return noEventFactoryFactory();
         }
 
@@ -259,6 +278,11 @@ export function pickFactory(
         return noEventFactoryFactory();
     }
 
+    if (!showHiddenEvents && mxEvent.isDecryptionFailure() && isRelatedToVoiceBroadcast(mxEvent, cli)) {
+        // hide utd events related to a broadcast
+        return noEventFactoryFactory();
+    }
+
     return EVENT_TILE_TYPES.get(evType) ?? noEventFactoryFactory();
 }
 
@@ -276,7 +300,7 @@ export function renderTile(
     showHiddenEvents: boolean,
     cli?: MatrixClient,
 ): Optional<JSX.Element> {
-    cli = cli ?? MatrixClientPeg.get(); // because param defaults don't do the correct thing
+    cli = cli ?? MatrixClientPeg.safeGet(); // because param defaults don't do the correct thing
 
     const factory = pickFactory(props.mxEvent, cli, showHiddenEvents);
     if (!factory) return undefined;
@@ -300,6 +324,7 @@ export function renderTile(
         getRelationsForEvent,
         isSeeingThroughMessageHiddenForModeration,
         timestamp,
+        inhibitInteraction,
     } = props;
 
     switch (renderType) {
@@ -318,6 +343,7 @@ export function renderTile(
                 getRelationsForEvent,
                 isSeeingThroughMessageHiddenForModeration,
                 permalinkCreator,
+                inhibitInteraction,
             });
         default:
             // NEARLY ALL THE OPTIONS!
@@ -335,6 +361,7 @@ export function renderTile(
                 getRelationsForEvent,
                 isSeeingThroughMessageHiddenForModeration,
                 timestamp,
+                inhibitInteraction,
             });
     }
 }
@@ -351,7 +378,7 @@ export function renderReplyTile(
     showHiddenEvents: boolean,
     cli?: MatrixClient,
 ): Optional<JSX.Element> {
-    cli = cli ?? MatrixClientPeg.get(); // because param defaults don't do the correct thing
+    cli = cli ?? MatrixClientPeg.safeGet(); // because param defaults don't do the correct thing
 
     const factory = pickFactory(props.mxEvent, cli, showHiddenEvents);
     if (!factory) return undefined;
@@ -392,10 +419,18 @@ export function renderReplyTile(
 // XXX: this'll eventually be dynamic based on the fields once we have extensible event types
 const messageTypes = [EventType.RoomMessage, EventType.Sticker];
 export function isMessageEvent(ev: MatrixEvent): boolean {
-    return messageTypes.includes(ev.getType() as EventType) || M_POLL_START.matches(ev.getType());
+    return (
+        messageTypes.includes(ev.getType() as EventType) ||
+        M_POLL_START.matches(ev.getType()) ||
+        M_POLL_END.matches(ev.getType())
+    );
 }
 
-export function haveRendererForEvent(mxEvent: MatrixEvent, showHiddenEvents: boolean): boolean {
+export function haveRendererForEvent(
+    mxEvent: MatrixEvent,
+    matrixClient: MatrixClient,
+    showHiddenEvents: boolean,
+): boolean {
     // Only show "Message deleted" tile for plain message events, encrypted events,
     // and state events as they'll likely still contain enough keys to be relevant.
     if (mxEvent.isRedacted() && !mxEvent.isEncrypted() && !isMessageEvent(mxEvent) && !mxEvent.isState()) {
@@ -405,12 +440,14 @@ export function haveRendererForEvent(mxEvent: MatrixEvent, showHiddenEvents: boo
     // No tile for replacement events since they update the original tile
     if (mxEvent.isRelation(RelationType.Replace)) return false;
 
-    const handler = pickFactory(mxEvent, MatrixClientPeg.get(), showHiddenEvents);
+    const handler = pickFactory(mxEvent, matrixClient, showHiddenEvents);
     if (!handler) return false;
     if (handler === TextualEventFactory) {
-        return hasText(mxEvent, showHiddenEvents);
+        return hasText(mxEvent, matrixClient, showHiddenEvents);
     } else if (handler === STATE_EVENT_TILE_TYPES.get(EventType.RoomCreate)) {
-        return Boolean(mxEvent.getContent()["predecessor"]);
+        const dynamicPredecessorsEnabled = SettingsStore.getValue("feature_dynamic_room_predecessors");
+        const predecessor = matrixClient.getRoom(mxEvent.getRoomId())?.findPredecessor(dynamicPredecessorsEnabled);
+        return Boolean(predecessor);
     } else if (
         ElementCall.CALL_EVENT_TYPE.names.some((eventType) => handler === STATE_EVENT_TILE_TYPES.get(eventType))
     ) {
