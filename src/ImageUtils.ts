@@ -25,10 +25,22 @@ limitations under the License.
  * reflect the actual height the scaled thumbnail occupies.
  *
  * This is very useful for calculating how much height a thumbnail will actually
- * consume in the timeline, when performing scroll offset calcuations
+ * consume in the timeline, when performing scroll offset calculations
  * (e.g. scroll locking)
  */
-export function thumbHeight(fullWidth: number, fullHeight: number, thumbWidth: number, thumbHeight: number) {
+export function thumbHeight(fullWidth: number, fullHeight: number, thumbWidth: number, thumbHeight: number): number;
+export function thumbHeight(
+    fullWidth: number | undefined,
+    fullHeight: number | undefined,
+    thumbWidth: number,
+    thumbHeight: number,
+): null;
+export function thumbHeight(
+    fullWidth: number | undefined,
+    fullHeight: number | undefined,
+    thumbWidth: number,
+    thumbHeight: number,
+): number | null {
     if (!fullWidth || !fullHeight) {
         // Cannot calculate thumbnail height for image: missing w/h in metadata. We can't even
         // log this because it's spammy
@@ -48,4 +60,3 @@ export function thumbHeight(fullWidth: number, fullHeight: number, thumbWidth: n
         return Math.floor(heightMulti * fullHeight);
     }
 }
-

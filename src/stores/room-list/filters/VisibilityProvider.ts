@@ -15,16 +15,16 @@
  */
 
 import { Room } from "matrix-js-sdk/src/models/room";
-import CallHandler from "../../../CallHandler";
+
+import LegacyCallHandler from "../../../LegacyCallHandler";
 import { RoomListCustomisations } from "../../../customisations/RoomList";
+import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import VoipUserMapper from "../../../VoipUserMapper";
-import SpaceStore from "../../SpaceStore";
 
 export class VisibilityProvider {
     private static internalInstance: VisibilityProvider;
 
-    private constructor() {
-    }
+    private constructor() {}
 
     public static get instance(): VisibilityProvider {
         if (!VisibilityProvider.internalInstance) {
@@ -33,7 +33,7 @@ export class VisibilityProvider {
         return VisibilityProvider.internalInstance;
     }
 
-    public async onNewInvitedRoom(room: Room) {
+    public async onNewInvitedRoom(room: Room): Promise<void> {
         await VoipUserMapper.sharedInstance().onNewInvitedRoom(room);
     }
 
@@ -43,14 +43,19 @@ export class VisibilityProvider {
         }
 
         if (
-            CallHandler.sharedInstance().getSupportsVirtualRooms() &&
+            LegacyCallHandler.instance.getSupportsVirtualRooms() &&
             VoipUserMapper.sharedInstance().isVirtualRoom(room)
         ) {
             return false;
         }
 
         // hide space rooms as they'll be shown in the SpacePanel
-        if (SpaceStore.spacesEnabled && room.isSpaceRoom()) {
+        if (room.isSpaceRoom()) {
+            return false;
+        }
+
+        if (isLocalRoom(room)) {
+            // local rooms shouldn't show up anywhere
             return false;
         }
 

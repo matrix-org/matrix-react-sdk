@@ -15,26 +15,31 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { toDataURL, QRCodeSegment, QRCodeToDataURLOptions } from "qrcode";
+import { toDataURL, QRCodeSegment, QRCodeToDataURLOptions, QRCodeRenderersOptions } from "qrcode";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
 import Spinner from "./Spinner";
 
-interface IProps extends QRCodeToDataURLOptions {
-    data: string | QRCodeSegment[];
+interface IProps extends QRCodeRenderersOptions {
+    /** The data for the QR code. If `null`, a spinner is shown. */
+    data: null | string | QRCodeSegment[];
     className?: string;
 }
 
 const defaultOptions: QRCodeToDataURLOptions = {
-    errorCorrectionLevel: 'L', // we want it as trivial-looking as possible
+    errorCorrectionLevel: "L", // we want it as trivial-looking as possible
 };
 
 const QRCode: React.FC<IProps> = ({ data, className, ...options }) => {
-    const [dataUri, setUri] = React.useState<string>(null);
+    const [dataUri, setUri] = React.useState<string | null>(null);
     React.useEffect(() => {
+        if (data === null) {
+            setUri(null);
+            return;
+        }
         let cancelled = false;
-        toDataURL(data, { ...defaultOptions, ...options }).then(uri => {
+        toDataURL(data, { ...defaultOptions, ...options }).then((uri) => {
             if (cancelled) return;
             setUri(uri);
         });
@@ -43,9 +48,11 @@ const QRCode: React.FC<IProps> = ({ data, className, ...options }) => {
         };
     }, [JSON.stringify(data), options]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    return <div className={classNames("mx_QRCode", className)}>
-        { dataUri ? <img src={dataUri} className="mx_VerificationQRCode" alt={_t("QR Code")} /> : <Spinner /> }
-    </div>;
+    return (
+        <div className={classNames("mx_QRCode", className)}>
+            {dataUri ? <img src={dataUri} className="mx_VerificationQRCode" alt={_t("QR Code")} /> : <Spinner />}
+        </div>
+    );
 };
 
 export default QRCode;

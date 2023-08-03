@@ -16,377 +16,511 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { _t, _td } from '../../../languageHandler';
-import * as sdk from '../../../index';
+import React, { ReactNode } from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+import { createClient } from "matrix-js-sdk/src/matrix";
+import { sleep } from "matrix-js-sdk/src/utils";
+
+import { _t, _td } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import PasswordReset from "../../../PasswordReset";
-import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
-import classNames from 'classnames';
 import AuthPage from "../../views/auth/AuthPage";
-import CountlyAnalytics from "../../../CountlyAnalytics";
-import ServerPicker from "../../views/elements/ServerPicker";
-import PassphraseField from '../../views/auth/PassphraseField';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { PASSWORD_MIN_SCORE } from '../../views/auth/RegistrationForm';
+import PassphraseField from "../../views/auth/PassphraseField";
+import { PASSWORD_MIN_SCORE } from "../../views/auth/RegistrationForm";
+import AuthHeader from "../../views/auth/AuthHeader";
+import AuthBody from "../../views/auth/AuthBody";
+import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
+import StyledCheckbox from "../../views/elements/StyledCheckbox";
+import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
+import { Icon as CheckboxIcon } from "../../../../res/img/compound/checkbox-32px.svg";
+import { Icon as LockIcon } from "../../../../res/img/compound/padlock-32px.svg";
+import QuestionDialog from "../../views/dialogs/QuestionDialog";
+import { EnterEmail } from "./forgot-password/EnterEmail";
+import { CheckEmail } from "./forgot-password/CheckEmail";
+import Field from "../../views/elements/Field";
+import { ErrorMessage } from "../ErrorMessage";
+import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
+import Spinner from "../../views/elements/Spinner";
+import { formatSeconds } from "../../../DateUtils";
+import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 
-import { IValidationResult } from "../../views/elements/Validation";
-import InlineSpinner from '../../views/elements/InlineSpinner';
+const emailCheckInterval = 2000;
 
 enum Phase {
-    // Show the forgot password inputs
-    Forgot = 1,
+    // Show email input
+    EnterEmail = 1,
     // Email is in the process of being sent
     SendingEmail = 2,
     // Email has been sent
     EmailSent = 3,
-    // User has clicked the link in email and completed reset
-    Done = 4,
+    // Show new password input
+    PasswordInput = 4,
+    // Password is in the process of being reset
+    ResettingPassword = 5,
+    // All done
+    Done = 6,
 }
 
-interface IProps {
+interface Props {
     serverConfig: ValidatedServerConfig;
-    onServerConfigChange: (serverConfig: ValidatedServerConfig) => void;
-    onLoginClick?: () => void;
+    onLoginClick: () => void;
     onComplete: () => void;
 }
 
-interface IState {
+interface State {
     phase: Phase;
     email: string;
     password: string;
     password2: string;
-    errorText: string;
+    errorText: string | ReactNode | null;
 
     // We perform liveliness checks later, but for now suppress the errors.
     // We also track the server dead errors independently of the regular errors so
     // that we can render it differently, and override any other error the user may
     // be seeing.
     serverIsAlive: boolean;
-    serverErrorIsFatal: boolean;
     serverDeadError: string;
 
-    passwordFieldValid: boolean;
-    currentHttpRequest?: Promise<any>;
+    serverSupportsControlOfDevicesLogout: boolean;
+    logoutDevices: boolean;
 }
 
-@replaceableComponent("structures.auth.ForgotPassword")
-export default class ForgotPassword extends React.Component<IProps, IState> {
+export default class ForgotPassword extends React.Component<Props, State> {
     private reset: PasswordReset;
+    private fieldPassword: Field | null = null;
+    private fieldPasswordConfirm: Field | null = null;
 
-    state: IState = {
-        phase: Phase.Forgot,
-        email: "",
-        password: "",
-        password2: "",
-        errorText: null,
-
-        // We perform liveliness checks later, but for now suppress the errors.
-        // We also track the server dead errors independently of the regular errors so
-        // that we can render it differently, and override any other error the user may
-        // be seeing.
-        serverIsAlive: true,
-        serverErrorIsFatal: false,
-        serverDeadError: "",
-        passwordFieldValid: false,
-    };
-
-    constructor(props: IProps) {
+    public constructor(props: Props) {
         super(props);
-
-        CountlyAnalytics.instance.track("onboarding_forgot_password_begin");
+        this.state = {
+            phase: Phase.EnterEmail,
+            email: "",
+            password: "",
+            password2: "",
+            errorText: null,
+            // We perform liveliness checks later, but for now suppress the errors.
+            // We also track the server dead errors independently of the regular errors so
+            // that we can render it differently, and override any other error the user may
+            // be seeing.
+            serverIsAlive: true,
+            serverDeadError: "",
+            serverSupportsControlOfDevicesLogout: false,
+            logoutDevices: false,
+        };
+        this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
     }
 
-    public componentDidMount() {
-        this.reset = null;
-        this.checkServerLiveliness(this.props.serverConfig);
+    public componentDidMount(): void {
+        this.checkServerCapabilities(this.props.serverConfig);
     }
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    // eslint-disable-next-line
-    public UNSAFE_componentWillReceiveProps(newProps: IProps): void {
-        if (newProps.serverConfig.hsUrl === this.props.serverConfig.hsUrl &&
-            newProps.serverConfig.isUrl === this.props.serverConfig.isUrl) return;
+    public componentDidUpdate(prevProps: Readonly<Props>): void {
+        if (
+            prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
+            prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
+        ) {
+            // Do a liveliness check on the new URLs
+            this.checkServerLiveliness(this.props.serverConfig);
 
-        // Do a liveliness check on the new URLs
-        this.checkServerLiveliness(newProps.serverConfig);
+            // Do capabilities check on new URLs
+            this.checkServerCapabilities(this.props.serverConfig);
+        }
     }
 
-    private async checkServerLiveliness(serverConfig): Promise<void> {
+    private async checkServerLiveliness(serverConfig: ValidatedServerConfig): Promise<void> {
         try {
-            await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
-                serverConfig.hsUrl,
-                serverConfig.isUrl,
-            );
+            await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(serverConfig.hsUrl, serverConfig.isUrl);
 
             this.setState({
                 serverIsAlive: true,
             });
-        } catch (e) {
-            this.setState(AutoDiscoveryUtils.authComponentStateForError(e, "forgot_password") as IState);
+        } catch (e: any) {
+            const { serverIsAlive, serverDeadError } = AutoDiscoveryUtils.authComponentStateForError(
+                e,
+                "forgot_password",
+            );
+            this.setState({
+                serverIsAlive,
+                errorText: serverDeadError,
+            });
         }
     }
 
-    public submitPasswordReset(email: string, password: string): void {
-        this.setState({
-            phase: Phase.SendingEmail,
+    private async checkServerCapabilities(serverConfig: ValidatedServerConfig): Promise<void> {
+        const tempClient = createClient({
+            baseUrl: serverConfig.hsUrl,
         });
-        this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
-        this.reset.resetPassword(email, password).then(() => {
-            this.setState({
-                phase: Phase.EmailSent,
-            });
-        }, (err) => {
-            this.showErrorDialog(_t('Failed to send email') + ": " + err.message);
-            this.setState({
-                phase: Phase.Forgot,
-            });
+
+        const serverSupportsControlOfDevicesLogout = await tempClient.doesServerSupportLogoutDevices();
+
+        this.setState({
+            logoutDevices: !serverSupportsControlOfDevicesLogout,
+            serverSupportsControlOfDevicesLogout,
         });
     }
 
-    private onVerify = async (ev: React.MouseEvent): Promise<void> => {
-        ev.preventDefault();
-        if (!this.reset) {
-            console.error("onVerify called before submitPasswordReset!");
+    private async onPhaseEmailInputSubmit(): Promise<void> {
+        this.phase = Phase.SendingEmail;
+
+        if (await this.sendVerificationMail()) {
+            this.phase = Phase.EmailSent;
             return;
         }
-        if (this.state.currentHttpRequest) return;
+
+        this.phase = Phase.EnterEmail;
+    }
+
+    private sendVerificationMail = async (): Promise<boolean> => {
+        try {
+            await this.reset.requestResetToken(this.state.email);
+            return true;
+        } catch (err: any) {
+            this.handleError(err);
+        }
+
+        return false;
+    };
+
+    private handleError(err: any): void {
+        if (err?.httpStatus === 429) {
+            // 429: rate limit
+            const retryAfterMs = parseInt(err?.data?.retry_after_ms, 10);
+
+            const errorText = isNaN(retryAfterMs)
+                ? _t("Too many attempts in a short time. Wait some time before trying again.")
+                : _t("Too many attempts in a short time. Retry after %(timeout)s.", {
+                      timeout: formatSeconds(retryAfterMs / 1000),
+                  });
+
+            this.setState({
+                errorText,
+            });
+            return;
+        }
+
+        if (err?.name === "ConnectionError") {
+            this.setState({
+                errorText:
+                    _t("Cannot reach homeserver") +
+                    ": " +
+                    _t("Ensure you have a stable internet connection, or get in touch with the server admin"),
+            });
+            return;
+        }
+
+        this.setState({
+            errorText: err.message,
+        });
+    }
+
+    private async onPhaseEmailSentSubmit(): Promise<void> {
+        this.setState({
+            phase: Phase.PasswordInput,
+        });
+    }
+
+    private set phase(phase: Phase) {
+        this.setState({ phase });
+    }
+
+    private async verifyFieldsBeforeSubmit(): Promise<boolean> {
+        const fieldIdsInDisplayOrder = [this.fieldPassword, this.fieldPasswordConfirm];
+
+        const invalidFields: Field[] = [];
+
+        for (const field of fieldIdsInDisplayOrder) {
+            if (!field) continue;
+
+            const valid = await field.validate({ allowEmpty: false });
+            if (!valid) {
+                invalidFields.push(field);
+            }
+        }
+
+        if (invalidFields.length === 0) {
+            return true;
+        }
+
+        // Focus on the first invalid field, then re-validate,
+        // which will result in the error tooltip being displayed for that field.
+        invalidFields[0].focus();
+        invalidFields[0].validate({ allowEmpty: false, focused: true });
+
+        return false;
+    }
+
+    private async onPhasePasswordInputSubmit(): Promise<void> {
+        if (!(await this.verifyFieldsBeforeSubmit())) return;
+
+        if (this.state.logoutDevices) {
+            const logoutDevicesConfirmation = await this.renderConfirmLogoutDevicesDialog();
+            if (!logoutDevicesConfirmation) return;
+        }
+
+        this.phase = Phase.ResettingPassword;
+        this.reset.setLogoutDevices(this.state.logoutDevices);
 
         try {
-            await this.handleHttpRequest(this.reset.checkEmailLinkClicked());
+            await this.reset.setNewPassword(this.state.password);
             this.setState({ phase: Phase.Done });
-        } catch (err) {
-            this.showErrorDialog(err.message);
+            return;
+        } catch (err: any) {
+            if (err.httpStatus !== 401) {
+                // 401 = waiting for email verification, else unknown error
+                this.handleError(err);
+                return;
+            }
         }
-    };
+
+        const modal = Modal.createDialog(
+            VerifyEmailModal,
+            {
+                email: this.state.email,
+                errorText: this.state.errorText,
+                onCloseClick: () => {
+                    modal.close();
+                    this.setState({ phase: Phase.PasswordInput });
+                },
+                onReEnterEmailClick: () => {
+                    modal.close();
+                    this.setState({ phase: Phase.EnterEmail });
+                },
+                onResendClick: this.sendVerificationMail,
+            },
+            "mx_VerifyEMailDialog",
+            false,
+            false,
+            {
+                onBeforeClose: async (reason?: string): Promise<boolean> => {
+                    if (reason === "backgroundClick") {
+                        // Modal dismissed by clicking the background.
+                        // Go one phase back.
+                        this.setState({ phase: Phase.PasswordInput });
+                    }
+
+                    return true;
+                },
+            },
+        );
+
+        // Don't retry if the phase changed. For example when going back to email input.
+        while (this.state.phase === Phase.ResettingPassword) {
+            try {
+                await this.reset.setNewPassword(this.state.password);
+                this.setState({ phase: Phase.Done });
+                modal.close();
+            } catch (e) {
+                // Email not confirmed, yet. Retry after a while.
+                await sleep(emailCheckInterval);
+            }
+        }
+    }
 
     private onSubmitForm = async (ev: React.FormEvent): Promise<void> => {
         ev.preventDefault();
-        if (this.state.currentHttpRequest) return;
 
-        // refresh the server errors, just in case the server came back online
-        await this.handleHttpRequest(this.checkServerLiveliness(this.props.serverConfig));
+        // Should not happen because of disabled forms, but just return if currently doing an action.
+        if ([Phase.SendingEmail, Phase.ResettingPassword].includes(this.state.phase)) return;
 
-        await this['password_field'].validate({ allowEmpty: false });
-
-        if (!this.state.email) {
-            this.showErrorDialog(_t('The email address linked to your account must be entered.'));
-        } else if (!this.state.password || !this.state.password2) {
-            this.showErrorDialog(_t('A new password must be entered.'));
-        } else if (!this.state.passwordFieldValid) {
-            this.showErrorDialog(_t('Please choose a strong password'));
-        } else if (this.state.password !== this.state.password2) {
-            this.showErrorDialog(_t('New passwords must match each other.'));
-        } else {
-            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-            Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
-                title: _t('Warning!'),
-                description:
-                    <div>
-                        { _t(
-                            "Changing your password will reset any end-to-end encryption keys " +
-                            "on all of your sessions, making encrypted chat history unreadable. Set up " +
-                            "Key Backup or export your room keys from another session before resetting your " +
-                            "password.",
-                        ) }
-                    </div>,
-                button: _t('Continue'),
-                onFinished: (confirmed) => {
-                    if (confirmed) {
-                        this.submitPasswordReset(this.state.email, this.state.password);
-                    }
-                },
-            });
-        }
-    };
-
-    private onInputChanged = (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => {
         this.setState({
-            [stateKey]: ev.currentTarget.value,
-        } as any);
-    };
-
-    private onLoginClick = (ev: React.MouseEvent): void => {
-        ev.preventDefault();
-        ev.stopPropagation();
-        this.props.onLoginClick();
-    };
-
-    public showErrorDialog(description: string, title?: string) {
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-        Modal.createTrackedDialog('Forgot Password Error', '', ErrorDialog, {
-            title,
-            description,
+            errorText: "",
         });
-    }
 
-    private onPasswordValidate(result: IValidationResult) {
-        this.setState({
-            passwordFieldValid: result.valid,
-        });
-    }
+        // Refresh the server errors. Just in case the server came back online of went offline.
+        await this.checkServerLiveliness(this.props.serverConfig);
 
-    private handleHttpRequest<T = unknown>(request: Promise<T>): Promise<T> {
-        this.setState({
-            currentHttpRequest: request,
-        });
-        return request.finally(() => {
-            this.setState({
-                currentHttpRequest: undefined,
-            });
-        });
-    }
+        // Server error
+        if (!this.state.serverIsAlive) return;
 
-    renderForgot() {
-        const Field = sdk.getComponent('elements.Field');
-
-        let errorText = null;
-        const err = this.state.errorText;
-        if (err) {
-            errorText = <div className="mx_Login_error">{ err }</div>;
-        }
-
-        let serverDeadSection;
-        if (!this.state.serverIsAlive) {
-            const classes = classNames({
-                "mx_Login_error": true,
-                "mx_Login_serverError": true,
-                "mx_Login_serverErrorNonFatal": !this.state.serverErrorIsFatal,
-            });
-            serverDeadSection = (
-                <div className={classes}>
-                    { this.state.serverDeadError }
-                </div>
-            );
-        }
-
-        return <div>
-            { errorText }
-            { serverDeadSection }
-            <ServerPicker
-                serverConfig={this.props.serverConfig}
-                onServerConfigChange={this.props.onServerConfigChange}
-            />
-            <form onSubmit={this.onSubmitForm}>
-                <div className="mx_AuthBody_fieldRow">
-                    <Field
-                        name="reset_email" // define a name so browser's password autofill gets less confused
-                        type="text"
-                        label={_t('Email')}
-                        value={this.state.email}
-                        onChange={this.onInputChanged.bind(this, "email")}
-                        autoFocus
-                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_focus")}
-                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_blur")}
-                    />
-                </div>
-                <div className="mx_AuthBody_fieldRow">
-                    <PassphraseField
-                        name="reset_password"
-                        type="password"
-                        label={_td('New Password')}
-                        value={this.state.password}
-                        minScore={PASSWORD_MIN_SCORE}
-                        onChange={this.onInputChanged.bind(this, "password")}
-                        fieldRef={field => this['password_field'] = field}
-                        onValidate={(result) => this.onPasswordValidate(result)}
-                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_focus")}
-                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_blur")}
-                        autoComplete="new-password"
-                    />
-                    <Field
-                        name="reset_password_confirm"
-                        type="password"
-                        label={_t('Confirm')}
-                        value={this.state.password2}
-                        onChange={this.onInputChanged.bind(this, "password2")}
-                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_focus")}
-                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_blur")}
-                        autoComplete="new-password"
-                    />
-                </div>
-                <span>{ _t(
-                    'A verification email will be sent to your inbox to confirm ' +
-                    'setting your new password.',
-                ) }</span>
-                <input
-                    className="mx_Login_submit"
-                    type="submit"
-                    value={_t('Send Reset Email')}
-                />
-            </form>
-            <a className="mx_AuthBody_changeFlow" onClick={this.onLoginClick} href="#">
-                { _t('Sign in instead') }
-            </a>
-        </div>;
-    }
-
-    renderSendingEmail() {
-        const Spinner = sdk.getComponent("elements.Spinner");
-        return <Spinner />;
-    }
-
-    renderEmailSent() {
-        return <div>
-            { _t("An email has been sent to %(emailAddress)s. Once you've followed the " +
-                "link it contains, click below.", { emailAddress: this.state.email }) }
-            <br />
-            <input
-                className="mx_Login_submit"
-                type="button"
-                onClick={this.onVerify}
-                value={_t('I have verified my email address')} />
-            { this.state.currentHttpRequest && (
-                <div className="mx_Login_spinner"><InlineSpinner w={64} h={64} /></div>)
-            }
-        </div>;
-    }
-
-    renderDone() {
-        return <div>
-            <p>{ _t("Your password has been reset.") }</p>
-            <p>{ _t(
-                "You have been logged out of all sessions and will no longer receive " +
-                "push notifications. To re-enable notifications, sign in again on each " +
-                "device.",
-            ) }</p>
-            <input
-                className="mx_Login_submit"
-                type="button"
-                onClick={this.props.onComplete}
-                value={_t('Return to login screen')} />
-        </div>;
-    }
-
-    render() {
-        const AuthHeader = sdk.getComponent("auth.AuthHeader");
-        const AuthBody = sdk.getComponent("auth.AuthBody");
-
-        let resetPasswordJsx;
         switch (this.state.phase) {
-            case Phase.Forgot:
-                resetPasswordJsx = this.renderForgot();
-                break;
-            case Phase.SendingEmail:
-                resetPasswordJsx = this.renderSendingEmail();
+            case Phase.EnterEmail:
+                this.onPhaseEmailInputSubmit();
                 break;
             case Phase.EmailSent:
-                resetPasswordJsx = this.renderEmailSent();
+                this.onPhaseEmailSentSubmit();
+                break;
+            case Phase.PasswordInput:
+                this.onPhasePasswordInputSubmit();
+                break;
+        }
+    };
+
+    private onInputChanged = (
+        stateKey: "email" | "password" | "password2",
+        ev: React.FormEvent<HTMLInputElement>,
+    ): void => {
+        let value = ev.currentTarget.value;
+        if (stateKey === "email") value = value.trim();
+        this.setState({
+            [stateKey]: value,
+        } as Pick<State, typeof stateKey>);
+    };
+
+    public renderEnterEmail(): JSX.Element {
+        return (
+            <EnterEmail
+                email={this.state.email}
+                errorText={this.state.errorText}
+                homeserver={this.props.serverConfig.hsName}
+                loading={this.state.phase === Phase.SendingEmail}
+                onInputChanged={this.onInputChanged}
+                onLoginClick={this.props.onLoginClick!} // set by default props
+                onSubmitForm={this.onSubmitForm}
+            />
+        );
+    }
+
+    public async renderConfirmLogoutDevicesDialog(): Promise<boolean> {
+        const { finished } = Modal.createDialog(QuestionDialog, {
+            title: _t("Warning!"),
+            description: (
+                <div>
+                    <p>
+                        {!this.state.serverSupportsControlOfDevicesLogout
+                            ? _t(
+                                  "Resetting your password on this homeserver will cause all of your devices to be " +
+                                      "signed out. This will delete the message encryption keys stored on them, " +
+                                      "making encrypted chat history unreadable.",
+                              )
+                            : _t(
+                                  "Signing out your devices will delete the message encryption keys stored on them, " +
+                                      "making encrypted chat history unreadable.",
+                              )}
+                    </p>
+                    <p>
+                        {_t(
+                            "If you want to retain access to your chat history in encrypted rooms, set up Key Backup " +
+                                "or export your message keys from one of your other devices before proceeding.",
+                        )}
+                    </p>
+                </div>
+            ),
+            button: _t("Continue"),
+        });
+        const [confirmed] = await finished;
+        return !!confirmed;
+    }
+
+    public renderCheckEmail(): JSX.Element {
+        return (
+            <CheckEmail
+                email={this.state.email}
+                errorText={this.state.errorText}
+                onReEnterEmailClick={() => this.setState({ phase: Phase.EnterEmail })}
+                onResendClick={this.sendVerificationMail}
+                onSubmitForm={this.onSubmitForm}
+            />
+        );
+    }
+
+    public renderSetPassword(): JSX.Element {
+        const submitButtonChild =
+            this.state.phase === Phase.ResettingPassword ? <Spinner w={16} h={16} /> : _t("Reset password");
+
+        return (
+            <>
+                <LockIcon className="mx_AuthBody_lockIcon" />
+                <h1>{_t("Reset your password")}</h1>
+                <form onSubmit={this.onSubmitForm}>
+                    <fieldset disabled={this.state.phase === Phase.ResettingPassword}>
+                        <div className="mx_AuthBody_fieldRow">
+                            <PassphraseField
+                                name="reset_password"
+                                type="password"
+                                label={_td("New Password")}
+                                value={this.state.password}
+                                minScore={PASSWORD_MIN_SCORE}
+                                fieldRef={(field) => (this.fieldPassword = field)}
+                                onChange={this.onInputChanged.bind(this, "password")}
+                                autoComplete="new-password"
+                            />
+                            <PassphraseConfirmField
+                                name="reset_password_confirm"
+                                label={_td("Confirm new password")}
+                                labelRequired={_td("A new password must be entered.")}
+                                labelInvalid={_td("New passwords must match each other.")}
+                                value={this.state.password2}
+                                password={this.state.password}
+                                fieldRef={(field) => (this.fieldPasswordConfirm = field)}
+                                onChange={this.onInputChanged.bind(this, "password2")}
+                                autoComplete="new-password"
+                            />
+                        </div>
+                        {this.state.serverSupportsControlOfDevicesLogout ? (
+                            <div className="mx_AuthBody_fieldRow">
+                                <StyledCheckbox
+                                    onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })}
+                                    checked={this.state.logoutDevices}
+                                >
+                                    {_t("Sign out of all devices")}
+                                </StyledCheckbox>
+                            </div>
+                        ) : null}
+                        {this.state.errorText && <ErrorMessage message={this.state.errorText} />}
+                        <button type="submit" className="mx_Login_submit">
+                            {submitButtonChild}
+                        </button>
+                    </fieldset>
+                </form>
+            </>
+        );
+    }
+
+    public renderDone(): JSX.Element {
+        return (
+            <>
+                <CheckboxIcon className="mx_Icon mx_Icon_32 mx_Icon_accent" />
+                <h1>{_t("Your password has been reset.")}</h1>
+                {this.state.logoutDevices ? (
+                    <p>
+                        {_t(
+                            "You have been logged out of all devices and will no longer receive " +
+                                "push notifications. To re-enable notifications, sign in again on each " +
+                                "device.",
+                        )}
+                    </p>
+                ) : null}
+                <input
+                    className="mx_Login_submit"
+                    type="button"
+                    onClick={this.props.onComplete}
+                    value={_t("Return to login screen")}
+                />
+            </>
+        );
+    }
+
+    public render(): React.ReactNode {
+        let resetPasswordJsx: JSX.Element;
+
+        switch (this.state.phase) {
+            case Phase.EnterEmail:
+            case Phase.SendingEmail:
+                resetPasswordJsx = this.renderEnterEmail();
+                break;
+            case Phase.EmailSent:
+                resetPasswordJsx = this.renderCheckEmail();
+                break;
+            case Phase.PasswordInput:
+            case Phase.ResettingPassword:
+                resetPasswordJsx = this.renderSetPassword();
                 break;
             case Phase.Done:
                 resetPasswordJsx = this.renderDone();
                 break;
             default:
-                resetPasswordJsx = <div className="mx_Login_spinner"><InlineSpinner w={64} h={64} /></div>;
+                // This should not happen. However, it is logged and the user is sent to the start.
+                logger.warn(`unknown forgot password phase ${this.state.phase}`);
+                this.setState({
+                    phase: Phase.EnterEmail,
+                });
+                return;
         }
 
         return (
             <AuthPage>
                 <AuthHeader />
-                <AuthBody>
-                    <h2> { _t('Set a new password') } </h2>
-                    { resetPasswordJsx }
-                </AuthBody>
+                <AuthBody className="mx_AuthBody_forgot-password">{resetPasswordJsx}</AuthBody>
             </AuthPage>
         );
     }

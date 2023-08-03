@@ -14,14 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React from "react";
 
-@replaceableComponent("views.auth.AuthHeaderLogo")
 export default class AuthHeaderLogo extends React.PureComponent {
     public render(): React.ReactNode {
-        return <div className="mx_AuthHeaderLogo">
-            Matrix
-        </div>;
+        return <aside className="mx_AuthHeaderLogo">Matrix</aside>;
     }
 }

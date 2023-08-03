@@ -17,13 +17,14 @@ limitations under the License.
 import { ActionPayload } from "../payloads";
 import { Action } from "../actions";
 import { SettingLevel } from "../../settings/SettingLevel";
+import { SettingValueType } from "../../settings/Settings";
 
 export interface SettingUpdatedPayload extends ActionPayload {
     action: Action.SettingUpdated;
 
     settingName: string;
-    roomId: string;
+    roomId: string | null;
     level: SettingLevel;
     newValueAtLevel: SettingLevel;
-    newValue: any;
+    newValue: SettingValueType;
 }

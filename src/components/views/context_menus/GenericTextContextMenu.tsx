@@ -14,16 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React from "react";
 
 interface IProps {
     message: string;
 }
 
-@replaceableComponent("views.context_menus.GenericTextContextMenu")
 export default class GenericTextContextMenu extends React.Component<IProps> {
-    public render(): JSX.Element {
-        return <div>{ this.props.message }</div>;
+    public render(): React.ReactNode {
+        return (
+            <div className="mx_Tooltip mx_Tooltip_visible" style={{ display: "block" }}>
+                {this.props.message}
+            </div>
+        );
     }
 }

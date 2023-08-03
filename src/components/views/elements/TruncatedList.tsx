@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React, { ReactNode } from "react";
+
+import { _t } from "../../../languageHandler";
 
 interface IProps {
     // The number of elements to show before truncating. If negative, no truncation is done.
-    truncateAt?: number;
+    truncateAt: number;
     // The className to apply to the wrapping div
     className?: string;
     // A function that returns the children to be rendered into the element.
@@ -34,17 +34,15 @@ interface IProps {
     getChildCount?: () => number;
     // A function which will be invoked when an overflow element is required.
     // This will be inserted after the children.
-    createOverflowElement?: (overflowCount: number, totalCount: number) => React.ReactNode;
+    createOverflowElement: (overflowCount: number, totalCount: number) => React.ReactNode;
+    children?: ReactNode;
 }
 
-@replaceableComponent("views.elements.TruncatedList")
 export default class TruncatedList extends React.Component<IProps> {
-    static defaultProps ={
+    public static defaultProps = {
         truncateAt: 2,
-        createOverflowElement(overflowCount, totalCount) {
-            return (
-                <div>{ _t("And %(count)s more...", { count: overflowCount }) }</div>
-            );
+        createOverflowElement(overflowCount: number, totalCount: number) {
+            return <div>{_t("And %(count)s more...", { count: overflowCount })}</div>;
         },
     };
 
@@ -53,11 +51,13 @@ export default class TruncatedList extends React.Component<IProps> {
             return this.props.getChildren(start, end);
         } else {
             // XXX: I'm not sure why anything would pass null into this, it seems
-            // like a bizzare case to handle, but I'm preserving the behaviour.
+            // like a bizarre case to handle, but I'm preserving the behaviour.
             // (see commit 38d5c7d5c5d5a34dc16ef5d46278315f5c57f542)
-            return React.Children.toArray(this.props.children).filter((c) => {
-                return c != null;
-            }).slice(start, end);
+            return React.Children.toArray(this.props.children)
+                .filter((c) => {
+                    return c != null;
+                })
+                .slice(start, end);
         }
     }
 
@@ -71,17 +71,15 @@ export default class TruncatedList extends React.Component<IProps> {
         }
     }
 
-    public render() {
-        let overflowNode = null;
+    public render(): ReactNode {
+        let overflowNode: ReactNode | undefined;
 
         const totalChildren = this.getChildCount();
         let upperBound = totalChildren;
         if (this.props.truncateAt >= 0) {
             const overflowCount = totalChildren - this.props.truncateAt;
             if (overflowCount > 1) {
-                overflowNode = this.props.createOverflowElement(
-                    overflowCount, totalChildren,
-                );
+                overflowNode = this.props.createOverflowElement(overflowCount, totalChildren);
                 upperBound = this.props.truncateAt;
             }
         }
@@ -89,8 +87,8 @@ export default class TruncatedList extends React.Component<IProps> {
 
         return (
             <div className={this.props.className}>
-                { childNodes }
-                { overflowNode }
+                {childNodes}
+                {overflowNode}
             </div>
         );
     }

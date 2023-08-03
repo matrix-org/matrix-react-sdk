@@ -16,15 +16,21 @@ limitations under the License.
 
 import React from "react";
 import { randomString } from "matrix-js-sdk/src/randomstring";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import classnames from "classnames";
+
+export enum CheckboxStyle {
+    Solid = "solid",
+    Outline = "outline",
+}
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    inputRef?: React.RefObject<HTMLInputElement>;
+    kind?: CheckboxStyle;
+    id?: string;
 }
 
-interface IState {
-}
+interface IState {}
 
-@replaceableComponent("views.elements.StyledCheckbox")
 export default class StyledCheckbox extends React.PureComponent<IProps, IState> {
     private id: string;
 
@@ -32,26 +38,37 @@ export default class StyledCheckbox extends React.PureComponent<IProps, IState> 
         className: "",
     };
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         // 56^10 so unlikely chance of collision.
-        this.id = "checkbox_" + randomString(10);
+        this.id = this.props.id || "checkbox_" + randomString(10);
     }
 
-    public render() {
+    public render(): React.ReactNode {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-        const { children, className, ...otherProps } = this.props;
-        return <span className={"mx_Checkbox " + className}>
-            <input id={this.id} {...otherProps} type="checkbox" />
-            <label htmlFor={this.id}>
-                { /* Using the div to center the image */ }
-                <div className="mx_Checkbox_background">
-                    <img src={require("../../../../res/img/feather-customised/check.svg")} />
-                </div>
-                <div>
-                    { this.props.children }
-                </div>
-            </label>
-        </span>;
+        const { children, className, kind = CheckboxStyle.Solid, inputRef, ...otherProps } = this.props;
+
+        const newClassName = classnames("mx_Checkbox", className, {
+            mx_Checkbox_hasKind: kind,
+            [`mx_Checkbox_kind_${kind}`]: kind,
+        });
+        return (
+            <span className={newClassName}>
+                <input
+                    // Pass through the ref - used for keyboard shortcut access to some buttons
+                    ref={inputRef}
+                    id={this.id}
+                    {...otherProps}
+                    type="checkbox"
+                />
+                <label htmlFor={this.id}>
+                    {/* Using the div to center the image */}
+                    <div className="mx_Checkbox_background">
+                        <div className="mx_Checkbox_checkmark" />
+                    </div>
+                    {!!this.props.children && <div>{this.props.children}</div>}
+                </label>
+            </span>
+        );
     }
 }

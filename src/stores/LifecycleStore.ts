@@ -14,74 +14,64 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Store } from 'flux/utils';
-
-import dis from '../dispatcher/dispatcher';
+import { Action } from "../dispatcher/actions";
+import dis from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
+import { DoAfterSyncPreparedPayload } from "../dispatcher/payloads/DoAfterSyncPreparedPayload";
+import { AsyncStore } from "./AsyncStore";
 
 interface IState {
-    deferredAction: any;
+    deferredAction: ActionPayload | null;
 }
 
-const INITIAL_STATE = {
+const INITIAL_STATE: IState = {
     deferredAction: null,
 };
 
 /**
- * A class for storing application state to do with authentication. This is a simple flux
+ * A class for storing application state to do with authentication. This is a simple
  * store that listens for actions and updates its state accordingly, informing any
  * listeners (views) of state changes.
  */
-class LifecycleStore extends Store<ActionPayload> {
-    private state: IState = INITIAL_STATE;
-
-    constructor() {
-        super(dis);
+class LifecycleStore extends AsyncStore<IState> {
+    public constructor() {
+        super(dis, INITIAL_STATE);
     }
 
-    private setState(newState: Partial<IState>) {
-        this.state = Object.assign(this.state, newState);
-        this.__emitChange();
-    }
-
-    protected __onDispatch(payload: ActionPayload) { // eslint-disable-line @typescript-eslint/naming-convention
+    protected onDispatch(payload: ActionPayload | DoAfterSyncPreparedPayload<ActionPayload>): void {
         switch (payload.action) {
-            case 'do_after_sync_prepared':
-                this.setState({
+            case Action.DoAfterSyncPrepared:
+                this.updateState({
                     deferredAction: payload.deferred_action,
                 });
                 break;
-            case 'cancel_after_sync_prepared':
-                this.setState({
+            case "cancel_after_sync_prepared":
+                this.updateState({
                     deferredAction: null,
                 });
                 break;
-            case 'sync_state': {
-                if (payload.state !== 'PREPARED') {
+            case "MatrixActions.sync": {
+                if (payload.state !== "PREPARED") {
                     break;
                 }
                 if (!this.state.deferredAction) break;
                 const deferredAction = Object.assign({}, this.state.deferredAction);
-                this.setState({
+                this.updateState({
                     deferredAction: null,
                 });
                 dis.dispatch(deferredAction);
                 break;
             }
-            case 'on_client_not_viable':
-            case 'on_logged_out':
+            case "on_client_not_viable":
+            case Action.OnLoggedOut:
                 this.reset();
                 break;
         }
     }
-
-    private reset() {
-        this.state = Object.assign({}, INITIAL_STATE);
-    }
 }
 
-let singletonLifecycleStore = null;
+let singletonLifecycleStore: LifecycleStore | null = null;
 if (!singletonLifecycleStore) {
     singletonLifecycleStore = new LifecycleStore();
 }
-export default singletonLifecycleStore;
+export default singletonLifecycleStore!;

@@ -18,9 +18,17 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { ActionPayload } from "../payloads";
 import { Action } from "../actions";
+import { TimelineRenderingType } from "../../contexts/RoomContext";
+
+export enum ComposerType {
+    Send = "send",
+    Edit = "edit",
+}
 
 interface IBaseComposerInsertPayload extends ActionPayload {
     action: Action.ComposerInsert;
+    timelineRenderingType: TimelineRenderingType;
+    composerType?: ComposerType; // falsy if should be re-dispatched to the correct composer
 }
 
 interface IComposerInsertMentionPayload extends IBaseComposerInsertPayload {
@@ -36,7 +44,6 @@ interface IComposerInsertPlaintextPayload extends IBaseComposerInsertPayload {
 }
 
 export type ComposerInsertPayload =
-    IComposerInsertMentionPayload |
-    IComposerInsertQuotePayload |
-    IComposerInsertPlaintextPayload;
-
+    | IComposerInsertMentionPayload
+    | IComposerInsertQuotePayload
+    | IComposerInsertPlaintextPayload;

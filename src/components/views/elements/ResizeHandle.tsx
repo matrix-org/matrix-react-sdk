@@ -1,5 +1,20 @@
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
-import React from 'react'; // eslint-disable-line no-unused-vars
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+import React from "react"; // eslint-disable-line no-unused-vars
 
 //see src/resizer for the actual resizing code, this is just the DOM for the resize handle
 interface IResizeHandleProps {
@@ -10,17 +25,19 @@ interface IResizeHandleProps {
 }
 
 const ResizeHandle: React.FC<IResizeHandleProps> = ({ vertical, reverse, id, passRef }) => {
-    const classNames = ['mx_ResizeHandle'];
+    const classNames = ["mx_ResizeHandle"];
     if (vertical) {
-        classNames.push('mx_ResizeHandle_vertical');
+        classNames.push("mx_ResizeHandle--vertical");
     } else {
-        classNames.push('mx_ResizeHandle_horizontal');
+        classNames.push("mx_ResizeHandle--horizontal");
     }
     if (reverse) {
-        classNames.push('mx_ResizeHandle_reverse');
+        classNames.push("mx_ResizeHandle_reverse"); // required for the resizer of the third pinned widget to work
     }
     return (
-        <div ref={passRef} className={classNames.join(' ')} data-id={id}><div /></div>
+        <div ref={passRef} className={classNames.join(" ")} data-id={id}>
+            <div />
+        </div>
     );
 };
 

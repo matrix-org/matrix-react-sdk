@@ -39,11 +39,22 @@ export default abstract class SettingController {
      */
     public getValueOverride(
         level: SettingLevel,
-        roomId: string,
+        roomId: string | null,
         calculatedValue: any,
-        calculatedAtLevel: SettingLevel,
+        calculatedAtLevel: SettingLevel | null,
     ): any {
         return null; // no override
+    }
+
+    /**
+     * Called before the setting value has been changed, can abort the change.
+     * @param {string} level The level at which the setting has been modified.
+     * @param {String} roomId The room ID, may be null.
+     * @param {*} newValue The new value for the setting, may be null.
+     * @return {boolean} Whether the settings change should be accepted.
+     */
+    public async beforeChange(level: SettingLevel, roomId: string | null, newValue: any): Promise<boolean> {
+        return true;
     }
 
     /**
@@ -52,14 +63,15 @@ export default abstract class SettingController {
      * @param {String} roomId The room ID, may be null.
      * @param {*} newValue The new value for the setting, may be null.
      */
-    public onChange(level: SettingLevel, roomId: string, newValue: any) {
+    public onChange(level: SettingLevel, roomId: string | null, newValue: any): void {
         // do nothing by default
     }
 
     /**
      * Gets whether the setting has been disabled due to this controller.
+     * Can also return a string with the reason the setting is disabled.
      */
-    public get settingDisabled() {
+    public get settingDisabled(): boolean | string {
         return false;
     }
 }

@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+
 import { TagID } from "../../models";
 import { IAlgorithm } from "./IAlgorithm";
 
@@ -23,7 +24,7 @@ import { IAlgorithm } from "./IAlgorithm";
  */
 export class ManualAlgorithm implements IAlgorithm {
     public sortRooms(rooms: Room[], tagId: TagID): Room[] {
-        const getOrderProp = (r: Room) => r.tags[tagId].order || 0;
+        const getOrderProp = (r: Room): number => r.tags[tagId].order || 0;
         return rooms.sort((a, b) => {
             return getOrderProp(a) - getOrderProp(b);
         });

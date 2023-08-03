@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { PerformanceEntryNames } from "./entry-names";
 
 interface GetEntriesOptions {
@@ -29,7 +31,7 @@ interface PerformanceDataListener {
 }
 
 export default class PerformanceMonitor {
-    static _instance: PerformanceMonitor;
+    private static _instance: PerformanceMonitor;
 
     private START_PREFIX = "start:";
     private STOP_PREFIX = "stop:";
@@ -50,14 +52,14 @@ export default class PerformanceMonitor {
      * @param id Specify an identifier appended to the measurement name
      * @returns {void}
      */
-    start(name: string, id?: string): void {
+    public start(name: string, id?: string): void {
         if (!this.supportsPerformanceApi()) {
             return;
         }
         const key = this.buildKey(name, id);
 
         if (performance.getEntriesByName(this.START_PREFIX + key).length > 0) {
-            console.warn(`Recording already started for: ${name}`);
+            logger.warn(`Recording already started for: ${name}`);
             return;
         }
 
@@ -69,35 +71,31 @@ export default class PerformanceMonitor {
      * with the start marker
      * @param name Name of the recording
      * @param id Specify an identifier appended to the measurement name
-     * @returns {void}
+     * @returns The measurement
      */
-    stop(name: string, id?: string): PerformanceEntry {
+    public stop(name: string, id?: string): PerformanceEntry | undefined {
         if (!this.supportsPerformanceApi()) {
             return;
         }
         const key = this.buildKey(name, id);
         if (performance.getEntriesByName(this.START_PREFIX + key).length === 0) {
-            console.warn(`No recording started for: ${name}`);
+            logger.warn(`No recording started for: ${name}`);
             return;
         }
 
         performance.mark(this.STOP_PREFIX + key);
-        performance.measure(
-            key,
-            this.START_PREFIX + key,
-            this.STOP_PREFIX + key,
-        );
+        performance.measure(key, this.START_PREFIX + key, this.STOP_PREFIX + key);
 
         this.clear(name, id);
 
-        const measurement = performance.getEntriesByName(key).pop();
+        const measurement = performance.getEntriesByName(key).pop()!;
 
         // Keeping a reference to all PerformanceEntry created
         // by this abstraction for historical events collection
         // when adding a data callback
         this.entries.push(measurement);
 
-        this.listeners.forEach(listener => {
+        this.listeners.forEach((listener) => {
             if (this.shouldEmit(listener, measurement)) {
                 listener.callback([measurement]);
             }
@@ -106,7 +104,7 @@ export default class PerformanceMonitor {
         return measurement;
     }
 
-    clear(name: string, id?: string): void {
+    public clear(name: string, id?: string): void {
         if (!this.supportsPerformanceApi()) {
             return;
         }
@@ -115,30 +113,30 @@ export default class PerformanceMonitor {
         performance.clearMarks(this.STOP_PREFIX + key);
     }
 
-    getEntries({ name, type }: GetEntriesOptions = {}): PerformanceEntry[] {
-        return this.entries.filter(entry => {
+    public getEntries({ name, type }: GetEntriesOptions = {}): PerformanceEntry[] {
+        return this.entries.filter((entry) => {
             const satisfiesName = !name || entry.name === name;
             const satisfiedType = !type || entry.entryType === type;
             return satisfiesName && satisfiedType;
         });
     }
 
-    addPerformanceDataCallback(listener: PerformanceDataListener, buffer = false) {
+    public addPerformanceDataCallback(listener: PerformanceDataListener, buffer = false): void {
         this.listeners.push(listener);
         if (buffer) {
-            const toEmit = this.entries.filter(entry => this.shouldEmit(listener, entry));
+            const toEmit = this.entries.filter((entry) => this.shouldEmit(listener, entry));
             if (toEmit.length > 0) {
                 listener.callback(toEmit);
             }
         }
     }
 
-    removePerformanceDataCallback(callback?: PerformanceCallbackFunction) {
+    public removePerformanceDataCallback(callback?: PerformanceCallbackFunction): void {
         if (!callback) {
             this.listeners = [];
         } else {
             this.listeners.splice(
-                this.listeners.findIndex(listener => listener.callback === callback),
+                this.listeners.findIndex((listener) => listener.callback === callback),
                 1,
             );
         }
@@ -163,14 +161,13 @@ export default class PerformanceMonitor {
      * @returns {string} a compound of the name and identifier if present
      */
     private buildKey(name: string, id?: string): string {
-        return `${name}${id ? `:${id}` : ''}`;
+        const suffix = id ? `:${id}` : "";
+        return `${name}${suffix}`;
     }
 }
 
 // Convenience exports
-export {
-    PerformanceEntryNames,
-};
+export { PerformanceEntryNames };
 
 // Exposing those to the window object to bridge them from tests
 window.mxPerformanceMonitor = PerformanceMonitor.instance;

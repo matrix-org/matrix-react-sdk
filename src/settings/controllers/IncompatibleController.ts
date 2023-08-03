@@ -27,7 +27,7 @@ export default class IncompatibleController extends SettingController {
     public constructor(
         private settingName: string,
         private forcedValue: any = false,
-        private incompatibleValue: any = true,
+        private incompatibleValue: any | ((v: any) => boolean) = true,
     ) {
         super();
     }
@@ -36,7 +36,7 @@ export default class IncompatibleController extends SettingController {
         level: SettingLevel,
         roomId: string,
         calculatedValue: any,
-        calculatedAtLevel: SettingLevel,
+        calculatedAtLevel: SettingLevel | null,
     ): any {
         if (this.incompatibleSetting) {
             return this.forcedValue;
@@ -49,6 +49,9 @@ export default class IncompatibleController extends SettingController {
     }
 
     public get incompatibleSetting(): boolean {
+        if (typeof this.incompatibleValue === "function") {
+            return this.incompatibleValue(SettingsStore.getValue(this.settingName));
+        }
         return SettingsStore.getValue(this.settingName) === this.incompatibleValue;
     }
 }

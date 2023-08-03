@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isEnumValue } from "../../utils/enums";
-
 export enum DefaultTagID {
     Invite = "im.vector.fake.invite",
     Untagged = "im.vector.fake.recent", // legacy: used to just be 'recent rooms' but now it's all untagged rooms
@@ -25,11 +23,13 @@ export enum DefaultTagID {
     DM = "im.vector.fake.direct",
     ServerNotice = "m.server_notice",
     Suggested = "im.vector.fake.suggested",
+    SavedItems = "im.vector.fake.saved_items",
 }
 
 export const OrderedDefaultTagIDs = [
     DefaultTagID.Invite,
     DefaultTagID.Favourite,
+    DefaultTagID.SavedItems,
     DefaultTagID.DM,
     DefaultTagID.Untagged,
     DefaultTagID.LowPriority,
@@ -40,13 +40,10 @@ export const OrderedDefaultTagIDs = [
 
 export type TagID = string | DefaultTagID;
 
-export function isCustomTag(tagId: TagID): boolean {
-    return !isEnumValue(DefaultTagID, tagId);
-}
-
 export enum RoomUpdateCause {
     Timeline = "TIMELINE",
     PossibleTagChange = "POSSIBLE_TAG_CHANGE",
+    PossibleMuteChange = "POSSIBLE_MUTE_CHANGE",
     ReadReceipt = "READ_RECEIPT",
     NewRoom = "NEW_ROOM",
     RoomRemoved = "ROOM_REMOVED",

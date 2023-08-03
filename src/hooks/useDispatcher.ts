@@ -17,10 +17,10 @@ limitations under the License.
 import { useEffect, useRef } from "react";
 
 import { ActionPayload } from "../dispatcher/payloads";
-import { Dispatcher } from "flux";
+import { MatrixDispatcher } from "../dispatcher/dispatcher";
 
-// Hook to simplify listening to flux dispatches
-export const useDispatcher = (dispatcher: Dispatcher<ActionPayload>, handler: (payload: ActionPayload) => void) => {
+// Hook to simplify listening to event dispatches
+export const useDispatcher = (dispatcher: MatrixDispatcher, handler: (payload: ActionPayload) => void): void => {
     // Create a ref that stores handler
     const savedHandler = useRef((payload: ActionPayload) => {});
 

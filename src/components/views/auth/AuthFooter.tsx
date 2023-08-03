@@ -16,17 +16,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _t } from '../../../languageHandler';
-import React from 'react';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React from "react";
 
-@replaceableComponent("views.auth.AuthFooter")
+import { _t } from "../../../languageHandler";
+
 export default class AuthFooter extends React.Component {
     public render(): React.ReactNode {
         return (
-            <div className="mx_AuthFooter">
-                <a href="https://matrix.org" target="_blank" rel="noreferrer noopener">{ _t("powered by Matrix") }</a>
-            </div>
+            <footer className="mx_AuthFooter" role="contentinfo">
+                <a href="https://matrix.org" target="_blank" rel="noreferrer noopener">
+                    {_t("powered by Matrix")}
+                </a>
+            </footer>
         );
     }
 }
