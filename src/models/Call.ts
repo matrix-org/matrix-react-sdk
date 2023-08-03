@@ -32,9 +32,7 @@ import {
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import type EventEmitter from "events";
-import type { IMyDevice } from "matrix-js-sdk/src/client";
-import type { Room } from "matrix-js-sdk/src/matrix";
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { Room, IMyDevice, RoomMember } from "matrix-js-sdk/src/matrix";
 import type { ClientWidgetApi } from "matrix-widget-api";
 import type { IApp } from "../stores/WidgetStore";
 import SdkConfig, { DEFAULTS } from "../SdkConfig";

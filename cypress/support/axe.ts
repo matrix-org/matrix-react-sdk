@@ -19,6 +19,7 @@ limitations under the License.
 import * as CypressAxe from "cypress-axe";
 import * as axe from "axe-core";
 
+import type { Options } from "cypress-axe";
 import Chainable = Cypress.Chainable;
 
 function terminalLog(violations: axe.Result[]): void {
