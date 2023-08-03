@@ -3772,5 +3772,6 @@
     "User read up to (m.read.private;ignoreSynthetic): ": "Користувач прочитав до (m.read.private;ignoreSynthetic): ",
     "This homeserver doesn't offer any login flows that are supported by this client.": "Цей домашній сервер не пропонує жодних схем входу, які підтримуються цим клієнтом.",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Експортований файл дозволить будь-кому, хто зможе його прочитати, розшифрувати будь-які зашифровані повідомлення, які ви бачите, тому ви повинні бути обережними, щоб зберегти його в безпеці. Щоб зробити це, вам слід ввести унікальну парольну фразу нижче, яка буде використовуватися тільки для шифрування експортованих даних. Імпортувати дані можна буде лише за допомогою тієї ж самої парольної фрази.",
-    "Under active development, new room header & details interface": "В активній розробці новий інтерфейс заголовка та подробиць кімнати"
+    "Under active development, new room header & details interface": "В активній розробці новий інтерфейс заголовка та подробиць кімнати",
+    "Other spaces you know": "Інші відомі вам простори"
 }
