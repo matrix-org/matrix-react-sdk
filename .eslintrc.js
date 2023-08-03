@@ -62,6 +62,10 @@ module.exports = {
                         message: "Please use matrix-js-sdk/src/matrix instead",
                     },
                     {
+                        name: "matrix-js-sdk/src/models/typed-event-emitter",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
                         name: "matrix-react-sdk",
                         message: "Please use matrix-react-sdk/src/index instead",
                     },
