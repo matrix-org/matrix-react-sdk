@@ -44,6 +44,10 @@ describe("<ManageRestrictedJoinRuleDialog />", () => {
     const getComponent = (props = {}) =>
         render(<ManageRestrictedJoinRuleDialog room={room} onFinished={onFinished} {...props} />);
 
+    it("should render empty state", () => {
+        expect(getComponent().asFragment()).toMatchSnapshot();
+    });
+
     it("should list spaces which are not parents of the room", () => {
         const space1 = new Room("!space:server", mockClient, userId);
         space1.name = "Other Space";
