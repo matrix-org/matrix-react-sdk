@@ -136,7 +136,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
         super(props);
-        this.context = context;
+        this.context = context; // XXX: workaround for lack of `declare` support on `public context!:` definition
 
         // Tiles in miniMode are floating, and therefore not docked
         if (!this.props.miniMode) {
