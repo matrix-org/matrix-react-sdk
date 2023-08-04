@@ -886,7 +886,7 @@ describe("Read receipts", () => {
                 // And I read that edit
                 goTo(room2);
 
-                // Then the room becomes unread and stays unread
+                // Then the room becomes read and stays read
                 assertRead(room2);
                 goTo(room1);
                 assertRead(room2);
