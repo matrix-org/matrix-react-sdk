@@ -476,6 +476,7 @@ describe("Read receipts", () => {
 
     function assertRead(room: string) {
         return getRoomListTile(room).within(() => {
+            cy.get(".mx_NotificationBadge_dot").should("not.exist");
             cy.get(".mx_NotificationBadge_count").should("not.exist");
         });
     }
