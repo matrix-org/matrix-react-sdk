@@ -24,7 +24,6 @@ import EMOTICON_REGEX from "emojibase-regex/emoticon";
 import { Room } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
-
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { _t } from "../languageHandler";
 import AutocompleteProvider from "./AutocompleteProvider";
