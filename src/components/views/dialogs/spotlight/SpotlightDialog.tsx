@@ -18,7 +18,8 @@ import { WebSearch as WebSearchEvent } from "@matrix-org/analytics-events/types/
 import classNames from "classnames";
 import { capitalize, sum } from "lodash";
 import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
-import { IPublicRoomsChunkRoom, MatrixClient, RoomMember, RoomType, Room } from "matrix-js-sdk/src/matrix";
+import { IPublicRoomsChunkRoom, MatrixClient, RoomMember, RoomType } from "matrix-js-sdk/src/matrix";
+import { Room } from "matrix-js-sdk/src/models/room";
 import { normalize } from "matrix-js-sdk/src/utils";
 import React, { ChangeEvent, RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import sanitizeHtml from "sanitize-html";
@@ -406,12 +407,17 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
             possibleResults.forEach((entry) => {
                 if (isRoomResult(entry)) {
-                    if (
-                        !entry.room.normalizedName?.includes(normalizedQuery) &&
-                        !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
-                        !entry.query?.some((q) => q.includes(lcQuery))
-                    )
-                        return; // bail, does not match query
+                    // Check if the DM userId is part of the user directory results, if so keep it
+                    const userId = DMRoomMap.shared().getUserIdForRoomId(entry.room.roomId);
+                    if (!users.some((user) => user.userId === userId)) {
+                        if (
+                            !entry.room.normalizedName?.includes(normalizedQuery) &&
+                            !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
+                            !entry.query?.some((q) => q.includes(lcQuery))
+                        ) {
+                            return; // bail, does not match query
+                        }
+                    }
                 } else if (isMemberResult(entry)) {
                     if (!entry.alreadyFiltered && !entry.query?.some((q) => q.includes(lcQuery))) return; // bail, does not match query
                 } else if (isPublicRoomResult(entry)) {
