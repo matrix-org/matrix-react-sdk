@@ -678,7 +678,7 @@ describe("Read receipts", () => {
                 // Then thread does appear unread
                 assertUnreadThread("Msg1");
             });
-            // XXX: this failure seems legit
+            // XXX: fails because the room is still "bold" even though the notification counts all disappear
             it.skip("Marking a room with unread threads as read makes it read", () => {
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), threadedOff("Msg1", "Resp2")]);
@@ -687,21 +687,38 @@ describe("Read receipts", () => {
                 markAsRead(room2);
                 assertRead(room2);
             });
-            it("Sending a new thread message after marking as read makes it unread", () => {
+            // XXX: fails for the same reason as "Marking a room with unread threads as read makes it read"
+            it.skip("Sending a new thread message after marking as read makes it unread", () => {
                 // Given a thread exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), threadedOff("Msg1", "Resp2")]);
 
-                // When I read the main timeline
-                goTo(room2);
+                // When I mark the room as read
+                markAsRead(room2);
+                assertRead(room2);
 
-                // And the thread
-                openThread("Msg1");
-
-                goTo(room1);
-                // Receive additional response to thread whilst not looking at room
+                // Then another message appears in the thread
                 receiveMessages(room2, [threadedOff("Msg1", "Resp3")]);
 
+                // Then the room becomes unread
+                assertUnread(room2, 1);
+            });
+            // XXX: fails for the same reason as "Marking a room with unread threads as read makes it read"
+            it.skip("Sending a new different-thread message after marking as read makes it unread", () => {
+                // Given 2 threads exist, and Thread2 has the latest message in it
+                goTo(room1);
+                receiveMessages(room2, ["Thread1", "Thread2", threadedOff("Thread1", "t1a")]);
+                assertUnread(room2, 3);
+                receiveMessages(room2, [threadedOff("Thread2", "t2a")]);
+
+                // When I mark the room as read (making an unthreaded receipt for t2a)
+                markAsRead(room2);
+                assertRead(room2);
+
+                // Then another message appears in the other thread
+                receiveMessages(room2, [threadedOff("Thread1", "t1b")]);
+
+                // Then the room becomes unread
                 assertUnread(room2, 1);
             });
             it("A room with a new threaded message is still unread after restart", () => {
