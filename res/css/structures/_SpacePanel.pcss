@@ -24,7 +24,7 @@ limitations under the License.
 
     background-color: $spacePanel-bg-color;
     flex: 0 0 auto;
-    padding: 0;
+    padding: 0 0 12px 0;
     margin: 0;
     position: relative;
     /* Fix for the blurred avatar-background */
@@ -283,7 +283,6 @@ limitations under the License.
         }
 
         .mx_SpaceTreeLevel {
-            // Indent subspaces
             padding-left: 16px;
         }
     }
@@ -438,4 +437,29 @@ limitations under the License.
 
 .mx_SpacePanel_sharePublicSpace {
     margin: 0;
+}
+
+.mx_SpacePanel_button {
+    flex: 0 0 auto;
+    border-radius: 8px;
+    position: relative;
+    margin: 0 auto;
+    color: $secondary-content;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    padding: 12px;
+
+    &:not(.expanded):hover {
+        color: $quaternary-content;
+        background-color: $quaternary-content;
+
+        &::before {
+            background-color: $primary-content;
+        }
+
+        svg {
+            color: $primary-content;
+        }
+    }
 }

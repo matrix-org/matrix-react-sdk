@@ -33,12 +33,8 @@ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { useReadPinnedEvents, usePinnedEvents } from "./PinnedMessagesCard";
 import { showThreadPanel } from "../../../dispatcher/dispatch-actions/threads";
 import SettingsStore from "../../../settings/SettingsStore";
-import {
-    RoomNotificationStateStore,
-    UPDATE_STATUS_INDICATOR,
-} from "../../../stores/notifications/RoomNotificationStateStore";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
-import { SummarizedNotificationState } from "../../../stores/notifications/SummarizedNotificationState";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { doesRoomOrThreadHaveUnreadMessages } from "../../../Unread";
@@ -57,7 +53,7 @@ interface IUnreadIndicatorProps {
     color?: NotificationColor;
 }
 
-const UnreadIndicator: React.FC<IUnreadIndicatorProps> = ({ color }) => {
+export const UnreadIndicator: React.FC<IUnreadIndicatorProps> = ({ color }) => {
     if (color === NotificationColor.None) {
         return null;
     }
@@ -132,11 +128,9 @@ interface IProps {
  */
 export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
     private static readonly THREAD_PHASES = [RightPanelPhases.ThreadPanel, RightPanelPhases.ThreadView];
-    private globalNotificationState: SummarizedNotificationState;
 
     public constructor(props: IProps) {
         super(props, HeaderKind.Room);
-        this.globalNotificationState = RoomNotificationStateStore.instance.globalState;
     }
 
     public componentDidMount(): void {
@@ -153,7 +147,6 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
         this.props.room?.on(ThreadEvent.New, this.onNotificationUpdate);
         this.props.room?.on(ThreadEvent.Update, this.onNotificationUpdate);
         this.onNotificationUpdate();
-        RoomNotificationStateStore.instance.on(UPDATE_STATUS_INDICATOR, this.onUpdateStatus);
     }
 
     public componentWillUnmount(): void {
@@ -166,7 +159,6 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
         this.props.room?.off(RoomEvent.MyMembership, this.onNotificationUpdate);
         this.props.room?.off(ThreadEvent.New, this.onNotificationUpdate);
         this.props.room?.off(ThreadEvent.Update, this.onNotificationUpdate);
-        RoomNotificationStateStore.instance.off(UPDATE_STATUS_INDICATOR, this.onUpdateStatus);
     }
 
     private onNotificationUpdate = (): void => {
@@ -195,14 +187,6 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
         // Otherwise, no notification color.
         return NotificationColor.None;
     }
-
-    private onUpdateStatus = (notificationState: SummarizedNotificationState): void => {
-        // XXX: why don't we read from this.state.globalNotificationCount in the render methods?
-        this.globalNotificationState = notificationState;
-        this.setState({
-            globalNotificationColor: notificationState.color,
-        });
-    };
 
     protected onAction(payload: ActionPayload): void {
         if (payload.action === Action.ViewUser) {
@@ -244,11 +228,6 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
             // This toggles for us, if needed
             this.setPhase(RightPanelPhases.RoomSummary);
         }
-    };
-
-    private onNotificationsClicked = (): void => {
-        // This toggles for us, if needed
-        this.setPhase(RightPanelPhases.NotificationPanel);
     };
 
     private onPinnedMessagesClicked = (): void => {
@@ -307,21 +286,6 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
                 isUnread={this.state.threadNotificationColor > NotificationColor.None}
             >
                 <UnreadIndicator color={this.state.threadNotificationColor} />
-            </HeaderButton>,
-        );
-        rightPanelPhaseButtons.set(
-            RightPanelPhases.NotificationPanel,
-            <HeaderButton
-                key="notifsButton"
-                name="notifsButton"
-                title={_t("Notifications")}
-                isHighlighted={this.isPhase(RightPanelPhases.NotificationPanel)}
-                onClick={this.onNotificationsClicked}
-                isUnread={this.globalNotificationState.color === NotificationColor.Red}
-            >
-                {this.globalNotificationState.color === NotificationColor.Red ? (
-                    <UnreadIndicator color={this.globalNotificationState.color} />
-                ) : null}
             </HeaderButton>,
         );
         rightPanelPhaseButtons.set(

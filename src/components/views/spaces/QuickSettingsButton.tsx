@@ -39,7 +39,8 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 
 const QuickSettingsButton: React.FC<{
     isPanelCollapsed: boolean;
-}> = ({ isPanelCollapsed = false }) => {
+    className: string;
+}> = ({ isPanelCollapsed = false, className = "" }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
 
     const { [MetaSpace.Favourites]: favouritesEnabled, [MetaSpace.People]: peopleEnabled } =
@@ -131,7 +132,7 @@ const QuickSettingsButton: React.FC<{
     return (
         <>
             <AccessibleTooltipButton
-                className={classNames("mx_QuickSettingsButton", { expanded: !isPanelCollapsed })}
+                className={classNames("mx_QuickSettingsButton", { expanded: !isPanelCollapsed }, className)}
                 onClick={openMenu}
                 title={_t("Quick settings")}
                 inputRef={handle}

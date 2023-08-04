@@ -72,6 +72,14 @@ import { NotificationState } from "../../../stores/notifications/NotificationSta
 import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { useGlobalNotificationState } from "../../../hooks/useGlobalNotification";
+import { NotificationColor } from "../../../stores/notifications/NotificationColor";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
+import { UnreadIndicator } from "../right_panel/LegacyRoomHeaderButtons";
+import { Icon as NotificationIcon } from "../../../../res/img/element-icons/notifications.svg";
+import TooltipTarget from "../elements/TooltipTarget";
+import { Alignment } from "../elements/Tooltip";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -344,6 +352,8 @@ const SpacePanel: React.FC = () => {
         }
     });
 
+    const summarizedNotificationState = useGlobalNotificationState();
+
     return (
         <RovingTabIndexProvider handleHomeEnd handleUpDown={!dragging}>
             {({ onKeyDownHandler, onDragEndHandler }) => (
@@ -399,7 +409,21 @@ const SpacePanel: React.FC = () => {
                             )}
                         </Droppable>
 
-                        <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
+                        <TooltipTarget label={_t("Notifications")} alignment={Alignment.Right}>
+                            <div
+                                className="mx_SpacePanel_button"
+                                title={_t("Notifications")}
+                                onClick={() => {
+                                    RightPanelStore.instance.setCard({ phase: RightPanelPhases.NotificationPanel });
+                                }}
+                            >
+                                <NotificationIcon />
+                                {summarizedNotificationState.color === NotificationColor.Red ? (
+                                    <UnreadIndicator color={summarizedNotificationState.color} />
+                                ) : null}
+                            </div>
+                        </TooltipTarget>
+                        <QuickSettingsButton className="mx_SpacePanel_button" isPanelCollapsed={isPanelCollapsed} />
                     </div>
                 </DragDropContext>
             )}
