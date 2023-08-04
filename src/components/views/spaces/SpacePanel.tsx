@@ -409,20 +409,22 @@ const SpacePanel: React.FC = () => {
                             )}
                         </Droppable>
 
-                        <TooltipTarget label={_t("Notifications")} alignment={Alignment.Right}>
-                            <div
-                                className="mx_SpacePanel_button"
-                                title={_t("Notifications")}
-                                onClick={() => {
-                                    RightPanelStore.instance.setCard({ phase: RightPanelPhases.NotificationPanel });
-                                }}
-                            >
-                                <NotificationIcon />
-                                {summarizedNotificationState.color === NotificationColor.Red ? (
-                                    <UnreadIndicator color={summarizedNotificationState.color} />
-                                ) : null}
-                            </div>
-                        </TooltipTarget>
+                        {SettingsStore.getValue("feature_video_rooms") && (
+                            <TooltipTarget label={_t("Notifications")} alignment={Alignment.Right}>
+                                <div
+                                    className="mx_SpacePanel_button"
+                                    title={_t("Notifications")}
+                                    onClick={() => {
+                                        RightPanelStore.instance.setCard({ phase: RightPanelPhases.NotificationPanel });
+                                    }}
+                                >
+                                    <NotificationIcon />
+                                    {summarizedNotificationState.color === NotificationColor.Red ? (
+                                        <UnreadIndicator color={summarizedNotificationState.color} />
+                                    ) : null}
+                                </div>
+                            </TooltipTarget>
+                        )}
                         <QuickSettingsButton className="mx_SpacePanel_button" isPanelCollapsed={isPanelCollapsed} />
                     </div>
                 </DragDropContext>
