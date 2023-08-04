@@ -3772,5 +3772,6 @@
     "Show a badge <badge/> when keywords are used in a room.": "Affiche un badge <badge/> quand des mots-clés sont utilisés dans un salon.",
     "Notify when someone uses a keyword": "Notifie lorsque quelqu'un utilise un mot-clé",
     "Mark all messages as read": "Marquer tous les messages comme lus",
-    "Great! This passphrase looks strong enough": "Super ! Cette phrase secrète a l’air assez robuste"
+    "Great! This passphrase looks strong enough": "Super ! Cette phrase secrète a l’air assez robuste",
+    "Other spaces you know": "Autres espaces que vous connaissez"
 }
