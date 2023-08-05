@@ -3771,5 +3771,7 @@
     "Show a badge <badge/> when keywords are used in a room.": "Zobrazit odznak <badge/> při použití klíčových slov v místnosti.",
     "Notify when someone mentions using @room": "Upozornit, když se někdo zmíní použitím @room",
     "Enter keywords here, or use for spelling variations or nicknames": "Zadejte klíčová slova nebo je použijte pro pravopisné varianty či přezdívky",
-    "Reset to default settings": "Obnovit výchozí nastavení"
+    "Reset to default settings": "Obnovit výchozí nastavení",
+    "Under active development, new room header & details interface": "V aktivním vývoji, nové rozhraní pro záhlaví a detaily místnosti",
+    "Other spaces you know": "Další prostory, které znáte"
 }
