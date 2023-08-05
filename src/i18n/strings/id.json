@@ -3771,5 +3771,7 @@
     "Show profile picture changes": "Tampilkan perubahan foto profil",
     "This homeserver doesn't offer any login flows that are supported by this client.": "Homeserver ini tidak menawarkan alur masuk yang tidak didukung oleh klien ini.",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Berkas yang diekspor akan memungkinkan siapa saja yang dapat membacanya untuk mendekripsi semua pesan terenkripsi yang dapat Anda lihat, jadi Anda harus berhati-hati untuk menjaganya tetap aman. Untuk mengamankannya, Anda harus memasukkan frasa sandi di bawah ini, yang akan digunakan untuk mengenkripsi data yang diekspor. Impor data hanya dapat dilakukan dengan menggunakan frasa sandi yang sama.",
-    "Great! This passphrase looks strong enough": "Hebat! Frasa keamanan ini kelihatannya kuat"
+    "Great! This passphrase looks strong enough": "Hebat! Frasa keamanan ini kelihatannya kuat",
+    "Other spaces you know": "Space lainnya yang Anda tahu",
+    "Under active development, new room header & details interface": "Dalam pengembangan aktif, tajuk ruangan & antarmuka detail baru"
 }
