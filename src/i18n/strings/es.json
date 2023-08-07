@@ -3418,7 +3418,6 @@
     "Echo cancellation": "Cancelación de eco",
     "When enabled, the other party might be able to see your IP address": "Si lo activas, la otra parte podría ver tu dirección IP",
     "Go live": "Empezar directo",
-    "Right panel stays open": "El panel derecho se mantiene abierto",
     "Currently experimental.": "Actualmente en fase experimental.",
     "New ways to ignore people": "Nuevas maneras de ignorar a otras personas",
     "Rich text editor": "Editor de texto enriquecido",
@@ -3602,7 +3601,6 @@
     "Message from %(user)s": "Mensaje de %(user)s",
     "Change input device": "Cambiar dispositivo de entrada",
     "You reacted %(reaction)s to %(message)s": "Reaccionaste %(reaction)s a %(message)s",
-    "Defaults to room member list.": "Por defecto es la lista de miembros de la sala.",
     "Requires your server to support MSC3030": "Requiere que tu servidor sea compatible con MSC3030",
     "Enable MSC3946 (to support late-arriving room archives)": "",
     "Try using %(server)s": "Probar a usar %(server)s"

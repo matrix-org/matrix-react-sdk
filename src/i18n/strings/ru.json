@@ -3469,7 +3469,6 @@
     "Indent decrease": "Пункт",
     "Indent increase": "Подпункт",
     "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s отреагировал(а) %(reaction)s на %(message)s",
-    "Defaults to room member list.": "По умолчанию отображается список участников комнаты.",
     "Requires your server to support MSC3030": "Требуется, чтобы ваш сервер поддерживал MSC3030",
     "Grey": "Серый",
     "Red": "Красный",
