@@ -18,8 +18,8 @@ limitations under the License.
 
 import "cypress-axe";
 import * as axe from "axe-core";
-import { Options } from "cypress-axe";
 
+import type { Options } from "cypress-axe";
 import Chainable = Cypress.Chainable;
 
 function terminalLog(violations: axe.Result[]): void {
@@ -57,10 +57,6 @@ Cypress.Commands.overwrite(
                 rules: {
                     // Disable contrast checking for now as we have too many issues with it
                     "color-contrast": {
-                        enabled: false,
-                    },
-                    // link-in-text-block also complains due to known contrast issues
-                    "link-in-text-block": {
                         enabled: false,
                     },
                     ...options.rules,
