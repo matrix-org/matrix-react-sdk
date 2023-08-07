@@ -90,13 +90,14 @@ describe("Read receipts", () => {
     }
 
     function openThread(rootMessage: string) {
-        cy.get(".mx_RoomView_body").within(() => {
-            cy.contains(".mx_EventTile[data-scroll-tokens]", rootMessage)
+        cy.log("Open thread", rootMessage);
+        cy.get(".mx_RoomView_body", { log: false }).within(() => {
+            cy.contains(".mx_EventTile[data-scroll-tokens]", rootMessage, { log: false })
                 .realHover()
-                .findByRole("button", { name: "Reply in thread" })
+                .findByRole("button", { name: "Reply in thread", log: false })
                 .click();
         });
-        cy.get(".mx_ThreadView_timelinePanelWrapper").should("have.length", 1);
+        cy.get(".mx_ThreadView_timelinePanelWrapper", { log: false }).should("have.length", 1);
     }
 
     // Sends messages into given room as a bot
@@ -181,15 +182,17 @@ describe("Read receipts", () => {
     }
 
     function getRoomListTile(room: string) {
-        return cy.findByRole("treeitem", { name: new RegExp("^" + room) });
+        return cy.findByRole("treeitem", { name: new RegExp("^" + room), log: false });
     }
 
     function markAsRead(room: string) {
+        cy.log("Marking room as read", room);
         getRoomListTile(room).rightclick();
         cy.findByText("Mark as read").click();
     }
 
     function assertRead(room: string) {
+        cy.log("Assert room read", room);
         return getRoomListTile(room).within(() => {
             cy.get(".mx_NotificationBadge_dot").should("not.exist");
             cy.get(".mx_NotificationBadge_count").should("not.exist");
@@ -197,6 +200,7 @@ describe("Read receipts", () => {
     }
 
     function assertUnread(room: string, count: number | ".") {
+        cy.log("Assert room unread", room, count);
         return getRoomListTile(room).within(() => {
             if (count === ".") {
                 cy.get(".mx_NotificationBadge_dot").should("exist");
@@ -207,41 +211,52 @@ describe("Read receipts", () => {
     }
 
     function openThreadList() {
-        cy.findByTestId("threadsButton").then((button) => {
-            if (button?.attr("aria-current") !== "true") {
-                button.trigger("click");
+        cy.log("Open thread list");
+        cy.findByTestId("threadsButton", { log: false }).then(($button) => {
+            if ($button?.attr("aria-current") !== "true") {
+                $button.trigger("click");
             }
         });
-        cy.get(".mx_ThreadPanel").should("exist");
-        // If the Threads back button is present then click it, the threads button can open either threads list or thread panel
-        Cypress.$('.mx_BaseCard_back[title="Threads"]')?.trigger("click");
+
+        cy.get(".mx_ThreadPanel", { log: false })
+            .should("exist")
+            .then(($panel) => {
+                const $button = $panel.find('.mx_BaseCard_back[title="Threads"]');
+                // If the Threads back button is present then click it, the threads button can open either threads list or thread panel
+                if ($button.length) {
+                    $button.trigger("click");
+                }
+            });
     }
 
     function getThreadListTile(rootMessage: string) {
         openThreadList();
-        return cy.contains(".mx_ThreadPanel .mx_EventTile_body", rootMessage).closest("li");
+        return cy.contains(".mx_ThreadPanel .mx_EventTile_body", rootMessage, { log: false }).closest("li");
     }
 
     function assertReadThread(rootMessage: string) {
         return getThreadListTile(rootMessage).within(() => {
-            cy.get(".mx_NotificationBadge").should("not.exist");
+            cy.get(".mx_NotificationBadge", { log: false }).should("not.exist");
         });
     }
 
     function assertUnreadThread(rootMessage: string) {
+        cy.log("Assert unread thread", rootMessage);
         return getThreadListTile(rootMessage).within(() => {
             cy.get(".mx_NotificationBadge").should("exist");
         });
     }
 
     function saveAndReload() {
+        cy.log("Save and reload");
         cy.getClient().then((cli) => {
             // @ts-ignore
             return (cli.store as IndexedDBStore).reallySave();
         });
         cy.reload();
         // Wait for the app to reload
-        cy.get(".mx_RoomView").should("exist");
+        cy.log("Waiting for app to reload");
+        cy.get(".mx_RoomView", { log: false }).should("exist");
     }
 
     const room1 = selectedRoomName;
@@ -363,8 +378,7 @@ describe("Read receipts", () => {
                 openThread("Msg1");
                 assertUnread(room2, 1);
             });
-            // XXX: Fails, but looks like it is working in the UI - needs investigation
-            it.skip("Reading only one thread's message makes that thread read but not others", () => {
+            it("Reading only one thread's message makes that thread read but not others", () => {
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2", threadedOff("Msg1", "Resp1"), threadedOff("Msg2", "Resp2")]);
                 assertUnread(room2, 4); // (Sanity)
