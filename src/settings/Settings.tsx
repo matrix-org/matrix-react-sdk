@@ -237,11 +237,9 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
         // Reload to ensure that the left panel etc. get remounted
-        controller: new ReloadOnChangeController(),
         betaInfo: {
             title: _td("Notifications panel"),
             caption: () => <p>{_t("A list of all events notifying you. Only works with unencrypted rooms")}</p>,
-            requiresRefresh: true,
         },
     },
     [Features.NotificationSettings2]: {
