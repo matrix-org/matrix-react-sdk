@@ -114,8 +114,15 @@ describe("Read receipts", () => {
         });
     }
 
-    async function getMessage(room: Room, message: string): Promise<MatrixEvent> {
-        const ev = room.timeline.find((e) => e.getContent().body === message);
+    async function getMessage(room: Room, message: string, includeThreads = false): Promise<MatrixEvent> {
+        let ev = room.timeline.find((e) => e.getContent().body === message);
+        if (!ev && includeThreads) {
+            for (const thread of room.getThreads()) {
+                ev = thread.timeline.find((e) => e.getContent().body === message);
+                if (ev) break;
+            }
+        }
+
         if (ev) return ev;
 
         return new Promise((resolve) => {
@@ -130,7 +137,7 @@ describe("Read receipts", () => {
     function editOf(originalMessage: string, newMessage: string): MessageSpec {
         return new (class extends MessageSpec {
             public async getContent(room: Room): Promise<Record<string, unknown>> {
-                const ev = await getMessage(room, originalMessage);
+                const ev = await getMessage(room, originalMessage, true);
 
                 const content = ev.getContent();
                 return {
@@ -658,8 +665,36 @@ describe("Read receipts", () => {
         });
 
         describe("in threads", () => {
-            it.skip("An edit of a threaded message makes the room unread", () => {});
-            it.skip("Reading an edit of a threaded message makes the room read", () => {});
+            it("An edit of a threaded message makes the room unread", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
+                assertUnread(room2, 1);
+
+                goTo(room2);
+                openThread("Msg1");
+                assertRead(room2);
+                goTo(room1);
+
+                receiveMessages(room2, [editOf("Resp1", "Edit1")]);
+                assertUnread(room2, 1);
+            });
+            it("Reading an edit of a threaded message makes the room read", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
+                assertUnread(room2, 1);
+
+                goTo(room2);
+                openThread("Msg1");
+                assertRead(room2);
+                goTo(room1);
+
+                receiveMessages(room2, [editOf("Resp1", "Edit1")]);
+                assertUnread(room2, 1);
+
+                goTo(room2);
+                openThread("Msg1");
+                assertRead(room2);
+            });
             it.skip("Marking a room as read after an edit in a thread makes it read", () => {});
             it.skip("Editing a thread message after marking as read makes the room unread", () => {});
             it.skip("A room with an edited threaded message is still unread after restart", () => {});
