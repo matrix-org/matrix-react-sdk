@@ -24,4 +24,6 @@ export interface JoinRoomErrorPayload extends Pick<ActionPayload, "action"> {
 
     roomId: string;
     err: MatrixError;
+
+    canAskToJoin?: boolean;
 }
