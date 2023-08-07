@@ -46,7 +46,6 @@ describe("Room Header", () => {
                 "Video call",
                 "Search",
                 "Threads",
-                "Notifications",
                 "Room info",
             ];
 
@@ -106,21 +105,6 @@ describe("Room Header", () => {
         cy.get(".mx_LegacyRoomHeader").percySnapshotElement("Room header - with a long room name", {
             widths: [300, 600], // Magic numbers to emulate the narrow RoomHeader on the actual UI
         });
-    });
-
-    it("should have buttons highlighted by being clicked", () => {
-        cy.createRoom({ name: "Test Room" }).viewRoomByName("Test Room");
-
-        cy.get(".mx_LegacyRoomHeader").within(() => {
-            // Check these buttons
-            const buttonsHighlighted = ["Threads", "Notifications", "Room info"];
-
-            for (const name of buttonsHighlighted) {
-                cy.findByRole("button", { name: name }).click(); // Highlight the button
-            }
-        });
-
-        cy.get(".mx_LegacyRoomHeader").percySnapshotElement("Room header - with a highlighted button");
     });
 
     describe("with a video room", () => {
