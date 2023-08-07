@@ -3456,7 +3456,6 @@
     "Error starting verification": "Viga verifitseerimise alustamisel",
     "Buffering…": "Andmed on puhverdamisel…",
     "<w>WARNING:</w> <description/>": "<w>HOIATUS:</w> <description/>",
-    "Right panel stays open": "Parem paan jääb avatuks",
     "Currently experimental.": "Parasjagu katsejärgus.",
     "New ways to ignore people": "Uued võimalused osalejate eiramiseks",
     "Rich text editor": "Kujundatud teksti toimeti",
@@ -3772,5 +3771,15 @@
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Kes iganes saab kätte selle ekspordifaili, saab ka lugeda sinu krüptitud sõnumeid, seega ole hoolikas selle faili talletamisel. Andmaks lisakihi turvalisust, peaksid sa alljärgnevalt sisestama unikaalse paroolifraasi, millega krüptitakse eksporditavad andmed. Faili hilisem importimine õnnestub vaid sama paroolifraasi sisestamisel.",
     "Great! This passphrase looks strong enough": "Suurepärane! See paroolifraas on piisavalt kange",
     "Under active development, new room header & details interface": "Uus jututoa päis ja infovaade on hetkel aktiivses arenduses",
-    "Other spaces you know": "Muud kogukonnad, mida sa tead"
+    "Other spaces you know": "Muud kogukonnad, mida sa tead",
+    "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Selle jututoa vestluste lugemiseks ja nendega liitumiseks on sul vaja luba. Vastava päringu võid saata alljärgnevalt.",
+    "Message (optional)": "Sõnum (kui soovid lisada)",
+    "You need an invite to access this room.": "Ligipääsuks siia jututuppa on sul vaja kutset.",
+    "Failed to cancel": "Tühistamine ei õnnestunud",
+    "Ask to join %(roomName)s?": "Küsi luba liitumiseks jututoaga %(roomName)s?",
+    "Ask to join?": "Küsi võimalust liitumiseks?",
+    "Request access": "Küsi ligipääsu",
+    "Cancel request": "Tühista liitumissoov",
+    "Your request to join is pending.": "Sinu liitumissoov on ootel.",
+    "Request to join sent": "Ligipääsu päring on saadetud"
 }
