@@ -18,12 +18,12 @@ limitations under the License.
 import React, { FC, useState, useMemo, useCallback } from "react";
 import classNames from "classnames";
 import { throttle } from "lodash";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { ISearchResults } from "matrix-js-sdk/src/@types/search";
 
 import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import type { Room } from "matrix-js-sdk/src/models/room";
+import type { Room } from "matrix-js-sdk/src/matrix";
 import { _t } from "../../../languageHandler";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -483,6 +483,9 @@ interface IState {
     rightPanelOpen: boolean;
 }
 
+/**
+ * @deprecated use `src/components/views/rooms/RoomHeader.tsx` instead
+ */
 export default class RoomHeader extends React.Component<IProps, IState> {
     public static defaultProps: Partial<IProps> = {
         inRoom: false,

@@ -36,6 +36,7 @@ module.exports = {
             ),
         ],
 
+        "import/no-duplicates": ["error"],
         // Ban matrix-js-sdk/src imports in favour of matrix-js-sdk/src/matrix imports to prevent unleashing hell.
         "no-restricted-imports": [
             "error",
@@ -59,6 +60,22 @@ module.exports = {
                     },
                     {
                         name: "matrix-js-sdk/src/index",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/typed-event-emitter",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/room",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/room-member",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/room-state",
                         message: "Please use matrix-js-sdk/src/matrix instead",
                     },
                     {
