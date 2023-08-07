@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { createRef, ReactNode } from "react";
 import ReactDOM from "react-dom";
-import { Room, RoomEvent, RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/matrix";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent, RoomMember, RoomMemberEvent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
 import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
 import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
@@ -1806,7 +1805,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.context.timelineRenderingType,
         );
         if (events.length === 0 || !room || !cli.isRoomEncrypted(room.roomId) || isThreadTimeline) {
-            logger.info("checkForPreJoinUISI: showing all messages, skipping check");
+            logger.debug("checkForPreJoinUISI: showing all messages, skipping check");
             return 0;
         }
 
@@ -1852,12 +1851,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 // reached an undecryptable message when the user wasn't in the room -- don't try to load any more
                 // Note: for now, we assume that events that are being decrypted are
                 // not decryptable - we will be called once more when it is decrypted.
-                logger.info("checkForPreJoinUISI: reached a pre-join UISI at index ", i);
+                logger.debug("checkForPreJoinUISI: reached a pre-join UISI at index ", i);
                 return i + 1;
             }
         }
 
-        logger.info("checkForPreJoinUISI: did not find pre-join UISI");
+        logger.debug("checkForPreJoinUISI: did not find pre-join UISI");
         return 0;
     }
 
