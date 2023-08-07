@@ -3771,5 +3771,17 @@
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Berkas yang diekspor akan memungkinkan siapa saja yang dapat membacanya untuk mendekripsi semua pesan terenkripsi yang dapat Anda lihat, jadi Anda harus berhati-hati untuk menjaganya tetap aman. Untuk mengamankannya, Anda harus memasukkan frasa sandi di bawah ini, yang akan digunakan untuk mengenkripsi data yang diekspor. Impor data hanya dapat dilakukan dengan menggunakan frasa sandi yang sama.",
     "Great! This passphrase looks strong enough": "Hebat! Frasa keamanan ini kelihatannya kuat",
     "Other spaces you know": "Space lainnya yang Anda tahu",
-    "Under active development, new room header & details interface": "Dalam pengembangan aktif, tajuk ruangan & antarmuka detail baru"
+    "Under active development, new room header & details interface": "Dalam pengembangan aktif, tajuk ruangan & antarmuka detail baru",
+    "Request to join sent": "Permintaan untuk bergabung terkirim",
+    "Ask to join %(roomName)s?": "Tanyakan untuk bergabung ke %(roomName)s?",
+    "Ask to join?": "Tanyakan untuk bergabung?",
+    "Request access": "Minta akses",
+    "Your request to join is pending.": "Permintaan Anda untuk bergabung sedang ditunda.",
+    "Cancel request": "Batalkan permintaan",
+    "%(severalUsers)schanged their profile picture %(count)s times|one": "%(severalUsers)smengubah foto profil mereka",
+    "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)smengubah foto profilnya",
+    "You need an invite to access this room.": "Anda memerlukan undangan untuk mengakses ruangan ini.",
+    "Failed to cancel": "Gagal membatalkan",
+    "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Anda memerlukan akses untuk mengakses ruangan ini supaya dapat melihat atau berpartisipasi dalam percakapan. Anda dapat mengirimkan permintaan untuk bergabung di bawah.",
+    "Message (optional)": "Pesan (opsional)"
 }
