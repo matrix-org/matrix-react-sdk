@@ -3771,5 +3771,17 @@
     "Enter keywords here, or use for spelling variations or nicknames": "Zadejte klíčová slova nebo je použijte pro pravopisné varianty či přezdívky",
     "Reset to default settings": "Obnovit výchozí nastavení",
     "Under active development, new room header & details interface": "V aktivním vývoji, nové rozhraní pro záhlaví a detaily místnosti",
-    "Other spaces you know": "Další prostory, které znáte"
+    "Other spaces you know": "Další prostory, které znáte",
+    "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Abyste si mohli konverzaci prohlédnout nebo se jí zúčastnit, musíte mít do této místnosti povolen přístup. Žádost o vstup můžete zaslat níže.",
+    "%(severalUsers)schanged their profile picture %(count)s times|one": "%(severalUsers)szměnilo svůj profilový obrázek",
+    "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)szměnil(a) svůj profilový obrázek",
+    "Message (optional)": "Zpráva (nepovinné)",
+    "Request access": "Žádost o přístup",
+    "Request to join sent": "Žádost o vstup odeslána",
+    "Your request to join is pending.": "Vaše žádost o vstup čeká na vyřízení.",
+    "Ask to join %(roomName)s?": "Požádat o vstup do %(roomName)s?",
+    "Ask to join?": "Požádat o vstup?",
+    "Cancel request": "Zrušit žádost",
+    "Failed to cancel": "Nepodařilo se zrušit",
+    "You need an invite to access this room.": "Pro vstup do této místnosti potřebujete pozvánku."
 }
