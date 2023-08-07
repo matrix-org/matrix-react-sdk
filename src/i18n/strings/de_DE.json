@@ -3773,5 +3773,15 @@
     "User read up to (ignoreSynthetic): ": "Der Benutzer hat gelesen bis (ignoreSynthetic): ",
     "User read up to (m.read.private): ": "Benutzer las bis (m.read.private): ",
     "User read up to (m.read.private;ignoreSynthetic): ": "Benutzer las bis (m.read.private;ignoreSynthetic): ",
-    "Other spaces you know": "Andere dir bekannte Spaces"
+    "Other spaces you know": "Andere dir bekannte Spaces",
+    "Ask to join %(roomName)s?": "Beitrittsanfrage für %(roomName)s stellen?",
+    "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Du benötigst eine Beitrittsberechtigung, um den Raum betrachten oder an der Unterhaltung teilnehmen zu können. Du kannst nachstehend eine Beitrittsanfrage stellen.",
+    "You need an invite to access this room.": "Du kannst diesen Raum nur auf Einladung betreten.",
+    "Failed to cancel": "Abbrechen gescheitert",
+    "Ask to join?": "Beitrittsanfrage stellen?",
+    "Message (optional)": "Nachricht (optional)",
+    "Request access": "Beitrittsanfrage stellen",
+    "Request to join sent": "Beitrittsanfrage gestellt",
+    "Your request to join is pending.": "Deine Beitrittsanfrage wurde noch nicht bearbeitet.",
+    "Cancel request": "Anfrage abbrechen"
 }
