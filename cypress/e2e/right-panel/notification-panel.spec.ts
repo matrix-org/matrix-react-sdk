@@ -38,6 +38,7 @@ describe("NotificationPanel", () => {
     });
 
     it("should render empty state", () => {
+        cy.enableLabsFeature("feature_notifications_panel");
         cy.viewRoomByName(ROOM_NAME);
         cy.findByRole("button", { name: "Notifications" }).click();
 

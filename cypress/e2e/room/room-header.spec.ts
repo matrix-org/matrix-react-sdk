@@ -55,7 +55,7 @@ describe("Room Header", () => {
             }
 
             // Assert that just those seven buttons exist on mx_LegacyRoomHeader by default
-            cy.findAllByRole("button").should("have.length", 7);
+            cy.findAllByRole("button").should("have.length", expectedButtonNames.length);
         });
 
         cy.get(".mx_LegacyRoomHeader").percySnapshotElement("Room header");
@@ -96,7 +96,7 @@ describe("Room Header", () => {
             // Assert the size of buttons on RoomHeader are specified and the buttons are not compressed
             // Note these assertions do not check the size of mx_LegacyRoomHeader_name button
             cy.get(".mx_LegacyRoomHeader_button")
-                .should("have.length", 6)
+                .should("have.length", 5)
                 .should("be.visible")
                 .should("have.css", "height", "32px")
                 .should("have.css", "width", "32px");
@@ -144,7 +144,7 @@ describe("Room Header", () => {
                 }
 
                 // Assert that there is not a button except those buttons
-                cy.findAllByRole("button").should("have.length", 7);
+                cy.findAllByRole("button").should("have.length", 6);
             });
 
             cy.get(".mx_LegacyRoomHeader").percySnapshotElement("Room header - with a video room");
