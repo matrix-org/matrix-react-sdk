@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -26,7 +26,6 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { mediaFromMxc } from "../../../customisations/Media";
 import RoomAvatar from "../avatars/RoomAvatar";
 import ImageView from "../elements/ImageView";
-
 interface IProps {
     /* the MatrixEvent to show */
     mxEvent: MatrixEvent;
@@ -34,9 +33,10 @@ interface IProps {
 
 export default class RoomAvatarEvent extends React.Component<IProps> {
     private onAvatarClick = (): void => {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const ev = this.props.mxEvent;
         const httpUrl = mediaFromMxc(ev.getContent().url).srcHttp;
+        if (!httpUrl) return;
 
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
         const text = _t("%(senderDisplayName)s changed the avatar for %(roomName)s", {
@@ -48,7 +48,7 @@ export default class RoomAvatarEvent extends React.Component<IProps> {
             src: httpUrl,
             name: text,
         };
-        Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
+        Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", undefined, true);
     };
 
     public render(): React.ReactNode {
@@ -63,7 +63,7 @@ export default class RoomAvatarEvent extends React.Component<IProps> {
             );
         }
 
-        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        const room = MatrixClientPeg.safeGet().getRoom(ev.getRoomId());
         // Provide all arguments to RoomAvatar via oobData because the avatar is historic
         const oobData = {
             avatarUrl: ev.getContent().url,
@@ -71,7 +71,7 @@ export default class RoomAvatarEvent extends React.Component<IProps> {
         };
 
         return (
-            <div className="mx_RoomAvatarEvent">
+            <>
                 {_t(
                     "%(senderDisplayName)s changed the room avatar to <img/>",
                     { senderDisplayName: senderDisplayName },
@@ -87,7 +87,7 @@ export default class RoomAvatarEvent extends React.Component<IProps> {
                         ),
                     },
                 )}
-            </div>
+            </>
         );
     }
 }

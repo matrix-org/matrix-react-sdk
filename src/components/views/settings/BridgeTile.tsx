@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -97,7 +96,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
                                 <Pill
                                     type={PillType.UserMention}
                                     room={this.props.room}
-                                    url={makeUserPermalink(content.creator)}
+                                    url={makeUserPermalink(content.creator!)}
                                     shouldShowPillAvatar={SettingsStore.getValue("Pill.shouldShowPillAvatar")}
                                 />
                             ),

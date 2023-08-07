@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { render } from "@testing-library/react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { ConditionKind, EventType, PushRuleActionName, Room, TweakName } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, ConditionKind, EventType, PushRuleActionName, Room, TweakName } from "matrix-js-sdk/src/matrix";
 
 import { pillifyLinks } from "../../src/utils/pillify";
 import { stubClient } from "../test-utils";
@@ -36,7 +35,7 @@ describe("pillify", () => {
 
     beforeEach(() => {
         stubClient();
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         (cli.getRoom as jest.Mock).mockReturnValue(new Room(roomId, cli, cli.getUserId()!));
         cli.pushRules!.global = {
             override: [
@@ -62,14 +61,14 @@ describe("pillify", () => {
             ],
         };
 
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(cli);
     });
 
     it("should do nothing for empty element", () => {
         const { container } = render(<div />);
         const originalHtml = container.outerHTML;
         const containers: Element[] = [];
-        pillifyLinks([container], event, containers);
+        pillifyLinks(MatrixClientPeg.safeGet(), [container], event, containers);
         expect(containers).toHaveLength(0);
         expect(container.outerHTML).toEqual(originalHtml);
     });
@@ -77,7 +76,7 @@ describe("pillify", () => {
     it("should pillify @room", () => {
         const { container } = render(<div>@room</div>);
         const containers: Element[] = [];
-        pillifyLinks([container], event, containers);
+        pillifyLinks(MatrixClientPeg.safeGet(), [container], event, containers);
         expect(containers).toHaveLength(1);
         expect(container.querySelector(".mx_Pill.mx_AtRoomPill")?.textContent).toBe("!@room");
     });
@@ -85,10 +84,10 @@ describe("pillify", () => {
     it("should not double up pillification on repeated calls", () => {
         const { container } = render(<div>@room</div>);
         const containers: Element[] = [];
-        pillifyLinks([container], event, containers);
-        pillifyLinks([container], event, containers);
-        pillifyLinks([container], event, containers);
-        pillifyLinks([container], event, containers);
+        pillifyLinks(MatrixClientPeg.safeGet(), [container], event, containers);
+        pillifyLinks(MatrixClientPeg.safeGet(), [container], event, containers);
+        pillifyLinks(MatrixClientPeg.safeGet(), [container], event, containers);
+        pillifyLinks(MatrixClientPeg.safeGet(), [container], event, containers);
         expect(containers).toHaveLength(1);
         expect(container.querySelector(".mx_Pill.mx_AtRoomPill")?.textContent).toBe("!@room");
     });

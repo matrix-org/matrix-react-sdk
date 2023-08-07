@@ -26,8 +26,7 @@ import {
     PUSHER_ENABLED,
     UNSTABLE_MSC3852_LAST_SEEN_UA,
 } from "matrix-js-sdk/src/matrix";
-import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
@@ -39,27 +38,7 @@ import { getDeviceClientInformation, pruneClientInformation } from "../../../../
 import { DevicesDictionary, ExtendedDevice, ExtendedDeviceAppInfo } from "./types";
 import { useEventEmitter } from "../../../../hooks/useEventEmitter";
 import { parseUserAgent } from "../../../../utils/device/parseUserAgent";
-
-const isDeviceVerified = (
-    matrixClient: MatrixClient,
-    crossSigningInfo: CrossSigningInfo,
-    device: IMyDevice,
-): boolean | null => {
-    try {
-        const userId = matrixClient.getUserId();
-        if (!userId) {
-            throw new Error("No user id");
-        }
-        const deviceInfo = matrixClient.getStoredDevice(userId, device.device_id);
-        if (!deviceInfo) {
-            throw new Error("No device info available");
-        }
-        return crossSigningInfo.checkDeviceTrust(crossSigningInfo, deviceInfo, false, true).isCrossSigningVerified();
-    } catch (error) {
-        logger.error("Error getting device cross-signing info", error);
-        return null;
-    }
-};
+import { isDeviceVerified } from "../../../../utils/device/isDeviceVerified";
 
 const parseDeviceExtendedInformation = (matrixClient: MatrixClient, device: IMyDevice): ExtendedDeviceAppInfo => {
     const { name, version, url } = getDeviceClientInformation(matrixClient, device.device_id);
@@ -71,29 +50,26 @@ const parseDeviceExtendedInformation = (matrixClient: MatrixClient, device: IMyD
     };
 };
 
-const fetchDevicesWithVerification = async (
-    matrixClient: MatrixClient,
-    userId: string,
-): Promise<DevicesState["devices"]> => {
+/**
+ * Fetch extended details of the user's own devices
+ *
+ * @param matrixClient - Matrix Client
+ * @returns A dictionary mapping from device ID to ExtendedDevice
+ */
+export async function fetchExtendedDeviceInformation(matrixClient: MatrixClient): Promise<DevicesDictionary> {
     const { devices } = await matrixClient.getDevices();
 
-    const crossSigningInfo = matrixClient.getStoredCrossSigningForUser(userId);
-
-    const devicesDict = devices.reduce(
-        (acc, device: IMyDevice) => ({
-            ...acc,
-            [device.device_id]: {
-                ...device,
-                isVerified: isDeviceVerified(matrixClient, crossSigningInfo, device),
-                ...parseDeviceExtendedInformation(matrixClient, device),
-                ...parseUserAgent(device[UNSTABLE_MSC3852_LAST_SEEN_UA.name]),
-            },
-        }),
-        {},
-    );
-
+    const devicesDict: DevicesDictionary = {};
+    for (const device of devices) {
+        devicesDict[device.device_id] = {
+            ...device,
+            isVerified: await isDeviceVerified(matrixClient, device.device_id),
+            ...parseDeviceExtendedInformation(matrixClient, device),
+            ...parseUserAgent(device[UNSTABLE_MSC3852_LAST_SEEN_UA.name]),
+        };
+    }
     return devicesDict;
-};
+}
 
 export enum OwnDevicesError {
     Unsupported = "Unsupported",
@@ -138,7 +114,7 @@ export const useOwnDevices = (): DevicesState => {
     const refreshDevices = useCallback(async (): Promise<void> => {
         setIsLoadingDeviceList(true);
         try {
-            const devices = await fetchDevicesWithVerification(matrixClient, userId);
+            const devices = await fetchExtendedDeviceInformation(matrixClient);
             setDevices(devices);
 
             const { pushers } = await matrixClient.getPushers();
@@ -165,7 +141,7 @@ export const useOwnDevices = (): DevicesState => {
             }
             setIsLoadingDeviceList(false);
         }
-    }, [matrixClient, userId]);
+    }, [matrixClient]);
 
     useEffect(() => {
         refreshDevices();
@@ -201,7 +177,7 @@ export const useOwnDevices = (): DevicesState => {
     const requestDeviceVerification =
         isCurrentDeviceVerified && userId
             ? async (deviceId: ExtendedDevice["device_id"]): Promise<VerificationRequest> => {
-                  return await matrixClient.requestVerification(userId, [deviceId]);
+                  return await matrixClient.getCrypto()!.requestDeviceVerification(userId, deviceId);
               }
             : undefined;
 

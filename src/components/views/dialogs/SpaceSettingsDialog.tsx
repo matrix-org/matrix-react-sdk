@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useMemo } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { _t, _td } from "../../../languageHandler";
@@ -70,17 +70,17 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
                 SpaceSettingsTab.Roles,
                 _td("Roles & Permissions"),
                 "mx_RoomSettingsDialog_rolesIcon",
-                <RolesRoomSettingsTab roomId={space.roomId} />,
+                <RolesRoomSettingsTab room={space} />,
             ),
             SettingsStore.getValue(UIFeature.AdvancedSettings)
                 ? new Tab(
                       SpaceSettingsTab.Advanced,
                       _td("Advanced"),
                       "mx_RoomSettingsDialog_warningIcon",
-                      <AdvancedRoomSettingsTab roomId={space.roomId} closeSettingsFn={onFinished} />,
+                      <AdvancedRoomSettingsTab room={space} closeSettingsFn={onFinished} />,
                   )
                 : null,
-        ].filter(Boolean) as NonEmptyArray<Tab>;
+        ].filter(Boolean) as NonEmptyArray<Tab<SpaceSettingsTab>>;
     }, [cli, space, onFinished]);
 
     return (

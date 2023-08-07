@@ -17,7 +17,7 @@ limitations under the License.
 import React, { useContext } from "react";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { User } from "matrix-js-sdk/src/models/user";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -33,7 +33,7 @@ import { Action } from "../../../dispatcher/actions";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { showSpaceInvite } from "../../../utils/space";
 import EventTileBubble from "../messages/EventTileBubble";
-import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
+import { RoomSettingsTab } from "../dialogs/RoomSettingsDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
@@ -44,7 +44,7 @@ import { shouldEncryptRoomWithSingle3rdPartyInvite } from "../../../utils/room/s
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
     const isPublic: boolean = room.getJoinRule() === "public";
-    return isPublic || !privateShouldBeEncrypted() || isEncrypted;
+    return isPublic || !privateShouldBeEncrypted(matrixClient) || isEncrypted;
 }
 
 const determineIntroMessage = (room: Room, encryptedSingle3rdPartyInvite: boolean): string => {
@@ -268,7 +268,7 @@ const NewRoomIntro: React.FC = () => {
         event.preventDefault();
         defaultDispatcher.dispatch({
             action: "open_room_settings",
-            initial_tab_id: ROOM_SECURITY_TAB,
+            initial_tab_id: RoomSettingsTab.Security,
         });
     }
 
@@ -278,8 +278,11 @@ const NewRoomIntro: React.FC = () => {
             "like email invites.",
     );
 
-    let subButton;
-    if (room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, MatrixClientPeg.get()) && !isLocalRoom) {
+    let subButton: JSX.Element | undefined;
+    if (
+        room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, MatrixClientPeg.safeGet()) &&
+        !isLocalRoom
+    ) {
         subButton = (
             <AccessibleButton kind="link_inline" onClick={openRoomSettings}>
                 {_t("Enable encryption in settings.")}

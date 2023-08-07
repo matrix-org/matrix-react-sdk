@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { forwardRef, useCallback, useContext, useMemo } from "react";
 
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import { ConnectionState, ElementCall } from "../../../models/Call";
 import { _t } from "../../../languageHandler";
 import {
@@ -168,7 +167,7 @@ export const CallEvent = forwardRef<any, CallEventProps>(({ mxEvent }, ref) => {
         .getRoom(mxEvent.getRoomId())!
         .currentState.getStateEvents(mxEvent.getType(), mxEvent.getStateKey()!)!;
 
-    if ("m.terminated" in latestEvent.getContent()) {
+    if ("m.terminated" in latestEvent.getContent() || latestEvent.isRedacted()) {
         // The call is terminated
         return (
             <div className="mx_CallEvent_wrapper" ref={ref}>

@@ -32,6 +32,11 @@ import { getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../t
 import { PollHistoryDialog } from "../../../../src/components/views/dialogs/PollHistoryDialog";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 
+// Fake random strings to give a predictable snapshot for checkbox IDs
+jest.mock("matrix-js-sdk/src/randomstring", () => ({
+    randomString: () => "abdefghi",
+}));
+
 describe("<RoomSummaryCard />", () => {
     const userId = "@alice:domain.org";
     const mockClient = getMockClientWithEventEmitter({
@@ -71,7 +76,7 @@ describe("<RoomSummaryCard />", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(mockClient);
 
         mockClient.getRoom.mockReturnValue(room);
         jest.spyOn(room, "isElementVideoRoom").mockRestore();
@@ -137,13 +142,13 @@ describe("<RoomSummaryCard />", () => {
         it("renders poll history option", () => {
             const { getByText } = getComponent();
 
-            expect(getByText("Polls history")).toBeInTheDocument();
+            expect(getByText("Poll history")).toBeInTheDocument();
         });
 
         it("opens poll history dialog on button click", () => {
             const { getByText } = getComponent();
 
-            fireEvent.click(getByText("Polls history"));
+            fireEvent.click(getByText("Poll history"));
 
             expect(modalSpy).toHaveBeenCalledWith(PollHistoryDialog, {
                 room,

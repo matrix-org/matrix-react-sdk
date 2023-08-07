@@ -15,11 +15,9 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent, RoomStateEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
 import { Icon as EmojiIcon } from "../../../../res/img/element-icons/room/message-bar/emoji.svg";
@@ -103,6 +101,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
     const readPinnedEvents = useReadPinnedEvents(room);
 
     useEffect(() => {
+        if (!cli || cli.isGuest()) return; // nothing to do
         const newlyRead = pinnedEventIds.filter((id) => !readPinnedEvents.has(id));
         if (newlyRead.length > 0) {
             // clear out any read pinned events which no longer are pinned
@@ -179,7 +178,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
                         </div>
                     </div>
 
-                    <Heading size="h4" className="mx_PinnedMessagesCard_empty_header">
+                    <Heading size="4" className="mx_PinnedMessagesCard_empty_header">
                         {_t("Nothing pinned, yet")}
                     </Heading>
                     {_t(
@@ -225,7 +224,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
         <BaseCard
             header={
                 <div className="mx_BaseCard_header_title">
-                    <Heading size="h4" className="mx_BaseCard_header_title_heading">
+                    <Heading size="4" className="mx_BaseCard_header_title_heading">
                         {_t("Pinned messages")}
                     </Heading>
                 </div>

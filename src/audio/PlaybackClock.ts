@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { SimpleObservable } from "matrix-widget-api";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { IDestroyable } from "../utils/IDestroyable";
 
@@ -60,7 +60,7 @@ export class PlaybackClock implements IDestroyable {
     private stopped = true;
     private lastCheck = 0;
     private observable = new SimpleObservable<number[]>();
-    private timerId: number;
+    private timerId?: number;
     private clipDuration = 0;
     private placeholderDuration = 0;
 

@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 
 import { useTypedEventEmitterState } from "../../hooks/useEventEmitter";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -41,7 +40,7 @@ export const useVoiceBroadcastPlayback = (
     toggle(): void;
     room: Room;
 } => {
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
     const room = client.getRoom(playback.infoEvent.getRoomId());
 
     if (!room) {

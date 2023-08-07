@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, ICreateRoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { RoomType, EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { ICreateRoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import { calculateRoomVia } from "./permalinks/Permalinks";
 import Modal from "../Modal";
@@ -82,7 +81,7 @@ export const showCreateNewRoom = async (space: Room, type?: RoomType): Promise<b
     });
     const [shouldCreate, opts] = await modal.finished;
     if (shouldCreate) {
-        await createRoom(opts);
+        await createRoom(space.client, opts);
     }
     return !!shouldCreate;
 };

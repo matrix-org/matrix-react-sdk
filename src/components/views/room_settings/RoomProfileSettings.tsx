@@ -22,7 +22,7 @@ import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Field from "../elements/Field";
 import { mediaFromMxc } from "../../../customisations/Media";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import AvatarSetting from "../settings/AvatarSetting";
 import { htmlSerializeFromMdIfNeeded } from "../../../editor/serialize";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
@@ -52,7 +52,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
     public constructor(props: IProps) {
         super(props);
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const room = client.getRoom(props.roomId);
         if (!room) throw new Error(`Expected a room for ID: ${props.roomId}`);
 
@@ -103,7 +103,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
         return Boolean(Object.values(this.state.profileFieldsTouched).length);
     };
 
-    private cancelProfileChanges = async (e: React.MouseEvent): Promise<void> => {
+    private cancelProfileChanges = async (e: ButtonEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -124,7 +124,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
         if (!this.isSaveEnabled()) return;
         this.setState({ profileFieldsTouched: {} });
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const newState: Partial<IState> = {};
 
         // TODO: What do we do about errors?

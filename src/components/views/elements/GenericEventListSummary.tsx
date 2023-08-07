@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { ReactNode, useEffect } from "react";
 import { uniqBy } from "lodash";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import MemberAvatar from "../avatars/MemberAvatar";
@@ -38,7 +37,7 @@ interface IProps {
     // The text to show as the summary of this event list
     "summaryText"?: ReactNode;
     // An array of EventTiles to render when expanded
-    "children": ReactNode[];
+    "children": ReactNode[] | null;
     // Called when the event list expansion is toggled
     onToggle?(): void;
     // The layout currently used

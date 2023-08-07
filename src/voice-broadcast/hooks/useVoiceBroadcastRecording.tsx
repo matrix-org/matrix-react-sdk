@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import {
@@ -58,7 +57,7 @@ export const useVoiceBroadcastRecording = (
     stopRecording(): void;
     toggleRecording(): void;
 } => {
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
     const roomId = recording.infoEvent.getRoomId();
     const room = client.getRoom(roomId);
 

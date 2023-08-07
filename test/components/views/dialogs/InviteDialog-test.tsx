@@ -15,18 +15,32 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
+import { sleep } from "matrix-js-sdk/src/utils";
+import { mocked, Mocked } from "jest-mock";
 
 import InviteDialog from "../../../../src/components/views/dialogs/InviteDialog";
 import { InviteKind } from "../../../../src/components/views/dialogs/InviteDialogTypes";
-import { getMockClientWithEventEmitter, mkMembership, mkMessage, mkRoomCreateEvent } from "../../../test-utils";
+import {
+    filterConsole,
+    flushPromises,
+    getMockClientWithEventEmitter,
+    mkMembership,
+    mkMessage,
+    mkRoomCreateEvent,
+} from "../../../test-utils";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import SdkConfig from "../../../../src/SdkConfig";
 import { ValidatedServerConfig } from "../../../../src/utils/ValidatedServerConfig";
 import { IConfigOptions } from "../../../../src/IConfigOptions";
+import { SdkContextClass } from "../../../../src/contexts/SDKContext";
+import { IProfileInfo } from "../../../../src/hooks/useProfileInfo";
+import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
+import SettingsStore from "../../../../src/settings/SettingsStore";
+import Modal from "../../../../src/Modal";
 
 const mockGetAccessToken = jest.fn().mockResolvedValue("getAccessToken");
 jest.mock("../../../../src/IdentityAuthClient", () =>
@@ -34,6 +48,12 @@ jest.mock("../../../../src/IdentityAuthClient", () =>
         getAccessToken: mockGetAccessToken,
     })),
 );
+
+jest.mock("../../../../src/utils/direct-messages", () => ({
+    ...jest.requireActual("../../../../src/utils/direct-messages"),
+    __esModule: true,
+    startDmOnFirstMessage: jest.fn(),
+}));
 
 const getSearchField = () => screen.getByTestId("invite-dialog-input");
 
@@ -60,46 +80,73 @@ const expectNoPill = (value: string) => {
     expect(getSearchField()).toHaveValue(value);
 };
 
+const roomId = "!111111111111111111:example.org";
+const aliceId = "@alice:example.org";
+const aliceEmail = "foobar@email.com";
+const bobId = "@bob:example.org";
+const bobEmail = "bobbob@example.com"; // bob@example.com is already used as an example in the invite dialog
+const carolId = "@carol:example.com";
+const bobbob = "bobbob";
+
+const aliceProfileInfo: IProfileInfo = {
+    user_id: aliceId,
+    display_name: "Alice",
+};
+
+const bobProfileInfo: IProfileInfo = {
+    user_id: bobId,
+    display_name: "Bob",
+};
+
 describe("InviteDialog", () => {
-    const roomId = "!111111111111111111:example.org";
-    const aliceId = "@alice:example.org";
-    const aliceEmail = "foobar@email.com";
-    const bobId = "@bob:example.org";
-    const bobEmail = "bobbob@example.com"; // bob@example.com is already used as an example in the invite dialog
-    const mockClient = getMockClientWithEventEmitter({
-        getUserId: jest.fn().mockReturnValue(bobId),
-        getSafeUserId: jest.fn().mockReturnValue(bobId),
-        isGuest: jest.fn().mockReturnValue(false),
-        getVisibleRooms: jest.fn().mockReturnValue([]),
-        getRoom: jest.fn(),
-        getRooms: jest.fn(),
-        getAccountData: jest.fn(),
-        getPushActionsForEvent: jest.fn(),
-        mxcUrlToHttp: jest.fn().mockReturnValue(""),
-        isRoomEncrypted: jest.fn().mockReturnValue(false),
-        getProfileInfo: jest.fn().mockRejectedValue({ errcode: "" }),
-        getIdentityServerUrl: jest.fn(),
-        searchUserDirectory: jest.fn().mockResolvedValue({}),
-        lookupThreePid: jest.fn(),
-        registerWithIdentityServer: jest.fn().mockResolvedValue({
-            access_token: "access_token",
-            token: "token",
-        }),
-        getOpenIdToken: jest.fn().mockResolvedValue({}),
-        getIdentityAccount: jest.fn().mockResolvedValue({}),
-        getTerms: jest.fn().mockResolvedValue({ policies: [] }),
-        supportsThreads: jest.fn().mockReturnValue(false),
-        isInitialSyncComplete: jest.fn().mockReturnValue(true),
-        getClientWellKnown: jest.fn(),
-    });
+    let mockClient: Mocked<MatrixClient>;
     let room: Room;
 
+    filterConsole(
+        "Error retrieving profile for userId @carol:example.com",
+        "Error retrieving profile for userId @localpart:server.tld",
+        "Error retrieving profile for userId @localpart:server:tld",
+        "[Invite:Recents] Excluding @alice:example.org from recents",
+    );
+
     beforeEach(() => {
+        mockClient = getMockClientWithEventEmitter({
+            getUserId: jest.fn().mockReturnValue(bobId),
+            getSafeUserId: jest.fn().mockReturnValue(bobId),
+            isGuest: jest.fn().mockReturnValue(false),
+            getVisibleRooms: jest.fn().mockReturnValue([]),
+            getRoom: jest.fn(),
+            getRooms: jest.fn(),
+            getAccountData: jest.fn(),
+            getPushActionsForEvent: jest.fn(),
+            mxcUrlToHttp: jest.fn().mockReturnValue(""),
+            isRoomEncrypted: jest.fn().mockReturnValue(false),
+            getProfileInfo: jest.fn().mockImplementation(async (userId: string) => {
+                if (userId === aliceId) return aliceProfileInfo;
+                if (userId === bobId) return bobProfileInfo;
+
+                throw new MatrixError({
+                    errcode: "M_NOT_FOUND",
+                    error: "Profile not found",
+                });
+            }),
+            getIdentityServerUrl: jest.fn(),
+            searchUserDirectory: jest.fn().mockResolvedValue({}),
+            lookupThreePid: jest.fn(),
+            registerWithIdentityServer: jest.fn().mockResolvedValue({
+                access_token: "access_token",
+                token: "token",
+            }),
+            getOpenIdToken: jest.fn().mockResolvedValue({}),
+            getIdentityAccount: jest.fn().mockResolvedValue({}),
+            getTerms: jest.fn().mockResolvedValue({ policies: [] }),
+            supportsThreads: jest.fn().mockReturnValue(false),
+            isInitialSyncComplete: jest.fn().mockReturnValue(true),
+            getClientWellKnown: jest.fn().mockResolvedValue({}),
+        });
         SdkConfig.put({ validated_server_config: {} as ValidatedServerConfig } as IConfigOptions);
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(mockClient);
         jest.clearAllMocks();
-        mockClient.getUserId.mockReturnValue(bobId);
-        mockClient.getClientWellKnown.mockReturnValue({});
 
         room = new Room(roomId, mockClient, mockClient.getSafeUserId());
         room.addLiveEvents([
@@ -127,6 +174,14 @@ describe("InviteDialog", () => {
         });
         mockClient.getRooms.mockReturnValue([room]);
         mockClient.getRoom.mockReturnValue(room);
+
+        SdkContextClass.instance.client = mockClient;
+    });
+
+    afterEach(() => {
+        Modal.closeCurrentModal();
+        SdkContextClass.instance.onLoggedOut();
+        SdkContextClass.instance.client = undefined;
     });
 
     afterAll(() => {
@@ -147,7 +202,7 @@ describe("InviteDialog", () => {
         expect(screen.getByText(`Invite to ${roomId}`)).toBeInTheDocument();
     });
 
-    it("should suggest valid MXIDs even if unknown", async () => {
+    it("should not suggest valid unknown MXIDs", async () => {
         render(
             <InviteDialog
                 kind={InviteKind.Invite}
@@ -156,8 +211,8 @@ describe("InviteDialog", () => {
                 initialText="@localpart:server.tld"
             />,
         );
-
-        await screen.findAllByText("@localpart:server.tld"); // Using findAllByText as the MXID is used for name too
+        await flushPromises();
+        expect(screen.queryByText("@localpart:server.tld")).not.toBeInTheDocument();
     });
 
     it("should not suggest invalid MXIDs", () => {
@@ -232,9 +287,22 @@ describe("InviteDialog", () => {
         input.focus();
         await userEvent.paste(`${bobId} ${aliceEmail}`);
 
-        await screen.findByText(bobId);
+        await screen.findAllByText(bobId);
         await screen.findByText(aliceEmail);
         expect(input).toHaveValue("");
+    });
+    it("should support pasting one username that is not a mx id or email", async () => {
+        mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
+        mockClient.lookupThreePid.mockResolvedValue({});
+
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        const input = screen.getByTestId("invite-dialog-input");
+        input.focus();
+        await userEvent.paste(`${bobbob}`);
+
+        await screen.findAllByText(bobId);
+        expect(input).toHaveValue(`${bobbob}`);
     });
 
     it("should allow to invite multiple emails to a room", async () => {
@@ -291,13 +359,123 @@ describe("InviteDialog", () => {
         render(<InviteDialog kind={InviteKind.Dm} onFinished={jest.fn()} />);
 
         // Start with a MXID → should convert to a pill
-        await enterIntoSearchField("@carol:example.com");
+        await enterIntoSearchField(carolId);
         expect(screen.queryByText("Invites by email can only be sent one at a time")).not.toBeInTheDocument();
-        expectPill("@carol:example.com");
+        expectPill(carolId);
 
         // Add an email → should not convert to a pill
         await enterIntoSearchField(bobEmail);
         expect(screen.getByText("Invites by email can only be sent one at a time")).toBeInTheDocument();
         expectNoPill(bobEmail);
+    });
+
+    it("should start a DM if the profile is available", async () => {
+        render(<InviteDialog kind={InviteKind.Dm} onFinished={jest.fn()} />);
+        await enterIntoSearchField(aliceId);
+        await userEvent.click(screen.getByRole("button", { name: "Go" }));
+        expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockClient, [
+            new DirectoryMember({
+                user_id: aliceId,
+            }),
+        ]);
+    });
+
+    it("should not allow pasting the same user multiple times", async () => {
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        const input = screen.getByTestId("invite-dialog-input");
+        input.focus();
+        await userEvent.paste(`${bobId}`);
+        await userEvent.paste(`${bobId}`);
+        await userEvent.paste(`${bobId}`);
+
+        expect(input).toHaveValue("");
+        await expect(screen.findAllByText(bobId, { selector: "a" })).resolves.toHaveLength(1);
+    });
+
+    it("should add to selection on click of user tile", async () => {
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        const input = screen.getByTestId("invite-dialog-input");
+        input.focus();
+        await userEvent.keyboard(`${aliceId}`);
+
+        const btn = await screen.findByText(aliceId, {
+            selector: ".mx_InviteDialog_tile_nameStack_userId .mx_InviteDialog_tile--room_highlight",
+        });
+        fireEvent.click(btn);
+
+        const tile = await screen.findByText(aliceId, { selector: ".mx_InviteDialog_userTile_name" });
+        expect(tile).toBeInTheDocument();
+    });
+
+    describe("when inviting a user with an unknown profile", () => {
+        beforeEach(async () => {
+            render(<InviteDialog kind={InviteKind.Dm} onFinished={jest.fn()} />);
+            await enterIntoSearchField(carolId);
+            await userEvent.click(screen.getByRole("button", { name: "Go" }));
+            // Wait for the »invite anyway« modal to show up
+            await screen.findByText("The following users may not exist");
+        });
+
+        it("should not start the DM", () => {
+            expect(startDmOnFirstMessage).not.toHaveBeenCalled();
+        });
+
+        it("should show the »invite anyway« dialog if the profile is not available", () => {
+            expect(screen.getByText("The following users may not exist")).toBeInTheDocument();
+            expect(screen.getByText(`${carolId}: Profile not found`)).toBeInTheDocument();
+        });
+
+        describe("when clicking »Start DM anyway«", () => {
+            beforeEach(async () => {
+                await userEvent.click(screen.getByRole("button", { name: "Start DM anyway", exact: true }));
+            });
+
+            it("should start the DM", () => {
+                expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockClient, [
+                    new DirectoryMember({
+                        user_id: carolId,
+                    }),
+                ]);
+            });
+        });
+
+        describe("when clicking »Close«", () => {
+            beforeEach(async () => {
+                mocked(startDmOnFirstMessage).mockClear();
+                await userEvent.click(screen.getByRole("button", { name: "Close" }));
+            });
+
+            it("should not start the DM", () => {
+                expect(startDmOnFirstMessage).not.toHaveBeenCalled();
+            });
+        });
+    });
+
+    describe("when inviting a user with an unknown profile and »promptBeforeInviteUnknownUsers« setting = false", () => {
+        beforeEach(async () => {
+            mocked(startDmOnFirstMessage).mockClear();
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName !== "promptBeforeInviteUnknownUsers",
+            );
+            render(<InviteDialog kind={InviteKind.Dm} onFinished={jest.fn()} />);
+            await enterIntoSearchField(carolId);
+            await userEvent.click(screen.getByRole("button", { name: "Go" }));
+            // modal rendering has some weird sleeps - fake timers will mess up the entire test
+            await sleep(100);
+        });
+
+        it("should not show the »invite anyway« dialog", () => {
+            expect(screen.queryByText("The following users may not exist")).not.toBeInTheDocument();
+        });
+
+        it("should start the DM directly", () => {
+            expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockClient, [
+                new DirectoryMember({
+                    user_id: carolId,
+                }),
+            ]);
+        });
     });
 });

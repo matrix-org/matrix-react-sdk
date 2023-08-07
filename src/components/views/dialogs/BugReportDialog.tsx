@@ -37,7 +37,7 @@ interface IProps {
     onFinished: (success: boolean) => void;
     initialText?: string;
     label?: string;
-    error?: Error;
+    error?: unknown;
 }
 
 interface IState {
@@ -53,9 +53,11 @@ interface IState {
 
 export default class BugReportDialog extends React.Component<IProps, IState> {
     private unmounted: boolean;
+    private issueRef: React.RefObject<Field>;
 
     public constructor(props: IProps) {
         super(props);
+
         this.state = {
             sendLogs: true,
             busy: false,
@@ -66,7 +68,9 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             downloadBusy: false,
             downloadProgress: null,
         };
+
         this.unmounted = false;
+        this.issueRef = React.createRef();
 
         // Get all of the extra info dumped to the console when someone is about
         // to send debug logs. Since this is a fire and forget action, we do
@@ -77,6 +81,10 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         defaultDispatcher.dispatch({
             action: Action.DumpDebugLogs,
         });
+    }
+
+    public componentDidMount(): void {
+        this.issueRef.current?.focus();
     }
 
     public componentWillUnmount(): void {
@@ -152,7 +160,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             if (!this.unmounted) {
                 this.setState({
                     downloadBusy: false,
-                    downloadProgress: _t("Failed to send logs: ") + `${err.message}`,
+                    downloadProgress: _t("Failed to send logs: ") + `${err instanceof Error ? err.message : ""}`,
                 });
             }
         }
@@ -255,6 +263,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                         onChange={this.onIssueUrlChange}
                         value={this.state.issueUrl}
                         placeholder="https://github.com/vector-im/element-web/issues/..."
+                        ref={this.issueRef}
                     />
                     <Field
                         className="mx_BugReportDialog_field_input"

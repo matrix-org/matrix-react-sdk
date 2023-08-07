@@ -31,7 +31,7 @@ interface IProps {
     // XXX: It can take a cycle or two for the MessageActionBar to have all the props/setup
     // required to get us a MediaEventHelper, so we use a getter function instead to prod for
     // one.
-    mediaEventHelperGet: () => MediaEventHelper;
+    mediaEventHelperGet: () => MediaEventHelper | undefined;
 }
 
 interface IState {
@@ -53,9 +53,10 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
     }
 
     private onDownloadClick = async (): Promise<void> => {
-        if (this.state.loading) return;
+        const mediaEventHelper = this.props.mediaEventHelperGet();
+        if (this.state.loading || !mediaEventHelper) return;
 
-        if (this.props.mediaEventHelperGet().media.isEncrypted) {
+        if (mediaEventHelper.media.isEncrypted) {
             this.setState({ tooltip: _td("Decrypting") });
         }
 
@@ -63,18 +64,18 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
 
         if (this.state.blob) {
             // Cheat and trigger a download, again.
-            return this.doDownload();
+            return this.doDownload(this.state.blob);
         }
 
-        const blob = await this.props.mediaEventHelperGet().sourceBlob.value;
+        const blob = await mediaEventHelper.sourceBlob.value;
         this.setState({ blob });
-        await this.doDownload();
+        await this.doDownload(blob);
     };
 
-    private async doDownload(): Promise<void> {
+    private async doDownload(blob: Blob): Promise<void> {
         await this.downloader.download({
-            blob: this.state.blob,
-            name: this.props.mediaEventHelperGet().fileName,
+            blob,
+            name: this.props.mediaEventHelperGet()!.fileName,
         });
         this.setState({ loading: false });
     }

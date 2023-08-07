@@ -17,10 +17,8 @@ limitations under the License.
 import { EventEmitter } from "events";
 import { mocked } from "jest-mock";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { RoomMember, RoomStateEvent, ClientEvent, MatrixEvent, Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import { defer } from "matrix-js-sdk/src/utils";
-import { ClientEvent, RoomEvent, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import SpaceStore from "../../src/stores/spaces/SpaceStore";
 import {
@@ -38,6 +36,10 @@ import SettingsStore from "../../src/settings/SettingsStore";
 import { SettingLevel } from "../../src/settings/SettingLevel";
 import { Action } from "../../src/dispatcher/actions";
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
+import RoomListStore from "../../src/stores/room-list/RoomListStore";
+import { DefaultTagID } from "../../src/stores/room-list/models";
+import { RoomNotificationStateStore } from "../../src/stores/notifications/RoomNotificationStateStore";
+import { NotificationColor } from "../../src/stores/notifications/NotificationColor";
 
 jest.useFakeTimers();
 
@@ -93,7 +95,7 @@ DMRoomMap.sharedInstance = { getUserIdForRoomId, getDMRoomsForUserId };
 describe("SpaceStore", () => {
     stubClient();
     const store = SpaceStore.instance;
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
 
     const spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
 
@@ -669,6 +671,29 @@ describe("SpaceStore", () => {
             it("does not honour m.space.parent if sender does not have permission in parent space", () => {
                 expect(store.isRoomInSpace(space3, room3)).toBeFalsy();
             });
+        });
+    });
+
+    it("should add new DM Invites to the People Space Notification State", async () => {
+        mkRoom(dm1);
+        mocked(client.getRoom(dm1)!).getMyMembership.mockReturnValue("join");
+        mocked(client).getRoom.mockImplementation((roomId) => rooms.find((room) => room.roomId === roomId) || null);
+
+        await run();
+
+        mkRoom(dm2);
+        const cliDm2 = client.getRoom(dm2)!;
+        mocked(cliDm2).getMyMembership.mockReturnValue("invite");
+        mocked(client).getRoom.mockImplementation((roomId) => rooms.find((room) => room.roomId === roomId) || null);
+        client.emit(RoomEvent.MyMembership, cliDm2, "invite");
+
+        [dm1, dm2].forEach((d) => {
+            expect(
+                store
+                    .getNotificationState(MetaSpace.People)
+                    .rooms.map((r) => r.roomId)
+                    .includes(d),
+            ).toBeTruthy();
         });
     });
 
@@ -1427,6 +1452,31 @@ describe("SpaceStore", () => {
             expect(client.getVisibleRooms).toHaveBeenCalledWith(true);
             expect(client.getVisibleRooms).not.toHaveBeenCalledWith(false);
             expect(client.getVisibleRooms).not.toHaveBeenCalledWith();
+        });
+    });
+
+    describe("setActiveRoomInSpace", () => {
+        it("should work with Home as all rooms space", async () => {
+            const room = mkRoom(room1);
+            const state = RoomNotificationStateStore.instance.getRoomState(room);
+            // @ts-ignore
+            state._color = NotificationColor.Grey;
+            jest.spyOn(RoomListStore.instance, "orderedLists", "get").mockReturnValue({
+                [DefaultTagID.Untagged]: [room],
+            });
+
+            // init the store
+            await run();
+            await setShowAllRooms(true);
+
+            store.setActiveRoomInSpace(MetaSpace.Home);
+
+            expect(spyDispatcher).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    action: "view_room",
+                    room_id: room.roomId,
+                }),
+            );
         });
     });
 });

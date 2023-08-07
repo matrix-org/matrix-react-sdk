@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef, RefObject, useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { ISearchResults } from "matrix-js-sdk/src/@types/search";
-import { IThreadBundledRelationship } from "matrix-js-sdk/src/models/event";
+import { IThreadBundledRelationship, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import ScrollPanel from "./ScrollPanel";
 import { SearchScope } from "../views/rooms/SearchBar";
@@ -50,7 +49,6 @@ interface Props {
     promise: Promise<ISearchResults>;
     abortController?: AbortController;
     resizeNotifier: ResizeNotifier;
-    permalinkCreator: RoomPermalinkCreator;
     className: string;
     onUpdate(inProgress: boolean, results: ISearchResults | null): void;
 }
@@ -58,16 +56,23 @@ interface Props {
 // XXX: todo: merge overlapping results somehow?
 // XXX: why doesn't searching on name work?
 export const RoomSearchView = forwardRef<ScrollPanel, Props>(
-    (
-        { term, scope, promise, abortController, resizeNotifier, permalinkCreator, className, onUpdate }: Props,
-        ref: RefObject<ScrollPanel>,
-    ) => {
+    ({ term, scope, promise, abortController, resizeNotifier, className, onUpdate }: Props, ref) => {
         const client = useContext(MatrixClientContext);
         const roomContext = useContext(RoomContext);
         const [inProgress, setInProgress] = useState(true);
         const [highlights, setHighlights] = useState<string[] | null>(null);
         const [results, setResults] = useState<ISearchResults | null>(null);
         const aborted = useRef(false);
+        // A map from room ID to permalink creator
+        const permalinkCreators = useRef(new Map<string, RoomPermalinkCreator>()).current;
+        const innerRef = useRef<ScrollPanel | null>();
+
+        useEffect(() => {
+            return () => {
+                permalinkCreators.forEach((pc) => pc.stop());
+                permalinkCreators.clear();
+            };
+        }, [permalinkCreators]);
 
         const handleSearchResult = useCallback(
             (searchPromise: Promise<ISearchResults>): Promise<boolean> => {
@@ -118,6 +123,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
 
                             setHighlights(highlights);
                             setResults({ ...results }); // copy to force a refresh
+                            return false;
                         },
                         (error) => {
                             if (aborted.current) {
@@ -172,7 +178,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
             }
 
             debuglog("requesting more search results");
-            const searchPromise = searchPagination(results);
+            const searchPromise = searchPagination(client, results);
             return handleSearchResult(searchPromise);
         };
 
@@ -205,8 +211,16 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
         // once dynamic content in the search results load, make the scrollPanel check
         // the scroll offsets.
         const onHeightChanged = (): void => {
-            const scrollPanel = ref.current;
-            scrollPanel?.checkScroll();
+            innerRef.current?.checkScroll();
+        };
+
+        const onRef = (e: ScrollPanel | null): void => {
+            if (typeof ref === "function") {
+                ref(e);
+            } else if (!!ref) {
+                ref.current = e;
+            }
+            innerRef.current = e;
         };
 
         let lastRoomId: string | undefined;
@@ -217,7 +231,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
             const result = results.results[i];
 
             const mxEv = result.context.getEvent();
-            const roomId = mxEv.getRoomId();
+            const roomId = mxEv.getRoomId()!;
             const room = client.getRoom(roomId);
             if (!room) {
                 // if we do not have the room in js-sdk stores then hide it as we cannot easily show it
@@ -228,7 +242,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                 continue;
             }
 
-            if (!haveRendererForEvent(mxEv, roomContext.showHiddenEvents)) {
+            if (!haveRendererForEvent(mxEv, client, roomContext.showHiddenEvents)) {
                 // XXX: can this ever happen? It will make the result count
                 // not match the displayed count.
                 continue;
@@ -283,6 +297,13 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                 ourEventsIndexes.push(result.context.getOurEventIndex());
             }
 
+            let permalinkCreator = permalinkCreators.get(roomId);
+            if (!permalinkCreator) {
+                permalinkCreator = new RoomPermalinkCreator(room);
+                permalinkCreator.start();
+                permalinkCreators.set(roomId, permalinkCreator);
+            }
+
             ret.push(
                 <SearchResultTile
                     key={mxEv.getId()}
@@ -301,7 +322,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
 
         return (
             <ScrollPanel
-                ref={ref}
+                ref={onRef}
                 className={"mx_RoomView_searchResultsPanel " + className}
                 onFillRequest={onSearchResultsFillRequest}
                 resizeNotifier={resizeNotifier}

@@ -17,8 +17,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { _t } from "../../../languageHandler";
@@ -31,7 +30,7 @@ import { Action } from "../../../dispatcher/actions";
 import Spinner from "./Spinner";
 import ReplyTile from "../rooms/ReplyTile";
 import { Pill, PillType } from "./Pill";
-import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
+import AccessibleButton from "./AccessibleButton";
 import { getParentEventId, shouldDisplayReply } from "../../../utils/Reply";
 import RoomContext from "../../../contexts/RoomContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -45,9 +44,9 @@ const SHOW_EXPAND_QUOTE_PIXELS = 60;
 
 interface IProps {
     // the latest event in this chain of replies
-    parentEv?: MatrixEvent;
+    parentEv: MatrixEvent;
     // called when the ReplyChain contents has changed, including EventTiles thereof
-    onHeightChanged: () => void;
+    onHeightChanged?: () => void;
     permalinkCreator?: RoomPermalinkCreator;
     // Specifies which layout to use.
     layout?: Layout;
@@ -91,11 +90,11 @@ export default class ReplyChain extends React.Component<IProps, IState> {
             err: false,
         };
 
-        this.room = this.matrixClient.getRoom(this.props.parentEv.getRoomId());
+        this.room = this.matrixClient.getRoom(this.props.parentEv.getRoomId())!;
     }
 
     private get matrixClient(): MatrixClient {
-        return MatrixClientPeg.get();
+        return MatrixClientPeg.safeGet();
     }
 
     public componentDidMount(): void {
@@ -104,7 +103,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
     }
 
     public componentDidUpdate(): void {
-        this.props.onHeightChanged();
+        this.props.onHeightChanged?.();
         this.trySetExpandableQuotes();
     }
 
@@ -155,7 +154,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         }
     }
 
-    private async getEvent(eventId: string): Promise<MatrixEvent | null> {
+    private async getEvent(eventId?: string): Promise<MatrixEvent | null> {
         if (!eventId) return null;
         const event = this.room.findEventById(eventId);
         if (event) return event;
@@ -180,7 +179,8 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         this.initialize();
     };
 
-    private onQuoteClick = async (event: ButtonEvent): Promise<void> => {
+    private onQuoteClick = async (): Promise<void> => {
+        if (!this.state.loadedEv) return;
         const events = [this.state.loadedEv, ...this.state.events];
 
         let loadedEv: MatrixEvent | null = null;

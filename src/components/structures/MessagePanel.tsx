@@ -17,13 +17,12 @@ limitations under the License.
 import React, { createRef, ReactNode, TransitionEvent } from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, MatrixClient, RoomStateEvent, EventStatus, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
+import { Optional } from "matrix-events-sdk";
 
 import shouldHideEvent from "../../shouldHideEvent";
 import { wantsDateSeparator } from "../../DateUtils";
@@ -32,7 +31,12 @@ import SettingsStore from "../../settings/SettingsStore";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { Layout } from "../../settings/enums/Layout";
 import { _t } from "../../languageHandler";
-import EventTile, { GetRelationsForEvent, IReadReceiptProps, UnwrappedEventTile } from "../views/rooms/EventTile";
+import EventTile, {
+    GetRelationsForEvent,
+    IReadReceiptProps,
+    isEligibleForSpecialReceipt,
+    UnwrappedEventTile,
+} from "../views/rooms/EventTile";
 import { hasText } from "../../TextForEvent";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import DMRoomMap from "../../utils/DMRoomMap";
@@ -72,6 +76,7 @@ const groupedStateEvents = [
 export function shouldFormContinuation(
     prevEvent: MatrixEvent | null,
     mxEvent: MatrixEvent,
+    matrixClient: MatrixClient,
     showHiddenEvents: boolean,
     timelineRenderingType?: TimelineRenderingType,
 ): boolean {
@@ -109,7 +114,7 @@ export function shouldFormContinuation(
     }
 
     // if we don't have tile for previous event then it was shown by showHiddenEvents and has no SenderProfile
-    if (!haveRendererForEvent(prevEvent, showHiddenEvents)) return false;
+    if (!haveRendererForEvent(prevEvent, matrixClient, showHiddenEvents)) return false;
 
     return true;
 }
@@ -219,7 +224,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     // opaque readreceipt info for each userId; used by ReadReceiptMarker
     // to manage its animations
-    private readonly readReceiptMap: { [userId: string]: IReadReceiptInfo } = {};
+    private readReceiptMap: { [userId: string]: IReadReceiptInfo } = {};
 
     // Track read receipts by event ID. For each _shown_ event ID, we store
     // the list of read receipts to display:
@@ -233,7 +238,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     // This is recomputed on each render. It's only stored on the component
     // for ease of passing the data around since it's computed in one pass
     // over all events.
-    private readReceiptsByEvent: Record<string, IReadReceiptProps[]> = {};
+    private readReceiptsByEvent: Map<string, IReadReceiptProps[]> = new Map();
 
     // Track read receipts by user ID. For each user ID we've ever shown a
     // a read receipt for, we store an object:
@@ -252,7 +257,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     // This is recomputed on each render, using the data from the previous
     // render as our fallback for any user IDs we can't match a receipt to a
     // displayed event in the current render cycle.
-    private readReceiptsByUserId: Record<string, IReadReceiptForUser> = {};
+    private readReceiptsByUserId: Map<string, IReadReceiptForUser> = new Map();
 
     private readonly _showHiddenEvents: boolean;
     private isMounted = false;
@@ -300,6 +305,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         this.isMounted = false;
         this.props.room?.currentState.off(RoomStateEvent.Update, this.calculateRoomMembersCount);
         SettingsStore.unwatchSetting(this.showTypingNotificationsWatcherRef);
+        this.readReceiptMap = {};
     }
 
     public componentDidUpdate(prevProps: IProps, prevState: IState): void {
@@ -307,7 +313,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             this.calculateRoomMembersCount();
         }
 
-        if (prevProps.readMarkerVisible && this.props.readMarkerEventId !== prevProps.readMarkerEventId) {
+        if (
+            prevProps.readMarkerVisible &&
+            prevProps.readMarkerEventId &&
+            this.props.readMarkerEventId !== prevProps.readMarkerEventId
+        ) {
             const ghostReadMarkers = this.state.ghostReadMarkers;
             ghostReadMarkers.push(prevProps.readMarkerEventId);
             this.setState({
@@ -327,7 +337,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     private shouldHideSender(): boolean {
-        return this.props.room?.getInvitedAndJoinedMemberCount() <= 2 && this.props.layout === Layout.Bubble;
+        return (
+            !!this.props.room &&
+            this.props.room.getInvitedAndJoinedMemberCount() <= 2 &&
+            this.props.layout === Layout.Bubble
+        );
     }
 
     private calculateRoomMembersCount = (): void => {
@@ -432,10 +446,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
      * node (specifically, the bottom of it) will be positioned. If omitted, it
      * defaults to 0.
      */
-    public scrollToEvent(eventId: string, pixelOffset: number, offsetBase: number): void {
-        if (this.scrollPanel.current) {
-            this.scrollPanel.current.scrollToToken(eventId, pixelOffset, offsetBase);
-        }
+    public scrollToEvent(eventId: string, pixelOffset?: number, offsetBase?: number): void {
+        this.scrollPanel.current?.scrollToToken(eventId, pixelOffset, offsetBase);
     }
 
     public scrollToEventIfNeeded(eventId: string): void {
@@ -465,7 +477,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             }
         }
 
-        if (MatrixClientPeg.get().isUserIgnored(mxEv.getSender())) {
+        if (MatrixClientPeg.safeGet().isUserIgnored(mxEv.getSender()!)) {
             return false; // ignored = no show (only happens if the ignore happens after an event was received)
         }
 
@@ -473,7 +485,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             return true;
         }
 
-        if (!haveRendererForEvent(mxEv, this.showHiddenEvents)) {
+        if (!haveRendererForEvent(mxEv, MatrixClientPeg.safeGet(), this.showHiddenEvents)) {
             return false; // no tile = no show
         }
 
@@ -495,14 +507,14 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // algorithms which depend on its position on the screen aren't
             // confused.
             if (visible) {
-                hr = <hr className="mx_RoomView_myReadMarker" style={{ opacity: 1, width: "99%" }} />;
+                hr = <hr style={{ opacity: 1, width: "99%" }} />;
             }
 
             return (
                 <li
                     key={"readMarker_" + eventId}
                     ref={this.readMarkerNode}
-                    className="mx_RoomView_myReadMarker_container"
+                    className="mx_MessagePanel_myReadMarker"
                     data-scroll-tokens={eventId}
                 >
                     {hr}
@@ -521,7 +533,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // and TransitionGroup requires that all its children are Transitions.
             const hr = (
                 <hr
-                    className="mx_RoomView_myReadMarker"
                     ref={this.collectGhostReadMarker}
                     onTransitionEnd={this.onGhostTransitionEnd}
                     data-eventid={eventId}
@@ -532,7 +543,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             // we get a new DOM node (restarting the animation) when the ghost
             // moves to a different event.
             return (
-                <li key={"_readuptoghost_" + eventId} className="mx_RoomView_myReadMarker_container">
+                <li key={"_readuptoghost_" + eventId} className="mx_MessagePanel_myReadMarker">
                     {hr}
                 </li>
             );
@@ -574,9 +585,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
      * the tile.
      */
     private getNextEventInfo(
-        events: EventAndShouldShow[],
+        events: WrappedEvent[],
         i: number,
-    ): { nextEventAndShouldShow: EventAndShouldShow | null; nextTile: MatrixEvent | null } {
+    ): { nextEventAndShouldShow: WrappedEvent | null; nextTile: MatrixEvent | null } {
         // WARNING: this method is on a hot path.
 
         const nextEventAndShouldShow = i < events.length - 1 ? events[i + 1] : null;
@@ -586,17 +597,23 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return { nextEventAndShouldShow, nextTile };
     }
 
-    private get pendingEditItem(): string | undefined {
+    private get pendingEditItem(): string | null {
         if (!this.props.room) {
-            return undefined;
+            return null;
         }
 
         try {
             return localStorage.getItem(editorRoomKey(this.props.room.roomId, this.context.timelineRenderingType));
         } catch (err) {
             logger.error(err);
-            return undefined;
+            return null;
         }
+    }
+
+    private isSentState(ev: MatrixEvent): boolean {
+        const status = ev.getAssociatedStatus();
+        // A falsey state applies to events which have come down sync, including remote echoes
+        return !status || status === EventStatus.SENT;
     }
 
     private getEventTiles(): ReactNode[] {
@@ -607,11 +624,15 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // we also need to figure out which is the last event we show which isn't
         // a local echo, to manage the read-marker.
         let lastShownEvent: MatrixEvent | undefined;
-        const events: EventAndShouldShow[] = this.props.events.map((event) => {
+        const events: WrappedEvent[] = this.props.events.map((event) => {
             return { event, shouldShow: this.shouldShowEvent(event) };
         });
 
+        const userId = MatrixClientPeg.safeGet().getSafeUserId();
+
+        let foundLastSuccessfulEvent = false;
         let lastShownNonLocalEchoIndex = -1;
+        // Find the indices of the last successful event we sent and the last non-local-echo events shown
         for (let i = events.length - 1; i >= 0; i--) {
             const { event, shouldShow } = events[i];
             if (!shouldShow) {
@@ -622,13 +643,23 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 lastShownEvent = event;
             }
 
-            if (event.status) {
-                // this is a local echo
-                continue;
+            if (!foundLastSuccessfulEvent && this.isSentState(event) && isEligibleForSpecialReceipt(event)) {
+                foundLastSuccessfulEvent = true;
+                // If we are not sender of this last successful event eligible for special receipt then we stop here
+                // As we do not want to render our sent receipt if there are more receipts below it and events sent
+                // by other users get a synthetic read receipt for their sent events.
+                if (event.getSender() === userId) {
+                    events[i].lastSuccessfulWeSent = true;
+                }
             }
 
-            lastShownNonLocalEchoIndex = i;
-            break;
+            if (lastShownNonLocalEchoIndex < 0 && !event.status) {
+                lastShownNonLocalEchoIndex = i;
+            }
+
+            if (lastShownNonLocalEchoIndex >= 0 && foundLastSuccessfulEvent) {
+                break;
+            }
         }
 
         const ret: ReactNode[] = [];
@@ -637,7 +668,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // Note: the EventTile might still render a "sent/sending receipt" independent of
         // this information. When not providing read receipt information, the tile is likely
         // to assume that sent receipts are to be shown more often.
-        this.readReceiptsByEvent = {};
+        this.readReceiptsByEvent = new Map();
         if (this.props.showReadReceipts) {
             this.readReceiptsByEvent = this.getReadReceiptsByShownEvent(events);
         }
@@ -645,15 +676,15 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         let grouper: BaseGrouper | null = null;
 
         for (let i = 0; i < events.length; i++) {
-            const eventAndShouldShow = events[i];
-            const { event, shouldShow } = eventAndShouldShow;
-            const eventId = event.getId();
+            const wrappedEvent = events[i];
+            const { event, shouldShow } = wrappedEvent;
+            const eventId = event.getId()!;
             const last = event === lastShownEvent;
             const { nextEventAndShouldShow, nextTile } = this.getNextEventInfo(events, i);
 
             if (grouper) {
-                if (grouper.shouldGroup(eventAndShouldShow)) {
-                    grouper.add(eventAndShouldShow);
+                if (grouper.shouldGroup(wrappedEvent)) {
+                    grouper.add(wrappedEvent);
                     continue;
                 } else {
                     // not part of group, so get the group tiles, close the
@@ -665,10 +696,10 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             }
 
             for (const Grouper of groupers) {
-                if (Grouper.canStartGroup(this, eventAndShouldShow) && !this.props.disableGrouping) {
+                if (Grouper.canStartGroup(this, wrappedEvent) && !this.props.disableGrouping) {
                     grouper = new Grouper(
                         this,
-                        eventAndShouldShow,
+                        wrappedEvent,
                         prevEvent,
                         lastShownEvent,
                         nextEventAndShouldShow,
@@ -683,7 +714,16 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     // make sure we unpack the array returned by getTilesForEvent,
                     // otherwise React will auto-generate keys, and we will end up
                     // replacing all the DOM elements every time we paginate.
-                    ret.push(...this.getTilesForEvent(prevEvent, event, last, false, nextEventAndShouldShow, nextTile));
+                    ret.push(
+                        ...this.getTilesForEvent(
+                            prevEvent,
+                            wrappedEvent,
+                            last,
+                            false,
+                            nextEventAndShouldShow,
+                            nextTile,
+                        ),
+                    );
                     prevEvent = event;
                 }
 
@@ -701,12 +741,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     public getTilesForEvent(
         prevEvent: MatrixEvent | null,
-        mxEv: MatrixEvent,
+        wrappedEvent: WrappedEvent,
         last = false,
         isGrouped = false,
-        nextEvent: EventAndShouldShow | null = null,
+        nextEvent: WrappedEvent | null = null,
         nextEventWithTile: MatrixEvent | null = null,
     ): ReactNode[] {
+        const mxEv = wrappedEvent.event;
         const ret: ReactNode[] = [];
 
         const isEditing = this.props.editState?.getEvent().getId() === mxEv.getId();
@@ -729,6 +770,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             ret.push(dateSeparator);
         }
 
+        const cli = MatrixClientPeg.safeGet();
         let lastInSection = true;
         if (nextEventWithTile) {
             const nextEv = nextEventWithTile;
@@ -736,43 +778,19 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             lastInSection =
                 willWantDateSeparator ||
                 mxEv.getSender() !== nextEv.getSender() ||
-                getEventDisplayInfo(nextEv, this.showHiddenEvents).isInfoMessage ||
-                !shouldFormContinuation(mxEv, nextEv, this.showHiddenEvents, this.context.timelineRenderingType);
+                getEventDisplayInfo(cli, nextEv, this.showHiddenEvents).isInfoMessage ||
+                !shouldFormContinuation(mxEv, nextEv, cli, this.showHiddenEvents, this.context.timelineRenderingType);
         }
 
         // is this a continuation of the previous message?
         const continuation =
             !wantsDateSeparator &&
-            shouldFormContinuation(prevEvent, mxEv, this.showHiddenEvents, this.context.timelineRenderingType);
+            shouldFormContinuation(prevEvent, mxEv, cli, this.showHiddenEvents, this.context.timelineRenderingType);
 
-        const eventId = mxEv.getId();
+        const eventId = mxEv.getId()!;
         const highlight = eventId === this.props.highlightedEventId;
 
-        const readReceipts = this.readReceiptsByEvent[eventId];
-
-        let isLastSuccessful = false;
-        const isSentState = (s: EventStatus | null): boolean => !s || s === EventStatus.SENT;
-        const isSent = isSentState(mxEv.getAssociatedStatus());
-        const hasNextEvent = nextEvent?.shouldShow;
-        if (!hasNextEvent && isSent) {
-            isLastSuccessful = true;
-        } else if (hasNextEvent && isSent && !isSentState(nextEvent.event.getAssociatedStatus())) {
-            isLastSuccessful = true;
-        }
-
-        // This is a bit nuanced, but if our next event is hidden but a future event is not
-        // hidden then we're not the last successful.
-        if (
-            nextEventWithTile &&
-            nextEventWithTile !== nextEvent?.event &&
-            isSentState(nextEventWithTile.getAssociatedStatus())
-        ) {
-            isLastSuccessful = false;
-        }
-
-        // We only want to consider "last successful" if the event is sent by us, otherwise of course
-        // it's successful: we received it.
-        isLastSuccessful = isLastSuccessful && mxEv.getSender() === MatrixClientPeg.get().getUserId();
+        const readReceipts = this.readReceiptsByEvent.get(eventId);
 
         const callEventGrouper = this.props.callEventGroupers.get(mxEv.getContent().call_id);
         // use txnId as key if available so that we don't remount during sending
@@ -797,7 +815,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 permalinkCreator={this.props.permalinkCreator}
                 last={last}
                 lastInSection={lastInSection}
-                lastSuccessful={isLastSuccessful}
+                lastSuccessful={wrappedEvent.lastSuccessfulWeSent}
                 isSelectedEvent={highlight}
                 getRelationsForEvent={this.props.getRelationsForEvent}
                 showReactions={this.props.showReactions}
@@ -811,7 +829,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return ret;
     }
 
-    public wantsDateSeparator(prevEvent: MatrixEvent | null, nextEventDate: Date): boolean {
+    public wantsDateSeparator(prevEvent: MatrixEvent | null, nextEventDate: Optional<Date>): boolean {
         if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
             return false;
         }
@@ -826,7 +844,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     // Get a list of read receipts that should be shown next to this event
     // Receipts are objects which have a 'userId', 'roomMember' and 'ts'.
     private getReadReceiptsForEvent(event: MatrixEvent): IReadReceiptProps[] | null {
-        const myUserId = MatrixClientPeg.get().credentials.userId;
+        const myUserId = MatrixClientPeg.safeGet().credentials.userId;
 
         // get list of read receipts, sorted most recent first
         const { room } = this.props;
@@ -849,7 +867,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             if (!r.userId || !isSupportedReceiptType(r.type) || r.userId === myUserId) {
                 return; // ignore non-read receipts and receipts from self.
             }
-            if (MatrixClientPeg.get().isUserIgnored(r.userId)) {
+            if (MatrixClientPeg.safeGet().isUserIgnored(r.userId)) {
                 return; // ignore ignored users
             }
             const member = room.getMember(r.userId);
@@ -865,36 +883,31 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     // Get an object that maps from event ID to a list of read receipts that
     // should be shown next to that event. If a hidden event has read receipts,
     // they are folded into the receipts of the last shown event.
-    private getReadReceiptsByShownEvent(events: EventAndShouldShow[]): Record<string, IReadReceiptProps[]> {
-        const receiptsByEvent: Record<string, IReadReceiptProps[]> = {};
-        const receiptsByUserId: Record<
-            string,
-            {
-                lastShownEventId: string;
-                receipt: IReadReceiptProps;
-            }
-        > = {};
+    private getReadReceiptsByShownEvent(events: WrappedEvent[]): Map<string, IReadReceiptProps[]> {
+        const receiptsByEvent: Map<string, IReadReceiptProps[]> = new Map();
+        const receiptsByUserId: Map<string, IReadReceiptForUser> = new Map();
 
-        let lastShownEventId;
-        for (const { event, shouldShow } of events) {
-            if (shouldShow) {
+        let lastShownEventId: string | undefined;
+        for (const event of this.props.events) {
+            if (this.shouldShowEvent(event)) {
                 lastShownEventId = event.getId();
             }
             if (!lastShownEventId) {
                 continue;
             }
 
-            const existingReceipts = receiptsByEvent[lastShownEventId] || [];
+            const existingReceipts = receiptsByEvent.get(lastShownEventId) || [];
             const newReceipts = this.getReadReceiptsForEvent(event);
-            receiptsByEvent[lastShownEventId] = existingReceipts.concat(newReceipts);
+            if (!newReceipts) continue;
+            receiptsByEvent.set(lastShownEventId, existingReceipts.concat(newReceipts));
 
             // Record these receipts along with their last shown event ID for
             // each associated user ID.
             for (const receipt of newReceipts) {
-                receiptsByUserId[receipt.userId] = {
+                receiptsByUserId.set(receipt.userId, {
                     lastShownEventId,
                     receipt,
-                };
+                });
             }
         }
 
@@ -904,21 +917,21 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // someone which had one in the last. By looking through our previous
         // mapping of receipts by user ID, we can cover recover any receipts
         // that would have been lost by using the same event ID from last time.
-        for (const userId in this.readReceiptsByUserId) {
-            if (receiptsByUserId[userId]) {
+        for (const userId of this.readReceiptsByUserId.keys()) {
+            if (receiptsByUserId.get(userId)) {
                 continue;
             }
-            const { lastShownEventId, receipt } = this.readReceiptsByUserId[userId];
-            const existingReceipts = receiptsByEvent[lastShownEventId] || [];
-            receiptsByEvent[lastShownEventId] = existingReceipts.concat(receipt);
-            receiptsByUserId[userId] = { lastShownEventId, receipt };
+            const { lastShownEventId, receipt } = this.readReceiptsByUserId.get(userId)!;
+            const existingReceipts = receiptsByEvent.get(lastShownEventId) || [];
+            receiptsByEvent.set(lastShownEventId, existingReceipts.concat(receipt));
+            receiptsByUserId.set(userId, { lastShownEventId, receipt });
         }
         this.readReceiptsByUserId = receiptsByUserId;
 
         // After grouping receipts by shown events, do another pass to sort each
         // receipt list.
-        for (const eventId in receiptsByEvent) {
-            receiptsByEvent[eventId].sort((r1, r2) => {
+        for (const receipts of receiptsByEvent.values()) {
+            receipts.sort((r1, r2) => {
                 return r2.ts - r1.ts;
             });
         }
@@ -1024,11 +1037,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         let ircResizer: JSX.Element | undefined;
         if (this.props.layout == Layout.IRC) {
             ircResizer = (
-                <IRCTimelineProfileResizer
-                    minWidth={20}
-                    maxWidth={600}
-                    roomId={this.props.room ? this.props.room.roomId : null}
-                />
+                <IRCTimelineProfileResizer minWidth={20} maxWidth={600} roomId={this.props.room?.roomId ?? null} />
             );
         }
 
@@ -1060,38 +1069,41 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 }
 
 /**
- * Holds on to an event, caching the information about whether it should be
- * shown. Avoids calling shouldShowEvent more times than we need to.
+ * Holds on to an event, caching the information about it in the context of the current messages list.
+ * Avoids calling shouldShowEvent more times than we need to.
+ * Simplifies threading of event context like whether it's the last successful event we sent which cannot be determined
+ * by a consumer from the event alone, so has to be done by the event list processing code earlier.
  */
-interface EventAndShouldShow {
+interface WrappedEvent {
     event: MatrixEvent;
-    shouldShow: boolean;
+    shouldShow?: boolean;
+    lastSuccessfulWeSent?: boolean;
 }
 
 abstract class BaseGrouper {
-    public static canStartGroup = (_panel: MessagePanel, _ev: EventAndShouldShow): boolean => true;
+    public static canStartGroup = (_panel: MessagePanel, _ev: WrappedEvent): boolean => true;
 
-    public events: MatrixEvent[] = [];
+    public events: WrappedEvent[] = [];
     // events that we include in the group but then eject out and place above the group.
-    public ejectedEvents: MatrixEvent[] = [];
+    public ejectedEvents: WrappedEvent[] = [];
     public readMarker: ReactNode;
 
     public constructor(
         public readonly panel: MessagePanel,
-        public readonly firstEventAndShouldShow: EventAndShouldShow,
+        public readonly firstEventAndShouldShow: WrappedEvent,
         public readonly prevEvent: MatrixEvent | null,
         public readonly lastShownEvent: MatrixEvent | undefined,
-        public readonly nextEvent: EventAndShouldShow | null,
+        public readonly nextEvent: WrappedEvent | null,
         public readonly nextEventTile?: MatrixEvent | null,
     ) {
         this.readMarker = panel.readMarkerForEvent(
-            firstEventAndShouldShow.event.getId(),
+            firstEventAndShouldShow.event.getId()!,
             firstEventAndShouldShow.event === lastShownEvent,
         );
     }
 
-    public abstract shouldGroup(ev: EventAndShouldShow): boolean;
-    public abstract add(ev: EventAndShouldShow): void;
+    public abstract shouldGroup(ev: WrappedEvent): boolean;
+    public abstract add(ev: WrappedEvent): void;
     public abstract getTiles(): ReactNode[];
     public abstract getNewPrevEvent(): MatrixEvent;
 }
@@ -1112,11 +1124,11 @@ abstract class BaseGrouper {
 // Grouping only events sent by the same user that sent the `m.room.create` and only until
 // the first non-state event, beacon_info event or membership event which is not regarding the sender of the `m.room.create` event
 class CreationGrouper extends BaseGrouper {
-    public static canStartGroup = function (_panel: MessagePanel, { event }: EventAndShouldShow): boolean {
+    public static canStartGroup = function (_panel: MessagePanel, { event }: WrappedEvent): boolean {
         return event.getType() === EventType.RoomCreate;
     };
 
-    public shouldGroup({ event, shouldShow }: EventAndShouldShow): boolean {
+    public shouldGroup({ event, shouldShow }: WrappedEvent): boolean {
         const panel = this.panel;
         const createEvent = this.firstEventAndShouldShow.event;
         if (!shouldShow) {
@@ -1151,16 +1163,17 @@ class CreationGrouper extends BaseGrouper {
         return false;
     }
 
-    public add({ event: ev, shouldShow }: EventAndShouldShow): void {
+    public add(wrappedEvent: WrappedEvent): void {
+        const { event: ev, shouldShow } = wrappedEvent;
         const panel = this.panel;
-        this.readMarker = this.readMarker || panel.readMarkerForEvent(ev.getId(), ev === this.lastShownEvent);
+        this.readMarker = this.readMarker || panel.readMarkerForEvent(ev.getId()!, ev === this.lastShownEvent);
         if (!shouldShow) {
             return;
         }
         if (ev.getType() === EventType.RoomEncryption) {
-            this.ejectedEvents.push(ev);
+            this.ejectedEvents.push(wrappedEvent);
         } else {
-            this.events.push(ev);
+            this.events.push(wrappedEvent);
         }
     }
 
@@ -1180,7 +1193,7 @@ class CreationGrouper extends BaseGrouper {
             const ts = createEvent.event.getTs();
             ret.push(
                 <li key={ts + "~"}>
-                    <DateSeparator roomId={createEvent.event.getRoomId()} ts={ts} />
+                    <DateSeparator roomId={createEvent.event.getRoomId()!} ts={ts} />
                 </li>,
             );
         }
@@ -1188,7 +1201,7 @@ class CreationGrouper extends BaseGrouper {
         // If this m.room.create event should be shown (room upgrade) then show it before the summary
         if (createEvent.shouldShow) {
             // pass in the createEvent as prevEvent as well so no extra DateSeparator is rendered
-            ret.push(...panel.getTilesForEvent(createEvent.event, createEvent.event));
+            ret.push(...panel.getTilesForEvent(createEvent.event, createEvent));
         }
 
         for (const ejected of this.ejectedEvents) {
@@ -1203,16 +1216,16 @@ class CreationGrouper extends BaseGrouper {
                 // of GenericEventListSummary, render each member event as if the previous
                 // one was itself. This way, the timestamp of the previous event === the
                 // timestamp of the current event, and no DateSeparator is inserted.
-                return panel.getTilesForEvent(e, e, e === lastShownEvent, isGrouped);
+                return panel.getTilesForEvent(e.event, e, e.event === lastShownEvent, isGrouped);
             })
             .reduce((a, b) => a.concat(b), []);
         // Get sender profile from the latest event in the summary as the m.room.create doesn't contain one
-        const ev = this.events[this.events.length - 1];
+        const ev = this.events[this.events.length - 1].event;
 
         let summaryText: string;
         const roomId = ev.getRoomId();
         const creator = ev.sender?.name ?? ev.getSender();
-        if (DMRoomMap.shared().getUserIdForRoomId(roomId)) {
+        if (roomId && DMRoomMap.shared().getUserIdForRoomId(roomId)) {
             summaryText = _t("%(creator)s created this DM.", { creator });
         } else {
             summaryText = _t("%(creator)s created and configured the room.", { creator });
@@ -1223,9 +1236,9 @@ class CreationGrouper extends BaseGrouper {
         ret.push(
             <GenericEventListSummary
                 key="roomcreationsummary"
-                events={this.events}
+                events={this.events.map((e) => e.event)}
                 onToggle={panel.onHeightChanged} // Update scroll state
-                summaryMembers={[ev.sender]}
+                summaryMembers={ev.sender ? [ev.sender] : undefined}
                 summaryText={summaryText}
                 layout={this.panel.props.layout}
             >
@@ -1247,10 +1260,7 @@ class CreationGrouper extends BaseGrouper {
 
 // Wrap consecutive grouped events in a ListSummary
 class MainGrouper extends BaseGrouper {
-    public static canStartGroup = function (
-        panel: MessagePanel,
-        { event: ev, shouldShow }: EventAndShouldShow,
-    ): boolean {
+    public static canStartGroup = function (panel: MessagePanel, { event: ev, shouldShow }: WrappedEvent): boolean {
         if (!shouldShow) return false;
 
         if (ev.isState() && groupedStateEvents.includes(ev.getType() as EventType)) {
@@ -1270,22 +1280,22 @@ class MainGrouper extends BaseGrouper {
 
     public constructor(
         public readonly panel: MessagePanel,
-        public readonly firstEventAndShouldShow: EventAndShouldShow,
+        public readonly firstEventAndShouldShow: WrappedEvent,
         public readonly prevEvent: MatrixEvent | null,
         public readonly lastShownEvent: MatrixEvent | undefined,
-        nextEvent: EventAndShouldShow | null,
+        nextEvent: WrappedEvent | null,
         nextEventTile: MatrixEvent | null,
     ) {
         super(panel, firstEventAndShouldShow, prevEvent, lastShownEvent, nextEvent, nextEventTile);
-        this.events = [firstEventAndShouldShow.event];
+        this.events = [firstEventAndShouldShow];
     }
 
-    public shouldGroup({ event: ev, shouldShow }: EventAndShouldShow): boolean {
+    public shouldGroup({ event: ev, shouldShow }: WrappedEvent): boolean {
         if (!shouldShow) {
             // absorb hidden events so that they do not break up streams of messages & redaction events being grouped
             return true;
         }
-        if (this.panel.wantsDateSeparator(this.events[0], ev.getDate())) {
+        if (this.panel.wantsDateSeparator(this.events[0].event, ev.getDate())) {
             return false;
         }
         if (ev.isState() && groupedStateEvents.includes(ev.getType() as EventType)) {
@@ -1300,21 +1310,22 @@ class MainGrouper extends BaseGrouper {
         return false;
     }
 
-    public add({ event: ev, shouldShow }: EventAndShouldShow): void {
+    public add(wrappedEvent: WrappedEvent): void {
+        const { event: ev, shouldShow } = wrappedEvent;
         if (ev.getType() === EventType.RoomMember) {
             // We can ignore any events that don't actually have a message to display
-            if (!hasText(ev, this.panel.showHiddenEvents)) return;
+            if (!hasText(ev, MatrixClientPeg.safeGet(), this.panel.showHiddenEvents)) return;
         }
-        this.readMarker = this.readMarker || this.panel.readMarkerForEvent(ev.getId(), ev === this.lastShownEvent);
+        this.readMarker = this.readMarker || this.panel.readMarkerForEvent(ev.getId()!, ev === this.lastShownEvent);
         if (!this.panel.showHiddenEvents && !shouldShow) {
             // absorb hidden events to not split the summary
             return;
         }
-        this.events.push(ev);
+        this.events.push(wrappedEvent);
     }
 
     private generateKey(): string {
-        return "eventlistsummary-" + this.events[0].getId();
+        return "eventlistsummary-" + this.events[0].event.getId();
     }
 
     public getTiles(): ReactNode[] {
@@ -1328,11 +1339,11 @@ class MainGrouper extends BaseGrouper {
         const lastShownEvent = this.lastShownEvent;
         const ret: ReactNode[] = [];
 
-        if (panel.wantsDateSeparator(this.prevEvent, this.events[0].getDate())) {
-            const ts = this.events[0].getTs();
+        if (panel.wantsDateSeparator(this.prevEvent, this.events[0].event.getDate())) {
+            const ts = this.events[0].event.getTs();
             ret.push(
                 <li key={ts + "~"}>
-                    <DateSeparator roomId={this.events[0].getRoomId()} ts={ts} />
+                    <DateSeparator roomId={this.events[0].event.getRoomId()!} ts={ts} />
                 </li>,
             );
         }
@@ -1340,26 +1351,29 @@ class MainGrouper extends BaseGrouper {
         // Ensure that the key of the EventListSummary does not change with new events in either direction.
         // This will prevent it from being re-created unnecessarily, and instead will allow new props to be provided.
         // In turn, the shouldComponentUpdate method on ELS can be used to prevent unnecessary renderings.
-        const keyEvent = this.events.find((e) => this.panel.grouperKeyMap.get(e));
-        const key = keyEvent ? this.panel.grouperKeyMap.get(keyEvent) : this.generateKey();
+        const keyEvent = this.events.find((e) => this.panel.grouperKeyMap.get(e.event));
+        const key =
+            keyEvent && this.panel.grouperKeyMap.has(keyEvent.event)
+                ? this.panel.grouperKeyMap.get(keyEvent.event)!
+                : this.generateKey();
         if (!keyEvent) {
             // Populate the weak map with the key.
             // Note that we only set the key on the specific event it refers to, since this group might get
             // split up in the future by other intervening events. If we were to set the key on all events
             // currently in the group, we would risk later giving the same key to multiple groups.
-            this.panel.grouperKeyMap.set(this.events[0], key);
+            this.panel.grouperKeyMap.set(this.events[0].event, key);
         }
 
         let highlightInSummary = false;
         let eventTiles: ReactNode[] | null = this.events
             .map((e, i) => {
-                if (e.getId() === panel.props.highlightedEventId) {
+                if (e.event.getId() === panel.props.highlightedEventId) {
                     highlightInSummary = true;
                 }
                 return panel.getTilesForEvent(
-                    i === 0 ? this.prevEvent : this.events[i - 1],
+                    i === 0 ? this.prevEvent : this.events[i - 1].event,
                     e,
-                    e === lastShownEvent,
+                    e.event === lastShownEvent,
                     isGrouped,
                     this.nextEvent,
                     this.nextEventTile,
@@ -1381,7 +1395,7 @@ class MainGrouper extends BaseGrouper {
             <EventListSummary
                 key={key}
                 data-testid={key}
-                events={this.events}
+                events={this.events.map((e) => e.event)}
                 onToggle={panel.onHeightChanged} // Update scroll state
                 startExpanded={highlightInSummary}
                 layout={this.panel.props.layout}
@@ -1398,7 +1412,7 @@ class MainGrouper extends BaseGrouper {
     }
 
     public getNewPrevEvent(): MatrixEvent {
-        return this.events[this.events.length - 1];
+        return this.events[this.events.length - 1].event;
     }
 }
 
@@ -1406,10 +1420,10 @@ class MainGrouper extends BaseGrouper {
 const groupers = [CreationGrouper, MainGrouper];
 
 /**
- * Look through the supplied list of EventAndShouldShow, and return the first
+ * Look through the supplied list of WrappedEvent, and return the first
  * event that is >start items through the list, and is shown.
  */
-function findFirstShownAfter(start: number, events: EventAndShouldShow[]): MatrixEvent | null {
+function findFirstShownAfter(start: number, events: WrappedEvent[]): MatrixEvent | null {
     // Note: this could be done with something like:
     // events.slice(i + 1).find((e) => e.shouldShow)?.event ?? null;
     // but it is ~10% slower, and this is on the critical path.

@@ -15,14 +15,12 @@ limitations under the License.
 */
 
 import { uniq } from "lodash";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 
-import { MatrixClientPeg } from "../MatrixClientPeg";
 import { filterValidMDirect } from "./dm/filterValidMDirect";
 
 /**
@@ -39,7 +37,7 @@ export default class DMRoomMap {
     private roomToUser: { [key: string]: string } | null = null;
     private userToRooms: { [key: string]: string[] } | null = null;
     private hasSentOutPatchDirectAccountDataPatch: boolean;
-    private mDirectEvent: { [key: string]: string[] };
+    private mDirectEvent!: { [key: string]: string[] };
 
     public constructor(private readonly matrixClient: MatrixClient) {
         // see onAccountData
@@ -53,8 +51,8 @@ export default class DMRoomMap {
      * Makes and returns a new shared instance that can then be accessed
      * with shared(). This returned instance is not automatically started.
      */
-    public static makeShared(): DMRoomMap {
-        DMRoomMap.sharedInstance = new DMRoomMap(MatrixClientPeg.get());
+    public static makeShared(matrixClient: MatrixClient): DMRoomMap {
+        DMRoomMap.sharedInstance = new DMRoomMap(matrixClient);
         return DMRoomMap.sharedInstance;
     }
 
@@ -103,8 +101,6 @@ export default class DMRoomMap {
     }
 
     private onAccountData = (ev: MatrixEvent): void => {
-        console.log("onAccountData");
-
         if (ev.getType() == EventType.Direct) {
             this.setMDirectFromContent(ev.getContent());
             this.userToRooms = null;
@@ -177,7 +173,7 @@ export default class DMRoomMap {
         }
 
         const joinedRooms = commonRooms
-            .map((r) => MatrixClientPeg.get().getRoom(r))
+            .map((r) => this.matrixClient.getRoom(r))
             .filter((r) => r && r.getMyMembership() === "join");
 
         return joinedRooms[0];
@@ -207,13 +203,16 @@ export default class DMRoomMap {
 
     public getUniqueRoomsWithIndividuals(): { [userId: string]: Room } {
         if (!this.roomToUser) return {}; // No rooms means no map.
-        return Object.keys(this.roomToUser)
-            .map((r) => ({ userId: this.getUserIdForRoomId(r), room: this.matrixClient.getRoom(r) }))
-            .filter((r) => r.userId && r.room?.getInvitedAndJoinedMemberCount() === 2)
-            .reduce((obj, r) => {
-                obj[r.userId] = r.room;
-                return obj;
-            }, {} as Record<string, Room>);
+        // map roomToUser to valid rooms with two participants
+        return Object.keys(this.roomToUser).reduce((acc, roomId: string) => {
+            const userId = this.getUserIdForRoomId(roomId);
+            const room = this.matrixClient.getRoom(roomId);
+            const hasTwoMembers = room?.getInvitedAndJoinedMemberCount() === 2;
+            if (userId && room && hasTwoMembers) {
+                acc[userId] = room;
+            }
+            return acc;
+        }, {} as Record<string, Room>);
     }
 
     /**
@@ -236,9 +235,7 @@ export default class DMRoomMap {
                 // to avoid multiple devices fighting to correct
                 // the account data, only try to send the corrected
                 // version once.
-                logger.warn(
-                    `Invalid m.direct account data detected ` + `(self-chats that shouldn't be), patching it up.`,
-                );
+                logger.warn(`Invalid m.direct account data detected (self-chats that shouldn't be), patching it up.`);
                 if (neededPatching && !this.hasSentOutPatchDirectAccountDataPatch) {
                     this.hasSentOutPatchDirectAccountDataPatch = true;
                     this.matrixClient.setAccountData(EventType.Direct, userToRooms);

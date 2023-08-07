@@ -16,9 +16,8 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { Relations } from "matrix-js-sdk/src/models/relations";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { M_POLL_KIND_DISCLOSED, M_POLL_RESPONSE, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { RelatedRelations } from "matrix-js-sdk/src/models/related-relations";
 import { PollStartEvent, PollAnswerSubevent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
@@ -118,16 +117,17 @@ export function pollAlreadyHasVotes(mxEvent: MatrixEvent, getRelationsForEvent?:
 }
 
 export function launchPollEditor(mxEvent: MatrixEvent, getRelationsForEvent?: GetRelationsForEvent): void {
+    const room = MatrixClientPeg.safeGet().getRoom(mxEvent.getRoomId());
     if (pollAlreadyHasVotes(mxEvent, getRelationsForEvent)) {
         Modal.createDialog(ErrorDialog, {
             title: _t("Can't edit poll"),
             description: _t("Sorry, you can't edit a poll after votes have been cast."),
         });
-    } else {
+    } else if (room) {
         Modal.createDialog(
             PollCreateDialog,
             {
-                room: MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),
+                room,
                 threadId: mxEvent.getThread()?.id,
                 editingMxEvent: mxEvent,
             },
@@ -153,7 +153,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     }
 
     public componentDidMount(): void {
-        const room = this.context.getRoom(this.props.mxEvent.getRoomId());
+        const room = this.context?.getRoom(this.props.mxEvent.getRoomId());
         const poll = room?.polls.get(this.props.mxEvent.getId()!);
         if (poll) {
             this.setPollInstance(poll);
@@ -235,7 +235,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
      * @returns userId -> UserVote
      */
     private collectUserVotes(): Map<string, UserVote> {
-        if (!this.state.voteRelations) {
+        if (!this.state.voteRelations || !this.context) {
             return new Map<string, UserVote>();
         }
         return collectUserVotes(allVotes(this.state.voteRelations), this.context.getUserId(), this.state.selected);
@@ -290,8 +290,8 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const votes = countVotes(userVotes, pollEvent);
         const totalVotes = this.totalVotes(votes);
         const winCount = Math.max(...votes.values());
-        const userId = this.context.getUserId();
-        const myVote = userVotes?.get(userId!)?.answers[0];
+        const userId = this.context.getSafeUserId();
+        const myVote = userVotes?.get(userId)?.answers[0];
         const disclosed = M_POLL_KIND_DISCLOSED.matches(pollEvent.kind.name);
 
         // Disclosed: votes are hidden until I vote or the poll ends

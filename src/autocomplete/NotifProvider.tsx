@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import AutocompleteProvider from "./AutocompleteProvider";
 import { _t } from "../languageHandler";
@@ -38,9 +38,9 @@ export default class NotifProvider extends AutocompleteProvider {
         force = false,
         limit = -1,
     ): Promise<ICompletion[]> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
-        if (!this.room.currentState.mayTriggerNotifOfType("room", client.credentials.userId!)) return [];
+        if (!this.room.currentState.mayTriggerNotifOfType("room", client.getSafeUserId())) return [];
 
         const { command, range } = this.getCurrentCommand(query, selection, force);
         if (

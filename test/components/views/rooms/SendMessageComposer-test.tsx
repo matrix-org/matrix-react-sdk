@@ -18,6 +18,7 @@ import React from "react";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { IContent, MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
+import userEvent from "@testing-library/user-event";
 
 import SendMessageComposer, {
     attachMentions,
@@ -28,7 +29,7 @@ import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 import EditorModel from "../../../../src/editor/model";
 import { createPartCreator } from "../../../editor/mock";
-import { createTestClient, mkEvent, mkStubRoom } from "../../../test-utils";
+import { createTestClient, mkEvent, mkStubRoom, stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import DocumentOffset from "../../../../src/editor/offset";
@@ -38,7 +39,6 @@ import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalink
 import { mockPlatformPeg } from "../../../test-utils/platform";
 import { doMaybeLocalRoomAction } from "../../../../src/utils/local-room";
 import { addTextToComposer } from "../../../test-utils/composer";
-import dis from "../../../../src/dispatcher/dispatcher";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 
 jest.mock("../../../../src/utils/local-room", () => ({
@@ -56,6 +56,7 @@ describe("<SendMessageComposer/>", () => {
         showApps: false,
         isPeeking: false,
         showRightPanel: true,
+        threadRightPanel: false,
         joining: false,
         atEndOfLiveTimeline: true,
         showTopUnreadMessagesBar: false,
@@ -82,6 +83,9 @@ describe("<SendMessageComposer/>", () => {
         narrow: false,
         activeCall: null,
         msc3946ProcessDynamicPredecessor: false,
+        canAskToJoin: false,
+        promptAskToJoin: false,
+        knocked: false,
     };
     describe("createMessageContent", () => {
         const permalinkCreator = jest.fn() as any;
@@ -176,7 +180,7 @@ describe("<SendMessageComposer/>", () => {
             const content: IContent = {};
             attachMentions("@alice:test", content, model, undefined);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": {},
+                "m.mentions": {},
             });
         });
 
@@ -185,7 +189,7 @@ describe("<SendMessageComposer/>", () => {
             const content: IContent = {};
             attachMentions("@alice:test", content, model, undefined);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] },
+                "m.mentions": { user_ids: ["@bob:test"] },
             });
         });
 
@@ -196,13 +200,13 @@ describe("<SendMessageComposer/>", () => {
                 type: "m.room.message",
                 user: "@bob:test",
                 room: "!abc:test",
-                content: { "org.matrix.msc3952.mentions": {} },
+                content: { "m.mentions": {} },
                 event: true,
             });
             let content: IContent = {};
             attachMentions("@alice:test", content, model, replyToEvent);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] },
+                "m.mentions": { user_ids: ["@bob:test"] },
             });
 
             // It also adds any other mentioned users, but removes yourself.
@@ -210,13 +214,13 @@ describe("<SendMessageComposer/>", () => {
                 type: "m.room.message",
                 user: "@bob:test",
                 room: "!abc:test",
-                content: { "org.matrix.msc3952.mentions": { user_ids: ["@alice:test", "@charlie:test"] } },
+                content: { "m.mentions": { user_ids: ["@alice:test", "@charlie:test"] } },
                 event: true,
             });
             content = {};
             attachMentions("@alice:test", content, model, replyToEvent);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": { user_ids: ["@bob:test", "@charlie:test"] },
+                "m.mentions": { user_ids: ["@bob:test", "@charlie:test"] },
             });
         });
 
@@ -225,7 +229,7 @@ describe("<SendMessageComposer/>", () => {
             const content: IContent = {};
             attachMentions("@alice:test", content, model, undefined);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": { room: true },
+                "m.mentions": { room: true },
             });
         });
 
@@ -236,13 +240,13 @@ describe("<SendMessageComposer/>", () => {
                 type: "m.room.message",
                 user: "@alice:test",
                 room: "!abc:test",
-                content: { "org.matrix.msc3952.mentions": { room: true } },
+                content: { "m.mentions": { room: true } },
                 event: true,
             });
             const content: IContent = {};
             attachMentions("@alice:test", content, model, replyToEvent);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": {},
+                "m.mentions": {},
             });
         });
 
@@ -254,13 +258,13 @@ describe("<SendMessageComposer/>", () => {
                 user: "@alice:test",
                 room: "!abc:test",
                 // @ts-ignore - Purposefully testing invalid data.
-                content: { "org.matrix.msc3952.mentions": { user_ids: "@bob:test" } },
+                content: { "m.mentions": { user_ids: "@bob:test" } },
                 event: true,
             });
             const content: IContent = {};
             attachMentions("@alice:test", content, model, replyToEvent);
             expect(content).toEqual({
-                "org.matrix.msc3952.mentions": {},
+                "m.mentions": {},
             });
         });
 
@@ -271,8 +275,8 @@ describe("<SendMessageComposer/>", () => {
                 const prevContent: IContent = {};
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": {},
-                    "m.new_content": { "org.matrix.msc3952.mentions": {} },
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": {} },
                 });
             });
 
@@ -280,12 +284,12 @@ describe("<SendMessageComposer/>", () => {
                 const model = new EditorModel([], partsCreator);
                 const content: IContent = { "m.new_content": {} };
                 const prevContent: IContent = {
-                    "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"], room: true },
+                    "m.mentions": { user_ids: ["@bob:test"], room: true },
                 };
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": {},
-                    "m.new_content": { "org.matrix.msc3952.mentions": {} },
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": {} },
                 });
             });
 
@@ -295,19 +299,19 @@ describe("<SendMessageComposer/>", () => {
                 const prevContent: IContent = {};
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] },
-                    "m.new_content": { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] } },
+                    "m.mentions": { user_ids: ["@bob:test"] },
+                    "m.new_content": { "m.mentions": { user_ids: ["@bob:test"] } },
                 });
             });
 
             it("test prev user mentions", () => {
                 const model = new EditorModel([partsCreator.userPill("Bob", "@bob:test")], partsCreator);
                 const content: IContent = { "m.new_content": {} };
-                const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] } };
+                const prevContent: IContent = { "m.mentions": { user_ids: ["@bob:test"] } };
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": {},
-                    "m.new_content": { "org.matrix.msc3952.mentions": { user_ids: ["@bob:test"] } },
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": { user_ids: ["@bob:test"] } },
                 });
             });
 
@@ -317,19 +321,19 @@ describe("<SendMessageComposer/>", () => {
                 const prevContent: IContent = {};
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": { room: true },
-                    "m.new_content": { "org.matrix.msc3952.mentions": { room: true } },
+                    "m.mentions": { room: true },
+                    "m.new_content": { "m.mentions": { room: true } },
                 });
             });
 
             it("test prev room mention", () => {
                 const model = new EditorModel([partsCreator.atRoomPill("@room")], partsCreator);
                 const content: IContent = { "m.new_content": {} };
-                const prevContent: IContent = { "org.matrix.msc3952.mentions": { room: true } };
+                const prevContent: IContent = { "m.mentions": { room: true } };
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": {},
-                    "m.new_content": { "org.matrix.msc3952.mentions": { room: true } },
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": { room: true } },
                 });
             });
 
@@ -338,11 +342,11 @@ describe("<SendMessageComposer/>", () => {
                 const model = new EditorModel([], partsCreator);
                 const content: IContent = { "m.new_content": {} };
                 // @ts-ignore - Purposefully testing invalid data.
-                const prevContent: IContent = { "org.matrix.msc3952.mentions": { user_ids: "@bob:test" } };
+                const prevContent: IContent = { "m.mentions": { user_ids: "@bob:test" } };
                 attachMentions("@alice:test", content, model, undefined, prevContent);
                 expect(content).toEqual({
-                    "org.matrix.msc3952.mentions": {},
-                    "m.new_content": { "org.matrix.msc3952.mentions": {} },
+                    "m.mentions": {},
+                    "m.new_content": { "m.mentions": {} },
                 });
             });
         });
@@ -508,7 +512,7 @@ describe("<SendMessageComposer/>", () => {
                 msgtype: MsgType.Text,
             });
 
-            expect(dis.dispatch).toHaveBeenCalledWith({ action: `effects.confetti` });
+            expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({ action: `effects.confetti` });
         });
 
         it("not to send chat effects on message sending for threads", () => {
@@ -535,7 +539,7 @@ describe("<SendMessageComposer/>", () => {
                 msgtype: MsgType.Text,
             });
 
-            expect(dis.dispatch).not.toHaveBeenCalledWith({ action: `effects.confetti` });
+            expect(defaultDispatcher.dispatch).not.toHaveBeenCalledWith({ action: `effects.confetti` });
         });
     });
 
@@ -573,5 +577,30 @@ describe("<SendMessageComposer/>", () => {
             expect(isQuickReaction(model3)).toBeFalsy();
             expect(isQuickReaction(model4)).toBeFalsy();
         });
+    });
+
+    it("should call prepareToEncrypt when the user is typing", async () => {
+        const cli = stubClient();
+        cli.isCryptoEnabled = jest.fn().mockReturnValue(true);
+        cli.isRoomEncrypted = jest.fn().mockReturnValue(true);
+        cli.prepareToEncrypt = jest.fn();
+        const room = mkStubRoom("!roomId:server", "Room", cli);
+
+        expect(cli.prepareToEncrypt).not.toHaveBeenCalled();
+
+        const { container } = render(
+            <MatrixClientContext.Provider value={cli}>
+                <SendMessageComposer room={room} toggleStickerPickerOpen={jest.fn()} />
+            </MatrixClientContext.Provider>,
+        );
+
+        const composer = container.querySelector<HTMLDivElement>(".mx_BasicMessageComposer_input")!;
+
+        // Does not trigger on keydown as that'll cause false negatives for global shortcuts
+        await userEvent.type(composer, "[ControlLeft>][KeyK][/ControlLeft]");
+        expect(cli.prepareToEncrypt).not.toHaveBeenCalled();
+
+        await userEvent.type(composer, "Hello");
+        expect(cli.prepareToEncrypt).toHaveBeenCalled();
     });
 });

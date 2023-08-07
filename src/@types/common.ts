@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { JSXElementConstructor } from "react";
+import { JSXElementConstructor } from "react";
 
 // Based on https://stackoverflow.com/a/53229857/3532235
 export type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
@@ -22,7 +22,6 @@ export type XOR<T, U> = T | U extends object ? (Without<T, U> & U) | (Without<U,
 export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
 export type ComponentClass = keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
-export type ReactAnyComponent = React.Component | React.ExoticComponent;
 
 // Utility type for string dot notation for accessing nested object properties
 // Based on https://stackoverflow.com/a/58436959
@@ -54,3 +53,27 @@ export type KeysStartingWith<Input extends object, Str extends string> = {
 }[keyof Input];
 
 export type NonEmptyArray<T> = [T, ...T[]];
+
+export type Defaultize<P, D> = P extends any
+    ? string extends keyof P
+        ? P
+        : Pick<P, Exclude<keyof P, keyof D>> &
+              Partial<Pick<P, Extract<keyof P, keyof D>>> &
+              Partial<Pick<D, Exclude<keyof D, keyof P>>>
+    : never;
+
+export type DeepReadonly<T> = T extends (infer R)[]
+    ? DeepReadonlyArray<R>
+    : T extends Function
+    ? T
+    : T extends object
+    ? DeepReadonlyObject<T>
+    : T;
+
+interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
+
+type DeepReadonlyObject<T> = {
+    readonly [P in keyof T]: DeepReadonly<T[P]>;
+};
+
+export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U];

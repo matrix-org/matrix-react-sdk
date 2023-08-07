@@ -17,8 +17,7 @@ limitations under the License.
 import React from "react";
 import { fireEvent, render, RenderResult, waitFor } from "@testing-library/react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
@@ -27,18 +26,18 @@ import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
 import { VoipRoomSettingsTab } from "../../../../../../src/components/views/settings/tabs/room/VoipRoomSettingsTab";
 import { ElementCall } from "../../../../../../src/models/Call";
 
-describe("RolesRoomSettingsTab", () => {
+describe("VoipRoomSettingsTab", () => {
     const roomId = "!room:example.com";
     let cli: MatrixClient;
     let room: Room;
 
     const renderTab = (): RenderResult => {
-        return render(<VoipRoomSettingsTab roomId={roomId} />);
+        return render(<VoipRoomSettingsTab room={room} />);
     };
 
     beforeEach(() => {
         stubClient();
-        cli = MatrixClientPeg.get();
+        cli = MatrixClientPeg.safeGet();
         room = mkStubRoom(roomId, "test room", cli);
 
         jest.spyOn(cli, "sendStateEvent");

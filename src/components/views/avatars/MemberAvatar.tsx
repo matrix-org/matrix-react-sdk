@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { ReactNode, useContext } from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 
 import dis from "../../../dispatcher/dispatcher";
@@ -26,6 +26,7 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import { CardContext } from "../right_panel/context";
 import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import { useRoomMemberProfile } from "../../../hooks/room/useRoomMemberProfile";
+import { _t } from "../../../languageHandler";
 
 interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url"> {
     member: RoomMember | null;
@@ -33,8 +34,6 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     width: number;
     height: number;
     resizeMethod?: ResizeMethod;
-    // The onClick to give the avatar
-    onClick?: React.MouseEventHandler;
     // Whether the onClick of the avatar should be overridden to dispatch `Action.ViewUser`
     viewUserOnClick?: boolean;
     pushUserOnClick?: boolean;
@@ -105,6 +104,8 @@ export default function MemberAvatar({
                       }
                     : props.onClick
             }
+            altText={_t("Profile picture")}
+            ariaLabel={_t("Profile picture")}
         />
     );
 }

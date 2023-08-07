@@ -46,6 +46,7 @@ import { FontWatcher } from "./watchers/FontWatcher";
 import RustCryptoSdkController from "./controllers/RustCryptoSdkController";
 import ServerSupportUnstableFeatureController from "./controllers/ServerSupportUnstableFeatureController";
 import { WatchManager } from "./WatchManager";
+import { CustomTheme } from "../theme";
 
 export const defaultWatchManager = new WatchManager();
 
@@ -84,7 +85,6 @@ export enum LabGroup {
     VoiceAndVideo,
     Moderation,
     Analytics,
-    MessagePreviews,
     Themes,
     Encryption,
     Experimental,
@@ -94,6 +94,8 @@ export enum LabGroup {
 export enum Features {
     VoiceBroadcast = "feature_voice_broadcast",
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
+    NotificationSettings2 = "feature_notification_settings2",
+    OidcNativeFlow = "feature_oidc_native_flow",
 }
 
 export const labGroupNames: Record<LabGroup, string> = {
@@ -105,14 +107,21 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.VoiceAndVideo]: _td("Voice & Video"),
     [LabGroup.Moderation]: _td("Moderation"),
     [LabGroup.Analytics]: _td("Analytics"),
-    [LabGroup.MessagePreviews]: _td("Message Previews"),
     [LabGroup.Themes]: _td("Themes"),
     [LabGroup.Encryption]: _td("Encryption"),
     [LabGroup.Experimental]: _td("Experimental"),
     [LabGroup.Developer]: _td("Developer"),
 };
 
-export type SettingValueType = boolean | number | string | number[] | string[] | Record<string, unknown> | null;
+export type SettingValueType =
+    | boolean
+    | number
+    | string
+    | number[]
+    | string[]
+    | Record<string, unknown>
+    | Record<string, unknown>[]
+    | null;
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
@@ -215,10 +224,32 @@ export const SETTINGS: { [setting: string]: ISetting } = {
                 ),
             feedbackLabel: "video-room-feedback",
             feedbackSubheading: _td(
-                "Thank you for trying the beta, " + "please go into as much detail as you can so we can improve it.",
+                "Thank you for trying the beta, please go into as much detail as you can so we can improve it.",
             ),
             image: require("../../res/img/betas/video_rooms.png"),
             requiresRefresh: true,
+        },
+    },
+    [Features.NotificationSettings2]: {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("New Notification Settings"),
+        default: false,
+        betaInfo: {
+            title: _td("Notification Settings"),
+            caption: () => (
+                <>
+                    <p>
+                        {_t(
+                            "Introducing a simpler way to change your notification settings. Customize your %(brand)s, just the way you like.",
+                            {
+                                brand: SdkConfig.get().brand,
+                            },
+                        )}
+                    </p>
+                </>
+            ),
         },
     },
     "feature_exploring_public_spaces": {
@@ -231,7 +262,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             "feature_exploring_public_spaces",
             defaultWatchManager,
             [["org.matrix.msc3827.stable"]],
-            undefined,
+            "v1.4",
             _td("Requires your server to support the stable version of MSC3827"),
         ),
     },
@@ -298,22 +329,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_roomlist_preview_reactions_dms": {
-        isFeature: true,
-        labsGroup: LabGroup.MessagePreviews,
-        displayName: _td("Show message previews for reactions in DMs"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        // this option is a subset of `feature_roomlist_preview_reactions_all` so disable it when that one is enabled
-        controller: new IncompatibleController("feature_roomlist_preview_reactions_all"),
-    },
-    "feature_roomlist_preview_reactions_all": {
-        isFeature: true,
-        labsGroup: LabGroup.MessagePreviews,
-        displayName: _td("Show message previews for reactions in all rooms"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
     "feature_dehydration": {
         isFeature: true,
         labsGroup: LabGroup.Encryption,
@@ -323,7 +338,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "useOnlyCurrentProfiles": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show current avatar and name for users in message history"),
+        displayName: _td("Show current profile picture and name for users in message history"),
         default: false,
     },
     "mjolnirRooms": {
@@ -346,21 +361,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Show info about bridges in room settings"),
-        default: false,
-    },
-    "feature_breadcrumbs_v2": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Use new room breadcrumbs"),
-        default: false,
-    },
-    "feature_right_panel_default_open": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Right panel stays open"),
-        description: _td("Defaults to room member list."),
         default: false,
     },
     "feature_jump_to_date": {
@@ -425,6 +425,15 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         controller: new ReloadOnChangeController(),
         default: false,
     },
+    "feature_allow_screen_share_only_mode": {
+        isFeature: true,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        description: _td("Under active development."),
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("Allow screen share only mode"),
+        controller: new ReloadOnChangeController(),
+        default: false,
+    },
     "feature_location_share_live": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -443,14 +452,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         shouldWarn: true,
         default: false,
     },
-    "feature_favourite_messages": {
-        isFeature: true,
-        labsGroup: LabGroup.Messaging,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Favourite Messages"),
-        description: _td("Under active development."),
-        default: false,
-    },
     [Features.VoiceBroadcast]: {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -463,26 +464,10 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Force 15s voice broadcast chunk length"),
         default: false,
     },
-    "feature_new_device_manager": {
-        isFeature: true,
-        labsGroup: LabGroup.Experimental,
+    [Features.OidcNativeFlow]: {
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Use new session manager"),
+        displayName: _td("Enable new native OIDC flows (Under active development)"),
         default: false,
-        betaInfo: {
-            title: _td("New session manager"),
-            caption: () => (
-                <>
-                    <p>{_t("Have greater visibility and control over all your sessions.")}</p>
-                    <p>
-                        {_t(
-                            "Our new sessions manager provides better visibility of all your sessions, " +
-                                "and greater control over them including the ability to remotely toggle push notifications.",
-                        )}
-                    </p>
-                </>
-            ),
-        },
     },
     "feature_rust_crypto": {
         // use the rust matrix-sdk-crypto-js for crypto.
@@ -498,6 +483,18 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "baseFontSize": {
         displayName: _td("Font size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: "",
+        controller: new FontSizeController(),
+    },
+    /**
+     * With the transition to Compound we are moving to a base font size
+     * of 16px. We're taking the opportunity to move away from the `baseFontSize`
+     * setting that had a 5px offset.
+     *
+     */
+    "baseFontSizeV2": {
+        displayName: _td("Font size"),
+        supportedLevels: [SettingLevel.DEVICE],
         default: FontWatcher.DEFAULT_SIZE,
         controller: new FontSizeController(),
     },
@@ -547,9 +544,27 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Enable intentional mentions"),
         labsGroup: LabGroup.Rooms,
         default: false,
-        controller: new ServerSupportUnstableFeatureController("feature_intentional_mentions", defaultWatchManager, [
-            ["org.matrix.msc3952_intentional_mentions"],
-        ]),
+        controller: new ServerSupportUnstableFeatureController(
+            "feature_intentional_mentions",
+            defaultWatchManager,
+            [["org.matrix.msc3952_intentional_mentions"]],
+            "v1.7",
+        ),
+    },
+    "feature_ask_to_join": {
+        default: false,
+        displayName: _td("Enable ask to join"),
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+    },
+    "feature_new_room_decoration_ui": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        displayName: _td("Under active development, new room header & details interface"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+        controller: new ReloadOnChangeController(),
     },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -571,7 +586,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "showAvatarChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td("Show avatar changes"),
+        displayName: _td("Show profile picture changes"),
         default: true,
         invertedSettingName: "hideAvatarChanges",
     },
@@ -683,7 +698,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Enable Markdown"),
         description: () =>
             _t(
-                "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.",
+                "Start messages with <code>/plain</code> to send without markdown.",
                 {},
                 { code: (sub) => <code>{sub}</code> },
             ),
@@ -701,7 +716,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "custom_themes": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: [],
+        default: [] as CustomTheme[],
     },
     "use_system_theme": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -897,7 +912,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
         default: true,
-        controller: new IncompatibleController("feature_breadcrumbs_v2", true),
     },
     "FTUE.userOnboardingButton": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -919,9 +933,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td("Allow fallback call assist server (turn.matrix.org)"),
         description: _td(
-            "Only applies if your homeserver does not offer one. " + "Your IP address would be shared during a call.",
+            "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.",
         ),
         // This is a tri-state value, where `null` means "prompt the user".
         default: null,
@@ -1086,6 +1099,10 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: true,
     },
     [UIFeature.Widgets]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.LocationSharing]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },

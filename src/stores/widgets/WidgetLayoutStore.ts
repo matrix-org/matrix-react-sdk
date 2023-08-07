@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { compare } from "matrix-js-sdk/src/utils";
+import { Room, RoomStateEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { Optional } from "matrix-events-sdk";
+import { compare, MapWithDefault, recursiveMapToObject } from "matrix-js-sdk/src/utils";
+import { IWidget } from "matrix-widget-api";
 
 import SettingsStore from "../../settings/SettingsStore";
 import WidgetStore, { IApp } from "../WidgetStore";
@@ -91,19 +91,17 @@ export const MAX_PINNED = 3;
 const MIN_WIDGET_WIDTH_PCT = 10; // 10%
 const MIN_WIDGET_HEIGHT_PCT = 2; // 2%
 
+interface ContainerValue {
+    ordered: IApp[];
+    height?: number;
+    distributions?: number[];
+}
+
 export class WidgetLayoutStore extends ReadyWatchingStore {
     private static internalInstance: WidgetLayoutStore;
 
-    private byRoom: {
-        [roomId: string]: Partial<{
-            [container in Container]: {
-                ordered: IApp[];
-                height?: number | null;
-                distributions?: number[];
-            };
-        }>;
-    } = {};
-
+    // Map: room Id → container → ContainerValue
+    private byRoom: MapWithDefault<string, Map<Container, ContainerValue>> = new MapWithDefault(() => new Map());
     private pinnedRef: string | undefined;
     private layoutRef: string | undefined;
     private dynamicRef: string | undefined;
@@ -143,7 +141,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     }
 
     protected async onNotReady(): Promise<void> {
-        this.byRoom = {};
+        this.byRoom = new MapWithDefault(() => new Map());
 
         this.matrixClient?.off(RoomStateEvent.Events, this.updateRoomFromState);
         if (this.pinnedRef) SettingsStore.unwatchSetting(this.pinnedRef);
@@ -155,7 +153,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     private updateAllRooms = (): void => {
         const msc3946ProcessDynamicPredecessor = SettingsStore.getValue("feature_dynamic_room_predecessors");
         if (!this.matrixClient) return;
-        this.byRoom = {};
+        this.byRoom = new MapWithDefault(() => new Map());
         for (const room of this.matrixClient.getVisibleRooms(msc3946ProcessDynamicPredecessor)) {
             this.recalculateRoom(room);
         }
@@ -194,12 +192,13 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     public recalculateRoom(room: Room): void {
         const widgets = WidgetStore.instance.getApps(room.roomId);
         if (!widgets?.length) {
-            this.byRoom[room.roomId] = {};
+            this.byRoom.set(room.roomId, new Map());
             this.emitFor(room);
             return;
         }
 
-        const beforeChanges = JSON.stringify(this.byRoom[room.roomId]);
+        const roomContainers = this.byRoom.getOrCreate(room.roomId);
+        const beforeChanges = JSON.stringify(recursiveMapToObject(roomContainers));
 
         const layoutEv = room.currentState.getStateEvents(WIDGET_LAYOUT_EVENT_TYPE, "");
         const legacyPinned = SettingsStore.getValue("Widgets.pinned", room.roomId);
@@ -335,36 +334,38 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         }
 
         // Finally, fill in our cache and update
-        this.byRoom[room.roomId] = {};
+        const newRoomContainers = new Map();
+        this.byRoom.set(room.roomId, newRoomContainers);
         if (topWidgets.length) {
-            this.byRoom[room.roomId][Container.Top] = {
+            newRoomContainers.set(Container.Top, {
                 ordered: topWidgets,
                 distributions: widths,
                 height: maxHeight,
-            };
+            });
         }
         if (rightWidgets.length) {
-            this.byRoom[room.roomId][Container.Right] = {
+            newRoomContainers.set(Container.Right, {
                 ordered: rightWidgets,
-            };
+            });
         }
         if (centerWidgets.length) {
-            this.byRoom[room.roomId][Container.Center] = {
+            newRoomContainers.set(Container.Center, {
                 ordered: centerWidgets,
-            };
+            });
         }
 
-        const afterChanges = JSON.stringify(this.byRoom[room.roomId]);
+        const afterChanges = JSON.stringify(recursiveMapToObject(newRoomContainers));
+
         if (afterChanges !== beforeChanges) {
             this.emitFor(room);
         }
     }
 
-    public getContainerWidgets(room: Room, container: Container): IApp[] {
-        return this.byRoom[room.roomId]?.[container]?.ordered || [];
+    public getContainerWidgets(room: Optional<Room>, container: Container): IWidget[] {
+        return (room && this.byRoom.get(room.roomId)?.get(container)?.ordered) || [];
     }
 
-    public isInContainer(room: Room, widget: IApp, container: Container): boolean {
+    public isInContainer(room: Room, widget: IWidget, container: Container): boolean {
         return this.getContainerWidgets(room, container).some((w) => w.id === widget.id);
     }
 
@@ -381,7 +382,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
 
     public getResizerDistributions(room: Room, container: Container): string[] {
         // yes, string.
-        let distributions = this.byRoom[room.roomId]?.[container]?.distributions;
+        let distributions = this.byRoom.get(room.roomId)?.get(container)?.distributions;
         if (!distributions || distributions.length < 2) return [];
 
         // The distributor actually expects to be fed N-1 sizes and expands the middle section
@@ -410,19 +411,19 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
                 container: container,
                 width: numbers[i],
                 index: i,
-                height: this.byRoom[room.roomId]?.[container]?.height || MIN_WIDGET_HEIGHT_PCT,
+                height: this.byRoom.get(room.roomId)?.get(container)?.height || MIN_WIDGET_HEIGHT_PCT,
             };
         });
         this.updateUserLayout(room, localLayout);
     }
 
     public getContainerHeight(room: Room, container: Container): number | null {
-        return this.byRoom[room.roomId]?.[container]?.height ?? null; // let the default get returned if needed
+        return this.byRoom.get(room.roomId)?.get(container)?.height ?? null; // let the default get returned if needed
     }
 
     public setContainerHeight(room: Room, container: Container, height?: number | null): void {
         const widgets = this.getContainerWidgets(room, container);
-        const widths = this.byRoom[room.roomId]?.[container]?.distributions;
+        const widths = this.byRoom.get(room.roomId)?.get(container)?.distributions;
         const localLayout: Record<string, IStoredLayout> = {};
         widgets.forEach((w, i) => {
             localLayout[w.id] = {
@@ -435,7 +436,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         this.updateUserLayout(room, localLayout);
     }
 
-    public moveWithinContainer(room: Room, container: Container, widget: IApp, delta: number): void {
+    public moveWithinContainer(room: Room, container: Container, widget: IWidget, delta: number): void {
         const widgets = arrayFastClone(this.getContainerWidgets(room, container));
         const currentIdx = widgets.findIndex((w) => w.id === widget.id);
         if (currentIdx < 0) return; // no change needed
@@ -444,8 +445,8 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         const newIdx = clamp(currentIdx + delta, 0, widgets.length);
         widgets.splice(newIdx, 0, widget);
 
-        const widths = this.byRoom[room.roomId]?.[container]?.distributions;
-        const height = this.byRoom[room.roomId]?.[container]?.height;
+        const widths = this.byRoom.get(room.roomId)?.get(container)?.distributions;
+        const height = this.byRoom.get(room.roomId)?.get(container)?.height;
         const localLayout: Record<string, IStoredLayout> = {};
         widgets.forEach((w, i) => {
             localLayout[w.id] = {
@@ -458,7 +459,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         this.updateUserLayout(room, localLayout);
     }
 
-    public moveToContainer(room: Room, widget: IApp, toContainer: Container): void {
+    public moveToContainer(room: Room, widget: IWidget, toContainer: Container): void {
         const allWidgets = this.getAllWidgets(room);
         if (!allWidgets.some(([w]) => w.id === widget.id)) return; // invalid
         // Prepare other containers (potentially move widgets to obey the following rules)
@@ -512,8 +513,8 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             if (container === Container.Top) {
                 const containerWidgets = this.getContainerWidgets(room, container);
                 const idx = containerWidgets.findIndex((w) => w.id === widget.id);
-                const widths = this.byRoom[room.roomId]?.[container]?.distributions;
-                const height = this.byRoom[room.roomId]?.[container]?.height;
+                const widths = this.byRoom.get(room.roomId)?.get(container)?.distributions;
+                const height = this.byRoom.get(room.roomId)?.get(container)?.height;
                 evContent.widgets[widget.id] = {
                     ...evContent.widgets[widget.id],
                     height: height ? Math.round(height) : undefined,
@@ -526,12 +527,12 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     }
 
     private getAllWidgets(room: Room): [IApp, Container][] {
-        const containers = this.byRoom[room.roomId];
+        const containers = this.byRoom.get(room.roomId);
         if (!containers) return [];
 
         const ret: [IApp, Container][] = [];
-        for (const container in containers) {
-            const widgets = containers[container as Container]!.ordered;
+        for (const [container, containerValue] of containers) {
+            const widgets = containerValue.ordered;
             for (const widget of widgets) {
                 ret.push([widget, container as Container]);
             }
@@ -545,12 +546,12 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         for (const [widget, container] of allWidgets) {
             const containerWidgets = this.getContainerWidgets(room, container);
             const idx = containerWidgets.findIndex((w) => w.id === widget.id);
-            const widths = this.byRoom[room.roomId]?.[container]?.distributions;
+            const widths = this.byRoom.get(room.roomId)?.get(container)?.distributions;
             if (!newLayout[widget.id]) {
                 newLayout[widget.id] = {
                     container: container,
                     index: idx,
-                    height: this.byRoom[room.roomId]?.[container]?.height,
+                    height: this.byRoom.get(room.roomId)?.get(container)?.height,
                     width: widths?.[idx],
                 };
             }

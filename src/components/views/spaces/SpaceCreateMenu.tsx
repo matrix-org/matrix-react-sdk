@@ -30,26 +30,23 @@ import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
 import { HistoryVisibility, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ContextMenu, { ChevronFace } from "../../structures/ContextMenu";
 import createRoom, { IOpts as ICreateOpts } from "../../../createRoom";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import MatrixClientContext, { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 import SpaceBasicSettings, { SpaceAvatar } from "./SpaceBasicSettings";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import withValidation from "../elements/Validation";
 import RoomAliasField from "../elements/RoomAliasField";
-import Modal from "../../../Modal";
-import GenericFeatureFeedbackDialog from "../dialogs/GenericFeatureFeedbackDialog";
-import SettingsStore from "../../../settings/SettingsStore";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { shouldShowFeedback } from "../../../utils/Feedback";
 
 export const createSpace = async (
+    client: MatrixClient,
     name: string,
     isPublic: boolean,
     alias?: string,
@@ -58,12 +55,12 @@ export const createSpace = async (
     createOpts: Partial<ICreateRoomOpts> = {},
     otherOpts: Partial<Omit<ICreateOpts, "createOpts">> = {},
 ): Promise<string | null> => {
-    return createRoom({
+    return createRoom(client, {
         createOpts: {
             name,
             preset: isPublic ? Preset.PublicChat : Preset.PrivateChat,
             visibility:
-                isPublic && (await MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3827.stable"))
+                isPublic && (await client.doesServerSupportUnstableFeature("org.matrix.msc3827.stable"))
                     ? Visibility.Public
                     : Visibility.Private,
             power_level_content_override: {
@@ -94,8 +91,8 @@ const SpaceCreateMenuType: React.FC<{
 }> = ({ title, description, className, onClick }) => {
     return (
         <AccessibleButton className={classNames("mx_SpaceCreateMenuType", className)} onClick={onClick}>
-            <h3>{title}</h3>
-            <span>{description}</span>
+            {title}
+            <div>{description}</div>
         </AccessibleButton>
     );
 };
@@ -116,40 +113,6 @@ const nameToLocalpart = (name: string): string => {
         .toLowerCase()
         .replace(/\s+/g, "-")
         .replace(/[^a-z0-9_-]+/gi, "");
-};
-
-// XXX: Temporary for the Spaces release only
-export const SpaceFeedbackPrompt: React.FC<{
-    onClick?(): void;
-}> = ({ onClick }) => {
-    if (!shouldShowFeedback()) return null;
-
-    return (
-        <div className="mx_SpaceFeedbackPrompt">
-            <span className="mx_SpaceFeedbackPrompt_text">{_t("Spaces are a new feature.")}</span>
-            <AccessibleButton
-                kind="link_inline"
-                onClick={() => {
-                    if (onClick) onClick();
-                    Modal.createDialog(GenericFeatureFeedbackDialog, {
-                        title: _t("Spaces feedback"),
-                        subheading: _t(
-                            "Thank you for trying Spaces. " + "Your feedback will help inform the next versions.",
-                        ),
-                        rageshakeLabel: "spaces-feedback",
-                        rageshakeData: Object.fromEntries(
-                            ["Spaces.allRoomsInHome", "Spaces.enabledMetaSpaces"].map((k) => [
-                                k,
-                                SettingsStore.getValue(k),
-                            ]),
-                        ),
-                    });
-                }}
-            >
-                {_t("Give feedback.")}
-            </AccessibleButton>
-        </div>
-    );
 };
 
 type BProps = Omit<ComponentProps<typeof SpaceBasicSettings>, "nameDisabled" | "topicDisabled" | "avatarDisabled">;
@@ -247,13 +210,14 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
 const SpaceCreateMenu: React.FC<{
     onFinished(): void;
 }> = ({ onFinished }) => {
+    const cli = useMatrixClientContext();
     const [visibility, setVisibility] = useState<Visibility | null>(null);
     const [busy, setBusy] = useState<boolean>(false);
 
     const [name, setName] = useState("");
-    const spaceNameField = useRef<Field>();
+    const spaceNameField = useRef<Field>(null);
     const [alias, setAlias] = useState("");
-    const spaceAliasField = useRef<RoomAliasField>();
+    const spaceAliasField = useRef<RoomAliasField>(null);
     const [avatar, setAvatar] = useState<File | undefined>(undefined);
     const [topic, setTopic] = useState<string>("");
 
@@ -282,7 +246,7 @@ const SpaceCreateMenu: React.FC<{
         }
 
         try {
-            await createSpace(name, visibility === Visibility.Public, alias, topic, avatar);
+            await createSpace(cli, name, visibility === Visibility.Public, alias, topic, avatar);
 
             onFinished();
         } catch (e) {
@@ -316,8 +280,6 @@ const SpaceCreateMenu: React.FC<{
                 />
 
                 <p>{_t("To join a space you'll need an invite.")}</p>
-
-                <SpaceFeedbackPrompt onClick={onFinished} />
             </React.Fragment>
         );
     } else {

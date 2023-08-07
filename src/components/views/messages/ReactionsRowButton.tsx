@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
@@ -24,7 +24,6 @@ import dis from "../../../dispatcher/dispatcher";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-
 interface IProps {
     // The event we're displaying reactions for
     mxEvent: MatrixEvent;
@@ -32,8 +31,8 @@ interface IProps {
     content: string;
     // The count of votes for this key
     count: number;
-    // A Set of Matrix reaction events for this key
-    reactionEvents: Set<MatrixEvent>;
+    // A list of Matrix reaction events for this key
+    reactionEvents: MatrixEvent[];
     // A possible Matrix event if the current user has voted for this type
     myReactionEvent?: MatrixEvent;
     // Whether to prevent quick-reactions by clicking on this reaction
@@ -57,9 +56,9 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
     public onClick = (): void => {
         const { mxEvent, myReactionEvent, content } = this.props;
         if (myReactionEvent) {
-            this.context.redactEvent(mxEvent.getRoomId(), myReactionEvent.getId());
+            this.context.redactEvent(mxEvent.getRoomId()!, myReactionEvent.getId()!);
         } else {
-            this.context.sendEvent(mxEvent.getRoomId(), "m.reaction", {
+            this.context.sendEvent(mxEvent.getRoomId()!, "m.reaction", {
                 "m.relates_to": {
                     rel_type: "m.annotation",
                     event_id: mxEvent.getId(),
@@ -93,7 +92,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
             mx_ReactionsRowButton_selected: !!myReactionEvent,
         });
 
-        let tooltip;
+        let tooltip: JSX.Element | undefined;
         if (this.state.tooltipRendered) {
             tooltip = (
                 <ReactionsRowButtonTooltip
@@ -110,8 +109,8 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
         if (room) {
             const senders: string[] = [];
             for (const reactionEvent of reactionEvents) {
-                const member = room.getMember(reactionEvent.getSender());
-                senders.push(member?.name || reactionEvent.getSender());
+                const member = room.getMember(reactionEvent.getSender()!);
+                senders.push(member?.name || reactionEvent.getSender()!);
             }
 
             const reactors = formatCommaSeparatedList(senders, 6);

@@ -14,12 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { RoomEvent } from "matrix-js-sdk/src/models/room";
+import { MatrixEventEvent, RoomEvent } from "matrix-js-sdk/src/matrix";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import type { Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import type { IDestroyable } from "../../utils/IDestroyable";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
@@ -59,7 +57,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
     };
 
     private handleReadReceipt = (event: MatrixEvent, room: Room): void => {
-        if (!readReceiptChangeIsFor(event, MatrixClientPeg.get())) return; // not our own - ignore
+        if (!readReceiptChangeIsFor(event, MatrixClientPeg.safeGet())) return; // not our own - ignore
         if (room.roomId !== this.room.roomId) return; // not for us - ignore
         this.updateNotificationState();
     };
@@ -93,9 +91,12 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         const snapshot = this.snapshot();
 
         const { color, symbol, count } = RoomNotifs.determineUnreadState(this.room);
+        const muted =
+            RoomNotifs.getRoomNotifsState(this.room.client, this.room.roomId) === RoomNotifs.RoomNotifState.Mute;
         this._color = color;
         this._symbol = symbol;
         this._count = count;
+        this._muted = muted;
 
         // finally, publish an update if needed
         this.emitIfUpdated(snapshot);
