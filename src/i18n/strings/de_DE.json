@@ -3781,5 +3781,7 @@
     "Request access": "Beitrittsanfrage stellen",
     "Request to join sent": "Beitrittsanfrage gestellt",
     "Your request to join is pending.": "Deine Beitrittsanfrage wurde noch nicht bearbeitet.",
-    "Cancel request": "Anfrage abbrechen"
+    "Cancel request": "Anfrage abbrechen",
+    "%(severalUsers)schanged their profile picture %(count)s times|one": "%(severalUsers)shaben ihr Profilbild geändert",
+    "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)shat das Profilbild geändert"
 }
