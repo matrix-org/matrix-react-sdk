@@ -16,11 +16,9 @@ limitations under the License.
 
 import React, { createRef, ReactNode, SyntheticEvent } from "react";
 import classNames from "classnames";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { RoomMember, Room, MatrixError } from "matrix-js-sdk/src/matrix";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 import { uniqBy } from "lodash";
 
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/info.svg";
@@ -870,11 +868,17 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             return;
         }
 
+        const text = e.clipboardData.getData("text");
+        const potentialAddresses = this.parseFilter(text);
+        // one search term which is not a mxid or email address
+        if (potentialAddresses.length === 1 && !potentialAddresses[0].includes("@")) {
+            return;
+        }
+
         // Prevent the text being pasted into the input
         e.preventDefault();
 
         // Process it as a list of addresses to add instead
-        const text = e.clipboardData.getData("text");
         const possibleMembers = [
             // If we can avoid hitting the profile endpoint, we should.
             ...this.state.recents,
@@ -888,8 +892,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         // Addresses that could not be added.
         // Will be displayed as filter text to provide feedback.
         const unableToAddMore: string[] = [];
-
-        const potentialAddresses = this.parseFilter(text);
 
         for (const address of potentialAddresses) {
             const member = possibleMembers.find((m) => m.userId === address);

@@ -16,11 +16,9 @@ limitations under the License.
 
 import { mocked, MockedObject } from "jest-mock";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent, EventType, MsgType, IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { waitFor } from "@testing-library/react";
-import { EventType, MsgType } from "matrix-js-sdk/src/matrix";
 
 import BasePlatform from "../src/BasePlatform";
 import { ElementCall } from "../src/models/Call";
