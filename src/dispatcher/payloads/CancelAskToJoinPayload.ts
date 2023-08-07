@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2023 Nordeck IT + Consulting GmbH
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,18 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { RoomMember } from "matrix-js-sdk/src/matrix";
-import { User } from "matrix-js-sdk/src/models/user";
-
-import { ActionPayload } from "../payloads";
 import { Action } from "../actions";
+import { ActionPayload } from "../payloads";
 
-export interface ViewUserPayload extends ActionPayload {
-    action: Action.ViewUser;
+export interface CancelAskToJoinPayload extends Pick<ActionPayload, "action"> {
+    action: Action.CancelAskToJoin;
 
-    /**
-     * The member to view. May be null or falsy to indicate that no member
-     * should be shown (hide whichever relevant components).
-     */
-    member?: RoomMember | User;
+    roomId: string;
 }
