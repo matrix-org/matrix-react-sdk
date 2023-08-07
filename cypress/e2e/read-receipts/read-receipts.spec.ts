@@ -16,8 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
+import type { MatrixClient, MatrixEvent, ISendEventResponse } from "matrix-js-sdk/src/matrix";
 import type { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import type { Room } from "matrix-js-sdk/src/matrix";
 import type { IndexedDBStore } from "matrix-js-sdk/src/matrix";

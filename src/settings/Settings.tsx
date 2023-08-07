@@ -363,14 +363,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Show info about bridges in room settings"),
         default: false,
     },
-    "feature_right_panel_default_open": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Right panel stays open"),
-        description: _td("Defaults to room member list."),
-        default: false,
-    },
     "feature_jump_to_date": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -565,6 +557,14 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
+    },
+    "feature_new_room_decoration_ui": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        displayName: _td("Under active development, new room header & details interface"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+        controller: new ReloadOnChangeController(),
     },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
