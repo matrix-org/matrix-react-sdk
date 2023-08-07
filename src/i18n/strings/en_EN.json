@@ -961,6 +961,8 @@
     "Can I use text chat alongside the video call?": "Can I use text chat alongside the video call?",
     "Yes, the chat timeline is displayed alongside the video.": "Yes, the chat timeline is displayed alongside the video.",
     "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "Thank you for trying the beta, please go into as much detail as you can so we can improve it.",
+    "Notifications panel": "Notifications panel",
+    "A list of all events notifying you. Only works with unencrypted rooms": "A list of all events notifying you. Only works with unencrypted rooms",
     "New Notification Settings": "New Notification Settings",
     "Notification Settings": "Notification Settings",
     "Introducing a simpler way to change your notification settings. Customize your %(brand)s, just the way you like.": "Introducing a simpler way to change your notification settings. Customize your %(brand)s, just the way you like.",

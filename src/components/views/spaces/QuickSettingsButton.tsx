@@ -39,7 +39,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 
 const QuickSettingsButton: React.FC<{
     isPanelCollapsed: boolean;
-    className: string;
+    className?: string;
 }> = ({ isPanelCollapsed = false, className = "" }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
 
