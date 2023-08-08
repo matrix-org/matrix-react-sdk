@@ -263,7 +263,7 @@ describe("Read receipts", () => {
         cy.reload();
         // Wait for the app to reload
         cy.log("Waiting for app to reload");
-        cy.get(".mx_RoomView", { log: false }).should("exist");
+        cy.get(".mx_RoomView", { log: false, timeout: 20000 }).should("exist");
     }
 
     const room1 = selectedRoomName;
@@ -695,10 +695,44 @@ describe("Read receipts", () => {
                 openThread("Msg1");
                 assertRead(room2);
             });
-            it.skip("Marking a room as read after an edit in a thread makes it read", () => {});
-            it.skip("Editing a thread message after marking as read makes the room unread", () => {});
-            it.skip("A room with an edited threaded message is still unread after restart", () => {});
-            it.skip("A room where all threaded edits are read is still read after restart", () => {});
+            it("Marking a room as read after an edit in a thread makes it read", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), editOf("Resp1", "Edit1")]);
+                assertUnread(room2, 2);
+
+                markAsRead(room2);
+                assertRead(room2);
+            });
+            it.skip("Editing a thread message after marking as read makes the room unread", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
+                assertUnread(room2, 1);
+
+                markAsRead(room2);
+                assertRead(room2);
+
+                receiveMessages(room2, [editOf("Resp1", "Edit1")]);
+                assertUnread(room2, 1);
+            });
+            it("A room with an edited threaded message is still unread after restart", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), editOf("Resp1", "Edit1")]);
+                assertUnread(room2, 3);
+
+                saveAndReload();
+                assertUnread(room2, 3);
+            });
+            it("A room where all threaded edits are read is still read after restart", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), editOf("Resp1", "Edit1")]);
+                assertUnread(room2, 3);
+
+                markAsRead(room2);
+                assertRead(room2);
+
+                saveAndReload();
+                assertRead(room2);
+            });
         });
 
         describe("thread roots", () => {
