@@ -51,7 +51,7 @@ export const usePublicRoomDirectory = (): {
     config?: IPublicRoomDirectoryConfig | null;
     setConfig(config: IPublicRoomDirectoryConfig | null): void;
     search(opts: IPublicRoomsOpts): Promise<boolean>;
-    error?: Error;
+    error?: Error | true; // true if an unknown error is encountered
 } => {
     const [publicRooms, setPublicRooms] = useState<IPublicRoomsChunkRoom[]>([]);
 
@@ -61,7 +61,7 @@ export const usePublicRoomDirectory = (): {
 
     const [ready, setReady] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<Error | undefined>();
+    const [error, setError] = useState<Error | true | undefined>();
 
     const [updateQuery, updateResult] = useLatestResult<IRoomDirectoryOptions, IPublicRoomsChunkRoom[]>(setPublicRooms);
 
@@ -121,7 +121,7 @@ export const usePublicRoomDirectory = (): {
                 updateResult(opts, showNsfwPublicRooms ? chunk : chunk.filter(cheapNsfwFilter));
                 return true;
             } catch (e) {
-                setError(e);
+                setError(e instanceof Error ? e : true);
                 console.error("Could not fetch public rooms for params", opts, e);
                 updateResult(opts, []);
                 return false;
