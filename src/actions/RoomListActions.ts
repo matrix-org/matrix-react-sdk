@@ -15,8 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { asyncAction } from "./actionCreators";
@@ -26,7 +25,7 @@ import { _t } from "../languageHandler";
 import { AsyncActionPayload } from "../dispatcher/payloads";
 import RoomListStore from "../stores/room-list/RoomListStore";
 import { SortAlgorithm } from "../stores/room-list/algorithms/models";
-import { DefaultTagID } from "../stores/room-list/models";
+import { DefaultTagID, TagID } from "../stores/room-list/models";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 
 export default class RoomListActions {
@@ -49,12 +48,11 @@ export default class RoomListActions {
     public static tagRoom(
         matrixClient: MatrixClient,
         room: Room,
-        oldTag: string,
-        newTag: string,
-        oldIndex: number | null,
-        newIndex: number | null,
+        oldTag: TagID | null,
+        newTag: TagID | null,
+        newIndex: number,
     ): AsyncActionPayload {
-        let metaData: Parameters<MatrixClient["setRoomTag"]>[2] | null = null;
+        let metaData: Parameters<MatrixClient["setRoomTag"]>[2] | undefined;
 
         // Is the tag ordered manually?
         const store = RoomListStore.instance;
@@ -63,12 +61,8 @@ export default class RoomListActions {
 
             newList.sort((a, b) => a.tags[newTag].order - b.tags[newTag].order);
 
-            // If the room was moved "down" (increasing index) in the same list we
-            // need to use the orders of the tiles with indices shifted by +1
-            const offset = newTag === oldTag && oldIndex < newIndex ? 1 : 0;
-
-            const indexBefore = offset + newIndex - 1;
-            const indexAfter = offset + newIndex;
+            const indexBefore = newIndex - 1;
+            const indexAfter = newIndex;
 
             const prevOrder = indexBefore <= 0 ? 0 : newList[indexBefore].tags[newTag].order;
             const nextOrder = indexAfter >= newList.length ? 1 : newList[indexAfter].tags[newTag].order;
@@ -118,10 +112,6 @@ export default class RoomListActions {
 
                 // if we moved lists or the ordering changed, add the new tag
                 if (newTag && newTag !== DefaultTagID.DM && (hasChangedSubLists || metaData)) {
-                    // metaData is the body of the PUT to set the tag, so it must
-                    // at least be an empty object.
-                    metaData = metaData || ({} as typeof metaData);
-
                     const promiseToAdd = matrixClient.setRoomTag(roomId, newTag, metaData).catch(function (err) {
                         logger.error("Failed to add tag " + newTag + " to room: " + err);
                         Modal.createDialog(ErrorDialog, {

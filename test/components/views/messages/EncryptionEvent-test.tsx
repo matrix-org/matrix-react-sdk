@@ -49,6 +49,7 @@ describe("EncryptionEvent", () => {
         jest.clearAllMocks();
         client = createTestClient();
         jest.spyOn(MatrixClientPeg, "get").mockReturnValue(client);
+        jest.spyOn(MatrixClientPeg, "safeGet").mockReturnValue(client);
         event = mkMessage({
             event: true,
             room: roomId,
@@ -72,7 +73,7 @@ describe("EncryptionEvent", () => {
             checkTexts(
                 "Encryption enabled",
                 "Messages in this room are end-to-end encrypted. " +
-                    "When people join, you can verify them in their profile, just tap on their avatar.",
+                    "When people join, you can verify them in their profile, just tap on their profile picture.",
             );
         });
 

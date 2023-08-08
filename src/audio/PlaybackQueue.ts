@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, Room, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { Playback, PlaybackState } from "./Playback";
@@ -64,7 +62,7 @@ export class PlaybackQueue {
     }
 
     public static forRoom(roomId: string): PlaybackQueue {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const room = cli.getRoom(roomId);
         if (!room) throw new Error("Unknown room");
         if (PlaybackQueue.queues.has(room.roomId)) {
@@ -106,7 +104,7 @@ export class PlaybackQueue {
             // Remove the now-useless clock for some space savings
             this.clockStates.delete(mxEvent.getId()!);
 
-            if (wasLastPlaying) {
+            if (wasLastPlaying && this.currentPlaybackId) {
                 this.recentFullPlays.add(this.currentPlaybackId);
                 const orderClone = arrayFastClone(this.playbackIdOrder);
                 const last = orderClone.pop();
@@ -170,7 +168,7 @@ export class PlaybackQueue {
                             // This should cause a Play event, which will re-populate our playback order
                             // and update our current playback ID.
                             // noinspection JSIgnoredPromiseFromCall
-                            instance.play();
+                            instance?.play();
                         }
                     }
                 } else {
@@ -188,8 +186,8 @@ export class PlaybackQueue {
                 if (order.length === 0 || order[order.length - 1] !== this.currentPlaybackId) {
                     const lastInstance = this.playbacks.get(this.currentPlaybackId);
                     if (
-                        lastInstance.currentState === PlaybackState.Playing ||
-                        lastInstance.currentState === PlaybackState.Paused
+                        lastInstance &&
+                        [PlaybackState.Playing, PlaybackState.Paused].includes(lastInstance.currentState)
                     ) {
                         order.push(this.currentPlaybackId);
                     }

@@ -125,7 +125,7 @@ export function GenericDropdownMenu<T>({
 }: IProps<T>): JSX.Element {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
 
-    const selected: GenericDropdownMenuItem<T> | null = options
+    const selected: GenericDropdownMenuItem<T> | undefined = options
         .flatMap((it) => (isGenericDropdownMenuGroup(it) ? [it, ...it.options] : [it]))
         .find((option) => (toKey ? toKey(option.key) === toKey(value) : option.key === value));
     let contextMenuOptions: JSX.Element;
@@ -177,19 +177,20 @@ export function GenericDropdownMenu<T>({
             </>
         );
     }
-    const contextMenu = menuDisplayed ? (
-        <ContextMenu
-            onFinished={closeMenu}
-            chevronFace={ChevronFace.Top}
-            wrapperClassName={classNames("mx_GenericDropdownMenu_wrapper", className)}
-            {...aboveLeftOf(button.current.getBoundingClientRect())}
-        >
-            {contextMenuOptions}
-            {AdditionalOptions && (
-                <AdditionalOptions menuDisplayed={menuDisplayed} openMenu={openMenu} closeMenu={closeMenu} />
-            )}
-        </ContextMenu>
-    ) : null;
+    const contextMenu =
+        menuDisplayed && button.current ? (
+            <ContextMenu
+                onFinished={closeMenu}
+                chevronFace={ChevronFace.Top}
+                wrapperClassName={classNames("mx_GenericDropdownMenu_wrapper", className)}
+                {...aboveLeftOf(button.current.getBoundingClientRect())}
+            >
+                {contextMenuOptions}
+                {AdditionalOptions && (
+                    <AdditionalOptions menuDisplayed={menuDisplayed} openMenu={openMenu} closeMenu={closeMenu} />
+                )}
+            </ContextMenu>
+        ) : null;
     return (
         <>
             <ContextMenuButton

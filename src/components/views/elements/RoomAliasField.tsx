@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, KeyboardEventHandler } from "react";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import withValidation, { IFieldState, IValidationResult } from "./Validation";
@@ -71,7 +72,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
         const postfix = domain ? <span title={`:${domain}`}>{`:${domain}`}</span> : <span />;
         const maxlength = domain ? 255 - domain.length - 2 : 255 - 1; // 2 for # and :
         const value = domain
-            ? this.props.value.substring(1, this.props.value.length - this.props.domain.length - 1)
+            ? this.props.value.substring(1, this.props.value.length - domain.length - 1)
             : this.props.value.substring(1);
 
         return { prefix, postfix, value, maxlength };
@@ -104,7 +105,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
 
     private onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validationRules(fieldState);
-        this.setState({ isValid: result.valid });
+        this.setState({ isValid: !!result.valid });
         return result;
     };
 
@@ -209,7 +210,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                               // any server error code will do,
                               // either it M_NOT_FOUND or the alias is invalid somehow,
                               // in which case we don't want to show the invalid message
-                              return !!err.errcode;
+                              return err instanceof MatrixError;
                           }
                       },
                       valid: () => _t("This address is available to use"),
@@ -225,8 +226,9 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
         return this.state.isValid;
     }
 
-    public validate(options: IValidateOpts): Promise<boolean> {
-        return this.fieldRef.current?.validate(options);
+    public async validate(options: IValidateOpts): Promise<boolean> {
+        const val = await this.fieldRef.current?.validate(options);
+        return val ?? false;
     }
 
     public focus(): void {

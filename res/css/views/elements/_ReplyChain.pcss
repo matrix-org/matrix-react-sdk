@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 .mx_ReplyChain {
-    margin: 0 0 $spacing-8 0;
-    padding-left: 10px; // TODO: Use a spacing variable
-    border-left: 2px solid var(--username-color); // TODO: Use a spacing variable
-    border-radius: 2px; // TODO: Use a spacing variable
+    margin: 0; // Reset default blockquote margin
+    padding-left: 10px;
+    border-left: 2px solid var(--username-color);
+    border-radius: 2px;
 
     .mx_ReplyChain_show {
         &.mx_AccessibleButton_kind_link_inline {
@@ -62,5 +62,13 @@ limitations under the License.
 
     &.mx_ReplyChain_color8 {
         --username-color: $username-variant8-color;
+    }
+}
+
+/* Percy screenshot test specific CSS */
+@media only percy {
+    .mx_ReplyChain {
+        /* Override the colour in percy tests for screenshot consistency */
+        border-left-color: var(--percy-color-replyChain-border) !important;
     }
 }

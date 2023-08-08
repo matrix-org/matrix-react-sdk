@@ -15,13 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from "react";
+import React, { CSSProperties, useState } from "react";
 import classNames from "classnames";
 
 import { _t, _td } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import { E2EStatus } from "../../../utils/ShieldUtils";
+import { XOR } from "../../../@types/common";
 
 export enum E2EState {
     Verified = "verified",
@@ -42,9 +43,7 @@ const crossSigningRoomTitles: { [key in E2EState]?: string } = {
     [E2EState.Verified]: _td("Everyone in this room is verified"),
 };
 
-interface IProps {
-    isUser?: boolean;
-    status?: E2EState | E2EStatus;
+interface Props {
     className?: string;
     size?: number;
     onClick?: () => void;
@@ -53,7 +52,17 @@ interface IProps {
     bordered?: boolean;
 }
 
-const E2EIcon: React.FC<IProps> = ({
+interface UserProps extends Props {
+    isUser: true;
+    status: E2EState | E2EStatus;
+}
+
+interface RoomProps extends Props {
+    isUser?: false;
+    status: E2EStatus;
+}
+
+const E2EIcon: React.FC<XOR<UserProps, RoomProps>> = ({
     isUser,
     status,
     className,
@@ -76,14 +85,14 @@ const E2EIcon: React.FC<IProps> = ({
         className,
     );
 
-    let e2eTitle;
+    let e2eTitle: string | undefined;
     if (isUser) {
         e2eTitle = crossSigningUserTitles[status];
     } else {
         e2eTitle = crossSigningRoomTitles[status];
     }
 
-    let style;
+    let style: CSSProperties | undefined;
     if (size) {
         style = { width: `${size}px`, height: `${size}px` };
     }
@@ -91,9 +100,11 @@ const E2EIcon: React.FC<IProps> = ({
     const onMouseOver = (): void => setHover(true);
     const onMouseLeave = (): void => setHover(false);
 
-    let tip;
-    if (hover && !hideTooltip) {
-        tip = <Tooltip label={e2eTitle ? _t(e2eTitle) : ""} alignment={tooltipAlignment} />;
+    const label = e2eTitle ? _t(e2eTitle) : "";
+
+    let tip: JSX.Element | undefined;
+    if (hover && !hideTooltip && label) {
+        tip = <Tooltip label={label} alignment={tooltipAlignment} />;
     }
 
     if (onClick) {
@@ -104,6 +115,7 @@ const E2EIcon: React.FC<IProps> = ({
                 onMouseLeave={onMouseLeave}
                 className={classes}
                 style={style}
+                aria-label={label}
             >
                 {tip}
             </AccessibleButton>
@@ -111,7 +123,7 @@ const E2EIcon: React.FC<IProps> = ({
     }
 
     return (
-        <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} className={classes} style={style}>
+        <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} className={classes} style={style} aria-label={label}>
             {tip}
         </div>
     );

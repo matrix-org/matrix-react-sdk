@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { User } from "matrix-js-sdk/src/models/user";
+import { RoomMember, User } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -108,7 +107,7 @@ const EncryptionInfo: React.FC<IProps> = ({
 
     return (
         <React.Fragment>
-            <div data-test-id="encryption-info-description" className="mx_UserInfo_container">
+            <div data-testid="encryption-info-description" className="mx_UserInfo_container">
                 <h3>{_t("Encryption")}</h3>
                 {description}
             </div>

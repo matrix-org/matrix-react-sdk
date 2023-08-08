@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 
@@ -77,12 +77,12 @@ class ReactionPicker extends React.Component<IProps, IState> {
         if (!this.props.reactions) {
             return {};
         }
-        const userId = MatrixClientPeg.get().getUserId()!;
+        const userId = MatrixClientPeg.safeGet().getSafeUserId();
         const myAnnotations = this.props.reactions.getAnnotationsBySender()?.[userId] ?? new Set<MatrixEvent>();
         return Object.fromEntries(
             [...myAnnotations]
                 .filter((event) => !event.isRedacted())
-                .map((event) => [event.getRelation().key, event.getId()]),
+                .map((event) => [event.getRelation()?.key, event.getId()]),
         );
     }
 
@@ -99,7 +99,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
         if (myReactions.hasOwnProperty(reaction)) {
             if (this.props.mxEvent.isRedacted() || !this.context.canSelfRedact) return false;
 
-            MatrixClientPeg.get().redactEvent(this.props.mxEvent.getRoomId()!, myReactions[reaction]);
+            MatrixClientPeg.safeGet().redactEvent(this.props.mxEvent.getRoomId()!, myReactions[reaction]);
             dis.dispatch<FocusComposerPayload>({
                 action: Action.FocusAComposer,
                 context: this.context.timelineRenderingType,
@@ -107,7 +107,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
             // Tell the emoji picker not to bump this in the more frequently used list.
             return false;
         } else {
-            MatrixClientPeg.get().sendEvent(this.props.mxEvent.getRoomId()!, EventType.Reaction, {
+            MatrixClientPeg.safeGet().sendEvent(this.props.mxEvent.getRoomId()!, EventType.Reaction, {
                 "m.relates_to": {
                     rel_type: RelationType.Annotation,
                     event_id: this.props.mxEvent.getId(),
@@ -135,8 +135,8 @@ class ReactionPicker extends React.Component<IProps, IState> {
             <EmojiPicker
                 onChoose={this.onChoose}
                 isEmojiDisabled={this.isEmojiDisabled}
+                onFinished={this.props.onFinished}
                 selectedEmojis={this.state.selectedEmojis}
-                showQuickReactions={true}
             />
         );
     }

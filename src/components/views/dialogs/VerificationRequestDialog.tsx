@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { User } from "matrix-js-sdk/src/models/user";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
+import { User } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -48,8 +48,10 @@ export default class VerificationRequestDialog extends React.Component<IProps, I
     public render(): React.ReactNode {
         const request = this.state.verificationRequest;
         const otherUserId = request?.otherUserId;
-        const member = this.props.member || (otherUserId ? MatrixClientPeg.get().getUser(otherUserId) : null);
+        const member = this.props.member || (otherUserId ? MatrixClientPeg.safeGet().getUser(otherUserId) : null);
         const title = request?.isSelfVerification ? _t("Verify other device") : _t("Verification Request");
+
+        if (!member) return null;
 
         return (
             <BaseDialog

@@ -18,11 +18,16 @@ limitations under the License.
 
 import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { AuthType, IAuthData } from "matrix-js-sdk/src/interactive-auth";
+import { AuthType } from "matrix-js-sdk/src/interactive-auth";
+import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
-import InteractiveAuth, { ERROR_USER_CANCELLED, InteractiveAuthCallback } from "../../structures/InteractiveAuth";
+import InteractiveAuth, {
+    ERROR_USER_CANCELLED,
+    InteractiveAuthCallback,
+    InteractiveAuthProps,
+} from "../../structures/InteractiveAuth";
 import { SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
 import BaseDialog from "./BaseDialog";
 
@@ -37,16 +42,10 @@ type DialogAesthetics = Partial<{
     };
 }>;
 
-export interface InteractiveAuthDialogProps {
+export interface InteractiveAuthDialogProps<T = unknown>
+    extends Pick<InteractiveAuthProps<T>, "makeRequest" | "authData"> {
     // matrix client to use for UI auth requests
     matrixClient: MatrixClient;
-
-    // response from initial request. If not supplied, will do a request on
-    // mount.
-    authData?: IAuthData;
-
-    // callback
-    makeRequest: (auth: IAuthData) => Promise<IAuthData>;
 
     // Optional title and body to show when not showing a particular stage
     title?: string;
@@ -72,19 +71,19 @@ export interface InteractiveAuthDialogProps {
     // Default is defined in _getDefaultDialogAesthetics()
     aestheticsForStagePhases?: DialogAesthetics;
 
-    onFinished(success?: boolean, result?: IAuthData | Error | null): void;
+    onFinished(success?: boolean, result?: UIAResponse<T> | Error | null): void;
 }
 
 interface IState {
-    authError: Error;
+    authError: Error | null;
 
     // See _onUpdateStagePhase()
     uiaStage: AuthType | null;
     uiaStagePhase: number | null;
 }
 
-export default class InteractiveAuthDialog extends React.Component<InteractiveAuthDialogProps, IState> {
-    public constructor(props: InteractiveAuthDialogProps) {
+export default class InteractiveAuthDialog<T> extends React.Component<InteractiveAuthDialogProps<T>, IState> {
+    public constructor(props: InteractiveAuthDialogProps<T>) {
         super(props);
 
         this.state = {
@@ -118,7 +117,7 @@ export default class InteractiveAuthDialog extends React.Component<InteractiveAu
         };
     }
 
-    private onAuthFinished: InteractiveAuthCallback = (success, result): void => {
+    private onAuthFinished: InteractiveAuthCallback<T> = (success, result): void => {
         if (success) {
             this.props.onFinished(true, result);
         } else {
@@ -147,16 +146,22 @@ export default class InteractiveAuthDialog extends React.Component<InteractiveAu
 
         let title = this.state.authError ? "Error" : this.props.title || _t("Authentication");
         let body = this.state.authError ? null : this.props.body;
-        let continueText = null;
-        let continueKind = null;
+        let continueText: string | undefined;
+        let continueKind: string | undefined;
         const dialogAesthetics = this.props.aestheticsForStagePhases || this.getDefaultDialogAesthetics();
         if (!this.state.authError && dialogAesthetics) {
-            if (dialogAesthetics[this.state.uiaStage]) {
-                const aesthetics = dialogAesthetics[this.state.uiaStage][this.state.uiaStagePhase];
-                if (aesthetics?.title) title = aesthetics.title;
-                if (aesthetics?.body) body = aesthetics.body;
-                if (aesthetics?.continueText) continueText = aesthetics.continueText;
-                if (aesthetics?.continueKind) continueKind = aesthetics.continueKind;
+            if (
+                this.state.uiaStage !== null &&
+                this.state.uiaStagePhase !== null &&
+                dialogAesthetics[this.state.uiaStage]
+            ) {
+                const aesthetics = dialogAesthetics[this.state.uiaStage]![this.state.uiaStagePhase];
+                if (aesthetics) {
+                    if (aesthetics.title) title = aesthetics.title;
+                    if (aesthetics.body) body = aesthetics.body;
+                    if (aesthetics.continueText) continueText = aesthetics.continueText;
+                    if (aesthetics.continueKind) continueKind = aesthetics.continueKind;
+                }
             }
         }
 

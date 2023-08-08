@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { SerializedPart } from "../editor/parts";
 import DocumentOffset from "../editor/offset";
@@ -30,7 +30,7 @@ export default class EditorStateTransfer {
 
     public constructor(private readonly event: MatrixEvent) {}
 
-    public setEditorState(caret: DocumentOffset, serializedParts: SerializedPart[]): void {
+    public setEditorState(caret: DocumentOffset | null, serializedParts: SerializedPart[]): void {
         this.caret = caret;
         this.serializedParts = serializedParts;
     }

@@ -20,6 +20,7 @@ import React from "react";
 import { _t } from "../../../languageHandler";
 import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
+import Heading from "../typography/Heading";
 
 interface IProps {
     newVersion: string;
@@ -27,7 +28,7 @@ interface IProps {
     onFinished: (success: boolean) => void;
 }
 
-type State = Partial<Record<typeof REPOS[number], null | string | Commit[]>>;
+type State = Partial<Record<(typeof REPOS)[number], null | string | Commit[]>>;
 
 interface Commit {
     sha: string;
@@ -46,7 +47,7 @@ export default class ChangelogDialog extends React.Component<IProps, State> {
         this.state = {};
     }
 
-    private async fetchChanges(repo: typeof REPOS[number], oldVersion: string, newVersion: string): Promise<void> {
+    private async fetchChanges(repo: (typeof REPOS)[number], oldVersion: string, newVersion: string): Promise<void> {
         const url = `https://riot.im/github/repos/${repo}/compare/${oldVersion}...${newVersion}`;
 
         try {
@@ -60,7 +61,7 @@ export default class ChangelogDialog extends React.Component<IProps, State> {
             const body = await res.json();
             this.setState({ [repo]: body.commits });
         } catch (err) {
-            this.setState({ [repo]: err.message });
+            this.setState({ [repo]: err instanceof Error ? err.message : _t("Unknown error") });
         }
     }
 
@@ -100,7 +101,9 @@ export default class ChangelogDialog extends React.Component<IProps, State> {
             }
             return (
                 <div key={repo}>
-                    <h2>{repo}</h2>
+                    <Heading as="h2" size="4">
+                        {repo}
+                    </Heading>
                     <ul>{content}</ul>
                 </div>
             );

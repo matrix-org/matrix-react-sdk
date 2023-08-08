@@ -16,10 +16,8 @@ limitations under the License.
 
 import React, { useEffect, useMemo, useState } from "react";
 import classnames from "classnames";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { IContent, MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { ILocationContent, LocationAssetType, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
 import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
@@ -51,6 +49,7 @@ import { ButtonEvent } from "../elements/AccessibleButton";
 import { isLocationEvent } from "../../../utils/EventUtils";
 import { isSelfLocation, locationEventGeoUri } from "../../../utils/location";
 import { RoomContextDetails } from "../rooms/RoomContextDetails";
+import { filterBoolean } from "../../../utils/arrays";
 
 const AVATAR_SIZE = 30;
 
@@ -194,7 +193,7 @@ const transformEvent = (event: MatrixEvent): { type: string; content: IContent }
 };
 
 const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCreator, onFinished }) => {
-    const userId = cli.getUserId();
+    const userId = cli.getSafeUserId();
     const [profileInfo, setProfileInfo] = useState<any>({});
     useEffect(() => {
         cli.getProfileInfo(userId).then((info) => setProfileInfo(info));
@@ -227,17 +226,22 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     const lcQuery = query.toLowerCase();
 
     const previewLayout = useSettingValue<Layout>("layout");
+    const msc3946DynamicRoomPredecessors = useSettingValue<boolean>("feature_dynamic_room_predecessors");
 
     let rooms = useMemo(
         () =>
-            sortRooms(cli.getVisibleRooms().filter((room) => room.getMyMembership() === "join" && !room.isSpaceRoom())),
-        [cli],
+            sortRooms(
+                cli
+                    .getVisibleRooms(msc3946DynamicRoomPredecessors)
+                    .filter((room) => room.getMyMembership() === "join" && !room.isSpaceRoom()),
+            ),
+        [cli, msc3946DynamicRoomPredecessors],
     );
 
     if (lcQuery) {
         rooms = new QueryMatcher<Room>(rooms, {
             keys: ["name"],
-            funcs: [(r) => [r.getCanonicalAlias(), ...r.getAltAliases()].filter(Boolean)],
+            funcs: [(r) => filterBoolean([r.getCanonicalAlias(), ...r.getAltAliases()])],
             shouldMatchWordsOnly: false,
         }).match(lcQuery);
     }
@@ -278,7 +282,13 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                     mx_IRCLayout: previewLayout == Layout.IRC,
                 })}
             >
-                <EventTile mxEvent={mockEvent} layout={previewLayout} permalinkCreator={permalinkCreator} as="div" />
+                <EventTile
+                    mxEvent={mockEvent}
+                    layout={previewLayout}
+                    permalinkCreator={permalinkCreator}
+                    as="div"
+                    inhibitInteraction
+                />
             </div>
             <hr />
             <div className="mx_ForwardList" id="mx_ForwardList">

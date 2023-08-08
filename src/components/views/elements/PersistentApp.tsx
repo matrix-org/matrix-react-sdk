@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { ContextType, CSSProperties, MutableRefObject } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import WidgetUtils from "../../../utils/WidgetUtils";
 import AppTile from "./AppTile";
@@ -32,7 +32,7 @@ interface IProps {
 
 export default class PersistentApp extends React.Component<IProps> {
     public static contextType = MatrixClientContext;
-    public context: ContextType<typeof MatrixClientContext>;
+    public context!: ContextType<typeof MatrixClientContext>;
     private room: Room;
 
     public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
@@ -50,7 +50,7 @@ export default class PersistentApp extends React.Component<IProps> {
                 app={app}
                 fullWidth={true}
                 room={this.room}
-                userId={this.context.credentials.userId}
+                userId={this.context.getSafeUserId()}
                 creatorUserId={app.creatorUserId}
                 widgetPageTitle={WidgetUtils.getWidgetDataTitle(app)}
                 waitForIframeLoad={app.waitForIframeLoad}

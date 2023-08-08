@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { GenericEchoChamber, implicitlyReverted, PROPERTY_UPDATED } from "./GenericEchoChamber";
 import { getRoomNotifsState, RoomNotifState, setRoomNotifsState } from "../../RoomNotifs";
@@ -27,7 +26,7 @@ export enum CachedRoomKey {
     NotificationVolume,
 }
 
-export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedRoomKey, RoomNotifState> {
+export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedRoomKey, RoomNotifState | undefined> {
     private properties = new Map<CachedRoomKey, RoomNotifState>();
 
     public constructor(context: RoomEchoContext) {
@@ -47,6 +46,7 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
     }
 
     private onAccountData = (event: MatrixEvent): void => {
+        if (!this.matrixClient) return;
         if (event.getType() === EventType.PushRules) {
             const currentVolume = this.properties.get(CachedRoomKey.NotificationVolume);
             const newVolume = getRoomNotifsState(this.matrixClient, this.context.room.roomId);
@@ -66,17 +66,18 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
 
     // ---- helpers below here ----
 
-    public get notificationVolume(): RoomNotifState {
+    public get notificationVolume(): RoomNotifState | undefined {
         return this.getValue(CachedRoomKey.NotificationVolume);
     }
 
-    public set notificationVolume(v: RoomNotifState) {
+    public set notificationVolume(v: RoomNotifState | undefined) {
+        if (v === undefined) return;
         this.setValue(
             _t("Change notification settings"),
             CachedRoomKey.NotificationVolume,
             v,
             async (): Promise<void> => {
-                return setRoomNotifsState(this.context.room.roomId, v);
+                return setRoomNotifsState(this.context.room.client, this.context.room.roomId, v);
             },
             implicitlyReverted,
         );

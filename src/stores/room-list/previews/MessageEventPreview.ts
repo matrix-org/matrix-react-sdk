@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 
 import { IPreview } from "./IPreview";
@@ -72,7 +72,9 @@ export class MessageEventPreview implements IPreview {
             return _t("* %(senderName)s %(emote)s", { senderName: getSenderName(event), emote: body });
         }
 
-        if (isThread || isSelf(event) || !shouldPrefixMessagesIn(event.getRoomId(), tagId)) {
+        const roomId = event.getRoomId();
+
+        if (isThread || isSelf(event) || (roomId && !shouldPrefixMessagesIn(roomId, tagId))) {
             return body;
         } else {
             return _t("%(senderName)s: %(message)s", { senderName: getSenderName(event), message: body });

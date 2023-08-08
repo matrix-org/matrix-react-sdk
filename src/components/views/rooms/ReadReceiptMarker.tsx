@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { createRef, RefObject } from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import NodeAnimator from "../../../NodeAnimator";
@@ -48,7 +48,7 @@ interface IProps {
     suppressAnimation?: boolean;
 
     // an opaque object for storing information about this user's RR in this room
-    readReceiptInfo: IReadReceiptInfo;
+    readReceiptInfo?: IReadReceiptInfo;
 
     // A function which is used to check if the parent panel is being
     // unmounted, to avoid unnecessary work. Should return true if we
@@ -124,7 +124,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
     private buildReadReceiptInfo(target: IReadReceiptInfo = {}): IReadReceiptInfo {
         const element = this.avatar.current;
         // this is the mx_ReadReceiptsGroup_container
-        const horizontalContainer = element.offsetParent;
+        const horizontalContainer = element?.offsetParent;
         if (!horizontalContainer || !(horizontalContainer instanceof HTMLElement)) {
             // this seems to happen sometimes for reasons I don't understand
             // the docs for `offsetParent` say it may be null if `display` is
@@ -165,7 +165,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
             return 0;
         }
 
-        return info.top + info.parent.getBoundingClientRect().top;
+        return (info.top ?? 0) + info.parent.getBoundingClientRect().top;
     }
 
     private animateMarker(): void {

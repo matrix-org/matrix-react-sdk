@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { defer } from "matrix-js-sdk/src/utils";
 
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
@@ -50,7 +50,7 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         newClient.on(ClientEvent.AccountData, this.onAccountData);
     }
 
-    private onAccountData = (event: MatrixEvent, prevEvent: MatrixEvent): void => {
+    private onAccountData = (event: MatrixEvent, prevEvent?: MatrixEvent): void => {
         if (event.getType() === "org.matrix.preview_urls") {
             let val = event.getContent()["disable"];
             if (typeof val !== "boolean") {

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useRef } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
@@ -31,14 +31,15 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton from "./AccessibleButton";
 import TooltipTarget from "./TooltipTarget";
 import { Linkify, topicToHtml } from "../../../HtmlUtils";
+import { tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 
 interface IProps extends React.HTMLProps<HTMLDivElement> {
-    room?: Room;
+    room: Room;
 }
 
 export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
     const client = useContext(MatrixClientContext);
-    const ref = useRef<HTMLDivElement>();
+    const ref = useRef<HTMLDivElement>(null);
 
     const topic = useTopic(room);
     const body = topicToHtml(topic?.text, topic?.html, ref);
@@ -46,12 +47,22 @@ export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
     const onClick = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
             props.onClick?.(e);
+
             const target = e.target as HTMLElement;
-            if (target.tagName.toUpperCase() === "A") {
+
+            if (target.tagName.toUpperCase() !== "A") {
+                dis.fire(Action.ShowRoomTopic);
                 return;
             }
 
-            dis.fire(Action.ShowRoomTopic);
+            const anchor = e.target as HTMLLinkElement;
+            const localHref = tryTransformPermalinkToLocalHref(anchor.href);
+
+            if (localHref !== anchor.href) {
+                // it could be converted to a localHref -> therefore handle locally
+                e.preventDefault();
+                window.location.hash = localHref;
+            }
         },
         [props],
     );
@@ -62,7 +73,7 @@ export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
 
     useDispatcher(dis, (payload) => {
         if (payload.action === Action.ShowRoomTopic) {
-            const canSetTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, client.getUserId());
+            const canSetTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, client.getSafeUserId());
             const body = topicToHtml(topic?.text, topic?.html, ref, true);
 
             const modal = Modal.createDialog(InfoDialog, {
@@ -103,10 +114,17 @@ export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
     const className = classNames(props.className, "mx_RoomTopic");
 
     return (
-        <div {...props} ref={ref} onClick={onClick} dir="auto" className={className}>
-            <TooltipTarget label={_t("Click to read topic")} alignment={Alignment.Bottom} ignoreHover={ignoreHover}>
-                <Linkify>{body}</Linkify>
-            </TooltipTarget>
-        </div>
+        <TooltipTarget
+            {...props}
+            ref={ref}
+            onClick={onClick}
+            dir="auto"
+            tooltipTargetClassName={className}
+            label={_t("Click to read topic")}
+            alignment={Alignment.Bottom}
+            ignoreHover={ignoreHover}
+        >
+            <Linkify>{body}</Linkify>
+        </TooltipTarget>
     );
 }

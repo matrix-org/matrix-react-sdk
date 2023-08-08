@@ -15,16 +15,15 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { SpaceWatcher } from "../../../src/stores/room-list/SpaceWatcher";
 import type { RoomListStoreClass } from "../../../src/stores/room-list/RoomListStore";
 import SettingsStore from "../../../src/settings/SettingsStore";
 import SpaceStore from "../../../src/stores/spaces/SpaceStore";
 import { MetaSpace, UPDATE_HOME_BEHAVIOUR } from "../../../src/stores/spaces";
-import { stubClient } from "../../test-utils";
+import { stubClient, mkSpace, emitPromise, setupAsyncStoreWithClient } from "../../test-utils";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
-import { mkSpace, emitPromise, setupAsyncStoreWithClient } from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { SpaceFilterCondition } from "../../../src/stores/room-list/filters/SpaceFilterCondition";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
@@ -49,7 +48,7 @@ const space2 = "!space2:server";
 describe("SpaceWatcher", () => {
     stubClient();
     const store = SpaceStore.instance;
-    const client = mocked(MatrixClientPeg.get());
+    const client = mocked(MatrixClientPeg.safeGet());
 
     let rooms: Room[] = [];
     const mkSpaceForRooms = (spaceId: string, children: string[] = []) => mkSpace(client, spaceId, rooms, children);

@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { User, UserEvent } from "matrix-js-sdk/src/models/user";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixEvent, RoomStateEvent, MatrixError, User, UserEvent } from "matrix-js-sdk/src/matrix";
 import { throttle } from "lodash";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
@@ -43,9 +41,9 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         return instance;
     })();
 
-    private monitoredUser: User | null;
+    private monitoredUser: User | null = null;
 
-    private constructor() {
+    public constructor() {
         // seed from localstorage because otherwise we won't get these values until a whole network
         // round-trip after the client is ready, and we often load widgets in that time, and we'd
         // and up passing them an incorrect display name
@@ -112,7 +110,8 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
     }
 
     protected async onReady(): Promise<void> {
-        const myUserId = this.matrixClient.getUserId()!;
+        if (!this.matrixClient) return;
+        const myUserId = this.matrixClient.getSafeUserId();
         this.monitoredUser = this.matrixClient.getUser(myUserId);
         if (this.monitoredUser) {
             this.monitoredUser.on(UserEvent.DisplayName, this.onProfileUpdate);
@@ -132,14 +131,35 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
 
     private onProfileUpdate = throttle(
         async (): Promise<void> => {
+            if (!this.matrixClient) return;
             // We specifically do not use the User object we stored for profile info as it
             // could easily be wrong (such as per-room instead of global profile).
-            const profileInfo = await this.matrixClient.getProfileInfo(this.matrixClient.getUserId()!);
+
+            let profileInfo: { displayname?: string; avatar_url?: string } = {
+                displayname: undefined,
+                avatar_url: undefined,
+            };
+
+            try {
+                profileInfo = await this.matrixClient.getProfileInfo(this.matrixClient.getSafeUserId());
+            } catch (error: unknown) {
+                if (!(error instanceof MatrixError) || error.errcode !== "M_NOT_FOUND") {
+                    /**
+                     * Raise any other error than M_NOT_FOUND.
+                     * M_NOT_FOUND could occur if there is no user profile.
+                     * {@link https://spec.matrix.org/v1.7/client-server-api/#get_matrixclientv3profileuserid}
+                     * We should then assume an empty profile, emit UPDATE_EVENT etc..
+                     */
+                    throw error;
+                }
+            }
+
             if (profileInfo.displayname) {
                 window.localStorage.setItem(KEY_DISPLAY_NAME, profileInfo.displayname);
             } else {
                 window.localStorage.removeItem(KEY_DISPLAY_NAME);
             }
+
             if (profileInfo.avatar_url) {
                 window.localStorage.setItem(KEY_AVATAR_URL, profileInfo.avatar_url);
             } else {
@@ -157,7 +177,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
     );
 
     private onStateEvents = async (ev: MatrixEvent): Promise<void> => {
-        const myUserId = MatrixClientPeg.get().getUserId();
+        const myUserId = MatrixClientPeg.safeGet().getUserId();
         if (ev.getType() === EventType.RoomMember && ev.getSender() === myUserId && ev.getStateKey() === myUserId) {
             await this.onProfileUpdate();
         }

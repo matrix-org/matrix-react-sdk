@@ -16,8 +16,14 @@ limitations under the License.
 
 import { mocked } from "jest-mock";
 import { PushRuleActionName, TweakName } from "matrix-js-sdk/src/@types/PushRules";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { EventStatus, EventType, MatrixEvent, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
+import {
+    NotificationCountType,
+    Room,
+    EventStatus,
+    EventType,
+    MatrixEvent,
+    PendingEventOrdering,
+} from "matrix-js-sdk/src/matrix";
 
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { mkEvent, mkRoom, muteRoom, stubClient, upsertRoomStateEvents } from "./test-utils";
@@ -61,6 +67,13 @@ describe("RoomNotifs test", () => {
     it("getRoomNotifsState handles mute state", () => {
         const room = mkRoom(client, "!roomId:server");
         muteRoom(room);
+        expect(getRoomNotifsState(client, room.roomId)).toBe(RoomNotifState.Mute);
+    });
+
+    it("getRoomNotifsState handles mute state for legacy DontNotify action", () => {
+        const room = mkRoom(client, "!roomId:server");
+        muteRoom(room);
+        client.pushRules!.global.override![0]!.actions = [PushRuleActionName.DontNotify];
         expect(getRoomNotifsState(client, room.roomId)).toBe(RoomNotifState.Mute);
     });
 

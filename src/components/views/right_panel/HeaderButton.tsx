@@ -18,7 +18,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import classNames from "classnames";
 
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -36,6 +36,7 @@ interface IProps {
     name: string;
     // Button title
     title: string;
+    children?: ReactNode;
 }
 
 // TODO: replace this, the composer buttons and the right panel buttons with a unified representation
@@ -44,17 +45,16 @@ export default class HeaderButton extends React.Component<IProps> {
         const { isHighlighted, isUnread = false, onClick, name, title, ...props } = this.props;
 
         const classes = classNames({
-            mx_RightPanel_headerButton: true,
-            mx_RightPanel_headerButton_highlight: isHighlighted,
-            mx_RightPanel_headerButton_unread: isUnread,
+            "mx_LegacyRoomHeader_button": true,
+            "mx_LegacyRoomHeader_button--highlight": isHighlighted,
+            "mx_LegacyRoomHeader_button--unread": isUnread,
             [`mx_RightPanel_${name}`]: true,
         });
 
         return (
             <AccessibleTooltipButton
                 {...props}
-                aria-selected={isHighlighted}
-                role="tab"
+                aria-current={isHighlighted ? "true" : "false"}
                 title={title}
                 alignment={Alignment.Bottom}
                 className={classes}

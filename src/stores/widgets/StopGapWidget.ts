@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 import {
     ClientWidgetApi,
     IModalWidgetOpenRequest,
@@ -35,12 +35,10 @@ import {
 } from "matrix-widget-api";
 import { Optional } from "matrix-events-sdk";
 import { EventEmitter } from "events";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent } from "matrix-js-sdk/src/client";
 
-import { _t } from "../../languageHandler";
+import { _t, getUserLanguage } from "../../languageHandler";
 import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { WidgetMessagingStore } from "./WidgetMessagingStore";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -55,12 +53,11 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { Action } from "../../dispatcher/actions";
 import { ElementWidgetActions, IHangupCallApiRequest, IViewRoomApiRequest } from "./ElementWidgetActions";
 import { ModalWidgetStore } from "../ModalWidgetStore";
-import { IApp } from "../WidgetStore";
+import { IApp, isAppWidget } from "../WidgetStore";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { getCustomTheme } from "../../theme";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 import { ELEMENT_CLIENT_ID } from "../../identifiers";
-import { getUserLanguage } from "../../languageHandler";
 import { WidgetVariableCustomisations } from "../../customisations/WidgetVariables";
 import { arrayFastClone } from "../../utils/arrays";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
@@ -72,7 +69,7 @@ import { SdkContextClass } from "../../contexts/SDKContext";
 
 interface IAppTileProps {
     // Note: these are only the props we care about
-    app: IApp;
+    app: IApp | IWidget;
     room?: Room; // without a room it is a user widget
     userId: string;
     creatorUserId: string;
@@ -157,9 +154,9 @@ export class ElementWidget extends Widget {
 
 export class StopGapWidget extends EventEmitter {
     private client: MatrixClient;
-    private messaging: ClientWidgetApi | null;
+    private messaging: ClientWidgetApi | null = null;
     private mockWidget: ElementWidget;
-    private scalarToken: string;
+    private scalarToken?: string;
     private roomId?: string;
     private kind: WidgetKind;
     private readonly virtual: boolean;
@@ -167,7 +164,7 @@ export class StopGapWidget extends EventEmitter {
 
     public constructor(private appTileProps: IAppTileProps) {
         super();
-        this.client = MatrixClientPeg.get();
+        this.client = MatrixClientPeg.safeGet();
 
         let app = appTileProps.app;
         // Backwards compatibility: not all old widgets have a creatorUserId
@@ -179,7 +176,7 @@ export class StopGapWidget extends EventEmitter {
         this.mockWidget = new ElementWidget(app);
         this.roomId = appTileProps.room?.roomId;
         this.kind = appTileProps.userWidget ? WidgetKind.Account : WidgetKind.Room; // probably
-        this.virtual = app.eventId === undefined;
+        this.virtual = isAppWidget(app) && app.eventId === undefined;
     }
 
     private get eventListenerRoomId(): Optional<string> {
@@ -221,6 +218,7 @@ export class StopGapWidget extends EventEmitter {
             clientId: ELEMENT_CLIENT_ID,
             clientTheme: SettingsStore.getValue("theme"),
             clientLanguage: getUserLanguage(),
+            deviceId: this.client.getDeviceId() ?? undefined,
         };
         const templated = this.mockWidget.getCompleteUrl(Object.assign(defaults, fromCustomisation), opts?.asPopout);
 
@@ -284,8 +282,9 @@ export class StopGapWidget extends EventEmitter {
 
         this.messaging = new ClientWidgetApi(this.mockWidget, iframe, driver);
         this.messaging.on("preparing", () => this.emit("preparing"));
+        this.messaging.on("error:preparing", (err: unknown) => this.emit("error:preparing", err));
         this.messaging.on("ready", () => {
-            WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.roomId, this.messaging);
+            WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.roomId, this.messaging!);
             this.emit("ready");
         });
         this.messaging.on("capabilitiesNotified", () => this.emit("capabilitiesNotified"));
@@ -347,7 +346,7 @@ export class StopGapWidget extends EventEmitter {
                 if (this.messaging?.hasCapability(MatrixCapabilities.AlwaysOnScreen)) {
                     ActiveWidgetStore.instance.setWidgetPersistence(
                         this.mockWidget.id,
-                        this.roomId,
+                        this.roomId ?? null,
                         ev.detail.data.value,
                     );
                     ev.preventDefault();
@@ -393,14 +392,12 @@ export class StopGapWidget extends EventEmitter {
                     const integType = data?.integType as string;
                     const integId = <string>data?.integId;
 
+                    const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
+                    const room = roomId ? this.client.getRoom(roomId) : undefined;
+                    if (!room) return;
+
                     // noinspection JSIgnoredPromiseFromCall
-                    IntegrationManagers.sharedInstance()
-                        .getPrimaryManager()
-                        .open(
-                            this.client.getRoom(SdkContextClass.instance.roomViewStore.getRoomId()),
-                            `type_${integType}`,
-                            integId,
-                        );
+                    IntegrationManagers.sharedInstance()?.getPrimaryManager()?.open(room, `type_${integType}`, integId);
                 },
             );
         }
@@ -434,7 +431,7 @@ export class StopGapWidget extends EventEmitter {
                 if (managers.hasManager()) {
                     // TODO: Pick the right manager for the widget
                     const defaultManager = managers.getPrimaryManager();
-                    if (WidgetUtils.isScalarUrl(defaultManager.apiUrl)) {
+                    if (defaultManager && WidgetUtils.isScalarUrl(defaultManager.apiUrl)) {
                         const scalar = defaultManager.getScalarClient();
                         this.scalarToken = await scalar.getScalarToken();
                     }
@@ -452,7 +449,10 @@ export class StopGapWidget extends EventEmitter {
      * @param opts
      */
     public stopMessaging(opts = { forceDestroy: false }): void {
-        if (!opts?.forceDestroy && ActiveWidgetStore.instance.getWidgetPersistence(this.mockWidget.id, this.roomId)) {
+        if (
+            !opts?.forceDestroy &&
+            ActiveWidgetStore.instance.getWidgetPersistence(this.mockWidget.id, this.roomId ?? null)
+        ) {
             logger.log("Skipping destroy - persistent widget");
             return;
         }
@@ -500,9 +500,11 @@ export class StopGapWidget extends EventEmitter {
 
             let isBeforeMark = true;
 
+            const room = this.client.getRoom(ev.getRoomId()!);
+            if (!room) return;
             // Timelines are most recent last, so reverse the order and limit ourselves to 100 events
             // to avoid overusing the CPU.
-            const timeline = this.client.getRoom(ev.getRoomId()!).getLiveTimeline();
+            const timeline = room.getLiveTimeline();
             const events = arrayFastClone(timeline.getEvents()).reverse().slice(0, 100);
 
             for (const timelineEvent of events) {
@@ -533,7 +535,7 @@ export class StopGapWidget extends EventEmitter {
         }
 
         const raw = ev.getEffectiveEvent();
-        this.messaging.feedEvent(raw as IRoomEvent, this.eventListenerRoomId).catch((e) => {
+        this.messaging.feedEvent(raw as IRoomEvent, this.eventListenerRoomId!).catch((e) => {
             logger.error("Error sending event to widget: ", e);
         });
     }

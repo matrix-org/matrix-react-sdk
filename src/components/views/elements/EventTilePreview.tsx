@@ -16,8 +16,8 @@ limitations under the License.
 
 import React from "react";
 import classnames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import * as Avatar from "../../../Avatar";
 import EventTile from "../rooms/EventTile";
@@ -78,12 +78,12 @@ export default class EventTilePreview extends React.Component<IProps, IState> {
             sender: this.props.userId,
             content: {
                 "m.new_content": {
-                    msgtype: "m.text",
+                    msgtype: MsgType.Text,
                     body: message,
                     displayname: this.props.displayName,
                     avatar_url: this.props.avatarUrl,
                 },
-                "msgtype": "m.text",
+                "msgtype": MsgType.Text,
                 "body": message,
                 "displayname": this.props.displayName,
                 "avatar_url": this.props.avatarUrl,
@@ -127,8 +127,8 @@ export default class EventTilePreview extends React.Component<IProps, IState> {
         const event = this.fakeEvent(this.state);
 
         return (
-            <div className={className}>
-                <EventTile mxEvent={event} layout={this.props.layout} as="div" />
+            <div className={className} role="presentation">
+                <EventTile mxEvent={event} layout={this.props.layout} as="div" hideTimestamp inhibitInteraction />
             </div>
         );
     }

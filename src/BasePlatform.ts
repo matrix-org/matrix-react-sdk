@@ -17,12 +17,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient, MatrixEvent, Room, SSOAction } from "matrix-js-sdk/src/matrix";
 import { encodeUnpaddedBase64 } from "matrix-js-sdk/src/crypto/olmlib";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { SSOAction } from "matrix-js-sdk/src/@types/auth";
 
 import dis from "./dispatcher/dispatcher";
 import BaseEventIndexManager from "./indexing/BaseEventIndexManager";
@@ -75,7 +72,7 @@ export default abstract class BasePlatform {
         this.startUpdateCheck = this.startUpdateCheck.bind(this);
     }
 
-    public abstract getConfig(): Promise<IConfigOptions>;
+    public abstract getConfig(): Promise<IConfigOptions | undefined>;
 
     public abstract getDefaultDeviceDisplayName(): string;
 
@@ -441,5 +438,13 @@ export default abstract class BasePlatform {
         } catch (e) {
             logger.error("idbDelete failed in destroyPickleKey", e);
         }
+    }
+
+    /**
+     * Clear app storage, called when logging out to perform data clean up.
+     */
+    public async clearStorage(): Promise<void> {
+        window.sessionStorage.clear();
+        window.localStorage.clear();
     }
 }

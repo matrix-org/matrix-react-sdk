@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useMemo, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
@@ -26,6 +26,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { filterBoolean } from "../../../utils/arrays";
 
 interface IProps {
     room: Room;
@@ -65,7 +66,7 @@ const Entry: React.FC<{
                 )}
             </div>
             <StyledCheckbox
-                onChange={onChange ? (e) => onChange(e.target.checked) : null}
+                onChange={onChange ? (e) => onChange(e.target.checked) : undefined}
                 checked={checked}
                 disabled={!onChange}
             />
@@ -80,7 +81,7 @@ const addAllParents = (set: Set<Room>, room: Room): void => {
     );
 
     parents.forEach((parent) => {
-        if (set.has(parent)) return;
+        if (!parent || set.has(parent)) return;
         set.add(parent);
         addAllParents(set, parent);
     });
@@ -92,13 +93,15 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
     const [query, setQuery] = useState("");
     const lcQuery = query.toLowerCase().trim();
 
-    const [spacesContainingRoom, otherEntries] = useMemo(() => {
+    const [spacesContainingRoom, otherJoinedSpaces, otherEntries] = useMemo(() => {
         const parents = new Set<Room>();
         addAllParents(parents, room);
+
         return [
             Array.from(parents),
-            selected
-                .map((roomId) => {
+            SpaceStore.instance.spacePanelSpaces.filter((s) => !parents.has(s)),
+            filterBoolean(
+                selected.map((roomId) => {
                     const room = cli.getRoom(roomId);
                     if (!room) {
                         return { roomId, name: roomId } as Room;
@@ -106,17 +109,18 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
                     if (room.getMyMembership() !== "join" || !room.isSpaceRoom()) {
                         return room;
                     }
-                })
-                .filter(Boolean),
+                }),
+            ),
         ];
     }, [cli, selected, room]);
 
-    const [filteredSpacesContainingRoom, filteredOtherEntries] = useMemo(
+    const [filteredSpacesContainingRoom, filteredOtherJoinedSpaces, filteredOtherEntries] = useMemo(
         () => [
             spacesContainingRoom.filter((r) => r.name.toLowerCase().includes(lcQuery)),
+            otherJoinedSpaces.filter((r) => r.name.toLowerCase().includes(lcQuery)),
             otherEntries.filter((r) => r.name.toLowerCase().includes(lcQuery)),
         ],
-        [spacesContainingRoom, otherEntries, lcQuery],
+        [spacesContainingRoom, otherJoinedSpaces, otherEntries, lcQuery],
     );
 
     const onChange = (checked: boolean, room: Room): void => {
@@ -137,6 +141,8 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
         );
     }
 
+    const totalResults =
+        filteredSpacesContainingRoom.length + filteredOtherJoinedSpaces.length + filteredOtherEntries.length;
     return (
         <BaseDialog
             title={_t("Select spaces")}
@@ -205,7 +211,25 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
                         </div>
                     ) : null}
 
-                    {filteredSpacesContainingRoom.length + filteredOtherEntries.length < 1 ? (
+                    {filteredOtherJoinedSpaces.length > 0 ? (
+                        <div className="mx_ManageRestrictedJoinRuleDialog_section">
+                            <h3>{_t("Other spaces you know")}</h3>
+                            {filteredOtherJoinedSpaces.map((space) => {
+                                return (
+                                    <Entry
+                                        key={space.roomId}
+                                        room={space}
+                                        checked={newSelected.has(space.roomId)}
+                                        onChange={(checked: boolean) => {
+                                            onChange(checked, space);
+                                        }}
+                                    />
+                                );
+                            })}
+                        </div>
+                    ) : null}
+
+                    {totalResults < 1 ? (
                         <span className="mx_ManageRestrictedJoinRuleDialog_noResults">{_t("No results")}</span>
                     ) : undefined}
                 </AutoHideScrollbar>

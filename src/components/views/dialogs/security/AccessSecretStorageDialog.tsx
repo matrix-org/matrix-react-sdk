@@ -22,7 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
-import AccessibleButton from "../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 import { _t } from "../../../../languageHandler";
 import { accessSecretStorage } from "../../../../SecurityManager";
 import Modal from "../../../../Modal";
@@ -42,7 +42,7 @@ const VALIDATION_THROTTLE_MS = 200;
 export type KeyParams = { passphrase?: string; recoveryKey?: string };
 
 interface IProps {
-    keyInfo?: ISecretStorageKeyInfo;
+    keyInfo: ISecretStorageKeyInfo;
     checkPrivateKey: (k: KeyParams) => Promise<boolean>;
     onFinished(result?: false | KeyParams): void;
 }
@@ -63,6 +63,7 @@ interface IState {
  */
 export default class AccessSecretStorageDialog extends React.PureComponent<IProps, IState> {
     private fileUpload = React.createRef<HTMLInputElement>();
+    private inputRef = React.createRef<HTMLInputElement>();
 
     public constructor(props: IProps) {
         super(props);
@@ -106,7 +107,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         }
 
         try {
-            const cli = MatrixClientPeg.get();
+            const cli = MatrixClientPeg.safeGet();
             const decodedKey = cli.keyBackupKeyFromRecoveryKey(this.state.recoveryKey);
             const correct = await cli.checkSecretStorageKey(decodedKey, this.props.keyInfo);
             this.setState({
@@ -129,7 +130,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
 
         // also clear the file upload control so that the user can upload the same file
         // the did before (otherwise the onchange wouldn't fire)
-        if (this.fileUpload.current) this.fileUpload.current.value = null;
+        if (this.fileUpload.current) this.fileUpload.current.value = "";
 
         // We don't use Field's validation here because a) we want it in a separate place rather
         // than in a tooltip and b) we want it to display feedback based on the uploaded file
@@ -178,7 +179,10 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
     private onPassPhraseNext = async (ev: FormEvent<HTMLFormElement> | React.MouseEvent): Promise<void> => {
         ev.preventDefault();
 
-        if (this.state.passPhrase.length <= 0) return;
+        if (this.state.passPhrase.length <= 0) {
+            this.inputRef.current?.focus();
+            return;
+        }
 
         this.setState({ keyMatches: null });
         const input = { passphrase: this.state.passPhrase };
@@ -187,6 +191,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
             this.props.onFinished(input);
         } else {
             this.setState({ keyMatches });
+            this.inputRef.current?.focus();
         }
     };
 
@@ -212,7 +217,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         });
     };
 
-    private onResetAllClick = (ev: React.MouseEvent<HTMLAnchorElement>): void => {
+    private onResetAllClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         this.setState({ resetting: true });
     };
@@ -230,7 +235,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
             // Force reset secret storage (which resets the key backup)
             await accessSecretStorage(async (): Promise<void> => {
                 // Now reset cross-signing so everything Just Works™ again.
-                const cli = MatrixClientPeg.get();
+                const cli = MatrixClientPeg.safeGet();
                 await cli.bootstrapCrossSigning({
                     authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
                         const { finished } = Modal.createDialog(InteractiveAuthDialog, {
@@ -351,6 +356,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
 
                     <form className="mx_AccessSecretStorageDialog_primaryContainer" onSubmit={this.onPassPhraseNext}>
                         <Field
+                            inputRef={this.inputRef}
                             id="mx_passPhraseInput"
                             className="mx_AccessSecretStorageDialog_passPhraseInput"
                             type="password"

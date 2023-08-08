@@ -38,13 +38,13 @@ export interface IPublicRoomDirectoryConfig {
     instanceId?: string;
 }
 
-const validServer = withValidation<undefined, { error?: MatrixError }>({
-    deriveData: async ({ value }): Promise<{ error?: MatrixError }> => {
+const validServer = withValidation<undefined, { error?: unknown }>({
+    deriveData: async ({ value }): Promise<{ error?: unknown }> => {
         try {
             // check if we can successfully load this server's room directory
-            await MatrixClientPeg.get().publicRooms({
+            await MatrixClientPeg.safeGet().publicRooms({
                 limit: 1,
-                server: value,
+                server: value ?? undefined,
             });
             return {};
         } catch (error) {
@@ -63,11 +63,12 @@ const validServer = withValidation<undefined, { error?: MatrixError }>({
             test: async (_, { error }) => !error,
             valid: () => _t("Looks good"),
             invalid: ({ error }) =>
-                error?.errcode === "M_FORBIDDEN"
+                error instanceof MatrixError && error.errcode === "M_FORBIDDEN"
                     ? _t("You are not allowed to view this server's rooms list")
                     : _t("Can't find this server or its room list"),
         },
     ],
+    memoize: true,
 });
 
 function useSettingsValueWithSetter<T>(
@@ -148,7 +149,7 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
     const { allServers, homeServer, userDefinedServers, setUserDefinedServers } = useServers();
 
     const options: GenericDropdownMenuItem<IPublicRoomDirectoryConfig | null>[] = allServers.map((roomServer) => ({
-        key: { roomServer, instanceId: null },
+        key: { roomServer, instanceId: undefined },
         label: roomServer,
         description: roomServer === homeServer ? _t("Your server") : null,
         options: [

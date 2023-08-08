@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { FC, MutableRefObject, useCallback, useMemo } from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 
 import PersistentApp from "../elements/PersistentApp";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -123,7 +123,7 @@ export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom, onStartMovin
                 pointerEvents="none"
                 movePersistedElement={movePersistedElement}
             />
-            {(call !== null || WidgetType.JITSI.matches(widget.type)) && (
+            {(call !== null || WidgetType.JITSI.matches(widget?.type)) && (
                 <Toolbar className="mx_WidgetPip_footer">
                     <RovingAccessibleTooltipButton
                         onClick={onLeaveClick}

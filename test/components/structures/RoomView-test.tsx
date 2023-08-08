@@ -14,16 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-// eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from "enzyme";
+import React, { createRef, RefObject } from "react";
 import { mocked, MockedObject } from "jest-mock";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import {
+    Room,
+    RoomEvent,
+    EventType,
+    JoinRule,
+    MatrixError,
+    RoomStateEvent,
+    MatrixEvent,
+} from "matrix-js-sdk/src/matrix";
 import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, screen, RenderResult } from "@testing-library/react";
 
 import {
     stubClient,
@@ -34,10 +38,15 @@ import {
     mkEvent,
     setupAsyncStoreWithClient,
     filterConsole,
+    mkRoomMemberJoinEvent,
+    mkThirdPartyInviteEvent,
+    emitPromise,
+    createTestClient,
+    untilDispatch,
 } from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { Action } from "../../../src/dispatcher/actions";
-import { defaultDispatcher } from "../../../src/dispatcher/dispatcher";
+import dis, { defaultDispatcher } from "../../../src/dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../src/dispatcher/payloads/ViewRoomPayload";
 import { RoomView as _RoomView } from "../../../src/components/structures/RoomView";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
@@ -55,6 +64,12 @@ import VoipUserMapper from "../../../src/VoipUserMapper";
 import WidgetUtils from "../../../src/utils/WidgetUtils";
 import { WidgetType } from "../../../src/widgets/WidgetType";
 import WidgetStore from "../../../src/stores/WidgetStore";
+import { ViewRoomErrorPayload } from "../../../src/dispatcher/payloads/ViewRoomErrorPayload";
+
+// Fake random strings to give a predictable snapshot for IDs
+jest.mock("matrix-js-sdk/src/randomstring", () => ({
+    randomString: () => "abdefghi",
+}));
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
@@ -68,10 +83,10 @@ describe("RoomView", () => {
     // mute some noise
     filterConsole("RVS update", "does not have an m.room.create event", "Current version: 1", "Version capability");
 
-    beforeEach(async () => {
+    beforeEach(() => {
         mockPlatformPeg({ reload: () => {} });
         stubClient();
-        cli = mocked(MatrixClientPeg.get());
+        cli = mocked(MatrixClientPeg.safeGet());
 
         room = new Room(`!${roomCount++}:example.org`, cli, "@alice:example.org");
         jest.spyOn(room, "findPredecessor");
@@ -83,7 +98,7 @@ describe("RoomView", () => {
         room.on(RoomEvent.Timeline, (...args) => cli.emit(RoomEvent.Timeline, ...args));
         room.on(RoomEvent.TimelineReset, (...args) => cli.emit(RoomEvent.TimelineReset, ...args));
 
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(cli);
         stores = new SdkContextClass();
         stores.client = cli;
         stores.rightPanelStore.useUnitTestClient(cli);
@@ -91,12 +106,12 @@ describe("RoomView", () => {
         jest.spyOn(VoipUserMapper.sharedInstance(), "getVirtualRoomForRoom").mockResolvedValue(undefined);
     });
 
-    afterEach(async () => {
+    afterEach(() => {
         unmockPlatformPeg();
         jest.restoreAllMocks();
     });
 
-    const mountRoomView = async (): Promise<ReactWrapper> => {
+    const mountRoomView = async (ref?: RefObject<_RoomView>): Promise<RenderResult> => {
         if (stores.roomViewStore.getRoomId() !== room.roomId) {
             const switchedRoom = new Promise<void>((resolve) => {
                 const subFn = () => {
@@ -117,7 +132,7 @@ describe("RoomView", () => {
             await switchedRoom;
         }
 
-        const roomView = mount(
+        const roomView = render(
             <SDKContext.Provider value={stores}>
                 <RoomView
                     // threepidInvite should be optional on RoomView props
@@ -125,6 +140,7 @@ describe("RoomView", () => {
                     threepidInvite={undefined as any}
                     resizeNotifier={new ResizeNotifier()}
                     forceTimeline={false}
+                    wrappedRef={ref as any}
                 />
             </SDKContext.Provider>,
         );
@@ -132,8 +148,8 @@ describe("RoomView", () => {
         return roomView;
     };
 
-    const renderRoomView = async (): Promise<ReturnType<typeof render>> => {
-        if (stores.roomViewStore.getRoomId() !== room.roomId) {
+    const renderRoomView = async (switchRoom = true): Promise<ReturnType<typeof render>> => {
+        if (switchRoom && stores.roomViewStore.getRoomId() !== room.roomId) {
             const switchedRoom = new Promise<void>((resolve) => {
                 const subFn = () => {
                     if (stores.roomViewStore.getRoomId()) {
@@ -168,8 +184,11 @@ describe("RoomView", () => {
         await flushPromises();
         return roomView;
     };
-    const getRoomViewInstance = async (): Promise<_RoomView> =>
-        (await mountRoomView()).find(_RoomView).instance() as _RoomView;
+    const getRoomViewInstance = async (): Promise<_RoomView> => {
+        const ref = createRef<_RoomView>();
+        await mountRoomView(ref);
+        return ref.current!;
+    };
 
     it("when there is no room predecessor, getHiddenHighlightCount should return 0", async () => {
         const instance = await getRoomViewInstance();
@@ -199,15 +218,24 @@ describe("RoomView", () => {
             expect(instance.getHiddenHighlightCount()).toBe(23);
         });
 
-        it("and feature_dynamic_room_predecessors is enabled it should pass the setting to findPredecessor", async () => {
-            SettingsStore.setValue("feature_dynamic_room_predecessors", null, SettingLevel.DEVICE, true);
-            expect(instance.getHiddenHighlightCount()).toBe(0);
-            expect(room.findPredecessor).toHaveBeenCalledWith(true);
-            SettingsStore.setValue("feature_dynamic_room_predecessors", null, SettingLevel.DEVICE, null);
+        describe("and feature_dynamic_room_predecessors is enabled", () => {
+            beforeEach(() => {
+                instance.setState({ msc3946ProcessDynamicPredecessor: true });
+            });
+
+            afterEach(() => {
+                instance.setState({ msc3946ProcessDynamicPredecessor: false });
+            });
+
+            it("should pass the setting to findPredecessor", async () => {
+                expect(instance.getHiddenHighlightCount()).toBe(0);
+                expect(room.findPredecessor).toHaveBeenCalledWith(true);
+            });
         });
     });
 
     it("updates url preview visibility on encryption state change", async () => {
+        room.getMyMembership = jest.fn().mockReturnValue("join");
         // we should be starting unencrypted
         expect(cli.isCryptoEnabled()).toEqual(false);
         expect(cli.isRoomEncrypted(room.roomId)).toEqual(false);
@@ -369,6 +397,32 @@ describe("RoomView", () => {
         });
     });
 
+    describe("when rendering a DM room with a single third-party invite", () => {
+        beforeEach(async () => {
+            room.currentState.setStateEvents([
+                mkRoomMemberJoinEvent(cli.getSafeUserId(), room.roomId),
+                mkThirdPartyInviteEvent(cli.getSafeUserId(), "user@example.com", room.roomId),
+            ]);
+            jest.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue(cli.getSafeUserId());
+            jest.spyOn(DMRoomMap.shared(), "getRoomIds").mockReturnValue(new Set([room.roomId]));
+            mocked(cli).isRoomEncrypted.mockReturnValue(true);
+            await renderRoomView();
+        });
+
+        it("should render the »waiting for third-party« view", () => {
+            expect(screen.getByText("Waiting for users to join Element")).toBeInTheDocument();
+            expect(
+                screen.getByText(
+                    "Once invited users have joined Element, you will be able to chat and the room will be end-to-end encrypted",
+                ),
+            ).toBeInTheDocument();
+
+            // no message composer
+            expect(screen.queryByText("Send an encrypted message…")).not.toBeInTheDocument();
+            expect(screen.queryByText("Send a message…")).not.toBeInTheDocument();
+        });
+    });
+
     describe("when there is a RoomView", () => {
         const widget1Id = "widget1";
         const widget2Id = "widget2";
@@ -419,7 +473,7 @@ describe("RoomView", () => {
                 });
 
                 it("the last Jitsi widget should be removed", () => {
-                    expect(WidgetUtils.setRoomWidget).toHaveBeenCalledWith(room.roomId, widget2Id);
+                    expect(WidgetUtils.setRoomWidget).toHaveBeenCalledWith(cli, room.roomId, widget2Id);
                 });
             });
 
@@ -452,6 +506,87 @@ describe("RoomView", () => {
 
                 itShouldNotRemoveTheLastWidget();
             });
+        });
+    });
+
+    it("should show error view if failed to look up room alias", async () => {
+        const { asFragment, findByText } = await renderRoomView(false);
+
+        defaultDispatcher.dispatch<ViewRoomErrorPayload>({
+            action: Action.ViewRoomError,
+            room_alias: "#addy:server",
+            room_id: null,
+            err: new MatrixError({ errcode: "M_NOT_FOUND" }),
+        });
+        await emitPromise(stores.roomViewStore, UPDATE_EVENT);
+
+        await findByText("Are you sure you're at the right place?");
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    describe("Peeking", () => {
+        beforeEach(() => {
+            // Make room peekable
+            room.currentState.setStateEvents([
+                new MatrixEvent({
+                    type: "m.room.history_visibility",
+                    state_key: "",
+                    content: {
+                        history_visibility: "world_readable",
+                    },
+                    room_id: room.roomId,
+                }),
+            ]);
+        });
+
+        it("should show forget room button for non-guests", async () => {
+            mocked(cli.isGuest).mockReturnValue(false);
+            await mountRoomView();
+
+            expect(screen.getByLabelText("Forget room")).toBeInTheDocument();
+        });
+
+        it("should not show forget room button for guests", async () => {
+            mocked(cli.isGuest).mockReturnValue(true);
+            await mountRoomView();
+            expect(screen.queryByLabelText("Forget room")).not.toBeInTheDocument();
+        });
+    });
+
+    describe("knock rooms", () => {
+        const client = createTestClient();
+
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => setting === "feature_ask_to_join");
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
+            jest.spyOn(dis, "dispatch");
+        });
+
+        it("allows to request to join", async () => {
+            jest.spyOn(MatrixClientPeg, "safeGet").mockReturnValue(client);
+            jest.spyOn(client, "knockRoom").mockResolvedValue({ room_id: room.roomId });
+
+            await mountRoomView();
+            fireEvent.click(screen.getByRole("button", { name: "Request access" }));
+            await untilDispatch(Action.SubmitAskToJoin, dis);
+
+            expect(dis.dispatch).toHaveBeenCalledWith({
+                action: "submit_ask_to_join",
+                roomId: room.roomId,
+                opts: { reason: undefined },
+            });
+        });
+
+        it("allows to cancel a join request", async () => {
+            jest.spyOn(MatrixClientPeg, "safeGet").mockReturnValue(client);
+            jest.spyOn(client, "leave").mockResolvedValue({});
+            jest.spyOn(room, "getMyMembership").mockReturnValue("knock");
+
+            await mountRoomView();
+            fireEvent.click(screen.getByRole("button", { name: "Cancel request" }));
+            await untilDispatch(Action.CancelAskToJoin, dis);
+
+            expect(dis.dispatch).toHaveBeenCalledWith({ action: "cancel_ask_to_join", roomId: room.roomId });
         });
     });
 });

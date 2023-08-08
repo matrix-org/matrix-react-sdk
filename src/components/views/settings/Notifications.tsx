@@ -15,18 +15,10 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import {
-    IAnnotatedPushRule,
-    IPusher,
-    PushRuleAction,
-    IPushRule,
-    PushRuleKind,
-    RuleId,
-} from "matrix-js-sdk/src/@types/PushRules";
+import { IAnnotatedPushRule, IPusher, PushRuleAction, PushRuleKind, RuleId } from "matrix-js-sdk/src/@types/PushRules";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
-import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
 
 import Spinner from "../elements/Spinner";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -49,8 +41,15 @@ import SdkConfig from "../../../SdkConfig";
 import AccessibleButton from "../elements/AccessibleButton";
 import TagComposer from "../elements/TagComposer";
 import { objectClone } from "../../../utils/objects";
-import { arrayDiff } from "../../../utils/arrays";
+import { arrayDiff, filterBoolean } from "../../../utils/arrays";
 import { clearAllNotifications, getLocalNotificationAccountDataEventType } from "../../../utils/notifications";
+import {
+    updateExistingPushRulesWithActions,
+    updatePushRuleActions,
+} from "../../../utils/pushRules/updatePushRuleActions";
+import { Caption } from "../typography/Caption";
+import { SettingsSubsectionHeading } from "./shared/SettingsSubsectionHeading";
+import SettingsSubsection from "./shared/SettingsSubsection";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -59,7 +58,10 @@ enum Phase {
     Loading = "loading",
     Ready = "ready",
     Persisting = "persisting", // technically a meta-state for Ready, but whatever
+    // unrecoverable error - eg can't load push rules
     Error = "error",
+    // error saving individual rule
+    SavingError = "savingError",
 }
 
 enum RuleClass {
@@ -125,6 +127,8 @@ interface IState {
     audioNotifications: boolean;
 
     clearingNotifications: boolean;
+
+    ruleIdsWithError: Record<RuleId | string, boolean>;
 }
 const findInDefaultRules = (
     ruleId: RuleId | string,
@@ -175,19 +179,21 @@ const maximumVectorState = (
             const syncedRuleVectorState = definition.ruleToVectorState(syncedRule);
             // if syncedRule is 'louder' than current maximum
             // set maximum to louder vectorState
-            if (OrderedVectorStates.indexOf(syncedRuleVectorState) > OrderedVectorStates.indexOf(maxVectorState)) {
+            if (
+                syncedRuleVectorState &&
+                OrderedVectorStates.indexOf(syncedRuleVectorState) > OrderedVectorStates.indexOf(maxVectorState)
+            ) {
                 return syncedRuleVectorState;
             }
         }
         return maxVectorState;
-    }, definition.ruleToVectorState(rule));
+    }, definition.ruleToVectorState(rule)!);
 
     return vectorState;
 };
 
 export default class Notifications extends React.PureComponent<IProps, IState> {
     private settingWatchers: string[];
-    private pushProcessor: PushProcessor;
 
     public constructor(props: IProps) {
         super(props);
@@ -199,6 +205,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             desktopShowBody: SettingsStore.getValue("notificationBodyEnabled"),
             audioNotifications: SettingsStore.getValue("audioNotificationsEnabled"),
             clearingNotifications: false,
+            ruleIdsWithError: {},
         };
 
         this.settingWatchers = [
@@ -215,8 +222,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 this.setState({ audioNotifications: value as boolean }),
             ),
         ];
-
-        this.pushProcessor = new PushProcessor(MatrixClientPeg.get());
     }
 
     private get isInhibited(): boolean {
@@ -250,13 +255,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             ).reduce((p, c) => Object.assign(c, p), {});
 
             this.setState<
-                keyof Omit<
+                keyof Pick<
                     IState,
-                    | "deviceNotificationsEnabled"
-                    | "desktopNotifications"
-                    | "desktopShowBody"
-                    | "audioNotifications"
-                    | "clearingNotifications"
+                    "phase" | "vectorKeywordRuleInfo" | "vectorPushRules" | "pushers" | "threepids" | "masterPushRule"
                 >
             >({
                 ...newState,
@@ -269,7 +270,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     }
 
     private async refreshFromAccountData(): Promise<void> {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const settingsEvent = cli.getAccountData(getLocalNotificationAccountDataEventType(cli.deviceId));
         if (settingsEvent) {
             const notificationsEnabled = !(settingsEvent.getContent() as LocalNotificationSettings).is_silenced;
@@ -278,14 +279,14 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     }
 
     private persistLocalNotificationSettings(enabled: boolean): Promise<{}> {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         return cli.setAccountData(getLocalNotificationAccountDataEventType(cli.deviceId), {
             is_silenced: !enabled,
         });
     }
 
     private async refreshRules(): Promise<Partial<IState>> {
-        const ruleSets = await MatrixClientPeg.get().getPushRules();
+        const ruleSets = await MatrixClientPeg.safeGet().getPushRules()!;
         const categories: Record<string, RuleClass> = {
             [RuleId.Master]: RuleClass.Master,
 
@@ -320,7 +321,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             // noinspection JSUnfilteredForInLoop
             const kind = k as PushRuleKind;
 
-            for (const r of ruleSets.global[kind]) {
+            for (const r of ruleSets.global[kind]!) {
                 const rule: IAnnotatedPushRule = Object.assign(r, { kind });
                 const category = categories[rule.rule_id] ?? RuleClass.Other;
 
@@ -348,8 +349,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             preparedNewState.vectorPushRules[category] = [];
             for (const rule of defaultRules[category]) {
                 const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.rule_id];
-                const vectorState = definition.ruleToVectorState(rule);
-                preparedNewState.vectorPushRules[category].push({
+                const vectorState = definition.ruleToVectorState(rule)!;
+                preparedNewState.vectorPushRules[category]!.push({
                     ruleId: rule.rule_id,
                     rule,
                     vectorState,
@@ -359,7 +360,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             }
 
             // Quickly sort the rules for display purposes
-            preparedNewState.vectorPushRules[category].sort((a, b) => {
+            preparedNewState.vectorPushRules[category]!.sort((a, b) => {
                 let idxA = RULE_DISPLAY_ORDER.indexOf(a.ruleId);
                 let idxB = RULE_DISPLAY_ORDER.indexOf(b.ruleId);
 
@@ -371,7 +372,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             });
 
             if (category === KEYWORD_RULE_CATEGORY) {
-                preparedNewState.vectorPushRules[category].push({
+                preparedNewState.vectorPushRules[category]!.push({
                     ruleId: KEYWORD_RULE_ID,
                     description: _t("Messages containing keywords"),
                     vectorState: preparedNewState.vectorKeywordRuleInfo.vectorState,
@@ -383,11 +384,11 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     }
 
     private refreshPushers(): Promise<Partial<IState>> {
-        return MatrixClientPeg.get().getPushers();
+        return MatrixClientPeg.safeGet().getPushers();
     }
 
     private refreshThreepids(): Promise<Partial<IState>> {
-        return MatrixClientPeg.get().getThreePids();
+        return MatrixClientPeg.safeGet().getThreePids();
     }
 
     private showSaveError(): void {
@@ -400,15 +401,22 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     private onMasterRuleChanged = async (checked: boolean): Promise<void> => {
         this.setState({ phase: Phase.Persisting });
 
+        const masterRule = this.state.masterPushRule!;
         try {
-            const masterRule = this.state.masterPushRule!;
-            await MatrixClientPeg.get().setPushRuleEnabled("global", masterRule.kind, masterRule.rule_id, !checked);
+            await MatrixClientPeg.safeGet().setPushRuleEnabled("global", masterRule.kind, masterRule.rule_id, !checked);
             await this.refreshFromServer();
         } catch (e) {
             this.setState({ phase: Phase.Error });
             logger.error("Error updating master push rule:", e);
             this.showSaveError();
         }
+    };
+
+    private setSavingError = (ruleId: RuleId | string): void => {
+        this.setState(({ ruleIdsWithError }) => ({
+            phase: Phase.SavingError,
+            ruleIdsWithError: { ...ruleIdsWithError, [ruleId]: true },
+        }));
     };
 
     private updateDeviceNotifications = async (checked: boolean): Promise<void> => {
@@ -420,7 +428,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         try {
             if (checked) {
-                await MatrixClientPeg.get().setPusher({
+                await MatrixClientPeg.safeGet().setPusher({
                     kind: "email",
                     app_id: "m.email",
                     pushkey: email,
@@ -436,9 +444,10 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     append: true,
                 });
             } else {
-                const pusher = this.state.pushers.find((p) => p.kind === "email" && p.pushkey === email);
-                pusher.kind = null; // flag for delete
-                await MatrixClientPeg.get().setPusher(pusher);
+                const pusher = this.state.pushers?.find((p) => p.kind === "email" && p.pushkey === email);
+                if (pusher) {
+                    await MatrixClientPeg.safeGet().removePusher(pusher.pushkey, pusher.app_id);
+                }
             }
 
             await this.refreshFromServer();
@@ -461,49 +470,19 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         await SettingsStore.setValue("audioNotificationsEnabled", null, SettingLevel.DEVICE, checked);
     };
 
-    private setPushRuleActions = async (
-        ruleId: IPushRule["rule_id"],
-        kind: PushRuleKind,
-        actions?: PushRuleAction[],
-    ): Promise<void> => {
-        const cli = MatrixClientPeg.get();
-        if (!actions) {
-            await cli.setPushRuleEnabled("global", kind, ruleId, false);
-        } else {
-            await cli.setPushRuleActions("global", kind, ruleId, actions);
-            await cli.setPushRuleEnabled("global", kind, ruleId, true);
-        }
-    };
-
-    /**
-     * Updated syncedRuleIds from rule definition
-     * If a rule does not exist it is ignored
-     * Synced rules are updated sequentially
-     * and stop at first error
-     */
-    private updateSyncedRules = async (
-        syncedRuleIds: VectorPushRuleDefinition["syncedRuleIds"],
-        actions?: PushRuleAction[],
-    ): Promise<void> => {
-        // get synced rules that exist for user
-        const syncedRules: ReturnType<PushProcessor["getPushRuleAndKindById"]>[] = syncedRuleIds
-            ?.map((ruleId) => this.pushProcessor.getPushRuleAndKindById(ruleId))
-            .filter(Boolean);
-
-        if (!syncedRules?.length) {
-            return;
-        }
-        for (const { kind, rule: syncedRule } of syncedRules) {
-            await this.setPushRuleActions(syncedRule.rule_id, kind, actions);
-        }
-    };
-
     private onRadioChecked = async (rule: IVectorPushRule, checkedState: VectorState): Promise<void> => {
-        this.setState({ phase: Phase.Persisting });
+        this.setState(({ ruleIdsWithError }) => ({
+            phase: Phase.Persisting,
+            ruleIdsWithError: { ...ruleIdsWithError, [rule.ruleId]: false },
+        }));
 
         try {
-            const cli = MatrixClientPeg.get();
+            const cli = MatrixClientPeg.safeGet();
             if (rule.ruleId === KEYWORD_RULE_ID) {
+                // should not encounter this
+                if (!this.state.vectorKeywordRuleInfo) {
+                    throw new Error("Notification data is incomplete.");
+                }
                 // Update all the keywords
                 for (const rule of this.state.vectorKeywordRuleInfo.rules) {
                     let enabled: boolean | undefined;
@@ -538,65 +517,72 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             } else {
                 const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
-                await this.setPushRuleActions(rule.rule.rule_id, rule.rule.kind, actions);
-                await this.updateSyncedRules(definition.syncedRuleIds, actions);
+                // we should not encounter this
+                // satisfies types
+                if (!rule.rule) {
+                    throw new Error("Cannot update rule: push rule data is incomplete.");
+                }
+                await updatePushRuleActions(cli, rule.rule.rule_id, rule.rule.kind, actions);
+                await updateExistingPushRulesWithActions(cli, definition.syncedRuleIds, actions);
             }
 
             await this.refreshFromServer();
         } catch (e) {
-            this.setState({ phase: Phase.Error });
+            this.setSavingError(rule.ruleId);
             logger.error("Error updating push rule:", e);
-            this.showSaveError();
         }
     };
 
     private onClearNotificationsClicked = async (): Promise<void> => {
         try {
             this.setState({ clearingNotifications: true });
-            const client = MatrixClientPeg.get();
+            const client = MatrixClientPeg.safeGet();
             await clearAllNotifications(client);
         } finally {
             this.setState({ clearingNotifications: false });
         }
     };
 
-    private async setKeywords(keywords: string[], originalRules: IAnnotatedPushRule[]): Promise<void> {
+    private async setKeywords(
+        unsafeKeywords: (string | undefined)[],
+        originalRules: IAnnotatedPushRule[],
+    ): Promise<void> {
         try {
             // De-duplicate and remove empties
-            keywords = Array.from(new Set(keywords)).filter((k) => !!k);
-            const oldKeywords = Array.from(new Set(originalRules.map((r) => r.pattern))).filter((k) => !!k);
+            const keywords = filterBoolean<string>(Array.from(new Set(unsafeKeywords)));
+            const oldKeywords = filterBoolean<string>(Array.from(new Set(originalRules.map((r) => r.pattern))));
 
             // Note: Technically because of the UI interaction (at the time of writing), the diff
             // will only ever be +/-1 so we don't really have to worry about efficiently handling
             // tons of keyword changes.
 
-            const diff = arrayDiff(oldKeywords, keywords);
+            const diff = arrayDiff<string>(oldKeywords, keywords);
 
             for (const word of diff.removed) {
                 for (const rule of originalRules.filter((r) => r.pattern === word)) {
-                    await MatrixClientPeg.get().deletePushRule("global", rule.kind, rule.rule_id);
+                    await MatrixClientPeg.safeGet().deletePushRule("global", rule.kind, rule.rule_id);
                 }
             }
 
-            let ruleVectorState = this.state.vectorKeywordRuleInfo.vectorState;
+            let ruleVectorState = this.state.vectorKeywordRuleInfo!.vectorState;
             if (ruleVectorState === VectorState.Off) {
                 // When the current global keywords rule is OFF, we need to look at
                 // the flavor of existing rules to apply the same actions
                 // when creating the new rule.
-                if (originalRules.length) {
-                    ruleVectorState = PushRuleVectorState.contentRuleVectorStateKind(originalRules[0]);
-                } else {
-                    ruleVectorState = VectorState.On; // default
-                }
+                const existingRuleVectorState = originalRules.length
+                    ? PushRuleVectorState.contentRuleVectorStateKind(originalRules[0])
+                    : undefined;
+                // set to same state as existing rule, or default to On
+                ruleVectorState = existingRuleVectorState ?? VectorState.On; //default
             }
             const kind = PushRuleKind.ContentSpecific;
             for (const word of diff.added) {
-                await MatrixClientPeg.get().addPushRule("global", kind, word, {
+                await MatrixClientPeg.safeGet().addPushRule("global", kind, word, {
                     actions: PushRuleVectorState.actionsFor(ruleVectorState),
                     pattern: word,
                 });
                 if (ruleVectorState === VectorState.Off) {
-                    await MatrixClientPeg.get().setPushRuleEnabled("global", kind, word, false);
+                    await MatrixClientPeg.safeGet().setPushRuleEnabled("global", kind, word, false);
                 }
             }
 
@@ -609,6 +595,10 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     }
 
     private onKeywordAdd = (keyword: string): void => {
+        // should not encounter this
+        if (!this.state.vectorKeywordRuleInfo) {
+            throw new Error("Notification data is incomplete.");
+        }
         const originalRules = objectClone(this.state.vectorKeywordRuleInfo.rules);
 
         // We add the keyword immediately as a sort of local echo effect
@@ -627,7 +617,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             },
             async (): Promise<void> => {
                 await this.setKeywords(
-                    this.state.vectorKeywordRuleInfo.rules.map((r) => r.pattern),
+                    this.state.vectorKeywordRuleInfo!.rules.map((r) => r.pattern),
                     originalRules,
                 );
             },
@@ -635,6 +625,10 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     };
 
     private onKeywordRemove = (keyword: string): void => {
+        // should not encounter this
+        if (!this.state.vectorKeywordRuleInfo) {
+            throw new Error("Notification data is incomplete.");
+        }
         const originalRules = objectClone(this.state.vectorKeywordRuleInfo.rules);
 
         // We remove the keyword immediately as a sort of local echo effect
@@ -648,7 +642,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             },
             async (): Promise<void> => {
                 await this.setKeywords(
-                    this.state.vectorKeywordRuleInfo.rules.map((r) => r.pattern),
+                    this.state.vectorKeywordRuleInfo!.rules.map((r) => r.pattern),
                     originalRules,
                 );
             },
@@ -678,7 +672,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 <LabelledToggleSwitch
                     data-testid="notif-email-switch"
                     key={e.address}
-                    value={this.state.pushers.some((p) => p.kind === "email" && p.pushkey === e.address)}
+                    value={!!this.state.pushers?.some((p) => p.kind === "email" && p.pushkey === e.address)}
                     label={_t("Enable email notifications for %(email)s", { email: e.address })}
                     onChange={this.onEmailNotificationsChanged.bind(this, e.address)}
                     disabled={this.state.phase === Phase.Persisting}
@@ -686,7 +680,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             ));
 
         return (
-            <>
+            <SettingsSubsection>
                 {masterSwitch}
 
                 <LabelledToggleSwitch
@@ -724,7 +718,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 )}
 
                 {emailSwitches}
-            </>
+            </SettingsSubsection>
         );
     }
 
@@ -736,7 +730,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         let clearNotifsButton: JSX.Element | undefined;
         if (
             category === RuleClass.VectorOther &&
-            MatrixClientPeg.get()
+            MatrixClientPeg.safeGet()
                 .getRooms()
                 .some((r) => r.getUnreadNotificationCount() > 0)
         ) {
@@ -768,9 +762,10 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         let keywordComposer: JSX.Element | undefined;
         if (category === RuleClass.VectorMentions) {
+            const tags = filterBoolean<string>(this.state.vectorKeywordRuleInfo?.rules.map((r) => r.pattern) || []);
             keywordComposer = (
                 <TagComposer
-                    tags={this.state.vectorKeywordRuleInfo?.rules.map((r) => r.pattern)}
+                    tags={tags}
                     onAdd={this.onKeywordAdd}
                     onRemove={this.onKeywordRemove}
                     disabled={this.state.phase === Phase.Persisting}
@@ -797,7 +792,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             />
         );
 
-        const fieldsetRows = this.state.vectorPushRules[category]?.map((r) => (
+        const fieldsetRows = this.state.vectorPushRules?.[category]?.map((r) => (
             <fieldset
                 key={category + r.ruleId}
                 data-testid={category + r.ruleId}
@@ -807,10 +802,19 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 {makeRadio(r, VectorState.Off)}
                 {makeRadio(r, VectorState.On)}
                 {makeRadio(r, VectorState.Loud)}
+                {this.state.ruleIdsWithError[r.ruleId] && (
+                    <div className="mx_UserNotifSettings_gridRowError">
+                        <Caption isError>
+                            {_t(
+                                "An error occurred when updating your notification preferences. Please try to toggle your option again.",
+                            )}
+                        </Caption>
+                    </div>
+                )}
             </fieldset>
         ));
 
-        let sectionName: TranslatedString;
+        let sectionName: string;
         switch (category) {
             case RuleClass.VectorGlobal:
                 sectionName = _t("Global");
@@ -826,11 +830,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         }
 
         return (
-            <>
+            <div>
                 <div data-testid={`notif-section-${category}`} className="mx_UserNotifSettings_grid">
-                    <span className="mx_UserNotifSettings_gridRowLabel mx_UserNotifSettings_gridRowHeading">
-                        {sectionName}
-                    </span>
+                    <SettingsSubsectionHeading heading={sectionName} />
                     <span className="mx_UserNotifSettings_gridColumnLabel">{VectorStateToLabel[VectorState.Off]}</span>
                     <span className="mx_UserNotifSettings_gridColumnLabel">{VectorStateToLabel[VectorState.On]}</span>
                     <span className="mx_UserNotifSettings_gridColumnLabel">{VectorStateToLabel[VectorState.Loud]}</span>
@@ -838,7 +840,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 </div>
                 {clearNotifsButton}
                 {keywordComposer}
-            </>
+            </div>
         );
     }
 
@@ -852,7 +854,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             </tr>
         ));
 
-        if (!rows.length) return null; // no targets to show
+        if (!rows?.length) return null; // no targets to show
 
         return (
             <div className="mx_UserNotifSettings_floatingSection">
@@ -873,13 +875,13 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         }
 
         return (
-            <div className="mx_UserNotifSettings">
+            <>
                 {this.renderTopSection()}
                 {this.renderCategory(RuleClass.VectorGlobal)}
                 {this.renderCategory(RuleClass.VectorMentions)}
                 {this.renderCategory(RuleClass.VectorOther)}
                 {this.renderTargets()}
-            </div>
+            </>
         );
     }
 }

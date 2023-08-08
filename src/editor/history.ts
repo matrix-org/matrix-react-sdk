@@ -19,9 +19,9 @@ import { IDiff } from "./diff";
 import { SerializedPart } from "./parts";
 import { Caret } from "./caret";
 
-interface IHistory {
+export interface IHistory {
     parts: SerializedPart[];
-    caret: Caret;
+    caret?: Caret;
 }
 
 export const MAX_STEP_LENGTH = 10;
@@ -31,7 +31,7 @@ export default class HistoryManager {
     private newlyTypedCharCount = 0;
     private currentIndex = -1;
     private changedSinceLastPush = false;
-    private lastCaret: Caret | null = null;
+    private lastCaret?: Caret;
     private nonWordBoundarySinceLastPush = false;
     private addedSinceLastPush = false;
     private removedSinceLastPush = false;
@@ -41,13 +41,13 @@ export default class HistoryManager {
         this.newlyTypedCharCount = 0;
         this.currentIndex = -1;
         this.changedSinceLastPush = false;
-        this.lastCaret = null;
+        this.lastCaret = undefined;
         this.nonWordBoundarySinceLastPush = false;
         this.addedSinceLastPush = false;
         this.removedSinceLastPush = false;
     }
 
-    private shouldPush(inputType: string, diff: IDiff): boolean {
+    private shouldPush(inputType?: string, diff?: IDiff): boolean {
         // right now we can only push a step after
         // the input has been applied to the model,
         // so we can't push the state before something happened.
@@ -85,7 +85,7 @@ export default class HistoryManager {
         }
     }
 
-    private pushState(model: EditorModel, caret: Caret): void {
+    private pushState(model: EditorModel, caret?: Caret): void {
         // remove all steps after current step
         while (this.currentIndex < this.stack.length - 1) {
             this.stack.pop();
@@ -93,7 +93,7 @@ export default class HistoryManager {
         const parts = model.serializeParts();
         this.stack.push({ parts, caret });
         this.currentIndex = this.stack.length - 1;
-        this.lastCaret = null;
+        this.lastCaret = undefined;
         this.changedSinceLastPush = false;
         this.newlyTypedCharCount = 0;
         this.nonWordBoundarySinceLastPush = false;
@@ -102,7 +102,7 @@ export default class HistoryManager {
     }
 
     // needs to persist parts and caret position
-    public tryPush(model: EditorModel, caret: Caret, inputType: string, diff: IDiff): boolean {
+    public tryPush(model: EditorModel, caret?: Caret, inputType?: string, diff?: IDiff): boolean {
         // ignore state restoration echos.
         // these respect the inputType values of the input event,
         // but are actually passed in from MessageEditor calling model.reset()
@@ -121,7 +121,7 @@ export default class HistoryManager {
     }
 
     public ensureLastChangesPushed(model: EditorModel): void {
-        if (this.changedSinceLastPush) {
+        if (this.changedSinceLastPush && this.lastCaret) {
             this.pushState(model, this.lastCaret);
         }
     }
@@ -135,7 +135,7 @@ export default class HistoryManager {
     }
 
     // returns state that should be applied to model
-    public undo(model: EditorModel): IHistory {
+    public undo(model: EditorModel): IHistory | void {
         if (this.canUndo()) {
             this.ensureLastChangesPushed(model);
             this.currentIndex -= 1;
@@ -144,7 +144,7 @@ export default class HistoryManager {
     }
 
     // returns state that should be applied to model
-    public redo(): IHistory {
+    public redo(): IHistory | void {
         if (this.canRedo()) {
             this.changedSinceLastPush = false;
             this.currentIndex += 1;

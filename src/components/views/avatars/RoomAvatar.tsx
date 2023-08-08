@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 import React, { ComponentProps } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { Room, RoomStateEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 
@@ -65,7 +63,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
+        MatrixClientPeg.safeGet().on(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
     public componentWillUnmount(): void {
@@ -110,6 +108,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
 
     private onRoomAvatarClick = (): void => {
         const avatarUrl = Avatar.avatarUrlForRoom(this.props.room ?? null, undefined, undefined, undefined);
+        if (!avatarUrl) return;
         const params = {
             src: avatarUrl,
             name: this.props.room?.name,

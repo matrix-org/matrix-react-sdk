@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from "url";
 import React from "react";
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 
@@ -22,6 +21,8 @@ import { _t, pickBestLanguage } from "../../../languageHandler";
 import DialogButtons from "../elements/DialogButtons";
 import BaseDialog from "./BaseDialog";
 import { ServicePolicyPair } from "../../../Terms";
+import ExternalLink from "../elements/ExternalLink";
+import { parseUrl } from "../../../utils/UrlUtils";
 
 interface ITermsCheckboxProps {
     onChange: (url: string, checked: boolean) => void;
@@ -49,7 +50,7 @@ interface ITermsDialogProps {
     /**
      * urls that the user has already agreed to
      */
-    agreedUrls?: string[];
+    agreedUrls: string[];
 
     /**
      * Called with:
@@ -127,16 +128,16 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
     };
 
     public render(): React.ReactNode {
-        const rows = [];
+        const rows: JSX.Element[] = [];
         for (const policiesAndService of this.props.policiesAndServicePairs) {
-            const parsedBaseUrl = url.parse(policiesAndService.service.baseUrl);
+            const parsedBaseUrl = parseUrl(policiesAndService.service.baseUrl);
 
             const policyValues = Object.values(policiesAndService.policies);
             for (let i = 0; i < policyValues.length; ++i) {
                 const termDoc = policyValues[i];
                 const termsLang = pickBestLanguage(Object.keys(termDoc).filter((k) => k !== "version"));
-                let serviceName;
-                let summary;
+                let serviceName: JSX.Element | undefined;
+                let summary: JSX.Element | undefined;
                 if (i === 0) {
                     serviceName = this.nameForServiceType(policiesAndService.service.serviceType, parsedBaseUrl.host);
                     summary = this.summaryForServiceType(policiesAndService.service.serviceType);
@@ -147,10 +148,9 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
                         <td className="mx_TermsDialog_service">{serviceName}</td>
                         <td className="mx_TermsDialog_summary">{summary}</td>
                         <td>
-                            {termDoc[termsLang].name}
-                            <a rel="noreferrer noopener" target="_blank" href={termDoc[termsLang].url}>
-                                <span className="mx_TermsDialog_link" />
-                            </a>
+                            <ExternalLink rel="noreferrer noopener" target="_blank" href={termDoc[termsLang].url}>
+                                {termDoc[termsLang].name}
+                            </ExternalLink>
                         </td>
                         <td>
                             <TermsCheckbox

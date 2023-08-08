@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { act, fireEvent, render, RenderResult } from "@testing-library/react";
 import * as maplibregl from "maplibre-gl";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { mocked } from "jest-mock";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -116,6 +116,20 @@ describe("LocationPicker", () => {
             const { getByText } = getComponent();
 
             expect(getByText("This homeserver is not configured to display maps.")).toBeInTheDocument();
+        });
+
+        it("displays error when WebGl is not enabled", () => {
+            // suppress expected error log
+            jest.spyOn(logger, "error").mockImplementation(() => {});
+            mocked(findMapStyleUrl).mockImplementation(() => {
+                throw new Error("Failed to initialize WebGL");
+            });
+
+            const { getByText } = getComponent();
+
+            expect(
+                getByText("WebGL is required to display maps, please enable it in your browser settings."),
+            ).toBeInTheDocument();
         });
 
         it("displays error when map setup throws", () => {

@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { IGeneratedSas, ISasEvent, SasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
-import { VerificationBase, VerificationEvent } from "matrix-js-sdk/src/crypto/verification/Base";
+import React, { ReactNode } from "react";
+import { GeneratedSas, ShowSasCallbacks, Verifier, VerifierEvent } from "matrix-js-sdk/src/crypto-api/verification";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -37,7 +36,7 @@ const PHASE_VERIFIED = 3;
 const PHASE_CANCELLED = 4;
 
 interface IProps {
-    verifier: VerificationBase<SasEvent, any>;
+    verifier: Verifier;
     onFinished(verified?: boolean): void;
 }
 
@@ -48,13 +47,13 @@ interface IState {
         // eslint-disable-next-line camelcase
         avatar_url?: string;
         displayname?: string;
-    };
-    opponentProfileError: Error;
-    sas: IGeneratedSas;
+    } | null;
+    opponentProfileError: Error | null;
+    sas: GeneratedSas | null;
 }
 
 export default class IncomingSasDialog extends React.Component<IProps, IState> {
-    private showSasEvent: ISasEvent;
+    private showSasEvent: ShowSasCallbacks | null;
 
     public constructor(props: IProps) {
         super(props);
@@ -73,8 +72,8 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
             opponentProfileError: null,
             sas: null,
         };
-        this.props.verifier.on(SasEvent.ShowSas, this.onVerifierShowSas);
-        this.props.verifier.on(VerificationEvent.Cancel, this.onVerifierCancel);
+        this.props.verifier.on(VerifierEvent.ShowSas, this.onVerifierShowSas);
+        this.props.verifier.on(VerifierEvent.Cancel, this.onVerifierCancel);
         this.fetchOpponentProfile();
     }
 
@@ -82,18 +81,18 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
         if (this.state.phase !== PHASE_CANCELLED && this.state.phase !== PHASE_VERIFIED) {
             this.props.verifier.cancel(new Error("User cancel"));
         }
-        this.props.verifier.removeListener(SasEvent.ShowSas, this.onVerifierShowSas);
+        this.props.verifier.removeListener(VerifierEvent.ShowSas, this.onVerifierShowSas);
     }
 
     private async fetchOpponentProfile(): Promise<void> {
         try {
-            const prof = await MatrixClientPeg.get().getProfileInfo(this.props.verifier.userId);
+            const prof = await MatrixClientPeg.safeGet().getProfileInfo(this.props.verifier.userId);
             this.setState({
                 opponentProfile: prof,
             });
         } catch (e) {
             this.setState({
-                opponentProfileError: e,
+                opponentProfileError: e as Error,
             });
         }
     }
@@ -118,7 +117,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
             });
     };
 
-    private onVerifierShowSas = (e: ISasEvent): void => {
+    private onVerifierShowSas = (e: ShowSasCallbacks): void => {
         this.showSasEvent = e;
         this.setState({
             phase: PHASE_SHOW_SAS,
@@ -133,7 +132,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
     };
 
     private onSasMatchesClick = (): void => {
-        this.showSasEvent.confirm();
+        this.showSasEvent?.confirm();
         this.setState({
             phase: PHASE_WAIT_FOR_PARTNER_TO_CONFIRM,
         });
@@ -143,8 +142,8 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
         this.props.onFinished(true);
     };
 
-    private renderPhaseStart(): JSX.Element {
-        const isSelf = this.props.verifier.userId === MatrixClientPeg.get().getUserId();
+    private renderPhaseStart(): ReactNode {
+        const isSelf = this.props.verifier.userId === MatrixClientPeg.safeGet().getUserId();
 
         let profile;
         const oppProfile = this.state.opponentProfile;
@@ -227,19 +226,20 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
         );
     }
 
-    private renderPhaseShowSas(): JSX.Element {
+    private renderPhaseShowSas(): ReactNode {
+        if (!this.showSasEvent) return null;
         return (
             <VerificationShowSas
                 sas={this.showSasEvent.sas}
                 onCancel={this.onCancelClick}
                 onDone={this.onSasMatchesClick}
-                isSelf={this.props.verifier.userId === MatrixClientPeg.get().getUserId()}
+                isSelf={this.props.verifier.userId === MatrixClientPeg.safeGet().getUserId()}
                 inDialog={true}
             />
         );
     }
 
-    private renderPhaseWaitForPartnerToConfirm(): JSX.Element {
+    private renderPhaseWaitForPartnerToConfirm(): ReactNode {
         return (
             <div>
                 <Spinner />
@@ -248,15 +248,15 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
         );
     }
 
-    private renderPhaseVerified(): JSX.Element {
+    private renderPhaseVerified(): ReactNode {
         return <VerificationComplete onDone={this.onVerifiedDoneClick} />;
     }
 
-    private renderPhaseCancelled(): JSX.Element {
+    private renderPhaseCancelled(): ReactNode {
         return <VerificationCancelled onDone={this.onCancelClick} />;
     }
 
-    public render(): React.ReactNode {
+    public render(): ReactNode {
         let body;
         switch (this.state.phase) {
             case PHASE_START:

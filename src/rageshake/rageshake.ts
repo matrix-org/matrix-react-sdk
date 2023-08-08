@@ -49,7 +49,14 @@ const FLUSH_RATE_MS = 30 * 1000;
 const MAX_LOG_SIZE = 1024 * 1024 * 5; // 5 MB
 
 type LogFunction = (...args: (Error | DOMException | object | string)[]) => void;
-type LogFunctionName = "log" | "info" | "warn" | "error";
+const consoleFunctionsToLevels = {
+    log: "I",
+    info: "I",
+    warn: "W",
+    error: "E",
+    debug: "D",
+} as const;
+type LogFunctionName = keyof typeof consoleFunctionsToLevels;
 
 // A class which monkey-patches the global console and stores log lines.
 export class ConsoleLogger {
@@ -58,13 +65,7 @@ export class ConsoleLogger {
 
     public monkeyPatch(consoleObj: Console): void {
         // Monkey-patch console logging
-        const consoleFunctionsToLevels = {
-            log: "I",
-            info: "I",
-            warn: "W",
-            error: "E",
-        } as const;
-        Object.keys(consoleFunctionsToLevels).forEach((fnName: keyof typeof consoleFunctionsToLevels) => {
+        (Object.keys(consoleFunctionsToLevels) as LogFunctionName[]).forEach((fnName: LogFunctionName) => {
             const level = consoleFunctionsToLevels[fnName];
             const originalFn = consoleObj[fnName].bind(consoleObj);
             this.originalFunctions[fnName] = originalFn;
@@ -261,6 +262,8 @@ export class IndexedDBLogStore {
         // Returns: a string representing the concatenated logs for this ID.
         // Stops adding log fragments when the size exceeds maxSize
         function fetchLogs(id: string, maxSize: number): Promise<string> {
+            if (!db) return Promise.reject("DB unavailable");
+
             const objectStore = db.transaction("logs", "readonly").objectStore("logs");
 
             return new Promise((resolve, reject) => {
@@ -287,6 +290,8 @@ export class IndexedDBLogStore {
 
         // Returns: A sorted array of log IDs. (newest first)
         function fetchLogIds(): Promise<string[]> {
+            if (!db) return Promise.reject("DB unavailable");
+
             // To gather all the log IDs, query for all records in logslastmod.
             const o = db.transaction("logslastmod", "readonly").objectStore("logslastmod");
             return selectQuery(o, undefined, (cursor) => {
@@ -305,6 +310,8 @@ export class IndexedDBLogStore {
         }
 
         function deleteLogs(id: string): Promise<void> {
+            if (!db) return Promise.reject("DB unavailable");
+
             return new Promise<void>((resolve, reject) => {
                 const txn = db.transaction(["logs", "logslastmod"], "readwrite");
                 const o = txn.objectStore("logs");

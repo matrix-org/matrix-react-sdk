@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useContext, useEffect } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MatrixError } from "matrix-js-sdk/src/matrix";
 import { IPreviewUrlResponse, MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -32,7 +32,7 @@ interface IProps {
     links: string[]; // the URLs to be previewed
     mxEvent: MatrixEvent; // the Event associated with the preview
     onCancelClick(): void; // called when the preview's cancel ('hide') button is clicked
-    onHeightChanged(): void; // called when the preview's contents has loaded
+    onHeightChanged?(): void; // called when the preview's contents has loaded
 }
 
 const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onHeightChanged }) => {
@@ -49,12 +49,12 @@ const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onH
     );
 
     useEffect(() => {
-        onHeightChanged();
+        onHeightChanged?.();
     }, [onHeightChanged, expanded, previews]);
 
     const showPreviews = expanded ? previews : previews.slice(0, INITIAL_NUM_PREVIEWS);
 
-    let toggleButton: JSX.Element;
+    let toggleButton: JSX.Element | undefined;
     if (previews.length > INITIAL_NUM_PREVIEWS) {
         toggleButton = (
             <AccessibleButton onClick={toggleExpanded}>
@@ -94,14 +94,24 @@ const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onH
 
 const fetchPreviews = (cli: MatrixClient, links: string[], ts: number): Promise<[string, IPreviewUrlResponse][]> => {
     return Promise.all<[string, IPreviewUrlResponse] | void>(
-        links.map(async (link): Promise<[string, IPreviewUrlResponse]> => {
+        links.map(async (link): Promise<[string, IPreviewUrlResponse] | undefined> => {
             try {
                 const preview = await cli.getUrlPreview(link, ts);
-                if (preview && Object.keys(preview).length > 0) {
+                // Ensure at least one of the rendered fields is truthy
+                if (
+                    preview?.["og:image"]?.startsWith("mxc://") ||
+                    !!preview?.["og:description"] ||
+                    !!preview?.["og:title"]
+                ) {
                     return [link, preview];
                 }
             } catch (error) {
-                logger.error("Failed to get URL preview: " + error);
+                if (error instanceof MatrixError && error.httpStatus === 404) {
+                    // Quieten 404 Not found errors, not all URLs can have a preview generated
+                    logger.debug("Failed to get URL preview: ", error);
+                } else {
+                    logger.error("Failed to get URL preview: ", error);
+                }
             }
         }),
     ).then((a) => a.filter(Boolean)) as Promise<[string, IPreviewUrlResponse][]>;

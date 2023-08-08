@@ -17,12 +17,11 @@ limitations under the License.
 import React from "react";
 import { render, screen, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomStateEvent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
     useMockedCalls,
     MockedCall,
@@ -59,7 +58,7 @@ describe("IncomingCallEvent", () => {
 
     beforeEach(async () => {
         stubClient();
-        client = mocked(MatrixClientPeg.get());
+        client = mocked(MatrixClientPeg.safeGet());
 
         room = new Room("!1:example.org", client, "@alice:example.org");
 
@@ -171,6 +170,17 @@ describe("IncomingCallEvent", () => {
             room_id: room.roomId,
             view_call: true,
         });
+
+        await waitFor(() =>
+            expect(toastStore.dismissToast).toHaveBeenCalledWith(getIncomingCallToastKey(call.event.getStateKey()!)),
+        );
+    });
+
+    it("closes toast when the call event is redacted", async () => {
+        renderToast();
+
+        const event = room.currentState.getStateEvents(MockedCall.EVENT_TYPE, "1")!;
+        event.emit(MatrixEventEvent.BeforeRedaction, event, {} as unknown as MatrixEvent);
 
         await waitFor(() =>
             expect(toastStore.dismissToast).toHaveBeenCalledWith(getIncomingCallToastKey(call.event.getStateKey()!)),

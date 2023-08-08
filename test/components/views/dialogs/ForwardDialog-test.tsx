@@ -36,6 +36,7 @@ import {
     mockPlatformPeg,
 } from "../../../test-utils";
 import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 describe("ForwardDialog", () => {
     const sourceRoom = "!111111111111111111:example.org";
@@ -53,6 +54,7 @@ describe("ForwardDialog", () => {
     });
     const mockClient = getMockClientWithEventEmitter({
         getUserId: jest.fn().mockReturnValue(aliceId),
+        getSafeUserId: jest.fn().mockReturnValue(aliceId),
         isGuest: jest.fn().mockReturnValue(false),
         getVisibleRooms: jest.fn().mockReturnValue([]),
         getRoom: jest.fn(),
@@ -88,9 +90,10 @@ describe("ForwardDialog", () => {
     };
 
     beforeEach(() => {
-        DMRoomMap.makeShared();
+        DMRoomMap.makeShared(mockClient);
         jest.clearAllMocks();
         mockClient.getUserId.mockReturnValue("@bob:example.org");
+        mockClient.getSafeUserId.mockReturnValue("@bob:example.org");
         mockClient.sendEvent.mockReset();
     });
 
@@ -323,6 +326,33 @@ describe("ForwardDialog", () => {
                 pinDropLocationEvent.getType(),
                 pinDropLocationEvent.getContent(),
             );
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors is not enabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        });
+
+        it("Passes through the dynamic predecessor setting", async () => {
+            mockClient.getVisibleRooms.mockClear();
+            mountForwardDialog();
+            expect(mockClient.getVisibleRooms).toHaveBeenCalledWith(false);
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors is enabled", () => {
+        beforeEach(() => {
+            // Turn on feature_dynamic_room_predecessors setting
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "feature_dynamic_room_predecessors",
+            );
+        });
+
+        it("Passes through the dynamic predecessor setting", async () => {
+            mockClient.getVisibleRooms.mockClear();
+            mountForwardDialog();
+            expect(mockClient.getVisibleRooms).toHaveBeenCalledWith(true);
         });
     });
 });

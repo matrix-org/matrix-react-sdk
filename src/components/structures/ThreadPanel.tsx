@@ -16,9 +16,8 @@ limitations under the License.
 
 import { Optional } from "matrix-events-sdk";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
+import { EventTimelineSet, Room } from "matrix-js-sdk/src/matrix";
 import { Thread } from "matrix-js-sdk/src/models/thread";
-import { Room } from "matrix-js-sdk/src/models/room";
 
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from "../../utils/ResizeNotifier";
@@ -113,7 +112,7 @@ export const ThreadPanelHeader: React.FC<{
     ) : null;
     return (
         <div className="mx_BaseCard_header_title">
-            <Heading size="h4" className="mx_BaseCard_header_title_heading">
+            <Heading size="4" className="mx_BaseCard_header_title_heading">
                 {_t("Threads")}
             </Heading>
             {!empty && (
@@ -127,7 +126,7 @@ export const ThreadPanelHeader: React.FC<{
                             PosthogTrackers.trackInteraction("WebRightPanelThreadPanelFilterDropdown", ev);
                         }}
                     >
-                        {`${_t("Show:")} ${value.label}`}
+                        {`${_t("Show:")} ${value?.label}`}
                     </ContextMenuButton>
                     {contextMenu}
                 </>
@@ -197,8 +196,8 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
 const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) => {
     const mxClient = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const timelinePanel = useRef<TimelinePanel>();
-    const card = useRef<HTMLDivElement>();
+    const timelinePanel = useRef<TimelinePanel | null>(null);
+    const card = useRef<HTMLDivElement | null>(null);
 
     const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
     const [room, setRoom] = useState<Room | null>(null);
@@ -220,7 +219,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
 
     useEffect(() => {
         if (timelineSet && !Thread.hasServerSideSupport) {
-            timelinePanel.current.refreshTimeline();
+            timelinePanel.current?.refreshTimeline();
         }
     }, [timelineSet, timelinePanel]);
 
@@ -246,7 +245,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                 withoutScrollContainer={true}
                 ref={card}
             >
-                <Measured sensor={card.current} onMeasurement={setNarrow} />
+                {card.current && <Measured sensor={card.current} onMeasurement={setNarrow} />}
                 {timelineSet ? (
                     <TimelinePanel
                         key={filterOption + ":" + (timelineSet.getFilter()?.filterId ?? roomId)}

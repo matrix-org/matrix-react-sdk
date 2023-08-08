@@ -1,5 +1,6 @@
 /*
 Copyright 2022 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,11 +16,8 @@ limitations under the License.
 */
 
 import React, { useContext, useEffect, useState } from "react";
-import {
-    Phase,
-    VerificationRequest,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationPhase as Phase, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { useTypedEventEmitter, useTypedEventEmitterState } from "../../../../hooks/useEventEmitter";
@@ -85,9 +83,9 @@ const VerificationExplorer: Tool = ({ onBack }: IDevtoolsProps) => {
     const cli = useContext(MatrixClientContext);
     const context = useContext(DevtoolsContext);
 
-    const requests = useTypedEventEmitterState(cli, CryptoEvent.VerificationRequest, () => {
+    const requests = useTypedEventEmitterState(cli, CryptoEvent.VerificationRequestReceived, () => {
         return (
-            cli.crypto.inRoomVerificationRequests["requestsByRoomId"]?.get(context.room.roomId) ??
+            cli.crypto?.inRoomVerificationRequests["requestsByRoomId"]?.get(context.room.roomId) ??
             new Map<string, VerificationRequest>()
         );
     });

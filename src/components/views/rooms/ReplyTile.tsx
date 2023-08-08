@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { createRef } from "react";
 import classNames from "classnames";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -34,6 +34,7 @@ import MVoiceMessageBody from "../messages/MVoiceMessageBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { renderReplyTile } from "../../../events/EventTileFactory";
 import { GetRelationsForEvent } from "../rooms/EventTile";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -110,6 +111,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         const evType = mxEvent.getType();
 
         const { hasRenderer, isInfoMessage, isSeeingThroughMessageHiddenForModeration } = getEventDisplayInfo(
+            MatrixClientPeg.safeGet(),
             mxEvent,
             false /* Replies are never hidden, so this should be fine */,
         );
@@ -134,7 +136,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
         let permalink = "#";
         if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId());
+            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId()!);
         }
 
         let sender;

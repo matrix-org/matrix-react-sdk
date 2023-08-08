@@ -31,14 +31,13 @@ import {
     WidgetDriver,
     WidgetEventCapability,
     WidgetKind,
+    ISearchUserDirectoryResult,
 } from "matrix-widget-api";
 import { ClientEvent, ITurnServer as IClientTurnServer } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { IContent, MatrixEvent, Room, Direction } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
-import { Direction } from "matrix-js-sdk/src/matrix";
 import {
     ApprovalOpts,
     CapabilitiesOpts,
@@ -61,6 +60,7 @@ import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 import { navigateToPermalink } from "../../utils/permalinks/navigator";
 import { SdkContextClass } from "../../contexts/SDKContext";
 import { ModuleRunner } from "../../modules/ModuleRunner";
+import SettingsStore from "../../settings/SettingsStore";
 
 // TODO: Purge this from the universe
 
@@ -113,7 +113,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
             this.allowedCapabilities.add("visibility");
         } else if (
             virtual &&
-            new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url).origin === this.forWidget.origin
+            new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url!).origin === this.forWidget.origin
         ) {
             // This is a trusted Element Call widget that we control
             this.allowedCapabilities.add(MatrixCapabilities.AlwaysOnScreen);
@@ -136,7 +136,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 WidgetEventCapability.forStateEvent(
                     EventDirection.Send,
                     "org.matrix.msc3401.call.member",
-                    MatrixClientPeg.get().getUserId()!,
+                    MatrixClientPeg.safeGet().getSafeUserId(),
                 ).raw,
             );
             this.allowedCapabilities.add(
@@ -163,6 +163,14 @@ export class StopGapWidgetDriver extends WidgetDriver {
                     WidgetEventCapability.forToDeviceEvent(EventDirection.Receive, eventType).raw,
                 );
             }
+
+            // To always allow OIDC requests for element call, the widgetPermissionStore is used:
+            SdkContextClass.instance.widgetPermissionStore.setOIDCState(
+                forWidget,
+                forWidgetKind,
+                inRoomId,
+                OIDCState.Allowed,
+            );
         }
     }
 
@@ -202,8 +210,8 @@ export class StopGapWidgetDriver extends WidgetDriver {
                     widget: this.forWidget,
                     widgetKind: this.forWidgetKind,
                 }).finished;
-                (result.approved || []).forEach((cap) => allowedSoFar.add(cap));
-                rememberApproved = result.remember;
+                result?.approved?.forEach((cap) => allowedSoFar.add(cap));
+                rememberApproved = !!result?.remember;
             } catch (e) {
                 logger.error("Non-fatal error getting capabilities: ", e);
             }
@@ -264,27 +272,30 @@ export class StopGapWidgetDriver extends WidgetDriver {
         encrypted: boolean,
         contentMap: { [userId: string]: { [deviceId: string]: object } },
     ): Promise<void> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
         if (encrypted) {
-            const deviceInfoMap = await client.crypto.deviceList.downloadKeys(Object.keys(contentMap), false);
+            const deviceInfoMap = await client.crypto!.deviceList.downloadKeys(Object.keys(contentMap), false);
 
             await Promise.all(
                 Object.entries(contentMap).flatMap(([userId, userContentMap]) =>
                     Object.entries(userContentMap).map(async ([deviceId, content]): Promise<void> => {
+                        const devices = deviceInfoMap.get(userId);
+                        if (!devices) return;
+
                         if (deviceId === "*") {
                             // Send the message to all devices we have keys for
                             await client.encryptAndSendToDevices(
-                                Object.values(deviceInfoMap[userId]).map((deviceInfo) => ({
+                                Array.from(devices.values()).map((deviceInfo) => ({
                                     userId,
                                     deviceInfo,
                                 })),
                                 content,
                             );
-                        } else {
+                        } else if (devices.has(deviceId)) {
                             // Send the message to a specific device
                             await client.encryptAndSendToDevices(
-                                [{ userId, deviceInfo: deviceInfoMap[userId][deviceId] }],
+                                [{ userId, deviceInfo: devices.get(deviceId)! }],
                                 content,
                             );
                         }
@@ -311,9 +322,9 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
         const targetRooms = roomIds
             ? roomIds.includes(Symbols.AnyRoom)
-                ? client.getVisibleRooms()
+                ? client.getVisibleRooms(SettingsStore.getValue("feature_dynamic_room_predecessors"))
                 : roomIds.map((r) => client.getRoom(r))
-            : [client.getRoom(SdkContextClass.instance.roomViewStore.getRoomId())];
+            : [client.getRoom(SdkContextClass.instance.roomViewStore.getRoomId()!)];
         return targetRooms.filter((r) => !!r) as Room[];
     }
 
@@ -356,7 +367,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         const allResults: IRoomEvent[] = [];
         for (const room of rooms) {
             const results: MatrixEvent[] = [];
-            const state: Map<string, MatrixEvent> = room.currentState.events.get(eventType);
+            const state = room.currentState.events.get(eventType);
             if (state) {
                 if (stateKey === "" || !!stateKey) {
                     const forKey = state.get(stateKey);
@@ -377,7 +388,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         if (opts.approved) {
             return observer.update({
                 state: OpenIDRequestState.Allowed,
-                token: await MatrixClientPeg.get().getOpenIdToken(),
+                token: await MatrixClientPeg.safeGet().getOpenIdToken(),
             });
         }
 
@@ -388,7 +399,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         );
 
         const getToken = (): Promise<IOpenIDCredentials> => {
-            return MatrixClientPeg.get().getOpenIdToken();
+            return MatrixClientPeg.safeGet().getOpenIdToken();
         };
 
         if (oidcState === OIDCState.Denied) {
@@ -420,7 +431,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
     }
 
     public async *getTurnServers(): AsyncGenerator<ITurnServer> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         if (!client.pollingTurnServers || !client.getTurnServers().length) return;
 
         let setTurnServer: (server: ITurnServer) => void;
@@ -463,7 +474,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         limit?: number,
         direction?: "f" | "b",
     ): Promise<IReadEventRelationsResult> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const dir = direction as Direction;
         roomId = roomId ?? SdkContextClass.instance.roomViewStore.getRoomId() ?? undefined;
 
@@ -483,6 +494,21 @@ export class StopGapWidgetDriver extends WidgetDriver {
             chunk: events.map((e) => e.getEffectiveEvent() as IRoomEvent),
             nextBatch: nextBatch ?? undefined,
             prevBatch: prevBatch ?? undefined,
+        };
+    }
+
+    public async searchUserDirectory(searchTerm: string, limit?: number): Promise<ISearchUserDirectoryResult> {
+        const client = MatrixClientPeg.safeGet();
+
+        const { limited, results } = await client.searchUserDirectory({ term: searchTerm, limit });
+
+        return {
+            limited,
+            results: results.map((r) => ({
+                userId: r.user_id,
+                displayName: r.display_name,
+                avatarUrl: r.avatar_url,
+            })),
         };
     }
 }

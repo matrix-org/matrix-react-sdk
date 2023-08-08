@@ -15,11 +15,10 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventStatus, MatrixEvent, Room, MatrixError } from "matrix-js-sdk/src/matrix";
 import { SyncState, ISyncStateData } from "matrix-js-sdk/src/sync";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 
+import { Icon as WarningIcon } from "../../../res/img/feather-customised/warning-triangle.svg";
 import { _t, _td } from "../../languageHandler";
 import Resend from "../../Resend";
 import dis from "../../dispatcher/dispatcher";
@@ -30,6 +29,7 @@ import AccessibleButton from "../views/elements/AccessibleButton";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { RoomStatusBarUnsentMessages } from "./RoomStatusBarUnsentMessages";
+import ExternalLink from "../views/elements/ExternalLink";
 
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
@@ -213,9 +213,9 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                 {},
                 {
                     consentLink: (sub) => (
-                        <a href={consentError!.data?.consent_uri} target="_blank">
+                        <ExternalLink href={consentError!.data?.consent_uri} target="_blank" rel="noreferrer noopener">
                             {sub}
-                        </a>
+                        </ExternalLink>
                     ),
                 },
             );
@@ -278,13 +278,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                 <div className="mx_RoomStatusBar">
                     <div role="alert">
                         <div className="mx_RoomStatusBar_connectionLostBar">
-                            <img
-                                src={require("../../../res/img/feather-customised/warning-triangle.svg").default}
-                                width="24"
-                                height="24"
-                                title="/!\ "
-                                alt="/!\ "
-                            />
+                            <WarningIcon width="24" height="24" />
                             <div>
                                 <div className="mx_RoomStatusBar_connectionLostBar_title">
                                     {_t("Connectivity to the server has been lost.")}

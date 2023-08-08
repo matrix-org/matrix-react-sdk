@@ -32,13 +32,13 @@ import AuthBody from "../../views/auth/AuthBody";
 import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
 import StyledCheckbox from "../../views/elements/StyledCheckbox";
 import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
-import { Icon as LockIcon } from "../../../../res/img/element-icons/lock.svg";
+import { Icon as CheckboxIcon } from "../../../../res/img/compound/checkbox-32px.svg";
+import { Icon as LockIcon } from "../../../../res/img/compound/padlock-32px.svg";
 import QuestionDialog from "../../views/dialogs/QuestionDialog";
 import { EnterEmail } from "./forgot-password/EnterEmail";
 import { CheckEmail } from "./forgot-password/CheckEmail";
 import Field from "../../views/elements/Field";
 import { ErrorMessage } from "../ErrorMessage";
-import { Icon as CheckboxIcon } from "../../../../res/img/element-icons/Checkbox.svg";
 import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
 import Spinner from "../../views/elements/Spinner";
 import { formatSeconds } from "../../../DateUtils";
@@ -345,12 +345,15 @@ export default class ForgotPassword extends React.Component<Props, State> {
         }
     };
 
-    private onInputChanged = (stateKey: string, ev: React.FormEvent<HTMLInputElement>): void => {
+    private onInputChanged = (
+        stateKey: "email" | "password" | "password2",
+        ev: React.FormEvent<HTMLInputElement>,
+    ): void => {
         let value = ev.currentTarget.value;
         if (stateKey === "email") value = value.trim();
         this.setState({
             [stateKey]: value,
-        } as any);
+        } as Pick<State, typeof stateKey>);
     };
 
     public renderEnterEmail(): JSX.Element {
@@ -395,7 +398,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
             button: _t("Continue"),
         });
         const [confirmed] = await finished;
-        return confirmed;
+        return !!confirmed;
     }
 
     public renderCheckEmail(): JSX.Element {

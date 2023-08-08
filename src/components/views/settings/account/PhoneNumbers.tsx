@@ -16,17 +16,17 @@ limitations under the License.
 */
 
 import React from "react";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from "../../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
-import AccessibleButton from "../../elements/AccessibleButton";
-import AddThreepid from "../../../../AddThreepid";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
+import AddThreepid, { ThirdPartyIdentifier } from "../../../../AddThreepid";
 import CountryDropdown from "../../auth/CountryDropdown";
 import Modal from "../../../../Modal";
-import ErrorDialog from "../../dialogs/ErrorDialog";
+import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
 import { PhoneNumberCountryDefinition } from "../../../../phonenumber";
 
 /*
@@ -37,8 +37,8 @@ This is a copy/paste of EmailAddresses, mostly.
 // TODO: Combine EmailAddresses and PhoneNumbers to be 3pid agnostic
 
 interface IExistingPhoneNumberProps {
-    msisdn: IThreepid;
-    onRemoved: (phoneNumber: IThreepid) => void;
+    msisdn: ThirdPartyIdentifier;
+    onRemoved: (phoneNumber: ThirdPartyIdentifier) => void;
 }
 
 interface IExistingPhoneNumberState {
@@ -54,25 +54,25 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
         };
     }
 
-    private onRemove = (e: React.MouseEvent): void => {
+    private onRemove = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
         this.setState({ verifyRemove: true });
     };
 
-    private onDontRemove = (e: React.MouseEvent): void => {
+    private onDontRemove = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
         this.setState({ verifyRemove: false });
     };
 
-    private onActuallyRemove = (e: React.MouseEvent): void => {
+    private onActuallyRemove = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
-        MatrixClientPeg.get()
+        MatrixClientPeg.safeGet()
             .deleteThreePid(this.props.msisdn.medium, this.props.msisdn.address)
             .then(() => {
                 return this.props.onRemoved(this.props.msisdn);
@@ -81,7 +81,7 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
                 logger.error("Unable to remove contact information: " + err);
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Unable to remove contact information"),
-                    description: err && err.message ? err.message : _t("Operation failed"),
+                    description: extractErrorMessageFromError(err, _t("Operation failed")),
                 });
             });
     };
@@ -89,21 +89,21 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
     public render(): React.ReactNode {
         if (this.state.verifyRemove) {
             return (
-                <div className="mx_ExistingPhoneNumber">
-                    <span className="mx_ExistingPhoneNumber_promptText">
+                <div className="mx_GeneralUserSettingsTab_section--discovery_existing">
+                    <span className="mx_GeneralUserSettingsTab_section--discovery_existing_promptText">
                         {_t("Remove %(phone)s?", { phone: this.props.msisdn.address })}
                     </span>
                     <AccessibleButton
                         onClick={this.onActuallyRemove}
                         kind="danger_sm"
-                        className="mx_ExistingPhoneNumber_confirmBtn"
+                        className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
                         {_t("Remove")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.onDontRemove}
                         kind="link_sm"
-                        className="mx_ExistingPhoneNumber_confirmBtn"
+                        className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
                         {_t("Cancel")}
                     </AccessibleButton>
@@ -112,8 +112,10 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
         }
 
         return (
-            <div className="mx_ExistingPhoneNumber">
-                <span className="mx_ExistingPhoneNumber_address">+{this.props.msisdn.address}</span>
+            <div className="mx_GeneralUserSettingsTab_section--discovery_existing">
+                <span className="mx_GeneralUserSettingsTab_section--discovery_existing_address">
+                    +{this.props.msisdn.address}
+                </span>
                 <AccessibleButton onClick={this.onRemove} kind="danger_sm">
                     {_t("Remove")}
                 </AccessibleButton>
@@ -123,15 +125,15 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
 }
 
 interface IProps {
-    msisdns: IThreepid[];
-    onMsisdnsChange: (phoneNumbers: Partial<IThreepid>[]) => void;
+    msisdns: ThirdPartyIdentifier[];
+    onMsisdnsChange: (phoneNumbers: ThirdPartyIdentifier[]) => void;
 }
 
 interface IState {
     verifying: boolean;
-    verifyError: string;
+    verifyError: string | null;
     verifyMsisdn: string;
-    addTask: AddThreepid;
+    addTask: AddThreepid | null;
     continueDisabled: boolean;
     phoneCountry: string;
     newPhoneNumber: string;
@@ -154,7 +156,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         };
     }
 
-    private onRemoved = (address: IThreepid): void => {
+    private onRemoved = (address: ThirdPartyIdentifier): void => {
         const msisdns = this.props.msisdns.filter((e) => e !== address);
         this.props.onMsisdnsChange(msisdns);
     };
@@ -171,7 +173,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         });
     };
 
-    private onAddClick = (e: React.MouseEvent | React.FormEvent): void => {
+    private onAddClick = (e: ButtonEvent | React.FormEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -180,7 +182,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         const phoneNumber = this.state.newPhoneNumber;
         const phoneCountry = this.state.phoneCountry;
 
-        const task = new AddThreepid();
+        const task = new AddThreepid(MatrixClientPeg.safeGet());
         this.setState({ verifying: true, continueDisabled: true, addTask: task });
 
         task.addMsisdn(phoneCountry, phoneNumber)
@@ -192,12 +194,12 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                 this.setState({ verifying: false, continueDisabled: false, addTask: null });
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Error"),
-                    description: err && err.message ? err.message : _t("Operation failed"),
+                    description: extractErrorMessageFromError(err, _t("Operation failed")),
                 });
             });
     };
 
-    private onContinueClick = (e: React.MouseEvent | React.FormEvent): void => {
+    private onContinueClick = (e: ButtonEvent | React.FormEvent): void => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -205,8 +207,8 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         const token = this.state.newPhoneNumberCode;
         const address = this.state.verifyMsisdn;
         this.state.addTask
-            .haveMsisdnToken(token)
-            .then(([finished]) => {
+            ?.haveMsisdnToken(token)
+            .then(([finished] = []) => {
                 let newPhoneNumber = this.state.newPhoneNumber;
                 if (finished) {
                     const msisdns = [...this.props.msisdns, { address, medium: ThreepidMedium.Phone }];
@@ -224,12 +226,18 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                 });
             })
             .catch((err) => {
+                logger.error("Unable to verify phone number: " + err);
                 this.setState({ continueDisabled: false });
-                if (err.errcode !== "M_THREEPID_AUTH_FAILED") {
-                    logger.error("Unable to verify phone number: " + err);
+
+                let underlyingError = err;
+                if (err instanceof UserFriendlyError) {
+                    underlyingError = err.cause;
+                }
+
+                if (underlyingError.errcode !== "M_THREEPID_AUTH_FAILED") {
                     Modal.createDialog(ErrorDialog, {
                         title: _t("Unable to verify phone number."),
-                        description: err && err.message ? err.message : _t("Operation failed"),
+                        description: extractErrorMessageFromError(err, _t("Operation failed")),
                     });
                 } else {
                     this.setState({ verifyError: _t("Incorrect verification code") });
@@ -297,14 +305,14 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
         );
 
         return (
-            <div className="mx_PhoneNumbers">
+            <>
                 {existingPhoneElements}
                 <form onSubmit={this.onAddClick} autoComplete="off" noValidate={true} className="mx_PhoneNumbers_new">
                     <div className="mx_PhoneNumbers_input">
                         <Field
                             type="text"
                             label={_t("Phone Number")}
-                            autoComplete="off"
+                            autoComplete="tel-national"
                             disabled={this.state.verifying}
                             prefixComponent={phoneCountry}
                             value={this.state.newPhoneNumber}
@@ -313,7 +321,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                     </div>
                 </form>
                 {addVerifySection}
-            </div>
+            </>
         );
     }
 }

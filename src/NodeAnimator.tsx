@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactInstance } from "react";
+import React, { Key, ReactElement, ReactFragment, ReactInstance, ReactPortal } from "react";
 import ReactDom from "react-dom";
 
 interface IChildProps {
@@ -33,6 +33,10 @@ interface IProps {
     startStyles: React.CSSProperties[];
 }
 
+function isReactElement(c: ReactElement | ReactFragment | ReactPortal): c is ReactElement {
+    return typeof c === "object" && "type" in c;
+}
+
 /**
  * The NodeAnimator contains components and animates transitions.
  * It will only pick up direct changes to properties ('left', currently), and so
@@ -42,7 +46,7 @@ interface IProps {
  */
 export default class NodeAnimator extends React.Component<IProps> {
     private nodes: Record<string, ReactInstance> = {};
-    private children: { [key: string]: React.DetailedReactHTMLElement<any, HTMLElement> };
+    private children: { [key: string]: ReactElement } = {};
     public static defaultProps: Partial<IProps> = {
         startStyles: [],
     };
@@ -72,17 +76,18 @@ export default class NodeAnimator extends React.Component<IProps> {
     private updateChildren(newChildren: React.ReactNode): void {
         const oldChildren = this.children || {};
         this.children = {};
-        React.Children.toArray(newChildren).forEach((c: any) => {
-            if (oldChildren[c.key]) {
-                const old = oldChildren[c.key];
-                const oldNode = ReactDom.findDOMNode(this.nodes[old.key]);
+        React.Children.toArray(newChildren).forEach((c) => {
+            if (!isReactElement(c)) return;
+            if (oldChildren[c.key!]) {
+                const old = oldChildren[c.key!];
+                const oldNode = ReactDom.findDOMNode(this.nodes[old.key!]);
 
                 if (oldNode && (oldNode as HTMLElement).style.left !== c.props.style.left) {
                     this.applyStyles(oldNode as HTMLElement, { left: c.props.style.left });
                 }
                 // clone the old element with the props (and children) of the new element
                 // so prop updates are still received by the children.
-                this.children[c.key] = React.cloneElement(old, c.props, c.props.children);
+                this.children[c.key!] = React.cloneElement(old, c.props, c.props.children);
             } else {
                 // new element. If we have a startStyle, use that as the style and go through
                 // the enter animations
@@ -95,14 +100,14 @@ export default class NodeAnimator extends React.Component<IProps> {
                     newProps.style = startStyle;
                 }
 
-                newProps.ref = (n) => this.collectNode(c.key, n, restingStyle);
+                newProps.ref = (n) => this.collectNode(c.key!, n, restingStyle);
 
-                this.children[c.key] = React.cloneElement(c, newProps);
+                this.children[c.key!] = React.cloneElement(c, newProps);
             }
         });
     }
 
-    private collectNode(k: string, node: React.ReactInstance, restingStyle: React.CSSProperties): void {
+    private collectNode(k: Key, node: React.ReactInstance, restingStyle: React.CSSProperties): void {
         if (node && this.nodes[k] === undefined && this.props.startStyles.length > 0) {
             const startStyles = this.props.startStyles;
             const domNode = ReactDom.findDOMNode(node);

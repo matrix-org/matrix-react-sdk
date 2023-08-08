@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -26,7 +26,7 @@ import Modal from "../../../Modal";
 import VerificationRequestDialog from "../../views/dialogs/VerificationRequestDialog";
 import { SetupEncryptionStore, Phase } from "../../../stores/SetupEncryptionStore";
 import EncryptionPanel from "../../views/right_panel/EncryptionPanel";
-import AccessibleButton from "../../views/elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import Spinner from "../../views/elements/Spinner";
 
 function keyHasPassphrase(keyInfo: ISecretStorageKeyInfo): boolean {
@@ -38,9 +38,9 @@ interface IProps {
 }
 
 interface IState {
-    phase: Phase;
-    verificationRequest: VerificationRequest;
-    backupInfo: IKeyBackupInfo;
+    phase?: Phase;
+    verificationRequest: VerificationRequest | null;
+    backupInfo: IKeyBackupInfo | null;
     lostKeys: boolean;
 }
 
@@ -87,16 +87,16 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
     };
 
     private onVerifyClick = (): void => {
-        const cli = MatrixClientPeg.get();
-        const userId = cli.getUserId();
-        const requestPromise = cli.requestVerification(userId);
+        const cli = MatrixClientPeg.safeGet();
+        const userId = cli.getSafeUserId();
+        const requestPromise = cli.getCrypto()!.requestOwnUserVerification();
 
         // We need to call onFinished now to close this dialog, and
         // again later to signal that the verification is complete.
         this.props.onFinished();
         Modal.createDialog(VerificationRequestDialog, {
             verificationRequestPromise: requestPromise,
-            member: cli.getUser(userId),
+            member: cli.getUser(userId) ?? undefined,
             onFinished: async (): Promise<void> => {
                 const request = await requestPromise;
                 request.cancel();
@@ -115,7 +115,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
         store.returnAfterSkip();
     };
 
-    private onResetClick = (ev: React.MouseEvent<HTMLButtonElement>): void => {
+    private onResetClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         const store = SetupEncryptionStore.sharedInstance();
         store.reset();
@@ -142,15 +142,16 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
     };
 
     public render(): React.ReactNode {
+        const cli = MatrixClientPeg.safeGet();
         const { phase, lostKeys } = this.state;
 
-        if (this.state.verificationRequest) {
+        if (this.state.verificationRequest && cli.getUser(this.state.verificationRequest.otherUserId)) {
             return (
                 <EncryptionPanel
                     layout="dialog"
                     verificationRequest={this.state.verificationRequest}
                     onClose={this.onEncryptionPanelClose}
-                    member={MatrixClientPeg.get().getUser(this.state.verificationRequest.otherUserId)}
+                    member={cli.getUser(this.state.verificationRequest.otherUserId)!}
                     isRoomEncrypted={false}
                 />
             );
@@ -212,7 +213,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                             {useRecoveryKeyButton}
                         </div>
                         <div className="mx_SetupEncryptionBody_reset">
-                            {_t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
+                            {_t("Forgotten or lost all recovery methods? <a>Reset all</a>", undefined, {
                                 a: (sub) => (
                                     <AccessibleButton
                                         kind="link_inline"
@@ -228,7 +229,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                 );
             }
         } else if (phase === Phase.Done) {
-            let message;
+            let message: JSX.Element;
             if (this.state.backupInfo) {
                 message = (
                     <p>

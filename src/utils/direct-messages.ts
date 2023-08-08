@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { canEncryptToAllUsers } from "../createRoom";
@@ -30,7 +29,7 @@ import { createDmLocalRoom } from "./dm/createDmLocalRoom";
 import { startDm } from "./dm/startDm";
 import { resolveThreePids } from "./threepids";
 
-export async function startDmOnFirstMessage(client: MatrixClient, targets: Member[]): Promise<Room> {
+export async function startDmOnFirstMessage(client: MatrixClient, targets: Member[]): Promise<string | null> {
     let resolvedTargets = targets;
 
     try {
@@ -49,7 +48,13 @@ export async function startDmOnFirstMessage(client: MatrixClient, targets: Membe
             joining: false,
             metricsTrigger: "MessageUser",
         });
-        return existingRoom;
+        return existingRoom.roomId;
+    }
+
+    if (targets.length === 1 && targets[0] instanceof ThreepidMember && privateShouldBeEncrypted(client)) {
+        // Single 3rd-party invite and well-known promotes encryption:
+        // Directly create a room and invite the other.
+        return await startDm(client, targets);
     }
 
     const room = await createDmLocalRoom(client, resolvedTargets);
@@ -59,7 +64,7 @@ export async function startDmOnFirstMessage(client: MatrixClient, targets: Membe
         joining: false,
         targets: resolvedTargets,
     });
-    return room;
+    return room.roomId;
 }
 
 /**
@@ -81,8 +86,10 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
 
     return startDm(client, localRoom.targets, false).then(
         (roomId) => {
+            if (!roomId) throw new Error(`startDm for local room ${localRoom.roomId} didn't return a room Id`);
+
             localRoom.actualRoomId = roomId;
-            return waitForRoomReadyAndApplyAfterCreateCallbacks(client, localRoom);
+            return waitForRoomReadyAndApplyAfterCreateCallbacks(client, localRoom, roomId);
         },
         () => {
             logger.warn(`Error creating DM for local room ${localRoom.roomId}`);
@@ -110,9 +117,9 @@ export abstract class Member {
 
     /**
      * Gets the MXC URL of this Member's avatar. For users this should be their profile's
-     * avatar MXC URL or null if none set. For 3PIDs this should always be null.
+     * avatar MXC URL or null if none set. For 3PIDs this should always be undefined.
      */
-    public abstract getMxcAvatarUrl(): string | null;
+    public abstract getMxcAvatarUrl(): string | undefined;
 }
 
 export class DirectoryMember extends Member {
@@ -137,8 +144,8 @@ export class DirectoryMember extends Member {
         return this._userId;
     }
 
-    public getMxcAvatarUrl(): string | null {
-        return this.avatarUrl ?? null;
+    public getMxcAvatarUrl(): string | undefined {
+        return this.avatarUrl;
     }
 }
 
@@ -166,8 +173,8 @@ export class ThreepidMember extends Member {
         return this.id;
     }
 
-    public getMxcAvatarUrl(): string | null {
-        return null;
+    public getMxcAvatarUrl(): string | undefined {
+        return undefined;
     }
 }
 
@@ -185,7 +192,10 @@ export interface IDMUserTileProps {
  * @returns {Promise<boolean>}
  */
 export async function determineCreateRoomEncryptionOption(client: MatrixClient, targets: Member[]): Promise<boolean> {
-    if (privateShouldBeEncrypted()) {
+    if (privateShouldBeEncrypted(client)) {
+        // Enable encryption for a single 3rd party invite.
+        if (targets.length === 1 && targets[0] instanceof ThreepidMember) return true;
+
         // Check whether all users have uploaded device keys before.
         // If so, enable encryption in the new room.
         const has3PidMembers = targets.some((t) => t instanceof ThreepidMember);

@@ -18,6 +18,7 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import BasePlatform from "../../BasePlatform";
 import { IConfigOptions } from "../../IConfigOptions";
+import { DeepReadonly } from "../../@types/common";
 
 export type DeviceClientInformation = {
     name?: string;
@@ -49,12 +50,12 @@ export const getClientInformationEventType = (deviceId: string): string => `${cl
  */
 export const recordClientInformation = async (
     matrixClient: MatrixClient,
-    sdkConfig: IConfigOptions,
-    platform: BasePlatform,
+    sdkConfig: DeepReadonly<IConfigOptions>,
+    platform?: BasePlatform,
 ): Promise<void> => {
     const deviceId = matrixClient.getDeviceId()!;
     const { brand } = sdkConfig;
-    const version = await platform.getAppVersion();
+    const version = await platform?.getAppVersion();
     const type = getClientInformationEventType(deviceId);
     const url = formatUrl();
 
@@ -71,7 +72,7 @@ export const recordClientInformation = async (
  *                      client information for devices NOT in this list will be removed
  */
 export const pruneClientInformation = (validDeviceIds: string[], matrixClient: MatrixClient): void => {
-    Object.values(matrixClient.store.accountData).forEach((event) => {
+    Array.from(matrixClient.store.accountData.values()).forEach((event) => {
         if (!event.getType().startsWith(clientInformationEventPrefix)) {
             return;
         }

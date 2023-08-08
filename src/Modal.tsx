@@ -19,21 +19,27 @@ import React from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 
 import dis from "./dispatcher/dispatcher";
 import AsyncWrapper from "./AsyncWrapper";
+import { Defaultize } from "./@types/common";
 
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
 const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
 
 // Type which accepts a React Component which looks like a Modal (accepts an onFinished prop)
-export type ComponentType = React.ComponentType<{
-    onFinished?(...args: any): void;
-}>;
+export type ComponentType =
+    | React.ComponentType<{
+          onFinished(...args: any): void;
+      }>
+    | React.ComponentType<any>;
 
 // Generic type which returns the props of the Modal component with the onFinished being optional.
-export type ComponentProps<C extends ComponentType> = Omit<React.ComponentProps<C>, "onFinished"> &
+export type ComponentProps<C extends ComponentType> = Defaultize<
+    Omit<React.ComponentProps<C>, "onFinished">,
+    C["defaultProps"]
+> &
     Partial<Pick<React.ComponentProps<C>, "onFinished">>;
 
 export interface IModal<C extends ComponentType> {
@@ -131,24 +137,29 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     }
 
     public appendDialog<C extends ComponentType>(
-        Element: React.ComponentType,
+        Element: C,
         props?: ComponentProps<C>,
         className?: string,
     ): IHandle<C> {
         return this.appendDialogAsync<C>(Promise.resolve(Element), props, className);
     }
 
-    public closeCurrentModal(reason: string): void {
+    /**
+     * @param reason either "backgroundClick" or undefined
+     * @return whether a modal was closed
+     */
+    public closeCurrentModal(reason?: string): boolean {
         const modal = this.getCurrentModal();
         if (!modal) {
-            return;
+            return false;
         }
         modal.closeReason = reason;
         modal.close();
+        return true;
     }
 
     private buildModal<C extends ComponentType>(
-        prom: Promise<React.ComponentType>,
+        prom: Promise<C>,
         props?: ComponentProps<C>,
         className?: string,
         options?: IOptions<C>,
@@ -292,7 +303,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     }
 
     private appendDialogAsync<C extends ComponentType>(
-        prom: Promise<React.ComponentType>,
+        prom: Promise<C>,
         props?: ComponentProps<C>,
         className?: string,
     ): IHandle<C> {
@@ -335,6 +346,8 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     }
 
     private async reRender(): Promise<void> {
+        // TODO: We should figure out how to remove this weird sleep. It also makes testing harder
+        //
         // await next tick because sometimes ReactDOM can race with itself and cause the modal to wrongly stick around
         await sleep(0);
 

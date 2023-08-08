@@ -24,15 +24,17 @@ import DialogButtons from "../elements/DialogButtons";
 import EmailField from "../auth/EmailField";
 
 interface IProps {
-    onFinished(continued: boolean, email?: string): void;
+    onFinished(continued: false, email?: undefined): void;
+    onFinished(continued: true, email: string): void;
 }
 
 const RegistrationEmailPromptDialog: React.FC<IProps> = ({ onFinished }) => {
     const [email, setEmail] = useState("");
-    const fieldRef = useRef<Field>();
+    const fieldRef = useRef<Field>(null);
 
     const onSubmit = async (e: SyntheticEvent): Promise<void> => {
         e.preventDefault();
+        if (!fieldRef.current) return;
         if (email) {
             const valid = await fieldRef.current.validate({});
 

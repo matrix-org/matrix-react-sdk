@@ -17,11 +17,8 @@ limitations under the License.
 import React, { useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
+import { RoomMember, Room, MatrixEvent, EventTimeline } from "matrix-js-sdk/src/matrix";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -42,7 +39,7 @@ const BulkRedactDialog: React.FC<Props> = (props) => {
     const { matrixClient: cli, room, member, onFinished } = props;
     const [keepStateEvents, setKeepStateEvents] = useState(true);
 
-    let timeline = room.getLiveTimeline();
+    let timeline: EventTimeline | null = room.getLiveTimeline();
     let eventsToRedact: MatrixEvent[] = [];
     while (timeline) {
         eventsToRedact = [
@@ -93,7 +90,7 @@ const BulkRedactDialog: React.FC<Props> = (props) => {
             await Promise.all(
                 eventsToRedact.reverse().map(async (event): Promise<void> => {
                     try {
-                        await cli.redactEvent(room.roomId, event.getId());
+                        await cli.redactEvent(room.roomId, event.getId()!);
                     } catch (err) {
                         // log and swallow errors
                         logger.error("Could not redact", event.getId());

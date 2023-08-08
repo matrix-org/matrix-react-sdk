@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { BaseSyntheticEvent } from "react";
+import React, { BaseSyntheticEvent, ReactNode } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixError } from "matrix-js-sdk/src/matrix";
@@ -82,7 +82,7 @@ interface IState {
     // Field error codes by field ID
     fieldValid: Partial<Record<RegistrationField, boolean>>;
     // The ISO2 country code selected in the phone number entry
-    phoneCountry: string;
+    phoneCountry?: string;
     username: string;
     email: string;
     phoneNumber: string;
@@ -95,11 +95,11 @@ interface IState {
  * A pure UI component which displays a registration form.
  */
 export default class RegistrationForm extends React.PureComponent<IProps, IState> {
-    private [RegistrationField.Email]: Field;
-    private [RegistrationField.Password]: Field;
-    private [RegistrationField.PasswordConfirm]: Field;
-    private [RegistrationField.Username]: Field;
-    private [RegistrationField.PhoneNumber]: Field;
+    private [RegistrationField.Email]: Field | null = null;
+    private [RegistrationField.Password]: Field | null = null;
+    private [RegistrationField.PasswordConfirm]: Field | null = null;
+    private [RegistrationField.Username]: Field | null = null;
+    private [RegistrationField.PhoneNumber]: Field | null = null;
 
     public static defaultProps = {
         onValidationChange: logger.error,
@@ -117,7 +117,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             phoneNumber: this.props.defaultPhoneNumber || "",
             password: this.props.defaultPassword || "",
             passwordConfirm: this.props.defaultPassword || "",
-            passwordComplexity: null,
         };
     }
 
@@ -138,7 +137,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             if (this.showEmail()) {
                 Modal.createDialog(RegistrationEmailPromptDialog, {
                     onFinished: async (confirmed: boolean, email?: string): Promise<void> => {
-                        if (confirmed) {
+                        if (confirmed && email !== undefined) {
                             this.setState(
                                 {
                                     email,
@@ -265,7 +264,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     };
 
     private onEmailValidate = (result: IValidationResult): void => {
-        this.markFieldValid(RegistrationField.Email, result.valid);
+        this.markFieldValid(RegistrationField.Email, !!result.valid);
     };
 
     private validateEmailRules = withValidation({
@@ -294,7 +293,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     };
 
     private onPasswordValidate = (result: IValidationResult): void => {
-        this.markFieldValid(RegistrationField.Password, result.valid);
+        this.markFieldValid(RegistrationField.Password, !!result.valid);
     };
 
     private onPasswordConfirmChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
@@ -304,7 +303,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     };
 
     private onPasswordConfirmValidate = (result: IValidationResult): void => {
-        this.markFieldValid(RegistrationField.PasswordConfirm, result.valid);
+        this.markFieldValid(RegistrationField.PasswordConfirm, !!result.valid);
     };
 
     private onPhoneCountryChange = (newVal: PhoneNumberCountryDefinition): void => {
@@ -321,7 +320,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
     private onPhoneNumberValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validatePhoneNumberRules(fieldState);
-        this.markFieldValid(RegistrationField.PhoneNumber, result.valid);
+        this.markFieldValid(RegistrationField.PhoneNumber, !!result.valid);
         return result;
     };
 
@@ -352,14 +351,14 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
     private onUsernameValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validateUsernameRules(fieldState);
-        this.markFieldValid(RegistrationField.Username, result.valid);
+        this.markFieldValid(RegistrationField.Username, !!result.valid);
         return result;
     };
 
     private validateUsernameRules = withValidation<this, UsernameAvailableStatus>({
         description: (_, results) => {
             // omit the description if the only failing result is the `available` one as it makes no sense for it.
-            if (results.every(({ key, valid }) => key === "available" || valid)) return;
+            if (results.every(({ key, valid }) => key === "available" || valid)) return null;
             return _t("Use lowercase letters, numbers, dashes and underscores only");
         },
         hideDescriptionIfValid: true,
@@ -434,7 +433,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     }
 
     private showEmail(): boolean {
-        if (!this.authStepIsUsed("m.login.email.identity")) {
+        const threePidLogin = !SdkConfig.get().disable_3pid_login;
+        if (!threePidLogin || !this.authStepIsUsed("m.login.email.identity")) {
             return false;
         }
         return true;
@@ -448,7 +448,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         return true;
     }
 
-    private renderEmail(): JSX.Element {
+    private renderEmail(): ReactNode {
         if (!this.showEmail()) {
             return null;
         }
@@ -474,6 +474,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 value={this.state.password}
                 onChange={this.onPasswordChange}
                 onValidate={this.onPasswordValidate}
+                userInputs={[this.state.username]}
             />
         );
     }
@@ -492,7 +493,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         );
     }
 
-    public renderPhoneNumber(): JSX.Element {
+    public renderPhoneNumber(): ReactNode {
         if (!this.showPhoneNumber()) {
             return null;
         }
@@ -518,7 +519,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         );
     }
 
-    public renderUsername(): JSX.Element {
+    public renderUsername(): ReactNode {
         return (
             <Field
                 id="mx_RegistrationForm_username"
@@ -534,12 +535,12 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         );
     }
 
-    public render(): React.ReactNode {
+    public render(): ReactNode {
         const registerButton = (
             <input className="mx_Login_submit" type="submit" value={_t("Register")} disabled={!this.props.canSubmit} />
         );
 
-        let emailHelperText = null;
+        let emailHelperText: JSX.Element | undefined;
         if (this.showEmail()) {
             if (this.showPhoneNumber()) {
                 emailHelperText = (

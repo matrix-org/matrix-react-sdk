@@ -14,15 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from "react";
-import { MatrixCapabilities } from "matrix-widget-api";
+import React, { ComponentProps, useContext } from "react";
+import { ClientWidgetApi, IWidget, MatrixCapabilities } from "matrix-widget-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ApprovalOpts, WidgetLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
 import { ChevronFace } from "../../structures/ContextMenu";
 import { _t } from "../../../languageHandler";
-import { IApp } from "../../../stores/WidgetStore";
+import { isAppWidget } from "../../../stores/WidgetStore";
 import WidgetUtils from "../../../utils/WidgetUtils";
 import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
 import RoomContext from "../../../contexts/RoomContext";
@@ -38,8 +39,8 @@ import { getConfigLivestreamUrl, startJitsiAudioLivestream } from "../../../Live
 import { ModuleRunner } from "../../../modules/ModuleRunner";
 import { ElementWidget } from "../../../stores/widgets/StopGapWidget";
 
-interface IProps extends React.ComponentProps<typeof IconizedContextMenu> {
-    app: IApp;
+interface IProps extends Omit<ComponentProps<typeof IconizedContextMenu>, "children"> {
+    app: IWidget;
     userWidget?: boolean;
     showUnpin?: boolean;
     // override delete handler
@@ -47,6 +48,69 @@ interface IProps extends React.ComponentProps<typeof IconizedContextMenu> {
     // override edit handler
     onEditClick?(): void;
 }
+
+const showStreamAudioStreamButton = (app: IWidget): boolean => {
+    return !!getConfigLivestreamUrl() && WidgetType.JITSI.matches(app.type);
+};
+
+const showEditButton = (app: IWidget, canModify: boolean): boolean => {
+    return canModify && WidgetUtils.isManagedByManager(app);
+};
+
+const showRevokeButton = (
+    cli: MatrixClient,
+    roomId: string | undefined,
+    app: IWidget,
+    userWidget: boolean | undefined,
+): boolean => {
+    const isAllowedWidget =
+        (isAppWidget(app) &&
+            app.eventId !== undefined &&
+            (SettingsStore.getValue("allowedWidgets", roomId)[app.eventId] ?? false)) ||
+        app.creatorUserId === cli?.getUserId();
+
+    const isLocalWidget = WidgetType.JITSI.matches(app.type);
+    return !userWidget && !isLocalWidget && isAllowedWidget;
+};
+
+const showDeleteButton = (canModify: boolean, onDeleteClick: undefined | (() => void)): boolean => {
+    return !!onDeleteClick || canModify;
+};
+
+const showSnapshotButton = (widgetMessaging: ClientWidgetApi | undefined): boolean => {
+    return (
+        SettingsStore.getValue<boolean>("enableWidgetScreenshots") &&
+        !!widgetMessaging?.hasCapability(MatrixCapabilities.Screenshots)
+    );
+};
+
+const showMoveButtons = (app: IWidget, room: Room | undefined, showUnpin: boolean | undefined): [boolean, boolean] => {
+    if (!showUnpin) return [false, false];
+
+    const pinnedWidgets = room ? WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top) : [];
+    const widgetIndex = pinnedWidgets.findIndex((widget) => widget.id === app.id);
+    return [widgetIndex > 0, widgetIndex < pinnedWidgets.length - 1];
+};
+
+export const showContextMenu = (
+    cli: MatrixClient,
+    room: Room | undefined,
+    app: IWidget,
+    userWidget: boolean,
+    showUnpin: boolean,
+    onDeleteClick: (() => void) | undefined,
+): boolean => {
+    const canModify = userWidget || WidgetUtils.canUserModifyWidgets(cli, room?.roomId);
+    const widgetMessaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(app));
+    return (
+        showStreamAudioStreamButton(app) ||
+        showEditButton(app, canModify) ||
+        showRevokeButton(cli, room?.roomId, app, userWidget) ||
+        showDeleteButton(canModify, onDeleteClick) ||
+        showSnapshotButton(widgetMessaging) ||
+        showMoveButtons(app, room, showUnpin).some(Boolean)
+    );
+};
 
 export const WidgetContextMenu: React.FC<IProps> = ({
     onFinished,
@@ -61,17 +125,17 @@ export const WidgetContextMenu: React.FC<IProps> = ({
     const { room, roomId } = useContext(RoomContext);
 
     const widgetMessaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(app));
-    const canModify = userWidget || WidgetUtils.canUserModifyWidgets(roomId);
+    const canModify = userWidget || WidgetUtils.canUserModifyWidgets(cli, roomId);
 
-    let streamAudioStreamButton;
-    if (getConfigLivestreamUrl() && WidgetType.JITSI.matches(app.type)) {
+    let streamAudioStreamButton: JSX.Element | undefined;
+    if (roomId && showStreamAudioStreamButton(app)) {
         const onStreamAudioClick = async (): Promise<void> => {
             try {
-                await startJitsiAudioLivestream(widgetMessaging, roomId);
+                await startJitsiAudioLivestream(cli, widgetMessaging!, roomId);
             } catch (err) {
                 logger.error("Failed to start livestream", err);
                 // XXX: won't i18n well, but looks like widget api only support 'message'?
-                const message = err.message || _t("Unable to start audio streaming.");
+                const message = err instanceof Error ? err.message : _t("Unable to start audio streaming.");
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Failed to start livestream"),
                     description: message,
@@ -84,15 +148,12 @@ export const WidgetContextMenu: React.FC<IProps> = ({
         );
     }
 
-    const pinnedWidgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
-    const widgetIndex = pinnedWidgets.findIndex((widget) => widget.id === app.id);
-
-    let editButton;
-    if (canModify && WidgetUtils.isManagedByManager(app)) {
+    let editButton: JSX.Element | undefined;
+    if (showEditButton(app, canModify)) {
         const _onEditClick = (): void => {
             if (onEditClick) {
                 onEditClick();
-            } else {
+            } else if (room) {
                 WidgetUtils.editWidget(room, app);
             }
             onFinished();
@@ -101,9 +162,8 @@ export const WidgetContextMenu: React.FC<IProps> = ({
         editButton = <IconizedContextMenuOption onClick={_onEditClick} label={_t("Edit")} />;
     }
 
-    let snapshotButton;
-    const screenshotsEnabled = SettingsStore.getValue("enableWidgetScreenshots");
-    if (screenshotsEnabled && widgetMessaging?.hasCapability(MatrixCapabilities.Screenshots)) {
+    let snapshotButton: JSX.Element | undefined;
+    if (showSnapshotButton(widgetMessaging)) {
         const onSnapshotClick = (): void => {
             widgetMessaging
                 ?.takeScreenshot()
@@ -122,12 +182,12 @@ export const WidgetContextMenu: React.FC<IProps> = ({
         snapshotButton = <IconizedContextMenuOption onClick={onSnapshotClick} label={_t("Take a picture")} />;
     }
 
-    let deleteButton;
-    if (onDeleteClick || canModify) {
+    let deleteButton: JSX.Element | undefined;
+    if (showDeleteButton(canModify, onDeleteClick)) {
         const _onDeleteClick = (): void => {
             if (onDeleteClick) {
                 onDeleteClick();
-            } else {
+            } else if (roomId) {
                 // Show delete confirmation dialog
                 Modal.createDialog(QuestionDialog, {
                     title: _t("Delete Widget"),
@@ -138,7 +198,7 @@ export const WidgetContextMenu: React.FC<IProps> = ({
                     button: _t("Delete widget"),
                     onFinished: (confirmed) => {
                         if (!confirmed) return;
-                        WidgetUtils.setRoomWidget(roomId, app.id);
+                        WidgetUtils.setRoomWidget(cli, roomId, app.id);
                     },
                 });
             }
@@ -154,21 +214,17 @@ export const WidgetContextMenu: React.FC<IProps> = ({
         );
     }
 
-    const isAllowedWidget =
-        (app.eventId !== undefined && (SettingsStore.getValue("allowedWidgets", roomId)[app.eventId] ?? false)) ||
-        app.creatorUserId === cli.getUserId();
-
-    const isLocalWidget = WidgetType.JITSI.matches(app.type);
-    let revokeButton;
-    if (!userWidget && !isLocalWidget && isAllowedWidget) {
+    let revokeButton: JSX.Element | undefined;
+    if (showRevokeButton(cli, roomId, app, userWidget)) {
         const opts: ApprovalOpts = { approved: undefined };
         ModuleRunner.instance.invoke(WidgetLifecycle.PreLoadRequest, opts, new ElementWidget(app));
 
         if (!opts.approved) {
             const onRevokeClick = (): void => {
-                logger.info("Revoking permission for widget to load: " + app.eventId);
+                const eventId = isAppWidget(app) ? app.eventId : undefined;
+                logger.info("Revoking permission for widget to load: " + eventId);
                 const current = SettingsStore.getValue("allowedWidgets", roomId);
-                if (app.eventId !== undefined) current[app.eventId] = false;
+                if (eventId !== undefined) current[eventId] = false;
                 const level = SettingsStore.firstSupportedLevel("allowedWidgets");
                 if (!level) throw new Error("level must be defined");
                 SettingsStore.setValue("allowedWidgets", roomId ?? null, level, current).catch((err) => {
@@ -182,8 +238,9 @@ export const WidgetContextMenu: React.FC<IProps> = ({
         }
     }
 
-    let moveLeftButton;
-    if (showUnpin && widgetIndex > 0) {
+    const [showMoveLeftButton, showMoveRightButton] = showMoveButtons(app, room, showUnpin);
+    let moveLeftButton: JSX.Element | undefined;
+    if (showMoveLeftButton) {
         const onClick = (): void => {
             if (!room) throw new Error("room must be defined");
             WidgetLayoutStore.instance.moveWithinContainer(room, Container.Top, app, -1);
@@ -193,9 +250,10 @@ export const WidgetContextMenu: React.FC<IProps> = ({
         moveLeftButton = <IconizedContextMenuOption onClick={onClick} label={_t("Move left")} />;
     }
 
-    let moveRightButton;
-    if (showUnpin && widgetIndex < pinnedWidgets.length - 1) {
+    let moveRightButton: JSX.Element | undefined;
+    if (showMoveRightButton) {
         const onClick = (): void => {
+            if (!room) throw new Error("room must be defined");
             WidgetLayoutStore.instance.moveWithinContainer(room, Container.Top, app, 1);
             onFinished();
         };

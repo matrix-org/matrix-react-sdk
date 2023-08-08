@@ -17,6 +17,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
+import { findLastIndex } from "lodash";
 
 import { _t } from "../../../languageHandler";
 import { CategoryKey, ICategory } from "./Category";
@@ -29,7 +30,7 @@ interface IProps {
 }
 
 class Header extends React.PureComponent<IProps> {
-    private findNearestEnabled(index: number, delta: number): number {
+    private findNearestEnabled(index: number, delta: number): number | undefined {
         index += this.props.categories.length;
         const cats = [...this.props.categories, ...this.props.categories, ...this.props.categories];
 
@@ -40,15 +41,22 @@ class Header extends React.PureComponent<IProps> {
     }
 
     private changeCategoryRelative(delta: number): void {
-        const current = this.props.categories.findIndex((c) => c.visible);
+        let current: number;
+        // As multiple categories may be visible at once, we want to find the one closest to the relative direction
+        if (delta < 0) {
+            current = this.props.categories.findIndex((c) => c.visible);
+        } else {
+            // XXX: Switch to Array::findLastIndex once we enable ES2023
+            current = findLastIndex(this.props.categories, (c) => c.visible);
+        }
         this.changeCategoryAbsolute(current + delta, delta);
     }
 
     private changeCategoryAbsolute(index: number, delta = 1): void {
-        const category = this.props.categories[this.findNearestEnabled(index, delta)];
+        const category = this.props.categories[this.findNearestEnabled(index, delta)!];
         if (category) {
             this.props.onAnchorClick(category.id);
-            category.ref.current.focus();
+            category.ref.current?.focus();
         }
     }
 

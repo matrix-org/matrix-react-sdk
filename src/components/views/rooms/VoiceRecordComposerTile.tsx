@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";
@@ -39,7 +38,7 @@ import InlineSpinner from "../elements/InlineSpinner";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { attachRelation } from "./SendMessageComposer";
+import { attachMentions, attachRelation } from "./SendMessageComposer";
 import { addReplyToMessageContent } from "../../../utils/Reply";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import RoomContext from "../../../contexts/RoomContext";
@@ -48,7 +47,7 @@ import { createVoiceMessageContent } from "../../../utils/createVoiceMessageCont
 
 interface IProps {
     room: Room;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     relation?: IEventRelation;
     replyToEvent?: MatrixEvent;
 }
@@ -129,6 +128,8 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                 this.state.recorder.getPlayback().thumbnailWaveform.map((v) => Math.round(v * 1024)),
             );
 
+            // Attach mentions, which really only applies if there's a replyToEvent.
+            attachMentions(MatrixClientPeg.safeGet().getSafeUserId(), content, null, replyToEvent);
             attachRelation(content, relation);
             if (replyToEvent) {
                 addReplyToMessageContent(content, replyToEvent, {
@@ -144,8 +145,10 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                 });
             }
 
-            doMaybeLocalRoomAction(this.props.room.roomId, (actualRoomId: string) =>
-                MatrixClientPeg.get().sendMessage(actualRoomId, content),
+            doMaybeLocalRoomAction(
+                this.props.room.roomId,
+                (actualRoomId: string) => MatrixClientPeg.safeGet().sendMessage(actualRoomId, content),
+                this.props.room.client,
             );
         } catch (e) {
             logger.error("Error sending voice message:", e);

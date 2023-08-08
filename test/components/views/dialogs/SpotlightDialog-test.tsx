@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,9 +26,10 @@ import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../../src/models/LocalRoo
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { flushPromisesWithFakeTimers, mkRoom, stubClient } from "../../../test-utils";
-import { shouldShowFeedback } from "../../../../src/utils/Feedback";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
+import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
+import SdkConfig from "../../../../src/SdkConfig";
 
 jest.useFakeTimers();
 
@@ -38,6 +39,11 @@ jest.mock("../../../../src/utils/direct-messages", () => ({
     // @ts-ignore
     ...jest.requireActual("../../../../src/utils/direct-messages"),
     startDmOnFirstMessage: jest.fn(),
+}));
+
+jest.mock("../../../../src/dispatcher/dispatcher", () => ({
+    register: jest.fn(),
+    dispatch: jest.fn(),
 }));
 
 interface IUserChunkMember {
@@ -64,7 +70,7 @@ function mockClient({
     users = [],
 }: MockClientOptions = {}): MatrixClient {
     stubClient();
-    const cli = MatrixClientPeg.get();
+    const cli = MatrixClientPeg.safeGet();
     MatrixClientPeg.getHomeserverName = jest.fn(() => homeserver);
     cli.getUserId = jest.fn(() => userId);
     cli.getHomeserverUrl = jest.fn(() => homeserver);
@@ -122,7 +128,7 @@ describe("Spotlight Dialog", () => {
     };
 
     const testPublicRoom: IPublicRoomsChunkRoom = {
-        room_id: "@room247:matrix.org",
+        room_id: "!room247:matrix.org",
         name: "Room #247",
         topic: "We hope you'll have a <b>shining</b> experience!",
         world_readable: false,
@@ -168,7 +174,7 @@ describe("Spotlight Dialog", () => {
             expect(filterChip.innerHTML).toContain("Public rooms");
 
             const content = document.querySelector("#mx_SpotlightDialog_content")!;
-            const options = content.querySelectorAll("div.mx_SpotlightDialog_option");
+            const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
             expect(options.length).toBe(1);
             expect(options[0].innerHTML).toContain(testPublicRoom.name);
         });
@@ -190,7 +196,7 @@ describe("Spotlight Dialog", () => {
             expect(filterChip.innerHTML).toContain("People");
 
             const content = document.querySelector("#mx_SpotlightDialog_content")!;
-            const options = content.querySelectorAll("div.mx_SpotlightDialog_option");
+            const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
             expect(options.length).toBeGreaterThanOrEqual(1);
             expect(options[0]!.innerHTML).toContain(testPerson.display_name);
         });
@@ -198,11 +204,17 @@ describe("Spotlight Dialog", () => {
 
     describe("when MSC3946 dynamic room predecessors is enabled", () => {
         beforeEach(() => {
-            SettingsStore.setValue("feature_dynamic_room_predecessors", null, SettingLevel.DEVICE, true);
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((settingName, roomId, excludeDefault) => {
+                if (settingName === "feature_dynamic_room_predecessors") {
+                    return true;
+                } else {
+                    return []; // SpotlightSearch.recentSearches
+                }
+            });
         });
 
         afterEach(() => {
-            SettingsStore.setValue("feature_dynamic_room_predecessors", null, SettingLevel.DEVICE, null);
+            jest.restoreAllMocks();
         });
 
         it("should call getVisibleRooms with MSC3946 dynamic room predecessors", async () => {
@@ -230,7 +242,7 @@ describe("Spotlight Dialog", () => {
             expect(filterChip.innerHTML).toContain("Public rooms");
 
             const content = document.querySelector("#mx_SpotlightDialog_content")!;
-            const options = content.querySelectorAll("div.mx_SpotlightDialog_option");
+            const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
             expect(options.length).toBe(1);
             expect(options[0]!.innerHTML).toContain(testPublicRoom.name);
 
@@ -253,7 +265,7 @@ describe("Spotlight Dialog", () => {
             expect(filterChip.innerHTML).toContain("People");
 
             const content = document.querySelector("#mx_SpotlightDialog_content")!;
-            const options = content.querySelectorAll("div.mx_SpotlightDialog_option");
+            const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
             expect(options.length).toBeGreaterThanOrEqual(1);
             expect(options[0]!.innerHTML).toContain(testPerson.display_name);
         });
@@ -312,7 +324,7 @@ describe("Spotlight Dialog", () => {
             await flushPromisesWithFakeTimers();
 
             const content = document.querySelector("#mx_SpotlightDialog_content")!;
-            options = content.querySelectorAll("div.mx_SpotlightDialog_option");
+            options = content.querySelectorAll("li.mx_SpotlightDialog_option");
         });
 
         it("should find Rooms", () => {
@@ -324,6 +336,52 @@ describe("Spotlight Dialog", () => {
             expect(options.length).toBe(3);
             expect(options[0]!.innerHTML).not.toContain(testLocalRoom.name);
         });
+    });
+
+    it("should not filter out users sent by the server", async () => {
+        mocked(mockedClient.searchUserDirectory).mockResolvedValue({
+            results: [
+                { user_id: "@user1:server", display_name: "User Alpha", avatar_url: "mxc://1/avatar" },
+                { user_id: "@user2:server", display_name: "User Beta", avatar_url: "mxc://2/avatar" },
+            ],
+            limited: false,
+        });
+
+        render(<SpotlightDialog initialFilter={Filter.People} initialText="Alpha" onFinished={() => null} />);
+        // search is debounced
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        const content = document.querySelector("#mx_SpotlightDialog_content")!;
+        const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
+        expect(options.length).toBeGreaterThanOrEqual(2);
+        expect(options[0]).toHaveTextContent("User Alpha");
+        expect(options[1]).toHaveTextContent("User Beta");
+    });
+
+    it("should not filter out users sent by the server even if a local suggestion gets filtered out", async () => {
+        const member = new RoomMember(testRoom.roomId, testPerson.user_id);
+        member.name = member.rawDisplayName = testPerson.display_name!;
+        member.getMxcAvatarUrl = jest.fn().mockReturnValue("mxc://0/avatar");
+        mocked(testRoom.getJoinedMembers).mockReturnValue([member]);
+        mocked(mockedClient.searchUserDirectory).mockResolvedValue({
+            results: [
+                { user_id: "@janedoe:matrix.org", display_name: "User Alpha", avatar_url: "mxc://1/avatar" },
+                { user_id: "@johndoe:matrix.org", display_name: "User Beta", avatar_url: "mxc://2/avatar" },
+            ],
+            limited: false,
+        });
+
+        render(<SpotlightDialog initialFilter={Filter.People} initialText="Beta" onFinished={() => null} />);
+        // search is debounced
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        const content = document.querySelector("#mx_SpotlightDialog_content")!;
+        const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
+        expect(options.length).toBeGreaterThanOrEqual(2);
+        expect(options[0]).toHaveTextContent(testPerson.display_name!);
+        expect(options[1]).toHaveTextContent("User Beta");
     });
 
     it("should start a DM when clicking a person", async () => {
@@ -338,7 +396,7 @@ describe("Spotlight Dialog", () => {
         jest.advanceTimersByTime(200);
         await flushPromisesWithFakeTimers();
 
-        const options = document.querySelectorAll("div.mx_SpotlightDialog_option");
+        const options = document.querySelectorAll("li.mx_SpotlightDialog_option");
         expect(options.length).toBeGreaterThanOrEqual(1);
         expect(options[0]!.innerHTML).toContain(testPerson.display_name);
 
@@ -346,26 +404,33 @@ describe("Spotlight Dialog", () => {
         expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockedClient, [new DirectoryMember(testPerson)]);
     });
 
-    describe("Feedback prompt", () => {
-        it("should show feedback prompt if feedback is enabled", async () => {
-            mocked(shouldShowFeedback).mockReturnValue(true);
-
-            render(<SpotlightDialog initialText="test23" onFinished={() => null} />);
-            jest.advanceTimersByTime(200);
-            await flushPromisesWithFakeTimers();
-
-            expect(screen.getByText("give feedback")).toBeInTheDocument();
+    it("should pass via of the server being explored when joining room from directory", async () => {
+        SdkConfig.put({
+            room_directory: {
+                servers: ["example.tld"],
+            },
         });
+        localStorage.setItem("mx_last_room_directory_server", "example.tld");
 
-        it("should hide feedback prompt if feedback is disabled", async () => {
-            mocked(shouldShowFeedback).mockReturnValue(false);
+        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
 
-            render(<SpotlightDialog initialText="test23" onFinished={() => null} />);
-            jest.advanceTimersByTime(200);
-            await flushPromisesWithFakeTimers();
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
 
-            expect(screen.queryByText("give feedback")).not.toBeInTheDocument();
-        });
+        const content = document.querySelector("#mx_SpotlightDialog_content")!;
+        const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
+        expect(options.length).toBe(1);
+        expect(options[0].innerHTML).toContain(testPublicRoom.name);
+
+        fireEvent.click(options[0].querySelector("[role='button']")!);
+        expect(defaultDispatcher.dispatch).toHaveBeenCalledTimes(1);
+        expect(defaultDispatcher.dispatch).toHaveBeenCalledWith(
+            expect.objectContaining({
+                action: "view_room",
+                room_id: testPublicRoom.room_id,
+                via_servers: ["example.tld"],
+            }),
+        );
     });
 
     describe("nsfw public rooms filter", () => {
@@ -412,9 +477,9 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            expect(screen.getByText(potatoRoom.name)).toBeInTheDocument();
-            expect(screen.queryByText(nsfwTopicRoom.name)).not.toBeInTheDocument();
-            expect(screen.queryByText(nsfwTopicRoom.name)).not.toBeInTheDocument();
+            expect(screen.getByText(potatoRoom.name!)).toBeInTheDocument();
+            expect(screen.queryByText(nsfwTopicRoom.name!)).not.toBeInTheDocument();
+            expect(screen.queryByText(nsfwTopicRoom.name!)).not.toBeInTheDocument();
         });
 
         it("displays rooms with nsfw keywords in results when showNsfwPublicRooms is truthy", async () => {
@@ -425,9 +490,9 @@ describe("Spotlight Dialog", () => {
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
-            expect(screen.getByText(nsfwTopicRoom.name)).toBeInTheDocument();
-            expect(screen.getByText(nsfwNameRoom.name)).toBeInTheDocument();
-            expect(screen.getByText(potatoRoom.name)).toBeInTheDocument();
+            expect(screen.getByText(nsfwTopicRoom.name!)).toBeInTheDocument();
+            expect(screen.getByText(nsfwNameRoom.name!)).toBeInTheDocument();
+            expect(screen.getByText(potatoRoom.name!)).toBeInTheDocument();
         });
     });
 });

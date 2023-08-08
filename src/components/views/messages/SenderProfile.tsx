@@ -16,7 +16,7 @@
  */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import DisambiguatedProfile from "./DisambiguatedProfile";
@@ -43,5 +43,7 @@ export default function SenderProfile({ mxEvent, onClick, withTooltip }: IProps)
             emphasizeDisplayName={true}
             withTooltip={withTooltip}
         />
-    ) : null;
+    ) : (
+        <></>
+    );
 }

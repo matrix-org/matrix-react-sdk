@@ -14,11 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { User } from "matrix-js-sdk/src/models/user";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { MatrixEvent, Room, RoomMember, User } from "matrix-js-sdk/src/matrix";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 
 import { RightPanelPhases } from "./RightPanelStorePhases";
 
@@ -57,7 +54,7 @@ export interface IRightPanelCard {
 }
 
 export interface IRightPanelCardStored {
-    phase: RightPanelPhases;
+    phase: RightPanelPhases | null;
     state?: IRightPanelCardStateStored;
 }
 
@@ -71,8 +68,8 @@ interface IRightPanelForRoomStored {
     history: Array<IRightPanelCardStored>;
 }
 
-export function convertToStorePanel(cacheRoom: IRightPanelForRoom): IRightPanelForRoomStored {
-    if (!cacheRoom) return cacheRoom;
+export function convertToStorePanel(cacheRoom?: IRightPanelForRoom): IRightPanelForRoomStored | undefined {
+    if (!cacheRoom) return undefined;
     const storeHistory = [...cacheRoom.history].map((panelState) => convertCardToStore(panelState));
     return { isOpen: cacheRoom.isOpen, history: storeHistory };
 }
