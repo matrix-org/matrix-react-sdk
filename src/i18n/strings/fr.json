@@ -3771,5 +3771,17 @@
     "Notify when someone uses a keyword": "Notifie lorsque quelqu'un utilise un mot-clé",
     "Mark all messages as read": "Marquer tous les messages comme lus",
     "Great! This passphrase looks strong enough": "Super ! Cette phrase secrète a l’air assez robuste",
-    "Other spaces you know": "Autres espaces que vous connaissez"
+    "Other spaces you know": "Autres espaces que vous connaissez",
+    "Ask to join?": "Demander à venir ?",
+    "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Vous avez besoin d’une autorisation pour accéder à ce salon afin de voir et participer à la conversation. Vous pouvez envoyer une demande d’accès ci-dessous.",
+    "Message (optional)": "Message (optionnel)",
+    "Request access": "Demander l’accès",
+    "Request to join sent": "Demande d’accès envoyée",
+    "Your request to join is pending.": "Votre demande d’accès est en cours.",
+    "Cancel request": "Annuler la demande",
+    "%(severalUsers)schanged their profile picture %(count)s times|one": "%(severalUsers)s ont changé leur image de profil",
+    "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)s a changé son image de profil",
+    "Ask to join %(roomName)s?": "Demander à venir dans %(roomName)s ?",
+    "You need an invite to access this room.": "Vous avez besoin d’une invitation pour accéder à ce salon.",
+    "Failed to cancel": "Erreur lors de l’annulation"
 }
