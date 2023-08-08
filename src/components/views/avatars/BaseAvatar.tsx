@@ -41,7 +41,6 @@ interface IProps {
     height: number;
     // XXX: resizeMethod not actually used.
     resizeMethod?: ResizeMethod;
-    defaultToInitialLetter?: boolean; // true to add default url
     onClick?: (ev: ButtonEvent) => void;
     inputRef?: React.RefObject<HTMLImageElement & HTMLSpanElement>;
     className?: string;
@@ -111,7 +110,6 @@ const BaseAvatar: React.FC<IProps> = (props) => {
         width = 40,
         height = 40,
         resizeMethod = "crop", // eslint-disable-line @typescript-eslint/no-unused-vars
-        defaultToInitialLetter = true,
         onClick,
         inputRef,
         className,
@@ -122,7 +120,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
 
     const [imageUrl, onError] = useImageUrl({ url, urls });
 
-    if (!imageUrl && defaultToInitialLetter && name) {
+    if (!imageUrl && name) {
         const initialLetter = AvatarLogic.getInitialLetter(name);
         const textNode = (
             <span
