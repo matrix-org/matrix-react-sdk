@@ -15,38 +15,46 @@ limitations under the License.
 */
 
 import React from "react";
+import { Body as BodyText } from "@vector-im/compound-web";
 
-import type { Room } from "matrix-js-sdk/src/models/room";
-import { _t } from "../../../languageHandler";
-import RoomName from "../elements/RoomName";
-import { IOOBData } from "../../../stores/ThreepidInviteStore";
+import type { Room } from "matrix-js-sdk/src/matrix";
+import { useRoomName } from "../../../hooks/useRoomName";
+import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { useTopic } from "../../../hooks/room/useTopic";
 
-export default function RoomHeader({ room, oobData }: { room?: Room; oobData?: IOOBData }): JSX.Element {
-    let oobName = _t("Join Room");
-    if (oobData && oobData.name) {
-        oobName = oobData.name;
-    }
+export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+    const roomName = useRoomName(room);
+    const roomTopic = useTopic(room);
 
     return (
-        <header className="mx_LegacyRoomHeader light-panel">
-            <div className="mx_LegacyRoomHeader_wrapper">
-                {room && (
-                    <RoomName room={room}>
-                        {(name) => {
-                            const roomName = name || oobName;
-                            return (
-                                <div
-                                    className="mx_LegacyRoomHeader_name"
-                                    dir="auto"
-                                    title={roomName}
-                                    role="heading"
-                                    aria-level={1}
-                                >
-                                    {roomName}
-                                </div>
-                            );
-                        }}
-                    </RoomName>
+        <header
+            className="mx_RoomHeader light-panel"
+            onClick={() => {
+                const rightPanel = RightPanelStore.instance;
+                rightPanel.isOpen
+                    ? rightPanel.togglePanel(null)
+                    : rightPanel.setCard({ phase: RightPanelPhases.RoomSummary });
+            }}
+        >
+            <DecoratedRoomAvatar room={room} avatarSize={40} displayBadge={false} />
+            <div className="mx_RoomHeader_info">
+                <BodyText
+                    as="div"
+                    size="lg"
+                    weight="semibold"
+                    dir="auto"
+                    title={roomName}
+                    role="heading"
+                    aria-level={1}
+                >
+                    {roomName}
+                </BodyText>
+                {roomTopic && (
+                    <BodyText as="div" size="sm" className="mx_RoomHeader_topic">
+                        {roomTopic.text}
+                    </BodyText>
                 )}
             </div>
         </header>

@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { RefObject } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { RefObject } from "react";
 
 import { useRoomContext } from "../../contexts/RoomContext";
 import ResizeNotifier from "../../utils/ResizeNotifier";
@@ -51,7 +50,7 @@ export const WaitingForThirdPartyRoomView: React.FC<Props> = ({ roomView, resize
         <div className="mx_RoomView mx_RoomView--local">
             <ErrorBoundary>
                 {SettingsStore.getValue("feature_new_room_decoration_ui") ? (
-                    <RoomHeader room={context.room} />
+                    <RoomHeader room={context.room!} />
                 ) : (
                     <LegacyRoomHeader
                         room={context.room}

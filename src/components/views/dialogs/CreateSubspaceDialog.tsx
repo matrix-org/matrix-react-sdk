@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useRef, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -70,7 +70,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
         if (
             spaceAliasField.current &&
             joinRule === JoinRule.Public &&
-            (await spaceAliasField.current.validate({ allowEmpty: true }))
+            !(await spaceAliasField.current.validate({ allowEmpty: true }))
         ) {
             spaceAliasField.current.focus();
             spaceAliasField.current.validate({ allowEmpty: true, focused: true });

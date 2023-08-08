@@ -18,8 +18,7 @@ import React from "react";
 import { render, screen, act, fireEvent, waitFor, getByRole, RenderResult } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
@@ -27,8 +26,7 @@ import EventEmitter from "events";
 import { ISearchResults } from "matrix-js-sdk/src/@types/search";
 
 import type { MatrixClient } from "matrix-js-sdk/src/client";
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import type { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import {
     stubClient,
@@ -36,13 +34,13 @@ import {
     setupAsyncStoreWithClient,
     resetAsyncStoreWithClient,
     mockPlatformPeg,
+    mkEvent,
 } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import RoomHeader, { IProps as RoomHeaderProps } from "../../../../src/components/views/rooms/LegacyRoomHeader";
 import { SearchScope } from "../../../../src/components/views/rooms/SearchBar";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
-import { mkEvent } from "../../../test-utils";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import RoomContext from "../../../../src/contexts/RoomContext";
 import SdkConfig from "../../../../src/SdkConfig";
