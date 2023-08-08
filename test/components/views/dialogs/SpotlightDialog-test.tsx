@@ -512,4 +512,22 @@ describe("Spotlight Dialog", () => {
 
         expect(screen.getByText("Failed to query public rooms")).toBeInTheDocument();
     });
+
+    it("should show error both 'Show rooms' and 'Show spaces' are unchecked", async () => {
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((settingName, roomId, excludeDefault) => {
+            if (settingName === "feature_exploring_public_spaces") {
+                return true;
+            } else {
+                return []; // SpotlightSearch.recentSearches
+            }
+        });
+        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        fireEvent.click(screen.getByText("Show rooms"));
+
+        expect(screen.getByText("You cannot search for rooms that are neither a room nor a space")).toBeInTheDocument();
+    });
 });
