@@ -20,7 +20,7 @@ import { render, screen } from "@testing-library/react";
 import React, { ComponentProps } from "react";
 import { mocked } from "jest-mock";
 import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContextMenu from "../../../../src/components/views/context_menus/RoomContextMenu";
@@ -46,7 +46,7 @@ describe("RoomContextMenu", () => {
         jest.clearAllMocks();
 
         stubClient();
-        mockClient = mocked(MatrixClientPeg.get());
+        mockClient = mocked(MatrixClientPeg.safeGet());
 
         room = new Room(ROOM_ID, mockClient, mockClient.getUserId() ?? "", {
             pendingEventOrdering: PendingEventOrdering.Detached,

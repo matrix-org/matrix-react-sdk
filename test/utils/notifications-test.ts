@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, NotificationCountType, Room } from "matrix-js-sdk/src/matrix";
 import { Mocked, mocked } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 
 import {
@@ -119,7 +118,7 @@ describe("notifications", () => {
 
         beforeEach(() => {
             stubClient();
-            client = mocked(MatrixClientPeg.get());
+            client = mocked(MatrixClientPeg.safeGet());
             room = new Room(ROOM_ID, client, USER_ID);
             message = mkMessage({
                 event: true,
@@ -172,7 +171,7 @@ describe("notifications", () => {
 
         beforeEach(() => {
             stubClient();
-            client = mocked(MatrixClientPeg.get());
+            client = mocked(MatrixClientPeg.safeGet());
             room = new Room(ROOM_ID, client, USER_ID);
             sendReadReceiptSpy = jest.spyOn(client, "sendReadReceipt").mockResolvedValue({});
             jest.spyOn(client, "getRooms").mockReturnValue([room]);

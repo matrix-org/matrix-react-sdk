@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
+import { EventType, RoomType, Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import { ClientEvent } from "matrix-js-sdk/src/client";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import React, { useContext, useEffect, useState } from "react";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -45,7 +44,13 @@ import {
     showCreateNewSubspace,
     showSpaceInvite,
 } from "../../../utils/space";
-import { ChevronFace, ContextMenuTooltipButton, useContextMenu, MenuProps } from "../../structures/ContextMenu";
+import {
+    ChevronFace,
+    ContextMenuTooltipButton,
+    useContextMenu,
+    MenuProps,
+    ContextMenuButton,
+} from "../../structures/ContextMenu";
 import { BetaPill } from "../beta/BetaCard";
 import IconizedContextMenu, {
     IconizedContextMenuOption,
@@ -171,7 +176,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
         contextMenu = (
             <ContextMenuComponent
                 {...contextMenuBelow(mainMenuHandle.current.getBoundingClientRect())}
-                space={activeSpace}
+                space={activeSpace!}
                 onFinished={closeMainMenu}
                 hideHeader={true}
             />
@@ -390,21 +395,24 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
 
     let contextMenuButton: JSX.Element = <div className="mx_RoomListHeader_contextLessTitle">{title}</div>;
     if (canShowMainMenu) {
-        contextMenuButton = (
-            <ContextMenuTooltipButton
-                inputRef={mainMenuHandle}
-                onClick={openMainMenu}
-                isExpanded={mainMenuDisplayed}
-                className="mx_RoomListHeader_contextMenuButton"
-                title={
-                    activeSpace
-                        ? _t("%(spaceName)s menu", { spaceName: spaceName ?? activeSpace.name })
-                        : _t("Home options")
-                }
-            >
-                {title}
-            </ContextMenuTooltipButton>
-        );
+        const commonProps = {
+            inputRef: mainMenuHandle,
+            onClick: openMainMenu,
+            isExpanded: mainMenuDisplayed,
+            className: "mx_RoomListHeader_contextMenuButton",
+            children: title,
+        };
+
+        if (!!activeSpace) {
+            contextMenuButton = (
+                <ContextMenuButton
+                    {...commonProps}
+                    label={_t("%(spaceName)s menu", { spaceName: spaceName ?? activeSpace.name })}
+                />
+            );
+        } else {
+            contextMenuButton = <ContextMenuTooltipButton {...commonProps} title={_t("Home options")} />;
+        }
     }
 
     return (

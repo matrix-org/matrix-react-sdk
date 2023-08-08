@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td } from "../../../languageHandler";
 import BaseDialog from "../dialogs/BaseDialog";
@@ -27,6 +27,9 @@ import { SettingLevel } from "../../../settings/SettingLevel";
 import RoomName from "../elements/RoomName";
 import { SpacePreferenceTab } from "../../../dispatcher/payloads/OpenSpacePreferencesPayload";
 import { NonEmptyArray } from "../../../@types/common";
+import SettingsTab from "../settings/tabs/SettingsTab";
+import { SettingsSection } from "../settings/shared/SettingsSection";
+import SettingsSubsection, { SettingsSubsectionText } from "../settings/shared/SettingsSubsection";
 
 interface IProps {
     space: Room;
@@ -38,34 +41,34 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space 
     const showPeople = useSettingValue("Spaces.showPeopleInSpace", space.roomId);
 
     return (
-        <div className="mx_SettingsTab">
-            <div className="mx_SettingsTab_heading">{_t("Sections to show")}</div>
-
-            <div className="mx_SettingsTab_section">
-                <StyledCheckbox
-                    checked={!!showPeople}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        SettingsStore.setValue(
-                            "Spaces.showPeopleInSpace",
-                            space.roomId,
-                            SettingLevel.ROOM_ACCOUNT,
-                            !showPeople,
-                        );
-                    }}
-                >
-                    {_t("People")}
-                </StyledCheckbox>
-                <p>
-                    {_t(
-                        "This groups your chats with members of this space. " +
-                            "Turning this off will hide those chats from your view of %(spaceName)s.",
-                        {
-                            spaceName: space.name,
-                        },
-                    )}
-                </p>
-            </div>
-        </div>
+        <SettingsTab>
+            <SettingsSection heading={_t("Sections to show")}>
+                <SettingsSubsection>
+                    <StyledCheckbox
+                        checked={!!showPeople}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                            SettingsStore.setValue(
+                                "Spaces.showPeopleInSpace",
+                                space.roomId,
+                                SettingLevel.ROOM_ACCOUNT,
+                                !showPeople,
+                            );
+                        }}
+                    >
+                        {_t("People")}
+                    </StyledCheckbox>
+                    <SettingsSubsectionText>
+                        {_t(
+                            "This groups your chats with members of this space. " +
+                                "Turning this off will hide those chats from your view of %(spaceName)s.",
+                            {
+                                spaceName: space.name,
+                            },
+                        )}
+                    </SettingsSubsectionText>
+                </SettingsSubsection>
+            </SettingsSection>
+        </SettingsTab>
     );
 };
 

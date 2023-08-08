@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2022 The Matrix.org Foundation C.I.C.
+Copyright 2019-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,12 +15,16 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import {
+    GuestAccess,
+    HistoryVisibility,
+    JoinRule,
+    MatrixEvent,
+    RoomStateEvent,
+    Room,
+    EventType,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { Room } from "matrix-js-sdk/src/matrix";
 
 import { Icon as WarningIcon } from "../../../../../../res/img/warning.svg";
 import { _t } from "../../../../../languageHandler";
@@ -43,6 +47,9 @@ import PosthogTrackers from "../../../../../PosthogTrackers";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsTab from "../SettingsTab";
+import SdkConfig from "../../../../../SdkConfig";
+import { shouldForceDisableEncryption } from "../../../../../utils/crypto/shouldForceDisableEncryption";
+import { Caption } from "../../../typography/Caption";
 
 interface IProps {
     room: Room;
@@ -163,7 +170,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                     "may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>",
                 {},
                 {
-                    a: (sub) => <ExternalLink href="https://element.io/help#encryption">{sub}</ExternalLink>,
+                    a: (sub) => <ExternalLink href={SdkConfig.get("help_encryption_url")}>{sub}</ExternalLink>,
                 },
             ),
             onFinished: (confirm) => {
@@ -215,7 +222,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
         const [shouldCreate, opts] = await modal.finished;
         if (shouldCreate) {
-            await createRoom(opts);
+            await createRoom(this.context, opts);
         }
         return shouldCreate;
     };
@@ -441,7 +448,8 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         const room = this.props.room;
         const isEncrypted = this.state.encrypted;
         const hasEncryptionPermission = room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
-        const canEnableEncryption = !isEncrypted && hasEncryptionPermission;
+        const isEncryptionForceDisabled = shouldForceDisableEncryption(client);
+        const canEnableEncryption = !isEncrypted && !isEncryptionForceDisabled && hasEncryptionPermission;
 
         let encryptionSettings: JSX.Element | undefined;
         if (isEncrypted && SettingsStore.isEnabled("blacklistUnverifiedDevices")) {
@@ -462,7 +470,11 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 <SettingsSection heading={_t("Security & Privacy")}>
                     <SettingsFieldset
                         legend={_t("Encryption")}
-                        description={_t("Once enabled, encryption cannot be disabled.")}
+                        description={
+                            isEncryptionForceDisabled && !isEncrypted
+                                ? undefined
+                                : _t("Once enabled, encryption cannot be disabled.")
+                        }
                     >
                         <LabelledToggleSwitch
                             value={isEncrypted}
@@ -470,6 +482,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                             label={_t("Encrypted")}
                             disabled={!canEnableEncryption}
                         />
+                        {isEncryptionForceDisabled && !isEncrypted && (
+                            <Caption>{_t("Your server requires encryption to be disabled.")}</Caption>
+                        )}
                         {encryptionSettings}
                     </SettingsFieldset>
 
@@ -477,10 +492,6 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                     {historySection}
                 </SettingsSection>
             </SettingsTab>
-            // <div className="mx_SettingsTab mx_SecurityRoomSettingsTab">
-            //     <div className="mx_SettingsTab_heading">{_t("Security & Privacy")}</div>
-
-            // </div>
         );
     }
 }

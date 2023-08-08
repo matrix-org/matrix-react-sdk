@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { DefaultTagID, TagID } from "../models";
 
 export function isSelf(event: MatrixEvent): boolean {
-    const selfUserId = MatrixClientPeg.get().getSafeUserId();
+    const selfUserId = MatrixClientPeg.safeGet().getSafeUserId();
     if (event.getType() === "m.room.member") {
         return event.getStateKey() === selfUserId;
     }
@@ -31,7 +31,7 @@ export function shouldPrefixMessagesIn(roomId: string, tagId?: TagID): boolean {
     if (tagId !== DefaultTagID.DM) return true;
 
     // We don't prefix anything in 1:1s
-    const room = MatrixClientPeg.get().getRoom(roomId);
+    const room = MatrixClientPeg.safeGet().getRoom(roomId);
     if (!room) return true;
     return room.currentState.getJoinedMemberCount() !== 2;
 }

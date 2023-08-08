@@ -16,11 +16,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { User, UserEvent } from "matrix-js-sdk/src/models/user";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { Room, RoomEvent, MatrixEvent, User, UserEvent, EventType, JoinRule } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import RoomAvatar from "./RoomAvatar";
@@ -165,8 +161,8 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         const otherUserId = DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
         if (otherUserId && this.props.room.getJoinedMemberCount() === 2) {
             // Track presence, if available
-            if (isPresenceEnabled()) {
-                this.dmUser = MatrixClientPeg.get().getUser(otherUserId);
+            if (isPresenceEnabled(this.props.room.client)) {
+                this.dmUser = MatrixClientPeg.safeGet().getUser(otherUserId);
                 icon = this.getPresenceIcon();
             }
         } else {

@@ -16,12 +16,9 @@ limitations under the License.
 
 import isIp from "is-ip";
 import * as utils from "matrix-js-sdk/src/utils";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, MatrixClient, RoomStateEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { MatrixClientPeg } from "../../MatrixClientPeg";
 import MatrixToPermalinkConstructor, {
     baseUrl as matrixtoBaseUrl,
     baseUrlPattern as matrixToBaseUrlPattern,
@@ -216,8 +213,7 @@ export class RoomPermalinkCreator {
         if (this.room?.currentState) {
             const aclEvent = this.room?.currentState.getStateEvents(EventType.RoomServerAcl, "");
             if (aclEvent && aclEvent.getContent()) {
-                const getRegex = (hostname: string): RegExp =>
-                    new RegExp("^" + utils.globToRegexp(hostname, false) + "$");
+                const getRegex = (hostname: string): RegExp => new RegExp("^" + utils.globToRegexp(hostname) + "$");
 
                 const denied = aclEvent.getContent<{ deny: string[] }>().deny;
                 if (Array.isArray(denied)) {
@@ -284,7 +280,7 @@ export function makeUserPermalink(userId: string): string {
     return getPermalinkConstructor().forUser(userId);
 }
 
-export function makeRoomPermalink(roomId: string): string {
+export function makeRoomPermalink(matrixClient: MatrixClient, roomId: string): string {
     if (!roomId) {
         throw new Error("can't permalink a falsy roomId");
     }
@@ -293,8 +289,7 @@ export function makeRoomPermalink(roomId: string): string {
     // Aliases are already routable, and don't need extra information.
     if (roomId[0] !== "!") return getPermalinkConstructor().forRoom(roomId, []);
 
-    const client = MatrixClientPeg.get();
-    const room = client.getRoom(roomId);
+    const room = matrixClient.getRoom(roomId);
     if (!room) {
         return getPermalinkConstructor().forRoom(roomId, []);
     }
@@ -317,11 +312,11 @@ export function isPermalinkHost(host: string): boolean {
  * @param {string} entity The entity to transform.
  * @returns {string|null} The transformed permalink or null if unable.
  */
-export function tryTransformEntityToPermalink(entity: string): string | null {
+export function tryTransformEntityToPermalink(matrixClient: MatrixClient, entity: string): string | null {
     if (!entity) return null;
 
     // Check to see if it is a bare entity for starters
-    if (entity[0] === "#" || entity[0] === "!") return makeRoomPermalink(entity);
+    if (entity[0] === "#" || entity[0] === "!") return makeRoomPermalink(matrixClient, entity);
     if (entity[0] === "@") return makeUserPermalink(entity);
 
     if (entity.slice(0, 7) === "matrix:") {

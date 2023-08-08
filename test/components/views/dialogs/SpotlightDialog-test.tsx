@@ -16,7 +16,14 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { IProtocol, IPublicRoomsChunkRoom, MatrixClient, Room, RoomMember } from "matrix-js-sdk/src/matrix";
+import {
+    ConnectionError,
+    IProtocol,
+    IPublicRoomsChunkRoom,
+    MatrixClient,
+    Room,
+    RoomMember,
+} from "matrix-js-sdk/src/matrix";
 import sanitizeHtml from "sanitize-html";
 import { fireEvent, render, screen } from "@testing-library/react";
 
@@ -70,7 +77,7 @@ function mockClient({
     users = [],
 }: MockClientOptions = {}): MatrixClient {
     stubClient();
-    const cli = MatrixClientPeg.get();
+    const cli = MatrixClientPeg.safeGet();
     MatrixClientPeg.getHomeserverName = jest.fn(() => homeserver);
     cli.getUserId = jest.fn(() => userId);
     cli.getHomeserverUrl = jest.fn(() => homeserver);
@@ -338,6 +345,52 @@ describe("Spotlight Dialog", () => {
         });
     });
 
+    it("should not filter out users sent by the server", async () => {
+        mocked(mockedClient.searchUserDirectory).mockResolvedValue({
+            results: [
+                { user_id: "@user1:server", display_name: "User Alpha", avatar_url: "mxc://1/avatar" },
+                { user_id: "@user2:server", display_name: "User Beta", avatar_url: "mxc://2/avatar" },
+            ],
+            limited: false,
+        });
+
+        render(<SpotlightDialog initialFilter={Filter.People} initialText="Alpha" onFinished={() => null} />);
+        // search is debounced
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        const content = document.querySelector("#mx_SpotlightDialog_content")!;
+        const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
+        expect(options.length).toBeGreaterThanOrEqual(2);
+        expect(options[0]).toHaveTextContent("User Alpha");
+        expect(options[1]).toHaveTextContent("User Beta");
+    });
+
+    it("should not filter out users sent by the server even if a local suggestion gets filtered out", async () => {
+        const member = new RoomMember(testRoom.roomId, testPerson.user_id);
+        member.name = member.rawDisplayName = testPerson.display_name!;
+        member.getMxcAvatarUrl = jest.fn().mockReturnValue("mxc://0/avatar");
+        mocked(testRoom.getJoinedMembers).mockReturnValue([member]);
+        mocked(mockedClient.searchUserDirectory).mockResolvedValue({
+            results: [
+                { user_id: "@janedoe:matrix.org", display_name: "User Alpha", avatar_url: "mxc://1/avatar" },
+                { user_id: "@johndoe:matrix.org", display_name: "User Beta", avatar_url: "mxc://2/avatar" },
+            ],
+            limited: false,
+        });
+
+        render(<SpotlightDialog initialFilter={Filter.People} initialText="Beta" onFinished={() => null} />);
+        // search is debounced
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        const content = document.querySelector("#mx_SpotlightDialog_content")!;
+        const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
+        expect(options.length).toBeGreaterThanOrEqual(2);
+        expect(options[0]).toHaveTextContent(testPerson.display_name!);
+        expect(options[1]).toHaveTextContent("User Beta");
+    });
+
     it("should start a DM when clicking a person", async () => {
         render(
             <SpotlightDialog
@@ -448,5 +501,33 @@ describe("Spotlight Dialog", () => {
             expect(screen.getByText(nsfwNameRoom.name!)).toBeInTheDocument();
             expect(screen.getByText(potatoRoom.name!)).toBeInTheDocument();
         });
+    });
+
+    it("should show error if /publicRooms API failed", async () => {
+        mocked(mockedClient.publicRooms).mockRejectedValue(new ConnectionError("Failed to fetch"));
+        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        expect(screen.getByText("Failed to query public rooms")).toBeInTheDocument();
+    });
+
+    it("should show error both 'Show rooms' and 'Show spaces' are unchecked", async () => {
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((settingName, roomId, excludeDefault) => {
+            if (settingName === "feature_exploring_public_spaces") {
+                return true;
+            } else {
+                return []; // SpotlightSearch.recentSearches
+            }
+        });
+        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        fireEvent.click(screen.getByText("Show rooms"));
+
+        expect(screen.getByText("You cannot search for rooms that are neither a room nor a space")).toBeInTheDocument();
     });
 });

@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { RoomEvent, Room } from "matrix-js-sdk/src/models/room";
+import { RoomEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
@@ -62,7 +62,7 @@ interface IState {
 }
 
 class RoomSettingsDialog extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
 
     public constructor(props: IProps) {
         super(props);
@@ -73,7 +73,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
-        MatrixClientPeg.get().on(RoomEvent.Name, this.onRoomName);
+        MatrixClientPeg.safeGet().on(RoomEvent.Name, this.onRoomName);
         this.onRoomName();
     }
 
@@ -89,7 +89,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
             dis.unregister(this.dispatcherRef);
         }
 
-        MatrixClientPeg.get().removeListener(RoomEvent.Name, this.onRoomName);
+        MatrixClientPeg.get()?.removeListener(RoomEvent.Name, this.onRoomName);
     }
 
     /**
@@ -98,7 +98,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
      * @throws when room is not found
      */
     private getRoom(): Room {
-        const room = MatrixClientPeg.get().getRoom(this.props.roomId)!;
+        const room = MatrixClientPeg.safeGet().getRoom(this.props.roomId)!;
 
         // something is really wrong if we encounter this
         if (!room) {

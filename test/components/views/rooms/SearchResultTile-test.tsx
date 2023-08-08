@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, Room, EventType } from "matrix-js-sdk/src/matrix";
 import { render, type RenderResult } from "@testing-library/react";
-import { Room } from "matrix-js-sdk/src/models/room";
 
 import { stubClient } from "../../../test-utils";
 import SearchResultTile from "../../../../src/components/views/rooms/SearchResultTile";
@@ -31,7 +29,7 @@ type Props = React.ComponentPropsWithoutRef<typeof SearchResultTile>;
 describe("SearchResultTile", () => {
     beforeAll(() => {
         stubClient();
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
 
         const room = new Room(ROOM_ID, cli, "@bob:example.org");
         jest.spyOn(cli, "getRoom").mockReturnValue(room);

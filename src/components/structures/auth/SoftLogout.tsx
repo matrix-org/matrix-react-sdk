@@ -18,6 +18,7 @@ import React, { ChangeEvent, SyntheticEvent } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
 import { ISSOFlow, LoginFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { MatrixError } from "matrix-js-sdk/src/http-api";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -93,7 +94,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
 
         this.initLogin();
 
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         if (cli.isCryptoEnabled()) {
             cli.countSessionsNeedingBackup().then((remaining) => {
                 this.setState({ keyBackupNeeded: remaining > 0 });
@@ -123,7 +124,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
 
         // Note: we don't use the existing Login class because it is heavily flow-based. We don't
         // care about login flows here, unless it is the single flow we support.
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const flows = (await client.loginFlows()).flows;
         const loginViews = flows.map((f) => STATIC_FLOWS_TO_VIEWS[f.type]);
 
@@ -147,16 +148,17 @@ export default class SoftLogout extends React.Component<IProps, IState> {
 
         this.setState({ busy: true });
 
-        const hsUrl = MatrixClientPeg.get().getHomeserverUrl();
-        const isUrl = MatrixClientPeg.get().getIdentityServerUrl();
+        const cli = MatrixClientPeg.safeGet();
+        const hsUrl = cli.getHomeserverUrl();
+        const isUrl = cli.getIdentityServerUrl();
         const loginType = "m.login.password";
         const loginParams = {
             identifier: {
                 type: "m.id.user",
-                user: MatrixClientPeg.get().getUserId(),
+                user: cli.getUserId(),
             },
             password: this.state.password,
-            device_id: MatrixClientPeg.get().getDeviceId() ?? undefined,
+            device_id: cli.getDeviceId() ?? undefined,
         };
 
         let credentials: IMatrixClientCreds;
@@ -164,7 +166,11 @@ export default class SoftLogout extends React.Component<IProps, IState> {
             credentials = await sendLoginRequest(hsUrl, isUrl, loginType, loginParams);
         } catch (e) {
             let errorText = _t("Failed to re-authenticate due to a homeserver problem");
-            if (e.errcode === "M_FORBIDDEN" && (e.httpStatus === 401 || e.httpStatus === 403)) {
+            if (
+                e instanceof MatrixError &&
+                e.errcode === "M_FORBIDDEN" &&
+                (e.httpStatus === 401 || e.httpStatus === 403)
+            ) {
                 errorText = _t("Incorrect password");
             }
 
@@ -191,11 +197,11 @@ export default class SoftLogout extends React.Component<IProps, IState> {
             return;
         }
 
-        const isUrl = localStorage.getItem(SSO_ID_SERVER_URL_KEY) || MatrixClientPeg.get().getIdentityServerUrl();
+        const isUrl = localStorage.getItem(SSO_ID_SERVER_URL_KEY) || MatrixClientPeg.safeGet().getIdentityServerUrl();
         const loginType = "m.login.token";
         const loginParams = {
             token: this.props.realQueryParams["loginToken"],
-            device_id: MatrixClientPeg.get().getDeviceId() ?? undefined,
+            device_id: MatrixClientPeg.safeGet().getDeviceId() ?? undefined,
         };
 
         let credentials: IMatrixClientCreds;
@@ -257,7 +263,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
             <div>
                 {introText ? <p>{introText}</p> : null}
                 <SSOButtons
-                    matrixClient={MatrixClientPeg.get()}
+                    matrixClient={MatrixClientPeg.safeGet()}
                     flow={flow}
                     loginType={loginType}
                     fragmentAfterLogin={this.props.fragmentAfterLogin}

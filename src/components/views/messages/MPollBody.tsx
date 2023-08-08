@@ -16,9 +16,8 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { Relations } from "matrix-js-sdk/src/models/relations";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { M_POLL_KIND_DISCLOSED, M_POLL_RESPONSE, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { RelatedRelations } from "matrix-js-sdk/src/models/related-relations";
 import { PollStartEvent, PollAnswerSubevent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
@@ -118,7 +117,7 @@ export function pollAlreadyHasVotes(mxEvent: MatrixEvent, getRelationsForEvent?:
 }
 
 export function launchPollEditor(mxEvent: MatrixEvent, getRelationsForEvent?: GetRelationsForEvent): void {
-    const room = MatrixClientPeg.get().getRoom(mxEvent.getRoomId());
+    const room = MatrixClientPeg.safeGet().getRoom(mxEvent.getRoomId());
     if (pollAlreadyHasVotes(mxEvent, getRelationsForEvent)) {
         Modal.createDialog(ErrorDialog, {
             title: _t("Can't edit poll"),

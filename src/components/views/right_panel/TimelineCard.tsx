@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { IEventRelation, MatrixEvent, NotificationCountType, Room, EventTimelineSet } from "matrix-js-sdk/src/matrix";
 import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import BaseCard from "./BaseCard";
@@ -190,7 +188,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     private renderTimelineCardHeader = (): JSX.Element => {
         return (
             <div className="mx_BaseCard_header_title">
-                <Heading size="h4" className="mx_BaseCard_header_title_heading">
+                <Heading size="4" className="mx_BaseCard_header_title_heading">
                     {_t("Chat")}
                 </Heading>
             </div>

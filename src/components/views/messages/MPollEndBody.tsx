@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, ForwardRefExoticComponent } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { Icon as PollIcon } from "../../../../res/img/element-icons/room/composer/poll.svg";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import MatrixClientContext, { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 import { _t } from "../../../languageHandler";
 import { textForEvent } from "../../../TextForEvent";
 import { Caption } from "../typography/Caption";
@@ -95,10 +95,11 @@ const usePollStartEvent = (event: MatrixEvent): { pollStartEvent?: MatrixEvent; 
 };
 
 export const MPollEndBody = React.forwardRef<any, IBodyProps>(({ mxEvent, ...props }, ref) => {
+    const cli = useMatrixClientContext();
     const { pollStartEvent, isLoadingPollStartEvent } = usePollStartEvent(mxEvent);
 
     if (!pollStartEvent) {
-        const pollEndFallbackMessage = M_TEXT.findIn(mxEvent.getContent()) || textForEvent(mxEvent);
+        const pollEndFallbackMessage = M_TEXT.findIn(mxEvent.getContent()) || textForEvent(mxEvent, cli);
         return (
             <>
                 <PollIcon className="mx_MPollEndBody_icon" />
@@ -108,9 +109,9 @@ export const MPollEndBody = React.forwardRef<any, IBodyProps>(({ mxEvent, ...pro
     }
 
     return (
-        <div>
+        <div ref={ref}>
             <Caption>{_t("Ended a poll")}</Caption>
             <MPollBody mxEvent={pollStartEvent} {...props} />
         </div>
     );
-});
+}) as ForwardRefExoticComponent<IBodyProps>;

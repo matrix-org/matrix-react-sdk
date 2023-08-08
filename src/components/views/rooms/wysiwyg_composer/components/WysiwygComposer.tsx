@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { memo, MutableRefObject, ReactNode, useEffect, useRef } from "react";
+import { IEventRelation } from "matrix-js-sdk/src/matrix";
 import { useWysiwyg, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
 import classNames from "classnames";
 
@@ -29,10 +30,11 @@ import { useRoomContext } from "../../../../../contexts/RoomContext";
 import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import { Action } from "../../../../../dispatcher/actions";
 import { parsePermalink } from "../../../../../utils/permalinks/Permalinks";
+import { isNotNull } from "../../../../../Typeguards";
 
 interface WysiwygComposerProps {
     disabled?: boolean;
-    onChange?: (content: string) => void;
+    onChange: (content: string) => void;
     onSend: () => void;
     placeholder?: string;
     initialContent?: string;
@@ -40,6 +42,7 @@ interface WysiwygComposerProps {
     leftComponent?: ReactNode;
     rightComponent?: ReactNode;
     children?: (ref: MutableRefObject<HTMLDivElement | null>, wysiwyg: FormattingFunctions) => ReactNode;
+    eventRelation?: IEventRelation;
 }
 
 export const WysiwygComposer = memo(function WysiwygComposer({
@@ -52,15 +55,17 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     leftComponent,
     rightComponent,
     children,
+    eventRelation,
 }: WysiwygComposerProps) {
     const { room } = useRoomContext();
     const autocompleteRef = useRef<Autocomplete | null>(null);
 
-    const inputEventProcessor = useInputEventProcessor(onSend, autocompleteRef, initialContent);
-    const { ref, isWysiwygReady, content, actionStates, wysiwyg, suggestion } = useWysiwyg({
+    const inputEventProcessor = useInputEventProcessor(onSend, autocompleteRef, initialContent, eventRelation);
+    const { ref, isWysiwygReady, content, actionStates, wysiwyg, suggestion, messageContent } = useWysiwyg({
         initialContent,
         inputEventProcessor,
     });
+
     const { isFocused, onFocus } = useIsFocused();
 
     const isReady = isWysiwygReady && !disabled;
@@ -69,10 +74,10 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     useSetCursorPosition(!isReady, ref);
 
     useEffect(() => {
-        if (!disabled && content !== null) {
-            onChange?.(content);
+        if (!disabled && isNotNull(messageContent)) {
+            onChange(messageContent);
         }
-    }, [onChange, content, disabled]);
+    }, [onChange, messageContent, disabled]);
 
     useEffect(() => {
         function handleClick(e: Event): void {
@@ -112,6 +117,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
                 ref={autocompleteRef}
                 suggestion={suggestion}
                 handleMention={wysiwyg.mention}
+                handleAtRoomMention={wysiwyg.mentionAtRoom}
                 handleCommand={wysiwyg.command}
             />
             <FormattingButtons composer={wysiwyg} actionStates={actionStates} />

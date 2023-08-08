@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Direction } from "matrix-js-sdk/src/models/event-timeline";
+import { Direction } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ConnectionError, MatrixError, HTTPError } from "matrix-js-sdk/src/http-api";
 
@@ -125,7 +125,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         const roomIdForJumpRequest = this.props.roomId;
 
         try {
-            const cli = MatrixClientPeg.get();
+            const cli = MatrixClientPeg.safeGet();
             const { event_id: eventId, origin_server_ts: originServerTs } = await cli.timestampToEvent(
                 roomIdForJumpRequest,
                 unixTimestamp,

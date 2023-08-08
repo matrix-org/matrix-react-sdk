@@ -17,12 +17,11 @@ limitations under the License.
 import React from "react";
 import { render, screen, act, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
     useMockedCalls,
     MockedCall,
@@ -58,7 +57,7 @@ describe("CallEvent", () => {
         jest.setSystemTime(0);
 
         stubClient();
-        client = mocked(MatrixClientPeg.get());
+        client = mocked(MatrixClientPeg.safeGet());
         client.getUserId.mockReturnValue("@alice:example.org");
 
         room = new Room("!1:example.org", client, "@alice:example.org", {

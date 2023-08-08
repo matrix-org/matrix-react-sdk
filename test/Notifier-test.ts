@@ -16,11 +16,9 @@ limitations under the License.
 
 import { mocked, MockedObject } from "jest-mock";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent, EventType, MsgType, IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { waitFor } from "@testing-library/react";
-import { EventType, MsgType } from "matrix-js-sdk/src/matrix";
 
 import BasePlatform from "../src/BasePlatform";
 import { ElementCall } from "../src/models/Call";
@@ -31,7 +29,13 @@ import {
     createLocalNotificationSettingsIfNeeded,
     getLocalNotificationAccountDataEventType,
 } from "../src/utils/notifications";
-import { getMockClientWithEventEmitter, mkEvent, mockClientMethodsUser, mockPlatformPeg } from "./test-utils";
+import {
+    getMockClientWithEventEmitter,
+    mkEvent,
+    mkMessage,
+    mockClientMethodsUser,
+    mockPlatformPeg,
+} from "./test-utils";
 import { IncomingCallToast } from "../src/toasts/IncomingCallToast";
 import { SdkContextClass } from "../src/contexts/SDKContext";
 import UserActivity from "../src/UserActivity";
@@ -42,6 +46,7 @@ import { ThreadPayload } from "../src/dispatcher/payloads/ThreadPayload";
 import { Action } from "../src/dispatcher/actions";
 import { VoiceBroadcastChunkEventType, VoiceBroadcastInfoState } from "../src/voice-broadcast";
 import { mkVoiceBroadcastInfoStateEvent } from "./voice-broadcast/utils/test-utils";
+import { addReplyToMessageContent } from "../src/utils/Reply";
 
 jest.mock("../src/utils/notifications", () => ({
     // @ts-ignore
@@ -307,6 +312,30 @@ describe("Notifier", () => {
             Notifier.displayPopupNotification(audioEvent, testRoom);
             expect(MockPlatform.displayNotification).not.toHaveBeenCalled();
         });
+
+        it("should strip reply fallback", () => {
+            const event = mkMessage({
+                msg: "Test",
+                event: true,
+                user: mockClient.getSafeUserId(),
+                room: testRoom.roomId,
+            });
+            const reply = mkMessage({
+                msg: "This was a triumph",
+                event: true,
+                user: mockClient.getSafeUserId(),
+                room: testRoom.roomId,
+            });
+            addReplyToMessageContent(reply.getContent(), event, { includeLegacyFallback: true });
+            Notifier.displayPopupNotification(reply, testRoom);
+            expect(MockPlatform.displayNotification).toHaveBeenCalledWith(
+                "@bob:example.org (!room1:server)",
+                "This was a triumph",
+                expect.any(String),
+                testRoom,
+                reply,
+            );
+        });
     });
 
     describe("getSoundForRoom", () => {
@@ -536,6 +565,30 @@ describe("Notifier", () => {
         it("should persist by default", () => {
             Notifier.setPromptHidden(true);
             expect(localStorage.getItem("notifications_hidden")).toBeTruthy();
+        });
+    });
+
+    describe("onEvent", () => {
+        it("should not evaluate events from the thread list fake timeline sets", async () => {
+            mockClient.supportsThreads.mockReturnValue(true);
+
+            const fn = jest.spyOn(Notifier, "evaluateEvent");
+
+            await testRoom.createThreadsTimelineSets();
+            testRoom.threadsTimelineSets[0]!.addEventToTimeline(
+                mkEvent({
+                    event: true,
+                    type: "m.room.message",
+                    user: "@user1:server",
+                    room: roomId,
+                    content: { body: "this is a thread root" },
+                }),
+                testRoom.threadsTimelineSets[0]!.getLiveTimeline(),
+                false,
+                false,
+            );
+
+            expect(fn).not.toHaveBeenCalled();
         });
     });
 });

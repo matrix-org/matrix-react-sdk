@@ -16,8 +16,7 @@ limitations under the License.
 
 import { mocked, MockedObject } from "jest-mock";
 import { PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { Widget } from "matrix-widget-api";
 
 import type { MatrixClient } from "matrix-js-sdk/src/client";
@@ -40,8 +39,8 @@ describe("Algorithm", () => {
 
     beforeEach(() => {
         stubClient();
-        client = mocked(MatrixClientPeg.get());
-        DMRoomMap.makeShared();
+        client = mocked(MatrixClientPeg.safeGet());
+        DMRoomMap.makeShared(client);
 
         algorithm = new Algorithm();
         algorithm.start();

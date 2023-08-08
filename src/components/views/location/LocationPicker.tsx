@@ -17,7 +17,7 @@ limitations under the License.
 import React, { SyntheticEvent } from "react";
 import maplibregl, { MapMouseEvent } from "maplibre-gl";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 import { ClientEvent, IClientWellKnown } from "matrix-js-sdk/src/client";
 
 import { _t } from "../../../languageHandler";
@@ -76,7 +76,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         try {
             this.map = new maplibregl.Map({
                 container: "mx_LocationPicker_map",
-                style: findMapStyleUrl(),
+                style: findMapStyleUrl(this.context),
                 center: [0, 0],
                 zoom: 1,
             });

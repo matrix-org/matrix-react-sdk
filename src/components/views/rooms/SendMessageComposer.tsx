@@ -14,13 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ClipboardEvent, createRef, KeyboardEvent } from "react";
+import React, { createRef, KeyboardEvent, SyntheticEvent } from "react";
 import EMOJI_REGEX from "emojibase-regex";
-import { IContent, MatrixEvent, IEventRelation, IMentions } from "matrix-js-sdk/src/models/event";
+import {
+    IContent,
+    MatrixEvent,
+    IEventRelation,
+    IMentions,
+    Room,
+    EventType,
+    MsgType,
+    RelationType,
+} from "matrix-js-sdk/src/matrix";
 import { DebouncedFunc, throttle } from "lodash";
-import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
@@ -59,6 +66,9 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from "../../../utils/Reply";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
+import { Caret } from "../../../editor/caret";
+import { IDiff } from "../../../editor/diff";
+import { getBlobSafeMimeType } from "../../../utils/blobs";
 
 /**
  * Build the mentions information based on the editor model (and any related events):
@@ -86,7 +96,7 @@ export function attachMentions(
     }
 
     // The mentions property *always* gets included to disable legacy push rules.
-    const mentions: IMentions = (content["org.matrix.msc3952.mentions"] = {});
+    const mentions: IMentions = (content["m.mentions"] = {});
 
     const userMentions = new Set<string>();
     let roomMention = false;
@@ -97,7 +107,7 @@ export function attachMentions(
         userMentions.add(replyToEvent.sender!.userId);
         // TODO What do we do if the reply event *doeesn't* have this property?
         // Try to fish out replies from the contents?
-        const userIds = replyToEvent.getContent()["org.matrix.msc3952.mentions"]?.user_ids;
+        const userIds = replyToEvent.getContent()["m.mentions"]?.user_ids;
         if (Array.isArray(userIds)) {
             userIds.forEach((userId) => userMentions.add(userId));
         }
@@ -124,7 +134,7 @@ export function attachMentions(
     if (editedContent) {
         // First, the new event content gets the *full* set of users.
         const newContent = content["m.new_content"];
-        const newMentions: IMentions = (newContent["org.matrix.msc3952.mentions"] = {});
+        const newMentions: IMentions = (newContent["m.mentions"] = {});
 
         // Only include the users/room if there is any content.
         if (userMentions.size) {
@@ -136,7 +146,7 @@ export function attachMentions(
 
         // Fetch the mentions from the original event and remove any previously
         // mentioned users.
-        const prevMentions = editedContent["org.matrix.msc3952.mentions"];
+        const prevMentions = editedContent["m.mentions"];
         if (Array.isArray(prevMentions?.user_ids)) {
             prevMentions!.user_ids.forEach((userId) => userMentions.delete(userId));
         }
@@ -333,6 +343,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                         ? findEditableEvent({
                               events,
                               isForward: false,
+                              matrixClient: MatrixClientPeg.safeGet(),
                           })
                         : undefined;
                     if (editEvent) {
@@ -347,17 +358,16 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 }
                 break;
             case KeyBindingAction.CancelReplyOrEdit:
-                dis.dispatch({
-                    action: "reply_to_event",
-                    event: null,
-                    context: this.context.timelineRenderingType,
-                });
-                break;
-            default:
-                if (this.prepareToEncrypt) {
-                    // This needs to be last!
-                    this.prepareToEncrypt();
+                if (!!this.context.replyToEvent) {
+                    dis.dispatch({
+                        action: "reply_to_event",
+                        event: null,
+                        context: this.context.timelineRenderingType,
+                    });
+                    event.preventDefault();
+                    event.stopPropagation();
                 }
+                break;
         }
     };
 
@@ -403,7 +413,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             if (events[i].getType() === EventType.RoomMessage) {
                 let shouldReact = true;
                 const lastMessage = events[i];
-                const userId = MatrixClientPeg.get().getSafeUserId();
+                const userId = MatrixClientPeg.safeGet().getSafeUserId();
                 const messageReactions = this.props.room.relations.getChildEventsForEvent(
                     lastMessage.getId()!,
                     RelationType.Annotation,
@@ -420,7 +430,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     shouldReact = !myReactionKeys.includes(reaction);
                 }
                 if (shouldReact) {
-                    MatrixClientPeg.get().sendEvent(lastMessage.getRoomId()!, EventType.Reaction, {
+                    MatrixClientPeg.safeGet().sendEvent(lastMessage.getRoomId()!, EventType.Reaction, {
                         "m.relates_to": {
                             rel_type: RelationType.Annotation,
                             event_id: lastMessage.getId(),
@@ -444,6 +454,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const posthogEvent: ComposerEvent = {
             eventName: "Composer",
             isEditing: false,
+            isLocation: false,
             isReply: !!this.props.replyToEvent,
             inThread: this.props.relation?.rel_type === THREAD_RELATION_TYPE.name,
         };
@@ -475,6 +486,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
                 let commandSuccessful: boolean;
                 [content, commandSuccessful] = await runSlashCommand(
+                    MatrixClientPeg.safeGet(),
                     cmd,
                     args,
                     this.props.room.roomId,
@@ -669,15 +681,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
     };
 
-    private onPaste = (event: ClipboardEvent<HTMLDivElement>): boolean => {
-        const { clipboardData } = event;
+    private onPaste = (event: Event | SyntheticEvent, data: DataTransfer): boolean => {
         // Prioritize text on the clipboard over files if RTF is present as Office on macOS puts a bitmap
         // in the clipboard as well as the content being copied. Modern versions of Office seem to not do this anymore.
         // We check text/rtf instead of text/plain as when copy+pasting a file from Finder or Gnome Image Viewer
         // it puts the filename in as text/plain which we want to ignore.
-        if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
+        if (data.files.length && !data.types.includes("text/rtf")) {
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files),
+                Array.from(data.files),
                 this.props.room.roomId,
                 this.props.relation,
                 this.props.mxClient,
@@ -686,11 +697,67 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             return true; // to skip internal onPaste handler
         }
 
+        // Safari `Insert from iPhone or iPad`
+        // data.getData("text/html") returns a string like: <img src="blob:https://...">
+        if (data.types.includes("text/html")) {
+            const imgElementStr = data.getData("text/html");
+            const parser = new DOMParser();
+            const imgDoc = parser.parseFromString(imgElementStr, "text/html");
+
+            if (
+                imgDoc.getElementsByTagName("img").length !== 1 ||
+                !imgDoc.querySelector("img")?.src.startsWith("blob:") ||
+                imgDoc.childNodes.length !== 1
+            ) {
+                console.log("Failed to handle pasted content as Safari inserted content");
+
+                // Fallback to internal onPaste handler
+                return false;
+            }
+            const imgSrc = imgDoc!.querySelector("img")!.src;
+
+            fetch(imgSrc).then(
+                (response) => {
+                    response.blob().then(
+                        (imgBlob) => {
+                            const type = imgBlob.type;
+                            const safetype = getBlobSafeMimeType(type);
+                            const ext = type.split("/")[1];
+                            const parts = response.url.split("/");
+                            const filename = parts[parts.length - 1];
+                            const file = new File([imgBlob], filename + "." + ext, { type: safetype });
+                            ContentMessages.sharedInstance().sendContentToRoom(
+                                file,
+                                this.props.room.roomId,
+                                this.props.relation,
+                                this.props.mxClient,
+                                this.context.replyToEvent,
+                            );
+                        },
+                        (error) => {
+                            console.log(error);
+                        },
+                    );
+                },
+                (error) => {
+                    console.log(error);
+                },
+            );
+
+            // Skip internal onPaste handler
+            return true;
+        }
+
         return false;
     };
 
-    private onChange = (): void => {
-        if (this.props.onChange) this.props.onChange(this.model);
+    private onChange = (selection?: Caret, inputType?: string, diff?: IDiff): void => {
+        // We call this in here rather than onKeyDown as that would trip it on global shortcuts e.g. Ctrl-k also
+        if (!!diff) {
+            this.prepareToEncrypt?.();
+        }
+
+        this.props.onChange?.(this.model);
     };
 
     private focusComposer = (): void => {

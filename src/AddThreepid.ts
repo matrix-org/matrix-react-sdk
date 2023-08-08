@@ -16,18 +16,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IAuthData, IRequestMsisdnTokenResponse, IRequestTokenResponse } from "matrix-js-sdk/src/matrix";
-import { MatrixError, HTTPError } from "matrix-js-sdk/src/matrix";
+import {
+    IAddThreePidOnlyBody,
+    IAuthData,
+    IRequestMsisdnTokenResponse,
+    IRequestTokenResponse,
+    MatrixClient,
+    MatrixError,
+    HTTPError,
+} from "matrix-js-sdk/src/matrix";
+import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 
-import { MatrixClientPeg } from "./MatrixClientPeg";
 import Modal from "./Modal";
 import { _t, UserFriendlyError } from "./languageHandler";
 import IdentityAuthClient from "./IdentityAuthClient";
 import { SSOAuthEntry } from "./components/views/auth/InteractiveAuthEntryComponents";
-import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDialog";
+import InteractiveAuthDialog, { InteractiveAuthDialogProps } from "./components/views/dialogs/InteractiveAuthDialog";
 
-function getIdServerDomain(): string {
-    const idBaseUrl = MatrixClientPeg.get().getIdentityServerUrl(true);
+function getIdServerDomain(matrixClient: MatrixClient): string {
+    const idBaseUrl = matrixClient.getIdentityServerUrl(true);
     if (!idBaseUrl) {
         throw new UserFriendlyError("Identity server not set");
     }
@@ -39,6 +46,9 @@ export type Binding = {
     label: string;
     errorTitle: string;
 };
+
+// IThreepid modified stripping validated_at and added_at as they aren't necessary for our UI
+export type ThirdPartyIdentifier = Omit<IThreepid, "validated_at" | "added_at">;
 
 /**
  * Allows a user to add a third party identifier to their homeserver and,
@@ -53,13 +63,13 @@ export type Binding = {
  * https://gist.github.com/jryans/839a09bf0c5a70e2f36ed990d50ed928
  */
 export default class AddThreepid {
-    private sessionId: string;
+    private sessionId?: string;
     private submitUrl?: string;
-    private clientSecret: string;
-    private bind: boolean;
+    private bind = false;
+    private readonly clientSecret: string;
 
-    public constructor() {
-        this.clientSecret = MatrixClientPeg.get().generateClientSecret();
+    public constructor(private readonly matrixClient: MatrixClient) {
+        this.clientSecret = matrixClient.generateClientSecret();
     }
 
     /**
@@ -70,7 +80,7 @@ export default class AddThreepid {
      */
     public async addEmailAddress(emailAddress: string): Promise<IRequestTokenResponse> {
         try {
-            const res = await MatrixClientPeg.get().requestAdd3pidEmailToken(emailAddress, this.clientSecret, 1);
+            const res = await this.matrixClient.requestAdd3pidEmailToken(emailAddress, this.clientSecret, 1);
             this.sessionId = res.sid;
             return res;
         } catch (err) {
@@ -90,12 +100,12 @@ export default class AddThreepid {
      */
     public async bindEmailAddress(emailAddress: string): Promise<IRequestTokenResponse> {
         this.bind = true;
-        if (await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind()) {
+        if (await this.matrixClient.doesServerSupportSeparateAddAndBind()) {
             // For separate bind, request a token directly from the IS.
             const authClient = new IdentityAuthClient();
             const identityAccessToken = (await authClient.getAccessToken()) ?? undefined;
             try {
-                const res = await MatrixClientPeg.get().requestEmailToken(
+                const res = await this.matrixClient.requestEmailToken(
                     emailAddress,
                     this.clientSecret,
                     1,
@@ -126,7 +136,7 @@ export default class AddThreepid {
      */
     public async addMsisdn(phoneCountry: string, phoneNumber: string): Promise<IRequestMsisdnTokenResponse> {
         try {
-            const res = await MatrixClientPeg.get().requestAdd3pidMsisdnToken(
+            const res = await this.matrixClient.requestAdd3pidMsisdnToken(
                 phoneCountry,
                 phoneNumber,
                 this.clientSecret,
@@ -153,12 +163,12 @@ export default class AddThreepid {
      */
     public async bindMsisdn(phoneCountry: string, phoneNumber: string): Promise<IRequestMsisdnTokenResponse> {
         this.bind = true;
-        if (await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind()) {
+        if (await this.matrixClient.doesServerSupportSeparateAddAndBind()) {
             // For separate bind, request a token directly from the IS.
             const authClient = new IdentityAuthClient();
             const identityAccessToken = (await authClient.getAccessToken()) ?? undefined;
             try {
-                const res = await MatrixClientPeg.get().requestMsisdnToken(
+                const res = await this.matrixClient.requestMsisdnToken(
                     phoneCountry,
                     phoneNumber,
                     this.clientSecret,
@@ -189,17 +199,17 @@ export default class AddThreepid {
      */
     public async checkEmailLinkClicked(): Promise<[success?: boolean, result?: IAuthData | Error | null]> {
         try {
-            if (await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind()) {
+            if (await this.matrixClient.doesServerSupportSeparateAddAndBind()) {
                 if (this.bind) {
                     const authClient = new IdentityAuthClient();
                     const identityAccessToken = await authClient.getAccessToken();
                     if (!identityAccessToken) {
                         throw new UserFriendlyError("No identity access token found");
                     }
-                    await MatrixClientPeg.get().bindThreePid({
-                        sid: this.sessionId,
+                    await this.matrixClient.bindThreePid({
+                        sid: this.sessionId!,
                         client_secret: this.clientSecret,
-                        id_server: getIdServerDomain(),
+                        id_server: getIdServerDomain(this.matrixClient),
                         id_access_token: identityAccessToken,
                     });
                 } else {
@@ -231,25 +241,25 @@ export default class AddThreepid {
                                 continueKind: "primary",
                             },
                         };
-                        const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                        const { finished } = Modal.createDialog(InteractiveAuthDialog<{}>, {
                             title: _t("Add Email Address"),
-                            matrixClient: MatrixClientPeg.get(),
+                            matrixClient: this.matrixClient,
                             authData: err.data,
                             makeRequest: this.makeAddThreepidOnlyRequest,
                             aestheticsForStagePhases: {
                                 [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
                                 [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
                             },
-                        });
+                        } as InteractiveAuthDialogProps<IAddThreePidOnlyBody>);
                         return finished;
                     }
                 }
             } else {
-                await MatrixClientPeg.get().addThreePid(
+                await this.matrixClient.addThreePid(
                     {
-                        sid: this.sessionId,
+                        sid: this.sessionId!,
                         client_secret: this.clientSecret,
-                        id_server: getIdServerDomain(),
+                        id_server: getIdServerDomain(this.matrixClient),
                     },
                     this.bind,
                 );
@@ -271,11 +281,11 @@ export default class AddThreepid {
      * @param {{type: string, session?: string}} auth UI auth object
      * @return {Promise<Object>} Response from /3pid/add call (in current spec, an empty object)
      */
-    private makeAddThreepidOnlyRequest = (auth?: { type: string; session?: string }): Promise<{}> => {
-        return MatrixClientPeg.get().addThreePidOnly({
-            sid: this.sessionId,
+    private makeAddThreepidOnlyRequest = (auth?: IAddThreePidOnlyBody["auth"] | null): Promise<{}> => {
+        return this.matrixClient.addThreePidOnly({
+            sid: this.sessionId!,
             client_secret: this.clientSecret,
-            auth,
+            auth: auth ?? undefined,
         });
     };
 
@@ -291,19 +301,19 @@ export default class AddThreepid {
         msisdnToken: string,
     ): Promise<[success?: boolean, result?: IAuthData | Error | null] | undefined> {
         const authClient = new IdentityAuthClient();
-        const supportsSeparateAddAndBind = await MatrixClientPeg.get().doesServerSupportSeparateAddAndBind();
+        const supportsSeparateAddAndBind = await this.matrixClient.doesServerSupportSeparateAddAndBind();
 
         let result: { success: boolean } | MatrixError;
         if (this.submitUrl) {
-            result = await MatrixClientPeg.get().submitMsisdnTokenOtherUrl(
+            result = await this.matrixClient.submitMsisdnTokenOtherUrl(
                 this.submitUrl,
-                this.sessionId,
+                this.sessionId!,
                 this.clientSecret,
                 msisdnToken,
             );
         } else if (this.bind || !supportsSeparateAddAndBind) {
-            result = await MatrixClientPeg.get().submitMsisdnToken(
-                this.sessionId,
+            result = await this.matrixClient.submitMsisdnToken(
+                this.sessionId!,
                 this.clientSecret,
                 msisdnToken,
                 await authClient.getAccessToken(),
@@ -317,10 +327,10 @@ export default class AddThreepid {
 
         if (supportsSeparateAddAndBind) {
             if (this.bind) {
-                await MatrixClientPeg.get().bindThreePid({
-                    sid: this.sessionId,
+                await this.matrixClient.bindThreePid({
+                    sid: this.sessionId!,
                     client_secret: this.clientSecret,
-                    id_server: getIdServerDomain(),
+                    id_server: getIdServerDomain(this.matrixClient),
                     id_access_token: await authClient.getAccessToken(),
                 });
             } else {
@@ -352,25 +362,25 @@ export default class AddThreepid {
                             continueKind: "primary",
                         },
                     };
-                    const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                    const { finished } = Modal.createDialog(InteractiveAuthDialog<{}>, {
                         title: _t("Add Phone Number"),
-                        matrixClient: MatrixClientPeg.get(),
+                        matrixClient: this.matrixClient,
                         authData: err.data,
                         makeRequest: this.makeAddThreepidOnlyRequest,
                         aestheticsForStagePhases: {
                             [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
                             [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
                         },
-                    });
+                    } as InteractiveAuthDialogProps<IAddThreePidOnlyBody>);
                     return finished;
                 }
             }
         } else {
-            await MatrixClientPeg.get().addThreePid(
+            await this.matrixClient.addThreePid(
                 {
-                    sid: this.sessionId,
+                    sid: this.sessionId!,
                     client_secret: this.clientSecret,
-                    id_server: getIdServerDomain(),
+                    id_server: getIdServerDomain(this.matrixClient),
                 },
                 this.bind,
             );

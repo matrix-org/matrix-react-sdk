@@ -17,8 +17,7 @@ limitations under the License.
 
 import React, { useCallback, useContext } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -87,7 +86,7 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
         return <div />;
     }
 
-    const prevRoom = MatrixClientPeg.get().getRoom(predecessor.roomId);
+    const prevRoom = MatrixClientPeg.safeGet().getRoom(predecessor.roomId);
 
     // We need either the previous room, or some servers to find it with.
     // Otherwise, we must bail out here

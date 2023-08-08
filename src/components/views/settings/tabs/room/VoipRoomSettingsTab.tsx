@@ -15,13 +15,9 @@ limitations under the License.
 */
 
 import React, { useCallback, useMemo, useState } from "react";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { RoomState } from "matrix-js-sdk/src/models/room-state";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { JoinRule, EventType, RoomState, Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../../languageHandler";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import SettingsSubsection from "../../shared/SettingsSubsection";
 import SettingsTab from "../SettingsTab";
@@ -38,14 +34,17 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ room }) => {
     const isPublic = useMemo(() => room.getJoinRule() === JoinRule.Public, [room]);
     const [content, events, maySend] = useRoomState(
         room,
-        useCallback((state: RoomState) => {
-            const content = state?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent();
-            return [
-                content ?? {},
-                content?.["events"] ?? {},
-                state?.maySendStateEvent(EventType.RoomPowerLevels, MatrixClientPeg.get().getSafeUserId()),
-            ];
-        }, []),
+        useCallback(
+            (state: RoomState) => {
+                const content = state?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent();
+                return [
+                    content ?? {},
+                    content?.["events"] ?? {},
+                    state?.maySendStateEvent(EventType.RoomPowerLevels, room.client.getSafeUserId()),
+                ];
+            },
+            [room.client],
+        ),
     );
 
     const [elementCallEnabled, setElementCallEnabled] = useState<boolean>(() => {
@@ -69,12 +68,12 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ room }) => {
                 events[ElementCall.MEMBER_EVENT_TYPE.name] = adminLevel;
             }
 
-            MatrixClientPeg.get().sendStateEvent(room.roomId, EventType.RoomPowerLevels, {
+            room.client.sendStateEvent(room.roomId, EventType.RoomPowerLevels, {
                 events: events,
                 ...content,
             });
         },
-        [room.roomId, content, events, isPublic],
+        [room.client, room.roomId, content, events, isPublic],
     );
 
     const brand = SdkConfig.get("element_call").brand ?? DEFAULTS.element_call.brand;

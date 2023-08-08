@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomState, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { RoomState } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { DefaultTagID, OrderedDefaultTagIDs, RoomUpdateCause, TagID } from "./models";
@@ -469,7 +467,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
 
     // logic must match calculateTagSorting
     private calculateListOrder(tagId: TagID): ListAlgorithm {
-        const defaultOrder = ListAlgorithm.Importance;
+        const defaultOrder = ListAlgorithm.Natural;
         const definedOrder = this.getListOrder(tagId);
         const storedOrder = this.getStoredListOrder(tagId);
 

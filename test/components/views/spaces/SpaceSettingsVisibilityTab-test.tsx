@@ -18,12 +18,16 @@ import React from "react";
 import { mocked } from "jest-mock";
 import { randomString } from "matrix-js-sdk/src/randomstring";
 import { act, fireEvent, render, RenderResult } from "@testing-library/react";
-import { EventType, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { EventType, MatrixClient, Room, GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/matrix";
 
 import _SpaceSettingsVisibilityTab from "../../../../src/components/views/spaces/SpaceSettingsVisibilityTab";
-import { createTestClient, mkEvent, wrapInMatrixClientContext } from "../../../test-utils";
-import { mkSpace, mockStateEventImplementation } from "../../../test-utils";
+import {
+    createTestClient,
+    mkEvent,
+    wrapInMatrixClientContext,
+    mkSpace,
+    mockStateEventImplementation,
+} from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 
 const SpaceSettingsVisibilityTab = wrapInMatrixClientContext(_SpaceSettingsVisibilityTab);
@@ -107,6 +111,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
 
         (mockMatrixClient.sendStateEvent as jest.Mock).mockClear().mockResolvedValue({});
         MatrixClientPeg.get = jest.fn().mockReturnValue(mockMatrixClient);
+        MatrixClientPeg.safeGet = jest.fn().mockReturnValue(mockMatrixClient);
     });
 
     afterEach(() => {

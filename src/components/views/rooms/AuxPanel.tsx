@@ -16,10 +16,8 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { lexicographicCompare } from "matrix-js-sdk/src/utils";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomStateEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { throttle } from "lodash";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import AppsDrawer from "./AppsDrawer";
@@ -65,7 +63,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         if (SettingsStore.getValue("feature_state_counters")) {
             cli.on(RoomStateEvent.Events, this.onRoomStateEvents);
         }
@@ -173,18 +171,14 @@ export default class AuxPanel extends React.Component<IProps, IState> {
                 }
 
                 span = (
-                    <span
-                        className="m_RoomView_auxPanel_stateViews_span"
-                        data-severity={severity}
-                        key={"x-" + stateKey}
-                    >
+                    <span className="mx_AuxPanel_stateViews_span" data-severity={severity} key={"x-" + stateKey}>
                         {span}
                     </span>
                 );
 
                 counters.push(span);
                 counters.push(
-                    <span className="m_RoomView_auxPanel_stateViews_delim" key={"delim" + idx}>
+                    <span className="mx_AuxPanel_stateViews_delim" key={"delim" + idx}>
                         {" "}
                         ─{" "}
                     </span>,
@@ -193,12 +187,12 @@ export default class AuxPanel extends React.Component<IProps, IState> {
 
             if (counters.length > 0) {
                 counters.pop(); // remove last deliminator
-                stateViews = <div className="m_RoomView_auxPanel_stateViews">{counters}</div>;
+                stateViews = <div className="mx_AuxPanel_stateViews">{counters}</div>;
             }
         }
 
         return (
-            <AutoHideScrollbar className="mx_RoomView_auxPanel">
+            <AutoHideScrollbar className="mx_AuxPanel">
                 {stateViews}
                 {this.props.children}
                 {appsDrawer}

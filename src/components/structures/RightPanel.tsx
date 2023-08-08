@@ -16,10 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomState, RoomStateEvent, RoomMember, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { throttle } from "lodash";
 
 import dis from "../../dispatcher/dispatcher";
@@ -44,14 +41,25 @@ import TimelineCard from "../views/right_panel/TimelineCard";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { IRightPanelCard, IRightPanelCardState } from "../../stores/right-panel/RightPanelStoreIPanelState";
 import { Action } from "../../dispatcher/actions";
+import { XOR } from "../../@types/common";
 
-interface IProps {
-    room?: Room; // if showing panels for a given room, this is set
+interface BaseProps {
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
     resizeNotifier: ResizeNotifier;
-    permalinkCreator?: RoomPermalinkCreator;
     e2eStatus?: E2EStatus;
 }
+
+interface RoomlessProps extends BaseProps {
+    room?: undefined;
+    permalinkCreator?: undefined;
+}
+
+interface RoomProps extends BaseProps {
+    room: Room;
+    permalinkCreator: RoomPermalinkCreator;
+}
+
+type Props = XOR<RoomlessProps, RoomProps>;
 
 interface IState {
     phase?: RightPanelPhases;
@@ -59,11 +67,11 @@ interface IState {
     cardState?: IRightPanelCardState;
 }
 
-export default class RightPanel extends React.Component<IProps, IState> {
+export default class RightPanel extends React.Component<Props, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
 
-    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+    public constructor(props: Props, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
         this.state = {
@@ -89,7 +97,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
     }
 
-    public static getDerivedStateFromProps(props: IProps): Partial<IState> {
+    public static getDerivedStateFromProps(props: Props): Partial<IState> {
         let currentCard: IRightPanelCard | undefined;
         if (props.room) {
             currentCard = RightPanelStore.instance.currentCardForRoom(props.room.roomId);
@@ -97,7 +105,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
 
         return {
             cardState: currentCard?.state,
-            phase: currentCard?.phase,
+            phase: currentCard?.phase ?? undefined,
         };
     }
 
@@ -111,7 +119,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
             this.delayedUpdate();
         } else if (
             this.state.phase === RightPanelPhases.RoomMemberInfo &&
-            member.userId === this.state.cardState.member?.userId
+            member.userId === this.state.cardState?.member?.userId
         ) {
             // refresh the member info (e.g. new power level)
             this.delayedUpdate();
@@ -156,7 +164,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
         const cardState = this.props.overwriteCard?.state ?? this.state.cardState;
         switch (phase) {
             case RightPanelPhases.RoomMemberList:
-                if (roomId) {
+                if (!!roomId) {
                     card = (
                         <MemberList
                             roomId={roomId}
@@ -169,37 +177,43 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 }
                 break;
             case RightPanelPhases.SpaceMemberList:
-                card = (
-                    <MemberList
-                        roomId={cardState?.spaceId ?? roomId}
-                        key={cardState?.spaceId ?? roomId}
-                        onClose={this.onClose}
-                        searchQuery={this.state.searchQuery}
-                        onSearchQueryChanged={this.onSearchQueryChanged}
-                    />
-                );
+                if (!!cardState?.spaceId || !!roomId) {
+                    card = (
+                        <MemberList
+                            roomId={cardState?.spaceId ?? roomId!}
+                            key={cardState?.spaceId ?? roomId!}
+                            onClose={this.onClose}
+                            searchQuery={this.state.searchQuery}
+                            onSearchQueryChanged={this.onSearchQueryChanged}
+                        />
+                    );
+                }
                 break;
 
             case RightPanelPhases.RoomMemberInfo:
             case RightPanelPhases.SpaceMemberInfo:
             case RightPanelPhases.EncryptionPanel: {
-                const roomMember = cardState?.member instanceof RoomMember ? cardState.member : undefined;
-                card = (
-                    <UserInfo
-                        user={cardState?.member}
-                        room={this.context.getRoom(roomMember?.roomId) ?? this.props.room}
-                        key={roomId ?? cardState?.member?.userId}
-                        onClose={this.onClose}
-                        phase={phase}
-                        verificationRequest={cardState?.verificationRequest}
-                        verificationRequestPromise={cardState?.verificationRequestPromise}
-                    />
-                );
+                if (!!cardState?.member) {
+                    const roomMember = cardState.member instanceof RoomMember ? cardState.member : undefined;
+                    card = (
+                        <UserInfo
+                            user={cardState.member}
+                            room={this.context.getRoom(roomMember?.roomId) ?? this.props.room}
+                            key={roomId ?? cardState.member.userId}
+                            onClose={this.onClose}
+                            phase={phase}
+                            verificationRequest={cardState.verificationRequest}
+                            verificationRequestPromise={cardState.verificationRequestPromise}
+                        />
+                    );
+                }
                 break;
             }
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
-                card = <ThirdPartyMemberInfo event={cardState?.memberInfoEvent} key={roomId} />;
+                if (!!cardState?.memberInfoEvent) {
+                    card = <ThirdPartyMemberInfo event={cardState.memberInfoEvent} key={roomId} />;
+                }
                 break;
 
             case RightPanelPhases.NotificationPanel:
@@ -207,7 +221,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 break;
 
             case RightPanelPhases.PinnedMessages:
-                if (this.props.room && SettingsStore.getValue("feature_pinning")) {
+                if (!!this.props.room && SettingsStore.getValue("feature_pinning")) {
                     card = (
                         <PinnedMessagesCard
                             room={this.props.room}
@@ -218,7 +232,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 }
                 break;
             case RightPanelPhases.Timeline:
-                if (this.props.room) {
+                if (!!this.props.room) {
                     card = (
                         <TimelineCard
                             classNames="mx_ThreadPanel mx_TimelineCard"
@@ -233,20 +247,24 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 }
                 break;
             case RightPanelPhases.FilePanel:
-                card = <FilePanel roomId={roomId} resizeNotifier={this.props.resizeNotifier} onClose={this.onClose} />;
+                if (!!roomId) {
+                    card = (
+                        <FilePanel roomId={roomId} resizeNotifier={this.props.resizeNotifier} onClose={this.onClose} />
+                    );
+                }
                 break;
 
             case RightPanelPhases.ThreadView:
-                if (this.props.room) {
+                if (!!this.props.room && !!cardState?.threadHeadEvent) {
                     card = (
                         <ThreadView
                             room={this.props.room}
                             resizeNotifier={this.props.resizeNotifier}
                             onClose={this.onClose}
-                            mxEvent={cardState?.threadHeadEvent}
-                            initialEvent={cardState?.initialEvent}
-                            isInitialEventHighlighted={cardState?.isInitialEventHighlighted}
-                            initialEventScrollIntoView={cardState?.initialEventScrollIntoView}
+                            mxEvent={cardState.threadHeadEvent}
+                            initialEvent={cardState.initialEvent}
+                            isInitialEventHighlighted={cardState.isInitialEventHighlighted}
+                            initialEventScrollIntoView={cardState.initialEventScrollIntoView}
                             permalinkCreator={this.props.permalinkCreator}
                             e2eStatus={this.props.e2eStatus}
                         />
@@ -255,18 +273,20 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 break;
 
             case RightPanelPhases.ThreadPanel:
-                card = (
-                    <ThreadPanel
-                        roomId={roomId}
-                        resizeNotifier={this.props.resizeNotifier}
-                        onClose={this.onClose}
-                        permalinkCreator={this.props.permalinkCreator}
-                    />
-                );
+                if (!!this.props.room) {
+                    card = (
+                        <ThreadPanel
+                            roomId={this.props.room.roomId}
+                            resizeNotifier={this.props.resizeNotifier}
+                            onClose={this.onClose}
+                            permalinkCreator={this.props.permalinkCreator}
+                        />
+                    );
+                }
                 break;
 
             case RightPanelPhases.RoomSummary:
-                if (this.props.room) {
+                if (!!this.props.room) {
                     card = (
                         <RoomSummaryCard
                             room={this.props.room}
@@ -279,8 +299,8 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 break;
 
             case RightPanelPhases.Widget:
-                if (this.props.room) {
-                    card = <WidgetCard room={this.props.room} widgetId={cardState?.widgetId} onClose={this.onClose} />;
+                if (!!this.props.room && !!cardState?.widgetId) {
+                    card = <WidgetCard room={this.props.room} widgetId={cardState.widgetId} onClose={this.onClose} />;
                 }
                 break;
         }

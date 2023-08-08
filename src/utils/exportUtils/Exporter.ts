@@ -14,15 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Direction } from "matrix-js-sdk/src/models/event-timeline";
+import { MatrixEvent, Room, Direction } from "matrix-js-sdk/src/matrix";
 import { saveAs } from "file-saver";
 import { logger } from "matrix-js-sdk/src/logger";
 import sanitizeFilename from "sanitize-filename";
 
-import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { ExportType, IExportOptions } from "./exportUtils";
 import { decryptFile } from "../DecryptFile";
 import { mediaFromContent } from "../../customisations/Media";
@@ -39,7 +35,6 @@ type BlobFile = {
 
 export default abstract class Exporter {
     protected files: BlobFile[] = [];
-    protected client: MatrixClient;
     protected cancelled = false;
 
     protected constructor(
@@ -56,7 +51,6 @@ export default abstract class Exporter {
         ) {
             throw new Error("Invalid export options");
         }
-        this.client = MatrixClientPeg.get();
         window.addEventListener("beforeunload", this.onBeforeUnload);
     }
 
@@ -124,7 +118,7 @@ export default abstract class Exporter {
     }
 
     protected setEventMetadata(event: MatrixEvent): MatrixEvent {
-        const roomState = this.client.getRoom(this.room.roomId)?.currentState;
+        const roomState = this.room.currentState;
         const sender = event.getSender();
         event.sender = (!!sender && roomState?.getSentinelMember(sender)) || null;
         if (event.getType() === "m.room.member") {
@@ -151,7 +145,7 @@ export default abstract class Exporter {
     }
 
     protected async getRequiredEvents(): Promise<MatrixEvent[]> {
-        const eventMapper = this.client.getEventMapper();
+        const eventMapper = this.room.client.getEventMapper();
 
         let prevToken: string | null = null;
         let limit = this.getLimit();
@@ -159,7 +153,7 @@ export default abstract class Exporter {
 
         while (limit) {
             const eventsPerCrawl = Math.min(limit, 1000);
-            const res = await this.client.createMessagesRequest(
+            const res = await this.room.client.createMessagesRequest(
                 this.room.roomId,
                 prevToken,
                 eventsPerCrawl,
@@ -211,7 +205,7 @@ export default abstract class Exporter {
         const decryptionPromises = events
             .filter((event) => event.isEncrypted())
             .map((event) => {
-                return this.client.decryptEventIfNeeded(event, {
+                return this.room.client.decryptEventIfNeeded(event, {
                     isRetry: true,
                     emit: false,
                 });

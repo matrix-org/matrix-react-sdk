@@ -16,17 +16,15 @@ limitations under the License.
 
 import React from "react";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
-import { QrCodeEvent, ReciprocateQRCode, SCAN_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
+import { SCAN_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import {
-    Phase,
+    VerificationPhase as Phase,
     VerificationRequest,
     VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { User } from "matrix-js-sdk/src/models/user";
-import { SAS, SasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
+} from "matrix-js-sdk/src/crypto-api";
+import { RoomMember, Device, User } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { ShowQrCodeCallbacks, ShowSasCallbacks, VerifierEvent } from "matrix-js-sdk/src/crypto-api/verification";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import VerificationQRCode from "../elements/crypto/VerificationQRCode";
@@ -36,6 +34,7 @@ import E2EIcon, { E2EState } from "../rooms/E2EIcon";
 import Spinner from "../elements/Spinner";
 import AccessibleButton from "../elements/AccessibleButton";
 import VerificationShowSas from "../verification/VerificationShowSas";
+import { getDeviceCryptoInfo } from "../../../utils/crypto/deviceInfo";
 
 interface IProps {
     layout: string;
@@ -48,18 +47,39 @@ interface IProps {
 }
 
 interface IState {
-    sasEvent?: SAS["sasEvent"];
+    /**
+     * The data for the QR code to display.
+     *
+     * We attempt to calculate this once the verification request transitions into the "Ready" phase. If the other
+     * side cannot scan QR codes, it will remain `undefined`.
+     */
+    qrCodeBytes: Buffer | undefined;
+
+    sasEvent: ShowSasCallbacks | null;
     emojiButtonClicked?: boolean;
     reciprocateButtonClicked?: boolean;
-    reciprocateQREvent?: ReciprocateQRCode["reciprocateQREvent"];
+    reciprocateQREvent: ShowQrCodeCallbacks | null;
+
+    /**
+     * Details of the other device involved in the transaction.
+     *
+     * `undefined` if there is not (yet) another device in the transaction, or if we do not know about it.
+     */
+    otherDeviceDetails?: Device;
 }
 
 export default class VerificationPanel extends React.PureComponent<IProps, IState> {
     private hasVerifier: boolean;
 
+    /** have we yet tried to check the other device's info */
+    private haveCheckedDevice = false;
+
+    /** have we yet tried to get the QR code */
+    private haveFetchedQRCode = false;
+
     public constructor(props: IProps) {
         super(props);
-        this.state = {};
+        this.state = { qrCodeBytes: undefined, sasEvent: null, reciprocateQREvent: null };
         this.hasVerifier = false;
     }
 
@@ -85,11 +105,11 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             // HACK: This is a terrible idea.
             let qrBlockDialog: JSX.Element | undefined;
             let sasBlockDialog: JSX.Element | undefined;
-            if (showQR && request.qrCodeData) {
+            if (showQR) {
                 qrBlockDialog = (
                     <div className="mx_VerificationPanel_QRPhase_startOption">
                         <p>{_t("Scan this unique code")}</p>
-                        <VerificationQRCode qrCodeData={request.qrCodeData} />
+                        <VerificationQRCode qrCodeBytes={this.state.qrCodeBytes} />
                     </div>
                 );
             }
@@ -133,7 +153,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         }
 
         let qrBlock: JSX.Element | undefined;
-        if (showQR && request.qrCodeData) {
+        if (showQR) {
             qrBlock = (
                 <div className="mx_UserInfo_container">
                     <h3>{_t("Verify by scanning")}</h3>
@@ -144,7 +164,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                     </p>
 
                     <div className="mx_VerificationPanel_qrCode">
-                        <VerificationQRCode qrCodeData={request.qrCodeData} />
+                        <VerificationQRCode qrCodeBytes={this.state.qrCodeBytes} />
                     </div>
                 </div>
             );
@@ -200,14 +220,20 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         this.state.reciprocateQREvent?.cancel();
     };
 
-    private getDevice(): DeviceInfo | null {
-        const deviceId = this.props.request && this.props.request.channel.deviceId;
-        const userId = MatrixClientPeg.get().getUserId();
-        if (deviceId && userId) {
-            return MatrixClientPeg.get().getStoredDevice(userId, deviceId);
-        } else {
-            return null;
+    /**
+     * Get details of the other device involved in the verification, if we haven't before, and store in the state.
+     */
+    private async maybeGetOtherDevice(): Promise<void> {
+        if (this.haveCheckedDevice) return;
+
+        const client = MatrixClientPeg.safeGet();
+        const deviceId = this.props.request?.otherDeviceId;
+        const userId = client.getUserId();
+        if (!deviceId || !userId) {
+            return;
         }
+        this.haveCheckedDevice = true;
+        this.setState({ otherDeviceDetails: await getDeviceCryptoInfo(client, userId, deviceId) });
     }
 
     private renderQRReciprocatePhase(): JSX.Element {
@@ -271,16 +297,16 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
         let description: string;
         if (request.isSelfVerification) {
-            const device = this.getDevice();
+            const device = this.state.otherDeviceDetails;
             if (!device) {
                 // This can happen if the device is logged out while we're still showing verification
                 // UI for it.
-                logger.warn("Verified device we don't know about: " + this.props.request.channel.deviceId);
+                logger.warn("Verified device we don't know about: " + this.props.request.otherDeviceId);
                 description = _t("You've successfully verified your device!");
             } else {
                 description = _t("You've successfully verified %(deviceName)s (%(deviceId)s)!", {
-                    deviceName: device ? device.getDisplayName() : "",
-                    deviceId: this.props.request.channel.deviceId,
+                    deviceName: device.displayName,
+                    deviceId: device.deviceId,
                 });
             }
         } else {
@@ -355,7 +381,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                         const emojis = this.state.sasEvent ? (
                             <VerificationShowSas
                                 displayName={displayName}
-                                device={this.getDevice() ?? undefined}
+                                otherDeviceDetails={this.state.otherDeviceDetails}
                                 sas={this.state.sasEvent.sas}
                                 onCancel={this.onSasMismatchesClick}
                                 onDone={this.onSasMatchesClick}
@@ -381,12 +407,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
     private startSAS = async (): Promise<void> => {
         this.setState({ emojiButtonClicked: true });
-        const verifier = this.props.request.beginKeyVerification(verificationMethods.SAS);
-        try {
-            await verifier.verify();
-        } catch (err) {
-            logger.error(err);
-        }
+        await this.props.request.startVerification(verificationMethods.SAS);
     };
 
     private onSasMatchesClick = (): void => {
@@ -398,21 +419,40 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     };
 
     private updateVerifierState = (): void => {
-        const { request } = this.props;
-        const sasEvent = (request.verifier as SAS).sasEvent;
-        const reciprocateQREvent = (request.verifier as ReciprocateQRCode).reciprocateQREvent;
-        request.verifier?.off(SasEvent.ShowSas, this.updateVerifierState);
-        request.verifier?.off(QrCodeEvent.ShowReciprocateQr, this.updateVerifierState);
+        // this method is only called once we know there is a verifier.
+        const verifier = this.props.request.verifier!;
+        const sasEvent = verifier.getShowSasCallbacks();
+        const reciprocateQREvent = verifier.getReciprocateQrCodeCallbacks();
+        verifier.off(VerifierEvent.ShowSas, this.updateVerifierState);
+        verifier.off(VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
         this.setState({ sasEvent, reciprocateQREvent });
     };
 
     private onRequestChange = async (): Promise<void> => {
         const { request } = this.props;
+
+        // if we have a device ID and did not have one before, fetch the device's details
+        this.maybeGetOtherDevice();
+
+        // if we have had a reply from the other side (ie, the phase is "ready") and we have not
+        // yet done so, fetch the QR code
+        if (request.phase === Phase.Ready && !this.haveFetchedQRCode) {
+            this.haveFetchedQRCode = true;
+            request.generateQRCode().then(
+                (buf) => {
+                    this.setState({ qrCodeBytes: buf });
+                },
+                (error) => {
+                    console.error("Error generating QR code:", error);
+                },
+            );
+        }
+
         const hadVerifier = this.hasVerifier;
         this.hasVerifier = !!request.verifier;
         if (!hadVerifier && this.hasVerifier) {
-            request.verifier?.on(SasEvent.ShowSas, this.updateVerifierState);
-            request.verifier?.on(QrCodeEvent.ShowReciprocateQr, this.updateVerifierState);
+            request.verifier?.on(VerifierEvent.ShowSas, this.updateVerifierState);
+            request.verifier?.on(VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
             try {
                 // on the requester side, this is also awaited in startSAS,
                 // but that's ok as verify should return the same promise.
@@ -427,8 +467,8 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         const { request } = this.props;
         request.on(VerificationRequestEvent.Change, this.onRequestChange);
         if (request.verifier) {
-            const sasEvent = (request.verifier as SAS).sasEvent;
-            const reciprocateQREvent = (request.verifier as ReciprocateQRCode).reciprocateQREvent;
+            const sasEvent = request.verifier.getShowSasCallbacks();
+            const reciprocateQREvent = request.verifier.getReciprocateQrCodeCallbacks();
             this.setState({ sasEvent, reciprocateQREvent });
         }
         this.onRequestChange();
@@ -437,8 +477,8 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     public componentWillUnmount(): void {
         const { request } = this.props;
         if (request.verifier) {
-            request.verifier.off(SasEvent.ShowSas, this.updateVerifierState);
-            request.verifier.off(QrCodeEvent.ShowReciprocateQr, this.updateVerifierState);
+            request.verifier.off(VerifierEvent.ShowSas, this.updateVerifierState);
+            request.verifier.off(VerifierEvent.ShowReciprocateQr, this.updateVerifierState);
         }
         request.off(VerificationRequestEvent.Change, this.onRequestChange);
     }

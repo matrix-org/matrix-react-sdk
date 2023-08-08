@@ -36,6 +36,7 @@ module.exports = {
             ),
         ],
 
+        "import/no-duplicates": ["error"],
         // Ban matrix-js-sdk/src imports in favour of matrix-js-sdk/src/matrix imports to prevent unleashing hell.
         "no-restricted-imports": [
             "error",
@@ -59,6 +60,54 @@ module.exports = {
                     },
                     {
                         name: "matrix-js-sdk/src/index",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/typed-event-emitter",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/room",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/room-member",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/room-state",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/event",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/event-status",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/user",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/device",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/event-timeline",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/event-timeline-set",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/@types/partials",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/@types/event",
                         message: "Please use matrix-js-sdk/src/matrix instead",
                     },
                     {
@@ -92,7 +141,6 @@ module.exports = {
         "jsx-a11y/no-noninteractive-tabindex": "off",
         "jsx-a11y/no-static-element-interactions": "off",
         "jsx-a11y/role-supports-aria-props": "off",
-        "jsx-a11y/tabindex-no-positive": "off",
 
         "matrix-org/require-copyright-header": "error",
     },
@@ -174,9 +222,6 @@ module.exports = {
                 // Disabled tests are a reality for now but as soon as all of the xits are
                 // eliminated, we should enforce this.
                 "jest/no-disabled-tests": "off",
-                // TODO: There are many tests with invalid expects that should be fixed,
-                // https://github.com/vector-im/element-web/issues/24709
-                "jest/valid-expect": "off",
                 // Also treat "oldBackendOnly" as a test function.
                 // Used in some crypto tests.
                 "jest/no-standalone-expect": [
@@ -194,6 +239,7 @@ module.exports = {
             },
             rules: {
                 // Cypress "promises" work differently - disable some related rules
+                "jest/valid-expect": "off",
                 "jest/valid-expect-in-promise": "off",
                 "jest/no-done-callback": "off",
             },

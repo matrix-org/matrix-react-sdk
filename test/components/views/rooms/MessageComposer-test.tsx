@@ -71,7 +71,7 @@ const startVoiceMessage = async (): Promise<void> => {
 const setCurrentBroadcastRecording = (room: Room, state: VoiceBroadcastInfoState): void => {
     const recording = new VoiceBroadcastRecording(
         mkVoiceBroadcastInfoStateEvent(room.roomId, state, "@user:example.com", "ABC123"),
-        MatrixClientPeg.get(),
+        MatrixClientPeg.safeGet(),
         state,
     );
     SdkContextClass.instance.voiceBroadcastRecordingsStore.setCurrent(recording);
@@ -268,9 +268,11 @@ describe("MessageComposer", () => {
             let resizeCallback: Function;
 
             beforeEach(() => {
-                jest.spyOn(UIStore.instance, "on").mockImplementation((_event: string, listener: Function): any => {
-                    resizeCallback = listener;
-                });
+                jest.spyOn(UIStore.instance, "on").mockImplementation(
+                    (_event: string | symbol, listener: Function): any => {
+                        resizeCallback = listener;
+                    },
+                );
             });
 
             describe("when a non-resize event occurred in UIStore", () => {
@@ -481,7 +483,7 @@ function wrapAndRender(
     narrow = false,
     tombstone?: MatrixEvent,
 ) {
-    const mockClient = MatrixClientPeg.get();
+    const mockClient = MatrixClientPeg.safeGet();
     const roomId = "myroomid";
     const room: any = props.room || {
         currentState: undefined,

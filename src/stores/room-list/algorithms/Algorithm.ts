@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { EventEmitter } from "events";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -548,6 +548,8 @@ export class Algorithm extends EventEmitter {
         const tags: TagID[] = [];
 
         const membership = getEffectiveMembership(room.getMyMembership());
+        if (!membership) return []; // peeked room has no tags
+
         if (membership === EffectiveMembership.Invite) {
             tags.push(DefaultTagID.Invite);
         } else if (membership === EffectiveMembership.Leave) {

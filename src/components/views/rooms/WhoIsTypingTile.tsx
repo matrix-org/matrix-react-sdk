@@ -16,9 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent, RoomMember, RoomMemberEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { compare } from "matrix-js-sdk/src/utils";
 
 import * as WhoIsTyping from "../../../WhoIsTyping";
@@ -57,8 +55,8 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
     };
 
     public componentDidMount(): void {
-        MatrixClientPeg.get().on(RoomMemberEvent.Typing, this.onRoomMemberTyping);
-        MatrixClientPeg.get().on(RoomEvent.Timeline, this.onRoomTimeline);
+        MatrixClientPeg.safeGet().on(RoomMemberEvent.Typing, this.onRoomMemberTyping);
+        MatrixClientPeg.safeGet().on(RoomEvent.Timeline, this.onRoomTimeline);
     }
 
     public componentDidUpdate(prevProps: IProps, prevState: IState): void {

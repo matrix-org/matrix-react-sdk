@@ -16,9 +16,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, EventType, RelationType } from "matrix-js-sdk/src/matrix";
 import { Relations } from "matrix-js-sdk/src/models/relations";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -70,6 +69,10 @@ export default class PinnedEventTile extends React.Component<IProps> {
 
     public render(): React.ReactNode {
         const sender = this.props.event.getSender();
+
+        if (!sender) {
+            throw new Error("Pinned event unexpectedly has no sender");
+        }
 
         let unpinButton: JSX.Element | undefined;
         if (this.props.onUnpinClicked) {

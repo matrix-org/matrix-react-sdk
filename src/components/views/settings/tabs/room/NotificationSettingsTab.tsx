@@ -18,7 +18,6 @@ import React, { createRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import Notifier from "../../../../../Notifier";
 import SettingsStore from "../../../../../settings/SettingsStore";
@@ -70,7 +69,7 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         };
     }
 
-    private triggerUploader = async (e: React.MouseEvent): Promise<void> => {
+    private triggerUploader = async (e: ButtonEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -91,7 +90,7 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         });
     };
 
-    private onClickSaveSound = async (e: React.MouseEvent): Promise<void> => {
+    private onClickSaveSound = async (e: ButtonEvent): Promise<void> => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -116,7 +115,7 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
             type = "audio/ogg";
         }
 
-        const { content_uri: url } = await MatrixClientPeg.get().uploadContent(this.state.uploadedFile, {
+        const { content_uri: url } = await this.context.uploadContent(this.state.uploadedFile, {
             type,
         });
 
@@ -133,7 +132,7 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         });
     }
 
-    private clearSound = (e: React.MouseEvent): void => {
+    private clearSound = (e: ButtonEvent): void => {
         e.stopPropagation();
         e.preventDefault();
         SettingsStore.setValue("notificationSound", this.props.roomId, SettingLevel.ROOM_ACCOUNT, null);
@@ -275,7 +274,7 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
                             </AccessibleButton>
                         </div>
                         <div>
-                            <h4>{_t("Set a new custom sound")}</h4>
+                            <h4 className="mx_Heading_h4">{_t("Set a new custom sound")}</h4>
                             <div className="mx_SettingsFlag">
                                 <form autoComplete="off" noValidate={true}>
                                     <input

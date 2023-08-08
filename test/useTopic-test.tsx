@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { act, render, screen } from "@testing-library/react";
 
 import { useTopic } from "../src/hooks/room/useTopic";
@@ -25,7 +25,7 @@ import { MatrixClientPeg } from "../src/MatrixClientPeg";
 describe("useTopic", () => {
     it("should display the room topic", () => {
         stubClient();
-        const room = new Room("!TESTROOM", MatrixClientPeg.get(), "@alice:example.org");
+        const room = new Room("!TESTROOM", MatrixClientPeg.safeGet(), "@alice:example.org");
         const topic = mkEvent({
             type: "m.room.topic",
             room: "!TESTROOM",

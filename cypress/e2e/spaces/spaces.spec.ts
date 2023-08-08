@@ -16,9 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { MatrixClient } from "matrix-js-sdk/src/client";
-import type { Preset } from "matrix-js-sdk/src/@types/partials";
-import type { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
+import type { MatrixClient, Preset, ICreateRoomOpts } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
 import { UserCredentials } from "../../support/login";
@@ -140,10 +138,9 @@ describe("Spaces", () => {
         cy.findByPlaceholderText("Support").type("Projects");
         cy.findByRole("button", { name: "Continue" }).click();
 
-        cy.get(".mx_SpaceRoomView").within(() => {
-            cy.get("h1").findByText("Invite your teammates");
-            cy.findByRole("button", { name: "Skip for now" }).click();
-        });
+        cy.get(".mx_SpaceRoomView h1").findByText("Invite your teammates");
+        cy.get(".mx_SpaceRoomView").percySnapshotElement("Space - 'Invite your teammates' dialog");
+        cy.findByRole("button", { name: "Skip for now" }).click();
 
         // Assert rooms exist in the room list
         cy.findByRole("treeitem", { name: "General" }).should("exist");

@@ -16,8 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
+import type { MatrixClient, MatrixEvent, ISendEventResponse } from "matrix-js-sdk/src/matrix";
 import type { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
@@ -32,17 +31,44 @@ describe("Read receipts", () => {
     let selectedRoomId: string;
     let bot: MatrixClient | undefined;
 
-    const botSendMessage = (): Cypress.Chainable<ISendEventResponse> => {
-        return cy.botSendMessage(bot, otherRoomId, "Message");
+    const botSendMessage = (no = 1): Cypress.Chainable<ISendEventResponse> => {
+        return cy.botSendMessage(bot, otherRoomId, `Message ${no}`);
     };
 
-    const fakeEventFromSent = (eventResponse: ISendEventResponse): MatrixEvent => {
+    const botSendThreadMessage = (threadId: string): Cypress.Chainable<ISendEventResponse> => {
+        return cy.botSendThreadMessage(bot, otherRoomId, threadId, "Message");
+    };
+
+    const fakeEventFromSent = (eventResponse: ISendEventResponse, threadRootId: string | undefined): MatrixEvent => {
         return {
             getRoomId: () => otherRoomId,
             getId: () => eventResponse.event_id,
-            threadRootId: undefined,
+            threadRootId,
             getTs: () => 1,
+            isRelation: (relType) => {
+                return !relType || relType === "m.thread";
+            },
         } as any as MatrixEvent;
+    };
+
+    /**
+     * Send a threaded receipt marking the message referred to in
+     * eventResponse as read. If threadRootEventResponse is supplied, the
+     * receipt will have its event_id as the thread root ID for the receipt.
+     */
+    const sendThreadedReadReceipt = (
+        eventResponse: ISendEventResponse,
+        threadRootEventResponse: ISendEventResponse = undefined,
+    ) => {
+        cy.sendReadReceipt(fakeEventFromSent(eventResponse, threadRootEventResponse?.event_id));
+    };
+
+    /**
+     * Send an unthreaded receipt marking the message referred to in
+     * eventResponse as read.
+     */
+    const sendUnthreadedReadReceipt = (eventResponse: ISendEventResponse) => {
+        cy.sendReadReceipt(fakeEventFromSent(eventResponse, undefined), "m.read" as any as ReceiptType, true);
     };
 
     beforeEach(() => {
@@ -88,7 +114,7 @@ describe("Read receipts", () => {
     });
 
     it(
-        "Considers room read if there's a receipt for main even if an earlier unthreaded receipt exists #24629",
+        "With sync accumulator, considers main thread and unthreaded receipts #24629",
         {
             // When #24629 exists, the test fails the first time but passes later, so we disable retries
             // to be sure we are going to fail if the bug comes back.
@@ -108,8 +134,8 @@ describe("Read receipts", () => {
 
                     // When we send a threaded receipt for the last event in main
                     // And an unthreaded receipt for an earlier event
-                    cy.sendReadReceipt(fakeEventFromSent(main3));
-                    cy.sendReadReceipt(fakeEventFromSent(main2), "m.read" as any as ReceiptType, true);
+                    sendThreadedReadReceipt(main3);
+                    sendUnthreadedReadReceipt(main2);
 
                     // (So the room has no unreads)
                     cy.findByLabelText(`${otherRoomName}`).should("exist");
@@ -130,4 +156,201 @@ describe("Read receipts", () => {
             });
         },
     );
+
+    it("Recognises unread messages on main thread after receiving a receipt for earlier ones", () => {
+        // Given we sent 3 events on the main thread
+        botSendMessage();
+        botSendMessage().then((main2) => {
+            botSendMessage().then(() => {
+                // (The room starts off unread)
+                cy.findByLabelText(`${otherRoomName} 3 unread messages.`).should("exist");
+
+                // When we send a threaded receipt for the second-last event in main
+                sendThreadedReadReceipt(main2);
+
+                // Then the room has only one unread
+                cy.findByLabelText(`${otherRoomName} 1 unread message.`).should("exist");
+            });
+        });
+    });
+
+    it("Considers room read if there is only a main thread and we have a main receipt", () => {
+        // Given we sent 3 events on the main thread
+        botSendMessage();
+        botSendMessage().then(() => {
+            botSendMessage().then((main3) => {
+                // (The room starts off unread)
+                cy.findByLabelText(`${otherRoomName} 3 unread messages.`).should("exist");
+
+                // When we send a threaded receipt for the last event in main
+                sendThreadedReadReceipt(main3);
+
+                // Then the room has no unreads
+                cy.findByLabelText(`${otherRoomName}`).should("exist");
+            });
+        });
+    });
+
+    it("Recognises unread messages on other thread after receiving a receipt for earlier ones", () => {
+        // Given we sent 3 events on the main thread
+        botSendMessage().then((main1) => {
+            botSendThreadMessage(main1.event_id).then((thread1a) => {
+                botSendThreadMessage(main1.event_id).then((thread1b) => {
+                    // 1 unread on the main thread, 2 in the new thread
+                    cy.findByLabelText(`${otherRoomName} 3 unread messages.`).should("exist");
+
+                    // When we send receipts for main, and the second-last in the thread
+                    sendThreadedReadReceipt(main1);
+                    sendThreadedReadReceipt(thread1a, main1);
+
+                    // Then the room has only one unread - the one in the thread
+                    cy.findByLabelText(`${otherRoomName} 1 unread message.`).should("exist");
+                });
+            });
+        });
+    });
+
+    it("Considers room read if there are receipts for main and other thread", () => {
+        // Given we sent 3 events on the main thread
+        botSendMessage().then((main1) => {
+            botSendThreadMessage(main1.event_id).then((thread1a) => {
+                botSendThreadMessage(main1.event_id).then((thread1b) => {
+                    // 1 unread on the main thread, 2 in the new thread
+                    cy.findByLabelText(`${otherRoomName} 3 unread messages.`).should("exist");
+
+                    // When we send receipts for main, and the last in the thread
+                    sendThreadedReadReceipt(main1);
+                    sendThreadedReadReceipt(thread1b, main1);
+
+                    // Then the room has no unreads
+                    cy.findByLabelText(`${otherRoomName}`).should("exist");
+                });
+            });
+        });
+    });
+
+    it("Recognises unread messages on a thread after receiving a unthreaded receipt for earlier ones", () => {
+        // Given we sent 3 events on the main thread
+        botSendMessage().then((main1) => {
+            botSendThreadMessage(main1.event_id).then((thread1a) => {
+                botSendThreadMessage(main1.event_id).then(() => {
+                    // 1 unread on the main thread, 2 in the new thread
+                    cy.findByLabelText(`${otherRoomName} 3 unread messages.`).should("exist");
+
+                    // When we send an unthreaded receipt for the second-last in the thread
+                    sendUnthreadedReadReceipt(thread1a);
+
+                    // Then the room has only one unread - the one in the
+                    // thread. The one in main is read because the unthreaded
+                    // receipt is for a later event.
+                    cy.findByLabelText(`${otherRoomName} 1 unread message.`).should("exist");
+                });
+            });
+        });
+    });
+
+    it("Recognises unread messages on main after receiving a unthreaded receipt for a thread message", () => {
+        // Given we sent 3 events on the main thread
+        botSendMessage().then((main1) => {
+            botSendThreadMessage(main1.event_id).then(() => {
+                botSendThreadMessage(main1.event_id).then((thread1b) => {
+                    botSendMessage().then(() => {
+                        // 2 unreads on the main thread, 2 in the new thread
+                        cy.findByLabelText(`${otherRoomName} 4 unread messages.`).should("exist");
+
+                        // When we send an unthreaded receipt for the last in the thread
+                        sendUnthreadedReadReceipt(thread1b);
+
+                        // Then the room has only one unread - the one in the
+                        // main thread, because it is later than the unthreaded
+                        // receipt.
+                        cy.findByLabelText(`${otherRoomName} 1 unread message.`).should("exist");
+                    });
+                });
+            });
+        });
+    });
+
+    /**
+     * The idea of this test is to intercept the receipt / read read_markers requests and
+     * assert that the correct ones are sent.
+     * Prose playbook:
+     * - Another user sends enough messages that the timeline becomes scrollable
+     * - The current user looks at the room and jumps directly to the first unread message
+     * - At this point, a receipt for the last message in the room and
+     *   a fully read marker for the last visible message are expected to be sent
+     * - Then the user jumps to the end of the timeline
+     * - A fully read marker for the last message in the room is expected to be sent
+     */
+    it("Should send the correct receipts", () => {
+        const uriEncodedOtherRoomId = encodeURIComponent(otherRoomId);
+
+        cy.intercept({
+            method: "POST",
+            url: new RegExp(
+                `http://localhost:\\d+/_matrix/client/r0/rooms/${uriEncodedOtherRoomId}/receipt/m\\.read/.+`,
+            ),
+        }).as("receiptRequest");
+
+        const numberOfMessages = 20;
+        const sendMessagePromises = [];
+
+        for (let i = 1; i <= numberOfMessages; i++) {
+            sendMessagePromises.push(botSendMessage(i));
+        }
+
+        cy.all(sendMessagePromises).then((sendMessageResponses) => {
+            const lastMessageId = sendMessageResponses.at(-1).event_id;
+            const uriEncodedLastMessageId = encodeURIComponent(lastMessageId);
+
+            // wait until all messages have been received
+            cy.findByLabelText(`${otherRoomName} ${sendMessagePromises.length} unread messages.`).should("exist");
+
+            // switch to the room with the messages
+            cy.visit("/#/room/" + otherRoomId);
+
+            cy.wait("@receiptRequest").should((req) => {
+                // assert the read receipt for the last message in the room
+                expect(req.request.url).to.contain(uriEncodedLastMessageId);
+                expect(req.request.body).to.deep.equal({
+                    thread_id: "main",
+                });
+            });
+
+            // the following code tests the fully read marker somewhere in the middle of the room
+
+            cy.intercept({
+                method: "POST",
+                url: new RegExp(`http://localhost:\\d+/_matrix/client/r0/rooms/${uriEncodedOtherRoomId}/read_markers`),
+            }).as("readMarkersRequest");
+
+            cy.findByRole("button", { name: "Jump to first unread message." }).click();
+
+            cy.wait("@readMarkersRequest").should((req) => {
+                // since this is not pixel perfect,
+                // the fully read marker should be +/- 1 around the last visible message
+                expect(Array.from(Object.keys(req.request.body))).to.deep.equal(["m.fully_read"]);
+                expect(req.request.body["m.fully_read"]).to.be.oneOf([
+                    sendMessageResponses[11].event_id,
+                    sendMessageResponses[12].event_id,
+                    sendMessageResponses[13].event_id,
+                ]);
+            });
+
+            // the following code tests the fully read marker at the bottom of the room
+
+            cy.intercept({
+                method: "POST",
+                url: new RegExp(`http://localhost:\\d+/_matrix/client/r0/rooms/${uriEncodedOtherRoomId}/read_markers`),
+            }).as("readMarkersRequest");
+
+            cy.findByRole("button", { name: "Scroll to most recent messages" }).click();
+
+            cy.wait("@readMarkersRequest").should((req) => {
+                expect(req.request.body).to.deep.equal({
+                    ["m.fully_read"]: sendMessageResponses.at(-1).event_id,
+                });
+            });
+        });
+    });
 });

@@ -18,7 +18,7 @@ import { fireEvent, getByLabelText, render, screen } from "@testing-library/reac
 import { mocked } from "jest-mock";
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import React from "react";
 import userEvent from "@testing-library/user-event";
 
@@ -71,7 +71,7 @@ describe("RoomGeneralContextMenu", () => {
         jest.clearAllMocks();
 
         stubClient();
-        mockClient = mocked(MatrixClientPeg.get());
+        mockClient = mocked(MatrixClientPeg.safeGet());
 
         room = new Room(ROOM_ID, mockClient, mockClient.getUserId() ?? "", {
             pendingEventOrdering: PendingEventOrdering.Detached,

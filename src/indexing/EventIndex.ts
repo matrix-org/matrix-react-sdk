@@ -15,19 +15,26 @@ limitations under the License.
 */
 
 import { EventEmitter } from "events";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
-import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import {
+    RoomMember,
+    Room,
+    RoomEvent,
+    RoomState,
+    RoomStateEvent,
+    MatrixEvent,
+    Direction,
+    EventTimeline,
+    EventTimelineSet,
+    IRoomTimelineData,
+    EventType,
+} from "matrix-js-sdk/src/matrix";
 import { TimelineIndex, TimelineWindow } from "matrix-js-sdk/src/timeline-window";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { IEventWithRoomId, IMatrixProfile, IResultRoomEvents } from "matrix-js-sdk/src/@types/search";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
+import { HTTPError } from "matrix-js-sdk/src/http-api";
 
 import PlatformPeg from "../PlatformPeg";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -68,7 +75,7 @@ export default class EventIndex extends EventEmitter {
      * Register event listeners that are necessary for the event index to work.
      */
     public registerListeners(): void {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
         client.on(ClientEvent.Sync, this.onSync);
         client.on(RoomEvent.Timeline, this.onRoomTimeline);
@@ -95,7 +102,7 @@ export default class EventIndex extends EventEmitter {
     public async addInitialCheckpoints(): Promise<void> {
         const indexManager = PlatformPeg.get()?.getEventIndexingManager();
         if (!indexManager) return;
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const rooms = client.getRooms();
 
         const isRoomEncrypted = (room: Room): boolean => {
@@ -193,13 +200,13 @@ export default class EventIndex extends EventEmitter {
     private onRoomTimeline = async (
         ev: MatrixEvent,
         room: Room | undefined,
-        toStartOfTimeline: boolean,
+        toStartOfTimeline: boolean | undefined,
         removed: boolean,
         data: IRoomTimelineData,
     ): Promise<void> => {
         if (!room) return; // notification timeline, we'll get this event again with a room specific timeline
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
         // We only index encrypted rooms locally.
         if (!client.isRoomEncrypted(ev.getRoomId()!)) return;
@@ -219,7 +226,7 @@ export default class EventIndex extends EventEmitter {
     };
 
     private onRoomStateEvent = async (ev: MatrixEvent, state: RoomState): Promise<void> => {
-        if (!MatrixClientPeg.get().isRoomEncrypted(state.roomId)) return;
+        if (!MatrixClientPeg.safeGet().isRoomEncrypted(state.roomId)) return;
 
         if (ev.getType() === EventType.RoomEncryption && !(await this.isRoomIndexed(state.roomId))) {
             logger.log("EventIndex: Adding a checkpoint for a newly encrypted room", state.roomId);
@@ -253,7 +260,7 @@ export default class EventIndex extends EventEmitter {
      */
     private onTimelineReset = async (room: Room | undefined): Promise<void> => {
         if (!room) return;
-        if (!MatrixClientPeg.get().isRoomEncrypted(room.roomId)) return;
+        if (!MatrixClientPeg.safeGet().isRoomEncrypted(room.roomId)) return;
 
         logger.log("EventIndex: Adding a checkpoint because of a limited timeline", room.roomId);
 
@@ -363,7 +370,7 @@ export default class EventIndex extends EventEmitter {
     private async addRoomCheckpoint(roomId: string, fullCrawl = false): Promise<void> {
         const indexManager = PlatformPeg.get()?.getEventIndexingManager();
         if (!indexManager) return;
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const room = client.getRoom(roomId);
 
         if (!room) return;
@@ -409,7 +416,7 @@ export default class EventIndex extends EventEmitter {
     private async crawlerFunc(): Promise<void> {
         let cancelled = false;
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const indexManager = PlatformPeg.get()?.getEventIndexingManager();
         if (!indexManager) return;
 
@@ -471,7 +478,7 @@ export default class EventIndex extends EventEmitter {
                     checkpoint.direction,
                 );
             } catch (e) {
-                if (e.httpStatus === 403) {
+                if (e instanceof HTTPError && e.httpStatus === 403) {
                     logger.log(
                         "EventIndex: Removing checkpoint as we don't have ",
                         "permissions to fetch messages from this room.",
@@ -564,7 +571,7 @@ export default class EventIndex extends EventEmitter {
                 return object;
             });
 
-            let newCheckpoint;
+            let newCheckpoint: ICrawlerCheckpoint | null = null;
 
             // The token can be null for some reason. Don't create a checkpoint
             // in that case since adding it to the db will fail.
@@ -706,7 +713,7 @@ export default class EventIndex extends EventEmitter {
         fromEvent?: string,
         direction: string = EventTimeline.BACKWARDS,
     ): Promise<MatrixEvent[]> {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const indexManager = PlatformPeg.get()?.getEventIndexingManager();
         if (!indexManager) return [];
 
@@ -941,7 +948,7 @@ export default class EventIndex extends EventEmitter {
             return null;
         }
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
         if (this.currentCheckpoint !== null) {
             return client.getRoom(this.currentCheckpoint.roomId);
@@ -965,7 +972,7 @@ export default class EventIndex extends EventEmitter {
             crawlingRooms.add(this.currentCheckpoint.roomId);
         }
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const rooms = client.getRooms();
 
         const isRoomEncrypted = (room: Room): boolean => {

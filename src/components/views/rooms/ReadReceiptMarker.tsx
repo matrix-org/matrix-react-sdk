@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { createRef, RefObject } from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import NodeAnimator from "../../../NodeAnimator";
@@ -165,7 +165,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
             return 0;
         }
 
-        return info.top + info.parent.getBoundingClientRect().top;
+        return (info.top ?? 0) + info.parent.getBoundingClientRect().top;
     }
 
     private animateMarker(): void {

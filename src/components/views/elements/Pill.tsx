@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { ReactElement, useRef, useState } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -106,7 +105,7 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
         mx_RoomPill: type === PillType.RoomMention,
         mx_SpacePill: type === "space",
         mx_UserPill: type === PillType.UserMention,
-        mx_UserPill_me: resourceId === MatrixClientPeg.get().getUserId(),
+        mx_UserPill_me: resourceId === MatrixClientPeg.safeGet().getUserId(),
         mx_EventPill: type === PillType.EventInOtherRoom || type === PillType.EventInSameRoom,
     });
 
@@ -158,7 +157,7 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
 
     return (
         <bdi>
-            <MatrixClientContext.Provider value={MatrixClientPeg.get()}>
+            <MatrixClientContext.Provider value={MatrixClientPeg.safeGet()}>
                 {inMessage && url ? (
                     <a
                         className={classes}

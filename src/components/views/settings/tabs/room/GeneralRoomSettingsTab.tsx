@@ -41,7 +41,7 @@ interface IState {
 
 export default class GeneralRoomSettingsTab extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
-    public context: ContextType<typeof MatrixClientContext>;
+    public context!: ContextType<typeof MatrixClientContext>;
 
     public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
         super(props, context);
@@ -84,7 +84,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
         }
 
         return (
-            <SettingsTab>
+            <SettingsTab data-testid="General">
                 <SettingsSection heading={_t("General")}>
                     <RoomProfileSettings roomId={room.roomId} />
                 </SettingsSection>

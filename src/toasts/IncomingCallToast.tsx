@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback, useEffect } from "react";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../languageHandler";
 import RoomAvatar from "../components/views/avatars/RoomAvatar";
@@ -67,7 +67,7 @@ interface Props {
 
 export function IncomingCallToast({ callEvent }: Props): JSX.Element {
     const roomId = callEvent.getRoomId()!;
-    const room = MatrixClientPeg.get().getRoom(roomId) ?? undefined;
+    const room = MatrixClientPeg.safeGet().getRoom(roomId) ?? undefined;
     const call = useCall(roomId);
 
     const dismissToast = useCallback((): void => {

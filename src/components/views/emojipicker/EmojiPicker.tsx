@@ -268,25 +268,30 @@ class EmojiPicker extends React.Component<IProps, IState> {
             } else {
                 emojis = cat.id === "recent" ? this.recentlyUsed : DATA_BY_CATEGORY[cat.id];
             }
-            emojis = emojis.filter((emoji) => this.emojiMatchesFilter(emoji, lcFilter));
-            emojis = emojis.sort((a, b) => {
-                const indexA = a.shortcodes[0].indexOf(lcFilter);
-                const indexB = b.shortcodes[0].indexOf(lcFilter);
 
-                // Prioritize emojis containing the filter in its shortcode
-                if (indexA == -1 || indexB == -1) {
-                    return indexB - indexA;
-                }
+            if (lcFilter !== "") {
+                emojis = emojis.filter((emoji) => this.emojiMatchesFilter(emoji, lcFilter));
+                // Copy the array to not clobber the original unfiltered sorting
+                emojis = [...emojis].sort((a, b) => {
+                    const indexA = a.shortcodes[0].indexOf(lcFilter);
+                    const indexB = b.shortcodes[0].indexOf(lcFilter);
 
-                // If both emojis start with the filter
-                // put the shorter emoji first
-                if (indexA == 0 && indexB == 0) {
-                    return a.shortcodes[0].length - b.shortcodes[0].length;
-                }
+                    // Prioritize emojis containing the filter in its shortcode
+                    if (indexA == -1 || indexB == -1) {
+                        return indexB - indexA;
+                    }
 
-                // Prioritize emojis starting with the filter
-                return indexA - indexB;
-            });
+                    // If both emojis start with the filter
+                    // put the shorter emoji first
+                    if (indexA == 0 && indexB == 0) {
+                        return a.shortcodes[0].length - b.shortcodes[0].length;
+                    }
+
+                    // Prioritize emojis starting with the filter
+                    return indexA - indexB;
+                });
+            }
+
             this.memoizedDataByCategory[cat.id] = emojis;
             cat.enabled = emojis.length > 0;
             // The setState below doesn't re-render the header and we already have the refs for updateVisibility, so...
@@ -301,6 +306,10 @@ class EmojiPicker extends React.Component<IProps, IState> {
     };
 
     private emojiMatchesFilter = (emoji: IEmoji, filter: string): boolean => {
+        // If the query is an emoji containing a variation then strip it to provide more useful matches
+        if (filter.includes(ZERO_WIDTH_JOINER)) {
+            filter = filter.split(ZERO_WIDTH_JOINER, 2)[0];
+        }
         return (
             emoji.label.toLowerCase().includes(filter) ||
             (Array.isArray(emoji.emoticon)

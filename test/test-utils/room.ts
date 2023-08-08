@@ -61,6 +61,7 @@ export function getRoomContext(room: Room, override: Partial<IRoomState>): IRoom
         showApps: false,
         isPeeking: false,
         showRightPanel: true,
+        threadRightPanel: false,
         joining: false,
         atEndOfLiveTimeline: true,
         showTopUnreadMessagesBar: false,
@@ -87,6 +88,9 @@ export function getRoomContext(room: Room, override: Partial<IRoomState>): IRoom
         narrow: false,
         activeCall: null,
         msc3946ProcessDynamicPredecessor: false,
+        canAskToJoin: false,
+        promptAskToJoin: false,
+        knocked: false,
 
         ...override,
     };

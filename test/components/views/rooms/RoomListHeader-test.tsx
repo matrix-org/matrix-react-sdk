@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/matrix";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { Room, EventType } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 import { act, render, screen, fireEvent, RenderResult } from "@testing-library/react";
 
@@ -112,7 +111,7 @@ describe("RoomListHeader", () => {
         } as unknown as DMRoomMap;
         DMRoomMap.setShared(dmRoomMap);
         stubClient();
-        client = MatrixClientPeg.get();
+        client = MatrixClientPeg.safeGet();
         mocked(shouldShowComponent).mockReturnValue(true); // show all UIComponents
     });
 

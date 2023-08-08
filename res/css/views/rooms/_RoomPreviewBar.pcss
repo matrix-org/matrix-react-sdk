@@ -24,12 +24,13 @@ limitations under the License.
 
     h3 {
         font-size: $font-18px;
-        font-weight: var(--font-semi-bold);
+        font-weight: var(--cpd-font-weight-semibold);
 
         &.mx_RoomPreviewBar_spinnerTitle {
             display: flex;
             flex-direction: row;
             align-items: center;
+            margin: 0;
         }
     }
 
@@ -141,10 +142,19 @@ limitations under the License.
 }
 
 .mx_RoomPreviewBar_inviter {
-    font-weight: var(--font-semi-bold);
+    font-weight: var(--cpd-font-weight-semibold);
 }
 
 a.mx_RoomPreviewBar_inviter {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.mx_RoomPreviewBar_icon {
+    margin-right: 8px;
+    vertical-align: text-top;
+}
+
+.mx_RoomPreviewBar_fullWidth {
+    width: 100%;
 }

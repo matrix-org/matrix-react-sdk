@@ -18,7 +18,12 @@ import React from "react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { mocked } from "jest-mock";
 
-import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
+import {
+    flushPromises,
+    getMockClientWithEventEmitter,
+    mockClientMethodsCrypto,
+    mockClientMethodsUser,
+} from "../../../test-utils";
 import SecureBackupPanel from "../../../../src/components/views/settings/SecureBackupPanel";
 import { accessSecretStorage } from "../../../../src/SecurityManager";
 
@@ -30,20 +35,13 @@ describe("<SecureBackupPanel />", () => {
     const userId = "@alice:server.org";
     const client = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
-        checkKeyBackup: jest.fn(),
-        isKeyBackupKeyStored: jest.fn(),
-        isSecretStorageReady: jest.fn(),
+        ...mockClientMethodsCrypto(),
         getKeyBackupEnabled: jest.fn(),
         getKeyBackupVersion: jest.fn().mockReturnValue("1"),
         isKeyBackupTrusted: jest.fn().mockResolvedValue(true),
         getClientWellKnown: jest.fn(),
         deleteKeyBackupVersion: jest.fn(),
     });
-    // @ts-ignore allow it
-    client.crypto = {
-        secretStorage: { hasKey: jest.fn() },
-        getSessionBackupPrivateKey: jest.fn(),
-    } as unknown as Crypto;
 
     const getComponent = () => render(<SecureBackupPanel />);
 
@@ -62,7 +60,7 @@ describe("<SecureBackupPanel />", () => {
             },
         });
 
-        mocked(client.crypto!.secretStorage.hasKey).mockClear().mockResolvedValue(false);
+        mocked(client.secretStorage.hasKey).mockClear().mockResolvedValue(false);
         client.deleteKeyBackupVersion.mockClear().mockResolvedValue();
         client.getKeyBackupVersion.mockClear();
         client.isKeyBackupTrusted.mockClear();
@@ -166,7 +164,7 @@ describe("<SecureBackupPanel />", () => {
     });
 
     it("resets secret storage", async () => {
-        mocked(client.crypto!.secretStorage.hasKey).mockClear().mockResolvedValue(true);
+        mocked(client.secretStorage.hasKey).mockClear().mockResolvedValue(true);
         getComponent();
         // flush checkKeyBackup promise
         await flushPromises();

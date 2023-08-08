@@ -26,7 +26,7 @@ import {
     WidgetEventCapability,
     WidgetKind,
 } from "matrix-widget-api";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { EventType, MsgType } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import { _t, _td, TranslatedString } from "../languageHandler";
@@ -149,7 +149,7 @@ export class CapabilityText {
                 return { primary: _t("The above, but in any room you are joined or invited to as well") };
             } else {
                 const roomId = getTimelineRoomIDFromCapability(capability);
-                const room = MatrixClientPeg.get().getRoom(roomId);
+                const room = MatrixClientPeg.safeGet().getRoom(roomId);
                 return {
                     primary: _t(
                         "The above, but in <Room /> as well",
