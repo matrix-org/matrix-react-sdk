@@ -28,7 +28,7 @@ const compactFormatter = new Intl.NumberFormat(locale, {
 });
 
 /**
- * formats numbers to fit into ~3 characters, suitable for badge counts
+ * formats and rounds numbers to fit into ~3 characters, suitable for badge counts
  * e.g: 999, 10K, 99K, 1M, 10M, 99M, 1B, 10B, ...
  */
 export function formatCount(count: number): string {
