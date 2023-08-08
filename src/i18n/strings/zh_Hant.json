@@ -3771,5 +3771,17 @@
     "Are you sure you wish to remove (delete) this event?": "您真的想要移除（刪除）此活動嗎？",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "匯出的檔案將允許任何可以讀取該檔案的人解密您可以看到的任何加密訊息，因此您應該小心確保其安全。為了協助解決此問題，您應該在下面輸入一個唯一的密碼，該密碼僅用於加密匯出的資料。只能使用相同的密碼匯入資料。",
     "Under active development, new room header & details interface": "正在積極開發中，新的聊天室標題與詳細資訊介面",
-    "Other spaces you know": "您知道的其他空間"
+    "Other spaces you know": "您知道的其他空間",
+    "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "您需要被授予存取此聊天室的權限才能檢視或參與對話。您可以在下面傳送加入請求。",
+    "%(severalUsers)schanged their profile picture %(count)s times|one": "%(severalUsers)s 變更了他們的個人檔案圖片",
+    "You need an invite to access this room.": "您需要邀請才能存取此聊天室。",
+    "Failed to cancel": "取消失敗",
+    "Ask to join %(roomName)s?": "要求加入 %(roomName)s？",
+    "Ask to join?": "要求加入？",
+    "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)s 變更了他們的個人檔案圖片",
+    "Message (optional)": "訊息（選擇性）",
+    "Request access": "請求存取權",
+    "Request to join sent": "已傳送加入請求",
+    "Your request to join is pending.": "您的加入請求正在等待處理。",
+    "Cancel request": "取消請求"
 }
