@@ -38,7 +38,6 @@ import { Service, ServicePolicyPair, startTermsFlow } from "../../../../../Terms
 import IdentityAuthClient from "../../../../../IdentityAuthClient";
 import { abbreviateUrl } from "../../../../../utils/UrlUtils";
 import { getThreepidsWithBindStatus } from "../../../../../boundThreepids";
-import Spinner from "../../../elements/Spinner";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
@@ -71,7 +70,6 @@ interface IState {
     spellCheckEnabled?: boolean;
     spellCheckLanguages: string[];
     haveIdServer: boolean;
-    serverSupportsSeparateAddAndBind?: boolean;
     idServerHasUnsignedTerms: boolean;
     requiredPolicyInfo:
         | {
@@ -167,8 +165,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private async getCapabilities(): Promise<void> {
         const cli = this.context;
 
-        const serverSupportsSeparateAddAndBind = await cli.doesServerSupportSeparateAddAndBind();
-
         const capabilities = await cli.getCapabilities(); // this is cached
         const changePasswordCap = capabilities["m.change_password"];
 
@@ -180,7 +176,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const delegatedAuthConfig = M_AUTHENTICATION.findIn<IDelegatedAuthConfig | undefined>(cli.getClientWellKnown());
         const externalAccountManagementUrl = delegatedAuthConfig?.account;
 
-        this.setState({ serverSupportsSeparateAddAndBind, canChangePassword, externalAccountManagementUrl });
+        this.setState({ canChangePassword, externalAccountManagementUrl });
     }
 
     private async getThreepidState(): Promise<void> {
@@ -333,10 +329,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         // validate 3PID ownership even if we're just adding to the homeserver only.
         // For newer homeservers with separate 3PID add and bind methods (MSC2290),
         // there is no such concern, so we can always show the HS account 3PIDs.
-        if (
-            SettingsStore.getValue(UIFeature.ThirdPartyID) &&
-            (this.state.haveIdServer || this.state.serverSupportsSeparateAddAndBind === true)
-        ) {
+        if (SettingsStore.getValue(UIFeature.ThirdPartyID) && this.state.haveIdServer) {
             const emails = this.state.loading3pids ? (
                 <InlineSpinner />
             ) : (
@@ -366,8 +359,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     </SettingsSubsection>
                 </>
             );
-        } else if (this.state.serverSupportsSeparateAddAndBind === null) {
-            threepidSection = <Spinner />;
         }
 
         let passwordChangeSection: ReactNode = null;

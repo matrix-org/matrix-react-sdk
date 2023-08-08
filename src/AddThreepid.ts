@@ -100,30 +100,25 @@ export default class AddThreepid {
      */
     public async bindEmailAddress(emailAddress: string): Promise<IRequestTokenResponse> {
         this.bind = true;
-        if (await this.matrixClient.doesServerSupportSeparateAddAndBind()) {
-            // For separate bind, request a token directly from the IS.
-            const authClient = new IdentityAuthClient();
-            const identityAccessToken = (await authClient.getAccessToken()) ?? undefined;
-            try {
-                const res = await this.matrixClient.requestEmailToken(
-                    emailAddress,
-                    this.clientSecret,
-                    1,
-                    undefined,
-                    identityAccessToken,
-                );
-                this.sessionId = res.sid;
-                return res;
-            } catch (err) {
-                if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
-                    throw new UserFriendlyError("This email address is already in use", { cause: err });
-                }
-                // Otherwise, just blurt out the same error
-                throw err;
+        // For separate bind, request a token directly from the IS.
+        const authClient = new IdentityAuthClient();
+        const identityAccessToken = (await authClient.getAccessToken()) ?? undefined;
+        try {
+            const res = await this.matrixClient.requestEmailToken(
+                emailAddress,
+                this.clientSecret,
+                1,
+                undefined,
+                identityAccessToken,
+            );
+            this.sessionId = res.sid;
+            return res;
+        } catch (err) {
+            if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
+                throw new UserFriendlyError("This email address is already in use", { cause: err });
             }
-        } else {
-            // For tangled bind, request a token via the HS.
-            return this.addEmailAddress(emailAddress);
+            // Otherwise, just blurt out the same error
+            throw err;
         }
     }
 
@@ -163,31 +158,26 @@ export default class AddThreepid {
      */
     public async bindMsisdn(phoneCountry: string, phoneNumber: string): Promise<IRequestMsisdnTokenResponse> {
         this.bind = true;
-        if (await this.matrixClient.doesServerSupportSeparateAddAndBind()) {
-            // For separate bind, request a token directly from the IS.
-            const authClient = new IdentityAuthClient();
-            const identityAccessToken = (await authClient.getAccessToken()) ?? undefined;
-            try {
-                const res = await this.matrixClient.requestMsisdnToken(
-                    phoneCountry,
-                    phoneNumber,
-                    this.clientSecret,
-                    1,
-                    undefined,
-                    identityAccessToken,
-                );
-                this.sessionId = res.sid;
-                return res;
-            } catch (err) {
-                if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
-                    throw new UserFriendlyError("This phone number is already in use", { cause: err });
-                }
-                // Otherwise, just blurt out the same error
-                throw err;
+        // For separate bind, request a token directly from the IS.
+        const authClient = new IdentityAuthClient();
+        const identityAccessToken = (await authClient.getAccessToken()) ?? undefined;
+        try {
+            const res = await this.matrixClient.requestMsisdnToken(
+                phoneCountry,
+                phoneNumber,
+                this.clientSecret,
+                1,
+                undefined,
+                identityAccessToken,
+            );
+            this.sessionId = res.sid;
+            return res;
+        } catch (err) {
+            if (err instanceof MatrixError && err.errcode === "M_THREEPID_IN_USE") {
+                throw new UserFriendlyError("This phone number is already in use", { cause: err });
             }
-        } else {
-            // For tangled bind, request a token via the HS.
-            return this.addMsisdn(phoneCountry, phoneNumber);
+            // Otherwise, just blurt out the same error
+            throw err;
         }
     }
 
@@ -290,7 +280,6 @@ export default class AddThreepid {
         msisdnToken: string,
     ): Promise<[success?: boolean, result?: IAuthData | Error | null] | undefined> {
         const authClient = new IdentityAuthClient();
-        const supportsSeparateAddAndBind = await this.matrixClient.doesServerSupportSeparateAddAndBind();
 
         let result: { success: boolean } | MatrixError;
         if (this.submitUrl) {
@@ -300,7 +289,7 @@ export default class AddThreepid {
                 this.clientSecret,
                 msisdnToken,
             );
-        } else if (this.bind || !supportsSeparateAddAndBind) {
+        } else if (this.bind) {
             result = await this.matrixClient.submitMsisdnToken(
                 this.sessionId!,
                 this.clientSecret,
