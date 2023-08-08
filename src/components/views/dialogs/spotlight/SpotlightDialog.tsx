@@ -21,7 +21,7 @@ import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 import { IPublicRoomsChunkRoom, MatrixClient, RoomMember, RoomType, Room } from "matrix-js-sdk/src/matrix";
 import React, { ChangeEvent, RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import sanitizeHtml from "sanitize-html";
-import { Fzf } from "fzf";
+import { Fzf, FzfResultItem } from "fzf";
 
 import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
 import {
@@ -426,7 +426,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     if (canonicalAlias) {
                         items.push({
                             result: possibleResult,
-                            value: possibleResult.room.getCanonicalAlias(),
+                            value: canonicalAlias,
                             visible: false,
                         });
                     }
@@ -449,9 +449,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 }
 
                 if (isPublicRoomResult(possibleResult)) {
+                    const name = possibleResult.publicRoom.name || possibleResult.publicRoom.canonical_alias!;
                     items.push({
                         result: possibleResult,
-                        value: possibleResult.publicRoom.name,
+                        value: name,
                         visible: true,
                     });
 
@@ -503,12 +504,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 }
 
                 if (result.item.visible) {
-                    results.get(searchResult).item.visible = true;
+                    results.get(searchResult)!.item.visible = true;
                     return results;
                 }
 
                 return results;
-            }, new Map());
+            }, new Map<Result, FzfResultItem<SearchItem>>());
 
             for (const r of results2.values()) {
                 if (r.item.visible) {
