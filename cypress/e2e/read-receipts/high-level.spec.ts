@@ -736,7 +736,19 @@ describe("Read receipts", () => {
         });
 
         describe("thread roots", () => {
-            it.skip("An edit of a thread root makes the room unread", () => {});
+            it("An edit of a thread root makes the room unread", () => {
+                goTo(room1);
+                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
+                assertUnread(room2, 1);
+
+                goTo(room2);
+                openThread("Msg1");
+                assertRead(room2);
+                goTo(room1);
+
+                receiveMessages(room2, [editOf("Msg1", "Edit1")]);
+                assertUnread(room2, 1);
+            });
             it.skip("Reading an edit of a thread root makes the room read", () => {
                 // Given a fully-read thread exists
                 goTo(room2);
