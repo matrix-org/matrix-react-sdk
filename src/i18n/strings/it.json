@@ -3770,5 +3770,18 @@
     "People cannot join unless access is granted.": "Nessuno può entrare previo consenso di accesso.",
     "User read up to (m.read.private;ignoreSynthetic): ": "L'utente ha letto fino a (m.read.private;ignoreSynthetic): ",
     "%(senderDisplayName)s changed the join rule to ask to join.": "%(senderDisplayName)s ha cambiato la regola di accesso in \"Chiedi di entrare\".",
-    "Under active development, new room header & details interface": "In sviluppo attivo, nuova interfaccia per intestazione e dettagli stanza"
+    "Under active development, new room header & details interface": "In sviluppo attivo, nuova interfaccia per intestazione e dettagli stanza",
+    "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Ti deve venire dato l'accesso alla stanza per potere vedere o partecipare alla conversazione. Puoi inviare una richiesta di accesso sotto.",
+    "%(severalUsers)schanged their profile picture %(count)s times|one": "%(severalUsers)shanno cambiato la propria immagine del profilo",
+    "Ask to join %(roomName)s?": "Chiedi di entrare in %(roomName)s?",
+    "Ask to join?": "Chiedi di entrare?",
+    "Message (optional)": "Messaggio (facoltativo)",
+    "Request access": "Richiedi accesso",
+    "Request to join sent": "Richiesta di ingresso inviata",
+    "Your request to join is pending.": "La tua richiesta di ingresso è in attesa.",
+    "Cancel request": "Annulla richiesta",
+    "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)sha cambiato la propria immagine del profilo",
+    "Other spaces you know": "Altri spazi che conosci",
+    "You need an invite to access this room.": "Ti serve un invito per entrare in questa stanza.",
+    "Failed to cancel": "Annullamento fallito"
 }
