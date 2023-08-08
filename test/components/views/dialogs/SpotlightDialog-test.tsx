@@ -16,7 +16,14 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { IProtocol, IPublicRoomsChunkRoom, MatrixClient, Room, RoomMember } from "matrix-js-sdk/src/matrix";
+import {
+    ConnectionError,
+    IProtocol,
+    IPublicRoomsChunkRoom,
+    MatrixClient,
+    Room,
+    RoomMember,
+} from "matrix-js-sdk/src/matrix";
 import sanitizeHtml from "sanitize-html";
 import { fireEvent, render, screen } from "@testing-library/react";
 
@@ -494,5 +501,15 @@ describe("Spotlight Dialog", () => {
             expect(screen.getByText(nsfwNameRoom.name!)).toBeInTheDocument();
             expect(screen.getByText(potatoRoom.name!)).toBeInTheDocument();
         });
+    });
+
+    it("should show error if /publicRooms API failed", async () => {
+        mocked(mockedClient.publicRooms).mockRejectedValue(new ConnectionError("Failed to fetch"));
+        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        expect(screen.getByText("Failed to query public rooms")).toBeInTheDocument();
     });
 });
