@@ -32,13 +32,7 @@ describe("Read receipts", () => {
     let bot: MatrixClient | undefined;
 
     beforeEach(() => {
-        /*
-         * Create 2 rooms:
-         *
-         * - Selected room - this one is clicked in the UI
-         * - Other room - this one contains the bot, which will send events so
-         *                we can check its unread state.
-         */
+        // Create 2 rooms: Alpha & Beta, we join the bot to both of them
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
             cy.initTestUser(homeserver, userName)

@@ -23,8 +23,10 @@ declare global {
     namespace Cypress {
         interface Chainable {
             /**
-             * Opens the given room by name. The room must be visible in the
-             * room list.
+             * Opens the given room by name. The room must be visible in the room list.
+             * It uses a start-anchored regexp to accommodate for room tiles for unread rooms containing additional
+             * context in their aria labels, e.g. "Room name 3 unread messages."
+             *
              * @param name The room name to find and click on/open.
              */
             viewRoomByName(name: string): Chainable<JQuery<HTMLElement>>;
@@ -63,8 +65,6 @@ declare global {
 }
 
 Cypress.Commands.add("viewRoomByName", (name: string): Chainable<JQuery<HTMLElement>> => {
-    // We use a regexp here to search for starts with given name as room tiles have notification labels appended onto them
-    // e.g. "Room name 3 unread messages."
     return cy
         .findByRole("treeitem", { name: new RegExp("^" + name) })
         .should("have.class", "mx_RoomTile")
