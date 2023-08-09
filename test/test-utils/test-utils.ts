@@ -16,9 +16,8 @@ limitations under the License.
 
 import EventEmitter from "events";
 import { mocked, MockedObject } from "jest-mock";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import {
+    MatrixEvent,
     Room,
     User,
     IContent,
@@ -36,6 +35,7 @@ import {
     ConditionKind,
     IPushRules,
     RelationType,
+    JoinRule,
 } from "matrix-js-sdk/src/matrix";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
@@ -242,6 +242,8 @@ export function createTestClient(): MatrixClient {
         getSyncStateData: jest.fn(),
         getDehydratedDevice: jest.fn(),
         exportRoomKeys: jest.fn(),
+        knockRoom: jest.fn(),
+        leave: jest.fn(),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);

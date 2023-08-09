@@ -79,6 +79,42 @@ module.exports = {
                         message: "Please use matrix-js-sdk/src/matrix instead",
                     },
                     {
+                        name: "matrix-js-sdk/src/models/event",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/event-status",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/user",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/device",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/event-timeline",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/event-timeline-set",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/@types/partials",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/@types/event",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/client",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
                         name: "matrix-react-sdk",
                         message: "Please use matrix-react-sdk/src/index instead",
                     },
@@ -109,7 +145,6 @@ module.exports = {
         "jsx-a11y/no-noninteractive-tabindex": "off",
         "jsx-a11y/no-static-element-interactions": "off",
         "jsx-a11y/role-supports-aria-props": "off",
-        "jsx-a11y/tabindex-no-positive": "off",
 
         "matrix-org/require-copyright-header": "error",
     },

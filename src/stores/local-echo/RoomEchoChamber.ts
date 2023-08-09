@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, ClientEvent, MatrixClient, EventType } from "matrix-js-sdk/src/matrix";
 
 import { GenericEchoChamber, implicitlyReverted, PROPERTY_UPDATED } from "./GenericEchoChamber";
 import { getRoomNotifsState, RoomNotifState, setRoomNotifsState } from "../../RoomNotifs";

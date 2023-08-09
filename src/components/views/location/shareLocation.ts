@@ -14,12 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { IContent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, IContent, IEventRelation } from "matrix-js-sdk/src/matrix";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { makeLocationContent, makeBeaconInfoContent } from "matrix-js-sdk/src/content-helpers";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
