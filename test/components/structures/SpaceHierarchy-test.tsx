@@ -17,8 +17,7 @@ limitations under the License.
 import React from "react";
 import { mocked } from "jest-mock";
 import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 
@@ -30,11 +29,6 @@ import { Action } from "../../../src/dispatcher/actions";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
 import SettingsStore from "../../../src/settings/SettingsStore";
-
-// Fake random strings to give a predictable snapshot for checkbox IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: () => "abdefghi",
-}));
 
 describe("SpaceHierarchy", () => {
     describe("showRoom", () => {
