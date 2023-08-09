@@ -60,7 +60,12 @@ describe("Read receipts", () => {
                 .then(() => {
                     // Invite the bot to both rooms
                     cy.inviteUser(alphaRoomId, bot.getUserId());
+                    cy.viewRoomById(alphaRoomId);
+                    cy.findByText(botName + " joined the room").should("exist");
+
                     cy.inviteUser(betaRoomId, bot.getUserId());
+                    cy.viewRoomById(betaRoomId);
+                    cy.findByText(botName + " joined the room").should("exist");
                 });
         });
     });
