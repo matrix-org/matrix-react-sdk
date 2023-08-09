@@ -114,6 +114,12 @@ describe("Read receipts", () => {
         });
     }
 
+    /**
+     * Utility to find a MatrixEvent by its body content
+     * @param room - the room to search for the event in
+     * @param message - the body of the event to search for
+     * @param includeThreads - whether to search within threads too
+     */
     async function getMessage(room: Room, message: string, includeThreads = false): Promise<MatrixEvent> {
         let ev = room.timeline.find((e) => e.getContent().body === message);
         if (!ev && includeThreads) {
@@ -134,6 +140,11 @@ describe("Read receipts", () => {
         });
     }
 
+    /**
+     * MessageSpec to send an edit into a room
+     * @param originalMessage - the body of the message to edit
+     * @param newMessage - the message body to send in the edit
+     */
     function editOf(originalMessage: string, newMessage: string): MessageSpec {
         return new (class extends MessageSpec {
             public async getContent(room: Room): Promise<Record<string, unknown>> {
@@ -152,6 +163,11 @@ describe("Read receipts", () => {
         })();
     }
 
+    /**
+     * MessageSpec to send a reply into a room
+     * @param targetMessage - the body of the message to reply to
+     * @param newMessage - the message body to send into the reply
+     */
     function replyTo(targetMessage: string, newMessage: string): MessageSpec {
         return new (class extends MessageSpec {
             public async getContent(room: Room): Promise<Record<string, unknown>> {
@@ -170,6 +186,11 @@ describe("Read receipts", () => {
         })();
     }
 
+    /**
+     * MessageSpec to send a threaded response into a room
+     * @param rootMessage - the body of the thread root message to send a response to
+     * @param newMessage - the message body to send into the thread response
+     */
     function threadedOff(rootMessage: string, newMessage: string): MessageSpec {
         return new (class extends MessageSpec {
             public async getContent(room: Room): Promise<Record<string, unknown>> {
