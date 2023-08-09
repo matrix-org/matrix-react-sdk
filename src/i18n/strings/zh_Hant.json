@@ -3783,5 +3783,6 @@
     "Request access": "請求存取權",
     "Request to join sent": "已傳送加入請求",
     "Your request to join is pending.": "您的加入請求正在等待處理。",
-    "Cancel request": "取消請求"
+    "Cancel request": "取消請求",
+    "Failed to query public rooms": "檢索公開聊天室失敗"
 }

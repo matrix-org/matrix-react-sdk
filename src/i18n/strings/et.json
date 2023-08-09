@@ -3781,5 +3781,8 @@
     "Request access": "Küsi ligipääsu",
     "Cancel request": "Tühista liitumissoov",
     "Your request to join is pending.": "Sinu liitumissoov on ootel.",
-    "Request to join sent": "Ligipääsu päring on saadetud"
+    "Request to join sent": "Ligipääsu päring on saadetud",
+    "%(severalUsers)schanged their profile picture %(count)s times|one": "%(severalUsers)s kasutajat muutsid oma profiilipilti",
+    "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)s muutis oma profiilipilti",
+    "Failed to query public rooms": "Avalike jututubade tuvastamise päring ei õnnestunud"
 }
