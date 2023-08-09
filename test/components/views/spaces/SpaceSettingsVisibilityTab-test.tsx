@@ -18,8 +18,7 @@ import React from "react";
 import { mocked } from "jest-mock";
 import { randomString } from "matrix-js-sdk/src/randomstring";
 import { act, fireEvent, render, RenderResult } from "@testing-library/react";
-import { EventType, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { EventType, MatrixClient, Room, GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/matrix";
 
 import _SpaceSettingsVisibilityTab from "../../../../src/components/views/spaces/SpaceSettingsVisibilityTab";
 import {
@@ -32,11 +31,6 @@ import {
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 
 const SpaceSettingsVisibilityTab = wrapInMatrixClientContext(_SpaceSettingsVisibilityTab);
-
-// Fake random strings to give a predictable snapshot for IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: jest.fn(),
-}));
 
 jest.useFakeTimers();
 
