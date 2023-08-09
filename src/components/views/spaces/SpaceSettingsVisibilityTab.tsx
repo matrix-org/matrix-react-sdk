@@ -15,10 +15,7 @@ limitations under the License.
 */
 
 import React, { useState } from "react";
-import { Room } from "matrix-js-sdk/src/matrix";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { Room, EventType, GuestAccess, HistoryVisibility, JoinRule, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";

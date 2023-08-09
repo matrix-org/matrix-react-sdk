@@ -15,11 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, EventType, MsgType, RelationType, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 import { M_POLL_END, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { GroupCallIntent } from "matrix-js-sdk/src/webrtc/groupCall";
 
 import SettingsStore from "../settings/SettingsStore";
