@@ -42,7 +42,7 @@ export const useRoomMemberCount = (room: Room, throttleWait = 250): number => {
     const [count, setCount] = useState<number>(room.getJoinedMemberCount());
     useTypedEventEmitter(
         room.currentState,
-        RoomStateEvent.Update,
+        RoomStateEvent.Members,
         throttle(
             () => {
                 setCount(room.getJoinedMemberCount());
