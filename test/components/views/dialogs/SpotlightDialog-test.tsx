@@ -136,9 +136,10 @@ describe("Spotlight Dialog", () => {
         guest_can_join: false,
     };
 
+    const testDMRoomId = "!testDM:example.com";
+    const testDMUserId = "@alice:matrix.org";
+
     let testRoom: Room;
-    let testDMRoomId = "!testDM:example.com";
-    let testDMUserId = "@alice:matrix.org"
     let testDM: Room;
     let testLocalRoom: LocalRoom;
 
@@ -156,13 +157,13 @@ describe("Spotlight Dialog", () => {
             getUserIdForRoomId: jest.fn(),
         } as unknown as DMRoomMap);
 
-        testDM = mkRoom(mockedClient, testDMRoomId)
+        testDM = mkRoom(mockedClient, testDMRoomId);
         testDM.name = "Chat with Alice";
         mocked(testDM.getMyMembership).mockReturnValue("join");
 
         mocked(DMRoomMap.shared().getUserIdForRoomId).mockImplementation((roomId: string) => {
             if (roomId === testDMRoomId) {
-              return testDMUserId;
+                return testDMUserId;
             }
             return undefined;
         });
@@ -408,7 +409,9 @@ describe("Spotlight Dialog", () => {
             ],
             limited: false,
         });
-        render(<SpotlightDialog initialFilter={Filter.People} initialText="Something Wonder" onFinished={() => null} />);
+        render(
+            <SpotlightDialog initialFilter={Filter.People} initialText="Something Wonder" onFinished={() => null} />,
+        );
         // search is debounced
         jest.advanceTimersByTime(200);
         await flushPromisesWithFakeTimers();
@@ -421,10 +424,10 @@ describe("Spotlight Dialog", () => {
     });
 
     it("don't sort the order of users sent by the server", async () => {
-        var serverList = [
+        const serverList = [
             { user_id: "@user2:server", display_name: "User Beta", avatar_url: "mxc://2/avatar" },
             { user_id: "@user1:server", display_name: "User Alpha", avatar_url: "mxc://1/avatar" },
-        ]
+        ];
         mocked(mockedClient.searchUserDirectory).mockResolvedValue({
             results: serverList,
             limited: false,
@@ -434,7 +437,7 @@ describe("Spotlight Dialog", () => {
         // search is debounced
         jest.advanceTimersByTime(200);
         await flushPromisesWithFakeTimers();
-        
+
         const content = document.querySelector("#mx_SpotlightDialog_content")!;
         const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
         expect(options.length).toBeGreaterThanOrEqual(2);

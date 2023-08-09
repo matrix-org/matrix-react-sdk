@@ -38,7 +38,7 @@ export const compareMembers =
 
         if (aScore === bScore) {
             if (aNumRooms === bNumRooms) {
-                // If there is no activity between members, 
+                // If there is no activity between members,
                 // keep the order received from the user directory search results
                 return 0;
             }
