@@ -17,15 +17,21 @@ limitations under the License.
 import React, { createRef } from "react";
 import { DialogContent, DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
 import { logger } from "matrix-js-sdk/src/logger";
+import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
+import { ModuleUiDialogOptions } from "@matrix-org/react-sdk-module-api/lib/types/ModuleUiDialogOptions";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "./ScrollableBaseModal";
 import { _t } from "../../../languageHandler";
 
 interface IProps<P extends DialogProps, C extends DialogContent<P>> {
     contentFactory: (props: P, ref: React.RefObject<C>) => React.ReactNode;
-    contentProps: P;
+    contentProps: Omit<P, keyof DialogProps> | undefined;
     title: string;
-    onFinished(ok?: boolean, model?: Awaited<ReturnType<DialogContent<P>["trySubmit"]>>): void;
+    actionLabel?: string;
+    cancelLabel?: string;
+    canSubmit?: boolean;
+    moduleApi: ModuleApi;
+    onFinished(ok?: boolean, model?: Awaited<ReturnType<DialogContent<P & DialogProps>["trySubmit"]>>): void;
 }
 
 interface IState extends IScrollableBaseState {
@@ -43,8 +49,9 @@ export class ModuleUiDialog<P extends DialogProps, C extends DialogContent<P>> e
 
         this.state = {
             title: this.props.title,
-            canSubmit: true,
-            actionLabel: _t("OK"),
+            actionLabel: this.props.actionLabel ?? _t("OK"),
+            cancelLabel: this.props.cancelLabel,
+            canSubmit: this.props.canSubmit ?? true,
         };
     }
 
@@ -61,11 +68,23 @@ export class ModuleUiDialog<P extends DialogProps, C extends DialogContent<P>> e
         this.props.onFinished(false);
     }
 
+    protected setOptions(options: ModuleUiDialogOptions): void {
+        this.setState((state) => ({ ...state, ...options }));
+    }
+
     protected renderContent(): React.ReactNode {
-        return (
-            <div className="mx_ModuleUiDialog">
-                {this.props.contentFactory(this.props.contentProps, this.contentRef)}
-            </div>
-        );
+        const dialogProps: DialogProps = {
+            moduleApi: this.props.moduleApi,
+            setOptions: this.setOptions.bind(this),
+            cancel: this.cancel.bind(this),
+        };
+
+        // Typescript isn't very happy understanding that `contentProps` satisfies `Omit<P, keyof DialogProps>`
+        const contentProps: P = {
+            ...this.props.contentProps,
+            ...dialogProps,
+        } as unknown as P;
+
+        return <div className="mx_ModuleUiDialog">{this.props.contentFactory(contentProps, this.contentRef)}</div>;
     }
 }

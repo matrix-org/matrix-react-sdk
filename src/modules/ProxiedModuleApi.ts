@@ -22,6 +22,7 @@ import React from "react";
 import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/lib/types/AccountAuthInfo";
 import * as Matrix from "matrix-js-sdk/src/matrix";
 import { IRegisterRequestParams } from "matrix-js-sdk/src/matrix";
+import { ModuleUiDialogOptions } from "@matrix-org/react-sdk-module-api/lib/types/ModuleUiDialogOptions";
 
 import Modal from "../Modal";
 import { _t } from "../languageHandler";
@@ -81,21 +82,21 @@ export class ProxiedModuleApi implements ModuleApi {
      * @override
      */
     public openDialog<M extends object, P extends DialogProps, C extends DialogContent<P>>(
-        title: string,
+        titleOrOptions: string | ModuleUiDialogOptions,
         body: (props: P, ref: React.RefObject<C>) => React.ReactNode,
         props?: Omit<P, keyof DialogProps>,
     ): Promise<{ didOkOrSubmit: boolean; model: M }> {
+        const options: ModuleUiDialogOptions =
+            typeof titleOrOptions === "string" ? { title: titleOrOptions } : titleOrOptions;
+
         return new Promise<{ didOkOrSubmit: boolean; model: M }>((resolve) => {
             Modal.createDialog(
                 ModuleUiDialog<P, C>,
                 {
-                    title: title,
+                    ...options,
                     contentFactory: body,
-                    // Typescript isn't very happy understanding that `props` satisfies `Omit<P, keyof DialogProps>`
-                    contentProps: {
-                        ...props,
-                        moduleApi: this,
-                    } as unknown as P,
+                    moduleApi: this,
+                    contentProps: props,
                 },
                 "mx_CompoundDialog",
             ).finished.then(([didOkOrSubmit, model]) => {
