@@ -104,7 +104,6 @@ export default function MemberAvatar({
                     : props.onClick
             }
             altText={_t("Profile picture")}
-            ariaLabel={_t("Profile picture")}
         />
     );
 }

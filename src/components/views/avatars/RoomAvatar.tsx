@@ -16,7 +16,6 @@ limitations under the License.
 
 import React, { ComponentProps } from "react";
 import { Room, RoomStateEvent, MatrixEvent, EventType, RoomType } from "matrix-js-sdk/src/matrix";
-import classNames from "classnames";
 
 import BaseAvatar from "./BaseAvatar";
 import ImageView from "../elements/ImageView";
@@ -140,9 +139,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         return (
             <BaseAvatar
                 {...otherProps}
-                className={classNames(className, {
-                    mx_RoomAvatar_isSpaceRoom: (room?.getType() ?? this.props.oobData?.roomType) === RoomType.Space,
-                })}
+                type={(room?.getType() ?? this.props.oobData?.roomType) === RoomType.Space ? "square" : "round"}
                 name={roomName}
                 idName={this.roomIdName}
                 urls={this.state.urls}
