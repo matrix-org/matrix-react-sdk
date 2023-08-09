@@ -23,12 +23,12 @@ import Chainable = Cypress.Chainable;
 describe("Read receipts", () => {
     const userName = "Mae";
     const botName = "Other User";
-    const selectedRoomName = "Selected Room";
-    const otherRoomName = "Other Room";
+    const roomAlpha = "Room Alpha";
+    const roomBeta = "Room Beta";
 
     let homeserver: HomeserverInstance;
-    let otherRoomId: string;
-    let selectedRoomId: string;
+    let betaRoomId: string;
+    let alphaRoomId: string;
     let bot: MatrixClient | undefined;
 
     beforeEach(() => {
@@ -43,13 +43,13 @@ describe("Read receipts", () => {
             homeserver = data;
             cy.initTestUser(homeserver, userName)
                 .then(() => {
-                    cy.createRoom({ name: selectedRoomName }).then((createdRoomId) => {
-                        selectedRoomId = createdRoomId;
+                    cy.createRoom({ name: roomAlpha }).then((createdRoomId) => {
+                        alphaRoomId = createdRoomId;
                     });
                 })
                 .then(() => {
-                    cy.createRoom({ name: otherRoomName }).then((createdRoomId) => {
-                        otherRoomId = createdRoomId;
+                    cy.createRoom({ name: roomBeta }).then((createdRoomId) => {
+                        betaRoomId = createdRoomId;
                     });
                 })
                 .then(() => {
@@ -58,13 +58,9 @@ describe("Read receipts", () => {
                     });
                 })
                 .then(() => {
-                    // Invite the bot to Other room
-                    cy.inviteUser(otherRoomId, bot.getUserId());
-                    cy.visit("/#/room/" + otherRoomId);
-                    cy.findByText(botName + " joined the room").should("exist");
-
-                    // Then go into Selected room
-                    cy.visit("/#/room/" + selectedRoomId);
+                    // Invite the bot to both rooms
+                    cy.inviteUser(alphaRoomId, bot.getUserId());
+                    cy.inviteUser(betaRoomId, bot.getUserId());
                 });
         });
     });
@@ -100,7 +96,11 @@ describe("Read receipts", () => {
         cy.get(".mx_ThreadView_timelinePanelWrapper", { log: false }).should("have.length", 1);
     }
 
-    // Sends messages into given room as a bot
+    /**
+     * Sends messages into given room as a bot
+     * @param room - the name of the room to send messages into
+     * @param messages - the list of messages to send, these can be strings or implementations of MessageSpace like `editOf`
+     */
     function receiveMessages(room: string, messages: Message[]) {
         findRoomByName(room).then(async ({ roomId }) => {
             const room = bot.getRoom(roomId);
@@ -206,6 +206,11 @@ describe("Read receipts", () => {
         });
     }
 
+    /**
+     * Assert a given room is marked as unread (via the room list tile)
+     * @param room - the name of the room to check
+     * @param count - the numeric count to assert, or if "." specified then a bold/dot (no count) state is asserted
+     */
     function assertUnread(room: string, count: number | ".") {
         cy.log("Assert room unread", room, count);
         return getRoomListTile(room).within(() => {
@@ -266,8 +271,8 @@ describe("Read receipts", () => {
         cy.get(".mx_RoomView", { log: false, timeout: 20000 }).should("exist");
     }
 
-    const room1 = selectedRoomName;
-    const room2 = otherRoomName;
+    const room1 = roomAlpha;
+    const room2 = roomBeta;
 
     describe("new messages", () => {
         describe("in the main timeline", () => {
@@ -535,7 +540,7 @@ describe("Read receipts", () => {
     describe("editing messages", () => {
         describe("in the main timeline", () => {
             it("Editing a message makes a room unread", () => {
-                // Given I am not in the room
+                // Given I am not looking at the room
                 goTo(room1);
 
                 receiveMessages(room2, ["Msg1"]);
@@ -596,7 +601,7 @@ describe("Read receipts", () => {
                 assertUnread(room2, 1);
             });
             it("Editing a reply after reading it makes the room unread", () => {
-                // Given I am not in the room
+                // Given I am not looking at the room
                 goTo(room1);
 
                 receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1")]);
@@ -613,7 +618,7 @@ describe("Read receipts", () => {
                 assertUnread(room2, 1);
             });
             it("Editing a reply after marking as read makes the room unread", () => {
-                // Given I am not in the room
+                // Given I am not looking at the room
                 goTo(room1);
 
                 receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1")]);
@@ -627,7 +632,7 @@ describe("Read receipts", () => {
                 assertUnread(room2, 1);
             });
             it("A room with an edit is still unread after restart", () => {
-                // Given I am not in the room
+                // Given I am not looking at the room
                 goTo(room1);
 
                 receiveMessages(room2, ["Msg1"]);

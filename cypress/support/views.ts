@@ -63,6 +63,8 @@ declare global {
 }
 
 Cypress.Commands.add("viewRoomByName", (name: string): Chainable<JQuery<HTMLElement>> => {
+    // We use a regexp here to search for starts with given name as room tiles have notification labels appended onto them
+    // e.g. "Room name 3 unread messages."
     return cy
         .findByRole("treeitem", { name: new RegExp("^" + name) })
         .should("have.class", "mx_RoomTile")
