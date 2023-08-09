@@ -25,7 +25,7 @@ export const useRoomMembers = (room: Room, throttleWait = 250): RoomMember[] => 
     const [members, setMembers] = useState<RoomMember[]>(room.getJoinedMembers());
     useTypedEventEmitter(
         room.currentState,
-        RoomStateEvent.Update,
+        RoomStateEvent.Members,
         throttle(
             () => {
                 setMembers(room.getJoinedMembers());
