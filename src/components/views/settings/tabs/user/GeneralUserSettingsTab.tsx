@@ -299,12 +299,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         });
     };
 
-    private onPasswordChanged = ({ didLogoutOutOtherDevices }: { didLogoutOutOtherDevices: boolean }): void => {
-        let description = _t("Your password was successfully changed.");
-        if (didLogoutOutOtherDevices) {
-            description +=
-                " " + _t("You will not receive push notifications on other devices until you sign back in to them.");
-        }
+    private onPasswordChanged = (): void => {
+        const description = _t("Your password was successfully changed.");
         // TODO: Figure out a design that doesn't involve replacing the current dialog
         Modal.createDialog(ErrorDialog, {
             title: _t("Success"),
