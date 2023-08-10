@@ -89,16 +89,10 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     private async onChangePassword(oldPassword: string, newPassword: string): Promise<void> {
         const cli = MatrixClientPeg.safeGet();
 
-        const userHasOtherDevices = (await cli.getDevices()).devices.length > 1;
-        this.changePassword(cli, oldPassword, newPassword, userHasOtherDevices);
+        this.changePassword(cli, oldPassword, newPassword);
     }
 
-    private changePassword(
-        cli: MatrixClient,
-        oldPassword: string,
-        newPassword: string,
-        userHasOtherDevices: boolean,
-    ): void {
+    private changePassword(cli: MatrixClient, oldPassword: string, newPassword: string): void {
         const authDict = {
             type: "m.login.password",
             identifier: {
