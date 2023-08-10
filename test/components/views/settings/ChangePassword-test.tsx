@@ -15,12 +15,11 @@ limitations under the License.
 */
 
 import React from "react";
-import { getByText, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import ChangePassword from "../../../../src/components/views/settings/ChangePassword";
 import { stubClient } from "../../../test-utils";
-import { mocked } from "jest-mock";
 
 describe("<ChangePassword />", () => {
     it("renders expected fields", () => {
