@@ -244,6 +244,9 @@ export function createTestClient(): MatrixClient {
         knockRoom: jest.fn(),
         leave: jest.fn(),
         getVersions: jest.fn().mockResolvedValue({ versions: ["v1.1"] }),
+        requestAdd3pidMsisdnToken: jest.fn(),
+        submitMsisdnTokenOtherUrl: jest.fn(),
+        addThreePidOnly: jest.fn(),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
