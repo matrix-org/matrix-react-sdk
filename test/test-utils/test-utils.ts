@@ -247,6 +247,8 @@ export function createTestClient(): MatrixClient {
         requestAdd3pidMsisdnToken: jest.fn(),
         submitMsisdnTokenOtherUrl: jest.fn(),
         addThreePidOnly: jest.fn(),
+        requestMsisdnToken: jest.fn(),
+        submitMsisdnToken: jest.fn(),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);

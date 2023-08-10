@@ -17,6 +17,7 @@ limitations under the License.
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { mocked } from "jest-mock";
 
 import ChangePassword from "../../../../src/components/views/settings/ChangePassword";
 import { stubClient } from "../../../test-utils";
@@ -50,6 +51,7 @@ describe("<ChangePassword />", () => {
 
     it("should call MatrixClient::setPassword with expected parameters", async () => {
         const cli = stubClient();
+        mocked(cli.setPassword).mockResolvedValue({});
 
         const onFinished = jest.fn();
         const onError = jest.fn();
@@ -79,5 +81,6 @@ describe("<ChangePassword />", () => {
                 false,
             );
         });
+        expect(onFinished).toHaveBeenCalled();
     });
 });
