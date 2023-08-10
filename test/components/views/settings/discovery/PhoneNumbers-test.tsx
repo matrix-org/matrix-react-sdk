@@ -32,11 +32,10 @@ const msisdn: IThreepid = {
 };
 describe("<PhoneNumber/>", () => {
     it("should track props.msisdn.bound changes", async () => {
-        const { rerender } = render(<PhoneNumber msisdn={msisdn} />);
+        const { rerender } = render(<PhoneNumber msisdn={{ ...msisdn }} />);
         await screen.findByText("Share");
 
-        msisdn.bound = true;
-        rerender(<PhoneNumber msisdn={{ ...msisdn }} />);
+        rerender(<PhoneNumber msisdn={{ ...msisdn, bound: true }} />);
         await screen.findByText("Revoke");
     });
 });
@@ -50,7 +49,7 @@ jest.mock("../../../../../src/IdentityAuthClient", () =>
 
 describe("<PhoneNumbers />", () => {
     it("should render a loader while loading", async () => {
-        const { container } = render(<PhoneNumbers msisdns={[msisdn]} isLoading={true} />);
+        const { container } = render(<PhoneNumbers msisdns={[{ ...msisdn }]} isLoading={true} />);
 
         expect(container).toMatchSnapshot();
     });
