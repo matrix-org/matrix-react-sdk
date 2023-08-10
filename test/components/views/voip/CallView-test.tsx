@@ -18,12 +18,10 @@ import React from "react";
 import { zip } from "lodash";
 import { render, screen, act, fireEvent, waitFor, cleanup } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixClient, PendingEventOrdering, Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { Widget } from "matrix-widget-api";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import type { ClientWidgetApi } from "matrix-widget-api";
 import {
     stubClient,

@@ -18,8 +18,7 @@ import { WebSearch as WebSearchEvent } from "@matrix-org/analytics-events/types/
 import classNames from "classnames";
 import { capitalize, sum } from "lodash";
 import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
-import { IPublicRoomsChunkRoom, MatrixClient, RoomMember, RoomType } from "matrix-js-sdk/src/matrix";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { IPublicRoomsChunkRoom, MatrixClient, RoomMember, RoomType, Room } from "matrix-js-sdk/src/matrix";
 import { normalize } from "matrix-js-sdk/src/utils";
 import React, { ChangeEvent, RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import sanitizeHtml from "sanitize-html";
@@ -312,6 +311,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         config,
         setConfig,
         search: searchPublicRooms,
+        error: publicRoomsError,
     } = usePublicRoomDirectory();
     const [showRooms, setShowRooms] = useState(true);
     const [showSpaces, setShowSpaces] = useState(false);
@@ -758,6 +758,23 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
         let publicRoomsSection: JSX.Element | undefined;
         if (filter === Filter.PublicRooms) {
+            let content: JSX.Element | JSX.Element[];
+            if (!showRooms && !showSpaces) {
+                content = (
+                    <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
+                        {_t("You cannot search for rooms that are neither a room nor a space")}
+                    </div>
+                );
+            } else if (publicRoomsError) {
+                content = (
+                    <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
+                        {_t("Failed to query public rooms")}
+                    </div>
+                );
+            } else {
+                content = results[Section.PublicRooms].slice(0, SECTION_LIMIT).map(resultMapper);
+            }
+
             publicRoomsSection = (
                 <div
                     className="mx_SpotlightDialog_section mx_SpotlightDialog_results"
@@ -784,16 +801,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             <NetworkDropdown protocols={protocols} config={config ?? null} setConfig={setConfig} />
                         </div>
                     </div>
-                    <div>
-                        {" "}
-                        {showRooms || showSpaces ? (
-                            results[Section.PublicRooms].slice(0, SECTION_LIMIT).map(resultMapper)
-                        ) : (
-                            <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
-                                {_t("You cannot search for rooms that are neither a room nor a space")}
-                            </div>
-                        )}{" "}
-                    </div>
+                    <div>{content}</div>
                 </div>
             );
         }

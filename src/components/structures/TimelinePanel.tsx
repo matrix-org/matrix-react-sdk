@@ -16,21 +16,30 @@ limitations under the License.
 
 import React, { createRef, ReactNode } from "react";
 import ReactDOM from "react-dom";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
-import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
+import {
+    Room,
+    RoomEvent,
+    RoomMember,
+    RoomMemberEvent,
+    MatrixEvent,
+    MatrixEventEvent,
+    EventTimelineSet,
+    IRoomTimelineData,
+    Direction,
+    EventTimeline,
+    EventType,
+    RelationType,
+    ClientEvent,
+    MatrixClient,
+    Relations,
+    MatrixError,
+    SyncState,
+} from "matrix-js-sdk/src/matrix";
 import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { SyncState } from "matrix-js-sdk/src/sync";
-import { RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import { debounce, findLastIndex, throttle } from "lodash";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
-import { Relations } from "matrix-js-sdk/src/models/relations";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -1807,7 +1816,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.context.timelineRenderingType,
         );
         if (events.length === 0 || !room || !cli.isRoomEncrypted(room.roomId) || isThreadTimeline) {
-            logger.info("checkForPreJoinUISI: showing all messages, skipping check");
+            logger.debug("checkForPreJoinUISI: showing all messages, skipping check");
             return 0;
         }
 
@@ -1853,12 +1862,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 // reached an undecryptable message when the user wasn't in the room -- don't try to load any more
                 // Note: for now, we assume that events that are being decrypted are
                 // not decryptable - we will be called once more when it is decrypted.
-                logger.info("checkForPreJoinUISI: reached a pre-join UISI at index ", i);
+                logger.debug("checkForPreJoinUISI: reached a pre-join UISI at index ", i);
                 return i + 1;
             }
         }
 
-        logger.info("checkForPreJoinUISI: did not find pre-join UISI");
+        logger.debug("checkForPreJoinUISI: did not find pre-join UISI");
         return 0;
     }
 

@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 import { Optional } from "matrix-events-sdk";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RelationType } from "matrix-js-sdk/src/@types/event";
-import { IEventRelation } from "matrix-js-sdk/src/models/event";
+import { Room, IEventRelation, RelationType } from "matrix-js-sdk/src/matrix";
 
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import defaultDispatcher from "../dispatcher/dispatcher";

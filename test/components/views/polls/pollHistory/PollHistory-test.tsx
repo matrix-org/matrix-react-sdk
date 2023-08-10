@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
-import { Filter } from "matrix-js-sdk/src/filter";
-import { EventTimeline, Room } from "matrix-js-sdk/src/matrix";
+import { Filter, EventTimeline, Room } from "matrix-js-sdk/src/matrix";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 
 import { PollHistory } from "../../../../../src/components/views/polls/pollHistory/PollHistory";
@@ -35,11 +34,6 @@ import { RoomPermalinkCreator } from "../../../../../src/utils/permalinks/Permal
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
 import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
-
-// Fake random strings to give a predictable snapshot for IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: () => "abdefghi",
-}));
 
 describe("<PollHistory />", () => {
     // 14.03.2022 16:15

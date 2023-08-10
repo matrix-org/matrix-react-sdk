@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
 import {
+    Room,
     MatrixEventEvent,
     PendingEventOrdering,
     EventStatus,
     NotificationCountType,
     EventType,
+    MatrixEvent,
 } from "matrix-js-sdk/src/matrix";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { mkEvent, muteRoom, stubClient } from "../../test-utils";

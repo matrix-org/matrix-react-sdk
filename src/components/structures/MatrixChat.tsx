@@ -22,15 +22,16 @@ import {
     HttpApiEvent,
     MatrixClient,
     MatrixEventEvent,
+    MatrixEvent,
+    RoomType,
+    SyncStateData,
+    SyncState,
 } from "matrix-js-sdk/src/matrix";
-import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 
@@ -1502,7 +1503,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return this.loggedInView.current.canResetTimelineInRoom(roomId);
         });
 
-        cli.on(ClientEvent.Sync, (state: SyncState, prevState: SyncState | null, data?: ISyncStateData) => {
+        cli.on(ClientEvent.Sync, (state: SyncState, prevState: SyncState | null, data?: SyncStateData) => {
             if (state === SyncState.Error || state === SyncState.Reconnecting) {
                 if (data?.error instanceof InvalidStoreError) {
                     Lifecycle.handleInvalidStoreError(data.error);
@@ -1515,7 +1516,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (state === SyncState.Syncing && prevState === SyncState.Syncing) {
                 return;
             }
-            logger.info(`MatrixClient sync state => ${state}`);
+            logger.debug(`MatrixClient sync state => ${state}`);
             if (state !== SyncState.Prepared) {
                 return;
             }

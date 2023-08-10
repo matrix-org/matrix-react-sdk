@@ -14,12 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomStateEvent, MatrixEvent, ClientEvent } from "matrix-js-sdk/src/matrix";
 import { IWidget } from "matrix-widget-api";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent } from "matrix-js-sdk/src/client";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
