@@ -32,7 +32,7 @@ describe("Read receipts", () => {
     let bot: MatrixClient | undefined;
 
     beforeEach(() => {
-        // Create 2 rooms: Alpha & Beta, we join the bot to both of them
+        // Create 2 rooms: Alpha & Beta. We join the bot to both of them
         cy.startHomeserver("default").then((data) => {
             homeserver = data;
             cy.initTestUser(homeserver, userName)
