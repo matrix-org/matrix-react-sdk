@@ -3783,5 +3783,6 @@
     "Ask to join?": "Požádat o vstup?",
     "Cancel request": "Zrušit žádost",
     "Failed to cancel": "Nepodařilo se zrušit",
-    "You need an invite to access this room.": "Pro vstup do této místnosti potřebujete pozvánku."
+    "You need an invite to access this room.": "Pro vstup do této místnosti potřebujete pozvánku.",
+    "Failed to query public rooms": "Nepodařilo se vyhledat veřejné místnosti"
 }
