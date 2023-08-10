@@ -324,12 +324,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderAccountSection(): JSX.Element {
         let threepidSection: ReactNode = null;
 
-        // For older homeservers without separate 3PID add and bind methods (MSC2290),
-        // we use a combo add with bind option API which requires an identity server to
-        // validate 3PID ownership even if we're just adding to the homeserver only.
-        // For newer homeservers with separate 3PID add and bind methods (MSC2290),
-        // there is no such concern, so we can always show the HS account 3PIDs.
-        if (SettingsStore.getValue(UIFeature.ThirdPartyID) && this.state.haveIdServer) {
+        if (SettingsStore.getValue(UIFeature.ThirdPartyID)) {
             const emails = this.state.loading3pids ? (
                 <InlineSpinner />
             ) : (
