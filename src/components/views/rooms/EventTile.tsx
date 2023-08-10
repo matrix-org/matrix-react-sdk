@@ -17,8 +17,10 @@ limitations under the License.
 
 import React, { createRef, forwardRef, MouseEvent, ReactNode, useRef } from "react";
 import classNames from "classnames";
-import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import {
+    EventType,
+    MsgType,
+    RelationType,
     EventStatus,
     MatrixEvent,
     MatrixEventEvent,
@@ -26,8 +28,8 @@ import {
     NotificationCountType,
     Room,
     RoomEvent,
+    Relations,
 } from "matrix-js-sdk/src/matrix";
-import { Relations } from "matrix-js-sdk/src/models/relations";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";

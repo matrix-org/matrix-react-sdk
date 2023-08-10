@@ -103,6 +103,58 @@ module.exports = {
                         message: "Please use matrix-js-sdk/src/matrix instead",
                     },
                     {
+                        name: "matrix-js-sdk/src/@types/partials",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/@types/event",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/client",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/search-result",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/poll",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/models/relations",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/http-api",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/@types/PushRules",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/@types/search",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/filter",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/webrtc/groupCall",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/service-types",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        name: "matrix-js-sdk/src/sync",
+                        message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
                         name: "matrix-react-sdk",
                         message: "Please use matrix-react-sdk/src/index instead",
                     },

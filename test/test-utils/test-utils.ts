@@ -35,8 +35,8 @@ import {
     ConditionKind,
     IPushRules,
     RelationType,
+    JoinRule,
 } from "matrix-js-sdk/src/matrix";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
@@ -45,7 +45,7 @@ import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
 import { IEventDecryptionResult } from "matrix-js-sdk/src/@types/crypto";
 import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
 
-import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
+import type { GroupCall } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
 import { ValidatedDelegatedAuthConfig, ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";

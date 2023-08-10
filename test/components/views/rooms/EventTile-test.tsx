@@ -17,9 +17,16 @@ limitations under the License.
 import * as React from "react";
 import { render, waitFor, screen, act, fireEvent } from "@testing-library/react";
 import { mocked } from "jest-mock";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { CryptoApi, TweakName, NotificationCountType, Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import {
+    EventType,
+    CryptoApi,
+    TweakName,
+    NotificationCountType,
+    Room,
+    MatrixEvent,
+    MatrixClient,
+    PendingEventOrdering,
+} from "matrix-js-sdk/src/matrix";
 import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { IEncryptedEventInfo } from "matrix-js-sdk/src/crypto/api";
