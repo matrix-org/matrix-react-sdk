@@ -41,9 +41,9 @@ exports[`<PhoneNumbers /> should allow a phone number to be added 1`] = `
                   <div
                     class="mx_Dropdown_option_emoji"
                   >
-                    🇺🇸
+                    🇬🇧
                   </div>
-                  +1
+                  +44
                 </span>
               </div>
               <span
@@ -59,7 +59,7 @@ exports[`<PhoneNumbers /> should allow a phone number to be added 1`] = `
           label="Phone Number"
           placeholder="Phone Number"
           type="text"
-          value="5555551234"
+          value="7900111222"
         />
         <label
           for="mx_Field_1"
@@ -71,7 +71,7 @@ exports[`<PhoneNumbers /> should allow a phone number to be added 1`] = `
   </form>
   <div>
     <div>
-      A text message has been sent to ++15555551234. Please enter the verification code it contains.
+      A text message has been sent to +447900111222. Please enter the verification code it contains.
       <br />
     </div>
     <form

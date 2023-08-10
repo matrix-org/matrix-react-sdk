@@ -75,7 +75,7 @@ describe("<PhoneNumbers />", () => {
 
         mocked(cli.requestMsisdnToken).mockResolvedValue({
             sid: "SID",
-            msisdn: "+15555551234",
+            msisdn: "+447900111222",
             submit_url: "https://server.url",
             success: true,
             intl_fmt: "no-clue",

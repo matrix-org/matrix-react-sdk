@@ -21,9 +21,14 @@ import { mocked } from "jest-mock";
 
 import PhoneNumbers from "../../../../../src/components/views/settings/account/PhoneNumbers";
 import { stubClient } from "../../../../test-utils";
+import SdkConfig from "../../../../../src/SdkConfig";
 
 describe("<PhoneNumbers />", () => {
     it("should allow a phone number to be added", async () => {
+        SdkConfig.add({
+            default_country_code: "GB",
+        });
+
         const cli = stubClient();
         const onMsisdnsChange = jest.fn();
         const { asFragment, getByLabelText, getByText } = render(
@@ -32,7 +37,7 @@ describe("<PhoneNumbers />", () => {
 
         mocked(cli.requestAdd3pidMsisdnToken).mockResolvedValue({
             sid: "SID",
-            msisdn: "+15555551234",
+            msisdn: "447900111222",
             submit_url: "https://server.url",
             success: true,
             intl_fmt: "no-clue",
@@ -41,10 +46,10 @@ describe("<PhoneNumbers />", () => {
         mocked(cli.addThreePidOnly).mockResolvedValue({});
 
         const phoneNumberField = getByLabelText("Phone Number");
-        await userEvent.type(phoneNumberField, "5555551234");
+        await userEvent.type(phoneNumberField, "7900111222");
         await userEvent.click(getByText("Add"));
 
-        expect(cli.requestAdd3pidMsisdnToken).toHaveBeenCalledWith("US", "5555551234", "t35tcl1Ent5ECr3T", 1);
+        expect(cli.requestAdd3pidMsisdnToken).toHaveBeenCalledWith("GB", "7900111222", "t35tcl1Ent5ECr3T", 1);
         expect(asFragment()).toMatchSnapshot();
 
         const verificationCodeField = getByLabelText("Verification code");
@@ -57,6 +62,6 @@ describe("<PhoneNumbers />", () => {
             "t35tcl1Ent5ECr3T",
             "123666",
         );
-        expect(onMsisdnsChange).toHaveBeenCalledWith([{ address: "+15555551234", medium: "msisdn" }]);
+        expect(onMsisdnsChange).toHaveBeenCalledWith([{ address: "447900111222", medium: "msisdn" }]);
     });
 });
