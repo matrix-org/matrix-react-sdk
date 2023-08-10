@@ -56,7 +56,7 @@ describe("<PhoneNumbers />", () => {
     });
 
     it("should render phone numbers", async () => {
-        const { container } = render(<PhoneNumbers msisdns={[msisdn]} isLoading={false} />);
+        const { container } = render(<PhoneNumbers msisdns={[{ ...msisdn }]} isLoading={false} />);
 
         expect(container).toMatchSnapshot();
     });
@@ -69,7 +69,9 @@ describe("<PhoneNumbers />", () => {
 
     it("should allow binding msisdn", async () => {
         const cli = stubClient();
-        const { getByText, getByLabelText, asFragment } = render(<PhoneNumbers msisdns={[msisdn]} isLoading={false} />);
+        const { getByText, getByLabelText, asFragment } = render(
+            <PhoneNumbers msisdns={[{ ...msisdn }]} isLoading={false} />,
+        );
 
         mocked(cli.requestMsisdnToken).mockResolvedValue({
             sid: "SID",
