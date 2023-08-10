@@ -217,7 +217,6 @@ export function createTestClient(): MatrixClient {
         uploadContent: jest.fn(),
         getEventMapper: (_options?: MapperOpts) => (event: Partial<IEvent>) => new MatrixEvent(event),
         leaveRoomChain: jest.fn((roomId) => ({ [roomId]: null })),
-        doesServerSupportLogoutDevices: jest.fn().mockReturnValue(true),
         requestPasswordEmailToken: jest.fn().mockRejectedValue({}),
         setPassword: jest.fn().mockRejectedValue({}),
         groupCallEventHandler: { groupCalls: new Map<string, GroupCall>() },
