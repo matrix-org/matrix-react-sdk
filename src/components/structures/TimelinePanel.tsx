@@ -1411,7 +1411,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // Clear all notifications if we already dismissed the read marker and we are at the bottom of the message panel
         if (this.isReadMarkerUpToDate() && this.canResetTimeline()) {
             if (this.props.timelineSet.room) {
-                await clearRoomNotification(this.props.timelineSet.room, client);
+                const room = this.props.timelineSet.room as MatrixClient;
+                await clearRoomNotification(room, client);
             }
         } else {
             this.forgetReadMarker();
