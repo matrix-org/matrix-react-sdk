@@ -46,7 +46,7 @@ describe("<SecureBackupPanel />", () => {
     const getComponent = () => render(<SecureBackupPanel />);
 
     beforeEach(() => {
-        client.checkKeyBackup.mockResolvedValue({
+        mocked(client.getCrypto()!.checkKeyBackupAndEnable).mockResolvedValue({
             backupInfo: {
                 version: "1",
                 algorithm: "test",
@@ -55,15 +55,15 @@ describe("<SecureBackupPanel />", () => {
                 },
             },
             trustInfo: {
-                usable: false,
-                sigs: [],
+                trusted: false,
+                matchesDecryptionKey: false,
             },
         });
+        mocked(client.getCrypto()!.getActiveSessionBackupVersion).mockResolvedValue(null);
 
         mocked(client.secretStorage.hasKey).mockClear().mockResolvedValue(false);
         client.deleteKeyBackupVersion.mockClear().mockResolvedValue();
         client.getKeyBackupVersion.mockClear();
-        client.isKeyBackupTrusted.mockClear();
 
         mocked(accessSecretStorage).mockClear().mockResolvedValue();
     });
@@ -77,7 +77,7 @@ describe("<SecureBackupPanel />", () => {
 
     it("handles null backup info", async () => {
         // checkKeyBackup can fail and return null for various reasons
-        client.checkKeyBackup.mockResolvedValue(null);
+        mocked(client.getCrypto()!.checkKeyBackupAndEnable).mockResolvedValue(null);
         getComponent();
         // flush checkKeyBackup promise
         await flushPromises();
@@ -95,7 +95,7 @@ describe("<SecureBackupPanel />", () => {
     });
 
     it("displays when session is connected to key backup", async () => {
-        client.getKeyBackupEnabled.mockReturnValue(true);
+        mocked(client.getCrypto()!.getActiveSessionBackupVersion).mockResolvedValue("1");
         getComponent();
         // flush checkKeyBackup promise
         await flushPromises();
@@ -124,7 +124,7 @@ describe("<SecureBackupPanel />", () => {
     });
 
     it("deletes backup after confirmation", async () => {
-        client.checkKeyBackup
+        mocked(client.getCrypto()!.checkKeyBackupAndEnable)
             .mockResolvedValueOnce({
                 backupInfo: {
                     version: "1",
@@ -134,8 +134,8 @@ describe("<SecureBackupPanel />", () => {
                     },
                 },
                 trustInfo: {
-                    usable: false,
-                    sigs: [],
+                    trusted: false,
+                    matchesDecryptionKey: false,
                 },
             })
             .mockResolvedValue(null);
@@ -170,7 +170,7 @@ describe("<SecureBackupPanel />", () => {
         await flushPromises();
 
         client.getKeyBackupVersion.mockClear();
-        client.isKeyBackupTrusted.mockClear();
+        mocked(client.getCrypto()!.isKeyBackupTrusted).mockClear();
 
         fireEvent.click(screen.getByText("Reset"));
 
@@ -180,6 +180,6 @@ describe("<SecureBackupPanel />", () => {
 
         // backup status refreshed
         expect(client.getKeyBackupVersion).toHaveBeenCalled();
-        expect(client.isKeyBackupTrusted).toHaveBeenCalled();
+        expect(client.getCrypto()!.isKeyBackupTrusted).toHaveBeenCalled();
     });
 });

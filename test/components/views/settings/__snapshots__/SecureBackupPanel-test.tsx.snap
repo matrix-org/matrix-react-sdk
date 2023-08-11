@@ -93,7 +93,6 @@ exports[`<SecureBackupPanel /> suggests connecting session to key backup when ba
       </tr>
     </table>
     
-    <div />
   </details>
   <div
     class="mx_SecureBackupPanel_buttonRow"

@@ -17,9 +17,9 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { logger } from "matrix-js-sdk/src/logger";
+import { BackupTrustInfo } from "matrix-js-sdk/src/crypto-api";
 
 import type CreateKeyBackupDialog from "../../../async-components/views/dialogs/security/CreateKeyBackupDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -42,7 +42,8 @@ interface IState {
     secretStorageKeyInAccount: boolean | null;
     secretStorageReady: boolean | null;
     backupInfo: IKeyBackupInfo | null;
-    backupSigStatus: TrustInfo | null;
+    backupSigStatus: BackupTrustInfo | null;
+    activeBackupVersion: string | null;
     sessionsRemaining: number;
 }
 
@@ -62,6 +63,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             secretStorageReady: null,
             backupInfo: null,
             backupSigStatus: null,
+            activeBackupVersion: null,
             sessionsRemaining: 0,
         };
     }
@@ -100,12 +102,15 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
     private async checkKeyBackupStatus(): Promise<void> {
         this.getUpdatedDiagnostics();
         try {
-            const keyBackupResult = await MatrixClientPeg.safeGet().checkKeyBackup();
+            const keyBackupResult = await MatrixClientPeg.safeGet().getCrypto()!.checkKeyBackupAndEnable();
+            const activeBackupVersion =
+                (await MatrixClientPeg.safeGet().getCrypto()?.getActiveSessionBackupVersion()) ?? null;
             this.setState({
                 loading: false,
                 error: false,
                 backupInfo: keyBackupResult?.backupInfo ?? null,
                 backupSigStatus: keyBackupResult?.trustInfo ?? null,
+                activeBackupVersion: activeBackupVersion,
             });
         } catch (e) {
             logger.log("Unable to fetch check backup status", e);
@@ -115,6 +120,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 error: true,
                 backupInfo: null,
                 backupSigStatus: null,
+                activeBackupVersion: null,
             });
         }
     }
@@ -124,13 +130,18 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         this.getUpdatedDiagnostics();
         try {
             const backupInfo = await MatrixClientPeg.safeGet().getKeyBackupVersion();
-            const backupSigStatus = backupInfo ? await MatrixClientPeg.safeGet().isKeyBackupTrusted(backupInfo) : null;
+            const backupSigStatus = backupInfo
+                ? await MatrixClientPeg.safeGet().getCrypto()!.isKeyBackupTrusted(backupInfo)
+                : null;
+            const activeBackupVersion =
+                (await MatrixClientPeg.safeGet().getCrypto()?.getActiveSessionBackupVersion()) ?? null;
             if (this.unmounted) return;
             this.setState({
                 loading: false,
                 error: false,
                 backupInfo,
                 backupSigStatus,
+                activeBackupVersion,
             });
         } catch (e) {
             logger.log("Unable to fetch key backup status", e);
@@ -140,6 +151,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 error: true,
                 backupInfo: null,
                 backupSigStatus: null,
+                activeBackupVersion: null,
             });
         }
     }
@@ -231,7 +243,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             secretStorageKeyInAccount,
             secretStorageReady,
             backupInfo,
-            backupSigStatus,
+            activeBackupVersion,
             sessionsRemaining,
         } = this.state;
 
@@ -250,7 +262,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         } else if (backupInfo) {
             let restoreButtonCaption = _t("Restore from Backup");
 
-            if (MatrixClientPeg.safeGet().getKeyBackupEnabled()) {
+            if (activeBackupVersion) {
                 statusDescription = (
                     <SettingsSubsectionText>✅ {_t("This session is backing up your keys.")}</SettingsSubsectionText>
                 );
@@ -278,7 +290,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             }
 
             let uploadStatus: ReactNode;
-            if (!MatrixClientPeg.safeGet().getKeyBackupEnabled()) {
+            if (!activeBackupVersion) {
                 // No upload status to show when backup disabled.
                 uploadStatus = "";
             } else if (sessionsRemaining > 0) {
@@ -295,11 +307,6 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 );
             }
 
-            let trustedLocally: string | undefined;
-            if (backupSigStatus?.trusted_locally) {
-                trustedLocally = _t("This backup is trusted because it has been restored on this session");
-            }
-
             extraDetailsTableRows = (
                 <>
                     <tr>
@@ -313,12 +320,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 </>
             );
 
-            extraDetails = (
-                <>
-                    {uploadStatus}
-                    <div>{trustedLocally}</div>
-                </>
-            );
+            extraDetails = <>{uploadStatus}</>;
 
             actions.push(
                 <AccessibleButton key="restore" kind="primary" onClick={this.restoreBackup}>
