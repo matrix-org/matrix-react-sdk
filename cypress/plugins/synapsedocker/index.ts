@@ -64,6 +64,7 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
     hsYaml = hsYaml.replace(/{{MACAROON_SECRET_KEY}}/g, macaroonSecret);
     hsYaml = hsYaml.replace(/{{FORM_SECRET}}/g, formSecret);
     hsYaml = hsYaml.replace(/{{PUBLIC_BASEURL}}/g, baseUrl);
+    hsYaml = hsYaml.replace(/{{OAUTH_SERVER_PORT}}/g, opts.oAuthServerPort?.toString());
     await fse.writeFile(path.join(tempDir, "homeserver.yaml"), hsYaml);
 
     // now generate a signing key (we could use synapse's config generation for
@@ -92,7 +93,16 @@ async function synapseStart(opts: StartHomeserverOpts): Promise<HomeserverInstan
     const synapseId = await dockerRun({
         image: "matrixdotorg/synapse:develop",
         containerName: `react-sdk-cypress-synapse`,
-        params: ["--rm", "-v", `${synCfg.configDir}:/data`, "-p", `${synCfg.port}:8008/tcp`],
+        params: [
+            "--rm",
+            "-v",
+            `${synCfg.configDir}:/data`,
+            "-p",
+            `${synCfg.port}:8008/tcp`,
+            // make host.docker.internal work to allow Synapse to talk to the test OIDC server
+            "--add-host",
+            "host.docker.internal:host-gateway",
+        ],
         cmd: ["run"],
     });
 

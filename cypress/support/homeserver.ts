@@ -25,6 +25,9 @@ import { HomeserverInstance } from "../plugins/utils/homeserver";
 export interface StartHomeserverOpts {
     /** path to template within cypress/plugins/{homeserver}docker/template/ directory. */
     template: string;
+
+    /** Port of an OAuth server to configure the homeserver to use */
+    oAuthServerPort?: number;
 }
 
 declare global {
