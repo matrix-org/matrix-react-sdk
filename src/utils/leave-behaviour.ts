@@ -16,10 +16,7 @@ limitations under the License.
 
 import { sleep } from "matrix-js-sdk/src/utils";
 import React, { ReactNode } from "react";
-import { EventStatus } from "matrix-js-sdk/src/models/event-status";
-import { MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
+import { EventStatus, MatrixEventEvent, Room, MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 
 import Modal, { IHandle } from "../Modal";
 import Spinner from "../components/views/elements/Spinner";
@@ -105,8 +102,10 @@ export async function leaveRoomBehaviour(
             if (e instanceof MatrixError) {
                 const message = e.data.error || _t("Unexpected server error trying to leave the room");
                 results[roomId] = Object.assign(new Error(message), { errcode: e.data.errcode, data: e.data });
+            } else if (e instanceof Error) {
+                results[roomId] = e;
             } else {
-                results[roomId] = e || new Error("Failed to leave room for unknown causes");
+                results[roomId] = new Error("Failed to leave room for unknown causes");
             }
         }
     } else {

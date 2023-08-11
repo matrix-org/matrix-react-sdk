@@ -35,16 +35,16 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
-import { clearAllModals } from "../../../../../test-utils";
-import SessionManagerTab from "../../../../../../src/components/views/settings/tabs/user/SessionManagerTab";
-import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import {
+    clearAllModals,
     flushPromises,
     getMockClientWithEventEmitter,
     mkPusher,
     mockClientMethodsUser,
     mockPlatformPeg,
 } from "../../../../../test-utils";
+import SessionManagerTab from "../../../../../../src/components/views/settings/tabs/user/SessionManagerTab";
+import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import Modal from "../../../../../../src/Modal";
 import LogoutDialog from "../../../../../../src/components/views/dialogs/LogoutDialog";
 import { DeviceSecurityVariation, ExtendedDevice } from "../../../../../../src/components/views/settings/devices/types";
@@ -53,11 +53,6 @@ import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import { getClientInformationEventType } from "../../../../../../src/utils/device/clientInformation";
 
 mockPlatformPeg();
-
-// Fake random strings to give a predictable snapshot for IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: () => "abdefghi",
-}));
 
 describe("<SessionManagerTab />", () => {
     const aliceId = "@alice:server.org";

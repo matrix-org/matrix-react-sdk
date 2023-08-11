@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
-import { IContent, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { ISendEventResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { IContent, IEventRelation, MatrixEvent, ISendEventResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
@@ -64,6 +63,7 @@ export async function sendMessage(
     const posthogEvent: ComposerEvent = {
         eventName: "Composer",
         isEditing: false,
+        isLocation: false,
         isReply: Boolean(replyToEvent),
         // TODO thread
         inThread: relation?.rel_type === THREAD_RELATION_TYPE.name,
@@ -199,6 +199,7 @@ export async function editMessage(
     PosthogAnalytics.instance.trackEvent<ComposerEvent>({
         eventName: "Composer",
         isEditing: true,
+        isLocation: false,
         inThread: Boolean(editedEvent?.getThread()),
         isReply: Boolean(editedEvent.replyEventId),
     });

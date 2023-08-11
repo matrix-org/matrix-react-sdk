@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 /// <reference types="cypress" />
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventType } from "matrix-js-sdk/src/matrix";
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
@@ -36,10 +36,8 @@ describe("Composer", () => {
 
     describe("CIDER", () => {
         beforeEach(() => {
-            cy.initTestUser(homeserver, "Janet").then(() => {
-                cy.createRoom({ name: "Composing Room" });
-            });
-            cy.viewRoomByName("Composing Room");
+            cy.initTestUser(homeserver, "Janet");
+            cy.createRoom({ name: "Composing Room" }).then((roomId) => cy.viewRoomById(roomId));
         });
 
         it("sends a message when you click send or press Enter", () => {
@@ -113,10 +111,8 @@ describe("Composer", () => {
     describe("Rich text editor", () => {
         beforeEach(() => {
             cy.enableLabsFeature("feature_wysiwyg_composer");
-            cy.initTestUser(homeserver, "Janet").then(() => {
-                cy.createRoom({ name: "Composing Room" });
-            });
-            cy.viewRoomByName("Composing Room");
+            cy.initTestUser(homeserver, "Janet");
+            cy.createRoom({ name: "Composing Room" }).then((roomId) => cy.viewRoomById(roomId));
         });
 
         describe("Commands", () => {
@@ -177,7 +173,7 @@ describe("Composer", () => {
                     cy.findByRole("textbox").type("this is the spoiler text ");
                     cy.findByRole("button", { name: "Send message" }).click();
                     // Check that a spoiler item has appeared in the timeline and contains the spoiler command text
-                    cy.get("span.mx_EventTile_spoiler").should("exist");
+                    cy.get("button.mx_EventTile_spoiler").should("exist");
                     cy.findByText("this is the spoiler text").should("exist");
                 });
             });
@@ -188,7 +184,7 @@ describe("Composer", () => {
 
             describe("Plain text mode", () => {
                 it("autocomplete behaviour tests", () => {
-                    // Setup a private room so we have another user to mention
+                    // Set up a private room so we have another user to mention
                     const otherUserName = "Bob";
                     let bobClient: MatrixClient;
                     cy.getBot(homeserver, {
@@ -197,15 +193,16 @@ describe("Composer", () => {
                         bobClient = bob;
                     });
                     // create DM with bob
-                    cy.getClient().then(async (cli) => {
-                        const bobRoom = await cli.createRoom({ is_direct: true });
-                        await cli.invite(bobRoom.room_id, bobClient.getUserId());
-                        await cli.setAccountData("m.direct" as EventType, {
-                            [bobClient.getUserId()]: [bobRoom.room_id],
-                        });
-                    });
-
-                    cy.viewRoomByName("Bob");
+                    cy.getClient()
+                        .then(async (cli) => {
+                            const bobRoom = await cli.createRoom({ is_direct: true });
+                            await cli.invite(bobRoom.room_id, bobClient.getUserId());
+                            await cli.setAccountData("m.direct" as EventType, {
+                                [bobClient.getUserId()]: [bobRoom.room_id],
+                            });
+                            return bobRoom.room_id;
+                        })
+                        .then((bobRoomId) => cy.viewRoomById(bobRoomId));
 
                     // Select plain text mode after composer is ready
                     cy.get("div[contenteditable=true]").should("exist");

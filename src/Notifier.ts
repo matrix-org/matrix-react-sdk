@@ -17,15 +17,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { ClientEvent } from "matrix-js-sdk/src/client";
+import {
+    MatrixEvent,
+    MatrixEventEvent,
+    Room,
+    RoomEvent,
+    ClientEvent,
+    MsgType,
+    SyncState,
+    SyncStateData,
+    IRoomTimelineData,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { PermissionChanged as PermissionChangedEvent } from "@matrix-org/analytics-events/types/typescript/PermissionChanged";
-import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
-import { IRoomTimelineData } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { PosthogAnalytics } from "./PosthogAnalytics";
@@ -52,6 +57,7 @@ import ToastStore from "./stores/ToastStore";
 import { ElementCall } from "./models/Call";
 import { VoiceBroadcastChunkEventType, VoiceBroadcastInfoEventType } from "./voice-broadcast";
 import { getSenderName } from "./utils/event/getSenderName";
+import { stripPlainReply } from "./utils/Reply";
 
 /*
  * Dispatches:
@@ -138,7 +144,7 @@ class NotifierClass {
             // notificationMessageForEvent includes sender, but we already have the sender here
             const msgType = ev.getContent().msgtype;
             if (ev.getContent().body && (!msgType || !msgTypeHandlers.hasOwnProperty(msgType))) {
-                msg = ev.getContent().body;
+                msg = stripPlainReply(ev.getContent().body);
             }
         } else if (ev.getType() === "m.room.member") {
             // context is all in the message here, we don't need
@@ -149,7 +155,7 @@ class NotifierClass {
             // notificationMessageForEvent includes sender, but we've just out sender in the title
             const msgType = ev.getContent().msgtype;
             if (ev.getContent().body && (!msgType || !msgTypeHandlers.hasOwnProperty(msgType))) {
-                msg = ev.getContent().body;
+                msg = stripPlainReply(ev.getContent().body);
             }
         }
 
@@ -392,7 +398,7 @@ class NotifierClass {
     }
 
     // XXX: Exported for tests
-    public onSyncStateChange = (state: SyncState, prevState: SyncState | null, data?: ISyncStateData): void => {
+    public onSyncStateChange = (state: SyncState, prevState: SyncState | null, data?: SyncStateData): void => {
         if (state === SyncState.Syncing) {
             this.isSyncing = true;
         } else if (state === SyncState.Stopped || state === SyncState.Error) {

@@ -16,9 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RelationType } from "matrix-js-sdk/src/matrix";
+import { RoomMember, RelationType, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { M_ASSET, LocationAssetType } from "matrix-js-sdk/src/@types/location";
 import { act, fireEvent, render, RenderResult } from "@testing-library/react";
@@ -70,11 +68,6 @@ jest.mock("../../../../src/Modal", () => ({
     on: jest.fn(),
     off: jest.fn(),
     ModalManagerEvent: { Opened: "opened" },
-}));
-
-// Fake random strings to give a predictable snapshot for IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: () => "abdefghi",
 }));
 
 describe("<LocationShareMenu />", () => {

@@ -18,12 +18,10 @@ import React from "react";
 import { zip } from "lodash";
 import { render, screen, act, fireEvent, waitFor, cleanup } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixClient, PendingEventOrdering, Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { Widget } from "matrix-widget-api";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import type { ClientWidgetApi } from "matrix-widget-api";
 import {
     stubClient,
@@ -39,6 +37,7 @@ import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessa
 import { CallStore } from "../../../../src/stores/CallStore";
 import { Call, ConnectionState } from "../../../../src/models/Call";
 import SdkConfig from "../../../../src/SdkConfig";
+import MediaDeviceHandler from "../../../../src/MediaDeviceHandler";
 
 const CallView = wrapInMatrixClientContext(_CallView);
 
@@ -126,7 +125,7 @@ describe("CallLobby", () => {
             const carol = mkRoomMember(room.roomId, "@carol:example.org");
 
             const expectAvatars = (userIds: string[]) => {
-                const avatars = screen.queryAllByRole("button", { name: "Avatar" });
+                const avatars = screen.queryAllByRole("button", { name: "Profile picture" });
                 expect(userIds.length).toBe(avatars.length);
 
                 for (const [userId, avatar] of zip(userIds, avatars)) {
@@ -247,6 +246,26 @@ describe("CallLobby", () => {
             expect(screen.queryByRole("button", { name: /camera/ })).toBe(null);
         });
 
+        it("hide when no access to device list", async () => {
+            mocked(navigator.mediaDevices.enumerateDevices).mockRejectedValue("permission denied");
+            await renderView();
+            expect(MediaDeviceHandler.startWithAudioMuted).toBeTruthy();
+            expect(MediaDeviceHandler.startWithVideoMuted).toBeTruthy();
+            expect(screen.queryByRole("button", { name: /microphone/ })).toBe(null);
+            expect(screen.queryByRole("button", { name: /camera/ })).toBe(null);
+        });
+
+        it("hide when unknown error with device list", async () => {
+            const originalGetDevices = MediaDeviceHandler.getDevices;
+            MediaDeviceHandler.getDevices = () => Promise.reject("unknown error");
+            await renderView();
+            expect(MediaDeviceHandler.startWithAudioMuted).toBeTruthy();
+            expect(MediaDeviceHandler.startWithVideoMuted).toBeTruthy();
+            expect(screen.queryByRole("button", { name: /microphone/ })).toBe(null);
+            expect(screen.queryByRole("button", { name: /camera/ })).toBe(null);
+            MediaDeviceHandler.getDevices = originalGetDevices;
+        });
+
         it("show without dropdown when only one device is available", async () => {
             mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([fakeVideoInput1]);
 
@@ -285,6 +304,22 @@ describe("CallLobby", () => {
             fireEvent.click(screen.getByRole("menuitem", { name: fakeAudioInput2.label }));
 
             expect(client.getMediaHandler().setAudioInput).toHaveBeenCalledWith(fakeAudioInput2.deviceId);
+        });
+
+        it("set media muted if no access to audio device", async () => {
+            mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([fakeAudioInput1, fakeAudioInput2]);
+            mocked(navigator.mediaDevices.getUserMedia).mockRejectedValue("permission rejected");
+            await renderView();
+            expect(MediaDeviceHandler.startWithAudioMuted).toBeTruthy();
+            expect(MediaDeviceHandler.startWithVideoMuted).toBeTruthy();
+        });
+
+        it("set media muted if no access to video device", async () => {
+            mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([fakeVideoInput1, fakeVideoInput2]);
+            mocked(navigator.mediaDevices.getUserMedia).mockRejectedValue("permission rejected");
+            await renderView();
+            expect(MediaDeviceHandler.startWithAudioMuted).toBeTruthy();
+            expect(MediaDeviceHandler.startWithVideoMuted).toBeTruthy();
         });
     });
 });

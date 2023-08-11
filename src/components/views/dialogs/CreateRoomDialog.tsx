@@ -16,9 +16,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent, createRef, KeyboardEvent, SyntheticEvent } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
+import { Room, RoomType, JoinRule, Preset, Visibility } from "matrix-js-sdk/src/matrix";
 
 import SdkConfig from "../../../SdkConfig";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
@@ -34,6 +32,7 @@ import JoinRuleDropdown from "../elements/JoinRuleDropdown";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { privateShouldBeEncrypted } from "../../../utils/rooms";
+import SettingsStore from "../../../settings/SettingsStore";
 
 interface IProps {
     type?: RoomType;
@@ -59,6 +58,7 @@ interface IState {
 }
 
 export default class CreateRoomDialog extends React.Component<IProps, IState> {
+    private readonly askToJoinEnabled: boolean;
     private readonly supportsRestricted: boolean;
     private nameField = createRef<Field>();
     private aliasField = createRef<RoomAliasField>();
@@ -66,6 +66,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
 
+        this.askToJoinEnabled = SettingsStore.getValue("feature_ask_to_join");
         this.supportsRestricted = !!this.props.parentSpace;
 
         let joinRule = JoinRule.Invite;
@@ -124,6 +125,10 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         opts.parentSpace = this.props.parentSpace;
         if (this.props.parentSpace && this.state.joinRule === JoinRule.Restricted) {
             opts.joinRule = JoinRule.Restricted;
+        }
+
+        if (this.state.joinRule === JoinRule.Knock) {
+            opts.joinRule = JoinRule.Knock;
         }
 
         return opts;
@@ -283,6 +288,14 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                     {_t("You can change this at any time from room settings.")}
                 </p>
             );
+        } else if (this.state.joinRule === JoinRule.Knock) {
+            publicPrivateLabel = (
+                <p>
+                    {_t(
+                        "Anyone can request to join, but admins or moderators need to grant access. You can change this later.",
+                    )}
+                </p>
+            );
         }
 
         let e2eeSection: JSX.Element | undefined;
@@ -332,7 +345,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         let title: string;
         if (isVideoRoom) {
             title = _t("Create a video room");
-        } else if (this.props.parentSpace) {
+        } else if (this.props.parentSpace || this.state.joinRule === JoinRule.Knock) {
             title = _t("Create a room");
         } else {
             title = this.state.joinRule === JoinRule.Public ? _t("Create a public room") : _t("Create a private room");
@@ -365,6 +378,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         <JoinRuleDropdown
                             label={_t("Room visibility")}
                             labelInvite={_t("Private room (invite only)")}
+                            labelKnock={this.askToJoinEnabled ? _t("Ask to join") : undefined}
                             labelPublic={_t("Public room")}
                             labelRestricted={this.supportsRestricted ? _t("Visible to space members") : undefined}
                             value={this.state.joinRule}

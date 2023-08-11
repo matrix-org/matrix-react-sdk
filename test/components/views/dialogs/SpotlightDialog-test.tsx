@@ -16,7 +16,14 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { IProtocol, IPublicRoomsChunkRoom, MatrixClient, Room, RoomMember } from "matrix-js-sdk/src/matrix";
+import {
+    ConnectionError,
+    IProtocol,
+    IPublicRoomsChunkRoom,
+    MatrixClient,
+    Room,
+    RoomMember,
+} from "matrix-js-sdk/src/matrix";
 import sanitizeHtml from "sanitize-html";
 import { fireEvent, render, screen } from "@testing-library/react";
 
@@ -136,7 +143,11 @@ describe("Spotlight Dialog", () => {
         guest_can_join: false,
     };
 
+    const testDMRoomId = "!testDM:example.com";
+    const testDMUserId = "@alice:matrix.org";
+
     let testRoom: Room;
+    let testDM: Room;
     let testLocalRoom: LocalRoom;
 
     let mockedClient: MatrixClient;
@@ -152,6 +163,19 @@ describe("Spotlight Dialog", () => {
         jest.spyOn(DMRoomMap, "shared").mockReturnValue({
             getUserIdForRoomId: jest.fn(),
         } as unknown as DMRoomMap);
+
+        testDM = mkRoom(mockedClient, testDMRoomId);
+        testDM.name = "Chat with Alice";
+        mocked(testDM.getMyMembership).mockReturnValue("join");
+
+        mocked(DMRoomMap.shared().getUserIdForRoomId).mockImplementation((roomId: string) => {
+            if (roomId === testDMRoomId) {
+                return testDMUserId;
+            }
+            return undefined;
+        });
+
+        mocked(mockedClient.getVisibleRooms).mockReturnValue([testRoom, testLocalRoom, testDM]);
     });
 
     describe("should apply filters supplied via props", () => {
@@ -338,6 +362,96 @@ describe("Spotlight Dialog", () => {
         });
     });
 
+    it("should not filter out users sent by the server", async () => {
+        mocked(mockedClient.searchUserDirectory).mockResolvedValue({
+            results: [
+                { user_id: "@user1:server", display_name: "User Alpha", avatar_url: "mxc://1/avatar" },
+                { user_id: "@user2:server", display_name: "User Beta", avatar_url: "mxc://2/avatar" },
+            ],
+            limited: false,
+        });
+
+        render(<SpotlightDialog initialFilter={Filter.People} initialText="Alpha" onFinished={() => null} />);
+        // search is debounced
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        const content = document.querySelector("#mx_SpotlightDialog_content")!;
+        const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
+        expect(options.length).toBeGreaterThanOrEqual(2);
+        expect(options[0]).toHaveTextContent("User Alpha");
+        expect(options[1]).toHaveTextContent("User Beta");
+    });
+
+    it("should not filter out users sent by the server even if a local suggestion gets filtered out", async () => {
+        const member = new RoomMember(testRoom.roomId, testPerson.user_id);
+        member.name = member.rawDisplayName = testPerson.display_name!;
+        member.getMxcAvatarUrl = jest.fn().mockReturnValue("mxc://0/avatar");
+        mocked(testRoom.getJoinedMembers).mockReturnValue([member]);
+        mocked(mockedClient.searchUserDirectory).mockResolvedValue({
+            results: [
+                { user_id: "@janedoe:matrix.org", display_name: "User Alpha", avatar_url: "mxc://1/avatar" },
+                { user_id: "@johndoe:matrix.org", display_name: "User Beta", avatar_url: "mxc://2/avatar" },
+            ],
+            limited: false,
+        });
+
+        render(<SpotlightDialog initialFilter={Filter.People} initialText="Beta" onFinished={() => null} />);
+        // search is debounced
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        const content = document.querySelector("#mx_SpotlightDialog_content")!;
+        const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
+        expect(options.length).toBeGreaterThanOrEqual(2);
+        expect(options[0]).toHaveTextContent(testPerson.display_name!);
+        expect(options[1]).toHaveTextContent("User Beta");
+    });
+
+    it("show non-matching query members with DMs if they are present in the server search results", async () => {
+        mocked(mockedClient.searchUserDirectory).mockResolvedValue({
+            results: [
+                { user_id: testDMUserId, display_name: "Alice Wonder", avatar_url: "mxc://1/avatar" },
+                { user_id: "@bob:matrix.org", display_name: "Bob Wonder", avatar_url: "mxc://2/avatar" },
+            ],
+            limited: false,
+        });
+        render(
+            <SpotlightDialog initialFilter={Filter.People} initialText="Something Wonder" onFinished={() => null} />,
+        );
+        // search is debounced
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        const content = document.querySelector("#mx_SpotlightDialog_content")!;
+        const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
+        expect(options.length).toBeGreaterThanOrEqual(2);
+        expect(options[0]).toHaveTextContent(testDMUserId);
+        expect(options[1]).toHaveTextContent("Bob Wonder");
+    });
+
+    it("don't sort the order of users sent by the server", async () => {
+        const serverList = [
+            { user_id: "@user2:server", display_name: "User Beta", avatar_url: "mxc://2/avatar" },
+            { user_id: "@user1:server", display_name: "User Alpha", avatar_url: "mxc://1/avatar" },
+        ];
+        mocked(mockedClient.searchUserDirectory).mockResolvedValue({
+            results: serverList,
+            limited: false,
+        });
+
+        render(<SpotlightDialog initialFilter={Filter.People} initialText="User" onFinished={() => null} />);
+        // search is debounced
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        const content = document.querySelector("#mx_SpotlightDialog_content")!;
+        const options = content.querySelectorAll("li.mx_SpotlightDialog_option");
+        expect(options.length).toBeGreaterThanOrEqual(2);
+        expect(options[0]).toHaveTextContent("User Beta");
+        expect(options[1]).toHaveTextContent("User Alpha");
+    });
+
     it("should start a DM when clicking a person", async () => {
         render(
             <SpotlightDialog
@@ -448,5 +562,33 @@ describe("Spotlight Dialog", () => {
             expect(screen.getByText(nsfwNameRoom.name!)).toBeInTheDocument();
             expect(screen.getByText(potatoRoom.name!)).toBeInTheDocument();
         });
+    });
+
+    it("should show error if /publicRooms API failed", async () => {
+        mocked(mockedClient.publicRooms).mockRejectedValue(new ConnectionError("Failed to fetch"));
+        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        expect(screen.getByText("Failed to query public rooms")).toBeInTheDocument();
+    });
+
+    it("should show error both 'Show rooms' and 'Show spaces' are unchecked", async () => {
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((settingName, roomId, excludeDefault) => {
+            if (settingName === "feature_exploring_public_spaces") {
+                return true;
+            } else {
+                return []; // SpotlightSearch.recentSearches
+            }
+        });
+        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+
+        jest.advanceTimersByTime(200);
+        await flushPromisesWithFakeTimers();
+
+        fireEvent.click(screen.getByText("Show rooms"));
+
+        expect(screen.getByText("You cannot search for rooms that are neither a room nor a space")).toBeInTheDocument();
     });
 });

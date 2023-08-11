@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { FormEvent } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import FocusLock from "react-focus-lock";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -43,7 +43,11 @@ export default abstract class ScrollableBaseModal<
     }
 
     protected get matrixClient(): MatrixClient {
-        return MatrixClientPeg.get();
+        // XXX: The contract on MatrixClientContext says it is only available within a LoggedInView subtree,
+        // given that modals function outside the MatrixChat React tree this simulates that. We don't want to
+        // use safeGet as it throwing would mean we cannot use modals whilst the user isn't logged in.
+        // The longer term solution is to move our ModalManager into the React tree to inherit contexts properly.
+        return MatrixClientPeg.get()!;
     }
 
     private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import * as Sentry from "@sentry/browser";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -174,7 +174,7 @@ async function getContexts(): Promise<Contexts> {
     };
 }
 
-export async function sendSentryReport(userText: string, issueUrl: string, error?: Error): Promise<void> {
+export async function sendSentryReport(userText: string, issueUrl: string, error?: unknown): Promise<void> {
     const sentryConfig = SdkConfig.getObject("sentry");
     if (!sentryConfig) return;
 

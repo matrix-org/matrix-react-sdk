@@ -22,8 +22,10 @@ import {
     IRequestMsisdnTokenResponse,
     IRequestTokenResponse,
     MatrixClient,
+    MatrixError,
+    HTTPError,
 } from "matrix-js-sdk/src/matrix";
-import { MatrixError, HTTPError } from "matrix-js-sdk/src/matrix";
+import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 
 import Modal from "./Modal";
 import { _t, UserFriendlyError } from "./languageHandler";
@@ -44,6 +46,9 @@ export type Binding = {
     label: string;
     errorTitle: string;
 };
+
+// IThreepid modified stripping validated_at and added_at as they aren't necessary for our UI
+export type ThirdPartyIdentifier = Omit<IThreepid, "validated_at" | "added_at">;
 
 /**
  * Allows a user to add a third party identifier to their homeserver and,
@@ -252,7 +257,7 @@ export default class AddThreepid {
             } else {
                 await this.matrixClient.addThreePid(
                     {
-                        sid: this.sessionId,
+                        sid: this.sessionId!,
                         client_secret: this.clientSecret,
                         id_server: getIdServerDomain(this.matrixClient),
                     },
@@ -373,7 +378,7 @@ export default class AddThreepid {
         } else {
             await this.matrixClient.addThreePid(
                 {
-                    sid: this.sessionId,
+                    sid: this.sessionId!,
                     client_secret: this.clientSecret,
                     id_server: getIdServerDomain(this.matrixClient),
                 },

@@ -16,8 +16,7 @@ limitations under the License.
 
 import { act, render, waitFor } from "@testing-library/react";
 import React, { ComponentProps } from "react";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
-import { User } from "matrix-js-sdk/src/models/user";
+import { User, TypedEventEmitter, Device, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { mocked, Mocked } from "jest-mock";
 import {
     EmojiMapping,
@@ -29,7 +28,6 @@ import {
     VerifierEvent,
     VerifierEventHandlerMap,
 } from "matrix-js-sdk/src/crypto-api/verification";
-import { Device, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import VerificationPanel from "../../../../src/components/views/right_panel/VerificationPanel";
 import { flushPromises, stubClient } from "../../../test-utils";
@@ -56,7 +54,7 @@ describe("<VerificationPanel />", () => {
             const request = makeMockVerificationRequest({
                 phase: Phase.Ready,
             });
-            request.getQRCodeBytes.mockReturnValue(Buffer.from("test", "utf-8"));
+            request.generateQRCode.mockResolvedValue(Buffer.from("test", "utf-8"));
             const container = renderComponent({
                 request: request,
                 layout: "dialog",
@@ -81,7 +79,7 @@ describe("<VerificationPanel />", () => {
             const request = makeMockVerificationRequest({
                 phase: Phase.Ready,
             });
-            request.getQRCodeBytes.mockReturnValue(Buffer.from("test", "utf-8"));
+            request.generateQRCode.mockResolvedValue(Buffer.from("test", "utf-8"));
             const container = renderComponent({
                 request: request,
                 member: new User("@other:user"),
@@ -198,7 +196,7 @@ function makeMockVerificationRequest(props: Partial<VerificationRequest> = {}): 
     Object.assign(request, {
         cancel: jest.fn(),
         otherPartySupportsMethod: jest.fn().mockReturnValue(true),
-        getQRCodeBytes: jest.fn(),
+        generateQRCode: jest.fn().mockResolvedValue(undefined),
         ...props,
     });
     return request as unknown as Mocked<VerificationRequest>;

@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
@@ -104,7 +104,7 @@ export default class AppPermission extends React.Component<IProps, IState> {
                 {_t("Any of the following data may be shared:")}
                 <ul>
                     <li>{_t("Your display name")}</li>
-                    <li>{_t("Your avatar URL")}</li>
+                    <li>{_t("Your profile picture URL")}</li>
                     <li>{_t("Your user ID")}</li>
                     <li>{_t("Your device ID")}</li>
                     <li>{_t("Your theme")}</li>

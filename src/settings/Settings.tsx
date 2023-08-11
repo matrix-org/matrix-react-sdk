@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import React, { ReactNode } from "react";
 
 import { _t, _td } from "../languageHandler";
@@ -338,7 +338,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "useOnlyCurrentProfiles": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show current avatar and name for users in message history"),
+        displayName: _td("Show current profile picture and name for users in message history"),
         default: false,
     },
     "mjolnirRooms": {
@@ -361,14 +361,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Show info about bridges in room settings"),
-        default: false,
-    },
-    "feature_right_panel_default_open": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Right panel stays open"),
-        description: _td("Defaults to room member list."),
         default: false,
     },
     "feature_jump_to_date": {
@@ -430,6 +422,15 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_FEATURE,
         labsGroup: LabGroup.VoiceAndVideo,
         displayName: _td("New group call experience"),
+        controller: new ReloadOnChangeController(),
+        default: false,
+    },
+    "feature_allow_screen_share_only_mode": {
+        isFeature: true,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        description: _td("Under active development."),
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("Allow screen share only mode"),
         controller: new ReloadOnChangeController(),
         default: false,
     },
@@ -543,9 +544,27 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("Enable intentional mentions"),
         labsGroup: LabGroup.Rooms,
         default: false,
-        controller: new ServerSupportUnstableFeatureController("feature_intentional_mentions", defaultWatchManager, [
-            ["org.matrix.msc3952_intentional_mentions"],
-        ]),
+        controller: new ServerSupportUnstableFeatureController(
+            "feature_intentional_mentions",
+            defaultWatchManager,
+            [["org.matrix.msc3952_intentional_mentions"]],
+            "v1.7",
+        ),
+    },
+    "feature_ask_to_join": {
+        default: false,
+        displayName: _td("Enable ask to join"),
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+    },
+    "feature_new_room_decoration_ui": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        displayName: _td("Under active development, new room header & details interface"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+        controller: new ReloadOnChangeController(),
     },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -567,7 +586,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "showAvatarChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td("Show avatar changes"),
+        displayName: _td("Show profile picture changes"),
         default: true,
         invertedSettingName: "hideAvatarChanges",
     },

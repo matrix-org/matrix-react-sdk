@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -71,7 +71,7 @@ export default class RoomAvatarEvent extends React.Component<IProps> {
         };
 
         return (
-            <div className="mx_RoomAvatarEvent">
+            <>
                 {_t(
                     "%(senderDisplayName)s changed the room avatar to <img/>",
                     { senderDisplayName: senderDisplayName },
@@ -87,7 +87,7 @@ export default class RoomAvatarEvent extends React.Component<IProps> {
                         ),
                     },
                 )}
-            </div>
+            </>
         );
     }
 }

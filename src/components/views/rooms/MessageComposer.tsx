@@ -16,10 +16,7 @@ limitations under the License.
 
 import React, { createRef, ReactNode } from "react";
 import classNames from "classnames";
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { IEventRelation, MatrixEvent, Room, RoomMember, EventType } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
@@ -371,8 +368,8 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
         const { isRichTextEnabled, composerContent } = this.state;
         const convertedContent = isRichTextEnabled
-            ? await richToPlain(composerContent)
-            : await plainToRich(composerContent);
+            ? await richToPlain(composerContent, false)
+            : await plainToRich(composerContent, false);
 
         this.setState({
             isRichTextEnabled: !isRichTextEnabled,
@@ -588,7 +585,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
             />,
         );
 
-        const showSendButton = !this.state.isComposerEmpty || this.state.haveRecording;
+        const showSendButton = canSendMessages && (!this.state.isComposerEmpty || this.state.haveRecording);
 
         const classes = classNames({
             "mx_MessageComposer": true,

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { MatrixClient } from "matrix-js-sdk/src/client";
+import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 describe("Invite dialog", function () {
@@ -166,8 +166,8 @@ describe("Invite dialog", function () {
 
         // Assert that the hovered user name on invitation UI does not have background color
         // TODO: implement the test on room-header.spec.ts
-        cy.get(".mx_RoomHeader").within(() => {
-            cy.get(".mx_RoomHeader_name--textonly")
+        cy.get(".mx_LegacyRoomHeader").within(() => {
+            cy.get(".mx_LegacyRoomHeader_name--textonly")
                 .realHover()
                 .should("have.css", "background-color", "rgba(0, 0, 0, 0)");
         });

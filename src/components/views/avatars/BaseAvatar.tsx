@@ -19,8 +19,7 @@ limitations under the License.
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import classNames from "classnames";
-import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
-import { ClientEvent } from "matrix-js-sdk/src/client";
+import { ResizeMethod, ClientEvent } from "matrix-js-sdk/src/matrix";
 
 import * as AvatarLogic from "../../../Avatar";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -46,6 +45,8 @@ interface IProps {
     inputRef?: React.RefObject<HTMLImageElement & HTMLSpanElement>;
     className?: string;
     tabIndex?: number;
+    altText?: string;
+    ariaLabel?: string;
 }
 
 const calculateUrls = (url?: string | null, urls?: string[], lowBandwidth = false): string[] => {
@@ -113,6 +114,8 @@ const BaseAvatar: React.FC<IProps> = (props) => {
         onClick,
         inputRef,
         className,
+        altText = _t("Avatar"),
+        ariaLabel = _t("Avatar"),
         ...otherProps
     } = props;
 
@@ -153,7 +156,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
         if (onClick) {
             return (
                 <AccessibleButton
-                    aria-label={_t("Avatar")}
+                    aria-label={ariaLabel}
                     aria-live="off"
                     {...otherProps}
                     element="span"
@@ -193,7 +196,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
                     height: toPx(height),
                 }}
                 title={title}
-                alt={_t("Avatar")}
+                alt={altText}
                 inputRef={inputRef}
                 data-testid="avatar-img"
                 {...otherProps}

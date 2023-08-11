@@ -31,6 +31,11 @@ $left-gutter: 64px;
     padding-top: 18px;
     position: relative;
 
+    &.mx_EventTile_info {
+        font-size: var(--cpd-font-size-body-sm);
+        color: $secondary-content;
+    }
+
     .mx_EventTile_avatar {
         cursor: pointer;
         user-select: none;
@@ -686,7 +691,7 @@ $left-gutter: 64px;
     .mx_EventTile_pendingModeration {
         user-select: none;
         font-size: $font-12px;
-        color: $roomtopic-color;
+        color: $secondary-content;
         display: inline-block;
         margin-left: 9px;
     }
@@ -770,6 +775,7 @@ $left-gutter: 64px;
 
         blockquote {
             border-left: 2px solid $blockquote-bar-color;
+            color: $secondary-content;
             border-radius: 2px;
             padding: 0 10px;
         }
@@ -803,6 +809,16 @@ $left-gutter: 64px;
 .mx_EventTile_spoiler {
     cursor: pointer;
 
+    // clear button styles
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+
     .mx_EventTile_spoiler_reason {
         color: $event-timestamp-color;
         font-size: $font-11px;
@@ -815,6 +831,7 @@ $left-gutter: 64px;
 
     &.visible > .mx_EventTile_spoiler_content {
         filter: none;
+        user-select: auto;
     }
 }
 
@@ -1136,13 +1153,13 @@ $left-gutter: 64px;
     }
 
     &:hover {
-        background-color: $system;
+        background-color: $panels;
     }
 
     /* ThreadsList has always group layout */
     &[data-layout="group"]:hover {
         .mx_EventTile_line {
-            background-color: $system; /* override $event-selected-color */
+            background-color: inherit;
             box-shadow: none; /* don't show the verification left stroke in the thread list */
         }
     }
@@ -1154,6 +1171,7 @@ $left-gutter: 64px;
         display: flex;
         align-items: center;
         position: relative;
+        font: var(--cpd-font-body-sm-regular);
 
         &::before {
             @mixin ThreadSummaryIcon;
@@ -1161,8 +1179,6 @@ $left-gutter: 64px;
 
         .mx_ThreadPanel_replies_amount {
             @mixin ThreadRepliesAmount;
-            line-height: var(--EventTile_ThreadSummary-line-height);
-            font-size: $font-12px; /* Same font size as the counter on the main panel */
         }
 
         .mx_ThreadSummary_content {
@@ -1195,11 +1211,6 @@ $left-gutter: 64px;
                 margin-bottom: 0;
                 width: 14px; /* avatar img size */
                 height: 14px; /* avatar img size */
-            }
-
-            .mx_ViewSourceEvent_toggle {
-                display: none; /* hide the hidden event expand button, not enough
-                space, view source can still be used */
             }
 
             &.mx_EventTile_selected .mx_EventTile_line,

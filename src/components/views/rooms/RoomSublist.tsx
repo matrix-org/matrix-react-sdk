@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 import { Enable, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
@@ -566,7 +566,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             let isAlphabetical = RoomListStore.instance.getTagSorting(this.props.tagId) === SortAlgorithm.Alphabetic;
             let isUnreadFirst = RoomListStore.instance.getListOrder(this.props.tagId) === ListAlgorithm.Importance;
             if (this.slidingSyncMode) {
-                const slidingList = SlidingSyncManager.instance.slidingSync.getListParams(this.props.tagId);
+                const slidingList = SlidingSyncManager.instance.slidingSync?.getListParams(this.props.tagId);
                 isAlphabetical = (slidingList?.sort || [])[0] === "by_name";
                 isUnreadFirst = (slidingList?.sort || [])[0] === "by_notification_level";
             }

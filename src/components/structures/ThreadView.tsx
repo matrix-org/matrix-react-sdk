@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { createRef, KeyboardEvent } from "react";
 import { Thread, THREAD_RELATION_TYPE, ThreadEvent } from "matrix-js-sdk/src/models/thread";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import classNames from "classnames";
 
@@ -214,7 +213,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
         let thread = this.props.room.getThread(eventId);
 
         if (!thread) {
-            thread = this.props.room.createThread(eventId, mxEv, [mxEv], true);
+            const events = [];
+            // if the event is still being sent, don't include it in the Thread yet - otherwise the timeline panel
+            // will attempt to show it twice (once as a regular event, once as a pending event) and everything will
+            // blow up
+            if (mxEv.status === null) events.push(mxEv);
+            thread = this.props.room.createThread(eventId, mxEv, events, true);
         }
 
         this.updateThread(thread);

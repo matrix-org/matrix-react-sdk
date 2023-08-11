@@ -2,7 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
 Copyright 2018 New Vector Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020, 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,9 +18,8 @@ limitations under the License.
 */
 
 import { ReactNode } from "react";
-import { createClient } from "matrix-js-sdk/src/matrix";
+import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -65,6 +64,8 @@ import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLoc
 import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
 import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
+import { completeOidcLogin } from "./utils/oidc/authorize";
+import { persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettings";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -182,7 +183,100 @@ export async function getStoredSessionOwner(): Promise<[string, boolean] | [null
 }
 
 /**
+ * If query string includes OIDC authorization code flow parameters attempt to login using oidc flow
+ * Else, we may be returning from SSO - attempt token login
+ *
  * @param {Object} queryParams    string->string map of the
+ *     query-parameters extracted from the real query-string of the starting
+ *     URI.
+ *
+ * @param {string} defaultDeviceDisplayName
+ * @param {string} fragmentAfterLogin path to go to after a successful login, only used for "Try again"
+ *
+ * @returns {Promise} promise which resolves to true if we completed the delegated auth login
+ *      else false
+ */
+export async function attemptDelegatedAuthLogin(
+    queryParams: QueryDict,
+    defaultDeviceDisplayName?: string,
+    fragmentAfterLogin?: string,
+): Promise<boolean> {
+    if (queryParams.code && queryParams.state) {
+        return attemptOidcNativeLogin(queryParams);
+    }
+
+    return attemptTokenLogin(queryParams, defaultDeviceDisplayName, fragmentAfterLogin);
+}
+
+/**
+ * Attempt to login by completing OIDC authorization code flow
+ * @param queryParams string->string map of the query-parameters extracted from the real query-string of the starting URI.
+ * @returns Promise that resolves to true when login succceeded, else false
+ */
+async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
+    try {
+        const { accessToken, homeserverUrl, identityServerUrl, clientId, issuer } = await completeOidcLogin(
+            queryParams,
+        );
+
+        const {
+            user_id: userId,
+            device_id: deviceId,
+            is_guest: isGuest,
+        } = await getUserIdFromAccessToken(accessToken, homeserverUrl, identityServerUrl);
+
+        const credentials = {
+            accessToken,
+            homeserverUrl,
+            identityServerUrl,
+            deviceId,
+            userId,
+            isGuest,
+        };
+
+        logger.debug("Logged in via OIDC native flow");
+        await onSuccessfulDelegatedAuthLogin(credentials);
+        // this needs to happen after success handler which clears storages
+        persistOidcAuthenticatedSettings(clientId, issuer);
+        return true;
+    } catch (error) {
+        logger.error("Failed to login via OIDC", error);
+
+        // TODO(kerrya) nice error messages https://github.com/vector-im/element-web/issues/25665
+        await onFailedDelegatedAuthLogin(_t("Something went wrong."));
+        return false;
+    }
+}
+
+/**
+ * Gets information about the owner of a given access token.
+ * @param accessToken
+ * @param homeserverUrl
+ * @param identityServerUrl
+ * @returns Promise that resolves with whoami response
+ * @throws when whoami request fails
+ */
+async function getUserIdFromAccessToken(
+    accessToken: string,
+    homeserverUrl: string,
+    identityServerUrl?: string,
+): Promise<ReturnType<MatrixClient["whoami"]>> {
+    try {
+        const client = createClient({
+            baseUrl: homeserverUrl,
+            accessToken: accessToken,
+            idBaseUrl: identityServerUrl,
+        });
+
+        return await client.whoami();
+    } catch (error) {
+        logger.error("Failed to retrieve userId using accessToken", error);
+        throw new Error("Failed to retrieve userId using accessToken");
+    }
+}
+
+/**
+ * @param {QueryDict} queryParams    string->string map of the
  *     query-parameters extracted from the real query-string of the starting
  *     URI.
  *
@@ -497,7 +591,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
     }
 }
 
-async function handleLoadSessionFailure(e: Error): Promise<boolean> {
+async function handleLoadSessionFailure(e: unknown): Promise<boolean> {
     logger.error("Unable to load session", e);
 
     const modal = Modal.createDialog(SessionRestoreErrorDialog, {
@@ -748,11 +842,12 @@ let _isLoggingOut = false;
  * Logs the current session out and transitions to the logged-out state
  */
 export function logout(): void {
-    if (!MatrixClientPeg.get()) return;
+    const client = MatrixClientPeg.get();
+    if (!client) return;
 
     PosthogAnalytics.instance.logout();
 
-    if (MatrixClientPeg.get()!.isGuest()) {
+    if (client.isGuest()) {
         // logout doesn't work for guest sessions
         // Also we sometimes want to re-log in a guest session if we abort the login.
         // defer until next tick because it calls a synchronous dispatch, and we are likely here from a dispatch.
@@ -761,7 +856,6 @@ export function logout(): void {
     }
 
     _isLoggingOut = true;
-    const client = MatrixClientPeg.get()!;
     PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
     client.logout(true).then(onLoggedOut, (err) => {
         // Just throwing an error here is going to be very unhelpful

@@ -16,8 +16,7 @@ limitations under the License.
 
 import classNames from "classnames";
 import React, { createRef, ClipboardEvent, SyntheticEvent } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import EMOTICON_REGEX from "emojibase-regex/emoticon";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -554,8 +553,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                     autoComplete.onEscape(event);
                     handled = true;
                     break;
-                default:
-                    return; // don't preventDefault on anything else
             }
         } else if (autocompleteAction === KeyBindingAction.ForceCompleteAutocomplete && !this.state.showVisualBell) {
             // there is no current autocomplete window, try to open it

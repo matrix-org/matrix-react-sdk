@@ -16,11 +16,18 @@ limitations under the License.
 
 import React, { createRef, KeyboardEvent, SyntheticEvent } from "react";
 import EMOJI_REGEX from "emojibase-regex";
-import { IContent, MatrixEvent, IEventRelation, IMentions } from "matrix-js-sdk/src/models/event";
+import {
+    IContent,
+    MatrixEvent,
+    IEventRelation,
+    IMentions,
+    Room,
+    EventType,
+    MsgType,
+    RelationType,
+} from "matrix-js-sdk/src/matrix";
 import { DebouncedFunc, throttle } from "lodash";
-import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
@@ -89,7 +96,7 @@ export function attachMentions(
     }
 
     // The mentions property *always* gets included to disable legacy push rules.
-    const mentions: IMentions = (content["org.matrix.msc3952.mentions"] = {});
+    const mentions: IMentions = (content["m.mentions"] = {});
 
     const userMentions = new Set<string>();
     let roomMention = false;
@@ -100,7 +107,7 @@ export function attachMentions(
         userMentions.add(replyToEvent.sender!.userId);
         // TODO What do we do if the reply event *doeesn't* have this property?
         // Try to fish out replies from the contents?
-        const userIds = replyToEvent.getContent()["org.matrix.msc3952.mentions"]?.user_ids;
+        const userIds = replyToEvent.getContent()["m.mentions"]?.user_ids;
         if (Array.isArray(userIds)) {
             userIds.forEach((userId) => userMentions.add(userId));
         }
@@ -127,7 +134,7 @@ export function attachMentions(
     if (editedContent) {
         // First, the new event content gets the *full* set of users.
         const newContent = content["m.new_content"];
-        const newMentions: IMentions = (newContent["org.matrix.msc3952.mentions"] = {});
+        const newMentions: IMentions = (newContent["m.mentions"] = {});
 
         // Only include the users/room if there is any content.
         if (userMentions.size) {
@@ -139,7 +146,7 @@ export function attachMentions(
 
         // Fetch the mentions from the original event and remove any previously
         // mentioned users.
-        const prevMentions = editedContent["org.matrix.msc3952.mentions"];
+        const prevMentions = editedContent["m.mentions"];
         if (Array.isArray(prevMentions?.user_ids)) {
             prevMentions!.user_ids.forEach((userId) => userMentions.delete(userId));
         }
@@ -447,6 +454,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const posthogEvent: ComposerEvent = {
             eventName: "Composer",
             isEditing: false,
+            isLocation: false,
             isReply: !!this.props.replyToEvent,
             inThread: this.props.relation?.rel_type === THREAD_RELATION_TYPE.name,
         };

@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { ComponentProps, createRef, ReactNode } from "react";
 import { decode } from "html-entities";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { IPreviewUrlResponse } from "matrix-js-sdk/src/client";
+import { MatrixEvent, IPreviewUrlResponse } from "matrix-js-sdk/src/matrix";
 
 import { Linkify } from "../../../HtmlUtils";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -75,9 +74,6 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
 
     public render(): React.ReactNode {
         const p = this.props.preview;
-        if (!p || Object.keys(p).length === 0) {
-            return <div />;
-        }
 
         // FIXME: do we want to factor out all image displaying between this and MImageBody - especially for lightboxing?
         let image: string | null = p["og:image"] ?? null;

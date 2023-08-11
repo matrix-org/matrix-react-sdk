@@ -16,9 +16,8 @@ limitations under the License.
 
 import EventEmitter from "events";
 import { mocked, MockedObject } from "jest-mock";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import {
+    MatrixEvent,
     Room,
     User,
     IContent,
@@ -36,6 +35,7 @@ import {
     ConditionKind,
     IPushRules,
     RelationType,
+    JoinRule,
 } from "matrix-js-sdk/src/matrix";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
@@ -45,7 +45,7 @@ import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
 import { IEventDecryptionResult } from "matrix-js-sdk/src/@types/crypto";
 import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
 
-import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
+import type { GroupCall } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
 import { ValidatedDelegatedAuthConfig, ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
@@ -241,6 +241,9 @@ export function createTestClient(): MatrixClient {
         joinRoom: jest.fn(),
         getSyncStateData: jest.fn(),
         getDehydratedDevice: jest.fn(),
+        exportRoomKeys: jest.fn(),
+        knockRoom: jest.fn(),
+        leave: jest.fn(),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);

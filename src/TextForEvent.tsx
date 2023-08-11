@@ -15,14 +15,19 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import {
+    MatrixEvent,
+    MatrixClient,
+    GuestAccess,
+    HistoryVisibility,
+    JoinRule,
+    EventType,
+    MsgType,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from "matrix-js-sdk/src/utils";
-import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { M_POLL_START, M_POLL_END } from "matrix-js-sdk/src/@types/polls";
 import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "./languageHandler";
 import * as Roles from "./Roles";
@@ -286,6 +291,8 @@ function textForJoinRulesEvent(ev: MatrixEvent, client: MatrixClient, allowJSX: 
                 _t("%(senderDisplayName)s made the room invite only.", {
                     senderDisplayName,
                 });
+        case JoinRule.Knock:
+            return () => _t("%(senderDisplayName)s changed the join rule to ask to join.", { senderDisplayName });
         case JoinRule.Restricted:
             if (allowJSX) {
                 return () => (

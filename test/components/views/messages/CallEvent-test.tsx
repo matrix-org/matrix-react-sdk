@@ -17,12 +17,10 @@ limitations under the License.
 import React from "react";
 import { render, screen, act, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { Room, RoomStateEvent, MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
     useMockedCalls,
     MockedCall,

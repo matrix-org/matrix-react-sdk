@@ -94,16 +94,19 @@ interface IState {
     error?: boolean;
 }
 
-/*
- * Walks the user through the process of creating a passphrase to guard Secure
- * Secret Storage in account data.
+/**
+ * Walks the user through the process of creating a 4S passphrase and bootstrapping secret storage.
+ *
+ * If the user already has a key backup, follows a "migration" flow (aka "Upgrade your encryption") which
+ * prompts the user to enter their backup decryption password (a Curve25519 private key, possibly derived
+ * from a passphrase), and uses that as the (AES) 4S encryption key.
  */
 export default class CreateSecretStorageDialog extends React.PureComponent<IProps, IState> {
     public static defaultProps: Partial<IProps> = {
         hasCancel: true,
         forceReset: false,
     };
-    private recoveryKey: IRecoveryKey;
+    private recoveryKey?: IRecoveryKey;
     private backupKey?: Uint8Array;
     private recoveryKeyNode = createRef<HTMLElement>();
     private passphraseField = createRef<Field>();
@@ -270,6 +273,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     };
 
     private onDownloadClick = (): void => {
+        if (!this.recoveryKey) return;
         const blob = new Blob([this.recoveryKey.encodedPrivateKey!], {
             type: "text/plain;charset=us-ascii",
         });
@@ -341,7 +345,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             if (forceReset) {
                 logger.log("Forcing secret storage reset");
                 await cli.bootstrapSecretStorage({
-                    createSecretStorageKey: async () => this.recoveryKey,
+                    createSecretStorageKey: async () => this.recoveryKey!,
                     setupNewKeyBackup: true,
                     setupNewSecretStorage: true,
                 });
@@ -357,7 +361,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     authUploadDeviceSigningKeys: this.doBootstrapUIAuth,
                 });
                 await cli.bootstrapSecretStorage({
-                    createSecretStorageKey: async () => this.recoveryKey,
+                    createSecretStorageKey: async () => this.recoveryKey!,
                     keyBackupInfo: this.state.backupInfo!,
                     setupNewKeyBackup: !this.state.backupInfo,
                     getKeyBackupPassphrase: async (): Promise<Uint8Array> => {
@@ -575,12 +579,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     }
 
     private renderPhaseMigrate(): JSX.Element {
-        // TODO: This is a temporary screen so people who have the labs flag turned on and
-        // click the button are aware they're making a change to their account.
-        // Once we're confident enough in this (and it's supported enough) we can do
-        // it automatically.
-        // https://github.com/vector-im/element-web/issues/11696
-
         let authPrompt;
         let nextCaption = _t("Next");
         if (this.state.canUploadKeysWithPasswordOnly) {
@@ -762,7 +760,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 <div className="mx_CreateSecretStorageDialog_primaryContainer mx_CreateSecretStorageDialog_recoveryKeyPrimarycontainer">
                     <div className="mx_CreateSecretStorageDialog_recoveryKeyContainer">
                         <div className="mx_CreateSecretStorageDialog_recoveryKey">
-                            <code ref={this.recoveryKeyNode}>{this.recoveryKey.encodedPrivateKey}</code>
+                            <code ref={this.recoveryKeyNode}>{this.recoveryKey?.encodedPrivateKey}</code>
                         </div>
                         <div className="mx_CreateSecretStorageDialog_recoveryKeyButtons">
                             <AccessibleButton

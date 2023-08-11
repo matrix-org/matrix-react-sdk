@@ -17,9 +17,7 @@ limitations under the License.
 */
 
 import React, { ComponentProps, ReactNode } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, RoomMember, EventType } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
@@ -324,8 +322,11 @@ export default class EventListSummary extends React.Component<
             case TransitionType.ChangedAvatar:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)schanged their avatar %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)schanged their avatar %(count)s times", { oneUser: "", count });
+                        ? _t("%(severalUsers)schanged their profile picture %(count)s times", {
+                              severalUsers: "",
+                              count,
+                          })
+                        : _t("%(oneUser)schanged their profile picture %(count)s times", { oneUser: "", count });
                 break;
             case TransitionType.NoChange:
                 res =

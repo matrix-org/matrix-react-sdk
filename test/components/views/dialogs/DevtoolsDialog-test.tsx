@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { getByLabelText, render } from "@testing-library/react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { getByLabelText, getAllByLabelText, render } from "@testing-library/react";
+import { Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
 
 import { stubClient } from "../../../test-utils";
@@ -29,10 +28,10 @@ describe("DevtoolsDialog", () => {
     let cli: MatrixClient;
     let room: Room;
 
-    function getComponent(roomId: string, onFinished = () => true) {
+    function getComponent(roomId: string, threadRootId: string | null = null, onFinished = () => true) {
         return render(
             <MatrixClientContext.Provider value={cli}>
-                <DevtoolsDialog roomId={roomId} onFinished={onFinished} />
+                <DevtoolsDialog roomId={roomId} threadRootId={threadRootId} onFinished={onFinished} />
             </MatrixClientContext.Provider>,
         );
     }
@@ -66,6 +65,22 @@ describe("DevtoolsDialog", () => {
 
         expect(copiedBtn).toBeInTheDocument();
         expect(navigator.clipboard.writeText).toHaveBeenCalled();
-        expect(navigator.clipboard.readText()).resolves.toBe(room.roomId);
+        await expect(navigator.clipboard.readText()).resolves.toBe(room.roomId);
+    });
+
+    it("copies the thread root id when provided", async () => {
+        const user = userEvent.setup();
+        jest.spyOn(navigator.clipboard, "writeText");
+
+        const threadRootId = "$test_event_id_goes_here";
+        const { container } = getComponent(room.roomId, threadRootId);
+
+        const copyBtn = getAllByLabelText(container, "Copy")[1];
+        await user.click(copyBtn);
+        const copiedBtn = getByLabelText(container, "Copied!");
+
+        expect(copiedBtn).toBeInTheDocument();
+        expect(navigator.clipboard.writeText).toHaveBeenCalled();
+        await expect(navigator.clipboard.readText()).resolves.toBe(threadRootId);
     });
 });

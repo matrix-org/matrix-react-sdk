@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 import { useState } from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { Room, RoomEvent, RoomMember, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { throttle } from "lodash";
 
 import { useTypedEventEmitter } from "./useEventEmitter";
@@ -27,7 +25,7 @@ export const useRoomMembers = (room: Room, throttleWait = 250): RoomMember[] => 
     const [members, setMembers] = useState<RoomMember[]>(room.getJoinedMembers());
     useTypedEventEmitter(
         room.currentState,
-        RoomStateEvent.Update,
+        RoomStateEvent.Members,
         throttle(
             () => {
                 setMembers(room.getJoinedMembers());
@@ -44,7 +42,7 @@ export const useRoomMemberCount = (room: Room, throttleWait = 250): number => {
     const [count, setCount] = useState<number>(room.getJoinedMemberCount());
     useTypedEventEmitter(
         room.currentState,
-        RoomStateEvent.Update,
+        RoomStateEvent.Members,
         throttle(
             () => {
                 setCount(room.getJoinedMemberCount());

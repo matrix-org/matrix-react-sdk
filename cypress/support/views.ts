@@ -23,11 +23,22 @@ declare global {
     namespace Cypress {
         interface Chainable {
             /**
-             * Opens the given room by name. The room must be visible in the
-             * room list.
+             * Opens the given room by name. The room must be visible in the room list.
+             * It uses a start-anchored regexp to accommodate for room tiles for unread rooms containing additional
+             * context in their aria labels, e.g. "Room name 3 unread messages."
+             *
              * @param name The room name to find and click on/open.
              */
             viewRoomByName(name: string): Chainable<JQuery<HTMLElement>>;
+
+            /**
+             * Opens the given room by room ID.
+             *
+             * This works by browsing to `/#/room/${id}`, so it will also work for room aliases.
+             *
+             * @param id
+             */
+            viewRoomById(id: string): void;
 
             /**
              * Returns the space panel space button based on a name. The space
@@ -54,7 +65,14 @@ declare global {
 }
 
 Cypress.Commands.add("viewRoomByName", (name: string): Chainable<JQuery<HTMLElement>> => {
-    return cy.findByRole("treeitem", { name: name }).should("have.class", "mx_RoomTile").click();
+    return cy
+        .findByRole("treeitem", { name: new RegExp("^" + name) })
+        .should("have.class", "mx_RoomTile")
+        .click();
+});
+
+Cypress.Commands.add("viewRoomById", (id: string): void => {
+    cy.visit(`/#/room/${id}`);
 });
 
 Cypress.Commands.add("getSpacePanelButton", (name: string): Chainable<JQuery<HTMLElement>> => {

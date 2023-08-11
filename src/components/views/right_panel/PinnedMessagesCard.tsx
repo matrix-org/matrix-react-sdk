@@ -15,11 +15,8 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { Room, RoomEvent, RoomStateEvent, MatrixEvent, EventType, RelationType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
 import { Icon as EmojiIcon } from "../../../../res/img/element-icons/room/message-bar/emoji.svg";
@@ -103,10 +100,11 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
     const readPinnedEvents = useReadPinnedEvents(room);
 
     useEffect(() => {
+        if (!cli || cli.isGuest()) return; // nothing to do
         const newlyRead = pinnedEventIds.filter((id) => !readPinnedEvents.has(id));
         if (newlyRead.length > 0) {
             // clear out any read pinned events which no longer are pinned
-            cli?.setRoomAccountData(room.roomId, ReadPinsEventId, {
+            cli.setRoomAccountData(room.roomId, ReadPinsEventId, {
                 event_ids: pinnedEventIds,
             });
         }

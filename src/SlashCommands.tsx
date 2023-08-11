@@ -18,15 +18,10 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { User } from "matrix-js-sdk/src/models/user";
-import { Direction } from "matrix-js-sdk/src/models/event-timeline";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { User, IContent, Direction } from "matrix-js-sdk/src/matrix";
 import * as ContentHelpers from "matrix-js-sdk/src/content-helpers";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IContent } from "matrix-js-sdk/src/models/event";
 import { MRoomTopicEventContent } from "matrix-js-sdk/src/@types/topic";
-import { SlashCommand as SlashCommandEvent } from "@matrix-org/analytics-events/types/typescript/SlashCommand";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import dis from "./dispatcher/dispatcher";
 import { _t, _td, UserFriendlyError } from "./languageHandler";
@@ -39,14 +34,12 @@ import { textToHtmlRainbow } from "./utils/colour";
 import { AddressType, getAddressType } from "./UserAddress";
 import { abbreviateUrl } from "./utils/UrlUtils";
 import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "./utils/IdentityServerUtils";
-import { isPermalinkHost, parsePermalink } from "./utils/permalinks/Permalinks";
 import { WidgetType } from "./widgets/WidgetType";
 import { Jitsi } from "./widgets/Jitsi";
 import BugReportDialog from "./components/views/dialogs/BugReportDialog";
 import { ensureDMExists } from "./createRoom";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { Action } from "./dispatcher/actions";
-import { EffectiveMembership, getEffectiveMembership } from "./utils/membership";
 import SdkConfig from "./SdkConfig";
 import SettingsStore from "./settings/SettingsStore";
 import { UIComponent, UIFeature } from "./settings/UIFeature";
@@ -54,185 +47,32 @@ import { CHAT_EFFECTS } from "./effects";
 import LegacyCallHandler from "./LegacyCallHandler";
 import { guessAndSetDMRoom } from "./Rooms";
 import { upgradeRoom } from "./utils/RoomUpgrade";
-import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 import DevtoolsDialog from "./components/views/dialogs/DevtoolsDialog";
 import RoomUpgradeWarningDialog from "./components/views/dialogs/RoomUpgradeWarningDialog";
 import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from "./contexts/RoomContext";
-import { XOR } from "./@types/common";
-import { PosthogAnalytics } from "./PosthogAnalytics";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import VoipUserMapper from "./VoipUserMapper";
 import { htmlSerializeFromMdIfNeeded } from "./editor/serialize";
 import { leaveRoomBehaviour } from "./utils/leave-behaviour";
-import { isLocalRoom } from "./utils/localRoom/isLocalRoom";
-import { SdkContextClass } from "./contexts/SDKContext";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { getDeviceCryptoInfo } from "./utils/crypto/deviceInfo";
+import { isCurrentLocalRoom, reject, singleMxcUpload, success, successSync } from "./slash-commands/utils";
+import { deop, op } from "./slash-commands/op";
+import { CommandCategories } from "./slash-commands/interface";
+import { Command } from "./slash-commands/command";
+import { goto, join } from "./slash-commands/join";
 
-// XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
-interface HTMLInputEvent extends Event {
-    target: HTMLInputElement & EventTarget;
-}
-
-const singleMxcUpload = async (cli: MatrixClient): Promise<string | null> => {
-    return new Promise((resolve) => {
-        const fileSelector = document.createElement("input");
-        fileSelector.setAttribute("type", "file");
-        fileSelector.onchange = (ev: Event) => {
-            const file = (ev as HTMLInputEvent).target.files?.[0];
-            if (!file) return;
-
-            Modal.createDialog(UploadConfirmDialog, {
-                file,
-                onFinished: async (shouldContinue): Promise<void> => {
-                    if (shouldContinue) {
-                        const { content_uri: uri } = await cli.uploadContent(file);
-                        resolve(uri);
-                    } else {
-                        resolve(null);
-                    }
-                },
-            });
-        };
-
-        fileSelector.click();
-    });
-};
-
-export const CommandCategories = {
-    messages: _td("Messages"),
-    actions: _td("Actions"),
-    admin: _td("Admin"),
-    advanced: _td("Advanced"),
-    effects: _td("Effects"),
-    other: _td("Other"),
-};
-
-export type RunResult = XOR<{ error: Error }, { promise: Promise<IContent | undefined> }>;
-
-type RunFn = (this: Command, matrixClient: MatrixClient, roomId: string, args?: string) => RunResult;
-
-interface ICommandOpts {
-    command: string;
-    aliases?: string[];
-    args?: string;
-    description: string;
-    analyticsName?: SlashCommandEvent["command"];
-    runFn?: RunFn;
-    category: string;
-    hideCompletionAfterSpace?: boolean;
-    isEnabled?(matrixClient: MatrixClient | null): boolean;
-    renderingTypes?: TimelineRenderingType[];
-}
-
-export class Command {
-    public readonly command: string;
-    public readonly aliases: string[];
-    public readonly args?: string;
-    public readonly description: string;
-    public readonly runFn?: RunFn;
-    public readonly category: string;
-    public readonly hideCompletionAfterSpace: boolean;
-    public readonly renderingTypes?: TimelineRenderingType[];
-    public readonly analyticsName?: SlashCommandEvent["command"];
-    private readonly _isEnabled?: (matrixClient: MatrixClient | null) => boolean;
-
-    public constructor(opts: ICommandOpts) {
-        this.command = opts.command;
-        this.aliases = opts.aliases || [];
-        this.args = opts.args || "";
-        this.description = opts.description;
-        this.runFn = opts.runFn?.bind(this);
-        this.category = opts.category || CommandCategories.other;
-        this.hideCompletionAfterSpace = opts.hideCompletionAfterSpace || false;
-        this._isEnabled = opts.isEnabled;
-        this.renderingTypes = opts.renderingTypes;
-        this.analyticsName = opts.analyticsName;
-    }
-
-    public getCommand(): string {
-        return `/${this.command}`;
-    }
-
-    public getCommandWithArgs(): string {
-        return this.getCommand() + " " + this.args;
-    }
-
-    public run(matrixClient: MatrixClient, roomId: string, threadId: string | null, args?: string): RunResult {
-        // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
-        if (!this.runFn) {
-            return reject(new UserFriendlyError("Command error: Unable to handle slash command."));
-        }
-
-        const renderingType = threadId ? TimelineRenderingType.Thread : TimelineRenderingType.Room;
-        if (this.renderingTypes && !this.renderingTypes?.includes(renderingType)) {
-            return reject(
-                new UserFriendlyError("Command error: Unable to find rendering type (%(renderingType)s)", {
-                    renderingType,
-                    cause: undefined,
-                }),
-            );
-        }
-
-        if (this.analyticsName) {
-            PosthogAnalytics.instance.trackEvent<SlashCommandEvent>({
-                eventName: "SlashCommand",
-                command: this.analyticsName,
-            });
-        }
-
-        return this.runFn(matrixClient, roomId, args);
-    }
-
-    public getUsage(): string {
-        return _t("Usage") + ": " + this.getCommandWithArgs();
-    }
-
-    public isEnabled(cli: MatrixClient | null): boolean {
-        return this._isEnabled?.(cli) ?? true;
-    }
-}
-
-function reject(error?: any): RunResult {
-    return { error };
-}
-
-function success(promise: Promise<any> = Promise.resolve()): RunResult {
-    return { promise };
-}
-
-function successSync(value: any): RunResult {
-    return success(Promise.resolve(value));
-}
-
-const isCurrentLocalRoom = (cli: MatrixClient | null): boolean => {
-    const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
-    if (!roomId) return false;
-    const room = cli?.getRoom(roomId);
-    if (!room) return false;
-    return isLocalRoom(room);
-};
-
-const canAffectPowerlevels = (cli: MatrixClient | null): boolean => {
-    const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
-    if (!cli || !roomId) return false;
-    const room = cli?.getRoom(roomId);
-    return !!room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getSafeUserId()) && !isLocalRoom(room);
-};
-
-/* Disable the "unexpected this" error for these commands - all of the run
- * functions are called with `this` bound to the Command instance.
- */
+export { CommandCategories, Command };
 
 export const Commands = [
     new Command({
         command: "spoiler",
         args: "<message>",
         description: _td("Sends the given message as a spoiler"),
-        runFn: function (cli, roomId, message = "") {
+        runFn: function (cli, roomId, threadId, message = "") {
             return successSync(ContentHelpers.makeHtmlMessage(message, `<span data-mx-spoiler>${message}</span>`));
         },
         category: CommandCategories.messages,
@@ -241,7 +81,7 @@ export const Commands = [
         command: "shrug",
         args: "<message>",
         description: _td("Prepends ¯\\_(ツ)_/¯ to a plain-text message"),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             let message = "¯\\_(ツ)_/¯";
             if (args) {
                 message = message + " " + args;
@@ -254,7 +94,7 @@ export const Commands = [
         command: "tableflip",
         args: "<message>",
         description: _td("Prepends (╯°□°）╯︵ ┻━┻ to a plain-text message"),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             let message = "(╯°□°）╯︵ ┻━┻";
             if (args) {
                 message = message + " " + args;
@@ -267,7 +107,7 @@ export const Commands = [
         command: "unflip",
         args: "<message>",
         description: _td("Prepends ┬──┬ ノ( ゜-゜ノ) to a plain-text message"),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             let message = "┬──┬ ノ( ゜-゜ノ)";
             if (args) {
                 message = message + " " + args;
@@ -280,7 +120,7 @@ export const Commands = [
         command: "lenny",
         args: "<message>",
         description: _td("Prepends ( ͡° ͜ʖ ͡°) to a plain-text message"),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             let message = "( ͡° ͜ʖ ͡°)";
             if (args) {
                 message = message + " " + args;
@@ -293,7 +133,7 @@ export const Commands = [
         command: "plain",
         args: "<message>",
         description: _td("Sends a message as plain text, without interpreting it as markdown"),
-        runFn: function (cli, roomId, messages = "") {
+        runFn: function (cli, roomId, threadId, messages = "") {
             return successSync(ContentHelpers.makeTextMessage(messages));
         },
         category: CommandCategories.messages,
@@ -302,7 +142,7 @@ export const Commands = [
         command: "html",
         args: "<message>",
         description: _td("Sends a message as html, without interpreting it as markdown"),
-        runFn: function (cli, roomId, messages = "") {
+        runFn: function (cli, roomId, threadId, messages = "") {
             return successSync(ContentHelpers.makeHtmlMessage(messages, messages));
         },
         category: CommandCategories.messages,
@@ -312,7 +152,7 @@ export const Commands = [
         args: "<new_version>",
         description: _td("Upgrades a room to a new version"),
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const room = cli.getRoom(roomId);
                 if (!room?.currentState.mayClientSendStateEvent("m.room.tombstone", cli)) {
@@ -346,7 +186,7 @@ export const Commands = [
         args: "<YYYY-MM-DD>",
         description: _td("Jump to the given date in the timeline"),
         isEnabled: () => SettingsStore.getValue("feature_jump_to_date"),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 return success(
                     (async (): Promise<void> => {
@@ -387,7 +227,7 @@ export const Commands = [
         command: "nick",
         args: "<display_name>",
         description: _td("Changes your display nickname"),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 return success(cli.setDisplayName(args));
             }
@@ -402,7 +242,7 @@ export const Commands = [
         args: "<display_name>",
         description: _td("Changes your display nickname in the current room only"),
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const ev = cli.getRoom(roomId)?.currentState.getStateEvents("m.room.member", cli.getSafeUserId());
                 const content = {
@@ -421,7 +261,7 @@ export const Commands = [
         args: "[<mxc_url>]",
         description: _td("Changes the avatar of the current room"),
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             let promise = Promise.resolve(args ?? null);
             if (!args) {
                 promise = singleMxcUpload(cli);
@@ -440,9 +280,9 @@ export const Commands = [
     new Command({
         command: "myroomavatar",
         args: "[<mxc_url>]",
-        description: _td("Changes your avatar in this current room only"),
+        description: _td("Changes your profile picture in this current room only"),
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             const room = cli.getRoom(roomId);
             const userId = cli.getSafeUserId();
 
@@ -469,8 +309,8 @@ export const Commands = [
     new Command({
         command: "myavatar",
         args: "[<mxc_url>]",
-        description: _td("Changes your avatar in all rooms"),
-        runFn: function (cli, roomId, args) {
+        description: _td("Changes your profile picture in all rooms"),
+        runFn: function (cli, roomId, threadId, args) {
             let promise = Promise.resolve(args ?? null);
             if (!args) {
                 promise = singleMxcUpload(cli);
@@ -491,7 +331,7 @@ export const Commands = [
         args: "[<topic>]",
         description: _td("Gets or sets the room topic"),
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const html = htmlSerializeFromMdIfNeeded(args, { forceHTML: false });
                 return success(cli.setRoomTopic(roomId, args, html));
@@ -529,7 +369,7 @@ export const Commands = [
         args: "<name>",
         description: _td("Sets the room name"),
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 return success(cli.setRoomName(roomId, args));
             }
@@ -544,7 +384,7 @@ export const Commands = [
         description: _td("Invites user with given id to current room"),
         analyticsName: "Invite",
         isEnabled: (cli) => !isCurrentLocalRoom(cli) && shouldShowComponent(UIComponent.InviteUsers),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const [address, reason] = args.split(/\s+(.+)/);
                 if (address) {
@@ -616,125 +456,15 @@ export const Commands = [
         category: CommandCategories.actions,
         renderingTypes: [TimelineRenderingType.Room],
     }),
-    new Command({
-        command: "join",
-        aliases: ["j", "goto"],
-        args: "<room-address>",
-        description: _td("Joins room with given address"),
-        runFn: function (cli, roomId, args) {
-            if (args) {
-                // Note: we support 2 versions of this command. The first is
-                // the public-facing one for most users and the other is a
-                // power-user edition where someone may join via permalink or
-                // room ID with optional servers. Practically, this results
-                // in the following variations:
-                //   /join #example:example.org
-                //   /join !example:example.org
-                //   /join !example:example.org altserver.com elsewhere.ca
-                //   /join https://matrix.to/#/!example:example.org?via=altserver.com
-                // The command also supports event permalinks transparently:
-                //   /join https://matrix.to/#/!example:example.org/$something:example.org
-                //   /join https://matrix.to/#/!example:example.org/$something:example.org?via=altserver.com
-                const params = args.split(" ");
-                if (params.length < 1) return reject(this.getUsage());
-
-                let isPermalink = false;
-                if (params[0].startsWith("http:") || params[0].startsWith("https:")) {
-                    // It's at least a URL - try and pull out a hostname to check against the
-                    // permalink handler
-                    const parsedUrl = new URL(params[0]);
-                    const hostname = parsedUrl.host || parsedUrl.hostname; // takes first non-falsey value
-
-                    // if we're using a Element permalink handler, this will catch it before we get much further.
-                    // see below where we make assumptions about parsing the URL.
-                    if (isPermalinkHost(hostname)) {
-                        isPermalink = true;
-                    }
-                }
-                if (params[0][0] === "#") {
-                    let roomAlias = params[0];
-                    if (!roomAlias.includes(":")) {
-                        roomAlias += ":" + cli.getDomain();
-                    }
-
-                    dis.dispatch<ViewRoomPayload>({
-                        action: Action.ViewRoom,
-                        room_alias: roomAlias,
-                        auto_join: true,
-                        metricsTrigger: "SlashCommand",
-                        metricsViaKeyboard: true,
-                    });
-                    return success();
-                } else if (params[0][0] === "!") {
-                    const [roomId, ...viaServers] = params;
-
-                    dis.dispatch<ViewRoomPayload>({
-                        action: Action.ViewRoom,
-                        room_id: roomId,
-                        via_servers: viaServers, // for the rejoin button
-                        auto_join: true,
-                        metricsTrigger: "SlashCommand",
-                        metricsViaKeyboard: true,
-                    });
-                    return success();
-                } else if (isPermalink) {
-                    const permalinkParts = parsePermalink(params[0]);
-
-                    // This check technically isn't needed because we already did our
-                    // safety checks up above. However, for good measure, let's be sure.
-                    if (!permalinkParts) {
-                        return reject(this.getUsage());
-                    }
-
-                    // If for some reason someone wanted to join a user, we should
-                    // stop them now.
-                    if (!permalinkParts.roomIdOrAlias) {
-                        return reject(this.getUsage());
-                    }
-
-                    const entity = permalinkParts.roomIdOrAlias;
-                    const viaServers = permalinkParts.viaServers;
-                    const eventId = permalinkParts.eventId;
-
-                    const dispatch: ViewRoomPayload = {
-                        action: Action.ViewRoom,
-                        auto_join: true,
-                        metricsTrigger: "SlashCommand",
-                        metricsViaKeyboard: true,
-                    };
-
-                    if (entity[0] === "!") dispatch["room_id"] = entity;
-                    else dispatch["room_alias"] = entity;
-
-                    if (eventId) {
-                        dispatch["event_id"] = eventId;
-                        dispatch["highlighted"] = true;
-                    }
-
-                    if (viaServers) {
-                        // For the join, these are passed down to the js-sdk's /join call
-                        dispatch["opts"] = { viaServers };
-
-                        // For if the join fails (rejoin button)
-                        dispatch["via_servers"] = viaServers;
-                    }
-
-                    dis.dispatch(dispatch);
-                    return success();
-                }
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.actions,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    goto,
+    join,
     new Command({
         command: "part",
         args: "[<room-address>]",
         description: _td("Leave room"),
         analyticsName: "Part",
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             let targetRoomId: string | undefined;
             if (args) {
                 const matches = args.match(/^(\S+)$/);
@@ -774,7 +504,7 @@ export const Commands = [
         args: "<user-id> [reason]",
         description: _td("Removes user with given id from this room"),
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/^(\S+?)( +(.*))?$/);
                 if (matches) {
@@ -791,7 +521,7 @@ export const Commands = [
         args: "<user-id> [reason]",
         description: _td("Bans user with given id"),
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/^(\S+?)( +(.*))?$/);
                 if (matches) {
@@ -808,7 +538,7 @@ export const Commands = [
         args: "<user-id>",
         description: _td("Unbans user with given ID"),
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/^(\S+)$/);
                 if (matches) {
@@ -825,7 +555,7 @@ export const Commands = [
         command: "ignore",
         args: "<user-id>",
         description: _td("Ignores a user, hiding their messages from you"),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/^(@[^:]+:\S+)$/);
                 if (matches) {
@@ -854,7 +584,7 @@ export const Commands = [
         command: "unignore",
         args: "<user-id>",
         description: _td("Stops ignoring a user, showing their messages going forward"),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/(^@[^:]+:\S+$)/);
                 if (matches) {
@@ -880,83 +610,13 @@ export const Commands = [
         },
         category: CommandCategories.actions,
     }),
-    new Command({
-        command: "op",
-        args: "<user-id> [<power-level>]",
-        description: _td("Define the power level of a user"),
-        isEnabled: canAffectPowerlevels,
-        runFn: function (cli, roomId, args) {
-            if (args) {
-                const matches = args.match(/^(\S+?)( +(-?\d+))?$/);
-                let powerLevel = 50; // default power level for op
-                if (matches) {
-                    const userId = matches[1];
-                    if (matches.length === 4 && undefined !== matches[3]) {
-                        powerLevel = parseInt(matches[3], 10);
-                    }
-                    if (!isNaN(powerLevel)) {
-                        const room = cli.getRoom(roomId);
-                        if (!room) {
-                            return reject(
-                                new UserFriendlyError("Command failed: Unable to find room (%(roomId)s", {
-                                    roomId,
-                                    cause: undefined,
-                                }),
-                            );
-                        }
-                        const member = room.getMember(userId);
-                        if (
-                            !member?.membership ||
-                            getEffectiveMembership(member.membership) === EffectiveMembership.Leave
-                        ) {
-                            return reject(new UserFriendlyError("Could not find user in room"));
-                        }
-                        const powerLevelEvent = room.currentState.getStateEvents("m.room.power_levels", "");
-                        return success(cli.setPowerLevel(roomId, userId, powerLevel, powerLevelEvent));
-                    }
-                }
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.admin,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
-    new Command({
-        command: "deop",
-        args: "<user-id>",
-        description: _td("Deops user with given id"),
-        isEnabled: canAffectPowerlevels,
-        runFn: function (cli, roomId, args) {
-            if (args) {
-                const matches = args.match(/^(\S+)$/);
-                if (matches) {
-                    const room = cli.getRoom(roomId);
-                    if (!room) {
-                        return reject(
-                            new UserFriendlyError("Command failed: Unable to find room (%(roomId)s", {
-                                roomId,
-                                cause: undefined,
-                            }),
-                        );
-                    }
-
-                    const powerLevelEvent = room.currentState.getStateEvents("m.room.power_levels", "");
-                    if (!powerLevelEvent?.getContent().users[args]) {
-                        return reject(new UserFriendlyError("Could not find user in room"));
-                    }
-                    return success(cli.setPowerLevel(roomId, args, undefined, powerLevelEvent));
-                }
-            }
-            return reject(this.getUsage());
-        },
-        category: CommandCategories.admin,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    op,
+    deop,
     new Command({
         command: "devtools",
         description: _td("Opens the Developer Tools dialog"),
-        runFn: function (cli, roomId) {
-            Modal.createDialog(DevtoolsDialog, { roomId }, "mx_DevtoolsDialog_wrapper");
+        runFn: function (cli, roomId, threadRootId) {
+            Modal.createDialog(DevtoolsDialog, { roomId, threadRootId }, "mx_DevtoolsDialog_wrapper");
             return success();
         },
         category: CommandCategories.advanced,
@@ -969,7 +629,7 @@ export const Commands = [
             SettingsStore.getValue(UIFeature.Widgets) &&
             shouldShowComponent(UIComponent.AddIntegrations) &&
             !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, widgetUrl) {
+        runFn: function (cli, roomId, threadId, widgetUrl) {
             if (!widgetUrl) {
                 return reject(new UserFriendlyError("Please supply a widget URL or embed code"));
             }
@@ -1022,7 +682,7 @@ export const Commands = [
         command: "verify",
         args: "<user-id> <device-id> <device-signing-key>",
         description: _td("Verifies a user, session, and pubkey tuple"),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 const matches = args.match(/^(\S+) +(\S+) +(\S+)$/);
                 if (matches) {
@@ -1144,7 +804,7 @@ export const Commands = [
         command: "rainbow",
         description: _td("Sends the given message coloured as a rainbow"),
         args: "<message>",
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (!args) return reject(this.getUsage());
             return successSync(ContentHelpers.makeHtmlMessage(args, textToHtmlRainbow(args)));
         },
@@ -1154,7 +814,7 @@ export const Commands = [
         command: "rainbowme",
         description: _td("Sends the given emote coloured as a rainbow"),
         args: "<message>",
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (!args) return reject(this.getUsage());
             return successSync(ContentHelpers.makeHtmlEmote(args, textToHtmlRainbow(args)));
         },
@@ -1174,7 +834,7 @@ export const Commands = [
         description: _td("Displays information about a user"),
         args: "<user-id>",
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, userId) {
+        runFn: function (cli, roomId, threadId, userId) {
             if (!userId || !userId.startsWith("@") || !userId.includes(":")) {
                 return reject(this.getUsage());
             }
@@ -1195,7 +855,7 @@ export const Commands = [
         description: _td("Send a bug report with logs"),
         isEnabled: () => !!SdkConfig.get().bug_report_endpoint_url,
         args: "<description>",
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             return success(
                 Modal.createDialog(BugReportDialog, {
                     initialText: args,
@@ -1230,7 +890,7 @@ export const Commands = [
         command: "query",
         description: _td("Opens chat with the given user"),
         args: "<user-id>",
-        runFn: function (cli, roomId, userId) {
+        runFn: function (cli, roomId, threadId, userId) {
             // easter-egg for now: look up phone numbers through the thirdparty API
             // (very dumb phone number detection...)
             const isPhoneNumber = userId && /^\+?[0123456789]+$/.test(userId);
@@ -1266,7 +926,7 @@ export const Commands = [
         command: "msg",
         description: _td("Sends a message to the given user"),
         args: "<user-id> [<message>]",
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             if (args) {
                 // matches the first whitespace delimited group and then the rest of the string
                 const matches = args.match(/^(\S+?)(?: +(.*))?$/s);
@@ -1302,7 +962,7 @@ export const Commands = [
         description: _td("Places the call in the current room on hold"),
         category: CommandCategories.other,
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             const call = LegacyCallHandler.instance.getCallForRoom(roomId);
             if (!call) {
                 return reject(new UserFriendlyError("No active call in this room"));
@@ -1317,7 +977,7 @@ export const Commands = [
         description: _td("Takes the call in the current room off hold"),
         category: CommandCategories.other,
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             const call = LegacyCallHandler.instance.getCallForRoom(roomId);
             if (!call) {
                 return reject(new UserFriendlyError("No active call in this room"));
@@ -1332,7 +992,7 @@ export const Commands = [
         description: _td("Converts the room to a DM"),
         category: CommandCategories.other,
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             const room = cli.getRoom(roomId);
             if (!room) return reject(new UserFriendlyError("Could not find room"));
             return success(guessAndSetDMRoom(room, true));
@@ -1344,7 +1004,7 @@ export const Commands = [
         description: _td("Converts the DM to a room"),
         category: CommandCategories.other,
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, args) {
+        runFn: function (cli, roomId, threadId, args) {
             const room = cli.getRoom(roomId);
             if (!room) return reject(new UserFriendlyError("Could not find room"));
             return success(guessAndSetDMRoom(room, false));
@@ -1367,7 +1027,7 @@ export const Commands = [
             command: effect.command,
             description: effect.description(),
             args: "<message>",
-            runFn: function (cli, roomId, args) {
+            runFn: function (cli, roomId, threadId, args) {
                 let content: IContent;
                 if (!args) {
                     content = ContentHelpers.makeEmoteMessage(effect.fallbackMessage());

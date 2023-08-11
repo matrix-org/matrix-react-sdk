@@ -28,7 +28,7 @@ import React, {
 } from "react";
 import { DragDropContext, Draggable, Droppable, DroppableProvidedProps } from "react-beautiful-dnd";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { useContextMenu } from "../../structures/ContextMenu";
@@ -243,7 +243,7 @@ const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed"
                 label={menuDisplayed ? _t("Cancel") : _t("Create a space")}
                 onClick={onNewClick}
                 isNarrow={isPanelCollapsed}
-                ref={handle}
+                innerRef={handle}
             />
 
             {contextMenu}

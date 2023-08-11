@@ -15,8 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, useContext, useMemo, useRef, useState } from "react";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import React, { ChangeEvent, ReactNode, useContext, useMemo, useRef, useState } from "react";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td } from "../../../../languageHandler";
 import Field from "../../elements/Field";
@@ -111,7 +111,7 @@ export const EventEditor: React.FC<IEventEditorProps> = ({ fieldDefs, defaultCon
             const json = JSON.parse(content);
             await onSend(fieldData, json);
         } catch (e) {
-            return _t("Failed to send event!") + ` (${e.toString()})`;
+            return _t("Failed to send event!") + (e instanceof Error ? ` (${e.message})` : "");
         }
         return _t("Event sent!");
     };
@@ -143,9 +143,10 @@ export interface IEditorProps extends Pick<IDevtoolsProps, "onBack"> {
 
 interface IViewerProps extends Required<IEditorProps> {
     Editor: React.FC<IEditorProps>;
+    extraButton?: ReactNode;
 }
 
-export const EventViewer: React.FC<IViewerProps> = ({ mxEvent, onBack, Editor }) => {
+export const EventViewer: React.FC<IViewerProps> = ({ mxEvent, onBack, Editor, extraButton }) => {
     const [editing, setEditing] = useState(false);
 
     if (editing) {
@@ -160,7 +161,7 @@ export const EventViewer: React.FC<IViewerProps> = ({ mxEvent, onBack, Editor })
     };
 
     return (
-        <BaseTool onBack={onBack} actionLabel={_t("Edit")} onAction={onAction}>
+        <BaseTool onBack={onBack} actionLabel={_t("Edit")} onAction={onAction} extraButton={extraButton}>
             <SyntaxHighlight language="json">{stringify(mxEvent.event)}</SyntaxHighlight>
         </BaseTool>
     );
@@ -203,6 +204,13 @@ export const TimelineEventEditor: React.FC<IEditorProps> = ({ mxEvent, onBack })
         };
 
         defaultContent = stringify(newContent);
+    } else if (context.threadRootId) {
+        defaultContent = stringify({
+            "m.relates_to": {
+                rel_type: "m.thread",
+                event_id: context.threadRootId,
+            },
+        });
     }
 
     return <EventEditor fieldDefs={fields} defaultContent={defaultContent} onSend={onSend} onBack={onBack} />;

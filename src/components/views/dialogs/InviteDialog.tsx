@@ -16,11 +16,10 @@ limitations under the License.
 
 import React, { createRef, ReactNode, SyntheticEvent } from "react";
 import classNames from "classnames";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { RoomMember, Room, MatrixError } from "matrix-js-sdk/src/matrix";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
+import { uniqBy } from "lodash";
 
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/info.svg";
 import { Icon as EmailPillAvatarIcon } from "../../../../res/img/icon-email-pill-avatar.svg";
@@ -275,7 +274,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
             : this.highlightName(userIdentifier || this.props.member.userId);
 
         return (
-            <div className="mx_InviteDialog_tile mx_InviteDialog_tile--room" onClick={this.onClick}>
+            <AccessibleButton className="mx_InviteDialog_tile mx_InviteDialog_tile--room" onClick={this.onClick}>
                 {stackedAvatar}
                 <span className="mx_InviteDialog_tile_nameStack">
                     <div className="mx_InviteDialog_tile_nameStack_name">
@@ -284,7 +283,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
                     <div className="mx_InviteDialog_tile_nameStack_userId">{caption}</div>
                 </span>
                 {timestamp}
-            </div>
+            </AccessibleButton>
         );
     }
 }
@@ -384,6 +383,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         this.state = {
             targets: [], // array of Member objects (see interface above)
             filterText: this.props.initialText || "",
+            // Mutates alreadyInvited set so that buildSuggestions doesn't duplicate any users
             recents: InviteDialog.buildRecents(alreadyInvited),
             numRecentsShown: INITIAL_ROOMS_SHOWN,
             suggestions: this.buildSuggestions(alreadyInvited),
@@ -476,6 +476,8 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             }
 
             recents.push({ userId, user: toMember(roomMember), lastActive: lastEventTs });
+            // We mutate the given set so that any later callers avoid duplicating these users
+            excludedTargetIds.add(userId);
         }
         if (!recents) logger.warn("[Invite:Recents] No recents to suggest!");
 
@@ -821,7 +823,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (!this.state.busy) {
             let filterText = this.state.filterText;
             let targets = this.state.targets.map((t) => t); // cheap clone for mutation
-            const idx = targets.indexOf(member);
+            const idx = targets.findIndex((m) => m.userId === member.userId);
             if (idx >= 0) {
                 targets.splice(idx, 1);
             } else {
@@ -866,11 +868,17 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             return;
         }
 
+        const text = e.clipboardData.getData("text");
+        const potentialAddresses = this.parseFilter(text);
+        // one search term which is not a mxid or email address
+        if (potentialAddresses.length === 1 && !potentialAddresses[0].includes("@")) {
+            return;
+        }
+
         // Prevent the text being pasted into the input
         e.preventDefault();
 
         // Process it as a list of addresses to add instead
-        const text = e.clipboardData.getData("text");
         const possibleMembers = [
             // If we can avoid hitting the profile endpoint, we should.
             ...this.state.recents,
@@ -884,8 +892,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         // Addresses that could not be added.
         // Will be displayed as filter text to provide feedback.
         const unableToAddMore: string[] = [];
-
-        const potentialAddresses = this.parseFilter(text);
 
         for (const address of potentialAddresses) {
             const member = possibleMembers.find((m) => m.userId === address);
@@ -945,11 +951,11 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (unableToAddMore) {
             this.setState({
                 filterText: unableToAddMore.join(" "),
-                targets: [...this.state.targets, ...toAdd],
+                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
             });
         } else {
             this.setState({
-                targets: [...this.state.targets, ...toAdd],
+                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
             });
         }
     };
@@ -1001,6 +1007,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             // The type of u is a pain to define but members of both mixins have the 'userId' property
             const notAlreadyExists = (u: any): boolean => {
                 return (
+                    !this.state.recents.some((m) => m.userId === u.userId) &&
                     !sourceMembers.some((m) => m.userId === u.userId) &&
                     !priorityAdditionalMembers.some((m) => m.userId === u.userId) &&
                     !otherAdditionalMembers.some((m) => m.userId === u.userId)

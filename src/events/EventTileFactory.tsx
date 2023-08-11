@@ -15,12 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, EventType, MsgType, RelationType, MatrixClient, GroupCallIntent } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 import { M_POLL_END, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { GroupCallIntent } from "matrix-js-sdk/src/webrtc/groupCall";
 
 import SettingsStore from "../settings/SettingsStore";
 import LegacyCallEventGrouper from "../components/structures/LegacyCallEventGrouper";
@@ -105,7 +102,7 @@ const EVENT_TILE_TYPES = new Map<string, Factory>([
     [M_POLL_END.altName, MessageEventFactory],
     [EventType.KeyVerificationCancel, KeyVerificationConclFactory],
     [EventType.KeyVerificationDone, KeyVerificationConclFactory],
-    [EventType.CallInvite, LegacyCallEventFactory], // note that this requires a special factory type
+    [EventType.CallInvite, LegacyCallEventFactory as Factory], // note that this requires a special factory type
 ]);
 
 const STATE_EVENT_TILE_TYPES = new Map<string, Factory>([

@@ -17,13 +17,21 @@ limitations under the License.
 
 import React, { createRef, forwardRef, MouseEvent, ReactNode, useRef } from "react";
 import classNames from "classnames";
-import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Relations } from "matrix-js-sdk/src/models/relations";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import {
+    EventType,
+    MsgType,
+    RelationType,
+    EventStatus,
+    MatrixEvent,
+    MatrixEventEvent,
+    RoomMember,
+    NotificationCountType,
+    Room,
+    RoomEvent,
+    Relations,
+} from "matrix-js-sdk/src/matrix";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
 import { logger } from "matrix-js-sdk/src/logger";
-import { NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
@@ -107,6 +115,7 @@ export interface IEventTileOps {
 
 export interface IEventTileType extends React.Component {
     getEventTileOps?(): IEventTileOps;
+    getMediaHelper(): MediaEventHelper | undefined;
 }
 
 export interface EventTileProps {
@@ -245,6 +254,21 @@ interface IState {
     threadNotification?: NotificationCountType;
 }
 
+/**
+ * When true, the tile qualifies for some sort of special read receipt.
+ * This could be a 'sending' or 'sent' receipt, for example.
+ * @returns {boolean}
+ */
+export function isEligibleForSpecialReceipt(event: MatrixEvent): boolean {
+    // Determine if the type is relevant to the user.
+    // This notably excludes state events and pretty much anything that can't be sent by the composer as a message.
+    // For those we rely on local echo giving the impression of things changing, and expect them to be quick.
+    if (!isMessageEvent(event) && event.getType() !== EventType.RoomMessageEncrypted) return false;
+
+    // Default case
+    return true;
+}
+
 // MUST be rendered within a RoomContext with a set timelineRenderingType
 export class UnwrappedEventTile extends React.Component<EventTileProps, IState> {
     private suppressReadReceiptAnimation: boolean;
@@ -312,23 +336,10 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         // Quickly check to see if the event was sent by us. If it wasn't, it won't qualify for
         // special read receipts.
-        const myUserId = MatrixClientPeg.safeGet().getUserId();
+        const myUserId = MatrixClientPeg.safeGet().getSafeUserId();
+        // Check to see if the event was sent by us. If it wasn't, it won't qualify for special read receipts.
         if (this.props.mxEvent.getSender() !== myUserId) return false;
-
-        // Finally, determine if the type is relevant to the user. This notably excludes state
-        // events and pretty much anything that can't be sent by the composer as a message. For
-        // those we rely on local echo giving the impression of things changing, and expect them
-        // to be quick.
-        const simpleSendableEvents = [
-            EventType.Sticker,
-            EventType.RoomMessage,
-            EventType.RoomMessageEncrypted,
-            EventType.PollStart,
-        ];
-        if (!simpleSendableEvents.includes(this.props.mxEvent.getType() as EventType)) return false;
-
-        // Default case
-        return true;
+        return isEligibleForSpecialReceipt(this.props.mxEvent);
     }
 
     private get shouldShowSentReceipt(): boolean {
