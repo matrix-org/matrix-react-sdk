@@ -66,7 +66,7 @@ describe("Email Registration", () => {
         cy.checkA11y();
 
         // Unfortunately the email is not available immediately, so we have a magic wait here
-        cy.wait(1000).then(async () => {
+        cy.wait(5000).then(async () => {
             const messages = await mailhog.api.messages();
             expect(messages.items).to.have.length(1);
             expect(messages.items[0].to).to.eq("alice@email.com");
