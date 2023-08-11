@@ -30,7 +30,10 @@ declare global {
              * Start a homeserver instance with a given config template.
              * @param template path to template within cypress/plugins/{homeserver}docker/template/ directory.
              */
-            startHomeserver(template: string): Chainable<HomeserverInstance>;
+            startHomeserver(
+                template: string,
+                variables?: Record<string, string | number>,
+            ): Chainable<HomeserverInstance>;
 
             /**
              * Custom command wrapping task:{homeserver}Stop whilst preventing uncaught exceptions
@@ -56,9 +59,9 @@ declare global {
     }
 }
 
-function startHomeserver(template: string): Chainable<HomeserverInstance> {
+function startHomeserver(template: string, variables?: Record<string, string>): Chainable<HomeserverInstance> {
     const homeserverName = Cypress.env("HOMESERVER");
-    return cy.task<HomeserverInstance>(homeserverName + "Start", template, { log: false }).then((x) => {
+    return cy.task<HomeserverInstance>(homeserverName + "Start", [template, variables], { log: false }).then((x) => {
         Cypress.log({ name: "startHomeserver", message: `Started homeserver instance ${x.serverId}` });
     });
 }

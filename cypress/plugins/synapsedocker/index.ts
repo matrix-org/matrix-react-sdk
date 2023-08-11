@@ -36,7 +36,10 @@ function randB64Bytes(numBytes: number): string {
     return crypto.randomBytes(numBytes).toString("base64").replace(/=*$/, "");
 }
 
-async function cfgDirFromTemplate(template: string): Promise<HomeserverConfig> {
+async function cfgDirFromTemplate(
+    template: string,
+    variables?: Record<string, string | number>,
+): Promise<HomeserverConfig> {
     const templateDir = path.join(__dirname, "templates", template);
 
     const stats = await fse.stat(templateDir);
@@ -63,6 +66,12 @@ async function cfgDirFromTemplate(template: string): Promise<HomeserverConfig> {
     hsYaml = hsYaml.replace(/{{MACAROON_SECRET_KEY}}/g, macaroonSecret);
     hsYaml = hsYaml.replace(/{{FORM_SECRET}}/g, formSecret);
     hsYaml = hsYaml.replace(/{{PUBLIC_BASEURL}}/g, baseUrl);
+    if (variables) {
+        for (const key in variables) {
+            hsYaml = hsYaml.replace(new RegExp("%" + key + "%", "g"), String(variables[key]));
+        }
+    }
+
     await fse.writeFile(path.join(tempDir, "homeserver.yaml"), hsYaml);
 
     // now generate a signing key (we could use synapse's config generation for
@@ -83,8 +92,11 @@ async function cfgDirFromTemplate(template: string): Promise<HomeserverConfig> {
 // Start a synapse instance: the template must be the name of
 // one of the templates in the cypress/plugins/synapsedocker/templates
 // directory
-async function synapseStart(template: string): Promise<HomeserverInstance> {
-    const synCfg = await cfgDirFromTemplate(template);
+async function synapseStart([template, variables]: [
+    string,
+    Record<string, string | number> | undefined,
+]): Promise<HomeserverInstance> {
+    const synCfg = await cfgDirFromTemplate(template, variables);
 
     console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
 
