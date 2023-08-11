@@ -316,7 +316,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     } = usePublicRoomDirectory();
     const [showRooms, setShowRooms] = useState(true);
     const [showSpaces, setShowSpaces] = useState(false);
-    const { loading: peopleLoading, users, search: searchPeople } = useUserDirectory();
+    const { loading: peopleLoading, users: userDirectorySearchResults, search: searchPeople } = useUserDirectory();
     const { loading: profileLoading, profile, search: searchProfileInfo } = useProfileInfo();
     const searchParams: [IDirectoryOpts] = useMemo(
         () => [
@@ -364,7 +364,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             }
         }
         addUserResults(findVisibleRoomMembers(visibleRooms, cli), false);
-        addUserResults(users, true);
+        addUserResults(userDirectorySearchResults, true);
         if (profile) {
             addUserResults([new DirectoryMember(profile)], true);
         }
@@ -390,7 +390,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             ...userResults,
             ...publicRooms.map(toPublicRoomResult),
         ].filter((result) => filter === null || result.filter.includes(filter));
-    }, [cli, users, profile, publicRooms, filter, msc3946ProcessDynamicPredecessor]);
+    }, [cli, userDirectorySearchResults, profile, publicRooms, filter, msc3946ProcessDynamicPredecessor]);
 
     const results = useMemo<Record<Section, Result[]>>(() => {
         const results: Record<Section, Result[]> = {
@@ -408,12 +408,18 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
             possibleResults.forEach((entry) => {
                 if (isRoomResult(entry)) {
-                    if (
-                        !entry.room.normalizedName?.includes(normalizedQuery) &&
-                        !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
-                        !entry.query?.some((q) => q.includes(lcQuery))
-                    )
-                        return; // bail, does not match query
+                    // If the room is a DM with a user that is part of the user directory search results,
+                    // we can assume the user is a relevant result, so include the DM with them too.
+                    const userId = DMRoomMap.shared().getUserIdForRoomId(entry.room.roomId);
+                    if (!userDirectorySearchResults.some((user) => user.userId === userId)) {
+                        if (
+                            !entry.room.normalizedName?.includes(normalizedQuery) &&
+                            !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
+                            !entry.query?.some((q) => q.includes(lcQuery))
+                        ) {
+                            return; // bail, does not match query
+                        }
+                    }
                 } else if (isMemberResult(entry)) {
                     if (!entry.alreadyFiltered && !entry.query?.some((q) => q.includes(lcQuery))) return; // bail, does not match query
                 } else if (isPublicRoomResult(entry)) {
@@ -464,7 +470,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
 
         return results;
-    }, [trimmedQuery, filter, cli, possibleResults, memberComparator]);
+    }, [trimmedQuery, filter, cli, possibleResults, userDirectorySearchResults, memberComparator]);
 
     const numResults = sum(Object.values(results).map((it) => it.length));
     useWebSearchMetrics(numResults, query.length, true);
