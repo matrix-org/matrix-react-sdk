@@ -3184,7 +3184,6 @@
     "Saved Items": "Zëra të Ruajtur",
     "Send your first message to invite <displayName/> to chat": "Dërgoni mesazhin tuaj të parë për të ftuar në fjalosje <displayName/>",
     "Spell check": "Kontroll drejtshkrimi",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Mund edhe t’i kërkoni përgjegjësit të shërbyesit tuaj Home të përmirësojë shërbyesin, për ndryshimin e kësaj sjelljeje.",
     "Show HTML representation of room topics": "Shfaq paraqitje HTML të temave të dhomave",
     "Yes, the chat timeline is displayed alongside the video.": "Po, rrjedha kohore e fjalosjes shfaqet tok me videon.",
     "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Në %(brand)s, dhomat video janë kanale VoIP përherë-hapur, trupëzuar brenda një dhome.",

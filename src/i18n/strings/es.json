@@ -3097,7 +3097,6 @@
     "Seen by %(count)s people|other": "%(count)s personas lo han visto",
     "Your password was successfully changed.": "Has cambiado tu contraseña.",
     "Confirm signing out these devices|one": "Confirmar cerrar sesión de este dispositivo",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Si no quieres perder acceso a tus conversaciones en salas cifradas, primero tienes que exportar tus claves de sala y volver a importarlas cuando termines.",
     "Turn on camera": "Encender cámara",
     "Turn off camera": "Apagar cámara",
     "Video devices": "Dispositivos de vídeo",

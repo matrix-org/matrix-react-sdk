@@ -2493,7 +2493,6 @@
     "User signing private key:": "Podpisany przez użytkownika klucz prywatny:",
     "Self signing private key:": "Samo-podpisujący klucz prywatny:",
     "Error while changing password: %(error)s": "Wystąpił błąd podczas zmiany hasła: %(error)s",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Jeśli chcesz zachować dostęp do swojej historii czatu w pokojach szyfrowanych, najpierw wyeksportuj klucze pokoju i zaimportuj je ponownie później.",
     "Workspace: <networkLink/>": "Obszar roboczy: <networkLink/>",
     "Give one or multiple users in this room more privileges": "Dodaj jednemu lub więcej użytkownikom więcej uprawnień",
     "Add privileged users": "Dodaj użytkowników uprzywilejowanych",

@@ -2919,7 +2919,6 @@
     "IRC (Experimental)": "IRC（实验性）",
     "Confirm signing out these devices|one": "确认登出此设备",
     "Confirm signing out these devices|other": "确认登出这些设备",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "若你想保留对加密房间的聊天历史的访问权，你应该首先导出房间的密钥，之后再重新导入。",
     "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "空间是将房间和人分组的一种新方式。你想创建什么类型的空间？你可以在以后更改。",
     "Match system": "匹配系统",
     "Developer tools": "开发者工具",

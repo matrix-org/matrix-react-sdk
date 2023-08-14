@@ -3032,7 +3032,6 @@
     "Your password was successfully changed.": "Dein Passwort wurde erfolgreich geändert.",
     "Confirm signing out these devices|one": "Abmelden des Geräts bestätigen",
     "Confirm signing out these devices|other": "Abmelden dieser Geräte bestätigen",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Wenn du Zugriff auf die Nachrichten behalten willst, musst du die Schlüssel zuerst exportieren und dann erneut importieren.",
     "Developer tools": "Entwicklungswerkzeuge",
     "Turn on camera": "Kamera aktivieren",
     "Turn off camera": "Kamera deaktivieren",

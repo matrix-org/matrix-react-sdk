@@ -3108,7 +3108,6 @@
     "Seen by %(count)s people|one": "Visto da %(count)s persona",
     "Seen by %(count)s people|other": "Visto da %(count)s persone",
     "Your password was successfully changed.": "La tua password è stata cambiata correttamente.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Se vuoi mantenere l'accesso alla cronologia della chat nelle stanze cifrate, dovresti prima esportare le tue chiavi della stanza e reimportarle in seguito.",
     "An error occurred while stopping your live location": "Si è verificato un errore fermando la tua posizione in tempo reale",
     "Enable live location sharing": "Attiva condivisione posizione in tempo reale",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Nota: si tratta di una funzionalità sperimentale che usa un'implementazione temporanea. Ciò significa che non potrai eliminare la cronologia delle posizioni e gli utenti avanzati potranno vederla anche dopo l'interruzione della tua condivisione con questa stanza.",

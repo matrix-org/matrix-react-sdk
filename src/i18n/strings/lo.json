@@ -595,7 +595,6 @@
     "Passwords can't be empty": "ລະຫັດຜ່ານບໍ່ສາມາດຫວ່າງເປົ່າໄດ້",
     "New passwords don't match": "ລະຫັດຜ່ານໃໝ່ບໍ່ກົງກັນ",
     "Export E2E room keys": "ສົ່ງກະແຈຫ້ອງ E2E ອອກ",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "ຖ້າທ່ານຕ້ອງການຮັກສາການເຂົ້າເຖິງປະຫວັດການສົນທະນາຂອງທ່ານຢູ່ໃນຫ້ອງທີ່ຖືກເຂົ້າລະຫັດ, ທໍາອິດທ່ານຄວນນຳກະແຈຫ້ອງຂອງທ່ານອອກ ແລະນໍາເຂົ້າໃຫມ່ຫຼັງຈາກນັ້ນ.",
     "Warning!": "ແຈ້ງເຕືອນ!",
     "No display name": "ບໍ່ມີຊື່ສະແດງຜົນ",
     "Channel: <channelLink/>": "ຊ່ອງ: <channelLink/>",

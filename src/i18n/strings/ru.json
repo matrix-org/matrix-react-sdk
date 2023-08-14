@@ -2997,7 +2997,6 @@
     "Loading preview": "Загрузка предпросмотра",
     "Currently removing messages in %(count)s rooms|one": "Удаляются сообщения в %(count)s комнате",
     "Currently removing messages in %(count)s rooms|other": "Удаляются сообщения в %(count)s комнатах",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Смена пароля на этом домашнем сервере приведёт к отключению всех остальных ваших устройств. Это удалит ключи шифрования сообщений, которые хранятся на них, и может сделать зашифрованную историю чата нечитаемой.",
     "Sends the given message with hearts": "Отправляет данное сообщение с сердечками",
     "You were disconnected from the call. (Error: %(message)s)": "Вас отключили от звонка. (Ошибка: %(message)s)",
     "Next recently visited room or space": "Следующая недавно посещённая комната или пространство",

@@ -3108,7 +3108,6 @@
     "Seen by %(count)s people|one": "Dilihat oleh %(count)s orang",
     "Seen by %(count)s people|other": "Dilihat oleh %(count)s orang",
     "Your password was successfully changed.": "Kata sandi Anda berhasil diubah.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Jika Anda ingin mengakses riwayat obrolan di ruangan terenkripsi Anda pertama seharusnya ekspor kunci-kunci ruangan lalu impor ulang setelahnya.",
     "An error occurred while stopping your live location": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda",
     "Enable live location sharing": "Aktifkan pembagian lokasi langsung",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Mohon dicatat: ini adalah fitur uji coba menggunakan implementasi sementara. Ini berarti Anda tidak akan dapat menghapus riwayat lokasi Anda, dan pengguna tingkat lanjut akan dapat melihat riwayat lokasi Anda bahkan setelah Anda berhenti membagikan lokasi langsung Anda dengan ruangan ini.",

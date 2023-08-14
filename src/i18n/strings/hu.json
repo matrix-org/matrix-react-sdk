@@ -3108,7 +3108,6 @@
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "A kijelentkezéssel az üzeneteket titkosító kulcsokat az eszközök törlik magukról ami elérhetetlenné teheti a régi titkosított csevegéseket.",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Azok a régi üzenetek amiket az emberek már megkaptak továbbra is láthatóak maradnak, mint az e-mailek amiket régebben küldött. Szeretné elrejteni az üzeneteit azon emberek elől aki ez után lépnek be a szobába?",
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Az azonosítási kiszolgálóról törlésre kerül: a barátai többé nem találják meg az e-mail-címe vagy a telefonszáma alapján",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Ha meg szeretné tartani a hozzáférést a titkosított csevegésekhez, akkor először exportálja ki a kulcsokat, majd importálja újra azokat.",
     "To view %(roomName)s, you need an invite": "A %(roomName)s megjelenítéséhez meghívó szükséges",
     "Private room": "Privát szoba",
     "Video room": "Videó szoba",

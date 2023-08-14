@@ -3108,7 +3108,6 @@
     "Seen by %(count)s people|one": "Visto por %(count)s persoa",
     "Seen by %(count)s people|other": "Visto por %(count)s persoas",
     "Your password was successfully changed.": "Cambiouse correctamente o contrasinal.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Se desexas manter o acceso ao teu historial en salas cifradas primeiro debes exportar as túas chaves da sala e volver a importalas posteriormente.",
     "An error occurred while stopping your live location": "Algo fallou ao deter a compartición da localización en directo",
     "Enable live location sharing": "Activar a compartición da localización",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Ten en conta que ésta é unha característica en probas cunha implementación temporal. Esto significa que non poderás borrar o teu historial de localización, e as usuarias más instruídas poderán ver o teu historial de localización incluso despois de que deixes de compartir a túa localización nesta sala.",

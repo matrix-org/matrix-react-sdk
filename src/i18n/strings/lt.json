@@ -2046,7 +2046,6 @@
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.|one": "Saugiai talpinkite užšifruotas žinutes vietoje, kad jos būtų rodomos paieškos rezultatuose, naudojant %(size)s žinutėms iš %(rooms)s kambario saugoti.",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.|other": "Saugiai talpinkite užšifruotas žinutes vietoje, kad jos būtų rodomos paieškos rezultatuose, naudojant %(size)s žinutėms iš %(rooms)s kambarių saugoti.",
     "Cross-signing is ready but keys are not backed up.": "Kryžminis pasirašymas paruoštas, tačiau raktai neturi atsarginės kopijos.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Jei norite išsaugoti prieigą prie savo pokalbių istorijos užšifruotuose kambariuose, pirmiausia turėtumėte eksportuoti savo kambarių raktus ir po to juos vėl importuoti.",
     "Workspace: <networkLink/>": "Darbo aplinka: <networkLink/>",
     "Space options": "Erdvės parinktys",
     "Recommended for public spaces.": "Rekomenduojama viešosiose erdvėse.",

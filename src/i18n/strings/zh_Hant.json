@@ -3108,7 +3108,6 @@
     "Seen by %(count)s people|one": "已被 %(count)s 個人看過",
     "Seen by %(count)s people|other": "已被 %(count)s 個人看過",
     "Your password was successfully changed.": "您的密碼已成功變更。",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "若您想保留對加密聊天室中聊天紀錄的存取權限，您應該先匯出您的聊天室金鑰，然後再重新匯入它們。",
     "An error occurred while stopping your live location": "停止您的即時位置時發生錯誤",
     "Enable live location sharing": "啟用即時位置分享",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "請注意：這是暫時開發的實驗性功能。您無法刪除位置紀錄，而且即使您停止與此聊天室分享即時位置，進階使用者仍能看見您的定位紀錄。",

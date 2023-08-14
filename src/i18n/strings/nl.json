@@ -3101,7 +3101,6 @@
     "Seen by %(count)s people|one": "Gezien door %(count)s persoon",
     "Seen by %(count)s people|other": "Gezien door %(count)s mensen",
     "Your password was successfully changed.": "Wachtwoord veranderen geslaagd.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Als je toegang tot je versleutelde chatgeschiedenis wilt behouden kan je eerst je encryptiesleutels exporteren en ze na afloop weer herimporteren.",
     "Turn on camera": "Camera inschakelen",
     "Turn off camera": "Camera uitschakelen",
     "Video devices": "Video-apparaten",

@@ -3108,7 +3108,6 @@
     "Seen by %(count)s people|one": "Sedd av %(count)s person",
     "Seen by %(count)s people|other": "Sedd av %(count)s personer",
     "Your password was successfully changed.": "Ditt lösenord byttes framgångsrikt.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Om du vill behålla åtkomst till din chatthistorik i krypterade rum bör du först exportera dina rumsnycklar och åter-importera dem efteråt.",
     "An error occurred while stopping your live location": "Ett fel inträffade vid delning av din realtidsposition",
     "Enable live location sharing": "Aktivera platsdelning i realtid",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "OBS: detta är en experimentell funktion med en temporär implementation. Detta betyder att du inte kommer kunna radera din platshistorik, och avancerade användare kommer kunna se din platshistorik även efter att du slutar dela din realtidsposition med det här rummet.",

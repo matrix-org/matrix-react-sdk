@@ -3101,7 +3101,6 @@
     "Seen by %(count)s people|one": "Vu par %(count)s personne",
     "Seen by %(count)s people|other": "Vu par %(count)s personnes",
     "Your password was successfully changed.": "Votre mot de passe a été mis à jour.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Si vous voulez garder l’accès à votre historique de conversation dans les salons chiffrés, vous devriez d’abord exporter vos clés de salon, et les réimporter par la suite.",
     "Turn on camera": "Activer la caméra",
     "Turn off camera": "Désactiver la caméra",
     "Video devices": "Périphériques vidéo",
