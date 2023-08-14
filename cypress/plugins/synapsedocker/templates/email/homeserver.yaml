@@ -38,7 +38,7 @@ ui_auth:
     session_timeout: "300s"
 
 email:
-    smtp_host: %SMTP_HOST%
+    smtp_host: "%SMTP_HOST%"
     smtp_port: %SMTP_PORT%
     notif_from: "Your Friendly %(app)s homeserver <noreply@example.com>"
     app_name: my_branded_matrix_server

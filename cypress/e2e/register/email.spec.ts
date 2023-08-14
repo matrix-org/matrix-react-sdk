@@ -28,7 +28,7 @@ describe("Email Registration", () => {
         cy.startMailhog().then((_mailhog) => {
             mailhog = _mailhog;
             cy.startHomeserver("email", {
-                SMTP_HOST: _mailhog.instance.host,
+                SMTP_HOST: "172.17.0.1",
                 SMTP_PORT: _mailhog.instance.smtpPort,
             }).then((_homeserver) => {
                 homeserver = _homeserver;
@@ -64,6 +64,8 @@ describe("Email Registration", () => {
         cy.findByText("Check your email to continue").should("be.visible");
         cy.percySnapshot("Registration check your email", { percyCSS });
         cy.checkA11y();
+
+        cy.findByText("An error was encountered when sending the email").should("not.exist");
 
         // Unfortunately the email is not available immediately, so we have a magic wait here
         cy.wait(5000).then(async () => {
