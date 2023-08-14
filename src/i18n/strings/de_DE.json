@@ -3783,5 +3783,6 @@
     "Your request to join is pending.": "Deine Beitrittsanfrage wurde noch nicht bearbeitet.",
     "Cancel request": "Anfrage abbrechen",
     "%(severalUsers)schanged their profile picture %(count)s times|one": "%(severalUsers)shaben ihr Profilbild geändert",
-    "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)shat das Profilbild geändert"
+    "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)shat das Profilbild geändert",
+    "Failed to query public rooms": "Abfrage öffentlicher Räume fehlgeschlagen"
 }
