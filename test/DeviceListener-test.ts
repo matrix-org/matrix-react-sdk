@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import { Mocked, mocked } from "jest-mock";
-import { MatrixEvent, Room, MatrixClient, DeviceVerificationStatus, CryptoApi, Device } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, Room, MatrixClient, DeviceVerificationStatus, Device } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 
 import DeviceListener from "../src/DeviceListener";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
@@ -31,7 +31,12 @@ import dis from "../src/dispatcher/dispatcher";
 import { Action } from "../src/dispatcher/actions";
 import SettingsStore from "../src/settings/SettingsStore";
 import { SettingLevel } from "../src/settings/SettingLevel";
-import { getMockClientWithEventEmitter, mockPlatformPeg } from "./test-utils";
+import {
+    getMockClientWithEventEmitter,
+    mockClientMethodsCrypto,
+    mockClientMethodsUser,
+    mockPlatformPeg,
+} from "./test-utils";
 import { UIFeature } from "../src/settings/UIFeature";
 import { isBulkUnverifiedDeviceReminderSnoozed } from "../src/utils/device/snoozeBulkUnverifiedDeviceReminder";
 
@@ -59,7 +64,6 @@ const flushPromises = async () => await new Promise(process.nextTick);
 
 describe("DeviceListener", () => {
     let mockClient: Mocked<MatrixClient>;
-    let mockCrypto: Mocked<CryptoApi>;
 
     // spy on various toasts' hide and show functions
     // easier than mocking
@@ -75,25 +79,13 @@ describe("DeviceListener", () => {
         mockPlatformPeg({
             getAppVersion: jest.fn().mockResolvedValue("1.2.3"),
         });
-        mockCrypto = {
-            getDeviceVerificationStatus: jest.fn().mockResolvedValue({
-                crossSigningVerified: false,
-            }),
-            getCrossSigningKeyId: jest.fn(),
-            getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
-            isCrossSigningReady: jest.fn().mockResolvedValue(true),
-            isSecretStorageReady: jest.fn().mockResolvedValue(true),
-        } as unknown as Mocked<CryptoApi>;
         mockClient = getMockClientWithEventEmitter({
+            ...mockClientMethodsUser(userId),
+            ...mockClientMethodsCrypto(),
             isGuest: jest.fn(),
-            getUserId: jest.fn().mockReturnValue(userId),
-            getSafeUserId: jest.fn().mockReturnValue(userId),
-            getKeyBackupVersion: jest.fn().mockResolvedValue(undefined),
             getRooms: jest.fn().mockReturnValue([]),
             isVersionSupported: jest.fn().mockResolvedValue(true),
             isInitialSyncComplete: jest.fn().mockReturnValue(true),
-            getKeyBackupEnabled: jest.fn(),
-            getStoredCrossSigningForUser: jest.fn(),
             waitForClientWellKnown: jest.fn(),
             isRoomEncrypted: jest.fn(),
             getClientWellKnown: jest.fn(),
@@ -101,11 +93,14 @@ describe("DeviceListener", () => {
             setAccountData: jest.fn(),
             getAccountData: jest.fn(),
             deleteAccountData: jest.fn(),
-            getCrypto: jest.fn().mockReturnValue(mockCrypto),
         });
         jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
         jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
         mocked(isBulkUnverifiedDeviceReminderSnoozed).mockClear().mockReturnValue(false);
+        mocked(mockClient.getCrypto()!.getUserDeviceInfo).mockResolvedValue(new Map());
+
+        mocked(mockClient.getCrypto()!.isSecretStorageReady).mockResolvedValue(true);
+        mocked(mockClient.getCrypto()!.isCrossSigningReady).mockResolvedValue(true);
     });
 
     const createAndStart = async (): Promise<DeviceListener> => {
@@ -242,34 +237,35 @@ describe("DeviceListener", () => {
             await createAndStart();
 
             expect(mockClient!.isVersionSupported).toHaveBeenCalledWith("v1.1");
-            expect(mockCrypto!.isCrossSigningReady).not.toHaveBeenCalled();
+            expect(mockClient.getCrypto()!.isCrossSigningReady).not.toHaveBeenCalled();
         });
         it("does nothing when crypto is not enabled", async () => {
+            const mockedCrypto = mockClient.getCrypto()!;
             mockClient!.getCrypto.mockReturnValue(undefined);
             await createAndStart();
 
-            expect(mockCrypto!.isCrossSigningReady).not.toHaveBeenCalled();
+            expect(mockedCrypto.isCrossSigningReady).not.toHaveBeenCalled();
         });
         it("does nothing when initial sync is not complete", async () => {
             mockClient!.isInitialSyncComplete.mockReturnValue(false);
             await createAndStart();
 
-            expect(mockCrypto!.isCrossSigningReady).not.toHaveBeenCalled();
+            expect(mockClient.getCrypto()?.isCrossSigningReady).not.toHaveBeenCalled();
         });
 
         describe("set up encryption", () => {
             const rooms = [{ roomId: "!room1" }, { roomId: "!room2" }] as unknown as Room[];
 
             beforeEach(() => {
-                mockCrypto!.isCrossSigningReady.mockResolvedValue(false);
-                mockCrypto!.isSecretStorageReady.mockResolvedValue(false);
+                mocked(mockClient.getCrypto()!.isCrossSigningReady).mockResolvedValue(false);
+                mocked(mockClient.getCrypto()!.isSecretStorageReady).mockResolvedValue(false);
                 mockClient!.getRooms.mockReturnValue(rooms);
                 mockClient!.isRoomEncrypted.mockReturnValue(true);
             });
 
             it("hides setup encryption toast when cross signing and secret storage are ready", async () => {
-                mockCrypto!.isCrossSigningReady.mockResolvedValue(true);
-                mockCrypto!.isSecretStorageReady.mockResolvedValue(true);
+                mocked(mockClient.getCrypto()!.isCrossSigningReady).mockResolvedValue(true);
+                mocked(mockClient.getCrypto()!.isSecretStorageReady).mockResolvedValue(true);
                 await createAndStart();
                 expect(SetupEncryptionToast.hideToast).toHaveBeenCalled();
             });
@@ -297,36 +293,42 @@ describe("DeviceListener", () => {
 
             describe("when user does not have a cross signing id on this device", () => {
                 beforeEach(() => {
-                    mockCrypto!.getCrossSigningKeyId.mockResolvedValue(null);
+                    mocked(mockClient.getCrypto()!.getCrossSigningKeyId).mockResolvedValue(null);
                 });
 
                 it("shows verify session toast when account has cross signing", async () => {
                     mockClient!.getStoredCrossSigningForUser.mockReturnValue(new CrossSigningInfo(userId));
                     await createAndStart();
 
-                    expect(mockCrypto!.getUserDeviceInfo).toHaveBeenCalled();
+                    expect(mockClient.getCrypto()!.getUserDeviceInfo).toHaveBeenCalled();
                     expect(SetupEncryptionToast.showToast).toHaveBeenCalledWith(
                         SetupEncryptionToast.Kind.VERIFY_THIS_SESSION,
                     );
                 });
 
                 it("checks key backup status when when account has cross signing", async () => {
-                    mockCrypto!.getCrossSigningKeyId.mockResolvedValue(null);
+                    mocked(mockClient.getCrypto()!.getCrossSigningKeyId).mockResolvedValue(null);
                     mockClient!.getStoredCrossSigningForUser.mockReturnValue(new CrossSigningInfo(userId));
                     await createAndStart();
 
-                    expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalled();
+                    expect(mockClient!.getCrypto()!.getActiveSessionBackupVersion).toHaveBeenCalled();
                 });
             });
 
             describe("when user does have a cross signing id on this device", () => {
                 beforeEach(() => {
-                    mockCrypto!.getCrossSigningKeyId.mockResolvedValue("abc");
+                    mocked(mockClient.getCrypto()!.getCrossSigningKeyId).mockResolvedValue("abc");
                 });
 
                 it("shows upgrade encryption toast when user has a key backup available", async () => {
                     // non falsy response
-                    mockClient!.getKeyBackupVersion.mockResolvedValue({} as unknown as IKeyBackupInfo);
+                    mocked(mockClient.getCrypto()!.checkKeyBackupAndEnable).mockResolvedValue({
+                        backupInfo: {} as unknown as KeyBackupInfo,
+                        trustInfo: {
+                            trusted: false,
+                            matchesDecryptionKey: false,
+                        },
+                    });
                     await createAndStart();
 
                     expect(SetupEncryptionToast.showToast).toHaveBeenCalledWith(
@@ -340,51 +342,31 @@ describe("DeviceListener", () => {
             it("checks keybackup status when cross signing and secret storage are ready", async () => {
                 // default mocks set cross signing and secret storage to ready
                 await createAndStart();
-                expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalled();
+                expect(mockClient!.getCrypto()!.checkKeyBackupAndEnable).toHaveBeenCalled();
                 expect(mockDispatcher.dispatch).not.toHaveBeenCalled();
             });
 
             it("checks keybackup status when setup encryption toast has been dismissed", async () => {
-                mockCrypto!.isCrossSigningReady.mockResolvedValue(false);
+                mocked(mockClient.getCrypto()!.isCrossSigningReady).mockResolvedValue(false);
                 const instance = await createAndStart();
 
                 instance.dismissEncryptionSetup();
                 await flushPromises();
 
-                expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalled();
+                expect(mockClient!.getCrypto()!.getActiveSessionBackupVersion).toHaveBeenCalled();
             });
 
             it("does not dispatch keybackup event when key backup check is not finished", async () => {
                 // returns null when key backup status hasn't finished being checked
-                mockClient!.getKeyBackupEnabled.mockReturnValue(null);
+                mocked(mockClient.getCrypto()!.checkKeyBackupAndEnable).mockResolvedValue(null);
                 await createAndStart();
                 expect(mockDispatcher.dispatch).not.toHaveBeenCalled();
             });
 
             it("dispatches keybackup event when key backup is not enabled", async () => {
-                mockClient!.getKeyBackupEnabled.mockReturnValue(false);
+                mocked(mockClient.getCrypto()!.getActiveSessionBackupVersion).mockResolvedValue(null);
                 await createAndStart();
                 expect(mockDispatcher.dispatch).toHaveBeenCalledWith({ action: Action.ReportKeyBackupNotEnabled });
-            });
-
-            it("does not check key backup status again after check is complete", async () => {
-                mockClient!.getKeyBackupEnabled.mockReturnValue(null);
-                const instance = await createAndStart();
-                expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalled();
-
-                // keyback check now complete
-                mockClient!.getKeyBackupEnabled.mockReturnValue(true);
-
-                // trigger a recheck
-                instance.dismissEncryptionSetup();
-                await flushPromises();
-                expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalledTimes(2);
-
-                // trigger another recheck
-                instance.dismissEncryptionSetup();
-                await flushPromises();
-                // not called again, check was complete last time
-                expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalledTimes(2);
             });
         });
 
@@ -397,12 +379,12 @@ describe("DeviceListener", () => {
             const deviceTrustUnverified = new DeviceVerificationStatus({});
 
             beforeEach(() => {
-                mockCrypto!.isCrossSigningReady.mockResolvedValue(true);
-                mockCrypto!.getUserDeviceInfo.mockResolvedValue(
+                mocked(mockClient.getCrypto()!.isCrossSigningReady).mockResolvedValue(true);
+                mocked(mockClient.getCrypto()!.getUserDeviceInfo).mockResolvedValue(
                     new Map([[userId, new Map([currentDevice, device2, device3].map((d) => [d.deviceId, d]))]]),
                 );
                 // all devices verified by default
-                mockCrypto!.getDeviceVerificationStatus.mockResolvedValue(deviceTrustVerified);
+                mocked(mockClient.getCrypto()!.getDeviceVerificationStatus).mockResolvedValue(deviceTrustVerified);
                 mockClient!.deviceId = currentDevice.deviceId;
                 jest.spyOn(SettingsStore, "getValue").mockImplementation(
                     (settingName) => settingName === UIFeature.BulkUnverifiedSessionsReminder,
@@ -410,7 +392,7 @@ describe("DeviceListener", () => {
             });
             describe("bulk unverified sessions toasts", () => {
                 it("hides toast when cross signing is not ready", async () => {
-                    mockCrypto!.isCrossSigningReady.mockResolvedValue(false);
+                    mocked(mockClient.getCrypto()!.isCrossSigningReady).mockResolvedValue(false);
                     await createAndStart();
                     expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
                     expect(BulkUnverifiedSessionsToast.showToast).not.toHaveBeenCalled();
@@ -427,29 +409,33 @@ describe("DeviceListener", () => {
                     jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
                     // currentDevice, device2 are verified, device3 is unverified
                     // ie if reminder was enabled it should be shown
-                    mockCrypto!.getDeviceVerificationStatus.mockImplementation(async (_userId, deviceId) => {
-                        switch (deviceId) {
-                            case currentDevice.deviceId:
-                            case device2.deviceId:
-                                return deviceTrustVerified;
-                            default:
-                                return deviceTrustUnverified;
-                        }
-                    });
+                    mocked(mockClient.getCrypto()!.getDeviceVerificationStatus).mockImplementation(
+                        async (_userId, deviceId) => {
+                            switch (deviceId) {
+                                case currentDevice.deviceId:
+                                case device2.deviceId:
+                                    return deviceTrustVerified;
+                                default:
+                                    return deviceTrustUnverified;
+                            }
+                        },
+                    );
                     await createAndStart();
                     expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
                 });
 
                 it("hides toast when current device is unverified", async () => {
                     // device2 verified, current and device3 unverified
-                    mockCrypto!.getDeviceVerificationStatus.mockImplementation(async (_userId, deviceId) => {
-                        switch (deviceId) {
-                            case device2.deviceId:
-                                return deviceTrustVerified;
-                            default:
-                                return deviceTrustUnverified;
-                        }
-                    });
+                    mocked(mockClient.getCrypto()!.getDeviceVerificationStatus).mockImplementation(
+                        async (_userId, deviceId) => {
+                            switch (deviceId) {
+                                case device2.deviceId:
+                                    return deviceTrustVerified;
+                                default:
+                                    return deviceTrustUnverified;
+                            }
+                        },
+                    );
                     await createAndStart();
                     expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
                     expect(BulkUnverifiedSessionsToast.showToast).not.toHaveBeenCalled();
@@ -458,15 +444,17 @@ describe("DeviceListener", () => {
                 it("hides toast when reminder is snoozed", async () => {
                     mocked(isBulkUnverifiedDeviceReminderSnoozed).mockReturnValue(true);
                     // currentDevice, device2 are verified, device3 is unverified
-                    mockCrypto!.getDeviceVerificationStatus.mockImplementation(async (_userId, deviceId) => {
-                        switch (deviceId) {
-                            case currentDevice.deviceId:
-                            case device2.deviceId:
-                                return deviceTrustVerified;
-                            default:
-                                return deviceTrustUnverified;
-                        }
-                    });
+                    mocked(mockClient.getCrypto()!.getDeviceVerificationStatus).mockImplementation(
+                        async (_userId, deviceId) => {
+                            switch (deviceId) {
+                                case currentDevice.deviceId:
+                                case device2.deviceId:
+                                    return deviceTrustVerified;
+                                default:
+                                    return deviceTrustUnverified;
+                            }
+                        },
+                    );
                     await createAndStart();
                     expect(BulkUnverifiedSessionsToast.showToast).not.toHaveBeenCalled();
                     expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
@@ -474,15 +462,17 @@ describe("DeviceListener", () => {
 
                 it("shows toast with unverified devices at app start", async () => {
                     // currentDevice, device2 are verified, device3 is unverified
-                    mockCrypto!.getDeviceVerificationStatus.mockImplementation(async (_userId, deviceId) => {
-                        switch (deviceId) {
-                            case currentDevice.deviceId:
-                            case device2.deviceId:
-                                return deviceTrustVerified;
-                            default:
-                                return deviceTrustUnverified;
-                        }
-                    });
+                    mocked(mockClient.getCrypto()!.getDeviceVerificationStatus).mockImplementation(
+                        async (_userId, deviceId) => {
+                            switch (deviceId) {
+                                case currentDevice.deviceId:
+                                case device2.deviceId:
+                                    return deviceTrustVerified;
+                                default:
+                                    return deviceTrustUnverified;
+                            }
+                        },
+                    );
                     await createAndStart();
                     expect(BulkUnverifiedSessionsToast.showToast).toHaveBeenCalledWith(
                         new Set<string>([device3.deviceId]),
@@ -492,15 +482,17 @@ describe("DeviceListener", () => {
 
                 it("hides toast when unverified sessions at app start have been dismissed", async () => {
                     // currentDevice, device2 are verified, device3 is unverified
-                    mockCrypto!.getDeviceVerificationStatus.mockImplementation(async (_userId, deviceId) => {
-                        switch (deviceId) {
-                            case currentDevice.deviceId:
-                            case device2.deviceId:
-                                return deviceTrustVerified;
-                            default:
-                                return deviceTrustUnverified;
-                        }
-                    });
+                    mocked(mockClient.getCrypto()!.getDeviceVerificationStatus).mockImplementation(
+                        async (_userId, deviceId) => {
+                            switch (deviceId) {
+                                case currentDevice.deviceId:
+                                case device2.deviceId:
+                                    return deviceTrustVerified;
+                                default:
+                                    return deviceTrustUnverified;
+                            }
+                        },
+                    );
                     const instance = await createAndStart();
                     expect(BulkUnverifiedSessionsToast.showToast).toHaveBeenCalledWith(
                         new Set<string>([device3.deviceId]),
@@ -514,16 +506,18 @@ describe("DeviceListener", () => {
 
                 it("hides toast when unverified sessions are added after app start", async () => {
                     // currentDevice, device2 are verified, device3 is unverified
-                    mockCrypto!.getDeviceVerificationStatus.mockImplementation(async (_userId, deviceId) => {
-                        switch (deviceId) {
-                            case currentDevice.deviceId:
-                            case device2.deviceId:
-                                return deviceTrustVerified;
-                            default:
-                                return deviceTrustUnverified;
-                        }
-                    });
-                    mockCrypto!.getUserDeviceInfo.mockResolvedValue(
+                    mocked(mockClient.getCrypto()!.getDeviceVerificationStatus).mockImplementation(
+                        async (_userId, deviceId) => {
+                            switch (deviceId) {
+                                case currentDevice.deviceId:
+                                case device2.deviceId:
+                                    return deviceTrustVerified;
+                                default:
+                                    return deviceTrustUnverified;
+                            }
+                        },
+                    );
+                    mocked(mockClient.getCrypto()!.getUserDeviceInfo).mockResolvedValue(
                         new Map([[userId, new Map([currentDevice, device2].map((d) => [d.deviceId, d]))]]),
                     );
                     await createAndStart();
@@ -531,7 +525,7 @@ describe("DeviceListener", () => {
                     expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalled();
 
                     // add an unverified device
-                    mockCrypto!.getUserDeviceInfo.mockResolvedValue(
+                    mocked(mockClient.getCrypto()!.getUserDeviceInfo).mockResolvedValue(
                         new Map([[userId, new Map([currentDevice, device2, device3].map((d) => [d.deviceId, d]))]]),
                     );
                     // trigger a recheck

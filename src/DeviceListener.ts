@@ -17,7 +17,7 @@ limitations under the License.
 import { MatrixEvent, ClientEvent, EventType, MatrixClient, RoomStateEvent, SyncState } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 
 import dis from "./dispatcher/dispatcher";
 import {
@@ -55,9 +55,8 @@ export default class DeviceListener {
     // has the user dismissed any of the various nag toasts to setup encryption on this device?
     private dismissedThisDeviceToast = false;
     // cache of the key backup info
-    private keyBackupInfo: IKeyBackupInfo | null = null;
+    private keyBackupInfo: KeyBackupInfo | null = null;
     private keyBackupFetchedAt: number | null = null;
-    private keyBackupStatusChecked = false;
     // We keep a list of our own device IDs so we can batch ones that were already
     // there the last time the app launched into a single toast, but display new
     // ones in their own toasts.
@@ -123,7 +122,6 @@ export default class DeviceListener {
         this.dismissedThisDeviceToast = false;
         this.keyBackupInfo = null;
         this.keyBackupFetchedAt = null;
-        this.keyBackupStatusChecked = false;
         this.ourDeviceIdsAtStart = null;
         this.displayingToastsForDeviceIds = new Set();
         this.client = undefined;
@@ -237,7 +235,7 @@ export default class DeviceListener {
 
     // The server doesn't tell us when key backup is set up, so we poll
     // & cache the result
-    private async getKeyBackupInfo(): Promise<IKeyBackupInfo | null> {
+    private async getKeyBackupInfo(): Promise<KeyBackupInfo | null> {
         if (!this.client) return null;
         const now = new Date().getTime();
         if (
@@ -245,7 +243,7 @@ export default class DeviceListener {
             !this.keyBackupFetchedAt ||
             this.keyBackupFetchedAt < now - KEY_BACKUP_POLL_INTERVAL
         ) {
-            this.keyBackupInfo = await this.client.getKeyBackupVersion();
+            this.keyBackupInfo = (await this.client.getCrypto()!.checkKeyBackupAndEnable())?.backupInfo ?? null;
             this.keyBackupFetchedAt = now;
         }
         return this.keyBackupInfo;
@@ -278,7 +276,6 @@ export default class DeviceListener {
         const crossSigningReady = await crypto.isCrossSigningReady();
         const secretStorageReady = await crypto.isSecretStorageReady();
         const allSystemsReady = crossSigningReady && secretStorageReady;
-
         if (this.dismissedThisDeviceToast || allSystemsReady) {
             hideSetupEncryptionToast();
 
@@ -385,12 +382,12 @@ export default class DeviceListener {
     }
 
     private checkKeyBackupStatus = async (): Promise<void> => {
-        if (this.keyBackupStatusChecked || !this.client) {
+        if (!this.client) {
             return;
         }
-        // returns null when key backup status hasn't finished being checked
+        // force a backup check
+        await this.client.getCrypto()?.checkKeyBackupAndEnable();
         const isKeyBackupEnabled = (await this.client.getCrypto()?.getActiveSessionBackupVersion()) !== null;
-        this.keyBackupStatusChecked = true;
 
         if (isKeyBackupEnabled === false) {
             dis.dispatch({ action: Action.ReportKeyBackupNotEnabled });
