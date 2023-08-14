@@ -3779,5 +3779,8 @@
     "Request access": "Запитати доступ",
     "Request to join sent": "Запит на приєднання надіслано",
     "Your request to join is pending.": "Ваш запит на приєднання очікує на розгляд.",
-    "Failed to query public rooms": "Не вдалося зробити запит до загальнодоступних кімнат"
+    "Failed to query public rooms": "Не вдалося зробити запит до загальнодоступних кімнат",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Цей сервер використовує стару версію Matrix. Оновіть Matrix до %(version)s, щоб використовувати %(brand)s без помилок.",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Ваш домашній сервер застарілий і не підтримує мінімально необхідну версію API. Будь ласка, зв'яжіться з власником вашого сервера або оновіть його.",
+    "Your server is unsupported": "Ваш сервер не підтримується"
 }
