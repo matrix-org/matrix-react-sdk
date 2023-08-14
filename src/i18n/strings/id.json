@@ -3779,5 +3779,8 @@
     "Failed to cancel": "Gagal membatalkan",
     "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Anda memerlukan akses untuk mengakses ruangan ini supaya dapat melihat atau berpartisipasi dalam percakapan. Anda dapat mengirimkan permintaan untuk bergabung di bawah.",
     "Message (optional)": "Pesan (opsional)",
-    "Failed to query public rooms": "Gagal melakukan kueri ruangan publik"
+    "Failed to query public rooms": "Gagal melakukan kueri ruangan publik",
+    "Your server is unsupported": "Server Anda tidak didukung",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Server ini menjalankan sebuah versi Matrix yang lama. Tingkatkan ke Matrix %(version)s untuk menggunakan %(brand)s tanpa eror.",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Homeserver Anda terlalu lawas dan tidak mendukung versi API minimum yang diperlukan. Silakan menghubungi pemilik server Anda, atau tingkatkan server Anda."
 }
