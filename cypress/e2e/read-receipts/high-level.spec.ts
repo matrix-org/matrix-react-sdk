@@ -68,11 +68,15 @@ describe("Read receipts", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    abstract class MessageSpec {
+    abstract class MessageContentSpec {
         public abstract getContent(room: Room): Promise<Record<string, unknown>>;
     }
 
-    type Message = string | MessageSpec;
+    abstract class BotActionSpec {
+        public abstract performAction(cli: MatrixClient, room: Room): Promise<void>;
+    }
+
+    type Message = string | MessageContentSpec | BotActionSpec;
 
     function goTo(room: string) {
         cy.viewRoomByName(room);
@@ -95,22 +99,37 @@ describe("Read receipts", () => {
         cy.get(".mx_ThreadView_timelinePanelWrapper", { log: false }).should("have.length", 1);
     }
 
-    /**
-     * Sends messages into given room as a bot
-     * @param room - the name of the room to send messages into
-     * @param messages - the list of messages to send, these can be strings or implementations of MessageSpace like `editOf`
-     */
-    function receiveMessages(room: string, messages: Message[]) {
+    function sendMessageAsClient(cli: MatrixClient, room: string, messages: Message[]) {
         findRoomByName(room).then(async ({ roomId }) => {
-            const room = bot.getRoom(roomId);
+            const room = cli.getRoom(roomId);
             for (const message of messages) {
                 if (typeof message === "string") {
-                    await bot.sendTextMessage(roomId, message);
+                    await cli.sendTextMessage(roomId, message);
+                } else if (message instanceof MessageContentSpec) {
+                    await cli.sendMessage(roomId, await message.getContent(room));
                 } else {
-                    await bot.sendMessage(roomId, await message.getContent(room));
+                    await message.performAction(cli, room);
                 }
             }
         });
+    }
+
+    /**
+     * Sends messages into given room as a bot
+     * @param room - the name of the room to send messages into
+     * @param messages - the list of messages to send, these can be strings or implementations of MessageSpec like `editOf`
+     */
+    function receiveMessages(room: string, messages: Message[]) {
+        sendMessageAsClient(bot, room, messages);
+    }
+
+    /**
+     * Sends messages into given room as the currently logged-in user
+     * @param room - the name of the room to send messages into
+     * @param messages - the list of messages to send, these can be strings or implementations of MessageSpec like `editOf`
+     */
+    function sendMessages(room: string, messages: Message[]) {
+        cy.getClient().then((cli) => sendMessageAsClient(cli, room, messages));
     }
 
     /**
@@ -140,12 +159,12 @@ describe("Read receipts", () => {
     }
 
     /**
-     * MessageSpec to send an edit into a room
+     * MessageContentSpec to send an edit into a room
      * @param originalMessage - the body of the message to edit
      * @param newMessage - the message body to send in the edit
      */
-    function editOf(originalMessage: string, newMessage: string): MessageSpec {
-        return new (class extends MessageSpec {
+    function editOf(originalMessage: string, newMessage: string): MessageContentSpec {
+        return new (class extends MessageContentSpec {
             public async getContent(room: Room): Promise<Record<string, unknown>> {
                 const ev = await getMessage(room, originalMessage, true);
 
@@ -163,12 +182,12 @@ describe("Read receipts", () => {
     }
 
     /**
-     * MessageSpec to send a reply into a room
+     * MessageContentSpec to send a reply into a room
      * @param targetMessage - the body of the message to reply to
      * @param newMessage - the message body to send into the reply
      */
-    function replyTo(targetMessage: string, newMessage: string): MessageSpec {
-        return new (class extends MessageSpec {
+    function replyTo(targetMessage: string, newMessage: string): MessageContentSpec {
+        return new (class extends MessageContentSpec {
             public async getContent(room: Room): Promise<Record<string, unknown>> {
                 const ev = await getMessage(room, targetMessage);
 
@@ -186,12 +205,12 @@ describe("Read receipts", () => {
     }
 
     /**
-     * MessageSpec to send a threaded response into a room
+     * MessageContentSpec to send a threaded response into a room
      * @param rootMessage - the body of the thread root message to send a response to
      * @param newMessage - the message body to send into the thread response
      */
-    function threadedOff(rootMessage: string, newMessage: string): MessageSpec {
-        return new (class extends MessageSpec {
+    function threadedOff(rootMessage: string, newMessage: string): MessageContentSpec {
+        return new (class extends MessageContentSpec {
             public async getContent(room: Room): Promise<Record<string, unknown>> {
                 const ev = await getMessage(room, rootMessage);
 
@@ -204,6 +223,40 @@ describe("Read receipts", () => {
                         rel_type: "m.thread",
                     },
                 };
+            }
+        })();
+    }
+
+    /**
+     * BotActionSpec to send a reaction to an existing event into a room
+     * @param targetMessage - the body of the message to send a reaction to
+     * @param reaction - the key of the reaction to send into the room
+     */
+    function reactionTo(targetMessage: string, reaction: string): BotActionSpec {
+        return new (class extends BotActionSpec {
+            public async performAction(cli: MatrixClient, room: Room): Promise<void> {
+                const ev = await getMessage(room, targetMessage);
+                const threadId = !ev.isThreadRoot ? ev.threadRootId : undefined;
+                await cli.sendEvent(room.roomId, threadId ?? null, "m.reaction", {
+                    "m.relates_to": {
+                        rel_type: "m.annotation",
+                        event_id: ev.getId(),
+                        key: reaction,
+                    },
+                });
+            }
+        })();
+    }
+
+    /**
+     * BotActionSpec to send a redaction into a room
+     * @param targetMessage - the body of the message to send a redaction to
+     */
+    function redactionOf(targetMessage: string): BotActionSpec {
+        return new (class extends BotActionSpec {
+            public async performAction(cli: MatrixClient, room: Room): Promise<void> {
+                const ev = await getMessage(room, targetMessage);
+                await cli.redactEvent(room.roomId, ev.threadRootId, ev.getId());
             }
         })();
     }
@@ -354,6 +407,16 @@ describe("Read receipts", () => {
                 assertRead(room2);
 
                 saveAndReload();
+                assertRead(room2);
+            });
+            it.skip("Sending a message from a different client marks room as read", () => {
+                goTo(room1);
+                assertRead(room2);
+
+                receiveMessages(room2, ["Msg1"]);
+                assertUnread(room2, 1);
+
+                sendMessages(room2, ["Msg2"]);
                 assertRead(room2);
             });
         });
@@ -808,7 +871,21 @@ describe("Read receipts", () => {
         // affect only one or the other.
 
         describe("in the main timeline", () => {
-            it.skip("Reacting to a message makes a room unread", () => {});
+            // XXX: Is this the actual expectation?
+            it.skip("Receiving a reaction to a message makes a room unread", () => {
+                goTo(room1);
+                assertRead(room2);
+                receiveMessages(room2, ["Msg1", "Msg2"]);
+                assertUnread(room2, 1);
+
+                // When I read the main timeline
+                goTo(room2);
+                assertRead(room2);
+
+                goTo(room1);
+                receiveMessages(room2, [reactionTo("Msg2", "🪿")]);
+                assertUnread(room2, ".");
+            });
             it.skip("Reading a reaction makes the room read", () => {});
             it.skip("Marking a room as read after a reaction makes it read", () => {});
             it.skip("Reacting to a message after marking as read makes the room unread", () => {});
@@ -835,9 +912,20 @@ describe("Read receipts", () => {
 
     describe("redactions", () => {
         describe("in the main timeline", () => {
-            // One of the following two must be right:
-            it.skip("Redacting the message pointed to by my receipt leaves the room read", () => {});
-            it.skip("Redacting a message after it was read makes the room unread", () => {});
+            it("Redacting the message pointed to by my receipt leaves the room read", () => {
+                goTo(room1);
+                assertRead(room2);
+                receiveMessages(room2, ["Msg1", "Msg2"]);
+                assertUnread(room2, 1);
+
+                // When I read the main timeline
+                goTo(room2);
+                assertRead(room2);
+
+                goTo(room1);
+                receiveMessages(room2, [redactionOf("Msg2")]);
+                assertRead(room2);
+            });
 
             it.skip("Reading an unread room after a redaction of the latest message makes it read", () => {});
             it.skip("Reading an unread room after a redaction of an older message makes it read", () => {});
