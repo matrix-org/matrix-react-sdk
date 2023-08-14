@@ -620,7 +620,7 @@ export default class EventIndex extends EventEmitter {
                 // up with our index and don't need to crawl the room further.
                 // Let us delete the checkpoint in that case, otherwise push
                 // the new checkpoint to be used by the crawler.
-                if (eventsAlreadyAdded && newCheckpoint.fullCrawl !== true) {
+                if (eventsAlreadyAdded === true && newCheckpoint.fullCrawl !== true) {
                     logger.log(
                         "EventIndex: Checkpoint had already all events",
                         "added, stopping the crawl",
@@ -628,7 +628,7 @@ export default class EventIndex extends EventEmitter {
                     );
                     await indexManager.removeCrawlerCheckpoint(newCheckpoint);
                 } else {
-                    if (eventsAlreadyAdded) {
+                    if (eventsAlreadyAdded === true) {
                         logger.log(
                             "EventIndex: Checkpoint had already all events",
                             "added, but continuing due to a full crawl",
