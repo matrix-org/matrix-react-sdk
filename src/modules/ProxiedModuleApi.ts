@@ -82,18 +82,18 @@ export class ProxiedModuleApi implements ModuleApi {
      * @override
      */
     public openDialog<M extends object, P extends DialogProps, C extends DialogContent<P>>(
-        titleOrOptions: string | ModuleUiDialogOptions,
+        initialTitleOrOptions: string | ModuleUiDialogOptions,
         body: (props: P, ref: React.RefObject<C>) => React.ReactNode,
         props?: Omit<P, keyof DialogProps>,
     ): Promise<{ didOkOrSubmit: boolean; model: M }> {
-        const options: ModuleUiDialogOptions =
-            typeof titleOrOptions === "string" ? { title: titleOrOptions } : titleOrOptions;
+        const initialOptions: ModuleUiDialogOptions =
+            typeof initialTitleOrOptions === "string" ? { title: initialTitleOrOptions } : initialTitleOrOptions;
 
         return new Promise<{ didOkOrSubmit: boolean; model: M }>((resolve) => {
             Modal.createDialog(
                 ModuleUiDialog<P, C>,
                 {
-                    ...options,
+                    initialOptions,
                     contentFactory: body,
                     moduleApi: this,
                     contentProps: props,

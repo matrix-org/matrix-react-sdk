@@ -26,10 +26,7 @@ import { _t } from "../../../languageHandler";
 interface IProps<P extends DialogProps, C extends DialogContent<P>> {
     contentFactory: (props: P, ref: React.RefObject<C>) => React.ReactNode;
     contentProps: Omit<P, keyof DialogProps> | undefined;
-    title: string;
-    actionLabel?: string;
-    cancelLabel?: string;
-    canSubmit?: boolean;
+    initialOptions: ModuleUiDialogOptions,
     moduleApi: ModuleApi;
     onFinished(ok?: boolean, model?: Awaited<ReturnType<DialogContent<P & DialogProps>["trySubmit"]>>): void;
 }
@@ -48,10 +45,10 @@ export class ModuleUiDialog<P extends DialogProps, C extends DialogContent<P>> e
         super(props);
 
         this.state = {
-            title: this.props.title,
-            actionLabel: this.props.actionLabel ?? _t("OK"),
-            cancelLabel: this.props.cancelLabel,
-            canSubmit: this.props.canSubmit ?? true,
+            title: this.props.initialOptions.title,
+            actionLabel: this.props.initialOptions.actionLabel ?? _t("OK"),
+            cancelLabel: this.props.initialOptions.cancelLabel,
+            canSubmit: this.props.initialOptions.canSubmit ?? true,
         };
     }
 
