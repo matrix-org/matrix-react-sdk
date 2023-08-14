@@ -22,13 +22,14 @@ import {
     M_LOCATION,
     M_TIMESTAMP,
 } from "matrix-js-sdk/src/@types/location";
+import { ContentHelpers } from "matrix-js-sdk/src/matrix";
 import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
 
 import { isSelfLocation } from "../../../src/utils/location";
 
 describe("isSelfLocation", () => {
     it("Returns true for a full m.asset event", () => {
-        const content = makeLocationContent("", "0", Date.now());
+        const content = ContentHelpers.makeLocationContent("", "0", Date.now());
         expect(isSelfLocation(content)).toBe(true);
     });
 
