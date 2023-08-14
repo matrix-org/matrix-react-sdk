@@ -23,7 +23,6 @@ import {
     M_TIMESTAMP,
 } from "matrix-js-sdk/src/@types/location";
 import { ContentHelpers } from "matrix-js-sdk/src/matrix";
-import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
 
 import { isSelfLocation } from "../../../src/utils/location";
 
@@ -62,7 +61,7 @@ describe("isSelfLocation", () => {
     });
 
     it("Returns false for an unknown asset type", () => {
-        const content = makeLocationContent(
+        const content = ContentHelpers.makeLocationContent(
             undefined /* text */,
             "geo:foo",
             0,

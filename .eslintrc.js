@@ -90,7 +90,6 @@ module.exports = {
                             "!matrix-js-sdk/src/feature",
                             "!matrix-js-sdk/src/NamespacedValue",
                             "!matrix-js-sdk/src/ReEmitter",
-                            "!matrix-js-sdk/src/content-helpers",
                             "!matrix-js-sdk/src/event-mapper",
                             "!matrix-js-sdk/src/interactive-auth",
                             "!matrix-js-sdk/src/secret-storage",
