@@ -24,7 +24,6 @@ describe("Email Registration", () => {
     let mailhog: Mailhog;
 
     beforeEach(() => {
-        cy.visit("/#/register");
         cy.startMailhog().then((_mailhog) => {
             mailhog = _mailhog;
             cy.startHomeserver("email", {
@@ -32,9 +31,26 @@ describe("Email Registration", () => {
                 SMTP_PORT: _mailhog.instance.smtpPort,
             }).then((_homeserver) => {
                 homeserver = _homeserver;
+
+                cy.intercept(
+                    { method: "GET", pathname: "/config.json" },
+                    {
+                        body: {
+                            default_server_config: {
+                                "m.homeserver": {
+                                    base_url: homeserver.baseUrl,
+                                },
+                                "m.identity_server": {
+                                    base_url: "https://server.invalid",
+                                },
+                            },
+                        },
+                    },
+                );
+                cy.visit("/#/register");
+                cy.injectAxe();
             });
         });
-        cy.injectAxe();
     });
 
     afterEach(() => {
@@ -43,14 +59,6 @@ describe("Email Registration", () => {
     });
 
     it("registers an account and lands on the use case selection screen", () => {
-        cy.findByRole("button", { name: "Edit", timeout: 15000 }).click();
-        cy.findByRole("button", { name: "Continue" }).should("be.visible");
-
-        cy.findByRole("textbox", { name: "Other homeserver" }).type(homeserver.baseUrl);
-        cy.findByRole("button", { name: "Continue" }).click();
-        // wait for the dialog to go away
-        cy.get(".mx_ServerPickerDialog").should("not.exist");
-
         cy.findByRole("textbox", { name: "Username" }).should("be.visible");
         // Hide the server text as it contains the randomly allocated Homeserver port
         const percyCSS = ".mx_ServerPicker_server { visibility: hidden !important; }";
