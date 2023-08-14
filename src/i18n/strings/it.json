@@ -3779,5 +3779,8 @@
     "Other spaces you know": "Altri spazi che conosci",
     "You need an invite to access this room.": "Ti serve un invito per entrare in questa stanza.",
     "Failed to cancel": "Annullamento fallito",
-    "Failed to query public rooms": "Richiesta di stanze pubbliche fallita"
+    "Failed to query public rooms": "Richiesta di stanze pubbliche fallita",
+    "Your server is unsupported": "Il tuo server non è supportato",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Questo server usa una versione più vecchia di Matrix. Aggiorna a Matrix %(version)s per usare %(brand)s senza errori.",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Il tuo homeserver è troppo vecchio e non supporta la versione API minima richiesta. Contatta il proprietario del server o aggiornalo."
 }
