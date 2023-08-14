@@ -3029,13 +3029,10 @@
     "%(members)s and more": "%(members)s und weitere",
     "View older version of %(spaceName)s.": "Alte Version von %(spaceName)s anzeigen.",
     "Upgrade this space to the recommended room version": "Space auf die empfohlene Version aktualisieren",
-    "You will not receive push notifications on other devices until you sign back in to them.": "Du wirst auf anderen Geräten keine Push-Benachrichtigungen erhalten, bis du dich dort erneut anmeldest.",
     "Your password was successfully changed.": "Dein Passwort wurde erfolgreich geändert.",
     "Confirm signing out these devices|one": "Abmelden des Geräts bestätigen",
     "Confirm signing out these devices|other": "Abmelden dieser Geräte bestätigen",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Du kannst auch deine Heim-Server-Administration bitten, diese Einstellung zu ändern.",
     "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Wenn du Zugriff auf die Nachrichten behalten willst, musst du die Schlüssel zuerst exportieren und dann erneut importieren.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Wenn du dein Passwort änderst, werden alle deine anderen Geräte abgemeldet. Wenn auf diesen Ende-zu-Ende-Schlüssel gespeichert sind, kann der Verlauf deiner verschlüsselten Unterhaltungen verloren gehen.",
     "Developer tools": "Entwicklungswerkzeuge",
     "Turn on camera": "Kamera aktivieren",
     "Turn off camera": "Kamera deaktivieren",
@@ -3092,7 +3089,6 @@
     "Next recently visited room or space": "Nächster kürzlich besuchter Raum oder Space",
     "Previous recently visited room or space": "Vorheriger kürzlich besuchter Raum oder Space",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Du wurdest von allen Geräten abgemeldet und erhältst keine Push-Benachrichtigungen mehr. Um Benachrichtigungen wieder zu aktivieren, melde dich auf jedem Gerät erneut an.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Wenn du dein Passwort zurücksetzt, werden all deine anderen Geräte abgemeldet. Wenn auf diesen Ende-zu-Ende-Schlüssel gespeichert sind, kann der Verlauf deiner verschlüsselten Unterhaltungen verloren gehen.",
     "Event ID: %(eventId)s": "Event-ID: %(eventId)s",
     "Threads help keep your conversations on-topic and easy to track.": "Threads helfen dabei, dass deine Konversationen beim Thema und leicht nachverfolgbar bleiben.",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Deine Nachricht wurde nicht gesendet, weil dieser Heim-Server von dessen Administration gesperrt wurde. Bitte <a>kontaktiere deine Dienstadministration</a>, um den Dienst weiterzunutzen.",
@@ -3783,5 +3779,6 @@
     "Your request to join is pending.": "Deine Beitrittsanfrage wurde noch nicht bearbeitet.",
     "Cancel request": "Anfrage abbrechen",
     "%(severalUsers)schanged their profile picture %(count)s times|one": "%(severalUsers)shaben ihr Profilbild geändert",
-    "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)shat das Profilbild geändert"
+    "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)shat das Profilbild geändert",
+    "Failed to query public rooms": "Abfrage öffentlicher Räume fehlgeschlagen"
 }
