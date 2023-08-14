@@ -1,0 +1,5 @@
+# This file is included by the `yarn start:e2e` task in element-web. It will
+# register the module in this folder as a module in the dev mode so that the
+# Cypress tests can be executed correctly.
+modules:
+  - "file:node_modules/matrix-react-sdk/cypress/example_module"
