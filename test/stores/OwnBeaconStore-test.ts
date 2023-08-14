@@ -239,12 +239,12 @@ describe("OwnBeaconStore", () => {
             expect(mockClient.sendEvent).toHaveBeenCalledWith(
                 room1Id,
                 M_BEACON.name,
-                makeBeaconContent(defaultLocationUri, now, alicesRoom1BeaconInfo.getId()!),
+                ContentHelpers.makeBeaconContent(defaultLocationUri, now, alicesRoom1BeaconInfo.getId()!),
             );
             expect(mockClient.sendEvent).toHaveBeenCalledWith(
                 room2Id,
                 M_BEACON.name,
-                makeBeaconContent(defaultLocationUri, now, alicesRoom2BeaconInfo.getId()!),
+                ContentHelpers.makeBeaconContent(defaultLocationUri, now, alicesRoom2BeaconInfo.getId()!),
             );
         });
     });
