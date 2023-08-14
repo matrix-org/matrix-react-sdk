@@ -3781,5 +3781,6 @@
     "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)s muutis oma profiilipilti",
     "Failed to query public rooms": "Avalike jututubade tuvastamise päring ei õnnestunud",
     "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "See server kasutab Matrixi vanemat versiooni. Selleks, et %(brand)s'i kasutamisel vigu ei tekiks palun uuenda serverit nii, et kasutusel oleks Matrixi %(version)s.",
-    "Your server is unsupported": "Sinu server ei ole toetatud"
+    "Your server is unsupported": "Sinu server ei ole toetatud",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Sinu koduserver on liiga vana ega toeta vähimat nõutavat API versiooni. Lisateavet saad oma serveri haldajalt või kui ise oled haldaja, siis palun uuenda serverit."
 }
