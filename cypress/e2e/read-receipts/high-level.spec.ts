@@ -296,7 +296,7 @@ describe("Read receipts", () => {
 
     describe("new messages", () => {
         describe("in the main timeline", () => {
-            it("Sending a message makes a room unread", () => {
+            it("Receiving a message makes a room unread", () => {
                 goTo(room1);
                 assertRead(room2);
 
@@ -323,7 +323,7 @@ describe("Read receipts", () => {
                 markAsRead(room2);
                 assertRead(room2);
             });
-            it("Sending a new message after marking as read makes it unread", () => {
+            it("Receiving a new message after marking as read makes it unread", () => {
                 goTo(room1);
                 assertRead(room2);
                 receiveMessages(room2, ["Msg1"]);
@@ -527,7 +527,7 @@ describe("Read receipts", () => {
                 // Given a thread exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
-                assertUnread(room2, 1); // (Sanity)
+                assertUnread(room2, 2); // (Sanity)
 
                 // When I read the main timeline
                 goTo(room2);
