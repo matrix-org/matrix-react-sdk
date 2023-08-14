@@ -16,8 +16,8 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import { Filter } from "matrix-js-sdk/src/filter";
 import {
+    Filter,
     EventTimelineSet,
     IRoomTimelineData,
     Direction,
@@ -25,8 +25,8 @@ import {
     MatrixEventEvent,
     Room,
     RoomEvent,
+    TimelineWindow,
 } from "matrix-js-sdk/src/matrix";
-import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";

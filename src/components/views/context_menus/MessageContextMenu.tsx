@@ -24,10 +24,10 @@ import {
     RoomMemberEvent,
     EventType,
     RelationType,
+    Relations,
+    Thread,
 } from "matrix-js-sdk/src/matrix";
-import { Relations } from "matrix-js-sdk/src/models/relations";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
