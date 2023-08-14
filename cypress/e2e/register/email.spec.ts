@@ -26,9 +26,12 @@ describe("Email Registration", () => {
     beforeEach(() => {
         cy.startMailhog().then((_mailhog) => {
             mailhog = _mailhog;
-            cy.startHomeserver("email", {
-                SMTP_HOST: "172.17.0.1",
-                SMTP_PORT: _mailhog.instance.smtpPort,
+            cy.startHomeserver({
+                template: "email",
+                variables: {
+                    SMTP_HOST: "host.docker.internal",
+                    SMTP_PORT: _mailhog.instance.smtpPort,
+                },
             }).then((_homeserver) => {
                 homeserver = _homeserver;
 
