@@ -3783,5 +3783,6 @@
     "You need an invite to access this room.": "Anda memerlukan undangan untuk mengakses ruangan ini.",
     "Failed to cancel": "Gagal membatalkan",
     "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Anda memerlukan akses untuk mengakses ruangan ini supaya dapat melihat atau berpartisipasi dalam percakapan. Anda dapat mengirimkan permintaan untuk bergabung di bawah.",
-    "Message (optional)": "Pesan (opsional)"
+    "Message (optional)": "Pesan (opsional)",
+    "Failed to query public rooms": "Gagal melakukan kueri ruangan publik"
 }
