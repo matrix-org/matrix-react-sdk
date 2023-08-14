@@ -67,7 +67,7 @@ export default abstract class BasePlatform {
     protected notificationCount = 0;
     protected errorDidOccur = false;
 
-    public constructor() {
+    protected constructor() {
         dis.register(this.onAction);
         this.startUpdateCheck = this.startUpdateCheck.bind(this);
     }

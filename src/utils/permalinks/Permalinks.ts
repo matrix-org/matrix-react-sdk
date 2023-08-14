@@ -128,10 +128,6 @@ export class RoomPermalinkCreator {
         return this._serverCandidates;
     }
 
-    public isStarted(): boolean {
-        return this.started;
-    }
-
     public forEvent(eventId: string): string {
         return getPermalinkConstructor().forEvent(this.roomId, eventId, this._serverCandidates);
     }
