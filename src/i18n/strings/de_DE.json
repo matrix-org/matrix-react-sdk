@@ -3779,5 +3779,8 @@
     "Cancel request": "Anfrage abbrechen",
     "%(severalUsers)schanged their profile picture %(count)s times|one": "%(severalUsers)shaben ihr Profilbild geändert",
     "%(oneUser)schanged their profile picture %(count)s times|one": "%(oneUser)shat das Profilbild geändert",
-    "Failed to query public rooms": "Abfrage öffentlicher Räume fehlgeschlagen"
+    "Failed to query public rooms": "Abfrage öffentlicher Räume fehlgeschlagen",
+    "Your server is unsupported": "Dein Server wird nicht unterstützt",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Dieser Server nutzt eine ältere Matrix-Version. Aktualisiere auf Matrix %(version)s, um %(brand)s fehlerfrei nutzen zu können.",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Dein Heim-Server ist zu alt und unterstützt nicht die benötigte API-Version. Bitte kontaktiere deine Server-Administration oder aktualisiere deinen Server."
 }
