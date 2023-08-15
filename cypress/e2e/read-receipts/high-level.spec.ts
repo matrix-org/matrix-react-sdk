@@ -235,7 +235,7 @@ describe("Read receipts", () => {
     function reactionTo(targetMessage: string, reaction: string): BotActionSpec {
         return new (class extends BotActionSpec {
             public async performAction(cli: MatrixClient, room: Room): Promise<void> {
-                const ev = await getMessage(room, targetMessage);
+                const ev = await getMessage(room, targetMessage, true);
                 const threadId = !ev.isThreadRoot ? ev.threadRootId : undefined;
                 await cli.sendEvent(room.roomId, threadId ?? null, "m.reaction", {
                     "m.relates_to": {
@@ -255,7 +255,7 @@ describe("Read receipts", () => {
     function redactionOf(targetMessage: string): BotActionSpec {
         return new (class extends BotActionSpec {
             public async performAction(cli: MatrixClient, room: Room): Promise<void> {
-                const ev = await getMessage(room, targetMessage);
+                const ev = await getMessage(room, targetMessage, true);
                 await cli.redactEvent(room.roomId, ev.threadRootId, ev.getId());
             }
         })();
@@ -864,19 +864,12 @@ describe("Read receipts", () => {
     });
 
     describe("reactions", () => {
-        // Justification for this section: edits an reactions are similar, so we
-        // might choose to miss this section, but I have included it because
-        // edits replace the content of the original event in our code and
-        // reactions don't, so it seems possible that bugs could creep in that
-        // affect only one or the other.
-
         describe("in the main timeline", () => {
-            // XXX: Is this the actual expectation?
-            it.skip("Receiving a reaction to a message makes a room unread", () => {
+            it("Receiving a reaction to a message does not make a room unread", () => {
                 goTo(room1);
                 assertRead(room2);
                 receiveMessages(room2, ["Msg1", "Msg2"]);
-                assertUnread(room2, 1);
+                assertUnread(room2, 2);
 
                 // When I read the main timeline
                 goTo(room2);
@@ -884,13 +877,47 @@ describe("Read receipts", () => {
 
                 goTo(room1);
                 receiveMessages(room2, [reactionTo("Msg2", "🪿")]);
-                assertUnread(room2, ".");
+                assertRead(room2);
             });
-            it.skip("Reading a reaction makes the room read", () => {});
-            it.skip("Marking a room as read after a reaction makes it read", () => {});
-            it.skip("Reacting to a message after marking as read makes the room unread", () => {});
-            it.skip("A room with a reaction is still unread after restart", () => {});
-            it.skip("A room where all reactions are read is still read after restart", () => {});
+            it("Reacting to a message after marking as read does not make the room unread", () => {
+                goTo(room1);
+                assertRead(room2);
+                receiveMessages(room2, ["Msg1", "Msg2"]);
+                assertUnread(room2, 2);
+
+                markAsRead(room2);
+                assertRead(room2);
+
+                receiveMessages(room2, [reactionTo("Msg2", "🪿")]);
+                assertRead(room2);
+            });
+            it("A room with an unread reaction is still read after restart", () => {
+                goTo(room1);
+                assertRead(room2);
+                receiveMessages(room2, ["Msg1", "Msg2"]);
+                assertUnread(room2, 2);
+
+                markAsRead(room2);
+                assertRead(room2);
+
+                receiveMessages(room2, [reactionTo("Msg2", "🪿")]);
+                assertRead(room2);
+
+                saveAndReload();
+                assertRead(room2);
+            });
+            it("A room where all reactions are read is still read after restart", () => {
+                goTo(room1);
+                assertRead(room2);
+                receiveMessages(room2, ["Msg1", "Msg2", reactionTo("Msg2", "🪿")]);
+                assertUnread(room2, 2);
+
+                markAsRead(room2);
+                assertRead(room2);
+
+                saveAndReload();
+                assertRead(room2);
+            });
         });
 
         describe("in threads", () => {
