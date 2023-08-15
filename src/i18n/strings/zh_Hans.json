@@ -2166,7 +2166,7 @@
     "A call can only be transferred to a single user.": "通话只能转移到单个用户。",
     "We couldn't create your DM.": "我们无法创建你的私聊。",
     "Block anyone not part of %(serverName)s from ever joining this room.": "阻住任何不属于 %(serverName)s 的人加入此房间。",
-    "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.": "如果房间用于与自己的家服务器外的团队进行协助的话，可以停用此功能。这将无法在稍后进行更改。",
+    "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.": "若房间将用于与拥有自己的家服务器的外部团队协作，则你可禁用此功能。这无法在以后更改。",
     "What do you want to organise?": "你想要组织什么？",
     "Skip for now": "暂时跳过",
     "Failed to create initial space rooms": "创建初始空间房间失败",
