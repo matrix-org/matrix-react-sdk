@@ -7161,8 +7161,8 @@ matrix-events-sdk@0.0.1:
   integrity sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "27.1.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/2ef7ae7661b9ac036f50819efd2ae2a72ae61b4d"
+  version "27.2.0"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/97cf73bc52814c2a479161caffffb85fe6ce63c8"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@matrix-org/matrix-sdk-crypto-wasm" "^1.2.0"
