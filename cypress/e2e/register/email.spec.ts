@@ -78,14 +78,15 @@ describe("Email Registration", () => {
 
         cy.findByText("An error was encountered when sending the email").should("not.exist");
 
-        // Unfortunately the email is not available immediately, so we have a magic wait here
-        cy.wait(5000).then(async () => {
+        cy.waitForPromise(async () => {
             const messages = await mailhog.api.messages();
             expect(messages.items).to.have.length(1);
             expect(messages.items[0].to).to.eq("alice@email.com");
             const [link] = messages.items[0].text.match(/http.+/);
-            cy.request(link);
-        });
+            return link;
+        }).as("emailLink");
+
+        cy.get<string>("@emailLink").then((link) => cy.request(link));
 
         cy.get(".mx_UseCaseSelection_skip", { timeout: 30000 }).should("exist");
     });
