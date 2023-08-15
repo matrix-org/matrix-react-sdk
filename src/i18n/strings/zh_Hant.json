@@ -3779,5 +3779,8 @@
     "Request to join sent": "已傳送加入請求",
     "Your request to join is pending.": "您的加入請求正在等待處理。",
     "Cancel request": "取消請求",
-    "Failed to query public rooms": "檢索公開聊天室失敗"
+    "Failed to query public rooms": "檢索公開聊天室失敗",
+    "Your server is unsupported": "您的伺服器不支援",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "此伺服器正在使用較舊版本的 Matrix。升級至 Matrix %(version)s 以在沒有錯誤的情況下使用 %(brand)s。",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "您的家伺服器太舊了，不支援所需的最低 API 版本。請聯絡您的伺服器擁有者，或是升級您的伺服器。"
 }
