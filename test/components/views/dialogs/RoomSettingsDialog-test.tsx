@@ -16,7 +16,16 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { JoinRule, Room, Visibility } from "matrix-js-sdk/src/matrix";
+import { mkEvent } from "matrix-js-sdk/spec/test-utils/test-utils";
+import {
+    EventTimeline,
+    EventType,
+    JoinRule,
+    MatrixEvent,
+    Room,
+    RoomStateEvent,
+    Visibility,
+} from "matrix-js-sdk/src/matrix";
 
 import { getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
 import RoomSettingsDialog from "../../../../src/components/views/dialogs/RoomSettingsDialog";
@@ -113,6 +122,22 @@ describe("<RoomSettingsDialog />", () => {
                 jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
                 getComponent();
                 expect(screen.getByTestId("settings-tab-ROOM_PEOPLE_TAB")).toBeInTheDocument();
+            });
+
+            it("re-renders on room join rule changes", () => {
+                jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                    (setting) => setting === "feature_ask_to_join",
+                );
+                jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
+                getComponent();
+                jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Invite);
+                mockClient.emit(
+                    RoomStateEvent.Events,
+                    new MatrixEvent(mkEvent({ content: {}, type: EventType.RoomJoinRules })),
+                    room.getLiveTimeline().getState(EventTimeline.FORWARDS)!,
+                    null,
+                );
+                expect(screen.queryByTestId("settings-tab-ROOM_PEOPLE_TAB")).not.toBeInTheDocument();
             });
         });
 

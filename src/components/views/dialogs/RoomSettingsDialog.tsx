@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { RoomEvent, Room } from "matrix-js-sdk/src/matrix";
+import { RoomEvent, Room, RoomStateEvent, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
@@ -76,6 +76,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.safeGet().on(RoomEvent.Name, this.onRoomName);
+        MatrixClientPeg.safeGet().on(RoomStateEvent.Events, this.onStateEvent);
         this.onRoomName();
     }
 
@@ -92,6 +93,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
         }
 
         MatrixClientPeg.get()?.removeListener(RoomEvent.Name, this.onRoomName);
+        MatrixClientPeg.get()?.removeListener(RoomStateEvent.Events, this.onStateEvent);
     }
 
     /**
@@ -120,6 +122,10 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
     private onRoomName = (): void => {
         // rerender when the room name changes
         this.forceUpdate();
+    };
+
+    private onStateEvent = (event: MatrixEvent): void => {
+        if (event.getType() === EventType.RoomJoinRules) this.forceUpdate();
     };
 
     private getTabs(): NonEmptyArray<Tab<RoomSettingsTab>> {

@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import { EventTimeline, MatrixError, Room, RoomMember, RoomStateEvent } from "matrix-js-sdk/src/matrix";
-import React, { useEffect, useState, VFC } from "react";
+import React, { useCallback, useState, VFC } from "react";
 
 import { Icon as CheckIcon } from "../../../../../../res/img/feather-customised/check.svg";
 import { Icon as XIcon } from "../../../../../../res/img/feather-customised/x.svg";
 import { formatRelativeTime } from "../../../../../DateUtils";
+import { useTypedEventEmitterState } from "../../../../../hooks/useEventEmitter";
 import { _t } from "../../../../../languageHandler";
 import Modal, { IHandle } from "../../../../../Modal";
 import MemberAvatar from "../../../avatars/MemberAvatar";
@@ -111,7 +112,6 @@ const Knock: VFC<{
 };
 
 export const PeopleRoomSettingsTab: VFC<{ room: Room }> = ({ room }) => {
-    const [knockMembers, setKnockMembers] = useState(room.getMembersWithMembership("knock"));
     const client = room.client;
     const userId = client.getUserId() || "";
     const canInvite = room.canInvite(userId);
@@ -142,13 +142,11 @@ export const PeopleRoomSettingsTab: VFC<{ room: Room }> = ({ room }) => {
             description: error.message,
         });
 
-    useEffect(() => {
-        const updateKnockMembers = (): void => setKnockMembers(room.getMembersWithMembership("knock"));
-        client.on(RoomStateEvent.Members, updateKnockMembers);
-        return () => {
-            client.removeListener(RoomStateEvent.Members, updateKnockMembers);
-        };
-    }, [client, room]);
+    const knockMembers = useTypedEventEmitterState(
+        room,
+        RoomStateEvent.Members,
+        useCallback(() => room.getMembersWithMembership("knock"), [room]),
+    );
 
     return (
         <SettingsTab>
