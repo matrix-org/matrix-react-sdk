@@ -39,9 +39,6 @@ const i18nFolder = "i18n/";
 // Useful for debugging and testing
 const ANNOTATE_STRINGS = false;
 
-// We use english strings as keys, some of which contain full stops
-counterpart.setSeparator("|");
-
 // see `translateWithFallback` for an explanation of fallback handling
 const FALLBACK_LOCALE = "en";
 counterpart.setFallbackLocale(FALLBACK_LOCALE);
