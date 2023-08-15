@@ -2232,7 +2232,7 @@
     "Failed to create initial space rooms": "Fehler beim Initialisieren des Space",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Du bist die einzige Person im Raum. Sobald du ihn verlässt, wird niemand mehr hineingelangen, auch du nicht.",
     "Edit settings relating to your space.": "Einstellungen vom Space bearbeiten.",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Wenn du alles zurücksetzt, gehen alle verifizierten Anmeldungen, Benutzer und vergangenen Nachrichten verloren.",
+    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Wenn du alles zurücksetzt, gehen alle verifizierten Anmeldungen, Benutzende und vergangenen Nachrichten verloren.",
     "Only do this if you have no other device to complete verification with.": "Verwende es nur, wenn du kein Gerät, mit dem du dich verifizieren kannst, bei dir hast.",
     "Reset everything": "Alles zurücksetzen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
