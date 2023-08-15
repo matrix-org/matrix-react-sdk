@@ -299,7 +299,7 @@ describe("Read receipts", () => {
         cy.log("Open thread list");
         cy.findByTestId("threadsButton", { log: false }).then(($button) => {
             if ($button?.attr("aria-current") !== "true") {
-                $button.trigger("click");
+                cy.findByTestId("threadsButton", { log: false }).click();
             }
         });
 
@@ -921,8 +921,21 @@ describe("Read receipts", () => {
         });
 
         describe("in threads", () => {
-            it.skip("A reaction to a threaded message makes the room unread", () => {});
-            it.skip("Reading a reaction to a threaded message makes the room read", () => {});
+            it("A reaction to a threaded message does not make the room unread", () => {
+                goTo(room1);
+                assertRead(room2);
+                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Reply1")]);
+                assertUnread(room2, 2);
+
+                goTo(room2);
+                openThread("Msg1");
+                assertRead(room2);
+
+                goTo(room1);
+                receiveMessages(room2, [reactionTo("Reply1", "🪿")]);
+
+                assertRead(room2);
+            });
             it.skip("Marking a room as read after a reaction in a thread makes it read", () => {});
             it.skip("Reacting to a thread message after marking as read makes the room unread", () => {});
             it.skip("A room with a reaction to a threaded message is still unread after restart", () => {});
@@ -930,7 +943,21 @@ describe("Read receipts", () => {
         });
 
         describe("thread roots", () => {
-            it.skip("A reaction to a thread root makes the room unread", () => {});
+            it("A reaction to a thread root does not make the room unread", () => {
+                goTo(room1);
+                assertRead(room2);
+                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Reply1")]);
+                assertUnread(room2, 2);
+
+                goTo(room2);
+                openThread("Msg1");
+                assertRead(room2);
+
+                goTo(room1);
+                receiveMessages(room2, [reactionTo("Msg1", "🪿")]);
+
+                assertRead(room2);
+            });
             it.skip("Reading a reaction to a thread root makes the room read", () => {});
             it.skip("Marking a room as read after a reaction to a thread root makes it read", () => {});
             it.skip("Reacting to a thread root after marking as read makes the room unread but not the thread", () => {});
