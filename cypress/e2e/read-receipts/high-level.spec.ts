@@ -249,6 +249,19 @@ describe("Read receipts", () => {
     }
 
     /**
+     * BotActionSpec to send a custom event
+     * @param eventType - the type of the event to send
+     * @param content - the event content to send
+     */
+    function customEvent(eventType: string, content: Record<string, any>): BotActionSpec {
+        return new (class extends BotActionSpec {
+            public async performAction(cli: MatrixClient, room: Room): Promise<void> {
+                await cli.sendEvent(room.roomId, null, eventType, content);
+            }
+        })();
+    }
+
+    /**
      * BotActionSpec to send a redaction into a room
      * @param targetMessage - the body of the message to send a redaction to
      */
@@ -1091,8 +1104,31 @@ describe("Read receipts", () => {
     });
 
     describe("Ignored events", () => {
-        it.skip("If all events after receipt are unimportant, the room is read", () => {});
-        it.skip("Sending an important event after unimportant ones makes the room unread", () => {});
+        it("If all events after receipt are unimportant, the room is read", () => {
+            goTo(room1);
+            assertRead(room2);
+            receiveMessages(room2, ["Msg1", "Msg2"]);
+            assertUnread(room2, 2);
+
+            markAsRead(room2);
+
+            receiveMessages(room2, [customEvent("org.custom.event", { body: "foobar" })]);
+            assertRead(room2);
+        });
+        it("Sending an important event after unimportant ones makes the room unread", () => {
+            goTo(room1);
+            assertRead(room2);
+            receiveMessages(room2, ["Msg1", "Msg2"]);
+            assertUnread(room2, 2);
+
+            markAsRead(room2);
+
+            receiveMessages(room2, [customEvent("org.custom.event", { body: "foobar" })]);
+            assertRead(room2);
+
+            receiveMessages(room2, ["Hello"]);
+            assertUnread(room2, 1);
+        });
         it.skip("A receipt for the last unimportant event makes the room read, even if all are unimportant", () => {});
     });
 
