@@ -58,12 +58,13 @@ limitations under the License.
         display: flex;
         flex-direction: column;
         min-height: 0;
-        max-height: 100%;
+        flex: 1;
     }
 
     .mx_CompoundDialog_content {
         overflow: auto;
         padding: 8px 32px;
+        flex: 1;
     }
 
     .mx_CompoundDialog_footer {
@@ -81,9 +82,10 @@ limitations under the License.
     flex-direction: column;
 
     width: 544px; /* fixed */
+    height: 516px; /* fixed */
     max-width: 100%;
     min-height: 0;
-    max-height: min(516px, 80vh);
+    max-height: 80%;
 
     .mx_CompoundDialog_footer {
         box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.05); /* hardcoded colour for both themes */
