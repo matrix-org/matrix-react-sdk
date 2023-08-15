@@ -225,3 +225,12 @@ export const clearAllModals = async (): Promise<void> => {
         }
     }
 };
+
+/** Install a stub object at `navigator.mediaDevices` */
+export function useMockMediaDevices(): void {
+    // @ts-ignore
+    navigator["mediaDevices"] = {
+        enumerateDevices: jest.fn().mockResolvedValue([]),
+        getUserMedia: jest.fn(),
+    };
+}
