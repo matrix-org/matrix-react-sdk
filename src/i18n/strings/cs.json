@@ -3779,5 +3779,8 @@
     "Cancel request": "Zrušit žádost",
     "Failed to cancel": "Nepodařilo se zrušit",
     "You need an invite to access this room.": "Pro vstup do této místnosti potřebujete pozvánku.",
-    "Failed to query public rooms": "Nepodařilo se vyhledat veřejné místnosti"
+    "Failed to query public rooms": "Nepodařilo se vyhledat veřejné místnosti",
+    "Your server is unsupported": "Váš server není podporován",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Tento server používá starší verzi Matrix. Chcete-li používat %(brand)s bez možných problémů, aktualizujte Matrixu na %(version)s .",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Váš domovský server je příliš starý a nepodporuje minimální požadovanou verzi API. Obraťte se prosím na vlastníka serveru nebo proveďte aktualizaci serveru."
 }
