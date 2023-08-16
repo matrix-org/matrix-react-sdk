@@ -124,7 +124,7 @@ export const PeopleRoomSettingsTab: VFC<{ room: Room }> = ({ room }) => {
         new Promise((_, reject) =>
             client.invite(roomId, userId).catch((error) => {
                 onError(error);
-                reject();
+                reject(error);
             }),
         );
 
@@ -132,7 +132,7 @@ export const PeopleRoomSettingsTab: VFC<{ room: Room }> = ({ room }) => {
         new Promise((_, reject) =>
             client.kick(roomId, userId).catch((error) => {
                 onError(error);
-                reject();
+                reject(error);
             }),
         );
 
