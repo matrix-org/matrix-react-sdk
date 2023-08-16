@@ -1,6 +1,6 @@
 {
     "name": "matrix-react-sdk",
-    "version": "3.77.1",
+    "version": "3.78.0",
     "description": "SDK for matrix.org using React",
     "author": "matrix.org",
     "repository": {
@@ -209,6 +209,7 @@
         "jest-mock": "^29.6.2",
         "jest-raw-loader": "^1.0.1",
         "jsqr": "^1.4.0",
+        "mailhog": "^4.16.0",
         "matrix-mock-request": "^2.5.0",
         "matrix-web-i18n": "^1.4.0",
         "mocha-junit-reporter": "^2.2.0",
