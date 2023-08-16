@@ -3782,5 +3782,10 @@
     "Failed to query public rooms": "Gagal melakukan kueri ruangan publik",
     "Your server is unsupported": "Server Anda tidak didukung",
     "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Server ini menjalankan sebuah versi Matrix yang lama. Tingkatkan ke Matrix %(version)s untuk menggunakan %(brand)s tanpa eror.",
-    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Homeserver Anda terlalu lawas dan tidak mendukung versi API minimum yang diperlukan. Silakan menghubungi pemilik server Anda, atau tingkatkan server Anda."
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Homeserver Anda terlalu lawas dan tidak mendukung versi API minimum yang diperlukan. Silakan menghubungi pemilik server Anda, atau tingkatkan server Anda.",
+    "See less": "Lihat lebih sedikit",
+    "See more": "Lihat lebih banyak",
+    "Deny": "Tolak",
+    "Asking to join": "Meminta untuk bergabung",
+    "No requests": "Tidak ada permintaan"
 }
