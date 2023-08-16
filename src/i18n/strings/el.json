@@ -229,8 +229,8 @@
     "Server may be unavailable, overloaded, or you hit a bug.": "Ο διακομιστής μπορεί να είναι μη διαθέσιμος, υπερφορτωμένος, ή να πέσατε σε ένα σφάλμα.",
     "Server unavailable, overloaded, or something else went wrong.": "Ο διακομιστής μπορεί να είναι μη διαθέσιμος, υπερφορτωμένος, ή κάτι άλλο να πήγε στραβά.",
     "This room is not recognised.": "Αυτό το δωμάτιο δεν αναγνωρίζεται.",
+    "Uploading %(filename)s": "Γίνεται αποστολή του %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
-        "zero": "Γίνεται αποστολή του %(filename)s",
         "other": "Γίνεται αποστολή του %(filename)s και %(count)s υπολοίπων",
         "one": "Γίνεται αποστολή του %(filename)s και %(count)s υπολοίπα"
     },
@@ -721,11 +721,6 @@
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "Αδυναμία κατανόησης της δοθείσας ημερομηνίας (%(inputDate)s). Προσπαθήστε να χρησιμοποιήσετε την μορφή YYYY-MM-DD.",
     "Sends the given message as a spoiler": "Στέλνει το δοθέν μήνυμα ως spoiler",
     "Setting up keys": "Ρύθμιση κλειδιών",
-    "%(spaceName)s and %(count)s others": {
-        "zero": "%(spaceName)s",
-        "other": "%(spaceName)s και άλλα %(count)s",
-        "one": "%(spaceName)s και %(count)s άλλο"
-    },
     "Some invites couldn't be sent": "Δεν ήταν δυνατή η αποστολή κάποιων προσκλήσεων",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Στάλθηκαν οι προσκλήσεις στους άλλους, αλλά δεν ήταν δυνατή η αποστολή πρόσκλησης στους παρακάτω στο <RoomName/>",
     "Custom (%(level)s)": "Προσαρμοσμένα (%(level)s)",
@@ -851,6 +846,10 @@
     "Failed to get room topic: Unable to find room (%(roomId)s": "Αποτυχία λήψης θέματος δωματίου: Αδυναμία εύρεσης δωματίου (%(roomId)s",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s kai %(space2Name)s",
     "Unrecognised room address: %(roomAlias)s": "Μη αναγνωρισμένη διεύθυνση δωματίου: %(roomAlias)s",
+    "%(spaceName)s and %(count)s others": {
+        "other": "%(spaceName)s και άλλα %(count)s",
+        "one": "%(spaceName)s και %(count)s άλλο"
+    },
     "Message didn't send. Click for info.": "Το μήνυμα δεν στάλθηκε. Κάντε κλικ για πληροφορίες.",
     "End-to-end encryption isn't enabled": "Η κρυπτογράφηση από άκρο σε άκρο δεν είναι ενεργοποιημένη",
     "Enable encryption in settings.": "Ενεργοποιήστε την κρυπτογράφηση στις ρυθμίσεις.",
@@ -2975,8 +2974,7 @@
     "Capabilities": "Δυνατότητες",
     "<%(count)s spaces>": {
         "one": "<χώρος>",
-        "other": "<%(count)s χώροι>",
-        "zero": "<empty string>"
+        "other": "<%(count)s χώροι>"
     },
     "No results found": "Δε βρέθηκαν αποτελέσματα",
     "Filter results": "Φιλτράρισμα αποτελεσμάτων",
@@ -3133,6 +3131,7 @@
     "Server Versions": "Εκδόσεις διακομιστή",
     "Client Versions": "Εκδόσεις πελάτη",
     "Send custom state event": "Αποστολή προσαρμοσμένου συμβάντος κατάστασης",
+    "<empty string>": "<empty string>",
     "Event Content": "Περιεχόμενο συμβάντος",
     "Event sent!": "Το συμβάν στάλθηκε!",
     "Failed to send event!": "Αποτυχία αποστολής συμβάντος!",
@@ -3277,10 +3276,6 @@
     },
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Ενεργοποίηση επιτάχυνσης υλικού (κάντε επανεκκίνηση του %(appName)s για να τεθεί σε ισχύ)",
     "Deactivating your account is a permanent action — be careful!": "Η απενεργοποίηση του λογαριασμού σας είναι μια μόνιμη ενέργεια — να είστε προσεκτικοί!",
-    "You will not receive push notifications on other devices until you sign back in to them.": "Δε θα λαμβάνετε ειδοποιήσεις push σε άλλες συσκευές μέχρι να συνδεθείτε ξανά σε αυτές.",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Μπορείτε επίσης να ζητήσετε από τον διαχειριστή του κεντρικού διακομιστή να τον αναβαθμίσει για να αλλάξει αυτή τη συμπεριφορά.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Εάν θέλετε να διατηρήσετε την πρόσβαση στο ιστορικό συνομιλιών σας σε κρυπτογραφημένα δωμάτια, θα πρέπει πρώτα να εξαγάγετε τα κλειδιά του δωματίου σας και να τα εισαγάγετε ξανά στη συνέχεια.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Η αλλαγή του κωδικού πρόσβασης σας σε αυτόν τον κεντρικό διακομιστή θα έχει ως αποτέλεσμα την αποσύνδεση όλων των άλλων συσκευών σας. Αυτό θα διαγράψει τα κλειδιά κρυπτογράφησης μηνυμάτων που είναι αποθηκευμένα σε αυτές και μπορεί να καταστήσει το κρυπτογραφημένο ιστορικό συνομιλιών μη αναγνώσιμο.",
     "Enable hardware acceleration": "Ενεργοποίηση επιτάχυνσης υλικού",
     "Yes, the chat timeline is displayed alongside the video.": "Ναι, το χρονοδιάγραμμα της συνομιλίας εμφανίζεται δίπλα στο βίντεο.",
     "Can I use text chat alongside the video call?": "Μπορώ να χρησιμοποιήσω τη συνομιλία κειμένου παράλληλα με τη βιντεοκλήση;",

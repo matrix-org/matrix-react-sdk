@@ -274,8 +274,8 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s is not accessible at this time.",
     "Start authentication": "Start authentication",
     "Unnamed Room": "Unnamed Room",
+    "Uploading %(filename)s": "Uploading %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
-        "zero": "Uploading %(filename)s",
         "one": "Uploading %(filename)s and %(count)s other",
         "other": "Uploading %(filename)s and %(count)s others"
     },

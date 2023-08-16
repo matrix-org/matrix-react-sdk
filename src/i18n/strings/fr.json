@@ -246,8 +246,8 @@
     "You have <a>disabled</a> URL previews by default.": "Vous avez <a>désactivé</a> les aperçus d’URL par défaut.",
     "You have <a>enabled</a> URL previews by default.": "Vous avez <a>activé</a> les aperçus d’URL par défaut.",
     "Add": "Ajouter",
+    "Uploading %(filename)s": "Envoi de %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
-        "zero": "Envoi de %(filename)s",
         "one": "Envoi de %(filename)s et %(count)s autre",
         "other": "Envoi de %(filename)s et %(count)s autres"
     },
@@ -2840,7 +2840,6 @@
     "Messaging": "Messagerie",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s et %(count)s autre",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s et %(count)s autres"
     },
     "Toggle space panel": "(Dés)activer le panneau des espaces",
@@ -3059,8 +3058,8 @@
     "Use <arrows/> to scroll": "Utilisez <arrows/> pour faire défiler",
     "Join %(roomAddress)s": "Rejoindre %(roomAddress)s",
     "Export Cancelled": "Export annulé",
+    "<empty string>": "<chaîne de caractères vide>",
     "<%(count)s spaces>": {
-        "zero": "<chaîne de caractères vide>",
         "one": "<espace>",
         "other": "<%(count)s espaces>"
     },
@@ -3238,7 +3237,6 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Vous avez été déconnecté de tous vos appareils et ne recevrez plus de notification. Pour réactiver les notifications, reconnectez-vous sur chaque appareil.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Si vous voulez garder un accès à votre historique de conversation dans les salons chiffrés, configurez la sauvegarde de clés, ou bien exportez vos clés de messages à partir de l’un de vos autres appareils avant de continuer.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "La déconnexion de vos appareils va supprimer les clés de chiffrement des messages qu’ils possèdent, rendant l’historique des conversations chiffrées illisible.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "La réinitialisation de votre mot de passe sur ce serveur d’accueil va déconnecter tous vos autres appareils. Cela va supprimer les clés de chiffrement de messages qu'ils possèdent, et probablement rendre l’historique des conversations chiffrées illisibles.",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Conseil :</b> Utilisez « %(replyInThread)s » en survolant un message.",
     "Close sidebar": "Fermer la barre latérale",
     "View List": "Voir la liste",
@@ -3261,11 +3259,7 @@
         "one": "Vu par %(count)s personne",
         "other": "Vu par %(count)s personnes"
     },
-    "You will not receive push notifications on other devices until you sign back in to them.": "Vous ne recevrez plus de notifications sur vos autres appareils jusqu’à ce que vous vous reconnectiez dessus.",
     "Your password was successfully changed.": "Votre mot de passe a été mis à jour.",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Vous pouvez également demander à l’administrateur de votre serveur d’accueil de mettre-à-jour le serveur pour changer ce comportement.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Si vous voulez garder l’accès à votre historique de conversation dans les salons chiffrés, vous devriez d’abord exporter vos clés de salon, et les réimporter par la suite.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Le changement de votre mot de passe sur ce serveur d’accueil va déconnecter tous vos autres appareils. Cela va supprimer les clés de chiffrement de messages qu'ils possèdent, et probablement rendre l’historique des conversations chiffrées illisibles.",
     "Turn on camera": "Activer la caméra",
     "Turn off camera": "Désactiver la caméra",
     "Video devices": "Périphériques vidéo",
@@ -3361,9 +3355,9 @@
     "Toggle attribution": "Changer l’attribution",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Dans %(spaceName)s et %(count)s autre espace.",
-        "zero": "Dans l’espace %(spaceName)s.",
         "other": "Dans %(spaceName)s et %(count)s autres espaces."
     },
+    "In %(spaceName)s.": "Dans l’espace %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Dans les espaces %(space1Name)s et %(space2Name)s.",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Commande développeur : oublier la session de groupe sortante actuelle et négocier une nouvelle session Olm",
     "Stop and close": "Arrêter et fermer",
@@ -3792,8 +3786,8 @@
     "Room is <strong>not encrypted 🚨</strong>": "Le salon <strong>n’est pas chiffré 🚨</strong>",
     "Room is <strong>encrypted ✅</strong>": "Le salon est <strong>chiffré ✅</strong>",
     "Notification state is <strong>%(notificationState)s</strong>": "L’état des notifications est <strong>%(notificationState)s</strong>",
+    "Room unread status: <strong>%(status)s</strong>": "Statut non-lus du salon : <strong>%(status)s</strong>",
     "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>": {
-        "zero": "Statut non-lus du salon : <strong>%(status)s</strong>",
         "other": "Statut non-lus du salon : <strong>%(status)s</strong>, total : <strong>%(count)s</strong>"
     },
     "Ended a poll": "Sondage terminé",
@@ -3971,5 +3965,9 @@
     "Cancel request": "Annuler la demande",
     "Ask to join %(roomName)s?": "Demander à venir dans %(roomName)s ?",
     "You need an invite to access this room.": "Vous avez besoin d’une invitation pour accéder à ce salon.",
-    "Failed to cancel": "Erreur lors de l’annulation"
+    "Failed to cancel": "Erreur lors de l’annulation",
+    "Failed to query public rooms": "Impossible d’interroger les salons publics",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Votre serveur d’accueil est trop ancien et ne prend pas en charge la version minimale requise de l’API. Veuillez contacter le propriétaire du serveur, ou bien mettez à jour votre serveur.",
+    "Your server is unsupported": "Votre serveur n’est pas pris en charge",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Ce serveur utilise une ancienne version de Matrix. Mettez-le à jour vers Matrix %(version)s pour utiliser %(brand)s sans erreurs."
 }

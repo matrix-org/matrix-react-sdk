@@ -2105,9 +2105,9 @@
     "Got an account? <a>Sign in</a>": "יש לך חשבון? <a> היכנס </a>",
     "Uploading %(filename)s and %(count)s others": {
         "one": "מעלה %(filename)s ו-%(count)s אחרים",
-        "zero": "מעלה %(filename)s",
         "other": "מעלה %(filename)s ו-%(count)s אחרים"
     },
+    "Uploading %(filename)s": "מעלה %(filename)s",
     "Failed to load timeline position": "טעינת מיקום ציר הזמן נכשלה",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "ניסה לטעון נקודה מסוימת בציר הזמן של החדר הזה, אך לא הצליח למצוא אותה.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "ניסיתי לטעון נקודה ספציפית בציר הזמן של החדר הזה, אך אין לך הרשאה להציג את ההודעה המדוברת.",
@@ -2388,8 +2388,8 @@
     "Failed to load.": "נכשל בטעינה.",
     "Capabilities": "יכולות",
     "Send custom state event": "שלח אירוע מצב מותאם אישית",
+    "<empty string>": "<מחרוזת ריקה>",
     "<%(count)s spaces>": {
-        "zero": "<מחרוזת ריקה>",
         "one": "<רווח>"
     },
     "Friends and family": "חברים ומשפחה",
@@ -2557,7 +2557,6 @@
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "אם ברצונכם לשמור על גישה להיסטוריית הצ'אט שלכם בחדרים מוצפנים, הגדירו גיבוי מפתחות או ייצאו את מפתחות ההודעות שלכם מאחד מהמכשירים האחרים שלכם לפני שתמשיך.",
     "Select from the options below to export chats from your timeline": "ביחרו מבין האפשרויות למטה כדי לייצא צ'אטים מציר הזמן שלכם",
     "Export Chat": "ייצוא צ'אט",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "אם אתם רוצים לשמור על גישה להיסטוריית הצ'אט שלכם בחדרים מוצפנים, עליכם לייצא תחילה את מפתחות החדר שלכם ולייבא אותם מחדש לאחר מכן.",
     "Export chat": "ייצוא צ'אט",
     "Joining the beta will reload %(brand)s.": "הצטרפות לפיתוח תטען מחדש את %(brand)s.",
     "Leaving the beta will reload %(brand)s.": "עזיבת הניסוי תטען מחדש את %(brand)s.",
@@ -2683,9 +2682,9 @@
     "You do not have permission to invite people to this space.": "אין לכם הרשאה להזמין משתתפים אחרים למרחב עבודה זה.",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "ב%(spaceName)sו%(count)s מרחבי עבודה אחרים.",
-        "zero": "במרחבי עבודה%(spaceName)s.",
         "other": "%(spaceName)sו%(count)s מרחבי עבודה אחרים."
     },
+    "In %(spaceName)s.": "במרחבי עבודה%(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
     "Search %(spaceName)s": "חיפוש %(spaceName)s",
     "sends space invaders": "שולח פולשים לחלל",
@@ -2693,7 +2692,6 @@
     "Invite to %(spaceName)s": "הזמן אל %(spaceName)s",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sו%(count)sאחרים",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)sו%(count)s אחרים"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)sו%(space2Name)s",

@@ -202,8 +202,8 @@
     "Unable to enable Notifications": "Kan meldingen niet inschakelen",
     "Unmute": "Niet dempen",
     "Unnamed Room": "Naamloze Kamer",
+    "Uploading %(filename)s": "%(filename)s wordt geüpload",
     "Uploading %(filename)s and %(count)s others": {
-        "zero": "%(filename)s wordt geüpload",
         "one": "%(filename)s en %(count)s ander worden geüpload",
         "other": "%(filename)s en %(count)s andere worden geüpload"
     },
@@ -2811,7 +2811,6 @@
     "%(senderName)s has updated the room layout": "%(senderName)s heeft de kamerindeling bijgewerkt",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s en %(count)s andere",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s en %(count)s andere"
     },
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Wij maken een veiligheidssleutel voor je aan die je ergens veilig kunt opbergen, zoals in een wachtwoordmanager of een kluis.",
@@ -3033,8 +3032,8 @@
     "This is a beta feature": "Dit is een bètafunctie",
     "Use <arrows/> to scroll": "Gebruik <arrows/> om te scrollen",
     "Feedback sent! Thanks, we appreciate it!": "Reactie verzonden! Bedankt, we waarderen het!",
+    "<empty string>": "<empty string>",
     "<%(count)s spaces>": {
-        "zero": "<empty string>",
         "one": "<space>",
         "other": "<%(count)s spaces>"
     },
@@ -3241,7 +3240,6 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Je bent afgemeld op al je apparaten en zal geen pushmeldingen meer ontvangen. Meld je op elk apparaat opnieuw aan om weer meldingen te ontvangen.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Als je toegang tot je berichten wilt behouden, stel dan sleutelback-up in of exporteer je sleutels vanaf een van je andere apparaten voordat je verder gaat.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Jouw apparaten uitloggen zal de ertoe behorende encryptiesleutels verwijderen, wat versleutelde berichten onleesbaar zal maken.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Jouw wachtwoorden veranderen op deze homeserver zal je uit al je andere apparaten uitloggen. Hierdoor zullen de encryptiesleutels van je berichten verloren gaan, wat versleutelde berichten onleesbaar zal maken.",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Tip:</b> Gebruik “%(replyInThread)s” met de muiscursor boven een bericht.",
     "Close sidebar": "Zijbalk sluiten",
     "View List": "Toon Lijst",
@@ -3261,11 +3259,7 @@
         "one": "Gezien door %(count)s persoon",
         "other": "Gezien door %(count)s mensen"
     },
-    "You will not receive push notifications on other devices until you sign back in to them.": "Je zal geen pushmeldingen ontvangen op je andere apparaten totdat je er weer op inlogt.",
     "Your password was successfully changed.": "Wachtwoord veranderen geslaagd.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Jouw wachtwoorden veranderen op deze homeserver zal je uit al uw andere apparaten uitloggen. Hierdoor zullen de encryptiesleutels van je berichten verloren gaan, wat mogelijk versleutelde berichten onleesbaar kan maken.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Als je toegang tot je versleutelde chatgeschiedenis wilt behouden kan je eerst je encryptiesleutels exporteren en ze na afloop weer herimporteren.",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Je kan ook je homeserveradministrator vragen de server te updateten om dit gedrag te veranderen.",
     "Turn on camera": "Camera inschakelen",
     "Turn off camera": "Camera uitschakelen",
     "Video devices": "Video-apparaten",
@@ -3370,9 +3364,9 @@
     "Toggle attribution": "Attributie in-/uitschakelen",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "In %(spaceName)s en %(count)s andere space.",
-        "zero": "In space %(spaceName)s.",
         "other": "In %(spaceName)s en %(count)s andere spaces."
     },
+    "In %(spaceName)s.": "In space %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "In spaces %(space1Name)s en %(space2Name)s.",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Opdracht voor ontwikkelaars: verwijdert de huidige uitgaande groepssessie en stelt nieuwe Olm-sessies in",
     "Messages in this chat will be end-to-end encrypted.": "Berichten in deze chat worden eind-tot-eind versleuteld.",

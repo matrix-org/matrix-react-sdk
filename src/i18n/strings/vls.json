@@ -861,9 +861,9 @@
     "Guest": "Gast",
     "Uploading %(filename)s and %(count)s others": {
         "other": "%(filename)s en %(count)s andere wordn ipgeloadn",
-        "zero": "%(filename)s wordt ipgeloadn",
         "one": "%(filename)s en %(count)s ander wordn ipgeloadn"
     },
+    "Uploading %(filename)s": "%(filename)s wordt ipgeloadn",
     "Could not load user profile": "Kostege ’t gebruukersprofiel nie loadn",
     "The email address linked to your account must be entered.": "’t E-mailadresse da me joun account verboundn is moet ingegeevn wordn.",
     "A new password must be entered.": "’t Moet e nieuw paswoord ingegeevn wordn.",

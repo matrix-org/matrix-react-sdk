@@ -188,8 +188,8 @@
     "Unable to enable Notifications": "Ezin izan dira jakinarazpenak gaitu",
     "Unmute": "Audioa aktibatu",
     "Unnamed Room": "Izen gabeko gela",
+    "Uploading %(filename)s": "%(filename)s igotzen",
     "Uploading %(filename)s and %(count)s others": {
-        "zero": "%(filename)s igotzen",
         "one": "%(filename)s eta beste %(count)s igotzen",
         "other": "%(filename)s eta beste %(count)s igotzen"
     },

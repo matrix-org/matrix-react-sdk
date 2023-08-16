@@ -386,9 +386,9 @@
     "Failed to load timeline position": "Caricamento posizione cronologica fallito",
     "Uploading %(filename)s and %(count)s others": {
         "other": "Invio di %(filename)s e altri %(count)s",
-        "zero": "Invio di %(filename)s",
         "one": "Invio di %(filename)s e altri %(count)s"
     },
+    "Uploading %(filename)s": "Invio di %(filename)s",
     "Sign out": "Disconnetti",
     "Success": "Successo",
     "Unable to remove contact information": "Impossibile rimuovere le informazioni di contatto",
@@ -2816,7 +2816,6 @@
     },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s e altri %(count)s",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s e altri %(count)s"
     },
     "Sorry, the poll you tried to create was not posted.": "Spiacenti, il sondaggio che hai provato a creare non è stato inviato.",
@@ -3054,8 +3053,8 @@
     },
     "Maximise": "Espandi",
     "Automatically send debug logs when key backup is not functioning": "Invia automaticamente log di debug quando il backup delle chiavi non funziona",
+    "<empty string>": "<stringa vuota>",
     "<%(count)s spaces>": {
-        "zero": "<stringa vuota>",
         "one": "<spazio>",
         "other": "<%(count)s spazi>"
     },
@@ -3263,16 +3262,11 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Hai eseguito la disconnessione da tutti i dispositivi e non riceverai più notifiche push. Per riattivare le notifiche, riaccedi su ogni dispositivo.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Se vuoi mantenere l'accesso alla cronologia della chat nelle stanze cifrate, imposta il backup delle chiavi o esporta le tue chiavi dei messaggi da un altro dispositivo prima di procedere.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "La disconnessione dai tuoi dispositivi eliminerà le chiavi di crittografia dei messaggi salvate in essi, rendendo illeggibile la cronologia delle chat cifrate.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Il ripristino della password su questo homeserver provocherà la disconnessione da tutti gli altri tuoi dispositivi. Ciò eliminerà le chiavi di crittografia dei messaggi salvate in essi e potrebbe rendere illeggibile la cronologia delle chat cifrate.",
     "Seen by %(count)s people": {
         "one": "Visto da %(count)s persona",
         "other": "Visto da %(count)s persone"
     },
-    "You will not receive push notifications on other devices until you sign back in to them.": "Non riceverai notifiche push su altri dispositivi finché non riesegui l'accesso in essi.",
     "Your password was successfully changed.": "La tua password è stata cambiata correttamente.",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Puoi anche chiedere all'amministratore del tuo homeserver di aggiornare il server per cambiare questo comportamento.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Se vuoi mantenere l'accesso alla cronologia della chat nelle stanze cifrate, dovresti prima esportare le tue chiavi della stanza e reimportarle in seguito.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Il cambio di password su questo homeserver provocherà la disconnessione da tutti gli altri tuoi dispositivi. Ciò eliminerà le chiavi di crittografia dei messaggi salvate in essi e potrebbe rendere illeggibile la cronologia delle chat cifrate.",
     "An error occurred while stopping your live location": "Si è verificato un errore fermando la tua posizione in tempo reale",
     "Enable live location sharing": "Attiva condivisione posizione in tempo reale",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Nota: si tratta di una funzionalità sperimentale che usa un'implementazione temporanea. Ciò significa che non potrai eliminare la cronologia delle posizioni e gli utenti avanzati potranno vederla anche dopo l'interruzione della tua condivisione con questa stanza.",
@@ -3362,9 +3356,9 @@
     "Toggle attribution": "Attiva/disattiva attribuzione",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "In %(spaceName)s e in %(count)s altro spazio.",
-        "zero": "Nello spazio %(spaceName)s.",
         "other": "In %(spaceName)s e in altri %(count)s spazi."
     },
+    "In %(spaceName)s.": "Nello spazio %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Negli spazi %(space1Name)s e %(space2Name)s.",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Comando sviluppatore: scarta l'attuale sessione di gruppo in uscita e imposta nuove sessioni Olm",
     "You're in": "Sei dentro",
@@ -3789,8 +3783,8 @@
     "Room is <strong>not encrypted 🚨</strong>": "La stanza <strong>non è crittografata 🚨</strong>",
     "Room is <strong>encrypted ✅</strong>": "La stanza è <strong>crittografata ✅</strong>",
     "Notification state is <strong>%(notificationState)s</strong>": "Lo stato di notifica è <strong>%(notificationState)s</strong>",
+    "Room unread status: <strong>%(status)s</strong>": "Stato \"non letto\" nella stanza: <strong>%(status)s</strong>",
     "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>": {
-        "zero": "Stato \"non letto\" nella stanza: <strong>%(status)s</strong>",
         "other": "Stato \"non letto\" nella stanza: <strong>%(status)s</strong>, conteggio: <strong>%(count)s</strong>"
     },
     "Ended a poll": "Terminato un sondaggio",
@@ -3971,5 +3965,14 @@
     "Cancel request": "Annulla richiesta",
     "Other spaces you know": "Altri spazi che conosci",
     "You need an invite to access this room.": "Ti serve un invito per entrare in questa stanza.",
-    "Failed to cancel": "Annullamento fallito"
+    "Failed to cancel": "Annullamento fallito",
+    "Failed to query public rooms": "Richiesta di stanze pubbliche fallita",
+    "Your server is unsupported": "Il tuo server non è supportato",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Questo server usa una versione più vecchia di Matrix. Aggiorna a Matrix %(version)s per usare %(brand)s senza errori.",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Il tuo homeserver è troppo vecchio e non supporta la versione API minima richiesta. Contatta il proprietario del server o aggiornalo.",
+    "See less": "Riduci",
+    "See more": "Espandi",
+    "No requests": "Nessuna richiesta",
+    "Deny": "Nega",
+    "Asking to join": "Richiesta di entrare"
 }

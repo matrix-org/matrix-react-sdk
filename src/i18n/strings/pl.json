@@ -218,8 +218,8 @@
     "Unable to enable Notifications": "Nie można włączyć powiadomień",
     "Unmute": "Wyłącz wyciszenie",
     "Unnamed Room": "Pokój bez nazwy",
+    "Uploading %(filename)s": "Przesyłanie %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
-        "zero": "Przesyłanie %(filename)s",
         "one": "Przesyłanie %(filename)s oraz %(count)s innych",
         "other": "Przesyłanie %(filename)s oraz %(count)s innych"
     },
@@ -1822,7 +1822,6 @@
     "Command error: Unable to handle slash command.": "Błąd polecenia: Nie można obsłużyć polecenia z ukośnikiem.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s i %(count)s pozostała",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s i %(count)s pozostałych"
     },
     "You cannot place calls without a connection to the server.": "Nie możesz wykonywać rozmów bez połączenia z serwerem.",
@@ -2081,9 +2080,9 @@
     "You do not have permission to invite people to this space.": "Nie masz uprawnień, by zapraszać ludzi do tej przestrzeni.",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "W %(spaceName)s i %(count)s innej przestrzeni.",
-        "zero": "W przestrzeni %(spaceName)s.",
         "other": "W %(spaceName)s i %(count)s innych przestrzeniach."
     },
+    "In %(spaceName)s.": "W przestrzeni %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "Jump to the given date in the timeline": "Przeskocz do podanej daty w linii czasu",
     "Failed to invite users to %(roomName)s": "Nie udało się zaprosić użytkowników do %(roomName)s",
@@ -2566,7 +2565,6 @@
     "The <twemoji>Twemoji</twemoji> emoji art is © <author>Twitter, Inc and other contributors</author> used under the terms of <terms>CC-BY 4.0</terms>.": "Czcionka <twemoji>Twemoji</twemoji> jest w użyciu na warunkach licencji <terms>CC-BY 4.0</terms>. <author>© Twitter, Inc i pozostali kontrybutorzy</author>.",
     "The <colr>twemoji-colr</colr> font is © <author>Mozilla Foundation</author> used under the terms of <terms>Apache 2.0</terms>.": "Czcionka <colr>twemoji-colr</colr> jest w użyciu na warunkach licencji <terms>Apache 2.0</terms>. <author>© Mozilla Foundation</author>.",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Twoje dane konta są zarządzane oddzielnie na <code>%(hostname)s</code>.",
-    "You will not receive push notifications on other devices until you sign back in to them.": "Nie otrzymasz powiadomień push na innych urządzeniach, dopóki się do nich nie zalogujesz ponownie.",
     "Your password was successfully changed.": "Twoje hasło zostało pomyślnie zmienione.",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (Status HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Wystąpił nieznany błąd podczas zmiany hasła (%(stringifiedError)s)",
@@ -2586,7 +2584,6 @@
     "Your keys are <b>not being backed up from this session</b>.": "Twoje klucze <b>nie są zapisywanie na tej sesji</b>.",
     "This backup is trusted because it has been restored on this session": "Ta kopia jest zaufana, ponieważ została przywrócona w tej sesji",
     "Master private key:": "Główny klucz prywatny:",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Zmiana hasła na tym serwerze domowym wyloguje Cię z wszystkich pozostałych urządzeń. Ta akcja usunie wszystkie klucze szyfrujące znajdujące się na nich, uniemożliwiając czytanie historii wiadomości szyfrowanych.",
     "Backing up %(sessionsRemaining)s keys…": "Tworzenie kopii zapasowej %(sessionsRemaining)s kluczy…",
     "This session is backing up your keys.": "Ta sesja tworzy kopię zapasową kluczy.",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Wystąpił błąd podczas aktualizowania Twoich preferencji powiadomień. Przełącz opcję ponownie.",
@@ -2608,8 +2605,6 @@
     "User signing private key:": "Podpisany przez użytkownika klucz prywatny:",
     "Self signing private key:": "Samo-podpisujący klucz prywatny:",
     "Error while changing password: %(error)s": "Wystąpił błąd podczas zmiany hasła: %(error)s",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Możesz również zapytać administratora serwera domowego, aby zaktualizował serwer i zmienił to zachowanie.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Jeśli chcesz zachować dostęp do swojej historii czatu w pokojach szyfrowanych, najpierw wyeksportuj klucze pokoju i zaimportuj je ponownie później.",
     "Workspace: <networkLink/>": "Obszar roboczy: <networkLink/>",
     "Give one or multiple users in this room more privileges": "Dodaj jednemu lub więcej użytkownikom więcej uprawnień",
     "Add privileged users": "Dodaj użytkowników uprzywilejowanych",
@@ -3665,8 +3660,8 @@
     "Failed to load.": "Nie udało się wczytać.",
     "Capabilities": "Możliwości",
     "Send custom state event": "Wyślij własne wydarzenie stanu",
+    "<empty string>": "<empty string>",
     "<%(count)s spaces>": {
-        "zero": "<empty string>",
         "one": "<space>",
         "other": "<%(count)s spacji>"
     },
@@ -3685,8 +3680,8 @@
     "Room is <strong>not encrypted 🚨</strong>": "Pokój nie jest <strong>szyfrowany 🚨</strong>",
     "Room is <strong>encrypted ✅</strong>": "Pokój jest <strong>szyfrowany ✅</strong>",
     "Notification state is <strong>%(notificationState)s</strong>": "Status powiadomień <strong>%(notificationState)s</strong>",
+    "Room unread status: <strong>%(status)s</strong>": "Status nieprzeczytanych wiadomości pokoju: <strong>%(status)s</strong>",
     "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>": {
-        "zero": "Status nieprzeczytanych wiadomości pokoju: <strong>%(status)s</strong>",
         "other": "Status nieprzeczytanych wiadomości pokoju: <strong>%(status)s</strong>, ilość: <strong>%(count)s</strong>"
     },
     "Room status": "Status pokoju",
@@ -3793,7 +3788,6 @@
     "Reset your password": "Resetuj swoje hasło",
     "Reset password": "Resetuj hasło",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Wylogowanie Twoich urządzeń spowoduje usunięcie wszystkich kluczy szyfrujących, które się na nich znajdują, uniemożliwiając czytanie historii wiadomości szyfrowanych.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Resetowanie hasła na tym serwerze domowym wyloguje Cię ze wszystkich urządzeń. Ta akcja usunie wszystkie klucze szyfrujące znajdujące się na nich, uniemożliwiając czytanie historii wiadomości szyfrowanych.",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Za dużo prób w krótkim odstępie czasu. Spróbuj ponownie za%(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Za dużo prób w krótkim odstępie czasu. Odczekaj trochę, zanim spróbujesz ponownie.",
     "Skip verification for now": "Pomiń weryfikację na razie",

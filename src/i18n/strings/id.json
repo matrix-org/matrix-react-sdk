@@ -921,11 +921,7 @@
     },
     "Popout widget": "Widget popout",
     "Muted Users": "Pengguna yang Dibisukan",
-    "Uploading %(filename)s and %(count)s others": {
-        "zero": "Mengunggah %(filename)s",
-        "one": "Mengunggah %(filename)s dan %(count)s lainnya",
-        "other": "Mengunggah %(filename)s dan %(count)s lainnya"
-    },
+    "Uploading %(filename)s": "Mengunggah %(filename)s",
     "Delete Widget": "Hapus Widget",
     "were banned %(count)s times": {
         "one": "dicekal",
@@ -2371,6 +2367,10 @@
     "All settings": "Semua pengaturan",
     "New here? <a>Create an account</a>": "Baru di sini? <a>Buat sebuah akun</a>",
     "Got an account? <a>Sign in</a>": "Punya sebuah akun? <a>Masuk</a>",
+    "Uploading %(filename)s and %(count)s others": {
+        "one": "Mengunggah %(filename)s dan %(count)s lainnya",
+        "other": "Mengunggah %(filename)s dan %(count)s lainnya"
+    },
     "Failed to load timeline position": "Gagal untuk memuat posisi lini masa",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Mencoba memuat titik spesifik di lini masa ruangan ini, tetapi tidak dapat menemukannya.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Mencoba memuat titik spesifik di lini masa ruangan ini, tetapi Anda tidak memiliki izin untuk menampilkan pesannya.",
@@ -2759,7 +2759,6 @@
     },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s dan %(count)s lainnya",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s dan %(count)s lainnya"
     },
     "Jump to room search": "Pergi ke pencarian ruangan",
@@ -3054,8 +3053,8 @@
         "one": "%(oneUser)s mengirim sebuah pesan tersembunyi"
     },
     "Automatically send debug logs when key backup is not functioning": "Kirim catatan pengawakutu secara otomatis ketika pencadangan kunci tidak berfungsi",
+    "<empty string>": "<string kosong>",
     "<%(count)s spaces>": {
-        "zero": "<string kosong>",
         "one": "<space>",
         "other": "<%(count)s space>"
     },
@@ -3263,16 +3262,11 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Anda telah dikeluarkan dari semua perangkat Anda dan tidak akan dapat notifikasi. Untuk mengaktifkan ulang notifikasi, masuk ulang pada setiap perangkat.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Jika Anda ingin mengakses riwayat obrolan di ruangan terenkripsi Anda, siapkan Cadangan Kunci atau ekspor kunci-kunci pesan Anda dari salah satu perangkat Anda yang lain sebelum melanjutkan.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Mengeluarkan perangkat Anda akan menghapus kunci enkripsi pesan pada perangkat, dan membuat riwayat obrolan terenkripsi tidak dapat dibaca.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Mengatur ulang kata sandi Anda pada homeserver ini akan mengeluarkan perangkat Anda yang lain. Ini akan menghapus kunci enkripsi pesan yang disimpan pada perangkat, dan membuat riwayat obrolan terenkripsi tidak dapat dibaca.",
     "Seen by %(count)s people": {
         "one": "Dilihat oleh %(count)s orang",
         "other": "Dilihat oleh %(count)s orang"
     },
-    "You will not receive push notifications on other devices until you sign back in to them.": "Anda tidak akan dapat notifikasi pada perangkat lain sampai Anda masuk ulang di perangkat lainnya.",
     "Your password was successfully changed.": "Kata sandi Anda berhasil diubah.",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Anda juga dapat menanyakan kepada admin homeserver untuk meningkatkan servernya untuk mengubah perilaku ini.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Jika Anda ingin mengakses riwayat obrolan di ruangan terenkripsi Anda pertama seharusnya ekspor kunci-kunci ruangan lalu impor ulang setelahnya.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Mengubah kata sandi Anda pada homeserver ini akan mengeluarkan perangkat Anda yang lain. Ini akan menghapus kunci enkripsi pesan yang disimpan pada perangkat, dan mungkin membuat riwayat obrolan terenkripsi tidak dapat dibaca.",
     "An error occurred while stopping your live location": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda",
     "Enable live location sharing": "Aktifkan pembagian lokasi langsung",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Mohon dicatat: ini adalah fitur uji coba menggunakan implementasi sementara. Ini berarti Anda tidak akan dapat menghapus riwayat lokasi Anda, dan pengguna tingkat lanjut akan dapat melihat riwayat lokasi Anda bahkan setelah Anda berhenti membagikan lokasi langsung Anda dengan ruangan ini.",
@@ -3361,9 +3355,9 @@
     "Toggle attribution": "Alih atribusi",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Dalam %(spaceName)s dan %(count)s space lainnya.",
-        "zero": "Dalam space %(spaceName)s.",
         "other": "Dalam %(spaceName)s dan %(count)s space lainnya."
     },
+    "In %(spaceName)s.": "Dalam space %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Perintah pengembang: Membuang sesi grup keluar saat ini dan menyiapkan sesi Olm baru",
     "Stop and close": "Berhenti dan tutup",
@@ -3786,8 +3780,8 @@
     "Secure Backup successful": "Pencadangan Aman berhasil",
     "Your keys are now being backed up from this device.": "Kunci Anda sekarang dicadangkan dari perangkat ini.",
     "Loading polls": "Memuat pemungutan suara",
+    "Room unread status: <strong>%(status)s</strong>": "Keadaan belum dibaca ruangan: <strong>%(status)s</strong>",
     "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>": {
-        "zero": "Keadaan belum dibaca ruangan: <strong>%(status)s</strong>",
         "other": "Keadaan belum dibaca ruangan: <strong>%(status)s</strong>, jumlah: <strong>%(count)s</strong>"
     },
     "Ended a poll": "Mengakhiri sebuah pemungutan suara",
@@ -3971,5 +3965,14 @@
     "You need an invite to access this room.": "Anda memerlukan undangan untuk mengakses ruangan ini.",
     "Failed to cancel": "Gagal membatalkan",
     "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Anda memerlukan akses untuk mengakses ruangan ini supaya dapat melihat atau berpartisipasi dalam percakapan. Anda dapat mengirimkan permintaan untuk bergabung di bawah.",
-    "Message (optional)": "Pesan (opsional)"
+    "Message (optional)": "Pesan (opsional)",
+    "Failed to query public rooms": "Gagal melakukan kueri ruangan publik",
+    "Your server is unsupported": "Server Anda tidak didukung",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Server ini menjalankan sebuah versi Matrix yang lama. Tingkatkan ke Matrix %(version)s untuk menggunakan %(brand)s tanpa eror.",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Homeserver Anda terlalu lawas dan tidak mendukung versi API minimum yang diperlukan. Silakan menghubungi pemilik server Anda, atau tingkatkan server Anda.",
+    "See less": "Lihat lebih sedikit",
+    "See more": "Lihat lebih banyak",
+    "Deny": "Tolak",
+    "Asking to join": "Meminta untuk bergabung",
+    "No requests": "Tidak ada permintaan"
 }

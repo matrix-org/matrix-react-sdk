@@ -247,8 +247,8 @@
     "You have <a>enabled</a> URL previews by default.": "Você <a>ativou</a> pré-visualizações de links por padrão.",
     "Add": "Adicionar",
     "Home": "Home",
+    "Uploading %(filename)s": "Enviando o arquivo %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
-        "zero": "Enviando o arquivo %(filename)s",
         "one": "Enviando o arquivo %(filename)s e %(count)s outros arquivos",
         "other": "Enviando o arquivo %(filename)s e %(count)s outros arquivos"
     },
@@ -2504,7 +2504,6 @@
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s mudou a foto da sala.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s e %(count)s outro",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s e %(count)s outros"
     },
     "%(date)s at %(time)s": "%(date)s às %(time)s",
@@ -2827,9 +2826,9 @@
     "You do not have permission to invite people to this space.": "Você não tem permissão para convidar pessoas para este espaço.",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Em %(spaceName)s e %(count)s outro espaço.",
-        "zero": "No espaço %(spaceName)s.",
         "other": "Em %(spaceName)s e %(count)s outros espaços."
     },
+    "In %(spaceName)s.": "No espaço %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "Empty room (was %(oldName)s)": "Sala vazia (era %(oldName)s)",
     "Unknown session type": "Tipo de sessão desconhecido",

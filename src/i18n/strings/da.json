@@ -486,7 +486,6 @@
     "Are you sure you want to cancel entering passphrase?": "Er du sikker på, at du vil annullere indtastning af adgangssætning?",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s og %(count)s andre",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s og %(count)s andre"
     },
     "Some invites couldn't be sent": "Nogle invitationer kunne ikke blive sendt",

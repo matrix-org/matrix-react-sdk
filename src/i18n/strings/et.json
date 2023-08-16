@@ -657,9 +657,9 @@
     "Guest": "Külaline",
     "Uploading %(filename)s and %(count)s others": {
         "other": "Laadin üles %(filename)s ning %(count)s muud faili",
-        "zero": "Laadin üles %(filename)s",
         "one": "Laadin üles %(filename)s ning veel %(count)s faili"
     },
+    "Uploading %(filename)s": "Laadin üles %(filename)s",
     "The email address linked to your account must be entered.": "Sa pead sisestama oma kontoga seotud e-posti aadressi.",
     "A new password must be entered.": "Palun sisesta uus salasõna.",
     "New passwords must match each other.": "Uued salasõnad peavad omavahel klappima.",
@@ -2808,7 +2808,6 @@
     "%(senderName)s has updated the room layout": "%(senderName)s on uuendanud jututoa välimust",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja veel %(count)s kogukond",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s ja muud %(count)s kogukonda"
     },
     "Based on %(count)s votes": {
@@ -3054,8 +3053,7 @@
     "Automatically send debug logs when key backup is not functioning": "Kui krüptovõtmete varundus ei toimi, siis automaatselt saada silumislogid arendajatele",
     "<%(count)s spaces>": {
         "other": "<%(count)s kogukonda>",
-        "one": "<kogukond>",
-        "zero": "<tühi string>"
+        "one": "<kogukond>"
     },
     "Can't edit poll": "Küsimustikku ei saa muuta",
     "Sorry, you can't edit a poll after votes have been cast.": "Vabandust, aga küsimustikku ei saa enam peale hääletamise lõppu muuta.",
@@ -3175,6 +3173,7 @@
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s ei saanud asukohta tuvastada. Palun luba vastavad õigused brauseri seadistustes.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s toimib nutiseadme veebibrauseris kastseliselt. Parima kasutajakogemuse ja uusima funktsionaalsuse jaoks kasuta meie rakendust.",
     "Force complete": "Sunni lõpetama",
+    "<empty string>": "<tühi string>",
     "Call": "Helista",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Astumisel jututuppa või liitumisel kogukonnaga tekkis viga %(errcode)s. Kui sa arvad, et sellise põhjusega viga ei tohiks tekkida, siis palun <issueLink>koosta veateade</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Proovi hiljem uuesti või küsi jututoa või kogukonna haldurilt, kas sul on ligipääs olemas.",
@@ -3265,14 +3264,9 @@
         "one": "Seda nägi %(count)s lugeja",
         "other": "Seda nägid %(count)s lugejat"
     },
-    "You will not receive push notifications on other devices until you sign back in to them.": "Sa ei saa teistes seadetes tõuketeavitusi enne, kui sa seal uuesti sisse logid.",
     "Your password was successfully changed.": "Sinu salasõna muutmine õnnestus.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Kui sa soovid ligipääsu varasematele krüptitud vestlustele, palun seadista võtmete varundus või enne jätkamist ekspordi mõnest seadmest krüptovõtmed.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Kõikide sinu seadmete võrgust välja logimine kustutab ka nendes salvestatud krüptovõtmed ja sellega muutuvad ka krüptitud vestlused loetamatuteks.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Selles koduserveris sinu kasutajakonto salasõna lähtestamine põhjustab kõikide sinu muude seadmete automaatse väljalogimise. Samaga kustutatakse ka krüptitud sõnumite võtmed ning varasemad krüptitud sõnumid muutuvad loetamatuteks.",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Sa võid ka paluda, et sinu koduserveri haldaja uuendaks serveritarkvara ja väldiks kirjeldatud olukorra tekkimist.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Kui sa soovid, et krüptitud vestluste sõnumid oleks ka hiljem loetavad, siis esmalt ekspordi kõik krüptovõtmed ning hiljem impordi nad tagasi.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Selles koduserveris oma kasutajakonto salasõna muutmine põhjustab kõikide sinu muude seadmete automaatse väljalogimise. Samaga kustutatakse ka krüptitud sõnumite võtmed ning varasemad krüptitud sõnumid muutuvad loetamatuteks.",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Palun arvesta järgnevaga: see katseline funktsionaalsus kasutab ajutist lahendust. See tähendab, et sa ei saa oma asukoha jagamise ajalugu kustutada ning heade arvutioskustega kasutajad saavad näha sinu asukohta ka siis, kui sa oled oma asukoha jagamise selles jututoas lõpetanud.",
     "An error occurred while stopping your live location": "Sinu asukoha reaalajas jagamise lõpetamisel tekkis viga",
     "Enable live location sharing": "Luba asukohta jagada reaalajas",
@@ -3359,9 +3353,9 @@
     "Enter fullscreen": "Lülita täisekraanivaade sisse",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Kogukonnas %(spaceName)s ja veel %(count)s's kogukonnas.",
-        "zero": "Kogukonnas %(spaceName)s.",
         "other": "Kogukonnas %(spaceName)s ja %(count)s's muus kogukonnas."
     },
+    "In %(spaceName)s.": "Kogukonnas %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Kogukondades %(space1Name)s ja %(space2Name)s.",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Arendaja toiming: Lõpetab kehtiva väljuva rühmasessiooni ja seadistab uue Olm sessiooni",
     "Stop and close": "Peata ja sulge",
@@ -3791,8 +3785,8 @@
     "Room directory": "Jututubade loend",
     "Show NSFW content": "Näita töökeskkonnas mittesobilikku sisu",
     "Notification state is <strong>%(notificationState)s</strong>": "Teavituste olek: <strong>%(notificationState)s</strong>",
+    "Room unread status: <strong>%(status)s</strong>": "Lugemata sõnumite olek jututoas: <strong>%(status)s</strong>",
     "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>": {
-        "zero": "Lugemata sõnumite olek jututoas: <strong>%(status)s</strong>",
         "other": "Lugemata sõnumite olek jututoas: <strong>%(status)s</strong>, kokku: <strong>%(count)s</strong>"
     },
     "Ended a poll": "Lõpetas küsitluse",
@@ -3939,7 +3933,8 @@
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Sõnumid siin jututoas on läbivalt krüptitud. Kui uued kasutajad liituvad, siis klõpsides nende tunnuspilti saad neid verifitseerida.",
     "Your profile picture URL": "Sinu tunnuspildi URL",
     "%(severalUsers)schanged their profile picture %(count)s times": {
-        "other": "Mitu kasutajat %(severalUsers)s muutsid oma tunnuspilti %(count)s korda"
+        "other": "Mitu kasutajat %(severalUsers)s muutsid oma tunnuspilti %(count)s korda",
+        "one": "%(severalUsers)s kasutajat muutsid oma profiilipilti"
     },
     "Anyone can request to join, but admins or moderators need to grant access. You can change this later.": "Kõik võivad liituda, kuid jututoa haldur või moderaator peab eelnevalt ligipääsu kinnitama. Sa saad seda hiljem muuta.",
     "Thread Root ID: %(threadRootId)s": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
@@ -3952,7 +3947,8 @@
     "Mark all messages as read": "Märgi kõik sõnumid loetuks",
     "Reset to default settings": "Lähtesta kõik seadistused",
     "%(oneUser)schanged their profile picture %(count)s times": {
-        "other": "Kasutaja %(oneUser)s muutis oma tunnuspilti %(count)s korda"
+        "other": "Kasutaja %(oneUser)s muutis oma tunnuspilti %(count)s korda",
+        "one": "%(oneUser)s muutis oma profiilipilti"
     },
     "User read up to (m.read.private): ": "Kasutaja luges kuni sõnumini (m.read.private): ",
     "See history": "Vaata ajalugu",
@@ -3969,5 +3965,9 @@
     "Request access": "Küsi ligipääsu",
     "Cancel request": "Tühista liitumissoov",
     "Your request to join is pending.": "Sinu liitumissoov on ootel.",
-    "Request to join sent": "Ligipääsu päring on saadetud"
+    "Request to join sent": "Ligipääsu päring on saadetud",
+    "Failed to query public rooms": "Avalike jututubade tuvastamise päring ei õnnestunud",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "See server kasutab Matrixi vanemat versiooni. Selleks, et %(brand)s'i kasutamisel vigu ei tekiks palun uuenda serverit nii, et kasutusel oleks Matrixi %(version)s.",
+    "Your server is unsupported": "Sinu server ei ole toetatud",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Sinu koduserver on liiga vana ega toeta vähimat nõutavat API versiooni. Lisateavet saad oma serveri haldajalt või kui ise oled haldaja, siis palun uuenda serverit."
 }

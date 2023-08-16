@@ -247,8 +247,8 @@
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s hat das Raumbild zu <img/> geändert",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s hat das Raumbild von %(roomName)s geändert",
     "Add": "Hinzufügen",
+    "Uploading %(filename)s": "%(filename)s wird hochgeladen",
     "Uploading %(filename)s and %(count)s others": {
-        "zero": "%(filename)s wird hochgeladen",
         "one": "%(filename)s und %(count)s weitere Dateien werden hochgeladen",
         "other": "%(filename)s und %(count)s weitere Dateien werden hochgeladen"
     },
@@ -1212,7 +1212,7 @@
     "Session ID:": "Sitzungs-ID:",
     "Message search": "Nachrichtensuche",
     "Cross-signing": "Quersignierung",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Dieser Raum verbindet Nachrichten mit den folgenden Plattformen. <a>Mehr erfahren.</a>",
+    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Dieser Raum leitet Nachrichten von/an folgende(n) Plattformen weiter. <a>Mehr erfahren.</a>",
     "Bridges": "Brücken",
     "Uploaded sound": "Hochgeladener Ton",
     "Upgrade this room to the recommended room version": "Raum auf die empfohlene Raumversion aktualisieren",
@@ -2318,8 +2318,8 @@
     "Failed to create initial space rooms": "Fehler beim Initialisieren des Space",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Du bist die einzige Person im Raum. Sobald du ihn verlässt, wird niemand mehr hineingelangen, auch du nicht.",
     "Edit settings relating to your space.": "Einstellungen vom Space bearbeiten.",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Wenn du alles zurücksetzt, gehen alle verifizierten Anmeldungen, Benutzer und vergangenen Nachrichten verloren.",
-    "Only do this if you have no other device to complete verification with.": "Verwende es nur, wenn du kein Gerät, mit dem du dich verifizieren, kannst bei dir hast.",
+    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Wenn du alles zurücksetzt, beginnst du ohne verifizierte Sitzungen und Benutzende von Neuem und siehst eventuell keine alten Nachrichten.",
+    "Only do this if you have no other device to complete verification with.": "Verwende es nur, wenn du kein Gerät, mit dem du dich verifizieren kannst, bei dir hast.",
     "Reset everything": "Alles zurücksetzen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
     "View message": "Nachricht anzeigen",
@@ -2742,7 +2742,7 @@
     "Yours, or the other users' internet connection": "Die Internetverbindung von dir oder dem anderen Nutzer",
     "The homeserver the user you're verifying is connected to": "Der Heim-Server der Person, die du verifizierst",
     "You do not have permission to start polls in this room.": "Du bist nicht berechtigt, Umfragen in diesem Raum zu beginnen.",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Dieser Raum verbindet Nachrichten nicht mit anderen Plattformen. <a>Mehr erfahren.</a>",
+    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Dieser Raum leitet keine Nachrichten von/an andere(n) Plattformen weiter. <a>Mehr erfahren.</a>",
     "Use high contrast": "Hohen Kontrast verwenden",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Dieser Raum ist Teil von Spaces von denen du kein Administrator bist. In diesen Räumen wird der alte Raum weiter angezeigt werden, aber Personen werden aufgefordert werden, dem neuen Raum beizutreten.",
     "Rename": "Umbenennen",
@@ -2820,7 +2820,6 @@
     "Moderation": "Moderation",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s und %(count)s anderer",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s und %(count)s andere"
     },
     "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "Teile Daten anonymisiert um uns zu helfen Probleme zu identifizieren. Nichts persönliches. Keine Dritten. <LearnMoreLink>Mehr dazu hier</LearnMoreLink>",
@@ -3044,8 +3043,8 @@
     "Open thread": "Thread anzeigen",
     "Search Dialog": "Suchdialog",
     "Join %(roomAddress)s": "%(roomAddress)s betreten",
+    "<empty string>": "<Leere Zeichenkette>",
     "<%(count)s spaces>": {
-        "zero": "<Leere Zeichenkette>",
         "one": "<Leerzeichen>",
         "other": "<%(count)s Leerzeichen>"
     },
@@ -3187,15 +3186,11 @@
     "%(members)s and more": "%(members)s und weitere",
     "View older version of %(spaceName)s.": "Alte Version von %(spaceName)s anzeigen.",
     "Upgrade this space to the recommended room version": "Space auf die empfohlene Version aktualisieren",
-    "You will not receive push notifications on other devices until you sign back in to them.": "Du wirst auf anderen Geräten keine Push-Benachrichtigungen erhalten, bis du dich dort erneut anmeldest.",
     "Your password was successfully changed.": "Dein Passwort wurde erfolgreich geändert.",
     "Confirm signing out these devices": {
         "one": "Abmelden des Geräts bestätigen",
         "other": "Abmelden dieser Geräte bestätigen"
     },
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Du kannst auch deine Heim-Server-Administration bitten, diese Einstellung zu ändern.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Wenn du Zugriff auf die Nachrichten behalten willst, musst du die Schlüssel zuerst exportieren und dann erneut importieren.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Wenn du dein Passwort änderst, werden alle deine anderen Geräte abgemeldet. Wenn auf diesen Ende-zu-Ende-Schlüssel gespeichert sind, kann der Verlauf deiner verschlüsselten Unterhaltungen verloren gehen.",
     "Developer tools": "Entwicklungswerkzeuge",
     "Turn on camera": "Kamera aktivieren",
     "Turn off camera": "Kamera deaktivieren",
@@ -3252,7 +3247,6 @@
     "Next recently visited room or space": "Nächster kürzlich besuchter Raum oder Space",
     "Previous recently visited room or space": "Vorheriger kürzlich besuchter Raum oder Space",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Du wurdest von allen Geräten abgemeldet und erhältst keine Push-Benachrichtigungen mehr. Um Benachrichtigungen wieder zu aktivieren, melde dich auf jedem Gerät erneut an.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Wenn du dein Passwort zurücksetzt, werden all deine anderen Geräte abgemeldet. Wenn auf diesen Ende-zu-Ende-Schlüssel gespeichert sind, kann der Verlauf deiner verschlüsselten Unterhaltungen verloren gehen.",
     "Event ID: %(eventId)s": "Event-ID: %(eventId)s",
     "Threads help keep your conversations on-topic and easy to track.": "Threads helfen dabei, dass deine Konversationen beim Thema und leicht nachverfolgbar bleiben.",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Deine Nachricht wurde nicht gesendet, weil dieser Heim-Server von dessen Administration gesperrt wurde. Bitte <a>kontaktiere deine Dienstadministration</a>, um den Dienst weiterzunutzen.",
@@ -3401,9 +3395,9 @@
     "You made it!": "Geschafft!",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Im Space %(spaceName)s und %(count)s weiteren Spaces.",
-        "zero": "Im Space %(spaceName)s.",
         "other": "In %(spaceName)s und %(count)s weiteren Spaces."
     },
+    "In %(spaceName)s.": "Im Space %(spaceName)s.",
     "Download %(brand)s": "%(brand)s herunterladen",
     "Find and invite your community members": "Finde deine Community-Mitglieder und lade sie ein",
     "Get stuff done by finding your teammates": "Finde dein Team und werdet produktiv",
@@ -3794,8 +3788,8 @@
     "Room is <strong>not encrypted 🚨</strong>": "Raum ist <strong>nicht verschlüsselt 🚨</strong>",
     "Room is <strong>encrypted ✅</strong>": "Raum ist <strong>verschlüsselt ✅</strong>",
     "Notification state is <strong>%(notificationState)s</strong>": "Benachrichtigungsstand ist <strong>%(notificationState)s</strong>",
+    "Room unread status: <strong>%(status)s</strong>": "Ungelesen-Status im Raum: <strong>%(status)s</strong>",
     "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>": {
-        "zero": "Ungelesen-Status im Raum: <strong>%(status)s</strong>",
         "other": "Ungelesen-Status im Raum: <strong>%(status)s</strong>, Anzahl: <strong>%(count)s</strong>"
     },
     "Identity server is <code>%(identityServerUrl)s</code>": "Identitäts-Server ist <code>%(identityServerUrl)s</code>",
@@ -3971,5 +3965,14 @@
     "Request access": "Beitrittsanfrage stellen",
     "Request to join sent": "Beitrittsanfrage gestellt",
     "Your request to join is pending.": "Deine Beitrittsanfrage wurde noch nicht bearbeitet.",
-    "Cancel request": "Anfrage abbrechen"
+    "Cancel request": "Anfrage abbrechen",
+    "Failed to query public rooms": "Abfrage öffentlicher Räume fehlgeschlagen",
+    "Your server is unsupported": "Dein Server wird nicht unterstützt",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Dieser Server nutzt eine ältere Matrix-Version. Aktualisiere auf Matrix %(version)s, um %(brand)s fehlerfrei nutzen zu können.",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Dein Heim-Server ist zu alt und unterstützt nicht die benötigte API-Version. Bitte kontaktiere deine Server-Administration oder aktualisiere deinen Server.",
+    "Deny": "Ablehnen",
+    "No requests": "Keine Anfragen",
+    "Asking to join": "Beitrittsanfragen",
+    "See less": "Weniger",
+    "See more": "Mehr"
 }

@@ -141,8 +141,8 @@
     "Unable to verify email address.": "ไม่สามารถยืนยันที่อยู่อีเมล",
     "Unban": "ปลดแบน",
     "Unable to enable Notifications": "ไม่สามารถเปิดใช้งานการแจ้งเตือน",
+    "Uploading %(filename)s": "กำลังอัปโหลด %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
-        "zero": "กำลังอัปโหลด %(filename)s",
         "one": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์",
         "other": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์"
     },

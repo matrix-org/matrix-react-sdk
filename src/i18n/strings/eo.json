@@ -372,9 +372,9 @@
     "Failed to load timeline position": "Malsukcesis enlegi lokon en historio",
     "Uploading %(filename)s and %(count)s others": {
         "other": "Alŝutante dosieron %(filename)s kaj %(count)s aliajn",
-        "zero": "Alŝutante dosieron %(filename)s",
         "one": "Alŝutante dosieron %(filename)s kaj %(count)s alian"
     },
+    "Uploading %(filename)s": "Alŝutante dosieron %(filename)s",
     "Sign out": "Adiaŭi",
     "Success": "Sukceso",
     "Unable to remove contact information": "Ne povas forigi kontaktajn informojn",
@@ -2773,12 +2773,11 @@
     "You do not have permission to invite people to this space.": "Vi ne havas permeson inviti personojn al ĉi tiu aro.",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "En %(spaceName)s kaj %(count)s alia aro.",
-        "zero": "En aro %(spaceName)s.",
         "other": "En %(spaceName)s kaj %(count)s aliaj aroj."
     },
+    "In %(spaceName)s.": "En aro %(spaceName)s.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s kaj %(count)s alia",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s kaj %(count)s aliaj"
     },
     "In spaces %(space1Name)s and %(space2Name)s.": "En aroj %(space1Name)s kaj %(space2Name)s.",

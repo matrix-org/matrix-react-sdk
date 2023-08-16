@@ -375,9 +375,9 @@
     "Failed to load timeline position": "Fallo ao cargar posición da liña temporal",
     "Uploading %(filename)s and %(count)s others": {
         "other": "Subindo %(filename)s e %(count)s máis",
-        "zero": "Subindo %(filename)s",
         "one": "Subindo %(filename)s e %(count)s máis"
     },
+    "Uploading %(filename)s": "Subindo %(filename)s",
     "Sign out": "Saír",
     "Failed to change password. Is your password correct?": "Fallo ao cambiar o contrasinal. É correcto o contrasinal?",
     "Success": "Parabéns",
@@ -2816,7 +2816,6 @@
     },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s e %(count)s outro",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s e outros %(count)s"
     },
     "Sorry, the poll you tried to create was not posted.": "A enquisa que ías publicar non se puido publicar.",
@@ -3036,8 +3035,8 @@
     "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "Grazas por probar a beta, entra en detalles canto queiras para así axudarnos a mellorala.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
     "Maximise": "Maximizar",
+    "<empty string>": "<cadea baleira>",
     "<%(count)s spaces>": {
-        "zero": "<cadea baleira>",
         "one": "<spazo>",
         "other": "<%(count)s espazos>"
     },
@@ -3263,16 +3262,11 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Pechaches a sesión en tódolos dispositivos e non recibirás notificacións push. Para reactivalas notificacións volve a acceder en cada dispositivo.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Se queres manter o acceso ao historial de conversas en salas cifradas, configura a Copia de Apoio das Chaves ou exporta as chaves das mensaxes desde un dos teus dispositivos antes de continuar.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Ao pechar sesión nos teus dispositivos eliminarás as chaves de cifrado de mensaxes gardadas neles, facendo ilexible o historial de conversas cifrado.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "A restablecer o teu contrasinal neste servidor pecharás a sesión en tódolos teus dispositivos. Esto eliminará as chaves de cifrado das mensaxes gardadas neles, facendo ilexible o historial de conversas.",
     "Seen by %(count)s people": {
         "one": "Visto por %(count)s persoa",
         "other": "Visto por %(count)s persoas"
     },
-    "You will not receive push notifications on other devices until you sign back in to them.": "Non recibirás notificacións push noutros dispositivos ata que volvas a acceder desde eles.",
     "Your password was successfully changed.": "Cambiouse correctamente o contrasinal.",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Tamén podes pedirlle á administración do teu servidor que actualice o servidor para cambiar este comportamento.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Se desexas manter o acceso ao teu historial en salas cifradas primeiro debes exportar as túas chaves da sala e volver a importalas posteriormente.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Ao cambiar o contrasinal no servidor de inicio pecharás a sesión nos teus outros dispositivos. Esto eliminará as chaves de cifrado de mensaxes gardadas neles, e fará ilexible o historial de conversas cifradas.",
     "An error occurred while stopping your live location": "Algo fallou ao deter a compartición da localización en directo",
     "Enable live location sharing": "Activar a compartición da localización",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Ten en conta que ésta é unha característica en probas cunha implementación temporal. Esto significa que non poderás borrar o teu historial de localización, e as usuarias más instruídas poderán ver o teu historial de localización incluso despois de que deixes de compartir a túa localización nesta sala.",
@@ -3361,9 +3355,9 @@
     "Toggle attribution": "Cambiar atribución",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "No %(spaceName)s e %(count)s outro espazo.",
-        "zero": "No espazo %(spaceName)s.",
         "other": "No espazo %(spaceName)s e %(count)s outros espazos."
     },
+    "In %(spaceName)s.": "No espazo %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Nos espazos %(space1Name)s e %(space2Name)s.",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Comando de desenvolvemento: descarta a actual sesión en grupo e crea novas sesións Olm",
     "Stop and close": "Deter e pechar",

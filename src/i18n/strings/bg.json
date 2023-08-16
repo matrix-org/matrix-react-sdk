@@ -383,9 +383,9 @@
     "Failed to load timeline position": "Неуспешно зареждане на позицията в хронологията",
     "Uploading %(filename)s and %(count)s others": {
         "other": "Качване на %(filename)s и %(count)s други",
-        "zero": "Качване на %(filename)s",
         "one": "Качване на %(filename)s и %(count)s друг"
     },
+    "Uploading %(filename)s": "Качване на %(filename)s",
     "Success": "Успешно",
     "<not supported>": "<не се поддържа>",
     "Import E2E room keys": "Импортирай E2E ключове",

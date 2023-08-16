@@ -179,8 +179,8 @@
     "Unable to enable Notifications": "Az értesítések engedélyezése sikertelen",
     "Unmute": "Némítás visszavonása",
     "Unnamed Room": "Névtelen szoba",
+    "Uploading %(filename)s": "%(filename)s feltöltése",
     "Uploading %(filename)s and %(count)s others": {
-        "zero": "%(filename)s feltöltése",
         "one": "%(filename)s és még %(count)s db másik feltöltése",
         "other": "%(filename)s és még %(count)s db másik feltöltése"
     },
@@ -2816,7 +2816,6 @@
     },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s és még %(count)s másik",
-        "zero": "%(spaceName)s",
         "other": "%(spaceName)s és még %(count)s másik"
     },
     "Sorry, the poll you tried to create was not posted.": "Sajnos a szavazás amit készített nem lett elküldve.",
@@ -3054,8 +3053,8 @@
     "Maximise": "Teljes méret",
     "Automatically send debug logs when key backup is not functioning": "Hibakeresési naplók automatikus küldése, ha a kulcsmentés nem működik",
     "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "Köszönjük, hogy kipróbálja a béta programunkat, hogy fejleszthessünk, adjon olyan részletes visszajelzést, amennyire csak lehet.",
+    "<empty string>": "<üres karakterek>",
     "<%(count)s spaces>": {
-        "zero": "<üres karakterek>",
         "other": "<%(count)s szóköz>",
         "one": "<szóköz>"
     },
@@ -3262,17 +3261,12 @@
         "one": "%(count)s ember látta",
         "other": "%(count)s ember látta"
     },
-    "You will not receive push notifications on other devices until you sign back in to them.": "Addig nem fog leküldéses értesítéseket kapni a többi eszközön, amíg újra be nem jelentkezik rajtuk.",
     "Your password was successfully changed.": "A jelszó sikeresen megváltozott.",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Az összes eszközéről kijelentkezett és leküldéses értesítéseket sem fog kapni. Az értesítések újbóli engedélyezéséhez újra be kell jelentkezni az egyes eszközökön.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Ha szeretné megtartani a hozzáférést a titkosított szobákban lévő csevegésekhez, állítson be Kulcs mentést vagy exportálja ki a kulcsokat valamelyik eszközéről mielőtt továbblép.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "A kijelentkezéssel az üzeneteket titkosító kulcsokat az eszközök törlik magukról ami elérhetetlenné teheti a régi titkosított csevegéseket.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "A Matrix-kiszolgálón a jelszavának megváltoztatása azt eredményezi, hogy minden eszközön kijelentkezik. Ezzel az üzeneteket titkosító kulcsokat az eszközök törlik magukról, ami elérhetetlenné teheti a régi titkosított csevegéseket.",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Azok a régi üzenetek amiket az emberek már megkaptak továbbra is láthatóak maradnak, mint az e-mailek amiket régebben küldött. Szeretné elrejteni az üzeneteit azon emberek elől aki ez után lépnek be a szobába?",
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Az azonosítási kiszolgálóról törlésre kerül: a barátai többé nem találják meg az e-mail-címe vagy a telefonszáma alapján",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "A viselkedés megváltoztatásához megkérheti a Matrix-kiszolgáló rendszergazdáját, hogy frissítse a kiszolgálót.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Ha meg szeretné tartani a hozzáférést a titkosított csevegésekhez, akkor először exportálja ki a kulcsokat, majd importálja újra azokat.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "A Matrix-kiszolgálón a jelszavának megváltoztatása azt eredményezi, hogy az összes eszközön kijelentkezik. Ezzel az eszközök törlik magukról az üzeneteket titkosító kulcsokat, ami olvashatatlanná teheti a régi titkosított csevegéseket.",
     "To view %(roomName)s, you need an invite": "A %(roomName)s megjelenítéséhez meghívó szükséges",
     "Private room": "Privát szoba",
     "Video room": "Videó szoba",
@@ -3370,9 +3364,9 @@
     "Toggle attribution": "Forrásmegjelölés be/ki",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Itt: %(spaceName)s és %(count)s másik térben.",
-        "zero": "Ebben a térben: %(spaceName)s.",
         "other": "Itt: %(spaceName)s és %(count)s másik térben."
     },
+    "In %(spaceName)s.": "Ebben a térben: %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Ezekben a terekben: %(space1Name)s és %(space2Name)s.",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Fejlesztői parancs: Eldobja a jelenlegi kimenő csoport kapcsolatot és új Olm munkamenetet hoz létre",
     "Send your first message to invite <displayName/> to chat": "Küldj egy üzenetet ahhoz, hogy meghívd <displayName/> felhasználót",
@@ -3789,8 +3783,8 @@
     "Room is <strong>not encrypted 🚨</strong>": "A szoba <strong>nincs titkosítva 🚨</strong>",
     "Room is <strong>encrypted ✅</strong>": "A szoba <strong>titkosított ✅</strong>",
     "Notification state is <strong>%(notificationState)s</strong>": "Értesítés állapot: <strong>%(notificationState)s</strong>",
+    "Room unread status: <strong>%(status)s</strong>": "Szoba olvasatlan állapota: <strong>%(status)s</strong>",
     "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>": {
-        "zero": "Szoba olvasatlan állapota: <strong>%(status)s</strong>",
         "other": "Szoba olvasatlan állapota: <strong>%(status)s</strong>, darabszám: <strong>%(count)s</strong>"
     },
     "Ended a poll": "Lezárta a szavazást",

@@ -344,9 +344,9 @@
     "Failed to load timeline position": "Nepodarilo sa načítať pozíciu na časovej osi",
     "Uploading %(filename)s and %(count)s others": {
         "other": "Nahrávanie %(filename)s a %(count)s ďalších súborov",
-        "zero": "Nahrávanie %(filename)s",
         "one": "Nahrávanie %(filename)s a %(count)s ďalší súbor"
     },
+    "Uploading %(filename)s": "Nahrávanie %(filename)s",
     "Always show message timestamps": "Vždy zobrazovať časovú značku správ",
     "Show timestamps in 12 hour format (e.g. 2:30pm)": "Pri zobrazovaní časových značiek používať 12 hodinový formát (napr. 2:30pm)",
     "Enable automatic language detection for syntax highlighting": "Povoliť automatickú detekciu jazyka pre zvýraznenie syntaxe",
@@ -1528,11 +1528,6 @@
     "%(senderName)s banned %(targetName)s: %(reason)s": "%(senderName)s zakázal používateľa %(targetName)s: %(reason)s",
     "%(targetName)s accepted an invitation": "%(targetName)s prijal/a pozvanie",
     "Effects": "Efekty",
-    "%(spaceName)s and %(count)s others": {
-        "zero": "%(spaceName)s",
-        "one": "%(spaceName)s a %(count)s ďalší",
-        "other": "%(spaceName)s a %(count)s ďalší"
-    },
     "You cannot place calls in this browser.": "V tomto prehliadači nie je možné uskutočňovať hovory.",
     "Calls are unsupported": "Volania nie sú podporované",
     "You're already in a call with this person.": "S touto osobou už hovor prebieha.",
@@ -2483,6 +2478,10 @@
     "%(senderName)s removed their display name (%(oldDisplayName)s)": "%(senderName)s odstránil svoje zobrazované meno (%(oldDisplayName)s)",
     "Converts the DM to a room": "Premení priamu správu na miestnosť",
     "Converts the room to a DM": "Premení miestnosť na priamu správu",
+    "%(spaceName)s and %(count)s others": {
+        "one": "%(spaceName)s a %(count)s ďalší",
+        "other": "%(spaceName)s a %(count)s ďalší"
+    },
     "Some invites couldn't be sent": "Niektoré pozvánky nebolo možné odoslať",
     "%(date)s at %(time)s": "%(date)s o %(time)s",
     "Page Down": "Page Down",
@@ -2925,8 +2924,8 @@
     "Move left": "Presun doľava",
     "The export was cancelled successfully": "Export bol úspešne zrušený",
     "Size can only be a number between %(min)s MB and %(max)s MB": "Veľkosť môže byť len medzi %(min)s MB a %(max)s MB",
+    "<empty string>": "<prázdny reťazec>",
     "<%(count)s spaces>": {
-        "zero": "<prázdny reťazec>",
         "one": "<priestor>",
         "other": "<%(count)s priestorov>"
     },
@@ -3267,12 +3266,7 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Boli ste odhlásení zo všetkých zariadení a už nebudete dostávať okamžité oznámenia. Ak chcete oznámenia znovu povoliť, prihláste sa znova na každom zariadení.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Ak si chcete zachovať prístup k histórii konverzácie v zašifrovaných miestnostiach, pred pokračovaním nastavte zálohovanie kľúčov alebo exportujte kľúče správ z niektorého z vašich ďalších zariadení.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Odhlásenie zariadení vymaže kľúče na šifrovanie správ, ktoré sú v nich uložené, čím sa história zašifrovaných konverzácií stane nečitateľnou.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Obnovenie hesla na tomto domovskom serveri spôsobí odhlásenie všetkých vašich zariadení. Tým sa odstránia kľúče na šifrovanie správ, ktoré sú v nich uložené, čím sa história zašifrovaných rozhovorov stane nečitateľnou.",
-    "You will not receive push notifications on other devices until you sign back in to them.": "Na ostatných zariadeniach nebudete dostávať push oznámenia, kým sa do nich opäť neprihlásite.",
     "Your password was successfully changed.": "Vaše heslo bolo úspešne zmenené.",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Môžete tiež požiadať správcu domovského servera o aktualizáciu servera, aby sa toto správanie zmenilo.",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Ak si chcete zachovať prístup k histórii konverzácie v zašifrovaných miestnostiach, mali by ste najprv exportovať kľúče od miestností a potom ich znova importovať.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Zmena hesla na tomto domovskom serveri spôsobí odhlásenie všetkých ostatných zariadení. Tým sa odstránia kľúče na šifrovanie správ, ktoré sú na nich uložené, a môže sa stať, že história zašifrovaných rozhovorov nebude čitateľná.",
     "An error occurred while stopping your live location": "Pri zastavovaní zdieľania polohy v reálnom čase došlo k chybe",
     "Enable live location sharing": "Povoliť zdieľanie polohy v reálnom čase",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Upozornenie: ide o funkciu laboratórií, ktorá sa používa dočasne. To znamená, že nebudete môcť vymazať históriu svojej polohy a pokročilí používatelia budú môcť vidieť históriu vašej polohy aj po tom, ako prestanete zdieľať svoju živú polohu s touto miestnosťou.",
@@ -3361,9 +3355,9 @@
     "Toggle attribution": "Prepínanie atribútu",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "V %(spaceName)s a v %(count)s ďalšom priestore.",
-        "zero": "V priestore %(spaceName)s.",
         "other": "V %(spaceName)s a %(count)s ďalších priestoroch."
     },
+    "In %(spaceName)s.": "V priestore %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "V priestoroch %(space1Name)s a %(space2Name)s.",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Príkaz pre vývojárov: Zruší aktuálnu reláciu odchádzajúcej skupiny a vytvorí nové relácie Olm",
     "Stop and close": "Zastaviť a zavrieť",
@@ -3789,8 +3783,8 @@
     "Room is <strong>not encrypted 🚨</strong>": "Miestnosť <strong>nie je šifrovaná 🚨</strong>",
     "Room is <strong>encrypted ✅</strong>": "Miestnosť je <strong>šifrovaná ✅</strong>",
     "Notification state is <strong>%(notificationState)s</strong>": "Stav oznámenia je <strong>%(notificationState)s</strong>",
+    "Room unread status: <strong>%(status)s</strong>": "Stav neprečítaných v miestnosti: <strong>%(status)s</strong>",
     "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>": {
-        "zero": "Stav neprečítaných v miestnosti: <strong>%(status)s</strong>",
         "other": "Stav neprečítaných v miestnosti: <strong>%(status)s</strong>, počet: <strong>%(count)s</strong>"
     },
     "Ended a poll": "Ukončil anketu",
@@ -3936,7 +3930,8 @@
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Správy v tejto miestnosti sú šifrované od vás až k príjemcovi. Keď sa ľudia pridajú, môžete ich overiť v ich profile, stačí len ťuknúť na ich profilový obrázok.",
     "Your profile picture URL": "Vaša URL adresa profilového obrázka",
     "%(severalUsers)schanged their profile picture %(count)s times": {
-        "other": "%(severalUsers)ssi zmenili %(count)s-krát profilový obrázok"
+        "other": "%(severalUsers)ssi zmenili %(count)s-krát profilový obrázok",
+        "one": "%(severalUsers)szmenilo svoj profilový obrázok"
     },
     "Anyone can request to join, but admins or moderators need to grant access. You can change this later.": "O pripojenie môže požiadať ktokoľvek, ale administrátori alebo moderátori musia udeliť prístup. Toto môžete neskôr zmeniť.",
     "Thread Root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
@@ -3952,12 +3947,27 @@
     "Mark all messages as read": "Označiť všetky správy ako prečítané",
     "Reset to default settings": "Obnoviť predvolené nastavenia",
     "%(oneUser)schanged their profile picture %(count)s times": {
-        "other": "%(oneUser)s si zmenil svoj profilový obrázok %(count)s-krát"
+        "other": "%(oneUser)s si zmenil svoj profilový obrázok %(count)s-krát",
+        "one": "%(oneUser)s zmenil/a svoj profilový obrázok"
     },
     "User read up to (m.read.private): ": "Používateľ prečíta až do (m.read.private): ",
     "See history": "Pozrieť históriu",
     "Great! This passphrase looks strong enough": "Skvelé! Táto bezpečnostná fráza vyzerá dostatočne silná",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Exportovaný súbor umožní každému, kto si ho môže prečítať, dešifrovať všetky zašifrované správy, ktoré môžete vidieť, preto by ste mali dbať na jeho zabezpečenie. Na pomoc by ste mali nižšie zadať jedinečnú prístupovú frázu, ktorá sa použije len na zašifrovanie exportovaných údajov. Údaje bude možné importovať len pomocou rovnakej prístupovej frázy.",
     "Under active development, new room header & details interface": "V štádiu aktívneho vývoja, nová hlavička miestnosti a rozhranie s detailmi",
-    "Other spaces you know": "Ďalšie priestory, ktoré poznáte"
+    "Other spaces you know": "Ďalšie priestory, ktoré poznáte",
+    "Request access": "Požiadať o prístup",
+    "Request to join sent": "Žiadosť o pripojenie odoslaná",
+    "You need an invite to access this room.": "Na prístup do tejto miestnosti potrebujete pozvánku.",
+    "Failed to cancel": "Nepodarilo sa zrušiť",
+    "Ask to join %(roomName)s?": "Požiadať o pripojenie do %(roomName)s?",
+    "Ask to join?": "Požiadať o pripojenie?",
+    "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Ak si chcete pozrieť konverzáciu alebo sa do nej zapojiť, musíte mať do tejto miestnosti povolený prístup. Žiadosť o pripojenie môžete poslať nižšie.",
+    "Cancel request": "Zrušiť žiadosť",
+    "Failed to query public rooms": "Nepodarilo sa vyhľadať verejné miestnosti",
+    "Message (optional)": "Správa (voliteľné)",
+    "Your request to join is pending.": "Vaša žiadosť o pripojenie čaká na vybavenie.",
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Tento server používa staršiu verziu systému Matrix. Ak chcete používať %(brand)s bez chýb, aktualizujte na Matrix %(version)s.",
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Váš domovský server je príliš starý a nepodporuje minimálnu požadovanú verziu API. Obráťte sa na vlastníka servera alebo aktualizujte svoj server.",
+    "Your server is unsupported": "Váš server nie je podporovaný"
 }
