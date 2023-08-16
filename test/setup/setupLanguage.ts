@@ -30,35 +30,6 @@ const lv = {
 // de_DE.json
 // lv.json - mock version with few translations, used to test fallback translation
 
-type Translation = Partial<Record<"one" | "other", string>> | string;
-type Translations = Record<string, Record<string, Translation> | string>;
-
-function weblateToCounterpart(inTrs: Record<string, Translation>): Translations {
-    const outTrs: Translations = {};
-
-    for (const key of Object.keys(inTrs)) {
-        const keyParts = key.split("|", 2);
-        if (keyParts.length === 2) {
-            let obj = outTrs[keyParts[0]];
-            if (obj === undefined) {
-                obj = outTrs[keyParts[0]] = {};
-            } else if (typeof obj === "string") {
-                // This is a transitional edge case if a string went from singular to pluralised and both still remain
-                // in the translation json file. Use the singular translation as `other` and merge pluralisation atop.
-                obj = outTrs[keyParts[0]] = {
-                    other: inTrs[key],
-                };
-                console.warn("Found entry in i18n file in both singular and pluralised form", keyParts[0]);
-            }
-            obj[keyParts[1]] = inTrs[key];
-        } else {
-            outTrs[key] = inTrs[key];
-        }
-    }
-
-    return outTrs;
-}
-
 fetchMock
     .get("/i18n/languages.json", {
         en: {
@@ -74,9 +45,9 @@ fetchMock
             label: "Latvian",
         },
     })
-    .get("end:en_EN.json", weblateToCounterpart(en))
-    .get("end:de_DE.json", weblateToCounterpart(de))
-    .get("end:lv.json", weblateToCounterpart(lv));
+    .get("end:en_EN.json", en)
+    .get("end:de_DE.json", de)
+    .get("end:lv.json", lv);
 
 languageHandler.setLanguage("en");
 languageHandler.setMissingEntryGenerator((key) => key.split("|", 2)[1]);
