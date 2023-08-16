@@ -2634,7 +2634,7 @@
     "Yours, or the other users' internet connection": "Die Internetverbindung von dir oder dem anderen Nutzer",
     "The homeserver the user you're verifying is connected to": "Der Heim-Server der Person, die du verifizierst",
     "You do not have permission to start polls in this room.": "Du bist nicht berechtigt, Umfragen in diesem Raum zu beginnen.",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Dieser Raum verbindet Nachrichten nicht mit anderen Plattformen. <a>Mehr erfahren.</a>",
+    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Dieser Raum leitet keine Nachrichten von/an andere(n) Plattformen weiter. <a>Mehr erfahren.</a>",
     "Use high contrast": "Hohen Kontrast verwenden",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Dieser Raum ist Teil von Spaces von denen du kein Administrator bist. In diesen Räumen wird der alte Raum weiter angezeigt werden, aber Personen werden aufgefordert werden, dem neuen Raum beizutreten.",
     "Rename": "Umbenennen",
@@ -3782,5 +3782,10 @@
     "Failed to query public rooms": "Abfrage öffentlicher Räume fehlgeschlagen",
     "Your server is unsupported": "Dein Server wird nicht unterstützt",
     "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Dieser Server nutzt eine ältere Matrix-Version. Aktualisiere auf Matrix %(version)s, um %(brand)s fehlerfrei nutzen zu können.",
-    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Dein Heim-Server ist zu alt und unterstützt nicht die benötigte API-Version. Bitte kontaktiere deine Server-Administration oder aktualisiere deinen Server."
+    "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Dein Heim-Server ist zu alt und unterstützt nicht die benötigte API-Version. Bitte kontaktiere deine Server-Administration oder aktualisiere deinen Server.",
+    "Deny": "Ablehnen",
+    "No requests": "Keine Anfragen",
+    "Asking to join": "Beitrittsanfragen",
+    "See less": "Weniger",
+    "See more": "Mehr"
 }
