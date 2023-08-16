@@ -68,9 +68,8 @@ describe("SessionLock", () => {
         expect(await getSessionLock(onNewInstance1)).toBe(true);
         expect(onNewInstance1).not.toHaveBeenCalled();
 
-        // ... and is closed
-        jest.spyOn(window.document, "visibilityState", "get").mockReturnValue("hidden");
-        window.document.dispatchEvent(new Event("visibilitychange", {}));
+        // ... and navigates away
+        window.dispatchEvent(new Event("pagehide", {}));
 
         // second instance starts as normal
         const onNewInstance2 = jest.fn();
