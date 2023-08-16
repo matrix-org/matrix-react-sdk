@@ -24,7 +24,7 @@ import * as fse from "fs-extra";
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
 import { getFreePort } from "../utils/port";
-import { dockerExec, dockerLogs, dockerRun, dockerStop } from "../docker";
+import { dockerExec, dockerLogs, dockerRun, dockerStop, isPodman } from "../docker";
 import { HomeserverConfig, HomeserverInstance } from "../utils/homeserver";
 import { StartHomeserverOpts } from "../../support/homeserver";
 
@@ -96,19 +96,24 @@ async function synapseStart(opts: StartHomeserverOpts): Promise<HomeserverInstan
 
     console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
 
+    const dockerSynapseParams = ["--rm", "-v", `${synCfg.configDir}:/data`, "-p", `${synCfg.port}:8008/tcp`];
+
+    if (await isPodman()) {
+        // Make host.containers.internal work to allow Synapse to talk to the
+        // test OIDC server.
+        dockerSynapseParams.push("--network");
+        dockerSynapseParams.push("slirp4netns:allow_host_loopback=true");
+    } else {
+        // Make host.docker.internal work to allow Synapse to talk to the test
+        // OIDC server.
+        dockerSynapseParams.push("--add-host");
+        dockerSynapseParams.push("host.docker.internal:host-gateway");
+    }
+
     const synapseId = await dockerRun({
         image: "matrixdotorg/synapse:develop",
         containerName: `react-sdk-cypress-synapse`,
-        params: [
-            "--rm",
-            "-v",
-            `${synCfg.configDir}:/data`,
-            "-p",
-            `${synCfg.port}:8008/tcp`,
-            // make host.docker.internal work to allow Synapse to talk to the test OIDC server
-            "--add-host",
-            "host.docker.internal:host-gateway",
-        ],
+        params: dockerSynapseParams,
         cmd: ["run"],
     });
 
