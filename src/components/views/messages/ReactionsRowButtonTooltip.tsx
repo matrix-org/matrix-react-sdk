@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { Optional } from "matrix-events-sdk/lib/types";
 
 import { unicodeToShortcode } from "../../../HtmlUtils";
 import { _t } from "../../../languageHandler";
@@ -47,17 +46,15 @@ export default class ReactionsRowButtonTooltip extends React.PureComponent<IProp
         let tooltipLabel: JSX.Element | undefined;
         if (room) {
             const senders: string[] = [];
-            let customReactionName: Optional<string>;
+            let customReactionName: string | undefined;
             for (const reactionEvent of reactionEvents) {
                 const member = room.getMember(reactionEvent.getSender()!);
                 const name = member?.name ?? reactionEvent.getSender()!;
                 senders.push(name);
-                if (
-                    this.props.customReactionImagesEnabled &&
-                    REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent())
-                ) {
-                    customReactionName = REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent());
-                }
+                customReactionName =
+                    (this.props.customReactionImagesEnabled &&
+                        REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent())) ||
+                    undefined;
             }
             const shortName = unicodeToShortcode(content) || customReactionName;
             tooltipLabel = (

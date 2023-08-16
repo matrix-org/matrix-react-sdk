@@ -17,7 +17,6 @@ limitations under the License.
 import React from "react";
 import classNames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { Optional } from "matrix-events-sdk/lib/types";
 
 import { mediaFromMxc } from "../../../customisations/Media";
 import { _t } from "../../../languageHandler";
@@ -112,18 +111,16 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
 
         const room = this.context.getRoom(mxEvent.getRoomId());
         let label: string | undefined;
-        let customReactionName: Optional<string>;
+        let customReactionName: string | undefined;
         if (room) {
             const senders: string[] = [];
             for (const reactionEvent of reactionEvents) {
                 const member = room.getMember(reactionEvent.getSender()!);
                 senders.push(member?.name || reactionEvent.getSender()!);
-                if (
-                    this.props.customReactionImagesEnabled &&
-                    REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent())
-                ) {
-                    customReactionName = REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent());
-                }
+                customReactionName =
+                    (this.props.customReactionImagesEnabled &&
+                        REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent())) ||
+                    undefined;
             }
 
             const reactors = formatCommaSeparatedList(senders, 6);
