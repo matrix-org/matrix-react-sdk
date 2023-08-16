@@ -31,6 +31,7 @@ import { v4 as uuidv4 } from "uuid";
  * @returns true if we successfully claimed the lock; false if another instance stole it from under our nose
  *     (in which `onNewInstance` will have been called)
  */
+/* istanbul ignore next (coverage instrumentation is disabled for this file) */
 export async function getSessionLock(onNewInstance: () => Promise<void>): Promise<boolean> {
     /*
      * The algorithm here is twofold.
