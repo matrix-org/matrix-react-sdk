@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React from "react";
 import { IContent, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { render } from "@testing-library/react";
@@ -61,7 +62,7 @@ describe("ReactionsRowButton", () => {
         });
     });
 
-    it("reaction row button renders emojis correctly", () => {
+    it("renders reaction row button emojis correctly", () => {
         const props = createProps({
             "m.relates_to": {
                 event_id: "$user2:example.com",
@@ -87,7 +88,7 @@ describe("ReactionsRowButton", () => {
         expect(root).toMatchSnapshot();
     });
 
-    it("reaction row button renders custom image reactions correctly", () => {
+    it("renders reaction row button custom image reactions correctly", () => {
         const props = createProps({
             "com.beeper.reaction.shortcode": ":test:",
             "shortcode": ":test:",
