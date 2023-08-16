@@ -53,7 +53,7 @@ export function roomContextDetails(room: Room): RoomContextDetails | null {
         }
         return {
             details: spaceName,
-            ariaLabel: _t("In %(spaceName)s."),
+            ariaLabel: _t("In %(spaceName)s.", { spaceName }),
         };
     }
 
