@@ -59,6 +59,7 @@ describe("<MatrixChat />", () => {
     // reused in createClient mock below
     const getMockClientMethods = () => ({
         ...mockClientMethodsUser(userId),
+        getVersions: jest.fn().mockResolvedValue({ versions: ["v1.1"] }),
         startClient: jest.fn(),
         stopClient: jest.fn(),
         setCanResetTimelineCallback: jest.fn(),
@@ -130,7 +131,6 @@ describe("<MatrixChat />", () => {
         },
         onNewScreen: jest.fn(),
         onTokenLoginCompleted: jest.fn(),
-        makeRegistrationUrl: jest.fn(),
         realQueryParams: {},
     };
     const getComponent = (props: Partial<ComponentProps<typeof MatrixChat>> = {}) =>
@@ -178,7 +178,7 @@ describe("<MatrixChat />", () => {
         mockClient = getMockClientWithEventEmitter(getMockClientMethods());
         fetchMock.get("https://test.com/_matrix/client/versions", {
             unstable_features: {},
-            versions: [],
+            versions: ["v1.1"],
         });
         localStorageSetSpy = jest.spyOn(localStorage.__proto__, "setItem");
         localStorageGetSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
@@ -516,6 +516,36 @@ describe("<MatrixChat />", () => {
                     });
                 });
             });
+        });
+    });
+
+    describe("with a soft-logged-out session", () => {
+        const mockidb: Record<string, Record<string, string>> = {};
+        const mockLocalStorage: Record<string, string> = {
+            mx_hs_url: serverConfig.hsUrl,
+            mx_is_url: serverConfig.isUrl,
+            mx_access_token: accessToken,
+            mx_user_id: userId,
+            mx_device_id: deviceId,
+            mx_soft_logout: "true",
+        };
+
+        beforeEach(() => {
+            localStorageGetSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
+
+            mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.password" }] });
+
+            jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (table, key) => {
+                const safeKey = Array.isArray(key) ? key[0] : key;
+                return mockidb[table]?.[safeKey];
+            });
+        });
+
+        it("should show the soft-logout page", async () => {
+            const result = getComponent();
+
+            await result.findByText("You're signed out");
+            expect(result.container).toMatchSnapshot();
         });
     });
 
