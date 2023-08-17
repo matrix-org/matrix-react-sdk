@@ -2441,8 +2441,6 @@
     },
     "%(name)s started a video call": "%(name)s started a video call",
     "Video call ended": "Video call ended",
-    "Today": "Today",
-    "Yesterday": "Yesterday",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.",
     "Server returned %(statusCode)s with error code %(errorCode)s": "Server returned %(statusCode)s with error code %(errorCode)s",

@@ -19,7 +19,7 @@ import React from "react";
 import { Direction, ConnectionError, MatrixError, HTTPError } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from "../../../languageHandler";
+import { _t, getUserLanguage } from "../../../languageHandler";
 import { formatFullDateNoDay, formatFullDateNoTime, getDaysArray } from "../../../DateUtils";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dispatcher from "../../../dispatcher/dispatcher";
@@ -104,10 +104,12 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         const days = getDaysArray("long");
         yesterday.setDate(today.getDate() - 1);
 
+        const locale = getUserLanguage();
+        const relativeTimeFormat = new Intl.RelativeTimeFormat(locale, { style: "long", numeric: "auto" });
         if (date.toDateString() === today.toDateString()) {
-            return _t("Today");
+            return relativeTimeFormat.format(0, "day").toLocaleUpperCase(locale);
         } else if (date.toDateString() === yesterday.toDateString()) {
-            return _t("Yesterday");
+            return relativeTimeFormat.format(-1, "day").toLocaleUpperCase(locale);
         } else if (today.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
             return days[date.getDay()];
         } else {
