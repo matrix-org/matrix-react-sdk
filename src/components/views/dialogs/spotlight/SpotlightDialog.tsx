@@ -310,17 +310,15 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     const [inviteLinkCopied, setInviteLinkCopied] = useState<boolean>(false);
     const trimmedQuery = useMemo(() => query.trim(), [query]);
 
-    const exploringPublicSpacesEnabled = useFeatureEnabled("feature_exploring_public_spaces");
-    const [supportsSpaceFiltering, setSupportsSpaceFiltering] = useState(exploringPublicSpacesEnabled); // assume it does until we find out it doesn't
+    const [supportsSpaceFiltering, setSupportsSpaceFiltering] = useState(true); // assume it does until we find out it doesn't
     useEffect(() => {
-        if (!exploringPublicSpacesEnabled) return;
         Promise.all([
             cli.isVersionSupported("v1.4"),
             cli.doesServerSupportUnstableFeature("org.matrix.msc3827.stable"),
         ]).then(([versionSupported, unstableFeatureSupported]) =>
             setSupportsSpaceFiltering(versionSupported || unstableFeatureSupported),
         );
-    }, [cli, exploringPublicSpacesEnabled]);
+    }, [cli]);
 
     const {
         loading: publicRoomsLoading,
