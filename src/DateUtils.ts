@@ -18,90 +18,66 @@ limitations under the License.
 
 import { Optional } from "matrix-events-sdk";
 
-import { _t } from "./languageHandler";
+import { _t, getUserLanguage } from "./languageHandler";
 
-function getDaysArray(): string[] {
-    return [_t("Sun"), _t("Mon"), _t("Tue"), _t("Wed"), _t("Thu"), _t("Fri"), _t("Sat")];
-}
+const MILLIS_IN_DAY = 86400000;
 
-function getMonthsArray(): string[] {
-    return [
-        _t("Jan"),
-        _t("Feb"),
-        _t("Mar"),
-        _t("Apr"),
-        _t("May"),
-        _t("Jun"),
-        _t("Jul"),
-        _t("Aug"),
-        _t("Sep"),
-        _t("Oct"),
-        _t("Nov"),
-        _t("Dec"),
-    ];
-}
-
-function pad(n: number): string {
-    return (n < 10 ? "0" : "") + n;
-}
-
-function twelveHourTime(date: Date, showSeconds = false): string {
-    let hours = date.getHours() % 12;
-    const minutes = pad(date.getMinutes());
-    const ampm = date.getHours() >= 12 ? _t("PM") : _t("AM");
-    hours = hours ? hours : 12; // convert 0 -> 12
-    if (showSeconds) {
-        const seconds = pad(date.getSeconds());
-        return `${hours}:${minutes}:${seconds}${ampm}`;
-    }
-    return `${hours}:${minutes}${ampm}`;
-}
-
-export function formatDate(date: Date, showTwelveHour = false): string {
+export function getDaysArray(weekday: Intl.DateTimeFormatOptions["weekday"] = "short"): string[] {
     const now = new Date();
-    const days = getDaysArray();
-    const months = getMonthsArray();
+    const { format } = new Intl.DateTimeFormat(getUserLanguage(), { weekday });
+    return [...Array(7).keys()].map((day) => format(new Date().getTime() - (now.getDay() - day) * MILLIS_IN_DAY));
+}
+
+function getMonthsArray(month: Intl.DateTimeFormatOptions["month"] = "short"): string[] {
+    const { format } = new Intl.DateTimeFormat(getUserLanguage(), { month });
+    return [...Array(12).keys()].map((m) => format(new Date(Date.UTC(2021, m))));
+}
+
+export function formatDate(date: Date, showTwelveHour = false, locale?: string): string {
+    const _locale = locale ?? getUserLanguage();
+    const now = new Date();
     if (date.toDateString() === now.toDateString()) {
-        return formatTime(date, showTwelveHour);
+        return formatTime(date, showTwelveHour, _locale);
     } else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
-        // TODO: use standard date localize function provided in counterpart
-        return _t("%(weekDayName)s %(time)s", {
-            weekDayName: days[date.getDay()],
-            time: formatTime(date, showTwelveHour),
-        });
+        return new Intl.DateTimeFormat(_locale, {
+            weekday: "short",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: showTwelveHour,
+        }).format(new Date());
     } else if (now.getFullYear() === date.getFullYear()) {
-        // TODO: use standard date localize function provided in counterpart
-        return _t("%(weekDayName)s, %(monthName)s %(day)s %(time)s", {
-            weekDayName: days[date.getDay()],
-            monthName: months[date.getMonth()],
-            day: date.getDate(),
-            time: formatTime(date, showTwelveHour),
-        });
+        return new Intl.DateTimeFormat(_locale, {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: showTwelveHour,
+        }).format(new Date());
     }
-    return formatFullDate(date, showTwelveHour);
+    return formatFullDate(date, showTwelveHour, true, _locale);
 }
 
-export function formatFullDateNoTime(date: Date): string {
-    const days = getDaysArray();
-    const months = getMonthsArray();
-    return _t("%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s", {
-        weekDayName: days[date.getDay()],
-        monthName: months[date.getMonth()],
-        day: date.getDate(),
-        fullYear: date.getFullYear(),
-    });
+export function formatFullDateNoTime(date: Date, locale?: string): string {
+    return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+    }).format(date);
 }
 
-export function formatFullDate(date: Date, showTwelveHour = false, showSeconds = true): string {
-    const days = getDaysArray();
-    const months = getMonthsArray();
-    return _t("%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s", {
-        weekDayName: days[date.getDay()],
-        monthName: months[date.getMonth()],
-        day: date.getDate(),
-        fullYear: date.getFullYear(),
-        time: showSeconds ? formatFullTime(date, showTwelveHour) : formatTime(date, showTwelveHour),
-    });
+export function formatFullDate(date: Date, showTwelveHour = false, showSeconds = true, locale?: string): string {
+    return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: showSeconds ? "2-digit" : undefined,
+        hour12: showTwelveHour,
+    }).format(date);
 }
 
 /**
@@ -119,18 +95,23 @@ export function formatDateForInput(date: Date): string {
     return dateInputValue;
 }
 
-export function formatFullTime(date: Date, showTwelveHour = false): string {
-    if (showTwelveHour) {
-        return twelveHourTime(date, true);
-    }
-    return pad(date.getHours()) + ":" + pad(date.getMinutes()) + ":" + pad(date.getSeconds());
+export function formatFullTime(date: Date, showTwelveHour = false, locale?: string): string {
+    return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: showTwelveHour,
+    }).format(date);
 }
 
-export function formatTime(date: Date, showTwelveHour = false): string {
-    if (showTwelveHour) {
-        return twelveHourTime(date);
-    }
-    return pad(date.getHours()) + ":" + pad(date.getMinutes());
+export function formatTime(date: Date, showTwelveHour = false, locale?: string): string {
+    return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: showTwelveHour,
+    }).format(date);
 }
 
 export function formatSeconds(inSeconds: number): string {
@@ -183,7 +164,6 @@ export function formatTimeLeft(inSeconds: number): string {
     });
 }
 
-const MILLIS_IN_DAY = 86400000;
 function withinPast24Hours(prevDate: Date, nextDate: Date): boolean {
     return Math.abs(prevDate.getTime() - nextDate.getTime()) <= MILLIS_IN_DAY;
 }
@@ -210,9 +190,10 @@ export function wantsDateSeparator(prevEventDate: Optional<Date>, nextEventDate:
 }
 
 export function formatFullDateNoDay(date: Date): string {
+    const locale = getUserLanguage();
     return _t("%(date)s at %(time)s", {
-        date: date.toLocaleDateString().replace(/\//g, "-"),
-        time: date.toLocaleTimeString().replace(/:/g, "-"),
+        date: date.toLocaleDateString(locale).replace(/\//g, "-"),
+        time: date.toLocaleTimeString(locale).replace(/:/g, "-"),
     });
 }
 
@@ -226,8 +207,12 @@ export function formatFullDateNoDayISO(date: Date): string {
     return date.toISOString();
 }
 
-export function formatFullDateNoDayNoTime(date: Date): string {
-    return date.getFullYear() + "/" + pad(date.getMonth() + 1) + "/" + pad(date.getDate());
+export function formatFullDateNoDayNoTime(date: Date, locale?: string): string {
+    return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+    }).format(date);
 }
 
 export function formatRelativeTime(date: Date, showTwelveHour = false): string {
@@ -250,10 +235,10 @@ const HOUR_MS = MINUTE_MS * 60;
 const DAY_MS = HOUR_MS * 24;
 
 /**
- * Formats duration in ms to human readable string
- * Returns value in biggest possible unit (day, hour, min, second)
+ * Formats duration in ms to human-readable string
+ * Returns value in the biggest possible unit (day, hour, min, second)
  * Rounds values up until unit threshold
- * ie. 23:13:57 -> 23h, 24:13:57 -> 1d, 44:56:56 -> 2d
+ * i.e. 23:13:57 -> 23h, 24:13:57 -> 1d, 44:56:56 -> 2d
  */
 export function formatDuration(durationMs: number): string {
     if (durationMs >= DAY_MS) {
@@ -269,9 +254,9 @@ export function formatDuration(durationMs: number): string {
 }
 
 /**
- * Formats duration in ms to human readable string
+ * Formats duration in ms to human-readable string
  * Returns precise value down to the nearest second
- * ie. 23:13:57 -> 23h 13m 57s, 44:56:56 -> 1d 20h 56m 56s
+ * i.e. 23:13:57 -> 23h 13m 57s, 44:56:56 -> 1d 20h 56m 56s
  */
 export function formatPreciseDuration(durationMs: number): string {
     const days = Math.floor(durationMs / DAY_MS);
@@ -293,13 +278,13 @@ export function formatPreciseDuration(durationMs: number): string {
 
 /**
  * Formats a timestamp to a short date
- * (eg 25/12/22 in uk locale)
+ * (e.g. 25/12/22 in uk locale)
  * localised by system locale
  * @param timestamp - epoch timestamp
+ * @param locale - the locale string to use, defaulting to user's selected application locale (not browser locale)
  * @returns {string} formattedDate
  */
-export const formatLocalDateShort = (timestamp: number): string =>
-    new Intl.DateTimeFormat(
-        undefined, // locales
-        { day: "2-digit", month: "2-digit", year: "2-digit" },
-    ).format(timestamp);
+export const formatLocalDateShort = (timestamp: number, locale?: string): string =>
+    new Intl.DateTimeFormat(locale ?? getUserLanguage(), { day: "2-digit", month: "2-digit", year: "2-digit" }).format(
+        timestamp,
+    );
