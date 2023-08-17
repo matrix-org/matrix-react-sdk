@@ -58,8 +58,10 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
     const baseUrl = `http://localhost:${port}`;
 
     // now copy homeserver.yaml, applying substitutions
-    console.log(`Gen ${path.join(templateDir, "homeserver.yaml")}`);
-    let hsYaml = await fse.readFile(path.join(templateDir, "homeserver.yaml"), "utf8");
+    const templateHomeserver = path.join(templateDir, "homeserver.yaml");
+    const outputHomeserver = path.join(tempDir, "homeserver.yaml");
+    console.log(`Gen ${templateHomeserver} -> ${outputHomeserver}`);
+    let hsYaml = await fse.readFile(templateHomeserver, "utf8");
     hsYaml = hsYaml.replace(/{{REGISTRATION_SECRET}}/g, registrationSecret);
     hsYaml = hsYaml.replace(/{{MACAROON_SECRET_KEY}}/g, macaroonSecret);
     hsYaml = hsYaml.replace(/{{FORM_SECRET}}/g, formSecret);
@@ -71,14 +73,15 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
         }
     }
 
-    await fse.writeFile(path.join(tempDir, "homeserver.yaml"), hsYaml);
+    await fse.writeFile(outputHomeserver, hsYaml);
 
     // now generate a signing key (we could use synapse's config generation for
     // this, or we could just do this...)
     // NB. This assumes the homeserver.yaml specifies the key in this location
     const signingKey = randB64Bytes(32);
-    console.log(`Gen ${path.join(templateDir, "localhost.signing.key")}`);
-    await fse.writeFile(path.join(tempDir, "localhost.signing.key"), `ed25519 x ${signingKey}`);
+    const outputSigningKey = path.join(tempDir, "localhost.signing.key");
+    console.log(`Gen -> ${outputSigningKey}`);
+    await fse.writeFile(outputSigningKey, `ed25519 x ${signingKey}`);
 
     return {
         port,
