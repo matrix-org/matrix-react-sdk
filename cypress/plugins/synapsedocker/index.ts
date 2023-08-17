@@ -67,6 +67,10 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
     hsYaml = hsYaml.replace(/{{FORM_SECRET}}/g, formSecret);
     hsYaml = hsYaml.replace(/{{PUBLIC_BASEURL}}/g, baseUrl);
     hsYaml = hsYaml.replace(/{{OAUTH_SERVER_PORT}}/g, opts.oAuthServerPort?.toString());
+    hsYaml = hsYaml.replace(
+        /{{HOST_DOCKER_INTERNAL}}/g,
+        (await isPodman()) ? "host.containers.internal" : "host.docker.internal",
+    );
     if (opts.variables) {
         for (const key in opts.variables) {
             hsYaml = hsYaml.replace(new RegExp("%" + key + "%", "g"), String(opts.variables[key]));
