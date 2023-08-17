@@ -26,7 +26,7 @@ import { _t } from "../../../languageHandler";
 interface IProps<P extends DialogProps, C extends DialogContent<P>> {
     contentFactory: (props: P, ref: React.RefObject<C>) => React.ReactNode;
     contentProps: Omit<P, keyof DialogProps> | undefined;
-    initialOptions: ModuleUiDialogOptions,
+    initialOptions: ModuleUiDialogOptions;
     moduleApi: ModuleApi;
     onFinished(ok?: boolean, model?: Awaited<ReturnType<DialogContent<P & DialogProps>["trySubmit"]>>): void;
 }
