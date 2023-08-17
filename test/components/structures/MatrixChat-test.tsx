@@ -188,6 +188,9 @@ describe("<MatrixChat />", () => {
         jest.restoreAllMocks();
         localStorage.clear();
         sessionStorage.clear();
+
+        // emit a loggedOut event so that all of the Store singletons forget about their references to the mock client
+        defaultDispatcher.dispatch({ action: Action.OnLoggedOut });
     });
 
     it("should render spinner while app is loading", () => {
@@ -573,6 +576,7 @@ describe("<MatrixChat />", () => {
         beforeEach(() => {
             loginClient = getMockClientWithEventEmitter(getMockClientMethods());
             // this is used to create a temporary client during login
+            // FIXME: except it is *also* used as the permanent client for the rest of the test.
             jest.spyOn(MatrixJs, "createClient").mockClear().mockReturnValue(loginClient);
 
             loginClient.login.mockClear().mockResolvedValue({
