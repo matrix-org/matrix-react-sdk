@@ -24,7 +24,7 @@ import * as fse from "fs-extra";
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
 import { getFreePort } from "../utils/port";
-import { dockerExec, dockerLogs, dockerRun, dockerStop, isPodman } from "../docker";
+import { dockerExec, dockerLogs, dockerRun, dockerStop, hostContainerName, isPodman } from "../docker";
 import { HomeserverConfig, HomeserverInstance } from "../utils/homeserver";
 import { StartHomeserverOpts } from "../../support/homeserver";
 
@@ -67,10 +67,7 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
     hsYaml = hsYaml.replace(/{{FORM_SECRET}}/g, formSecret);
     hsYaml = hsYaml.replace(/{{PUBLIC_BASEURL}}/g, baseUrl);
     hsYaml = hsYaml.replace(/{{OAUTH_SERVER_PORT}}/g, opts.oAuthServerPort?.toString());
-    hsYaml = hsYaml.replace(
-        /{{HOST_DOCKER_INTERNAL}}/g,
-        (await isPodman()) ? "host.containers.internal" : "host.docker.internal",
-    );
+    hsYaml = hsYaml.replace(/{{HOST_DOCKER_INTERNAL}}/g, await hostContainerName());
     if (opts.variables) {
         for (const key in opts.variables) {
             hsYaml = hsYaml.replace(new RegExp("%" + key + "%", "g"), String(opts.variables[key]));
