@@ -60,7 +60,7 @@ export default class SpellCheckLanguagesDropdown extends React.Component<
     public componentDidMount(): void {
         const plaf = PlatformPeg.get();
         if (plaf) {
-            const languageNames = new Intl.DisplayNames([getUserLanguage()], { type: "language" });
+            const languageNames = new Intl.DisplayNames([getUserLanguage()], { type: "language", style: "short" });
             plaf.getAvailableSpellCheckLanguages()
                 ?.then((languages) => {
                     languages.sort(function (a, b) {

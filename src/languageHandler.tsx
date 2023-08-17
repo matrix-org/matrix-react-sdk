@@ -498,13 +498,14 @@ export async function getAllLanguagesFromJson(): Promise<string[]> {
 }
 
 export async function getAllLanguagesWithLabels(): Promise<Language[]> {
-    const languageNames = new Intl.DisplayNames([getUserLanguage()], { type: "language" });
+    const languageNames = new Intl.DisplayNames([getUserLanguage()], { type: "language", style: "short" });
     const languages = await getAllLanguagesFromJson();
     return languages.map<Language>((langKey) => {
         return {
             value: langKey,
             label: languageNames.of(langKey) ?? langKey,
-            labelInTargetLanguage: new Intl.DisplayNames([langKey], { type: "language" }).of(langKey) ?? langKey,
+            labelInTargetLanguage:
+                new Intl.DisplayNames([langKey], { type: "language", style: "short" }).of(langKey) ?? langKey,
         };
     });
 }
