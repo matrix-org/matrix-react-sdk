@@ -15,8 +15,13 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { AutoDiscovery, ClientConfig, OidcClientConfig } from "matrix-js-sdk/src/autodiscovery";
-import { M_AUTHENTICATION, IClientWellKnown } from "matrix-js-sdk/src/matrix";
+import {
+    AutoDiscovery,
+    ClientConfig,
+    OidcClientConfig,
+    M_AUTHENTICATION,
+    IClientWellKnown,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, UserFriendlyError } from "../languageHandler";
@@ -235,6 +240,11 @@ export default class AutoDiscoveryUtils {
             if (!syntaxOnly || !AutoDiscoveryUtils.isLivelinessError(hsResult.error)) {
                 if (AutoDiscovery.ALL_ERRORS.indexOf(hsResult.error as string) !== -1) {
                     throw new UserFriendlyError(String(hsResult.error));
+                }
+                if (hsResult.error === AutoDiscovery.ERROR_HOMESERVER_TOO_OLD) {
+                    throw new UserFriendlyError(
+                        "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.",
+                    );
                 }
                 throw new UserFriendlyError("Unexpected error resolving homeserver configuration");
             } // else the error is not related to syntax - continue anyways.
