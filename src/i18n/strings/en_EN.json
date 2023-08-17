@@ -992,8 +992,6 @@
     "New Notification Settings": "New Notification Settings",
     "Notification Settings": "Notification Settings",
     "Introducing a simpler way to change your notification settings. Customize your %(brand)s, just the way you like.": "Introducing a simpler way to change your notification settings. Customize your %(brand)s, just the way you like.",
-    "Explore public spaces in the new search dialog": "Explore public spaces in the new search dialog",
-    "Requires your server to support the stable version of MSC3827": "Requires your server to support the stable version of MSC3827",
     "Let moderators hide messages pending moderation.": "Let moderators hide messages pending moderation.",
     "Report to moderators": "Report to moderators",
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.",
