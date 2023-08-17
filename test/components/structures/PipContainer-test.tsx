@@ -35,6 +35,7 @@ import {
     mkRoomCreateEvent,
     mockPlatformPeg,
     flushPromises,
+    useMockMediaDevices,
 } from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { CallStore } from "../../../src/stores/CallStore";
@@ -84,6 +85,8 @@ describe("PipContainer", () => {
     };
 
     beforeEach(async () => {
+        useMockMediaDevices();
+
         user = userEvent.setup();
 
         stubClient();
@@ -133,7 +136,7 @@ describe("PipContainer", () => {
         cleanup();
         await Promise.all([CallStore.instance, WidgetMessagingStore.instance].map(resetAsyncStoreWithClient));
         client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     const renderPip = () => {
