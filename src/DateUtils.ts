@@ -107,7 +107,6 @@ export function formatFullTime(date: Date, showTwelveHour = false, locale?: stri
 
 export function formatTime(date: Date, showTwelveHour = false, locale?: string): string {
     return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
-        weekday: "short",
         hour: "2-digit",
         minute: "2-digit",
         hour12: showTwelveHour,
