@@ -322,7 +322,7 @@ export const FilteredDeviceList = forwardRef(
                                 onClick={() => setSelectedDeviceIds([])}
                                 className="mx_FilteredDeviceList_headerButton"
                             >
-                                {_t("Cancel")}
+                                {_t("action|cancel")}
                             </AccessibleButton>
                         </>
                     ) : (

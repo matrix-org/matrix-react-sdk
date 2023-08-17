@@ -74,7 +74,7 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
                     data-testid="base-card-close-button"
                     className="mx_BaseCard_close"
                     onClick={onClose}
-                    title={closeLabel || _t("Close")}
+                    title={closeLabel || _t("action|close")}
                 />
             );
         }

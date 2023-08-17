@@ -87,7 +87,7 @@ const getDefaultErrorParams = (
             brand: SdkConfig.get().brand,
         }),
         button: _t("Try again"),
-        cancelButton: _t("Cancel"),
+        cancelButton: _t("action|cancel"),
         onFinished: (tryAgain: boolean) => {
             if (tryAgain) {
                 openMenu();

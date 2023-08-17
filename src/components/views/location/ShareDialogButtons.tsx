@@ -44,7 +44,7 @@ const ShareDialogButtons: React.FC<Props> = ({ onBack, onCancel, displayBack }) 
             <AccessibleButton
                 className="mx_ShareDialogButtons_button right"
                 data-testid="share-dialog-buttons-cancel"
-                aria-label={_t("Close")}
+                aria-label={_t("action|close")}
                 onClick={onCancel}
                 element="button"
             >

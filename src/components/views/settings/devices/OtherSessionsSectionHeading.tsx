@@ -47,7 +47,7 @@ export const OtherSessionsSectionHeading: React.FC<Props> = ({
         <SettingsSubsectionHeading heading={_t("Other sessions")}>
             <KebabContextMenu
                 disabled={disabled}
-                title={_t("Options")}
+                title={_t("common|options")}
                 options={menuOptions}
                 data-testid="other-sessions-menu"
             />

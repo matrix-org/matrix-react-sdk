@@ -1,9 +1,10 @@
 {
-    "Dismiss": "Odbaci",
     "Create Account": "Otvori račun",
     "Sign In": "Prijavite se",
     "Explore rooms": "Istražite sobe",
     "Identity server": "Identifikacioni Server",
     "common": {},
-    "action": {}
+    "action": {
+        "dismiss": "Odbaci"
+    }
 }

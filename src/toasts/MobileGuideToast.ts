@@ -51,7 +51,7 @@ export const showToast = (): void => {
             ),
             acceptLabel: _t("Use app"),
             onAccept,
-            rejectLabel: _t("Dismiss"),
+            rejectLabel: _t("action|dismiss"),
             onReject,
         },
         component: GenericToast,

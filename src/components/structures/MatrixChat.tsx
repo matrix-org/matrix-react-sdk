@@ -1588,7 +1588,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                         </div>
                     ),
                     button: _t("Review terms and conditions"),
-                    cancelButton: _t("Dismiss"),
+                    cancelButton: _t("action|dismiss"),
                     onFinished: (confirmed) => {
                         if (confirmed) {
                             const wnd = window.open(consentUri, "_blank")!;
@@ -2095,7 +2095,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                         <Spinner />
                         <div className="mx_MatrixChat_splashButtons">
                             <AccessibleButton kind="link_inline" onClick={this.onLogoutClick}>
-                                {_t("Logout")}
+                                {_t("action|logout")}
                             </AccessibleButton>
                         </div>
                     </div>

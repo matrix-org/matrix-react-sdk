@@ -119,7 +119,7 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({ devic
                     data-testid="device-rename-cancel-cta"
                     disabled={isLoading}
                 >
-                    {_t("Cancel")}
+                    {_t("action|cancel")}
                 </AccessibleButton>
                 {isLoading && <Spinner w={16} h={16} />}
             </div>

@@ -116,7 +116,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
         <React.Fragment>
             <ContextMenuTooltipButton
                 className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
-                title={_t("Options")}
+                title={_t("common|options")}
                 onClick={onOptionsClick}
                 onContextMenu={onOptionsClick}
                 isExpanded={menuDisplayed}
@@ -404,7 +404,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         const cancelSendingButton = (
             <RovingAccessibleTooltipButton
                 className="mx_MessageActionBar_iconButton"
-                title={_t("Delete")}
+                title={_t("action|delete")}
                 onClick={this.onCancelClick}
                 onContextMenu={this.onCancelClick}
                 key="cancel"

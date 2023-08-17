@@ -97,7 +97,7 @@ export const HomeButtonContextMenu: React.FC<ComponentProps<typeof SpaceContextM
 
     return (
         <IconizedContextMenu {...props} onFinished={onFinished} className="mx_SpacePanel_contextMenu" compact>
-            {!hideHeader && <div className="mx_SpacePanel_contextMenu_header">{_t("Home")}</div>}
+            {!hideHeader && <div className="mx_SpacePanel_contextMenu_header">{_t("common|home")}</div>}
             <IconizedContextMenuOptionList first>
                 <IconizedContextMenuCheckbox
                     iconClassName="mx_SpacePanel_noIcon"
@@ -159,7 +159,7 @@ const HomeButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCollapsed
             label={getMetaSpaceName(MetaSpace.Home, allRoomsInHome)}
             notificationState={notificationState}
             ContextMenuComponent={HomeButtonContextMenu}
-            contextMenuTooltip={_t("Options")}
+            contextMenuTooltip={_t("common|options")}
         />
     );
 };
@@ -240,7 +240,7 @@ const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed"
                 className={classNames("mx_SpaceButton_new", {
                     mx_SpaceButton_newCancel: menuDisplayed,
                 })}
-                label={menuDisplayed ? _t("Cancel") : _t("Create a space")}
+                label={menuDisplayed ? _t("action|cancel") : _t("Create a space")}
                 onClick={onNewClick}
                 isNarrow={isPanelCollapsed}
                 innerRef={handle}
@@ -367,11 +367,11 @@ const SpacePanel: React.FC = () => {
                             <AccessibleTooltipButton
                                 className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
                                 onClick={() => setPanelCollapsed(!isPanelCollapsed)}
-                                title={isPanelCollapsed ? _t("Expand") : _t("Collapse")}
+                                title={isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
                                 tooltip={
                                     <div>
                                         <div className="mx_Tooltip_title">
-                                            {isPanelCollapsed ? _t("Expand") : _t("Collapse")}
+                                            {isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
                                         </div>
                                         <div className="mx_Tooltip_sub">
                                             {IS_MAC

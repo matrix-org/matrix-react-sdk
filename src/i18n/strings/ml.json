@@ -1,8 +1,5 @@
 {
-    "Cancel": "റദ്ദാക്കുക",
-    "Close": "അടയ്ക്കുക",
     "Create new room": "പുതിയ റൂം സൃഷ്ടിക്കുക",
-    "Dismiss": "ഒഴിവാക്കുക",
     "Failed to forget room %(errCode)s": "%(errCode)s റൂം ഫോര്‍ഗെറ്റ് ചെയ്യുവാന്‍ സാധിച്ചില്ല",
     "Favourite": "പ്രിയപ്പെട്ടവ",
     "Notifications": "നോട്ടിഫിക്കേഷനുകള്‍",
@@ -18,12 +15,10 @@
     "Notification targets": "നോട്ടിഫിക്കേഷന്‍ ടാര്‍ഗെറ്റുകള്‍",
     "Today": "ഇന്ന്",
     "Friday": "വെള്ളി",
-    "Update": "പുതുക്കുക",
     "What's New": "പുതിയ വിശേഷങ്ങള്‍",
     "On": "ഓണ്‍",
     "Changelog": "മാറ്റങ്ങളുടെ നാള്‍വഴി",
     "Waiting for response from server": "സെര്‍വറില്‍ നിന്നുള്ള പ്രതികരണത്തിന് കാക്കുന്നു",
-    "Warning": "മുന്നറിയിപ്പ്",
     "This Room": "ഈ മുറി",
     "Noisy": "ഉച്ചത്തില്‍",
     "Messages containing my display name": "എന്റെ പേര് അടങ്ങിയിരിക്കുന്ന സന്ദേശങ്ങള്‍ക്ക്",
@@ -37,7 +32,6 @@
     "Tuesday": "ചൊവ്വ",
     "Unnamed room": "പേരില്ലാത്ത റൂം",
     "Saturday": "ശനി",
-    "Reject": "നിരസിക്കുക",
     "Monday": "തിങ്കള്‍",
     "Collecting logs": "നാള്‍വഴി ശേഖരിക്കുന്നു",
     "All Rooms": "എല്ലാ മുറികളും കാണുക",
@@ -67,7 +61,8 @@
     "common": {
         "error": "എറര്‍",
         "mute": "നിശ്ശബ്ദം",
-        "settings": "സജ്ജീകരണങ്ങള്‍"
+        "settings": "സജ്ജീകരണങ്ങള്‍",
+        "warning": "മുന്നറിയിപ്പ്"
     },
     "action": {
         "continue": "മുന്നോട്ട്",
@@ -76,6 +71,11 @@
         "quote": "ഉദ്ധരിക്കുക",
         "remove": "നീക്കം ചെയ്യുക",
         "start_chat": "ചാറ്റ് തുടങ്ങുക",
-        "view_source": "സോഴ്സ് കാണുക"
+        "view_source": "സോഴ്സ് കാണുക",
+        "reject": "നിരസിക്കുക",
+        "dismiss": "ഒഴിവാക്കുക",
+        "cancel": "റദ്ദാക്കുക",
+        "close": "അടയ്ക്കുക",
+        "update": "പുതുക്കുക"
     }
 }

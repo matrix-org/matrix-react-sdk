@@ -80,7 +80,7 @@ const SidebarUserSettingsTab: React.FC = () => {
                     >
                         <SettingsSubsectionText>
                             <HomeIcon />
-                            {_t("Home")}
+                            {_t("common|home")}
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
                             {_t("Home is useful for getting an overview of everything.")}
@@ -107,7 +107,7 @@ const SidebarUserSettingsTab: React.FC = () => {
                     >
                         <SettingsSubsectionText>
                             <FavoriteIcon />
-                            {_t("Favourites")}
+                            {_t("common|favourites")}
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
                             {_t("Group all your favourite rooms and people in one place.")}

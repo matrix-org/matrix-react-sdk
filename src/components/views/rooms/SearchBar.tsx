@@ -135,7 +135,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
                     <AccessibleButton
                         className="mx_SearchBar_cancel"
                         onClick={this.props.onCancelClick}
-                        aria-label={_t("Cancel")}
+                        aria-label={_t("action|cancel")}
                     />
                 </div>
                 <SearchWarning isRoomEncrypted={this.props.isRoomEncrypted} kind={WarningKind.Search} />

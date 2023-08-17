@@ -205,7 +205,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                     kind="primary_sm"
                     onClick={this.onShareClick}
                 >
-                    {_t("Share")}
+                    {_t("action|share")}
                 </AccessibleButton>
             );
         }

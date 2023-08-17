@@ -162,7 +162,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
               WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center);
           };
 
-    const maximiseTitle = isMaximised ? _t("Close") : _t("Maximise");
+    const maximiseTitle = isMaximised ? _t("action|close") : _t("Maximise");
 
     let openTitle = "";
     if (isPinned) {
@@ -196,7 +196,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
                     className="mx_RoomSummaryCard_app_options"
                     isExpanded={menuDisplayed}
                     onClick={openMenu}
-                    title={_t("Options")}
+                    title={_t("common|options")}
                 />
             )}
 

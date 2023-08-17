@@ -76,7 +76,7 @@ async function confirmToDismiss(): Promise<boolean> {
         description: _t("Are you sure you want to cancel entering passphrase?"),
         danger: false,
         button: _t("Go Back"),
-        cancelButton: _t("Cancel"),
+        cancelButton: _t("action|cancel"),
     }).finished;
     return !sure;
 }

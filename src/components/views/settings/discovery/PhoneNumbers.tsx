@@ -213,7 +213,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
                     kind="primary_sm"
                     onClick={this.onShareClick}
                 >
-                    {_t("Share")}
+                    {_t("action|share")}
                 </AccessibleButton>
             );
         }

@@ -185,7 +185,7 @@ export const ALTERNATE_KEY_NAME: Record<string, string> = {
     [Key.ESCAPE]: _td("Esc"),
     [Key.ENTER]: _td("Enter"),
     [Key.SPACE]: _td("Space"),
-    [Key.HOME]: _td("Home"),
+    [Key.HOME]: _td("common|home"),
     [Key.END]: _td("End"),
     [Key.ALT]: _td("Alt"),
     [Key.CONTROL]: _td("Ctrl"),
@@ -231,7 +231,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
         settingNames: [KeyBindingAction.ToggleMicInCall, KeyBindingAction.ToggleWebcamInCall],
     },
     [CategoryName.ROOM]: {
-        categoryLabel: _td("Room"),
+        categoryLabel: _td("common|room"),
         settingNames: [
             KeyBindingAction.SearchInRoom,
             KeyBindingAction.UploadFile,
@@ -301,7 +301,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
         ],
     },
     [CategoryName.LABS]: {
-        categoryLabel: _td("Labs"),
+        categoryLabel: _td("common|labs"),
         settingNames: [KeyBindingAction.ToggleHiddenEventVisibility],
     },
 };
