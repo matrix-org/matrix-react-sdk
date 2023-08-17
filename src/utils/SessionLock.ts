@@ -207,7 +207,11 @@ export async function getSessionLock(onNewInstance: () => Promise<void>): Promis
 
         const storageUpdatePromise = new Promise((resolve) => {
             onStorageUpdate = (event: StorageEvent) => {
-                if (event.key === SESSION_LOCK_CONSTANTS.STORAGE_ITEM_PING) resolve(event);
+                if (
+                    event.key === SESSION_LOCK_CONSTANTS.STORAGE_ITEM_PING ||
+                    event.key === SESSION_LOCK_CONSTANTS.STORAGE_ITEM_CLAIMANT
+                )
+                    resolve(event);
             };
         });
 

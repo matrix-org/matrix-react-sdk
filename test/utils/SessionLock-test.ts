@@ -150,6 +150,35 @@ describe("SessionLock", () => {
         window2.close();
     });
 
+    it("If a third instance starts while we are waiting, we give up immediately", async () => {
+        // first instance starts. It will never release the lock.
+        await getSessionLock(() => new Promise(() => {}));
+
+        // first instance should ping the timer after 5 seconds
+        jest.advanceTimersByTime(5000);
+
+        // second instance starts
+        const { getSessionLock: getSessionLock2 } = buildNewContext();
+        let session2Result: boolean | undefined;
+        const onNewInstance2 = jest.fn();
+        getSessionLock2(onNewInstance2).then((res) => {
+            session2Result = res;
+        });
+
+        await jest.advanceTimersByTimeAsync(100);
+        // should still be blocking
+        expect(session2Result).toBe(undefined);
+
+        // third instance starts
+        const { getSessionLock: getSessionLock3 } = buildNewContext();
+        getSessionLock3(async () => {});
+        await jest.advanceTimersByTimeAsync(0);
+
+        // session 2 should have given up
+        expect(session2Result).toBe(false);
+        expect(onNewInstance2).toHaveBeenCalled();
+    });
+
     it("If two new instances start concurrently, only one wins", async () => {
         // first instance starts. Once it gets the shutdown signal, it will wait two seconds and then release the lock.
         await getSessionLock(async () => {
