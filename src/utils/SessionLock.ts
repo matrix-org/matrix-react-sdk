@@ -17,6 +17,74 @@ limitations under the License.
 import { logger } from "matrix-js-sdk/src/logger";
 import { v4 as uuidv4 } from "uuid";
 
+/*
+ * Functionality for checking that only one instance is running at once
+ *
+ * The algorithm here is twofold.
+ *
+ * First, we "claim" a lock by periodically writing to `STORAGE_ITEM_PING`. On shutdown, we clear that item. So,
+ * a new instance starting up can check if the lock is free by inspecting `STORAGE_ITEM_PING`. If it is unset,
+ * or is stale, the new instance can assume the lock is free and claim it for itself. Otherwise, the new instance
+ * has to wait for the ping to be stale, or the item to be cleared.
+ *
+ * Secondly, we need a mechanism for proactively telling existing instances to shut down. We do this by writing a
+ * unique value to `STORAGE_ITEM_CLAIMANT`. Other instances of the app are supposed to monitor for writes to
+ * `STORAGE_ITEM_CLAIMANT` and initiate shutdown when it happens.
+ *
+ * There is slight complexity in `STORAGE_ITEM_CLAIMANT` in that we need to watch out for yet another instance
+ * starting up and staking a claim before we even get a chance to take the lock. When that happens we just bail out
+ * and let the newer instance get the lock.
+ *
+ * `STORAGE_ITEM_OWNER` has no functional role in the lock mechanism; it exists solely as a diagnostic indicator
+ * of which instance is writing to `STORAGE_ITEM_PING`.
+ */
+
+export const SESSION_LOCK_CONSTANTS = {
+    /**
+     * LocalStorage key for an item which indicates we have the lock.
+     *
+     * The instance which holds the lock writes the current time to this key every few seconds, to indicate it is still
+     * alive and holds the lock.
+     */
+    STORAGE_ITEM_PING: "react_sdk_session_lock_ping",
+
+    /**
+     * LocalStorage key for an item which holds the unique "session ID" of the instance which currently holds the lock.
+     *
+     * This property doesn't actually form a functional part of the locking algorithm; it is purely diagnostic.
+     */
+    STORAGE_ITEM_OWNER: "react_sdk_session_lock_owner",
+
+    /**
+     * LocalStorage key for the session ID of the most recent claimant to the lock.
+     *
+     * Each instance writes to this key on startup, so existing instances can detect new ones starting up.
+     */
+    STORAGE_ITEM_CLAIMANT: "react_sdk_session_lock_claimant",
+
+    /**
+     * The number of milliseconds after which we consider a lock claim stale
+     */
+    LOCK_EXPIRY_TIME_MS: 30000,
+};
+
+/**
+ * See if any instances are currently running
+ *
+ * @returns true if any instance is currently active
+ */
+export function checkSessionLockFree(): boolean {
+    const lastPingTime = window.localStorage.getItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_PING);
+    if (lastPingTime === null) {
+        // no other holder
+        return true;
+    }
+
+    // see if it has expired
+    const timeAgo = Date.now() - parseInt(lastPingTime);
+    return timeAgo > SESSION_LOCK_CONSTANTS.LOCK_EXPIRY_TIME_MS;
+}
+
 /**
  * Ensure that only one instance of the application is running at once.
  *
@@ -32,48 +100,6 @@ import { v4 as uuidv4 } from "uuid";
  *     (in which `onNewInstance` will have been called)
  */
 export async function getSessionLock(onNewInstance: () => Promise<void>): Promise<boolean> {
-    /*
-     * The algorithm here is twofold.
-     *
-     * First, we "claim" a lock by periodically writing to `STORAGE_ITEM_PING`. On shutdown, we clear that item. So,
-     * a new instance starting up can check if the lock is free by inspecting `STORAGE_ITEM_PING`. If it is unset,
-     * or is stale, the new instance can assume the lock is free and claim it for itself. Otherwise, the new instance
-     * has to wait for the ping to be stale, or the item to be cleared.
-     *
-     * Secondly, we need a mechanism for proactively telling existing instances to shut down. We do this by writing a
-     * unique value to `STORAGE_ITEM_CLAIMANT`. Other instances of the app are supposed to monitor for writes to
-     * `STORAGE_ITEM_CLAIMANT` and initiate shutdown when it happens.
-     *
-     * There is slight complexity in `STORAGE_ITEM_CLAIMANT` in that we need to watch out for yet another instance
-     * starting up and staking a claim before we even get a chance to take the lock. When that happens we just bail out
-     * and let the newer instance get the lock.
-     *
-     * `STORAGE_ITEM_OWNER` has no functional role in the lock mechanism; it exists solely as a diagnostic indicator
-     * of which instance is writing to `STORAGE_ITEM_PING`.
-     */
-
-    /**
-     * LocalStorage key for an item which indicates we have the lock.
-     *
-     * The instance which holds the lock writes the current time to this key every few seconds, to indicate it is still
-     * alive and holds the lock.
-     */
-    const STORAGE_ITEM_PING = "react_sdk_session_lock_ping";
-
-    /**
-     * LocalStorage key for an item which holds the unique "session ID" of the instance which currently holds the lock.
-     *
-     * This property doesn't actually form a functional part of the locking algorithm; it is purely diagnostic.
-     */
-    const STORAGE_ITEM_OWNER = "react_sdk_session_lock_owner";
-
-    /**
-     * LocalStorage key for the session ID of the most recent claimant to the lock.
-     *
-     * Each instance writes to this key on startup, so existing instances can detect new ones starting up.
-     */
-    const STORAGE_ITEM_CLAIMANT = "react_sdk_session_lock_claimant";
-
     /** unique ID for this session */
     const sessionIdentifier = uuidv4();
 
@@ -94,21 +120,21 @@ export async function getSessionLock(onNewInstance: () => Promise<void>): Promis
      */
     function checkLock(): number {
         // first of all, check that we are still the active claimant (ie, another instance hasn't come along while we were waiting.
-        const claimant = window.localStorage.getItem(STORAGE_ITEM_CLAIMANT);
+        const claimant = window.localStorage.getItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_CLAIMANT);
         if (claimant !== sessionIdentifier) {
             prefixedLogger.warn(`Lock was claimed by ${claimant} while we were waiting for it: aborting startup`);
             return -1;
         }
 
-        const lastPingTime = window.localStorage.getItem(STORAGE_ITEM_PING);
-        const lockHolder = window.localStorage.getItem(STORAGE_ITEM_OWNER);
+        const lastPingTime = window.localStorage.getItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_PING);
+        const lockHolder = window.localStorage.getItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_OWNER);
         if (lastPingTime === null) {
             prefixedLogger.info("No other session has the lock: proceeding with startup");
             return 0;
         }
 
         const timeAgo = Date.now() - parseInt(lastPingTime);
-        const remaining = 30000 - timeAgo;
+        const remaining = SESSION_LOCK_CONSTANTS.LOCK_EXPIRY_TIME_MS - timeAgo;
         if (remaining <= 0) {
             // another session claimed the lock, but it is stale.
             prefixedLogger.info(`Last ping (from ${lockHolder}) was ${timeAgo}ms ago: proceeding with startup`);
@@ -120,20 +146,20 @@ export async function getSessionLock(onNewInstance: () => Promise<void>): Promis
     }
 
     function serviceLock(): void {
-        window.localStorage.setItem(STORAGE_ITEM_OWNER, sessionIdentifier);
-        window.localStorage.setItem(STORAGE_ITEM_PING, Date.now().toString());
+        window.localStorage.setItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_OWNER, sessionIdentifier);
+        window.localStorage.setItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_PING, Date.now().toString());
     }
 
     // handler for storage events, used later
     function onStorageEvent(event: StorageEvent): void {
-        if (event.key === STORAGE_ITEM_CLAIMANT) {
+        if (event.key === SESSION_LOCK_CONSTANTS.STORAGE_ITEM_CLAIMANT) {
             // It's possible that the event was delayed, and this update actually predates our claim on the lock.
             // (In particular: suppose tab A and tab B start concurrently and both attempt to set STORAGE_ITEM_CLAIMANT.
             // Each write queues up a `storage` event for all other tabs. So both tabs see the `storage` event from the
             // other, even though by the time it arrives we may have overwritten it.)
             //
             // To resolve any doubt, we check the *actual* state of the storage.
-            const claimingSession = window.localStorage.getItem(STORAGE_ITEM_CLAIMANT);
+            const claimingSession = window.localStorage.getItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_CLAIMANT);
             if (claimingSession === sessionIdentifier) {
                 return;
             }
@@ -153,13 +179,13 @@ export async function getSessionLock(onNewInstance: () => Promise<void>): Promis
         if (lockServicer !== null) {
             clearInterval(lockServicer);
         }
-        window.localStorage.removeItem(STORAGE_ITEM_PING);
-        window.localStorage.removeItem(STORAGE_ITEM_OWNER);
+        window.localStorage.removeItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_PING);
+        window.localStorage.removeItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_OWNER);
         lockServicer = null;
     }
 
     // first of all, stake a claim for the lock. This tells anyone else holding the lock that we want it.
-    window.localStorage.setItem(STORAGE_ITEM_CLAIMANT, sessionIdentifier);
+    window.localStorage.setItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_CLAIMANT, sessionIdentifier);
 
     // now, wait for the lock to be free.
     // eslint-disable-next-line no-constant-condition
@@ -181,7 +207,7 @@ export async function getSessionLock(onNewInstance: () => Promise<void>): Promis
 
         const storageUpdatePromise = new Promise((resolve) => {
             onStorageUpdate = (event: StorageEvent) => {
-                if (event.key === STORAGE_ITEM_PING) resolve(event);
+                if (event.key === SESSION_LOCK_CONSTANTS.STORAGE_ITEM_PING) resolve(event);
             };
         });
 
@@ -213,8 +239,8 @@ export async function getSessionLock(onNewInstance: () => Promise<void>): Promis
         // only remove the ping if we still think we're the owner. Otherwise we could be removing someone else's claim!
         if (lockServicer !== null) {
             prefixedLogger.info("page hide: clearing our claim");
-            window.localStorage.removeItem(STORAGE_ITEM_PING);
-            window.localStorage.removeItem(STORAGE_ITEM_OWNER);
+            window.localStorage.removeItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_PING);
+            window.localStorage.removeItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_OWNER);
         }
 
         // It's worth noting that, according to the spec, the page might come back to life again after a pagehide.

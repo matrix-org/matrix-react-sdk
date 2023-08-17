@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { getSessionLock } from "../../src/utils/SessionLock";
+import { checkSessionLockFree, getSessionLock, SESSION_LOCK_CONSTANTS } from "../../src/utils/SessionLock";
 
 describe("SessionLock", () => {
     const otherWindows: Array<Window> = [];
@@ -72,6 +72,7 @@ describe("SessionLock", () => {
         window.dispatchEvent(new Event("pagehide", {}));
 
         // second instance starts as normal
+        expect(checkSessionLockFree()).toBe(true);
         const onNewInstance2 = jest.fn();
         expect(await getSessionLock(onNewInstance2)).toBe(true);
 
@@ -84,18 +85,22 @@ describe("SessionLock", () => {
         const onNewInstance1 = jest.fn();
         expect(await getSessionLock(onNewInstance1)).toBe(true);
         expect(onNewInstance1).not.toHaveBeenCalled();
+        expect(checkSessionLockFree()).toBe(false);
 
         // and pings the timer after 5 seconds
         jest.advanceTimersByTime(5000);
+        expect(checkSessionLockFree()).toBe(false);
 
         // oops, now it dies. We simulate this by forcibly clearing the timers.
         // For some reason `jest.clearAllTimers` also resets the simulated time, so preserve that
         const time = Date.now();
         jest.clearAllTimers();
         jest.setSystemTime(time);
+        expect(checkSessionLockFree()).toBe(false);
 
         // time advances a bit more
         jest.advanceTimersByTime(5000);
+        expect(checkSessionLockFree()).toBe(false);
 
         // second instance tries to start. This should block for 25 more seconds
         const onNewInstance2 = jest.fn();
@@ -107,10 +112,12 @@ describe("SessionLock", () => {
         // after another 24.5 seconds, we are still waiting
         jest.advanceTimersByTime(24500);
         expect(session2Result).toBe(undefined);
+        expect(checkSessionLockFree()).toBe(false);
 
         // another 500ms and we get the lock
         await jest.advanceTimersByTimeAsync(500);
         expect(session2Result).toBe(true);
+        expect(checkSessionLockFree()).toBe(false); // still false, because the new session has claimed it
 
         expect(onNewInstance1).not.toHaveBeenCalled();
         expect(onNewInstance2).not.toHaveBeenCalled();
@@ -215,6 +222,7 @@ describe("SessionLock", () => {
         // import the dependencies of getSessionLock into the new context
         window2._uuid = require("uuid");
         window2._logger = require("matrix-js-sdk/src/logger");
+        window2.SESSION_LOCK_CONSTANTS = SESSION_LOCK_CONSTANTS;
 
         // now, define getSessionLock as a global
         window2.eval(String(getSessionLock));
