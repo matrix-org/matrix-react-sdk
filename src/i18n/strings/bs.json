@@ -3,5 +3,7 @@
     "Create Account": "Otvori račun",
     "Sign In": "Prijavite se",
     "Explore rooms": "Istražite sobe",
-    "Identity server": "Identifikacioni Server"
+    "Identity server": "Identifikacioni Server",
+    "common": {},
+    "action": {}
 }

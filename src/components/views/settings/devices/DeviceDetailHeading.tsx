@@ -111,7 +111,7 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({ devic
                     data-testid="device-rename-submit-cta"
                     disabled={isLoading}
                 >
-                    {_t("Save")}
+                    {_t("action|save")}
                 </AccessibleButton>
                 <AccessibleButton
                     onClick={stopEditing}

@@ -611,12 +611,15 @@ async function getLangsJson(): Promise<Languages> {
     return res.json();
 }
 
+type Translation =
+    | string
+    | {
+          other: string;
+          [pluralisation: string]: string;
+      };
+
 interface ICounterpartTranslation {
-    [key: string]:
-        | string
-        | {
-              [pluralisation: string]: string;
-          };
+    [key: string]: Translation | ICounterpartTranslation;
 }
 
 async function getLanguageRetry(langPath: string, num = 3): Promise<ICounterpartTranslation> {

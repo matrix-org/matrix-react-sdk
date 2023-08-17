@@ -613,7 +613,7 @@ async function checkServerVersions(): Promise<void> {
                                 brand: SdkConfig.get().brand,
                             },
                         ),
-                        acceptLabel: _t("OK"),
+                        acceptLabel: _t("action|ok"),
                         onAccept: () => {
                             ToastStore.sharedInstance().dismissToast(toastKey);
                         },

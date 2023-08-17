@@ -305,7 +305,7 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
                                 onClick={this.onClickSaveSound}
                                 kind="primary"
                             >
-                                {_t("Save")}
+                                {_t("action|save")}
                             </AccessibleButton>
                             <br />
                         </div>

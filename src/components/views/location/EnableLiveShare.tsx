@@ -56,7 +56,7 @@ export const EnableLiveShare: React.FC<Props> = ({ onSubmit }) => {
                 onClick={onSubmit}
                 disabled={!isEnabled}
             >
-                {_t("OK")}
+                {_t("action|ok")}
             </AccessibleButton>
         </div>
     );

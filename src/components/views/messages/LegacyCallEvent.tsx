@@ -137,7 +137,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                         onClick={this.props.callEventGrouper.rejectCall}
                         kind="danger"
                     >
-                        <span> {_t("Decline")} </span>
+                        <span> {_t("action|decline")} </span>
                     </AccessibleButton>
                     <AccessibleButton
                         className="mx_LegacyCallEvent_content_button mx_LegacyCallEvent_content_button_answer"

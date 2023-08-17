@@ -248,7 +248,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                     {message}
                     <div className="mx_CompleteSecurity_actionRow">
                         <AccessibleButton kind="primary" onClick={this.onDoneClick}>
-                            {_t("Done")}
+                            {_t("common|done")}
                         </AccessibleButton>
                     </div>
                 </div>

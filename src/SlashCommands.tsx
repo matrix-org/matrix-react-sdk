@@ -410,7 +410,7 @@ export const Commands = [
                                         )}
                                     </p>
                                 ),
-                                button: _t("Continue"),
+                                button: _t("action|continue"),
                             });
 
                             prom = finished.then(([useDefault]) => {
@@ -460,7 +460,7 @@ export const Commands = [
     new Command({
         command: "part",
         args: "[<room-address>]",
-        description: _td("Leave room"),
+        description: _td("action|leave_room"),
         analyticsName: "Part",
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, threadId, args) {

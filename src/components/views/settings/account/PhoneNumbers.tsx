@@ -98,7 +98,7 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
                         kind="danger_sm"
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
-                        {_t("Remove")}
+                        {_t("action|remove")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.onDontRemove}
@@ -117,7 +117,7 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
                     +{this.props.msisdn.address}
                 </span>
                 <AccessibleButton onClick={this.onRemove} kind="danger_sm">
-                    {_t("Remove")}
+                    {_t("action|remove")}
                 </AccessibleButton>
             </div>
         );
@@ -193,7 +193,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                 logger.error("Unable to add phone number " + phoneNumber + " " + err);
                 this.setState({ verifying: false, continueDisabled: false, addTask: null });
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Error"),
+                    title: _t("common|error"),
                     description: extractErrorMessageFromError(err, _t("Operation failed")),
                 });
             });
@@ -286,7 +286,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                             kind="primary"
                             disabled={this.state.continueDisabled || this.state.newPhoneNumberCode.length === 0}
                         >
-                            {_t("Continue")}
+                            {_t("action|continue")}
                         </AccessibleButton>
                     </form>
                 </div>

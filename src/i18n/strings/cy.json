@@ -8,5 +8,7 @@
     "Create Account": "Creu Cyfrif",
     "Dismiss": "Wfftio",
     "Explore rooms": "Archwilio Ystafelloedd",
-    "Identity server": "Gweinydd Adnabod"
+    "Identity server": "Gweinydd Adnabod",
+    "common": {},
+    "action": {}
 }

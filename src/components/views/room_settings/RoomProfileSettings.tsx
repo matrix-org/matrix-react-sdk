@@ -229,7 +229,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                         {_t("Cancel")}
                     </AccessibleButton>
                     <AccessibleButton onClick={this.saveProfile} kind="primary" disabled={!this.isSaveEnabled()}>
-                        {_t("Save")}
+                        {_t("action|save")}
                     </AccessibleButton>
                 </div>
             );
@@ -248,7 +248,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                 <div className="mx_ProfileSettings_profile">
                     <div className="mx_ProfileSettings_profile_controls">
                         <Field
-                            label={_t("Room Name")}
+                            label={_t("common|room_name")}
                             type="text"
                             value={this.state.displayName}
                             autoComplete="off"

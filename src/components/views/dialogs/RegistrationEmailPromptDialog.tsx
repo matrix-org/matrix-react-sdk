@@ -80,7 +80,7 @@ const RegistrationEmailPromptDialog: React.FC<IProps> = ({ onFinished }) => {
                     />
                 </form>
             </div>
-            <DialogButtons primaryButton={_t("Continue")} onPrimaryButtonClick={onSubmit} hasCancel={false} />
+            <DialogButtons primaryButton={_t("action|continue")} onPrimaryButtonClick={onSubmit} hasCancel={false} />
         </BaseDialog>
     );
 };
