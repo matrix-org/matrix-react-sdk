@@ -312,12 +312,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
     const [supportsSpaceFiltering, setSupportsSpaceFiltering] = useState(true); // assume it does until we find out it doesn't
     useEffect(() => {
-        Promise.all([
-            cli.isVersionSupported("v1.4"),
-            cli.doesServerSupportUnstableFeature("org.matrix.msc3827.stable"),
-        ]).then(([versionSupported, unstableFeatureSupported]) =>
-            setSupportsSpaceFiltering(versionSupported || unstableFeatureSupported),
-        );
+        cli.isVersionSupported("v1.4")
+            .then((supported) => {
+                return supported || cli.doesServerSupportUnstableFeature("org.matrix.msc3827.stable");
+            })
+            .then((supported) => {
+                setSupportsSpaceFiltering(supported);
+            });
     }, [cli]);
 
     const {
