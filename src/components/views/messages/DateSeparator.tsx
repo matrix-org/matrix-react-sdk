@@ -104,14 +104,13 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         const days = getDaysArray("long");
         yesterday.setDate(today.getDate() - 1);
 
-        const locale = getUserLanguage();
-        const relativeTimeFormat = new Intl.RelativeTimeFormat(locale, { style: "long", numeric: "auto" });
+        const relativeTimeFormat = new Intl.RelativeTimeFormat(getUserLanguage(), { style: "long", numeric: "auto" });
         if (date.toDateString() === today.toDateString()) {
-            return relativeTimeFormat.format(0, "day").toLocaleUpperCase(locale);
+            return relativeTimeFormat.format(0, "day"); // Today
         } else if (date.toDateString() === yesterday.toDateString()) {
-            return relativeTimeFormat.format(-1, "day").toLocaleUpperCase(locale);
+            return relativeTimeFormat.format(-1, "day"); // Yesterday
         } else if (today.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
-            return days[date.getDay()];
+            return days[date.getDay()]; // Sunday-Saturday
         } else {
             return formatFullDateNoTime(date);
         }
