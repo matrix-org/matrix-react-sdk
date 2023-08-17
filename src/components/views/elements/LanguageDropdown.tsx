@@ -24,7 +24,7 @@ import Spinner from "./Spinner";
 import Dropdown from "./Dropdown";
 import { NonEmptyArray } from "../../../@types/common";
 
-type Languages = Awaited<ReturnType<typeof languageHandler.getAllLanguagesFromJson>>;
+type Languages = Awaited<ReturnType<typeof languageHandler.getAllLanguagesWithLabels>>;
 
 function languageMatchesSearchQuery(query: string, language: Languages[0]): boolean {
     if (language.label.toUpperCase().includes(query.toUpperCase())) return true;
@@ -56,7 +56,7 @@ export default class LanguageDropdown extends React.Component<IProps, IState> {
 
     public componentDidMount(): void {
         languageHandler
-            .getAllLanguagesFromJson()
+            .getAllLanguagesWithLabels()
             .then((langs) => {
                 langs.sort(function (a, b) {
                     if (a.label < b.label) return -1;
@@ -66,13 +66,20 @@ export default class LanguageDropdown extends React.Component<IProps, IState> {
                 this.setState({ langs });
             })
             .catch(() => {
-                this.setState({ langs: [{ value: "en", label: "English" }] });
+                this.setState({
+                    langs: [
+                        {
+                            value: "en",
+                            label: "English",
+                            labelInTargetLanguage: "English",
+                        },
+                    ],
+                });
             });
 
         if (!this.props.value) {
-            // If no value is given, we start with the first
-            // country selected, but our parent component
-            // doesn't know this, therefore we do this.
+            // If no value is given, we start with the first country selected,
+            // but our parent component doesn't know this, therefore we do this.
             const language = languageHandler.getUserLanguage();
             this.props.onOptionChange(language);
         }
@@ -89,7 +96,7 @@ export default class LanguageDropdown extends React.Component<IProps, IState> {
             return <Spinner />;
         }
 
-        let displayedLanguages: Awaited<ReturnType<typeof languageHandler.getAllLanguagesFromJson>>;
+        let displayedLanguages: Awaited<ReturnType<typeof languageHandler.getAllLanguagesWithLabels>>;
         if (this.state.searchQuery) {
             displayedLanguages = this.state.langs.filter((lang) => {
                 return languageMatchesSearchQuery(this.state.searchQuery, lang);
