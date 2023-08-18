@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
+import fetchMock from "fetch-mock-jest";
 
 import SdkConfig from "../src/SdkConfig";
 import {
@@ -31,7 +32,6 @@ import {
     UserFriendlyError,
 } from "../src/languageHandler";
 import { stubClient } from "./test-utils";
-import fetchMock from "fetch-mock-jest";
 
 async function setupTranslationOverridesForTests(overrides: ICustomTranslations) {
     const lookupUrl = "/translations.json";
