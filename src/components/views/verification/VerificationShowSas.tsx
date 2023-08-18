@@ -16,14 +16,13 @@ limitations under the License.
 
 import React from "react";
 import { Device } from "matrix-js-sdk/src/matrix";
-import { GeneratedSas } from "matrix-js-sdk/src/crypto-api/verification";
+import { GeneratedSas, EmojiMapping } from "matrix-js-sdk/src/crypto-api/verification";
 import SasEmoji from "@matrix-org/spec/sas-emoji.json";
 
 import { _t, getNormalizedLanguageKeys, getUserLanguage, normalizeLanguageKey } from "../../../languageHandler";
 import { PendingActionSpinner } from "../right_panel/EncryptionInfo";
 import AccessibleButton from "../elements/AccessibleButton";
 import { fixupColorFonts } from "../../../utils/FontManager";
-import { EmojiMapping } from "../../../../cypress/e2e/crypto/utils";
 
 interface IProps {
     pending?: boolean;
