@@ -70,7 +70,7 @@ const SasEmojiMap = new Map<
 /**
  * Translate given EmojiMapping into the target locale
  * @param mapping - the given EmojiMapping to translate
- * @param locale - the locale to translate to, will fall back to English as the base locale for Matrix SAS Emoji.
+ * @param locale - the BCP 47 locale to translate to, will fall back to English as the base locale for Matrix SAS Emoji.
  */
 export function tEmoji(mapping: EmojiMapping, locale: string): string {
     const name = mapping[1];
