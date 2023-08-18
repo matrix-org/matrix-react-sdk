@@ -21,6 +21,7 @@ import {
     _t,
     _tDom,
     CustomTranslationOptions,
+    getAllLanguagesWithLabels,
     ICustomTranslations,
     registerCustomTranslations,
     setLanguage,
@@ -30,6 +31,7 @@ import {
     UserFriendlyError,
 } from "../src/languageHandler";
 import { stubClient } from "./test-utils";
+import fetchMock from "fetch-mock-jest";
 
 async function setupTranslationOverridesForTests(overrides: ICustomTranslations) {
     const lookupUrl = "/translations.json";
@@ -123,6 +125,36 @@ describe("languageHandler", () => {
         it("ok to omit the substitution variables and cause object, there just won't be any cause", async () => {
             const friendlyError = new UserFriendlyError("foo error");
             expect(friendlyError.cause).toBeUndefined();
+        });
+    });
+
+    describe("getAllLanguagesWithLabels", () => {
+        it("should handle unknown language sanely", async () => {
+            fetchMock.reset();
+            fetchMock.getOnce("/i18n/languages.json", {
+                en: "en_EN.json",
+                de: "de_DE.json",
+                qq: "qq.json",
+            });
+            await expect(getAllLanguagesWithLabels()).resolves.toMatchInlineSnapshot(`
+                [
+                  {
+                    "label": "English",
+                    "labelInTargetLanguage": "English",
+                    "value": "en",
+                  },
+                  {
+                    "label": "German",
+                    "labelInTargetLanguage": "Deutsch",
+                    "value": "de",
+                  },
+                  {
+                    "label": "qq",
+                    "labelInTargetLanguage": "qq",
+                    "value": "qq",
+                  },
+                ]
+            `);
         });
     });
 });
