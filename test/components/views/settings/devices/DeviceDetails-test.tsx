@@ -45,6 +45,7 @@ describe("<DeviceDetails />", () => {
 
     beforeEach(() => {
         jest.setSystemTime(now);
+        jest.spyOn(Date, "now").mockImplementation(() => now);
     });
 
     it("renders device without metadata", () => {

@@ -25,7 +25,7 @@ const MILLIS_IN_DAY = 86400000;
 export function getDaysArray(weekday: Intl.DateTimeFormatOptions["weekday"] = "short"): string[] {
     const now = new Date();
     const { format } = new Intl.DateTimeFormat(getUserLanguage(), { weekday });
-    return [...Array(7).keys()].map((day) => format(new Date().getTime() - (now.getDay() - day) * MILLIS_IN_DAY));
+    return [...Array(7).keys()].map((day) => format(now.getTime() - (now.getDay() - day) * MILLIS_IN_DAY));
 }
 
 function getMonthsArray(month: Intl.DateTimeFormatOptions["month"] = "short"): string[] {
@@ -44,7 +44,7 @@ export function formatDate(date: Date, showTwelveHour = false, locale?: string):
             hour: "numeric",
             minute: "2-digit",
             hour12: showTwelveHour,
-        }).format(new Date());
+        }).format(date);
     } else if (now.getFullYear() === date.getFullYear()) {
         return new Intl.DateTimeFormat(_locale, {
             weekday: "short",
@@ -53,7 +53,7 @@ export function formatDate(date: Date, showTwelveHour = false, locale?: string):
             hour: "numeric",
             minute: "2-digit",
             hour12: showTwelveHour,
-        }).format(new Date());
+        }).format(date);
     }
     return formatFullDate(date, showTwelveHour, true, _locale);
 }
@@ -214,7 +214,7 @@ export function formatFullDateNoDayNoTime(date: Date, locale?: string): string {
 }
 
 export function formatRelativeTime(date: Date, showTwelveHour = false): string {
-    const now = new Date(Date.now());
+    const now = new Date();
     if (withinCurrentDay(date, now)) {
         return formatTime(date, showTwelveHour);
     } else {
