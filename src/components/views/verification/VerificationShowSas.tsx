@@ -19,7 +19,7 @@ import { Device } from "matrix-js-sdk/src/matrix";
 import { GeneratedSas, EmojiMapping } from "matrix-js-sdk/src/crypto-api/verification";
 import SasEmoji from "@matrix-org/spec/sas-emoji.json";
 
-import { _t, getNormalizedLanguageKeys, getUserLanguage, normalizeLanguageKey } from "../../../languageHandler";
+import { _t, getNormalizedLanguageKeys, getUserLanguage } from "../../../languageHandler";
 import { PendingActionSpinner } from "../right_panel/EncryptionInfo";
 import AccessibleButton from "../elements/AccessibleButton";
 import { fixupColorFonts } from "../../../utils/FontManager";
