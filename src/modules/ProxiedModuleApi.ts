@@ -96,7 +96,7 @@ export class ProxiedModuleApi implements ModuleApi {
                     initialOptions,
                     contentFactory: body,
                     moduleApi: this,
-                    contentProps: props,
+                    additionalContentProps: props,
                 },
                 "mx_CompoundDialog",
             ).finished.then(([didOkOrSubmit, model]) => {

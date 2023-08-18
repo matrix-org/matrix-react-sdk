@@ -25,7 +25,7 @@ import { _t } from "../../../languageHandler";
 
 interface IProps<P extends DialogProps, C extends DialogContent<P>> {
     contentFactory: (props: P, ref: React.RefObject<C>) => React.ReactNode;
-    contentProps: Omit<P, keyof DialogProps> | undefined;
+    additionalContentProps: Omit<P, keyof DialogProps> | undefined;
     initialOptions: ModuleUiDialogOptions;
     moduleApi: ModuleApi;
     onFinished(ok?: boolean, model?: Awaited<ReturnType<DialogContent<P & DialogProps>["trySubmit"]>>): void;
@@ -65,7 +65,7 @@ export class ModuleUiDialog<P extends DialogProps, C extends DialogContent<P>> e
         this.props.onFinished(false);
     }
 
-    protected setOptions(options: ModuleUiDialogOptions): void {
+    private setOptions(options: ModuleUiDialogOptions): void {
         this.setState((state) => ({ ...state, ...options }));
     }
 
@@ -76,9 +76,9 @@ export class ModuleUiDialog<P extends DialogProps, C extends DialogContent<P>> e
             cancel: this.cancel.bind(this),
         };
 
-        // Typescript isn't very happy understanding that `contentProps` satisfies `Omit<P, keyof DialogProps>`
+        // Typescript isn't very happy understanding that `contentProps` satisfies `P`
         const contentProps: P = {
-            ...this.props.contentProps,
+            ...this.props.additionalContentProps,
             ...dialogProps,
         } as unknown as P;
 
