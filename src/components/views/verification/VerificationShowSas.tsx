@@ -64,9 +64,7 @@ export default class VerificationShowSas extends React.Component<IProps, IState>
         this.state = {
             pending: false,
         };
-    }
 
-    public componentWillMount(): void {
         // As this component is also used before login (during complete security),
         // also make sure we have a working emoji font to display the SAS emojis here.
         // This is also done from LoggedInView.
