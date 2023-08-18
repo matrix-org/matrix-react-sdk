@@ -23,9 +23,146 @@ import {
     formatTimeLeft,
     formatPreciseDuration,
     formatLocalDateShort,
+    getDaysArray,
+    getMonthsArray,
 } from "../../src/DateUtils";
 import { REPEATABLE_DATE, mockIntlDateTimeFormat, unmockIntlDateTimeFormat } from "../test-utils";
 import * as languageHandler from "../../src/languageHandler";
+
+describe("getDaysArray", () => {
+    it("should return Sunday-Saturday in long mode", () => {
+        expect(getDaysArray("long")).toMatchInlineSnapshot(`
+            [
+              "Sunday",
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+            ]
+        `);
+    });
+    it("should return Sun-Sat in short mode", () => {
+        expect(getDaysArray("short")).toMatchInlineSnapshot(`
+            [
+              "Sun",
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
+            ]
+        `);
+    });
+    it("should return S-S in narrow mode", () => {
+        expect(getDaysArray("narrow")).toMatchInlineSnapshot(`
+            [
+              "S",
+              "M",
+              "T",
+              "W",
+              "T",
+              "F",
+              "S",
+            ]
+        `);
+    });
+});
+
+describe("getMonthsArray", () => {
+    it("should return January-December in long mode", () => {
+        expect(getMonthsArray("long")).toMatchInlineSnapshot(`
+            [
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December",
+            ]
+        `);
+    });
+    it("should return Jan-Dec in short mode", () => {
+        expect(getMonthsArray("short")).toMatchInlineSnapshot(`
+            [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec",
+            ]
+        `);
+    });
+    it("should return J-D in narrow mode", () => {
+        expect(getMonthsArray("narrow")).toMatchInlineSnapshot(`
+            [
+              "J",
+              "F",
+              "M",
+              "A",
+              "M",
+              "J",
+              "J",
+              "A",
+              "S",
+              "O",
+              "N",
+              "D",
+            ]
+        `);
+    });
+    it("should return 1-12 in numeric mode", () => {
+        expect(getMonthsArray("numeric")).toMatchInlineSnapshot(`
+            [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+            ]
+        `);
+    });
+    it("should return 01-12 in 2-digit mode", () => {
+        expect(getMonthsArray("2-digit")).toMatchInlineSnapshot(`
+            [
+              "01",
+              "02",
+              "03",
+              "04",
+              "05",
+              "06",
+              "07",
+              "08",
+              "09",
+              "10",
+              "11",
+              "12",
+            ]
+        `);
+    });
+});
 
 describe("formatSeconds", () => {
     it("correctly formats time with hours", () => {

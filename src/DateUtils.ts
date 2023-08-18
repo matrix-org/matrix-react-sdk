@@ -22,15 +22,23 @@ import { _t, getUserLanguage } from "./languageHandler";
 
 const MILLIS_IN_DAY = 86400000;
 
+/**
+ * Returns array of 7 weekday names, from Sunday to Saturday, internationalised to the user's language.
+ * @param weekday - format desired "short" | "long" | "narrow"
+ */
 export function getDaysArray(weekday: Intl.DateTimeFormatOptions["weekday"] = "short"): string[] {
-    const now = new Date();
-    const { format } = new Intl.DateTimeFormat(getUserLanguage(), { weekday });
-    return [...Array(7).keys()].map((day) => format(now.getTime() - (now.getDay() - day) * MILLIS_IN_DAY));
+    const sunday = 1672574400000; // 2023-01-01 12:00 UTC
+    const { format } = new Intl.DateTimeFormat(getUserLanguage(), { weekday, timeZone: "UTC" });
+    return [...Array(7).keys()].map((day) => format(sunday + day * MILLIS_IN_DAY));
 }
 
-function getMonthsArray(month: Intl.DateTimeFormatOptions["month"] = "short"): string[] {
-    const { format } = new Intl.DateTimeFormat(getUserLanguage(), { month });
-    return [...Array(12).keys()].map((m) => format(new Date(Date.UTC(2021, m))));
+/**
+ * Returns array of 12 month names, from January to December, internationalised to the user's language.
+ * @param month - format desired "numeric" | "2-digit" | "long" | "short" | "narrow"
+ */
+export function getMonthsArray(month: Intl.DateTimeFormatOptions["month"] = "short"): string[] {
+    const { format } = new Intl.DateTimeFormat(getUserLanguage(), { month, timeZone: "UTC" });
+    return [...Array(12).keys()].map((m) => format(Date.UTC(2021, m)));
 }
 
 export function formatDate(date: Date, showTwelveHour = false, locale?: string): string {
