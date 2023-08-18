@@ -122,6 +122,7 @@ describe("<SpacePanel />", () => {
         isGuest: jest.fn(),
         getAccountData: jest.fn(),
         on: jest.fn(),
+        off: jest.fn(),
         removeListener: jest.fn(),
         isVersionSupported: jest.fn().mockResolvedValue(true),
         doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(false),
