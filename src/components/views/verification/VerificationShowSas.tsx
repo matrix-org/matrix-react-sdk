@@ -58,7 +58,9 @@ const SasEmojiMap = new Map<
             description,
             // Normalize the translation keys
             translations: Object.keys(translations).reduce<Record<string, string>>((o, k) => {
-                o[normalizeLanguageKey(k)] = translations[k as keyof typeof translations]!;
+                for (const key of getNormalizedLanguageKeys(k)) {
+                    o[key] = translations[k as keyof typeof translations]!;
+                }
                 return o;
             }, {}),
         },
@@ -79,8 +81,8 @@ export function tEmoji(mapping: EmojiMapping, locale: string): string {
     }
 
     for (const key of getNormalizedLanguageKeys(locale)) {
-        if (key in emoji.translations) {
-            return key;
+        if (!!emoji.translations[key]) {
+            return emoji.translations[key];
         }
     }
 
