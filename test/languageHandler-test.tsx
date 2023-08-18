@@ -32,6 +32,7 @@ import {
     UserFriendlyError,
 } from "../src/languageHandler";
 import { stubClient } from "./test-utils";
+import { setupLanguageMock } from "./setup/setupLanguage";
 
 async function setupTranslationOverridesForTests(overrides: ICustomTranslations) {
     const lookupUrl = "/translations.json";
@@ -50,6 +51,10 @@ async function setupTranslationOverridesForTests(overrides: ICustomTranslations)
 }
 
 describe("languageHandler", () => {
+    beforeEach(async () => {
+        await setLanguage("en");
+    });
+
     afterEach(() => {
         SdkConfig.reset();
         CustomTranslationOptions.lookupFn = undefined;
@@ -130,12 +135,15 @@ describe("languageHandler", () => {
 
     describe("getAllLanguagesWithLabels", () => {
         it("should handle unknown language sanely", async () => {
-            fetchMock.reset();
-            fetchMock.getOnce("/i18n/languages.json", {
-                en: "en_EN.json",
-                de: "de_DE.json",
-                qq: "qq.json",
-            });
+            fetchMock.getOnce(
+                "/i18n/languages.json",
+                {
+                    en: "en_EN.json",
+                    de: "de_DE.json",
+                    qq: "qq.json",
+                },
+                { overwriteRoutes: true },
+            );
             await expect(getAllLanguagesWithLabels()).resolves.toMatchInlineSnapshot(`
                 [
                   {
@@ -155,6 +163,7 @@ describe("languageHandler", () => {
                   },
                 ]
             `);
+            setupLanguageMock(); // restore language mock
         });
     });
 });
