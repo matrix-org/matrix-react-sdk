@@ -44,16 +44,16 @@ describe("formatSeconds", () => {
 });
 
 describe("formatRelativeTime", () => {
-    let dateSpy: jest.SpyInstance<number, []>;
+    jest.useFakeTimers();
+
     beforeAll(() => {
-        dateSpy = jest
-            .spyOn(global.Date, "now")
-            // Tuesday, 2 November 2021 11:18:03 UTC
-            .mockImplementation(() => 1635851883000);
+        // Tuesday, 2 November 2021 11:18:03 UTC
+        jest.setSystemTime(1635851883000);
     });
 
     afterAll(() => {
-        dateSpy.mockRestore();
+        jest.setSystemTime(jest.getRealSystemTime());
+        jest.useRealTimers();
     });
 
     it("returns hour format for events created in the same day", () => {
