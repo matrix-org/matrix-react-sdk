@@ -27,7 +27,8 @@ import {
 import sanitizeHtml from "sanitize-html";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import SpotlightDialog, { Filter } from "../../../../src/components/views/dialogs/spotlight/SpotlightDialog";
+import SpotlightDialog from "../../../../src/components/views/dialogs/spotlight/SpotlightDialog";
+import { Filter } from "../../../../src/components/views/dialogs/spotlight/Filter";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../../src/models/LocalRoom";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
