@@ -352,12 +352,12 @@ describe("Spotlight Dialog", () => {
         });
 
         it("should find Rooms", () => {
-            expect(options.length).toBe(3);
+            expect(options).toHaveLength(4);
             expect(options[0]!.innerHTML).toContain(testRoom.name);
         });
 
         it("should not find LocalRooms", () => {
-            expect(options.length).toBe(3);
+            expect(options).toHaveLength(4);
             expect(options[0]!.innerHTML).not.toContain(testLocalRoom.name);
         });
     });
