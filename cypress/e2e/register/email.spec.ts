@@ -16,7 +16,6 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { hostContainerName } from "../../plugins/docker";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { Mailhog } from "../../support/mailhog";
 
@@ -25,12 +24,12 @@ describe("Email Registration", () => {
     let mailhog: Mailhog;
 
     beforeEach(() => {
-        cy.startMailhog().then(async (_mailhog) => {
+        cy.startMailhog().then((_mailhog) => {
             mailhog = _mailhog;
             cy.startHomeserver({
                 template: "email",
                 variables: {
-                    SMTP_HOST: await hostContainerName(),
+                    SMTP_HOST: "{{HOST_DOCKER_INTERNAL}}", // This will get replaced in synapseStart
                     SMTP_PORT: _mailhog.instance.smtpPort,
                 },
             }).then((_homeserver) => {

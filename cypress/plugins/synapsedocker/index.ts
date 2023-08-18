@@ -92,10 +92,24 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
     };
 }
 
-// Start a synapse instance: the template must be the name of
-// one of the templates in the cypress/plugins/synapsedocker/templates
-// directory
+/**
+ * Start a synapse instance: the template must be the name of
+ * one of the templates in the cypress/plugins/synapsedocker/templates
+ * directory.
+ *
+ * Any value in opts.variables that is set to `{{HOST_DOCKER_INTERNAL}}'
+ * will be replaced with 'host.docker.internal' (if we are on Docker) or
+ * 'host.containers.interal' if we are on Podman.
+ */
 async function synapseStart(opts: StartHomeserverOpts): Promise<HomeserverInstance> {
+    if (opts.variables) {
+        for (const [key, value] of Object.entries(opts.variables)) {
+            if (value === "{{HOST_DOCKER_INTERNAL}}") {
+                opts.variables[key] = await hostContainerName();
+            }
+        }
+    }
+
     const synCfg = await cfgDirFromTemplate(opts);
 
     console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
