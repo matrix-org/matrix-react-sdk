@@ -69,8 +69,18 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
     hsYaml = hsYaml.replace(/{{OAUTH_SERVER_PORT}}/g, opts.oAuthServerPort?.toString());
     hsYaml = hsYaml.replace(/{{HOST_DOCKER_INTERNAL}}/g, await hostContainerName());
     if (opts.variables) {
+        let fetchedHostContainer = null;
         for (const key in opts.variables) {
-            hsYaml = hsYaml.replace(new RegExp("%" + key + "%", "g"), String(opts.variables[key]));
+            let value = String(opts.variables[key]);
+
+            if (value === "{{HOST_DOCKER_INTERNAL}}") {
+                if (!fetchedHostContainer) {
+                    fetchedHostContainer = await hostContainerName();
+                }
+                value = fetchedHostContainer;
+            }
+
+            hsYaml = hsYaml.replace(new RegExp("%" + key + "%", "g"), value);
         }
     }
 
@@ -102,14 +112,6 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
  * 'host.containers.interal' if we are on Podman.
  */
 async function synapseStart(opts: StartHomeserverOpts): Promise<HomeserverInstance> {
-    if (opts.variables) {
-        for (const [key, value] of Object.entries(opts.variables)) {
-            if (value === "{{HOST_DOCKER_INTERNAL}}") {
-                opts.variables[key] = await hostContainerName();
-            }
-        }
-    }
-
     const synCfg = await cfgDirFromTemplate(opts);
 
     console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
