@@ -20,9 +20,9 @@ import { Optional } from "matrix-events-sdk";
 
 import { _t, getUserLanguage } from "./languageHandler";
 
-const MINUTE_MS = 60000;
-const HOUR_MS = MINUTE_MS * 60;
-const DAY_MS = HOUR_MS * 24;
+export const MINUTE_MS = 60000;
+export const HOUR_MS = MINUTE_MS * 60;
+export const DAY_MS = HOUR_MS * 24;
 
 /**
  * Returns array of 7 weekday names, from Sunday to Saturday, internationalised to the user's language.
@@ -43,12 +43,25 @@ export function getMonthsArray(month: Intl.DateTimeFormatOptions["month"] = "sho
     return [...Array(12).keys()].map((m) => format(Date.UTC(2021, m)));
 }
 
+/**
+ * Formats a given date to a date & time string with
+ * variable resolution depending on far away the given date it from now.
+ * Will use the browser's default time zone.
+ * If the date is today it will return a time string excluding seconds. See {@formatTime}.
+ * If the date is within the last 6 days it will return the name of the weekday along with the time string excluding seconds.
+ * If the date is within the same year then it will return the weekday, month and day of the month along with the time string excluding seconds.
+ * Otherwise, it will return a string representing the full date & time in a human friendly manner. See {@formatFullDate}.
+ * @param date - date object to format
+ * @param showTwelveHour - whether to use 12-hour mode instead of default 24-hour mode
+ * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
+ */
 export function formatDate(date: Date, showTwelveHour = false, locale?: string): string {
     const _locale = locale ?? getUserLanguage();
     const now = new Date();
     if (date.toDateString() === now.toDateString()) {
         return formatTime(date, showTwelveHour, _locale);
-    } else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
+    } else if (now.getTime() - date.getTime() < 6 * DAY_MS) {
+        // Time is less than 6 days into the future.
         return new Intl.DateTimeFormat(_locale, {
             weekday: "short",
             hour: "numeric",
@@ -65,9 +78,15 @@ export function formatDate(date: Date, showTwelveHour = false, locale?: string):
             hour12: showTwelveHour,
         }).format(date);
     }
-    return formatFullDate(date, showTwelveHour, true, _locale);
+    return formatFullDate(date, showTwelveHour, false, _locale);
 }
 
+/**
+ * Formats a given date to a human-friendly string with short weekday
+ * @example "Thu, 17 Nov 2022" in en-GB locale
+ * @param date - date object to format
+ * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
+ */
 export function formatFullDateNoTime(date: Date, locale?: string): string {
     return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
         weekday: "short",
@@ -77,6 +96,14 @@ export function formatFullDateNoTime(date: Date, locale?: string): string {
     }).format(date);
 }
 
+/**
+ * Formats a given date to a date & time string, optionally including seconds
+ * @example "Thu, 17 Nov 2022, 4:58:32 pm" in en-GB locale with showTwelveHour=true and showSeconds=true
+ * @param date - date object to format
+ * @param showTwelveHour - whether to use 12-hour mode instead of default 24-hour mode
+ * @param showSeconds - whether to include seconds in the time portion of the string
+ * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
+ */
 export function formatFullDate(date: Date, showTwelveHour = false, showSeconds = true, locale?: string): string {
     return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
         weekday: "short",
@@ -104,9 +131,16 @@ export function formatDateForInput(date: Date): string {
     return `${year}-${month}-${day}`;
 }
 
+/**
+ * Formats a given date to a time string including seconds
+ * @example "4:58:32 PM" in en-GB locale with showTwelveHour=true
+ * @example "16:58:32" in en-GB locale with showTwelveHour=false
+ * @param date - date object to format
+ * @param showTwelveHour - whether to use 12-hour mode instead of default 24-hour mode
+ * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
+ */
 export function formatFullTime(date: Date, showTwelveHour = false, locale?: string): string {
     return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
-        weekday: "short",
         hour: "numeric",
         minute: "2-digit",
         second: "2-digit",
@@ -114,6 +148,14 @@ export function formatFullTime(date: Date, showTwelveHour = false, locale?: stri
     }).format(date);
 }
 
+/**
+ * Formats a given date to a time string excluding seconds
+ * @example "4:58 PM" in en-GB locale with showTwelveHour=true
+ * @example "16:58" in en-GB locale with showTwelveHour=false
+ * @param date - date object to format
+ * @param showTwelveHour - whether to use 12-hour mode instead of default 24-hour mode
+ * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
+ */
 export function formatTime(date: Date, showTwelveHour = false, locale?: string): string {
     return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
         hour: "numeric",
@@ -206,8 +248,7 @@ export function formatFullDateNoDay(date: Date): string {
 }
 
 /**
- * Returns an ISO date string without textual description of the date (ie: no "Wednesday" or
- * similar)
+ * Returns an ISO date string without textual description of the date (ie: no "Wednesday" or similar)
  * @param date The date to format.
  * @returns The date string in ISO format.
  */
@@ -215,6 +256,12 @@ export function formatFullDateNoDayISO(date: Date): string {
     return date.toISOString();
 }
 
+/**
+ * Formats a given date to a string
+ * @example 17/11/2022 in en-GB locale
+ * @param date - date object to format
+ * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
+ */
 export function formatFullDateNoDayNoTime(date: Date, locale?: string): string {
     return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
         year: "numeric",
@@ -282,10 +329,10 @@ export function formatPreciseDuration(durationMs: number): string {
 
 /**
  * Formats a timestamp to a short date
- * (e.g. 25/12/22 in uk locale)
- * localised by system locale
+ * Similar to {@formatFullDateNoDayNoTime} but with 2-digit on day, month, year.
+ * @example 25/12/22 in en-GB locale
  * @param timestamp - epoch timestamp
- * @param locale - the locale string to use, defaulting to user's selected application locale (not browser locale)
+ * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
  * @returns {string} formattedDate
  */
 export const formatLocalDateShort = (timestamp: number, locale?: string): string =>

@@ -25,6 +25,15 @@ import {
     formatLocalDateShort,
     getDaysArray,
     getMonthsArray,
+    formatFullDateNoDayNoTime,
+    formatTime,
+    formatFullTime,
+    formatFullDate,
+    formatFullDateNoTime,
+    formatDate,
+    HOUR_MS,
+    MINUTE_MS,
+    DAY_MS,
 } from "../../src/DateUtils";
 import { REPEATABLE_DATE, mockIntlDateTimeFormat, unmockIntlDateTimeFormat } from "../test-utils";
 import * as languageHandler from "../../src/languageHandler";
@@ -164,6 +173,75 @@ describe("getMonthsArray", () => {
     });
 });
 
+describe("formatDate", () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(REPEATABLE_DATE);
+    });
+
+    afterAll(() => {
+        jest.setSystemTime(jest.getRealSystemTime());
+        jest.useRealTimers();
+    });
+
+    it("should return time string if date is within same day", () => {
+        const date = new Date(REPEATABLE_DATE.getTime() + 2 * HOUR_MS + 12 * MINUTE_MS);
+        expect(formatDate(date, false, "en-GB")).toMatchInlineSnapshot(`"19:10"`);
+    });
+
+    it("should return time string with weekday if date is within last 6 days", () => {
+        const date = new Date(REPEATABLE_DATE.getTime() - 6 * DAY_MS + 2 * HOUR_MS + 12 * MINUTE_MS);
+        expect(formatDate(date, false, "en-GB")).toMatchInlineSnapshot(`"Fri 19:10"`);
+    });
+
+    it("should return time & date string without year if it is within the same year", () => {
+        const date = new Date(REPEATABLE_DATE.getTime() - 66 * DAY_MS + 2 * HOUR_MS + 12 * MINUTE_MS);
+        expect(formatDate(date, false, "en-GB")).toMatchInlineSnapshot(`"Mon, 12 Sept, 19:10"`);
+    });
+
+    it("should return full time & date string otherwise", () => {
+        const date = new Date(REPEATABLE_DATE.getTime() - 666 * DAY_MS + 2 * HOUR_MS + 12 * MINUTE_MS);
+        expect(formatDate(date, false, "en-GB")).toMatchInlineSnapshot(`"Wed, 20 Jan 2021, 19:10"`);
+    });
+});
+
+describe("formatFullDateNoTime", () => {
+    it("should match given locale en-GB", () => {
+        expect(formatFullDateNoTime(REPEATABLE_DATE, "en-GB")).toMatchInlineSnapshot(`"Thu, 17 Nov 2022"`);
+    });
+});
+
+describe("formatFullDate", () => {
+    it("correctly formats with seconds", () => {
+        expect(formatFullDate(REPEATABLE_DATE, true, true, "en-GB")).toMatchInlineSnapshot(
+            `"Thu, 17 Nov 2022, 4:58:32 pm"`,
+        );
+    });
+    it("correctly formats without seconds", () => {
+        expect(formatFullDate(REPEATABLE_DATE, false, false, "en-GB")).toMatchInlineSnapshot(
+            `"Thu, 17 Nov 2022, 16:58"`,
+        );
+    });
+});
+
+describe("formatFullTime", () => {
+    it("correctly formats 12 hour mode", () => {
+        expect(formatFullTime(REPEATABLE_DATE, true, "en-GB")).toMatchInlineSnapshot(`"4:58:32 pm"`);
+    });
+    it("correctly formats 24 hour mode", () => {
+        expect(formatFullTime(REPEATABLE_DATE, false, "en-GB")).toMatchInlineSnapshot(`"16:58:32"`);
+    });
+});
+
+describe("formatTime", () => {
+    it("correctly formats 12 hour mode", () => {
+        expect(formatTime(REPEATABLE_DATE, true, "en-GB")).toMatchInlineSnapshot(`"4:58 pm"`);
+    });
+    it("correctly formats 24 hour mode", () => {
+        expect(formatTime(REPEATABLE_DATE, false, "en-GB")).toMatchInlineSnapshot(`"16:58"`);
+    });
+});
+
 describe("formatSeconds", () => {
     it("correctly formats time with hours", () => {
         expect(formatSeconds(60 * 60 * 3 + 60 * 31 + 55)).toBe("03:31:55");
@@ -181,9 +259,8 @@ describe("formatSeconds", () => {
 });
 
 describe("formatRelativeTime", () => {
-    jest.useFakeTimers();
-
     beforeAll(() => {
+        jest.useFakeTimers();
         // Tuesday, 2 November 2021 11:18:03 UTC
         jest.setSystemTime(1635851883000);
     });
@@ -269,6 +346,12 @@ describe("formatPreciseDuration", () => {
 describe("formatFullDateNoDayISO", () => {
     it("should return ISO format", () => {
         expect(formatFullDateNoDayISO(REPEATABLE_DATE)).toEqual("2022-11-17T16:58:32.517Z");
+    });
+});
+
+describe("formatFullDateNoDayNoTime", () => {
+    it("should return en-GB locale", () => {
+        expect(formatFullDateNoDayNoTime(REPEATABLE_DATE, "en-GB")).toMatchInlineSnapshot(`"17/11/2022"`);
     });
 });
 
