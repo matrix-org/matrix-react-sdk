@@ -24,6 +24,7 @@ import React, {
     useState,
     ChangeEvent,
     ReactNode,
+    useEffect,
 } from "react";
 import classNames from "classnames";
 import {
@@ -228,6 +229,17 @@ const SpaceCreateMenu: React.FC<{
     const [avatar, setAvatar] = useState<File | undefined>(undefined);
     const [topic, setTopic] = useState<string>("");
 
+    const [supportsSpaceFiltering, setSupportsSpaceFiltering] = useState(true); // assume it does until we find out it doesn't
+    useEffect(() => {
+        cli.isVersionSupported("v1.4")
+            .then((supported) => {
+                return supported || cli.doesServerSupportUnstableFeature("org.matrix.msc3827.stable");
+            })
+            .then((supported) => {
+                setSupportsSpaceFiltering(supported);
+            });
+    }, [cli]);
+
     const onSpaceCreateClick = async (e: ButtonEvent): Promise<void> => {
         e.preventDefault();
         if (busy) return;
@@ -293,9 +305,11 @@ const SpaceCreateMenu: React.FC<{
                     onClick={() => setVisibility(Visibility.Private)}
                 />
 
-                <AccessibleButton kind="primary_outline" onClick={onSearchClick}>
-                    {_t("Search for public spaces")}
-                </AccessibleButton>
+                {supportsSpaceFiltering && (
+                    <AccessibleButton kind="primary_outline" onClick={onSearchClick}>
+                        {_t("Search for public spaces")}
+                    </AccessibleButton>
+                )}
             </React.Fragment>
         );
     } else {
