@@ -41,7 +41,7 @@ export function formatDate(date: Date, showTwelveHour = false, locale?: string):
     } else if (now.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
         return new Intl.DateTimeFormat(_locale, {
             weekday: "short",
-            hour: "2-digit",
+            hour: "numeric",
             minute: "2-digit",
             hour12: showTwelveHour,
         }).format(new Date());
@@ -50,7 +50,7 @@ export function formatDate(date: Date, showTwelveHour = false, locale?: string):
             weekday: "short",
             month: "short",
             day: "numeric",
-            hour: "2-digit",
+            hour: "numeric",
             minute: "2-digit",
             hour12: showTwelveHour,
         }).format(new Date());
@@ -73,7 +73,7 @@ export function formatFullDate(date: Date, showTwelveHour = false, showSeconds =
         month: "short",
         day: "numeric",
         year: "numeric",
-        hour: "2-digit",
+        hour: "numeric",
         minute: "2-digit",
         second: showSeconds ? "2-digit" : undefined,
         hour12: showTwelveHour,
@@ -91,14 +91,13 @@ export function formatDateForInput(date: Date): string {
     const year = `${date.getFullYear()}`.padStart(4, "0");
     const month = `${date.getMonth() + 1}`.padStart(2, "0");
     const day = `${date.getDate()}`.padStart(2, "0");
-    const dateInputValue = `${year}-${month}-${day}`;
-    return dateInputValue;
+    return `${year}-${month}-${day}`;
 }
 
 export function formatFullTime(date: Date, showTwelveHour = false, locale?: string): string {
     return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
         weekday: "short",
-        hour: "2-digit",
+        hour: "numeric",
         minute: "2-digit",
         second: "2-digit",
         hour12: showTwelveHour,
@@ -107,7 +106,7 @@ export function formatFullTime(date: Date, showTwelveHour = false, locale?: stri
 
 export function formatTime(date: Date, showTwelveHour = false, locale?: string): string {
     return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
-        hour: "2-digit",
+        hour: "numeric",
         minute: "2-digit",
         hour12: showTwelveHour,
     }).format(date);

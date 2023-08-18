@@ -25,6 +25,7 @@ import {
     formatLocalDateShort,
 } from "../../src/DateUtils";
 import { REPEATABLE_DATE, mockIntlDateTimeFormat, unmockIntlDateTimeFormat } from "../test-utils";
+import * as languageHandler from "../../src/languageHandler";
 
 describe("formatSeconds", () => {
     it("correctly formats time with hours", () => {
@@ -71,7 +72,7 @@ describe("formatRelativeTime", () => {
         const date = new Date(2021, 10, 2, 11, 1, 23, 0);
         expect(formatRelativeTime(date)).toBe("11:01");
         expect(formatRelativeTime(date, false)).toBe("11:01");
-        expect(formatRelativeTime(date, true)).toBe("11:01AM");
+        expect(formatRelativeTime(date, true)).toBe("11:01 AM");
     });
 
     it("returns month and day for events created in the current year", () => {
@@ -162,15 +163,18 @@ describe("formatLocalDateShort()", () => {
     });
     const timestamp = new Date("Fri Dec 17 2021 09:09:00 GMT+0100 (Central European Standard Time)").getTime();
     it("formats date correctly by locale", () => {
+        const locale = jest.spyOn(languageHandler, "getUserLanguage");
+        mockIntlDateTimeFormat();
+
         // format is DD/MM/YY
-        mockIntlDateTimeFormat("en-UK");
+        locale.mockReturnValue("en-GB");
         expect(formatLocalDateShort(timestamp)).toEqual("17/12/21");
 
         // US date format is MM/DD/YY
-        mockIntlDateTimeFormat("en-US");
+        locale.mockReturnValue("en-US");
         expect(formatLocalDateShort(timestamp)).toEqual("12/17/21");
 
-        mockIntlDateTimeFormat("de-DE");
+        locale.mockReturnValue("de-DE");
         expect(formatLocalDateShort(timestamp)).toEqual("17.12.21");
     });
 });
