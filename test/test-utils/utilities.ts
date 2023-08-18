@@ -236,7 +236,12 @@ export function useMockMediaDevices(): void {
 }
 
 /**
- * Register beforeEach and afterEach functions which will
+ * Clean up the JSDOM after each test.
+ *
+ * Registers `beforeEach` and `afterEach` functions which will deregister any event listeners and timers from the
+ * `window` and `document` objects.
+ *
+ * Also clears out `localStorage` and `sessionStorage`.
  */
 export function resetJsDomAfterEach(): void {
     // list of calls to run in afterEach
@@ -278,7 +283,6 @@ export function resetJsDomAfterEach(): void {
     });
 
     afterEach(() => {
-        console.log("*** Cleaning up JSDOM after test ***");
         // clean up event listeners, timers, etc.
         for (const call of resetCalls) {
             call();
