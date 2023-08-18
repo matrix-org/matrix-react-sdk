@@ -20,7 +20,9 @@ import { Optional } from "matrix-events-sdk";
 
 import { _t, getUserLanguage } from "./languageHandler";
 
-const MILLIS_IN_DAY = 86400000;
+const MINUTE_MS = 60000;
+const HOUR_MS = MINUTE_MS * 60;
+const DAY_MS = HOUR_MS * 24;
 
 /**
  * Returns array of 7 weekday names, from Sunday to Saturday, internationalised to the user's language.
@@ -29,7 +31,7 @@ const MILLIS_IN_DAY = 86400000;
 export function getDaysArray(weekday: Intl.DateTimeFormatOptions["weekday"] = "short"): string[] {
     const sunday = 1672574400000; // 2023-01-01 12:00 UTC
     const { format } = new Intl.DateTimeFormat(getUserLanguage(), { weekday, timeZone: "UTC" });
-    return [...Array(7).keys()].map((day) => format(sunday + day * MILLIS_IN_DAY));
+    return [...Array(7).keys()].map((day) => format(sunday + day * DAY_MS));
 }
 
 /**
@@ -171,7 +173,7 @@ export function formatTimeLeft(inSeconds: number): string {
 }
 
 function withinPast24Hours(prevDate: Date, nextDate: Date): boolean {
-    return Math.abs(prevDate.getTime() - nextDate.getTime()) <= MILLIS_IN_DAY;
+    return Math.abs(prevDate.getTime() - nextDate.getTime()) <= DAY_MS;
 }
 
 function withinCurrentDay(prevDate: Date, nextDate: Date): boolean {
@@ -235,10 +237,6 @@ export function formatRelativeTime(date: Date, showTwelveHour = false): string {
         return relativeDate;
     }
 }
-
-const MINUTE_MS = 60000;
-const HOUR_MS = MINUTE_MS * 60;
-const DAY_MS = HOUR_MS * 24;
 
 /**
  * Formats duration in ms to human-readable string
