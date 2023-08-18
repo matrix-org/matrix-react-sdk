@@ -1,470 +1,101 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ReactionsRowButton reaction row button renders custom image reactions correctly 1`] = `
-{
-  "asFragment": [Function],
-  "baseElement": <body>
-    <div
-      class="mx_Tooltip_wrapper"
+exports[`ReactionsRowButton renders reaction row button custom image reactions correctly 1`] = `
+<DocumentFragment>
+  <div
+    aria-label="@user1:example.com and @user2:example.com reacted with :test:"
+    class="mx_AccessibleButton mx_ReactionsRowButton"
+    role="button"
+    tabindex="0"
+  >
+    <img
+      alt=":test:"
+      class="mx_ReactionsRowButton_content"
+      height="16"
+      src="https://not.a.real.url"
+      width="16"
     />
-    <div>
-      <div
-        aria-label="@user1:example.com and @user2:example.com reacted with :test:"
-        class="mx_AccessibleButton mx_ReactionsRowButton"
-        role="button"
-        tabindex="0"
-      >
-        <img
-          alt=":test:"
-          class="mx_ReactionsRowButton_content"
-          height="16"
-          src="https://not.a.real.url"
-          width="16"
-        />
-        <span
-          aria-hidden="true"
-          class="mx_ReactionsRowButton_count"
-        >
-          2
-        </span>
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      aria-label="@user1:example.com and @user2:example.com reacted with :test:"
-      class="mx_AccessibleButton mx_ReactionsRowButton"
-      role="button"
-      tabindex="0"
+    <span
+      aria-hidden="true"
+      class="mx_ReactionsRowButton_count"
     >
-      <img
-        alt=":test:"
-        class="mx_ReactionsRowButton_content"
-        height="16"
-        src="https://not.a.real.url"
-        width="16"
-      />
-      <span
-        aria-hidden="true"
-        class="mx_ReactionsRowButton_count"
-      >
-        2
-      </span>
-    </div>
-  </div>,
-  "debug": [Function],
-  "findAllByAltText": [Function],
-  "findAllByDisplayValue": [Function],
-  "findAllByLabelText": [Function],
-  "findAllByPlaceholderText": [Function],
-  "findAllByRole": [Function],
-  "findAllByTestId": [Function],
-  "findAllByText": [Function],
-  "findAllByTitle": [Function],
-  "findByAltText": [Function],
-  "findByDisplayValue": [Function],
-  "findByLabelText": [Function],
-  "findByPlaceholderText": [Function],
-  "findByRole": [Function],
-  "findByTestId": [Function],
-  "findByText": [Function],
-  "findByTitle": [Function],
-  "getAllByAltText": [Function],
-  "getAllByDisplayValue": [Function],
-  "getAllByLabelText": [Function],
-  "getAllByPlaceholderText": [Function],
-  "getAllByRole": [Function],
-  "getAllByTestId": [Function],
-  "getAllByText": [Function],
-  "getAllByTitle": [Function],
-  "getByAltText": [Function],
-  "getByDisplayValue": [Function],
-  "getByLabelText": [Function],
-  "getByPlaceholderText": [Function],
-  "getByRole": [Function],
-  "getByTestId": [Function],
-  "getByText": [Function],
-  "getByTitle": [Function],
-  "queryAllByAltText": [Function],
-  "queryAllByDisplayValue": [Function],
-  "queryAllByLabelText": [Function],
-  "queryAllByPlaceholderText": [Function],
-  "queryAllByRole": [Function],
-  "queryAllByTestId": [Function],
-  "queryAllByText": [Function],
-  "queryAllByTitle": [Function],
-  "queryByAltText": [Function],
-  "queryByDisplayValue": [Function],
-  "queryByLabelText": [Function],
-  "queryByPlaceholderText": [Function],
-  "queryByRole": [Function],
-  "queryByTestId": [Function],
-  "queryByText": [Function],
-  "queryByTitle": [Function],
-  "rerender": [Function],
-  "unmount": [Function],
-}
+      2
+    </span>
+  </div>
+</DocumentFragment>
 `;
 
-exports[`ReactionsRowButton reaction row button renders custom image reactions correctly 2`] = `
-{
-  "asFragment": [Function],
-  "baseElement": <body>
-    <div
-      class="mx_Tooltip_wrapper"
+exports[`ReactionsRowButton renders reaction row button custom image reactions correctly 2`] = `
+<DocumentFragment>
+  <div
+    aria-label="@user1:example.com and @user2:example.com reacted with :test:"
+    class="mx_AccessibleButton mx_ReactionsRowButton"
+    role="button"
+    tabindex="0"
+  >
+    <img
+      alt=":test:"
+      class="mx_ReactionsRowButton_content"
+      height="16"
+      src="https://not.a.real.url"
+      width="16"
+    />
+    <span
+      aria-hidden="true"
+      class="mx_ReactionsRowButton_count"
     >
-      <div
-        class="mx_Tooltip mx_Tooltip_visible"
-        role="tooltip"
-        style="display: block; left: 6px; top: 0px; transform: translateY(-50%);"
-      >
-        <div
-          class="mx_Tooltip_chevron"
-        />
-        <div>
-          <span>
-            <div
-              class="mx_Tooltip_title"
-            >
-              @user1:example.com and @user2:example.com
-            </div>
-            <div
-              class="mx_Tooltip_sub"
-            >
-              reacted with :test:
-            </div>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div
-        aria-label="@user1:example.com and @user2:example.com reacted with :test:"
-        class="mx_AccessibleButton mx_ReactionsRowButton"
-        role="button"
-        tabindex="0"
-      >
-        <img
-          alt=":test:"
-          class="mx_ReactionsRowButton_content"
-          height="16"
-          src="https://not.a.real.url"
-          width="16"
-        />
-        <span
-          aria-hidden="true"
-          class="mx_ReactionsRowButton_count"
-        >
-          2
-        </span>
-        <div />
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      aria-label="@user1:example.com and @user2:example.com reacted with :test:"
-      class="mx_AccessibleButton mx_ReactionsRowButton"
-      role="button"
-      tabindex="0"
-    >
-      <img
-        alt=":test:"
-        class="mx_ReactionsRowButton_content"
-        height="16"
-        src="https://not.a.real.url"
-        width="16"
-      />
-      <span
-        aria-hidden="true"
-        class="mx_ReactionsRowButton_count"
-      >
-        2
-      </span>
-      <div />
-    </div>
-  </div>,
-  "debug": [Function],
-  "findAllByAltText": [Function],
-  "findAllByDisplayValue": [Function],
-  "findAllByLabelText": [Function],
-  "findAllByPlaceholderText": [Function],
-  "findAllByRole": [Function],
-  "findAllByTestId": [Function],
-  "findAllByText": [Function],
-  "findAllByTitle": [Function],
-  "findByAltText": [Function],
-  "findByDisplayValue": [Function],
-  "findByLabelText": [Function],
-  "findByPlaceholderText": [Function],
-  "findByRole": [Function],
-  "findByTestId": [Function],
-  "findByText": [Function],
-  "findByTitle": [Function],
-  "getAllByAltText": [Function],
-  "getAllByDisplayValue": [Function],
-  "getAllByLabelText": [Function],
-  "getAllByPlaceholderText": [Function],
-  "getAllByRole": [Function],
-  "getAllByTestId": [Function],
-  "getAllByText": [Function],
-  "getAllByTitle": [Function],
-  "getByAltText": [Function],
-  "getByDisplayValue": [Function],
-  "getByLabelText": [Function],
-  "getByPlaceholderText": [Function],
-  "getByRole": [Function],
-  "getByTestId": [Function],
-  "getByText": [Function],
-  "getByTitle": [Function],
-  "queryAllByAltText": [Function],
-  "queryAllByDisplayValue": [Function],
-  "queryAllByLabelText": [Function],
-  "queryAllByPlaceholderText": [Function],
-  "queryAllByRole": [Function],
-  "queryAllByTestId": [Function],
-  "queryAllByText": [Function],
-  "queryAllByTitle": [Function],
-  "queryByAltText": [Function],
-  "queryByDisplayValue": [Function],
-  "queryByLabelText": [Function],
-  "queryByPlaceholderText": [Function],
-  "queryByRole": [Function],
-  "queryByTestId": [Function],
-  "queryByText": [Function],
-  "queryByTitle": [Function],
-  "rerender": [Function],
-  "unmount": [Function],
-}
+      2
+    </span>
+    <div />
+  </div>
+</DocumentFragment>
 `;
 
-exports[`ReactionsRowButton reaction row button renders emojis correctly 1`] = `
-{
-  "asFragment": [Function],
-  "baseElement": <body>
-    <div>
-      <div
-        aria-label="@user1:example.com and @user2:example.com reacted with 👍"
-        class="mx_AccessibleButton mx_ReactionsRowButton"
-        role="button"
-        tabindex="0"
-      >
-        <span
-          aria-hidden="true"
-          class="mx_ReactionsRowButton_content"
-        >
-          👍
-        </span>
-        <span
-          aria-hidden="true"
-          class="mx_ReactionsRowButton_count"
-        >
-          2
-        </span>
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      aria-label="@user1:example.com and @user2:example.com reacted with 👍"
-      class="mx_AccessibleButton mx_ReactionsRowButton"
-      role="button"
-      tabindex="0"
+exports[`ReactionsRowButton renders reaction row button emojis correctly 1`] = `
+<DocumentFragment>
+  <div
+    aria-label="@user1:example.com and @user2:example.com reacted with 👍"
+    class="mx_AccessibleButton mx_ReactionsRowButton"
+    role="button"
+    tabindex="0"
+  >
+    <span
+      aria-hidden="true"
+      class="mx_ReactionsRowButton_content"
     >
-      <span
-        aria-hidden="true"
-        class="mx_ReactionsRowButton_content"
-      >
-        👍
-      </span>
-      <span
-        aria-hidden="true"
-        class="mx_ReactionsRowButton_count"
-      >
-        2
-      </span>
-    </div>
-  </div>,
-  "debug": [Function],
-  "findAllByAltText": [Function],
-  "findAllByDisplayValue": [Function],
-  "findAllByLabelText": [Function],
-  "findAllByPlaceholderText": [Function],
-  "findAllByRole": [Function],
-  "findAllByTestId": [Function],
-  "findAllByText": [Function],
-  "findAllByTitle": [Function],
-  "findByAltText": [Function],
-  "findByDisplayValue": [Function],
-  "findByLabelText": [Function],
-  "findByPlaceholderText": [Function],
-  "findByRole": [Function],
-  "findByTestId": [Function],
-  "findByText": [Function],
-  "findByTitle": [Function],
-  "getAllByAltText": [Function],
-  "getAllByDisplayValue": [Function],
-  "getAllByLabelText": [Function],
-  "getAllByPlaceholderText": [Function],
-  "getAllByRole": [Function],
-  "getAllByTestId": [Function],
-  "getAllByText": [Function],
-  "getAllByTitle": [Function],
-  "getByAltText": [Function],
-  "getByDisplayValue": [Function],
-  "getByLabelText": [Function],
-  "getByPlaceholderText": [Function],
-  "getByRole": [Function],
-  "getByTestId": [Function],
-  "getByText": [Function],
-  "getByTitle": [Function],
-  "queryAllByAltText": [Function],
-  "queryAllByDisplayValue": [Function],
-  "queryAllByLabelText": [Function],
-  "queryAllByPlaceholderText": [Function],
-  "queryAllByRole": [Function],
-  "queryAllByTestId": [Function],
-  "queryAllByText": [Function],
-  "queryAllByTitle": [Function],
-  "queryByAltText": [Function],
-  "queryByDisplayValue": [Function],
-  "queryByLabelText": [Function],
-  "queryByPlaceholderText": [Function],
-  "queryByRole": [Function],
-  "queryByTestId": [Function],
-  "queryByText": [Function],
-  "queryByTitle": [Function],
-  "rerender": [Function],
-  "unmount": [Function],
-}
+      👍
+    </span>
+    <span
+      aria-hidden="true"
+      class="mx_ReactionsRowButton_count"
+    >
+      2
+    </span>
+  </div>
+</DocumentFragment>
 `;
 
-exports[`ReactionsRowButton reaction row button renders emojis correctly 2`] = `
-{
-  "asFragment": [Function],
-  "baseElement": <body>
-    <div>
-      <div
-        aria-label="@user1:example.com and @user2:example.com reacted with 👍"
-        class="mx_AccessibleButton mx_ReactionsRowButton"
-        role="button"
-        tabindex="0"
-      >
-        <span
-          aria-hidden="true"
-          class="mx_ReactionsRowButton_content"
-        >
-          👍
-        </span>
-        <span
-          aria-hidden="true"
-          class="mx_ReactionsRowButton_count"
-        >
-          2
-        </span>
-        <div />
-      </div>
-    </div>
-    <div
-      class="mx_Tooltip_wrapper"
+exports[`ReactionsRowButton renders reaction row button emojis correctly 2`] = `
+<DocumentFragment>
+  <div
+    aria-label="@user1:example.com and @user2:example.com reacted with 👍"
+    class="mx_AccessibleButton mx_ReactionsRowButton"
+    role="button"
+    tabindex="0"
+  >
+    <span
+      aria-hidden="true"
+      class="mx_ReactionsRowButton_content"
     >
-      <div
-        class="mx_Tooltip mx_Tooltip_visible"
-        role="tooltip"
-        style="display: block; left: 6px; top: 0px; transform: translateY(-50%);"
-      >
-        <div
-          class="mx_Tooltip_chevron"
-        />
-        <div>
-          <span>
-            <div
-              class="mx_Tooltip_title"
-            >
-              @user1:example.com and @user2:example.com
-            </div>
-            <div
-              class="mx_Tooltip_sub"
-            >
-              reacted with :+1:
-            </div>
-          </span>
-        </div>
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      aria-label="@user1:example.com and @user2:example.com reacted with 👍"
-      class="mx_AccessibleButton mx_ReactionsRowButton"
-      role="button"
-      tabindex="0"
+      👍
+    </span>
+    <span
+      aria-hidden="true"
+      class="mx_ReactionsRowButton_count"
     >
-      <span
-        aria-hidden="true"
-        class="mx_ReactionsRowButton_content"
-      >
-        👍
-      </span>
-      <span
-        aria-hidden="true"
-        class="mx_ReactionsRowButton_count"
-      >
-        2
-      </span>
-      <div />
-    </div>
-  </div>,
-  "debug": [Function],
-  "findAllByAltText": [Function],
-  "findAllByDisplayValue": [Function],
-  "findAllByLabelText": [Function],
-  "findAllByPlaceholderText": [Function],
-  "findAllByRole": [Function],
-  "findAllByTestId": [Function],
-  "findAllByText": [Function],
-  "findAllByTitle": [Function],
-  "findByAltText": [Function],
-  "findByDisplayValue": [Function],
-  "findByLabelText": [Function],
-  "findByPlaceholderText": [Function],
-  "findByRole": [Function],
-  "findByTestId": [Function],
-  "findByText": [Function],
-  "findByTitle": [Function],
-  "getAllByAltText": [Function],
-  "getAllByDisplayValue": [Function],
-  "getAllByLabelText": [Function],
-  "getAllByPlaceholderText": [Function],
-  "getAllByRole": [Function],
-  "getAllByTestId": [Function],
-  "getAllByText": [Function],
-  "getAllByTitle": [Function],
-  "getByAltText": [Function],
-  "getByDisplayValue": [Function],
-  "getByLabelText": [Function],
-  "getByPlaceholderText": [Function],
-  "getByRole": [Function],
-  "getByTestId": [Function],
-  "getByText": [Function],
-  "getByTitle": [Function],
-  "queryAllByAltText": [Function],
-  "queryAllByDisplayValue": [Function],
-  "queryAllByLabelText": [Function],
-  "queryAllByPlaceholderText": [Function],
-  "queryAllByRole": [Function],
-  "queryAllByTestId": [Function],
-  "queryAllByText": [Function],
-  "queryAllByTitle": [Function],
-  "queryByAltText": [Function],
-  "queryByDisplayValue": [Function],
-  "queryByLabelText": [Function],
-  "queryByPlaceholderText": [Function],
-  "queryByRole": [Function],
-  "queryByTestId": [Function],
-  "queryByText": [Function],
-  "queryByTitle": [Function],
-  "rerender": [Function],
-  "unmount": [Function],
-}
+      2
+    </span>
+    <div />
+  </div>
+</DocumentFragment>
 `;

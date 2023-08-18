@@ -75,7 +75,7 @@ describe("ReactionsRowButton", () => {
                 <ReactionsRowButton {...props} />
             </MatrixClientContext.Provider>,
         );
-        expect(root).toMatchSnapshot();
+        expect(root.asFragment()).toMatchSnapshot();
 
         // Try hover and make sure that the ReactionsRowButtonTooltip works
         const reactionButton = root.getByRole("button");
@@ -85,7 +85,7 @@ describe("ReactionsRowButton", () => {
         });
         reactionButton.dispatchEvent(event);
 
-        expect(root).toMatchSnapshot();
+        expect(root.asFragment()).toMatchSnapshot();
     });
 
     it("renders reaction row button custom image reactions correctly", () => {
@@ -104,7 +104,7 @@ describe("ReactionsRowButton", () => {
                 <ReactionsRowButton {...props} />
             </MatrixClientContext.Provider>,
         );
-        expect(root).toMatchSnapshot();
+        expect(root.asFragment()).toMatchSnapshot();
 
         // Try hover and make sure that the ReactionsRowButtonTooltip works
         const reactionButton = root.getByRole("button");
@@ -114,6 +114,6 @@ describe("ReactionsRowButton", () => {
         });
         reactionButton.dispatchEvent(event);
 
-        expect(root).toMatchSnapshot();
+        expect(root.asFragment()).toMatchSnapshot();
     });
 });
