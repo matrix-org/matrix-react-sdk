@@ -48,6 +48,9 @@ import withValidation from "../elements/Validation";
 import RoomAliasField from "../elements/RoomAliasField";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
+import { Filter } from "../dialogs/spotlight/Filter";
 
 export const createSpace = async (
     client: MatrixClient,
@@ -258,6 +261,13 @@ const SpaceCreateMenu: React.FC<{
         }
     };
 
+    const onSearchClick = (): void => {
+        defaultDispatcher.dispatch({
+            action: Action.OpenSpotlight,
+            initialFilter: Filter.PublicSpaces,
+        });
+    };
+
     let body;
     if (visibility === null) {
         body = (
@@ -283,7 +293,9 @@ const SpaceCreateMenu: React.FC<{
                     onClick={() => setVisibility(Visibility.Private)}
                 />
 
-                <p>{_t("To join a space you'll need an invite.")}</p>
+                <AccessibleButton kind="primary_outline" onClick={onSearchClick}>
+                    {_t("Search for public spaces")}
+                </AccessibleButton>
             </React.Fragment>
         );
     } else {

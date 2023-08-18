@@ -84,6 +84,7 @@ import RoomAvatar from "../../avatars/RoomAvatar";
 import { useFeatureEnabled } from "../../../../hooks/useSettings";
 import { filterBoolean } from "../../../../utils/arrays";
 import { transformSearchTerm } from "../../../../utils/SearchInput";
+import { Filter } from "./Filter";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -114,12 +115,6 @@ enum Section {
     Spaces,
     Suggestions,
     PublicRoomsAndSpaces,
-}
-
-export enum Filter {
-    People,
-    PublicRooms,
-    PublicSpaces,
 }
 
 function filterToLabel(filter: Filter): string {
