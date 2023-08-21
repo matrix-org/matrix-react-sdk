@@ -456,10 +456,11 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                     return null;
                 }
 
+                const translationKeyForEvent = plEventsToLabels[eventType];
                 let label: string;
-                if (plEventsToLabels[eventType]) {
+                if (translationKeyForEvent) {
                     const brand = SdkConfig.get("element_call").brand ?? DEFAULTS.element_call.brand;
-                    label = _t(plEventsToLabels[eventType]!, { brand });
+                    label = _t(translationKeyForEvent, { brand });
                 } else {
                     label = _t("Send %(eventType)s events", { eventType });
                 }
