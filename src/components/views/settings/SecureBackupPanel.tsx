@@ -103,8 +103,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         this.getUpdatedDiagnostics();
         try {
             const keyBackupResult = await MatrixClientPeg.safeGet().getCrypto()!.checkKeyBackupAndEnable();
-            const activeBackupVersion =
-                (await MatrixClientPeg.safeGet().getCrypto()?.getActiveSessionBackupVersion()) ?? null;
+            const activeBackupVersion = await MatrixClientPeg.safeGet().getCrypto()!.getActiveSessionBackupVersion();
             this.setState({
                 loading: false,
                 error: false,
@@ -129,12 +128,13 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         this.setState({ loading: true });
         this.getUpdatedDiagnostics();
         try {
-            const backupInfo = await MatrixClientPeg.safeGet().getKeyBackupVersion();
+            const backupInfo =
+                (await MatrixClientPeg.safeGet().getCrypto()!.checkKeyBackupAndEnable())?.backupInfo ?? null;
             const backupSigStatus = backupInfo
                 ? await MatrixClientPeg.safeGet().getCrypto()!.isKeyBackupTrusted(backupInfo)
                 : null;
             const activeBackupVersion =
-                (await MatrixClientPeg.safeGet().getCrypto()?.getActiveSessionBackupVersion()) ?? null;
+                (await MatrixClientPeg.safeGet().getCrypto()!.getActiveSessionBackupVersion()) ?? null;
             if (this.unmounted) return;
             this.setState({
                 loading: false,

@@ -386,8 +386,8 @@ export default class DeviceListener {
             return;
         }
         // force a backup check
-        await this.client.getCrypto()?.checkKeyBackupAndEnable();
-        const isKeyBackupEnabled = (await this.client.getCrypto()?.getActiveSessionBackupVersion()) !== null;
+        await this.client.getCrypto()!.checkKeyBackupAndEnable();
+        const isKeyBackupEnabled = (await this.client.getCrypto()!.getActiveSessionBackupVersion()) !== null;
 
         if (isKeyBackupEnabled === false) {
             dis.dispatch({ action: Action.ReportKeyBackupNotEnabled });
