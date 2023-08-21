@@ -39,6 +39,7 @@ import QuestionDialog from "../../../dialogs/QuestionDialog";
 import { FilterVariation } from "../../devices/filter";
 import { OtherSessionsSectionHeading } from "../../devices/OtherSessionsSectionHeading";
 import { SettingsSection } from "../../shared/SettingsSection";
+import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
 
 const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
@@ -63,6 +64,7 @@ const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> 
 const useSignOut = (
     matrixClient: MatrixClient,
     onSignoutResolvedCallback: () => Promise<void>,
+    delegatedAuthAccountUrl?: string,
 ): {
     onSignOutCurrentDevice: () => void;
     onSignOutOtherDevices: (deviceIds: ExtendedDevice["device_id"][]) => Promise<void>;
@@ -130,6 +132,13 @@ const SessionManagerTab: React.FC = () => {
     const scrollIntoViewTimeoutRef = useRef<number>();
 
     const matrixClient = useContext(MatrixClientContext);
+    /**
+     * If we have a delegated auth account management URL, all sessions but the current session need to be managed in the
+     * delegated auth provider.
+     * See https://github.com/matrix-org/matrix-spec-proposals/pull/3824
+     */
+    const delegatedAuthAccountUrl = getDelegatedAuthAccountUrl(matrixClient.getClientWellKnown());
+
     const userId = matrixClient?.getUserId();
     const currentUserMember = (userId && matrixClient?.getUser(userId)) || undefined;
     const clientVersions = useAsyncMemo(() => matrixClient.getVersions(), [matrixClient]);
@@ -191,6 +200,7 @@ const SessionManagerTab: React.FC = () => {
     const { onSignOutCurrentDevice, onSignOutOtherDevices, signingOutDeviceIds } = useSignOut(
         matrixClient,
         onSignoutResolvedCallback,
+        delegatedAuthAccountUrl,
     );
 
     useEffect(
@@ -280,6 +290,7 @@ const SessionManagerTab: React.FC = () => {
                             setPushNotifications={setPushNotifications}
                             ref={filteredDeviceListRef}
                             supportsMSC3881={supportsMSC3881}
+                            disableMultipleSignout={!!delegatedAuthAccountUrl}
                         />
                     </SettingsSubsection>
                 )}
