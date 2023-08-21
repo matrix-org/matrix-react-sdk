@@ -266,7 +266,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Moderation,
         displayName: _td("Report to moderators"),
         description: _td(
-            "In rooms that support moderation, " + "the “Report” button will let you report abuse to room moderators.",
+            "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.",
         ),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -805,7 +805,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "deviceClientInformationOptIn": {
         supportedLevels: [SettingLevel.ACCOUNT],
         displayName: _td(
-            `Record the client name, version, and url ` + `to recognise sessions more easily in session manager`,
+            "Record the client name, version, and url to recognise sessions more easily in session manager",
         ),
         default: false,
     },

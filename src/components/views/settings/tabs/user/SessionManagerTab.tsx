@@ -255,8 +255,7 @@ const SessionManagerTab: React.FC = () => {
                             />
                         }
                         description={_t(
-                            `For best security, verify your sessions and sign out ` +
-                                `from any session that you don't recognize or use anymore.`,
+                            "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.",
                         )}
                         data-testid="other-sessions-section"
                         stretchContent

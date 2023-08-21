@@ -270,9 +270,7 @@ const NewRoomIntro: React.FC = () => {
     }
 
     const subText = _t(
-        "Your private messages are normally encrypted, but this room isn't. " +
-            "Usually this is due to an unsupported device or method being used, " +
-            "like email invites.",
+        "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.",
     );
 
     let subButton: JSX.Element | undefined;

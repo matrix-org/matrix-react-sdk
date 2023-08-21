@@ -207,8 +207,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             Modal.createDialog(ErrorDialog, {
                 title: _t("Error changing power level requirement"),
                 description: _t(
-                    "An error occurred changing the room's power level requirements. Ensure you have sufficient " +
-                        "permissions and try again.",
+                    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.",
                 ),
             });
         });
@@ -233,8 +232,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             Modal.createDialog(ErrorDialog, {
                 title: _t("Error changing power level"),
                 description: _t(
-                    "An error occurred changing the user's power level. Ensure you have sufficient " +
-                        "permissions and try again.",
+                    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.",
                 ),
             });
         });

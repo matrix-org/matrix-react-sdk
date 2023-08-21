@@ -104,21 +104,15 @@ export default class AutoDiscoveryUtils {
             // don't make this easy to avoid.
             if (pageName === "register") {
                 body = _t(
-                    "You can register, but some features will be unavailable until the identity server is " +
-                        "back online. If you keep seeing this warning, check your configuration or contact a server " +
-                        "admin.",
+                    "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.",
                 );
             } else if (pageName === "reset_password") {
                 body = _t(
-                    "You can reset your password, but some features will be unavailable until the identity " +
-                        "server is back online. If you keep seeing this warning, check your configuration or contact " +
-                        "a server admin.",
+                    "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.",
                 );
             } else {
                 body = _t(
-                    "You can log in, but some features will be unavailable until the identity server is " +
-                        "back online. If you keep seeing this warning, check your configuration or contact a server " +
-                        "admin.",
+                    "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.",
                 );
             }
         }
