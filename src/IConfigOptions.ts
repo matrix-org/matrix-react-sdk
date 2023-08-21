@@ -207,6 +207,12 @@ export interface IConfigOptions {
             client_id: string;
         }
     >;
+
+    custom_power_level_roles?: {
+        [level: string]: {
+            [lang: string]: string;
+        };
+    };
 }
 
 export interface ISsoRedirectOptions {

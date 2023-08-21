@@ -14,9 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _t } from "./languageHandler";
+import { safeSet } from "matrix-js-sdk/src/utils";
+
+import SdkConfig from "./SdkConfig";
+import { _t, pickBestLanguage } from "./languageHandler";
 
 export function levelRoleMap(usersDefault: number): Record<number | "undefined", string> {
+    const customPowerLevelRoles = SdkConfig.get().custom_power_level_roles;
+    if (customPowerLevelRoles) {
+        const mappings: Record<number | "undefined", string> = {
+            undefined: _t("Default"),
+        };
+
+        Object.entries(customPowerLevelRoles).forEach(([levelString, langs]) => {
+            const lang = pickBestLanguage(Object.keys(langs));
+            if (lang && langs[lang]) {
+                safeSet(mappings, parseInt(levelString), langs[lang]);
+            }
+        });
+
+        if (Object.keys(mappings).length > 1) {
+            return mappings;
+        }
+    }
+
     return {
         undefined: _t("Default"),
         0: _t("Restricted"),
