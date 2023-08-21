@@ -40,17 +40,19 @@ import { FilterVariation } from "../../devices/filter";
 import { OtherSessionsSectionHeading } from "../../devices/OtherSessionsSectionHeading";
 import { SettingsSection } from "../../shared/SettingsSection";
 import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
+import { redirectToOidcAwareLogout } from "../../../../../utils/oidc/redirectToOidcLogout";
 
-const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
+const confirmSignOut = async (sessionsToSignOutCount: number, delegatedAuthAccountUrl?: string): Promise<boolean> => {
+    const message = delegatedAuthAccountUrl
+        ? "TODO nice message about redirection TODO"
+        : _t("Are you sure you want to sign out of %(count)s sessions?", {
+              count: sessionsToSignOutCount,
+          });
     const { finished } = Modal.createDialog(QuestionDialog, {
         title: _t("Sign out"),
         description: (
             <div>
-                <p>
-                    {_t("Are you sure you want to sign out of %(count)s sessions?", {
-                        count: sessionsToSignOutCount,
-                    })}
-                </p>
+                <p>{message}</p>
             </div>
         ),
         cancelButton: _t("Cancel"),
@@ -64,6 +66,7 @@ const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> 
 const useSignOut = (
     matrixClient: MatrixClient,
     onSignoutResolvedCallback: () => Promise<void>,
+    delegatedAuthAccountUrl?: string,
 ): {
     onSignOutCurrentDevice: () => void;
     onSignOutOtherDevices: (deviceIds: ExtendedDevice["device_id"][]) => Promise<void>;
@@ -85,13 +88,27 @@ const useSignOut = (
         if (!deviceIds.length) {
             return;
         }
-        const userConfirmedSignout = await confirmSignOut(deviceIds.length);
+        // we can only sign out exactly one OIDC-aware device at a time
+        // we should not encounter this
+        if (delegatedAuthAccountUrl && deviceIds.length !== 1) {
+            logger.warn("Unexpectedly tried to sign out multiple OIDC-aware devices.");
+            return;
+        }
+        const userConfirmedSignout = await confirmSignOut(deviceIds.length, delegatedAuthAccountUrl);
         if (!userConfirmedSignout) {
             return;
         }
 
         try {
             setSigningOutDeviceIds([...signingOutDeviceIds, ...deviceIds]);
+
+            // if we are using delegated auth
+            // redirect to the delegated auth provider to do the logging out
+            if (delegatedAuthAccountUrl) {
+                const [deviceId] = deviceIds;
+                return redirectToOidcAwareLogout(delegatedAuthAccountUrl, deviceId);
+            }
+
             await deleteDevicesWithInteractiveAuth(matrixClient, deviceIds, async (success): Promise<void> => {
                 if (success) {
                     await onSignoutResolvedCallback();
@@ -200,6 +217,7 @@ const SessionManagerTab: React.FC = () => {
     const { onSignOutCurrentDevice, onSignOutOtherDevices, signingOutDeviceIds } = useSignOut(
         matrixClient,
         onSignoutResolvedCallback,
+        delegatedAuthAccountUrl,
     );
 
     useEffect(
