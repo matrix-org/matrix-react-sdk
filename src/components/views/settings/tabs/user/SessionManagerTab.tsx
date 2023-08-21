@@ -40,23 +40,33 @@ import { FilterVariation } from "../../devices/filter";
 import { OtherSessionsSectionHeading } from "../../devices/OtherSessionsSectionHeading";
 import { SettingsSection } from "../../shared/SettingsSection";
 import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
-import { redirectToOidcAwareLogout } from "../../../../../utils/oidc/redirectToOidcLogout";
+import { OidcLogoutDialog } from "../../../dialogs/oidc/OidcLogoutDialog";
+import { InteractiveAuthCallback } from "../../../../structures/InteractiveAuth";
 
-const confirmSignOut = async (sessionsToSignOutCount: number, delegatedAuthAccountUrl?: string): Promise<boolean> => {
-    const message = delegatedAuthAccountUrl
-        ? "TODO nice message about redirection TODO"
-        : _t("Are you sure you want to sign out of %(count)s sessions?", {
-              count: sessionsToSignOutCount,
-          });
+const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
         title: _t("Sign out"),
         description: (
             <div>
-                <p>{message}</p>
+                <p>
+                    {_t("Are you sure you want to sign out of %(count)s sessions?", {
+                        count: sessionsToSignOutCount,
+                    })}
+                </p>
             </div>
         ),
         cancelButton: _t("Cancel"),
         button: _t("Sign out"),
+    });
+    const [confirmed] = await finished;
+
+    return !!confirmed;
+};
+
+const confirmDelegatedAuthSignOut = async (delegatedAuthAccountUrl: string, deviceId: string): Promise<boolean> => {
+    const { finished } = Modal.createDialog(OidcLogoutDialog, {
+        deviceId,
+        delegatedAuthAccountUrl,
     });
     const [confirmed] = await finished;
 
@@ -94,27 +104,38 @@ const useSignOut = (
             logger.warn("Unexpectedly tried to sign out multiple OIDC-aware devices.");
             return;
         }
-        const userConfirmedSignout = await confirmSignOut(deviceIds.length, delegatedAuthAccountUrl);
-        if (!userConfirmedSignout) {
-            return;
+
+        // delegated auth logout flow confirms and signs out together
+        // so only confirm if we are doing a delegated auth sign out
+        if (!delegatedAuthAccountUrl) {
+            const userConfirmedSignout = await confirmSignOut(deviceIds.length);
+            if (!userConfirmedSignout) {
+                return;
+            }
         }
 
         try {
             setSigningOutDeviceIds([...signingOutDeviceIds, ...deviceIds]);
 
-            // if we are using delegated auth
-            // redirect to the delegated auth provider to do the logging out
-            if (delegatedAuthAccountUrl) {
-                const [deviceId] = deviceIds;
-                return redirectToOidcAwareLogout(delegatedAuthAccountUrl, deviceId);
-            }
-
-            await deleteDevicesWithInteractiveAuth(matrixClient, deviceIds, async (success): Promise<void> => {
+            const onSignOutFinished: InteractiveAuthCallback<void> = async (success): Promise<void> => {
                 if (success) {
                     await onSignoutResolvedCallback();
                 }
                 setSigningOutDeviceIds(signingOutDeviceIds.filter((deviceId) => !deviceIds.includes(deviceId)));
-            });
+            };
+
+            if (delegatedAuthAccountUrl) {
+                const [deviceId] = deviceIds;
+                try {
+                    setSigningOutDeviceIds([...signingOutDeviceIds, deviceId]);
+                    const success = await confirmDelegatedAuthSignOut(delegatedAuthAccountUrl, deviceId);
+                    await onSignOutFinished(success as true);
+                } catch (error) {
+                    logger.error("Error deleting OIDC-aware sessions", error);
+                }
+            } else {
+                await deleteDevicesWithInteractiveAuth(matrixClient, deviceIds, onSignOutFinished);
+            }
         } catch (error) {
             logger.error("Error deleting sessions", error);
             setSigningOutDeviceIds(signingOutDeviceIds.filter((deviceId) => !deviceIds.includes(deviceId)));

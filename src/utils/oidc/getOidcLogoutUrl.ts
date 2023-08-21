@@ -14,17 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { logger } from "matrix-js-sdk/src/logger";
-
 /**
- * Redirect to the delegated auth account management URL with logout params as per MSC3824
+ * Create a delegated auth account management URL with logout params as per MSC3824
  * https://github.com/matrix-org/matrix-spec-proposals/blob/hughns/sso-redirect-action/proposals/3824-oidc-aware-clients.md#definition-of-oidc-aware
  */
-export const redirectToOidcAwareLogout = (delegatedAuthAccountUrl: string, deviceId: string): void => {
+export const getOidcLogoutUrl = (delegatedAuthAccountUrl: string, deviceId: string): string => {
     const logoutUrl = new URL(delegatedAuthAccountUrl);
     logoutUrl.hash = `action=logout&device_id=${deviceId}`;
 
-    logger.debug("Redirecting to delegated authentication provider to logout session");
-
-    window.location.href = logoutUrl.toString();
+    return logoutUrl.toString();
 };

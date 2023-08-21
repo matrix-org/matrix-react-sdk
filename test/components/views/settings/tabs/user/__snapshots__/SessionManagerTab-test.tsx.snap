@@ -53,7 +53,7 @@ exports[`<SessionManagerTab /> Sign out Signs out of current device 1`] = `
 </div>
 `;
 
-exports[`<SessionManagerTab /> Sign out for and OIDC-aware server Signs out of current device 1`] = `
+exports[`<SessionManagerTab /> Sign out for an OIDC-aware server Signs out of current device 1`] = `
 <div
   class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_inline"
   data-testid="device-detail-sign-out-cta"

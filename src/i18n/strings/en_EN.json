@@ -1682,11 +1682,11 @@
     "Privacy": "Privacy",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Share anonymous data to help us identify issues. Nothing personal. No third parties.",
     "Sessions": "Sessions",
+    "Sign out": "Sign out",
     "Are you sure you want to sign out of %(count)s sessions?": {
         "other": "Are you sure you want to sign out of %(count)s sessions?",
         "one": "Are you sure you want to sign out of %(count)s session?"
     },
-    "Sign out": "Sign out",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.",
     "Sidebar": "Sidebar",
     "Spaces to show": "Spaces to show",
@@ -3385,6 +3385,7 @@
     "Not a valid Security Key": "Not a valid Security Key",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Access your secure message history and set up secure messaging by entering your Security Key.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "If you've forgotten your Security Key you can <button>set up new recovery options</button>",
+    "You will be redirected to your server's authentication provider to complete sign out.": "You will be redirected to your server's authentication provider to complete sign out.",
     "Send custom account data event": "Send custom account data event",
     "Send custom room account data event": "Send custom room account data event",
     "Event Type": "Event Type",

@@ -1049,7 +1049,7 @@ describe("<SessionManagerTab />", () => {
             });
         });
 
-        describe("for and OIDC-aware server", () => {
+        describe("for an OIDC-aware server", () => {
             beforeEach(() => {
                 mockClient.getClientWellKnown.mockReturnValue({
                     [M_AUTHENTICATION.name]: {
@@ -1097,7 +1097,7 @@ describe("<SessionManagerTab />", () => {
             });
 
             describe("other devices", () => {
-                it("redirects to the delegated auth provider to sign out a single device", async () => {
+                it("opens delegated auth provider to sign out a single device", async () => {
                     mockClient.getDevices.mockResolvedValue({
                         devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
                     });
@@ -1108,6 +1108,9 @@ describe("<SessionManagerTab />", () => {
                         await flushPromises();
                     });
 
+                    // reset call count
+                    mockClient.getDevices.mockClear();
+
                     toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
 
                     const deviceDetails = getByTestId(`device-detail-${alicesMobileDevice.device_id}`);
@@ -1117,13 +1120,28 @@ describe("<SessionManagerTab />", () => {
                     fireEvent.click(signOutButton);
 
                     await screen.findByRole("dialog");
-                    expect(screen.getByText("TODO nice message about redirection TODO")).toBeInTheDocument();
-                    await confirmSignout(getByTestId);
-
-                    // redirected to delegated auth OP with correct params
-                    expect(window.location.href).toEqual(
+                    expect(
+                        screen.getByText(
+                            "You will be redirected to your server's authentication provider to complete sign out.",
+                        ),
+                    ).toBeInTheDocument();
+                    // correct link to auth provider
+                    expect(screen.getByText("Continue")).toHaveAttribute(
+                        "href",
                         `https://issuer.org/account#action=logout&device_id=${alicesMobileDevice.device_id}`,
                     );
+
+                    // go to the link
+                    fireEvent.click(screen.getByText("Continue"));
+                    await flushPromises();
+
+                    // come back from the link and close the modal
+                    fireEvent.click(screen.getByText("Close"));
+
+                    await flushPromises();
+
+                    // devices were refreshed
+                    expect(mockClient.getDevices).toHaveBeenCalled();
                 });
 
                 it("does not allow removing multiple devices at once", async () => {
