@@ -1853,10 +1853,10 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/analytics-events/-/analytics-events-0.6.0.tgz#6552882f94d026f13da25d49e2a208287521c275"
   integrity sha512-bTvNpp8LkC/2sItHABd1vGHdB8iclAcdlIYrL0Cn6qT+aohpdjb1wZ0dhUcx3NK5Q98IduI43RVH33V4Li/X0A==
 
-"@matrix-org/emojibase-bindings@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@matrix-org/emojibase-bindings/-/emojibase-bindings-1.1.1.tgz#59931abd330277995c455ead4ee96855517b325d"
-  integrity sha512-8Wpz72ZOjoV3Vj8HfrrPvszdoHD47ij90Kc4Vz4QODtNr1ETJ+dlf44P+tgQajr64cGWdNSIPiTc68DqsNz1Xg==
+"@matrix-org/emojibase-bindings@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@matrix-org/emojibase-bindings/-/emojibase-bindings-1.1.2.tgz#3cbbed06258418895910b8778a3d9c885f0c48c5"
+  integrity sha512-6FLR4nzyeQPZl2FBsdPpbAvvDF7TuAZgEbNeFkID47/bzTovFS4MUXIHOMzwMy/PWehlVziuKMOe1AxD9PauKw==
   dependencies:
     emojibase "^15.0.0"
     emojibase-data "^15.0.0"
