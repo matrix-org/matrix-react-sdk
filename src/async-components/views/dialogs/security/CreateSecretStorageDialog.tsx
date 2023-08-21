@@ -176,17 +176,13 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         this.fetchBackupInfo();
     }
 
-    private async fetchBackupInfo(): Promise<{ backupInfo?: IKeyBackupInfo; backupEnabled?: boolean }> {
+    private async fetchBackupInfo(): Promise<{ backupInfo?: IKeyBackupInfo; backupEnabled: boolean }> {
         try {
             const cli = MatrixClientPeg.safeGet();
-            const backupInfo = await cli.getKeyBackupVersion();
-            const enabled =
-                // we may not have started crypto yet, in which case we definitely don't trust the backup
-                backupInfo && cli.getCrypto() != null
-                    ? (await cli.getCrypto()!.isKeyBackupTrusted(backupInfo)).trusted
-                    : false;
+            const backupInfo = (await cli.getCrypto()!.checkKeyBackupAndEnable())?.backupInfo ?? null;
+            const currentActiveBackupVersion = await cli.getCrypto()!.getActiveSessionBackupVersion();
+            const backupEnabled = currentActiveBackupVersion != null;
 
-            const backupEnabled = enabled;
             const { forceReset } = this.props;
             const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ChooseKeyPassphrase;
 
@@ -198,11 +194,13 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
             return {
                 backupInfo: backupInfo ?? undefined,
-                backupEnabled: backupEnabled ?? undefined,
+                backupEnabled: backupEnabled,
             };
         } catch (e) {
             this.setState({ phase: Phase.LoadError });
-            return {};
+            return {
+                backupEnabled: false,
+            };
         }
     }
 
@@ -345,7 +343,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         try {
             if (forceReset) {
                 logger.log("Forcing secret storage reset");
-                await cli.getCrypto()?.bootstrapSecretStorage({
+                await cli.getCrypto()!.bootstrapSecretStorage({
                     createSecretStorageKey: async () => this.recoveryKey!,
                     setupNewKeyBackup: true,
                     setupNewSecretStorage: true,
@@ -358,10 +356,10 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 //   * SSO authentication users which require interactive auth to upload
                 //     keys (and also happen to skip all post-authentication flows at the
                 //     moment via token login)
-                await cli.getCrypto()?.bootstrapCrossSigning({
+                await cli.getCrypto()!.bootstrapCrossSigning({
                     authUploadDeviceSigningKeys: this.doBootstrapUIAuth,
                 });
-                await cli.getCrypto()?.bootstrapSecretStorage({
+                await cli.getCrypto()!.bootstrapSecretStorage({
                     createSecretStorageKey: async () => this.recoveryKey!,
                     keyBackupInfo: this.state.backupInfo!,
                     setupNewKeyBackup: !this.state.backupInfo,
