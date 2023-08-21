@@ -1159,9 +1159,9 @@ describe("<SessionManagerTab />", () => {
                         await flushPromises();
                     });
 
-                    fireEvent.click(screen.getByTestId("other-sessions-menu"));
-
-                    expect(screen.queryByLabelText("Sign out of 2 sessions")).not.toBeInTheDocument();
+                    // no context menu because 'sign out all' is the only option
+                    // and it is not allowed when server is oidc-aware
+                    expect(screen.queryByTestId("other-sessions-menu")).not.toBeInTheDocument();
                 });
             });
         });

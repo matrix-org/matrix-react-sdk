@@ -138,6 +138,7 @@ const SessionManagerTab: React.FC = () => {
      * See https://github.com/matrix-org/matrix-spec-proposals/pull/3824
      */
     const delegatedAuthAccountUrl = getDelegatedAuthAccountUrl(matrixClient.getClientWellKnown());
+    const disableMultipleSignout = !!delegatedAuthAccountUrl;
 
     const userId = matrixClient?.getUserId();
     const currentUserMember = (userId && matrixClient?.getUser(userId)) || undefined;
@@ -215,11 +216,12 @@ const SessionManagerTab: React.FC = () => {
         setSelectedDeviceIds([]);
     }, [filter, setSelectedDeviceIds]);
 
-    const signOutAllOtherSessions = shouldShowOtherSessions
-        ? () => {
-              onSignOutOtherDevices(Object.keys(otherDevices));
-          }
-        : undefined;
+    const signOutAllOtherSessions =
+        shouldShowOtherSessions && !disableMultipleSignout
+            ? () => {
+                  onSignOutOtherDevices(Object.keys(otherDevices));
+              }
+            : undefined;
 
     const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>();
 
@@ -260,7 +262,7 @@ const SessionManagerTab: React.FC = () => {
                         heading={
                             <OtherSessionsSectionHeading
                                 otherSessionsCount={otherSessionsCount}
-                                signOutAllOtherSessions={signOutAllOtherSessions!}
+                                signOutAllOtherSessions={signOutAllOtherSessions}
                                 disabled={!!signingOutDeviceIds.length}
                             />
                         }
@@ -290,7 +292,7 @@ const SessionManagerTab: React.FC = () => {
                             setPushNotifications={setPushNotifications}
                             ref={filteredDeviceListRef}
                             supportsMSC3881={supportsMSC3881}
-                            disableMultipleSignout={!!delegatedAuthAccountUrl}
+                            disableMultipleSignout={disableMultipleSignout}
                         />
                     </SettingsSubsection>
                 )}
