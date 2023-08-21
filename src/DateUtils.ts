@@ -43,6 +43,14 @@ export function getMonthsArray(month: Intl.DateTimeFormatOptions["month"] = "sho
     return [...Array(12).keys()].map((m) => format(Date.UTC(2021, m)));
 }
 
+// XXX: Ideally we could just specify `hour12: boolean` but it has issues on Chrome in the `en` locale
+// https://support.google.com/chrome/thread/29828561?hl=en
+function getTwelveHourOptions(showTwelveHour: boolean): Intl.DateTimeFormatOptions {
+    return {
+        hourCycle: showTwelveHour ? "h12" : "h23",
+    };
+}
+
 /**
  * Formats a given date to a date & time string.
  *
@@ -64,19 +72,19 @@ export function formatDate(date: Date, showTwelveHour = false, locale?: string):
     } else if (now.getTime() - date.getTime() < 6 * DAY_MS) {
         // Time is less than 6 days into the future.
         return new Intl.DateTimeFormat(_locale, {
+            ...getTwelveHourOptions(showTwelveHour),
             weekday: "short",
             hour: "numeric",
             minute: "2-digit",
-            hour12: showTwelveHour,
         }).format(date);
     } else if (now.getFullYear() === date.getFullYear()) {
         return new Intl.DateTimeFormat(_locale, {
+            ...getTwelveHourOptions(showTwelveHour),
             weekday: "short",
             month: "short",
             day: "numeric",
             hour: "numeric",
             minute: "2-digit",
-            hour12: showTwelveHour,
         }).format(date);
     }
     return formatFullDate(date, showTwelveHour, false, _locale);
@@ -109,6 +117,7 @@ export function formatFullDateNoTime(date: Date, locale?: string): string {
  */
 export function formatFullDate(date: Date, showTwelveHour = false, showSeconds = true, locale?: string): string {
     return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
+        ...getTwelveHourOptions(showTwelveHour),
         weekday: "short",
         month: "short",
         day: "numeric",
@@ -116,7 +125,6 @@ export function formatFullDate(date: Date, showTwelveHour = false, showSeconds =
         hour: "numeric",
         minute: "2-digit",
         second: showSeconds ? "2-digit" : undefined,
-        hour12: showTwelveHour,
     }).format(date);
 }
 
@@ -145,10 +153,10 @@ export function formatDateForInput(date: Date): string {
  */
 export function formatFullTime(date: Date, showTwelveHour = false, locale?: string): string {
     return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
+        ...getTwelveHourOptions(showTwelveHour),
         hour: "numeric",
         minute: "2-digit",
         second: "2-digit",
-        hour12: showTwelveHour,
     }).format(date);
 }
 
@@ -163,9 +171,9 @@ export function formatFullTime(date: Date, showTwelveHour = false, locale?: stri
  */
 export function formatTime(date: Date, showTwelveHour = false, locale?: string): string {
     return new Intl.DateTimeFormat(locale ?? getUserLanguage(), {
+        ...getTwelveHourOptions(showTwelveHour),
         hour: "numeric",
         minute: "2-digit",
-        hour12: showTwelveHour,
     }).format(date);
 }
 
