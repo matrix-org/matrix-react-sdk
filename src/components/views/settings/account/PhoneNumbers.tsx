@@ -39,6 +39,9 @@ This is a copy/paste of EmailAddresses, mostly.
 interface IExistingPhoneNumberProps {
     msisdn: ThirdPartyIdentifier;
     onRemoved: (phoneNumber: ThirdPartyIdentifier) => void;
+    /**
+     * Disable removing phone number
+     */
     disabled?: boolean;
 }
 
@@ -128,6 +131,9 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
 interface IProps {
     msisdns: ThirdPartyIdentifier[];
     onMsisdnsChange: (phoneNumbers: ThirdPartyIdentifier[]) => void;
+    /**
+     * Adding or removing phone numbers is disabled when truthy
+     */
     disabled?: boolean;
 }
 

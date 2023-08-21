@@ -44,6 +44,9 @@ that is available.
 interface IExistingEmailAddressProps {
     email: ThirdPartyIdentifier;
     onRemoved: (emails: ThirdPartyIdentifier) => void;
+    /**
+     * Disallow removal of this email address when truthy
+     */
     disabled?: boolean;
 }
 
@@ -133,6 +136,9 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
 interface IProps {
     emails: ThirdPartyIdentifier[];
     onEmailsChange: (emails: ThirdPartyIdentifier[]) => void;
+    /**
+     * Adding or removing emails is disabled when truthy
+     */
     disabled?: boolean;
 }
 
