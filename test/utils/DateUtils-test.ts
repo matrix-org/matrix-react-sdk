@@ -350,7 +350,7 @@ describe("formatFullDateNoDayISO", () => {
 });
 
 describe("formatFullDateNoDayNoTime", () => {
-    it("should return en-GB locale", () => {
+    it("should return a date formatted for en-GB locale", () => {
         expect(formatFullDateNoDayNoTime(REPEATABLE_DATE, "en-GB")).toMatchInlineSnapshot(`"17/11/2022"`);
     });
 });

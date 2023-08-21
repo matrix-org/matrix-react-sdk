@@ -44,15 +44,16 @@ export function getMonthsArray(month: Intl.DateTimeFormatOptions["month"] = "sho
 }
 
 /**
- * Formats a given date to a date & time string with
- * variable resolution depending on far away the given date it from now.
+ * Formats a given date to a date & time string.
+ *
+ * The output format depends on how far away the given date is from now.
  * Will use the browser's default time zone.
  * If the date is today it will return a time string excluding seconds. See {@formatTime}.
  * If the date is within the last 6 days it will return the name of the weekday along with the time string excluding seconds.
  * If the date is within the same year then it will return the weekday, month and day of the month along with the time string excluding seconds.
  * Otherwise, it will return a string representing the full date & time in a human friendly manner. See {@formatFullDate}.
  * @param date - date object to format
- * @param showTwelveHour - whether to use 12-hour mode instead of default 24-hour mode
+ * @param showTwelveHour - whether to use 12-hour rather than 24-hour time. Defaults to `false` (24 hour mode). Overrides the default from the locale, whether `true` or `false`.
  * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
  */
 export function formatDate(date: Date, showTwelveHour = false, locale?: string): string {
