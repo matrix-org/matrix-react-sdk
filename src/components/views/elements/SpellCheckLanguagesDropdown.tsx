@@ -71,7 +71,7 @@ export default class SpellCheckLanguagesDropdown extends React.Component<
                     const langs: Languages = [];
                     languages.forEach((language) => {
                         langs.push({
-                            label: languageNames.of(language) ?? language,
+                            label: languageNames.of(language)!,
                             value: language,
                         });
                     });
@@ -82,7 +82,7 @@ export default class SpellCheckLanguagesDropdown extends React.Component<
                         languages: [
                             {
                                 value: "en",
-                                label: languageNames.of("en") ?? "English",
+                                label: languageNames.of("en")!,
                             },
                         ],
                     });

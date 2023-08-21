@@ -22,7 +22,7 @@ import PlatformPeg from "../../../../src/PlatformPeg";
 
 describe("<SpellCheckLanguagesDropdown />", () => {
     it("renders as expected", async () => {
-        const platform: any = { getAvailableSpellCheckLanguages: jest.fn().mockResolvedValue(["en", "de"]) };
+        const platform: any = { getAvailableSpellCheckLanguages: jest.fn().mockResolvedValue(["en", "de", "qq"]) };
         PlatformPeg.set(platform);
 
         const { asFragment } = render(

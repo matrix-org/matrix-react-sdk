@@ -503,9 +503,8 @@ export async function getAllLanguagesWithLabels(): Promise<Language[]> {
     return languages.map<Language>((langKey) => {
         return {
             value: langKey,
-            label: languageNames.of(langKey) ?? langKey,
-            labelInTargetLanguage:
-                new Intl.DisplayNames([langKey], { type: "language", style: "short" }).of(langKey) ?? langKey,
+            label: languageNames.of(langKey)!,
+            labelInTargetLanguage: new Intl.DisplayNames([langKey], { type: "language", style: "short" }).of(langKey)!,
         };
     });
 }
