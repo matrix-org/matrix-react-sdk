@@ -242,7 +242,7 @@ export async function getSessionLock(onNewInstance: () => Promise<void>): Promis
     window.addEventListener("pagehide", (event) => {
         // only remove the ping if we still think we're the owner. Otherwise we could be removing someone else's claim!
         if (lockServicer !== null) {
-            prefixedLogger.info("page hide: clearing our claim");
+            prefixedLogger.debug("page hide: clearing our claim");
             window.localStorage.removeItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_PING);
             window.localStorage.removeItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_OWNER);
         }
