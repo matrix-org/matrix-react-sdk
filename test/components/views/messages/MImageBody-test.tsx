@@ -22,6 +22,7 @@ import encrypt from "matrix-encrypt-attachment";
 import { mocked } from "jest-mock";
 import fs from "fs";
 import path from "path";
+import userEvent from "@testing-library/user-event";
 
 import MImageBody from "../../../../src/components/views/messages/MImageBody";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
@@ -34,7 +35,6 @@ import {
 } from "../../../test-utils";
 import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import userEvent from "@testing-library/user-event";
 
 jest.mock("matrix-encrypt-attachment", () => ({
     decryptAttachment: jest.fn(),
