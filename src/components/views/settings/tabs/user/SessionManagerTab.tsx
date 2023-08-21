@@ -64,7 +64,6 @@ const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> 
 const useSignOut = (
     matrixClient: MatrixClient,
     onSignoutResolvedCallback: () => Promise<void>,
-    delegatedAuthAccountUrl?: string,
 ): {
     onSignOutCurrentDevice: () => void;
     onSignOutOtherDevices: (deviceIds: ExtendedDevice["device_id"][]) => Promise<void>;
@@ -201,7 +200,6 @@ const SessionManagerTab: React.FC = () => {
     const { onSignOutCurrentDevice, onSignOutOtherDevices, signingOutDeviceIds } = useSignOut(
         matrixClient,
         onSignoutResolvedCallback,
-        delegatedAuthAccountUrl,
     );
 
     useEffect(
