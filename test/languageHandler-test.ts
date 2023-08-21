@@ -21,6 +21,7 @@ import {
     ICustomTranslations,
     registerCustomTranslations,
     setLanguage,
+    TranslationKey,
     UserFriendlyError,
 } from "../src/languageHandler";
 
@@ -47,9 +48,9 @@ describe("languageHandler", () => {
     });
 
     it("should support overriding translations", async () => {
-        const str = "This is a test string that does not exist in the app.";
-        const enOverride = "This is the English version of a custom string.";
-        const deOverride = "This is the German version of a custom string.";
+        const str = "This is a test string that does not exist in the app." as TranslationKey;
+        const enOverride = "This is the English version of a custom string." as TranslationKey;
+        const deOverride = "This is the German version of a custom string." as TranslationKey;
 
         // First test that overrides aren't being used
         await setLanguage("en");
@@ -73,7 +74,7 @@ describe("languageHandler", () => {
     });
 
     describe("UserFriendlyError", () => {
-        const testErrorMessage = "This email address is already in use (%(email)s)";
+        const testErrorMessage = "This email address is already in use (%(email)s)" as TranslationKey;
         beforeEach(async () => {
             // Setup some  strings with variable substituations that we can use in the tests.
             const deOverride = "Diese E-Mail-Adresse wird bereits verwendet (%(email)s)";
@@ -114,7 +115,7 @@ describe("languageHandler", () => {
         });
 
         it("ok to omit the substitution variables and cause object, there just won't be any cause", async () => {
-            const friendlyError = new UserFriendlyError("foo error");
+            const friendlyError = new UserFriendlyError("foo error" as TranslationKey);
             expect(friendlyError.cause).toBeUndefined();
         });
     });

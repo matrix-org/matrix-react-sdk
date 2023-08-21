@@ -25,19 +25,23 @@ export type ComponentClass = keyof JSX.IntrinsicElements | JSXElementConstructor
 
 // Utility type for string dot notation for accessing nested object properties
 // Based on https://stackoverflow.com/a/58436959
-type Join<K, P> = K extends string | number
+type Join<K, P, S extends string = "."> = K extends string | number
     ? P extends string | number
-        ? `${K}${"" extends P ? "" : "."}${P}`
+        ? `${K}${"" extends P ? "" : S}${P}`
         : never
     : never;
 
 type Prev = [never, 0, 1, 2, 3, ...0[]];
 
-export type Leaves<T, D extends number = 3> = [D] extends [never]
+export type Leaves<Target, Separator extends string = ".", LeafType = string, MaxDepth extends number = 3> = [
+    MaxDepth,
+] extends [never]
     ? never
-    : T extends object
-    ? { [K in keyof T]-?: Join<K, Leaves<T[K], Prev[D]>> }[keyof T]
-    : "";
+    : Target extends LeafType
+    ? ""
+    : {
+          [K in keyof Target]-?: Join<K, Leaves<Target[K], Separator, LeafType, Prev[MaxDepth]>, Separator>;
+      }[keyof Target];
 
 export type RecursivePartial<T> = {
     [P in keyof T]?: T[P] extends (infer U)[]

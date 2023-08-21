@@ -16,7 +16,7 @@ limitations under the License.
 
 import { KeyCombo } from "../KeyBindingsManager";
 import { IS_MAC, Key } from "../Keyboard";
-import { _t, _td } from "../languageHandler";
+import { _t, _td, TranslationKey } from "../languageHandler";
 import PlatformPeg from "../PlatformPeg";
 import SettingsStore from "../settings/SettingsStore";
 import {
@@ -130,5 +130,5 @@ export const getKeyboardShortcutValue = (name: KeyBindingAction): KeyCombo | und
 
 export const getKeyboardShortcutDisplayName = (name: KeyBindingAction): string | undefined => {
     const keyboardShortcutDisplayName = getKeyboardShortcutsForUI()[name]?.displayName;
-    return keyboardShortcutDisplayName && _t(keyboardShortcutDisplayName as string);
+    return keyboardShortcutDisplayName && _t(keyboardShortcutDisplayName as TranslationKey);
 };

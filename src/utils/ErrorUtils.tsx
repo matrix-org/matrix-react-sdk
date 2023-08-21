@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import { MatrixError, ConnectionError } from "matrix-js-sdk/src/matrix";
 
-import { _t, _td, Tags, TranslatedString } from "../languageHandler";
+import { _t, _td, Tags, TranslatedString, TranslationKey } from "../languageHandler";
 import SdkConfig from "../SdkConfig";
 import { ValidatedServerConfig } from "./ValidatedServerConfig";
 import ExternalLink from "../components/views/elements/ExternalLink";
@@ -49,7 +49,7 @@ export const adminContactStrings = {
 export function messageForResourceLimitError(
     limitType: string | undefined,
     adminContact: string | undefined,
-    strings: Record<string, string>,
+    strings: Record<string, TranslationKey>,
     extraTranslations?: Tags,
 ): TranslatedString {
     let errString = limitType ? strings[limitType] : undefined;

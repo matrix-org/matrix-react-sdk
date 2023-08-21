@@ -23,18 +23,25 @@ import {
     setLanguage,
     setMissingEntryGenerator,
     substitute,
+    TranslationKey,
 } from "../../src/languageHandler";
 import { stubClient } from "../test-utils";
 
 describe("languageHandler", function () {
     // See setupLanguage.ts for how we are stubbing out translations to provide fixture data for these tests
     const basicString = "Rooms";
-    const selfClosingTagSub = "Accept <policyLink /> to continue:";
-    const textInTagSub = "<a>Upgrade</a> to your own domain";
+    const selfClosingTagSub = "Accept <policyLink /> to continue:" as TranslationKey;
+    const textInTagSub = "<a>Upgrade</a> to your own domain" as TranslationKey;
     const plurals = "and %(count)s others...";
     const variableSub = "You are now ignoring %(userId)s";
 
-    type TestCase = [string, string, Record<string, unknown>, Record<string, unknown> | undefined, TranslatedString];
+    type TestCase = [
+        string,
+        TranslationKey,
+        Record<string, unknown>,
+        Record<string, unknown> | undefined,
+        TranslatedString,
+    ];
     const testCasesEn: TestCase[] = [
         // description of the test case, translationString, variables, tags, expected result
         ["translates a basic string", basicString, {}, undefined, "Rooms"],
@@ -111,7 +118,7 @@ describe("languageHandler", function () {
         });
 
         it("replacements in the wrong order", function () {
-            const text = "%(var1)s %(var2)s";
+            const text = "%(var1)s %(var2)s" as TranslationKey;
             expect(_t(text, { var2: "val2", var1: "val1" })).toBe("val1 val2");
         });
 
@@ -212,12 +219,12 @@ describe("languageHandler", function () {
 
     describe("when languages dont load", () => {
         it("_t", () => {
-            const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary";
+            const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary" as TranslationKey;
             expect(_t(STRING_NOT_IN_THE_DICTIONARY, {})).toEqual(STRING_NOT_IN_THE_DICTIONARY);
         });
 
         it("_tDom", () => {
-            const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary";
+            const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary" as TranslationKey;
             expect(_tDom(STRING_NOT_IN_THE_DICTIONARY, {})).toEqual(
                 <span lang="en">{STRING_NOT_IN_THE_DICTIONARY}</span>,
             );

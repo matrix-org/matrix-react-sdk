@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { throttle, get } from "lodash";
 import { compare } from "matrix-js-sdk/src/utils";
 
-import { _t, _td } from "../../../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../../../languageHandler";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Modal from "../../../../../Modal";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
@@ -247,7 +247,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         const plContent = plEvent ? plEvent.getContent() || {} : {};
         const canChangeLevels = room.currentState.mayClientSendStateEvent(EventType.RoomPowerLevels, client);
 
-        const plEventsToLabels: Record<EventType | string, string | null> = {
+        const plEventsToLabels: Record<EventType | string, TranslationKey | null> = {
             // These will be translated for us later.
             [EventType.RoomAvatar]: isSpaceRoom ? _td("Change space avatar") : _td("Change room avatar"),
             [EventType.RoomName]: isSpaceRoom ? _td("Change space name") : _td("Change room name"),
@@ -456,10 +456,10 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                     return null;
                 }
 
-                let label = plEventsToLabels[eventType];
-                if (label) {
+                let label: string;
+                if (plEventsToLabels[eventType]) {
                     const brand = SdkConfig.get("element_call").brand ?? DEFAULTS.element_call.brand;
-                    label = _t(label, { brand });
+                    label = _t(plEventsToLabels[eventType]!, { brand });
                 } else {
                     label = _t("Send %(eventType)s events", { eventType });
                 }

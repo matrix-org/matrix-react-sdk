@@ -18,7 +18,7 @@ limitations under the License.
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import React, { ReactNode } from "react";
 
-import { _t, _td } from "../languageHandler";
+import { _t, _td, TranslationKey } from "../languageHandler";
 import {
     NotificationBodyEnabledController,
     NotificationsEnabledController,
@@ -98,7 +98,7 @@ export enum Features {
     OidcNativeFlow = "feature_oidc_native_flow",
 }
 
-export const labGroupNames: Record<LabGroup, string> = {
+export const labGroupNames: Record<LabGroup, TranslationKey> = {
     [LabGroup.Messaging]: _td("Messaging"),
     [LabGroup.Profile]: _td("Profile"),
     [LabGroup.Spaces]: _td("Spaces"),
@@ -129,13 +129,13 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     // Display names are strongly recommended for clarity.
     // Display name can also be an object for different levels.
     displayName?:
-        | string
+        | TranslationKey
         | Partial<{
-              [level in SettingLevel]: string;
+              [level in SettingLevel]: TranslationKey;
           }>;
 
     // Optional description which will be shown as microCopy under SettingsFlags
-    description?: string | (() => ReactNode);
+    description?: TranslationKey | (() => ReactNode);
 
     // The supported levels are required. Preferably, use the preset arrays
     // at the top of this file to define this rather than a custom array.
@@ -165,11 +165,11 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
 
     // XXX: Keep this around for re-use in future Betas
     betaInfo?: {
-        title: string; // _td
+        title: TranslationKey;
         caption: () => ReactNode;
         faq?: (enabled: boolean) => ReactNode;
         image?: string; // require(...)
-        feedbackSubheading?: string;
+        feedbackSubheading?: TranslationKey;
         feedbackLabel?: string;
         extraSettings?: string[];
         requiresRefresh?: boolean;
