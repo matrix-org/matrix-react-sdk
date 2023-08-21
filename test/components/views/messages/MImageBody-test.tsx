@@ -34,6 +34,7 @@ import {
 } from "../../../test-utils";
 import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
 import SettingsStore from "../../../../src/settings/SettingsStore";
+import userEvent from "@testing-library/user-event";
 
 jest.mock("matrix-encrypt-attachment", () => ({
     decryptAttachment: jest.fn(),
@@ -257,5 +258,30 @@ describe("<MImageBody/>", () => {
         await waitForElementToBeRemoved(screen.getAllByRole("progressbar"));
         // thumbnail with dimensions present
         expect(container).toMatchSnapshot();
+    });
+
+    it("should show banner on hover", async () => {
+        const event = new MatrixEvent({
+            room_id: "!room:server",
+            sender: userId,
+            type: EventType.RoomMessage,
+            content: {
+                body: "alt for a test image",
+                info: {
+                    w: 40,
+                    h: 50,
+                },
+                url: "mxc://server/image",
+            },
+        });
+
+        const { container } = render(
+            <MImageBody {...props} mxEvent={event} mediaEventHelper={new MediaEventHelper(event)} />,
+        );
+
+        const img = container.querySelector(".mx_MImageBody_thumbnail")!;
+        await userEvent.hover(img);
+
+        expect(container.querySelector(".mx_MImageBody_banner")).toHaveTextContent("...alt for a test image");
     });
 });
