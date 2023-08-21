@@ -61,7 +61,8 @@ function getTwelveHourOptions(showTwelveHour: boolean): Intl.DateTimeFormatOptio
  * If the date is within the same year then it will return the weekday, month and day of the month along with the time string excluding seconds.
  * Otherwise, it will return a string representing the full date & time in a human friendly manner. See {@formatFullDate}.
  * @param date - date object to format
- * @param showTwelveHour - whether to use 12-hour rather than 24-hour time. Defaults to `false` (24 hour mode). Overrides the default from the locale, whether `true` or `false`.
+ * @param showTwelveHour - whether to use 12-hour rather than 24-hour time. Defaults to `false` (24 hour mode).
+ *        Overrides the default from the locale, whether `true` or `false`.
  * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
  */
 export function formatDate(date: Date, showTwelveHour = false, locale?: string): string {
@@ -111,7 +112,8 @@ export function formatFullDateNoTime(date: Date, locale?: string): string {
  * Will use the browser's default time zone.
  * @example "Thu, 17 Nov 2022, 4:58:32 pm" in en-GB locale with showTwelveHour=true and showSeconds=true
  * @param date - date object to format
- * @param showTwelveHour - whether to use 12-hour mode instead of default 24-hour mode
+ * @param showTwelveHour - whether to use 12-hour rather than 24-hour time. Defaults to `false` (24 hour mode).
+ *        Overrides the default from the locale, whether `true` or `false`.
  * @param showSeconds - whether to include seconds in the time portion of the string
  * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
  */
@@ -148,7 +150,8 @@ export function formatDateForInput(date: Date): string {
  * @example "4:58:32 PM" in en-GB locale with showTwelveHour=true
  * @example "16:58:32" in en-GB locale with showTwelveHour=false
  * @param date - date object to format
- * @param showTwelveHour - whether to use 12-hour mode instead of default 24-hour mode
+ * @param showTwelveHour - whether to use 12-hour rather than 24-hour time. Defaults to `false` (24 hour mode).
+ *        Overrides the default from the locale, whether `true` or `false`.
  * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
  */
 export function formatFullTime(date: Date, showTwelveHour = false, locale?: string): string {
@@ -166,7 +169,8 @@ export function formatFullTime(date: Date, showTwelveHour = false, locale?: stri
  * @example "4:58 PM" in en-GB locale with showTwelveHour=true
  * @example "16:58" in en-GB locale with showTwelveHour=false
  * @param date - date object to format
- * @param showTwelveHour - whether to use 12-hour mode instead of default 24-hour mode
+ * @param showTwelveHour - whether to use 12-hour rather than 24-hour time. Defaults to `false` (24 hour mode).
+ *        Overrides the default from the locale, whether `true` or `false`.
  * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
  */
 export function formatTime(date: Date, showTwelveHour = false, locale?: string): string {
