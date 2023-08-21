@@ -48,7 +48,7 @@ counterpart.setSeparator("|");
 const FALLBACK_LOCALE = "en";
 counterpart.setFallbackLocale(FALLBACK_LOCALE);
 
-interface ErrorOptions {
+export interface ErrorOptions {
     // Because we're mixing the subsitution variables and `cause` into the same object
     // below, we want them to always explicitly say whether there is an underlying error
     // or not to avoid typos of "cause" slipping through unnoticed.
