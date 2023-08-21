@@ -18,6 +18,7 @@ import React, { useCallback } from "react";
 import { Body as BodyText, IconButton } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
+import { Icon as ThreadsIcon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
 import type { Room } from "matrix-js-sdk/src/matrix";
@@ -34,6 +35,32 @@ import LegacyCallHandler from "../../../LegacyCallHandler";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
+import { useRoomThreadNotifications } from "../../../hooks/room/useRoomThreadNotifications";
+import { NotificationColor } from "../../../stores/notifications/NotificationColor";
+
+/**
+ * A helper to transform a notification color to the what the Compound Icon Button
+ * expects
+ */
+function notificationColorToIndicator(color: NotificationColor): React.ComponentProps<typeof IconButton>["indicator"] {
+    if (color <= NotificationColor.None) {
+        return undefined;
+    } else if (color <= NotificationColor.Grey) {
+        return "default";
+    } else {
+        return "highlight";
+    }
+}
+
+/**
+ * A helper to show or hide the right panel
+ */
+function showOrHidePanel(phase: RightPanelPhases): void {
+    const rightPanel = RightPanelStore.instance;
+    rightPanel.isOpen && rightPanel.currentCard.phase === phase
+        ? rightPanel.togglePanel(null)
+        : rightPanel.setCard({ phase });
+}
 
 export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const roomName = useRoomName(room);
@@ -69,6 +96,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
         [room.roomId],
     );
 
+    const threadNotifications = useRoomThreadNotifications(room);
+
     return (
         <Flex
             as="header"
@@ -76,10 +105,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
             gap="var(--cpd-space-3x)"
             className="mx_RoomHeader light-panel"
             onClick={() => {
-                const rightPanel = RightPanelStore.instance;
-                rightPanel.isOpen
-                    ? rightPanel.togglePanel(null)
-                    : rightPanel.setCard({ phase: RightPanelPhases.RoomSummary });
+                showOrHidePanel(RightPanelPhases.RoomSummary);
             }}
         >
             <DecoratedRoomAvatar room={room} avatarSize={40} displayBadge={false} />
@@ -106,7 +132,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     disabled={!!voiceCallDisabledReason}
                     title={!voiceCallDisabledReason ? _t("Voice call") : voiceCallDisabledReason!}
                     onClick={async (ev) => {
-                        ev.preventDefault();
+                        ev.stopPropagation();
                         placeCall(CallType.Voice, voiceCallType);
                     }}
                 >
@@ -116,11 +142,20 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     disabled={!!videoCallDisabledReason}
                     title={!videoCallDisabledReason ? _t("Video call") : videoCallDisabledReason!}
                     onClick={(ev) => {
-                        ev.preventDefault();
+                        ev.stopPropagation();
                         placeCall(CallType.Video, videoCallType);
                     }}
                 >
                     <VideoCallIcon />
+                </IconButton>
+                <IconButton
+                    indicator={notificationColorToIndicator(threadNotifications)}
+                    onClick={(ev) => {
+                        ev.stopPropagation();
+                        showOrHidePanel(RightPanelPhases.ThreadPanel);
+                    }}
+                >
+                    <ThreadsIcon />
                 </IconButton>
             </Flex>
         </Flex>
