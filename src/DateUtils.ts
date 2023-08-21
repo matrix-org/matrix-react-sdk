@@ -62,7 +62,7 @@ export function formatDate(date: Date, showTwelveHour = false, locale?: string):
     if (date.toDateString() === now.toDateString()) {
         return formatTime(date, showTwelveHour, _locale);
     } else if (now.getTime() - date.getTime() < 6 * DAY_MS) {
-        // Time is less than 6 days into the future.
+        // Time is within the last 6 days (or in the future)
         return new Intl.DateTimeFormat(_locale, {
             weekday: "short",
             hour: "numeric",
