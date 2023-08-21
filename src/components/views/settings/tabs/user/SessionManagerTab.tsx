@@ -106,7 +106,7 @@ const useSignOut = (
         }
 
         // delegated auth logout flow confirms and signs out together
-        // so only confirm if we are doing a delegated auth sign out
+        // so only confirm if we are NOT doing a delegated auth sign out
         if (!delegatedAuthAccountUrl) {
             const userConfirmedSignout = await confirmSignOut(deviceIds.length);
             if (!userConfirmedSignout) {
