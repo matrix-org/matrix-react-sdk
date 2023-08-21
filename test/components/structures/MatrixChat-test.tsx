@@ -17,12 +17,10 @@ limitations under the License.
 import React, { ComponentProps } from "react";
 import { fireEvent, render, RenderResult, screen, within } from "@testing-library/react";
 import fetchMock from "fetch-mock-jest";
-import { mocked } from "jest-mock";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { SyncState } from "matrix-js-sdk/src/sync";
+import { Mocked, mocked } from "jest-mock";
+import { ClientEvent, MatrixClient, MatrixEvent, Room, SyncState } from "matrix-js-sdk/src/matrix";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import * as MatrixJs from "matrix-js-sdk/src/matrix";
-import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { completeAuthorizationCodeGrant } from "matrix-js-sdk/src/oidc/authorize";
 import { logger } from "matrix-js-sdk/src/logger";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
@@ -61,6 +59,7 @@ describe("<MatrixChat />", () => {
     // reused in createClient mock below
     const getMockClientMethods = () => ({
         ...mockClientMethodsUser(userId),
+        getVersions: jest.fn().mockResolvedValue({ versions: ["v1.1"] }),
         startClient: jest.fn(),
         stopClient: jest.fn(),
         setCanResetTimelineCallback: jest.fn(),
@@ -108,7 +107,7 @@ describe("<MatrixChat />", () => {
         logout: jest.fn(),
         getDeviceId: jest.fn(),
     });
-    let mockClient = getMockClientWithEventEmitter(getMockClientMethods());
+    let mockClient: Mocked<MatrixClient>;
     const serverConfig = {
         hsUrl: "https://test.com",
         hsName: "Test Server",
@@ -132,15 +131,10 @@ describe("<MatrixChat />", () => {
         },
         onNewScreen: jest.fn(),
         onTokenLoginCompleted: jest.fn(),
-        makeRegistrationUrl: jest.fn(),
         realQueryParams: {},
     };
     const getComponent = (props: Partial<ComponentProps<typeof MatrixChat>> = {}) =>
         render(<MatrixChat {...defaultProps} {...props} />);
-    let localStorageSetSpy = jest.spyOn(localStorage.__proto__, "setItem");
-    let localStorageGetSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
-    let localStorageClearSpy = jest.spyOn(localStorage.__proto__, "clear");
-    let sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem");
 
     // make test results readable
     filterConsole("Failed to parse localStorage object");
@@ -180,12 +174,8 @@ describe("<MatrixChat />", () => {
         mockClient = getMockClientWithEventEmitter(getMockClientMethods());
         fetchMock.get("https://test.com/_matrix/client/versions", {
             unstable_features: {},
-            versions: [],
+            versions: ["v1.1"],
         });
-        localStorageSetSpy = jest.spyOn(localStorage.__proto__, "setItem");
-        localStorageGetSpy = jest.spyOn(localStorage.__proto__, "getItem").mockReturnValue(undefined);
-        localStorageClearSpy = jest.spyOn(localStorage.__proto__, "clear");
-        sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem");
 
         jest.spyOn(StorageManager, "idbLoad").mockReset();
         jest.spyOn(StorageManager, "idbSave").mockResolvedValue(undefined);
@@ -196,6 +186,11 @@ describe("<MatrixChat />", () => {
 
     afterEach(() => {
         jest.restoreAllMocks();
+        localStorage.clear();
+        sessionStorage.clear();
+
+        // emit a loggedOut event so that all of the Store singletons forget about their references to the mock client
+        defaultDispatcher.dispatch({ action: Action.OnLoggedOut });
     });
 
     it("should render spinner while app is loading", () => {
@@ -210,16 +205,13 @@ describe("<MatrixChat />", () => {
                 mx_access_token: accessToken,
             },
         };
-        const mockLocalStorage: Record<string, string> = {
-            mx_hs_url: serverConfig.hsUrl,
-            mx_is_url: serverConfig.isUrl,
-            mx_access_token: accessToken,
-            mx_user_id: userId,
-            mx_device_id: deviceId,
-        };
 
         beforeEach(() => {
-            localStorageGetSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
+            localStorage.setItem("mx_hs_url", serverConfig.hsUrl);
+            localStorage.setItem("mx_is_url", serverConfig.isUrl);
+            localStorage.setItem("mx_access_token", accessToken);
+            localStorage.setItem("mx_user_id", userId);
+            localStorage.setItem("mx_device_id", deviceId);
 
             jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (table, key) => {
                 const safeKey = Array.isArray(key) ? key[0] : key;
@@ -521,13 +513,35 @@ describe("<MatrixChat />", () => {
         });
     });
 
+    describe("with a soft-logged-out session", () => {
+        const mockidb: Record<string, Record<string, string>> = {};
+
+        beforeEach(() => {
+            localStorage.setItem("mx_hs_url", serverConfig.hsUrl);
+            localStorage.setItem("mx_is_url", serverConfig.isUrl);
+            localStorage.setItem("mx_access_token", accessToken);
+            localStorage.setItem("mx_user_id", userId);
+            localStorage.setItem("mx_device_id", deviceId);
+            localStorage.setItem("mx_soft_logout", "true");
+
+            mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.password" }] });
+
+            jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (table, key) => {
+                const safeKey = Array.isArray(key) ? key[0] : key;
+                return mockidb[table]?.[safeKey];
+            });
+        });
+
+        it("should show the soft-logout page", async () => {
+            const result = getComponent();
+
+            await result.findByText("You're signed out");
+            expect(result.container).toMatchSnapshot();
+        });
+    });
+
     describe("login via key/pass", () => {
         let loginClient!: ReturnType<typeof getMockClientWithEventEmitter>;
-
-        const mockCrypto = {
-            getVerificationRequestsToDeviceInProgress: jest.fn().mockReturnValue([]),
-            getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
-        };
 
         const userName = "ernie";
         const password = "ilovebert";
@@ -562,6 +576,7 @@ describe("<MatrixChat />", () => {
         beforeEach(() => {
             loginClient = getMockClientWithEventEmitter(getMockClientMethods());
             // this is used to create a temporary client during login
+            // FIXME: except it is *also* used as the permanent client for the rest of the test.
             jest.spyOn(MatrixJs, "createClient").mockClear().mockReturnValue(loginClient);
 
             loginClient.login.mockClear().mockResolvedValue({
@@ -584,6 +599,10 @@ describe("<MatrixChat />", () => {
 
         describe("post login setup", () => {
             beforeEach(() => {
+                const mockCrypto = {
+                    getVerificationRequestsToDeviceInProgress: jest.fn().mockReturnValue([]),
+                    getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
+                };
                 loginClient.isCryptoEnabled.mockReturnValue(true);
                 loginClient.getCrypto.mockReturnValue(mockCrypto as any);
                 loginClient.userHasCrossSigningKeys.mockClear().mockResolvedValue(false);
@@ -699,14 +718,6 @@ describe("<MatrixChat />", () => {
             loginToken,
         };
 
-        const mockLocalStorage: Record<string, string> = {
-            mx_sso_hs_url: serverConfig.hsUrl,
-            mx_sso_is_url: serverConfig.isUrl,
-            // these are only going to be set during login
-            mx_hs_url: serverConfig.hsUrl,
-            mx_is_url: serverConfig.isUrl,
-        };
-
         let loginClient!: ReturnType<typeof getMockClientWithEventEmitter>;
         const userId = "@alice:server.org";
         const deviceId = "test-device-id";
@@ -718,17 +729,18 @@ describe("<MatrixChat />", () => {
         };
 
         beforeEach(() => {
+            localStorage.setItem("mx_sso_hs_url", serverConfig.hsUrl);
+            localStorage.setItem("mx_sso_is_url", serverConfig.isUrl);
             loginClient = getMockClientWithEventEmitter(getMockClientMethods());
             // this is used to create a temporary client during login
             jest.spyOn(MatrixJs, "createClient").mockReturnValue(loginClient);
 
             loginClient.login.mockClear().mockResolvedValue(clientLoginResponse);
-
-            localStorageGetSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
         });
 
         it("should show an error dialog when no homeserver is found in local storage", async () => {
-            localStorageGetSpy.mockReturnValue(undefined);
+            localStorage.removeItem("mx_sso_hs_url");
+            const localStorageGetSpy = jest.spyOn(localStorage.__proto__, "getItem");
             getComponent({ realQueryParams });
 
             expect(localStorageGetSpy).toHaveBeenCalledWith("mx_sso_hs_url");
@@ -802,12 +814,15 @@ describe("<MatrixChat />", () => {
                 );
             });
             it("should clear storage", async () => {
+                const localStorageClearSpy = jest.spyOn(localStorage.__proto__, "clear");
+
                 getComponent({ realQueryParams });
 
                 await flushPromises();
 
                 // just check we called the clearStorage function
                 expect(loginClient.clearStores).toHaveBeenCalled();
+                expect(localStorage.getItem("mx_sso_hs_url")).toBe(null);
                 expect(localStorageClearSpy).toHaveBeenCalled();
             });
 
@@ -816,17 +831,17 @@ describe("<MatrixChat />", () => {
 
                 await flushPromises();
 
-                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_hs_url", serverConfig.hsUrl);
-                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_user_id", userId);
-                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_has_access_token", "true");
-                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_device_id", deviceId);
+                expect(localStorage.getItem("mx_hs_url")).toEqual(serverConfig.hsUrl);
+                expect(localStorage.getItem("mx_user_id")).toEqual(userId);
+                expect(localStorage.getItem("mx_has_access_token")).toEqual("true");
+                expect(localStorage.getItem("mx_device_id")).toEqual(deviceId);
             });
 
             it("should set fresh login flag in session storage", async () => {
+                const sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem");
                 getComponent({ realQueryParams });
 
                 await flushPromises();
-
                 expect(sessionStorageSetSpy).toHaveBeenCalledWith("mx_fresh_login", "true");
             });
 
@@ -845,7 +860,7 @@ describe("<MatrixChat />", () => {
 
                 await flushPromises();
 
-                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_hs_url", hsUrlFromWk);
+                expect(localStorage.getItem("mx_hs_url")).toEqual(hsUrlFromWk);
             });
 
             it("should continue to post login setup when no session is found in local storage", async () => {
@@ -873,14 +888,6 @@ describe("<MatrixChat />", () => {
         const userId = "@alice:server.org";
         const deviceId = "test-device-id";
         const accessToken = "test-access-token-from-oidc";
-
-        const mockLocalStorage: Record<string, string> = {
-            // these are only going to be set during login
-            mx_hs_url: homeserverUrl,
-            mx_is_url: identityServerUrl,
-            mx_user_id: userId,
-            mx_device_id: deviceId,
-        };
 
         const tokenResponse: BearerTokenResponse = {
             access_token: accessToken,
@@ -922,7 +929,6 @@ describe("<MatrixChat />", () => {
             jest.spyOn(logger, "error").mockClear();
             jest.spyOn(logger, "log").mockClear();
 
-            localStorageGetSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
             loginClient.whoami.mockResolvedValue({
                 user_id: userId,
                 device_id: deviceId,
@@ -1019,6 +1025,7 @@ describe("<MatrixChat />", () => {
             });
 
             it("should not store clientId or issuer", async () => {
+                const sessionStorageSetSpy = jest.spyOn(sessionStorage.__proto__, "setItem");
                 getComponent({ realQueryParams });
 
                 await flushPromises();
@@ -1030,7 +1037,6 @@ describe("<MatrixChat />", () => {
 
         describe("when login succeeds", () => {
             beforeEach(() => {
-                localStorageGetSpy.mockImplementation((key: unknown) => mockLocalStorage[key as string] || "");
                 jest.spyOn(StorageManager, "idbLoad").mockImplementation(
                     async (_table: string, key: string | string[]) => (key === "mx_access_token" ? accessToken : null),
                 );
@@ -1044,10 +1050,10 @@ describe("<MatrixChat />", () => {
 
                 await flushPromises();
 
-                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_hs_url", homeserverUrl);
-                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_user_id", userId);
-                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_has_access_token", "true");
-                expect(localStorageSetSpy).toHaveBeenCalledWith("mx_device_id", deviceId);
+                expect(localStorage.getItem("mx_hs_url")).toEqual(homeserverUrl);
+                expect(localStorage.getItem("mx_user_id")).toEqual(userId);
+                expect(localStorage.getItem("mx_has_access_token")).toEqual("true");
+                expect(localStorage.getItem("mx_device_id")).toEqual(deviceId);
             });
 
             it("should store clientId and issuer in session storage", async () => {
@@ -1055,8 +1061,8 @@ describe("<MatrixChat />", () => {
 
                 await flushPromises();
 
-                expect(sessionStorageSetSpy).toHaveBeenCalledWith("mx_oidc_client_id", clientId);
-                expect(sessionStorageSetSpy).toHaveBeenCalledWith("mx_oidc_token_issuer", issuer);
+                expect(sessionStorage.getItem("mx_oidc_client_id")).toEqual(clientId);
+                expect(sessionStorage.getItem("mx_oidc_token_issuer")).toEqual(issuer);
             });
 
             it("should set logged in and start MatrixClient", async () => {
@@ -1076,7 +1082,7 @@ describe("<MatrixChat />", () => {
                         homeserverUrl +
                         " softLogout: " +
                         false,
-                    " freshLogin: " + false,
+                    " freshLogin: " + true,
                 );
 
                 // client successfully started

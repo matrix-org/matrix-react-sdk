@@ -14,11 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, Room, RoomState, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { RoomState } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { DefaultTagID, OrderedDefaultTagIDs, RoomUpdateCause, TagID } from "./models";
@@ -580,10 +577,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
      * @param {IFilterCondition} filter The filter condition to add.
      */
     public async addFilter(filter: IFilterCondition): Promise<void> {
-        let promise = Promise.resolve();
         filter.on(FILTER_CHANGED, this.onPrefilterUpdated);
         this.prefilterConditions.push(filter);
-        promise = this.recalculatePrefiltering();
+        const promise = this.recalculatePrefiltering();
         promise.then(() => this.updateFn.trigger());
     }
 

@@ -17,14 +17,17 @@ limitations under the License.
 import React from "react";
 import { render, screen, act, RenderResult } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import {
+    MatrixClient,
+    PendingEventOrdering,
+    Room,
+    MatrixEvent,
+    RoomStateEvent,
+    Thread,
+} from "matrix-js-sdk/src/matrix";
 import { Widget } from "matrix-widget-api";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { Thread } from "matrix-js-sdk/src/models/thread";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import type { ClientWidgetApi } from "matrix-widget-api";
 import {
     stubClient,
@@ -35,6 +38,7 @@ import {
     filterConsole,
     flushPromises,
     mkMessage,
+    useMockMediaDevices,
 } from "../../../test-utils";
 import { CallStore } from "../../../../src/stores/CallStore";
 import RoomTile from "../../../../src/components/views/rooms/RoomTile";
@@ -131,6 +135,7 @@ describe("RoomTile", () => {
     };
 
     beforeEach(() => {
+        useMockMediaDevices();
         sdkContext = new TestSdkContext();
 
         client = mocked(stubClient());
@@ -149,7 +154,7 @@ describe("RoomTile", () => {
     afterEach(() => {
         // @ts-ignore
         MessagePreviewStore.instance.previews = new Map<string, Map<TagID | TAG_ANY, MessagePreview | null>>();
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("when message previews are not enabled", () => {

@@ -15,21 +15,53 @@ limitations under the License.
 */
 
 import React from "react";
+import { Body as BodyText } from "@vector-im/compound-web";
 
-import type { Room } from "matrix-js-sdk/src/models/room";
-import { IOOBData } from "../../../stores/ThreepidInviteStore";
+import type { Room } from "matrix-js-sdk/src/matrix";
 import { useRoomName } from "../../../hooks/useRoomName";
+import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { useTopic } from "../../../hooks/room/useTopic";
+import { Flex } from "../../utils/Flex";
+import { Box } from "../../utils/Box";
 
-export default function RoomHeader({ room, oobData }: { room?: Room; oobData?: IOOBData }): JSX.Element {
-    const roomName = useRoomName(room, oobData);
+export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+    const roomName = useRoomName(room);
+    const roomTopic = useTopic(room);
 
     return (
-        <header className="mx_RoomHeader light-panel">
-            <div className="mx_RoomHeader_wrapper">
-                <div className="mx_RoomHeader_name" dir="auto" title={roomName} role="heading" aria-level={1}>
+        <Flex
+            as="header"
+            align="center"
+            gap="var(--cpd-space-3x)"
+            className="mx_RoomHeader light-panel"
+            onClick={() => {
+                const rightPanel = RightPanelStore.instance;
+                rightPanel.isOpen
+                    ? rightPanel.togglePanel(null)
+                    : rightPanel.setCard({ phase: RightPanelPhases.RoomSummary });
+            }}
+        >
+            <DecoratedRoomAvatar room={room} avatarSize={40} displayBadge={false} />
+            <Box flex="1" className="mx_RoomHeader_info">
+                <BodyText
+                    as="div"
+                    size="lg"
+                    weight="semibold"
+                    dir="auto"
+                    title={roomName}
+                    role="heading"
+                    aria-level={1}
+                >
                     {roomName}
-                </div>
-            </div>
-        </header>
+                </BodyText>
+                {roomTopic && (
+                    <BodyText as="div" size="sm" className="mx_RoomHeader_topic">
+                        {roomTopic.text}
+                    </BodyText>
+                )}
+            </Box>
+        </Flex>
     );
 }

@@ -14,14 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { IContent } from "matrix-js-sdk/src/matrix";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
-import { makeLocationContent, makeBeaconInfoContent } from "matrix-js-sdk/src/content-helpers";
+import {
+    MatrixClient,
+    IContent,
+    IEventRelation,
+    MatrixError,
+    THREAD_RELATION_TYPE,
+    ContentHelpers,
+    LocationAssetType,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation } from "matrix-js-sdk/src/models/event";
-import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
@@ -113,7 +115,7 @@ export const shareLiveLocation =
         try {
             await OwnBeaconStore.instance.createLiveBeacon(
                 roomId,
-                makeBeaconInfoContent(
+                ContentHelpers.makeBeaconInfoContent(
                     timeout ?? DEFAULT_LIVE_DURATION,
                     true /* isLive */,
                     description,
@@ -138,7 +140,13 @@ export const shareLocation =
         try {
             const threadId = (relation?.rel_type === THREAD_RELATION_TYPE.name && relation?.event_id) || null;
             const assetType = shareType === LocationShareType.Pin ? LocationAssetType.Pin : LocationAssetType.Self;
-            const content = makeLocationContent(undefined, uri, timestamp, undefined, assetType) as IContent;
+            const content = ContentHelpers.makeLocationContent(
+                undefined,
+                uri,
+                timestamp,
+                undefined,
+                assetType,
+            ) as IContent;
             await doMaybeLocalRoomAction(
                 roomId,
                 (actualRoomId: string) => client.sendMessage(actualRoomId, threadId, content),

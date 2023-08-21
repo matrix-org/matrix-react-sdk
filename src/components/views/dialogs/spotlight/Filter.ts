@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,13 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_BroadcastPlaybackControlButton {
-    align-items: center;
-    background-color: $background;
-    border-radius: 50%;
-    display: flex;
-    height: 32px;
-    justify-content: center;
-    margin-bottom: $spacing-8;
-    width: 32px;
+export enum Filter {
+    People,
+    PublicRooms,
+    PublicSpaces,
 }

@@ -16,8 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
+import type { MatrixClient, MatrixEvent, ISendEventResponse } from "matrix-js-sdk/src/matrix";
 import type { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
@@ -289,7 +288,7 @@ describe("Read receipts", () => {
         cy.intercept({
             method: "POST",
             url: new RegExp(
-                `http://localhost:\\d+/_matrix/client/r0/rooms/${uriEncodedOtherRoomId}/receipt/m\\.read/.+`,
+                `http://localhost:\\d+/_matrix/client/v3/rooms/${uriEncodedOtherRoomId}/receipt/m\\.read/.+`,
             ),
         }).as("receiptRequest");
 
@@ -322,7 +321,7 @@ describe("Read receipts", () => {
 
             cy.intercept({
                 method: "POST",
-                url: new RegExp(`http://localhost:\\d+/_matrix/client/r0/rooms/${uriEncodedOtherRoomId}/read_markers`),
+                url: new RegExp(`http://localhost:\\d+/_matrix/client/v3/rooms/${uriEncodedOtherRoomId}/read_markers`),
             }).as("readMarkersRequest");
 
             cy.findByRole("button", { name: "Jump to first unread message." }).click();
@@ -342,7 +341,7 @@ describe("Read receipts", () => {
 
             cy.intercept({
                 method: "POST",
-                url: new RegExp(`http://localhost:\\d+/_matrix/client/r0/rooms/${uriEncodedOtherRoomId}/read_markers`),
+                url: new RegExp(`http://localhost:\\d+/_matrix/client/v3/rooms/${uriEncodedOtherRoomId}/read_markers`),
             }).as("readMarkersRequest");
 
             cy.findByRole("button", { name: "Scroll to most recent messages" }).click();

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MSC3575Filter, SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
 import { Optional } from "matrix-events-sdk";
@@ -399,6 +399,4 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     }
 
     protected async onAction(payload: ActionPayload): Promise<void> {}
-
-    protected async onDispatchAsync(payload: ActionPayload): Promise<void> {}
 }

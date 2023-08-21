@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 import React, { FC } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Room, JoinRule, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";

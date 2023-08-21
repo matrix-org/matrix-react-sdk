@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { IEventRelation } from "matrix-js-sdk/src/matrix";
+import { Room, IEventRelation } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 
 import ContentMessages from "../../ContentMessages";
@@ -108,11 +107,18 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
             return null;
         }
 
-        // MUST use var name 'count' for pluralization to kick in
-        const uploadText = _t("Uploading %(filename)s and %(count)s others", {
-            filename: this.state.currentFile,
-            count: this.state.countFiles - 1,
-        });
+        let uploadText: string;
+        if (this.state.countFiles > 1) {
+            // MUST use var name 'count' for pluralization to kick in
+            uploadText = _t("Uploading %(filename)s and %(count)s others", {
+                filename: this.state.currentFile,
+                count: this.state.countFiles - 1,
+            });
+        } else {
+            uploadText = _t("Uploading %(filename)s", {
+                filename: this.state.currentFile,
+            });
+        }
 
         const uploadSize = fileSize(this.state.currentTotal!);
         return (

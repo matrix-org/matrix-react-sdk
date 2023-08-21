@@ -15,10 +15,7 @@ limitations under the License.
 */
 
 import React, { useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { Room, EventType, GuestAccess, HistoryVisibility, JoinRule, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -43,7 +40,9 @@ const SpaceSettingsVisibilityTab: React.FC<IProps> = ({ matrixClient: cli, space
     const [error, setError] = useState("");
     const serverSupportsExploringSpaces = useAsyncMemo<boolean>(
         async (): Promise<boolean> => {
-            return cli.doesServerSupportUnstableFeature("org.matrix.msc3827.stable");
+            return cli.isVersionSupported("v1.4").then((supported) => {
+                return supported || cli.doesServerSupportUnstableFeature("org.matrix.msc3827.stable");
+            });
         },
         [cli],
         false,

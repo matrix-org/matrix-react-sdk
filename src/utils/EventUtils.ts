@@ -14,14 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, EVENT_VISIBILITY_CHANGE_TYPE, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import {
+    EventStatus,
+    MatrixEvent,
+    EventType,
+    EVENT_VISIBILITY_CHANGE_TYPE,
+    MsgType,
+    RelationType,
+    MatrixClient,
+    THREAD_RELATION_TYPE,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { M_POLL_END, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import shouldHideEvent from "../shouldHideEvent";
 import { GetRelationsForEvent } from "../components/views/rooms/EventTile";

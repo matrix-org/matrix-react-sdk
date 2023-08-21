@@ -17,9 +17,8 @@ limitations under the License.
 */
 
 import React, { ReactElement, useCallback, useContext, useEffect } from "react";
-import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { EventStatus, MatrixEvent, MatrixEventEvent, MsgType, RelationType } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
-import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 
 import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
@@ -31,7 +30,7 @@ import { Icon as TrashcanIcon } from "../../../../res/img/element-icons/trashcan
 import { Icon as ReplyIcon } from "../../../../res/img/element-icons/room/message-bar/reply.svg";
 import { Icon as ExpandMessageIcon } from "../../../../res/img/element-icons/expand-message.svg";
 import { Icon as CollapseMessageIcon } from "../../../../res/img/element-icons/collapse-message.svg";
-import type { Relations } from "matrix-js-sdk/src/models/relations";
+import type { Relations } from "matrix-js-sdk/src/matrix";
 import { _t } from "../../../languageHandler";
 import dis, { defaultDispatcher } from "../../../dispatcher/dispatcher";
 import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";

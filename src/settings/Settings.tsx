@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import React, { ReactNode } from "react";
 
 import { _t, _td } from "../languageHandler";
@@ -252,20 +252,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             ),
         },
     },
-    "feature_exploring_public_spaces": {
-        isFeature: true,
-        labsGroup: LabGroup.Spaces,
-        displayName: _td("Explore public spaces in the new search dialog"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        controller: new ServerSupportUnstableFeatureController(
-            "feature_exploring_public_spaces",
-            defaultWatchManager,
-            [["org.matrix.msc3827.stable"]],
-            "v1.4",
-            _td("Requires your server to support the stable version of MSC3827"),
-        ),
-    },
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
@@ -361,14 +347,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Show info about bridges in room settings"),
-        default: false,
-    },
-    "feature_right_panel_default_open": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Right panel stays open"),
-        description: _td("Defaults to room member list."),
         default: false,
     },
     "feature_jump_to_date": {

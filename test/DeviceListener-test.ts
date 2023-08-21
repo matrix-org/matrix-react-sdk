@@ -15,12 +15,11 @@ limitations under the License.
 */
 
 import { Mocked, mocked } from "jest-mock";
-import { MatrixEvent, Room, MatrixClient, DeviceVerificationStatus, CryptoApi } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, Room, MatrixClient, DeviceVerificationStatus, CryptoApi, Device } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { Device } from "matrix-js-sdk/src/models/device";
 
 import DeviceListener from "../src/DeviceListener";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
@@ -62,17 +61,18 @@ describe("DeviceListener", () => {
     let mockClient: Mocked<MatrixClient>;
     let mockCrypto: Mocked<CryptoApi>;
 
-    // spy on various toasts' hide and show functions
-    // easier than mocking
-    jest.spyOn(SetupEncryptionToast, "showToast");
-    jest.spyOn(SetupEncryptionToast, "hideToast");
-    jest.spyOn(BulkUnverifiedSessionsToast, "showToast");
-    jest.spyOn(BulkUnverifiedSessionsToast, "hideToast");
-    jest.spyOn(UnverifiedSessionToast, "showToast");
-    jest.spyOn(UnverifiedSessionToast, "hideToast");
-
     beforeEach(() => {
         jest.resetAllMocks();
+
+        // spy on various toasts' hide and show functions
+        // easier than mocking
+        jest.spyOn(SetupEncryptionToast, "showToast").mockReturnValue(undefined);
+        jest.spyOn(SetupEncryptionToast, "hideToast").mockReturnValue(undefined);
+        jest.spyOn(BulkUnverifiedSessionsToast, "showToast").mockReturnValue(undefined);
+        jest.spyOn(BulkUnverifiedSessionsToast, "hideToast").mockReturnValue(undefined);
+        jest.spyOn(UnverifiedSessionToast, "showToast").mockResolvedValue(undefined);
+        jest.spyOn(UnverifiedSessionToast, "hideToast").mockReturnValue(undefined);
+
         mockPlatformPeg({
             getAppVersion: jest.fn().mockResolvedValue("1.2.3"),
         });

@@ -24,17 +24,11 @@ import { MetaSpace } from "../../../../../../src/stores/spaces";
 import { SettingLevel } from "../../../../../../src/settings/SettingLevel";
 import { flushPromises } from "../../../../../test-utils";
 
-// used by checkbox to relate labels to inputs
-// make it stable for snapshot testing
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: jest.fn().mockReturnValue("abcd"),
-}));
-
 describe("<SidebarUserSettingsTab />", () => {
     beforeEach(() => {
         jest.spyOn(PosthogTrackers, "trackInteraction").mockClear();
         jest.spyOn(SettingsStore, "getValue").mockRestore();
-        jest.spyOn(SettingsStore, "setValue").mockReset();
+        jest.spyOn(SettingsStore, "setValue").mockResolvedValue(undefined);
     });
 
     it("renders sidebar settings", () => {

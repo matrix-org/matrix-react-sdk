@@ -16,8 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
-import type { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import type { ISendEventResponse, EventType, MsgType } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
@@ -705,14 +704,14 @@ describe("Timeline", () => {
         });
 
         it("should render url previews", () => {
-            cy.intercept("**/_matrix/media/r0/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*", {
+            cy.intercept("**/_matrix/media/v3/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*", {
                 statusCode: 200,
                 fixture: "riot.png",
                 headers: {
                     "Content-Type": "image/png",
                 },
             }).as("mxc");
-            cy.intercept("**/_matrix/media/r0/preview_url?url=https%3A%2F%2Fcall.element.io%2F&ts=*", {
+            cy.intercept("**/_matrix/media/v3/preview_url?url=https%3A%2F%2Fcall.element.io%2F&ts=*", {
                 statusCode: 200,
                 body: {
                     "og:title": "Element Call",
