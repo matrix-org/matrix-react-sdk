@@ -83,7 +83,8 @@ export function formatDate(date: Date, showTwelveHour = false, locale?: string):
 }
 
 /**
- * Formats a given date to a human-friendly string with short weekday
+ * Formats a given date to a human-friendly string with short weekday.
+ * Will use the browser's default time zone.
  * @example "Thu, 17 Nov 2022" in en-GB locale
  * @param date - date object to format
  * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
@@ -98,7 +99,8 @@ export function formatFullDateNoTime(date: Date, locale?: string): string {
 }
 
 /**
- * Formats a given date to a date & time string, optionally including seconds
+ * Formats a given date to a date & time string, optionally including seconds.
+ * Will use the browser's default time zone.
  * @example "Thu, 17 Nov 2022, 4:58:32 pm" in en-GB locale with showTwelveHour=true and showSeconds=true
  * @param date - date object to format
  * @param showTwelveHour - whether to use 12-hour mode instead of default 24-hour mode
@@ -120,7 +122,7 @@ export function formatFullDate(date: Date, showTwelveHour = false, showSeconds =
 
 /**
  * Formats dates to be compatible with attributes of a `<input type="date">`. Dates
- * should be formatted like "2020-06-23" (formatted according to ISO8601)
+ * should be formatted like "2020-06-23" (formatted according to ISO8601).
  *
  * @param date The date to format.
  * @returns The date string in ISO8601 format ready to be used with an `<input>`
@@ -133,7 +135,8 @@ export function formatDateForInput(date: Date): string {
 }
 
 /**
- * Formats a given date to a time string including seconds
+ * Formats a given date to a time string including seconds.
+ * Will use the browser's default time zone.
  * @example "4:58:32 PM" in en-GB locale with showTwelveHour=true
  * @example "16:58:32" in en-GB locale with showTwelveHour=false
  * @param date - date object to format
@@ -150,7 +153,8 @@ export function formatFullTime(date: Date, showTwelveHour = false, locale?: stri
 }
 
 /**
- * Formats a given date to a time string excluding seconds
+ * Formats a given date to a time string excluding seconds.
+ * Will use the browser's default time zone.
  * @example "4:58 PM" in en-GB locale with showTwelveHour=true
  * @example "16:58" in en-GB locale with showTwelveHour=false
  * @param date - date object to format
@@ -258,7 +262,8 @@ export function formatFullDateNoDayISO(date: Date): string {
 }
 
 /**
- * Formats a given date to a string
+ * Formats a given date to a string.
+ * Will use the browser's default time zone.
  * @example 17/11/2022 in en-GB locale
  * @param date - date object to format
  * @param locale - the locale string to use, in BCP 47 format, defaulting to user's selected application locale
