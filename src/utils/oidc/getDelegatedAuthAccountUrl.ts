@@ -17,7 +17,7 @@ limitations under the License.
 import { IClientWellKnown, IDelegatedAuthConfig, M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
 
 /**
- *
+ * Get the delegated auth account management url if configured
  * @param clientWellKnown from MatrixClient.getClientWellKnown
  * @returns the account management url, or undefined
  */
