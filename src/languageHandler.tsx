@@ -103,8 +103,13 @@ export function getUserLanguage(): string {
 }
 
 /**
- * A key into the translation file using `|` delimiter to access nested fields.
+ * A type representing the union of possible keys into the translation file using `|` delimiter to access nested fields.
  * @example `common|error` to access `error` within the `common` sub-object.
+ * {
+ *     "common": {
+ *         "error": "Error"
+ *     }
+ * }
  */
 export type TranslationKey = Leaves<typeof Translations, "|", string | { other: string }>;
 
