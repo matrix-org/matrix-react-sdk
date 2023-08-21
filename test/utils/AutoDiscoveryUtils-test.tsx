@@ -268,30 +268,7 @@ describe("AutoDiscoveryUtils", () => {
         const error = new Error("TEST");
 
         it("should return expected error for the registration page", () => {
-            expect(AutoDiscoveryUtils.authComponentStateForError(error, "register")).toMatchInlineSnapshot(`
-                {
-                  "serverDeadError": <div>
-                    <strong>
-                      Your Element is misconfigured
-                    </strong>
-                    <div>
-                      <span>
-                        Ask your Element admin to check
-                        <a
-                          href="https://github.com/vector-im/element-web/blob/master/docs/config.md"
-                          rel="noreferrer noopener"
-                          target="_blank"
-                        >
-                          your config
-                        </a>
-                         for incorrect or duplicate entries.
-                      </span>
-                    </div>
-                  </div>,
-                  "serverErrorIsFatal": true,
-                  "serverIsAlive": false,
-                }
-            `);
+            expect(AutoDiscoveryUtils.authComponentStateForError(error, "register")).toMatchSnapshot();
         });
     });
 });
