@@ -81,7 +81,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                         "Please check your email and click on the link it contains. Once this " +
                             "is done, click continue.",
                     ),
-                    button: _t("Continue"),
+                    button: _t("action|continue"),
                     onFinished: this.onEmailDialogFinished,
                 });
             },
@@ -132,7 +132,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                     Modal.createDialog(QuestionDialog, {
                         title: _t("Verification Pending"),
                         description: message,
-                        button: _t("Continue"),
+                        button: _t("action|continue"),
                         onFinished: this.onEmailDialogFinished,
                     });
                 } else {
@@ -174,7 +174,12 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                     {emailInput}
                 </div>
                 <div className="mx_Dialog_buttons">
-                    <input className="mx_Dialog_primary" type="submit" value={_t("Continue")} onClick={this.onSubmit} />
+                    <input
+                        className="mx_Dialog_primary"
+                        type="submit"
+                        value={_t("action|continue")}
+                        onClick={this.onSubmit}
+                    />
                     <input type="submit" value={_t("Skip")} onClick={this.onCancelled} />
                 </div>
             </BaseDialog>

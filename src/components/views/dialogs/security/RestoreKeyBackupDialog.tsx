@@ -398,7 +398,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                     </p>
                     {failedToDecrypt}
                     <DialogButtons
-                        primaryButton={_t("OK")}
+                        primaryButton={_t("action|ok")}
                         onPrimaryButtonClick={this.onDone}
                         hasCancel={false}
                         focus={true}
@@ -432,7 +432,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                             autoFocus={true}
                         />
                         <DialogButtons
-                            primaryButton={_t("Next")}
+                            primaryButton={_t("action|next")}
                             onPrimaryButtonClick={this.onPassPhraseNext}
                             primaryIsSubmit={true}
                             hasCancel={true}
@@ -507,7 +507,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                         />
                         {keyStatus}
                         <DialogButtons
-                            primaryButton={_t("Next")}
+                            primaryButton={_t("action|next")}
                             onPrimaryButtonClick={this.onRecoveryKeyNext}
                             hasCancel={true}
                             onCancel={this.onCancel}

@@ -125,7 +125,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                             onClick={this.startSAS}
                             kind="primary"
                         >
-                            {_t("Start")}
+                            {_t("action|start")}
                         </AccessibleButton>
                     </div>
                 );
@@ -256,14 +256,14 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                             disabled={this.state.reciprocateButtonClicked}
                             onClick={this.onReciprocateNoClick}
                         >
-                            {_t("No")}
+                            {_t("action|no")}
                         </AccessibleButton>
                         <AccessibleButton
                             kind="primary"
                             disabled={this.state.reciprocateButtonClicked}
                             onClick={this.onReciprocateYesClick}
                         >
-                            {_t("Yes")}
+                            {_t("action|yes")}
                         </AccessibleButton>
                     </div>
                 </React.Fragment>

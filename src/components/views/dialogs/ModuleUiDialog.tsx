@@ -44,7 +44,7 @@ export class ModuleUiDialog<P extends DialogProps, C extends DialogContent<P>> e
         this.state = {
             title: this.props.title,
             canSubmit: true,
-            actionLabel: _t("OK"),
+            actionLabel: _t("action|ok"),
         };
     }
 
