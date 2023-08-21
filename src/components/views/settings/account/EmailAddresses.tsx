@@ -44,6 +44,7 @@ that is available.
 interface IExistingEmailAddressProps {
     email: ThirdPartyIdentifier;
     onRemoved: (emails: ThirdPartyIdentifier) => void;
+    disabled?: boolean;
 }
 
 interface IExistingEmailAddressState {
@@ -121,7 +122,7 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
                 <span className="mx_GeneralUserSettingsTab_section--discovery_existing_address">
                     {this.props.email.address}
                 </span>
-                <AccessibleButton onClick={this.onRemove} kind="danger_sm">
+                <AccessibleButton onClick={this.onRemove} kind="danger_sm" disabled={this.props.disabled}>
                     {_t("Remove")}
                 </AccessibleButton>
             </div>
@@ -132,6 +133,7 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
 interface IProps {
     emails: ThirdPartyIdentifier[];
     onEmailsChange: (emails: ThirdPartyIdentifier[]) => void;
+    disabled?: boolean;
 }
 
 interface IState {
@@ -248,11 +250,18 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
 
     public render(): React.ReactNode {
         const existingEmailElements = this.props.emails.map((e) => {
-            return <ExistingEmailAddress email={e} onRemoved={this.onRemoved} key={e.address} />;
+            return (
+                <ExistingEmailAddress
+                    email={e}
+                    onRemoved={this.onRemoved}
+                    key={e.address}
+                    disabled={this.props.disabled}
+                />
+            );
         });
 
         let addButton = (
-            <AccessibleButton onClick={this.onAddClick} kind="primary">
+            <AccessibleButton onClick={this.onAddClick} kind="primary" disabled={this.props.disabled}>
                 {_t("Add")}
             </AccessibleButton>
         );
@@ -283,7 +292,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
                         type="text"
                         label={_t("Email Address")}
                         autoComplete="email"
-                        disabled={this.state.verifying}
+                        disabled={this.props.disabled || this.state.verifying}
                         value={this.state.newEmailAddress}
                         onChange={this.onChangeNewEmailAddress}
                     />
