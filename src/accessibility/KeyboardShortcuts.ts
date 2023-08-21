@@ -154,7 +154,9 @@ export enum KeyBindingAction {
     ToggleHiddenEventVisibility = "KeyBinding.toggleHiddenEventVisibility",
 }
 
-type KeyboardShortcutSetting = Omit<IBaseSetting<KeyCombo>, "supportedLevels">;
+export type KeyboardShortcutSetting = Omit<IBaseSetting<KeyCombo>, "supportedLevels" | "displayName"> & {
+    displayName?: TranslationKey;
+};
 
 // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
 export type IKeyboardShortcuts = Partial<Record<KeyBindingAction, KeyboardShortcutSetting>>;

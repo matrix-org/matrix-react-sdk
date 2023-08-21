@@ -16,7 +16,7 @@ limitations under the License.
 
 import { KeyCombo } from "../KeyBindingsManager";
 import { IS_MAC, Key } from "../Keyboard";
-import { _t, _td, TranslationKey } from "../languageHandler";
+import { _t, _td } from "../languageHandler";
 import PlatformPeg from "../PlatformPeg";
 import SettingsStore from "../settings/SettingsStore";
 import {
@@ -25,9 +25,9 @@ import {
     IKeyboardShortcuts,
     KeyBindingAction,
     KEYBOARD_SHORTCUTS,
+    KeyboardShortcutSetting,
     MAC_ONLY_SHORTCUTS,
 } from "./KeyboardShortcuts";
-import { IBaseSetting } from "../settings/Settings";
 
 /**
  * This function gets the keyboard shortcuts that should be presented in the UI
@@ -115,7 +115,7 @@ export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
 export const getKeyboardShortcutsForUI = (): IKeyboardShortcuts => {
     const entries = [...Object.entries(getUIOnlyShortcuts()), ...Object.entries(getKeyboardShortcuts())] as [
         KeyBindingAction,
-        IBaseSetting<KeyCombo>,
+        KeyboardShortcutSetting,
     ][];
 
     return entries.reduce((acc, [key, value]) => {
@@ -130,5 +130,5 @@ export const getKeyboardShortcutValue = (name: KeyBindingAction): KeyCombo | und
 
 export const getKeyboardShortcutDisplayName = (name: KeyBindingAction): string | undefined => {
     const keyboardShortcutDisplayName = getKeyboardShortcutsForUI()[name]?.displayName;
-    return keyboardShortcutDisplayName && _t(keyboardShortcutDisplayName as TranslationKey);
+    return keyboardShortcutDisplayName && _t(keyboardShortcutDisplayName);
 };
