@@ -30,7 +30,19 @@ import { ElementCall } from "../../models/Call";
 
 type CallType = "element_call" | "jitsi_or_element_call" | "legacy_or_jitsi";
 
-export const useRoomCallStatus = (room: Room): any => {
+/**
+ * Reports the call capabilities for the current room
+ * @param room the room to track
+ * @returns the call status for a room
+ */
+export const useRoomCallStatus = (
+    room: Room,
+): {
+    voiceCallDisabledReason: string | null;
+    voiceCallType: CallType;
+    videoCallDisabledReason: string | null;
+    videoCallType: CallType;
+} => {
     const [voiceCallDisabledReason, setVoiceCallDisabledReason] = useState<string | null>(null);
     const [videoCallDisabledReason, setVideoCallDisabledReason] = useState<string | null>(null);
     const [voiceCallType, setVoiceCallType] = useState<CallType>("jitsi_or_element_call");

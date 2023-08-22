@@ -21,6 +21,11 @@ import { NotificationColor } from "../../stores/notifications/NotificationColor"
 import { doesRoomOrThreadHaveUnreadMessages } from "../../Unread";
 import { useEventEmitter } from "../useEventEmitter";
 
+/**
+ * Tracks the thread unread state for an entire room
+ * @param room the room to track
+ * @returns the type of notification for this room
+ */
 export const useRoomThreadNotifications = (room: Room): NotificationColor => {
     const [notificationColor, setNotificationColor] = useState(NotificationColor.None);
 

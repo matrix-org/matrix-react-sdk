@@ -23,6 +23,10 @@ import {
 } from "../stores/notifications/RoomNotificationStateStore";
 import { useEventEmitter } from "./useEventEmitter";
 
+/**
+ * Tracks the global notification state of the user's account
+ * @returns A global notification state object
+ */
 export const useGlobalNotificationState = (): SummarizedNotificationState => {
     const [summarizedNotificationState, setSummarizedNotificationState] = useState(
         RoomNotificationStateStore.instance.globalState,
