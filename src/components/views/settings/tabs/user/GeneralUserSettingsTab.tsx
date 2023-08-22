@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { SERVICE_TYPES, IDelegatedAuthConfig, M_AUTHENTICATION, HTTPError } from "matrix-js-sdk/src/matrix";
+import { SERVICE_TYPES, HTTPError } from "matrix-js-sdk/src/matrix";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -59,6 +59,7 @@ import Heading from "../../../typography/Heading";
 import InlineSpinner from "../../../elements/InlineSpinner";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
+import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -174,8 +175,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         // the enabled flag value.
         const canChangePassword = !changePasswordCap || changePasswordCap["enabled"] !== false;
 
-        const delegatedAuthConfig = M_AUTHENTICATION.findIn<IDelegatedAuthConfig | undefined>(cli.getClientWellKnown());
-        const externalAccountManagementUrl = delegatedAuthConfig?.account;
+        const externalAccountManagementUrl = getDelegatedAuthAccountUrl(cli.getClientWellKnown());
         // https://spec.matrix.org/v1.7/client-server-api/#m3pid_changes-capability
         // We support as far back as v1.1 which doesn't have m.3pid_changes
         // so the behaviour for when it is missing has to be assume true
