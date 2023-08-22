@@ -3810,6 +3810,19 @@
     "Failed to set direct message tag": "Failed to set direct message tag",
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
     "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
+    "keyboard": {
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "escape": "Esc",
+        "enter": "Enter",
+        "space": "Space",
+        "home": "Home",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "number": "[number]"
+    },
     "Calls": "Calls",
     "Room List": "Room List",
     "Accessibility": "Accessibility",
@@ -3866,18 +3879,5 @@
     "Activate selected button": "Activate selected button",
     "New line": "New line",
     "Force complete": "Force complete",
-    "Search (must be enabled)": "Search (must be enabled)",
-    "keyboard": {
-        "page_up": "Page Up",
-        "page_down": "Page Down",
-        "home": "Home",
-        "escape": "Esc",
-        "enter": "Enter",
-        "end": "End",
-        "alt": "Alt",
-        "control": "Ctrl",
-        "shift": "Shift",
-        "space": "Space",
-        "number": "[number]"
-    }
+    "Search (must be enabled)": "Search (must be enabled)"
 }
