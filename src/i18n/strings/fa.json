@@ -1385,7 +1385,6 @@
     "Import": "واردکردن (Import)",
     "Export": "استخراج (Export)",
     "Space": "فضای کاری",
-    "Esc": "خروج",
     "Theme added!": "پوسته اضافه شد!",
     "If you've joined lots of rooms, this might take a while": "اگر عضو اتاق‌های بسیار زیادی هستید، ممکن است این فرآیند مقدای به طول بیانجامد",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "مدیر سرور شما قابلیت رمزنگاری سرتاسر برای اتاق‌ها و گفتگوهای خصوصی را به صورت پیش‌فرض غیرفعال کرده‌است.",
@@ -1845,10 +1844,7 @@
     "Room List": "لیست اتاق‌ها",
     "Remain on your screen while running": "بر روی صفحه خود باقی بمانید",
     "Autocomplete": "تکمیل خودکار",
-    "Alt": "Alt",
-    "Shift": "Shift",
     "Remain on your screen when viewing another room, when running": "هنگام مشاهده اتاق دیگر، روی صفحه خود باشید",
-    "Ctrl": "Ctrl",
     "Toggle Bold": "بولد‌کردن",
     "Toggle Quote": "نقل‌قول کردن",
     "Toggle Italics": "ایتالیک‌کردن",
@@ -1941,10 +1937,6 @@
     "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "شما می‌توانید حساب کاربری بسازید، اما برخی قابلیت‌ها تا زمان اتصال مجدد به سرور هویت‌سنجی در دسترس نخواهند بود. اگر شما مدام این هشدار را مشاهده می‌کنید، پیکربندی خود را بررسی کرده و یا با مدیر سرور تماس بگیرید.",
     "Cannot reach identity server": "دسترسی به سرور هویت‌سنجی امکان پذیر نیست",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "از مدیر %(brand)s خود بخواهید تا <a>پیکربندی شما</a> را از جهت ورودی‌های نادرست یا تکراری بررسی کند.",
-    "End": "End",
-    "Enter": "Enter",
-    "Page Down": "Page Down",
-    "Page Up": "Page Up",
     "Cancel autocomplete": "لغو تکمیل خودکار",
     "Users": "کاربران",
     "Clear personal data": "پاک‌کردن داده‌های شخصی",
@@ -2623,5 +2615,17 @@
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "از طرف دیگر، می‌توانید سعی کنید از سرور عمومی در <server/> استفاده کنید، اما این به آن اندازه قابل اعتماد نخواهد بود و آدرس IP شما را با آن سرور به اشتراک می‌گذارد. شما همچنین می توانید این قابلیت را در تنظیمات مدیریت کنید.",
     "Try using %(server)s": "سعی کنید از %(server)s استفاده کنید",
     "Keyboard shortcuts": "میانبرهای صفحه کلید",
-    "Poll type": "نوع نظرسنجی"
+    "Poll type": "نوع نظرسنجی",
+    "keyboard": {
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "home": "خانه",
+        "escape": "خروج",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "space": "فضای کاری"
+    }
 }

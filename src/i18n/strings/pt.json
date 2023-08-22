@@ -764,5 +764,8 @@
     "Enter username": "Introduza um nome de utilizador",
     "Failed to send event": "Falha no envio do evento",
     "Failed to read events": "Falha ao ler eventos",
-    "Setting up keys": "A configurar chaves"
+    "Setting up keys": "A configurar chaves",
+    "keyboard": {
+        "home": "Início"
+    }
 }

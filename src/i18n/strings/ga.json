@@ -285,13 +285,7 @@
     "Ok": "Togha",
     "Categories": "Catagóire",
     "Appearance": "Cuma",
-    "End": "End",
     "Space": "Spás",
-    "Enter": "Enter",
-    "Esc": "Esc",
-    "Ctrl": "Ctrl",
-    "Shift": "Shift",
-    "Alt": "Alt",
     "Autocomplete": "Uathiomlánaigh",
     "Calls": "Glaonna",
     "Navigation": "Nascleanúint",
@@ -628,7 +622,6 @@
     "Modern": "Comhaimseartha",
     "Global": "Uilíoch",
     "Keyword": "Eochairfhocal",
-    "[number]": "[uimhir]",
     "Report": "Tuairiscigh",
     "Forward": "Seol ar aghaidh",
     "Disagree": "Easaontaigh",
@@ -730,5 +723,16 @@
     "%(senderDisplayName)s changed the room name to %(roomName)s.": "D'athraigh %(senderDisplayName)s ainm an tseomra go %(roomName)s.",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "D'athraigh %(senderName)s an leibhéal cumhachta %(powerLevelDiffText)s.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Ní féidir ceangal leis an bhfreastalaí baile trí HTTP nuair a bhíonn URL HTTPS i mbarra do bhrabhsálaí. Bain úsáid as HTTPS nó <a> scripteanna neamhshábháilte a chumasú </a>.",
-    "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Ní féidir ceangal leis an bhfreastalaí baile - seiceáil do nascacht le do thoil, déan cinnte go bhfuil muinín i dteastas <a>SSL do fhreastalaí baile</a>, agus nach bhfuil síneadh brabhsálaí ag cur bac ar iarratais."
+    "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Ní féidir ceangal leis an bhfreastalaí baile - seiceáil do nascacht le do thoil, déan cinnte go bhfuil muinín i dteastas <a>SSL do fhreastalaí baile</a>, agus nach bhfuil síneadh brabhsálaí ag cur bac ar iarratais.",
+    "keyboard": {
+        "home": "Tús",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "space": "Spás",
+        "number": "[uimhir]"
+    }
 }

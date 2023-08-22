@@ -251,5 +251,8 @@
     "Create Account": "Hesab Aç",
     "Explore rooms": "Otaqları kəşf edin",
     "Sign In": "Daxil ol",
-    "Identity server": "Eyniləşdirmənin serveri"
+    "Identity server": "Eyniləşdirmənin serveri",
+    "keyboard": {
+        "home": "Başlanğıc"
+    }
 }

@@ -1214,7 +1214,6 @@
     "Toggle microphone mute": "تبديل كتم صوت الميكروفون",
     "Cancel replying to a message": "إلغاء الرد على رسالة",
     "New line": "سطر جديد",
-    "[number]": "[رقم]",
     "Greece": "اليونان",
     "%(senderName)s removed their profile picture": "%(senderName)s أزال صورة ملفه الشخصي",
     "%(senderName)s removed their display name (%(oldDisplayName)s)": "%(senderName)s أزال اسمه (%(oldDisplayName)s)",
@@ -1336,5 +1335,8 @@
     "You cannot place calls in this browser.": "لا يمكنك إجراء المكالمات في هذا المتصفّح.",
     "Calls are unsupported": "المكالمات غير مدعومة",
     "%(user1)s and %(user2)s": "%(user1)s و %(user2)s",
-    "Empty room": "غرفة فارغة"
+    "Empty room": "غرفة فارغة",
+    "keyboard": {
+        "number": "[رقم]"
+    }
 }

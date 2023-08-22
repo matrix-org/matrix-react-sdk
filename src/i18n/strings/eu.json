@@ -1454,9 +1454,6 @@
     "Calls": "Deiak",
     "Room List": "Gelen zerrenda",
     "Autocomplete": "Osatze automatikoa",
-    "Alt": "Alt",
-    "Shift": "Maius.",
-    "Ctrl": "Ctrl",
     "Toggle Bold": "Txandakatu lodia",
     "Toggle Italics": "Txandakatu etzana",
     "Toggle Quote": "Txandakatu aipamena",
@@ -1471,12 +1468,7 @@
     "Activate selected button": "Aktibatu hautatutako botoia",
     "Toggle right panel": "Txandakatu eskumako panela",
     "Cancel autocomplete": "Ezeztatu osatze automatikoa",
-    "Page Up": "Orrialdea gora",
-    "Page Down": "Orrialdea behera",
-    "Esc": "Esc",
-    "Enter": "Sartu",
     "Space": "Zuriune-barra",
-    "End": "Amaiera",
     "Manually verify all remote sessions": "Egiaztatu eskuz urruneko saio guztiak",
     "Self signing private key:": "Norberak sinatutako gako pribatua:",
     "cached locally": "cache lokalean",
@@ -1628,5 +1620,17 @@
     "Identity server (%(server)s)": "Identitate-zerbitzaria (%(server)s)",
     "Could not connect to identity server": "Ezin izan da identitate-zerbitzarira konektatu",
     "Not a valid identity server (status code %(code)s)": "Ez da identitate zerbitzari baliogarria (egoera-mezua %(code)s)",
-    "Identity server URL must be HTTPS": "Identitate zerbitzariaren URL-a HTTPS motakoa izan behar du"
+    "Identity server URL must be HTTPS": "Identitate zerbitzariaren URL-a HTTPS motakoa izan behar du",
+    "keyboard": {
+        "page_up": "Orrialdea gora",
+        "page_down": "Orrialdea behera",
+        "home": "Hasiera",
+        "escape": "Esc",
+        "enter": "Sartu",
+        "end": "Amaiera",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Maius.",
+        "space": "Zuriune-barra"
+    }
 }

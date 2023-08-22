@@ -1092,5 +1092,8 @@
     "%(value)sd": "%(value)sd",
     "%(seconds)ss left": "%(seconds)ss att",
     "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss att",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)st %(minutes)sm %(seconds)ss att"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)st %(minutes)sm %(seconds)ss att",
+    "keyboard": {
+        "home": "Heim"
+    }
 }

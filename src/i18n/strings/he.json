@@ -1949,12 +1949,7 @@
     "Transfer": "לְהַעֲבִיר",
     "Failed to transfer call": "העברת השיחה נכשלה",
     "A call can only be transferred to a single user.": "ניתן להעביר שיחה רק למשתמש יחיד.",
-    "End": "מקש סוף",
     "Space": "מקש רווח",
-    "Enter": "מקש אנטר",
-    "Esc": "אסקייפ Esc",
-    "Page Down": "עמוד למטה",
-    "Page Up": "גלול למעלה",
     "Cancel autocomplete": "בטל השלמה אוטומטית",
     "Go to Home View": "עבור אל תצוגת הבית",
     "Toggle right panel": "החלף את החלונית הימנית",
@@ -1974,9 +1969,6 @@
     "Toggle Quote": "גרשיים",
     "Toggle Italics": "אותיות נטויות",
     "Toggle Bold": "הדגשת אותיות",
-    "Ctrl": "CTRL",
-    "Shift": "הזזה",
-    "Alt": "ALT",
     "Autocomplete": "השלמה אוטומטית",
     "Room List": "רשימת חדרים",
     "Calls": "שיחות",
@@ -2768,5 +2760,17 @@
     "Show NSFW content": "הצג תוכן NSFW (תוכן שלא מתאים לצפיה במקום ציבורי)",
     "Room directory": "רשימת חדרים",
     "Enable Markdown": "אפשר Markdown",
-    "New room": "חדר חדש"
+    "New room": "חדר חדש",
+    "keyboard": {
+        "page_up": "גלול למעלה",
+        "page_down": "עמוד למטה",
+        "home": "הבית",
+        "escape": "אסקייפ Esc",
+        "enter": "מקש אנטר",
+        "end": "מקש סוף",
+        "alt": "ALT",
+        "control": "CTRL",
+        "shift": "הזזה",
+        "space": "מקש רווח"
+    }
 }

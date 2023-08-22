@@ -19,7 +19,6 @@
     "Add Phone Number": "Dodaj telefonsko številko",
     "Analytics": "Analitika",
     "Call Failed": "Klic ni uspel",
-    "End": "Konec",
     "Change": "Sprememba",
     "Explore rooms": "Raziščite sobe",
     "Create Account": "Registracija",
@@ -61,5 +60,8 @@
     "The file '%(fileName)s' failed to upload.": "Datoteka '%(fileName)s' se ni uspešno naložila.",
     "Attachment": "Priponka",
     "Unable to load! Check your network connectivity and try again.": "Napaka pri nalaganju! Preverite vašo povezavo in poskusite ponovno.",
-    "Error": "Napaka"
+    "Error": "Napaka",
+    "keyboard": {
+        "end": "Konec"
+    }
 }

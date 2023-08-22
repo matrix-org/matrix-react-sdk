@@ -1627,10 +1627,7 @@
     "Use Command + Enter to send a message": "Mesaj göndermek için Command + Enter tuşlarını kullanın",
     "Use custom size": "Özel büyüklük kullan",
     "Font size": "Yazı boyutu",
-    "End": "End",
     "Space": "Boşluk",
-    "Enter": "Enter",
-    "Esc": "Esc",
     "%(senderName)s: %(stickerName)s": "%(senderName)s%(stickerName)s",
     "%(senderName)s: %(message)s": "%(senderName)s%(message)s",
     "* %(senderName)s %(emote)s": "%(senderName)s%(emote)s",
@@ -1786,8 +1783,6 @@
     "QR Code": "Kare kod (QR)",
     "Keys restored": "Anahtarlar geri yüklendi",
     "Submit logs": "Günlükleri kaydet",
-    "Page Down": "Sayfa aşağı",
-    "Page Up": "Sayfa yukarı",
     "New line": "Yeni satır",
     "Room List": "Oda listesi",
     "Server name": "Sunucu adı",
@@ -1803,9 +1798,6 @@
     "Information": "Bilgi",
     "About": "Hakkında",
     "Modern": "Modern",
-    "Ctrl": "Ctrl",
-    "Shift": "Shift",
-    "Alt": "Alt",
     "Calls": "Aramalar",
     "Disable": "Devre dışı bırak",
     "Feedback": "Geri bildirim",
@@ -2026,5 +2018,17 @@
         "other": "Şu cihazlardan oturumu kapatmayı onayla"
     },
     "Current session": "Şimdiki oturum",
-    "Search (must be enabled)": "Arama (etkinleştirilmeli)"
+    "Search (must be enabled)": "Arama (etkinleştirilmeli)",
+    "keyboard": {
+        "page_up": "Sayfa yukarı",
+        "page_down": "Sayfa aşağı",
+        "home": "Ev",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "space": "Boşluk"
+    }
 }

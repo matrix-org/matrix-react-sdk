@@ -911,15 +911,6 @@
     "Navigation": "Flakk",
     "Room List": "Spjallrásalisti",
     "Calls": "Símtöl",
-    "[number]": "[tala]",
-    "Shift": "Shift",
-    "Ctrl": "Ctrl",
-    "Alt": "Alt",
-    "End": "End",
-    "Enter": "Enter",
-    "Esc": "Esc",
-    "Page Down": "Síða niður",
-    "Page Up": "Síða upp",
     "Space used:": "Notað geymslupláss:",
     "Disable": "Gera óvirkt",
     "Go to Settings": "Fara í stillingar",
@@ -3361,5 +3352,18 @@
     "Find and invite your community members": "Finndu og bjóddu meðlimum í samfélaginu þínu",
     "Get stuff done by finding your teammates": "Komdu hlutum í verk með því að finna félaga í teyminu þínu",
     "It’s what you’re here for, so lets get to it": "Það er nú einusinni það sem þú komst hingað til að gera, þannug að við skulum skella okkur í málið",
-    "Sorry — this call is currently full": "Því miður - þetta símtal er fullt í augnablikinu"
+    "Sorry — this call is currently full": "Því miður - þetta símtal er fullt í augnablikinu",
+    "keyboard": {
+        "page_up": "Síða upp",
+        "page_down": "Síða niður",
+        "home": "Forsíða",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "space": "Bil",
+        "number": "[tala]"
+    }
 }

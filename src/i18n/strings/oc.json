@@ -284,16 +284,8 @@
     "Retry": "Tornar ensajar",
     "Success!": "Capitada !",
     "Navigation": "Navigacion",
-    "Alt": "Alt",
-    "Shift": "Descalatge",
-    "Ctrl": "Ctrl",
     "Upload a file": "Actualizar un fichièr",
-    "Page Up": "Pagina precedenta",
-    "Page Down": "Pagina seguenta",
-    "Esc": "Escap",
-    "Enter": "Entrada",
     "Space": "Espaci",
-    "End": "Fin",
     "Explore rooms": "Percórrer las salas",
     "Create Account": "Crear un compte",
     "Click the button below to confirm adding this email address.": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail.",
@@ -301,5 +293,17 @@
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirmatz l'adicion d'aquela adreça e-mail en utilizant l'autentificacion unica per provar la vòstra identitat.",
     "Use Single Sign On to continue": "Utilizar l'autentificacion unica (SSO) per contunhar",
     "This phone number is already in use": "Aquel numèro de telefòn es ja utilizat",
-    "This email address is already in use": "Aquela adreça e-mail es ja utilizada"
+    "This email address is already in use": "Aquela adreça e-mail es ja utilizada",
+    "keyboard": {
+        "page_up": "Pagina precedenta",
+        "page_down": "Pagina seguenta",
+        "home": "Dorsièr personal",
+        "escape": "Escap",
+        "enter": "Entrada",
+        "end": "Fin",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Descalatge",
+        "space": "Espaci"
+    }
 }

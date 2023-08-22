@@ -1392,5 +1392,8 @@
     "Sessions": "세션목록",
     "Unverified session": "검증되지 않은 세션",
     "Favourited": "즐겨찾기 됨",
-    "Other rooms": "다른 방 목록"
+    "Other rooms": "다른 방 목록",
+    "keyboard": {
+        "home": "홈"
+    }
 }

@@ -451,5 +451,8 @@
     "User Busy": "User Busy",
     "%(seconds)ss left": "%(seconds)ss left",
     "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss left",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sh %(minutes)sm %(seconds)ss left"
+    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sh %(minutes)sm %(seconds)ss left",
+    "keyboard": {
+        "home": "Home"
+    }
 }
