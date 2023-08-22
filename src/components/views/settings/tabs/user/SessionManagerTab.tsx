@@ -41,7 +41,6 @@ import { OtherSessionsSectionHeading } from "../../devices/OtherSessionsSectionH
 import { SettingsSection } from "../../shared/SettingsSection";
 import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
 import { OidcLogoutDialog } from "../../../dialogs/oidc/OidcLogoutDialog";
-import { InteractiveAuthCallback } from "../../../../structures/InteractiveAuth";
 
 const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
@@ -117,7 +116,7 @@ const useSignOut = (
         try {
             setSigningOutDeviceIds([...signingOutDeviceIds, ...deviceIds]);
 
-            const onSignOutFinished: InteractiveAuthCallback<void> = async (success): Promise<void> => {
+            const onSignOutFinished = async (success: boolean): Promise<void> => {
                 if (success) {
                     await onSignoutResolvedCallback();
                 }
@@ -129,7 +128,7 @@ const useSignOut = (
                 try {
                     setSigningOutDeviceIds([...signingOutDeviceIds, deviceId]);
                     const success = await confirmDelegatedAuthSignOut(delegatedAuthAccountUrl, deviceId);
-                    await onSignOutFinished(success as true);
+                    await onSignOutFinished(success);
                 } catch (error) {
                     logger.error("Error deleting OIDC-aware sessions", error);
                 }
