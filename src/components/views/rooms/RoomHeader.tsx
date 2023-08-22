@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Body as BodyText, IconButton } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
@@ -39,6 +39,8 @@ import { Action } from "../../../dispatcher/actions";
 import { useRoomThreadNotifications } from "../../../hooks/room/useRoomThreadNotifications";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
+import SdkConfig from "../../../SdkConfig";
+import SettingsStore from "../../../settings/SettingsStore";
 
 /**
  * A helper to transform a notification color to the what the Compound Icon Button
@@ -69,6 +71,13 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const roomTopic = useTopic(room);
 
     const { voiceCallDisabledReason, voiceCallType, videoCallDisabledReason, videoCallType } = useRoomCallStatus(room);
+    /**
+     * A special mode where only Element Call is used. In this case we want to
+     * hide the voice call button
+     */
+    const useElementCallExclusively = useMemo(() => {
+        return SdkConfig.get("element_call").use_exclusively && SettingsStore.getValue("feature_group_calls");
+    }, []);
 
     const placeCall = useCallback(
         async (callType: CallType, platformCallType: typeof voiceCallType) => {
@@ -129,15 +138,17 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                 )}
             </Box>
             <Flex as="nav" align="center" gap="var(--cpd-space-2x)">
-                <IconButton
-                    disabled={!!voiceCallDisabledReason}
-                    title={!voiceCallDisabledReason ? _t("Voice call") : voiceCallDisabledReason!}
-                    onClick={async () => {
-                        placeCall(CallType.Voice, voiceCallType);
-                    }}
-                >
-                    <VoiceCallIcon />
-                </IconButton>
+                {!useElementCallExclusively && (
+                    <IconButton
+                        disabled={!!voiceCallDisabledReason}
+                        title={!voiceCallDisabledReason ? _t("Voice call") : voiceCallDisabledReason!}
+                        onClick={async () => {
+                            placeCall(CallType.Voice, voiceCallType);
+                        }}
+                    >
+                        <VoiceCallIcon />
+                    </IconButton>
+                )}
                 <IconButton
                     disabled={!!videoCallDisabledReason}
                     title={!videoCallDisabledReason ? _t("Video call") : videoCallDisabledReason!}
@@ -152,6 +163,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     onClick={() => {
                         showOrHidePanel(RightPanelPhases.ThreadPanel);
                     }}
+                    title={_t("Threads")}
                 >
                     <ThreadsIcon />
                 </IconButton>
@@ -160,6 +172,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     onClick={() => {
                         showOrHidePanel(RightPanelPhases.NotificationPanel);
                     }}
+                    title={_t("Notifications")}
                 >
                     <NotificationsIcon />
                 </IconButton>

@@ -70,11 +70,13 @@ export const useRoomCallStatus = (room: Room): any => {
         if (groupCallsEnabled) {
             if (useElementCallExclusively) {
                 if (hasGroupCall) {
+                    // done
                     setVideoCallDisabledReason(_t("Ongoing call"));
                 } else if (mayCreateElementCalls) {
+                    // DONE
                     setVideoCallType("element_call");
                 } else {
-                    setVoiceCallDisabledReason(_t("You do not have permission to start video calls"));
+                    setVideoCallDisabledReason(_t("You do not have permission to start video calls"));
                 }
             } else if (hasLegacyCall || hasJitsiWidget || hasGroupCall) {
                 setVoiceCallDisabledReason(_t("Ongoing call"));
@@ -107,7 +109,7 @@ export const useRoomCallStatus = (room: Room): any => {
             setVideoCallType("legacy_or_jitsi");
         } else {
             setVoiceCallDisabledReason(_t("You do not have permission to start voice calls"));
-            setVideoCallDisabledReason(_t("You do not have permission to start voice calls"));
+            setVideoCallDisabledReason(_t("You do not have permission to start video calls"));
         }
     }, [
         functionalMembers.length,
@@ -128,15 +130,5 @@ export const useRoomCallStatus = (room: Room): any => {
         voiceCallType,
         videoCallDisabledReason,
         videoCallType,
-        // voice: {
-        //     disabled: !!voiceCallDisabledReason,
-        //     reason: voiceCallDisabledReason,
-        //     type: voiceCallType,
-        // },
-        // video: {
-        //     disabled: !!videoCallDisabledReason,
-        //     reason: videoCallDisabledReason,
-        //     type: videoCallType,
-        // },
     };
 };
