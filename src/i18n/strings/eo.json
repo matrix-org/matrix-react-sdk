@@ -1612,7 +1612,6 @@
     "Switch to dark mode": "Ŝalti malhelan reĝimon",
     "Switch theme": "Ŝalti haŭton",
     "All settings": "Ĉiuj agordoj",
-    "User menu": "Menuo de uzanto",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Malhelpu perdon de aliro al ĉifritaj mesaĝoj kaj datumoj per savkopiado de ĉifraj ŝlosiloj al via servilo.",
     "Generate a Security Key": "Generi sekurecan ŝlosilon",
     "Enter a Security Phrase": "Enigiu sekurecan frazon",
@@ -2954,5 +2953,8 @@
         "username": "Uzantonomo",
         "verification_cancelled": "Kontrolo nuliĝis",
         "video": "Video"
+    },
+    "a11y": {
+        "user_menu": "Menuo de uzanto"
     }
 }

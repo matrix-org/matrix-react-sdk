@@ -1624,7 +1624,6 @@
     "This room is public": "Ce salon est public",
     "Edited at %(date)s": "Modifié le %(date)s",
     "Click to view edits": "Cliquez pour voir les modifications",
-    "User menu": "Menu utilisateur",
     "Are you sure you want to cancel entering passphrase?": "Souhaitez-vous vraiment annuler la saisie de la phrase de passe ?",
     "Unexpected server error trying to leave the room": "Erreur de serveur inattendue en essayant de quitter le salon",
     "Error leaving room": "Erreur en essayant de quitter le salon",
@@ -3971,5 +3970,8 @@
         "username": "Nom d’utilisateur",
         "verification_cancelled": "Vérification annulée",
         "video": "Vidéo"
+    },
+    "a11y": {
+        "user_menu": "Menu utilisateur"
     }
 }

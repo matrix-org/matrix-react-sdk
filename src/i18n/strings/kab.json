@@ -1393,7 +1393,6 @@
         "one": "Asali n %(filename)s d %(count)s wayeḍ-nniḍen"
     },
     "Uploading %(filename)s": "Asali n %(filename)s",
-    "User menu": "Umuɣ n useqdac",
     "Could not load user profile": "Yegguma ad d-yali umaɣnu n useqdac",
     "New passwords must match each other.": "Awalen uffiren imaynuten ilaq ad mṣadan.",
     "Return to login screen": "Uɣal ɣer ugdil n tuqqna",
@@ -2002,5 +2001,8 @@
         "unmute": "Rmed imesli",
         "username": "Isem n useqdac",
         "verification_cancelled": "Yefsex usenqed"
+    },
+    "a11y": {
+        "user_menu": "Umuɣ n useqdac"
     }
 }

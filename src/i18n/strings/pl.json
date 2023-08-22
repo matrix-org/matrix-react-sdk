@@ -3776,7 +3776,6 @@
     "Original event source": "Oryginalne źródło wydarzenia",
     "Decrypted source unavailable": "Rozszyfrowane źródło niedostępne",
     "Decrypted event source": "Rozszyfrowane wydarzenie źródłowe",
-    "User menu": "Menu użytkownika",
     "Got an account? <a>Sign in</a>": "Posiadasz już konto? <a>Zaloguj się</a>",
     "Thread": "Wątek",
     "Keep discussions organised with threads": "Organizuj dyskusje za pomocą wątków",
@@ -3953,5 +3952,8 @@
         "username": "Nazwa użytkownika",
         "verification_cancelled": "Weryfikacja anulowana",
         "video": "Wideo"
+    },
+    "a11y": {
+        "user_menu": "Menu użytkownika"
     }
 }

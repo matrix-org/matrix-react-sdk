@@ -1613,7 +1613,6 @@
     "Security Phrase": "Frase di sicurezza",
     "Security Key": "Chiave di sicurezza",
     "Use your Security Key to continue.": "Usa la tua chiave di sicurezza per continuare.",
-    "User menu": "Menu utente",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Proteggiti contro la perdita dell'accesso ai messaggi e dati cifrati facendo un backup delle chiavi crittografiche sul tuo server.",
     "Generate a Security Key": "Genera una chiave di sicurezza",
     "Enter a Security Phrase": "Inserisci una frase di sicurezza",
@@ -3976,5 +3975,8 @@
         "username": "Nome utente",
         "verification_cancelled": "Verifica annullata",
         "video": "Video"
+    },
+    "a11y": {
+        "user_menu": "Menu utente"
     }
 }

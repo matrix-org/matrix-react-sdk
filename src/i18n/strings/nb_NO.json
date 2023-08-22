@@ -1009,7 +1009,6 @@
     "The server is offline.": "Denne tjeneren er offline.",
     "Wrong file type": "Feil filtype",
     "Looks good!": "Ser bra ut!",
-    "User menu": "Brukermeny",
     "Your message was sent": "Meldingen ble sendt",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Autentisiteten av denne krypterte meldingen kan ikke garanteres på denne enheten.",
     "Encrypted by a deleted session": "Kryptert av en slettet sesjon",
@@ -1585,5 +1584,8 @@
         "unmute": "Opphev demp",
         "username": "Brukernavn",
         "verification_cancelled": "Verifiseringen ble avbrutt"
+    },
+    "a11y": {
+        "user_menu": "Brukermeny"
     }
 }

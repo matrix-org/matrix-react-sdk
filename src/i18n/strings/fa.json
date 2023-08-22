@@ -1955,7 +1955,6 @@
     "Original event source": "منبع اصلی رخداد",
     "Decrypted event source": "رمزگشایی منبع رخداد",
     "Could not load user profile": "امکان نمایش پروفایل کاربر میسر نیست",
-    "User menu": "منوی کاربر",
     "Switch theme": "تعویض پوسته",
     "Switch to dark mode": "انتخاب حالت تاریک",
     "Switch to light mode": "انتخاب حالت روشن",
@@ -2625,5 +2624,8 @@
         "username": "نام کاربری",
         "verification_cancelled": "تأیید هویت لغو شد",
         "video": "ویدئو"
+    },
+    "a11y": {
+        "user_menu": "منوی کاربر"
     }
 }

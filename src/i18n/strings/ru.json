@@ -1582,7 +1582,6 @@
     "Confirm your identity by entering your account password below.": "Подтвердите свою личность, введя пароль учетной записи ниже.",
     "Sign in with SSO": "Вход с помощью SSO",
     "Switch theme": "Сменить тему",
-    "User menu": "Меню пользователя",
     "If you've joined lots of rooms, this might take a while": "Если вы присоединились к большому количеству комнат, это может занять некоторое время",
     "Confirm encryption setup": "Подтвердите настройку шифрования",
     "Click the button below to confirm setting up encryption.": "Нажмите кнопку ниже, чтобы подтвердить настройку шифрования.",
@@ -3660,5 +3659,8 @@
         "username": "Псевдоним",
         "verification_cancelled": "Подтверждение отменено",
         "video": "Видео"
+    },
+    "a11y": {
+        "user_menu": "Меню пользователя"
     }
 }

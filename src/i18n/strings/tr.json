@@ -1759,7 +1759,6 @@
     "Widgets": "Widgetlar",
     "Unpin": "Sabitlemeyi kaldır",
     "Download logs": "Günlükleri indir",
-    "User menu": "Kullanıcı menüsü",
     "Notification options": "Bildirim ayarları",
     "Looks good!": "İyi görünüyor!",
     "Security Key": "Güvenlik anahtarı",
@@ -2028,5 +2027,8 @@
         "unmute": "Sesi aç",
         "username": "Kullanıcı Adı",
         "verification_cancelled": "Doğrulama iptal edildi"
+    },
+    "a11y": {
+        "user_menu": "Kullanıcı menüsü"
     }
 }

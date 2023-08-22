@@ -393,7 +393,6 @@
     "Original event source": "Nguồn sự kiện ban đầu",
     "Decrypted event source": "Nguồn sự kiện được giải mã",
     "Could not load user profile": "Không thể tải hồ sơ người dùng",
-    "User menu": "Menu người dùng",
     "Switch theme": "Chuyển đổi chủ đề",
     "Switch to dark mode": "Chuyển sang chế độ tối",
     "Switch to light mode": "Chuyển sang chế độ ánh sáng",
@@ -3674,5 +3673,8 @@
         "username": "Tên đăng nhập",
         "verification_cancelled": "Đã hủy xác thực",
         "video": "Truyền hình"
+    },
+    "a11y": {
+        "user_menu": "Menu người dùng"
     }
 }

@@ -1619,7 +1619,6 @@
     "Notification options": "Értesítési beállítások",
     "Favourited": "Kedvencnek jelölt",
     "Forget Room": "Szoba elfelejtése",
-    "User menu": "Felhasználói menü",
     "This room is public": "Ez egy nyilvános szoba",
     "Away": "Távol",
     "Are you sure you want to cancel entering passphrase?": "Biztos, hogy megszakítja a jelmondat bevitelét?",
@@ -3875,5 +3874,8 @@
         "username": "Felhasználói név",
         "verification_cancelled": "Ellenőrzés megszakítva",
         "video": "Videó"
+    },
+    "a11y": {
+        "user_menu": "Felhasználói menü"
     }
 }

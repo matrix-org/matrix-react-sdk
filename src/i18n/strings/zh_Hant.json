@@ -1629,7 +1629,6 @@
     "Edited at %(date)s": "編輯於 %(date)s",
     "Click to view edits": "點擊以檢視編輯",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "如果其他版本的 %(brand)s 仍在其他分頁中開啟，請關閉它，因為在同一主機上使用同時啟用與停用惰性載入的 %(brand)s 可能會造成問題。",
-    "User menu": "使用者選單",
     "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
     "Change notification settings": "變更通知設定",
     "Your server isn't responding to some <a>requests</a>.": "您的伺服器未回應某些<a>請求</a>。",
@@ -3971,5 +3970,8 @@
         "username": "使用者名稱",
         "verification_cancelled": "驗證已取消",
         "video": "影片"
+    },
+    "a11y": {
+        "user_menu": "使用者選單"
     }
 }

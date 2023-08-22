@@ -1213,7 +1213,6 @@
     "Italics": "Kurzíva",
     "Strikethrough": "Preškrtnuté",
     "Send a Direct Message": "Poslať priamu správu",
-    "User menu": "Používateľské menu",
     "Toggle Italics": "Prepnúť kurzíva",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
@@ -3971,5 +3970,8 @@
         "username": "Meno používateľa",
         "verification_cancelled": "Overovanie zrušené",
         "video": "Video"
+    },
+    "a11y": {
+        "user_menu": "Používateľské menu"
     }
 }

@@ -914,7 +914,6 @@
     "Switch theme": "テーマを切り替える",
     "All settings": "全ての設定",
     "Feedback": "フィードバック",
-    "User menu": "ユーザーメニュー",
     "Cannot connect to integration manager": "インテグレーションマネージャーに接続できません",
     "Failed to connect to integration manager": "インテグレーションマネージャーへの接続に失敗しました",
     "Start verification again from their profile.": "プロフィールから再度認証を開始してください。",
@@ -3773,5 +3772,8 @@
         "username": "ユーザー名",
         "verification_cancelled": "認証のキャンセル",
         "video": "動画"
+    },
+    "a11y": {
+        "user_menu": "ユーザーメニュー"
     }
 }
