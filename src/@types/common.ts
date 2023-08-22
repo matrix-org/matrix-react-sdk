@@ -35,7 +35,7 @@ export type ComponentClass = keyof JSX.IntrinsicElements | JSXElementConstructor
  *          "d": "foobar"
  *      }
  *  }
- *  will yield a type of `"a.b.c" | "a.b.d"` with Separator="."
+ *  will yield a type of `"a.b.c" | "a.d"` with Separator="."
  * @typeParam Target the target type to generate leaf keys for
  * @typeParam Separator the separator to use between key segments when accessing nested objects
  * @typeParam LeafType the type which leaves of this object extend, used to determine when to stop recursion
