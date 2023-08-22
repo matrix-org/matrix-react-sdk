@@ -43,7 +43,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     : rightPanel.setCard({ phase: RightPanelPhases.RoomSummary });
             }}
         >
-            <DecoratedRoomAvatar room={room} avatarSize={40} displayBadge={false} />
+            <DecoratedRoomAvatar room={room} size="40px" displayBadge={false} />
             <Box flex="1" className="mx_RoomHeader_info">
                 <BodyText
                     as="div"

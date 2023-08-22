@@ -47,9 +47,7 @@ interface IState {
 
 export default class RoomAvatar extends React.Component<IProps, IState> {
     public static defaultProps = {
-        width: 36,
-        height: 36,
-        resizeMethod: "crop",
+        size: "36px",
         oobData: {},
     };
 
@@ -87,9 +85,9 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         let oobAvatar: string | null = null;
         if (props.oobData.avatarUrl) {
             oobAvatar = mediaFromMxc(props.oobData.avatarUrl).getThumbnailOfSourceHttp(
-                props.width,
-                props.height,
-                props.resizeMethod,
+                parseInt(props.size, 10),
+                parseInt(props.size, 10),
+                "crop",
             );
         }
 
@@ -102,7 +100,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
     private static getRoomAvatarUrl(props: IProps): string | null {
         if (!props.room) return null;
 
-        return Avatar.avatarUrlForRoom(props.room, props.width, props.height, props.resizeMethod);
+        return Avatar.avatarUrlForRoom(props.room, parseInt(props.size, 10), parseInt(props.size, 10), "crop");
     }
 
     private onRoomAvatarClick = (): void => {
