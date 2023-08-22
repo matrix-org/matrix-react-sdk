@@ -117,8 +117,12 @@ const BaseAvatar: React.FC<IProps> = (props) => {
 
     if (onClick) {
         extraProps["aria-live"] = "off";
-    } else {
+        extraProps["role"] = "button";
+    } else if (!imageUrl) {
         extraProps["role"] = "presentation";
+        extraProps["aria-label"] = "";
+    } else {
+        extraProps["role"] = "img";
     }
 
     return (
