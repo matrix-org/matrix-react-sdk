@@ -3570,5 +3570,6 @@
         "video_rooms_faq1_answer": "Käytä ”+”-painiketta vasemman paneelin huoneosiossa.",
         "video_rooms_faq2_question": "Voinko käyttää tekstikeskustelua videopuhelussa?",
         "video_rooms_faq2_answer": "Kyllä, keskustelun aikajana esitetään videon yhteydessä."
-    }
+    },
+    "Voice broadcast": "Äänen yleislähetys"
 }

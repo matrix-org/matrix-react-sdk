@@ -2519,5 +2519,6 @@
         "video_rooms_faq1_answer": "Kairiajame skydelyje esančioje kambarių skiltyje naudokite mygtuką “+”.",
         "video_rooms_faq2_question": "Ar galiu naudoti teksto pokalbius kartu su vaizdo skambučiu?",
         "video_rooms_faq2_answer": "Taip, pokalbių laiko juosta rodoma kartu su vaizdu."
-    }
+    },
+    "Voice broadcast": "Balso transliacija"
 }

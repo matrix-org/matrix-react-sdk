@@ -3976,5 +3976,6 @@
         "video_rooms_faq1_answer": "Použijte tlačítko \"+\" v sekci místnosti na levém panelu.",
         "video_rooms_faq2_question": "Mohu vedle videohovoru používat i textový chat?",
         "video_rooms_faq2_answer": "Ano, časová osa chatu se zobrazuje vedle videa."
-    }
+    },
+    "Voice broadcast": "Hlasové vysílání"
 }

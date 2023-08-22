@@ -3971,5 +3971,6 @@
         "video_rooms_faq1_answer": "Použite tlačidlo \"+\" na ľavom paneli v sekcii miestnosti.",
         "video_rooms_faq2_question": "Môžem popri videohovore používať aj textovú konverzáciu?",
         "video_rooms_faq2_answer": "Áno, časová os konverzácie sa zobrazuje spolu s videom."
-    }
+    },
+    "Voice broadcast": "Hlasové vysielanie"
 }

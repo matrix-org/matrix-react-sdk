@@ -3563,5 +3563,6 @@
         "video_rooms_faq1_answer": "使用左侧面板房间部分的“+”按钮。",
         "video_rooms_faq2_question": "我能在视频通话的同时使用文字聊天吗？",
         "video_rooms_faq2_answer": "是的，聊天时间线显示在视频旁。"
-    }
+    },
+    "Voice broadcast": "语音广播"
 }

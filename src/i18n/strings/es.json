@@ -3777,5 +3777,6 @@
         "video_rooms_faq1_answer": "Usa el botón «+» en la sección de la sala del panel izquierdo.",
         "video_rooms_faq2_question": "¿Puedo mandar mensajes de texto en la videollamada?",
         "video_rooms_faq2_answer": "Sí, el historial de la sala aparece al lado del vídeo."
-    }
+    },
+    "Voice broadcast": "Retransmisión de voz"
 }

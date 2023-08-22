@@ -3976,5 +3976,6 @@
         "video_rooms_faq1_answer": "Usa il pulsante “+” nella sezione stanza del pannello sinistro.",
         "video_rooms_faq2_question": "Posso usare la chat testuale assieme alla chiamata video?",
         "video_rooms_faq2_answer": "Sì, la cronologia della chat viene mostrata assieme al video."
-    }
+    },
+    "Voice broadcast": "Trasmissione vocale"
 }

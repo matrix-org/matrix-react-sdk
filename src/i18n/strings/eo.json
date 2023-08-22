@@ -2954,5 +2954,6 @@
         "video_rooms_always_on_voip_channels": "Videoĉambroj estas ĉiam ŝaltitaj VoIP-kanaloj enkonstruitaj en ĉambro en %(brand)s.",
         "video_rooms_faq1_question": "Kiel mi povas krei videoĉambron?",
         "video_rooms_faq1_answer": "Uzu la \"+\" butonon en la ĉambro sekcio de la maldekstra panelo."
-    }
+    },
+    "Voice broadcast": "Voĉan elsendo"
 }

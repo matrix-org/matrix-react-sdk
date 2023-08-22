@@ -3773,5 +3773,6 @@
         "video_rooms_faq1_answer": "左のパネルにあるルームのセクションの「＋」ボタンで作成できます。",
         "video_rooms_faq2_question": "テキストによる会話も行えますか？",
         "video_rooms_faq2_answer": "はい、会話のタイムラインが動画と並んで表示されます。"
-    }
+    },
+    "Voice broadcast": "音声配信"
 }

@@ -3911,5 +3911,6 @@
         "video_rooms_faq1_answer": "Använd \"+\"-knappen i rumssektionen i vänsterpanelen.",
         "video_rooms_faq2_question": "Kan jag använda textchatt tillsammans med videosamtalet?",
         "video_rooms_faq2_answer": "Ja, chattidslinjen visas tillsammans med videon."
-    }
+    },
+    "Voice broadcast": "Röstsändning"
 }

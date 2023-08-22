@@ -3971,5 +3971,6 @@
         "video_rooms_faq1_answer": "Utilisez le bouton « + » dans la section salon du panneau de gauche.",
         "video_rooms_faq2_question": "Est-il possible d’utiliser les messages textuels en même temps que l’appel vidéo ?",
         "video_rooms_faq2_answer": "Oui, l’historique de conversation est affiché à côté de la vidéo."
-    }
+    },
+    "Voice broadcast": "Diffusion audio"
 }

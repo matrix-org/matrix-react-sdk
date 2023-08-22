@@ -3875,5 +3875,6 @@
         "video_rooms_faq1_answer": "A „+” gomb használatával a szoba bal oldali panelén.",
         "video_rooms_faq2_question": "Lehet a videóhívás közben szövegesen is csevegni?",
         "video_rooms_faq2_answer": "Igen, a szöveges idővonal a videóval együtt megjelenik."
-    }
+    },
+    "Voice broadcast": "Hangközvetítés"
 }

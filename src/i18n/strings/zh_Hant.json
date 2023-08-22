@@ -3971,5 +3971,6 @@
         "video_rooms_faq1_answer": "使用左側聊天室部份的「+」按鈕。",
         "video_rooms_faq2_question": "我可以在視訊通話的同時使用文字聊天嗎？",
         "video_rooms_faq2_answer": "可以，會在視訊畫面旁顯示聊天時間軸。"
-    }
+    },
+    "Voice broadcast": "語音廣播"
 }

@@ -3953,5 +3953,6 @@
         "video_rooms_faq1_answer": "Użyj przycisku \"+\" w sekcji pokoju lewego panelu.",
         "video_rooms_faq2_question": "Czy mogę używać kanału tekstowego jednocześnie rozmawiając na kanale wideo?",
         "video_rooms_faq2_answer": "Tak, oś czasu czatu jest wyświetlana wraz z wideo."
-    }
+    },
+    "Voice broadcast": "Transmisja głosowa"
 }
