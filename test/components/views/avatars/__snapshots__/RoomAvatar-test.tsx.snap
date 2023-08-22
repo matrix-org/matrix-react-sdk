@@ -3,7 +3,6 @@
 exports[`RoomAvatar should render as expected for a DM room 1`] = `
 <div>
   <span
-    aria-label="Avatar"
     class="_avatar_i91o9_17 mx_BaseAvatar"
     data-color="1"
     data-testid="avatar-img"
@@ -19,7 +18,6 @@ exports[`RoomAvatar should render as expected for a DM room 1`] = `
 exports[`RoomAvatar should render as expected for a LocalRoom 1`] = `
 <div>
   <span
-    aria-label="Avatar"
     class="_avatar_i91o9_17 mx_BaseAvatar"
     data-color="7"
     data-testid="avatar-img"
@@ -35,7 +33,6 @@ exports[`RoomAvatar should render as expected for a LocalRoom 1`] = `
 exports[`RoomAvatar should render as expected for a Room 1`] = `
 <div>
   <span
-    aria-label="Avatar"
     class="_avatar_i91o9_17 mx_BaseAvatar"
     data-color="2"
     data-testid="avatar-img"

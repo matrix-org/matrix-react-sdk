@@ -35,7 +35,6 @@ exports[`<Pill> should render the expected pill for @room 1`] = `
       >
         <span
           aria-hidden="true"
-          aria-label="Avatar"
           class="_avatar_i91o9_17 mx_BaseAvatar"
           data-color="3"
           data-testid="avatar-img"
@@ -67,7 +66,6 @@ exports[`<Pill> should render the expected pill for a known user not in the room
       >
         <span
           aria-hidden="true"
-          aria-label="Profile picture"
           class="_avatar_i91o9_17 mx_BaseAvatar"
           data-color="5"
           data-testid="avatar-img"
@@ -99,7 +97,6 @@ exports[`<Pill> should render the expected pill for a message in another room 1`
       >
         <span
           aria-hidden="true"
-          aria-label="Avatar"
           class="_avatar_i91o9_17 mx_BaseAvatar"
           data-color="3"
           data-testid="avatar-img"
@@ -131,7 +128,6 @@ exports[`<Pill> should render the expected pill for a message in the same room 1
       >
         <span
           aria-hidden="true"
-          aria-label="Profile picture"
           class="_avatar_i91o9_17 mx_BaseAvatar"
           data-color="4"
           data-testid="avatar-img"
@@ -163,7 +159,6 @@ exports[`<Pill> should render the expected pill for a room alias 1`] = `
       >
         <span
           aria-hidden="true"
-          aria-label="Avatar"
           class="_avatar_i91o9_17 mx_BaseAvatar"
           data-color="3"
           data-testid="avatar-img"
@@ -195,7 +190,6 @@ exports[`<Pill> should render the expected pill for a space 1`] = `
       >
         <span
           aria-hidden="true"
-          aria-label="Avatar"
           class="_avatar_i91o9_17 mx_BaseAvatar"
           data-color="2"
           data-testid="avatar-img"
@@ -250,7 +244,6 @@ exports[`<Pill> when rendering a pill for a room should render the expected pill
       >
         <span
           aria-hidden="true"
-          aria-label="Avatar"
           class="_avatar_i91o9_17 mx_BaseAvatar"
           data-color="3"
           data-testid="avatar-img"
@@ -282,7 +275,6 @@ exports[`<Pill> when rendering a pill for a user in the room should render as ex
       >
         <span
           aria-hidden="true"
-          aria-label="Profile picture"
           class="_avatar_i91o9_17 mx_BaseAvatar"
           data-color="4"
           data-testid="avatar-img"

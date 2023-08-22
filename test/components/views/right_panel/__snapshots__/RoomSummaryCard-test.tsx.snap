@@ -20,7 +20,6 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         role="presentation"
       >
         <span
-          aria-label="Avatar"
           class="_avatar_i91o9_17 mx_BaseAvatar"
           data-color="7"
           data-testid="avatar-img"

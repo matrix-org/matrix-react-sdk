@@ -18,7 +18,6 @@ exports[`<UserMenu> when rendered should render as expected 1`] = `
         class="mx_UserMenu_userAvatar"
       >
         <span
-          aria-label="Avatar"
           class="_avatar_i91o9_17 mx_BaseAvatar mx_UserMenu_userAvatar_BaseAvatar"
           data-color="2"
           data-testid="avatar-img"

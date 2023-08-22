@@ -14,7 +14,6 @@ exports[`RoomTile when message previews are enabled and there is a message in a 
       class="mx_DecoratedRoomAvatar"
     >
       <span
-        aria-label="Avatar"
         class="_avatar_i91o9_17 mx_BaseAvatar"
         data-color="7"
         data-testid="avatar-img"
@@ -89,7 +88,6 @@ exports[`RoomTile when message previews are enabled and there is a message in th
       class="mx_DecoratedRoomAvatar"
     >
       <span
-        aria-label="Avatar"
         class="_avatar_i91o9_17 mx_BaseAvatar"
         data-color="7"
         data-testid="avatar-img"
@@ -164,7 +162,6 @@ exports[`RoomTile when message previews are enabled should render a room without
       class="mx_DecoratedRoomAvatar"
     >
       <span
-        aria-label="Avatar"
         class="_avatar_i91o9_17 mx_BaseAvatar"
         data-color="7"
         data-testid="avatar-img"
@@ -227,7 +224,6 @@ exports[`RoomTile when message previews are not enabled should render the room 1
       class="mx_DecoratedRoomAvatar"
     >
       <span
-        aria-label="Avatar"
         class="_avatar_i91o9_17 mx_BaseAvatar"
         data-color="7"
         data-testid="avatar-img"

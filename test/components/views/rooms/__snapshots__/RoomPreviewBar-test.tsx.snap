@@ -23,7 +23,6 @@ exports[`<RoomPreviewBar /> message case AskToJoin renders the corresponding mes
   </h3>
   <p>
     <span
-      aria-label="Avatar"
       class="_avatar_i91o9_17 mx_BaseAvatar"
       data-color="4"
       data-testid="avatar-img"
@@ -49,7 +48,6 @@ exports[`<RoomPreviewBar /> message case AskToJoin renders the corresponding mes
   </h3>
   <p>
     <span
-      aria-label="Avatar"
       class="_avatar_i91o9_17 mx_BaseAvatar"
       data-color="1"
       data-testid="avatar-img"
@@ -216,7 +214,6 @@ exports[`<RoomPreviewBar /> with an invite with an invited email when client has
   </h3>
   <p>
     <span
-      aria-label="Avatar"
       class="_avatar_i91o9_17 mx_BaseAvatar"
       data-color="4"
       data-testid="avatar-img"
@@ -275,7 +272,6 @@ exports[`<RoomPreviewBar /> with an invite without an invited email for a dm roo
   </h3>
   <p>
     <span
-      aria-label="Avatar"
       class="_avatar_i91o9_17 mx_BaseAvatar"
       data-color="4"
       data-testid="avatar-img"
@@ -341,7 +337,6 @@ exports[`<RoomPreviewBar /> with an invite without an invited email for a non-dm
   </h3>
   <p>
     <span
-      aria-label="Avatar"
       class="_avatar_i91o9_17 mx_BaseAvatar"
       data-color="4"
       data-testid="avatar-img"

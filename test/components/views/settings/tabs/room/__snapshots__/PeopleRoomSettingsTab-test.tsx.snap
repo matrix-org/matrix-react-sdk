@@ -21,7 +21,6 @@ exports[`PeopleRoomSettingsTab with requests to join renders requests fully 1`] 
         data-color="4"
         data-testid="avatar-img"
         data-type="round"
-        role="presentation"
         style="--cpd-avatar-size: 42px;"
         title="@albert.einstein:example.org"
       >
@@ -112,7 +111,6 @@ exports[`PeopleRoomSettingsTab with requests to join renders requests reduced 1`
       class="mx_PeopleRoomSettingsTab_knock"
     >
       <span
-        aria-label="Profile picture"
         class="_avatar_i91o9_17 mx_BaseAvatar"
         data-color="4"
         data-testid="avatar-img"

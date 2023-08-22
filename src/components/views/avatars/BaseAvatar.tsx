@@ -120,9 +120,9 @@ const BaseAvatar: React.FC<IProps> = (props) => {
         extraProps["role"] = "button";
     } else if (!imageUrl) {
         extraProps["role"] = "presentation";
-        extraProps["aria-label"] = "";
+        extraProps["aria-label"] = undefined;
     } else {
-        extraProps["role"] = "img";
+        extraProps["role"] = undefined;
     }
 
     return (

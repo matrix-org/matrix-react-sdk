@@ -11,7 +11,6 @@ exports[`<BeaconMarker /> renders marker when beacon has location 1`] = `
         class="mx_Marker_border"
       >
         <span
-          aria-label="Profile picture"
           class="_avatar_i91o9_17 mx_BaseAvatar"
           data-color="8"
           data-testid="avatar-img"
