@@ -1128,7 +1128,7 @@ describe("<SessionManagerTab />", () => {
                     // correct link to auth provider
                     expect(screen.getByText("Continue")).toHaveAttribute(
                         "href",
-                        `https://issuer.org/account&action=session_end&device_id=${alicesMobileDevice.device_id}`,
+                        `https://issuer.org/account?action=session_end&device_id=${alicesMobileDevice.device_id}`,
                     );
 
                     // go to the link
