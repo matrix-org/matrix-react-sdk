@@ -3305,12 +3305,6 @@
     "Joining the beta will reload %(brand)s.": "Vstupom do beta verzie sa %(brand)s znovu načíta.",
     "Leaving the beta will reload %(brand)s.": "Po opustení beta verzie sa znovu načíta aplikácia %(brand)s.",
     "Video rooms are a beta feature": "Video miestnosti sú beta funkciou",
-    "Yes, the chat timeline is displayed alongside the video.": "Áno, časová os konverzácie sa zobrazuje spolu s videom.",
-    "Can I use text chat alongside the video call?": "Môžem popri videohovore používať aj textovú konverzáciu?",
-    "Use the “+” button in the room section of the left panel.": "Použite tlačidlo \"+\" na ľavom paneli v sekcii miestnosti.",
-    "How can I create a video room?": "Ako môžem vytvoriť video miestnosť?",
-    "A new way to chat over voice and video in %(brand)s.": "Nový spôsob konverzácie prostredníctvom hlasu a videa v aplikácii %(brand)s.",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Video miestnosti sú vždy zapnuté VoIP kanály zabudované do miestnosti v aplikácii %(brand)s.",
     "Enable hardware acceleration": "Povoliť hardvérovú akceleráciu",
     "%(count)s Members": {
         "other": "%(count)s členov",
@@ -3970,6 +3964,12 @@
         "hidebold": "Skryť oznamovaciu bodku (zobrazovať iba odznaky počítadiel)",
         "intentional_mentions": "Povoliť úmyselné zmienky",
         "ask_to_join": "Umožniť požiadať o pripojenie",
-        "new_room_decoration_ui": "V štádiu aktívneho vývoja, nová hlavička miestnosti a rozhranie s detailmi"
+        "new_room_decoration_ui": "V štádiu aktívneho vývoja, nová hlavička miestnosti a rozhranie s detailmi",
+        "video_rooms_a_new_way_to_chat": "Nový spôsob konverzácie prostredníctvom hlasu a videa v aplikácii %(brand)s.",
+        "video_rooms_always_on_voip_channels": "Video miestnosti sú vždy zapnuté VoIP kanály zabudované do miestnosti v aplikácii %(brand)s.",
+        "video_rooms_faq1_question": "Ako môžem vytvoriť video miestnosť?",
+        "video_rooms_faq1_answer": "Použite tlačidlo \"+\" na ľavom paneli v sekcii miestnosti.",
+        "video_rooms_faq2_question": "Môžem popri videohovore používať aj textovú konverzáciu?",
+        "video_rooms_faq2_answer": "Áno, časová os konverzácie sa zobrazuje spolu s videom."
     }
 }

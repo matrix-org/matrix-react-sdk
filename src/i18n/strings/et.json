@@ -3305,12 +3305,6 @@
     "Joining the beta will reload %(brand)s.": "Beeta-funktsionaalsuste kasutusele võtmisel laadime uuesti rakenduse %(brand)s.",
     "Leaving the beta will reload %(brand)s.": "Beeta-funktsionaalsuste kasutamise lõpetamisel laadime uuesti rakenduse %(brand)s.",
     "Video rooms are a beta feature": "Videotoad on veel beeta-funktsionaalsus",
-    "Yes, the chat timeline is displayed alongside the video.": "Jah, tekstivestluse ajajoon on kuvatud videovaate kõrval.",
-    "Can I use text chat alongside the video call?": "Kas ma saan videokõne ajal ka tekstisõnumeid saata?",
-    "Use the “+” button in the room section of the left panel.": "Klõpsi vasakus paanis jututubade loendis leiduvat „+“ nuppu.",
-    "How can I create a video room?": "Kuidas ma saan luua videotoa?",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Videotoad on kogu aeg saadaval VoIP kanalid, mis on lõimitud jututubadega ja kasutatavad rakenduses %(brand)s.",
-    "A new way to chat over voice and video in %(brand)s.": "Uus võimalus videovestlusteks rakenduses %(brand)s.",
     "Enable hardware acceleration": "Kasuta riistvaralist kiirendust",
     "Remove search filter for %(filter)s": "Eemalda otsingufilter „%(filter)s“",
     "Start a group chat": "Alusta rühmavestlust",
@@ -3970,6 +3964,12 @@
         "hidebold": "Peida teavituse täpp (ja näita loendure)",
         "intentional_mentions": "Võta kasutusele tahtlikud mainimised",
         "ask_to_join": "Võta kasutusele liitumine kasutaja sooviavalduse alusel",
-        "new_room_decoration_ui": "Uus jututoa päis ja infovaade on hetkel aktiivses arenduses"
+        "new_room_decoration_ui": "Uus jututoa päis ja infovaade on hetkel aktiivses arenduses",
+        "video_rooms_a_new_way_to_chat": "Uus võimalus videovestlusteks rakenduses %(brand)s.",
+        "video_rooms_always_on_voip_channels": "Videotoad on kogu aeg saadaval VoIP kanalid, mis on lõimitud jututubadega ja kasutatavad rakenduses %(brand)s.",
+        "video_rooms_faq1_question": "Kuidas ma saan luua videotoa?",
+        "video_rooms_faq1_answer": "Klõpsi vasakus paanis jututubade loendis leiduvat „+“ nuppu.",
+        "video_rooms_faq2_question": "Kas ma saan videokõne ajal ka tekstisõnumeid saata?",
+        "video_rooms_faq2_answer": "Jah, tekstivestluse ajajoon on kuvatud videovaate kõrval."
     }
 }

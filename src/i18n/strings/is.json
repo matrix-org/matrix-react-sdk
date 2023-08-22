@@ -3066,7 +3066,6 @@
     "Find and invite your friends": "Finndu og bjóddu vinum þínum",
     "You made it!": "Þú hafðir það!",
     "Send read receipts": "Senda leskvittanir",
-    "How can I create a video room?": "Hvernig bý ég til myndspjallrás?",
     "Mapbox logo": "Mapbox-táknmerki",
     "Location not available": "Staðsetning ekki tiltæk",
     "Find my location": "Finna staðsetningu mína",
@@ -3150,11 +3149,6 @@
     "Close this widget to view it in this panel": "Lokaðu þessum viðmótshluta til að sjá hann á þessu spjaldi",
     "Unpin this widget to view it in this panel": "Losaðu þennan viðmótshluta til að sjá hann á þessu spjaldi",
     "Explore public spaces in the new search dialog": "Kannaðu opimber svæði í nýja leitarglugganum",
-    "Yes, the chat timeline is displayed alongside the video.": "Já, tímalína spjallsins birtist við hlið myndmerkisins.",
-    "Can I use text chat alongside the video call?": "Get ég notað textaspjall samhliða myndsímtali?",
-    "Use the “+” button in the room section of the left panel.": "Notaðu “+” hnappinn í spjallrásarhluta hliðarspjaldsins vinstra megin.",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Myndspjallrásir eru sívirkar VoIP-rásir sem ívafðar eru í spjallrásir innan %(brand)s.",
-    "A new way to chat over voice and video in %(brand)s.": "Ný leið til að spjalla með tali og myndmerki í %(brand)s.",
     "Turn on notifications": "Kveikja á tilkynningum",
     "Make sure people know it’s really you": "Láttu fólk vita að þetta sért þú",
     "Set up your profile": "Settu upp notandasniðið þitt",
@@ -3362,6 +3356,12 @@
         "jump_to_date": "Hoppa á dagsetningu (bætir við /jumptodate og jump to date hausum)",
         "group_calls": "Ný upplifun við hópsamtöl",
         "location_share_live": "Deiling staðsetningar í rauntíma",
-        "voice_broadcast": "Útvörpun tals"
+        "voice_broadcast": "Útvörpun tals",
+        "video_rooms_a_new_way_to_chat": "Ný leið til að spjalla með tali og myndmerki í %(brand)s.",
+        "video_rooms_always_on_voip_channels": "Myndspjallrásir eru sívirkar VoIP-rásir sem ívafðar eru í spjallrásir innan %(brand)s.",
+        "video_rooms_faq1_question": "Hvernig bý ég til myndspjallrás?",
+        "video_rooms_faq1_answer": "Notaðu “+” hnappinn í spjallrásarhluta hliðarspjaldsins vinstra megin.",
+        "video_rooms_faq2_question": "Get ég notað textaspjall samhliða myndsímtali?",
+        "video_rooms_faq2_answer": "Já, tímalína spjallsins birtist við hlið myndmerkisins."
     }
 }

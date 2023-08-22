@@ -2904,7 +2904,6 @@
     "Jump to the given date in the timeline": "跳转到时间线中的给定日期",
     "Command error: Unable to handle slash command.": "命令错误：无法处理斜杠命令。",
     "Failed to invite users to %(roomName)s": "未能邀请用户加入 %(roomName)s",
-    "A new way to chat over voice and video in %(brand)s.": "在 %(brand)s 中使用语音和视频的新方式。",
     "Back to thread": "返回消息列",
     "Room members": "房间成员",
     "Back to chat": "返回聊天",
@@ -3077,11 +3076,6 @@
     "Show polls button": "显示投票按钮",
     "Explore public spaces in the new search dialog": "在新的搜索对话框中探索公开空间",
     "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "感谢你试用beta版，请尽可能详细地说明，以便我们能够改进它。",
-    "Yes, the chat timeline is displayed alongside the video.": "是的，聊天时间线显示在视频旁。",
-    "Can I use text chat alongside the video call?": "我能在视频通话的同时使用文字聊天吗？",
-    "Use the “+” button in the room section of the left panel.": "使用左侧面板房间部分的“+”按钮。",
-    "How can I create a video room?": "我如何创建视频房间？",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "视频房间是嵌入在%(brand)s房间内的总是开启的VoIP频道。",
     "Join the room to participate": "加入房间以参与",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>实用提示：</b>悬停在消息上时使用“%(replyInThread)s”。",
     "Threads help keep your conversations on-topic and easy to track.": "消息列帮助保持你的对话切题并易于追踪。",
@@ -3562,6 +3556,12 @@
         "group_calls": "新的群通话体验",
         "location_share_live": "实时位置共享",
         "voice_broadcast": "语音广播",
-        "hidebold": "隐藏通知的点标记（仅显示计数标记）"
+        "hidebold": "隐藏通知的点标记（仅显示计数标记）",
+        "video_rooms_a_new_way_to_chat": "在 %(brand)s 中使用语音和视频的新方式。",
+        "video_rooms_always_on_voip_channels": "视频房间是嵌入在%(brand)s房间内的总是开启的VoIP频道。",
+        "video_rooms_faq1_question": "我如何创建视频房间？",
+        "video_rooms_faq1_answer": "使用左侧面板房间部分的“+”按钮。",
+        "video_rooms_faq2_question": "我能在视频通话的同时使用文字聊天吗？",
+        "video_rooms_faq2_answer": "是的，聊天时间线显示在视频旁。"
     }
 }

@@ -3245,9 +3245,6 @@
     "You were disconnected from the call. (Error: %(message)s)": "Du wurdest vom Anruf getrennt. (Error: %(message)s)",
     "Connection lost": "Verbindung verloren",
     "Explore public spaces in the new search dialog": "Erkunde öffentliche Räume mit der neuen Suchfunktion",
-    "Yes, the chat timeline is displayed alongside the video.": "Ja, der Verlauf wird neben dem Videoanruf angezeigt.",
-    "Can I use text chat alongside the video call?": "Kann ich während Videoanrufen auch Textnachrichten verschicken?",
-    "How can I create a video room?": "Wie kann ich einen Videoraum erstellen?",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Hardwarebeschleunigung aktivieren (Neustart von %(appName)s erforderlich)",
     "%(count)s people joined": {
         "one": "%(count)s Person beigetreten",
@@ -3307,8 +3304,6 @@
     "Resent!": "Verschickt!",
     "Did not receive it? <a>Resend it</a>": "Nicht angekommen? <a>Erneut senden</a>",
     "Unread email icon": "Ungelesene E-Mail Symbol",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Videoräume sind dauerhaft aktive VoIP-Kanäle, die in einem Raum in %(brand)s eingebettet sind.",
-    "A new way to chat over voice and video in %(brand)s.": "Eine neue Möglichkeit in %(brand)s über Audio und Video zu kommunizieren.",
     "Coworkers and teams": "Kollegen und Gruppen",
     "Friends and family": "Freunde und Familie",
     "iOS": "iOS",
@@ -3330,7 +3325,6 @@
     "Joining…": "Betrete …",
     "Show Labs settings": "Zeige die \"Labor\" Einstellungen",
     "To view, please enable video rooms in Labs first": "Zum Anzeigen, aktiviere bitte Videoräume in den Laboreinstellungen",
-    "Use the “+” button in the room section of the left panel.": "Verwende die „+“-Schaltfläche des Räumebereichs der linken Seitenleiste.",
     "View all": "Alles anzeigen",
     "Security recommendations": "Sicherheitsempfehlungen",
     "Filter devices": "Geräte filtern",
@@ -3975,6 +3969,12 @@
         "hidebold": "Benachrichtigungspunkt ausblenden (nur Zähler zeigen)",
         "intentional_mentions": "Beabsichtigte Erwähnungen aktivieren",
         "ask_to_join": "Beitrittsanfragen erlauben",
-        "new_room_decoration_ui": "In aktiver Entwicklung, neue Raumkopfzeile & Detailoberfläche"
+        "new_room_decoration_ui": "In aktiver Entwicklung, neue Raumkopfzeile & Detailoberfläche",
+        "video_rooms_a_new_way_to_chat": "Eine neue Möglichkeit in %(brand)s über Audio und Video zu kommunizieren.",
+        "video_rooms_always_on_voip_channels": "Videoräume sind dauerhaft aktive VoIP-Kanäle, die in einem Raum in %(brand)s eingebettet sind.",
+        "video_rooms_faq1_question": "Wie kann ich einen Videoraum erstellen?",
+        "video_rooms_faq1_answer": "Verwende die „+“-Schaltfläche des Räumebereichs der linken Seitenleiste.",
+        "video_rooms_faq2_question": "Kann ich während Videoanrufen auch Textnachrichten verschicken?",
+        "video_rooms_faq2_answer": "Ja, der Verlauf wird neben dem Videoanruf angezeigt."
     }
 }

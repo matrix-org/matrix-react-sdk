@@ -3305,12 +3305,6 @@
     "Joining the beta will reload %(brand)s.": "Перехід до бета-тестування перезавантажить %(brand)s.",
     "Leaving the beta will reload %(brand)s.": "Вихід з бета-тестування перезавантажить %(brand)s.",
     "Video rooms are a beta feature": "Відеокімнати — це бета-функція",
-    "Yes, the chat timeline is displayed alongside the video.": "Так, стрічка бесіди показана поряд із відео.",
-    "Can I use text chat alongside the video call?": "Чи можу я писати текстові повідомлення під час відеовиклику?",
-    "Use the “+” button in the room section of the left panel.": "Натисніть кнопку «+» у розділі кімнат на лівій панелі.",
-    "How can I create a video room?": "Як створити відеокімнату?",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Відеокімнати — це завжди в VOIP-канали, вбудовані в кімнату в %(brand)s.",
-    "A new way to chat over voice and video in %(brand)s.": "Новий спосіб спілкування за допомогою голосового та відеозв’язку в %(brand)s.",
     "Enable hardware acceleration": "Увімкнути апаратне прискорення",
     "Remove search filter for %(filter)s": "Вилучити фільтр пошуку для %(filter)s",
     "Start a group chat": "Розпочати нову бесіду",
@@ -3970,6 +3964,12 @@
         "hidebold": "Сховати крапку сповіщення ( показувати тільки значки лічильників)",
         "intentional_mentions": "Увімкнути навмисні згадки",
         "ask_to_join": "Увімкнути запити на приєднання",
-        "new_room_decoration_ui": "В активній розробці новий інтерфейс заголовка та подробиць кімнати"
+        "new_room_decoration_ui": "В активній розробці новий інтерфейс заголовка та подробиць кімнати",
+        "video_rooms_a_new_way_to_chat": "Новий спосіб спілкування за допомогою голосового та відеозв’язку в %(brand)s.",
+        "video_rooms_always_on_voip_channels": "Відеокімнати — це завжди в VOIP-канали, вбудовані в кімнату в %(brand)s.",
+        "video_rooms_faq1_question": "Як створити відеокімнату?",
+        "video_rooms_faq1_answer": "Натисніть кнопку «+» у розділі кімнат на лівій панелі.",
+        "video_rooms_faq2_question": "Чи можу я писати текстові повідомлення під час відеовиклику?",
+        "video_rooms_faq2_answer": "Так, стрічка бесіди показана поряд із відео."
     }
 }

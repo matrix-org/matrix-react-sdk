@@ -202,12 +202,12 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             caption: () => (
                 <>
                     <p>
-                        {_t("A new way to chat over voice and video in %(brand)s.", {
+                        {_t("labs|video_rooms_a_new_way_to_chat", {
                             brand: SdkConfig.get().brand,
                         })}
                     </p>
                     <p>
-                        {_t("Video rooms are always-on VoIP channels embedded within a room in %(brand)s.", {
+                        {_t("labs|video_rooms_always_on_voip_channels", {
                             brand: SdkConfig.get().brand,
                         })}
                     </p>
@@ -216,10 +216,10 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             faq: () =>
                 SdkConfig.get().bug_report_endpoint_url && (
                     <>
-                        <h4>{_t("How can I create a video room?")}</h4>
-                        <p>{_t("Use the “+” button in the room section of the left panel.")}</p>
-                        <h4>{_t("Can I use text chat alongside the video call?")}</h4>
-                        <p>{_t("Yes, the chat timeline is displayed alongside the video.")}</p>
+                        <h4>{_t("labs|video_rooms_faq1_question")}</h4>
+                        <p>{_t("labs|video_rooms_faq1_answer")}</p>
+                        <h4>{_t("labs|video_rooms_faq2_question")}</h4>
+                        <p>{_t("labs|video_rooms_faq2_answer")}</p>
                     </>
                 ),
             feedbackLabel: "video-room-feedback",

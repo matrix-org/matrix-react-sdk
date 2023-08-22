@@ -3305,12 +3305,6 @@
     "Joining the beta will reload %(brand)s.": "Po připojení k betě se %(brand)s znovu načte.",
     "Leaving the beta will reload %(brand)s.": "Po opuštění beta verze se %(brand)s znovu načte.",
     "Video rooms are a beta feature": "Video místnosti jsou beta funkce",
-    "Yes, the chat timeline is displayed alongside the video.": "Ano, časová osa chatu se zobrazuje vedle videa.",
-    "Can I use text chat alongside the video call?": "Mohu vedle videohovoru používat i textový chat?",
-    "Use the “+” button in the room section of the left panel.": "Použijte tlačítko \"+\" v sekci místnosti na levém panelu.",
-    "How can I create a video room?": "Jak mohu vytvořit video místnost?",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Video místnosti jsou vždy zapnuté VoIP kanály vložené do místnosti v aplikaci %(brand)s.",
-    "A new way to chat over voice and video in %(brand)s.": "Nový způsob hlasového a video hovoru v aplikaci %(brand)s.",
     "Enable hardware acceleration": "Povolit hardwarovou akceleraci",
     "If you can't see who you're looking for, send them your invite link.": "Pokud nevidíte, koho hledáte, pošlete mu odkaz na pozvánku.",
     "Some results may be hidden for privacy": "Některé výsledky mohou být z důvodu ochrany soukromí skryté",
@@ -3975,6 +3969,12 @@
         "hidebold": "Skrýt tečku oznámení (zobrazit pouze odznaky čítačů)",
         "intentional_mentions": "Povolit úmyslné zmínky",
         "ask_to_join": "Umožnit požádat o vstup",
-        "new_room_decoration_ui": "V aktivním vývoji, nové rozhraní pro záhlaví a detaily místnosti"
+        "new_room_decoration_ui": "V aktivním vývoji, nové rozhraní pro záhlaví a detaily místnosti",
+        "video_rooms_a_new_way_to_chat": "Nový způsob hlasového a video hovoru v aplikaci %(brand)s.",
+        "video_rooms_always_on_voip_channels": "Video místnosti jsou vždy zapnuté VoIP kanály vložené do místnosti v aplikaci %(brand)s.",
+        "video_rooms_faq1_question": "Jak mohu vytvořit video místnost?",
+        "video_rooms_faq1_answer": "Použijte tlačítko \"+\" v sekci místnosti na levém panelu.",
+        "video_rooms_faq2_question": "Mohu vedle videohovoru používat i textový chat?",
+        "video_rooms_faq2_answer": "Ano, časová osa chatu se zobrazuje vedle videa."
     }
 }

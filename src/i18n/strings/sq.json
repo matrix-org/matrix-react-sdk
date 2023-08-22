@@ -3304,10 +3304,6 @@
     "Enable hardware acceleration": "Aktivizo përshpejtim hardware",
     "Enable Markdown": "Aktivizoni Markdown",
     "Explore public spaces in the new search dialog": "Eksploroni hapësira publike te dialogu i ri i kërkimeve",
-    "Can I use text chat alongside the video call?": "A mund të përdor fjalosje me tekst në krah të thirrjes video?",
-    "Use the “+” button in the room section of the left panel.": "Përdorni butonin “+” te ndarja për dhoma te paneli majtas.",
-    "How can I create a video room?": "Si mund të krijoj një dhomë me video?",
-    "A new way to chat over voice and video in %(brand)s.": "Një rrugë e re për të biseduar me zë dhe video në %(brand)s.",
     "Connection lost": "Humbi lidhja",
     "Jump to the given date in the timeline": "Kalo te data e dhënë, te rrjedha kohore",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Nëse doni ta mbani mundësinë e përdorimit të historikut të fjalosjeve tuaja në dhoma të fshehtëzuara, ujdisni Kopjeruajtje Kyçesh, ose eksportoni kyçet tuaj të mesazheve prej një nga pajisjet tuaja të tjera, para se të ecni më tej.",
@@ -3338,8 +3334,6 @@
     "Saved Items": "Zëra të Ruajtur",
     "Send your first message to invite <displayName/> to chat": "Dërgoni mesazhin tuaj të parë për të ftuar në fjalosje <displayName/>",
     "Spell check": "Kontroll drejtshkrimi",
-    "Yes, the chat timeline is displayed alongside the video.": "Po, rrjedha kohore e fjalosjes shfaqet tok me videon.",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Në %(brand)s, dhomat video janë kanale VoIP përherë-hapur, trupëzuar brenda një dhome.",
     "You were disconnected from the call. (Error: %(message)s)": "U shkëputët nga thirrja. (Gabim: %(message)s)",
     "Mapbox logo": "Stemë Mapbox",
     "Location not available": "S’ka vendndodhje",
@@ -3863,6 +3857,12 @@
         "voice_broadcast": "Transmetim zanor",
         "rust_crypto": "Sendërtim kriptografie Rust",
         "hidebold": "Fshihe pikën e njoftimeve (shfaq vetëm stema numëratorësh)",
-        "intentional_mentions": "Aktivizo përmendje të qëllimta"
+        "intentional_mentions": "Aktivizo përmendje të qëllimta",
+        "video_rooms_a_new_way_to_chat": "Një rrugë e re për të biseduar me zë dhe video në %(brand)s.",
+        "video_rooms_always_on_voip_channels": "Në %(brand)s, dhomat video janë kanale VoIP përherë-hapur, trupëzuar brenda një dhome.",
+        "video_rooms_faq1_question": "Si mund të krijoj një dhomë me video?",
+        "video_rooms_faq1_answer": "Përdorni butonin “+” te ndarja për dhoma te paneli majtas.",
+        "video_rooms_faq2_question": "A mund të përdor fjalosje me tekst në krah të thirrjes video?",
+        "video_rooms_faq2_answer": "Po, rrjedha kohore e fjalosjes shfaqet tok me videon."
     }
 }

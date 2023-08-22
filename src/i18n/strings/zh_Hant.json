@@ -3305,12 +3305,6 @@
     "Joining the beta will reload %(brand)s.": "加入 Beta 測試版將會重新載入 %(brand)s。",
     "Leaving the beta will reload %(brand)s.": "離開 Beta 測試版將會重新載入 %(brand)s。",
     "Video rooms are a beta feature": "視訊聊天室是 Beta 測試功能",
-    "Yes, the chat timeline is displayed alongside the video.": "可以，會在視訊畫面旁顯示聊天時間軸。",
-    "Can I use text chat alongside the video call?": "我可以在視訊通話的同時使用文字聊天嗎？",
-    "Use the “+” button in the room section of the left panel.": "使用左側聊天室部份的「+」按鈕。",
-    "How can I create a video room?": "我要如何建立視訊聊天室？",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "視訊聊天室是內建在 %(brand)s 聊天室當中，隨時開啟的 VoIP 頻道。",
-    "A new way to chat over voice and video in %(brand)s.": "在 %(brand)s 中透過語音及視訊聊天的新方式。",
     "Enable hardware acceleration": "啟用硬體加速",
     "Remove search filter for %(filter)s": "移除 %(filter)s 的搜尋過濾條件",
     "Start a group chat": "開始群組聊天",
@@ -3970,6 +3964,12 @@
         "hidebold": "隱藏通知點（僅顯示計數器徽章）",
         "intentional_mentions": "開啟刻意提及功能",
         "ask_to_join": "啟用要求加入",
-        "new_room_decoration_ui": "正在積極開發中，新的聊天室標題與詳細資訊介面"
+        "new_room_decoration_ui": "正在積極開發中，新的聊天室標題與詳細資訊介面",
+        "video_rooms_a_new_way_to_chat": "在 %(brand)s 中透過語音及視訊聊天的新方式。",
+        "video_rooms_always_on_voip_channels": "視訊聊天室是內建在 %(brand)s 聊天室當中，隨時開啟的 VoIP 頻道。",
+        "video_rooms_faq1_question": "我要如何建立視訊聊天室？",
+        "video_rooms_faq1_answer": "使用左側聊天室部份的「+」按鈕。",
+        "video_rooms_faq2_question": "我可以在視訊通話的同時使用文字聊天嗎？",
+        "video_rooms_faq2_answer": "可以，會在視訊畫面旁顯示聊天時間軸。"
     }
 }

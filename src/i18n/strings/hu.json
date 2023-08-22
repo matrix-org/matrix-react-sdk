@@ -3327,12 +3327,6 @@
     "Video rooms are a beta feature": "A videó szobák béta állapotúak",
     "Enable hardware acceleration": "Hardveres gyorsítás engedélyezése",
     "Explore public spaces in the new search dialog": "Nyilvános terek felderítése az új keresőben",
-    "Yes, the chat timeline is displayed alongside the video.": "Igen, a szöveges idővonal a videóval együtt megjelenik.",
-    "Can I use text chat alongside the video call?": "Lehet a videóhívás közben szövegesen is csevegni?",
-    "Use the “+” button in the room section of the left panel.": "A „+” gomb használatával a szoba bal oldali panelén.",
-    "How can I create a video room?": "Hogy lehet videószobát készíteni?",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "A videószobák szobákba ágyazott, folyamatosan bekapcsolat VoIP-csatornák a(z) %(brand)s alkalmazásban.",
-    "A new way to chat over voice and video in %(brand)s.": "Új csevegési lehetőség a(z) %(brand)s alkalmazásban, hanggal és videóval.",
     "Stop and close": "Befejezés és kilépés",
     "You can't disable this later. The room will be encrypted but the embedded call will not.": "Ezt később nem lehet kikapcsolni. A szoba titkosítva lesz de a hívások nem.",
     "Online community members": "Online közösségek tagjai",
@@ -3874,6 +3868,12 @@
         "voice_broadcast": "Hangközvetítés",
         "rust_crypto": "Rust titkosítási implementáció",
         "hidebold": "Értesítési pötty elrejtése (csak darabszám megjelenítése)",
-        "intentional_mentions": "Szándékos megemlítések engedélyezése"
+        "intentional_mentions": "Szándékos megemlítések engedélyezése",
+        "video_rooms_a_new_way_to_chat": "Új csevegési lehetőség a(z) %(brand)s alkalmazásban, hanggal és videóval.",
+        "video_rooms_always_on_voip_channels": "A videószobák szobákba ágyazott, folyamatosan bekapcsolat VoIP-csatornák a(z) %(brand)s alkalmazásban.",
+        "video_rooms_faq1_question": "Hogy lehet videószobát készíteni?",
+        "video_rooms_faq1_answer": "A „+” gomb használatával a szoba bal oldali panelén.",
+        "video_rooms_faq2_question": "Lehet a videóhívás közben szövegesen is csevegni?",
+        "video_rooms_faq2_answer": "Igen, a szöveges idővonal a videóval együtt megjelenik."
     }
 }

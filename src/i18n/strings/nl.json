@@ -3323,12 +3323,6 @@
     "Remove server “%(roomServer)s”": "Verwijder server “%(roomServer)s”",
     "Video rooms are a beta feature": "Videokamers zijn een bètafunctie",
     "Enable hardware acceleration": "Hardwareversnelling inschakelen",
-    "Yes, the chat timeline is displayed alongside the video.": "Ja, de gesprekstijdslijn wordt naast de video weergegeven.",
-    "Can I use text chat alongside the video call?": "Kan ik tekstberichten gebruiken naast het videogesprek?",
-    "Use the “+” button in the room section of the left panel.": "Gebruik de knop \"+\" in het kamergedeelte van het linkerpaneel.",
-    "How can I create a video room?": "Hoe kan ik een videokamer maken?",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Videoruimten zijn altijd-aan VoIP-kanalen die zijn geïntegreerd in een kamer in %(brand)s.",
-    "A new way to chat over voice and video in %(brand)s.": "Een nieuwe manier om te chatten via spraak en video in %(brand)s.",
     "You cannot search for rooms that are neither a room nor a space": "U kunt niet zoeken naar kamers die geen kamer of een space zijn",
     "Show spaces": "Toon spaces",
     "Show rooms": "Toon kamers",
@@ -3578,6 +3572,12 @@
         "jump_to_date": "Ga naar datum (voegt /jumptodate en spring naar datum headers toe)",
         "element_call_video_rooms": "Element Call videokamers",
         "group_calls": "Nieuwe ervaring voor groepsgesprekken",
-        "voice_broadcast": "Spraakuitzending"
+        "voice_broadcast": "Spraakuitzending",
+        "video_rooms_a_new_way_to_chat": "Een nieuwe manier om te chatten via spraak en video in %(brand)s.",
+        "video_rooms_always_on_voip_channels": "Videoruimten zijn altijd-aan VoIP-kanalen die zijn geïntegreerd in een kamer in %(brand)s.",
+        "video_rooms_faq1_question": "Hoe kan ik een videokamer maken?",
+        "video_rooms_faq1_answer": "Gebruik de knop \"+\" in het kamergedeelte van het linkerpaneel.",
+        "video_rooms_faq2_question": "Kan ik tekstberichten gebruiken naast het videogesprek?",
+        "video_rooms_faq2_answer": "Ja, de gesprekstijdslijn wordt naast de video weergegeven."
     }
 }

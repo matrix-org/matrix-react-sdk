@@ -3305,12 +3305,6 @@
     "Leaving the beta will reload %(brand)s.": "Ao saír da beta volveremos a cargar %(brand)s.",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ao saír, estas chaves serán eliminadas deste dispositivo, o que significa que non poderás ler as mensaxes cifradas a menos que teñas as chaves noutro dos teus dispositivos, ou unha copia de apoio no servidor.",
     "Video rooms are a beta feature": "As salas de vídeo están en fase beta",
-    "Yes, the chat timeline is displayed alongside the video.": "Si, a cronoloxía de texto móstrase xunto co vídeo.",
-    "Can I use text chat alongside the video call?": "Podo usar chat de texto xunto á chamada de vídeo?",
-    "Use the “+” button in the room section of the left panel.": "Usa o botón \"+\" na sección da sala do panel esquerdo.",
-    "How can I create a video room?": "Como creo unha sala de vídeo?",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "As salas de vídeo son canles VoIP sempre activas dentro dunha sala en %(brand)s.",
-    "A new way to chat over voice and video in %(brand)s.": "Un novo xeito de conversar con voz e vídeo en %(brand)s.",
     "Enable hardware acceleration": "Activar aceleración por hardware",
     "Remove search filter for %(filter)s": "Elimina o filtro de busca de %(filter)s",
     "Start a group chat": "Inicia un chat en grupo",
@@ -3495,6 +3489,12 @@
         "bridge_state": "Mostrar info sobre pontes nos axustes da sala",
         "jump_to_date": "Ir á data (engade cabeceiras /vaiadata e vai á data)",
         "element_call_video_rooms": "Salas de chamadas de vídeo Element",
-        "voice_broadcast": "Emisión de voz"
+        "voice_broadcast": "Emisión de voz",
+        "video_rooms_a_new_way_to_chat": "Un novo xeito de conversar con voz e vídeo en %(brand)s.",
+        "video_rooms_always_on_voip_channels": "As salas de vídeo son canles VoIP sempre activas dentro dunha sala en %(brand)s.",
+        "video_rooms_faq1_question": "Como creo unha sala de vídeo?",
+        "video_rooms_faq1_answer": "Usa o botón \"+\" na sección da sala do panel esquerdo.",
+        "video_rooms_faq2_question": "Podo usar chat de texto xunto á chamada de vídeo?",
+        "video_rooms_faq2_answer": "Si, a cronoloxía de texto móstrase xunto co vídeo."
     }
 }

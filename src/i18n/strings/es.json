@@ -3306,12 +3306,6 @@
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Al cerrar sesión, estas claves serán eliminadas del dispositivo. Esto significa que no podrás leer mensajes cifrados salvo que tengas sus claves en otros dispositivos, o hayas hecho una copia de seguridad usando el servidor.",
     "Video rooms are a beta feature": "Las salas de vídeo están en beta",
     "Enable hardware acceleration": "Activar aceleración por hardware",
-    "Yes, the chat timeline is displayed alongside the video.": "Sí, el historial de la sala aparece al lado del vídeo.",
-    "Can I use text chat alongside the video call?": "¿Puedo mandar mensajes de texto en la videollamada?",
-    "Use the “+” button in the room section of the left panel.": "Usa el botón «+» en la sección de la sala del panel izquierdo.",
-    "How can I create a video room?": "Cómo crear una sala de vídeo",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Las salas de vídeo son canales de VoIP siempre abiertos, disponibles dentro de una sala en %(brand)s.",
-    "A new way to chat over voice and video in %(brand)s.": "Una nueva forma de hablar por voz y vídeo en %(brand)s.",
     "%(count)s Members": {
         "one": "%(count)s miembro",
         "other": "%(count)s miembros"
@@ -3776,6 +3770,12 @@
         "voice_broadcast": "Retransmisión de voz",
         "rust_crypto": "Implementación de la criptografía en Rust",
         "hidebold": "Ocultar el punto indicador de notificaciones (solo mostrar un indicador con número)",
-        "intentional_mentions": "Activar menciones intencionales"
+        "intentional_mentions": "Activar menciones intencionales",
+        "video_rooms_a_new_way_to_chat": "Una nueva forma de hablar por voz y vídeo en %(brand)s.",
+        "video_rooms_always_on_voip_channels": "Las salas de vídeo son canales de VoIP siempre abiertos, disponibles dentro de una sala en %(brand)s.",
+        "video_rooms_faq1_question": "Cómo crear una sala de vídeo",
+        "video_rooms_faq1_answer": "Usa el botón «+» en la sección de la sala del panel izquierdo.",
+        "video_rooms_faq2_question": "¿Puedo mandar mensajes de texto en la videollamada?",
+        "video_rooms_faq2_answer": "Sí, el historial de la sala aparece al lado del vídeo."
     }
 }

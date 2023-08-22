@@ -3123,11 +3123,6 @@
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Совет:</b> Используйте “%(replyInThread)s” при наведении курсора на сообщение.",
     "Threads help keep your conversations on-topic and easy to track.": "Обсуждения помогают поддерживать и легко отслеживать тематику бесед.",
     "Explore public spaces in the new search dialog": "Исследуйте публичные пространства в новом диалоговом окне поиска",
-    "Yes, the chat timeline is displayed alongside the video.": "Да, лента сообщений отображается рядом с видео.",
-    "Can I use text chat alongside the video call?": "Можно ли использовать текстовый чат одновременно с видеозвонком?",
-    "Use the “+” button in the room section of the left panel.": "Используйте кнопку \"+\" в разделе комнат на левой панели.",
-    "How can I create a video room?": "Как создать видеокомнату?",
-    "A new way to chat over voice and video in %(brand)s.": "Новый способ голосового и видеообщения в %(brand)s.",
     "Connection lost": "Соединение потеряно",
     "The person who invited you has already left, or their server is offline.": "Пригласивший вас человек уже ушёл, или его сервер не подключён к сети.",
     "You were banned by %(memberName)s": "%(memberName)s заблокировал(а) вас",
@@ -3323,7 +3318,6 @@
     },
     "Upgrade this space to the recommended room version": "Обновите это пространство до рекомендуемой версии комнаты",
     "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Если вы отправили ошибку через GitHub, журналы отладки могут помочь нам отследить проблему. ",
-    "Video rooms are always-on VoIP channels embedded within a room in %(brand)s.": "Видеокомнаты — это постоянные VoIP-каналы, встроенные в комнату в %(brand)s.",
     "Enable live location sharing": "Включить функцию \"Поделиться трансляцией местоположения\"",
     "Live location ended": "Трансляция местоположения завершена",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Обратите внимание: это временная реализация функции. Это означает, что вы не сможете удалить свою историю местоположений, а опытные пользователи смогут просмотреть вашу историю местоположений даже после того, как вы перестанете делиться своим местоположением в этой комнате.",
@@ -3659,6 +3653,12 @@
         "element_call_video_rooms": "Видеокомнаты Element Call",
         "group_calls": "Новый опыт группового вызова",
         "voice_broadcast": "Голосовая трансляция",
-        "rust_crypto": "Реализация криптографии Rust"
+        "rust_crypto": "Реализация криптографии Rust",
+        "video_rooms_a_new_way_to_chat": "Новый способ голосового и видеообщения в %(brand)s.",
+        "video_rooms_always_on_voip_channels": "Видеокомнаты — это постоянные VoIP-каналы, встроенные в комнату в %(brand)s.",
+        "video_rooms_faq1_question": "Как создать видеокомнату?",
+        "video_rooms_faq1_answer": "Используйте кнопку \"+\" в разделе комнат на левой панели.",
+        "video_rooms_faq2_question": "Можно ли использовать текстовый чат одновременно с видеозвонком?",
+        "video_rooms_faq2_answer": "Да, лента сообщений отображается рядом с видео."
     }
 }

@@ -2496,7 +2496,6 @@
     "In spaces %(space1Name)s and %(space2Name)s.": "در فضای %(space1Name)s و %(space2Name)s.",
     "%(senderName)s withdrew %(targetName)s's invitation": "%(senderName)s رد کردن %(targetName)s's دعوت",
     "%(senderName)s withdrew %(targetName)s's invitation: %(reason)s": "%(senderName)s قبول نکرد %(targetName)s's دعوت: %(reason)s",
-    "A new way to chat over voice and video in %(brand)s.": "راهکار جدیدی برای گفتگوی صوتی و تصویری در%(brand)sوجود دارد.",
     "Developer": "توسعه دهنده",
     "Experimental": "تجربی",
     "Themes": "قالب ها",
@@ -2624,6 +2623,7 @@
         "custom_themes": "پشتیبانی از افزودن پوسته‌های ظاهری دلخواه",
         "dehydration": "ارسال پیام رمزشده به شکل آفلاین با استفاده از دستگاه‌های خاص",
         "bridge_state": "اطلاعات پل‌های ارتباطی را در تنظیمات اتاق نمایش بده",
-        "voice_broadcast": "صدای جمعی"
+        "voice_broadcast": "صدای جمعی",
+        "video_rooms_a_new_way_to_chat": "راهکار جدیدی برای گفتگوی صوتی و تصویری در%(brand)sوجود دارد."
     }
 }

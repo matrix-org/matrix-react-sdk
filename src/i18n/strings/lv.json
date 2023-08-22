@@ -1759,7 +1759,6 @@
     "You can change these anytime.": "Jebkurā laikā varat to mainīt.",
     "Join public room": "Pievienoties publiskai istabai",
     "Let's create a room for each of them.": "Izveidojam katram no tiem savu istabu!",
-    "How can I create a video room?": "Kā izveidot video istabu?",
     "We'll create rooms for each of them.": "Mēs izveidosim istabas katram no tiem.",
     "Failed to create initial space rooms": "Neizdevās izveidot sākotnējās vietas istabas",
     "Create a video room": "Izveidot video istabu",
@@ -1827,6 +1826,7 @@
     "Export chat": "Eksportēt čatu",
     "Back to chat": "Atgriezties uz čatu",
     "labs": {
-        "pinning": "Ziņu piespraušana"
+        "pinning": "Ziņu piespraušana",
+        "video_rooms_faq1_question": "Kā izveidot video istabu?"
     }
 }
