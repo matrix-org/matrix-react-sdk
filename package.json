@@ -124,6 +124,9 @@
         "what-input": "^5.2.10",
         "zxcvbn": "^4.4.2"
     },
+    "peerDependencies": {
+        "raw-loader": "^4.0.2"
+    },
     "devDependencies": {
         "@babel/cli": "^7.12.10",
         "@babel/core": "^7.12.10",
