@@ -33,7 +33,6 @@
     "scripts": {
         "prepublishOnly": "yarn build",
         "i18n": "matrix-gen-i18n",
-        "prunei18n": "matrix-prune-i18n",
         "diff-i18n": "cp src/i18n/strings/en_EN.json src/i18n/strings/en_EN_orig.json && matrix-gen-i18n && matrix-compare-i18n-files src/i18n/strings/en_EN_orig.json src/i18n/strings/en_EN.json",
         "make-component": "node scripts/make-react-component.js",
         "rethemendex": "res/css/rethemendex.sh",
