@@ -306,7 +306,6 @@
     "You are no longer ignoring %(userId)s": "Tu vairāk neignorē %(userId)s",
     "%(senderName)s changed the pinned messages for the room.": "%(senderName)s nomainīja šajā istabā piespraustās ziņas.",
     "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s vidžets, kuru mainīja %(senderName)s",
-    "Message Pinning": "Ziņu piespraušana",
     "Mirror local video feed": "Rādīt spoguļskatā kameras video",
     "Enable inline URL previews by default": "Iespējot URL priekšskatījumus pēc noklusējuma",
     "Enable URL previews for this room (only affects you)": "Iespējot URL priekšskatījumus šajā istabā (ietekmē tikai jūs pašu)",
@@ -1826,5 +1825,8 @@
     "Messages in this chat will be end-to-end encrypted.": "Ziņām šajā istabā tiek piemērota pilnīga šifrēšana.",
     "Export Chat": "Eksportēt čatu",
     "Export chat": "Eksportēt čatu",
-    "Back to chat": "Atgriezties uz čatu"
+    "Back to chat": "Atgriezties uz čatu",
+    "labs": {
+        "pinning": "Ziņu piespraušana"
+    }
 }

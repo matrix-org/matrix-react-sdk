@@ -845,7 +845,6 @@
     "Dates are often easy to guess": "Datoer er ofte lette å gjette",
     "This is a top-10 common password": "Dette er et topp-10 vanlig passord",
     "This is a top-100 common password": "Dette er et topp-100 vanlig passord",
-    "Message Pinning": "Meldingsklistring",
     "Aeroplane": "Fly",
     "No display name": "Ingen visningsnavn",
     "New passwords don't match": "De nye passordene samsvarer ikke",
@@ -1583,5 +1582,8 @@
     "Calls are unsupported": "Samtaler støttes ikke",
     "No other application is using the webcam": "Ingen andre applikasjoner bruker webkameraet",
     "A microphone and webcam are plugged in and set up correctly": "En mikrofon og webkamera er koblet til og satt opp riktig",
-    "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "Samtalen mislyktes fordi mikrofonen ikke var tilgjengelig. Sjekk at en mikrofon er koblet til og satt opp riktig."
+    "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "Samtalen mislyktes fordi mikrofonen ikke var tilgjengelig. Sjekk at en mikrofon er koblet til og satt opp riktig.",
+    "labs": {
+        "pinning": "Meldingsklistring"
+    }
 }

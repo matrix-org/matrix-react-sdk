@@ -309,7 +309,6 @@
     "Restricted": "Mugatua",
     "%(senderName)s changed the pinned messages for the room.": "%(senderName)s erabiltzaileak gelan finkatutako mezuak aldatu ditu.",
     "Send": "Bidali",
-    "Message Pinning": "Mezuak finkatzea",
     "Mirror local video feed": "Bikoiztu tokiko bideo jarioa",
     "Enable inline URL previews by default": "Gailu URL-en aurrebista lehenetsita",
     "Enable URL previews for this room (only affects you)": "Gaitu URLen aurrebista gela honetan (zuretzat bakarrik aldatuko duzu)",
@@ -649,7 +648,6 @@
         "one": "%(names)s eta beste bat idazten ari dira …"
     },
     "%(names)s and %(lastPerson)s are typing …": "%(names)s eta %(lastPerson)s idazten ari dira …",
-    "Render simple counters in room header": "Jarri kontagailu sinpleak gelaren goiburuan",
     "Enable Emoji suggestions while typing": "Proposatu emojiak  idatzi bitartean",
     "Show a placeholder for removed messages": "Erakutsi kendutako mezuek utzitako hutsunea",
     "Show display name changes": "Erakutsi pantaila-izenen aldaketak",
@@ -1241,7 +1239,6 @@
     "Unable to set up secret storage": "Ezin izan da biltegi sekretua ezarri",
     "Language Dropdown": "Hizkuntza menua",
     "Country Dropdown": "Herrialde menua",
-    "Show info about bridges in room settings": "Erakutsi zubiei buruzko informazioa gelaren ezarpenetan",
     "This bridge is managed by <user />.": "Zubi hau <user /> erabiltzaileak kudeatzen du.",
     "Show more": "Erakutsi gehiago",
     "Recent Conversations": "Azken elkarrizketak",
@@ -1414,7 +1411,6 @@
     "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s erabiltzaileak gela honen ordezko helbideak aldatu ditu.",
     "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s erabiltzaileak gela honen helbide nagusia eta ordezko helbideak aldatu ditu.",
     "%(senderName)s changed the addresses for this room.": "%(senderName)s erabiltzaileak gela honen helbideak aldatu ditu.",
-    "Support adding custom themes": "Azal pertsonalizatuak gehitzea onartzen du",
     "Invalid theme schema.": "Baliogabeko azal eskema.",
     "Error downloading theme information.": "Errorea azalaren informazioa deskargatzean.",
     "Theme added!": "Azala gehituta!",
@@ -1628,5 +1624,11 @@
     "Identity server (%(server)s)": "Identitate-zerbitzaria (%(server)s)",
     "Could not connect to identity server": "Ezin izan da identitate-zerbitzarira konektatu",
     "Not a valid identity server (status code %(code)s)": "Ez da identitate zerbitzari baliogarria (egoera-mezua %(code)s)",
-    "Identity server URL must be HTTPS": "Identitate zerbitzariaren URL-a HTTPS motakoa izan behar du"
+    "Identity server URL must be HTTPS": "Identitate zerbitzariaren URL-a HTTPS motakoa izan behar du",
+    "labs": {
+        "pinning": "Mezuak finkatzea",
+        "state_counters": "Jarri kontagailu sinpleak gelaren goiburuan",
+        "custom_themes": "Azal pertsonalizatuak gehitzea onartzen du",
+        "bridge_state": "Erakutsi zubiei buruzko informazioa gelaren ezarpenetan"
+    }
 }
