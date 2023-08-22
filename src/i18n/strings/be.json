@@ -15,11 +15,13 @@
     "Off": "Выключыць",
     "Invite to this room": "Запрасіць у гэты пакой",
     "Failed to remove tag %(tagName)s from room": "Не ўдалося выдаліць %(tagName)s з пакоя",
-    "Error": "Памылка",
     "Operation failed": "Не атрымалася выканаць аперацыю",
-    "Mute": "Без гуку",
     "powered by Matrix": "працуе на Matrix",
     "Source URL": "URL-адрас крыніцы",
+    "common": {
+        "error": "Памылка",
+        "mute": "Без гуку"
+    },
     "action": {
         "leave": "Пакінуць",
         "quote": "Цытата",
