@@ -1034,7 +1034,7 @@ describe("<SessionManagerTab />", () => {
             });
         });
 
-        describe("for and OIDC-aware server", () => {
+        describe("for an OIDC-aware server", () => {
             beforeEach(() => {
                 mockClient.getClientWellKnown.mockReturnValue({
                     [M_AUTHENTICATION.name]: {
