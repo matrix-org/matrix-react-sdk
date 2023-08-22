@@ -274,6 +274,22 @@ describe("<GeneralUserSettingsTab />", () => {
             expect(within(section).getByLabelText("Phone Number")).not.toBeDisabled();
         });
 
+        it("should allow 3pid changes when capabilities does not have 3pid_changes", async () => {
+            // We support as far back as v1.1 which doesn't have m.3pid_changes
+            // so the behaviour for when it is missing has to be assume true
+            mockClient.getCapabilities.mockResolvedValue({});
+
+            render(getComponent());
+
+            await flushPromises();
+
+            const section = screen.getByTestId("mx_AccountEmailAddresses");
+
+            // just check the fields are enabled
+            expect(within(section).getByLabelText("Email Address")).not.toBeDisabled();
+            expect(within(section).getByText("Add")).not.toHaveAttribute("aria-disabled");
+        });
+
         describe("when 3pid changes capability is disabled", () => {
             beforeEach(() => {
                 mockClient.getCapabilities.mockResolvedValue({

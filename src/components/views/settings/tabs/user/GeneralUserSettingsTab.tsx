@@ -177,7 +177,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const delegatedAuthConfig = M_AUTHENTICATION.findIn<IDelegatedAuthConfig | undefined>(cli.getClientWellKnown());
         const externalAccountManagementUrl = delegatedAuthConfig?.account;
         // https://spec.matrix.org/v1.7/client-server-api/#m3pid_changes-capability
-        const canMake3pidChanges = capabilities["m.3pid_changes"]?.enabled === true;
+        // We support as far back as v1.1 which doesn't have m.3pid_changes
+        // so the behaviour for when it is missing has to be assume true
+        const canMake3pidChanges = !capabilities["m.3pid_changes"] || capabilities["m.3pid_changes"].enabled === true;
 
         this.setState({ canChangePassword, externalAccountManagementUrl, canMake3pidChanges });
     }
