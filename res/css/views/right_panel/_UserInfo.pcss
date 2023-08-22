@@ -107,7 +107,6 @@ limitations under the License.
                 position: relative;
 
                 .mx_BaseAvatar,
-                .mx_BaseAvatar_initial,
                 .mx_BaseAvatar_image {
                     border-radius: 100%;
                     position: absolute;
@@ -120,22 +119,6 @@ limitations under the License.
                 .mx_BaseAvatar {
                     &.mx_BaseAvatar_image {
                         cursor: zoom-in;
-                    }
-
-                    .mx_BaseAvatar_initial {
-                        z-index: 1;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-
-                        /* override the calculated sizes so that the letter isn't HUGE */
-                        font-size: 6rem !important;
-                        width: 100% !important;
-                        transition: font-size 0.5s;
-
-                        & + .mx_BaseAvatar_image {
-                            cursor: default;
-                        }
                     }
                 }
             }
@@ -284,14 +267,6 @@ limitations under the License.
             .mx_UserInfo_avatar_transition {
                 max-width: 72px;
                 margin: 0 auto;
-            }
-
-            .mx_UserInfo_avatar_transition_child {
-                .mx_BaseAvatar {
-                    .mx_BaseAvatar_initial {
-                        font-size: 40px !important; /* override the other override because here the avatar is smaller */
-                    }
-                }
             }
         }
     }
