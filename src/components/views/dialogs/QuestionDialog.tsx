@@ -39,7 +39,7 @@ export interface IQuestionDialogProps {
     onFinished(ok?: boolean): void;
 }
 
-export default class ConfirmRedirectDialog extends React.Component<IQuestionDialogProps> {
+export default class QuestionDialog extends React.Component<IQuestionDialogProps> {
     public static defaultProps: Partial<IQuestionDialogProps> = {
         title: "",
         description: "",
