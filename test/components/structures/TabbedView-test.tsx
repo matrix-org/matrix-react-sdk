@@ -23,7 +23,7 @@ import { NonEmptyArray } from "../../../src/@types/common";
 describe("<TabbedView />", () => {
     const generalTab = new Tab("GENERAL", "General", "general", <div>general</div>);
     const labsTab = new Tab("LABS", "Labs", "labs", <div>labs</div>);
-    const securityTab = new Tab("SECURITY", "Security", "security", <div>security</div>);
+    const securityTab = new Tab("SECURITY", "common|security", "security", <div>security</div>);
     const defaultProps = {
         tabLocation: TabLocation.LEFT,
         tabs: [generalTab, labsTab, securityTab] as NonEmptyArray<Tab<any>>,
