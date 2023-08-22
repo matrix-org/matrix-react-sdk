@@ -138,9 +138,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         return (
             <BaseAvatar
                 {...otherProps}
-                className={classNames(className, {
-                    mx_RoomAvatar_isSpaceRoom: (room?.getType() ?? this.props.oobData?.roomType) === RoomType.Space,
-                })}
+                type={(room?.getType() ?? this.props.oobData?.roomType) === RoomType.Space ? "square" : "round"}
                 name={roomName}
                 idName={this.roomIdName}
                 urls={this.state.urls}
