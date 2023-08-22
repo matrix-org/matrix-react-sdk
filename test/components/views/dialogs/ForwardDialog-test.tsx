@@ -107,7 +107,7 @@ describe("ForwardDialog", () => {
         expect(screen.queryByText("Hello world!")).toBeInTheDocument();
 
         // We would just test SenderProfile for the user ID, but it's stubbed
-        const previewAvatar = container.querySelector(".mx_EventTile_avatar .mx_BaseAvatar img");
+        const previewAvatar = container.querySelector(".mx_EventTile_avatar .mx_BaseAvatar");
         expect(previewAvatar?.getAttribute("title")).toBe("@bob:example.org");
     });
 

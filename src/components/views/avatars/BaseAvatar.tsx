@@ -113,6 +113,14 @@ const BaseAvatar: React.FC<IProps> = (props) => {
 
     const [imageUrl, onError] = useImageUrl({ url, urls });
 
+    const extraProps: Partial<React.ComponentProps<typeof Avatar>> = {};
+
+    if (onClick) {
+        extraProps["aria-live"] = "off";
+    } else {
+        extraProps["role"] = "presentation";
+    }
+
     return (
         <Avatar
             ref={inputRef}
@@ -126,6 +134,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
             onError={onError}
             title={title}
             onClick={onClick}
+            {...extraProps}
             {...otherProps}
             data-testid="avatar-img"
         />
