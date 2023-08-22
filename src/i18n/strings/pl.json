@@ -3799,7 +3799,6 @@
     "Original event source": "Oryginalne źródło wydarzenia",
     "Decrypted source unavailable": "Rozszyfrowane źródło niedostępne",
     "Decrypted event source": "Rozszyfrowane wydarzenie źródłowe",
-    "User menu": "Menu użytkownika",
     "Got an account? <a>Sign in</a>": "Posiadasz już konto? <a>Zaloguj się</a>",
     "Thread": "Wątek",
     "Keep discussions organised with threads": "Organizuj dyskusje za pomocą wątków",
@@ -3953,5 +3952,8 @@
         "default_cover_photo": "Autorem <photo>domyślnego zdjęcia okładkowego</photo> jest <author>Jesús Roncero</author> na licencji <terms>CC-BY-SA 4.0</terms>.",
         "twemoji_colr": "Czcionka <colr>twemoji-colr</colr> jest w użyciu na warunkach licencji <terms>Apache 2.0</terms>. <author>© Mozilla Foundation</author>.",
         "twemoji": "Czcionka <twemoji>Twemoji</twemoji> jest w użyciu na warunkach licencji <terms>CC-BY 4.0</terms>. <author>© Twitter, Inc i pozostali kontrybutorzy</author>."
+    },
+    "a11y": {
+        "user_menu": "Menu użytkownika"
     }
 }

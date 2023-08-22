@@ -1227,7 +1227,6 @@
     "Strikethrough": "Preškrtnuté",
     "Security": "Zabezpečenie",
     "Send a Direct Message": "Poslať priamu správu",
-    "User menu": "Používateľské menu",
     "Toggle Italics": "Prepnúť kurzíva",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
@@ -3971,5 +3970,8 @@
         "default_cover_photo": "<photo>Predvolená titulná fotografia</photo> je © <author>Jesús Roncero</author> používaná podľa podmienok <terms>CC-BY-SA 4.0</terms>.",
         "twemoji_colr": "Písmo <colr>twemoji-colr</colr> je © <author>Mozilla Foundation</author> používané podľa podmienok <terms>Apache 2.0</terms>.",
         "twemoji": "<twemoji>Twemoji</twemoji> emoji grafika je © <author>Twitter, Inc a ďalší prispievatelia</author> používaná podľa podmienok <terms>CC-BY 4.0</terms>."
+    },
+    "a11y": {
+        "user_menu": "Používateľské menu"
     }
 }

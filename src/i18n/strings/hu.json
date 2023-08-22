@@ -1637,7 +1637,6 @@
     "Notification options": "Értesítési beállítások",
     "Favourited": "Kedvencnek jelölt",
     "Forget Room": "Szoba elfelejtése",
-    "User menu": "Felhasználói menü",
     "This room is public": "Ez egy nyilvános szoba",
     "Away": "Távol",
     "Are you sure you want to cancel entering passphrase?": "Biztos, hogy megszakítja a jelmondat bevitelét?",
@@ -3875,5 +3874,8 @@
         "default_cover_photo": "Az <photo>alapértelmezett borítóképre</photo> a következő vonatkozik: © <author>Jesús Roncero</author>, a <terms>CC BY-SA 4.0</terms> licenc feltételei szerint használva.",
         "twemoji_colr": "A <colr>twemoji-colr</colr> betűkészletre a következő vonatkozik: © <author>Mozilla Foundation</author>, az <terms>Apache 2.0</terms> licenc feltételei szerint használva.",
         "twemoji": "A <twemoji>Twemoji</twemoji> emodzsikra a következő vonatkozik: © <author>Twitter, Inc. és egyéb közreműködők</author>, a <terms>CC-BY 4.0</terms> licenc feltételei szerint használva."
+    },
+    "a11y": {
+        "user_menu": "Felhasználói menü"
     }
 }

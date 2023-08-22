@@ -1631,7 +1631,6 @@
     "Security Phrase": "Frase di sicurezza",
     "Security Key": "Chiave di sicurezza",
     "Use your Security Key to continue.": "Usa la tua chiave di sicurezza per continuare.",
-    "User menu": "Menu utente",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Proteggiti contro la perdita dell'accesso ai messaggi e dati cifrati facendo un backup delle chiavi crittografiche sul tuo server.",
     "Generate a Security Key": "Genera una chiave di sicurezza",
     "Enter a Security Phrase": "Inserisci una frase di sicurezza",
@@ -3976,5 +3975,8 @@
         "default_cover_photo": "La <photo>foto di copertina predefinita</photo> è © <author>Jesús Roncero</author> utilizzata secondo i termini <terms>CC-BY-SA 4.0</terms>.",
         "twemoji_colr": "Il font <colr>twemoji-colr</colr> è © <author>Mozilla Foundation</author> utilizzato secondo i termini <terms>Apache 2.0</terms>.",
         "twemoji": "Gli emoji <twemoji>Twemoji</twemoji> sono © <author>Twitter, Inc ed altri collaboratori</author> utilizzati secondo i termini <terms>CC-BY 4.0</terms>."
+    },
+    "a11y": {
+        "user_menu": "Menu utente"
     }
 }

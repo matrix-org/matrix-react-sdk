@@ -1563,7 +1563,6 @@
     "Notification options": "Ilmoitusasetukset",
     "Room options": "Huoneen asetukset",
     "This room is public": "Tämä huone on julkinen",
-    "User menu": "Käyttäjän valikko",
     "Video conference started by %(senderName)s": "%(senderName)s aloitti ryhmävideopuhelun",
     "Video conference updated by %(senderName)s": "%(senderName)s päivitti ryhmävideopuhelun",
     "Video conference ended by %(senderName)s": "%(senderName)s päätti ryhmävideopuhelun",
@@ -3570,5 +3569,8 @@
     "credits": {
         "default_cover_photo": "<photo>Oletuskansikuva</photo> © <author>Jesús Roncero</author>, käytössä <terms>CC-BY-SA 4.0</terms>:n ehtojen mukaisesti.",
         "twemoji_colr": "<colr>twemoji-colr</colr>-fontti © <author>Mozilla Foundation</author>, käytössä <terms>Apache 2.0</terms>:n ehtojen mukaisesti."
+    },
+    "a11y": {
+        "user_menu": "Käyttäjän valikko"
     }
 }

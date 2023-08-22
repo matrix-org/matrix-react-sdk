@@ -2360,7 +2360,6 @@
         "one": "Saat ini bergabung dengan %(count)s ruangan",
         "other": "Saat ini bergabung dengan %(count)s ruangan"
     },
-    "User menu": "Menu pengguna",
     "Switch theme": "Ubah tema",
     "Switch to dark mode": "Ubah ke mode gelap",
     "Switch to light mode": "Ubah ke mode terang",
@@ -3976,5 +3975,8 @@
         "default_cover_photo": "<photo>Foto kover bawaan</photo> © <author>Jesús Roncero</author> digunakan di bawah ketentuan <terms>CC-BY-SA 4.0</terms>.",
         "twemoji_colr": "Fon <colr>twemoji-colr</colr> © <author>Mozilla Foundation</author> digunakan di bawah ketentuan <terms>Apache 2.0</terms>.",
         "twemoji": "Gambar emoji <twemoji>Twemoji</twemoji> © <author>Twitter, Inc dan kontributor lainnya</author> digunakan di bawah ketentuan <terms>CC-BY 4.0</terms>."
+    },
+    "a11y": {
+        "user_menu": "Menu pengguna"
     }
 }

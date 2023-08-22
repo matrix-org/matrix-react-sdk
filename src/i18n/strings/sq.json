@@ -1645,7 +1645,6 @@
     "Away": "I larguar",
     "Edited at %(date)s": "Përpunuar më %(date)s",
     "Click to view edits": "Klikoni që të shihni përpunime",
-    "User menu": "Menu përdoruesi",
     "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
     "Change notification settings": "Ndryshoni rregullime njoftimesh",
     "Your server isn't responding to some <a>requests</a>.": "Shërbyesi juaj s’po u përgjigjet ca <a>kërkesave</a>.",
@@ -3864,5 +3863,8 @@
         "default_cover_photo": "<photo>Fotoja kopertinë parazgjedhje</photo> © <author>Jesús Roncero</author> përdoret sipas kushteve të <terms>CC-BY-SA 4.0</terms>.",
         "twemoji_colr": "Shkronjat <colr>twemoji-colr</colr> © <author>Mozilla Foundation</author> përdoren sipas kushteve të <terms>Apache 2.0</terms>.",
         "twemoji": "<twemoji>Twemoji</twemoji> © <author>Twitter, Inc dhe kontribues të tjerë</author> përdoren sipas kushteve të <terms>CC-BY 4.0</terms>."
+    },
+    "a11y": {
+        "user_menu": "Menu përdoruesi"
     }
 }

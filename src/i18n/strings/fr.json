@@ -1642,7 +1642,6 @@
     "This room is public": "Ce salon est public",
     "Edited at %(date)s": "Modifié le %(date)s",
     "Click to view edits": "Cliquez pour voir les modifications",
-    "User menu": "Menu utilisateur",
     "Are you sure you want to cancel entering passphrase?": "Souhaitez-vous vraiment annuler la saisie de la phrase de passe ?",
     "Unexpected server error trying to leave the room": "Erreur de serveur inattendue en essayant de quitter le salon",
     "Error leaving room": "Erreur en essayant de quitter le salon",
@@ -3971,5 +3970,8 @@
         "default_cover_photo": "La <photo>photo d’illustration par défaut</photo> est © <author>Jesús Roncero</author> utilisée selon les termes <terms>CC-BY-SA 4.0</terms>.",
         "twemoji_colr": "La police <colr>twemoji-colr</colr> est © <author>Mozilla Foundation</author> utilisée sous licence <terms>Apache 2.0</terms>.",
         "twemoji": "L’art émoji <twemoji>Twemoji</twemoji> est © <author>Twitter, Inc et autres contributeurs</author> utilisé sous licence <terms>CC-BY 4.0</terms>."
+    },
+    "a11y": {
+        "user_menu": "Menu utilisateur"
     }
 }

@@ -621,7 +621,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Підтвердьте шляхом порівняння наступного рядка з рядком у користувацьких налаштуваннях вашого іншого сеансу:",
     "Confirm this user's session by comparing the following with their User Settings:": "Підтвердьте сеанс цього користувача шляхом порівняння наступного рядка з рядком з їхніх користувацьких налаштувань:",
     "All settings": "Усі налаштування",
-    "User menu": "Користувацьке меню",
     "Go to Settings": "Перейти до налаштувань",
     "Compare unique emoji": "Порівняйте унікальні емодзі",
     "Cancelling…": "Скасування…",
@@ -3971,5 +3970,8 @@
         "default_cover_photo": "<photo>Типова світлина обкладинки</photo> від © <author>Jesús Roncero</author> використовується на умовах <terms>CC-BY-SA 4.0</terms>.",
         "twemoji_colr": "Шрифт <colr>wemoji-colr</colr> від © <author>Mozilla Foundation</author> використовується на умовах <terms>Apache 2.0</terms>.",
         "twemoji": "Стиль емоджі <twemoji>Twemoji</twemoji> від © <author>Twitter, Inc та інших учасників</author> використовується на умовах <terms>CC-BY 4.0</terms>."
+    },
+    "a11y": {
+        "user_menu": "Користувацьке меню"
     }
 }

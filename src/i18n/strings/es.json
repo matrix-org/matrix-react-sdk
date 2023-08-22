@@ -1594,7 +1594,6 @@
     "Switch to light mode": "Cambiar al tema claro",
     "Switch to dark mode": "Cambiar al tema oscuro",
     "Switch theme": "Cambiar tema",
-    "User menu": "Menú del Usuario",
     "Failed to perform homeserver discovery": "No se ha podido realizar el descubrimiento del servidor base",
     "If you've joined lots of rooms, this might take a while": "Si te has unido a muchas salas, esto puede tardar un poco",
     "Create account": "Crear una cuenta",
@@ -3777,5 +3776,8 @@
     "Try using %(server)s": "Probar a usar %(server)s",
     "credits": {
         "default_cover_photo": "La <photo>foto de fondo por defecto</photo> es © <author>Jesús Roncero</author>, usada bajo los términos de la licencia <terms>CC-BY-SA 4.0</terms>."
+    },
+    "a11y": {
+        "user_menu": "Menú del Usuario"
     }
 }
