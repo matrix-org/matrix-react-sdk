@@ -658,7 +658,7 @@ describe("LegacyRoomHeader", () => {
         const rendered = mountHeader(room);
 
         // Then we use the other user's avatar as our room's image avatar
-        const image = rendered.container.querySelector(".mx_BaseAvatar_image");
+        const image = rendered.container.querySelector(".mx_BaseAvatar img");
         expect(image).toHaveAttribute("src", "http://this.is.a.url/example.org/other");
     });
 

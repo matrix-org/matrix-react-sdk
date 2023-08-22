@@ -44,7 +44,7 @@ export const pillRoomNotifLen = (): number => {
     return "@room".length;
 };
 
-const linkIcon = <LinkIcon className="mx_Pill_LinkIcon mx_BaseAvatar mx_BaseAvatar_image" />;
+const linkIcon = <LinkIcon className="mx_Pill_LinkIcon mx_BaseAvatar" />;
 
 const PillRoomAvatar: React.FC<{
     shouldShowPillAvatar: boolean;
@@ -71,7 +71,7 @@ const PillMemberAvatar: React.FC<{
     if (member) {
         return <MemberAvatar member={member} size="16px" aria-hidden="true" hideTitle />;
     }
-    return <UserIcon className="mx_Pill_UserIcon mx_BaseAvatar mx_BaseAvatar_image" />;
+    return <UserIcon className="mx_Pill_UserIcon mx_BaseAvatar" />;
 };
 
 export interface PillProps {

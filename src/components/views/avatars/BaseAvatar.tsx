@@ -127,6 +127,7 @@ const BaseAvatar: React.FC<IProps> = (props) => {
             title={title}
             onClick={onClick}
             {...otherProps}
+            data-testid="avatar-img"
         />
     );
 };

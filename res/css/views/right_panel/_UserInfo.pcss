@@ -106,8 +106,7 @@ limitations under the License.
                 padding-top: 100%;
                 position: relative;
 
-                .mx_BaseAvatar,
-                .mx_BaseAvatar_image {
+                .mx_BaseAvatar {
                     border-radius: 100%;
                     position: absolute;
                     top: 0;
@@ -116,10 +115,8 @@ limitations under the License.
                     height: 100% !important;
                 }
 
-                .mx_BaseAvatar {
-                    &.mx_BaseAvatar_image {
-                        cursor: zoom-in;
-                    }
+                .mx_BaseAvatar img {
+                    cursor: zoom-in;
                 }
             }
         }
