@@ -11,23 +11,19 @@
     "Decrypt %(text)s": "ถอดรหัส %(text)s",
     "Download %(text)s": "ดาวน์โหลด %(text)s",
     "Emoji": "อีโมจิ",
-    "Error": "ข้อผิดพลาด",
     "Low priority": "ความสำคัญต่ำ",
     "Name": "ชื่อ",
     "OK": "ตกลง",
-    "Password": "รหัสผ่าน",
     "Profile": "โปรไฟล์",
     "Reason": "เหตุผล",
     "Register": "ลงทะเบียน",
     "%(brand)s version:": "เวอร์ชัน %(brand)s:",
     "Cancel": "ยกเลิก",
     "Dismiss": "ปิด",
-    "Mute": "เงียบ",
     "Notifications": "การแจ้งเตือน",
     "Operation failed": "การดำเนินการล้มเหลว",
     "powered by Matrix": "ใช้เทคโนโลยี Matrix",
     "Search": "ค้นหา",
-    "Settings": "การตั้งค่า",
     "unknown error code": "รหัสข้อผิดพลาดที่ไม่รู้จัก",
     "Remove": "ลบ",
     "Favourite": "รายการโปรด",
@@ -38,8 +34,10 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "คุณอาจต้องให้สิทธิ์ %(brand)s เข้าถึงไมค์โครโฟนไมค์โครโฟน/กล้องเว็บแคม ด้วยตัวเอง",
     "Authentication": "การยืนยันตัวตน",
     "%(items)s and %(lastItem)s": "%(items)s และ %(lastItem)s",
-    "and %(count)s others...|one": "และอีกหนึ่งผู้ใช้...",
-    "and %(count)s others...|other": "และอีก %(count)s ผู้ใช้...",
+    "and %(count)s others...": {
+        "one": "และอีกหนึ่งผู้ใช้...",
+        "other": "และอีก %(count)s ผู้ใช้..."
+    },
     "An error has occurred.": "เกิดข้อผิดพลาด",
     "Anyone": "ทุกคน",
     "Are you sure?": "คุณแน่ใจหรือไม่?",
@@ -98,7 +96,6 @@
     "not specified": "ไม่ได้ระบุ",
     "<not supported>": "<ไม่รองรับ>",
     "No more results": "ไม่มีผลลัพธ์อื่น",
-    "No results": "ไม่มีผลลัพธ์",
     "Passwords can't be empty": "รหัสผ่านต้องไม่ว่าง",
     "Permissions": "สิทธิ์",
     "Phone": "โทรศัพท์",
@@ -124,7 +121,6 @@
     "Always show message timestamps": "แสดงเวลาในแชทเสมอ",
     "Show timestamps in 12 hour format (e.g. 2:30pm)": "แสดงเวลาในแชทในรูปแบบ 12 ชั่วโมง (เช่น 2:30pm)",
     "Submit": "ส่ง",
-    "Success": "สำเร็จ",
     "This email address is already in use": "ที่อยู่อีเมลถูกใช้แล้ว",
     "This email address was not found": "ไม่พบที่อยู่อีเมล",
     "This phone number is already in use": "หมายเลขโทรศัพท์นี้ถูกใช้งานแล้ว",
@@ -139,9 +135,11 @@
     "Unable to verify email address.": "ไม่สามารถยืนยันที่อยู่อีเมล",
     "Unban": "ปลดแบน",
     "Unable to enable Notifications": "ไม่สามารถเปิดใช้งานการแจ้งเตือน",
-    "Uploading %(filename)s and %(count)s others|zero": "กำลังอัปโหลด %(filename)s",
-    "Uploading %(filename)s and %(count)s others|one": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์",
-    "Uploading %(filename)s and %(count)s others|other": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์",
+    "Uploading %(filename)s": "กำลังอัปโหลด %(filename)s",
+    "Uploading %(filename)s and %(count)s others": {
+        "one": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์",
+        "other": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์"
+    },
     "Upload Failed": "การอัปโหลดล้มเหลว",
     "Usage": "การใช้งาน",
     "Warning!": "คำเตือน!",
@@ -189,8 +187,10 @@
     "Decline": "ปฏิเสธ",
     "Home": "เมนูหลัก",
     "Unnamed Room": "ห้องที่ยังไม่ได้ตั้งชื่อ",
-    "(~%(count)s results)|one": "(~%(count)s ผลลัพท์)",
-    "(~%(count)s results)|other": "(~%(count)s ผลลัพท์)",
+    "(~%(count)s results)": {
+        "one": "(~%(count)s ผลลัพท์)",
+        "other": "(~%(count)s ผลลัพท์)"
+    },
     "A new password must be entered.": "กรุณากรอกรหัสผ่านใหม่",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "ไม่สามารถเฃื่อมต่อไปหาเซิร์ฟเวอร์บ้านได้ - กรุณาตรวจสอบคุณภาพการเชื่อมต่อ, ตรวจสอบว่า<a>SSL certificate ของเซิร์ฟเวอร์บ้าน</a>ของคุณเชื่อถือได้, และวไม่มีส่วนขยายเบราว์เซอร์ใดบล๊อคการเชื่อมต่ออยู่",
     "Custom level": "กำหนดระดับเอง",
@@ -343,18 +343,25 @@
     "Renaming sessions": "การเปลี่ยนชื่อเซสชัน",
     "Please be aware that session names are also visible to people you communicate with.": "โปรดทราบว่าชื่อเซสชันจะปรากฏแก่บุคคลที่คุณสื่อสารด้วย.",
     "Rename session": "เปลี่ยนชื่อเซสชัน",
-    "Sign out devices|one": "ออกจากระบบอุปกรณ์",
-    "Sign out devices|other": "ออกจากระบบอุปกรณ์",
-    "Click the button below to confirm signing out these devices.|one": "คลิกปุ่มด้านล่างเพื่อยืนยันการออกจากระบบอุปกรณ์นี้.",
-    "Click the button below to confirm signing out these devices.|other": "คลิกปุ่มด้านล่างเพื่อยืนยันการออกจากระบบอุปกรณ์เหล่านี้.",
-    "Confirm signing out these devices|one": "ยืนยันการออกจากระบบอุปกรณ์นี้",
-    "Confirm signing out these devices|other": "ยืนยันการออกจากระบบอุปกรณ์เหล่านี้",
-    "Confirm logging out these devices by using Single Sign On to prove your identity.|one": "ยืนยันการออกจากระบบอุปกรณ์นี้โดยใช้การลงชื่อเพียงครั้งเดียวเพื่อพิสูจน์ตัวตนของคุณ.",
-    "Confirm logging out these devices by using Single Sign On to prove your identity.|other": "ยืนยันการออกจากระบบอุปกรณ์เหล่านี้โดยใช้การลงชื่อเพียงครั้งเดียวเพื่อพิสูจน์ตัวตนของคุณ.",
+    "Sign out devices": {
+        "one": "ออกจากระบบอุปกรณ์",
+        "other": "ออกจากระบบอุปกรณ์"
+    },
+    "Click the button below to confirm signing out these devices.": {
+        "one": "คลิกปุ่มด้านล่างเพื่อยืนยันการออกจากระบบอุปกรณ์นี้.",
+        "other": "คลิกปุ่มด้านล่างเพื่อยืนยันการออกจากระบบอุปกรณ์เหล่านี้."
+    },
+    "Confirm signing out these devices": {
+        "one": "ยืนยันการออกจากระบบอุปกรณ์นี้",
+        "other": "ยืนยันการออกจากระบบอุปกรณ์เหล่านี้"
+    },
+    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
+        "one": "ยืนยันการออกจากระบบอุปกรณ์นี้โดยใช้การลงชื่อเพียงครั้งเดียวเพื่อพิสูจน์ตัวตนของคุณ.",
+        "other": "ยืนยันการออกจากระบบอุปกรณ์เหล่านี้โดยใช้การลงชื่อเพียงครั้งเดียวเพื่อพิสูจน์ตัวตนของคุณ."
+    },
     "Current session": "เซสชันปัจจุบัน",
     "Your server requires encryption to be enabled in private rooms.": "เซิร์ฟเวอร์ของคุณกำหนดให้เปิดใช้งานการเข้ารหัสในห้องส่วนตัว.",
     "Encryption not enabled": "ไม่ได้เปิดใช้งานการเข้ารหัส",
-    "Encryption enabled": "เปิดใช้งานการเข้ารหัส",
     "End-to-end encryption isn't enabled": "ไม่ได้เปิดใช้งานการเข้ารหัสจากต้นทางถึงปลายทาง",
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "คุณจะไม่สามารถเข้าร่วมในห้องที่เปิดใช้งานการเข้ารหัสเมื่อใช้เซสชันนี้.",
     "Once enabled, encryption cannot be disabled.": "เมื่อเปิดใช้งานแล้ว จะไม่สามารถปิดใช้งานการเข้ารหัสได้.",
@@ -363,7 +370,6 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "การปิดใช้งานผู้ใช้รายนี้จะออกจากระบบและป้องกันไม่ให้กลับเข้าสู่ระบบ นอกจากนี้ ผู้ใช้จะออกจากห้องทั้งหมดที่พวกเขาอยู่ การดำเนินการนี้ไม่สามารถย้อนกลับได้ คุณแน่ใจหรือไม่ว่าต้องการปิดใช้งานผู้ใช้รายนี้?",
     "Deactivate user?": "ปิดการใช้งานผู้ใช้?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "คุณจะไม่สามารถเลิกทำการเปลี่ยนแปลงนี้ได้ เนื่องจากคุณกำลังส่งเสริมผู้ใช้ให้มีระดับพลังเดียวกันกับตัวคุณเอง.",
-    "Unmute": "เปิดเสียง",
     "Failed to mute user": "ไม่สามารถปิดเสียงผู้ใช้",
     "Ban from %(roomName)s": "แบนจาก %(roomName)s",
     "Unban from %(roomName)s": "ปลดแบนจาก %(roomName)s",
@@ -394,11 +400,15 @@
     "United Kingdom": "สหราชอาณาจักร",
     "%(name)s is requesting verification": "%(name)s กำลังขอการตรวจสอบ",
     "Empty room (was %(oldName)s)": "ห้องว่าง (เดิม %(oldName)s)",
-    "Inviting %(user)s and %(count)s others|one": "เชิญ %(user)s และ 1 คนอื่นๆ",
-    "Inviting %(user)s and %(count)s others|other": "เชิญ %(user)s และ %(count)s คนอื่นๆ",
+    "Inviting %(user)s and %(count)s others": {
+        "one": "เชิญ %(user)s และ 1 คนอื่นๆ",
+        "other": "เชิญ %(user)s และ %(count)s คนอื่นๆ"
+    },
     "Inviting %(user1)s and %(user2)s": "เชิญ %(user1)s และ %(user2)s",
-    "%(user)s and %(count)s others|one": "%(user)s และ 1 คนอื่นๆ",
-    "%(user)s and %(count)s others|other": "%(user)s และ %(count)s คนอื่นๆ",
+    "%(user)s and %(count)s others": {
+        "one": "%(user)s และ 1 คนอื่นๆ",
+        "other": "%(user)s และ %(count)s คนอื่นๆ"
+    },
     "%(user1)s and %(user2)s": "%(user1)s และ %(user2)s",
     "Empty room": "ห้องว่าง",
     "Try again": "ลองอีกครั้ง",
@@ -428,8 +438,10 @@
     "Unable to access your microphone": "ไม่สามารถเข้าถึงไมโครโฟนของคุณ",
     "Mark all as read": "ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว",
     "Open thread": "เปิดกระทู้",
-    "%(count)s reply|one": "%(count)s ตอบ",
-    "%(count)s reply|other": "%(count)s ตอบกลับ",
+    "%(count)s reply": {
+        "one": "%(count)s ตอบ",
+        "other": "%(count)s ตอบกลับ"
+    },
     "Invited by %(sender)s": "ได้รับเชิญจาก %(sender)s",
     "Revoke invite": "ยกเลิกการเชิญ",
     "Admin Tools": "เครื่องมือผู้ดูแลระบบ",
@@ -449,13 +461,23 @@
     "Ignore": "เพิกเฉย",
     "Create": "สร้าง",
     "Skip": "ข้าม",
-    "Offline": "ออฟไลน์",
     "Idle": "ว่าง",
     "Online": "ออนไลน์",
     "Delete": "ลบ",
     "Upload": "อัปโหลด",
     "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "ที่อยู่อีเมลของคุณไม่ได้เชื่อมโยงกับ Matrix ID บนโฮมเซิร์ฟเวอร์นี้",
-    "Username": "ชื่อผู้ใช้",
     "Join": "เข้าร่วม",
-    "Timeline": "เส้นเวลา"
+    "Timeline": "เส้นเวลา",
+    "common": {
+        "encryption_enabled": "เปิดใช้งานการเข้ารหัส",
+        "error": "ข้อผิดพลาด",
+        "mute": "เงียบ",
+        "no_results": "ไม่มีผลลัพธ์",
+        "offline": "ออฟไลน์",
+        "password": "รหัสผ่าน",
+        "settings": "การตั้งค่า",
+        "success": "สำเร็จ",
+        "unmute": "เปิดเสียง",
+        "username": "ชื่อผู้ใช้"
+    }
 }

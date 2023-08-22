@@ -19,18 +19,21 @@ limitations under the License.
 
 import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { User } from "matrix-js-sdk/src/models/user";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import {
+    ClientEvent,
+    MatrixClient,
+    RoomMember,
+    Room,
+    RoomStateEvent,
+    MatrixEvent,
+    User,
+    Device,
+    EventType,
+} from "matrix-js-sdk/src/matrix";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
-import { Device } from "matrix-js-sdk/src/models/device";
 
 import dis from "../../../dispatcher/dispatcher";
 import Modal from "../../../Modal";
@@ -341,7 +344,7 @@ const MessageButton = ({ member }: { member: Member }): JSX.Element => {
             className="mx_UserInfo_field"
             disabled={busy}
         >
-            {_t("Message")}
+            {_t("common|message")}
         </AccessibleButton>
     );
 };
@@ -380,8 +383,7 @@ export const UserOptionsSection: React.FC<{
             description: (
                 <div>
                     {_t(
-                        "All messages and invites from this user will be hidden. " +
-                            "Are you sure you want to ignore them?",
+                        "All messages and invites from this user will be hidden. Are you sure you want to ignore them?",
                     )}
                 </div>
             ),
@@ -520,14 +522,10 @@ export const warnSelfDemote = async (isSpace: boolean): Promise<boolean> => {
             <div>
                 {isSpace
                     ? _t(
-                          "You will not be able to undo this change as you are demoting yourself, " +
-                              "if you are the last privileged user in the space it will be impossible " +
-                              "to regain privileges.",
+                          "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.",
                       )
                     : _t(
-                          "You will not be able to undo this change as you are demoting yourself, " +
-                              "if you are the last privileged user in the room it will be impossible " +
-                              "to regain privileges.",
+                          "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.",
                       )}
             </div>
         ),
@@ -847,7 +845,7 @@ export const BanToggleButton = ({
                 function (err) {
                     logger.error("Ban error: " + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Error"),
+                        title: _t("common|error"),
                         description: _t("Failed to ban user"),
                     });
                 },
@@ -929,7 +927,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({
                 function (err) {
                     logger.error("Mute error: " + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Error"),
+                        title: _t("common|error"),
                         description: _t("Failed to mute user"),
                     });
                 },
@@ -943,7 +941,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({
         mx_UserInfo_destructive: !muted,
     });
 
-    const muteLabel = muted ? _t("Unmute") : _t("Mute");
+    const muteLabel = muted ? _t("common|unmute") : _t("common|mute");
     return (
         <AccessibleButton kind="link" className={classes} onClick={onMuteToggle} disabled={isUpdating}>
             {muteLabel}
@@ -1161,7 +1159,7 @@ export const PowerLevelEditor: React.FC<{
                     function (err) {
                         logger.error("Failed to change power level " + err);
                         Modal.createDialog(ErrorDialog, {
-                            title: _t("Error"),
+                            title: _t("common|error"),
                             description: _t("Failed to change power level"),
                         });
                     },
@@ -1182,8 +1180,7 @@ export const PowerLevelEditor: React.FC<{
                     description: (
                         <div>
                             {_t(
-                                "You will not be able to undo this change as you are promoting the user " +
-                                    "to have the same power level as yourself.",
+                                "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.",
                             )}
                             <br />
                             {_t("Are you sure?")}
@@ -1352,9 +1349,7 @@ const BasicUserInfo: React.FC<{
             description: (
                 <div>
                     {_t(
-                        "Deactivating this user will log them out and prevent them from logging back in. Additionally, " +
-                            "they will leave all the rooms they are in. This action cannot be reversed. Are you sure you " +
-                            "want to deactivate this user?",
+                        "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?",
                     )}
                 </div>
             ),
@@ -1521,7 +1516,7 @@ const BasicUserInfo: React.FC<{
 
     const securitySection = (
         <div className="mx_UserInfo_container">
-            <h3>{_t("Security")}</h3>
+            <h3>{_t("common|security")}</h3>
             <p>{text}</p>
             {verifyButton}
             {cryptoEnabled && (

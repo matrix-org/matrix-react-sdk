@@ -16,10 +16,8 @@ limitations under the License.
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, MatrixEvent, EventType, MsgType } from "matrix-js-sdk/src/matrix";
 import { renderToStaticMarkup } from "react-dom/server";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import escapeHtml from "escape-html";
 
@@ -181,23 +179,23 @@ export default class HTMLExporter extends Exporter {
                 <div class="mx_MatrixChat_wrapper" aria-hidden="false">
                     <div class="mx_MatrixChat">
                     <main class="mx_RoomView">
-                        <div class="mx_RoomHeader light-panel">
-                        <div class="mx_RoomHeader_wrapper" aria-owns="mx_RightPanel">
-                            <div class="mx_RoomHeader_avatar">
+                        <div class="mx_LegacyRoomHeader light-panel">
+                        <div class="mx_LegacyRoomHeader_wrapper" aria-owns="mx_RightPanel">
+                            <div class="mx_LegacyRoomHeader_avatar">
                             <div class="mx_DecoratedRoomAvatar">
                                ${roomAvatar}
                             </div>
                             </div>
-                            <div class="mx_RoomHeader_name">
+                            <div class="mx_LegacyRoomHeader_name">
                             <div
                                 dir="auto"
-                                class="mx_RoomHeader_nametext"
+                                class="mx_LegacyRoomHeader_nametext"
                                 title="${safeRoomName}"
                             >
                                 ${safeRoomName}
                             </div>
                             </div>
-                            <div class="mx_RoomHeader_topic" dir="auto"> ${safeTopic} </div>
+                            <div class="mx_LegacyRoomHeader_topic" dir="auto"> ${safeTopic} </div>
                         </div>
                         </div>
                         ${previousMessagesLink}

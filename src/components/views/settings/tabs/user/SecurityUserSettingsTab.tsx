@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
@@ -302,8 +302,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             warning = (
                 <div className="mx_SecurityUserSettingsTab_warning">
                     {_t(
-                        "Your server admin has disabled end-to-end encryption by default " +
-                            "in private rooms & Direct Messages.",
+                        "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
                     )}
                 </div>
             );
@@ -320,7 +319,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             privacySection = (
                 <SettingsSection heading={_t("Privacy")}>
                     <SettingsSubsection
-                        heading={_t("Analytics")}
+                        heading={_t("common|analytics")}
                         description={_t(
                             "Share anonymous data to help us identify issues. Nothing personal. No third parties.",
                         )}

@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { Method } from "matrix-js-sdk/src/http-api";
+import { Method } from "matrix-js-sdk/src/matrix";
 
 import type * as Pako from "pako";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -117,7 +117,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
             );
 
             body.append("secret_storage_ready", String(await client.isSecretStorageReady()));
-            body.append("secret_storage_key_in_account", String(!!(await secretStorage.hasKey())));
+            body.append("secret_storage_key_in_account", String(await secretStorage.hasKey()));
 
             body.append("session_backup_key_in_secret_storage", String(!!(await client.isKeyBackupKeyStored())));
             const sessionBackupKeyFromCache = await client.crypto.getSessionBackupPrivateKey();

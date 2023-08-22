@@ -17,7 +17,7 @@ limitations under the License.
 import React, { createRef, SyntheticEvent, MouseEvent } from "react";
 import ReactDOM from "react-dom";
 import highlight from "highlight.js";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { MsgType } from "matrix-js-sdk/src/matrix";
 
 import * as HtmlUtils from "../../../HtmlUtils";
 import { formatDate } from "../../../DateUtils";
@@ -494,9 +494,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 description: (
                     <div>
                         {_t(
-                            "You are about to be taken to a third-party site so you can " +
-                                "authenticate your account for use with %(integrationsUrl)s. " +
-                                "Do you wish to continue?",
+                            "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?",
                             { integrationsUrl: integrationsUrl },
                         )}
                     </div>

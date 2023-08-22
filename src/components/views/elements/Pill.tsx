@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { ReactElement, useRef, useState } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -140,7 +139,7 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
                     });
                 } else {
                     avatar = linkIcon;
-                    pillText = _t("Message");
+                    pillText = _t("common|message");
                 }
             }
             break;

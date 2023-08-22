@@ -16,12 +16,11 @@ limitations under the License.
 
 import React, { ReactElement, ReactNode, RefObject, useContext, useMemo, useRef, useState } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, EventType } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import Dropdown from "../elements/Dropdown";
 import SearchBox from "../../structures/SearchBox";
@@ -349,7 +348,9 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
 
                 {dms.length > 0 && dmsRenderer ? dmsRenderer(dms, selectedToAdd, dmsScrollState, onChange) : null}
 
-                {noResults ? <span className="mx_AddExistingToSpace_noResults">{_t("No results")}</span> : undefined}
+                {noResults ? (
+                    <span className="mx_AddExistingToSpace_noResults">{_t("common|no_results")}</span>
+                ) : undefined}
             </AutoHideScrollbar>
 
             <div className="mx_AddExistingToSpace_footer">{footer}</div>
@@ -358,7 +359,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
 };
 
 const defaultRendererFactory =
-    (title: string): Renderer =>
+    (title: TranslationKey): Renderer =>
     (rooms, selectedToAdd, { scrollTop, height }, onChange) =>
         (
             <div className="mx_AddExistingToSpace_section">

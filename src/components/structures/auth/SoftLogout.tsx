@@ -17,8 +17,7 @@ limitations under the License.
 import React, { ChangeEvent, SyntheticEvent } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
-import { ISSOFlow, LoginFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
+import { SSOFlow, LoginFlow, SSOAction, MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -235,7 +234,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                 {error}
                 <Field
                     type="password"
-                    label={_t("Password")}
+                    label={_t("common|password")}
                     onChange={this.onPasswordChange}
                     value={this.state.password}
                     disabled={this.state.busy}
@@ -257,7 +256,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
 
     private renderSsoForm(introText: Optional<string>): JSX.Element {
         const loginType = this.state.loginView === LoginView.CAS ? "cas" : "sso";
-        const flow = this.state.flows.find((flow) => flow.type === "m.login." + loginType) as ISSOFlow;
+        const flow = this.state.flows.find((flow) => flow.type === "m.login." + loginType) as SSOFlow;
 
         return (
             <div>
@@ -282,8 +281,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         let introText: string | null = null; // null is translated to something area specific in this function
         if (this.state.keyBackupNeeded) {
             introText = _t(
-                "Regain access to your account and recover encryption keys stored in this session. " +
-                    "Without them, you won't be able to read all of your secure messages in any session.",
+                "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.",
             );
         }
 
@@ -330,10 +328,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         // Default: assume unsupported/error
         return (
             <p>
-                {_t(
-                    "You cannot sign in to your account. Please contact your " +
-                        "homeserver admin for more information.",
-                )}
+                {_t("You cannot sign in to your account. Please contact your homeserver admin for more information.")}
             </p>
         );
     }
@@ -351,9 +346,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                     <h2>{_t("Clear personal data")}</h2>
                     <p>
                         {_t(
-                            "Warning: your personal data (including encryption keys) is still stored " +
-                                "in this session. Clear it if you're finished using this session, or want to sign " +
-                                "in to another account.",
+                            "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.",
                         )}
                     </p>
                     <div>

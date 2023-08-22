@@ -15,14 +15,19 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import {
+    MatrixEvent,
+    MatrixClient,
+    GuestAccess,
+    HistoryVisibility,
+    JoinRule,
+    EventType,
+    MsgType,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from "matrix-js-sdk/src/utils";
-import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { M_POLL_START, M_POLL_END } from "matrix-js-sdk/src/@types/polls";
 import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "./languageHandler";
 import * as Roles from "./Roles";
@@ -477,17 +482,14 @@ function textForHistoryVisibilityEvent(event: MatrixEvent): (() => string) | nul
         case HistoryVisibility.Invited:
             return () =>
                 _t(
-                    "%(senderName)s made future room history visible to all room members, " +
-                        "from the point they are invited.",
+                    "%(senderName)s made future room history visible to all room members, from the point they are invited.",
                     { senderName },
                 );
         case HistoryVisibility.Joined:
             return () =>
-                _t(
-                    "%(senderName)s made future room history visible to all room members, " +
-                        "from the point they joined.",
-                    { senderName },
-                );
+                _t("%(senderName)s made future room history visible to all room members, from the point they joined.", {
+                    senderName,
+                });
         case HistoryVisibility.Shared:
             return () => _t("%(senderName)s made future room history visible to all room members.", { senderName });
         case HistoryVisibility.WorldReadable:
@@ -805,33 +807,31 @@ function textForMjolnirEvent(event: MatrixEvent): (() => string) | null {
     if (USER_RULE_TYPES.includes(event.getType())) {
         return () =>
             _t(
-                "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching " +
-                    "%(newGlob)s for %(reason)s",
+                "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
                 { senderName, oldGlob: prevEntity, newGlob: entity, reason },
             );
     } else if (ROOM_RULE_TYPES.includes(event.getType())) {
         return () =>
             _t(
-                "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching " +
-                    "%(newGlob)s for %(reason)s",
+                "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
                 { senderName, oldGlob: prevEntity, newGlob: entity, reason },
             );
     } else if (SERVER_RULE_TYPES.includes(event.getType())) {
         return () =>
             _t(
-                "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching " +
-                    "%(newGlob)s for %(reason)s",
+                "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
                 { senderName, oldGlob: prevEntity, newGlob: entity, reason },
             );
     }
 
     // Unknown type. We'll say something but we shouldn't end up here.
     return () =>
-        _t(
-            "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s " +
-                "for %(reason)s",
-            { senderName, oldGlob: prevEntity, newGlob: entity, reason },
-        );
+        _t("%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s", {
+            senderName,
+            oldGlob: prevEntity,
+            newGlob: entity,
+            reason,
+        });
 }
 
 export function textForLocationEvent(event: MatrixEvent): () => string {

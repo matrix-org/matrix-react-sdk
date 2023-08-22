@@ -16,9 +16,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent, createRef, KeyboardEvent, SyntheticEvent } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
+import { Room, RoomType, JoinRule, Preset, Visibility } from "matrix-js-sdk/src/matrix";
 
 import SdkConfig from "../../../SdkConfig";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
@@ -313,8 +311,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                 }
             } else {
                 microcopy = _t(
-                    "Your server admin has disabled end-to-end encryption by default " +
-                        "in private rooms & Direct Messages.",
+                    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
                 );
             }
             e2eeSection = (
@@ -332,15 +329,13 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         }
 
         let federateLabel = _t(
-            "You might enable this if the room will only be used for collaborating with internal " +
-                "teams on your homeserver. This cannot be changed later.",
+            "You might enable this if the room will only be used for collaborating with internal teams on your homeserver. This cannot be changed later.",
         );
         if (SdkConfig.get().default_federate === false) {
             // We only change the label if the default setting is different to avoid jarring text changes to the
             // user. They will have read the implications of turning this off/on, so no need to rephrase for them.
             federateLabel = _t(
-                "You might disable this if the room will be used for collaborating with external " +
-                    "teams who have their own homeserver. This cannot be changed later.",
+                "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.",
             );
         }
 

@@ -18,7 +18,7 @@ limitations under the License.
 
 import React, { createRef, CSSProperties } from "react";
 import FocusLock from "react-focus-lock";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
@@ -531,7 +531,7 @@ export default class ImageView extends React.Component<IProps, IState> {
         if (this.props.mxEvent?.getContent()) {
             title = (
                 <div className="mx_ImageView_title">
-                    {presentableTextForFile(this.props.mxEvent?.getContent(), _t("Image"), true)}
+                    {presentableTextForFile(this.props.mxEvent?.getContent(), _t("common|image"), true)}
                 </div>
             );
         }

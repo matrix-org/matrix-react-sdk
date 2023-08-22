@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useContext } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
@@ -59,6 +59,7 @@ interface IProps extends IContextMenuProps {
 
 /**
  * Room context menu accessible via the room header.
+ * @deprecated will be removed as part of `feature_new_room_decoration_ui`
  */
 const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     const cli = useContext(MatrixClientContext);
@@ -185,7 +186,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                 iconClassName = "mx_RoomTile_iconNotificationsMentionsKeywords";
                 break;
             case RoomNotifState.Mute:
-                notificationLabel = _t("Mute");
+                notificationLabel = _t("common|mute");
                 iconClassName = "mx_RoomTile_iconNotificationsNone";
                 break;
         }
@@ -227,7 +228,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                     onFinished();
                     PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
                 }}
-                label={_t("People")}
+                label={_t("common|people")}
                 iconClassName="mx_RoomTile_iconPeople"
             >
                 <span className="mx_IconizedContextMenu_sublabel">{room.getJoinedMemberCount()}</span>
@@ -389,7 +390,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                         onFinished();
                         PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuSettingsItem", ev);
                     }}
-                    label={_t("Settings")}
+                    label={_t("common|settings")}
                     iconClassName="mx_RoomTile_iconSettings"
                 />
 

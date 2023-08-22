@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import React, { ReactNode } from "react";
 
-import { _t, _td } from "../languageHandler";
+import { _t, _td, TranslationKey } from "../languageHandler";
 import {
     NotificationBodyEnabledController,
     NotificationsEnabledController,
@@ -98,7 +98,7 @@ export enum Features {
     OidcNativeFlow = "feature_oidc_native_flow",
 }
 
-export const labGroupNames: Record<LabGroup, string> = {
+export const labGroupNames: Record<LabGroup, TranslationKey> = {
     [LabGroup.Messaging]: _td("Messaging"),
     [LabGroup.Profile]: _td("Profile"),
     [LabGroup.Spaces]: _td("Spaces"),
@@ -106,7 +106,7 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Rooms]: _td("Rooms"),
     [LabGroup.VoiceAndVideo]: _td("Voice & Video"),
     [LabGroup.Moderation]: _td("Moderation"),
-    [LabGroup.Analytics]: _td("Analytics"),
+    [LabGroup.Analytics]: _td("common|analytics"),
     [LabGroup.Themes]: _td("Themes"),
     [LabGroup.Encryption]: _td("Encryption"),
     [LabGroup.Experimental]: _td("Experimental"),
@@ -129,13 +129,13 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     // Display names are strongly recommended for clarity.
     // Display name can also be an object for different levels.
     displayName?:
-        | string
+        | TranslationKey
         | Partial<{
-              [level in SettingLevel]: string;
+              [level in SettingLevel]: TranslationKey;
           }>;
 
     // Optional description which will be shown as microCopy under SettingsFlags
-    description?: string | (() => ReactNode);
+    description?: TranslationKey | (() => ReactNode);
 
     // The supported levels are required. Preferably, use the preset arrays
     // at the top of this file to define this rather than a custom array.
@@ -165,11 +165,11 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
 
     // XXX: Keep this around for re-use in future Betas
     betaInfo?: {
-        title: string; // _td
+        title: TranslationKey;
         caption: () => ReactNode;
         faq?: (enabled: boolean) => ReactNode;
         image?: string; // require(...)
-        feedbackSubheading?: string;
+        feedbackSubheading?: TranslationKey;
         feedbackLabel?: string;
         extraSettings?: string[];
         requiresRefresh?: boolean;
@@ -252,20 +252,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             ),
         },
     },
-    "feature_exploring_public_spaces": {
-        isFeature: true,
-        labsGroup: LabGroup.Spaces,
-        displayName: _td("Explore public spaces in the new search dialog"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        controller: new ServerSupportUnstableFeatureController(
-            "feature_exploring_public_spaces",
-            defaultWatchManager,
-            [["org.matrix.msc3827.stable"]],
-            "v1.4",
-            _td("Requires your server to support the stable version of MSC3827"),
-        ),
-    },
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
@@ -280,7 +266,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Moderation,
         displayName: _td("Report to moderators"),
         description: _td(
-            "In rooms that support moderation, " + "the “Report” button will let you report abuse to room moderators.",
+            "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.",
         ),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -354,14 +340,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Show info about bridges in room settings"),
-        default: false,
-    },
-    "feature_right_panel_default_open": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Right panel stays open"),
-        description: _td("Defaults to room member list."),
         default: false,
     },
     "feature_jump_to_date": {
@@ -558,6 +536,14 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
+    },
+    "feature_new_room_decoration_ui": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        displayName: _td("Under active development, new room header & details interface"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+        controller: new ReloadOnChangeController(),
     },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -812,7 +798,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "deviceClientInformationOptIn": {
         supportedLevels: [SettingLevel.ACCOUNT],
         displayName: _td(
-            `Record the client name, version, and url ` + `to recognise sessions more easily in session manager`,
+            "Record the client name, version, and url to recognise sessions more easily in session manager",
         ),
         default: false,
     },

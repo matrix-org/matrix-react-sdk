@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import React from "react";
 
@@ -24,6 +23,8 @@ import { _t } from "../../languageHandler";
 import { ExportType, IExportOptions } from "./exportUtils";
 import { textForEvent } from "../../TextForEvent";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
+import SettingsStore from "../../settings/SettingsStore";
+import { formatFullDate } from "../../DateUtils";
 
 export default class PlainTextExporter extends Exporter {
     protected totalSize: number;
@@ -122,7 +123,12 @@ export default class PlainTextExporter extends Exporter {
             if (this.cancelled) return this.cleanUp();
             if (!haveRendererForEvent(event, this.room.client, false)) continue;
             const textForEvent = await this.plainTextForEvent(event);
-            content += textForEvent && `${new Date(event.getTs()).toLocaleString()} - ${textForEvent}\n`;
+            content +=
+                textForEvent &&
+                `${formatFullDate(
+                    new Date(event.getTs()),
+                    SettingsStore.getValue("showTwelveHourTimestamps"),
+                )} - ${textForEvent}\n`;
         }
         return content;
     }

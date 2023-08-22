@@ -28,15 +28,13 @@ import {
     RoomMember,
     RoomState,
     TimelineWindow,
-} from "matrix-js-sdk/src/matrix";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import {
+    EventTimeline,
     FeatureSupport,
     Thread,
     THREAD_RELATION_TYPE,
     ThreadEvent,
     ThreadFilterType,
-} from "matrix-js-sdk/src/models/thread";
+} from "matrix-js-sdk/src/matrix";
 import React, { createRef } from "react";
 import { Mocked, mocked } from "jest-mock";
 import { forEachRight } from "lodash";
@@ -98,6 +96,7 @@ const mockEvents = (room: Room, count = 2): MatrixEvent[] => {
                 type: EventType.RoomMessage,
                 sender: "userId",
                 content: createMessageEventContent("`Event${index}`"),
+                origin_server_ts: index,
             }),
         );
     }
@@ -449,7 +448,7 @@ describe("TimelinePanel", () => {
 
             render(<TimelinePanel {...props} />);
 
-            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: otherTimeline, liveEvent: true };
             client.emit(RoomEvent.Timeline, event, room, false, false, data);
 
@@ -465,7 +464,7 @@ describe("TimelinePanel", () => {
 
             render(<TimelinePanel {...props} />);
 
-            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: false };
             client.emit(RoomEvent.Timeline, event, room, false, false, data);
 
@@ -481,7 +480,7 @@ describe("TimelinePanel", () => {
 
             render(<TimelinePanel {...props} />);
 
-            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: false };
             const toStartOfTimeline = true;
             client.emit(RoomEvent.Timeline, event, room, toStartOfTimeline, false, data);
@@ -498,7 +497,7 @@ describe("TimelinePanel", () => {
 
             render(<TimelinePanel {...props} />);
 
-            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: true };
             client.emit(RoomEvent.Timeline, event, room, false, false, data);
 
@@ -523,7 +522,7 @@ describe("TimelinePanel", () => {
 
             await flushPromises();
 
-            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: true };
             client.emit(RoomEvent.Timeline, event, room, false, false, data);
 
@@ -541,11 +540,13 @@ describe("TimelinePanel", () => {
                 type: "m.call.invite",
                 room_id: virtualRoom.roomId,
                 event_id: `virtualCallEvent1`,
+                origin_server_ts: 0,
             });
             const virtualCallMetaEvent = new MatrixEvent({
                 type: "org.matrix.call.sdp_stream_metadata_changed",
                 room_id: virtualRoom.roomId,
                 event_id: `virtualCallEvent2`,
+                origin_server_ts: 0,
             });
             const virtualEvents = [virtualCallInvite, ...mockEvents(virtualRoom), virtualCallMetaEvent];
             const { timelineSet: overlayTimelineSet } = getProps(virtualRoom, virtualEvents);
@@ -821,6 +822,7 @@ describe("TimelinePanel", () => {
                 type: EventType.RoomMessage,
                 sender: "userId",
                 content: createMessageEventContent("ReplyEvent1"),
+                origin_server_ts: 0,
             });
 
             reply2 = new MatrixEvent({
@@ -829,6 +831,7 @@ describe("TimelinePanel", () => {
                 type: EventType.RoomMessage,
                 sender: "userId",
                 content: createMessageEventContent("ReplyEvent2"),
+                origin_server_ts: 0,
             });
 
             root = new MatrixEvent({
@@ -837,6 +840,7 @@ describe("TimelinePanel", () => {
                 type: EventType.RoomMessage,
                 sender: "userId",
                 content: createMessageEventContent("RootEvent"),
+                origin_server_ts: 0,
             });
 
             const eventMap: { [key: string]: MatrixEvent } = {

@@ -15,8 +15,10 @@
     "Always show message timestamps": "Her zaman mesaj zaman dalgalarını (timestamps) gösterin",
     "Authentication": "Doğrulama",
     "%(items)s and %(lastItem)s": "%(items)s ve %(lastItem)s",
-    "and %(count)s others...|one": "ve bir diğeri...",
-    "and %(count)s others...|other": "ve %(count)s diğerleri...",
+    "and %(count)s others...": {
+        "one": "ve bir diğeri...",
+        "other": "ve %(count)s diğerleri..."
+    },
     "A new password must be entered.": "Yeni bir şifre girilmelidir.",
     "An error has occurred.": "Bir hata oluştu.",
     "Anyone": "Kimse",
@@ -53,7 +55,6 @@
     "Email address": "E-posta Adresi",
     "Emoji": "Emoji (Karakter)",
     "Enter passphrase": "Şifre deyimi Girin",
-    "Error": "Hata",
     "Error decrypting attachment": "Ek şifresini çözme hatası",
     "Export": "Dışa Aktar",
     "Export E2E room keys": "Uçtan uca Oda anahtarlarını Dışa Aktar",
@@ -103,7 +104,6 @@
     "Missing room_id in request": "İstekte eksik room_id",
     "Missing user_id in request": "İstekte user_id eksik",
     "Moderator": "Moderatör",
-    "Mute": "Sessiz",
     "Name": "İsim",
     "New passwords don't match": "Yeni şifreler uyuşmuyor",
     "New passwords must match each other.": "Yeni şifreler birbirleriyle eşleşmelidir.",
@@ -112,11 +112,9 @@
     "<not supported>": "<Desteklenmiyor>",
     "No display name": "Görünür isim yok",
     "No more results": "Başka sonuç yok",
-    "No results": "Sonuç yok",
     "No users have specific privileges in this room": "Bu odada hiçbir kullanıcının belirli ayrıcalıkları yoktur",
     "OK": "Tamam",
     "Operation failed": "Operasyon başarısız oldu",
-    "Password": "Şifre",
     "Passwords can't be empty": "Şifreler boş olamaz",
     "Permissions": "İzinler",
     "Phone": "Telefon",
@@ -146,7 +144,6 @@
     "Server may be unavailable, overloaded, or you hit a bug.": "Sunucu kullanılamıyor , aşırı yüklenmiş , veya bir hatayla karşılaşmış olabilirsiniz.",
     "Server unavailable, overloaded, or something else went wrong.": "Sunucu kullanılamıyor , aşırı yüklenmiş veya başka bir şey ters gitmiş olabilir.",
     "Session ID": "Oturum ID",
-    "Settings": "Ayarlar",
     "Show timestamps in 12 hour format (e.g. 2:30pm)": "Zaman damgalarını 12 biçiminde göster (örn. 2:30 pm)",
     "Signed Out": "Oturum Kapatıldı",
     "Sign in": "Giriş Yap",
@@ -154,7 +151,6 @@
     "Someone": "Birisi",
     "Start authentication": "Kimlik Doğrulamayı başlatın",
     "Submit": "Gönder",
-    "Success": "Başarılı",
     "This email address is already in use": "Bu e-posta adresi zaten kullanımda",
     "This email address was not found": "Bu e-posta adresi bulunamadı",
     "The email address linked to your account must be entered.": "Hesabınıza bağlı e-posta adresi girilmelidir.",
@@ -171,11 +167,12 @@
     "Unban": "Yasağı Kaldır",
     "Unable to enable Notifications": "Bildirimler aktif edilemedi",
     "unknown error code": "bilinmeyen hata kodu",
-    "Unmute": "Sesi aç",
     "Unnamed Room": "İsimsiz Oda",
-    "Uploading %(filename)s and %(count)s others|zero": "%(filename)s yükleniyor",
-    "Uploading %(filename)s and %(count)s others|one": "%(filename)s ve %(count)s kadarı yükleniyor",
-    "Uploading %(filename)s and %(count)s others|other": "%(filename)s ve %(count)s kadarları yükleniyor",
+    "Uploading %(filename)s": "%(filename)s yükleniyor",
+    "Uploading %(filename)s and %(count)s others": {
+        "one": "%(filename)s ve %(count)s kadarı yükleniyor",
+        "other": "%(filename)s ve %(count)s kadarları yükleniyor"
+    },
     "Upload avatar": "Avatar yükle",
     "Upload Failed": "Yükleme Başarısız",
     "Usage": "Kullanım",
@@ -223,14 +220,15 @@
     "Room": "Oda",
     "Connectivity to the server has been lost.": "Sunucuyla olan bağlantı kesildi.",
     "Sent messages will be stored until your connection has returned.": "Gönderilen iletiler bağlantınız geri gelene kadar saklanacak.",
-    "(~%(count)s results)|one": "(~%(count)s sonuç)",
-    "(~%(count)s results)|other": "(~%(count)s sonuçlar)",
+    "(~%(count)s results)": {
+        "one": "(~%(count)s sonuç)",
+        "other": "(~%(count)s sonuçlar)"
+    },
     "Cancel": "İptal",
     "Create new room": "Yeni Oda Oluştur",
     "Start chat": "Sohbet Başlat",
     "New Password": "Yeni Şifre",
     "Start automatically after system login": "Sisteme giriş yaptıktan sonra otomatik başlat",
-    "Analytics": "Analitik",
     "Options": "Seçenekler",
     "Passphrases must match": "Şifrenin eşleşmesi gerekir",
     "Passphrase must not be empty": "Şifrenin boş olmaması gerekir",
@@ -239,7 +237,6 @@
     "Import room keys": "Oda anahtarlarını içe aktar",
     "File to import": "Alınacak Dosya",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Bu işlem şifreli odalarda aldığınız iletilerin anahtarlarını yerel dosyaya vermenizi sağlar . Bundan sonra dosyayı ileride başka bir Matrix istemcisine de aktarabilirsiniz , böylece istemci bu mesajların şifresini çözebilir (decryption).",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Dışa aktarılan dosya , onu okuyabilen herkesin sizin görebildiğiniz iletilerin şifresini çözmesine olanak tanır , bu nedenle güvenliğini korumaya özen göstermelisiniz. Buna yardımcı olmak için , dışa aktarılan verileri şifrelemek için kullanılacak bir şifre girmelisiniz . Verileri yalnızca aynı şifreyi kullanarak içe aktarmak mümkün olacaktır.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Bu işlem , geçmişte başka Matrix istemcisinden dışa aktardığınız şifreleme anahtarlarınızı içe aktarmanızı sağlar . Böylece diğer istemcinin çözebileceği tüm iletilerin şifresini çözebilirsiniz.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Dışa aktarma dosyası bir şifre ile korunacaktır . Dosyanın şifresini çözmek için buraya şifre girmelisiniz.",
     "You must join the room to see its files": "Dosyalarını görmek için odaya katılmalısınız",
@@ -262,7 +259,6 @@
     "Drop file here to upload": "Yüklemek için dosyaları buraya bırakın",
     "Online": "Çevrimiçi",
     "Idle": "Boş",
-    "Offline": "Çevrimdışı",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s odanın avatarını <img/> olarak çevirdi",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s odanın avatarını kaldırdı.",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s %(roomName)s için avatarı değiştirdi",
@@ -348,7 +344,10 @@
     "%(senderDisplayName)s has prevented guests from joining the room.": "Odaya misafirlerin girişini engelleyen %(senderDisplayName)s.",
     "%(senderName)s removed the main address for this room.": "Bu oda için ana adresi silen %(senderName)s.",
     "%(displayName)s is typing …": "%(displayName)s yazıyor…",
-    "%(names)s and %(count)s others are typing …|one": "%(names)s ve bir diğeri yazıyor…",
+    "%(names)s and %(count)s others are typing …": {
+        "one": "%(names)s ve bir diğeri yazıyor…",
+        "other": "%(names)s ve diğer %(count)s kişi yazıyor…"
+    },
     "%(names)s and %(lastPerson)s are typing …": "%(names)s ve %(lastPerson)s yazıyor…",
     "Cannot reach homeserver": "Ana sunucuya erişilemiyor",
     "Your %(brand)s is misconfigured": "%(brand)s hatalı ayarlanmış",
@@ -367,21 +366,49 @@
     "Rotate Left": "Sola Döndür",
     "Rotate Right": "Sağa Döndür",
     "%(nameList)s %(transitionList)s": "%(nameList)s%(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times|other": "%(severalUsers)s %(count)s kez katıldı",
-    "%(severalUsers)sjoined %(count)s times|one": "%(severalUsers)s katıldı",
-    "%(oneUser)sjoined %(count)s times|other": "%(oneUser)s %(count)s kez katıldı",
-    "%(oneUser)sjoined %(count)s times|one": "%(oneUser)s katıldı",
-    "%(severalUsers)sleft %(count)s times|one": "%(severalUsers)s kullanıcı ayrıldı",
-    "%(oneUser)sleft %(count)s times|one": "%(oneUser)s ayrıldı",
-    "%(severalUsers)sjoined and left %(count)s times|one": "%(severalUsers)s katıldı ve ayrıldı",
-    "%(oneUser)sjoined and left %(count)s times|one": "%(oneUser)s katıldı ve ayrıldı",
-    "%(oneUser)sleft and rejoined %(count)s times|one": "%(oneUser)s ayrıldı ve yeniden katıldı",
-    "were invited %(count)s times|other": "%(count)s kez davet edildi",
-    "were invited %(count)s times|one": "davet edildi",
-    "was invited %(count)s times|other": "%(count)s kez davet edildi",
-    "was invited %(count)s times|one": "davet edildi",
-    "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s isimlerini değiştrtiler",
-    "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s ismini değiştirdi",
+    "%(severalUsers)sjoined %(count)s times": {
+        "other": "%(severalUsers)s %(count)s kez katıldı",
+        "one": "%(severalUsers)s katıldı"
+    },
+    "%(oneUser)sjoined %(count)s times": {
+        "other": "%(oneUser)s %(count)s kez katıldı",
+        "one": "%(oneUser)s katıldı"
+    },
+    "%(severalUsers)sleft %(count)s times": {
+        "one": "%(severalUsers)s kullanıcı ayrıldı",
+        "other": "%(severalUsers)s, %(count)s kez ayrıldı"
+    },
+    "%(oneUser)sleft %(count)s times": {
+        "one": "%(oneUser)s ayrıldı",
+        "other": "%(oneUser)s %(count)s kez ayrıldı"
+    },
+    "%(severalUsers)sjoined and left %(count)s times": {
+        "one": "%(severalUsers)s katıldı ve ayrıldı",
+        "other": "%(severalUsers)s %(count)s kez katılıp ve ayrıldı"
+    },
+    "%(oneUser)sjoined and left %(count)s times": {
+        "one": "%(oneUser)s katıldı ve ayrıldı",
+        "other": "%(oneUser)s %(count)s kez katıldı ve ayrıldı"
+    },
+    "%(oneUser)sleft and rejoined %(count)s times": {
+        "one": "%(oneUser)s ayrıldı ve yeniden katıldı"
+    },
+    "were invited %(count)s times": {
+        "other": "%(count)s kez davet edildi",
+        "one": "davet edildi"
+    },
+    "was invited %(count)s times": {
+        "other": "%(count)s kez davet edildi",
+        "one": "davet edildi"
+    },
+    "%(severalUsers)schanged their name %(count)s times": {
+        "one": "%(severalUsers)s isimlerini değiştrtiler",
+        "other": "%(severalUsers)s kullanıcıları isimlerini %(count)s kez değiştirdiler"
+    },
+    "%(oneUser)schanged their name %(count)s times": {
+        "one": "%(oneUser)s ismini değiştirdi",
+        "other": "%(oneUser)s ismini %(count)s kez değiştirdi"
+    },
     "Power level": "Güç düzeyi",
     "e.g. my-room": "örn. odam",
     "Some characters not allowed": "Bazı karakterlere izin verilmiyor",
@@ -461,7 +488,6 @@
     "This homeserver would like to make sure you are not a robot.": "Bu ana sunucu sizin bir robot olup olmadığınızdan emin olmak istiyor.",
     "Country Dropdown": "Ülke Listesi",
     "Code": "Kod",
-    "Username": "Kullanıcı Adı",
     "Use an email address to recover your account": "Hesabınızı kurtarmak için bir e-posta adresi kullanın",
     "Enter email address (required on this homeserver)": "E-posta adresi gir ( bu ana sunucuda gerekli)",
     "Doesn't look like a valid email address": "Geçerli bir e-posta adresine benzemiyor",
@@ -509,10 +535,11 @@
     "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s görsel bileşeni %(senderName)s tarafından düzenlendi",
     "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s görsel bileşeni %(senderName)s tarafından eklendi",
     "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s görsel bileşeni %(senderName)s tarafından silindi",
-    "%(names)s and %(count)s others are typing …|other": "%(names)s ve diğer %(count)s kişi yazıyor…",
     "This homeserver has exceeded one of its resource limits.": "Bu anasunucu kaynak limitlerinden birini aştı.",
-    "%(items)s and %(count)s others|other": "%(items)s ve diğer %(count)s",
-    "%(items)s and %(count)s others|one": "%(items)s ve bir diğeri",
+    "%(items)s and %(count)s others": {
+        "other": "%(items)s ve diğer %(count)s",
+        "one": "%(items)s ve bir diğeri"
+    },
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Unrecognised address": "Tanınmayan adres",
     "You do not have permission to invite people to this room.": "Bu odaya kişi davet etme izniniz yok.",
@@ -693,14 +720,14 @@
     "Edit message": "Mesajı düzenle",
     "Unencrypted": "Şifrelenmemiş",
     "Close preview": "Önizlemeyi kapat",
-    "Remove %(count)s messages|other": "%(count)s mesajı sil",
-    "Remove %(count)s messages|one": "1 mesajı sil",
+    "Remove %(count)s messages": {
+        "other": "%(count)s mesajı sil",
+        "one": "1 mesajı sil"
+    },
     "Prepends ¯\\_(ツ)_/¯ to a plain-text message": "Düz-metin mesajına ¯\\_(ツ)_/¯ ifadesi ekler",
     "Rooster": "Horoz",
     "Cross-signing public keys:": "Çarpraz-imzalama açık anahtarları:",
     "Cross-signing private keys:": "Çarpraz-imzalama gizli anahtarları:",
-    "Backup has a <validity>valid</validity> signature from this user": "Yedek bu kullanıcıdan <validity>geçerli</validity> anahtara sahip",
-    "Backup has a <validity>invalid</validity> signature from this user": "Yedek bu kullanıcıdan <validity>geçersiz</validity> bir anahtara sahip",
     "Terms of service not accepted or the identity server is invalid.": "Hizmet şartları kabuk edilmedi yada kimlik sunucu geçersiz.",
     "The identity server you have chosen does not have any terms of service.": "Seçtiğiniz kimlik sunucu herhangi bir hizmet şartları sözleşmesine sahip değil.",
     "Disconnect identity server": "Kimlik sunucu bağlantısını kes",
@@ -742,8 +769,10 @@
     "Do you want to join %(roomName)s?": "%(roomName)s odasına katılmak ister misin?",
     "<userName/> invited you": "<userName/> davet etti",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s odasında önizleme yapılamaz. Katılmak ister misin?",
-    "%(count)s unread messages.|other": "%(count)s okunmamış mesaj.",
-    "%(count)s unread messages.|one": "1 okunmamış mesaj.",
+    "%(count)s unread messages.": {
+        "other": "%(count)s okunmamış mesaj.",
+        "one": "1 okunmamış mesaj."
+    },
     "Unread messages.": "Okunmamış mesajlar.",
     "This room has already been upgraded.": "Bu ıda zaten güncellenmiş.",
     "Only room administrators will see this warning": "Bu uyarıyı sadece oda yöneticileri görür",
@@ -757,10 +786,11 @@
     "Main address": "Ana adres",
     "Room Name": "Oda Adı",
     "Hide verified sessions": "Onaylı oturumları gizle",
-    "%(count)s verified sessions|other": "%(count)s doğrulanmış oturum",
-    "%(count)s verified sessions|one": "1 doğrulanmış oturum",
+    "%(count)s verified sessions": {
+        "other": "%(count)s doğrulanmış oturum",
+        "one": "1 doğrulanmış oturum"
+    },
     "Verify": "Doğrula",
-    "Security": "Güvenlik",
     "Reply": "Cevapla",
     "Edit": "Düzenle",
     "Message Actions": "Mesaj Eylemleri",
@@ -774,7 +804,6 @@
     "%(name)s wants to verify": "%(name)s doğrulamak istiyor",
     "You sent a verification request": "Doğrulama isteği gönderdiniz",
     "Show all": "Hepsini göster",
-    "Reactions": "Tepkiler",
     "Click here to see older messages.": "Daha eski mesajları görmek için buraya tıklayın.",
     "Copied!": "Kopyalandı!",
     "Failed to copy": "Kopyalama başarısız",
@@ -894,35 +923,53 @@
     "Unable to revoke sharing for email address": "E-posta adresi paylaşımı kaldırılamadı",
     "Unable to revoke sharing for phone number": "Telefon numarası paylaşımı kaldırılamıyor",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Çağrıların sağlıklı bir şekide yapılabilmesi için lütfen anasunucunuzun (<code>%(homeserverDomain)s</code>) yöneticisinden bir TURN sunucusu yapılandırmasını isteyin.",
-    "%(severalUsers)schanged their name %(count)s times|other": "%(severalUsers)s kullanıcıları isimlerini %(count)s kez değiştirdiler",
-    "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s ismini %(count)s kez değiştirdi",
-    "%(severalUsers)smade no changes %(count)s times|one": "%(severalUsers)s değişiklik yapmadı",
-    "%(oneUser)smade no changes %(count)s times|other": "%(oneUser)s %(count)s kez değişiklik yapmadı",
-    "%(oneUser)smade no changes %(count)s times|one": "%(oneUser)s değişiklik yapmadı",
-    "And %(count)s more...|other": "ve %(count)s kez daha...",
+    "%(severalUsers)smade no changes %(count)s times": {
+        "one": "%(severalUsers)s değişiklik yapmadı",
+        "other": "%(severalUsers)s %(count)s kez hiç bir değişiklik yapmadı"
+    },
+    "%(oneUser)smade no changes %(count)s times": {
+        "other": "%(oneUser)s %(count)s kez değişiklik yapmadı",
+        "one": "%(oneUser)s değişiklik yapmadı"
+    },
+    "And %(count)s more...": {
+        "other": "ve %(count)s kez daha..."
+    },
     "Popout widget": "Görsel bileşeni göster",
     "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Lütfen GitHub’da <newIssueLink>Yeni bir talep</newIssueLink> oluşturun ki bu hatayı inceleyebilelim.",
     "Language Dropdown": "Dil Listesi",
-    "%(severalUsers)sleft %(count)s times|other": "%(severalUsers)s, %(count)s kez ayrıldı",
-    "%(oneUser)sleft %(count)s times|other": "%(oneUser)s %(count)s kez ayrıldı",
-    "%(severalUsers)sjoined and left %(count)s times|other": "%(severalUsers)s %(count)s kez katılıp ve ayrıldı",
-    "%(oneUser)sjoined and left %(count)s times|other": "%(oneUser)s %(count)s kez katıldı ve ayrıldı",
-    "%(severalUsers)sleft and rejoined %(count)s times|one": "%(severalUsers)s ayrıldı ve yeniden katıldı",
-    "%(severalUsers)srejected their invitations %(count)s times|other": "%(severalUsers)s %(count)s kez davetlerini reddetti",
-    "%(severalUsers)srejected their invitations %(count)s times|one": "%(severalUsers)s davetlerini reddetti",
-    "%(oneUser)srejected their invitation %(count)s times|one": "%(oneUser)s davetlerini reddetti",
-    "%(severalUsers)shad their invitations withdrawn %(count)s times|one": "%(severalUsers)s davetlerini geri çekti",
-    "%(oneUser)shad their invitation withdrawn %(count)s times|other": "%(oneUser)s davetini %(count)s kez geri çekti",
-    "%(oneUser)shad their invitation withdrawn %(count)s times|one": "%(oneUser)s davetini geri çekti",
-    "were banned %(count)s times|other": "%(count)s kez yasaklandı",
-    "were banned %(count)s times|one": "yasaklandı",
-    "was banned %(count)s times|other": "%(count)s kez yasaklandı",
-    "was banned %(count)s times|one": "yasaklandı",
-    "were unbanned %(count)s times|other": "%(count)s kez yasak kaldırıldı",
-    "were unbanned %(count)s times|one": "yasak kaldırıldı",
-    "was unbanned %(count)s times|other": "%(count)s kez yasak kaldırıldı",
-    "was unbanned %(count)s times|one": "yasak kaldırıldı",
-    "%(severalUsers)smade no changes %(count)s times|other": "%(severalUsers)s %(count)s kez hiç bir değişiklik yapmadı",
+    "%(severalUsers)sleft and rejoined %(count)s times": {
+        "one": "%(severalUsers)s ayrıldı ve yeniden katıldı"
+    },
+    "%(severalUsers)srejected their invitations %(count)s times": {
+        "other": "%(severalUsers)s %(count)s kez davetlerini reddetti",
+        "one": "%(severalUsers)s davetlerini reddetti"
+    },
+    "%(oneUser)srejected their invitation %(count)s times": {
+        "one": "%(oneUser)s davetlerini reddetti"
+    },
+    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
+        "one": "%(severalUsers)s davetlerini geri çekti"
+    },
+    "%(oneUser)shad their invitation withdrawn %(count)s times": {
+        "other": "%(oneUser)s davetini %(count)s kez geri çekti",
+        "one": "%(oneUser)s davetini geri çekti"
+    },
+    "were banned %(count)s times": {
+        "other": "%(count)s kez yasaklandı",
+        "one": "yasaklandı"
+    },
+    "was banned %(count)s times": {
+        "other": "%(count)s kez yasaklandı",
+        "one": "yasaklandı"
+    },
+    "were unbanned %(count)s times": {
+        "other": "%(count)s kez yasak kaldırıldı",
+        "one": "yasak kaldırıldı"
+    },
+    "was unbanned %(count)s times": {
+        "other": "%(count)s kez yasak kaldırıldı",
+        "one": "yasak kaldırıldı"
+    },
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posta ile davet etmek için bir kimlik sunucusu kullan. <default> Varsayılanı kullan (%(defaultIdentityServerName)s</default> ya da <settings>Ayarlar</settings> kullanarak yönetin.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "E-posta ile davet için bir kimlik sunucu kullan. <settings>Ayarlar</settings> dan yönet.",
     "The following users may not exist": "Belirtilen kullanıcılar mevcut olmayabilir",
@@ -1009,7 +1056,6 @@
     "Enable": "Aç",
     "The integration manager is offline or it cannot reach your homeserver.": "Entegrasyon yöneticisi çevrim dışı veya anasunucunuza erişemiyor.",
     "Connect this session to Key Backup": "Anahtar Yedekleme için bu oturuma bağlanın",
-    "Backup is not signed by any of your sessions": "Yedek hiç bir oturumunuz tarafından imzalanmadı",
     "This backup is trusted because it has been restored on this session": "Bu yedek güvenilir çünkü bu oturumda geri döndürüldü",
     "Enable desktop notifications for this session": "Bu oturum için masaüstü bildirimlerini aç",
     "Session ID:": "Oturum ID:",
@@ -1020,8 +1066,10 @@
     "Everyone in this room is verified": "Bu odadaki herkes doğrulanmış",
     "Setting up keys": "Anahtarları ayarla",
     "Custom (%(level)s)": "Özel (%(level)s)",
-    "Upload %(count)s other files|other": "%(count)s diğer dosyaları yükle",
-    "Upload %(count)s other files|one": "%(count)s dosyayı sağla",
+    "Upload %(count)s other files": {
+        "other": "%(count)s diğer dosyaları yükle",
+        "one": "%(count)s dosyayı sağla"
+    },
     "Remember my selection for this widget": "Bu görsel bileşen işin seçimimi hatırla",
     "Indexed rooms:": "İndekslenmiş odalar:",
     "Bridges": "Köprüler",
@@ -1036,8 +1084,10 @@
     "Your messages are not secure": "Mesajlarınız korunmuyor",
     "Your homeserver": "Ana sunucunuz",
     "Not Trusted": "Güvenilmiyor",
-    "%(count)s sessions|other": "%(count)s oturum",
-    "%(count)s sessions|one": "%(count)s oturum",
+    "%(count)s sessions": {
+        "other": "%(count)s oturum",
+        "one": "%(count)s oturum"
+    },
     "%(name)s cancelled verifying": "%(name)s doğrulama iptal edildi",
     "Error encountered (%(errorDetail)s).": "Hata oluştu (%(errorDetail)s).",
     "No update available.": "Güncelleme yok.",
@@ -1063,7 +1113,6 @@
     "Session name": "Oturum adı",
     "Session key": "Oturum anahtarı",
     "Recent Conversations": "Güncel Sohbetler",
-    "Suggestions": "Öneriler",
     "Recently Direct Messaged": "Güncel Doğrudan Mesajlar",
     "Go": "Git",
     "Sign In or Create Account": "Oturum Açın veya Hesap Oluşturun",
@@ -1091,7 +1140,10 @@
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
     "Strikethrough": "Üstü çizili",
     "Reject & Ignore user": "Kullanıcı Reddet & Yoksay",
-    "%(count)s unread messages including mentions.|one": "1 okunmamış bahis.",
+    "%(count)s unread messages including mentions.": {
+        "one": "1 okunmamış bahis.",
+        "other": "anmalar dahil okunmayan %(count)s mesaj."
+    },
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Davet geri çekilemiyor. Sunucu geçici bir problem yaşıyor olabilir yada daveti geri çekmek için gerekli izinlere sahip değilsin.",
     "Mark all as read": "Tümünü okunmuş olarak işaretle",
     "Incoming Verification Request": "Gelen Doğrulama İsteği",
@@ -1126,7 +1178,10 @@
     "Join millions for free on the largest public server": "En büyük açık sunucu üzerindeki milyonlara ücretsiz ulaşmak için katılın",
     "This room is not public. You will not be able to rejoin without an invite.": "Bu oda açık bir oda değil. Davet almadan tekrar katılamayacaksınız.",
     "%(creator)s created and configured the room.": "%(creator)s odayı oluşturdu ve yapılandırdı.",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.|other": "%(senderName)s bu odaya alternatif olarak %(addresses)s adreslerini ekledi.",
+    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
+        "other": "%(senderName)s bu odaya alternatif olarak %(addresses)s adreslerini ekledi.",
+        "one": "%(senderName)s bu oda için alternatif adres %(addresses)s ekledi."
+    },
     "Something went wrong trying to invite the users.": "Kullanıcıların davet edilmesinde bir şeyler yanlış gitti.",
     "a new master key signature": "yeni bir master anahtar imzası",
     "a new cross-signing key signature": "yeni bir çapraz-imzalama anahtarı imzası",
@@ -1150,9 +1205,10 @@
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Verilen imza anahtarı %(userld)s'nin/nın %(deviceld)s oturumundan gelen anahtar ile uyumlu. Oturum doğrulanmış olarak işaretlendi.",
     "Forces the current outbound group session in an encrypted room to be discarded": "Şifreli bir odadaki geçerli giden grup oturumunun atılmasını zorlar",
     "%(senderDisplayName)s changed the room name from %(oldRoomName)s to %(newRoomName)s.": "%(senderDisplayName)s oda ismini %(oldRoomName)s bununla değiştirdi %(newRoomName)s.",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.|one": "%(senderName)s bu oda için alternatif adres %(addresses)s ekledi.",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.|other": "%(senderName)s bu oda için alternatif adresleri %(addresses)s sildi.",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.|one": "%(senderName)s bu oda için alternatif adresi %(addresses)s sildi.",
+    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
+        "other": "%(senderName)s bu oda için alternatif adresleri %(addresses)s sildi.",
+        "one": "%(senderName)s bu oda için alternatif adresi %(addresses)s sildi."
+    },
     "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s, %(targetDisplayName)s'nin odaya katılması için daveti iptal etti.",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s %(glob)s ile eşleşen kullanıcıları banlama kuralını kaldırdı",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s %(glob)s ile eşleşen odaları banlama kuralını kaldırdı",
@@ -1183,7 +1239,6 @@
     "Error downloading theme information.": "Tema bilgisi indirilirken hata.",
     "Theme added!": "Tema eklendi!",
     "Add theme": "Tema ekle",
-    "%(count)s unread messages including mentions.|other": "anmalar dahil okunmayan %(count)s mesaj.",
     "Local address": "Yerel adres",
     "Local Addresses": "Yerel Adresler",
     "Trusted": "Güvenilir",
@@ -1522,8 +1577,6 @@
     "The encryption used by this room isn't supported.": "Bu odada kullanılan şifreleme desteklenmiyor.",
     "Encryption not enabled": "Şifreleme etkin değil",
     "Ignored attempt to disable encryption": "Şifrelemeyi devre dışı bırakma denemesi yok sayıldı",
-    "Encryption enabled": "Şifreleme etkin",
-    "Verification cancelled": "Doğrulama iptal edildi",
     "You cancelled verification.": "Doğrulamayı iptal ettiniz.",
     "%(displayName)s cancelled verification.": "%(displayName)s doğrulamayı iptal etti.",
     "Verification timed out.": "Doğrulama zaman aşımına uğradı.",
@@ -1578,7 +1631,6 @@
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Adres oluşturulurken hata ile karşılaşıldı. Sunucu tarafından izin verilmemiş yada geçici bir hata olabilir.",
     "Error creating address": "Adres oluşturulurken hata",
     "Explore public rooms": "Herkese açık odaları keşfet",
-    "People": "İnsanlar",
     "Show Widgets": "Widgetları Göster",
     "Hide Widgets": "Widgetları gizle",
     "No recently visited rooms": "Yakında ziyaret edilen oda yok",
@@ -1671,8 +1723,10 @@
     "Failed to save your profile": "Profiliniz kaydedilemedi",
     "Securely cache encrypted messages locally for them to appear in search results.": "Arama sonuçlarında gozükmeleri için iletileri güvenli bir şekilde yerel olarak önbelleğe al.",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Çapraz imzalı cihazlara güvenmeden, güvenilir olarak işaretlemek için, bir kullanıcı tarafından kullanılan her bir oturumu ayrı ayrı doğrulayın.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.|one": "İletilerin arama sonuçlarında gözükmeleri için %(rooms)s odasından %(size)s  yardımıyla depolayarak, şifrelenmiş iletileri güvenli bir şekilde yerel olarak önbelleğe al.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.|other": "İletilerin arama sonuçlarında gözükmeleri için %(rooms)s odalardan %(size)s yardımıyla depolayarak, şifrelenmiş iletileri güvenli bir şekilde yerel olarak önbelleğe al.",
+    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
+        "one": "İletilerin arama sonuçlarında gözükmeleri için %(rooms)s odasından %(size)s  yardımıyla depolayarak, şifrelenmiş iletileri güvenli bir şekilde yerel olarak önbelleğe al.",
+        "other": "İletilerin arama sonuçlarında gözükmeleri için %(rooms)s odalardan %(size)s yardımıyla depolayarak, şifrelenmiş iletileri güvenli bir şekilde yerel olarak önbelleğe al."
+    },
     "not found in storage": "Cihazda bulunamadı",
     "This bridge was provisioned by <user />.": "Bu köprü <user /> tarafından sağlandı.",
     "Render LaTeX maths in messages": "Mesajlarda LaTex maths işleyin",
@@ -1680,8 +1734,10 @@
     "with state key %(stateKey)s": "%(stateKey)s durum anahtarı ile",
     "Verify all users in a room to ensure it's secure.": "Güvenli olduğuna emin olmak için odadaki tüm kullanıcıları onaylayın.",
     "No recent messages by %(user)s found": "%(user)s kullanıcısın hiç yeni ileti yok",
-    "Show %(count)s more|one": "%(count)s adet daha fazla göster",
-    "Show %(count)s more|other": "%(count)s adet daha fazla göster",
+    "Show %(count)s more": {
+        "one": "%(count)s adet daha fazla göster",
+        "other": "%(count)s adet daha fazla göster"
+    },
     "Activity": "Aktivite",
     "Show previews of messages": "Mesajların ön izlemelerini göster",
     "Show rooms with unread messages first": "Önce okunmamış mesajları olan odaları göster",
@@ -1703,7 +1759,6 @@
     "Widgets": "Widgetlar",
     "Unpin": "Sabitlemeyi kaldır",
     "Download logs": "Günlükleri indir",
-    "User menu": "Kullanıcı menüsü",
     "Notification options": "Bildirim ayarları",
     "Looks good!": "İyi görünüyor!",
     "Security Key": "Güvenlik anahtarı",
@@ -1729,8 +1784,6 @@
     "Approve": "Onayla",
     "Homeserver": "Ana sunucu",
     "Information": "Bilgi",
-    "About": "Hakkında",
-    "Modern": "Modern",
     "Ctrl": "Ctrl",
     "Shift": "Shift",
     "Alt": "Alt",
@@ -1751,7 +1804,6 @@
     "Complete": "Tamamla",
     "Privacy": "Gizlilik",
     "New version available. <a>Update now.</a>": "Yeni sürüm mevcut: <a> Şimdi güncelle.</a>",
-    "Message layout": "Mesaj düzeni",
     "Use between %(min)s pt and %(max)s pt": "%(min)s ile %(max)s arasında girin",
     "Custom font size can only be between %(min)s pt and %(max)s pt": "Özel yazı tipi boyutu %(min)s ile %(max)s arasında olmalı",
     "Size must be a number": "Boyut bir sayı olmalıdır",
@@ -1765,12 +1817,6 @@
     "unexpected type": "Bilinmeyen tür",
     "Back up your keys before signing out to avoid losing them.": "Anahtarlarını kaybetmemek için, çıkış yapmadan önce önleri yedekle.",
     "Algorithm:": "Algoritma:",
-    "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "Yedekleme,<verify>onaylanmamış</verify> oturumdan <validity>geçerli</validity> bir imzaya sahip",
-    "Backup has a <validity>valid</validity> signature from <verify>verified</verify> session <device></device>": "Yedekleme, <verify>onaylanmış</verify> oturumdan <validity>geçerli</validity> bir imzaya sahip<device></device>",
-    "Backup has an <validity>invalid</validity> signature from this session": "Yedekleme, bu oturumdan <validity>geçersiz</validity> bir imzaya sahip",
-    "Backup has a <validity>valid</validity> signature from this session": "Yedekleme bu oturumdan <validity>geçerli</validity> bir imzaya sahip",
-    "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "Yedeklemede, <verify>bilinmeyen</verify> %(deviceId)s ID'sine sahip bir oturumdan imza var",
-    "Backup has a signature from <verify>unknown</verify> user with ID %(deviceId)s": "Yedeklemede, %(deviceId)s ID'sine sahip <verify>bilinmeyen</verify> bir kullanıcı tarafından imza var.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Yalnızca bu oturumda olabilecek anahtarları kaybetmemek için, oturumu kapatmadan önce bu oturumu anahtar yedeklemeye bağlayın.",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s internet tarayıcısında çalışıyorken şifrelenmiş mesajları güvenli bir şekilde önbelleğe alamaz. Şifrelenmiş mesajların arama sonucunda görünmesi için <desktopLink>%(brand)s Masaüstü</desktopLink> kullanın.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s, şifrelenmiş iletileri yerel olarak güvenli bir şekilde önbelleğe almak için gereken bazı bileşenlerden yoksun. Bu özelliği denemek istiyorsanız, <nativeLink> arama bileşenlerinin eklendiği</nativeLink> özel bir masaüstü oluşturun.",
@@ -1951,10 +1997,38 @@
     "Session details": "Oturum detayları",
     "IP address": "IP adresi",
     "Device": "Cihaz",
-    "Click the button below to confirm signing out these devices.|one": "Bu cihazın oturumunu kapatmak için aşağıdaki butona tıkla.",
-    "Click the button below to confirm signing out these devices.|other": "Bu cihazların oturumunu kapatmak için aşağıdaki butona tıkla.",
-    "Confirm signing out these devices|one": "Bu cihazın oturumunu kapatmayı onayla",
-    "Confirm signing out these devices|other": "Şu cihazlardan oturumu kapatmayı onayla",
+    "Click the button below to confirm signing out these devices.": {
+        "one": "Bu cihazın oturumunu kapatmak için aşağıdaki butona tıkla.",
+        "other": "Bu cihazların oturumunu kapatmak için aşağıdaki butona tıkla."
+    },
+    "Confirm signing out these devices": {
+        "one": "Bu cihazın oturumunu kapatmayı onayla",
+        "other": "Şu cihazlardan oturumu kapatmayı onayla"
+    },
     "Current session": "Şimdiki oturum",
-    "Search (must be enabled)": "Arama (etkinleştirilmeli)"
+    "Search (must be enabled)": "Arama (etkinleştirilmeli)",
+    "common": {
+        "about": "Hakkında",
+        "analytics": "Analitik",
+        "encryption_enabled": "Şifreleme etkin",
+        "error": "Hata",
+        "message_layout": "Mesaj düzeni",
+        "modern": "Modern",
+        "mute": "Sessiz",
+        "no_results": "Sonuç yok",
+        "offline": "Çevrimdışı",
+        "password": "Şifre",
+        "people": "İnsanlar",
+        "reactions": "Tepkiler",
+        "security": "Güvenlik",
+        "settings": "Ayarlar",
+        "success": "Başarılı",
+        "suggestions": "Öneriler",
+        "unmute": "Sesi aç",
+        "username": "Kullanıcı Adı",
+        "verification_cancelled": "Doğrulama iptal edildi"
+    },
+    "a11y": {
+        "user_menu": "Kullanıcı menüsü"
+    }
 }

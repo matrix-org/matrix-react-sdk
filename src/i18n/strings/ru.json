@@ -15,7 +15,6 @@
     "Deops user with given id": "Снимает полномочия оператора с пользователя с заданным ID",
     "Displays action": "Отображение действий",
     "Emoji": "Смайлы",
-    "Error": "Ошибка",
     "Export E2E room keys": "Экспорт ключей шифрования",
     "Failed to change password. Is your password correct?": "Не удалось сменить пароль. Вы правильно ввели текущий пароль?",
     "Failed to reject invitation": "Не удалось отклонить приглашение",
@@ -42,12 +41,10 @@
     "Notifications": "Уведомления",
     "<not supported>": "<не поддерживается>",
     "No users have specific privileges in this room": "Ни один пользователь не имеет особых прав в этой комнате",
-    "Password": "Пароль",
     "Permissions": "Права доступа",
     "Phone": "Телефон",
     "Remove": "Удалить",
     "Return to login screen": "Вернуться к экрану входа",
-    "Settings": "Настройки",
     "Unable to add email address": "Не удается добавить email",
     "Unable to remove contact information": "Не удалось удалить контактную информацию",
     "Unable to verify email address.": "Не удалось проверить email.",
@@ -105,8 +102,10 @@
     "Unable to enable Notifications": "Не удалось включить уведомления",
     "Upload Failed": "Сбой отправки файла",
     "Usage": "Использование",
-    "and %(count)s others...|other": "и %(count)s других...",
-    "and %(count)s others...|one": "и ещё кто-то...",
+    "and %(count)s others...": {
+        "other": "и %(count)s других...",
+        "one": "и ещё кто-то..."
+    },
     "Are you sure?": "Вы уверены?",
     "Decrypt %(text)s": "Расшифровать %(text)s",
     "Download %(text)s": "Скачать %(text)s",
@@ -132,7 +131,6 @@
     "New passwords don't match": "Новые пароли не совпадают",
     "not specified": "не задан",
     "No more results": "Больше никаких результатов",
-    "No results": "Нет результатов",
     "OK": "OK",
     "Passwords can't be empty": "Пароли не могут быть пустыми",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверьте свою электронную почту и нажмите на ссылку в письме. После этого нажмите кнопку Продолжить.",
@@ -153,7 +151,6 @@
     "Sign out": "Выйти",
     "Someone": "Кто-то",
     "Submit": "Отправить",
-    "Success": "Успех",
     "This email address is already in use": "Этот адрес электронной почты уже используется",
     "This email address was not found": "Этот адрес электронной почты не найден",
     "The email address linked to your account must be entered.": "Введите адрес электронной почты, связанный с вашей учётной записью.",
@@ -167,7 +164,6 @@
     "Cancel": "Отмена",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Не удается подключиться к домашнему серверу через HTTP, так как в адресной строке браузера указан адрес HTTPS. Используйте HTTPS или <a>включите небезопасные скрипты</a>.",
     "Dismiss": "Закрыть",
-    "Mute": "Приглушить",
     "Operation failed": "Сбой операции",
     "powered by Matrix": "основано на Matrix",
     "Show timestamps in 12 hour format (e.g. 2:30pm)": "Отображать время в 12-часовом формате (напр. 2:30 ПП)",
@@ -175,7 +171,6 @@
     "Camera": "Камера",
     "Microphone": "Микрофон",
     "Start automatically after system login": "Автозапуск при входе в систему",
-    "Analytics": "Аналитика",
     "Default Device": "Устройство по умолчанию",
     "No Webcams detected": "Веб-камера не обнаружена",
     "No media permissions": "Нет разрешённых носителей",
@@ -204,7 +199,6 @@
     "This room is not accessible by remote Matrix servers": "Это комната недоступна из других серверов Matrix",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как у вас нет разрешений на просмотр.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как запрошенный элемент не найден.",
-    "Unmute": "Вернуть право речи",
     "Verified key": "Ключ проверен",
     "You have <a>disabled</a> URL previews by default.": "Предпросмотр ссылок по умолчанию <a>выключен</a> для вас.",
     "You have <a>enabled</a> URL previews by default.": "Предпросмотр ссылок по умолчанию <a>включен</a> для вас.",
@@ -219,7 +213,6 @@
     "Import room keys": "Импорт ключей комнаты",
     "File to import": "Файл для импорта",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Этот процесс позволяет вам экспортировать ключи для сообщений, которые вы получили в комнатах с шифрованием, в локальный файл. Вы сможете импортировать эти ключи в другой клиент Matrix чтобы расшифровать эти сообщения.",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Экспортированный файл позволит любому пользователю расшифровать и зашифровать сообщения, которые вы видите, поэтому вы должны быть крайне осторожны и держать файл в надежном месте. Чтобы поспособствовать этому, ниже вы должны ввести кодовую фразу, которая будет использоваться для шифрования ключей. Вы сможете импортировать ключи только зная эту кодовую фразу.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Этот процесс позволит вам импортировать ключи шифрования, которые вы экспортировали ранее из клиента Matrix. Это позволит вам расшифровать историю чата.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Файл экспорта будет защищен кодовой фразой. Для расшифровки файла необходимо будет её ввести.",
     "You must join the room to see its files": "Вы должны войти в комнату, чтобы просмотреть файлы",
@@ -240,16 +233,17 @@
     "Drop file here to upload": "Перетащите файл сюда для отправки",
     "Online": "Онлайн",
     "Idle": "Неактивен",
-    "Offline": "Не в сети",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s изменил(а) аватар комнаты на <img/>",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s удалил(а) аватар комнаты.",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s изменил(а) аватар комнаты %(roomName)s",
     "Create new room": "Создать комнату",
     "Start chat": "Отправить личное сообщение",
     "Add": "Добавить",
-    "Uploading %(filename)s and %(count)s others|zero": "Отправка %(filename)s",
-    "Uploading %(filename)s and %(count)s others|one": "Отправка %(filename)s и %(count)s другой",
-    "Uploading %(filename)s and %(count)s others|other": "Отправка %(filename)s и %(count)s других",
+    "Uploading %(filename)s": "Отправка %(filename)s",
+    "Uploading %(filename)s and %(count)s others": {
+        "one": "Отправка %(filename)s и %(count)s другой",
+        "other": "Отправка %(filename)s и %(count)s других"
+    },
     "You must <a>register</a> to use this functionality": "Вы должны <a>зарегистрироваться</a>, чтобы использовать эту функцию",
     "New Password": "Новый пароль",
     "Something went wrong!": "Что-то пошло не так!",
@@ -259,13 +253,15 @@
     "Close": "Закрыть",
     "No display name": "Нет отображаемого имени",
     "Start authentication": "Начать аутентификацию",
-    "(~%(count)s results)|other": "(~%(count)s результатов)",
+    "(~%(count)s results)": {
+        "other": "(~%(count)s результатов)",
+        "one": "(~%(count)s результат)"
+    },
     "Decline": "Отклонить",
     "%(roomName)s does not exist.": "%(roomName)s не существует.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s на данный момент недоступна.",
     "Unnamed Room": "Комната без названия",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (уровень прав %(powerLevelNumber)s)",
-    "(~%(count)s results)|one": "(~%(count)s результат)",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Не удается подключиться к домашнему серверу — проверьте подключение, убедитесь, что ваш <a>SSL-сертификат домашнего сервера</a> является доверенным и что расширение браузера не блокирует запросы.",
     "Not a valid %(brand)s keyfile": "Недействительный файл ключей %(brand)s",
     "Your browser does not support the required cryptography extensions": "Ваш браузер не поддерживает необходимые криптографические расширения",
@@ -307,7 +303,9 @@
     "%(senderName)s changed the pinned messages for the room.": "%(senderName)s изменил(а) закреплённые сообщения в этой комнате.",
     "Unknown": "Неизвестно",
     "Unnamed room": "Комната без названия",
-    "And %(count)s more...|other": "Еще %(count)s…",
+    "And %(count)s more...": {
+        "other": "Еще %(count)s…"
+    },
     "Delete Widget": "Удалить виджет",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Удаление виджета действует для всех участников этой комнаты. Вы действительно хотите удалить этот виджет?",
     "Mirror local video feed": "Зеркально отражать видео со своей камеры",
@@ -318,56 +316,98 @@
     "Members only (since they joined)": "Только участники (с момента их входа)",
     "A text message has been sent to %(msisdn)s": "Текстовое сообщение отправлено на %(msisdn)s",
     "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times|other": "%(severalUsers)s присоединились %(count)s раз(а)",
-    "%(severalUsers)sjoined %(count)s times|one": "%(severalUsers)s присоединились",
-    "%(oneUser)sjoined %(count)s times|other": "%(oneUser)s присоединился(лась) %(count)s раз(а)",
-    "%(oneUser)sjoined %(count)s times|one": "%(oneUser)s присоединился(лась)",
-    "%(severalUsers)sleft %(count)s times|other": "%(severalUsers)s покинули %(count)s раз(а)",
-    "%(severalUsers)sleft %(count)s times|one": "%(severalUsers)s покинули",
-    "%(oneUser)sleft %(count)s times|other": "%(oneUser)s покинул(а) %(count)s раз(а)",
-    "%(oneUser)sleft %(count)s times|one": "%(oneUser)s покинул(а)",
-    "%(severalUsers)sjoined and left %(count)s times|other": "%(severalUsers)s присоединились и покинули %(count)s раз(а)",
-    "%(severalUsers)sjoined and left %(count)s times|one": "%(severalUsers)s присоединились и покинули",
-    "%(oneUser)sjoined and left %(count)s times|other": "%(oneUser)s присоединился(лась) и покинул(а) %(count)s раз(а)",
-    "%(oneUser)sjoined and left %(count)s times|one": "%(oneUser)s присоединился(лась) и покинул(а)",
-    "%(severalUsers)sleft and rejoined %(count)s times|other": "%(severalUsers)s покинули и снова присоединились %(count)s раз(а)",
-    "%(severalUsers)sleft and rejoined %(count)s times|one": "%(severalUsers)s покинули и снова присоединились",
-    "%(oneUser)sleft and rejoined %(count)s times|other": "%(oneUser)s покинул(а) и снова присоединился(лась) %(count)s раз(а)",
-    "%(oneUser)sleft and rejoined %(count)s times|one": "%(oneUser)s покинул(а) и снова присоединился(лась)",
-    "were invited %(count)s times|other": "приглашены %(count)s раз(а)",
-    "were invited %(count)s times|one": "приглашены",
-    "was invited %(count)s times|other": "приглашен(а) %(count)s раз(а)",
-    "was invited %(count)s times|one": "приглашен(а)",
-    "were banned %(count)s times|other": "заблокированы %(count)s раз(а)",
-    "were banned %(count)s times|one": "заблокированы",
-    "was banned %(count)s times|other": "заблокирован(а) %(count)s раз(а)",
-    "was banned %(count)s times|one": "заблокирован(а)",
-    "were unbanned %(count)s times|other": "разблокированы %(count)s раз(а)",
-    "were unbanned %(count)s times|one": "разблокированы",
-    "was unbanned %(count)s times|other": "разблокирован(а) %(count)s раз(а)",
-    "was unbanned %(count)s times|one": "разблокирован(а)",
-    "%(severalUsers)schanged their name %(count)s times|other": "%(severalUsers)sизменили имя %(count)s раз(а)",
-    "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)sизменили имя",
-    "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sизменил(а) имя %(count)s раз(а)",
-    "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)sизменил(а) имя",
-    "%(items)s and %(count)s others|other": "%(items)s и ещё %(count)s участника(-ов)",
-    "%(items)s and %(count)s others|one": "%(items)s и ещё кто-то",
+    "%(severalUsers)sjoined %(count)s times": {
+        "other": "%(severalUsers)s присоединились %(count)s раз(а)",
+        "one": "%(severalUsers)s присоединились"
+    },
+    "%(oneUser)sjoined %(count)s times": {
+        "other": "%(oneUser)s присоединился(лась) %(count)s раз(а)",
+        "one": "%(oneUser)s присоединился(лась)"
+    },
+    "%(severalUsers)sleft %(count)s times": {
+        "other": "%(severalUsers)s покинули %(count)s раз(а)",
+        "one": "%(severalUsers)s покинули"
+    },
+    "%(oneUser)sleft %(count)s times": {
+        "other": "%(oneUser)s покинул(а) %(count)s раз(а)",
+        "one": "%(oneUser)s покинул(а)"
+    },
+    "%(severalUsers)sjoined and left %(count)s times": {
+        "other": "%(severalUsers)s присоединились и покинули %(count)s раз(а)",
+        "one": "%(severalUsers)s присоединились и покинули"
+    },
+    "%(oneUser)sjoined and left %(count)s times": {
+        "other": "%(oneUser)s присоединился(лась) и покинул(а) %(count)s раз(а)",
+        "one": "%(oneUser)s присоединился(лась) и покинул(а)"
+    },
+    "%(severalUsers)sleft and rejoined %(count)s times": {
+        "other": "%(severalUsers)s покинули и снова присоединились %(count)s раз(а)",
+        "one": "%(severalUsers)s покинули и снова присоединились"
+    },
+    "%(oneUser)sleft and rejoined %(count)s times": {
+        "other": "%(oneUser)s покинул(а) и снова присоединился(лась) %(count)s раз(а)",
+        "one": "%(oneUser)s покинул(а) и снова присоединился(лась)"
+    },
+    "were invited %(count)s times": {
+        "other": "приглашены %(count)s раз(а)",
+        "one": "приглашены"
+    },
+    "was invited %(count)s times": {
+        "other": "приглашен(а) %(count)s раз(а)",
+        "one": "приглашен(а)"
+    },
+    "were banned %(count)s times": {
+        "other": "заблокированы %(count)s раз(а)",
+        "one": "заблокированы"
+    },
+    "was banned %(count)s times": {
+        "other": "заблокирован(а) %(count)s раз(а)",
+        "one": "заблокирован(а)"
+    },
+    "were unbanned %(count)s times": {
+        "other": "разблокированы %(count)s раз(а)",
+        "one": "разблокированы"
+    },
+    "was unbanned %(count)s times": {
+        "other": "разблокирован(а) %(count)s раз(а)",
+        "one": "разблокирован(а)"
+    },
+    "%(severalUsers)schanged their name %(count)s times": {
+        "other": "%(severalUsers)sизменили имя %(count)s раз(а)",
+        "one": "%(severalUsers)sизменили имя"
+    },
+    "%(oneUser)schanged their name %(count)s times": {
+        "other": "%(oneUser)sизменил(а) имя %(count)s раз(а)",
+        "one": "%(oneUser)sизменил(а) имя"
+    },
+    "%(items)s and %(count)s others": {
+        "other": "%(items)s и ещё %(count)s участника(-ов)",
+        "one": "%(items)s и ещё кто-то"
+    },
     "Room Notification": "Уведомления комнаты",
     "Notify the whole room": "Уведомить всю комнату",
     "Enable inline URL previews by default": "Предпросмотр ссылок по умолчанию",
     "Enable URL previews for this room (only affects you)": "Включить предпросмотр ссылок в этой комнате (влияет только на вас)",
     "Enable URL previews by default for participants in this room": "Включить предпросмотр ссылок для участников этой комнаты по умолчанию",
     "Restricted": "Ограниченный пользователь",
-    "%(severalUsers)srejected their invitations %(count)s times|other": "%(severalUsers)s отклонили приглашения %(count)s раз(а)",
-    "%(severalUsers)srejected their invitations %(count)s times|one": "%(severalUsers)sотклонили приглашения",
+    "%(severalUsers)srejected their invitations %(count)s times": {
+        "other": "%(severalUsers)s отклонили приглашения %(count)s раз(а)",
+        "one": "%(severalUsers)sотклонили приглашения"
+    },
     "URL previews are enabled by default for participants in this room.": "Предпросмотр ссылок по умолчанию включен для участников этой комнаты.",
     "URL previews are disabled by default for participants in this room.": "Предпросмотр ссылок по умолчанию выключен для участников этой комнаты.",
-    "%(oneUser)srejected their invitation %(count)s times|other": "%(oneUser)sотклонил(а) приглашение %(count)s раз(а)",
-    "%(oneUser)srejected their invitation %(count)s times|one": "%(oneUser)sотклонил(а) приглашение",
-    "%(severalUsers)shad their invitations withdrawn %(count)s times|other": "%(severalUsers)sотозвали приглашения %(count)s раз(а)",
-    "%(severalUsers)shad their invitations withdrawn %(count)s times|one": "%(severalUsers)sотозвали приглашения",
-    "%(oneUser)shad their invitation withdrawn %(count)s times|other": "%(oneUser)sотклонил(а) приглашение %(count)s раз(а)",
-    "%(oneUser)shad their invitation withdrawn %(count)s times|one": "%(oneUser)sотозвал(а) приглашение",
+    "%(oneUser)srejected their invitation %(count)s times": {
+        "other": "%(oneUser)sотклонил(а) приглашение %(count)s раз(а)",
+        "one": "%(oneUser)sотклонил(а) приглашение"
+    },
+    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
+        "other": "%(severalUsers)sотозвали приглашения %(count)s раз(а)",
+        "one": "%(severalUsers)sотозвали приглашения"
+    },
+    "%(oneUser)shad their invitation withdrawn %(count)s times": {
+        "other": "%(oneUser)sотклонил(а) приглашение %(count)s раз(а)",
+        "one": "%(oneUser)sотозвал(а) приглашение"
+    },
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Обратите внимание, что вы заходите на сервер %(hs)s, а не на matrix.org.",
     "%(duration)ss": "%(duration)s сек",
     "%(duration)sm": "%(duration)s мин",
@@ -503,8 +543,10 @@
     "%(senderName)s set the main address for this room to %(address)s.": "%(senderName)s установил(а) %(address)s в качестве главного адреса комнаты.",
     "%(senderName)s removed the main address for this room.": "%(senderName)s удалил главный адрес комнаты.",
     "%(displayName)s is typing …": "%(displayName)s печатает…",
-    "%(names)s and %(count)s others are typing …|other": "%(names)s и %(count)s других печатают…",
-    "%(names)s and %(count)s others are typing …|one": "%(names)s и ещё кто-то печатают…",
+    "%(names)s and %(count)s others are typing …": {
+        "other": "%(names)s и %(count)s других печатают…",
+        "one": "%(names)s и ещё кто-то печатают…"
+    },
     "%(names)s and %(lastPerson)s are typing …": "%(names)s и %(lastPerson)s печатают…",
     "This homeserver has hit its Monthly Active User limit.": "Сервер достиг ежемесячного ограничения активных пользователей.",
     "This homeserver has exceeded one of its resource limits.": "Превышен один из лимитов на ресурсы сервера.",
@@ -616,7 +658,6 @@
     "Unable to restore backup": "Невозможно восстановить резервную копию",
     "No backup found!": "Резервных копий не найдено!",
     "Download": "Скачать",
-    "Username": "Псевдоним",
     "Email (optional)": "Адрес электронной почты (не обязательно)",
     "Phone (optional)": "Телефон (не обязательно)",
     "Confirm": "Подтвердить",
@@ -818,8 +859,10 @@
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Этот файл <b>слишком большой</b> для загрузки. Лимит размера файла составляет %(limit)s но этот файл %(sizeOfThisFile)s.",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Эти файлы <b>слишком большие</b> для загрузки. Лимит размера файла составляет %(limit)s.",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Некоторые файлы имеют <b>слишком большой размер</b>, чтобы их можно было загрузить. Лимит размера файла составляет %(limit)s.",
-    "Upload %(count)s other files|other": "Загрузка %(count)s других файлов",
-    "Upload %(count)s other files|one": "Загрузка %(count)s другого файла",
+    "Upload %(count)s other files": {
+        "other": "Загрузка %(count)s других файлов",
+        "one": "Загрузка %(count)s другого файла"
+    },
     "Cancel All": "Отменить все",
     "Upload Error": "Ошибка загрузки",
     "Remember my selection for this widget": "Запомнить мой выбор для этого виджета",
@@ -844,8 +887,10 @@
     "Join millions for free on the largest public server": "Присоединяйтесь бесплатно к миллионам на крупнейшем общедоступном сервере",
     "Couldn't load page": "Невозможно загрузить страницу",
     "Add room": "Добавить комнату",
-    "You have %(count)s unread notifications in a prior version of this room.|other": "У вас есть %(count)s непрочитанных уведомлений в предыдущей версии этой комнаты.",
-    "You have %(count)s unread notifications in a prior version of this room.|one": "В предыдущей версии этой комнаты у вас есть непрочитанное уведомление %(count)s.",
+    "You have %(count)s unread notifications in a prior version of this room.": {
+        "other": "У вас есть %(count)s непрочитанных уведомлений в предыдущей версии этой комнаты.",
+        "one": "В предыдущей версии этой комнаты у вас есть непрочитанное уведомление %(count)s."
+    },
     "Guest": "Гость",
     "Could not load user profile": "Не удалось загрузить профиль пользователя",
     "Your password has been reset.": "Ваш пароль был сброшен.",
@@ -891,10 +936,14 @@
     "Registration Successful": "Регистрация успешно завершена",
     "Show all": "Показать все",
     "Edited at %(date)s. Click to view edits.": "Изменено %(date)s. Нажмите для посмотра истории изменений.",
-    "%(severalUsers)smade no changes %(count)s times|other": "%(severalUsers)sничего не изменили %(count)s раз(а)",
-    "%(severalUsers)smade no changes %(count)s times|one": "%(severalUsers)sне внёс изменений",
-    "%(oneUser)smade no changes %(count)s times|other": "%(oneUser)sничего не изменил(а) %(count)s раз(а)",
-    "%(oneUser)smade no changes %(count)s times|one": "%(oneUser)sне внёс изменений",
+    "%(severalUsers)smade no changes %(count)s times": {
+        "other": "%(severalUsers)sничего не изменили %(count)s раз(а)",
+        "one": "%(severalUsers)sне внёс изменений"
+    },
+    "%(oneUser)smade no changes %(count)s times": {
+        "other": "%(oneUser)sничего не изменил(а) %(count)s раз(а)",
+        "one": "%(oneUser)sне внёс изменений"
+    },
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Пожалуйста, расскажите нам что пошло не так, либо, ещё лучше, создайте отчёт в GitHub с описанием проблемы.",
     "Removing…": "Удаление…",
     "Clear all data": "Очистить все данные",
@@ -996,8 +1045,10 @@
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Попробуйте пролистать ленту сообщений вверх, чтобы увидеть, есть ли более ранние.",
     "Remove recent messages by %(user)s": "Удалить последние сообщения от %(user)s",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Для большого количества сообщений это может занять некоторое время. Пожалуйста, не обновляйте своего клиента в это время.",
-    "Remove %(count)s messages|other": "Удалить %(count)s сообщения(-й)",
-    "Remove %(count)s messages|one": "Удалить 1 сообщение",
+    "Remove %(count)s messages": {
+        "other": "Удалить %(count)s сообщения(-й)",
+        "one": "Удалить 1 сообщение"
+    },
     "Deactivate user?": "Деактивировать пользователя?",
     "Deactivate user": "Деактивировать пользователя",
     "Remove recent messages": "Удалить последние сообщения",
@@ -1005,7 +1056,10 @@
     "Italics": "Курсив",
     "Strikethrough": "Перечёркнутый",
     "Code block": "Блок кода",
-    "%(count)s unread messages.|other": "%(count)s непрочитанных сообщения(-й).",
+    "%(count)s unread messages.": {
+        "other": "%(count)s непрочитанных сообщения(-й).",
+        "one": "1 непрочитанное сообщение."
+    },
     "Show image": "Показать изображение",
     "e.g. my-room": "например, моя-комната",
     "Close dialog": "Закрыть диалог",
@@ -1025,7 +1079,10 @@
     "This invite to %(roomName)s was sent to %(email)s": "Это приглашение в %(roomName)s было отправлено на %(email)s",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Используйте сервер идентификации в Настройках для получения приглашений непосредственно в %(brand)s.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Введите адрес эл.почты в Настройках, чтобы получать приглашения прямо в %(brand)s.",
-    "%(count)s unread messages including mentions.|other": "%(count)s непрочитанных сообщения(-й), включая упоминания.",
+    "%(count)s unread messages including mentions.": {
+        "other": "%(count)s непрочитанных сообщения(-й), включая упоминания.",
+        "one": "1 непрочитанное упоминание."
+    },
     "Failed to deactivate user": "Не удалось деактивировать пользователя",
     "This client does not support end-to-end encryption.": "Этот клиент не поддерживает сквозное шифрование.",
     "Messages in this room are not end-to-end encrypted.": "Сообщения в этой комнате не защищены сквозным шифрованием.",
@@ -1058,8 +1115,6 @@
     "Jump to first unread room.": "Перейти в первую непрочитанную комнату.",
     "Jump to first invite.": "Перейти к первому приглашению.",
     "Trust": "Доверие",
-    "%(count)s unread messages including mentions.|one": "1 непрочитанное упоминание.",
-    "%(count)s unread messages.|one": "1 непрочитанное сообщение.",
     "Unread messages.": "Непрочитанные сообщения.",
     "Message Actions": "Сообщение действий",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Это действие требует по умолчанию доступа к серверу идентификации <server/> для подтверждения адреса электронной почты или номера телефона, но у сервера нет никакого пользовательского соглашения.",
@@ -1076,7 +1131,10 @@
     "Enable audible notifications for this session": "Звуковые уведомления для этого сеанса",
     "Manage integrations": "Управление интеграциями",
     "Direct Messages": "Личные сообщения",
-    "%(count)s sessions|other": "Сеансов: %(count)s",
+    "%(count)s sessions": {
+        "other": "Сеансов: %(count)s",
+        "one": "%(count)s сеанс"
+    },
     "Hide sessions": "Свернуть сеансы",
     "Verify this session": "Заверьте этот сеанс",
     "Verifies a user, session, and pubkey tuple": "Проверяет пользователя, сеанс и публичные ключи",
@@ -1142,10 +1200,14 @@
     "Sends a message as html, without interpreting it as markdown": "Отправить сообщение как html, не интерпретируя его как markdown",
     "Displays information about a user": "Показать информацию о пользователе",
     "%(senderDisplayName)s changed the room name from %(oldRoomName)s to %(newRoomName)s.": "%(senderDisplayName)s изменил(а) название комнаты с %(oldRoomName)s на %(newRoomName)s.",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.|other": "%(senderName)s добавил(а) альтернативные адреса %(addresses)s для этой комнаты.",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.|one": "%(senderName)s добавил(а) альтернативные адреса %(addresses)s для этой комнаты.",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.|other": "%(senderName)s удалил(а) альтернативные адреса %(addresses)s для этой комнаты.",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.|one": "%(senderName)s удалил(а) альтернативные адреса %(addresses)s для этой комнаты.",
+    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
+        "other": "%(senderName)s добавил(а) альтернативные адреса %(addresses)s для этой комнаты.",
+        "one": "%(senderName)s добавил(а) альтернативные адреса %(addresses)s для этой комнаты."
+    },
+    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
+        "other": "%(senderName)s удалил(а) альтернативные адреса %(addresses)s для этой комнаты.",
+        "one": "%(senderName)s удалил(а) альтернативные адреса %(addresses)s для этой комнаты."
+    },
     "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s изменил(а) альтернативные адреса для этой комнаты.",
     "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s изменил(а) главный и альтернативные адреса для этой комнаты.",
     "%(senderName)s changed the addresses for this room.": "%(senderName)s изменил(а) адреса для этой комнаты.",
@@ -1190,7 +1252,6 @@
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Это сеанс <b>не сохраняет ваши ключи</b>, но у вас есть резервная копия, из которой вы можете их восстановить.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Подключите этот сеанс к резервированию ключей до выхода, чтобы избежать утраты доступных только в этом сеансе ключей.",
     "Connect this session to Key Backup": "Подключить этот сеанс к резервированию ключей",
-    "Backup is not signed by any of your sessions": "Резервная копия не подписана ни одним из ваших сеансов",
     "This backup is trusted because it has been restored on this session": "Эта резервная копия является доверенной, потому что она была восстановлена в этом сеансе",
     "Invalid theme schema.": "Неверная схема темы.",
     "Error downloading theme information.": "Ошибка при загрузке информации темы.",
@@ -1207,7 +1268,6 @@
     "Unsubscribe": "Отписаться",
     "View rules": "Посмотреть правила",
     "You are currently subscribed to:": "Вы подписаны на:",
-    "Security": "Безопасность",
     "Verify by scanning": "Подтверждение сканированием",
     "Ask %(displayName)s to scan your code:": "Попросите %(displayName)s отсканировать ваш код:",
     "Verify by emoji": "Подтверждение с помощью смайлов",
@@ -1281,14 +1341,13 @@
     "Your homeserver": "Ваш домашний сервер",
     "Trusted": "Заверенный",
     "Not trusted": "Незаверенный",
-    "%(count)s verified sessions|other": "Заверенных сеансов: %(count)s",
-    "%(count)s verified sessions|one": "1 заверенный сеанс",
+    "%(count)s verified sessions": {
+        "other": "Заверенных сеансов: %(count)s",
+        "one": "1 заверенный сеанс"
+    },
     "Hide verified sessions": "Свернуть заверенные сеансы",
-    "%(count)s sessions|one": "%(count)s сеанс",
     "Verification timed out.": "Таймаут подтверждения.",
     "You cancelled verification.": "Вы отменили подтверждение.",
-    "Verification cancelled": "Подтверждение отменено",
-    "Encryption enabled": "Шифрование включено",
     "Error removing ignored user/server": "Ошибка при удалении игнорируемого пользователя/сервера",
     "Please try again or view your console for hints.": "Попробуйте снова или посмотрите сообщения в консоли.",
     "Ban list rules - %(roomName)s": "Правила блокировки — %(roomName)s",
@@ -1297,10 +1356,6 @@
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Подтвердите удаление учётной записи с помощью единой точки входа.",
     "Are you sure you want to deactivate your account? This is irreversible.": "Вы уверены, что хотите деактивировать свою учётную запись? Это необратимое действие.",
     "Confirm account deactivation": "Подтвердите деактивацию учётной записи",
-    "Backup has a <validity>valid</validity> signature from this user": "У резервной копии <validity>верная</validity> подпись этого пользователя",
-    "Backup has a <validity>invalid</validity> signature from this user": "У резервной копии <validity>неверная</validity> подпись этого пользователя",
-    "Backup has a signature from <verify>unknown</verify> user with ID %(deviceId)s": "У резервной копии подпись <verify>неизвестного</verify> пользователя с ID %(deviceId)s",
-    "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s": "У резервной копии подпись <verify>неподтверждённого</verify> сеанса с ID %(deviceId)s",
     "If this isn't what you want, please use a different tool to ignore users.": "Если вас это не устраивает, попробуйте другой инструмент для игнорирования пользователей.",
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "Совет: поставьте <code>//</code> в начале сообщения, чтобы начать его с косой черты.",
     "Almost there! Is %(displayName)s showing the same shield?": "Почти готово! Отображает ли %(displayName)s такой же щит?",
@@ -1318,7 +1373,6 @@
     "%(name)s cancelled": "%(name)s отменил(а)",
     "%(name)s wants to verify": "%(name)s желает подтвердить",
     "You sent a verification request": "Вы отправили запрос подтверждения",
-    "Reactions": "Реакции",
     "Your display name": "Отображаемое имя",
     "One of the following may be compromised:": "Что-то из этого может быть скомпрометировано:",
     "%(name)s cancelled verifying": "%(name)s отменил(а) подтверждение",
@@ -1355,12 +1409,6 @@
     "Securely cache encrypted messages locally for them to appear in search results.": "Безопасно кэшировать шифрованные сообщения локально, чтобы они появлялись в результатах поиска.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "Отсутствуют некоторые необходимые компоненты для %(brand)s, чтобы безопасно кэшировать шифрованные сообщения локально. Если вы хотите попробовать эту возможность, соберите самостоятельно %(brand)s Desktop с <nativeLink>добавлением поисковых компонентов</nativeLink>.",
     "not stored": "не сохранено",
-    "Backup has a <validity>valid</validity> signature from this session": "У резервной копии <validity>верная</validity> подпись этого сеанса",
-    "Backup has an <validity>invalid</validity> signature from this session": "У резервной копии <validity>неверная</validity> подпись этого сеанса",
-    "Backup has a <validity>valid</validity> signature from <verify>verified</verify> session <device></device>": "У резервной копии <validity>верная</validity>подпись <verify>подтверждённого</verify> сеанса <device></device>",
-    "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "У резервной копии <validity>верная</validity>подпись <verify>неподтверждённого</verify> сеанса <device></device>",
-    "Backup has an <validity>invalid</validity> signature from <verify>verified</verify> session <device></device>": "У резервной копии <validity>неверная</validity>подпись <verify>подтверждённого</verify> сеанса <device></device>",
-    "Backup has an <validity>invalid</validity> signature from <verify>unverified</verify> session <device></device>": "У резервной копии <validity>неверная</validity> подпись <verify>неподтверждённого</verify> сеанса <device></device>",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Эта комната пересылает сообщения с помощью моста на следующие платформы. <a>Подробнее</a>",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Для дополнительной безопасности подтвердите этого пользователя, сравнив одноразовый код на ваших устройствах.",
     "Start verification again from their profile.": "Начните подтверждение заново в профиле пользователя.",
@@ -1368,7 +1416,6 @@
     "Light": "Светлая",
     "Dark": "Темная",
     "Recent Conversations": "Недавние Диалоги",
-    "Suggestions": "Предложения",
     "a key signature": "отпечаток ключа",
     "Upload completed": "Отправка успешно завершена",
     "Cancelled signature upload": "Отправка отпечатка отменена",
@@ -1402,8 +1449,6 @@
     "Size must be a number": "Размер должен быть числом",
     "Custom font size can only be between %(min)s pt and %(max)s pt": "Пользовательский размер шрифта может быть только между %(min)s pt и %(max)s pt",
     "Use between %(min)s pt and %(max)s pt": "Введите значение между %(min)s pt и %(max)s pt",
-    "Message layout": "Макет сообщения",
-    "Modern": "Новый",
     "Set the name of a font installed on your system & %(brand)s will attempt to use it.": "Установите имя шрифта, установленного в вашей системе, и %(brand)s попытается его использовать.",
     "Customise your appearance": "Настройка внешнего вида",
     "Remove for everyone": "Убрать для всех",
@@ -1417,7 +1462,6 @@
     "System font name": "Название системного шрифта",
     "Please verify the room ID or address and try again.": "Проверьте ID комнаты или адрес и попробуйте снова.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Администратор вашего сервера отключил сквозное шифрование по умолчанию в приватных комнатах и диалогах.",
-    "People": "Люди",
     "Explore Public Rooms": "Просмотреть публичные комнаты",
     "Appearance": "Внешний вид",
     "Show rooms with unread messages first": "Комнаты с непрочитанными сообщениями в начале",
@@ -1426,7 +1470,10 @@
     "Activity": "По активности",
     "A-Z": "А-Я",
     "List options": "Настройки списка",
-    "Show %(count)s more|other": "Показать ещё %(count)s",
+    "Show %(count)s more": {
+        "other": "Показать ещё %(count)s",
+        "one": "Показать ещё %(count)s"
+    },
     "Notification options": "Настройки уведомлений",
     "Favourited": "В избранном",
     "Room options": "Настройки комнаты",
@@ -1436,7 +1483,6 @@
     "Feedback": "Отзыв",
     "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
     "Appearance Settings only affect this %(brand)s session.": "Настройки внешнего вида работают только в этом сеансе %(brand)s.",
-    "Show %(count)s more|one": "Показать ещё %(count)s",
     "Forget Room": "Забыть комнату",
     "This room is public": "Это публичная комната",
     "Away": "Отошёл(ла)",
@@ -1536,7 +1582,6 @@
     "Confirm your identity by entering your account password below.": "Подтвердите свою личность, введя пароль учетной записи ниже.",
     "Sign in with SSO": "Вход с помощью SSO",
     "Switch theme": "Сменить тему",
-    "User menu": "Меню пользователя",
     "If you've joined lots of rooms, this might take a while": "Если вы присоединились к большому количеству комнат, это может занять некоторое время",
     "Confirm encryption setup": "Подтвердите настройку шифрования",
     "Click the button below to confirm setting up encryption.": "Нажмите кнопку ниже, чтобы подтвердить настройку шифрования.",
@@ -1617,7 +1662,6 @@
     "Prepends ( ͡° ͜ʖ ͡°) to a plain-text message": "Добавляет ( ͡° ͜ʖ ͡°) в начало сообщения",
     "Unknown App": "Неизвестное приложение",
     "Not encrypted": "Не зашифровано",
-    "About": "О комнате",
     "Room settings": "Настройки комнаты",
     "Take a picture": "Сделать снимок",
     "Unpin": "Открепить",
@@ -1660,7 +1704,9 @@
     "Data on this screen is shared with %(widgetDomain)s": "Данные на этом экране используются %(widgetDomain)s",
     "Modal Widget": "Модальный виджет",
     "Ignored attempt to disable encryption": "Игнорируемая попытка отключить шифрование",
-    "You can only pin up to %(count)s widgets|other": "Вы можете закрепить не более %(count)s виджетов",
+    "You can only pin up to %(count)s widgets": {
+        "other": "Вы можете закрепить не более %(count)s виджетов"
+    },
     "Show Widgets": "Показать виджеты",
     "Hide Widgets": "Скрыть виджеты",
     "%(senderDisplayName)s changed the server ACLs for this room.": "%(senderDisplayName)s изменил(а) серверные разрешения для этой комнаты.",
@@ -1671,7 +1717,6 @@
     "Send feedback": "Отправить отзыв",
     "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "СОВЕТ ДЛЯ ПРОФЕССИОНАЛОВ: если вы запустите ошибку, отправьте <debugLogsLink>журналы отладки</debugLogsLink>, чтобы помочь нам отследить проблему.",
     "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Пожалуйста, сначала просмотрите <existingIssuesLink>существующие ошибки на Github</existingIssuesLink>. Нет совпадений? <newIssueLink>Сообщите о новой</newIssueLink>.",
-    "Report a bug": "Сообщить об ошибке",
     "Comment": "Комментарий",
     "Feedback sent": "Отзыв отправлен",
     "%(senderName)s ended the call": "%(senderName)s завершил(а) звонок",
@@ -1711,8 +1756,10 @@
     "Got an account? <a>Sign in</a>": "Есть учётная запись? <a>Войти</a>",
     "New here? <a>Create an account</a>": "Впервые здесь? <a>Создать учётную запись</a>",
     "Render LaTeX maths in messages": "Отображать математику LaTeX в сообщениях",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.|one": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из %(rooms)s комнаты.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.|other": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из комнат (%(rooms)s).",
+    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
+        "one": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из %(rooms)s комнаты.",
+        "other": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из комнат (%(rooms)s)."
+    },
     "Unable to validate homeserver": "Невозможно проверить домашний сервер",
     "Sign into your homeserver": "Войдите на свой домашний сервер",
     "with state key %(stateKey)s": "с ключом состояния %(stateKey)s",
@@ -2134,10 +2181,14 @@
     "Caution:": "Предупреждение:",
     "Suggested": "Рекомендуется",
     "This room is suggested as a good one to join": "Эта комната рекомендуется, чтобы присоединиться",
-    "%(count)s rooms|one": "%(count)s комната",
-    "%(count)s rooms|other": "%(count)s комнат",
-    "%(count)s members|one": "%(count)s участник",
-    "%(count)s members|other": "%(count)s участников",
+    "%(count)s rooms": {
+        "one": "%(count)s комната",
+        "other": "%(count)s комнат"
+    },
+    "%(count)s members": {
+        "one": "%(count)s участник",
+        "other": "%(count)s участников"
+    },
     "You don't have permission": "У вас нет разрешения",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Уверены, что хотите покинуть пространство \"%(spaceName)s\"?",
     "This space is not public. You will not be able to rejoin without an invite.": "Это пространство не публично. Вы не сможете вновь войти без приглашения.",
@@ -2210,7 +2261,6 @@
     "Share %(name)s": "Поделиться %(name)s",
     "Skip for now": "Пропустить сейчас",
     "Failed to create initial space rooms": "Не удалось создать первоначальные комнаты пространства",
-    "Room name": "Название комнаты",
     "Support": "Поддержка",
     "Random": "Случайный",
     "Welcome to <name/>": "Добро пожаловать в <name/>",
@@ -2246,8 +2296,10 @@
     "Enter your Security Phrase a second time to confirm it.": "Введите секретную фразу второй раз, чтобы подтвердить ее.",
     "Space Autocomplete": "Автозаполнение пространства",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Подтвердите свою личность, чтобы получить доступ к зашифрованным сообщениям и доказать свою личность другим.",
-    "Currently joining %(count)s rooms|one": "Сейчас вы состоите в %(count)s комнате",
-    "Currently joining %(count)s rooms|other": "Сейчас вы состоите в %(count)s комнатах",
+    "Currently joining %(count)s rooms": {
+        "one": "Сейчас вы состоите в %(count)s комнате",
+        "other": "Сейчас вы состоите в %(count)s комнатах"
+    },
     "You can add more later too, including already existing ones.": "Позже можно добавить и другие, в том числе уже существующие.",
     "Let's create a room for each of them.": "Давайте создадим для каждого из них отдельную комнату.",
     "What are some things you want to discuss in %(spaceName)s?": "Какие вещи вы хотите обсуждать в %(spaceName)s?",
@@ -2321,7 +2373,6 @@
     "Your platform and username will be noted to help us use your feedback as much as we can.": "Ваша платформа и имя пользователя будут отмечены, чтобы мы могли максимально использовать ваш отзыв.",
     "Search for rooms or people": "Поиск комнат или людей",
     "Message preview": "Просмотр сообщения",
-    "Forward message": "Переслать сообщение",
     "Sent": "Отправлено",
     "Sending": "Отправка",
     "You don't have permission to do this": "У вас нет на это разрешения",
@@ -2348,8 +2399,10 @@
     "Search for rooms": "Поиск комнат",
     "Want to add a new room instead?": "Хотите добавить новую комнату?",
     "Add existing rooms": "Добавить существующие комнаты",
-    "Adding rooms... (%(progress)s out of %(count)s)|one": "Добавление комнаты…",
-    "Adding rooms... (%(progress)s out of %(count)s)|other": "Добавление комнат… (%(progress)s из %(count)s)",
+    "Adding rooms... (%(progress)s out of %(count)s)": {
+        "one": "Добавление комнаты…",
+        "other": "Добавление комнат… (%(progress)s из %(count)s)"
+    },
     "Not all selected were added": "Не все выбранные добавлены",
     "Search for spaces": "Поиск пространств",
     "Create a new space": "Создать новое пространство",
@@ -2357,17 +2410,25 @@
     "Add existing space": "Добавить существующее пространство",
     "You are not allowed to view this server's rooms list": "Вам не разрешено просматривать список комнат этого сервера",
     "Please provide an address": "Пожалуйста, укажите адрес",
-    "%(oneUser)schanged the server ACLs %(count)s times|one": "%(oneUser)sизменил(а) разрешения сервера",
-    "%(oneUser)schanged the server ACLs %(count)s times|other": "%(oneUser)sизменил(а) разрешения сервера %(count)s раз(а)",
-    "%(severalUsers)schanged the server ACLs %(count)s times|one": "%(severalUsers)sизменили разрешения сервера",
-    "%(severalUsers)schanged the server ACLs %(count)s times|other": "%(severalUsers)sизменили разрешения сервера %(count)s раз(а)",
+    "%(oneUser)schanged the server ACLs %(count)s times": {
+        "one": "%(oneUser)sизменил(а) разрешения сервера",
+        "other": "%(oneUser)sизменил(а) разрешения сервера %(count)s раз(а)"
+    },
+    "%(severalUsers)schanged the server ACLs %(count)s times": {
+        "one": "%(severalUsers)sизменили разрешения сервера",
+        "other": "%(severalUsers)sизменили разрешения сервера %(count)s раз(а)"
+    },
     "Zoom in": "Увеличить",
     "Zoom out": "Уменьшить",
-    "%(count)s people you know have already joined|one": "%(count)s человек, которого вы знаете, уже присоединился",
-    "%(count)s people you know have already joined|other": "%(count)s человек(а), которых вы знаете, уже присоединились",
+    "%(count)s people you know have already joined": {
+        "one": "%(count)s человек, которого вы знаете, уже присоединился",
+        "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
+    },
     "Including %(commaSeparatedMembers)s": "Включая %(commaSeparatedMembers)s",
-    "View all %(count)s members|one": "Посмотреть 1 участника",
-    "View all %(count)s members|other": "Просмотреть всех %(count)s участников",
+    "View all %(count)s members": {
+        "one": "Посмотреть 1 участника",
+        "other": "Просмотреть всех %(count)s участников"
+    },
     "Share content": "Поделиться содержимым",
     "Application window": "Окно приложения",
     "Share entire screen": "Поделиться всем экраном",
@@ -2376,8 +2437,6 @@
     "Error loading Widget": "Ошибка загрузки виджета",
     "Add reaction": "Отреагировать",
     "Error processing voice message": "Ошибка при обработке голосового сообщения",
-    "Image": "Изображение",
-    "Sticker": "Наклейка",
     "Error processing audio message": "Ошибка обработки звукового сообщения",
     "Decrypting": "Расшифровка",
     "The call is in an unknown state!": "Вызов в неизвестном состоянии!",
@@ -2406,8 +2465,10 @@
     "End-to-end encryption isn't enabled": "Сквозное шифрование не включено",
     "Invite to just this room": "Пригласить только в эту комнату",
     "%(seconds)ss left": "%(seconds)s осталось",
-    "Show %(count)s other previews|one": "Показать %(count)s другой предварительный просмотр",
-    "Show %(count)s other previews|other": "Показать %(count)s других предварительных просмотров",
+    "Show %(count)s other previews": {
+        "one": "Показать %(count)s другой предварительный просмотр",
+        "other": "Показать %(count)s других предварительных просмотров"
+    },
     "Failed to send": "Не удалось отправить",
     "Access": "Доступ",
     "People with supported clients will be able to join the room without having a registered account.": "Люди с поддерживаемыми клиентами смогут присоединиться к комнате, не имея зарегистрированной учётной записи.",
@@ -2416,8 +2477,14 @@
     "Anyone in a space can find and join. You can select multiple spaces.": "Любой человек в пространстве может найти и присоединиться. Вы можете выбрать несколько пространств.",
     "Spaces with access": "Пространства с доступом",
     "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Любой человек в пространстве может найти и присоединиться. <a>Укажите здесь, какие пространства могут получить доступ.</a>",
-    "Currently, %(count)s spaces have access|other": "В настоящее время %(count)s пространств имеют доступ",
-    "& %(count)s more|other": "и %(count)s ещё",
+    "Currently, %(count)s spaces have access": {
+        "other": "В настоящее время %(count)s пространств имеют доступ",
+        "one": "В настоящее время пространство имеет доступ"
+    },
+    "& %(count)s more": {
+        "other": "и %(count)s ещё",
+        "one": "и %(count)s еще"
+    },
     "Upgrade required": "Требуется обновление",
     "Anyone can find and join.": "Любой желающий может найти и присоединиться.",
     "Only invited people can join.": "Присоединиться могут только приглашенные люди.",
@@ -2534,8 +2601,6 @@
     "Change space name": "Изменить название пространства",
     "Change space avatar": "Изменить аватар пространства",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Любой человек в <spaceName/> может найти и присоединиться. Вы можете выбрать и другие пространства.",
-    "Currently, %(count)s spaces have access|one": "В настоящее время пространство имеет доступ",
-    "& %(count)s more|one": "и %(count)s еще",
     "Cross-signing is ready but keys are not backed up.": "Кросс-подпись готова, но ключи не резервируются.",
     "Autoplay videos": "Автовоспроизведение видео",
     "Autoplay GIFs": "Автовоспроизведение GIF",
@@ -2551,7 +2616,6 @@
     "Would you like to leave the rooms in this space?": "Хотите ли вы покинуть комнаты в этом пространстве?",
     "You are about to leave <spaceName/>.": "Вы собираетесь покинуть <spaceName/>.",
     "%(reactors)s reacted with %(content)s": "%(reactors)s отреагировали %(content)s",
-    "Message": "Отправить личное сообщение",
     "Message didn't send. Click for info.": "Сообщение не отправлено. Нажмите для получения информации.",
     "To join a space you'll need an invite.": "Чтобы присоединиться к пространству, вам нужно получить приглашение.",
     "Include Attachments": "Включить вложения",
@@ -2601,10 +2665,14 @@
     "Thread": "Обсуждение",
     "Reply to thread…": "Ответить на обсуждение…",
     "Reply to encrypted thread…": "Ответить на зашифрованное обсуждение…",
-    "Updating spaces... (%(progress)s out of %(count)s)|one": "Обновление пространства…",
-    "Updating spaces... (%(progress)s out of %(count)s)|other": "Обновление пространств... (%(progress)s из %(count)s)",
-    "Sending invites... (%(progress)s out of %(count)s)|one": "Отправка приглашения…",
-    "Sending invites... (%(progress)s out of %(count)s)|other": "Отправка приглашений... (%(progress)s из %(count)s)",
+    "Updating spaces... (%(progress)s out of %(count)s)": {
+        "one": "Обновление пространства…",
+        "other": "Обновление пространств... (%(progress)s из %(count)s)"
+    },
+    "Sending invites... (%(progress)s out of %(count)s)": {
+        "one": "Отправка приглашения…",
+        "other": "Отправка приглашений... (%(progress)s из %(count)s)"
+    },
     "Loading new room": "Загрузка новой комнаты",
     "Upgrading room": "Обновление комнаты",
     "Ban from %(roomName)s": "Заблокировать в %(roomName)s",
@@ -2622,8 +2690,10 @@
     "They'll still be able to access whatever you're not an admin of.": "Они по-прежнему смогут получить доступ ко всему, где вы не являетесь администратором.",
     "Disinvite from %(roomName)s": "Отменить приглашение из %(roomName)s",
     "Threads": "Обсуждения",
-    "%(count)s reply|one": "%(count)s ответ",
-    "%(count)s reply|other": "%(count)s ответов",
+    "%(count)s reply": {
+        "one": "%(count)s ответ",
+        "other": "%(count)s ответов"
+    },
     "View in room": "Просмотреть в комнате",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Введите свою секретную фразу или <button> используйте секретный ключ </button> для продолжения.",
     "The email address doesn't appear to be valid.": "Адрес электронной почты не является действительным.",
@@ -2730,10 +2800,14 @@
     "Sorry, the poll you tried to create was not posted.": "Не удалось отправить опрос, который вы пытались создать.",
     "Failed to post poll": "Не удалось отправить опрос",
     "Create Poll": "Создать опрос",
-    "was removed %(count)s times|one": "был удалён",
-    "was removed %(count)s times|other": "удалено %(count)s раз(а)",
-    "were removed %(count)s times|one": "были удалены",
-    "were removed %(count)s times|other": "удалены %(count)s раз(а)",
+    "was removed %(count)s times": {
+        "one": "был удалён",
+        "other": "удалено %(count)s раз(а)"
+    },
+    "were removed %(count)s times": {
+        "one": "были удалены",
+        "other": "удалены %(count)s раз(а)"
+    },
     "Including you, %(commaSeparatedMembers)s": "Включая вас, %(commaSeparatedMembers)s",
     "Backspace": "Очистить",
     "Unknown error fetching location. Please try again later.": "Неизвестная ошибка при получении местоположения. Пожалуйста, повторите попытку позже.",
@@ -2743,15 +2817,23 @@
     "Could not fetch location": "Не удалось получить местоположение",
     "Location": "Местоположение",
     "toggle event": "переключить событие",
-    "%(count)s votes|one": "%(count)s голос",
-    "%(count)s votes|other": "%(count)s голосов",
-    "Based on %(count)s votes|one": "На основании %(count)s голоса",
-    "Based on %(count)s votes|other": "На основании %(count)s голосов",
-    "%(count)s votes cast. Vote to see the results|one": "%(count)s голос. Проголосуйте, чтобы увидеть результаты",
-    "%(count)s votes cast. Vote to see the results|other": "%(count)s голосов. Проголосуйте, чтобы увидеть результаты",
+    "%(count)s votes": {
+        "one": "%(count)s голос",
+        "other": "%(count)s голосов"
+    },
+    "Based on %(count)s votes": {
+        "one": "На основании %(count)s голоса",
+        "other": "На основании %(count)s голосов"
+    },
+    "%(count)s votes cast. Vote to see the results": {
+        "one": "%(count)s голос. Проголосуйте, чтобы увидеть результаты",
+        "other": "%(count)s голосов. Проголосуйте, чтобы увидеть результаты"
+    },
     "No votes cast": "Голосов нет",
-    "Final result based on %(count)s votes|one": "Окончательный результат на основе %(count)s голоса",
-    "Final result based on %(count)s votes|other": "Окончательный результат на основе %(count)s голосов",
+    "Final result based on %(count)s votes": {
+        "one": "Окончательный результат на основе %(count)s голоса",
+        "other": "Окончательный результат на основе %(count)s голосов"
+    },
     "Sorry, your vote was not registered. Please try again.": "Извините, ваш голос не был засчитан. Пожалуйста, попробуйте еще раз.",
     "Vote not registered": "Голос не засчитан",
     "Expand map": "Развернуть карту",
@@ -2833,12 +2915,18 @@
     "Rename": "Переименовать",
     "Select all": "Выбрать все",
     "Deselect all": "Отменить выбор",
-    "Sign out devices|one": "Выйти из устройства",
-    "Sign out devices|other": "Выйти из устройств",
-    "Click the button below to confirm signing out these devices.|one": "Нажмите кнопку ниже, чтобы подтвердить выход из этого устройства.",
-    "Click the button below to confirm signing out these devices.|other": "Нажмите кнопку ниже, чтобы подтвердить выход из этих устройств.",
-    "Confirm logging out these devices by using Single Sign On to prove your identity.|one": "Подтвердите выход из этого устройства с помощью единого входа, чтобы подтвердить свою личность.",
-    "Confirm logging out these devices by using Single Sign On to prove your identity.|other": "Подтвердите выход из этих устройств с помощью единого входа, чтобы подтвердить свою личность.",
+    "Sign out devices": {
+        "one": "Выйти из устройства",
+        "other": "Выйти из устройств"
+    },
+    "Click the button below to confirm signing out these devices.": {
+        "one": "Нажмите кнопку ниже, чтобы подтвердить выход из этого устройства.",
+        "other": "Нажмите кнопку ниже, чтобы подтвердить выход из этих устройств."
+    },
+    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
+        "one": "Подтвердите выход из этого устройства с помощью единого входа, чтобы подтвердить свою личность.",
+        "other": "Подтвердите выход из этих устройств с помощью единого входа, чтобы подтвердить свою личность."
+    },
     "Pin to sidebar": "Закрепить на боковой панели",
     "Quick settings": "Быстрые настройки",
     "Waiting for you to verify on your other device…": "Ожидает проверки на другом устройстве…",
@@ -2867,16 +2955,24 @@
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Ранее вы давали согласие на передачу нам анонимных данных об использовании. Мы изменили порядок предоставления этих данных.",
     "Help improve %(analyticsOwner)s": "Помогите улучшить %(analyticsOwner)s",
     "That's fine": "Всё в порядке",
-    "Exported %(count)s events in %(seconds)s seconds|one": "Экспортировано %(count)s событие за %(seconds)s секунд",
-    "Exported %(count)s events in %(seconds)s seconds|other": "Экспортировано %(count)s событий за %(seconds)s секунд",
+    "Exported %(count)s events in %(seconds)s seconds": {
+        "one": "Экспортировано %(count)s событие за %(seconds)s секунд",
+        "other": "Экспортировано %(count)s событий за %(seconds)s секунд"
+    },
     "Export successful!": "Успешно экспортировано!",
-    "Fetched %(count)s events in %(seconds)ss|one": "Получено %(count)s событие за %(seconds)sс",
-    "Fetched %(count)s events so far|one": "Получено %(count)s событие",
-    "Fetched %(count)s events out of %(total)s|one": "Извлечено %(count)s из %(total)s события",
-    "Fetched %(count)s events in %(seconds)ss|other": "Получено %(count)s событий за %(seconds)sс",
+    "Fetched %(count)s events in %(seconds)ss": {
+        "one": "Получено %(count)s событие за %(seconds)sс",
+        "other": "Получено %(count)s событий за %(seconds)sс"
+    },
+    "Fetched %(count)s events so far": {
+        "one": "Получено %(count)s событие",
+        "other": "Получено %(count)s событий"
+    },
+    "Fetched %(count)s events out of %(total)s": {
+        "one": "Извлечено %(count)s из %(total)s события",
+        "other": "Получено %(count)s из %(total)s событий"
+    },
     "Processing event %(number)s out of %(total)s": "Обработано %(number)s из %(total)s событий",
-    "Fetched %(count)s events so far|other": "Получено %(count)s событий",
-    "Fetched %(count)s events out of %(total)s|other": "Получено %(count)s из %(total)s событий",
     "Generating a ZIP": "Генерация ZIP-файла",
     "Remove, ban, or invite people to your active room, and make you leave": "Удалять, блокировать или приглашать людей в вашей активной комнате, в частности, вас",
     "Remove, ban, or invite people to this room, and make you leave": "Удалять, блокировать или приглашать людей в этой комнате, в частности, вас",
@@ -2897,9 +2993,10 @@
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "Мы не смогли распознать заданную дату (%(inputDate)s). Попробуйте использовать формат ГГГГ-ММ-ДД.",
     "Command error: Unable to handle slash command.": "Ошибка команды: невозможно обработать команду slash.",
     "Command error: Unable to find rendering type (%(renderingType)s)": "Ошибка команды: невозможно найти тип рендеринга (%(renderingType)s)",
-    "%(spaceName)s and %(count)s others|one": "%(spaceName)s и %(count)s другой",
-    "%(spaceName)s and %(count)s others|zero": "%(spaceName)s",
-    "%(spaceName)s and %(count)s others|other": "%(spaceName)s и %(count)s других",
+    "%(spaceName)s and %(count)s others": {
+        "one": "%(spaceName)s и %(count)s другой",
+        "other": "%(spaceName)s и %(count)s других"
+    },
     "You cannot place calls without a connection to the server.": "Вы не можете совершать вызовы без подключения к серверу.",
     "Connectivity to the server has been lost": "Соединение с сервером потеряно",
     "You cannot place calls in this browser.": "Вы не можете совершать вызовы в этом браузере.",
@@ -2916,27 +3013,41 @@
     "Join %(roomAddress)s": "Присоединиться к %(roomAddress)s",
     "Feedback sent! Thanks, we appreciate it!": "Отзыв отправлен! Спасибо, мы ценим это!",
     "Export Cancelled": "Экспорт отменён",
-    "<%(count)s spaces>|zero": "<пустая строка>",
-    "<%(count)s spaces>|one": "<пространство>",
-    "<%(count)s spaces>|other": "<%(count)s пространств>",
+    "<empty string>": "<пустая строка>",
+    "<%(count)s spaces>": {
+        "one": "<пространство>",
+        "other": "<%(count)s пространств>"
+    },
     "Results are only revealed when you end the poll": "Результаты отображаются только после завершения опроса",
     "Voters see results as soon as they have voted": "Голосующие увидят результаты сразу после голосования",
     "Closed poll": "Закрытый опрос",
     "Open poll": "Открытый опрос",
     "Poll type": "Тип опроса",
     "Edit poll": "Редактировать опрос",
-    "%(oneUser)ssent %(count)s hidden messages|one": "%(oneUser)sотправил(а) скрытое сообщение",
-    "%(oneUser)ssent %(count)s hidden messages|other": "%(oneUser)sотправил(а) %(count)s скрытых сообщения(-й)",
-    "%(severalUsers)ssent %(count)s hidden messages|one": "%(severalUsers)sотправили скрытое сообщение",
-    "%(severalUsers)ssent %(count)s hidden messages|other": "%(severalUsers)sотправили %(count)s скрытых сообщения(-й)",
-    "%(oneUser)sremoved a message %(count)s times|one": "%(oneUser)s удалил(а) сообщение",
-    "%(oneUser)sremoved a message %(count)s times|other": "%(oneUser)sудалил(а) %(count)s сообщения(-й)",
-    "%(severalUsers)sremoved a message %(count)s times|one": "%(severalUsers)sудалили сообщение",
-    "%(severalUsers)sremoved a message %(count)s times|other": "%(severalUsers)sудалили %(count)s сообщения(-й)",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)sизменил(а) <a>закреплённые сообщения</a> комнаты",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)sизменил(а) <a>закреплённые сообщения</a> комнаты %(count)s раз(а)",
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)s изменили <a>закреплённые сообщения</a> комнаты",
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s изменили <a>закреплённые сообщения</a> комнаты %(count)s раз(а)",
+    "%(oneUser)ssent %(count)s hidden messages": {
+        "one": "%(oneUser)sотправил(а) скрытое сообщение",
+        "other": "%(oneUser)sотправил(а) %(count)s скрытых сообщения(-й)"
+    },
+    "%(severalUsers)ssent %(count)s hidden messages": {
+        "one": "%(severalUsers)sотправили скрытое сообщение",
+        "other": "%(severalUsers)sотправили %(count)s скрытых сообщения(-й)"
+    },
+    "%(oneUser)sremoved a message %(count)s times": {
+        "one": "%(oneUser)s удалил(а) сообщение",
+        "other": "%(oneUser)sудалил(а) %(count)s сообщения(-й)"
+    },
+    "%(severalUsers)sremoved a message %(count)s times": {
+        "one": "%(severalUsers)sудалили сообщение",
+        "other": "%(severalUsers)sудалили %(count)s сообщения(-й)"
+    },
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
+        "one": "%(oneUser)sизменил(а) <a>закреплённые сообщения</a> комнаты",
+        "other": "%(oneUser)sизменил(а) <a>закреплённые сообщения</a> комнаты %(count)s раз(а)"
+    },
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
+        "one": "%(severalUsers)s изменили <a>закреплённые сообщения</a> комнаты",
+        "other": "%(severalUsers)s изменили <a>закреплённые сообщения</a> комнаты %(count)s раз(а)"
+    },
     "What location type do you want to share?": "Каким типом местоположения вы хотите поделиться?",
     "Drop a Pin": "Маркер на карте",
     "My live location": "Моё местоположение в реальном времени",
@@ -3007,10 +3118,10 @@
     "You were removed by %(memberName)s": "%(memberName)s исключил(а) вас",
     "Forget this space": "Забыть это пространство",
     "Loading preview": "Загрузка предпросмотра",
-    "Currently removing messages in %(count)s rooms|one": "Удаляются сообщения в %(count)s комнате",
-    "Currently removing messages in %(count)s rooms|other": "Удаляются сообщения в %(count)s комнатах",
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Вы также можете попросить администратора вашего домашнего сервера обновить сервер, чтобы изменить это поведение.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Смена пароля на этом домашнем сервере приведёт к отключению всех остальных ваших устройств. Это удалит ключи шифрования сообщений, которые хранятся на них, и может сделать зашифрованную историю чата нечитаемой.",
+    "Currently removing messages in %(count)s rooms": {
+        "one": "Удаляются сообщения в %(count)s комнате",
+        "other": "Удаляются сообщения в %(count)s комнатах"
+    },
     "Sends the given message with hearts": "Отправляет данное сообщение с сердечками",
     "You were disconnected from the call. (Error: %(message)s)": "Вас отключили от звонка. (Ошибка: %(message)s)",
     "Next recently visited room or space": "Следующая недавно посещённая комната или пространство",
@@ -3026,11 +3137,11 @@
     "View older version of %(spaceName)s.": "Посмотреть предыдущую версию %(spaceName)s.",
     "Debug logs contain application usage data including your username, the IDs or aliases of the rooms you have visited, which UI elements you last interacted with, and the usernames of other users. They do not contain messages.": "Журналы отладки содержат данные об использовании приложения, включая ваше имя пользователя, идентификаторы или названия комнат, которые вы посетили, с какими элементами пользовательского интерфейса вы взаимодействовали в последний раз, а также имена пользователей других пользователей. Они не содержат сообщений.",
     "Deactivating your account is a permanent action — be careful!": "Деактивация вашей учётной записи является необратимым действием — будьте осторожны!",
-    "You will not receive push notifications on other devices until you sign back in to them.": "Вы не будете получать push-уведомления на других устройствах, пока не войдёте на них снова.",
     "Your password was successfully changed.": "Ваш пароль успешно изменён.",
-    "Confirm signing out these devices|one": "Подтвердите выход из этого устройства",
-    "Confirm signing out these devices|other": "Подтвердите выход из этих устройств",
-    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Если вы хотите сохранить доступ к истории чата в зашифрованных комнатах, вам следует сначала экспортировать ключи комнат, а затем снова их импортировать.",
+    "Confirm signing out these devices": {
+        "one": "Подтвердите выход из этого устройства",
+        "other": "Подтвердите выход из этих устройств"
+    },
     "Developer tools": "Инструменты разработчика",
     "Unmute microphone": "Включить микрофон",
     "Turn on camera": "Включить камеру",
@@ -3038,8 +3149,10 @@
     "Video devices": "Видеоустройства",
     "Mute microphone": "Отключить микрофон",
     "Audio devices": "Аудиоустройства",
-    "%(count)s people joined|one": "%(count)s человек присоединился",
-    "%(count)s people joined|other": "%(count)s человек(а) присоединились",
+    "%(count)s people joined": {
+        "one": "%(count)s человек присоединился",
+        "other": "%(count)s человек(а) присоединились"
+    },
     "sends hearts": "отправляет сердечки",
     "Enable hardware acceleration": "Включить аппаратное ускорение",
     "Remove from space": "Исключить из пространства",
@@ -3052,7 +3165,6 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Вы вышли из всех устройств и больше не будете получать push-уведомления. Для повторного включения уведомлений снова войдите на каждом устройстве.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Если вы хотите сохранить доступ к истории общения в зашифрованных комнатах, настройте резервное копирование ключей или экспортируйте ключи сообщений с одного из других ваших устройств, прежде чем продолжить.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "При выходе из устройств удаляются хранящиеся на них ключи шифрования сообщений, что сделает зашифрованную историю чатов нечитаемой.",
-    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Сброс пароля на этом домашнем сервере приведет к тому, что все ваши устройства будут отключены. Это приведет к удалению хранящихся на них ключей шифрования сообщений, что сделает зашифрованную историю чата нечитаемой.",
     "Event ID: %(eventId)s": "ID события: %(eventId)s",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Ваше сообщение не отправлено, поскольку домашний сервер заблокирован его администратором. <a>Обратитесь к администратору службы</a>, чтобы продолжить её использование.",
     "Resent!": "Отправлено повторно!",
@@ -3115,8 +3227,10 @@
     "Show spaces": "Показать пространства",
     "Show rooms": "Показать комнаты",
     "Search for": "Поиск",
-    "%(count)s Members|one": "%(count)s участник",
-    "%(count)s Members|other": "%(count)s участников",
+    "%(count)s Members": {
+        "one": "%(count)s участник",
+        "other": "%(count)s участников"
+    },
     "Check if you want to hide all current and future messages from this user.": "Выберите, хотите ли вы скрыть все текущие и будущие сообщения от этого пользователя.",
     "Ignore user": "Игнорировать пользователя",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "При выходе эти ключи будут удалены с данного устройства и вы больше не сможете прочитать зашифрованные сообщения, если у вас нет ключей для них на других устройствах или резервной копии на сервере.",
@@ -3142,8 +3256,10 @@
     "Create a video room": "Создайте видеокомнату",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Отключите, чтобы удалить системные сообщения о пользователе (изменения членства, редактирование профиля…)",
     "Preserve system messages": "Оставить системные сообщения",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|one": "Вы собираетесь удалить %(count)s сообщение от %(user)s. Это удалит его навсегда для всех в разговоре. Точно продолжить?",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|other": "Вы собираетесь удалить %(count)s сообщений от %(user)s. Это удалит их навсегда для всех в разговоре. Точно продолжить?",
+    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
+        "one": "Вы собираетесь удалить %(count)s сообщение от %(user)s. Это удалит его навсегда для всех в разговоре. Точно продолжить?",
+        "other": "Вы собираетесь удалить %(count)s сообщений от %(user)s. Это удалит их навсегда для всех в разговоре. Точно продолжить?"
+    },
     "%(featureName)s Beta feedback": "%(featureName)s — отзыв о бета-версии",
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Помогите нам выявить проблемы и улучшить %(analyticsOwner)s, поделившись анонимными данными об использовании. Чтобы понять, как люди используют несколько устройств, мы генерируем случайный идентификатор, общий для всех ваших устройств.",
     "Show: Matrix rooms": "Показать: комнаты Matrix",
@@ -3165,10 +3281,11 @@
     "Unban from space": "Разблокировать в пространстве",
     "Disinvite from room": "Отозвать приглашение в комнату",
     "Disinvite from space": "Отозвать приглашение в пространство",
-    "%(count)s participants|one": "1 участник",
-    "%(count)s participants|other": "%(count)s участников",
+    "%(count)s participants": {
+        "one": "1 участник",
+        "other": "%(count)s участников"
+    },
     "Joining…": "Присоединение…",
-    "Video": "Видео",
     "Show Labs settings": "Показать настройки лаборатории",
     "To join, please enable video rooms in Labs first": "Чтобы присоединиться, сначала включите видеокомнаты в лаборатории",
     "To view, please enable video rooms in Labs first": "Для просмотра сначала включите видеокомнаты в лаборатории",
@@ -3182,8 +3299,10 @@
     "You can still join here.": "Вы всё ещё можете присоединиться сюда.",
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "При попытке проверить ваше приглашение была возвращена ошибка (%(errcode)s). Вы можете попытаться передать эту информацию пригласившему вас лицу.",
     "Video rooms are a beta feature": "Видеокомнаты – это бета-функция",
-    "Seen by %(count)s people|one": "Просмотрел %(count)s человек",
-    "Seen by %(count)s people|other": "Просмотрели %(count)s людей",
+    "Seen by %(count)s people": {
+        "one": "Просмотрел %(count)s человек",
+        "other": "Просмотрели %(count)s людей"
+    },
     "Upgrade this space to the recommended room version": "Обновите это пространство до рекомендуемой версии комнаты",
     "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Если вы отправили ошибку через GitHub, журналы отладки могут помочь нам отследить проблему. ",
     "Show HTML representation of room topics": "Показать HTML-представление тем комнаты",
@@ -3210,15 +3329,17 @@
     "Location not available": "Местоположение недоступно",
     "Find my location": "Найти моё местоположение",
     "Map feedback": "Карта отзывов",
-    "In %(spaceName)s and %(count)s other spaces.|zero": "В пространстве %(spaceName)s.",
+    "In %(spaceName)s.": "В пространстве %(spaceName)s.",
     "Stop and close": "Остановить и закрыть",
     "Who will you chat to the most?": "С кем вы будете общаться чаще всего?",
     "Saved Items": "Сохранённые объекты",
     "Mapbox logo": "Логотип Mapbox",
     "Enter fullscreen": "Перейти в полноэкранный режим",
     "Exit fullscreen": "Выйти из полноэкранного режима",
-    "In %(spaceName)s and %(count)s other spaces.|one": "В %(spaceName)s и %(count)s другом пространстве.",
-    "In %(spaceName)s and %(count)s other spaces.|other": "В %(spaceName)s и %(count)s других пространствах.",
+    "In %(spaceName)s and %(count)s other spaces.": {
+        "one": "В %(spaceName)s и %(count)s другом пространстве.",
+        "other": "В %(spaceName)s и %(count)s других пространствах."
+    },
     "In spaces %(space1Name)s and %(space2Name)s.": "В пространствах %(space1Name)s и %(space2Name)s.",
     "Unverified": "Не заверено",
     "Verified": "Заверено",
@@ -3261,8 +3382,10 @@
     "Presence": "Присутствие",
     "Complete these to get the most out of %(brand)s": "Выполните их, чтобы получить максимальную отдачу от %(brand)s",
     "You did it!": "Вы сделали это!",
-    "Only %(count)s steps to go|one": "Осталось всего %(count)s шагов до конца",
-    "Only %(count)s steps to go|other": "Осталось всего %(count)s шагов",
+    "Only %(count)s steps to go": {
+        "one": "Осталось всего %(count)s шагов до конца",
+        "other": "Осталось всего %(count)s шагов"
+    },
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Сохраняйте право над владением и контроль над обсуждением в сообществе.\nМасштабируйте, чтобы поддерживать миллионы, с мощной модерацией и функциональной совместимостью.",
     "Community ownership": "Владение сообществом",
     "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Благодаря бесплатному сквозному шифрованному обмену сообщениями и неограниченным голосовым и видеозвонкам, %(brand)s это отличный способ оставаться на связи.",
@@ -3297,8 +3420,10 @@
     "%(user1)s and %(user2)s": "%(user1)s и %(user2)s",
     "No unverified sessions found.": "Незаверенных сеансов не обнаружено.",
     "No verified sessions found.": "Заверенных сеансов не обнаружено.",
-    "%(user)s and %(count)s others|other": "%(user)s и ещё %(count)s",
-    "%(user)s and %(count)s others|one": "%(user)s и ещё 1",
+    "%(user)s and %(count)s others": {
+        "other": "%(user)s и ещё %(count)s",
+        "one": "%(user)s и ещё 1"
+    },
     "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Подтвердите свои сеансы для более безопасного обмена сообщениями или выйдите из тех, которые более не признаёте или не используете.",
     "For best security, sign out from any session that you don't recognize or use anymore.": "Для лучшей безопасности выйдите из всех сеансов, которые вы более не признаёте или не используете.",
     "Inactive for %(inactiveAgeDays)s days or longer": "Неактивны %(inactiveAgeDays)s дней или дольше",
@@ -3342,8 +3467,10 @@
     "Video call started in %(roomName)s. (not supported by this browser)": "Видеовызов начался в %(roomName)s. (не поддерживается этим браузером)",
     "Video call started in %(roomName)s.": "Видеовызов начался в %(roomName)s.",
     "You need to be able to kick users to do that.": "Вы должны иметь возможность пинать пользователей, чтобы сделать это.",
-    "Inviting %(user)s and %(count)s others|one": "Приглашающий %(user)s и 1 других",
-    "Inviting %(user)s and %(count)s others|other": "Приглашение %(user)s и %(count)s других",
+    "Inviting %(user)s and %(count)s others": {
+        "one": "Приглашающий %(user)s и 1 других",
+        "other": "Приглашение %(user)s и %(count)s других"
+    },
     "Inviting %(user1)s and %(user2)s": "Приглашение %(user1)s и %(user2)s",
     "Fill screen": "Заполнить экран",
     "Sorry — this call is currently full": "Извините — этот вызов в настоящее время заполнен",
@@ -3379,8 +3506,10 @@
     "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "Другие пользователи, будучи в личных сообщениях и посещаемых вами комнатах, могут видеть полный перечень ваших сеансов.",
     "Renaming sessions": "Переименование сеансов",
     "Please be aware that session names are also visible to people you communicate with.": "Пожалуйста, имейте в виду, что названия сеансов также видны людям, с которыми вы общаетесь.",
-    "Are you sure you want to sign out of %(count)s sessions?|one": "Вы уверены, что хотите выйти из %(count)s сеанса?",
-    "Are you sure you want to sign out of %(count)s sessions?|other": "Вы уверены, что хотите выйти из %(count)s сеансов?",
+    "Are you sure you want to sign out of %(count)s sessions?": {
+        "one": "Вы уверены, что хотите выйти из %(count)s сеанса?",
+        "other": "Вы уверены, что хотите выйти из %(count)s сеансов?"
+    },
     "You have unverified sessions": "У вас есть незаверенные сеансы",
     "Rich text editor": "Наглядный текстовый редактор",
     "Search users in this room…": "Поиск пользователей в этой комнате…",
@@ -3437,12 +3566,16 @@
     "Hide formatting": "Скрыть форматирование",
     "This message could not be decrypted": "Это сообщение не удалось расшифровать",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
-    "Sign out of %(count)s sessions|one": "Выйти из %(count)s сеанса",
-    "Sign out of %(count)s sessions|other": "Выйти из сеансов: %(count)s",
+    "Sign out of %(count)s sessions": {
+        "one": "Выйти из %(count)s сеанса",
+        "other": "Выйти из сеансов: %(count)s"
+    },
     "Show QR code": "Показать QR код",
     "Sign in with QR code": "Войти с QR кодом",
-    "%(count)s sessions selected|one": "%(count)s сеанс выбран",
-    "%(count)s sessions selected|other": "Сеансов выбрано: %(count)s",
+    "%(count)s sessions selected": {
+        "one": "%(count)s сеанс выбран",
+        "other": "Сеансов выбрано: %(count)s"
+    },
     "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Для лучшей безопасности и конфиденциальности, рекомендуется использовать клиенты Matrix с поддержкой шифрования.",
     "Hide details": "Скрыть подробности",
     "Show details": "Показать подробности",
@@ -3481,14 +3614,12 @@
     "Indent decrease": "Пункт",
     "Indent increase": "Подпункт",
     "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s отреагировал(а) %(reaction)s на %(message)s",
-    "Defaults to room member list.": "По умолчанию отображается список участников комнаты.",
     "Requires your server to support MSC3030": "Требуется, чтобы ваш сервер поддерживал MSC3030",
     "Grey": "Серый",
     "Red": "Красный",
     "There are no active polls in this room": "В этой комнате нет активных опросов",
     "Temporary implementation. Locations persist in room history.": "Временная реализация. Местоположения сохраняются в истории комнаты.",
     "Downloading update…": "Загрузка обновления…",
-    "Loading…": "Загрузка…",
     "Rust cryptography implementation": "Реализация криптографии Rust",
     "View poll in timeline": "Посмотреть опрос в ленте сообщений",
     "Your language": "Ваш язык",
@@ -3499,5 +3630,37 @@
     "Sign out of all devices": "Выйти из всех сеансов",
     "Set a new account password…": "Установите новый пароль…",
     "%(senderName)s started a voice broadcast": "%(senderName)s начал(а) голосовую трансляцию",
-    "Room directory": "Каталог комнат"
+    "Room directory": "Каталог комнат",
+    "common": {
+        "about": "О комнате",
+        "analytics": "Аналитика",
+        "encryption_enabled": "Шифрование включено",
+        "error": "Ошибка",
+        "forward_message": "Переслать сообщение",
+        "image": "Изображение",
+        "loading": "Загрузка…",
+        "message": "Отправить личное сообщение",
+        "message_layout": "Макет сообщения",
+        "modern": "Новый",
+        "mute": "Приглушить",
+        "no_results": "Нет результатов",
+        "offline": "Не в сети",
+        "password": "Пароль",
+        "people": "Люди",
+        "reactions": "Реакции",
+        "report_a_bug": "Сообщить об ошибке",
+        "room_name": "Название комнаты",
+        "security": "Безопасность",
+        "settings": "Настройки",
+        "sticker": "Наклейка",
+        "success": "Успех",
+        "suggestions": "Предложения",
+        "unmute": "Вернуть право речи",
+        "username": "Псевдоним",
+        "verification_cancelled": "Подтверждение отменено",
+        "video": "Видео"
+    },
+    "a11y": {
+        "user_menu": "Меню пользователя"
+    }
 }

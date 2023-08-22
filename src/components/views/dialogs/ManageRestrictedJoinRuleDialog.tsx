@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useMemo, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
@@ -93,11 +93,13 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
     const [query, setQuery] = useState("");
     const lcQuery = query.toLowerCase().trim();
 
-    const [spacesContainingRoom, otherEntries] = useMemo(() => {
+    const [spacesContainingRoom, otherJoinedSpaces, otherEntries] = useMemo(() => {
         const parents = new Set<Room>();
         addAllParents(parents, room);
+
         return [
             Array.from(parents),
+            SpaceStore.instance.spacePanelSpaces.filter((s) => !parents.has(s)),
             filterBoolean(
                 selected.map((roomId) => {
                     const room = cli.getRoom(roomId);
@@ -112,12 +114,13 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
         ];
     }, [cli, selected, room]);
 
-    const [filteredSpacesContainingRoom, filteredOtherEntries] = useMemo(
+    const [filteredSpacesContainingRoom, filteredOtherJoinedSpaces, filteredOtherEntries] = useMemo(
         () => [
             spacesContainingRoom.filter((r) => r.name.toLowerCase().includes(lcQuery)),
+            otherJoinedSpaces.filter((r) => r.name.toLowerCase().includes(lcQuery)),
             otherEntries.filter((r) => r.name.toLowerCase().includes(lcQuery)),
         ],
-        [spacesContainingRoom, otherEntries, lcQuery],
+        [spacesContainingRoom, otherJoinedSpaces, otherEntries, lcQuery],
     );
 
     const onChange = (checked: boolean, room: Room): void => {
@@ -138,6 +141,8 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
         );
     }
 
+    const totalResults =
+        filteredSpacesContainingRoom.length + filteredOtherJoinedSpaces.length + filteredOtherEntries.length;
     return (
         <BaseDialog
             title={_t("Select spaces")}
@@ -147,8 +152,7 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
         >
             <p>
                 {_t(
-                    "Decide which spaces can access this room. " +
-                        "If a space is selected, its members can find and join <RoomName/>.",
+                    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.",
                     {},
                     {
                         RoomName: () => <b>{room.name}</b>,
@@ -206,8 +210,26 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
                         </div>
                     ) : null}
 
-                    {filteredSpacesContainingRoom.length + filteredOtherEntries.length < 1 ? (
-                        <span className="mx_ManageRestrictedJoinRuleDialog_noResults">{_t("No results")}</span>
+                    {filteredOtherJoinedSpaces.length > 0 ? (
+                        <div className="mx_ManageRestrictedJoinRuleDialog_section">
+                            <h3>{_t("Other spaces you know")}</h3>
+                            {filteredOtherJoinedSpaces.map((space) => {
+                                return (
+                                    <Entry
+                                        key={space.roomId}
+                                        room={space}
+                                        checked={newSelected.has(space.roomId)}
+                                        onChange={(checked: boolean) => {
+                                            onChange(checked, space);
+                                        }}
+                                    />
+                                );
+                            })}
+                        </div>
+                    ) : null}
+
+                    {totalResults < 1 ? (
+                        <span className="mx_ManageRestrictedJoinRuleDialog_noResults">{_t("common|no_results")}</span>
                     ) : undefined}
                 </AutoHideScrollbar>
 

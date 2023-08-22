@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType, RoomType, Room } from "matrix-js-sdk/src/matrix";
 import React, { ComponentType, createRef, ReactComponentElement, SyntheticEvent } from "react";
 
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
@@ -27,7 +26,7 @@ import { ActionPayload } from "../../../dispatcher/payloads";
 import { ViewRoomDeltaPayload } from "../../../dispatcher/payloads/ViewRoomDeltaPayload";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import PosthogTrackers from "../../../PosthogTrackers";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -94,7 +93,7 @@ export const TAG_ORDER: TagID[] = [
 const ALWAYS_VISIBLE_TAGS: TagID[] = [DefaultTagID.DM, DefaultTagID.Untagged];
 
 interface ITagAesthetics {
-    sectionLabel: string;
+    sectionLabel: TranslationKey;
     sectionLabelRaw?: string;
     AuxButtonComponent?: ComponentType<IAuxButtonProps>;
     isInvite: boolean;
@@ -403,7 +402,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
         defaultHidden: false,
     },
     [DefaultTagID.DM]: {
-        sectionLabel: _td("People"),
+        sectionLabel: _td("common|people"),
         isInvite: false,
         defaultHidden: false,
         AuxButtonComponent: DmAuxButton,

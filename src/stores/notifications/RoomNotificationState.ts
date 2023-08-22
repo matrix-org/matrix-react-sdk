@@ -14,12 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { RoomEvent } from "matrix-js-sdk/src/models/room";
-import { ClientEvent } from "matrix-js-sdk/src/client";
+import { MatrixEventEvent, RoomEvent, ClientEvent } from "matrix-js-sdk/src/matrix";
 
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import type { Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import type { IDestroyable } from "../../utils/IDestroyable";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback, useEffect } from "react";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../languageHandler";
 import RoomAvatar from "../components/views/avatars/RoomAvatar";
@@ -140,7 +140,7 @@ export function IncomingCallToast({ callEvent }: Props): JSX.Element {
                     ) : (
                         <LiveContentSummary
                             type={LiveContentType.Video}
-                            text={_t("Video")}
+                            text={_t("common|video")}
                             active={false}
                             participantCount={0}
                         />

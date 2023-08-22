@@ -15,11 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent, Room, RoomStateEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -111,8 +108,7 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Failed to revoke invite"),
                     description: _t(
-                        "Could not revoke the invite. The server may be experiencing a temporary problem or " +
-                            "you do not have sufficient permissions to revoke the invite.",
+                        "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.",
                     ),
                 });
             });

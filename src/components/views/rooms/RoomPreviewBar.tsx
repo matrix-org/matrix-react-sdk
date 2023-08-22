@@ -14,12 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
-import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { IJoinRuleEventContent, JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import React, { ChangeEvent, ReactNode } from "react";
+import {
+    Room,
+    RoomMember,
+    EventType,
+    RoomType,
+    IJoinRuleEventContent,
+    JoinRule,
+    MatrixError,
+} from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 import { RoomPreviewOpts, RoomViewLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
@@ -36,6 +40,8 @@ import RoomAvatar from "../avatars/RoomAvatar";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { ModuleRunner } from "../../../modules/ModuleRunner";
+import { Icon as AskToJoinIcon } from "../../../../res/img/element-icons/ask-to-join.svg";
+import Field from "../elements/Field";
 
 const MemberEventHtmlReasonField = "io.element.html_reason";
 
@@ -54,6 +60,8 @@ enum MessageCase {
     ViewingRoom = "ViewingRoom",
     RoomNotFound = "RoomNotFound",
     OtherError = "OtherError",
+    PromptAskToJoin = "PromptAskToJoin",
+    Knocked = "Knocked",
 }
 
 interface IProps {
@@ -96,6 +104,11 @@ interface IProps {
     onRejectClick?(): void;
     onRejectAndIgnoreClick?(): void;
     onForgetClick?(): void;
+
+    promptAskToJoin?: boolean;
+    knocked?: boolean;
+    onSubmitAskToJoin?(reason?: string): void;
+    onCancelAskToJoin?(): void;
 }
 
 interface IState {
@@ -103,6 +116,7 @@ interface IState {
     accountEmails?: string[];
     invitedEmailMxid?: string;
     threePidFetchError?: MatrixError;
+    reason?: string;
 }
 
 export default class RoomPreviewBar extends React.Component<IProps, IState> {
@@ -187,6 +201,10 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             return MessageCase.Rejecting;
         } else if (this.props.loading || this.state.busy) {
             return MessageCase.Loading;
+        } else if (this.props.knocked) {
+            return MessageCase.Knocked;
+        } else if (this.props.promptAskToJoin) {
+            return MessageCase.PromptAskToJoin;
         }
 
         if (this.props.inviterName) {
@@ -282,6 +300,10 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         dis.dispatch({ action: "start_registration", screenAfterLogin: this.makeScreenAfterLogin() });
     };
 
+    private onChangeReason = (event: ChangeEvent<HTMLTextAreaElement>): void => {
+        this.setState({ reason: event.target.value });
+    };
+
     public render(): React.ReactNode {
         const brand = SdkConfig.get().brand;
         const roomName = this.props.room?.name ?? this.props.roomAlias ?? "";
@@ -311,7 +333,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 break;
             }
             case MessageCase.Loading: {
-                title = _t("Loading…");
+                title = _t("common|loading");
                 showSpinner = true;
                 break;
             }
@@ -399,8 +421,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 }
                 const joinRule = this.joinRule();
                 const errCodeMessage = _t(
-                    "An error (%(errcode)s) was returned while trying to validate your " +
-                        "invite. You could try to pass this information on to the person who invited you.",
+                    "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.",
                     { errcode: this.state.threePidFetchError?.errcode || _t("unknown error code") },
                 );
                 switch (joinRule) {
@@ -425,8 +446,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             case MessageCase.InvitedEmailNotFoundInAccount: {
                 if (roomName) {
                     title = _t(
-                        "This invite to %(roomName)s was sent to %(email)s which is not " +
-                            "associated with your account",
+                        "This invite to %(roomName)s was sent to %(email)s which is not associated with your account",
                         {
                             roomName,
                             email: this.props.invitedEmail,
@@ -563,9 +583,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 subTitle = [
                     _t("Try again later, or ask a room or space admin to check if you have access."),
                     _t(
-                        "%(errcode)s was returned while trying to access the room or space. " +
-                            "If you think you're seeing this message in error, please " +
-                            "<issueLink>submit a bug report</issueLink>.",
+                        "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.",
                         { errcode: String(this.props.error?.errcode) },
                         {
                             issueLink: (label) => (
@@ -580,6 +598,54 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                         },
                     ),
                 ];
+                break;
+            }
+            case MessageCase.PromptAskToJoin: {
+                if (roomName) {
+                    title = _t("Ask to join %(roomName)s?", { roomName });
+                } else {
+                    title = _t("Ask to join?");
+                }
+
+                const avatar = <RoomAvatar room={this.props.room} oobData={this.props.oobData} />;
+                subTitle = [
+                    avatar,
+                    _t(
+                        "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.",
+                    ),
+                ];
+
+                reasonElement = (
+                    <Field
+                        autoFocus
+                        className="mx_RoomPreviewBar_fullWidth"
+                        element="textarea"
+                        onChange={this.onChangeReason}
+                        placeholder={_t("Message (optional)")}
+                        type="text"
+                        value={this.state.reason ?? ""}
+                    />
+                );
+
+                primaryActionHandler = () =>
+                    this.props.onSubmitAskToJoin && this.props.onSubmitAskToJoin(this.state.reason);
+                primaryActionLabel = _t("Request access");
+
+                break;
+            }
+            case MessageCase.Knocked: {
+                title = _t("Request to join sent");
+
+                subTitle = [
+                    <>
+                        <AskToJoinIcon className="mx_Icon mx_Icon_16 mx_RoomPreviewBar_icon" />
+                        {_t("Your request to join is pending.")}
+                    </>,
+                ];
+
+                secondaryActionHandler = this.props.onCancelAskToJoin;
+                secondaryActionLabel = _t("Cancel request");
+
                 break;
             }
         }
@@ -651,7 +717,13 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                     {subTitleElements}
                 </div>
                 {reasonElement}
-                <div className="mx_RoomPreviewBar_actions">{actions}</div>
+                <div
+                    className={classNames("mx_RoomPreviewBar_actions", {
+                        mx_RoomPreviewBar_fullWidth: messageCase === MessageCase.PromptAskToJoin,
+                    })}
+                >
+                    {actions}
+                </div>
                 <div className="mx_RoomPreviewBar_footer">{footer}</div>
             </div>
         );

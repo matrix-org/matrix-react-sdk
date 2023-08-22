@@ -24,7 +24,7 @@ import React, {
     RefObject,
 } from "react";
 import classNames from "classnames";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 
 import RoomAvatar from "../avatars/RoomAvatar";
@@ -121,7 +121,7 @@ export const SpaceButton: React.FC<IButtonProps> = ({
     }
 
     let contextMenu: JSX.Element | undefined;
-    if (space && menuDisplayed && handle.current && ContextMenuComponent) {
+    if (menuDisplayed && handle.current && ContextMenuComponent) {
         contextMenu = (
             <ContextMenuComponent
                 {...toRightOf(handle.current.getBoundingClientRect(), 0)}

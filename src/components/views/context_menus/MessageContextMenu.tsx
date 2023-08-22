@@ -17,12 +17,17 @@ limitations under the License.
 */
 
 import React, { createRef, useContext } from "react";
-import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { Relations } from "matrix-js-sdk/src/models/relations";
-import { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
+import {
+    EventStatus,
+    MatrixEvent,
+    MatrixEventEvent,
+    RoomMemberEvent,
+    EventType,
+    RelationType,
+    Relations,
+    Thread,
+} from "matrix-js-sdk/src/matrix";
 import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";

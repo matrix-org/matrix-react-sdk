@@ -94,7 +94,6 @@
     "Enable URL previews by default for participants in this room": "Подразумевано омогући прегледе адреса за чланове ове собе",
     "Decline": "Одбиј",
     "Accept": "Прихвати",
-    "Error": "Грешка",
     "Incorrect verification code": "Нетачни потврдни код",
     "Submit": "Пошаљи",
     "Phone": "Телефон",
@@ -106,7 +105,6 @@
     "Export E2E room keys": "Извези E2E кључеве собе",
     "Do you want to set an email address?": "Да ли желите да поставите мејл адресу?",
     "Current password": "Тренутна лозинка",
-    "Password": "Лозинка",
     "New Password": "Нова лозинка",
     "Confirm password": "Потврди лозинку",
     "Change Password": "Промени лозинку",
@@ -126,11 +124,11 @@
     "Jump to read receipt": "Скочи на потврду о прочитаности",
     "Mention": "Спомени",
     "Invite": "Позови",
-    "Unmute": "Појачај",
-    "Mute": "Утишај",
     "Admin Tools": "Админ алатке",
-    "and %(count)s others...|other": "и %(count)s других...",
-    "and %(count)s others...|one": "и још један други...",
+    "and %(count)s others...": {
+        "other": "и %(count)s других...",
+        "one": "и још један други..."
+    },
     "Invited": "Позван",
     "Filter room members": "Филтрирај чланове собе",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (снага %(powerLevelNumber)s)",
@@ -154,16 +152,16 @@
     "Unknown for %(duration)s": "Непознато већ %(duration)s",
     "Online": "На мрежи",
     "Idle": "У мировању",
-    "Offline": "Ван мреже",
     "Unknown": "Непознато",
     "Replying": "Одговара",
     "Unnamed room": "Неименована соба",
     "Save": "Сачувај",
-    "(~%(count)s results)|other": "(~%(count)s резултата)",
-    "(~%(count)s results)|one": "(~%(count)s резултат)",
+    "(~%(count)s results)": {
+        "other": "(~%(count)s резултата)",
+        "one": "(~%(count)s резултат)"
+    },
     "Join Room": "Приступи соби",
     "Upload avatar": "Отпреми аватар",
-    "Settings": "Подешавања",
     "Forget room": "Заборави собу",
     "Search": "Претрага",
     "Invites": "Позивнице",
@@ -231,58 +229,101 @@
     "Delete widget": "Обриши виџет",
     "Edit": "Уреди",
     "Create new room": "Направи нову собу",
-    "No results": "Нема резултата",
     "Home": "Почетна",
     "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times|other": "%(severalUsers)s су ушли %(count)s пута",
-    "%(severalUsers)sjoined %(count)s times|one": "%(severalUsers)s је ушло",
-    "%(oneUser)sjoined %(count)s times|other": "Корисник %(oneUser)s је ушао %(count)s пута",
-    "%(oneUser)sjoined %(count)s times|one": "Корисник %(oneUser)s је ушао",
-    "%(severalUsers)sleft %(count)s times|other": "%(severalUsers)s је изашло %(count)s пута",
-    "%(severalUsers)sleft %(count)s times|one": "%(severalUsers)s је изашло",
-    "%(oneUser)sleft %(count)s times|other": "Корисник %(oneUser)s је изашло %(count)s пута",
-    "%(oneUser)sleft %(count)s times|one": "Корисник %(oneUser)s је изашао",
-    "%(severalUsers)sjoined and left %(count)s times|other": "%(severalUsers)s је ушло и изашло %(count)s пута",
-    "%(severalUsers)sjoined and left %(count)s times|one": "%(severalUsers)s је ушло и изашло",
-    "%(oneUser)sjoined and left %(count)s times|other": "%(oneUser)s је ушао и изашао %(count)s пута",
-    "%(oneUser)sjoined and left %(count)s times|one": "%(oneUser)s је ушао и изашао",
-    "%(severalUsers)sleft and rejoined %(count)s times|other": "%(severalUsers)s је изашло и поново ушло %(count)s пута",
-    "%(severalUsers)sleft and rejoined %(count)s times|one": "%(severalUsers)s је изашло и поново ушло",
-    "%(oneUser)sleft and rejoined %(count)s times|other": "%(oneUser)s је изашао и поново ушао %(count)s пута",
-    "%(oneUser)sleft and rejoined %(count)s times|one": "%(oneUser)s је изашао и поново ушао",
-    "%(severalUsers)srejected their invitations %(count)s times|other": "%(severalUsers)s је одбило њихове позивнице %(count)s пута",
-    "%(severalUsers)srejected their invitations %(count)s times|one": "%(severalUsers)s је одбило њихове позивнице",
-    "%(oneUser)srejected their invitation %(count)s times|other": "%(oneUser)s је одбио позивницу %(count)s пута",
-    "%(oneUser)srejected their invitation %(count)s times|one": "%(oneUser)s је одбио позивницу",
-    "%(severalUsers)shad their invitations withdrawn %(count)s times|other": "Корисницима %(severalUsers)s су позивнице повучене %(count)s пута",
-    "%(severalUsers)shad their invitations withdrawn %(count)s times|one": "Корисницима %(severalUsers)s су позивнице повучене",
-    "%(oneUser)shad their invitation withdrawn %(count)s times|other": "Кориснику %(oneUser)s је позивница повучена %(count)s пута",
-    "%(oneUser)shad their invitation withdrawn %(count)s times|one": "Кориснику %(oneUser)s је позивница повучена",
-    "were invited %(count)s times|other": "су позвани %(count)s пута",
-    "were invited %(count)s times|one": "су позвани",
-    "was invited %(count)s times|other": "је позван %(count)s пута",
-    "was invited %(count)s times|one": "је позван",
-    "were banned %(count)s times|other": "забрањен приступ %(count)s пута",
-    "were banned %(count)s times|one": "забрањен приступ",
-    "was banned %(count)s times|other": "забрањен приступ %(count)s пута",
-    "was banned %(count)s times|one": "забрањен приступ",
-    "were unbanned %(count)s times|other": "дозвољен приступ %(count)s пута",
-    "were unbanned %(count)s times|one": "дозвољен приступ",
-    "was unbanned %(count)s times|other": "дозвољен приступ %(count)s пута",
-    "was unbanned %(count)s times|one": "дозвољен приступ",
-    "%(severalUsers)schanged their name %(count)s times|other": "%(severalUsers)s промени своје име %(count)s пута",
-    "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)s промени своје име",
-    "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)s промени своје име %(count)s пута",
-    "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)s промени своје име",
-    "%(items)s and %(count)s others|other": "%(items)s и %(count)s других",
-    "%(items)s and %(count)s others|one": "%(items)s и још један",
+    "%(severalUsers)sjoined %(count)s times": {
+        "other": "%(severalUsers)s су ушли %(count)s пута",
+        "one": "%(severalUsers)s је ушло"
+    },
+    "%(oneUser)sjoined %(count)s times": {
+        "other": "Корисник %(oneUser)s је ушао %(count)s пута",
+        "one": "Корисник %(oneUser)s је ушао"
+    },
+    "%(severalUsers)sleft %(count)s times": {
+        "other": "%(severalUsers)s је изашло %(count)s пута",
+        "one": "%(severalUsers)s је изашло"
+    },
+    "%(oneUser)sleft %(count)s times": {
+        "other": "Корисник %(oneUser)s је изашло %(count)s пута",
+        "one": "Корисник %(oneUser)s је изашао"
+    },
+    "%(severalUsers)sjoined and left %(count)s times": {
+        "other": "%(severalUsers)s је ушло и изашло %(count)s пута",
+        "one": "%(severalUsers)s је ушло и изашло"
+    },
+    "%(oneUser)sjoined and left %(count)s times": {
+        "other": "%(oneUser)s је ушао и изашао %(count)s пута",
+        "one": "%(oneUser)s је ушао и изашао"
+    },
+    "%(severalUsers)sleft and rejoined %(count)s times": {
+        "other": "%(severalUsers)s је изашло и поново ушло %(count)s пута",
+        "one": "%(severalUsers)s је изашло и поново ушло"
+    },
+    "%(oneUser)sleft and rejoined %(count)s times": {
+        "other": "%(oneUser)s је изашао и поново ушао %(count)s пута",
+        "one": "%(oneUser)s је изашао и поново ушао"
+    },
+    "%(severalUsers)srejected their invitations %(count)s times": {
+        "other": "%(severalUsers)s је одбило њихове позивнице %(count)s пута",
+        "one": "%(severalUsers)s је одбило њихове позивнице"
+    },
+    "%(oneUser)srejected their invitation %(count)s times": {
+        "other": "%(oneUser)s је одбио позивницу %(count)s пута",
+        "one": "%(oneUser)s је одбио позивницу"
+    },
+    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
+        "other": "Корисницима %(severalUsers)s су позивнице повучене %(count)s пута",
+        "one": "Корисницима %(severalUsers)s су позивнице повучене"
+    },
+    "%(oneUser)shad their invitation withdrawn %(count)s times": {
+        "other": "Кориснику %(oneUser)s је позивница повучена %(count)s пута",
+        "one": "Кориснику %(oneUser)s је позивница повучена"
+    },
+    "were invited %(count)s times": {
+        "other": "су позвани %(count)s пута",
+        "one": "су позвани"
+    },
+    "was invited %(count)s times": {
+        "other": "је позван %(count)s пута",
+        "one": "је позван"
+    },
+    "were banned %(count)s times": {
+        "other": "забрањен приступ %(count)s пута",
+        "one": "забрањен приступ"
+    },
+    "was banned %(count)s times": {
+        "other": "забрањен приступ %(count)s пута",
+        "one": "забрањен приступ"
+    },
+    "were unbanned %(count)s times": {
+        "other": "дозвољен приступ %(count)s пута",
+        "one": "дозвољен приступ"
+    },
+    "was unbanned %(count)s times": {
+        "other": "дозвољен приступ %(count)s пута",
+        "one": "дозвољен приступ"
+    },
+    "%(severalUsers)schanged their name %(count)s times": {
+        "other": "%(severalUsers)s промени своје име %(count)s пута",
+        "one": "%(severalUsers)s промени своје име"
+    },
+    "%(oneUser)schanged their name %(count)s times": {
+        "other": "%(oneUser)s промени своје име %(count)s пута",
+        "one": "%(oneUser)s промени своје име"
+    },
+    "%(items)s and %(count)s others": {
+        "other": "%(items)s и %(count)s других",
+        "one": "%(items)s и још један"
+    },
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "скупи",
     "expand": "рашири",
     "Custom level": "Прилагођени ниво",
     "Quote": "Цитат",
     "Start chat": "Започни разговор",
-    "And %(count)s more...|other": "И %(count)s других...",
+    "And %(count)s more...": {
+        "other": "И %(count)s других..."
+    },
     "Confirm Removal": "Потврди уклањање",
     "Create": "Направи",
     "Unknown error": "Непозната грешка",
@@ -312,7 +353,6 @@
     "Signed Out": "Одјављен",
     "For security, this session has been signed out. Please sign in again.": "Зарад безбедности, одјављени сте из ове сесије. Пријавите се поново.",
     "Old cryptography data detected": "Нађени су стари криптографски подаци",
-    "Analytics": "Аналитика",
     "Failed to remove tag %(tagName)s from room": "Нисам успео да скинем ознаку %(tagName)s са собе",
     "Failed to add tag %(tagName)s to room": "Нисам успео да додам ознаку %(tagName)s на собу",
     "<a>In reply to</a> <pill>": "<a>Као одговор за</a> <pill>",
@@ -332,12 +372,13 @@
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Покушао сам да учитам одређену тачку у временској линији ове собе али ви немате овлашћења за преглед наведене поруке.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Покушао сам да учитам одређену тачку у временској линији ове собе али нисам могао да је нађем.",
     "Failed to load timeline position": "Нисам могао да учитам позицију у временској линији",
-    "Uploading %(filename)s and %(count)s others|other": "Отпремам датотеку %(filename)s и још %(count)s других",
-    "Uploading %(filename)s and %(count)s others|zero": "Отпремам датотеку %(filename)s",
-    "Uploading %(filename)s and %(count)s others|one": "Отпремам датотеку %(filename)s и %(count)s других датотека",
+    "Uploading %(filename)s and %(count)s others": {
+        "other": "Отпремам датотеку %(filename)s и још %(count)s других",
+        "one": "Отпремам датотеку %(filename)s и %(count)s других датотека"
+    },
+    "Uploading %(filename)s": "Отпремам датотеку %(filename)s",
     "Sign out": "Одјави ме",
     "Failed to change password. Is your password correct?": "Нисам успео да променим лозинку. Да ли је ваша лозинка тачна?",
-    "Success": "Успех",
     "Unable to remove contact information": "Не могу да уклоним контакт податке",
     "<not supported>": "<није подржано>",
     "Import E2E room keys": "Увези E2E кључеве собе",
@@ -385,7 +426,6 @@
     "Passphrase must not be empty": "Фразе не смеју бити празне",
     "Export room keys": "Извези кључеве собе",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Ова радња вам омогућава да извезете кључеве за примљене поруке у шифрованим собама у локалну датотеку. Онда ћете моћи да увезете датотеку у други Матрикс клијент, у будућности, тако да ће тај клијент моћи да дешифрује ове поруке.",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Извезена датотека ће дозволити свима који је могу прочитати да дешифрују било које шифроване поруке које можете видети те бисте требали да будете пажљиви и да је осигурате. Да бисмо вам помогли са тиме, требало би да унесете фразу испод са којом ће извезени подаци бити шифровани. Поновни увоз података ће бити могућ само уз коришћење исте фразе.",
     "Enter passphrase": "Унеси фразу",
     "Confirm passphrase": "Потврди фразу",
     "Export": "Извези",
@@ -499,7 +539,6 @@
     "Email (optional)": "Мејл (изборно)",
     "Change": "Промени",
     "Messages containing my username": "Поруке које садрже моје корисничко",
-    "Username": "Корисничко име",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
     "Call failed due to misconfigured server": "Позив неуспешан због лоше подешеног сервера",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Замолите администратора вашег сервера (<code>%(homeserverDomain)s</code>) да подеси „TURN“ сервер како би позиви радили поуздано.",
@@ -542,7 +581,6 @@
     "Scroll to most recent messages": "Пребаци на најновије поруке",
     "Send a message…": "Пошаљи поруку…",
     "Direct Messages": "Директне поруке",
-    "People": "Људи",
     "Forget this room": "Заборави ову собу",
     "Start chatting": "Започни ћаскање",
     "List options": "Прикажи опције",
@@ -554,23 +592,22 @@
     "Room Topic": "Тема собе",
     "Messages in this room are end-to-end encrypted.": "Поруке у овој соби су шифроване с краја на крај.",
     "Messages in this room are not end-to-end encrypted.": "Поруке у овој соби нису шифроване с краја на крај.",
-    "%(count)s verified sessions|other": "потврђених сесија: %(count)s",
-    "%(count)s verified sessions|one": "1 потврђена сесија",
+    "%(count)s verified sessions": {
+        "other": "потврђених сесија: %(count)s",
+        "one": "1 потврђена сесија"
+    },
     "Hide verified sessions": "Сакриј потврђене сесије",
     "Remove recent messages by %(user)s": "Уклони недавне поруке корисника %(user)s",
     "Remove recent messages": "Уклони недавне поруке",
-    "Encryption enabled": "Шифровање омогућено",
     "Encryption not enabled": "Шифровање није омогућено",
     "The encryption used by this room isn't supported.": "Начин шифровања унутар ове собе није подржан.",
     "React": "Реагуј",
-    "Reactions": "Реакције",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>реаговали са %(shortName)s</reactedWith>",
     "Smileys & People": "Смешци и особе",
     "Quick Reactions": "Брзе реакције",
     "Widgets do not use message encryption.": "Виџети не користе шифровање порука.",
     "Join": "Приступи",
     "Enable end-to-end encryption": "Омогући шифровање с краја на крај",
-    "Suggestions": "Предлози",
     "Report Content to Your Homeserver Administrator": "Пријави садржај администратору вашег домаћег сервера",
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Terms of Service": "Услови коришћења",
@@ -931,7 +968,6 @@
     "Click the button below to confirm adding this phone number.": "Кликните на дугме испод за потврду додавања броја телефона.",
     "Confirm adding phone number": "Потврда додавања броја телефона",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Потврдите додавање броја телефона помоћу јединствене пријаве да докажете свој идентитет.",
-    "About": "О програму",
     "Homeserver": "Домаћи сервер",
     "Your homeserver": "Ваш домаћи сервер",
     "Your homeserver does not support cross-signing.": "Ваш домаћи сервер не подржава међу-потписивање.",
@@ -943,7 +979,10 @@
     "Unexpected error resolving homeserver configuration": "Неочекивана грешка при откривању подешавања сервера",
     "No homeserver URL provided": "Није наведен УРЛ сервера",
     "Cannot reach homeserver": "Сервер недоступан",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.|other": "%(senderName)s је додао алтернативну адресу %(addresses)s за ову собу.",
+    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
+        "other": "%(senderName)s је додао алтернативну адресу %(addresses)s за ову собу.",
+        "one": "%(senderName)s је додао алтернативну адресу %(addresses)s за ову собу."
+    },
     "%(senderName)s removed the main address for this room.": "%(senderName)s је уклони главну адресу за ову собу.",
     "%(senderName)s set the main address for this room to %(address)s.": "%(senderName)s је постави главну адресу собе на %(address)s.",
     "🎉 All servers are banned from participating! This room can no longer be used.": "🎉 Свим серверима је забрањено да учествују! Ова соба се више не може користити.",
@@ -997,9 +1036,10 @@
     "%(senderName)s changed the addresses for this room.": "%(senderName)s је изменио адресе за ову собу.",
     "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s је изменио главну и алтернативне адресе за ову собу.",
     "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s је изменио алтернативне адресе за ову собу.",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.|other": "%(senderName)s је уклонио алтернативне адресе %(addresses)s за ову собу.",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.|one": "%(senderName)s је уклонио алтернативну адресу %(addresses)s за ову собу.",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.|one": "%(senderName)s је додао алтернативну адресу %(addresses)s за ову собу.",
+    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
+        "other": "%(senderName)s је уклонио алтернативне адресе %(addresses)s за ову собу.",
+        "one": "%(senderName)s је уклонио алтернативну адресу %(addresses)s за ову собу."
+    },
     "Converts the room to a DM": "Претвара собу у директно дописивање",
     "Converts the DM to a room": "Претвара директно дописивање у собу",
     "Changes the avatar of the current room": "Мења аватар тренутне собе",
@@ -1176,8 +1216,10 @@
     "Remain on your screen when viewing another room, when running": "Останите на екрану док гледате другу собу, током рада",
     "Remain on your screen while running": "Останите на екрану током рада",
     "%(names)s and %(lastPerson)s are typing …": "%(names)s и %(lastPerson)s куцају…",
-    "%(names)s and %(count)s others are typing …|one": "%(names)s и још један корисник куца…",
-    "%(names)s and %(count)s others are typing …|other": "%(names)s и %(count)s корисници куцају…",
+    "%(names)s and %(count)s others are typing …": {
+        "one": "%(names)s и још један корисник куца…",
+        "other": "%(names)s и %(count)s корисници куцају…"
+    },
     "%(displayName)s is typing …": "%(displayName)s куца …",
     "Couldn't load page": "Учитавање странице није успело",
     "Sign in with SSO": "Пријавите се помоћу SSO",
@@ -1280,5 +1322,22 @@
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Тражили смо од прегледача да запамти који кућни сервер користите за пријаву, али нажалост ваш претраживач га је заборавио. Идите на страницу за пријављивање и покушајте поново.",
     "You're already in a call with this person.": "Већ разговарате са овом особом.",
     "Already in call": "Већ у позиву",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Коришћење овог виџета може да дели податке <helpIcon /> са %(widgetDomain)s и вашим интеграционим менаџером."
+    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Коришћење овог виџета може да дели податке <helpIcon /> са %(widgetDomain)s и вашим интеграционим менаџером.",
+    "common": {
+        "about": "О програму",
+        "analytics": "Аналитика",
+        "encryption_enabled": "Шифровање омогућено",
+        "error": "Грешка",
+        "mute": "Утишај",
+        "no_results": "Нема резултата",
+        "offline": "Ван мреже",
+        "password": "Лозинка",
+        "people": "Људи",
+        "reactions": "Реакције",
+        "settings": "Подешавања",
+        "success": "Успех",
+        "suggestions": "Предлози",
+        "unmute": "Појачај",
+        "username": "Корисничко име"
+    }
 }

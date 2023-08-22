@@ -14,10 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
+import { EventType, RoomType, JoinRule, Preset, Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import React, { RefObject, useCallback, useContext, useRef, useState } from "react";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
@@ -255,7 +253,7 @@ const SpaceLanding: React.FC<{ space: Room }> = ({ space }) => {
                 onClick={() => {
                     showSpaceSettings(space);
                 }}
-                title={_t("Settings")}
+                title={_t("common|settings")}
             />
         );
     }
@@ -315,7 +313,7 @@ const SpaceSetupFirstRooms: React.FC<{
                 key={name}
                 name={name}
                 type="text"
-                label={_t("Room name")}
+                label={_t("common|room_name")}
                 placeholder={placeholders[i]}
                 value={roomNames[i]}
                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setRoomName(i, ev.target.value)}
@@ -403,8 +401,7 @@ const SpaceAddExistingRooms: React.FC<{
             <h1>{_t("What do you want to organise?")}</h1>
             <div className="mx_SpaceRoomView_description">
                 {_t(
-                    "Pick rooms or conversations to add. This is just a space for you, " +
-                        "no one will be informed. You can add more later.",
+                    "Pick rooms or conversations to add. This is just a space for you, no one will be informed. You can add more later.",
                 )}
             </div>
 

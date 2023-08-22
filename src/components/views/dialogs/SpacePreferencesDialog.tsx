@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td } from "../../../languageHandler";
 import BaseDialog from "../dialogs/BaseDialog";
@@ -55,12 +55,11 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space 
                             );
                         }}
                     >
-                        {_t("People")}
+                        {_t("common|people")}
                     </StyledCheckbox>
                     <SettingsSubsectionText>
                         {_t(
-                            "This groups your chats with members of this space. " +
-                                "Turning this off will hide those chats from your view of %(spaceName)s.",
+                            "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.",
                             {
                                 spaceName: space.name,
                             },

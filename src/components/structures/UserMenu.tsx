@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, ReactNode } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -378,7 +378,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     {homeButton}
                     <IconizedContextMenuOption
                         iconClassName="mx_UserMenu_iconSettings"
-                        label={_t("Settings")}
+                        label={_t("common|settings")}
                         onClick={(e) => this.onSettingsOpen(e)}
                     />
                     {feedbackButton}
@@ -449,7 +449,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     className="mx_UserMenu_contextMenuButton"
                     onClick={this.onOpenMenuClick}
                     inputRef={this.buttonRef}
-                    label={_t("User menu")}
+                    label={_t("a11y|user_menu")}
                     isExpanded={!!this.state.contextMenuPosition}
                     onContextMenu={this.onContextMenu}
                 >

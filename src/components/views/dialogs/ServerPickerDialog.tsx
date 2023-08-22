@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent, createRef, SyntheticEvent } from "react";
-import { AutoDiscovery } from "matrix-js-sdk/src/autodiscovery";
+import { AutoDiscovery } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
@@ -244,7 +244,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
 
                     <h2>{_t("Learn more")}</h2>
                     <ExternalLink
-                        href="https://matrix.org/faq/#what-is-a-homeserver%3F"
+                        href="https://matrix.org/docs/matrix-concepts/elements-of-matrix/#homeserver"
                         target="_blank"
                         rel="noreferrer noopener"
                     >

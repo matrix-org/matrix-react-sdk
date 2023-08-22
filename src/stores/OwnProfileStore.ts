@@ -14,12 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { User, UserEvent } from "matrix-js-sdk/src/models/user";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixEvent, RoomStateEvent, MatrixError, User, UserEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { throttle } from "lodash";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
@@ -104,6 +100,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
     }
 
     protected async onNotReady(): Promise<void> {
+        this.onProfileUpdate.cancel();
         if (this.monitoredUser) {
             this.monitoredUser.removeListener(UserEvent.DisplayName, this.onProfileUpdate);
             this.monitoredUser.removeListener(UserEvent.AvatarUrl, this.onProfileUpdate);

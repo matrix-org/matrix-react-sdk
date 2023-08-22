@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import AppsDrawer from "./AppsDrawer";
 import SettingsStore from "../../../settings/SettingsStore";

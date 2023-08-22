@@ -51,7 +51,6 @@
     "Email address": "Epasta adrese",
     "Emoji": "Emocijzīmes",
     "Enter passphrase": "Ievadiet frāzveida paroli",
-    "Error": "Kļūda",
     "Error decrypting attachment": "Kļūda atšifrējot pielikumu",
     "Export": "Eksportēt",
     "Export E2E room keys": "Eksportēt istabas šifrēšanas atslēgas",
@@ -103,7 +102,6 @@
     "Missing room_id in request": "Iztrūkstošs room_id pieprasījumā",
     "Missing user_id in request": "Iztrūkstošs user_id pieprasījumā",
     "Moderator": "Moderators",
-    "Mute": "Apklusināt",
     "Name": "Nosaukums",
     "New passwords don't match": "Jaunās paroles nesakrīt",
     "New passwords must match each other.": "Jaunajām parolēm ir jāsakrīt vienai ar otru.",
@@ -112,11 +110,9 @@
     "<not supported>": "<netiek atbalstīts>",
     "No display name": "Nav parādāmā vārda",
     "No more results": "Vairāk nekādu rezultātu nav",
-    "No results": "Nav rezultātu",
     "No users have specific privileges in this room": "Šajā istabā nav lietotāju ar īpašām privilēģijām",
     "OK": "Labi",
     "Operation failed": "Darbība neizdevās",
-    "Password": "Parole",
     "Passwords can't be empty": "Paroles nevar būt tukšas",
     "Permissions": "Atļaujas",
     "Phone": "Telefons",
@@ -138,15 +134,19 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s šobrīd nav pieejama.",
     "%(senderDisplayName)s sent an image.": "%(senderDisplayName)s nosūtīja attēlu.",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s nosūtīja uzaicinājumu %(targetDisplayName)s pievienoties istabai.",
-    "Uploading %(filename)s and %(count)s others|zero": "Tiek augšupielādēts %(filename)s",
-    "Uploading %(filename)s and %(count)s others|one": "Tiek augšupielādēts %(filename)s un %(count)s citi",
-    "Uploading %(filename)s and %(count)s others|other": "Tiek augšupielādēts %(filename)s un %(count)s citi",
+    "Uploading %(filename)s": "Tiek augšupielādēts %(filename)s",
+    "Uploading %(filename)s and %(count)s others": {
+        "one": "Tiek augšupielādēts %(filename)s un %(count)s citi",
+        "other": "Tiek augšupielādēts %(filename)s un %(count)s citi"
+    },
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (tiesību līmenis %(powerLevelNumber)s)",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "(~%(count)s results)|one": "(~%(count)s rezultāts)",
-    "(~%(count)s results)|other": "(~%(count)s rezultāti)",
+    "(~%(count)s results)": {
+        "one": "(~%(count)s rezultāts)",
+        "other": "(~%(count)s rezultāti)"
+    },
     "Reject all %(invitedRooms)s invites": "Noraidīt visus %(invitedRooms)s uzaicinājumus",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Notiek Tevis novirzīšana uz ārēju trešās puses vietni. Tu vari atļaut savam kontam piekļuvi ar %(integrationsUrl)s. Vai vēlies turpināt?",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s dzēsa istabas avataru.",
@@ -160,7 +160,6 @@
     "Server may be unavailable, overloaded, or you hit a bug.": "Serveris ir nesasniedzams, pārslogots, vai arī esat saskārties ar kļūdu programmā.",
     "Server unavailable, overloaded, or something else went wrong.": "Serveris ir nesasniedzams, pārslogots, vai arī esi uzdūries kļūdai.",
     "Session ID": "Sesijas ID",
-    "Settings": "Iestatījumi",
     "Show timestamps in 12 hour format (e.g. 2:30pm)": "Rādīt laiku 12 stundu formātā (piemēram 2:30pm)",
     "Signed Out": "Izrakstījās",
     "Sign in": "Pierakstīties",
@@ -168,7 +167,6 @@
     "Someone": "Kāds",
     "Start authentication": "Sākt autentifikāciju",
     "Submit": "Iesniegt",
-    "Success": "Izdevās",
     "This email address is already in use": "Šī epasta adrese jau tiek izmantota",
     "This email address was not found": "Šāda epasta adrese nav atrasta",
     "The email address linked to your account must be entered.": "Ir jāievada jūsu kontam piesaistītā epasta adrese.",
@@ -184,7 +182,6 @@
     "Unable to verify email address.": "Neizdevās apstiprināt epasta adresi.",
     "Unban": "Atcelt pieejas liegumu",
     "unknown error code": "nezināms kļūdas kods",
-    "Unmute": "Pārtraukt apklusināšanu",
     "Unnamed Room": "Istaba bez nosaukuma",
     "Cancel": "Atcelt",
     "Create new room": "Izveidot jaunu istabu",
@@ -235,7 +232,6 @@
     "Start chat": "Uzsākt čatu",
     "New Password": "Jaunā parole",
     "Start automatically after system login": "Startēt pie ierīces ielādes",
-    "Analytics": "Analītika",
     "Options": "Opcijas",
     "Passphrases must match": "Frāzveida parolēm ir jāsakrīt",
     "Passphrase must not be empty": "Frāzveida parole nevar būt tukša",
@@ -244,7 +240,6 @@
     "Import room keys": "Importēt istabas atslēgas",
     "File to import": "Importējamais fails",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Šī darbība ļauj Tev uz lokālo failu eksportēt atslēgas priekš tām ziņām, kuras Tu saņēmi šifrētās istabās. Tu varēsi importēt šo failu citā Matrix klientā, lai tajā būtu iespējams lasīt šīs ziņas atšifrētas.",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a passphrase below, which will be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Eksportētais fails ļaus ikvienam, kurš to spēj to nolasīt, atšifrēt jebkuras jūsu šifrētās ziņas. Tādēļ ievērojiet piesardzību un glabājiet šo failu drošā vietā. Lai palīdzētu to nodrošināt, zemāk ievadiet frāzveida paroli eksportējamo datu šifrēšanai. Datu importēšana būs iespējama tikai izmantojot šo pašu frāzveida paroli.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Šis process ļaus Tev importēt šifrēšanas atslēgas, kuras Tu iepriekš eksportēji no cita Matrix klienta. Tas ļaus Tev atšifrēt čata vēsturi.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksporta fails būs aizsargāts ar frāzveida paroli. Tā ir jāievada šeit, lai atšifrētu failu.",
     "You must join the room to see its files": "Tev ir jāpievienojas istabai, lai redzētu tās failus",
@@ -264,7 +259,6 @@
     "Drop file here to upload": "Ievelc šeit failu augšupielādei",
     "Online": "Tiešsaistē",
     "Idle": "Dīkstāvē",
-    "Offline": "Bezsaistē",
     "Check for update": "Pārbaudīt atjauninājumus",
     "Something went wrong!": "Kaut kas nogāja greizi!",
     "Your browser does not support the required cryptography extensions": "Jūsu pārlūks neatbalsta vajadzīgos kriptogrāfijas paplašinājumus",
@@ -272,8 +266,10 @@
     "Authentication check failed: incorrect password?": "Autentifikācijas pārbaude neizdevās. Nepareiza parole?",
     "Do you want to set an email address?": "Vai vēlies norādīt epasta adresi?",
     "Skip": "Izlaist",
-    "and %(count)s others...|other": "un vēl %(count)s citi...",
-    "and %(count)s others...|one": "un vēl viens cits...",
+    "and %(count)s others...": {
+        "other": "un vēl %(count)s citi...",
+        "one": "un vēl viens cits..."
+    },
     "Delete widget": "Dzēst vidžetu",
     "Define the power level of a user": "Definē lietotāja statusu",
     "Edit": "Rediģēt",
@@ -338,42 +334,80 @@
     "Delete Widget": "Dzēst vidžetu",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Vidžeta dzēšana to dzēš visiem šīs istabas lietotājiem. Vai tiešām vēlies dzēst šo vidžetu?",
     "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times|other": "%(severalUsers)spievienojās %(count)s reizes",
-    "%(severalUsers)sjoined %(count)s times|one": "%(severalUsers)spievienojās",
-    "%(oneUser)sjoined %(count)s times|other": "%(oneUser)spievienojās %(count)s reizes",
-    "%(oneUser)sjoined %(count)s times|one": "%(oneUser)spievienojās",
-    "%(severalUsers)sleft %(count)s times|other": "%(severalUsers)spameta %(count)s reizes",
-    "%(severalUsers)sleft %(count)s times|one": "%(severalUsers)spameta",
-    "%(oneUser)sleft %(count)s times|other": "%(oneUser)spameta %(count)s reizes",
-    "%(oneUser)sleft %(count)s times|one": "%(oneUser)spameta",
-    "%(severalUsers)sjoined and left %(count)s times|other": "%(severalUsers)spievienojās un pameta %(count)s reizes",
-    "%(severalUsers)sjoined and left %(count)s times|one": "%(severalUsers)spievienojās un pameta",
-    "%(oneUser)sjoined and left %(count)s times|other": "%(oneUser)spievienojās un pameta %(count)s reizes",
-    "%(oneUser)sjoined and left %(count)s times|one": "%(oneUser)spievienojās un pameta",
-    "%(severalUsers)sleft and rejoined %(count)s times|other": "%(severalUsers)spameta un atkal pievienojās %(count)s reizes",
-    "%(severalUsers)srejected their invitations %(count)s times|other": "%(severalUsers)s noraidīja uzaicinājumus %(count)s reizes",
-    "%(severalUsers)shad their invitations withdrawn %(count)s times|other": "%(severalUsers)s atsauca izsniegtos uzaicinājumus %(count)s reizes",
-    "were banned %(count)s times|other": "tika bloķēti (liegta piekļuve) %(count)s reizes",
-    "was banned %(count)s times|other": "tika bloķēts (liegta piekļuve) %(count)s reizes",
-    "were unbanned %(count)s times|other": "tika atbloķēti (atgriezta pieeja) %(count)s reizes",
+    "%(severalUsers)sjoined %(count)s times": {
+        "other": "%(severalUsers)spievienojās %(count)s reizes",
+        "one": "%(severalUsers)spievienojās"
+    },
+    "%(oneUser)sjoined %(count)s times": {
+        "other": "%(oneUser)spievienojās %(count)s reizes",
+        "one": "%(oneUser)spievienojās"
+    },
+    "%(severalUsers)sleft %(count)s times": {
+        "other": "%(severalUsers)spameta %(count)s reizes",
+        "one": "%(severalUsers)spameta"
+    },
+    "%(oneUser)sleft %(count)s times": {
+        "other": "%(oneUser)spameta %(count)s reizes",
+        "one": "%(oneUser)spameta"
+    },
+    "%(severalUsers)sjoined and left %(count)s times": {
+        "other": "%(severalUsers)spievienojās un pameta %(count)s reizes",
+        "one": "%(severalUsers)spievienojās un pameta"
+    },
+    "%(oneUser)sjoined and left %(count)s times": {
+        "other": "%(oneUser)spievienojās un pameta %(count)s reizes",
+        "one": "%(oneUser)spievienojās un pameta"
+    },
+    "%(severalUsers)sleft and rejoined %(count)s times": {
+        "other": "%(severalUsers)spameta un atkal pievienojās %(count)s reizes",
+        "one": "%(severalUsers)spameta un atkal pievienojās"
+    },
+    "%(severalUsers)srejected their invitations %(count)s times": {
+        "other": "%(severalUsers)s noraidīja uzaicinājumus %(count)s reizes",
+        "one": "%(severalUsers)s noraidīja uzaicinājumus"
+    },
+    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
+        "other": "%(severalUsers)s atsauca izsniegtos uzaicinājumus %(count)s reizes",
+        "one": "%(severalUsers)satsauca uzaicinājumus"
+    },
+    "were banned %(count)s times": {
+        "other": "tika bloķēti (liegta piekļuve) %(count)s reizes",
+        "one": "tika liegta pieeja"
+    },
+    "was banned %(count)s times": {
+        "other": "tika bloķēts (liegta piekļuve) %(count)s reizes",
+        "one": "tika liegta pieeja"
+    },
+    "were unbanned %(count)s times": {
+        "other": "tika atbloķēti (atgriezta pieeja) %(count)s reizes",
+        "one": "tika atcelts pieejas liegums"
+    },
     "collapse": "sakļaut",
     "expand": "izvērst",
     "<a>In reply to</a> <pill>": "<a>Atbildē uz</a> <pill>",
-    "And %(count)s more...|other": "Un par %(count)s vairāk...",
-    "%(severalUsers)sleft and rejoined %(count)s times|one": "%(severalUsers)spameta un atkal pievienojās",
-    "%(oneUser)sleft and rejoined %(count)s times|other": "%(oneUser)spameta un atkal pievienojās %(count)s reizes",
-    "%(oneUser)sleft and rejoined %(count)s times|one": "%(oneUser)spameta un atkal pievienojās",
-    "%(severalUsers)srejected their invitations %(count)s times|one": "%(severalUsers)s noraidīja uzaicinājumus",
-    "were invited %(count)s times|one": "tika uzaicināti",
-    "was invited %(count)s times|other": "tika uzaicināta %(count)s reizes",
-    "was invited %(count)s times|one": "tika uzaicināts(a)",
-    "were unbanned %(count)s times|one": "tika atcelts pieejas liegums",
-    "was unbanned %(count)s times|other": "tika atbloķēts %(count)s reizes",
-    "was banned %(count)s times|one": "tika liegta pieeja",
-    "were banned %(count)s times|one": "tika liegta pieeja",
-    "was unbanned %(count)s times|one": "tika atcelts pieejas liegums",
-    "%(severalUsers)schanged their name %(count)s times|other": "%(severalUsers)sizmainīja savu lietotājvārdu %(count)s reizes",
-    "%(severalUsers)schanged their name %(count)s times|one": "%(severalUsers)sizmainīja savu lietotājvārdu",
+    "And %(count)s more...": {
+        "other": "Un par %(count)s vairāk..."
+    },
+    "%(oneUser)sleft and rejoined %(count)s times": {
+        "other": "%(oneUser)spameta un atkal pievienojās %(count)s reizes",
+        "one": "%(oneUser)spameta un atkal pievienojās"
+    },
+    "were invited %(count)s times": {
+        "one": "tika uzaicināti",
+        "other": "bija uzaicināti %(count)s reizes"
+    },
+    "was invited %(count)s times": {
+        "other": "tika uzaicināta %(count)s reizes",
+        "one": "tika uzaicināts(a)"
+    },
+    "was unbanned %(count)s times": {
+        "other": "tika atbloķēts %(count)s reizes",
+        "one": "tika atcelts pieejas liegums"
+    },
+    "%(severalUsers)schanged their name %(count)s times": {
+        "other": "%(severalUsers)sizmainīja savu lietotājvārdu %(count)s reizes",
+        "one": "%(severalUsers)sizmainīja savu lietotājvārdu"
+    },
     "Description": "Apraksts",
     "This room is not public. You will not be able to rejoin without an invite.": "Šī istaba nav publiska un jūs nevarēsiet atkārtoti pievienoties bez uzaicinājuma.",
     "Old cryptography data detected": "Tika uzieti novecojuši šifrēšanas dati",
@@ -384,16 +418,22 @@
     "Notify the whole room": "Paziņot visai istabai",
     "Room Notification": "Istabas paziņojums",
     "Code": "Kods",
-    "%(oneUser)srejected their invitation %(count)s times|other": "%(oneUser)snoraidīja uzaicinājumu %(count)s reizes",
-    "%(oneUser)srejected their invitation %(count)s times|one": "%(oneUser)snoraidīja uzaicinājumu",
-    "%(severalUsers)shad their invitations withdrawn %(count)s times|one": "%(severalUsers)satsauca uzaicinājumus",
-    "%(oneUser)shad their invitation withdrawn %(count)s times|other": "%(oneUser)satsauca savus uzaicinājumus %(count)s reizes",
-    "%(oneUser)shad their invitation withdrawn %(count)s times|one": "%(oneUser)satsauca savu uzaicinājumu",
-    "were invited %(count)s times|other": "bija uzaicināti %(count)s reizes",
-    "%(oneUser)schanged their name %(count)s times|other": "%(oneUser)sizmainīja savu vārdu %(count)s reizes",
-    "%(oneUser)schanged their name %(count)s times|one": "%(oneUser)sizmainīja savu vārdu",
-    "%(items)s and %(count)s others|one": "%(items)s un viens cits",
-    "%(items)s and %(count)s others|other": "%(items)s un %(count)s citus",
+    "%(oneUser)srejected their invitation %(count)s times": {
+        "other": "%(oneUser)snoraidīja uzaicinājumu %(count)s reizes",
+        "one": "%(oneUser)snoraidīja uzaicinājumu"
+    },
+    "%(oneUser)shad their invitation withdrawn %(count)s times": {
+        "other": "%(oneUser)satsauca savus uzaicinājumus %(count)s reizes",
+        "one": "%(oneUser)satsauca savu uzaicinājumu"
+    },
+    "%(oneUser)schanged their name %(count)s times": {
+        "other": "%(oneUser)sizmainīja savu vārdu %(count)s reizes",
+        "one": "%(oneUser)sizmainīja savu vārdu"
+    },
+    "%(items)s and %(count)s others": {
+        "one": "%(items)s un viens cits",
+        "other": "%(items)s un %(count)s citus"
+    },
     "Submit debug logs": "Iesniegt atutošanas logfailus",
     "Opens the Developer Tools dialog": "Atver izstrādātāja rīku logu",
     "Sunday": "Svētdiena",
@@ -462,11 +502,16 @@
     "You sent a verification request": "Jūs nosūtījāt verifikācijas pieprasījumu",
     "Start Verification": "Uzsākt verifikāciju",
     "Hide verified sessions": "Slēpt verificētas sesijas",
-    "%(count)s verified sessions|one": "1 verificēta sesija",
-    "%(count)s verified sessions|other": "%(count)s verificētas sesijas",
+    "%(count)s verified sessions": {
+        "one": "1 verificēta sesija",
+        "other": "%(count)s verificētas sesijas"
+    },
     "Encrypted by an unverified session": "Šifrēts ar neverificētu sesiju",
     "Verify your other session using one of the options below.": "Verificējiet citas jūsu sesijas, izmantojot kādu no iespējām zemāk.",
-    "%(names)s and %(count)s others are typing …|other": "%(names)s un %(count)s citi raksta…",
+    "%(names)s and %(count)s others are typing …": {
+        "other": "%(names)s un %(count)s citi raksta…",
+        "one": "%(names)s un vēl viens raksta…"
+    },
     "%(names)s and %(lastPerson)s are typing …": "%(names)s un %(lastPerson)s raksta…",
     "Enable Emoji suggestions while typing": "Iespējot emocijzīmju ieteikumus rakstīšanas laikā",
     "Show typing notifications": "Rādīt paziņojumus par rakstīšanu",
@@ -474,11 +519,9 @@
     "Philippines": "Filipīnas",
     "Unpin": "Atspraust",
     "Pin": "Piespraust",
-    "%(names)s and %(count)s others are typing …|one": "%(names)s un vēl viens raksta…",
     "%(displayName)s is typing …": "%(displayName)s raksta…",
     "Got it": "Sapratu",
     "Got It": "Sapratu",
-    "Verification cancelled": "Verificēšana atcelta",
     "Waiting for %(displayName)s to accept…": "Gaida, kamēr %(displayName)s akceptēs…",
     "Waiting for answer": "Tiek gaidīta atbilde",
     "To be secure, do this in person or use a trusted way to communicate.": "Lai tas būtu droši, dariet to klātienē vai lietojiet kādu uzticamu saziņas veidu.",
@@ -491,11 +534,12 @@
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Jūsu ziņas ir drošībā - tikai jums un saņēmējam ir unikālas atslēgas, lai ziņas atšifrētu.",
     "Direct Messages": "Tiešā sarakste",
     "Hide sessions": "Slēpt sesijas",
-    "%(count)s sessions|one": "%(count)s sesija",
-    "%(count)s sessions|other": "%(count)s sesijas",
+    "%(count)s sessions": {
+        "one": "%(count)s sesija",
+        "other": "%(count)s sesijas"
+    },
     "Once enabled, encryption cannot be disabled.": "Šifrēšana nevar tikt atspējota, ja reiz tikusi iespējota.",
     "Encryption not enabled": "Šifrēšana nav iespējota",
-    "Encryption enabled": "Šifrēšana iespējota",
     "Only the two of you are in this conversation, unless either of you invites anyone to join.": "Tikai jūs abi esat šajā sarakstē, ja vien kāds no jums neuzaicina citus pievienoties.",
     "This is the beginning of your direct message history with <displayName/>.": "Šis ir sākums jūsu tiešās sarakstes vēsturei ar <displayName/>.",
     "Use the <a>Desktop app</a> to search encrypted messages": "Izmantojiet <a>lietotni</a>, lai veiktu šifrētu ziņu meklēšanu",
@@ -528,13 +572,11 @@
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Saziņa ar šo lietotāju ir nodrošināta ar pilnīgu šifrēšanu un nav nolasāma trešajām pusēm.",
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reaģēja ar %(shortName)s</reactedWith>",
-    "Reactions": "Reaģēšana",
     "Quick Reactions": "Ātra reaģēšana",
     "React": "Reaģēt",
     "Messages in this room are not end-to-end encrypted.": "Ziņām šajā istabā netiek piemērota pilnīga šifrēšana.",
     "This room is end-to-end encrypted": "Šajā istabā tiek veikta pilnīga šifrēšana",
     "Room information": "Informācija par istabu",
-    "Security": "Drošība",
     "The server is offline.": "Serveris bezsaistē.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Ja ir aizmirsta slepenā frāze, jūs varat <button1>izmantot drošības atslēgu</button1> vai<button2>iestatīt jaunus atkopšanas veidus</button2>",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Ja ir aizmirsta drošības atslēga, jūs varat <button>iestatīt jaunus atkopšanas veidus</button>",
@@ -608,11 +650,9 @@
     "Join millions for free on the largest public server": "Pievienojieties bez maksas miljoniem lietotāju lielākajā publiskajā serverī",
     "Server Options": "Servera parametri",
     "%(ssoButtons)s Or %(usernamePassword)s": "%(ssoButtons)s vai %(usernamePassword)s",
-    "Username": "Lietotājvārds",
     "<userName/> invited you": "<userName/> uzaicināja jūs",
     "<userName/> wants to chat": "<userName/> vēlas sarakstīties",
     "Smileys & People": "Smaidiņi & cilvēki",
-    "People": "Cilvēki",
     "Add a photo, so people can easily spot your room.": "Pievienojiet foto, lai padarītu istabu vieglāk pamanāmu citiem cilvēkiem.",
     "<a>Add a topic</a> to help people know what it is about.": "<a>Pievienot tematu</a>, lai dotu cilvēkiem priekšstatu.",
     "You do not have permission to invite people to this room.": "Jums nav atļaujas uzaicināt cilvēkus šajā istabā.",
@@ -633,10 +673,14 @@
     "Never send encrypted messages to unverified sessions from this session": "Nesūtīt šifrētas ziņas no šīs sesijas neverificētām sesijām",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Notikusi kļūda, mēģinot atjaunināt istabas alternatīvās adreses. Iespējams, tas ir liegts servera iestatījumos vai arī notikusi kāda pagaidu kļūme.",
     "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s nomainīja šīs istabas alternatīvās adreses.",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.|one": "%(senderName)s dzēsa šīs istabas alternatīvo adresi %(addresses)s.",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.|other": "%(senderName)s dzēsa šīs istabas alternatīvās adreses %(addresses)s.",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.|one": "%(senderName)s pievienoja alternatīvo adresi %(addresses)s šai istabai.",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.|other": "%(senderName)s pievienoja alternatīvās adreses %(addresses)s šai istabai.",
+    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
+        "one": "%(senderName)s dzēsa šīs istabas alternatīvo adresi %(addresses)s.",
+        "other": "%(senderName)s dzēsa šīs istabas alternatīvās adreses %(addresses)s."
+    },
+    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
+        "one": "%(senderName)s pievienoja alternatīvo adresi %(addresses)s šai istabai.",
+        "other": "%(senderName)s pievienoja alternatīvās adreses %(addresses)s šai istabai."
+    },
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Izmantojiet identitātes serveri, lai uzaicinātu ar epastu. Pārvaldiet <settings>iestatījumos</settings>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Uzaiciniet kādu personu, izmantojot vārdu, epasta adresi, lietotājvārdu (piemēram, <userId/>) vai <a>dalieties ar šo istabu</a>.",
     "Verified!": "Verificēts!",
@@ -718,8 +762,10 @@
     "Other": "Citi",
     "Show less": "Rādīt mazāk",
     "Show more": "Rādīt vairāk",
-    "Show %(count)s more|one": "Rādīt vēl %(count)s",
-    "Show %(count)s more|other": "Rādīt vēl %(count)s",
+    "Show %(count)s more": {
+        "one": "Rādīt vēl %(count)s",
+        "other": "Rādīt vēl %(count)s"
+    },
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Notikusi kļūda, mēģinot atjaunināt istabas galveno adresi. Iespējams, tas ir liegts servera iestatījumos vai arī notikusi kāda pagaidu kļūme.",
     "Error updating main address": "Kļūda galvenās adreses atjaunināšanā",
     "This address is available to use": "Šī adrese ir pieejama",
@@ -757,7 +803,6 @@
     "Share room": "Dalīties ar istabu",
     "Help & About": "Palīdzība un par lietotni",
     "About homeservers": "Par bāzes serveriem",
-    "About": "Par",
     "%(senderName)s placed a voice call. (not supported by this browser)": "%(senderName)s uzsāka balss zvanu. (Netiek atbalstīts šajā pārlūkā)",
     "%(senderName)s placed a voice call.": "%(senderName)s uzsāka balss zvanu.",
     "Enable message search in encrypted rooms": "Iespējot ziņu meklēšanu šifrētās istabās",
@@ -831,11 +876,12 @@
     "If you've joined lots of rooms, this might take a while": "Ja esat pievienojies daudzām istabām, tas var aizņemt kādu laiku",
     "Your password has been reset.": "Jūsu parole ir atiestatīta.",
     "Could not load user profile": "Nevarēja ielādēt lietotāja profilu",
-    "User menu": "Lietotāja izvēlne",
     "New here? <a>Create an account</a>": "Pirmo reizi šeit? <a>Izveidojiet kontu</a>",
     "Got an account? <a>Sign in</a>": "Vai jums ir konts? <a>Pierakstieties</a>",
-    "You have %(count)s unread notifications in a prior version of this room.|one": "Jums ir %(count)s nelasīts paziņojums iepriekšējā šīs istabas versijā.",
-    "You have %(count)s unread notifications in a prior version of this room.|other": "Jums ir %(count)s nelasīti paziņojumi iepriekšējā šīs istabas versijā.",
+    "You have %(count)s unread notifications in a prior version of this room.": {
+        "one": "Jums ir %(count)s nelasīts paziņojums iepriekšējā šīs istabas versijā.",
+        "other": "Jums ir %(count)s nelasīti paziņojumi iepriekšējā šīs istabas versijā."
+    },
     "Add a photo so people know it's you.": "Pievienot foto, lai cilvēki zina, ka tas esat jūs.",
     "Great, that'll help people know it's you": "Lieliski, tas ļaus cilvēkiem tevi atpazīt",
     "Couldn't load page": "Neizdevās ielādēt lapu",
@@ -934,8 +980,10 @@
     "A private space for you and your teammates": "Privāta vieta jums un jūsu komandas dalībniekiem",
     "A private space to organise your rooms": "Privāta vieta, kur organizēt jūsu istabas",
     "<inviter/> invites you": "<inviter/> uzaicina jūs",
-    "%(count)s rooms|one": "%(count)s istaba",
-    "%(count)s rooms|other": "%(count)s istabas",
+    "%(count)s rooms": {
+        "one": "%(count)s istaba",
+        "other": "%(count)s istabas"
+    },
     "Are you sure you want to leave the space '%(spaceName)s'?": "Vai tiešām vēlaties pamest vietu '%(spaceName)s'?",
     "Create a Group Chat": "Izveidot grupas čatu",
     "Missing session data": "Trūkst sesijas datu",
@@ -947,10 +995,14 @@
     "Create a new room": "Izveidot jaunu istabu",
     "All rooms": "Visas istabas",
     "Continue with %(provider)s": "Turpināt ar %(provider)s",
-    "%(oneUser)smade no changes %(count)s times|one": "%(oneUser)sneveica nekādas izmaiņas",
-    "%(oneUser)smade no changes %(count)s times|other": "%(oneUser)sneveica nekādas izmaiņas %(count)s reizes",
-    "%(severalUsers)smade no changes %(count)s times|one": "%(severalUsers)sneveica nekādas izmaiņas",
-    "%(severalUsers)smade no changes %(count)s times|other": "%(severalUsers)sneveica nekādas izmaiņas %(count)s reizes",
+    "%(oneUser)smade no changes %(count)s times": {
+        "one": "%(oneUser)sneveica nekādas izmaiņas",
+        "other": "%(oneUser)sneveica nekādas izmaiņas %(count)s reizes"
+    },
+    "%(severalUsers)smade no changes %(count)s times": {
+        "one": "%(severalUsers)sneveica nekādas izmaiņas",
+        "other": "%(severalUsers)sneveica nekādas izmaiņas %(count)s reizes"
+    },
     "%(name)s cancelled": "%(name)s atcēla",
     "%(name)s cancelled verifying": "%(name)s atcēla verifikāciju",
     "Deactivate user": "Deaktivizēt lietotāju",
@@ -958,10 +1010,14 @@
     "Demote": "Pazemināt",
     "Demote yourself?": "Pazemināt sevi?",
     "Accepting…": "Akceptē…",
-    "%(count)s unread messages.|one": "1 nelasīta ziņa.",
-    "%(count)s unread messages.|other": "%(count)s nelasītas ziņas.",
-    "%(count)s unread messages including mentions.|one": "1 neslasīts pieminējums.",
-    "%(count)s unread messages including mentions.|other": "%(count)s nelasītas ziņas, ieskaitot pieminēšanu.",
+    "%(count)s unread messages.": {
+        "one": "1 nelasīta ziņa.",
+        "other": "%(count)s nelasītas ziņas."
+    },
+    "%(count)s unread messages including mentions.": {
+        "one": "1 neslasīts pieminējums.",
+        "other": "%(count)s nelasītas ziņas, ieskaitot pieminēšanu."
+    },
     "A-Z": "A-Ž",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s priekšskatījums nav pieejams. Vai vēlaties tai pievienoties?",
     "Empty room": "Tukša istaba",
@@ -1018,8 +1074,10 @@
     "You cancelled verifying %(name)s": "Jūs atvēlāt %(name)s verifikāciju",
     "You cancelled verification.": "Jūs atcēlāt verifikāciju.",
     "Edit devices": "Rediģēt ierīces",
-    "Remove %(count)s messages|one": "Dzēst 1 ziņu",
-    "Remove %(count)s messages|other": "Dzēst %(count)s ziņas",
+    "Remove %(count)s messages": {
+        "one": "Dzēst 1 ziņu",
+        "other": "Dzēst %(count)s ziņas"
+    },
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Lielam ziņu apjomam tas var aizņemt kādu laiku. Lūdzu, tikmēr neatsvaidziniet klientu.",
     "You don't have permission to delete the address.": "Jums nav atļaujas dzēst adresi.",
     "Add some now": "Pievienot kādu tagad",
@@ -1039,13 +1097,16 @@
     "You're already in a call with this person.": "Jums jau notiek zvans ar šo personu.",
     "Already in call": "Notiek zvans",
     "%(deviceId)s from %(ip)s": "%(deviceId)s no %(ip)s",
-    "%(count)s people you know have already joined|other": "%(count)s pazīstami cilvēki ir jau pievienojusies",
-    "%(count)s people you know have already joined|one": "%(count)s pazīstama persona ir jau pievienojusies",
-    "%(count)s members|one": "%(count)s dalībnieks",
+    "%(count)s people you know have already joined": {
+        "other": "%(count)s pazīstami cilvēki ir jau pievienojusies",
+        "one": "%(count)s pazīstama persona ir jau pievienojusies"
+    },
+    "%(count)s members": {
+        "one": "%(count)s dalībnieks",
+        "other": "%(count)s dalībnieki"
+    },
     "Save Changes": "Saglabāt izmaiņas",
     "Welcome to <name/>": "Laipni lūdzam uz <name/>",
-    "Room name": "Istabas nosaukums",
-    "%(count)s members|other": "%(count)s dalībnieki",
     "Room List": "Istabu saraksts",
     "Send as message": "Nosūtīt kā ziņu",
     "%(brand)s URL": "%(brand)s URL",
@@ -1479,7 +1540,6 @@
     "Some suggestions may be hidden for privacy.": "Daži ieteikumi var būt slēpti dēļ privātuma.",
     "Search for rooms or people": "Meklēt istabas vai cilvēkus",
     "Message preview": "Ziņas priekšskatījums",
-    "Forward message": "Pārsūtīt ziņu",
     "Public room": "Publiska istaba",
     "Private room (invite only)": "Privāta istaba (tikai ar ielūgumiem)",
     "Only people invited will be able to find and join this room.": "Tikai uzaicinātās cilvēki varēs atrast un pievienoties šai istabai.",
@@ -1504,8 +1564,10 @@
     "Explore public rooms": "Pārlūkot publiskas istabas",
     "Enable encryption in settings.": "Iespējot šifrēšanu iestatījumos.",
     "%(seconds)ss left": "%(seconds)s sekundes atlikušas",
-    "Show %(count)s other previews|one": "Rādīt %(count)s citu priekšskatījumu",
-    "Show %(count)s other previews|other": "Rādīt %(count)s citus priekšskatījumus",
+    "Show %(count)s other previews": {
+        "one": "Rādīt %(count)s citu priekšskatījumu",
+        "other": "Rādīt %(count)s citus priekšskatījumus"
+    },
     "Share": "Dalīties",
     "Access": "Piekļuve",
     "People with supported clients will be able to join the room without having a registered account.": "Cilvēki ar atbalstītām lietotnēm varēs pievienoties istabai bez reģistrēta konta.",
@@ -1558,10 +1620,14 @@
     "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s noņēma piespraustu <a>ziņu</a> šajā istabā. Skatīt visas <b>piespraustās ziņas</b>.",
     "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s piesprauda ziņu šajā istabā. Skatīt visas piespraustās ziņas.",
     "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s piesprauda <a>ziņu</a> šajā istabā. Skatīt visas <b>piespraustās ziņas</b>.",
-    "Final result based on %(count)s votes|one": "Gala rezultāts pamatojoties uz %(count)s balss",
-    "Based on %(count)s votes|one": "Pamatojoties uz %(count)s balss",
-    "Based on %(count)s votes|other": "Pamatojoties uz %(count)s balsīm",
-    "Final result based on %(count)s votes|other": "Gala rezultāts pamatojoties uz %(count)s balsīm",
+    "Final result based on %(count)s votes": {
+        "one": "Gala rezultāts pamatojoties uz %(count)s balss",
+        "other": "Gala rezultāts pamatojoties uz %(count)s balsīm"
+    },
+    "Based on %(count)s votes": {
+        "one": "Pamatojoties uz %(count)s balss",
+        "other": "Pamatojoties uz %(count)s balsīm"
+    },
     "No votes cast": "Nav balsojumu",
     "Proxy URL (optional)": "Proxy URL (izvēles)",
     "Write an option": "Uzrakstiet variantu",
@@ -1641,10 +1707,14 @@
     "Unable to access your microphone": "Nevar piekļūt mikrofonam",
     "Error processing voice message": "Balss ziņas apstrādes kļūda",
     "Voice Message": "Balss ziņa",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)snomainīja <a>piespraustās ziņas</a> istabā %(count)s reizes",
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)snomainīja <a>piespraustās ziņas</a> istabā %(count)s reizes",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)snomainīja <a>piespraustās ziņas</a> istabā",
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)snomainīja <a>piespraustās ziņas</a> istabā",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
+        "other": "%(oneUser)snomainīja <a>piespraustās ziņas</a> istabā %(count)s reizes",
+        "one": "%(oneUser)snomainīja <a>piespraustās ziņas</a> istabā"
+    },
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
+        "other": "%(severalUsers)snomainīja <a>piespraustās ziņas</a> istabā %(count)s reizes",
+        "one": "%(severalUsers)snomainīja <a>piespraustās ziņas</a> istabā"
+    },
     "Nothing pinned, yet": "Vēl nekas nav piesprausts",
     "Pinned messages": "Piespraustās ziņas",
     "Pinned": "Piesprausts",
@@ -1658,8 +1728,10 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nevar atrast zemāk norādīto Matrix ID profilus - vai tomēr vēlaties tos uzaicināt?",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Daži faili ir <b>pārlieku lieli</b>, lai tos augšupielādētu. Faila izmēra ierobežojums ir %(limit)s.",
     "This version of %(brand)s does not support viewing some encrypted files": "Šī %(brand)s versija neatbalsta atsevišķu šifrētu failu skatīšanu",
-    "Upload %(count)s other files|one": "Augšupielādēt %(count)s citu failu",
-    "Upload %(count)s other files|other": "Augšupielādēt %(count)s citus failus",
+    "Upload %(count)s other files": {
+        "one": "Augšupielādēt %(count)s citu failu",
+        "other": "Augšupielādēt %(count)s citus failus"
+    },
     "Files": "Faili",
     "Your private space": "Jūsu privāta vieta",
     "Your profile": "Jūsu profils",
@@ -1717,7 +1789,6 @@
     "Show: %(instance)s rooms (%(server)s)": "Rādīt: %(instance)s istabas (%(server)s)",
     "Show: Matrix rooms": "Rādīt: Matrix istabas",
     "Show:": "Rādīt:",
-    "Suggestions": "Ieteikumi",
     "Other options": "Citas iespējas",
     "Use \"%(query)s\" to search": "Izmantot \"%(query)s\" meklēšanai",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Mēģiniet ritināt laika joslu uz augšu, lai redzētu, vai ir kādas agrākas ziņas.",
@@ -1735,5 +1806,29 @@
     "Messages in this chat will be end-to-end encrypted.": "Ziņām šajā istabā tiek piemērota pilnīga šifrēšana.",
     "Export Chat": "Eksportēt čatu",
     "Export chat": "Eksportēt čatu",
-    "Back to chat": "Atgriezties uz čatu"
+    "Back to chat": "Atgriezties uz čatu",
+    "common": {
+        "about": "Par",
+        "analytics": "Analītika",
+        "encryption_enabled": "Šifrēšana iespējota",
+        "error": "Kļūda",
+        "forward_message": "Pārsūtīt ziņu",
+        "mute": "Apklusināt",
+        "no_results": "Nav rezultātu",
+        "offline": "Bezsaistē",
+        "password": "Parole",
+        "people": "Cilvēki",
+        "reactions": "Reaģēšana",
+        "room_name": "Istabas nosaukums",
+        "security": "Drošība",
+        "settings": "Iestatījumi",
+        "success": "Izdevās",
+        "suggestions": "Ieteikumi",
+        "unmute": "Pārtraukt apklusināšanu",
+        "username": "Lietotājvārds",
+        "verification_cancelled": "Verificēšana atcelta"
+    },
+    "a11y": {
+        "user_menu": "Lietotāja izvēlne"
+    }
 }

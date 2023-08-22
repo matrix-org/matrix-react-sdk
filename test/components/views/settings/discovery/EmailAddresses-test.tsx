@@ -17,10 +17,9 @@ limitations under the License.
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
-import { IRequestTokenResponse } from "matrix-js-sdk/src/client";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
+import { IRequestTokenResponse, MatrixError } from "matrix-js-sdk/src/matrix";
 
-import { UserFriendlyError } from "../../../../../src/languageHandler";
+import { TranslationKey, UserFriendlyError } from "../../../../../src/languageHandler";
 import EmailAddresses, { EmailAddress } from "../../../../../src/components/views/settings/discovery/EmailAddresses";
 import { clearAllModals, getMockClientWithEventEmitter } from "../../../../test-utils";
 
@@ -43,7 +42,6 @@ describe("<EmailAddress/>", () => {
     const mockClient = getMockClientWithEventEmitter({
         getIdentityServerUrl: jest.fn().mockReturnValue("https://fake-identity-server"),
         generateClientSecret: jest.fn(),
-        doesServerSupportSeparateAddAndBind: jest.fn(),
         requestEmailToken: jest.fn(),
         bindThreePid: jest.fn(),
     });
@@ -75,7 +73,6 @@ describe("<EmailAddress/>", () => {
     describe("Email verification share phase", () => {
         it("shows translated error message", async () => {
             render(<EmailAddress email={emailThreepidFixture} />);
-            mockClient.doesServerSupportSeparateAddAndBind.mockResolvedValue(true);
             mockClient.requestEmailToken.mockRejectedValue(
                 new MatrixError(
                     { errcode: "M_THREEPID_IN_USE", error: "Some fake MatrixError occured" },
@@ -95,7 +92,6 @@ describe("<EmailAddress/>", () => {
             // Start these tests out at the "Complete" phase
             render(<EmailAddress email={emailThreepidFixture} />);
             mockClient.requestEmailToken.mockResolvedValue({ sid: "123-fake-sid" } satisfies IRequestTokenResponse);
-            mockClient.doesServerSupportSeparateAddAndBind.mockResolvedValue(true);
             fireEvent.click(screen.getByText("Share"));
             // Then wait for the completion screen to come up
             await screen.findByText("Complete");
@@ -123,7 +119,7 @@ describe("<EmailAddress/>", () => {
         });
 
         it("Shows error dialog when share completion fails (UserFriendlyError)", async () => {
-            const fakeErrorText = "Fake UserFriendlyError error in test";
+            const fakeErrorText = "Fake UserFriendlyError error in test" as TranslationKey;
             mockClient.bindThreePid.mockRejectedValue(new UserFriendlyError(fakeErrorText));
             fireEvent.click(screen.getByText("Complete"));
 

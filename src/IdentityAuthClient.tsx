@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
-import { createClient, MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
+import { SERVICE_TYPES, createClient, MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -74,10 +73,6 @@ export default class IdentityAuthClient {
     private readToken(): string | null {
         if (this.tempClient) return null; // temporary client: ignore
         return window.localStorage.getItem("mx_is_access_token");
-    }
-
-    public hasCredentials(): boolean {
-        return Boolean(this.accessToken);
     }
 
     // Returns a promise that resolves to the access_token string from the IS
@@ -146,9 +141,7 @@ export default class IdentityAuthClient {
                     <div>
                         <p>
                             {_t(
-                                "This action requires accessing the default identity server " +
-                                    "<server /> to validate an email address or phone number, " +
-                                    "but the server does not have any terms of service.",
+                                "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.",
                                 {},
                                 {
                                     server: () => <b>{abbreviateUrl(identityServerUrl)}</b>,

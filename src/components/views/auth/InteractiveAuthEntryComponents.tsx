@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { AuthType, IAuthDict, IInputs, IStageStatus } from "matrix-js-sdk/src/interactive-auth";
 import { logger } from "matrix-js-sdk/src/logger";
 import React, { ChangeEvent, createRef, FormEvent, Fragment } from "react";
@@ -175,7 +175,7 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
                         className={passwordBoxClass}
                         type="password"
                         name="passwordField"
-                        label={_t("Password")}
+                        label={_t("common|password")}
                         autoFocus={true}
                         value={this.state.password}
                         onChange={this.onPasswordFieldChange}
@@ -220,8 +220,7 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
         let sitePublicKey: string | undefined;
         if (!this.props.stageParams || !this.props.stageParams.public_key) {
             errorText = _t(
-                "Missing captcha public key in homeserver configuration. Please report " +
-                    "this to your homeserver administrator.",
+                "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.",
             );
         } else {
             sitePublicKey = this.props.stageParams.public_key;
