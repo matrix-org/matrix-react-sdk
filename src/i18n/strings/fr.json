@@ -3861,9 +3861,6 @@
     "WebGL is required to display maps, please enable it in your browser settings.": "WebGL est nécessaire pour afficher les cartes, veuillez l’activer dans les paramètres de votre navigateur.",
     "Search all rooms": "Rechercher dans tous les salons",
     "Search this room": "Rechercher dans ce salon",
-    "The <twemoji>Twemoji</twemoji> emoji art is © <author>Twitter, Inc and other contributors</author> used under the terms of <terms>CC-BY 4.0</terms>.": "L’art émoji <twemoji>Twemoji</twemoji> est © <author>Twitter, Inc et autres contributeurs</author> utilisé sous licence <terms>CC-BY 4.0</terms>.",
-    "The <colr>twemoji-colr</colr> font is © <author>Mozilla Foundation</author> used under the terms of <terms>Apache 2.0</terms>.": "La police <colr>twemoji-colr</colr> est © <author>Mozilla Foundation</author> utilisée sous licence <terms>Apache 2.0</terms>.",
-    "The <photo>default cover photo</photo> is © <author>Jesús Roncero</author> used under the terms of <terms>CC-BY-SA 4.0</terms>.": "La <photo>photo d’illustration par défaut</photo> est © <author>Jesús Roncero</author> utilisée selon les termes <terms>CC-BY-SA 4.0</terms>.",
     "Error changing password": "Erreur lors du changement de mot de passe",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (statut HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Erreur inconnue du changement de mot de passe (%(stringifiedError)s)",
@@ -3969,5 +3966,10 @@
     "Failed to query public rooms": "Impossible d’interroger les salons publics",
     "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Votre serveur d’accueil est trop ancien et ne prend pas en charge la version minimale requise de l’API. Veuillez contacter le propriétaire du serveur, ou bien mettez à jour votre serveur.",
     "Your server is unsupported": "Votre serveur n’est pas pris en charge",
-    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Ce serveur utilise une ancienne version de Matrix. Mettez-le à jour vers Matrix %(version)s pour utiliser %(brand)s sans erreurs."
+    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Ce serveur utilise une ancienne version de Matrix. Mettez-le à jour vers Matrix %(version)s pour utiliser %(brand)s sans erreurs.",
+    "credits": {
+        "default_cover_photo": "La <photo>photo d’illustration par défaut</photo> est © <author>Jesús Roncero</author> utilisée selon les termes <terms>CC-BY-SA 4.0</terms>.",
+        "twemoji_colr": "La police <colr>twemoji-colr</colr> est © <author>Mozilla Foundation</author> utilisée sous licence <terms>Apache 2.0</terms>.",
+        "twemoji": "L’art émoji <twemoji>Twemoji</twemoji> est © <author>Twitter, Inc et autres contributeurs</author> utilisé sous licence <terms>CC-BY 4.0</terms>."
+    }
 }

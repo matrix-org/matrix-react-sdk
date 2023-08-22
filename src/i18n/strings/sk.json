@@ -3861,9 +3861,6 @@
     "Upload custom sound": "Nahrať vlastný zvuk",
     "Search all rooms": "Vyhľadávať vo všetkých miestnostiach",
     "Search this room": "Vyhľadávať v tejto miestnosti",
-    "The <twemoji>Twemoji</twemoji> emoji art is © <author>Twitter, Inc and other contributors</author> used under the terms of <terms>CC-BY 4.0</terms>.": "<twemoji>Twemoji</twemoji> emoji grafika je © <author>Twitter, Inc a ďalší prispievatelia</author> používaná podľa podmienok <terms>CC-BY 4.0</terms>.",
-    "The <colr>twemoji-colr</colr> font is © <author>Mozilla Foundation</author> used under the terms of <terms>Apache 2.0</terms>.": "Písmo <colr>twemoji-colr</colr> je © <author>Mozilla Foundation</author> používané podľa podmienok <terms>Apache 2.0</terms>.",
-    "The <photo>default cover photo</photo> is © <author>Jesús Roncero</author> used under the terms of <terms>CC-BY-SA 4.0</terms>.": "<photo>Predvolená titulná fotografia</photo> je © <author>Jesús Roncero</author> používaná podľa podmienok <terms>CC-BY-SA 4.0</terms>.",
     "Error changing password": "Chyba pri zmene hesla",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP stav %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Neznáma chyba pri zmene hesla (%(stringifiedError)s)",
@@ -3969,5 +3966,10 @@
     "Your request to join is pending.": "Vaša žiadosť o pripojenie čaká na vybavenie.",
     "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Tento server používa staršiu verziu systému Matrix. Ak chcete používať %(brand)s bez chýb, aktualizujte na Matrix %(version)s.",
     "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Váš domovský server je príliš starý a nepodporuje minimálnu požadovanú verziu API. Obráťte sa na vlastníka servera alebo aktualizujte svoj server.",
-    "Your server is unsupported": "Váš server nie je podporovaný"
+    "Your server is unsupported": "Váš server nie je podporovaný",
+    "credits": {
+        "default_cover_photo": "<photo>Predvolená titulná fotografia</photo> je © <author>Jesús Roncero</author> používaná podľa podmienok <terms>CC-BY-SA 4.0</terms>.",
+        "twemoji_colr": "Písmo <colr>twemoji-colr</colr> je © <author>Mozilla Foundation</author> používané podľa podmienok <terms>Apache 2.0</terms>.",
+        "twemoji": "<twemoji>Twemoji</twemoji> emoji grafika je © <author>Twitter, Inc a ďalší prispievatelia</author> používaná podľa podmienok <terms>CC-BY 4.0</terms>."
+    }
 }

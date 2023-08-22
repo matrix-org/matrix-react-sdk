@@ -3843,9 +3843,6 @@
     "Search this room": "Kërko në këtë dhomë",
     "Formatting": "Formatim",
     "Upload custom sound": "Ngarkoni tingull vetjak",
-    "The <twemoji>Twemoji</twemoji> emoji art is © <author>Twitter, Inc and other contributors</author> used under the terms of <terms>CC-BY 4.0</terms>.": "<twemoji>Twemoji</twemoji> © <author>Twitter, Inc dhe kontribues të tjerë</author> përdoren sipas kushteve të <terms>CC-BY 4.0</terms>.",
-    "The <colr>twemoji-colr</colr> font is © <author>Mozilla Foundation</author> used under the terms of <terms>Apache 2.0</terms>.": "Shkronjat <colr>twemoji-colr</colr> © <author>Mozilla Foundation</author> përdoren sipas kushteve të <terms>Apache 2.0</terms>.",
-    "The <photo>default cover photo</photo> is © <author>Jesús Roncero</author> used under the terms of <terms>CC-BY-SA 4.0</terms>.": "<photo>Fotoja kopertinë parazgjedhje</photo> © <author>Jesús Roncero</author> përdoret sipas kushteve të <terms>CC-BY-SA 4.0</terms>.",
     "Error changing password": "Gabim në ndryshim fjalëkalimi",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (gjendje HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Gabim i panjohur ndryshimi fjalëkalimi (%(stringifiedError)s)",
@@ -3862,5 +3859,10 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Pasi përdoruesit e ftuar të kenë ardhur në %(brand)s, do të jeni në gjendje të bisedoni dhe dhoma do të jetë e fshehtëzuar skaj-më-skaj",
     "Waiting for users to join %(brand)s": "Po pritet që përdorues të vijnë në %(brand)s",
     "You do not have permission to invite users": "S’keni leje të ftoni përdorues",
-    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s ndryshoi emrin e vet në ekran dhe foton e profilit"
+    "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s ndryshoi emrin e vet në ekran dhe foton e profilit",
+    "credits": {
+        "default_cover_photo": "<photo>Fotoja kopertinë parazgjedhje</photo> © <author>Jesús Roncero</author> përdoret sipas kushteve të <terms>CC-BY-SA 4.0</terms>.",
+        "twemoji_colr": "Shkronjat <colr>twemoji-colr</colr> © <author>Mozilla Foundation</author> përdoren sipas kushteve të <terms>Apache 2.0</terms>.",
+        "twemoji": "<twemoji>Twemoji</twemoji> © <author>Twitter, Inc dhe kontribues të tjerë</author> përdoren sipas kushteve të <terms>CC-BY 4.0</terms>."
+    }
 }
