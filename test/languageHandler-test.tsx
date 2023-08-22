@@ -15,26 +15,175 @@ limitations under the License.
 */
 
 import React from "react";
+import fetchMock from "fetch-mock-jest";
 
+import SdkConfig from "../src/SdkConfig";
 import {
     _t,
     _tDom,
-    TranslatedString,
+    CustomTranslationOptions,
+    getAllLanguagesWithLabels,
+    ICustomTranslations,
+    registerCustomTranslations,
     setLanguage,
     setMissingEntryGenerator,
     substitute,
-} from "../../src/languageHandler";
-import { stubClient } from "../test-utils";
+    TranslatedString,
+    UserFriendlyError,
+    TranslationKey,
+} from "../src/languageHandler";
+import { stubClient } from "./test-utils";
+import { setupLanguageMock } from "./setup/setupLanguage";
 
-describe("languageHandler", function () {
+async function setupTranslationOverridesForTests(overrides: ICustomTranslations) {
+    const lookupUrl = "/translations.json";
+    const fn = (url: string): ICustomTranslations => {
+        expect(url).toEqual(lookupUrl);
+        return overrides;
+    };
+
+    SdkConfig.add({
+        custom_translations_url: lookupUrl,
+    });
+    CustomTranslationOptions.lookupFn = fn;
+    await registerCustomTranslations({
+        testOnlyIgnoreCustomTranslationsCache: true,
+    });
+}
+
+describe("languageHandler", () => {
+    beforeEach(async () => {
+        await setLanguage("en");
+    });
+
+    afterEach(() => {
+        SdkConfig.reset();
+        CustomTranslationOptions.lookupFn = undefined;
+    });
+
+    it("should support overriding translations", async () => {
+        const str = "This is a test string that does not exist in the app." as TranslationKey;
+        const enOverride = "This is the English version of a custom string." as TranslationKey;
+        const deOverride = "This is the German version of a custom string." as TranslationKey;
+
+        // First test that overrides aren't being used
+        await setLanguage("en");
+        expect(_t(str)).toEqual(str);
+        await setLanguage("de");
+        expect(_t(str)).toEqual(str);
+
+        await setupTranslationOverridesForTests({
+            [str]: {
+                en: enOverride,
+                de: deOverride,
+            },
+        });
+
+        // Now test that they *are* being used
+        await setLanguage("en");
+        expect(_t(str)).toEqual(enOverride);
+
+        await setLanguage("de");
+        expect(_t(str)).toEqual(deOverride);
+    });
+
+    describe("UserFriendlyError", () => {
+        const testErrorMessage = "This email address is already in use (%(email)s)" as TranslationKey;
+        beforeEach(async () => {
+            // Setup some  strings with variable substituations that we can use in the tests.
+            const deOverride = "Diese E-Mail-Adresse wird bereits verwendet (%(email)s)";
+            await setupTranslationOverridesForTests({
+                [testErrorMessage]: {
+                    en: testErrorMessage,
+                    de: deOverride,
+                },
+            });
+        });
+
+        it("includes English message and localized translated message", async () => {
+            await setLanguage("de");
+
+            const friendlyError = new UserFriendlyError(testErrorMessage, {
+                email: "test@example.com",
+                cause: undefined,
+            });
+
+            // Ensure message is in English so it's readable in the logs
+            expect(friendlyError.message).toStrictEqual("This email address is already in use (test@example.com)");
+            // Ensure the translated message is localized appropriately
+            expect(friendlyError.translatedMessage).toStrictEqual(
+                "Diese E-Mail-Adresse wird bereits verwendet (test@example.com)",
+            );
+        });
+
+        it("includes underlying cause error", async () => {
+            await setLanguage("de");
+
+            const underlyingError = new Error("Fake underlying error");
+            const friendlyError = new UserFriendlyError(testErrorMessage, {
+                email: "test@example.com",
+                cause: underlyingError,
+            });
+
+            expect(friendlyError.cause).toStrictEqual(underlyingError);
+        });
+
+        it("ok to omit the substitution variables and cause object, there just won't be any cause", async () => {
+            const friendlyError = new UserFriendlyError("foo error" as TranslationKey);
+            expect(friendlyError.cause).toBeUndefined();
+        });
+    });
+
+    describe("getAllLanguagesWithLabels", () => {
+        it("should handle unknown language sanely", async () => {
+            fetchMock.getOnce(
+                "/i18n/languages.json",
+                {
+                    en: "en_EN.json",
+                    de: "de_DE.json",
+                    qq: "qq.json",
+                },
+                { overwriteRoutes: true },
+            );
+            await expect(getAllLanguagesWithLabels()).resolves.toMatchInlineSnapshot(`
+                [
+                  {
+                    "label": "English",
+                    "labelInTargetLanguage": "English",
+                    "value": "en",
+                  },
+                  {
+                    "label": "German",
+                    "labelInTargetLanguage": "Deutsch",
+                    "value": "de",
+                  },
+                  {
+                    "label": "qq",
+                    "labelInTargetLanguage": "qq",
+                    "value": "qq",
+                  },
+                ]
+            `);
+            setupLanguageMock(); // restore language mock
+        });
+    });
+});
+
+describe("languageHandler JSX", function () {
     // See setupLanguage.ts for how we are stubbing out translations to provide fixture data for these tests
     const basicString = "Rooms";
-    const selfClosingTagSub = "Accept <policyLink /> to continue:";
-    const textInTagSub = "<a>Upgrade</a> to your own domain";
+    const selfClosingTagSub = "Accept <policyLink /> to continue:" as TranslationKey;
+    const textInTagSub = "<a>Upgrade</a> to your own domain" as TranslationKey;
     const plurals = "and %(count)s others...";
     const variableSub = "You are now ignoring %(userId)s";
 
-    type TestCase = [string, string, Record<string, unknown>, Record<string, unknown> | undefined, TranslatedString];
+    type TestCase = [
+        string,
+        TranslationKey,
+        Record<string, unknown>,
+        Record<string, unknown> | undefined,
+        TranslatedString,
+    ];
     const testCasesEn: TestCase[] = [
         // description of the test case, translationString, variables, tags, expected result
         ["translates a basic string", basicString, {}, undefined, "Rooms"],
@@ -111,7 +260,7 @@ describe("languageHandler", function () {
         });
 
         it("replacements in the wrong order", function () {
-            const text = "%(var1)s %(var2)s";
+            const text = "%(var1)s %(var2)s" as TranslationKey;
             expect(_t(text, { var2: "val2", var1: "val1" })).toBe("val1 val2");
         });
 
@@ -212,12 +361,12 @@ describe("languageHandler", function () {
 
     describe("when languages dont load", () => {
         it("_t", () => {
-            const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary";
+            const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary" as TranslationKey;
             expect(_t(STRING_NOT_IN_THE_DICTIONARY, {})).toEqual(STRING_NOT_IN_THE_DICTIONARY);
         });
 
         it("_tDom", () => {
-            const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary";
+            const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary" as TranslationKey;
             expect(_tDom(STRING_NOT_IN_THE_DICTIONARY, {})).toEqual(
                 <span lang="en">{STRING_NOT_IN_THE_DICTIONARY}</span>,
             );
