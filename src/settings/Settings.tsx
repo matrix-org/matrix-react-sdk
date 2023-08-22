@@ -386,14 +386,14 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("Sliding Sync mode"),
         description: _td("Under active development, cannot be disabled."),
-        shouldWarn: true,
-        default: false,
+        shouldWarn: false,
+        default: true,
         controller: new SlidingSyncController(),
     },
     "feature_sliding_sync_proxy_url": {
         // This is not a distinct feature, it is a setting for feature_sliding_sync above
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: "",
+        default: "https://slidingsync.lab.matrix.org",
     },
     "feature_element_call_video_rooms": {
         isFeature: true,
