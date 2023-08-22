@@ -15,12 +15,14 @@ limitations under the License.
 */
 
 /**
- * Create a delegated auth account management URL with logout params as per MSC3824
+ * Create a delegated auth account management URL with logout params as per MSC3824 and MSC2965
  * https://github.com/matrix-org/matrix-spec-proposals/blob/hughns/sso-redirect-action/proposals/3824-oidc-aware-clients.md#definition-of-oidc-aware
+ * https://github.com/sandhose/matrix-doc/blob/msc/sandhose/oidc-discovery/proposals/2965-oidc-discovery.md#account-management-url-parameters
  */
 export const getOidcLogoutUrl = (delegatedAuthAccountUrl: string, deviceId: string): string => {
     const logoutUrl = new URL(delegatedAuthAccountUrl);
-    logoutUrl.hash = `action=logout&device_id=${deviceId}`;
+    logoutUrl.searchParams.set("action", "session_end");
+    logoutUrl.searchParams.set("device_id", deviceId);
 
     return logoutUrl.toString();
 };
