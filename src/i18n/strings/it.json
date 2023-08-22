@@ -1627,7 +1627,6 @@
     "Security Phrase": "Frase di sicurezza",
     "Security Key": "Chiave di sicurezza",
     "Use your Security Key to continue.": "Usa la tua chiave di sicurezza per continuare.",
-    "User menu": "Menu utente",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Proteggiti contro la perdita dell'accesso ai messaggi e dati cifrati facendo un backup delle chiavi crittografiche sul tuo server.",
     "Generate a Security Key": "Genera una chiave di sicurezza",
     "Enter a Security Phrase": "Inserisci una frase di sicurezza",
@@ -3466,6 +3465,7 @@
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s o %(emojiCompare)s",
     "Sign out of this session": "Disconnetti da questa sessione",
     "You need to be able to kick users to do that.": "Devi poter cacciare via utenti per completare l'azione.",
+    "Voice broadcast": "Trasmissione vocale",
     "Rename session": "Rinomina sessione",
     "Voice broadcasts": "Trasmissioni vocali",
     "You do not have permission to start voice calls": "Non hai il permesso di avviare chiamate",
@@ -3977,5 +3977,7 @@
         "video_rooms_faq2_question": "Posso usare la chat testuale assieme alla chiamata video?",
         "video_rooms_faq2_answer": "Sì, la cronologia della chat viene mostrata assieme al video."
     },
-    "Voice broadcast": "Trasmissione vocale"
+    "a11y": {
+        "user_menu": "Menu utente"
+    }
 }

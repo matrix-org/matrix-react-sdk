@@ -1507,7 +1507,6 @@
         "one": "Você tem %(count)s notificações não lidas em uma versão anterior desta sala."
     },
     "Feedback": "Fale conosco",
-    "User menu": "Menu do usuário",
     "Could not load user profile": "Não foi possível carregar o perfil do usuário",
     "Your password has been reset.": "Sua senha foi alterada.",
     "Invalid base_url for m.homeserver": "base_url inválido para m.homeserver",
@@ -2894,5 +2893,8 @@
         "custom_themes": "Permite adicionar temas personalizados",
         "dehydration": "Envio de mensagens criptografadas offline, usando dispositivos específicos",
         "bridge_state": "Exibir informações sobre integrações nas configurações das salas"
+    },
+    "a11y": {
+        "user_menu": "Menu do usuário"
     }
 }

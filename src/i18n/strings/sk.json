@@ -1223,7 +1223,6 @@
     "Strikethrough": "Preškrtnuté",
     "Security": "Zabezpečenie",
     "Send a Direct Message": "Poslať priamu správu",
-    "User menu": "Používateľské menu",
     "Toggle Italics": "Prepnúť kurzíva",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
@@ -3467,6 +3466,7 @@
     "You need to be able to kick users to do that.": "Musíte mať oprávnenie vyhodiť používateľov, aby ste to mohli urobiť.",
     "Sign out of this session": "Odhlásiť sa z tejto relácie",
     "Rename session": "Premenovať reláciu",
+    "Voice broadcast": "Hlasové vysielanie",
     "Voice broadcasts": "Hlasové vysielania",
     "You do not have permission to start voice calls": "Nemáte povolenie na spustenie hlasových hovorov",
     "There's no one here to call": "Nie je tu nikto, komu by ste mohli zavolať",
@@ -3972,5 +3972,7 @@
         "video_rooms_faq2_question": "Môžem popri videohovore používať aj textovú konverzáciu?",
         "video_rooms_faq2_answer": "Áno, časová os konverzácie sa zobrazuje spolu s videom."
     },
-    "Voice broadcast": "Hlasové vysielanie"
+    "a11y": {
+        "user_menu": "Používateľské menu"
+    }
 }

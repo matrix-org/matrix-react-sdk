@@ -2354,7 +2354,6 @@
         "one": "Saat ini bergabung dengan %(count)s ruangan",
         "other": "Saat ini bergabung dengan %(count)s ruangan"
     },
-    "User menu": "Menu pengguna",
     "Switch theme": "Ubah tema",
     "Switch to dark mode": "Ubah ke mode gelap",
     "Switch to light mode": "Ubah ke mode terang",
@@ -3467,6 +3466,7 @@
     "You need to be able to kick users to do that.": "Anda harus dapat mengeluarkan pengguna untuk melakukan itu.",
     "Sign out of this session": "Keluarkan sesi ini",
     "Rename session": "Ubah nama sesi",
+    "Voice broadcast": "Siaran suara",
     "Voice broadcasts": "Siaran suara",
     "You do not have permission to start voice calls": "Anda tidak memiliki izin untuk memulai panggilan suara",
     "There's no one here to call": "Tidak ada siapa pun di sini untuk dipanggil",
@@ -3977,5 +3977,7 @@
         "video_rooms_faq2_question": "Bisakah saya mengobrol dengan teks saat ada panggilan video?",
         "video_rooms_faq2_answer": "Ya, lini masa obrolan akan ditampilkan di sebelah videonya."
     },
-    "Voice broadcast": "Siaran suara"
+    "a11y": {
+        "user_menu": "Menu pengguna"
+    }
 }

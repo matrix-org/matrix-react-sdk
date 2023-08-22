@@ -927,7 +927,6 @@
     "Switch theme": "テーマを切り替える",
     "All settings": "全ての設定",
     "Feedback": "フィードバック",
-    "User menu": "ユーザーメニュー",
     "Cannot connect to integration manager": "インテグレーションマネージャーに接続できません",
     "Failed to connect to integration manager": "インテグレーションマネージャーへの接続に失敗しました",
     "Start verification again from their profile.": "プロフィールから再度認証を開始してください。",
@@ -3240,6 +3239,7 @@
     "That e-mail address or phone number is already in use.": "そのメールアドレスまたは電話番号は既に使われています。",
     "Great! This Security Phrase looks strong enough.": "すばらしい！ このセキュリティーフレーズは十分に強力なようです。",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)sまたは%(copyButton)s",
+    "Voice broadcast": "音声配信",
     "Live": "ライブ",
     "pause voice broadcast": "音声配信を一時停止",
     "resume voice broadcast": "音声配信を再開",
@@ -3774,5 +3774,7 @@
         "video_rooms_faq2_question": "テキストによる会話も行えますか？",
         "video_rooms_faq2_answer": "はい、会話のタイムラインが動画と並んで表示されます。"
     },
-    "Voice broadcast": "音声配信"
+    "a11y": {
+        "user_menu": "ユーザーメニュー"
+    }
 }

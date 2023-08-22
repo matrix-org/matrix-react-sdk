@@ -1638,7 +1638,6 @@
     "This room is public": "Ce salon est public",
     "Edited at %(date)s": "Modifié le %(date)s",
     "Click to view edits": "Cliquez pour voir les modifications",
-    "User menu": "Menu utilisateur",
     "Are you sure you want to cancel entering passphrase?": "Souhaitez-vous vraiment annuler la saisie de la phrase de passe ?",
     "Unexpected server error trying to leave the room": "Erreur de serveur inattendue en essayant de quitter le salon",
     "Error leaving room": "Erreur en essayant de quitter le salon",
@@ -3466,6 +3465,7 @@
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s ou %(emojiCompare)s",
     "You need to be able to kick users to do that.": "Vous devez avoir l’autorisation d’expulser des utilisateurs pour faire ceci.",
     "Sign out of this session": "Se déconnecter de cette session",
+    "Voice broadcast": "Diffusion audio",
     "Rename session": "Renommer la session",
     "Voice broadcasts": "Diffusions audio",
     "You do not have permission to start voice calls": "Vous n’avez pas la permission de démarrer un appel audio",
@@ -3972,5 +3972,7 @@
         "video_rooms_faq2_question": "Est-il possible d’utiliser les messages textuels en même temps que l’appel vidéo ?",
         "video_rooms_faq2_answer": "Oui, l’historique de conversation est affiché à côté de la vidéo."
     },
-    "Voice broadcast": "Diffusion audio"
+    "a11y": {
+        "user_menu": "Menu utilisateur"
+    }
 }

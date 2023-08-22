@@ -2030,7 +2030,6 @@
     "New? <a>Create account</a>": "Nieuw? <a>Maak een account aan</a>",
     "If you've joined lots of rooms, this might take a while": "Als je bij veel kamers bent aangesloten kan dit een tijdje duren",
     "There was a problem communicating with the homeserver, please try again later.": "Er was een communicatieprobleem met de homeserver, probeer het later opnieuw.",
-    "User menu": "Persoonsmenu",
     "Switch theme": "Thema wisselen",
     "New here? <a>Create an account</a>": "Nieuw hier? <a>Maak een account</a>",
     "Got an account? <a>Sign in</a>": "Heb je een account? <a>Inloggen</a>",
@@ -3546,6 +3545,7 @@
     "Notifications silenced": "Meldingen stilgezet",
     "Video call started": "Videogesprek gestart",
     "Unknown room": "Onbekende kamer",
+    "Voice broadcast": "Spraakuitzending",
     "Live": "Live",
     "pause voice broadcast": "spraakuitzending pauzeren",
     "resume voice broadcast": "hervat spraakuitzending",
@@ -3580,5 +3580,7 @@
         "video_rooms_faq2_question": "Kan ik tekstberichten gebruiken naast het videogesprek?",
         "video_rooms_faq2_answer": "Ja, de gesprekstijdslijn wordt naast de video weergegeven."
     },
-    "Voice broadcast": "Spraakuitzending"
+    "a11y": {
+        "user_menu": "Persoonsmenu"
+    }
 }

@@ -1770,7 +1770,6 @@
     "Widgets": "Widgetlar",
     "Unpin": "Sabitlemeyi kaldır",
     "Download logs": "Günlükleri indir",
-    "User menu": "Kullanıcı menüsü",
     "Notification options": "Bildirim ayarları",
     "Looks good!": "İyi görünüyor!",
     "Security Key": "Güvenlik anahtarı",
@@ -2028,5 +2027,8 @@
         "state_counters": "Oda başlığında basit sayaçları görüntüle",
         "custom_themes": "Özel tema eklemeyi destekle",
         "bridge_state": "Oda ayarlarındaki köprülerin bilgilerini göster"
+    },
+    "a11y": {
+        "user_menu": "Kullanıcı menüsü"
     }
 }

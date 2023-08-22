@@ -1641,7 +1641,6 @@
     "Away": "I larguar",
     "Edited at %(date)s": "Përpunuar më %(date)s",
     "Click to view edits": "Klikoni që të shihni përpunime",
-    "User menu": "Menu përdoruesi",
     "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
     "Change notification settings": "Ndryshoni rregullime njoftimesh",
     "Your server isn't responding to some <a>requests</a>.": "Shërbyesi juaj s’po u përgjigjet ca <a>kërkesave</a>.",
@@ -3501,6 +3500,7 @@
     "Notifications silenced": "Njoftime të heshtuara",
     "Video call started": "Nisi thirrje me video",
     "Unknown room": "Dhomë e panjohur",
+    "Voice broadcast": "Transmetim zanor",
     "Live": "Drejtpërdrejt",
     "pause voice broadcast": "ndal transmetim zanor",
     "resume voice broadcast": "vazhdo transmetim zanor",
@@ -3865,5 +3865,7 @@
         "video_rooms_faq2_question": "A mund të përdor fjalosje me tekst në krah të thirrjes video?",
         "video_rooms_faq2_answer": "Po, rrjedha kohore e fjalosjes shfaqet tok me videon."
     },
-    "Voice broadcast": "Transmetim zanor"
+    "a11y": {
+        "user_menu": "Menu përdoruesi"
+    }
 }

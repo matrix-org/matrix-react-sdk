@@ -1539,7 +1539,6 @@
     "Switch theme": "切换主题",
     "All settings": "所有设置",
     "Feedback": "反馈",
-    "User menu": "用户菜单",
     "Failed to get autodiscovery configuration from server": "从服务器获取自动发现配置时失败",
     "Invalid base_url for m.homeserver": "m.homeserver 的 base_url 无效",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "家服务器链接不像是有效的 Matrix 家服务器",
@@ -3426,6 +3425,7 @@
         "one": "%(user)s 与 1 个人",
         "other": "%(user)s 与 %(count)s 个人"
     },
+    "Voice broadcast": "语音广播",
     "Voice broadcasts": "语音广播",
     "Video call (Jitsi)": "视频通话（Jitsi）",
     "Ongoing call": "正在进行的通话",
@@ -3564,5 +3564,7 @@
         "video_rooms_faq2_question": "我能在视频通话的同时使用文字聊天吗？",
         "video_rooms_faq2_answer": "是的，聊天时间线显示在视频旁。"
     },
-    "Voice broadcast": "语音广播"
+    "a11y": {
+        "user_menu": "用户菜单"
+    }
 }

@@ -1406,7 +1406,6 @@
         "one": "Asali n %(filename)s d %(count)s wayeḍ-nniḍen"
     },
     "Uploading %(filename)s": "Asali n %(filename)s",
-    "User menu": "Umuɣ n useqdac",
     "Could not load user profile": "Yegguma ad d-yali umaɣnu n useqdac",
     "New passwords must match each other.": "Awalen uffiren imaynuten ilaq ad mṣadan.",
     "Return to login screen": "Uɣal ɣer ugdil n tuqqna",
@@ -2002,5 +2001,8 @@
         "state_counters": "Err amsiḍen afessa ɣef uqerru n texxamt",
         "custom_themes": "Tallalt n tmerna n yisental udmawanen",
         "bridge_state": "Sken-d tilɣa ɣef teqneṭrin deg yiɣewwaṛen n texxamt"
+    },
+    "a11y": {
+        "user_menu": "Umuɣ n useqdac"
     }
 }

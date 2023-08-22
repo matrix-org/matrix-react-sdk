@@ -618,7 +618,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Підтвердьте шляхом порівняння наступного рядка з рядком у користувацьких налаштуваннях вашого іншого сеансу:",
     "Confirm this user's session by comparing the following with their User Settings:": "Підтвердьте сеанс цього користувача шляхом порівняння наступного рядка з рядком з їхніх користувацьких налаштувань:",
     "All settings": "Усі налаштування",
-    "User menu": "Користувацьке меню",
     "Go to Settings": "Перейти до налаштувань",
     "Compare unique emoji": "Порівняйте унікальні емодзі",
     "Cancelling…": "Скасування…",
@@ -3467,6 +3466,7 @@
     "You need to be able to kick users to do that.": "Для цього вам потрібен дозвіл вилучати користувачів.",
     "Sign out of this session": "Вийти з цього сеансу",
     "Rename session": "Перейменувати сеанс",
+    "Voice broadcast": "Голосові трансляції",
     "Voice broadcasts": "Голосові трансляції",
     "You do not have permission to start voice calls": "У вас немає дозволу розпочинати голосові виклики",
     "There's no one here to call": "Тут немає кого викликати",
@@ -3972,5 +3972,7 @@
         "video_rooms_faq2_question": "Чи можу я писати текстові повідомлення під час відеовиклику?",
         "video_rooms_faq2_answer": "Так, стрічка бесіди показана поряд із відео."
     },
-    "Voice broadcast": "Голосові трансляції"
+    "a11y": {
+        "user_menu": "Користувацьке меню"
+    }
 }

@@ -2090,7 +2090,6 @@
     "A new password must be entered.": "יש להזין סיסמה חדשה.",
     "The email address linked to your account must be entered.": "יש להזין את כתובת הדוא\"ל המקושרת לחשבונך.",
     "Could not load user profile": "לא ניתן לטעון את פרופיל המשתמש",
-    "User menu": "תפריט משתמש",
     "Switch theme": "שנה ערכת נושא",
     "Switch to dark mode": "שנה למצב כהה",
     "Switch to light mode": "שנה למצב בהיר",
@@ -2770,5 +2769,8 @@
         "dehydration": "שליחת הודעות מוצפנות במצב אופליין עם שימוש במכשיר מיובש",
         "bridge_state": "הצג מידע אודות גשרים בהגדרות של החדרים",
         "jump_to_date": "קיפצו לתאריך (מוסיף /jumptodate וקפוץ לכותרות תאריך)"
+    },
+    "a11y": {
+        "user_menu": "תפריט משתמש"
     }
 }

@@ -1596,7 +1596,6 @@
     "Confirm your identity by entering your account password below.": "Подтвердите свою личность, введя пароль учетной записи ниже.",
     "Sign in with SSO": "Вход с помощью SSO",
     "Switch theme": "Сменить тему",
-    "User menu": "Меню пользователя",
     "If you've joined lots of rooms, this might take a while": "Если вы присоединились к большому количеству комнат, это может занять некоторое время",
     "Confirm encryption setup": "Подтвердите настройку шифрования",
     "Click the button below to confirm setting up encryption.": "Нажмите кнопку ниже, чтобы подтвердить настройку шифрования.",
@@ -3471,6 +3470,7 @@
     "Live": "В эфире",
     "Video call (%(brand)s)": "Видеозвонок (%(brand)s)",
     "Voice broadcasts": "Голосовые трансляции",
+    "Voice broadcast": "Голосовая трансляция",
     "Video call started": "Начался видеозвонок",
     "Video call started in %(roomName)s. (not supported by this browser)": "Видеовызов начался в %(roomName)s. (не поддерживается этим браузером)",
     "Video call started in %(roomName)s.": "Видеовызов начался в %(roomName)s.",
@@ -3661,5 +3661,7 @@
         "video_rooms_faq2_question": "Можно ли использовать текстовый чат одновременно с видеозвонком?",
         "video_rooms_faq2_answer": "Да, лента сообщений отображается рядом с видео."
     },
-    "Voice broadcast": "Голосовая трансляция"
+    "a11y": {
+        "user_menu": "Меню пользователя"
+    }
 }

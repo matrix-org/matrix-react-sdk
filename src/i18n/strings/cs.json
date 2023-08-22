@@ -1657,7 +1657,6 @@
     "Upload a file": "Nahrát soubor",
     "You've reached the maximum number of simultaneous calls.": "Dosáhli jste maximálního počtu souběžných hovorů.",
     "Too Many Calls": "Přiliš mnoho hovorů",
-    "User menu": "Uživatelská nabídka",
     "Switch theme": "Přepnout téma",
     "Switch to dark mode": "Přepnout do tmavého režimu",
     "Switch to light mode": "Přepnout do světlého režimu",
@@ -3467,6 +3466,7 @@
     "You need to be able to kick users to do that.": "Pro tuto akci musíte mít právo vyhodit uživatele.",
     "Sign out of this session": "Odhlásit se z této relace",
     "Rename session": "Přejmenovat relaci",
+    "Voice broadcast": "Hlasové vysílání",
     "Voice broadcasts": "Hlasová vysílání",
     "You do not have permission to start voice calls": "Nemáte oprávnění k zahájení hlasových hovorů",
     "There's no one here to call": "Není tu nikdo, komu zavolat",
@@ -3977,5 +3977,7 @@
         "video_rooms_faq2_question": "Mohu vedle videohovoru používat i textový chat?",
         "video_rooms_faq2_answer": "Ano, časová osa chatu se zobrazuje vedle videa."
     },
-    "Voice broadcast": "Hlasové vysílání"
+    "a11y": {
+        "user_menu": "Uživatelská nabídka"
+    }
 }

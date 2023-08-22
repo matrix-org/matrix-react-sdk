@@ -1626,7 +1626,6 @@
     "Switch to dark mode": "Ŝalti malhelan reĝimon",
     "Switch theme": "Ŝalti haŭton",
     "All settings": "Ĉiuj agordoj",
-    "User menu": "Menuo de uzanto",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Malhelpu perdon de aliro al ĉifritaj mesaĝoj kaj datumoj per savkopiado de ĉifraj ŝlosiloj al via servilo.",
     "Generate a Security Key": "Generi sekurecan ŝlosilon",
     "Enter a Security Phrase": "Enigiu sekurecan frazon",
@@ -2722,6 +2721,7 @@
     "You ended a voice broadcast": "Vi finis voĉan elsendon",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s finis <a>voĉan elsendon</a>",
     "You ended a <a>voice broadcast</a>": "Vi finis <a>voĉan elsendon</a>",
+    "Voice broadcast": "Voĉan elsendo",
     "Live": "Vivi",
     "play voice broadcast": "ludu voĉan elsendon",
     "Scroll down in the timeline": "Rulumu malsupren en la historio",
@@ -2955,5 +2955,7 @@
         "video_rooms_faq1_question": "Kiel mi povas krei videoĉambron?",
         "video_rooms_faq1_answer": "Uzu la \"+\" butonon en la ĉambro sekcio de la maldekstra panelo."
     },
-    "Voice broadcast": "Voĉan elsendo"
+    "a11y": {
+        "user_menu": "Menuo de uzanto"
+    }
 }

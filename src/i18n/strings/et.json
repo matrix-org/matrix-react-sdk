@@ -1464,7 +1464,6 @@
     "Verify User": "Verifitseeri kasutaja",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Lisaturvalisus mõttes verifitseeri see kasutaja võrreldes selleks üheks korraks loodud koodi mõlemas seadmes.",
     "Your messages are not secure": "Sinu sõnumid ei ole turvatud",
-    "User menu": "Kasutajamenüü",
     "Return to login screen": "Mine tagasi sisselogimisvaatele",
     "Invalid homeserver discovery response": "Vigane vastus koduserveri tuvastamise päringule",
     "Failed to get autodiscovery configuration from server": "Serveri automaattuvastuse seadistuste laadimine ei õnnestunud",
@@ -3467,6 +3466,7 @@
     "You need to be able to kick users to do that.": "Selle tegevuse jaoks peaks sul olema õigus teistele kasutajatele müksamiseks.",
     "Rename session": "Muuda sessiooni nime",
     "Sliding Sync configuration": "Sliding Sync konfiguratsioon",
+    "Voice broadcast": "Ringhäälingukõne",
     "Voice broadcasts": "Ringhäälingukõned",
     "Enable notifications for this account": "Võta sellel kasutajakontol kasutusele teavitused",
     "Video call ended": "Videokõne on lõppenud",
@@ -3972,5 +3972,7 @@
         "video_rooms_faq2_question": "Kas ma saan videokõne ajal ka tekstisõnumeid saata?",
         "video_rooms_faq2_answer": "Jah, tekstivestluse ajajoon on kuvatud videovaate kõrval."
     },
-    "Voice broadcast": "Ringhäälingukõne"
+    "a11y": {
+        "user_menu": "Kasutajamenüü"
+    }
 }

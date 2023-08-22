@@ -1965,7 +1965,6 @@
     "Original event source": "منبع اصلی رخداد",
     "Decrypted event source": "رمزگشایی منبع رخداد",
     "Could not load user profile": "امکان نمایش پروفایل کاربر میسر نیست",
-    "User menu": "منوی کاربر",
     "Switch theme": "تعویض پوسته",
     "Switch to dark mode": "انتخاب حالت تاریک",
     "Switch to light mode": "انتخاب حالت روشن",
@@ -2555,6 +2554,7 @@
     "User is already invited to the room": "کاربر به این اتاق دعوت شده است",
     "User is already invited to the space": "کاربر به این فضا دعوت شده است",
     "You do not have permission to invite people to this space.": "شما دسترسی لازم برای دعوت از افراد به این فضا را ندارید.",
+    "Voice broadcast": "صدای جمعی",
     "Live": "زنده",
     "Go live": "برو به زنده",
     "pause voice broadcast": "توقف صدای جمعی",
@@ -2626,5 +2626,7 @@
         "voice_broadcast": "صدای جمعی",
         "video_rooms_a_new_way_to_chat": "راهکار جدیدی برای گفتگوی صوتی و تصویری در%(brand)sوجود دارد."
     },
-    "Voice broadcast": "صدای جمعی"
+    "a11y": {
+        "user_menu": "منوی کاربر"
+    }
 }

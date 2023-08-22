@@ -1590,7 +1590,6 @@
     "Switch to light mode": "Cambiar al tema claro",
     "Switch to dark mode": "Cambiar al tema oscuro",
     "Switch theme": "Cambiar tema",
-    "User menu": "Menú del Usuario",
     "Failed to perform homeserver discovery": "No se ha podido realizar el descubrimiento del servidor base",
     "If you've joined lots of rooms, this might take a while": "Si te has unido a muchas salas, esto puede tardar un poco",
     "Create account": "Crear una cuenta",
@@ -3512,6 +3511,7 @@
     "Notifications silenced": "Notificaciones silenciadas",
     "Video call started": "Videollamada iniciada",
     "Unknown room": "Sala desconocida",
+    "Voice broadcast": "Retransmisión de voz",
     "resume voice broadcast": "reanudar retransmisión de voz",
     "pause voice broadcast": "pausar retransmisión de voz",
     "Live": "En directo",
@@ -3778,5 +3778,7 @@
         "video_rooms_faq2_question": "¿Puedo mandar mensajes de texto en la videollamada?",
         "video_rooms_faq2_answer": "Sí, el historial de la sala aparece al lado del vídeo."
     },
-    "Voice broadcast": "Retransmisión de voz"
+    "a11y": {
+        "user_menu": "Menú del Usuario"
+    }
 }

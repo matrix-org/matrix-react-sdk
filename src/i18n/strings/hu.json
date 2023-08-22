@@ -1633,7 +1633,6 @@
     "Notification options": "Értesítési beállítások",
     "Favourited": "Kedvencnek jelölt",
     "Forget Room": "Szoba elfelejtése",
-    "User menu": "Felhasználói menü",
     "This room is public": "Ez egy nyilvános szoba",
     "Away": "Távol",
     "Are you sure you want to cancel entering passphrase?": "Biztos, hogy megszakítja a jelmondat bevitelét?",
@@ -3464,6 +3463,7 @@
     "Your server has native support": "A kiszolgálója natívan támogatja",
     "%(qrCode)s or %(appLinks)s": "%(qrCode)s vagy %(appLinks)s",
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s vagy %(emojiCompare)s",
+    "Voice broadcast": "Hangközvetítés",
     "Sign out of this session": "Kijelentkezés ebből a munkamenetből",
     "Rename session": "Munkamenet átnevezése",
     "You need to be able to kick users to do that.": "Hogy ezt tegye, ahhoz ki kell tudnia rúgni felhasználókat.",
@@ -3876,5 +3876,7 @@
         "video_rooms_faq2_question": "Lehet a videóhívás közben szövegesen is csevegni?",
         "video_rooms_faq2_answer": "Igen, a szöveges idővonal a videóval együtt megjelenik."
     },
-    "Voice broadcast": "Hangközvetítés"
+    "a11y": {
+        "user_menu": "Felhasználói menü"
+    }
 }

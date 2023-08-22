@@ -1636,7 +1636,6 @@
     "Favourited": "Con marca de Favorita",
     "Forget Room": "Esquecer sala",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Se a outra versión de %(brand)s aínda está aberta noutra lapela, péchaa xa que usar %(brand)s no mesmo servidor con carga preguiceira activada e desactivada ao mesmo tempo causará problemas.",
-    "User menu": "Menú de usuaria",
     "This room is public": "Esta é unha sala pública",
     "Away": "Fóra",
     "Show rooms with unread messages first": "Mostrar primeiro as salas con mensaxes sen ler",
@@ -3465,6 +3464,7 @@
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s ou %(emojiCompare)s",
     "Show shortcut to welcome checklist above the room list": "Mostrar atallo á lista de comprobacións de benvida sobre a lista de salas",
     "You need to be able to kick users to do that.": "Tes que poder expulsar usuarias para facer eso.",
+    "Voice broadcast": "Emisión de voz",
     "Sign out of this session": "Pechar esta sesión",
     "Rename session": "Renomear sesión",
     "Voice broadcasts": "Emisións de voz",
@@ -3497,5 +3497,7 @@
         "video_rooms_faq2_question": "Podo usar chat de texto xunto á chamada de vídeo?",
         "video_rooms_faq2_answer": "Si, a cronoloxía de texto móstrase xunto co vídeo."
     },
-    "Voice broadcast": "Emisión de voz"
+    "a11y": {
+        "user_menu": "Menú de usuaria"
+    }
 }

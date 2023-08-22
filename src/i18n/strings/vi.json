@@ -394,7 +394,6 @@
     "Original event source": "Nguồn sự kiện ban đầu",
     "Decrypted event source": "Nguồn sự kiện được giải mã",
     "Could not load user profile": "Không thể tải hồ sơ người dùng",
-    "User menu": "Menu người dùng",
     "Switch theme": "Chuyển đổi chủ đề",
     "Switch to dark mode": "Chuyển sang chế độ tối",
     "Switch to light mode": "Chuyển sang chế độ ánh sáng",
@@ -3203,6 +3202,7 @@
     "Connection error - Recording paused": "Lỗi kết nối - Đã tạm dừng ghi âm",
     "pause voice broadcast": "Tạm dừng phát thanh",
     "Buffering…": "Đang khởi tạo bộ đệm…",
+    "Voice broadcast": "Phát thanh",
     "Change input device": "Đổi thiết bị đầu vào",
     "resume voice broadcast": "Tiếp tục phát thanh",
     "Yes, end my recording": "Vâng, ngừng ghi âm tôi",
@@ -3675,5 +3675,7 @@
         "video_rooms_faq2_question": "Tôi có thể sử dụng nhắn tin cùng lúc với gọi video không?",
         "video_rooms_faq2_answer": "Vâng, dòng thời gian trò chuyện được hiển thị cùng với video."
     },
-    "Voice broadcast": "Phát thanh"
+    "a11y": {
+        "user_menu": "Menu người dùng"
+    }
 }

@@ -936,7 +936,6 @@
     "Original event source": "ແຫຼ່ງຕົ້ນສະບັບ",
     "Decrypted event source": "ບ່ອນທີ່ຖືກຖອດລະຫັດໄວ້",
     "Could not load user profile": "ບໍ່ສາມາດໂຫຼດໂປຣໄຟລ໌ຂອງຜູ້ໃຊ້ໄດ້",
-    "User menu": "ເມນູຜູ້ໃຊ້",
     "Switch theme": "ສະຫຼັບຫົວຂໍ້",
     "Switch to dark mode": "ສະຫຼັບໄປໂໝດມືດ",
     "Switch to light mode": "ສະຫຼັບໄປໂໝດແສງ",
@@ -3304,5 +3303,8 @@
         "dehydration": "ຂໍ້ຄວາມເຂົ້າລະຫັດແບບອອບໄລນ໌ໂດຍໃຊ້ອຸປະກອນອົບແຫ້ງ",
         "bridge_state": "ສະແດງຂໍ້ມູນກ່ຽວກັບການແກ້ໄຂການຕັ້ງຄ່າຫ້ອງ",
         "jump_to_date": "ໄປຫາວັນທີ (ເພີ່ມ /jumptodate ແລະໄປຫາຫົວຂໍ້ວັນທີ)"
+    },
+    "a11y": {
+        "user_menu": "ເມນູຜູ້ໃຊ້"
     }
 }
