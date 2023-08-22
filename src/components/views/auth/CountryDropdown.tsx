@@ -78,7 +78,7 @@ export default class CountryDropdown extends React.Component<IProps, IState> {
             try {
                 const locale = new Intl.Locale(navigator.language ?? navigator.languages[0]);
                 const code = locale.region ?? locale.language ?? locale.baseName;
-                const displayName = displayNames.of(code)?.toUpperCase();
+                const displayName = displayNames.of(code)!.toUpperCase();
                 defaultCountry = this.countries.find(
                     (c) => c.iso2 === code.toUpperCase() || c.name.toUpperCase() === displayName,
                 );
