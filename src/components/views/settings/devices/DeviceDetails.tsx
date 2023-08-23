@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { IPusher, PUSHER_ENABLED } from "matrix-js-sdk/src/matrix";
-import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
+import { IPusher, PUSHER_ENABLED, LocalNotificationSettings } from "matrix-js-sdk/src/matrix";
 
 import { formatDate } from "../../../../DateUtils";
 import { _t } from "../../../../languageHandler";
@@ -76,7 +75,7 @@ const DeviceDetails: React.FC<Props> = ({
             id: "application",
             heading: _t("Application"),
             values: [
-                { label: _t("Name"), value: device.appName },
+                { label: _t("common|name"), value: device.appName },
                 { label: _t("Version"), value: device.appVersion },
                 { label: _t("URL"), value: device.url },
             ],

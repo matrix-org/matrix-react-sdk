@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import { IEventRelation, Room, MatrixClient, THREAD_RELATION_TYPE } from "matrix-js-sdk/src/matrix";
-import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
+import { IEventRelation, Room, MatrixClient, THREAD_RELATION_TYPE, M_POLL_START } from "matrix-js-sdk/src/matrix";
 import React, { createContext, ReactElement, ReactNode, useContext, useRef } from "react";
 
 import { _t } from "../../../languageHandler";
@@ -246,7 +245,7 @@ const UploadButton: React.FC = () => {
             className="mx_MessageComposer_button"
             iconClassName="mx_MessageComposer_upload"
             onClick={onClick}
-            title={_t("Attachment")}
+            title={_t("common|attachment")}
         />
     );
 };
