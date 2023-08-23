@@ -19,6 +19,7 @@ import { Room, RoomEvent, RoomMember, RoomStateEvent } from "matrix-js-sdk/src/m
 import { throttle } from "lodash";
 
 import { useTypedEventEmitter } from "./useEventEmitter";
+import { getJoinedNonFunctionalMembers } from "../utils/room/getJoinedNonFunctionalMembers";
 
 // Hook to simplify watching Matrix Room joined members
 export const useRoomMembers = (room: Room, throttleWait = 250): RoomMember[] => {
@@ -37,9 +38,26 @@ export const useRoomMembers = (room: Room, throttleWait = 250): RoomMember[] => 
     return members;
 };
 
+type RoomMemberCountOpts = {
+    /**
+     * Wait time between room member count update
+     */
+    throttleWait?: number;
+    /**
+     * Whether to include functional members (bots, etc...) in the room count
+     * @default true
+     */
+    includeFunctional: boolean;
+};
+
 // Hook to simplify watching Matrix Room joined member count
-export const useRoomMemberCount = (room: Room, throttleWait = 250): number => {
+export const useRoomMemberCount = (
+    room: Room,
+    opts: RoomMemberCountOpts = { throttleWait: 250, includeFunctional: true },
+): number => {
     const [count, setCount] = useState<number>(room.getJoinedMemberCount());
+
+    const { throttleWait, includeFunctional } = opts;
 
     useTypedEventEmitter(
         room.currentState,
@@ -51,9 +69,11 @@ export const useRoomMemberCount = (room: Room, throttleWait = 250): number => {
                 // value, therefore handling the logic locally here.
                 //
                 // Tracked as part of https://github.com/vector-im/element-web/issues/26033
-                const membersCount = room.getMembers().reduce((count, m) => {
-                    return m.membership === "join" ? count + 1 : count;
-                }, 0);
+                const membersCount = includeFunctional
+                    ? room.getMembers().reduce((count, m) => {
+                          return m.membership === "join" ? count + 1 : count;
+                      }, 0)
+                    : getJoinedNonFunctionalMembers(room).length;
                 setCount(membersCount);
             },
             throttleWait,
