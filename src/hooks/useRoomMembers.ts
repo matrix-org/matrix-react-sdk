@@ -40,12 +40,21 @@ export const useRoomMembers = (room: Room, throttleWait = 250): RoomMember[] => 
 // Hook to simplify watching Matrix Room joined member count
 export const useRoomMemberCount = (room: Room, throttleWait = 250): number => {
     const [count, setCount] = useState<number>(room.getJoinedMemberCount());
+
     useTypedEventEmitter(
         room.currentState,
         RoomStateEvent.Members,
         throttle(
             () => {
-                setCount(room.getJoinedMemberCount());
+                // At the time where `RoomStateEvent.Members` is emitted the
+                // summary API has not had a chance to update the `summaryJoinedMemberCount`
+                // value, therefore handling the logic locally here.
+                //
+                // Tracked as part of https://github.com/vector-im/element-web/issues/26033
+                const membersCount = room.getMembers().reduce((count, m) => {
+                    return m.membership === "join" ? count + 1 : count;
+                }, 0);
+                setCount(membersCount);
             },
             throttleWait,
             { leading: true, trailing: true },
