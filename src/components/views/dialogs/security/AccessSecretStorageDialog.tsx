@@ -309,7 +309,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                         )}
                     </p>
                     <DialogButtons
-                        primaryButton={_t("Reset")}
+                        primaryButton={_t("action|reset")}
                         onPrimaryButtonClick={this.onConfirmResetAllClick}
                         hasCancel={true}
                         onCancel={this.onCancel}
@@ -366,7 +366,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                         />
                         {keyStatus}
                         <DialogButtons
-                            primaryButton={_t("Continue")}
+                            primaryButton={_t("action|continue")}
                             onPrimaryButtonClick={this.onPassPhraseNext}
                             hasCancel={true}
                             onCancel={this.onCancel}
@@ -426,16 +426,16 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                     onChange={this.onRecoveryKeyFileChange}
                                 />
                                 <AccessibleButton kind="primary" onClick={this.onRecoveryKeyFileUploadClick}>
-                                    {_t("Upload")}
+                                    {_t("action|upload")}
                                 </AccessibleButton>
                             </div>
                         </div>
                         {recoveryKeyFeedback}
                         <DialogButtons
-                            primaryButton={_t("Continue")}
+                            primaryButton={_t("action|continue")}
                             onPrimaryButtonClick={this.onRecoveryKeyNext}
                             hasCancel={true}
-                            cancelButton={_t("Go Back")}
+                            cancelButton={_t("action|go_back")}
                             cancelButtonClass="danger"
                             onCancel={this.onCancel}
                             focus={false}

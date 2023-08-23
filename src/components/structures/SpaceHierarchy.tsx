@@ -163,13 +163,13 @@ const Tile: React.FC<ITileProps> = ({
                 onFocus={onFocus}
                 tabIndex={isActive ? 0 : -1}
             >
-                {_t("View")}
+                {_t("action|view")}
             </AccessibleButton>
         );
     } else {
         button = (
             <AccessibleButton onClick={onJoinClick} kind="primary" onFocus={onFocus} tabIndex={isActive ? 0 : -1}>
-                {_t("Join")}
+                {_t("action|join")}
             </AccessibleButton>
         );
     }
@@ -716,7 +716,7 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
                 kind="danger_outline"
                 disabled={disabled}
             >
-                {removing ? _t("Removing…") : _t("Remove")}
+                {removing ? _t("Removing…") : _t("action|remove")}
             </Button>
             <Button
                 {...props}

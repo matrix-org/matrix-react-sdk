@@ -18,9 +18,8 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { User, IContent, Direction, ContentHelpers } from "matrix-js-sdk/src/matrix";
+import { User, IContent, Direction, ContentHelpers, MRoomTopicEventContent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MRoomTopicEventContent } from "matrix-js-sdk/src/@types/topic";
 
 import dis from "./dispatcher/dispatcher";
 import { _t, _td, UserFriendlyError } from "./languageHandler";
@@ -407,7 +406,7 @@ export const Commands = [
                                         )}
                                     </p>
                                 ),
-                                button: _t("Continue"),
+                                button: _t("action|continue"),
                             });
 
                             prom = finished.then(([useDefault]) => {
@@ -457,7 +456,7 @@ export const Commands = [
     new Command({
         command: "part",
         args: "[<room-address>]",
-        description: _td("Leave room"),
+        description: _td("action|leave_room"),
         analyticsName: "Part",
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, threadId, args) {

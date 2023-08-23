@@ -166,7 +166,7 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
                     {renderRules(list.userRules)}
                 </div>
             ),
-            button: _t("Close"),
+            button: _t("action|close"),
             hasCancelButton: false,
         });
     }
@@ -185,7 +185,7 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
                         onClick={() => this.removePersonalRule(rule)}
                         disabled={this.state.busy}
                     >
-                        {_t("Remove")}
+                        {_t("action|remove")}
                     </AccessibleButton>
                     &nbsp;
                     <code>{rule.entity}</code>
@@ -294,7 +294,7 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
                                 onClick={this.onAddPersonalRule}
                                 disabled={this.state.busy}
                             >
-                                {_t("Ignore")}
+                                {_t("action|ignore")}
                             </AccessibleButton>
                         </form>
                     </SettingsSubsection>

@@ -17,9 +17,15 @@ limitations under the License.
 */
 
 import React, { ReactElement, useCallback, useContext, useEffect } from "react";
-import { EventStatus, MatrixEvent, MatrixEventEvent, MsgType, RelationType } from "matrix-js-sdk/src/matrix";
+import {
+    EventStatus,
+    MatrixEvent,
+    MatrixEventEvent,
+    MsgType,
+    RelationType,
+    M_BEACON_INFO,
+} from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
-import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 
 import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
 import { Icon as EditIcon } from "../../../../res/img/element-icons/room/message-bar/edit.svg";
@@ -116,7 +122,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
         <React.Fragment>
             <ContextMenuTooltipButton
                 className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
-                title={_t("Options")}
+                title={_t("common|options")}
                 onClick={onOptionsClick}
                 onContextMenu={onOptionsClick}
                 isExpanded={menuDisplayed}
@@ -173,7 +179,7 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
         <React.Fragment>
             <ContextMenuTooltipButton
                 className="mx_MessageActionBar_iconButton"
-                title={_t("React")}
+                title={_t("action|react")}
                 onClick={onClick}
                 onContextMenu={onClick}
                 isExpanded={menuDisplayed}
@@ -391,7 +397,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             toolbarOpts.push(
                 <RovingAccessibleTooltipButton
                     className="mx_MessageActionBar_iconButton"
-                    title={_t("Edit")}
+                    title={_t("action|edit")}
                     onClick={this.onEditClick}
                     onContextMenu={this.onEditClick}
                     key="edit"
@@ -404,7 +410,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         const cancelSendingButton = (
             <RovingAccessibleTooltipButton
                 className="mx_MessageActionBar_iconButton"
-                title={_t("Delete")}
+                title={_t("action|delete")}
                 onClick={this.onCancelClick}
                 onContextMenu={this.onCancelClick}
                 key="cancel"
@@ -429,7 +435,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 0,
                 <RovingAccessibleTooltipButton
                     className="mx_MessageActionBar_iconButton"
-                    title={_t("Retry")}
+                    title={_t("action|retry")}
                     onClick={this.onResendClick}
                     onContextMenu={this.onResendClick}
                     key="resend"
@@ -455,7 +461,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                         0,
                         <RovingAccessibleTooltipButton
                             className="mx_MessageActionBar_iconButton"
-                            title={_t("Reply")}
+                            title={_t("action|reply")}
                             onClick={this.onReplyClick}
                             onContextMenu={this.onReplyClick}
                             key="reply"

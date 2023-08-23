@@ -84,7 +84,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
                     });
                 }}
             >
-                {_t("Leave")}
+                {_t("action|leave")}
             </AccessibleButton>
         );
     } else if (myMembership === "invite") {
@@ -121,7 +121,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
                         onRejectButtonClicked();
                     }}
                 >
-                    {_t("Reject")}
+                    {_t("action|reject")}
                 </AccessibleButton>
                 <AccessibleButton
                     kind="primary"
@@ -130,7 +130,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
                         onJoinButtonClicked();
                     }}
                 >
-                    {_t("Accept")}
+                    {_t("action|accept")}
                 </AccessibleButton>
             </>
         );
@@ -147,7 +147,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
                 }}
                 disabled={cannotJoin}
             >
-                {_t("Join")}
+                {_t("action|join")}
             </AccessibleButton>
         );
     }

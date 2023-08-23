@@ -343,7 +343,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         if (isVideoRoom) {
             title = _t("Create a video room");
         } else if (this.props.parentSpace || this.state.joinRule === JoinRule.Knock) {
-            title = _t("Create a room");
+            title = _t("action|create_a_room");
         } else {
             title = this.state.joinRule === JoinRule.Public ? _t("Create a public room") : _t("Create a private room");
         }
@@ -359,7 +359,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                     <div className="mx_Dialog_content">
                         <Field
                             ref={this.nameField}
-                            label={_t("Name")}
+                            label={_t("common|name")}
                             onChange={this.onNameChange}
                             onValidate={this.onNameValidate}
                             value={this.state.name}

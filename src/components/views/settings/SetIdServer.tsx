@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
+import { IThreepid } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -200,7 +200,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                                 new: (sub) => <b>{abbreviateUrl(idServer)}</b>,
                             },
                         ),
-                        button: _t("Continue"),
+                        button: _t("action|continue"),
                     });
                     save = !!confirmed;
                 }
@@ -232,7 +232,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                     <span>&nbsp;{_t("Only continue if you trust the owner of the server.")}</span>
                 </div>
             ),
-            button: _t("Continue"),
+            button: _t("action|continue"),
         });
         return finished;
     }
@@ -350,7 +350,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
             title,
             description: message,
             button,
-            cancelButton: _t("Go back"),
+            cancelButton: _t("action|go_back"),
             danger,
         });
         return finished;

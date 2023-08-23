@@ -24,9 +24,11 @@ import {
     EventType,
     MatrixClient,
     ContentHelpers,
+    ILocationContent,
+    LocationAssetType,
+    M_TIMESTAMP,
+    M_BEACON,
 } from "matrix-js-sdk/src/matrix";
-import { ILocationContent, LocationAssetType, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
-import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -276,7 +278,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
 
     return (
         <BaseDialog
-            title={_t("Forward message")}
+            title={_t("common|forward_message")}
             className="mx_ForwardDialog"
             contentId="mx_ForwardList"
             onFinished={onFinished}
@@ -329,7 +331,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                             />
                         </div>
                     ) : (
-                        <span className="mx_ForwardList_noResults">{_t("No results")}</span>
+                        <span className="mx_ForwardList_noResults">{_t("common|no_results")}</span>
                     )}
                 </AutoHideScrollbar>
             </div>

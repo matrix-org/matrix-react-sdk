@@ -169,7 +169,7 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
 
             <Field
                 name="spaceName"
-                label={_t("Name")}
+                label={_t("common|name")}
                 autoFocus={true}
                 value={name}
                 onChange={(ev: ChangeEvent<HTMLInputElement>) => {
@@ -203,7 +203,7 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
             <Field
                 name="spaceTopic"
                 element="textarea"
-                label={_t("Description")}
+                label={_t("common|description")}
                 value={topic ?? ""}
                 onChange={(ev) => setTopic(ev.target.value)}
                 rows={3}
@@ -292,13 +292,13 @@ const SpaceCreateMenu: React.FC<{
                 </p>
 
                 <SpaceCreateMenuType
-                    title={_t("Public")}
+                    title={_t("common|public")}
                     description={_t("Open space for anyone, best for communities")}
                     className="mx_SpaceCreateMenuType_public"
                     onClick={() => setVisibility(Visibility.Public)}
                 />
                 <SpaceCreateMenuType
-                    title={_t("Private")}
+                    title={_t("common|private")}
                     description={_t("Invite only, best for yourself or teams")}
                     className="mx_SpaceCreateMenuType_private"
                     onClick={() => setVisibility(Visibility.Private)}
@@ -317,7 +317,7 @@ const SpaceCreateMenu: React.FC<{
                 <AccessibleTooltipButton
                     className="mx_SpaceCreateMenu_back"
                     onClick={() => setVisibility(null)}
-                    title={_t("Go back")}
+                    title={_t("action|go_back")}
                 />
 
                 <h2>{visibility === Visibility.Public ? _t("Your public space") : _t("Your private space")}</h2>
@@ -341,7 +341,7 @@ const SpaceCreateMenu: React.FC<{
                 />
 
                 <AccessibleButton kind="primary" onClick={onSpaceCreateClick} disabled={busy}>
-                    {busy ? _t("Creating…") : _t("Create")}
+                    {busy ? _t("Creating…") : _t("action|create")}
                 </AccessibleButton>
             </React.Fragment>
         );

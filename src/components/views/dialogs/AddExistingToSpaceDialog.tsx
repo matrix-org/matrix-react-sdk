@@ -242,11 +242,11 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
 
                 <span className="mx_AddExistingToSpaceDialog_error">
                     <div className="mx_AddExistingToSpaceDialog_errorHeading">{_t("Not all selected were added")}</div>
-                    <div className="mx_AddExistingToSpaceDialog_errorCaption">{_t("Try again")}</div>
+                    <div className="mx_AddExistingToSpaceDialog_errorCaption">{_t("action|try_again")}</div>
                 </span>
 
                 <AccessibleButton className="mx_AddExistingToSpaceDialog_retryButton" onClick={addRooms}>
-                    {_t("Retry")}
+                    {_t("action|retry")}
                 </AccessibleButton>
             </>
         );
@@ -267,7 +267,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
         if (!button || selectedToAdd.size > 0) {
             button = (
                 <AccessibleButton kind="primary" disabled={selectedToAdd.size < 1} onClick={addRooms}>
-                    {_t("Add")}
+                    {_t("action|add")}
                 </AccessibleButton>
             );
         }
@@ -348,7 +348,9 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
 
                 {dms.length > 0 && dmsRenderer ? dmsRenderer(dms, selectedToAdd, dmsScrollState, onChange) : null}
 
-                {noResults ? <span className="mx_AddExistingToSpace_noResults">{_t("No results")}</span> : undefined}
+                {noResults ? (
+                    <span className="mx_AddExistingToSpace_noResults">{_t("common|no_results")}</span>
+                ) : undefined}
             </AutoHideScrollbar>
 
             <div className="mx_AddExistingToSpace_footer">{footer}</div>
