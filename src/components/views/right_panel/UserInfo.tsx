@@ -68,7 +68,6 @@ import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
 import { mediaFromMxc } from "../../../customisations/Media";
-import UIStore from "../../../stores/UIStore";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import ConfirmSpaceUserActionDialog from "../dialogs/ConfirmSpaceUserActionDialog";
 import { bulkSpaceBehaviour } from "../../../utils/space";
