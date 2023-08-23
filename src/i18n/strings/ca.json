@@ -657,5 +657,8 @@
         "save": "Desa",
         "start_chat": "Inicia un xat",
         "view_source": "Mostra el codi"
+    },
+    "keyboard": {
+        "home": "Inici"
     }
 }

@@ -790,12 +790,7 @@
     "Failed to copy": "Не вдалося скопіювати",
     "Your display name": "Ваш псевдонім",
     "Cancel replying to a message": "Скасувати відповідання на повідомлення",
-    "Page Up": "Page Up",
-    "Page Down": "Page Down",
-    "Esc": "Esc",
-    "Enter": "Enter",
     "Space": "Простір",
-    "End": "End",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Видалення даних з цього сеансу є безповоротним. Зашифровані повідомлення будуть втрачені якщо їхні ключі не було продубльовано.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Звірте цього користувача щоб позначити його довіреним. Довіряння користувачам додає спокою якщо ви користуєтесь наскрізно зашифрованими повідомленнями.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Звірте цей пристрій щоб позначити його довіреним. Довіряння цьому пристрою додає вам та іншим користувачам спокою якщо ви користуєтесь наскрізно зашифрованими повідомленнями.",
@@ -1591,12 +1586,8 @@
     "To leave the beta, visit your settings.": "Щоб вийти з бета-тестування, перейдіть до налаштувань.",
     "Beta": "Бета",
     "Leave the beta": "Вийти з бета-тестування",
-    "[number]": "[цифра]",
     "Upload a file": "Вивантажити файл",
     "New line": "Новий рядок",
-    "Ctrl": "Ctrl",
-    "Shift": "Shift",
-    "Alt": "Alt",
     "Autocomplete": "Автозаповнення",
     "Room List": "Перелік кімнат",
     "Calls": "Виклики",
@@ -3975,5 +3966,18 @@
     },
     "a11y": {
         "user_menu": "Користувацьке меню"
+    },
+    "keyboard": {
+        "home": "Домівка",
+        "space": "Простір",
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "number": "[цифра]"
     }
 }

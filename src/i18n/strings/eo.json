@@ -1419,9 +1419,6 @@
     "Calls": "Vokoj",
     "Room List": "Listo de ĉambroj",
     "Autocomplete": "Memkompletigo",
-    "Alt": "Alt-klavo",
-    "Shift": "Majuskliga klavo",
-    "Ctrl": "Stir-klavo",
     "Toggle Bold": "Ŝalti grason",
     "Toggle Italics": "Ŝalti kursivon",
     "Toggle Quote": "Ŝalti citaĵon",
@@ -1436,12 +1433,7 @@
     "Activate selected button": "Aktivigi la elektitan butonon",
     "Toggle right panel": "Baskuligi la dekstran panelon",
     "Cancel autocomplete": "Nuligi memkompletigon",
-    "Page Up": "Paĝosupren-klavo",
-    "Page Down": "Paĝosuben-klavo",
-    "Esc": "Eskapa klavo",
-    "Enter": "Eniga klavo",
     "Space": "Spaco",
-    "End": "Finen-klavo",
     "Manually verify all remote sessions": "Permane kontroli ĉiujn forajn salutaĵojn",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Unuope kontroli ĉiun salutaĵon de uzanto por marki ĝin fidata, ne fidante delege subskribitajn aparatojn.",
     "Invalid theme schema.": "Nevalida skemo de haŭto.",
@@ -2958,5 +2950,17 @@
     },
     "a11y": {
         "user_menu": "Menuo de uzanto"
+    },
+    "keyboard": {
+        "home": "Hejmo",
+        "space": "Spaco",
+        "page_up": "Paĝosupren-klavo",
+        "page_down": "Paĝosuben-klavo",
+        "escape": "Eskapa klavo",
+        "enter": "Eniga klavo",
+        "end": "Finen-klavo",
+        "alt": "Alt-klavo",
+        "control": "Stir-klavo",
+        "shift": "Majuskliga klavo"
     }
 }

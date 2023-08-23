@@ -255,5 +255,8 @@
         "ok": "OK",
         "remove": "Silmək",
         "start_chat": "Çata başlamaq"
+    },
+    "keyboard": {
+        "home": "Başlanğıc"
     }
 }

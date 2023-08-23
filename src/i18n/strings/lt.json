@@ -634,9 +634,6 @@
     "Calls": "Skambučiai",
     "Room List": "Kambarių Sąrašas",
     "Autocomplete": "Autorašymas",
-    "Alt": "Alt",
-    "Shift": "Shift",
-    "Ctrl": "Ctrl",
     "Verify this session": "Patvirtinti šį seansą",
     "%(senderDisplayName)s changed the room name from %(oldRoomName)s to %(newRoomName)s.": "%(senderDisplayName)s pakeitė kambario pavadinimą iš %(oldRoomName)s į %(newRoomName)s.",
     "Show display name changes": "Rodyti rodomo vardo pakeitimus",
@@ -1757,7 +1754,6 @@
     "Namibia": "Namibija",
     "Myanmar": "Mianmaras",
     "Mozambique": "Mozambikas",
-    "[number]": "[skaičius]",
     "Bahamas": "Bahamų salos",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Paprašėme naršyklės įsiminti, kurį namų serverį naudojate prisijungimui, bet, deja, naršyklė tai pamiršo. Eikite į prisijungimo puslapį ir bandykite dar kartą.",
     "%(date)s at %(time)s": "%(date)s %(time)s",
@@ -2521,5 +2517,12 @@
         "start_chat": "Pradėti pokalbį",
         "view_source": "Peržiūrėti šaltinį",
         "yes": "Taip"
+    },
+    "keyboard": {
+        "home": "Pradžia",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "number": "[skaičius]"
     }
 }

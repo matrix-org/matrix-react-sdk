@@ -1517,9 +1517,6 @@
     "Calls": "Обаждания",
     "Room List": "Списък със стаи",
     "Autocomplete": "Подсказване",
-    "Alt": "Alt",
-    "Shift": "Shift",
-    "Ctrl": "Ctrl",
     "Toggle Bold": "Превключи удебеляването",
     "Toggle Italics": "Превключи накланянето",
     "Toggle Quote": "Превключи цитирането",
@@ -1538,12 +1535,7 @@
     "Activate selected button": "Активиране на избрания бутон",
     "Toggle right panel": "Превключване на десния панел",
     "Cancel autocomplete": "Отказване на подсказките",
-    "Page Up": "Page Up",
-    "Page Down": "Page Down",
-    "Esc": "Esc",
-    "Enter": "Enter",
     "Space": "Space",
-    "End": "End",
     "No recently visited rooms": "Няма наскоро-посетени стаи",
     "Sort by": "Подреди по",
     "Activity": "Активност",
@@ -2125,5 +2117,17 @@
     },
     "a11y": {
         "user_menu": "Потребителско меню"
+    },
+    "keyboard": {
+        "home": "Начална страница",
+        "space": "Space",
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift"
     }
 }

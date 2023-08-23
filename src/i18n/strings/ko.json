@@ -1396,5 +1396,8 @@
         "start_chat": "대화 시작",
         "view_source": "소스 보기",
         "yes": "네"
+    },
+    "keyboard": {
+        "home": "홈"
     }
 }

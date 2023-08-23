@@ -255,16 +255,8 @@
     "Download": "Telecargament",
     "Success!": "Capitada !",
     "Navigation": "Navigacion",
-    "Alt": "Alt",
-    "Shift": "Descalatge",
-    "Ctrl": "Ctrl",
     "Upload a file": "Actualizar un fichièr",
-    "Page Up": "Pagina precedenta",
-    "Page Down": "Pagina seguenta",
-    "Esc": "Escap",
-    "Enter": "Entrada",
     "Space": "Espaci",
-    "End": "Fin",
     "Explore rooms": "Percórrer las salas",
     "Create Account": "Crear un compte",
     "Click the button below to confirm adding this email address.": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail.",
@@ -305,5 +297,17 @@
         "start_chat": "Començar una discussion",
         "view_source": "Veire la font",
         "yes": "Òc"
+    },
+    "keyboard": {
+        "home": "Dorsièr personal",
+        "space": "Espaci",
+        "page_up": "Pagina precedenta",
+        "page_down": "Pagina seguenta",
+        "escape": "Escap",
+        "enter": "Entrada",
+        "end": "Fin",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Descalatge"
     }
 }

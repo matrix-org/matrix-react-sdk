@@ -1367,18 +1367,11 @@
     "a new cross-signing key signature": "Eine neue Cross-Signing-Schlüsselsignatur",
     "a device cross-signing signature": "Eine Geräte Schlüssel Signatur",
     "a key signature": "Eine Schlüssel Signatur",
-    "Shift": "Umschalt",
-    "Ctrl": "Strg",
     "Toggle Bold": "Fett",
     "Toggle Italics": "Kursiv",
     "Toggle Quote": "Zitat umschalten",
     "New line": "Neue Zeile",
-    "Page Up": "Bild hoch",
-    "Page Down": "Bild runter",
-    "Esc": "Esc",
-    "Enter": "Enter",
     "Space": "Space",
-    "End": "Ende",
     "Please fill why you're reporting.": "Bitte gib an, weshalb du einen Fehler meldest.",
     "Upgrade private room": "Privaten Raum aktualisieren",
     "Upgrade public room": "Öffentlichen Raum aktualisieren",
@@ -1476,7 +1469,6 @@
     "Calls": "Anrufe",
     "Room List": "Raumliste",
     "Autocomplete": "Autovervollständigung",
-    "Alt": "Alt",
     "Toggle microphone mute": "Mikrofon an-/ausschalten",
     "Jump to room search": "Zur Raumsuche springen",
     "Close dialog or context menu": "Dialog oder Kontextmenü schließen",
@@ -2350,7 +2342,6 @@
     "Error - Mixed content": "Fehler - Uneinheitlicher Inhalt",
     "View source": "Rohdaten anzeigen",
     "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Die Person verbreitet Falschinformation.\nDies wird an die Raummoderation gemeldet.",
-    "[number]": "[Nummer]",
     "Report": "Melden",
     "Collapse reply thread": "Antworten verbergen",
     "Show preview": "Vorschau zeigen",
@@ -3980,5 +3971,18 @@
     },
     "a11y": {
         "user_menu": "Benutzermenü"
+    },
+    "keyboard": {
+        "home": "Startseite",
+        "space": "Space",
+        "page_up": "Bild hoch",
+        "page_down": "Bild runter",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "Ende",
+        "alt": "Alt",
+        "control": "Strg",
+        "shift": "Umschalt",
+        "number": "[Nummer]"
     }
 }

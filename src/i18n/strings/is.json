@@ -878,15 +878,6 @@
     "Navigation": "Flakk",
     "Room List": "Spjallrásalisti",
     "Calls": "Símtöl",
-    "[number]": "[tala]",
-    "Shift": "Shift",
-    "Ctrl": "Ctrl",
-    "Alt": "Alt",
-    "End": "End",
-    "Enter": "Enter",
-    "Esc": "Esc",
-    "Page Down": "Síða niður",
-    "Page Up": "Síða upp",
     "Space used:": "Notað geymslupláss:",
     "Go to Settings": "Fara í stillingar",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Útflutta skráin verður varin með lykilfrasa. Settu inn lykilfrasann hér til að afkóða skrána.",
@@ -3367,5 +3358,18 @@
     },
     "a11y": {
         "user_menu": "Valmynd notandans"
+    },
+    "keyboard": {
+        "home": "Forsíða",
+        "space": "Bil",
+        "page_up": "Síða upp",
+        "page_down": "Síða niður",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "number": "[tala]"
     }
 }

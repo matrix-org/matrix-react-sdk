@@ -1700,12 +1700,7 @@
     "Away": "Preč",
     "Restore": "Obnoviť",
     "A-Z": "A-Z",
-    "End": "End",
     "Space": "Priestor",
-    "Enter": "Enter",
-    "Esc": "Esc",
-    "Ctrl": "Ctrl",
-    "Shift": "Shift",
     "Calls": "Hovory",
     "Navigation": "Navigácia",
     "Matrix": "Matrix",
@@ -2051,7 +2046,6 @@
     "Set a Security Phrase": "Nastaviť bezpečnostnú frázu",
     "Save your Security Key": "Uložte svoj bezpečnostný kľúč",
     "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s z %(totalRooms)s",
-    "[number]": "[číslo]",
     "Leave the beta": "Opustiť beta verziu",
     "Leave space": "Opustiť priestor",
     "You are about to leave <spaceName/>.": "Chystáte sa opustiť <spaceName/>.",
@@ -2096,7 +2090,6 @@
     "An unknown error occurred": "Vyskytla sa neznáma chyba",
     "A new Security Phrase and key for Secure Messages have been detected.": "Bola zistená nová bezpečnostná fráza a kľúč pre zabezpečené správy.",
     "An error occurred whilst saving your notification preferences.": "Pri ukladaní vašich predvolieb oznámení došlo k chybe.",
-    "Alt": "Alt",
     "Already have an account? <a>Sign in here</a>": "Už máte účet? <a>Prihláste sa tu</a>",
     "Almost there! Is %(displayName)s showing the same shield?": "Už je to takmer hotové! Zobrazuje sa %(displayName)s rovnaký štít?",
     "All threads": "Všetky vlákna",
@@ -2428,8 +2421,6 @@
     },
     "Some invites couldn't be sent": "Niektoré pozvánky nebolo možné odoslať",
     "%(date)s at %(time)s": "%(date)s o %(time)s",
-    "Page Down": "Page Down",
-    "Page Up": "Page Up",
     "Toggle space panel": "Prepnúť panel priestoru",
     "Enter your Security Phrase a second time to confirm it.": "Zadajte svoju bezpečnostnú frázu znova, aby ste ju potvrdili.",
     "Enter a Security Phrase": "Zadajte bezpečnostnú frázu",
@@ -3975,5 +3966,18 @@
     },
     "a11y": {
         "user_menu": "Používateľské menu"
+    },
+    "keyboard": {
+        "home": "Domov",
+        "space": "Priestor",
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "number": "[číslo]"
     }
 }

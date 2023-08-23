@@ -768,5 +768,8 @@
         "save": "Salvar",
         "start_chat": "Iniciar conversa",
         "view_source": "Ver a fonte"
+    },
+    "keyboard": {
+        "home": "Início"
     }
 }

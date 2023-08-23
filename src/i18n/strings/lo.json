@@ -1239,15 +1239,6 @@
     "Accessibility": "ການເຂົ້າເຖິງ",
     "Room List": "ລາຍການຫ້ອງ",
     "Calls": "ໂທ",
-    "[number]": "[ຕົວເລກ]",
-    "Shift": "ປຸ່ມShift",
-    "Ctrl": "ປຸ່ມ Ctrl",
-    "Alt": "ປູ່ມ Alt",
-    "End": "ສິ້ນສຸດ",
-    "Enter": "ເຂົ້າສູ່",
-    "Esc": "ປູ່ມກົດອອກ",
-    "Page Down": "ເລື່ອນໜ້າລົງ",
-    "Page Up": "ເລື່ອນຂື້ນເທິງ",
     "Failed to add tag %(tagName)s to room": "ເພີ່ມແທັກ %(tagName)s ໃສ່ຫ້ອງບໍ່ສຳເລັດ",
     "Failed to remove tag %(tagName)s from room": "ລຶບແທັກ %(tagName)s ອອກຈາກຫ້ອງບໍ່ສຳເລັດ",
     "Message downloading sleep time(ms)": "ຂໍ້ຄວາມດາວໂຫຼດເວລາພັກເຄື່ອງ(ms)",
@@ -3308,5 +3299,18 @@
     },
     "a11y": {
         "user_menu": "ເມນູຜູ້ໃຊ້"
+    },
+    "keyboard": {
+        "home": "ໜ້າຫຼັກ",
+        "space": "ຍະຫວ່າງ",
+        "page_up": "ເລື່ອນຂື້ນເທິງ",
+        "page_down": "ເລື່ອນໜ້າລົງ",
+        "escape": "ປູ່ມກົດອອກ",
+        "enter": "ເຂົ້າສູ່",
+        "end": "ສິ້ນສຸດ",
+        "alt": "ປູ່ມ Alt",
+        "control": "ປຸ່ມ Ctrl",
+        "shift": "ປຸ່ມShift",
+        "number": "[ຕົວເລກ]"
     }
 }

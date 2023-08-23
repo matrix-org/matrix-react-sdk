@@ -1341,9 +1341,6 @@
     "Calls": "Puhelut",
     "Room List": "Huoneluettelo",
     "Autocomplete": "Automaattinen täydennys",
-    "Alt": "Alt",
-    "Shift": "Vaihto",
-    "Ctrl": "Ctrl",
     "Toggle Bold": "Lihavointi päälle/pois",
     "Toggle Italics": "Kursivointi päälle/pois",
     "Toggle Quote": "Lainaus päälle/pois",
@@ -1351,12 +1348,7 @@
     "Toggle microphone mute": "Mikrofonin mykistys päälle/pois",
     "Activate selected button": "Aktivoi valittu painike",
     "Cancel autocomplete": "Peruuta automaattinen täydennys",
-    "Page Up": "Page Up",
-    "Page Down": "Page Down",
-    "Esc": "Esc",
-    "Enter": "Enter",
     "Space": "Avaruus",
-    "End": "End",
     "Use Single Sign On to continue": "Jatka kertakirjautumista käyttäen",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Vahvista tämän sähköpostiosoitteen lisääminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
     "Single Sign On": "Kertakirjautuminen",
@@ -2758,7 +2750,6 @@
     "Jump to first message": "Siirry ensimmäiseen viestiin",
     "Accessibility": "Saavutettavuus",
     "Toggle webcam on/off": "Kamera päälle/pois",
-    "[number]": "[numero]",
     "Your new device is now verified. Other users will see it as trusted.": "Uusi laitteesi on nyt vahvistettu. Muut käyttäjät näkevät sen luotettuna.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Uusi laitteesi on nyt vahvistettu. Laitteella on pääsy salattuihin viesteihisi, ja muut käyttäjät näkevät sen luotettuna.",
     "Verify with another device": "Vahvista toisella laitteella",
@@ -3574,5 +3565,18 @@
     },
     "a11y": {
         "user_menu": "Käyttäjän valikko"
+    },
+    "keyboard": {
+        "home": "Etusivu",
+        "space": "Avaruus",
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Vaihto",
+        "number": "[numero]"
     }
 }

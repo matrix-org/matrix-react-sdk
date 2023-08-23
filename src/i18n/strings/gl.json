@@ -1536,9 +1536,6 @@
     "Calls": "Chamadas",
     "Room List": "Lista de Salas",
     "Autocomplete": "Autocompletado",
-    "Alt": "Alt",
-    "Shift": "Maiús",
-    "Ctrl": "Ctrl",
     "Toggle Bold": "Activa Resaltar",
     "Toggle Italics": "Activa Cursiva",
     "Toggle Quote": "Activa Citación",
@@ -1557,12 +1554,7 @@
     "Activate selected button": "Activar o botón seleccionado",
     "Toggle right panel": "Activar panel dereito",
     "Cancel autocomplete": "Cancelar autocompletado",
-    "Page Up": "Páxina superior",
-    "Page Down": "Páxina inferior",
-    "Esc": "Esc",
-    "Enter": "Intro",
     "Space": "Espazo",
-    "End": "Fin",
     "You joined the call": "Unícheste á chamada",
     "%(senderName)s joined the call": "%(senderName)s uniuse á chamada",
     "Call in progress": "Chamada en curso",
@@ -2441,7 +2433,6 @@
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Convidamos as outras, pero as persoas de aquí embaixo non foron convidadas a <RoomName/>",
     "Transfer Failed": "Fallou a transferencia",
     "Unable to transfer call": "Non se puido transferir a chamada",
-    "[number]": "[número]",
     "Unable to copy a link to the room to the clipboard.": "Non se copiou a ligazón da sala ao portapapeis.",
     "Unable to copy room link": "Non se puido copiar ligazón da sala",
     "Unnamed audio": "Audio sen nome",
@@ -3500,5 +3491,18 @@
     },
     "a11y": {
         "user_menu": "Menú de usuaria"
+    },
+    "keyboard": {
+        "home": "Inicio",
+        "space": "Espazo",
+        "page_up": "Páxina superior",
+        "page_down": "Páxina inferior",
+        "escape": "Esc",
+        "enter": "Intro",
+        "end": "Fin",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Maiús",
+        "number": "[número]"
     }
 }

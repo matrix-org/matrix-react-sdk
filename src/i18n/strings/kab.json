@@ -209,16 +209,9 @@
     "Success!": "Tammug akken iwata!",
     "Navigation": "Tunigin",
     "Calls": "Isawalen",
-    "Alt": "Alt",
-    "Shift": "Shift",
     "New line": "Izirig amaynut",
     "Upload a file": "Sali-d afaylu",
-    "Page Up": "Asebter afellay",
-    "Page Down": "Asebter adday",
-    "Esc": "Senser",
-    "Enter": "Anekcum",
     "Space": "Tallunt",
-    "End": "Taggara",
     "This email address is already in use": "Tansa-agi n yimayl tettuseqdac yakan",
     "This phone number is already in use": "Uṭṭun-agi n tilifun yettuseqddac yakan",
     "Your %(brand)s is misconfigured": "%(brand)s inek(inem) ur ittusbadu ara",
@@ -332,7 +325,6 @@
     "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s beṛṛa n %(totalRooms)s",
     "Room List": "Tabdert n texxamt",
     "Autocomplete": "Asmad awurman",
-    "Ctrl": "Ctrl",
     "Operation failed": "Tamhelt ur teddi ara",
     "Unable to create widget.": "Timerna n uwiǧit ulamek.",
     "Missing roomId.": "Ixuṣ usulay n texxamt.",
@@ -2006,5 +1998,17 @@
     },
     "a11y": {
         "user_menu": "Umuɣ n useqdac"
+    },
+    "keyboard": {
+        "home": "Agejdan",
+        "space": "Tallunt",
+        "page_up": "Asebter afellay",
+        "page_down": "Asebter adday",
+        "escape": "Senser",
+        "enter": "Anekcum",
+        "end": "Taggara",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift"
     }
 }

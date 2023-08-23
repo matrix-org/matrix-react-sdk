@@ -1040,20 +1040,12 @@
     "Calls": "Samtal",
     "Room List": "Rumslista",
     "Autocomplete": "Autokomplettera",
-    "Alt": "Alt",
-    "Shift": "Shift",
-    "Ctrl": "Ctrl",
     "Toggle Bold": "Växla fet stil",
     "Toggle Italics": "Växla kursiv",
     "Toggle Quote": "Växla citat",
     "New line": "Ny rad",
     "Jump to room search": "Hoppa till rumssökning",
-    "Page Up": "Page Up",
-    "Page Down": "Page Down",
-    "Esc": "Esc",
-    "Enter": "Enter",
     "Space": "Utrymme",
-    "End": "End",
     "Use Single Sign On to continue": "Använd samlad inloggning (single sign on) för att fortsätta",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Bekräfta tilläggning av e-postadressen genom att använda samlad inloggning för att bevisa din identitet.",
     "Single Sign On": "Samlad inloggning",
@@ -2500,7 +2492,6 @@
     "Create a new space": "Skapa ett nytt utrymme",
     "Want to add a new space instead?": "Vill du lägga till ett nytt utrymme istället?",
     "Add existing space": "Lägg till existerande utrymme",
-    "[number]": "[nummer]",
     "Unable to copy a link to the room to the clipboard.": "Kunde inte kopiera en länk till rummet till klippbordet.",
     "Unable to copy room link": "Kunde inte kopiera rumslänken",
     "Error downloading audio": "Fel vid nedladdning av ljud",
@@ -3915,5 +3906,18 @@
     },
     "a11y": {
         "user_menu": "Användarmeny"
+    },
+    "keyboard": {
+        "home": "Hem",
+        "space": "Utrymme",
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "number": "[nummer]"
     }
 }

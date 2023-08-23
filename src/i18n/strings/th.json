@@ -481,5 +481,8 @@
         "save": "บันทึก",
         "start_chat": "เริ่มแชท",
         "view_source": "ดูซอร์ส"
+    },
+    "keyboard": {
+        "home": "เมนูหลัก"
     }
 }

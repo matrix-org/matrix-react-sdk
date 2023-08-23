@@ -56,11 +56,7 @@
     "Andorra": "Andura",
     "Algeria": "Dzayer",
     "Albania": "Albanya",
-    "End": "End",
     "Space": "Space",
-    "Shift": "Shift",
-    "Ctrl": "Ctrl",
-    "Esc": "Esc",
     "Calls": "Iɣuṛiten",
     "Emoji": "Imuji",
     "Afghanistan": "Afɣanistan",
@@ -141,5 +137,13 @@
         "reply": "Rar",
         "save": "Ḥḍu",
         "yes": "Yah"
+    },
+    "keyboard": {
+        "home": "Asnubeg",
+        "space": "Space",
+        "escape": "Esc",
+        "end": "End",
+        "control": "Ctrl",
+        "shift": "Shift"
     }
 }

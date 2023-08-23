@@ -2515,7 +2515,6 @@
     "Accessibility": "Προσβασιμότητα",
     "Room List": "Λίστα Δωματίων",
     "Calls": "Κλήσεις",
-    "Esc": "Esc",
     "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s από %(totalRooms)s",
     "Indexed rooms:": "Ευρετηριασμένα δωμάτια:",
     "Indexed messages:": "Ευρετηριασμένα μηνύματα:",
@@ -2862,14 +2861,6 @@
     "Toggle Code Block": "Μπλοκ Κώδικα",
     "Toggle Italics": "Πλάγια Γραφή",
     "Toggle Bold": "Έντονη Γραφή",
-    "[number]": "[αριθμός]",
-    "End": "End",
-    "Enter": "Enter",
-    "Page Down": "Page Down",
-    "Page Up": "Page Up",
-    "Alt": "Alt",
-    "Shift": "Shift",
-    "Ctrl": "Ctrl",
     "Space used:": "Χώρος που χρησιμοποιείται:",
     "Not currently indexing messages for any room.": "Αυτήν τη στιγμή δεν υπάρχει ευρετηρίαση μηνυμάτων για κανένα δωμάτιο.",
     "If disabled, messages from encrypted rooms won't appear in search results.": "Εάν απενεργοποιηθεί, τα μηνύματα από κρυπτογραφημένα δωμάτια δε θα εμφανίζονται στα αποτελέσματα αναζήτησης.",
@@ -3291,5 +3282,18 @@
     },
     "a11y": {
         "user_menu": "Μενού χρήστη"
+    },
+    "keyboard": {
+        "home": "Αρχική",
+        "space": "Χώρος",
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "number": "[αριθμός]"
     }
 }

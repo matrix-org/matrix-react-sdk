@@ -1832,5 +1832,8 @@
     },
     "a11y": {
         "user_menu": "Lietotāja izvēlne"
+    },
+    "keyboard": {
+        "home": "Mājup"
     }
 }

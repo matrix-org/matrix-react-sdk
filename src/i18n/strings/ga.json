@@ -281,13 +281,7 @@
     "Ok": "Togha",
     "Categories": "Catagóire",
     "Appearance": "Cuma",
-    "End": "End",
     "Space": "Spás",
-    "Enter": "Enter",
-    "Esc": "Esc",
-    "Ctrl": "Ctrl",
-    "Shift": "Shift",
-    "Alt": "Alt",
     "Autocomplete": "Uathiomlánaigh",
     "Calls": "Glaonna",
     "Navigation": "Nascleanúint",
@@ -587,7 +581,6 @@
     "Access": "Rochtain",
     "Global": "Uilíoch",
     "Keyword": "Eochairfhocal",
-    "[number]": "[uimhir]",
     "Report": "Tuairiscigh",
     "Disagree": "Easaontaigh",
     "Collapse": "Cumaisc",
@@ -734,5 +727,16 @@
         "start": "Tosaigh",
         "start_chat": "Tosaigh comhrá",
         "yes": "Tá"
+    },
+    "keyboard": {
+        "home": "Tús",
+        "space": "Spás",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "number": "[uimhir]"
     }
 }

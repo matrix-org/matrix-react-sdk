@@ -1241,7 +1241,6 @@
     "Your server": "Ваш сервер",
     "All rooms": "Све собе",
     "Who are you working with?": "Са ким радите?",
-    "Alt": "Алт",
     "Autocomplete": "Аутоматско довршавање",
     "This room is public": "Ова соба је јавна",
     "Caution:": "Опрез:",
@@ -1341,5 +1340,9 @@
         "save": "Сачувај",
         "start_chat": "Започни разговор",
         "view_source": "Погледај извор"
+    },
+    "keyboard": {
+        "home": "Почетна",
+        "alt": "Алт"
     }
 }

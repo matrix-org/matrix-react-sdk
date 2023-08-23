@@ -18,7 +18,6 @@
     "Click the button below to confirm adding this phone number.": "Pritisnite gumb spodaj da potrdite dodajanje te telefonske številke.",
     "Add Phone Number": "Dodaj telefonsko številko",
     "Call Failed": "Klic ni uspel",
-    "End": "Konec",
     "Change": "Sprememba",
     "Explore rooms": "Raziščite sobe",
     "Create Account": "Registracija",
@@ -63,5 +62,8 @@
     "common": {
         "analytics": "Analitika",
         "error": "Napaka"
+    },
+    "keyboard": {
+        "end": "Konec"
     }
 }

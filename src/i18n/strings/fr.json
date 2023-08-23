@@ -1414,9 +1414,6 @@
     "Calls": "Appels",
     "Room List": "Liste de salons",
     "Autocomplete": "Autocomplétion",
-    "Alt": "Alt",
-    "Shift": "Maj",
-    "Ctrl": "Ctrl",
     "Toggle Bold": "(Dés)activer le gras",
     "Toggle Italics": "(Dés)activer l’italique",
     "Toggle Quote": "(Dés)activer la citation",
@@ -1430,12 +1427,7 @@
     "Close dialog or context menu": "Fermer le dialogue ou le menu contextuel",
     "Activate selected button": "Activer le bouton sélectionné",
     "Cancel autocomplete": "Annuler l’autocomplétion",
-    "Page Up": "Page Haut",
-    "Page Down": "Page Bas",
-    "Esc": "Échap",
-    "Enter": "Entrée",
     "Space": "Espace",
-    "End": "Fin",
     "Confirm by comparing the following with the User Settings in your other session:": "Confirmez en comparant ceci avec les paramètres utilisateurs de votre autre session :",
     "Confirm this user's session by comparing the following with their User Settings:": "Confirmez la session de cet utilisateur en comparant ceci avec ses paramètres utilisateur :",
     "If they don't match, the security of your communication may be compromised.": "S’ils ne correspondent pas, la sécurité de vos communications est peut-être compromise.",
@@ -2352,7 +2344,6 @@
     "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Cet utilisateur inonde le salon de publicités ou liens vers des publicités, ou vers de la propagande.\nCeci sera signalé aux modérateurs du salon.",
     "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Cet utilisateur fait preuve d’un comportement illicite, par exemple en publiant des informations personnelles d’autres ou en proférant des menaces.\nCeci sera signalé aux modérateurs du salon qui pourront l’escalader aux autorités.",
     "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Ce que cet utilisateur écrit est déplacé.\nCeci sera signalé aux modérateurs du salon.",
-    "[number]": "[numéro]",
     "Report": "Signaler",
     "Collapse reply thread": "Masquer le fil de discussion",
     "Show preview": "Afficher l’aperçu",
@@ -3975,5 +3966,18 @@
     },
     "a11y": {
         "user_menu": "Menu utilisateur"
+    },
+    "keyboard": {
+        "home": "Accueil",
+        "space": "Espace",
+        "page_up": "Page Haut",
+        "page_down": "Page Bas",
+        "escape": "Échap",
+        "enter": "Entrée",
+        "end": "Fin",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Maj",
+        "number": "[numéro]"
     }
 }

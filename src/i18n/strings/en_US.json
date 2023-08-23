@@ -455,5 +455,8 @@
         "save": "Save",
         "start_chat": "Start chat",
         "view_source": "View Source"
+    },
+    "keyboard": {
+        "home": "Home"
     }
 }

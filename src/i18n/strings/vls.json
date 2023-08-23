@@ -1022,5 +1022,8 @@
         "start_chat": "Gesprek beginn",
         "view_source": "Bron bekykn",
         "yes": "Joak"
+    },
+    "keyboard": {
+        "home": "Thuus"
     }
 }

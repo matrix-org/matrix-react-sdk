@@ -695,17 +695,9 @@
     "Indexed messages:": "Indekserte meldinger:",
     "Navigation": "Navigering",
     "Autocomplete": "Autofullfør",
-    "Alt": "Alt",
-    "Shift": "Shift",
-    "Ctrl": "Ctrl",
     "New line": "Ny linje",
     "Cancel replying to a message": "Avbryt å svare på en melding",
-    "Page Up": "Page Up",
-    "Page Down": "Page Down",
-    "Esc": "Esc",
-    "Enter": "Send",
     "Space": "Mellomrom",
-    "End": "Slutt",
     "Enter passphrase": "Skriv inn passordfrase",
     "Avoid sequences": "Unngå sekvenser",
     "Avoid recent years": "Unngå nylige år",
@@ -1589,5 +1581,17 @@
     },
     "a11y": {
         "user_menu": "Brukermeny"
+    },
+    "keyboard": {
+        "home": "Hjem",
+        "space": "Mellomrom",
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "escape": "Esc",
+        "enter": "Send",
+        "end": "Slutt",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift"
     }
 }

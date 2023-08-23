@@ -1179,7 +1179,6 @@
     "Toggle microphone mute": "تبديل كتم صوت الميكروفون",
     "Cancel replying to a message": "إلغاء الرد على رسالة",
     "New line": "سطر جديد",
-    "[number]": "[رقم]",
     "Greece": "اليونان",
     "%(senderName)s removed their profile picture": "%(senderName)s أزال صورة ملفه الشخصي",
     "%(senderName)s removed their display name (%(oldDisplayName)s)": "%(senderName)s أزال اسمه (%(oldDisplayName)s)",
@@ -1340,5 +1339,8 @@
         "start_chat": "ابدأ محادثة",
         "view_source": "انظر المصدر",
         "yes": "نعم"
+    },
+    "keyboard": {
+        "number": "[رقم]"
     }
 }

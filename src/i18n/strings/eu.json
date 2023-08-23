@@ -1414,9 +1414,6 @@
     "Calls": "Deiak",
     "Room List": "Gelen zerrenda",
     "Autocomplete": "Osatze automatikoa",
-    "Alt": "Alt",
-    "Shift": "Maius.",
-    "Ctrl": "Ctrl",
     "Toggle Bold": "Txandakatu lodia",
     "Toggle Italics": "Txandakatu etzana",
     "Toggle Quote": "Txandakatu aipamena",
@@ -1431,12 +1428,7 @@
     "Activate selected button": "Aktibatu hautatutako botoia",
     "Toggle right panel": "Txandakatu eskumako panela",
     "Cancel autocomplete": "Ezeztatu osatze automatikoa",
-    "Page Up": "Orrialdea gora",
-    "Page Down": "Orrialdea behera",
-    "Esc": "Esc",
-    "Enter": "Sartu",
     "Space": "Zuriune-barra",
-    "End": "Amaiera",
     "Manually verify all remote sessions": "Egiaztatu eskuz urruneko saio guztiak",
     "Self signing private key:": "Norberak sinatutako gako pribatua:",
     "cached locally": "cache lokalean",
@@ -1634,5 +1626,17 @@
     },
     "a11y": {
         "user_menu": "Erabiltzailea-menua"
+    },
+    "keyboard": {
+        "home": "Hasiera",
+        "space": "Zuriune-barra",
+        "page_up": "Orrialdea gora",
+        "page_down": "Orrialdea behera",
+        "escape": "Esc",
+        "enter": "Sartu",
+        "end": "Amaiera",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Maius."
     }
 }

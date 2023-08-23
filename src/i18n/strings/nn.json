@@ -1096,5 +1096,8 @@
         "save": "Lagra",
         "start_chat": "Start samtale",
         "view_source": "Sjå Kjelda"
+    },
+    "keyboard": {
+        "home": "Heim"
     }
 }

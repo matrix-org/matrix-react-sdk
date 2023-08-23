@@ -1537,12 +1537,7 @@
     "Cancelled signature upload": "Nahrávání podpisu zrušeno",
     "Unable to upload": "Nelze nahrát",
     "Server isn't responding": "Server neodpovídá",
-    "End": "End",
     "Space": "Prostor",
-    "Enter": "Enter",
-    "Esc": "Esc",
-    "Page Down": "Page Down",
-    "Page Up": "Page Up",
     "Cancel autocomplete": "Zrušit automatické doplňování",
     "Activate selected button": "Aktivovat označené tlačítko",
     "Close dialog or context menu": "Zavřít dialog nebo kontextové menu",
@@ -1556,8 +1551,6 @@
     "Toggle Quote": "Citace",
     "Toggle Italics": "Kurzíva",
     "Toggle Bold": "Tučné písmo",
-    "Ctrl": "Ctrl",
-    "Shift": "Shift",
     "Autocomplete": "Automatické doplňování",
     "Room List": "Seznam místností",
     "Calls": "Hovory",
@@ -1632,7 +1625,6 @@
     "Welcome %(name)s": "Vítejte %(name)s",
     "Now, let's help you get started": "Nyní vám pomůžeme začít",
     "Effects": "Efekty",
-    "Alt": "Alt",
     "Approve": "Schválit",
     "Looks good!": "To vypadá dobře!",
     "Wrong file type": "Špatný typ souboru",
@@ -2347,7 +2339,6 @@
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Pokud máte oprávnění, otevřete nabídku na libovolné zprávě a výběrem možnosti <b>Připnout</b> je sem vložte.",
     "Nothing pinned, yet": "Zatím není nic připnuto",
     "End-to-end encryption isn't enabled": "Koncové šifrování není povoleno",
-    "[number]": "[číslo]",
     "Report": "Nahlásit",
     "Collapse reply thread": "Sbalit vlákno odpovědi",
     "Show preview": "Zobrazit náhled",
@@ -3980,5 +3971,18 @@
     },
     "a11y": {
         "user_menu": "Uživatelská nabídka"
+    },
+    "keyboard": {
+        "home": "Domov",
+        "space": "Prostor",
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "number": "[číslo]"
     }
 }

@@ -1883,7 +1883,6 @@
     "See messages posted to this room": "Zie berichten verstuurd naar deze kamer",
     "Send messages as you in your active room": "Stuur berichten als jezelf in je actieve kamer",
     "Send messages as you in this room": "Stuur berichten als jezelf in deze kamer",
-    "End": "End",
     "The <b>%(capability)s</b> capability": "De <b>%(capability)s</b> mogelijkheid",
     "See <b>%(eventType)s</b> events posted to your active room": "Stuur <b>%(eventType)s</b> gebeurtenissen verstuurd in je actieve kamer",
     "Send <b>%(eventType)s</b> events as you in your active room": "Stuur <b>%(eventType)s</b> gebeurtenissen als jezelf in je actieve kamer",
@@ -1952,14 +1951,7 @@
     "Dismiss read marker and jump to bottom": "Verlaat de leesmarkering en spring naar beneden",
     "Cancel replying to a message": "Antwoord op bericht annuleren",
     "New line": "Nieuwe regel",
-    "Page Up": "Page Up",
-    "Page Down": "Page Down",
-    "Esc": "Esc",
-    "Enter": "Enter",
     "Space": "Space",
-    "Ctrl": "Ctrl",
-    "Shift": "Shift",
-    "Alt": "Alt",
     "Cancel autocomplete": "Autoaanvullen annuleren",
     "Autocomplete": "Autoaanvullen",
     "Room List": "Kamerslijst",
@@ -2347,7 +2339,6 @@
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Als je de rechten hebt, open dan het menu op elk bericht en selecteer <b>Vastprikken</b> om ze hier te zetten.",
     "Nothing pinned, yet": "Nog niks vastgeprikt",
     "End-to-end encryption isn't enabled": "Eind-tot-eind-versleuteling is uitgeschakeld",
-    "[number]": "[number]",
     "Report": "Melden",
     "Collapse reply thread": "Antwoorddraad invouwen",
     "Show preview": "Preview weergeven",
@@ -3583,5 +3574,18 @@
     },
     "a11y": {
         "user_menu": "Persoonsmenu"
+    },
+    "keyboard": {
+        "home": "Home",
+        "space": "Space",
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "escape": "Esc",
+        "enter": "Enter",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "number": "[number]"
     }
 }
