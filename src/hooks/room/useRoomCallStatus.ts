@@ -82,10 +82,8 @@ export const useRoomCallStatus = (
         if (groupCallsEnabled) {
             if (useElementCallExclusively) {
                 if (hasGroupCall) {
-                    // done
                     setVideoCallDisabledReason(_t("Ongoing call"));
                 } else if (mayCreateElementCalls) {
-                    // DONE
                     setVideoCallType("element_call");
                 } else {
                     setVideoCallDisabledReason(_t("You do not have permission to start video calls"));

@@ -44,6 +44,7 @@ export const useRoomThreadNotifications = (room: Room): NotificationColor => {
             // If the current thread has unread messages, we're done.
             if (doesRoomOrThreadHaveUnreadMessages(thread)) {
                 setNotificationColor(NotificationColor.Bold);
+                break;
             }
         }
     }, [room]);

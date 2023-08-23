@@ -22,6 +22,7 @@ import { Icon as ThreadsIcon } from "@vector-im/compound-design-tokens/icons/thr
 import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/icons/notifications-solid.svg";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
+import { group } from "console";
 import type { Room } from "matrix-js-sdk/src/matrix";
 import { _t } from "../../../languageHandler";
 import { useRoomName } from "../../../hooks/useRoomName";
@@ -41,6 +42,7 @@ import { NotificationColor } from "../../../stores/notifications/NotificationCol
 import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
 import SdkConfig from "../../../SdkConfig";
 import SettingsStore from "../../../settings/SettingsStore";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
 
 /**
  * A helper to transform a notification color to the what the Compound Icon Button
@@ -71,13 +73,15 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const roomTopic = useTopic(room);
 
     const { voiceCallDisabledReason, voiceCallType, videoCallDisabledReason, videoCallType } = useRoomCallStatus(room);
+
+    const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     /**
      * A special mode where only Element Call is used. In this case we want to
      * hide the voice call button
      */
     const useElementCallExclusively = useMemo(() => {
-        return SdkConfig.get("element_call").use_exclusively && SettingsStore.getValue("feature_group_calls");
-    }, []);
+        return SdkConfig.get("element_call").use_exclusively && groupCallsEnabled;
+    }, [groupCallsEnabled]);
 
     const placeCall = useCallback(
         async (callType: CallType, platformCallType: typeof voiceCallType) => {
