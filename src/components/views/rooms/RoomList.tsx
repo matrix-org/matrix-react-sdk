@@ -26,7 +26,7 @@ import { ActionPayload } from "../../../dispatcher/payloads";
 import { ViewRoomDeltaPayload } from "../../../dispatcher/payloads/ViewRoomDeltaPayload";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import PosthogTrackers from "../../../PosthogTrackers";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -93,7 +93,7 @@ export const TAG_ORDER: TagID[] = [
 const ALWAYS_VISIBLE_TAGS: TagID[] = [DefaultTagID.DM, DefaultTagID.Untagged];
 
 interface ITagAesthetics {
-    sectionLabel: string;
+    sectionLabel: TranslationKey;
     sectionLabelRaw?: string;
     AuxButtonComponent?: ComponentType<IAuxButtonProps>;
     isInvite: boolean;
@@ -195,8 +195,8 @@ const DmAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex, dispatcher = default
                 }}
                 className="mx_RoomSublist_auxButton"
                 tooltipClassName="mx_RoomSublist_addRoomTooltip"
-                aria-label={_t("Start chat")}
-                title={_t("Start chat")}
+                aria-label={_t("action|start_chat")}
+                title={_t("action|start_chat")}
             />
         );
     }
@@ -387,7 +387,7 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
 
 const TAG_AESTHETICS: TagAestheticsMap = {
     [DefaultTagID.Invite]: {
-        sectionLabel: _td("Invites"),
+        sectionLabel: _td("action|invites_list"),
         isInvite: true,
         defaultHidden: false,
     },
@@ -402,7 +402,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
         defaultHidden: false,
     },
     [DefaultTagID.DM]: {
-        sectionLabel: _td("People"),
+        sectionLabel: _td("common|people"),
         isInvite: false,
         defaultHidden: false,
         AuxButtonComponent: DmAuxButton,

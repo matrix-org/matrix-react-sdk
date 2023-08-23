@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { SERVICE_TYPES, IDelegatedAuthConfig, M_AUTHENTICATION, HTTPError } from "matrix-js-sdk/src/matrix";
+import { SERVICE_TYPES, HTTPError } from "matrix-js-sdk/src/matrix";
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -59,6 +59,7 @@ import Heading from "../../../typography/Heading";
 import InlineSpinner from "../../../elements/InlineSpinner";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
+import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -90,6 +91,7 @@ interface IState {
     canChangePassword: boolean;
     idServerName?: string;
     externalAccountManagementUrl?: string;
+    canMake3pidChanges: boolean;
 }
 
 export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
@@ -119,6 +121,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             msisdns: [],
             loading3pids: true, // whether or not the emails and msisdns have been loaded
             canChangePassword: false,
+            canMake3pidChanges: false,
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -172,10 +175,13 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         // the enabled flag value.
         const canChangePassword = !changePasswordCap || changePasswordCap["enabled"] !== false;
 
-        const delegatedAuthConfig = M_AUTHENTICATION.findIn<IDelegatedAuthConfig | undefined>(cli.getClientWellKnown());
-        const externalAccountManagementUrl = delegatedAuthConfig?.account;
+        const externalAccountManagementUrl = getDelegatedAuthAccountUrl(cli.getClientWellKnown());
+        // https://spec.matrix.org/v1.7/client-server-api/#m3pid_changes-capability
+        // We support as far back as v1.1 which doesn't have m.3pid_changes
+        // so the behaviour for when it is missing has to be assume true
+        const canMake3pidChanges = !capabilities["m.3pid_changes"] || capabilities["m.3pid_changes"].enabled === true;
 
-        this.setState({ canChangePassword, externalAccountManagementUrl });
+        this.setState({ canChangePassword, externalAccountManagementUrl, canMake3pidChanges });
     }
 
     private async getThreepidState(): Promise<void> {
@@ -303,7 +309,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const description = _t("Your password was successfully changed.");
         // TODO: Figure out a design that doesn't involve replacing the current dialog
         Modal.createDialog(ErrorDialog, {
-            title: _t("Success"),
+            title: _t("common|success"),
             description,
         });
     };
@@ -323,12 +329,20 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             const emails = this.state.loading3pids ? (
                 <InlineSpinner />
             ) : (
-                <AccountEmailAddresses emails={this.state.emails} onEmailsChange={this.onEmailsChange} />
+                <AccountEmailAddresses
+                    emails={this.state.emails}
+                    onEmailsChange={this.onEmailsChange}
+                    disabled={!this.state.canMake3pidChanges}
+                />
             );
             const msisdns = this.state.loading3pids ? (
                 <InlineSpinner />
             ) : (
-                <AccountPhoneNumbers msisdns={this.state.msisdns} onMsisdnsChange={this.onMsisdnsChange} />
+                <AccountPhoneNumbers
+                    msisdns={this.state.msisdns}
+                    onMsisdnsChange={this.onMsisdnsChange}
+                    disabled={!this.state.canMake3pidChanges}
+                />
             );
             threepidSection = (
                 <>
@@ -441,8 +455,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             const intro = (
                 <SettingsSubsectionText>
                     {_t(
-                        "Agree to the identity server (%(serverName)s) Terms of Service to " +
-                            "allow yourself to be discoverable by email address or phone number.",
+                        "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.",
                         { serverName: this.state.idServerName },
                     )}
                 </SettingsSubsectionText>
@@ -463,8 +476,16 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         const threepidSection = this.state.haveIdServer ? (
             <>
-                <DiscoveryEmailAddresses emails={this.state.emails} isLoading={this.state.loading3pids} />
-                <DiscoveryPhoneNumbers msisdns={this.state.msisdns} isLoading={this.state.loading3pids} />
+                <DiscoveryEmailAddresses
+                    emails={this.state.emails}
+                    isLoading={this.state.loading3pids}
+                    disabled={!this.state.canMake3pidChanges}
+                />
+                <DiscoveryPhoneNumbers
+                    msisdns={this.state.msisdns}
+                    isLoading={this.state.loading3pids}
+                    disabled={!this.state.canMake3pidChanges}
+                />
             </>
         ) : null;
 
@@ -505,7 +526,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const supportsMultiLanguageSpellCheck = plaf?.supportsSpellCheckSettings();
 
         let accountManagementSection: JSX.Element | undefined;
-        if (SettingsStore.getValue(UIFeature.Deactivate)) {
+        const isAccountManagedExternally = !!this.state.externalAccountManagementUrl;
+        if (SettingsStore.getValue(UIFeature.Deactivate) && !isAccountManagedExternally) {
             accountManagementSection = this.renderManagementSection();
         }
 

@@ -305,8 +305,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                     <p>{_t("Only do this if you have no other device to complete verification with.")}</p>
                     <p>
                         {_t(
-                            "If you reset everything, you will restart with no trusted sessions, no trusted users, and " +
-                                "might not be able to see past messages.",
+                            "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.",
                         )}
                     </p>
                     <DialogButtons
@@ -329,8 +328,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                     <div className="mx_AccessSecretStorageDialog_keyStatus">
                         {"\uD83D\uDC4E "}
                         {_t(
-                            "Unable to access secret storage. " +
-                                "Please verify that you entered the correct Security Phrase.",
+                            "Unable to access secret storage. Please verify that you entered the correct Security Phrase.",
                         )}
                     </div>
                 );
@@ -368,7 +366,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                         />
                         {keyStatus}
                         <DialogButtons
-                            primaryButton={_t("Continue")}
+                            primaryButton={_t("action|continue")}
                             onPrimaryButtonClick={this.onPassPhraseNext}
                             hasCancel={true}
                             onCancel={this.onCancel}
@@ -434,7 +432,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                         </div>
                         {recoveryKeyFeedback}
                         <DialogButtons
-                            primaryButton={_t("Continue")}
+                            primaryButton={_t("action|continue")}
                             onPrimaryButtonClick={this.onRecoveryKeyNext}
                             hasCancel={true}
                             cancelButton={_t("Go Back")}
