@@ -69,7 +69,7 @@ const SpaceContextMenu: React.FC<IProps> = ({ space, hideHeader, onFinished, ...
                 data-testid="invite-option"
                 className="mx_SpacePanel_contextMenu_inviteButton"
                 iconClassName="mx_SpacePanel_iconInvite"
-                label={_t("Invite")}
+                label={_t("action|invite")}
                 onClick={onInviteClick}
             />
         );
@@ -90,7 +90,7 @@ const SpaceContextMenu: React.FC<IProps> = ({ space, hideHeader, onFinished, ...
             <IconizedContextMenuOption
                 data-testid="settings-option"
                 iconClassName="mx_SpacePanel_iconSettings"
-                label={_t("Settings")}
+                label={_t("common|settings")}
                 onClick={onSettingsClick}
             />
         );

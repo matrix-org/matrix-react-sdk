@@ -309,7 +309,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const description = _t("Your password was successfully changed.");
         // TODO: Figure out a design that doesn't involve replacing the current dialog
         Modal.createDialog(ErrorDialog, {
-            title: _t("Success"),
+            title: _t("common|success"),
             description,
         });
     };
@@ -455,8 +455,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             const intro = (
                 <SettingsSubsectionText>
                     {_t(
-                        "Agree to the identity server (%(serverName)s) Terms of Service to " +
-                            "allow yourself to be discoverable by email address or phone number.",
+                        "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.",
                         { serverName: this.state.idServerName },
                     )}
                 </SettingsSubsectionText>

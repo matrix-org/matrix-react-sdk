@@ -120,7 +120,7 @@ enum Section {
 function filterToLabel(filter: Filter): string {
     switch (filter) {
         case Filter.People:
-            return _t("People");
+            return _t("common|people");
         case Filter.PublicRooms:
             return _t("Public rooms");
         case Filter.PublicSpaces:
@@ -746,7 +746,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     role="group"
                     aria-labelledby="mx_SpotlightDialog_section_suggestions"
                 >
-                    <h4 id="mx_SpotlightDialog_section_suggestions">{_t("Suggestions")}</h4>
+                    <h4 id="mx_SpotlightDialog_section_suggestions">{_t("common|suggestions")}</h4>
                     <div>{results[Section.Suggestions].slice(0, SECTION_LIMIT).map(resultMapper)}</div>
                 </div>
             );
@@ -802,7 +802,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     aria-labelledby="mx_SpotlightDialog_section_publicRooms"
                 >
                     <div className="mx_SpotlightDialog_sectionHeader">
-                        <h4 id="mx_SpotlightDialog_section_publicRooms">{_t("Suggestions")}</h4>
+                        <h4 id="mx_SpotlightDialog_section_publicRooms">{_t("common|suggestions")}</h4>
                         <div className="mx_SpotlightDialog_options">
                             <NetworkDropdown protocols={protocols} config={config ?? null} setConfig={setConfig} />
                         </div>
@@ -906,7 +906,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             copyPlaintext(ownInviteLink);
                         }}
                         onHideTooltip={() => setInviteLinkCopied(false)}
-                        title={inviteLinkCopied ? _t("Copied!") : _t("Copy")}
+                        title={inviteLinkCopied ? _t("Copied!") : _t("action|copy")}
                     >
                         <span className="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline">
                             {_t("Copy invite link")}
@@ -919,10 +919,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 <div className="mx_SpotlightDialog_section mx_SpotlightDialog_hiddenResults" role="group">
                     <h4>{_t("Some results may be hidden")}</h4>
                     <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
-                        {_t(
-                            "If you can't find the room you're looking for, " +
-                                "ask for an invite or create a new room.",
-                        )}
+                        {_t("If you can't find the room you're looking for, ask for an invite or create a new room.")}
                     </div>
                     <Option
                         id="mx_SpotlightDialog_button_createNewRoom"
