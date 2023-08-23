@@ -71,8 +71,8 @@
         "error": "Eroare"
     },
     "action": {
-        "ok": "OK",
-        "confirm": "Confirmă",
-        "dismiss": "Închide"
-    }
+        "ok": "OK"
+    },
+    "action.confirm": "Confirmă",
+    "action.dismiss": "Închide"
 }

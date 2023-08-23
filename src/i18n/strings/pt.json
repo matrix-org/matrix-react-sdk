@@ -756,17 +756,17 @@
         "remove": "Remover",
         "save": "Salvar",
         "start_chat": "Iniciar conversa",
-        "view_source": "Ver a fonte",
-        "reject": "Rejeitar",
-        "confirm": "Confirmar",
-        "dismiss": "Descartar",
-        "trust": "Confiar",
-        "reload": "Recarregar",
-        "cancel": "Cancelar",
-        "close": "Fechar",
-        "accept": "Aceitar",
-        "update": "Atualizar",
-        "skip": "Saltar",
-        "logout": "Sair"
-    }
+        "view_source": "Ver a fonte"
+    },
+    "action.reject": "Rejeitar",
+    "action.confirm": "Confirmar",
+    "action.dismiss": "Descartar",
+    "action.trust": "Confiar",
+    "action.reload": "Recarregar",
+    "action.cancel": "Cancelar",
+    "action.close": "Fechar",
+    "action.accept": "Aceitar",
+    "action.update": "Atualizar",
+    "action.skip": "Saltar",
+    "action.logout": "Sair"
 }

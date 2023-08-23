@@ -626,12 +626,12 @@
         "ok": "ठीक",
         "remove": "हटाए",
         "save": "अमुकनाम्ना",
-        "yes": "हाँ",
-        "confirm": "पुष्टि",
-        "dismiss": "खारिज",
-        "trust": "विश्वास",
-        "cancel": "रद्द",
-        "close": "बंद",
-        "accept": "स्वीकार"
-    }
+        "yes": "हाँ"
+    },
+    "action.confirm": "पुष्टि",
+    "action.dismiss": "खारिज",
+    "action.trust": "विश्वास",
+    "action.cancel": "रद्द",
+    "action.close": "बंद",
+    "action.accept": "स्वीकार"
 }

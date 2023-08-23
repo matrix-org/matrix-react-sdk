@@ -248,12 +248,12 @@
         "leave_room": "Otağı tərk etmək",
         "ok": "OK",
         "remove": "Silmək",
-        "start_chat": "Çata başlamaq",
-        "dismiss": "Nəzərə almayın",
-        "trust": "Etibar",
-        "close": "Bağlamaq",
-        "accept": "Qəbul etmək",
-        "update": "Yeniləmək",
-        "logout": "Çıxmaq"
-    }
+        "start_chat": "Çata başlamaq"
+    },
+    "action.dismiss": "Nəzərə almayın",
+    "action.trust": "Etibar",
+    "action.close": "Bağlamaq",
+    "action.accept": "Qəbul etmək",
+    "action.update": "Yeniləmək",
+    "action.logout": "Çıxmaq"
 }

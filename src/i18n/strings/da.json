@@ -711,15 +711,15 @@
         "remove": "Fjern",
         "reply": "Besvar",
         "save": "Gem",
-        "view_source": "Se Kilde",
-        "reject": "Afvis",
-        "confirm": "Bekræft",
-        "dismiss": "Afvis",
-        "trust": "Tillid",
-        "cancel": "Afbryd",
-        "close": "Luk",
-        "accept": "Accepter",
-        "update": "Opdater",
-        "reset": "Nulstil"
-    }
+        "view_source": "Se Kilde"
+    },
+    "action.reject": "Afvis",
+    "action.confirm": "Bekræft",
+    "action.dismiss": "Afvis",
+    "action.trust": "Tillid",
+    "action.cancel": "Afbryd",
+    "action.close": "Luk",
+    "action.accept": "Accepter",
+    "action.update": "Opdater",
+    "action.reset": "Nulstil"
 }

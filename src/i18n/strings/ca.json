@@ -645,17 +645,17 @@
         "reply": "Respon",
         "save": "Desa",
         "start_chat": "Inicia un xat",
-        "view_source": "Mostra el codi",
-        "reject": "Rebutja",
-        "confirm": "Confirma",
-        "dismiss": "Omet",
-        "trust": "Confiança",
-        "cancel": "Cancel·la",
-        "close": "Tanca",
-        "accept": "Accepta",
-        "update": "Actualitzar",
-        "upload": "Puja",
-        "skip": "Omet",
-        "logout": "Surt"
-    }
+        "view_source": "Mostra el codi"
+    },
+    "action.reject": "Rebutja",
+    "action.confirm": "Confirma",
+    "action.dismiss": "Omet",
+    "action.trust": "Confiança",
+    "action.cancel": "Cancel·la",
+    "action.close": "Tanca",
+    "action.accept": "Accepta",
+    "action.update": "Actualitzar",
+    "action.upload": "Puja",
+    "action.skip": "Omet",
+    "action.logout": "Surt"
 }

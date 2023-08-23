@@ -141,12 +141,12 @@
         "ok": "சரி",
         "quote": "மேற்கோள்",
         "remove": "நீக்கு",
-        "view_source": "மூலத்தைக் காட்டு",
-        "reject": "நிராகரி",
-        "confirm": "உறுதிப்படுத்தவும்",
-        "dismiss": "நீக்கு",
-        "cancel": "ரத்து",
-        "close": "மூடு",
-        "update": "புதுப்பி"
-    }
+        "view_source": "மூலத்தைக் காட்டு"
+    },
+    "action.reject": "நிராகரி",
+    "action.confirm": "உறுதிப்படுத்தவும்",
+    "action.dismiss": "நீக்கு",
+    "action.cancel": "ரத்து",
+    "action.close": "மூடு",
+    "action.update": "புதுப்பி"
 }

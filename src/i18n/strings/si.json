@@ -7,8 +7,6 @@
     "Sign In": "පිවිසෙන්න",
     "Explore rooms": "කාමර බලන්න",
     "Create Account": "ගිණුමක් සාදන්න",
-    "action": {
-        "confirm": "තහවුරු කරන්න",
-        "dismiss": "ඉවතලන්න"
-    }
+    "action.confirm": "තහවුරු කරන්න",
+    "action.dismiss": "ඉවතලන්න"
 }

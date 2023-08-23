@@ -62,8 +62,6 @@
         "analytics": "Analitika",
         "error": "Napaka"
     },
-    "action": {
-        "confirm": "Potrdi",
-        "dismiss": "Opusti"
-    }
+    "action.confirm": "Potrdi",
+    "action.dismiss": "Opusti"
 }

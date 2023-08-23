@@ -126,11 +126,11 @@
         "continue": "కొనసాగించు",
         "decline": "డిక్లైన్",
         "leave": "వదిలి",
-        "remove": "తొలగించు",
-        "reject": "తిరస్కరించు",
-        "dismiss": "రద్దుచేసే",
-        "cancel": "రద్దు",
-        "close": "ముసివెయండి",
-        "accept": "అంగీకరించు"
-    }
+        "remove": "తొలగించు"
+    },
+    "action.reject": "తిరస్కరించు",
+    "action.dismiss": "రద్దుచేసే",
+    "action.cancel": "రద్దు",
+    "action.close": "ముసివెయండి",
+    "action.accept": "అంగీకరించు"
 }

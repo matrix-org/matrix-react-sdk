@@ -22,9 +22,9 @@
     "action": {
         "leave": "Пакінуць",
         "quote": "Цытата",
-        "remove": "Выдалiць",
-        "reject": "Адхіліць",
-        "dismiss": "Aдхіліць",
-        "close": "Зачыніць"
-    }
+        "remove": "Выдалiць"
+    },
+    "action.reject": "Адхіліць",
+    "action.dismiss": "Aдхіліць",
+    "action.close": "Зачыніць"
 }

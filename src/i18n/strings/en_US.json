@@ -444,16 +444,16 @@
         "remove": "Remove",
         "save": "Save",
         "start_chat": "Start chat",
-        "view_source": "View Source",
-        "reject": "Reject",
-        "confirm": "Confirm",
-        "dismiss": "Dismiss",
-        "trust": "Trust",
-        "cancel": "Cancel",
-        "close": "Close",
-        "accept": "Accept",
-        "update": "Update",
-        "skip": "Skip",
-        "logout": "Logout"
-    }
+        "view_source": "View Source"
+    },
+    "action.reject": "Reject",
+    "action.confirm": "Confirm",
+    "action.dismiss": "Dismiss",
+    "action.trust": "Trust",
+    "action.cancel": "Cancel",
+    "action.close": "Close",
+    "action.accept": "Accept",
+    "action.update": "Update",
+    "action.skip": "Skip",
+    "action.logout": "Logout"
 }

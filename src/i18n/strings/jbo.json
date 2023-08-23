@@ -388,13 +388,13 @@
         "retry": "nu za'u re'u troci",
         "save": "nu co'a vreji",
         "start": "nu co'a co'e",
-        "start_chat": "nu co'a tavla",
-        "dismiss": "nu mipri",
-        "close": "nu zilmipri",
-        "accept": "nu fonjo'e",
-        "verify": "nu co'a lacri",
-        "upload": "nu kibdu'a",
-        "share": "nu jungau",
-        "logout": "nu co'u jaspu"
-    }
+        "start_chat": "nu co'a tavla"
+    },
+    "action.dismiss": "nu mipri",
+    "action.close": "nu zilmipri",
+    "action.accept": "nu fonjo'e",
+    "action.verify": "nu co'a lacri",
+    "action.upload": "nu kibdu'a",
+    "action.share": "nu jungau",
+    "action.logout": "nu co'u jaspu"
 }

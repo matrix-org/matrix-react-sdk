@@ -94,9 +94,7 @@
     "common": {
         "error": "Greška"
     },
-    "action": {
-        "confirm": "Potvrdi",
-        "dismiss": "Odbaci",
-        "trust": "Vjeruj"
-    }
+    "action.confirm": "Potvrdi",
+    "action.dismiss": "Odbaci",
+    "action.trust": "Vjeruj"
 }

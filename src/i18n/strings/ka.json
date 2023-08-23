@@ -55,8 +55,6 @@
     "common": {
         "error": "შეცდომა"
     },
-    "action": {
-        "confirm": "დადასტურება",
-        "dismiss": "დახურვა"
-    }
+    "action.confirm": "დადასტურება",
+    "action.dismiss": "დახურვა"
 }

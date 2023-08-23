@@ -12,7 +12,5 @@
     "Use Single Sign On to continue": "जारी राख्न एकल साइन अन प्रयोग गर्नुहोस्",
     "This phone number is already in use": "यो फोन नम्बर पहिले नै प्रयोगमा छ",
     "This email address is already in use": "यो इमेल ठेगाना पहिले नै प्रयोगमा छ",
-    "action": {
-        "confirm": "पुष्टि गर्नुहोस्"
-    }
+    "action.confirm": "पुष्टि गर्नुहोस्"
 }

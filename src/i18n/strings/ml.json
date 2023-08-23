@@ -71,11 +71,11 @@
         "quote": "ഉദ്ധരിക്കുക",
         "remove": "നീക്കം ചെയ്യുക",
         "start_chat": "ചാറ്റ് തുടങ്ങുക",
-        "view_source": "സോഴ്സ് കാണുക",
-        "reject": "നിരസിക്കുക",
-        "dismiss": "ഒഴിവാക്കുക",
-        "cancel": "റദ്ദാക്കുക",
-        "close": "അടയ്ക്കുക",
-        "update": "പുതുക്കുക"
-    }
+        "view_source": "സോഴ്സ് കാണുക"
+    },
+    "action.reject": "നിരസിക്കുക",
+    "action.dismiss": "ഒഴിവാക്കുക",
+    "action.cancel": "റദ്ദാക്കുക",
+    "action.close": "അടയ്ക്കുക",
+    "action.update": "പുതുക്കുക"
 }

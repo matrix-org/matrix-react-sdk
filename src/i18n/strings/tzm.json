@@ -131,15 +131,15 @@
         "remove": "KKes",
         "reply": "Rar",
         "save": "Ḥḍu",
-        "yes": "Yah",
-        "reject": "Agy",
-        "confirm": "Sentem",
-        "dismiss": "Nexxel",
-        "cancel": "Sser",
-        "join": "Lkem",
-        "close": "Rgel",
-        "upgrade": "Leqqem",
-        "share": "Bḍu",
-        "logout": "Ffeɣ"
-    }
+        "yes": "Yah"
+    },
+    "action.reject": "Agy",
+    "action.confirm": "Sentem",
+    "action.dismiss": "Nexxel",
+    "action.cancel": "Sser",
+    "action.join": "Lkem",
+    "action.close": "Rgel",
+    "action.upgrade": "Leqqem",
+    "action.share": "Bḍu",
+    "action.logout": "Ffeɣ"
 }
