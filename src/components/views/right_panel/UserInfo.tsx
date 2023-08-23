@@ -1579,7 +1579,7 @@ export const UserInfoHeader: React.FC<{
                     <MemberAvatar
                         key={member.userId} // to instantly blank the avatar when UserInfo changes members
                         member={member as RoomMember}
-                        size={2 * 0.3 * UIStore.instance.windowHeight + "px"} // 2x@30vh
+                        size="30vh" // 2x@30vh
                         resizeMethod="scale"
                         fallbackUserId={member.userId}
                         onClick={onMemberAvatarClick}
