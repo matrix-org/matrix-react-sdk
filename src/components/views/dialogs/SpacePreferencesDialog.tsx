@@ -55,12 +55,11 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space 
                             );
                         }}
                     >
-                        {_t("People")}
+                        {_t("common|people")}
                     </StyledCheckbox>
                     <SettingsSubsectionText>
                         {_t(
-                            "This groups your chats with members of this space. " +
-                                "Turning this off will hide those chats from your view of %(spaceName)s.",
+                            "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.",
                             {
                                 spaceName: space.name,
                             },

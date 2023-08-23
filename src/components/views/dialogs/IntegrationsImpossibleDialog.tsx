@@ -43,14 +43,13 @@ export default class IntegrationsImpossibleDialog extends React.Component<IProps
                 <div className="mx_IntegrationsImpossibleDialog_content">
                     <p>
                         {_t(
-                            "Your %(brand)s doesn't allow you to use an integration manager to do this. " +
-                                "Please contact an admin.",
+                            "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.",
                             { brand },
                         )}
                     </p>
                 </div>
                 <DialogButtons
-                    primaryButton={_t("OK")}
+                    primaryButton={_t("action|ok")}
                     onPrimaryButtonClick={this.onAcknowledgeClick}
                     hasCancel={false}
                 />

@@ -153,7 +153,7 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
                     type="submit"
                     className="mx_Dialog_primary"
                     disabled={!this.state.password}
-                    value={_t("Continue")}
+                    value={_t("action|continue")}
                 />
             );
         }
@@ -175,7 +175,7 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
                         className={passwordBoxClass}
                         type="password"
                         name="passwordField"
-                        label={_t("Password")}
+                        label={_t("common|password")}
                         autoFocus={true}
                         value={this.state.password}
                         onChange={this.onPasswordFieldChange}
@@ -220,8 +220,7 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
         let sitePublicKey: string | undefined;
         if (!this.props.stageParams || !this.props.stageParams.public_key) {
             errorText = _t(
-                "Missing captcha public key in homeserver configuration. Please report " +
-                    "this to your homeserver administrator.",
+                "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.",
             );
         } else {
             sitePublicKey = this.props.stageParams.public_key;
@@ -746,7 +745,7 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
         } else {
             submitButtonOrSpinner = (
                 <AccessibleButton onClick={this.onSubmit} kind="primary" disabled={!this.state.registrationToken}>
-                    {_t("Continue")}
+                    {_t("action|continue")}
                 </AccessibleButton>
             );
         }

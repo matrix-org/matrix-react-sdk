@@ -232,7 +232,7 @@ const SpaceLanding: React.FC<{ space: Room }> = ({ space }) => {
                     showSpaceInvite(space);
                 }}
             >
-                {_t("Invite")}
+                {_t("action|invite")}
             </AccessibleButton>
         );
     }
@@ -253,7 +253,7 @@ const SpaceLanding: React.FC<{ space: Room }> = ({ space }) => {
                 onClick={() => {
                     showSpaceSettings(space);
                 }}
-                title={_t("Settings")}
+                title={_t("common|settings")}
             />
         );
     }
@@ -313,7 +313,7 @@ const SpaceSetupFirstRooms: React.FC<{
                 key={name}
                 name={name}
                 type="text"
-                label={_t("Room name")}
+                label={_t("common|room_name")}
                 placeholder={placeholders[i]}
                 value={roomNames[i]}
                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setRoomName(i, ev.target.value)}
@@ -364,7 +364,7 @@ const SpaceSetupFirstRooms: React.FC<{
     let buttonLabel = _t("Skip for now");
     if (roomNames.some((name) => name.trim())) {
         onClick = onNextClick;
-        buttonLabel = busy ? _t("Creating rooms…") : _t("Continue");
+        buttonLabel = busy ? _t("Creating rooms…") : _t("action|continue");
     }
 
     return (
@@ -401,8 +401,7 @@ const SpaceAddExistingRooms: React.FC<{
             <h1>{_t("What do you want to organise?")}</h1>
             <div className="mx_SpaceRoomView_description">
                 {_t(
-                    "Pick rooms or conversations to add. This is just a space for you, " +
-                        "no one will be informed. You can add more later.",
+                    "Pick rooms or conversations to add. This is just a space for you, no one will be informed. You can add more later.",
                 )}
             </div>
 
@@ -573,7 +572,7 @@ const SpaceSetupPrivateInvite: React.FC<{
     let buttonLabel = _t("Skip for now");
     if (emailAddresses.some((name) => name.trim())) {
         onClick = onNextClick;
-        buttonLabel = busy ? _t("Inviting…") : _t("Continue");
+        buttonLabel = busy ? _t("Inviting…") : _t("action|continue");
     }
 
     return (
