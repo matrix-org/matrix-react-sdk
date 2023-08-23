@@ -128,7 +128,7 @@ exports[`<MatrixChat /> Multi-tab lockout waits for other tab to stop during sta
           </div>
         </div>
         <div
-          class="mx_Dropdown mx_AuthBody_language"
+          class="mx_Dropdown mx_LanguageDropdown mx_AuthBody_language"
         >
           <div
             aria-describedby="mx_LanguageDropdown_value"
