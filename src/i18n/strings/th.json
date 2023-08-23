@@ -453,9 +453,6 @@
     "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "ที่อยู่อีเมลของคุณไม่ได้เชื่อมโยงกับ Matrix ID บนโฮมเซิร์ฟเวอร์นี้",
     "Join": "เข้าร่วม",
     "Timeline": "เส้นเวลา",
-    "keyboard": {
-        "home": "เมนูหลัก"
-    },
     "common": {
         "encryption_enabled": "เปิดใช้งานการเข้ารหัส",
         "error": "ข้อผิดพลาด",

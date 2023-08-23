@@ -1241,6 +1241,7 @@
     "Your server": "Ваш сервер",
     "All rooms": "Све собе",
     "Who are you working with?": "Са ким радите?",
+    "Alt": "Алт",
     "Autocomplete": "Аутоматско довршавање",
     "This room is public": "Ова соба је јавна",
     "Caution:": "Опрез:",
@@ -1300,10 +1301,6 @@
     "You're already in a call with this person.": "Већ разговарате са овом особом.",
     "Already in call": "Већ у позиву",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Коришћење овог виџета може да дели податке <helpIcon /> са %(widgetDomain)s и вашим интеграционим менаџером.",
-    "keyboard": {
-        "home": "Почетна",
-        "alt": "Алт"
-    },
     "common": {
         "about": "О програму",
         "analytics": "Аналитика",

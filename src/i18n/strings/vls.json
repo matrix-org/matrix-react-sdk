@@ -990,9 +990,6 @@
     "Could not connect to identity server": "Kostege geen verbindienge moakn me den identiteitsserver",
     "Not a valid identity server (status code %(code)s)": "Geen geldigen identiteitsserver (statuscode %(code)s)",
     "Identity server URL must be HTTPS": "Den identiteitsserver-URL moet HTTPS zyn",
-    "keyboard": {
-        "home": "Thuus"
-    },
     "common": {
         "analytics": "Statistische gegeevns",
         "error": "Foute",

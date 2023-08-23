@@ -742,9 +742,6 @@
     "Failed to send event": "Falha no envio do evento",
     "Failed to read events": "Falha ao ler eventos",
     "Setting up keys": "A configurar chaves",
-    "keyboard": {
-        "home": "Início"
-    },
     "common": {
         "analytics": "Análise",
         "error": "Erro",

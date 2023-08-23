@@ -631,9 +631,6 @@
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Els gestors d'integracions reben dades de configuració i poden modificar ginys, enviar invitacions a sales i establir nivells d'autoritat en nom teu.",
     "Identity server": "Servidor d'identitat",
     "Could not connect to identity server": "No s'ha pogut connectar amb el servidor d'identitat",
-    "keyboard": {
-        "home": "Inici"
-    },
     "common": {
         "analytics": "Analítiques",
         "error": "Error",

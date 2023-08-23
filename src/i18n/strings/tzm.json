@@ -56,7 +56,11 @@
     "Andorra": "Andura",
     "Algeria": "Dzayer",
     "Albania": "Albanya",
+    "End": "End",
     "Space": "Space",
+    "Shift": "Shift",
+    "Ctrl": "Ctrl",
+    "Esc": "Esc",
     "Calls": "Iɣuṛiten",
     "Emoji": "Imuji",
     "Afghanistan": "Afɣanistan",
@@ -121,14 +125,6 @@
     "Usage": "Asemres",
     "Feb": "Bṛa",
     "Jan": "Yen",
-    "keyboard": {
-        "home": "Asnubeg",
-        "escape": "Esc",
-        "end": "End",
-        "control": "Ctrl",
-        "shift": "Shift",
-        "space": "Space"
-    },
     "common": {
         "about": "Xef",
         "error": "Tazgelt",
