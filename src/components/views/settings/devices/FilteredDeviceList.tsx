@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { ForwardedRef, forwardRef } from "react";
-import { IPusher, PUSHER_DEVICE_ID } from "matrix-js-sdk/src/matrix";
-import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
+import { IPusher, PUSHER_DEVICE_ID, LocalNotificationSettings } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../languageHandler";
 import AccessibleButton from "../../elements/AccessibleButton";
@@ -335,7 +334,7 @@ export const FilteredDeviceList = forwardRef(
                                 className="mx_FilteredDeviceList_headerButton"
                             >
                                 {isSigningOut && <Spinner w={16} h={16} />}
-                                {_t("Sign out")}
+                                {_t("action|sign_out")}
                             </AccessibleButton>
                             <AccessibleButton
                                 data-testid="cancel-selection-cta"
@@ -344,7 +343,7 @@ export const FilteredDeviceList = forwardRef(
                                 onClick={() => setSelectedDeviceIds([])}
                                 className="mx_FilteredDeviceList_headerButton"
                             >
-                                {_t("Cancel")}
+                                {_t("action|cancel")}
                             </AccessibleButton>
                         </>
                     ) : (

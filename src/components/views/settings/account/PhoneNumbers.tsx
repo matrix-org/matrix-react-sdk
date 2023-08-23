@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, UserFriendlyError } from "../../../../languageHandler";
@@ -109,7 +109,7 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
                         kind="link_sm"
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
-                        {_t("Cancel")}
+                        {_t("action|cancel")}
                     </AccessibleButton>
                 </div>
             );
@@ -271,7 +271,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
 
         let addVerifySection = (
             <AccessibleButton onClick={this.onAddClick} kind="primary" disabled={this.props.disabled}>
-                {_t("Add")}
+                {_t("action|add")}
             </AccessibleButton>
         );
         if (this.state.verifying) {

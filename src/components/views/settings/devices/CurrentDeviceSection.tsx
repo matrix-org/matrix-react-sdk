@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useState } from "react";
-import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
+import { LocalNotificationSettings } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../languageHandler";
 import Spinner from "../../elements/Spinner";
@@ -60,7 +60,7 @@ const CurrentDeviceSectionHeading: React.FC<CurrentDeviceSectionHeadingProps> = 
     const menuOptions = [
         <IconizedContextMenuOption
             key="sign-out"
-            label={_t("Sign out")}
+            label={_t("action|sign_out")}
             onClick={onSignOutCurrentDevice}
             isDestructive
         />,
