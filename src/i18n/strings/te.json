@@ -1,5 +1,4 @@
 {
-    "Accept": "అంగీకరించు",
     "Account": "ఖాతా",
     "Add": "చేర్చు",
     "Admin": "అడ్మిన్",
@@ -28,7 +27,6 @@
     "Changes your display nickname": "మీ ప్రదర్శన మారుపేరుని మారుస్తుంది",
     "You cannot place a call with yourself.": "మీకు మీరే కాల్ చేయలేరు.",
     "You need to be able to invite users to do that.": "మీరు దీన్ని చేయడానికి వినియోగదారులను ఆహ్వానించగలరు.",
-    "Close": "ముసివెయండి",
     "Command error": "కమాండ్ లోపం",
     "Commands": "కమ్మండ్స్",
     "Confirm password": "పాస్వర్డ్ని నిర్ధారించండి",
@@ -67,14 +65,12 @@
     "New passwords don't match": "కొత్త పాస్వర్డ్లు సరిపోలడం లేదు",
     "Connectivity to the server has been lost.": "సెర్వెర్ కనెక్టివిటీని కోల్పోయారు.",
     "Sent messages will be stored until your connection has returned.": "మీ కనెక్షన్ తిరిగి వచ్చే వరకు పంపిన సందేశాలు నిల్వ చేయబడతాయి.",
-    "Cancel": "రద్దు",
     "Failed to forget room %(errCode)s": "గది మర్చిపోవడం విఫలమైంది %(errCode)s",
     "Incorrect verification code": "ధృవీకరణ కోడ్ సరిగా లెదు",
     "unknown error code": "తెలియని కోడ్ లోపం",
     "Please enter the code it contains:": "దయచేసి దాన్ని కలిగి ఉన్న కోడ్ను నమోదు చేయండి:",
     "Unable to restore session": "సెషన్ను పునరుద్ధరించడానికి సాధ్యపడలేదు",
     "Create new room": "క్రొత్త గది సృష్టించండి",
-    "Dismiss": "రద్దుచేసే",
     "Favourite": "గుర్తుంచు",
     "Notifications": "ప్రకటనలు",
     "Operation failed": "కార్యం విఫలమైంది",
@@ -95,7 +91,6 @@
     "Resend": "మళ్ళి పంపుము",
     "Collecting app version information": "అనువర్తన సంస్కరణ సమాచారాన్ని సేకరించడం",
     "Tuesday": "మంగళవారం",
-    "Reject": "తిరస్కరించు",
     "Monday": "సోమవారం",
     "Collecting logs": "నమోదు సేకరించడం",
     "All Rooms": "అన్ని గదులు",
@@ -132,5 +127,10 @@
         "decline": "డిక్లైన్",
         "leave": "వదిలి",
         "remove": "తొలగించు"
-    }
+    },
+    "action.reject": "తిరస్కరించు",
+    "action.dismiss": "రద్దుచేసే",
+    "action.cancel": "రద్దు",
+    "action.close": "ముసివెయండి",
+    "action.accept": "అంగీకరించు"
 }

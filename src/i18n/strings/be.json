@@ -1,12 +1,9 @@
 {
-    "Reject": "Адхіліць",
     "Failed to forget room %(errCode)s": "Не атрымалася забыць пакой %(errCode)s",
     "All messages": "Усе паведамленні",
     "Notification targets": "Мэты апавяшчэння",
     "Favourite": "Улюбёнае",
-    "Dismiss": "Aдхіліць",
     "Failed to add tag %(tagName)s to room": "Не атрымалася дадаць %(tagName)s ў пакоі",
-    "Close": "Зачыніць",
     "Notifications": "Апавяшчэнні",
     "Low Priority": "Нізкі прыярытэт",
     "Noisy": "Шумна",
@@ -26,5 +23,8 @@
         "leave": "Пакінуць",
         "quote": "Цытата",
         "remove": "Выдалiць"
-    }
+    },
+    "action.reject": "Адхіліць",
+    "action.dismiss": "Aдхіліць",
+    "action.close": "Зачыніць"
 }
