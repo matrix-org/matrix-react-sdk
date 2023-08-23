@@ -1483,7 +1483,7 @@ const BasicUserInfo: React.FC<{
                             }
                         }}
                     >
-                        {_t("Verify")}
+                        {_t("action|verify")}
                     </AccessibleButton>
                 </div>
             );
@@ -1716,7 +1716,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     if (phase === RightPanelPhases.EncryptionPanel) {
         const verificationRequest = (props as React.ComponentProps<typeof EncryptionPanel>).verificationRequest;
         if (verificationRequest && verificationRequest.pending) {
-            closeLabel = _t("Cancel");
+            closeLabel = _t("action|cancel");
         }
     }
 

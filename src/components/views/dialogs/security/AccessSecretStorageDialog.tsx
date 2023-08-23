@@ -309,7 +309,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                         )}
                     </p>
                     <DialogButtons
-                        primaryButton={_t("Reset")}
+                        primaryButton={_t("action|reset")}
                         onPrimaryButtonClick={this.onConfirmResetAllClick}
                         hasCancel={true}
                         onCancel={this.onCancel}
@@ -426,7 +426,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                     onChange={this.onRecoveryKeyFileChange}
                                 />
                                 <AccessibleButton kind="primary" onClick={this.onRecoveryKeyFileUploadClick}>
-                                    {_t("Upload")}
+                                    {_t("action|upload")}
                                 </AccessibleButton>
                             </div>
                         </div>

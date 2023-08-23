@@ -396,7 +396,7 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
                     onClick={this.trySubmit}
                     disabled={!allChecked}
                 >
-                    {_t("Accept")}
+                    {_t("action|accept")}
                 </AccessibleButton>
             );
         }
@@ -868,7 +868,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
                 onClick={this.props.onCancel ?? null}
                 kind={this.props.continueKind ? this.props.continueKind + "_outline" : "primary_outline"}
             >
-                {_t("Cancel")}
+                {_t("action|cancel")}
             </AccessibleButton>
         );
         if (this.state.phase === SSOAuthEntry.PHASE_PREAUTH) {
@@ -880,7 +880,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
         } else {
             continueButton = (
                 <AccessibleButton onClick={this.onConfirmClick} kind={this.props.continueKind || "primary"}>
-                    {this.props.continueText || _t("Confirm")}
+                    {this.props.continueText || _t("action|confirm")}
                 </AccessibleButton>
             );
         }

@@ -162,7 +162,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
               WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center);
           };
 
-    const maximiseTitle = isMaximised ? _t("Close") : _t("Maximise");
+    const maximiseTitle = isMaximised ? _t("action|close") : _t("Maximise");
 
     let openTitle = "";
     if (isPinned) {

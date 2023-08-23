@@ -54,7 +54,7 @@ const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> 
                 </p>
             </div>
         ),
-        cancelButton: _t("Cancel"),
+        cancelButton: _t("action|cancel"),
         button: _t("Sign out"),
     });
     const [confirmed] = await finished;

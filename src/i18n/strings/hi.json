@@ -4,7 +4,6 @@
     "This email address is already in use": "यह ईमेल आईडी पहले से इस्तेमाल में है",
     "This phone number is already in use": "यह फ़ोन नंबर पहले से इस्तेमाल में है",
     "Failed to verify email address: make sure you clicked the link in the email": "ईमेल आईडी सत्यापित नही हो पाया: कृपया सुनिश्चित कर लें कि आपने ईमेल में मौजूद लिंक पर क्लिक किया है",
-    "Dismiss": "खारिज",
     "powered by Matrix": "मैट्रिक्स द्वारा संचालित",
     "Call Failed": "कॉल विफल",
     "You cannot place a call with yourself.": "आप अपने साथ कॉल नहीं कर सकते हैं।",
@@ -123,7 +122,6 @@
     "When I'm invited to a room": "जब मुझे एक रूम में आमंत्रित किया जाता है",
     "Call invitation": "कॉल आमंत्रण",
     "Messages sent by bot": "रोबॉट द्वारा भेजे गए संदेश",
-    "Accept": "स्वीकार",
     "Incorrect verification code": "गलत सत्यापन कोड",
     "Submit": "जमा करें",
     "Phone": "फ़ोन",
@@ -195,7 +193,6 @@
     "Mention": "उल्लेख",
     "Share Link to User": "उपयोगकर्ता को लिंक साझा करें",
     "Admin Tools": "व्यवस्थापक उपकरण",
-    "Close": "बंद",
     "and %(count)s others...": {
         "other": "और %(count)s अन्य ...",
         "one": "और एक अन्य..."
@@ -256,7 +253,6 @@
     "Prompt before sending invites to potentially invalid matrix IDs": "संभावित अवैध मैट्रिक्स आईडी को निमंत्रण भेजने से पहले सूचित करें",
     "Messages containing my username": "मेरे उपयोगकर्ता नाम वाले संदेश",
     "The other party cancelled the verification.": "दूसरे पक्ष ने सत्यापन रद्द कर दिया।",
-    "Cancel": "रद्द",
     "Verified!": "सत्यापित!",
     "You've successfully verified this user.": "आपने इस उपयोगकर्ता को सफलतापूर्वक सत्यापित कर लिया है।",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "इस उपयोगकर्ता के सुरक्षित संदेश एंड-टू-एंड एन्क्रिप्टेड हैं और तीसरे पक्ष द्वारा पढ़ने में सक्षम नहीं हैं।",
@@ -566,7 +562,6 @@
     "Try again": "पुनः प्रयास करे",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "हमने ब्राउज़र से यह याद रखने के लिए कहा कि आप किस होमसर्वर का उपयोग आपको साइन इन करने के लिए करते हैं, लेकिन दुर्भाग्य से आपका ब्राउज़र इसे भूल गया है। साइन इन पेज पर जाएं और फिर से कोशिश करें.",
     "We couldn't log you in": "हम आपको लॉग इन नहीं कर सके",
-    "Trust": "विश्वास",
     "Only continue if you trust the owner of the server.": "केवल तभी जारी रखें जब आप सर्वर के स्वामी पर भरोसा करते हैं।",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "इस क्रिया के लिए ईमेल पते या फ़ोन नंबर को मान्य करने के लिए डिफ़ॉल्ट पहचान सर्वर <server /> तक पहुँचने की आवश्यकता है, लेकिन सर्वर के पास सेवा की कोई शर्तें नहीं हैं।",
     "Identity server has no terms of service": "पहचान सर्वर की सेवा की कोई शर्तें नहीं हैं",
@@ -608,7 +603,6 @@
     "Confirm adding phone number": "फ़ोन नंबर जोड़ने की पुष्टि करें",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "अपनी पहचान साबित करने के लिए सिंगल साइन ऑन का उपयोग करके इस फ़ोन नंबर को जोड़ने की पुष्टि करें।",
     "Add Email Address": "ईमेल पता जोड़ें",
-    "Confirm": "पुष्टि",
     "Click the button below to confirm adding this email address.": "इस ईमेल पते को जोड़ने की पुष्टि करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
     "Confirm adding email": "ईमेल जोड़ने की पुष्टि करें",
     "Single Sign On": "केवल हस्ताक्षर के ऊपर",
@@ -632,6 +626,12 @@
         "ok": "ठीक",
         "remove": "हटाए",
         "save": "अमुकनाम्ना",
-        "yes": "हाँ"
+        "yes": "हाँ",
+        "confirm": "पुष्टि",
+        "dismiss": "खारिज",
+        "trust": "विश्वास",
+        "cancel": "रद्द",
+        "close": "बंद",
+        "accept": "स्वीकार"
     }
 }

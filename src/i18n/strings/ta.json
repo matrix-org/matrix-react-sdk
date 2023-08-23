@@ -1,13 +1,10 @@
 {
     "All messages": "அனைத்து செய்திகள்",
     "All Rooms": "அனைத்து அறைகள்",
-    "Cancel": "ரத்து",
     "Changelog": "மாற்றப்பதிவு",
-    "Close": "மூடு",
     "Collecting app version information": "செயலியின் பதிப்பு தகவல்கள் சேகரிக்கப்படுகிறது",
     "Collecting logs": "பதிவுகள் சேகரிக்கப்படுகிறது",
     "Call invitation": "அழைப்பிற்கான விண்ணப்பம்",
-    "Dismiss": "நீக்கு",
     "Failed to add tag %(tagName)s to room": "%(tagName)s எனும் குறிச்சொல்லை அறையில் சேர்ப்பதில் தோல்வி",
     "Failed to forget room %(errCode)s": "அறையை மறப்பதில் தோல்வி %(errCode)s",
     "Favourite": "விருப்பமான",
@@ -25,7 +22,6 @@
     "On": "மீது",
     "Operation failed": "செயல்பாடு தோல்வியுற்றது",
     "powered by Matrix": "Matrix-ஆல் ஆனது",
-    "Reject": "நிராகரி",
     "Resend": "மீண்டும் அனுப்பு",
     "Search": "தேடு",
     "Search…": "தேடு…",
@@ -36,7 +32,6 @@
     "Unavailable": "இல்லை",
     "unknown error code": "தெரியாத பிழை குறி",
     "Unnamed room": "பெயரிடப்படாத அறை",
-    "Update": "புதுப்பி",
     "What's New": "புதிதாக வந்தவை",
     "What's new?": "புதிதாக என்ன?",
     "Waiting for response from server": "வழங்கியின் பதிலுக்காக காத்திருக்கிறது",
@@ -127,7 +122,6 @@
     "Confirm adding phone number": "தொலைபேசி எண்ணைச் சேர்ப்பதை உறுதிப்படுத்தவும்",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "உங்கள் அடையாளத்தை நிரூபிக்க ஒற்றை உள்நுழைவைப் பயன்படுத்தி இந்த தொலைபேசி எண்ணைச் சேர்ப்பதை உறுதிப்படுத்தவும்.",
     "Add Email Address": "மின்னஞ்சல் முகவரியை சேர்க்கவும்",
-    "Confirm": "உறுதிப்படுத்தவும்",
     "Click the button below to confirm adding this email address.": "இந்த மின்னஞ்சல் முகவரியை சேர்ப்பதை உறுதிப்படுத்த கீழே உள்ள பொத்தானை அழுத்தவும்.",
     "Confirm adding email": "மின்னஞ்சலை சேர்ப்பதை உறுதிப்படுத்தவும்",
     "Single Sign On": "ஒற்றை உள்நுழைவு",
@@ -147,6 +141,12 @@
         "ok": "சரி",
         "quote": "மேற்கோள்",
         "remove": "நீக்கு",
-        "view_source": "மூலத்தைக் காட்டு"
+        "view_source": "மூலத்தைக் காட்டு",
+        "reject": "நிராகரி",
+        "confirm": "உறுதிப்படுத்தவும்",
+        "dismiss": "நீக்கு",
+        "cancel": "ரத்து",
+        "close": "மூடு",
+        "update": "புதுப்பி"
     }
 }

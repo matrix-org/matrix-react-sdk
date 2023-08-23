@@ -109,7 +109,7 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
                         kind="link_sm"
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
-                        {_t("Cancel")}
+                        {_t("action|cancel")}
                     </AccessibleButton>
                 </div>
             );

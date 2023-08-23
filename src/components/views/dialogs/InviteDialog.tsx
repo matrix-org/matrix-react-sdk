@@ -1419,7 +1419,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                         onClick={this.onCancel}
                         className="mx_InviteDialog_transferConsultConnect_pushRight"
                     >
-                        {_t("Cancel")}
+                        {_t("action|cancel")}
                     </AccessibleButton>
                     <AccessibleButton
                         kind="primary"

@@ -349,7 +349,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 }
                 if (opts.canJoin) {
                     title = _t("Join the room to participate");
-                    primaryActionLabel = _t("Join");
+                    primaryActionLabel = _t("action|join");
                     primaryActionHandler = () => {
                         ModuleRunner.instance.invoke(RoomViewLifecycle.JoinFromRoomPreview, this.props.roomId);
                     };
@@ -524,7 +524,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 } else {
                     title = _t("Do you want to join %(roomName)s?", { roomName });
                     subTitle = [avatar, _t("<userName/> invited you", {}, { userName: () => inviterElement })];
-                    primaryActionLabel = _t("Accept");
+                    primaryActionLabel = _t("action|accept");
                 }
 
                 const myUserId = MatrixClientPeg.safeGet().getSafeUserId();
@@ -541,7 +541,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 }
 
                 primaryActionHandler = this.props.onJoinClick;
-                secondaryActionLabel = _t("Reject");
+                secondaryActionLabel = _t("action|reject");
                 secondaryActionHandler = this.props.onRejectClick;
 
                 if (this.props.onRejectAndIgnoreClick) {

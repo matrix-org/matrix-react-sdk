@@ -166,7 +166,7 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
                     {renderRules(list.userRules)}
                 </div>
             ),
-            button: _t("Close"),
+            button: _t("action|close"),
             hasCancelButton: false,
         });
     }

@@ -571,7 +571,7 @@ export default class ImageView extends React.Component<IProps, IState> {
                         {contextMenuButton}
                         <AccessibleTooltipButton
                             className="mx_ImageView_button mx_ImageView_button_close"
-                            title={_t("Close")}
+                            title={_t("action|close")}
                             onClick={this.props.onFinished}
                         />
                         {this.renderContextMenu()}

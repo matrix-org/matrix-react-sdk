@@ -50,12 +50,12 @@ export const OidcLogoutDialog: React.FC<OidcLogoutDialogProps> = ({
             <div className="mx_Dialog_buttons">
                 {hasOpenedLogoutLink ? (
                     <AccessibleButton kind="primary" onClick={() => onFinished(true)}>
-                        {_t("Close")}
+                        {_t("action|close")}
                     </AccessibleButton>
                 ) : (
                     <>
                         <AccessibleButton kind="secondary" onClick={() => onFinished(false)}>
-                            {_t("Cancel")}
+                            {_t("action|cancel")}
                         </AccessibleButton>
                         <AccessibleButton
                             element="a"

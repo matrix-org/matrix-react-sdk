@@ -687,7 +687,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 onClick={listener}
                                 tabIndex={-1}
                             >
-                                {showViewButton ? _t("View") : _t("Join")}
+                                {showViewButton ? _t("action|view") : _t("action|join")}
                             </AccessibleButton>
                         }
                         aria-labelledby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_name`}
