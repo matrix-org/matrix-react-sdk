@@ -28,7 +28,7 @@ export function SessionLockStolenView(): JSX.Element {
 
     return (
         <SplashPage className="mx_SessionLockStolenView">
-            <h1>{_t("Error")}</h1>
+            <h1>{_t("common|error")}</h1>
             <h2>{_t("%(brand)s has been opened in another tab.", { brand })}</h2>
         </SplashPage>
     );

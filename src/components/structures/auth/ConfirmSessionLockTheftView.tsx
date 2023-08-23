@@ -38,12 +38,12 @@ export function ConfirmSessionLockTheftView(props: Props): JSX.Element {
                 <p>
                     {_t(
                         '%(brand)s is open in another window. Click "%(label)s" to use %(brand)s here and disconnect the other window.',
-                        { brand, label: _t("Continue") },
+                        { brand, label: _t("action|continue") },
                     )}
                 </p>
 
                 <AccessibleButton kind="primary" onClick={props.onConfirm}>
-                    {_t("Continue")}
+                    {_t("action|continue")}
                 </AccessibleButton>
             </div>
         </div>
