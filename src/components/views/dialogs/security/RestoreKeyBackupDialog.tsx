@@ -338,7 +338,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 </div>
             );
         } else if (this.state.loadError) {
-            title = _t("Error");
+            title = _t("common|error");
             content = _t("Unable to load backup status");
         } else if (this.state.restoreError) {
             if (
@@ -369,11 +369,11 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                     );
                 }
             } else {
-                title = _t("Error");
+                title = _t("common|error");
                 content = _t("Unable to restore backup");
             }
         } else if (this.state.backupInfo === null) {
-            title = _t("Error");
+            title = _t("common|error");
             content = _t("No backup found!");
         } else if (this.state.recoverInfo) {
             title = _t("Keys restored");
@@ -396,7 +396,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                     </p>
                     {failedToDecrypt}
                     <DialogButtons
-                        primaryButton={_t("OK")}
+                        primaryButton={_t("action|ok")}
                         onPrimaryButtonClick={this.onDone}
                         hasCancel={false}
                         focus={true}
@@ -429,7 +429,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                             autoFocus={true}
                         />
                         <DialogButtons
-                            primaryButton={_t("Next")}
+                            primaryButton={_t("action|next")}
                             onPrimaryButtonClick={this.onPassPhraseNext}
                             primaryIsSubmit={true}
                             hasCancel={true}
@@ -501,7 +501,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                         />
                         {keyStatus}
                         <DialogButtons
-                            primaryButton={_t("Next")}
+                            primaryButton={_t("action|next")}
                             onPrimaryButtonClick={this.onRecoveryKeyNext}
                             hasCancel={true}
                             onCancel={this.onCancel}
