@@ -119,6 +119,7 @@
     "When I'm invited to a room": "nu da friti le ka ziljmina lo se zilbe'i kei do",
     "Call invitation": "nu da co'a fonjo'e do",
     "Messages sent by bot": "nu da zilbe'i fi pa sampre",
+    "Accept": "nu fonjo'e",
     "Incorrect verification code": ".i na'e drani ke lacri lerpoi",
     "Submit": "nu zilbe'i",
     "Phone": "fonxa",
@@ -225,6 +226,7 @@
     "Bell": "janbe",
     "Headphones": "selsnapra",
     "Pin": "pijne",
+    "Upload": "nu kibdu'a",
     "Send an encrypted reply…": "nu pa mifra be pa jai te spuda cu zilbe'i",
     "Send a reply…": "nu pa jai te spuda cu zilbe'i",
     "Send an encrypted message…": "nu pa mifra be pa notci cu zilbe'i",
@@ -282,8 +284,10 @@
     "Waiting for %(displayName)s to verify…": ".i ca'o denpa lo nu la'o zoi. %(displayName)s .zoi mo'u co'a lacri",
     "Cancelling…": ".i ca'o co'u co'e",
     "To be secure, do this in person or use a trusted way to communicate.": ".i lo nu marji penmi vau ja pilno pa se lacri lo nu tavla cu sarcu lo nu snura",
+    "Close": "nu zilmipri",
     "Ok": "je'e",
     "Verify this session": "nu co'a lacri le se samtcise'u",
+    "Verify": "nu co'a lacri",
     "What's New": "notci le du'u cnino",
     "You joined the call": ".i do mo'u co'a fonjo'e",
     "%(senderName)s joined the call": ".i la'o zoi. %(senderName)s .zoi mo'u co'a fonjo'e",
@@ -325,6 +329,7 @@
         "one": ".i samtcise'u %(count)s da"
     },
     "Hide sessions": "nu ro se samtcise'u cu zilmipri",
+    "Logout": "nu co'u jaspu",
     "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": ".i gi je lo nu samcu'a <a>le dei cei'i</a> gi lo nu co'a tavla le sampre cu tadji lo nu facki le du'u tadji lo nu pilno la'o zoi. %(brand)s .zoi",
     "This room is end-to-end encrypted": ".i ro zilbe'i be fo le cei'i cu mifra",
     "Everyone in this room is verified": ".i do lacri ro pagbu be le se zilbe'i",
@@ -349,6 +354,7 @@
     "<a>In reply to</a> <pill>": ".i nu <a>spuda</a> tu'a la'o zoi. <pill> .zoi",
     "Show less": "nu viska so'u da",
     "Unable to share email address": ".i da nabmi fi lo nu jungau le du'u samymri judri",
+    "Share": "nu jungau",
     "Unable to share phone number": ".i da nabmi fi lo nu jungau le du'u fonjudri",
     "Edit message": "nu basti fi le ka notci",
     "Share room": "nu jungau fi le du'u ve zilbe'i",
@@ -365,6 +371,7 @@
     "Download %(text)s": "nu kibycpa la'o zoi. %(text)s .zoi",
     "Explore rooms": "nu facki le du'u ve zilbe'i",
     "Create Account": "nu pa re'u co'a jaspu",
+    "Dismiss": "nu mipri",
     "common": {
         "analytics": "lanli datni",
         "error": "nabmi",
@@ -389,12 +396,5 @@
         "save": "nu co'a vreji",
         "start": "nu co'a co'e",
         "start_chat": "nu co'a tavla"
-    },
-    "action.dismiss": "nu mipri",
-    "action.close": "nu zilmipri",
-    "action.accept": "nu fonjo'e",
-    "action.verify": "nu co'a lacri",
-    "action.upload": "nu kibdu'a",
-    "action.share": "nu jungau",
-    "action.logout": "nu co'u jaspu"
+    }
 }
