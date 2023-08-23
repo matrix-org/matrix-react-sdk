@@ -327,7 +327,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             homeButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconHome"
-                    label={_t("Home")}
+                    label={_t("common|home")}
                     onClick={this.onHomeClick}
                 />
             );
@@ -366,7 +366,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 <IconizedContextMenuOption
                     className="mx_IconizedContextMenu_option_red"
                     iconClassName="mx_UserMenu_iconSignOut"
-                    label={_t("Sign out")}
+                    label={_t("action|sign_out")}
                     onClick={this.onSignOutClick}
                 />
             </IconizedContextMenuOptionList>

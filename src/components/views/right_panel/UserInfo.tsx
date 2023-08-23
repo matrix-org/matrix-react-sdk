@@ -387,7 +387,7 @@ export const UserOptionsSection: React.FC<{
                     )}
                 </div>
             ),
-            button: _t("Ignore"),
+            button: _t("action|ignore"),
         });
         const [confirmed] = await finished;
 
@@ -407,7 +407,7 @@ export const UserOptionsSection: React.FC<{
                 kind="link"
                 className={classNames("mx_UserInfo_field", { mx_UserInfo_destructive: !isIgnored })}
             >
-                {isIgnored ? _t("Unignore") : _t("Ignore")}
+                {isIgnored ? _t("Unignore") : _t("action|ignore")}
             </AccessibleButton>
         );
 
@@ -502,7 +502,7 @@ export const UserOptionsSection: React.FC<{
 
     return (
         <div className="mx_UserInfo_container">
-            <h3>{_t("Options")}</h3>
+            <h3>{_t("common|options")}</h3>
             <div>
                 {directMessageButton}
                 {readReceiptButton}
@@ -1483,7 +1483,7 @@ const BasicUserInfo: React.FC<{
                             }
                         }}
                     >
-                        {_t("Verify")}
+                        {_t("action|verify")}
                     </AccessibleButton>
                 </div>
             );
@@ -1716,7 +1716,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     if (phase === RightPanelPhases.EncryptionPanel) {
         const verificationRequest = (props as React.ComponentProps<typeof EncryptionPanel>).verificationRequest;
         if (verificationRequest && verificationRequest.pending) {
-            closeLabel = _t("Cancel");
+            closeLabel = _t("action|cancel");
         }
     }
 
