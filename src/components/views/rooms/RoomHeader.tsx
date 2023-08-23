@@ -22,7 +22,6 @@ import { Icon as ThreadsIcon } from "@vector-im/compound-design-tokens/icons/thr
 import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/icons/notifications-solid.svg";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
-import { group } from "console";
 import type { Room } from "matrix-js-sdk/src/matrix";
 import { _t } from "../../../languageHandler";
 import { useRoomName } from "../../../hooks/useRoomName";
@@ -41,7 +40,6 @@ import { useRoomThreadNotifications } from "../../../hooks/room/useRoomThreadNot
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
 import SdkConfig from "../../../SdkConfig";
-import SettingsStore from "../../../settings/SettingsStore";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
 
 /**
