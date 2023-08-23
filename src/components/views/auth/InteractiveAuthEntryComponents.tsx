@@ -508,7 +508,7 @@ export class EmailIdentityAuthEntry extends React.Component<
                                     a: (text: string) => (
                                         <AccessibleTooltipButton
                                             kind="link_inline"
-                                            title={this.state.requested ? _t("Resent!") : _t("Resend")}
+                                            title={this.state.requested ? _t("Resent!") : _t("action|resend")}
                                             alignment={Alignment.Right}
                                             onHideTooltip={
                                                 this.state.requested

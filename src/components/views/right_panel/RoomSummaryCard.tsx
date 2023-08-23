@@ -150,7 +150,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     if (cannotPin) {
         pinTitle = _t("You can only pin up to %(count)s widgets", { count: MAX_PINNED });
     } else {
-        pinTitle = isPinned ? _t("Unpin") : _t("Pin");
+        pinTitle = isPinned ? _t("action|unpin") : _t("action|pin");
     }
 
     const isMaximised = WidgetLayoutStore.instance.isInContainer(room, app, Container.Center);

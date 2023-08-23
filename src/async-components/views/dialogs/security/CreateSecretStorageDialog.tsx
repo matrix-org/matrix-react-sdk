@@ -763,7 +763,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                                 onClick={this.onDownloadClick}
                                 disabled={this.state.phase === Phase.Storing}
                             >
-                                {_t("Download")}
+                                {_t("action|download")}
                             </AccessibleButton>
                             <span>
                                 {_t("%(downloadButton)s or %(copyButton)s", {
@@ -832,7 +832,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 </p>
                 <p>{_t("You can also set up Secure Backup & manage your keys in Settings.")}</p>
                 <DialogButtons
-                    primaryButton={_t("Go back")}
+                    primaryButton={_t("action|go_back")}
                     onPrimaryButtonClick={this.onGoBackClick}
                     hasCancel={false}
                 >

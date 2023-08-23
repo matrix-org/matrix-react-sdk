@@ -44,7 +44,7 @@ import { OidcLogoutDialog } from "../../../dialogs/oidc/OidcLogoutDialog";
 
 const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
-        title: _t("Sign out"),
+        title: _t("action|sign_out"),
         description: (
             <div>
                 <p>
@@ -55,7 +55,7 @@ const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> 
             </div>
         ),
         cancelButton: _t("action|cancel"),
-        button: _t("Sign out"),
+        button: _t("action|sign_out"),
     });
     const [confirmed] = await finished;
 

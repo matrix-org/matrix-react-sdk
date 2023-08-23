@@ -129,7 +129,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
                         <AccessibleButton
                             className={searchButtonClasses}
                             onClick={this.onSearch}
-                            aria-label={_t("Search")}
+                            aria-label={_t("action|search")}
                         />
                     </div>
                     <AccessibleButton

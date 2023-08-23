@@ -1236,13 +1236,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         autoCapitalize="off"
                         autoCorrect="off"
                         spellCheck="false"
-                        placeholder={_t("Search")}
+                        placeholder={_t("action|search")}
                         value={query}
                         onChange={setQuery}
                         onKeyDown={onKeyDown}
                         aria-owns="mx_SpotlightDialog_content"
                         aria-activedescendant={activeDescendant}
-                        aria-label={_t("Search")}
+                        aria-label={_t("action|search")}
                         aria-describedby="mx_SpotlightDialog_keyboardPrompt"
                     />
                     {(publicRoomsLoading || peopleLoading || profileLoading) && <Spinner w={24} h={24} />}

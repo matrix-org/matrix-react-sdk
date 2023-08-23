@@ -268,7 +268,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
 
         let addButton = (
             <AccessibleButton onClick={this.onAddClick} kind="primary" disabled={this.props.disabled}>
-                {_t("Add")}
+                {_t("action|add")}
             </AccessibleButton>
         );
         if (this.state.verifying) {

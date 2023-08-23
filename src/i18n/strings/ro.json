@@ -37,7 +37,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s%(time)s",
     "Explore rooms": "Explorează camerele",
-    "Sign In": "Autentificare",
     "Create Account": "Înregistare",
     "You've reached the maximum number of simultaneous calls.": "Ați atins numărul maxim de apeluri simultane.",
     "Too Many Calls": "Prea multe apeluri",
@@ -73,6 +72,7 @@
     "action": {
         "ok": "OK",
         "confirm": "Confirmă",
-        "dismiss": "Închide"
+        "dismiss": "Închide",
+        "sign_in": "Autentificare"
     }
 }

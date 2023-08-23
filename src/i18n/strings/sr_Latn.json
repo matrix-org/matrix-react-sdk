@@ -6,7 +6,6 @@
     "Add Phone Number": "Dodajte broj telefona",
     "Your %(brand)s is misconfigured": "Vaš %(brand)s nije dobro podešen",
     "Chat with %(brand)s Bot": "Ćaskajte sa %(brand)s botom",
-    "Sign In": "Prijavite se",
     "powered by Matrix": "pokreće Matriks",
     "Explore rooms": "Istražite sobe",
     "Send": "Pošalji",
@@ -97,6 +96,7 @@
     "action": {
         "confirm": "Potvrdi",
         "dismiss": "Odbaci",
-        "trust": "Vjeruj"
+        "trust": "Vjeruj",
+        "sign_in": "Prijavite se"
     }
 }

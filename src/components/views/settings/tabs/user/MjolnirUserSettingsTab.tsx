@@ -294,7 +294,7 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
                                 onClick={this.onAddPersonalRule}
                                 disabled={this.state.busy}
                             >
-                                {_t("Ignore")}
+                                {_t("action|ignore")}
                             </AccessibleButton>
                         </form>
                     </SettingsSubsection>

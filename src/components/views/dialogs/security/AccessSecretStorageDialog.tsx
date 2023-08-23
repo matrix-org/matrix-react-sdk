@@ -435,7 +435,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                             primaryButton={_t("action|continue")}
                             onPrimaryButtonClick={this.onRecoveryKeyNext}
                             hasCancel={true}
-                            cancelButton={_t("Go Back")}
+                            cancelButton={_t("action|go_back")}
                             cancelButtonClass="danger"
                             onCancel={this.onCancel}
                             focus={false}

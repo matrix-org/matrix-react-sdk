@@ -86,7 +86,7 @@ const getDefaultErrorParams = (
         description: _t("%(brand)s could not send your location. Please try again later.", {
             brand: SdkConfig.get().brand,
         }),
-        button: _t("Try again"),
+        button: _t("action|try_again"),
         cancelButton: _t("action|cancel"),
         onFinished: (tryAgain: boolean) => {
             if (tryAgain) {

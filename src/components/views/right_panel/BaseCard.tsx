@@ -63,7 +63,7 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
                 onBack?.(ev);
                 RightPanelStore.instance.popCard();
             };
-            const label = backLabelForPhase(prevCard.phase) ?? _t("Back");
+            const label = backLabelForPhase(prevCard.phase) ?? _t("action|back");
             backButton = <AccessibleButton className="mx_BaseCard_back" onClick={onBackClick} title={label} />;
         }
 

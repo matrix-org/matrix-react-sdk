@@ -124,7 +124,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                             kind="primary"
                             onClick={this.handleClick(Click.TryAgain)}
                         >
-                            {_t("Try again")}
+                            {_t("action|try_again")}
                         </AccessibleButton>
                         {this.cancelButton()}
                     </>

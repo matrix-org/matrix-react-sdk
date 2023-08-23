@@ -191,7 +191,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
                         {_t("action|cancel")}
                     </AccessibleButton>
                     <AccessibleButton kind="primary" disabled={busy} onClick={onCreateSubspaceClick}>
-                        {busy ? _t("Adding…") : _t("Add")}
+                        {busy ? _t("Adding…") : _t("action|add")}
                     </AccessibleButton>
                 </div>
             </MatrixClientContext.Provider>

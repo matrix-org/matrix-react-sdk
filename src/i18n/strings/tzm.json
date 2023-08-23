@@ -4,7 +4,6 @@
     "Actions": "Tugawin",
     "Messages": "Tuzinin",
     "Create Account": "senflul amiḍan",
-    "Sign In": "Kcem",
     "Dec": "Duj",
     "Nov": "Nuw",
     "Oct": "Kṭu",
@@ -70,12 +69,9 @@
     "Search…": "Arezzu…",
     "A-Z": "A-Ẓ",
     "Re-join": "als-lkem",
-    "Search": "Rzu",
     "%(duration)sd": "%(duration)sas",
     "Camera": "Takamiṛa",
     "Microphone": "Amikṛu",
-    "Add": "Rnu",
-    "Ignore": "Nexxel",
     "None": "Walu",
     "Account": "Amiḍan",
     "Algorithm:": "Talguritmit:",
@@ -140,7 +136,11 @@
         "close": "Rgel",
         "upgrade": "Leqqem",
         "share": "Bḍu",
-        "logout": "Ffeɣ"
+        "logout": "Ffeɣ",
+        "sign_in": "Kcem",
+        "add": "Rnu",
+        "search": "Rzu",
+        "ignore": "Nexxel"
     },
     "Home": "Asnubeg"
 }

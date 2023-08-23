@@ -176,7 +176,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 Modal.createDialog(QuestionDialog, {
                     title: _t("Failed to post poll"),
                     description: _t("Sorry, the poll you tried to create was not posted."),
-                    button: _t("Try again"),
+                    button: _t("action|try_again"),
                     cancelButton: _t("action|cancel"),
                     onFinished: (tryAgain: boolean) => {
                         if (!tryAgain) {

@@ -89,7 +89,6 @@
     "Failed to change power level": "Hüquqların səviyyəsini dəyişdirməyi bacarmadı",
     "Are you sure?": "Siz əminsiniz?",
     "Unignore": "Blokdan çıxarmaq",
-    "Ignore": "Bloklamaq",
     "Invited": "Dəvət edilmişdir",
     "Filter room members": "İştirakçılara görə axtarış",
     "Hangup": "Bitirmək",
@@ -228,7 +227,6 @@
     "powered by Matrix": "Matrix tərəfindən təchiz edilmişdir",
     "Create Account": "Hesab Aç",
     "Explore rooms": "Otaqları kəşf edin",
-    "Sign In": "Daxil ol",
     "Identity server": "Eyniləşdirmənin serveri",
     "common": {
         "analytics": "Analitik",
@@ -254,7 +252,9 @@
         "close": "Bağlamaq",
         "accept": "Qəbul etmək",
         "update": "Yeniləmək",
-        "logout": "Çıxmaq"
+        "logout": "Çıxmaq",
+        "sign_in": "Daxil ol",
+        "ignore": "Bloklamaq"
     },
     "Home": "Başlanğıc"
 }

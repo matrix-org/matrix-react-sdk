@@ -34,7 +34,7 @@ const ShareDialogButtons: React.FC<Props> = ({ onBack, onCancel, displayBack }) 
                 <AccessibleButton
                     className="mx_ShareDialogButtons_button left"
                     data-testid="share-dialog-buttons-back"
-                    aria-label={_t("Back")}
+                    aria-label={_t("action|back")}
                     onClick={onBack}
                     element="button"
                 >

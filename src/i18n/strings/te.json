@@ -1,6 +1,5 @@
 {
     "Account": "ఖాతా",
-    "Add": "చేర్చు",
     "Admin": "అడ్మిన్",
     "Admin Tools": "నిర్వాహకుని ఉపకరణాలు",
     "No Microphones detected": "మైక్రోఫోన్లు కనుగొనబడలేదు",
@@ -74,7 +73,6 @@
     "Favourite": "గుర్తుంచు",
     "Notifications": "ప్రకటనలు",
     "Operation failed": "కార్యం విఫలమైంది",
-    "Search": "శోధన",
     "Sunday": "ఆదివారం",
     "Messages sent by bot": "బాట్ పంపిన సందేశాలు",
     "Notification targets": "తాఖీదు లక్ష్యాలు",
@@ -88,7 +86,6 @@
     "Messages in one-to-one chats": "సందేశాలు నుండి ఒకరికి ఒకటి మాటామంతి",
     "Failed to add tag %(tagName)s to room": "%(tagName)s ను బొందు జోడించడంలో విఫలమైంది",
     "No update available.": "ఏ నవీకరణ అందుబాటులో లేదు.",
-    "Resend": "మళ్ళి పంపుము",
     "Collecting app version information": "అనువర్తన సంస్కరణ సమాచారాన్ని సేకరించడం",
     "Tuesday": "మంగళవారం",
     "Monday": "సోమవారం",
@@ -131,6 +128,9 @@
         "dismiss": "రద్దుచేసే",
         "cancel": "రద్దు",
         "close": "ముసివెయండి",
-        "accept": "అంగీకరించు"
+        "accept": "అంగీకరించు",
+        "add": "చేర్చు",
+        "search": "శోధన",
+        "resend": "మళ్ళి పంపుము"
     }
 }

@@ -359,7 +359,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                         primaryActionLabel = _t("Sign Up");
                         primaryActionHandler = this.onRegisterClick;
                     }
-                    secondaryActionLabel = _t("Sign In");
+                    secondaryActionLabel = _t("action|sign_in");
                     secondaryActionHandler = this.onLoginClick;
                 }
                 if (this.props.previewLoading) {

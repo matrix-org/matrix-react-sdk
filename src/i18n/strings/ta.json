@@ -22,8 +22,6 @@
     "On": "மீது",
     "Operation failed": "செயல்பாடு தோல்வியுற்றது",
     "powered by Matrix": "Matrix-ஆல் ஆனது",
-    "Resend": "மீண்டும் அனுப்பு",
-    "Search": "தேடு",
     "Search…": "தேடு…",
     "Send": "அனுப்பு",
     "Send logs": "பதிவுகளை அனுப்பு",
@@ -49,7 +47,6 @@
     "Yesterday": "நேற்று",
     "No update available.": "எந்த புதுப்பிப்பும் இல்லை.",
     "Thank you!": "உங்களுக்கு நன்றி",
-    "Back": "பின்",
     "Event sent!": "நிகழ்வு அனுப்பப்பட்டது",
     "Event Type": "நிகழ்வு வகை",
     "Event Content": "நிகழ்வு உள்ளடக்கம்",
@@ -59,7 +56,6 @@
     "This phone number is already in use": "இந்த தொலைபேசி எண் முன்னதாகவே பயன்பாட்டில் உள்ளது",
     "Failed to verify email address: make sure you clicked the link in the email": "மின்னஞ்சல் முகவரியை சரிபார்க்க முடியவில்லை: மின்னஞ்சலில் உள்ள இணைப்பை அழுத்தியுள்ளீர்களா என்பதை உறுதிப்படுத்தவும்",
     "Your %(brand)s is misconfigured": "உங்கள் %(brand)s தவறாக உள்ளமைக்கப்பட்டுள்ளது",
-    "Sign In": "உள்நுழைக",
     "Call Failed": "அழைப்பு தோல்வியுற்றது",
     "You cannot place a call with yourself.": "நீங்கள் உங்களுடனே அழைப்பை மேற்கொள்ள முடியாது.",
     "Permission Required": "அனுமதி தேவை",
@@ -147,6 +143,10 @@
         "dismiss": "நீக்கு",
         "cancel": "ரத்து",
         "close": "மூடு",
-        "update": "புதுப்பி"
+        "update": "புதுப்பி",
+        "sign_in": "உள்நுழைக",
+        "search": "தேடு",
+        "back": "பின்",
+        "resend": "மீண்டும் அனுப்பு"
     }
 }

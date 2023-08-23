@@ -271,7 +271,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
 
         let addVerifySection = (
             <AccessibleButton onClick={this.onAddClick} kind="primary" disabled={this.props.disabled}>
-                {_t("Add")}
+                {_t("action|add")}
             </AccessibleButton>
         );
         if (this.state.verifying) {

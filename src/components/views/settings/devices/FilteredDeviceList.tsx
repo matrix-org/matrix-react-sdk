@@ -335,7 +335,7 @@ export const FilteredDeviceList = forwardRef(
                                 className="mx_FilteredDeviceList_headerButton"
                             >
                                 {isSigningOut && <Spinner w={16} h={16} />}
-                                {_t("Sign out")}
+                                {_t("action|sign_out")}
                             </AccessibleButton>
                             <AccessibleButton
                                 data-testid="cancel-selection-cta"
