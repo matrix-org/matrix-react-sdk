@@ -17,11 +17,8 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { SERVICE_TYPES, HTTPError, IThreepid, ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IDelegatedAuthConfig, M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
-import { HTTPError } from "matrix-js-sdk/src/matrix";
 
 import { Icon as WarningIcon } from "../../../../../../res/img/feather-customised/warning-triangle.svg";
 import { UserFriendlyError, _t } from "../../../../../languageHandler";
@@ -39,7 +36,6 @@ import { Service, ServicePolicyPair, startTermsFlow } from "../../../../../Terms
 import IdentityAuthClient from "../../../../../IdentityAuthClient";
 import { abbreviateUrl } from "../../../../../utils/UrlUtils";
 import { getThreepidsWithBindStatus } from "../../../../../boundThreepids";
-import Spinner from "../../../elements/Spinner";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
@@ -62,6 +58,7 @@ import Heading from "../../../typography/Heading";
 import InlineSpinner from "../../../elements/InlineSpinner";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
+import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -72,7 +69,6 @@ interface IState {
     spellCheckEnabled?: boolean;
     spellCheckLanguages: string[];
     haveIdServer: boolean;
-    serverSupportsSeparateAddAndBind?: boolean;
     idServerHasUnsignedTerms: boolean;
     requiredPolicyInfo:
         | {
@@ -94,6 +90,7 @@ interface IState {
     canChangePassword: boolean;
     idServerName?: string;
     externalAccountManagementUrl?: string;
+    canMake3pidChanges: boolean;
 }
 
 export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
@@ -123,6 +120,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             msisdns: [],
             loading3pids: true, // whether or not the emails and msisdns have been loaded
             canChangePassword: false,
+            canMake3pidChanges: false,
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -168,8 +166,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private async getCapabilities(): Promise<void> {
         const cli = this.context;
 
-        const serverSupportsSeparateAddAndBind = await cli.doesServerSupportSeparateAddAndBind();
-
         const capabilities = await cli.getCapabilities(); // this is cached
         const changePasswordCap = capabilities["m.change_password"];
 
@@ -178,10 +174,13 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         // the enabled flag value.
         const canChangePassword = !changePasswordCap || changePasswordCap["enabled"] !== false;
 
-        const delegatedAuthConfig = M_AUTHENTICATION.findIn<IDelegatedAuthConfig | undefined>(cli.getClientWellKnown());
-        const externalAccountManagementUrl = delegatedAuthConfig?.account;
+        const externalAccountManagementUrl = getDelegatedAuthAccountUrl(cli.getClientWellKnown());
+        // https://spec.matrix.org/v1.7/client-server-api/#m3pid_changes-capability
+        // We support as far back as v1.1 which doesn't have m.3pid_changes
+        // so the behaviour for when it is missing has to be assume true
+        const canMake3pidChanges = !capabilities["m.3pid_changes"] || capabilities["m.3pid_changes"].enabled === true;
 
-        this.setState({ serverSupportsSeparateAddAndBind, canChangePassword, externalAccountManagementUrl });
+        this.setState({ canChangePassword, externalAccountManagementUrl, canMake3pidChanges });
     }
 
     private async getThreepidState(): Promise<void> {
@@ -305,15 +304,11 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         });
     };
 
-    private onPasswordChanged = ({ didLogoutOutOtherDevices }: { didLogoutOutOtherDevices: boolean }): void => {
-        let description = _t("Your password was successfully changed.");
-        if (didLogoutOutOtherDevices) {
-            description +=
-                " " + _t("You will not receive push notifications on other devices until you sign back in to them.");
-        }
+    private onPasswordChanged = (): void => {
+        const description = _t("Your password was successfully changed.");
         // TODO: Figure out a design that doesn't involve replacing the current dialog
         Modal.createDialog(ErrorDialog, {
-            title: _t("Success"),
+            title: _t("common|success"),
             description,
         });
     };
@@ -329,24 +324,24 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderAccountSection(): JSX.Element {
         let threepidSection: ReactNode = null;
 
-        // For older homeservers without separate 3PID add and bind methods (MSC2290),
-        // we use a combo add with bind option API which requires an identity server to
-        // validate 3PID ownership even if we're just adding to the homeserver only.
-        // For newer homeservers with separate 3PID add and bind methods (MSC2290),
-        // there is no such concern, so we can always show the HS account 3PIDs.
-        if (
-            SettingsStore.getValue(UIFeature.ThirdPartyID) &&
-            (this.state.haveIdServer || this.state.serverSupportsSeparateAddAndBind === true)
-        ) {
+        if (SettingsStore.getValue(UIFeature.ThirdPartyID)) {
             const emails = this.state.loading3pids ? (
                 <InlineSpinner />
             ) : (
-                <AccountEmailAddresses emails={this.state.emails} onEmailsChange={this.onEmailsChange} />
+                <AccountEmailAddresses
+                    emails={this.state.emails}
+                    onEmailsChange={this.onEmailsChange}
+                    disabled={!this.state.canMake3pidChanges}
+                />
             );
             const msisdns = this.state.loading3pids ? (
                 <InlineSpinner />
             ) : (
-                <AccountPhoneNumbers msisdns={this.state.msisdns} onMsisdnsChange={this.onMsisdnsChange} />
+                <AccountPhoneNumbers
+                    msisdns={this.state.msisdns}
+                    onMsisdnsChange={this.onMsisdnsChange}
+                    disabled={!this.state.canMake3pidChanges}
+                />
             );
             threepidSection = (
                 <>
@@ -367,8 +362,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     </SettingsSubsection>
                 </>
             );
-        } else if (this.state.serverSupportsSeparateAddAndBind === null) {
-            threepidSection = <Spinner />;
         }
 
         let passwordChangeSection: ReactNode = null;
@@ -461,8 +454,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             const intro = (
                 <SettingsSubsectionText>
                     {_t(
-                        "Agree to the identity server (%(serverName)s) Terms of Service to " +
-                            "allow yourself to be discoverable by email address or phone number.",
+                        "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.",
                         { serverName: this.state.idServerName },
                     )}
                 </SettingsSubsectionText>
@@ -483,8 +475,16 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         const threepidSection = this.state.haveIdServer ? (
             <>
-                <DiscoveryEmailAddresses emails={this.state.emails} isLoading={this.state.loading3pids} />
-                <DiscoveryPhoneNumbers msisdns={this.state.msisdns} isLoading={this.state.loading3pids} />
+                <DiscoveryEmailAddresses
+                    emails={this.state.emails}
+                    isLoading={this.state.loading3pids}
+                    disabled={!this.state.canMake3pidChanges}
+                />
+                <DiscoveryPhoneNumbers
+                    msisdns={this.state.msisdns}
+                    isLoading={this.state.loading3pids}
+                    disabled={!this.state.canMake3pidChanges}
+                />
             </>
         ) : null;
 
@@ -525,7 +525,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const supportsMultiLanguageSpellCheck = plaf?.supportsSpellCheckSettings();
 
         let accountManagementSection: JSX.Element | undefined;
-        if (SettingsStore.getValue(UIFeature.Deactivate)) {
+        const isAccountManagedExternally = !!this.state.externalAccountManagementUrl;
+        if (SettingsStore.getValue(UIFeature.Deactivate) && !isAccountManagedExternally) {
             accountManagementSection = this.renderManagementSection();
         }
 
@@ -538,7 +539,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     height="18"
                     // override icon default values
                     aria-hidden={false}
-                    aria-label={_t("Warning")}
+                    aria-label={_t("common|warning")}
                 />
             ) : null;
             const heading = (

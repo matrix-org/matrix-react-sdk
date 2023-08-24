@@ -14,12 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixError } from "matrix-js-sdk/src/http-api";
+import { MatrixError, MatrixClient, EventType, HistoryVisibility } from "matrix-js-sdk/src/matrix";
 import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { HistoryVisibility } from "matrix-js-sdk/src/@types/partials";
 
 import { AddressType, getAddressType } from "../UserAddress";
 import { _t } from "../languageHandler";
@@ -311,8 +308,7 @@ export default class MultiInviter {
                         case "ORG.MATRIX.JSSDK_MISSING_PARAM":
                             if (getAddressType(address) === AddressType.Email) {
                                 errorText = _t(
-                                    "Cannot invite user by email without an identity server. " +
-                                        'You can connect to one under "Settings".',
+                                    'Cannot invite user by email without an identity server. You can connect to one under "Settings".',
                                 );
                             }
                     }

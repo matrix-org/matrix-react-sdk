@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DeviceVerificationStatus, ICryptoCallbacks } from "matrix-js-sdk/src/matrix";
+import { DeviceVerificationStatus, ICryptoCallbacks, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { deriveKey } from "matrix-js-sdk/src/crypto/key_passphrase";
 import { decodeRecoveryKey } from "matrix-js-sdk/src/crypto/recoverykey";
 import { encodeBase64 } from "matrix-js-sdk/src/crypto/olmlib";
@@ -76,8 +75,8 @@ async function confirmToDismiss(): Promise<boolean> {
         title: _t("Cancel entering passphrase?"),
         description: _t("Are you sure you want to cancel entering passphrase?"),
         danger: false,
-        button: _t("Go Back"),
-        cancelButton: _t("Cancel"),
+        button: _t("action|go_back"),
+        cancelButton: _t("action|cancel"),
     }).finished;
     return !sure;
 }

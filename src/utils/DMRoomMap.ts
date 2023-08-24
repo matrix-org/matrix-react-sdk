@@ -15,11 +15,8 @@ limitations under the License.
 */
 
 import { uniq } from "lodash";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { Room, MatrixEvent, EventType, ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 
 import { filterValidMDirect } from "./dm/filterValidMDirect";

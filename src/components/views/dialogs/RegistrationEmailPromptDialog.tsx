@@ -59,8 +59,7 @@ const RegistrationEmailPromptDialog: React.FC<IProps> = ({ onFinished }) => {
             <div className="mx_Dialog_content" id="mx_RegistrationEmailPromptDialog">
                 <p>
                     {_t(
-                        "Just a heads up, if you don't add an email and forget your password, you could " +
-                            "<b>permanently lose access to your account</b>.",
+                        "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.",
                         {},
                         {
                             b: (sub) => <b>{sub}</b>,
@@ -80,7 +79,7 @@ const RegistrationEmailPromptDialog: React.FC<IProps> = ({ onFinished }) => {
                     />
                 </form>
             </div>
-            <DialogButtons primaryButton={_t("Continue")} onPrimaryButtonClick={onSubmit} hasCancel={false} />
+            <DialogButtons primaryButton={_t("action|continue")} onPrimaryButtonClick={onSubmit} hasCancel={false} />
         </BaseDialog>
     );
 };

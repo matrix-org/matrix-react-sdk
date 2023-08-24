@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { RoomType } from "matrix-js-sdk/src/@types/event";
-import { IRoomDirectoryOptions } from "matrix-js-sdk/src/@types/requests";
-import { IProtocol, IPublicRoomsChunkRoom } from "matrix-js-sdk/src/client";
+import { RoomType, IProtocol, IPublicRoomsChunkRoom, IRoomDirectoryOptions } from "matrix-js-sdk/src/matrix";
 import { useCallback, useEffect, useState } from "react";
 
 import { IPublicRoomDirectoryConfig } from "../components/views/directory/NetworkDropdown";
@@ -51,6 +49,7 @@ export const usePublicRoomDirectory = (): {
     config?: IPublicRoomDirectoryConfig | null;
     setConfig(config: IPublicRoomDirectoryConfig | null): void;
     search(opts: IPublicRoomsOpts): Promise<boolean>;
+    error?: Error | true; // true if an unknown error is encountered
 } => {
     const [publicRooms, setPublicRooms] = useState<IPublicRoomsChunkRoom[]>([]);
 
@@ -60,6 +59,7 @@ export const usePublicRoomDirectory = (): {
 
     const [ready, setReady] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<Error | true | undefined>();
 
     const [updateQuery, updateResult] = useLatestResult<IRoomDirectoryOptions, IPublicRoomsChunkRoom[]>(setPublicRooms);
 
@@ -112,12 +112,14 @@ export const usePublicRoomDirectory = (): {
             }
 
             updateQuery(opts);
+            setLoading(true);
+            setError(undefined);
             try {
-                setLoading(true);
                 const { chunk } = await MatrixClientPeg.safeGet().publicRooms(opts);
                 updateResult(opts, showNsfwPublicRooms ? chunk : chunk.filter(cheapNsfwFilter));
                 return true;
             } catch (e) {
+                setError(e instanceof Error ? e : true);
                 console.error("Could not fetch public rooms for params", opts, e);
                 updateResult(opts, []);
                 return false;
@@ -183,5 +185,6 @@ export const usePublicRoomDirectory = (): {
         config,
         search,
         setConfig,
+        error,
     } as const;
 };

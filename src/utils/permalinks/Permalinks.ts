@@ -16,11 +16,8 @@ limitations under the License.
 
 import isIp from "is-ip";
 import * as utils from "matrix-js-sdk/src/utils";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, MatrixClient, RoomStateEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import MatrixToPermalinkConstructor, {
     baseUrl as matrixtoBaseUrl,
@@ -117,6 +114,7 @@ export class RoomPermalinkCreator {
     }
 
     public start(): void {
+        if (this.started) return;
         this.load();
         this.room?.currentState.on(RoomStateEvent.Update, this.onRoomStateUpdate);
         this.started = true;
@@ -129,10 +127,6 @@ export class RoomPermalinkCreator {
 
     public get serverCandidates(): string[] | undefined {
         return this._serverCandidates;
-    }
-
-    public isStarted(): boolean {
-        return this.started;
     }
 
     public forEvent(eventId: string): string {

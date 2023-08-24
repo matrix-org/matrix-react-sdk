@@ -16,9 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent, RoomMember, RoomMemberEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { compare } from "matrix-js-sdk/src/utils";
 
 import * as WhoIsTyping from "../../../WhoIsTyping";
@@ -179,8 +177,7 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
                 <MemberAvatar
                     key={u.userId}
                     member={u}
-                    width={24}
-                    height={24}
+                    size="24px"
                     resizeMethod="crop"
                     viewUserOnClick={true}
                     aria-live="off"

@@ -17,9 +17,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient, UIAResponse } from "matrix-js-sdk/src/matrix";
 import { AuthType } from "matrix-js-sdk/src/interactive-auth";
-import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -106,7 +105,7 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
             [SSOAuthEntry.PHASE_POSTAUTH]: {
                 title: _t("Confirm to continue"),
                 body: _t("Click the button below to confirm your identity."),
-                continueText: _t("Confirm"),
+                continueText: _t("action|confirm"),
                 continueKind: "primary",
             },
         };
@@ -117,7 +116,7 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
         };
     }
 
-    private onAuthFinished: InteractiveAuthCallback<T> = (success, result): void => {
+    private onAuthFinished: InteractiveAuthCallback<T> = async (success, result): Promise<void> => {
         if (success) {
             this.props.onFinished(true, result);
         } else {
@@ -172,7 +171,7 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
                     <div role="alert">{this.state.authError.message || this.state.authError.toString()}</div>
                     <br />
                     <AccessibleButton onClick={this.onDismissClick} className="mx_GeneralButton" autoFocus={true}>
-                        {_t("Dismiss")}
+                        {_t("action|dismiss")}
                     </AccessibleButton>
                 </div>
             );

@@ -16,9 +16,8 @@ limitations under the License.
 */
 
 import React, { BaseSyntheticEvent, ReactNode } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import * as Email from "../../../email";
 import { looksValid as phoneNumberLooksValid, PhoneNumberCountryDefinition } from "../../../phonenumber";
@@ -433,7 +432,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     }
 
     private showEmail(): boolean {
-        if (!this.authStepIsUsed("m.login.email.identity")) {
+        const threePidLogin = !SdkConfig.get().disable_3pid_login;
+        if (!threePidLogin || !this.authStepIsUsed("m.login.email.identity")) {
             return false;
         }
         return true;
@@ -525,8 +525,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 ref={(field) => (this[RegistrationField.Username] = field)}
                 type="text"
                 autoFocus={true}
-                label={_t("Username")}
-                placeholder={_t("Username").toLocaleLowerCase()}
+                label={_t("common|username")}
+                placeholder={_t("common|username").toLocaleLowerCase()}
                 value={this.state.username}
                 onChange={this.onUsernameChange}
                 onValidate={this.onUsernameValidate}

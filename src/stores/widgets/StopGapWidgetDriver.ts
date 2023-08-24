@@ -33,13 +33,17 @@ import {
     WidgetKind,
     ISearchUserDirectoryResult,
 } from "matrix-widget-api";
-import { ClientEvent, ITurnServer as IClientTurnServer } from "matrix-js-sdk/src/client";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import {
+    ClientEvent,
+    ITurnServer as IClientTurnServer,
+    EventType,
+    IContent,
+    MatrixEvent,
+    Room,
+    Direction,
+    THREAD_RELATION_TYPE,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
-import { Direction } from "matrix-js-sdk/src/matrix";
 import {
     ApprovalOpts,
     CapabilitiesOpts,
@@ -241,7 +245,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
         if (!client || !roomId) throw new Error("Not in a room or not attached to a client");
 
-        let r: { event_id: string } | null = null; // eslint-disable-line camelcase
+        let r: { event_id: string } | null;
         if (stateKey !== null) {
             // state event
             r = await client.sendStateEvent(roomId, eventType, content, stateKey);

@@ -571,6 +571,7 @@ $left-gutter: 64px;
 
             .mx_EventTile_avatar,
             .mx_EventTile_e2eIcon {
+                line-height: 1;
                 margin: $spacing-block-start 0 $spacing-block-end;
             }
 
@@ -809,6 +810,16 @@ $left-gutter: 64px;
 .mx_EventTile_spoiler {
     cursor: pointer;
 
+    // clear button styles
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+
     .mx_EventTile_spoiler_reason {
         color: $event-timestamp-color;
         font-size: $font-11px;
@@ -821,6 +832,7 @@ $left-gutter: 64px;
 
     &.visible > .mx_EventTile_spoiler_content {
         filter: none;
+        user-select: auto;
     }
 }
 
@@ -1160,6 +1172,7 @@ $left-gutter: 64px;
         display: flex;
         align-items: center;
         position: relative;
+        font: var(--cpd-font-body-sm-regular);
 
         &::before {
             @mixin ThreadSummaryIcon;
@@ -1167,8 +1180,6 @@ $left-gutter: 64px;
 
         .mx_ThreadPanel_replies_amount {
             @mixin ThreadRepliesAmount;
-            line-height: var(--EventTile_ThreadSummary-line-height);
-            font-size: $font-12px; /* Same font size as the counter on the main panel */
         }
 
         .mx_ThreadSummary_content {

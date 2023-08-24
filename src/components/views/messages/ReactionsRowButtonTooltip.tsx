@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { unicodeToShortcode } from "../../../HtmlUtils";
 import { _t } from "../../../languageHandler";
@@ -27,8 +27,8 @@ interface IProps {
     mxEvent: MatrixEvent;
     // The reaction content / key / emoji
     content: string;
-    // A Set of Matrix reaction events for this key
-    reactionEvents: Set<MatrixEvent>;
+    // A list of Matrix reaction events for this key
+    reactionEvents: MatrixEvent[];
     visible: boolean;
 }
 

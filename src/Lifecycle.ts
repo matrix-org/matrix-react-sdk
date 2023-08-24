@@ -18,13 +18,12 @@ limitations under the License.
 */
 
 import { ReactNode } from "react";
-import { createClient } from "matrix-js-sdk/src/matrix";
+import { createClient, MatrixClient, SSOAction } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
-import { SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { MINIMUM_MATRIX_VERSION } from "matrix-js-sdk/src/version-support";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
@@ -67,6 +66,7 @@ import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
 import { completeOidcLogin } from "./utils/oidc/authorize";
 import { persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettings";
+import GenericToast from "./components/views/toasts/GenericToast";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -81,6 +81,41 @@ dis.register((payload) => {
         doSetLoggedIn(typed.credentials, true);
     }
 });
+
+/**
+ * This is set to true by {@link #onSessionLockStolen}.
+ *
+ * It is used in various of the async functions to prevent races where we initialise a client after the lock is stolen.
+ */
+let sessionLockStolen = false;
+
+// this is exposed solely for unit tests.
+// ts-prune-ignore-next
+export function setSessionLockNotStolen(): void {
+    sessionLockStolen = false;
+}
+
+/**
+ * Handle the session lock being stolen. Stops any active Matrix Client, and aborts any ongoing client initialisation.
+ */
+export async function onSessionLockStolen(): Promise<void> {
+    sessionLockStolen = true;
+    stopMatrixClient();
+}
+
+/**
+ * Check if we still hold the session lock.
+ *
+ * If not, raises a {@link SessionLockStolenError}.
+ */
+function checkSessionLock(): void {
+    if (sessionLockStolen) {
+        throw new SessionLockStolenError("session lock has been released");
+    }
+}
+
+/** Error type raised by various functions in the Lifecycle workflow if session lock is stolen during execution */
+class SessionLockStolenError extends Error {}
 
 interface ILoadSessionOpts {
     enableGuest?: boolean;
@@ -153,6 +188,9 @@ export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean>
         if (success) {
             return true;
         }
+        if (sessionLockStolen) {
+            return false;
+        }
 
         if (enableGuest && guestHsUrl) {
             return registerAsGuest(guestHsUrl, guestIsUrl, defaultDeviceDisplayName);
@@ -166,6 +204,12 @@ export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean>
             // need to show the general failure dialog. Instead, just go back to welcome.
             return false;
         }
+
+        // likewise, if the session lock has been stolen while we've been trying to start
+        if (sessionLockStolen) {
+            return false;
+        }
+
         return handleLoadSessionFailure(e);
     }
 }
@@ -203,6 +247,7 @@ export async function attemptDelegatedAuthLogin(
     fragmentAfterLogin?: string,
 ): Promise<boolean> {
     if (queryParams.code && queryParams.state) {
+        console.log("We have OIDC params - attempting OIDC login");
         return attemptOidcNativeLogin(queryParams);
     }
 
@@ -296,14 +341,15 @@ export function attemptTokenLogin(
         return Promise.resolve(false);
     }
 
+    console.log("We have token login params - attempting token login");
+
     const homeserver = localStorage.getItem(SSO_HOMESERVER_URL_KEY);
     const identityServer = localStorage.getItem(SSO_ID_SERVER_URL_KEY) ?? undefined;
     if (!homeserver) {
         logger.warn("Cannot log in with token: can't determine HS URL to use");
         onFailedDelegatedAuthLogin(
             _t(
-                "We asked the browser to remember which homeserver you use to let you sign in, " +
-                    "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
+                "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
             ),
         );
         return Promise.resolve(false);
@@ -362,7 +408,7 @@ async function onFailedDelegatedAuthLogin(description: string | ReactNode, tryAg
     Modal.createDialog(ErrorDialog, {
         title: _t("We couldn't log you in"),
         description,
-        button: _t("Try again"),
+        button: _t("action|try_again"),
         // if we have a tryAgain callback, call it the primary 'try again' button was clicked in the dialog
         onFinished: tryAgain ? (shouldTryAgain?: boolean) => shouldTryAgain && tryAgain() : undefined,
     });
@@ -585,11 +631,41 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             },
             false,
         );
+        checkServerVersions();
         return true;
     } else {
         logger.log("No previous session found.");
         return false;
     }
+}
+
+async function checkServerVersions(): Promise<void> {
+    MatrixClientPeg.get()
+        ?.getVersions()
+        .then((response) => {
+            if (!response.versions.includes(MINIMUM_MATRIX_VERSION)) {
+                const toastKey = "LEGACY_SERVER";
+                ToastStore.sharedInstance().addOrReplaceToast({
+                    key: toastKey,
+                    title: _t("Your server is unsupported"),
+                    props: {
+                        description: _t(
+                            "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.",
+                            {
+                                version: MINIMUM_MATRIX_VERSION,
+                                brand: SdkConfig.get().brand,
+                            },
+                        ),
+                        acceptLabel: _t("action|ok"),
+                        onAccept: () => {
+                            ToastStore.sharedInstance().dismissToast(toastKey);
+                        },
+                    },
+                    component: GenericToast,
+                    priority: 98,
+                });
+            }
+        });
 }
 
 async function handleLoadSessionFailure(e: unknown): Promise<boolean> {
@@ -687,6 +763,7 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
 async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnabled: boolean): Promise<MatrixClient> {
+    checkSessionLock();
     credentials.guest = Boolean(credentials.guest);
 
     const softLogout = isSoftLogout();
@@ -717,6 +794,8 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
         await abortLogin();
     }
 
+    // check the session lock just before creating the new client
+    checkSessionLock();
     MatrixClientPeg.replaceUsingCreds(credentials);
     const client = MatrixClientPeg.safeGet();
 
@@ -749,6 +828,7 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     } else {
         logger.warn("No local storage available: can't persist session!");
     }
+    checkSessionLock();
 
     dis.fire(Action.OnLoggedIn);
     await startMatrixClient(client, /*startSyncing=*/ !softLogout);
@@ -943,6 +1023,8 @@ async function startMatrixClient(client: MatrixClient, startSyncing = true): Pro
         logger.warn("Caller requested only auxiliary services be started");
         await MatrixClientPeg.assign();
     }
+
+    checkSessionLock();
 
     // Run the migrations after the MatrixClientPeg has been assigned
     SettingsStore.runMigrations();

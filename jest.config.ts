@@ -21,9 +21,9 @@ import type { Config } from "jest";
 const config: Config = {
     testEnvironment: "jsdom",
     testMatch: ["<rootDir>/test/**/*-test.[jt]s?(x)"],
-    globalSetup: "<rootDir>/test/globalSetup.js",
+    globalSetup: "<rootDir>/test/globalSetup.ts",
     setupFiles: ["jest-canvas-mock"],
-    setupFilesAfterEnv: ["<rootDir>/test/setupTests.js"],
+    setupFilesAfterEnv: ["<rootDir>/test/setupTests.ts"],
     moduleNameMapper: {
         "\\.(gif|png|ttf|woff2)$": "<rootDir>/__mocks__/imageMock.js",
         "\\.svg$": "<rootDir>/__mocks__/svg.js",
@@ -36,7 +36,12 @@ const config: Config = {
         "RecorderWorklet": "<rootDir>/__mocks__/empty.js",
     },
     transformIgnorePatterns: ["/node_modules/(?!matrix-js-sdk).+$"],
-    collectCoverageFrom: ["<rootDir>/src/**/*.{js,ts,tsx}"],
+    collectCoverageFrom: [
+        "<rootDir>/src/**/*.{js,ts,tsx}",
+        // getSessionLock is piped into a different JS context via stringification, and the coverage functionality is
+        // not available in that contest. So, turn off coverage instrumentation for it.
+        "!<rootDir>/src/utils/SessionLock.ts",
+    ],
     coverageReporters: ["text-summary", "lcov"],
     testResultsProcessor: "@casualbot/jest-sonar-reporter",
 };

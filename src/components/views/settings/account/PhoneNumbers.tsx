@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, UserFriendlyError } from "../../../../languageHandler";
@@ -39,6 +39,10 @@ This is a copy/paste of EmailAddresses, mostly.
 interface IExistingPhoneNumberProps {
     msisdn: ThirdPartyIdentifier;
     onRemoved: (phoneNumber: ThirdPartyIdentifier) => void;
+    /**
+     * Disable removing phone number
+     */
+    disabled?: boolean;
 }
 
 interface IExistingPhoneNumberState {
@@ -98,14 +102,14 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
                         kind="danger_sm"
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
-                        {_t("Remove")}
+                        {_t("action|remove")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.onDontRemove}
                         kind="link_sm"
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
-                        {_t("Cancel")}
+                        {_t("action|cancel")}
                     </AccessibleButton>
                 </div>
             );
@@ -116,8 +120,8 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
                 <span className="mx_GeneralUserSettingsTab_section--discovery_existing_address">
                     +{this.props.msisdn.address}
                 </span>
-                <AccessibleButton onClick={this.onRemove} kind="danger_sm">
-                    {_t("Remove")}
+                <AccessibleButton onClick={this.onRemove} kind="danger_sm" disabled={this.props.disabled}>
+                    {_t("action|remove")}
                 </AccessibleButton>
             </div>
         );
@@ -127,6 +131,10 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
 interface IProps {
     msisdns: ThirdPartyIdentifier[];
     onMsisdnsChange: (phoneNumbers: ThirdPartyIdentifier[]) => void;
+    /**
+     * Adding or removing phone numbers is disabled when truthy
+     */
+    disabled?: boolean;
 }
 
 interface IState {
@@ -193,7 +201,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                 logger.error("Unable to add phone number " + phoneNumber + " " + err);
                 this.setState({ verifying: false, continueDisabled: false, addTask: null });
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Error"),
+                    title: _t("common|error"),
                     description: extractErrorMessageFromError(err, _t("Operation failed")),
                 });
             });
@@ -210,7 +218,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
             ?.haveMsisdnToken(token)
             .then(([finished] = []) => {
                 let newPhoneNumber = this.state.newPhoneNumber;
-                if (finished) {
+                if (finished !== false) {
                     const msisdns = [...this.props.msisdns, { address, medium: ThreepidMedium.Phone }];
                     this.props.onMsisdnsChange(msisdns);
                     newPhoneNumber = "";
@@ -251,12 +259,19 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
 
     public render(): React.ReactNode {
         const existingPhoneElements = this.props.msisdns.map((p) => {
-            return <ExistingPhoneNumber msisdn={p} onRemoved={this.onRemoved} key={p.address} />;
+            return (
+                <ExistingPhoneNumber
+                    msisdn={p}
+                    onRemoved={this.onRemoved}
+                    key={p.address}
+                    disabled={this.props.disabled}
+                />
+            );
         });
 
         let addVerifySection = (
-            <AccessibleButton onClick={this.onAddClick} kind="primary">
-                {_t("Add")}
+            <AccessibleButton onClick={this.onAddClick} kind="primary" disabled={this.props.disabled}>
+                {_t("action|add")}
             </AccessibleButton>
         );
         if (this.state.verifying) {
@@ -265,8 +280,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                 <div>
                     <div>
                         {_t(
-                            "A text message has been sent to +%(msisdn)s. " +
-                                "Please enter the verification code it contains.",
+                            "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.",
                             { msisdn: msisdn },
                         )}
                         <br />
@@ -277,16 +291,20 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                             type="text"
                             label={_t("Verification code")}
                             autoComplete="off"
-                            disabled={this.state.continueDisabled}
+                            disabled={this.props.disabled || this.state.continueDisabled}
                             value={this.state.newPhoneNumberCode}
                             onChange={this.onChangeNewPhoneNumberCode}
                         />
                         <AccessibleButton
                             onClick={this.onContinueClick}
                             kind="primary"
-                            disabled={this.state.continueDisabled || this.state.newPhoneNumberCode.length === 0}
+                            disabled={
+                                this.props.disabled ||
+                                this.state.continueDisabled ||
+                                this.state.newPhoneNumberCode.length === 0
+                            }
                         >
-                            {_t("Continue")}
+                            {_t("action|continue")}
                         </AccessibleButton>
                     </form>
                 </div>
@@ -313,7 +331,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                             type="text"
                             label={_t("Phone Number")}
                             autoComplete="tel-national"
-                            disabled={this.state.verifying}
+                            disabled={this.props.disabled || this.state.verifying}
                             prefixComponent={phoneCountry}
                             value={this.state.newPhoneNumber}
                             onChange={this.onChangeNewPhoneNumber}

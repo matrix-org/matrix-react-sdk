@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 import { Enable, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
@@ -578,7 +578,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                     <React.Fragment>
                         <hr />
                         <fieldset>
-                            <legend className="mx_RoomSublist_contextMenu_title">{_t("Appearance")}</legend>
+                            <legend className="mx_RoomSublist_contextMenu_title">{_t("common|appearance")}</legend>
                             <StyledMenuItemCheckbox
                                 onClose={this.onCloseMenu}
                                 onChange={this.onUnreadFirstChanged}

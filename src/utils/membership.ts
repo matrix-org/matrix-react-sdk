@@ -14,11 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomMember, RoomState, RoomStateEvent, MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 /**
  * Approximation of a membership status for a given room.

@@ -15,10 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback, useMemo, useState } from "react";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { RoomState } from "matrix-js-sdk/src/models/room-state";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { JoinRule, EventType, RoomState, Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../../languageHandler";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
@@ -85,10 +82,9 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ room }) => {
         <LabelledToggleSwitch
             data-testid="element-call-switch"
             label={_t("Enable %(brand)s as an additional calling option in this room", { brand })}
-            caption={_t(
-                "%(brand)s is end-to-end encrypted, " + "but is currently limited to smaller numbers of users.",
-                { brand },
-            )}
+            caption={_t("%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.", {
+                brand,
+            })}
             value={elementCallEnabled}
             onChange={onChange}
             disabled={!maySend}

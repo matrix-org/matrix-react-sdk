@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { User } from "matrix-js-sdk/src/models/user";
+import { RoomMember, User } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -82,8 +81,7 @@ const EncryptionInfo: React.FC<IProps> = ({
                 <p>{_t("Messages in this room are end-to-end encrypted.")}</p>
                 <p>
                     {_t(
-                        "Your messages are secured and only you and the recipient have " +
-                            "the unique keys to unlock them.",
+                        "Your messages are secured and only you and the recipient have the unique keys to unlock them.",
                     )}
                 </p>
             </div>
@@ -94,8 +92,7 @@ const EncryptionInfo: React.FC<IProps> = ({
                 <p>{_t("Messages in this room are not end-to-end encrypted.")}</p>
                 <p>
                     {_t(
-                        "In encrypted rooms, your messages are secured and only you and the recipient have " +
-                            "the unique keys to unlock them.",
+                        "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.",
                     )}
                 </p>
             </div>

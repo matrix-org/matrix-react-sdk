@@ -22,20 +22,39 @@ import Chainable = Cypress.Chainable;
 import AUTWindow = Cypress.AUTWindow;
 import { HomeserverInstance } from "../plugins/utils/homeserver";
 
+export interface StartHomeserverOpts {
+    /** path to template within cypress/plugins/{homeserver}docker/template/ directory. */
+    template: string;
+
+    /** Port of an OAuth server to configure the homeserver to use */
+    oAuthServerPort?: number;
+
+    /** Additional variables to inject into the configuration template **/
+    variables?: Record<string, string | number>;
+}
+
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
             /**
              * Start a homeserver instance with a given config template.
-             * @param template path to template within cypress/plugins/{homeserver}docker/template/ directory.
+             *
+             * @param opts: either the template path (within cypress/plugins/{homeserver}docker/template/), or
+             *   an options object
+             *
+             * If any of opts.variables has the special value
+             * '{{HOST_DOCKER_INTERNAL}}', it will be replaced by
+             * 'host.docker.interal' if we are on Docker, or
+             * 'host.containers.internal' on Podman.
              */
-            startHomeserver(template: string): Chainable<HomeserverInstance>;
+            startHomeserver(opts: string | StartHomeserverOpts): Chainable<HomeserverInstance>;
 
             /**
              * Custom command wrapping task:{homeserver}Stop whilst preventing uncaught exceptions
              * for if Homeserver stopping races with the app's background sync loop.
-             * @param homeserver the homeserver instance returned by start{Homeserver}
+             *
+             * @param homeserver the homeserver instance returned by {homeserver}Start (e.g. synapseStart).
              */
             stopHomeserver(homeserver: HomeserverInstance): Chainable<AUTWindow>;
 
@@ -56,9 +75,13 @@ declare global {
     }
 }
 
-function startHomeserver(template: string): Chainable<HomeserverInstance> {
+function startHomeserver(opts: string | StartHomeserverOpts): Chainable<HomeserverInstance> {
     const homeserverName = Cypress.env("HOMESERVER");
-    return cy.task<HomeserverInstance>(homeserverName + "Start", template, { log: false }).then((x) => {
+    if (typeof opts === "string") {
+        opts = { template: opts };
+    }
+
+    return cy.task<HomeserverInstance>(homeserverName + "Start", opts, { log: false }).then((x) => {
         Cypress.log({ name: "startHomeserver", message: `Started homeserver instance ${x.serverId}` });
     });
 }

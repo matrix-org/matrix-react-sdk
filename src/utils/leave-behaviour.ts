@@ -16,10 +16,7 @@ limitations under the License.
 
 import { sleep } from "matrix-js-sdk/src/utils";
 import React, { ReactNode } from "react";
-import { EventStatus } from "matrix-js-sdk/src/models/event-status";
-import { MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
+import { EventStatus, MatrixEventEvent, Room, MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 
 import Modal, { IHandle } from "../Modal";
 import Spinner from "../components/views/elements/Spinner";
@@ -138,8 +135,7 @@ export async function leaveRoomBehaviour(
                     Modal.createDialog(ErrorDialog, {
                         title: _t("Can't leave Server Notices room"),
                         description: _t(
-                            "This room is used for important messages from the Homeserver, " +
-                                "so you cannot leave it.",
+                            "This room is used for important messages from the Homeserver, so you cannot leave it.",
                         ),
                     });
                     return;

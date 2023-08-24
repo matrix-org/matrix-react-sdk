@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { useContext } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
+import { Room, EventType, RoomType } from "matrix-js-sdk/src/matrix";
 
 import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
@@ -43,13 +42,17 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps extends IContextMenuProps {
-    space: Room;
+    space?: Room;
     hideHeader?: boolean;
 }
 
 const SpaceContextMenu: React.FC<IProps> = ({ space, hideHeader, onFinished, ...props }) => {
     const cli = useContext(MatrixClientContext);
-    const userId = cli.getUserId()!;
+    const userId = cli.getSafeUserId();
+    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
+    const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
+
+    if (!space) return null;
 
     let inviteOption: JSX.Element | null = null;
     if (space.getJoinRule() === "public" || space.canInvite(userId)) {
@@ -66,7 +69,7 @@ const SpaceContextMenu: React.FC<IProps> = ({ space, hideHeader, onFinished, ...
                 data-testid="invite-option"
                 className="mx_SpacePanel_contextMenu_inviteButton"
                 iconClassName="mx_SpacePanel_iconInvite"
-                label={_t("Invite")}
+                label={_t("action|invite")}
                 onClick={onInviteClick}
             />
         );
@@ -87,7 +90,7 @@ const SpaceContextMenu: React.FC<IProps> = ({ space, hideHeader, onFinished, ...
             <IconizedContextMenuOption
                 data-testid="settings-option"
                 iconClassName="mx_SpacePanel_iconSettings"
-                label={_t("Settings")}
+                label={_t("common|settings")}
                 onClick={onSettingsClick}
             />
         );
@@ -135,9 +138,6 @@ const SpaceContextMenu: React.FC<IProps> = ({ space, hideHeader, onFinished, ...
         );
     }
 
-    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
-    const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
-
     const hasPermissionToAddSpaceChild = space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
     const canAddRooms = hasPermissionToAddSpaceChild && shouldShowComponent(UIComponent.CreateRooms);
     const canAddVideoRooms = canAddRooms && videoRoomsEnabled;
@@ -173,13 +173,13 @@ const SpaceContextMenu: React.FC<IProps> = ({ space, hideHeader, onFinished, ...
         newRoomSection = (
             <>
                 <div data-testid="add-to-space-header" className="mx_SpacePanel_contextMenu_separatorLabel">
-                    {_t("Add")}
+                    {_t("action|add")}
                 </div>
                 {canAddRooms && (
                     <IconizedContextMenuOption
                         data-testid="new-room-option"
                         iconClassName="mx_SpacePanel_iconPlus"
-                        label={_t("Room")}
+                        label={_t("common|room")}
                         onClick={onNewRoomClick}
                     />
                 )}

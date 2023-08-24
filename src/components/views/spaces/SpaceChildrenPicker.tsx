@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import StyledRadioGroup from "../elements/StyledRadioGroup";
@@ -83,7 +83,7 @@ const SpecificChildrenPicker: React.FC<ISpecificChildrenPickerProps> = ({
                     );
                 })}
                 {filteredRooms.length < 1 ? (
-                    <span className="mx_SpaceChildrenPicker_noResults">{_t("No results")}</span>
+                    <span className="mx_SpaceChildrenPicker_noResults">{_t("common|no_results")}</span>
                 ) : undefined}
             </AutoHideScrollbar>
         </div>

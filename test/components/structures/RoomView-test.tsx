@@ -16,10 +16,17 @@ limitations under the License.
 
 import React, { createRef, RefObject } from "react";
 import { mocked, MockedObject } from "jest-mock";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, MatrixError, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import {
+    ClientEvent,
+    MatrixClient,
+    Room,
+    RoomEvent,
+    EventType,
+    JoinRule,
+    MatrixError,
+    RoomStateEvent,
+    MatrixEvent,
+} from "matrix-js-sdk/src/matrix";
 import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
 import { fireEvent, render, screen, RenderResult } from "@testing-library/react";
 
@@ -35,10 +42,12 @@ import {
     mkRoomMemberJoinEvent,
     mkThirdPartyInviteEvent,
     emitPromise,
+    createTestClient,
+    untilDispatch,
 } from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { Action } from "../../../src/dispatcher/actions";
-import { defaultDispatcher } from "../../../src/dispatcher/dispatcher";
+import dis, { defaultDispatcher } from "../../../src/dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../src/dispatcher/payloads/ViewRoomPayload";
 import { RoomView as _RoomView } from "../../../src/components/structures/RoomView";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
@@ -57,11 +66,6 @@ import WidgetUtils from "../../../src/utils/WidgetUtils";
 import { WidgetType } from "../../../src/widgets/WidgetType";
 import WidgetStore from "../../../src/stores/WidgetStore";
 import { ViewRoomErrorPayload } from "../../../src/dispatcher/payloads/ViewRoomErrorPayload";
-
-// Fake random strings to give a predictable snapshot for IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: () => "abdefghi",
-}));
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
@@ -100,7 +104,7 @@ describe("RoomView", () => {
 
     afterEach(() => {
         unmockPlatformPeg();
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     const mountRoomView = async (ref?: RefObject<_RoomView>): Promise<RenderResult> => {
@@ -542,6 +546,43 @@ describe("RoomView", () => {
             mocked(cli.isGuest).mockReturnValue(true);
             await mountRoomView();
             expect(screen.queryByLabelText("Forget room")).not.toBeInTheDocument();
+        });
+    });
+
+    describe("knock rooms", () => {
+        const client = createTestClient();
+
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => setting === "feature_ask_to_join");
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
+            jest.spyOn(dis, "dispatch");
+        });
+
+        it("allows to request to join", async () => {
+            jest.spyOn(MatrixClientPeg, "safeGet").mockReturnValue(client);
+            jest.spyOn(client, "knockRoom").mockResolvedValue({ room_id: room.roomId });
+
+            await mountRoomView();
+            fireEvent.click(screen.getByRole("button", { name: "Request access" }));
+            await untilDispatch(Action.SubmitAskToJoin, dis);
+
+            expect(dis.dispatch).toHaveBeenCalledWith({
+                action: "submit_ask_to_join",
+                roomId: room.roomId,
+                opts: { reason: undefined },
+            });
+        });
+
+        it("allows to cancel a join request", async () => {
+            jest.spyOn(MatrixClientPeg, "safeGet").mockReturnValue(client);
+            jest.spyOn(client, "leave").mockResolvedValue({});
+            jest.spyOn(room, "getMyMembership").mockReturnValue("knock");
+
+            await mountRoomView();
+            fireEvent.click(screen.getByRole("button", { name: "Cancel request" }));
+            await untilDispatch(Action.CancelAskToJoin, dis);
+
+            expect(dis.dispatch).toHaveBeenCalledWith({ action: "cancel_ask_to_join", roomId: room.roomId });
         });
     });
 });

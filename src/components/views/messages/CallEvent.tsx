@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { forwardRef, useCallback, useContext, useMemo } from "react";
 
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import { ConnectionState, ElementCall } from "../../../models/Call";
 import { _t } from "../../../languageHandler";
 import {
@@ -63,8 +62,7 @@ const ActiveCallEvent = forwardRef<any, ActiveCallEventProps>(
                         member={mxEvent.sender}
                         fallbackUserId={mxEvent.getSender()}
                         viewUserOnClick
-                        width={24}
-                        height={24}
+                        size="24px"
                     />
                     <div className="mx_CallEvent_columns">
                         <div className="mx_CallEvent_details">
@@ -77,7 +75,7 @@ const ActiveCallEvent = forwardRef<any, ActiveCallEventProps>(
                                 active={false}
                                 participantCount={participatingMembers.length}
                             />
-                            <FacePile members={facePileMembers} faceSize={24} overflow={facePileOverflow} />
+                            <FacePile members={facePileMembers} size="24px" overflow={facePileOverflow} />
                         </div>
                         {call && <GroupCallDuration groupCall={call.groupCall} />}
                         <AccessibleTooltipButton
@@ -130,13 +128,13 @@ const ActiveLoadedCallEvent = forwardRef<any, ActiveLoadedCallEventProps>(({ mxE
     const [buttonText, buttonKind, onButtonClick] = useMemo(() => {
         switch (connectionState) {
             case ConnectionState.Disconnected:
-                return [_t("Join"), "primary", connect];
+                return [_t("action|join"), "primary", connect];
             case ConnectionState.Connecting:
-                return [_t("Join"), "primary", null];
+                return [_t("action|join"), "primary", null];
             case ConnectionState.Connected:
-                return [_t("Leave"), "danger", disconnect];
+                return [_t("action|leave"), "danger", disconnect];
             case ConnectionState.Disconnecting:
-                return [_t("Leave"), "danger", null];
+                return [_t("action|leave"), "danger", null];
         }
     }, [connectionState, connect, disconnect]);
 
@@ -190,7 +188,7 @@ export const CallEvent = forwardRef<any, CallEventProps>(({ mxEvent }, ref) => {
                 mxEvent={mxEvent}
                 call={null}
                 participatingMembers={[]}
-                buttonText={_t("Join")}
+                buttonText={_t("action|join")}
                 buttonKind="primary"
                 onButtonClick={null}
             />

@@ -15,17 +15,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType, RoomCreateTypeField, RoomType } from "matrix-js-sdk/src/@types/event";
-import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
 import {
+    MatrixClient,
+    ClientEvent,
+    Room,
+    EventType,
+    RoomCreateTypeField,
+    RoomType,
+    ICreateRoomOpts,
     HistoryVisibility,
     JoinRule,
     Preset,
     RestrictedAllowType,
     Visibility,
-} from "matrix-js-sdk/src/@types/partials";
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import Modal, { IHandle } from "./Modal";
@@ -125,8 +128,7 @@ export default async function createRoom(client: MatrixClient, opts: IOpts): Pro
                 const isUrl = client.getIdentityServerUrl(true);
                 if (!isUrl) {
                     throw new UserFriendlyError(
-                        "Cannot invite user by email without an identity server. " +
-                            'You can connect to one under "Settings".',
+                        'Cannot invite user by email without an identity server. You can connect to one under "Settings".',
                     );
                 }
                 createOpts.invite_3pid = [

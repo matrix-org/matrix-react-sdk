@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType, RoomType, Room } from "matrix-js-sdk/src/matrix";
 import React, { ComponentType, createRef, ReactComponentElement, SyntheticEvent } from "react";
 
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
@@ -27,7 +26,7 @@ import { ActionPayload } from "../../../dispatcher/payloads";
 import { ViewRoomDeltaPayload } from "../../../dispatcher/payloads/ViewRoomDeltaPayload";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import PosthogTrackers from "../../../PosthogTrackers";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -94,7 +93,7 @@ export const TAG_ORDER: TagID[] = [
 const ALWAYS_VISIBLE_TAGS: TagID[] = [DefaultTagID.DM, DefaultTagID.Untagged];
 
 interface ITagAesthetics {
-    sectionLabel: string;
+    sectionLabel: TranslationKey;
     sectionLabelRaw?: string;
     AuxButtonComponent?: ComponentType<IAuxButtonProps>;
     isInvite: boolean;
@@ -196,8 +195,8 @@ const DmAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex, dispatcher = default
                 }}
                 className="mx_RoomSublist_auxButton"
                 tooltipClassName="mx_RoomSublist_addRoomTooltip"
-                aria-label={_t("Start chat")}
-                title={_t("Start chat")}
+                aria-label={_t("action|start_chat")}
+                title={_t("action|start_chat")}
             />
         );
     }
@@ -388,12 +387,12 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
 
 const TAG_AESTHETICS: TagAestheticsMap = {
     [DefaultTagID.Invite]: {
-        sectionLabel: _td("Invites"),
+        sectionLabel: _td("action|invites_list"),
         isInvite: true,
         defaultHidden: false,
     },
     [DefaultTagID.Favourite]: {
-        sectionLabel: _td("Favourites"),
+        sectionLabel: _td("common|favourites"),
         isInvite: false,
         defaultHidden: false,
     },
@@ -403,7 +402,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
         defaultHidden: false,
     },
     [DefaultTagID.DM]: {
-        sectionLabel: _td("People"),
+        sectionLabel: _td("common|people"),
         isInvite: false,
         defaultHidden: false,
         AuxButtonComponent: DmAuxButton,
@@ -565,9 +564,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                         name,
                         avatarUrl: room.avatar_url,
                     }}
-                    width={32}
-                    height={32}
-                    resizeMethod="crop"
+                    size="32px"
                 />
             );
             const viewRoom = (ev: SyntheticEvent): void => {
