@@ -15,14 +15,18 @@ limitations under the License.
 */
 
 import { ListIteratee, Many, sortBy } from "lodash";
-import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { ClientEvent } from "matrix-js-sdk/src/client";
+import {
+    EventType,
+    RoomType,
+    Room,
+    RoomEvent,
+    RoomMember,
+    RoomStateEvent,
+    MatrixEvent,
+    ClientEvent,
+    ISendEventResponse,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";

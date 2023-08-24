@@ -18,7 +18,7 @@ limitations under the License.
 
 import React from "react";
 import { sortBy, uniqBy } from "lodash";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../languageHandler";
 import AutocompleteProvider from "./AutocompleteProvider";
@@ -122,7 +122,7 @@ export default class RoomProvider extends AutocompleteProvider {
                         href: makeRoomPermalink(this.room.client, room.displayedAlias),
                         component: (
                             <PillCompletion title={room.room.name} description={room.displayedAlias}>
-                                <RoomAvatar width={24} height={24} room={room.room} />
+                                <RoomAvatar size="24px" room={room.room} />
                             </PillCompletion>
                         ),
                         range: range!,

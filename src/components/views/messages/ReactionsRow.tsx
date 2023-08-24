@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { SyntheticEvent } from "react";
 import classNames from "classnames";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
+import { MatrixEvent, MatrixEventEvent, Relations, RelationsEvent } from "matrix-js-sdk/src/matrix";
 import { uniqBy } from "lodash";
 
 import { _t } from "../../../languageHandler";
@@ -226,7 +225,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         }
 
         return (
-            <div className="mx_ReactionsRow" role="toolbar" aria-label={_t("Reactions")}>
+            <div className="mx_ReactionsRow" role="toolbar" aria-label={_t("common|reactions")}>
                 {items}
                 {showAllButton}
                 {addReactionButton}

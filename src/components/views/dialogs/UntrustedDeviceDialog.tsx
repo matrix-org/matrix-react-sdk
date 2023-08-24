@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { User } from "matrix-js-sdk/src/models/user";
+import { User } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -71,7 +71,7 @@ const UntrustedDeviceDialog: React.FC<IProps> = ({ device, user, onFinished }) =
                     {_t("Interactively verify by emoji")}
                 </AccessibleButton>
                 <AccessibleButton kind="primary" onClick={() => onFinished(false)}>
-                    {_t("Done")}
+                    {_t("action|done")}
                 </AccessibleButton>
             </div>
         </BaseDialog>

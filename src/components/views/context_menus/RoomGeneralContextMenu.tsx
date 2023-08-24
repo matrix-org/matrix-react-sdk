@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import React, { useContext } from "react";
 
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
@@ -138,7 +138,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
                         }),
                     onPostInviteClick,
                 )}
-                label={_t("Invite")}
+                label={_t("action|invite")}
                 iconClassName="mx_RoomGeneralContextMenu_iconInvite"
             />
         );
@@ -172,7 +172,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
                     }),
                 onPostSettingsClick,
             )}
-            label={_t("Settings")}
+            label={_t("common|settings")}
             iconClassName="mx_RoomGeneralContextMenu_iconSettings"
         />
     );
@@ -205,7 +205,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
                         }),
                     onPostLeaveClick,
                 )}
-                label={_t("Leave")}
+                label={_t("action|leave")}
                 className="mx_IconizedContextMenu_option_red"
                 iconClassName="mx_RoomGeneralContextMenu_iconSignOut"
             />

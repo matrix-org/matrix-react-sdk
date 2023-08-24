@@ -16,21 +16,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
-import encrypt from "matrix-encrypt-attachment";
-import extractPngChunks from "png-chunks-extract";
-import { IImageInfo } from "matrix-js-sdk/src/@types/partials";
-import { logger } from "matrix-js-sdk/src/logger";
 import {
+    MatrixClient,
+    MsgType,
+    IImageInfo,
     HTTPError,
     IEventRelation,
     ISendEventResponse,
     MatrixEvent,
     UploadOpts,
     UploadProgress,
+    THREAD_RELATION_TYPE,
 } from "matrix-js-sdk/src/matrix";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import encrypt from "matrix-encrypt-attachment";
+import extractPngChunks from "png-chunks-extract";
+import { logger } from "matrix-js-sdk/src/logger";
 import { removeElement } from "matrix-js-sdk/src/utils";
 
 import {
@@ -536,7 +536,7 @@ export default class ContentMessages {
         replyToEvent: MatrixEvent | undefined,
         promBefore?: Promise<any>,
     ): Promise<void> {
-        const fileName = file.name || _t("Attachment");
+        const fileName = file.name || _t("common|attachment");
         const content: Omit<IMediaEventContent, "info"> & { info: Partial<IMediaEventInfo> } = {
             body: fileName,
             info: {

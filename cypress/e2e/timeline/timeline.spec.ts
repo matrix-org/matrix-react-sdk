@@ -16,8 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
-import type { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import type { ISendEventResponse, EventType, MsgType } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
@@ -46,7 +45,7 @@ const expectDisplayName = (e: JQuery<HTMLElement>, displayName: string): void =>
 const expectAvatar = (e: JQuery<HTMLElement>, avatarUrl: string): void => {
     cy.all([cy.window({ log: false }), cy.getClient()]).then(([win, cli]) => {
         const size = AVATAR_SIZE * win.devicePixelRatio;
-        expect(e.find(".mx_BaseAvatar_image").attr("src")).to.equal(
+        expect(e.find(".mx_BaseAvatar img").attr("src")).to.equal(
             // eslint-disable-next-line no-restricted-properties
             cli.mxcUrlToHttp(avatarUrl, size, size, AVATAR_RESIZE_METHOD),
         );
@@ -198,10 +197,10 @@ describe("Timeline", () => {
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
-                cy.findByRole("button", { name: "expand" }).click();
+                cy.findByRole("button", { name: "Expand" }).click();
 
                 // Assert that the "expand" link button worked
-                cy.findByRole("button", { name: "collapse" }).should("exist");
+                cy.findByRole("button", { name: "Collapse" }).should("exist");
             });
 
             cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on IRC layout", { percyCSS });
@@ -225,10 +224,10 @@ describe("Timeline", () => {
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
-                cy.findByRole("button", { name: "expand" }).click();
+                cy.findByRole("button", { name: "Expand" }).click();
 
                 // Assert that the "expand" link button worked
-                cy.findByRole("button", { name: "collapse" }).should("exist");
+                cy.findByRole("button", { name: "Collapse" }).should("exist");
             });
 
             cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on modern layout", { percyCSS });
@@ -248,10 +247,10 @@ describe("Timeline", () => {
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
-                cy.findByRole("button", { name: "expand" }).click();
+                cy.findByRole("button", { name: "Expand" }).click();
 
                 // Assert that the "expand" link button worked
-                cy.findByRole("button", { name: "collapse" }).should("exist");
+                cy.findByRole("button", { name: "Collapse" }).should("exist");
             });
 
             // Make sure spacer is not visible on bubble layout
@@ -271,10 +270,10 @@ describe("Timeline", () => {
                     .realHover()
                     .findByRole("toolbar", { name: "Message Actions" })
                     .should("be.visible");
-                cy.findByRole("button", { name: "collapse" }).click();
+                cy.findByRole("button", { name: "Collapse" }).click();
 
                 // Assert that "collapse" link button worked
-                cy.findByRole("button", { name: "expand" }).should("exist");
+                cy.findByRole("button", { name: "Expand" }).should("exist");
             });
 
             // Save snapshot of collapsed generic event list summary on bubble layout
@@ -293,7 +292,7 @@ describe("Timeline", () => {
             });
 
             // Click "expand" link button
-            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "expand" }).click();
+            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "Expand" }).click();
 
             // Check the event line has margin instead of inset property
             // cf. _EventTile.pcss
@@ -389,7 +388,7 @@ describe("Timeline", () => {
 
             // 2. Alignment of expanded GELS and messages
             // Click "expand" link button
-            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "expand" }).click();
+            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "Expand" }).click();
             // Check inline start spacing of info line on expanded GELS
             cy.get(".mx_EventTile[data-layout=irc].mx_EventTile_info:first-of-type .mx_EventTile_line")
                 // See: _EventTile.pcss
@@ -705,14 +704,14 @@ describe("Timeline", () => {
         });
 
         it("should render url previews", () => {
-            cy.intercept("**/_matrix/media/r0/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*", {
+            cy.intercept("**/_matrix/media/v3/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*", {
                 statusCode: 200,
                 fixture: "riot.png",
                 headers: {
                     "Content-Type": "image/png",
                 },
             }).as("mxc");
-            cy.intercept("**/_matrix/media/r0/preview_url?url=https%3A%2F%2Fcall.element.io%2F&ts=*", {
+            cy.intercept("**/_matrix/media/v3/preview_url?url=https%3A%2F%2Fcall.element.io%2F&ts=*", {
                 statusCode: 200,
                 body: {
                     "og:title": "Element Call",

@@ -20,8 +20,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { ThreadEvent } from "matrix-js-sdk/src/models/thread";
+import { NotificationCountType, Room, RoomEvent, ThreadEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import HeaderButton from "./HeaderButton";
@@ -301,7 +300,7 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
                 key={RightPanelPhases.ThreadPanel}
                 name="threadsButton"
                 data-testid="threadsButton"
-                title={_t("Threads")}
+                title={_t("common|threads")}
                 onClick={this.onThreadsPanelClicked}
                 isHighlighted={this.isPhase(LegacyRoomHeaderButtons.THREAD_PHASES)}
                 isUnread={this.state.threadNotificationColor > NotificationColor.None}

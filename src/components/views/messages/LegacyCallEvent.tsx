@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { CallErrorCode, CallState } from "matrix-js-sdk/src/webrtc/call";
 import classNames from "classnames";
 
@@ -137,14 +137,14 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                         onClick={this.props.callEventGrouper.rejectCall}
                         kind="danger"
                     >
-                        <span> {_t("Decline")} </span>
+                        <span> {_t("action|decline")} </span>
                     </AccessibleButton>
                     <AccessibleButton
                         className="mx_LegacyCallEvent_content_button mx_LegacyCallEvent_content_button_answer"
                         onClick={this.props.callEventGrouper.answerCall}
                         kind="primary"
                     >
-                        <span> {_t("Accept")} </span>
+                        <span> {_t("action|accept")} </span>
                     </AccessibleButton>
                     {this.props.timestamp}
                 </div>
@@ -234,7 +234,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                         kind={InfoTooltipKind.Warning}
                     />
                     {_t("Connection failed")}
-                    {this.renderCallBackButton(_t("Retry"))}
+                    {this.renderCallBackButton(_t("action|retry"))}
                     {this.props.timestamp}
                 </div>
             );
@@ -290,7 +290,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                 <div className={className}>
                     {silenceIcon}
                     <div className="mx_LegacyCallEvent_info">
-                        <MemberAvatar member={event.sender} width={32} height={32} />
+                        <MemberAvatar member={event.sender} size="32px" />
                         <div className="mx_LegacyCallEvent_info_basic">
                             <div className="mx_LegacyCallEvent_sender">{sender}</div>
                             <div className="mx_LegacyCallEvent_type">

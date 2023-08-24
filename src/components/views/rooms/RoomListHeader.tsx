@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { ClientEvent } from "matrix-js-sdk/src/client";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { EventType, RoomType, Room, RoomEvent, ClientEvent } from "matrix-js-sdk/src/matrix";
 import React, { useContext, useEffect, useState } from "react";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -187,7 +185,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
         if (shouldShowSpaceInvite(activeSpace)) {
             inviteOption = (
                 <IconizedContextMenuOption
-                    label={_t("Invite")}
+                    label={_t("action|invite")}
                     iconClassName="mx_RoomListHeader_iconInvite"
                     onClick={(e) => {
                         e.preventDefault();
@@ -430,7 +428,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
                     onClick={openPlusMenu}
                     isExpanded={plusMenuDisplayed}
                     className="mx_RoomListHeader_plusButton"
-                    title={_t("Add")}
+                    title={_t("action|add")}
                 />
             )}
 

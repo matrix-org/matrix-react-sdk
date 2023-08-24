@@ -16,10 +16,8 @@ limitations under the License.
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, MatrixEvent, EventType, MsgType } from "matrix-js-sdk/src/matrix";
 import { renderToStaticMarkup } from "react-dom/server";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import escapeHtml from "escape-html";
 
@@ -78,14 +76,7 @@ export default class HTMLExporter extends Exporter {
             }
         }
         const avatar = (
-            <BaseAvatar
-                width={32}
-                height={32}
-                name={this.room.name}
-                title={this.room.name}
-                url={blob ? avatarPath : ""}
-                resizeMethod="crop"
-            />
+            <BaseAvatar size="32px" name={this.room.name} title={this.room.name} url={blob ? avatarPath : ""} />
         );
         return renderToStaticMarkup(avatar);
     }

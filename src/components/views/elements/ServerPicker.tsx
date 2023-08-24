@@ -47,12 +47,10 @@ const onHelpClick = (): void => {
         {
             title: _t("Server Options"),
             description: _t(
-                "You can use the custom server options to sign into other Matrix servers by specifying " +
-                    "a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on " +
-                    "a different homeserver.",
+                "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.",
                 { brand },
             ),
-            button: _t("Dismiss"),
+            button: _t("action|dismiss"),
             hasCloseButton: false,
             fixedWidth: false,
         },
@@ -74,7 +72,7 @@ const ServerPicker: React.FC<IProps> = ({ title, dialogTitle, serverConfig, onSe
         };
         editBtn = (
             <AccessibleButton className="mx_ServerPicker_change" kind="link" onClick={onClick}>
-                {_t("Edit")}
+                {_t("action|edit")}
             </AccessibleButton>
         );
     }
@@ -97,9 +95,13 @@ const ServerPicker: React.FC<IProps> = ({ title, dialogTitle, serverConfig, onSe
 
     return (
         <div className="mx_ServerPicker">
-            <h2>{title || _t("Homeserver")}</h2>
+            <h2>{title || _t("common|homeserver")}</h2>
             {!disableCustomUrls ? (
-                <AccessibleButton className="mx_ServerPicker_help" onClick={onHelpClick} aria-label={_t("Help")} />
+                <AccessibleButton
+                    className="mx_ServerPicker_help"
+                    onClick={onHelpClick}
+                    aria-label={_t("common|help")}
+                />
             ) : null}
             <span className="mx_ServerPicker_server" title={typeof serverName === "string" ? serverName : undefined}>
                 {serverName}

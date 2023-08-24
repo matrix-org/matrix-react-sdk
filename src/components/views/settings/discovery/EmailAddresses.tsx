@@ -46,6 +46,7 @@ TODO: Reduce all the copying between account vs. discovery components.
 
 interface IEmailAddressProps {
     email: ThirdPartyIdentifier;
+    disabled?: boolean;
 }
 
 interface IEmailAddressState {
@@ -77,10 +78,6 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
     }
 
     private async changeBinding({ bind, label, errorTitle }: Binding): Promise<void> {
-        if (!(await MatrixClientPeg.safeGet().doesServerSupportSeparateAddAndBind())) {
-            return this.changeBindingTangledAddBind({ bind, label, errorTitle });
-        }
-
         const { medium, address } = this.props.email;
 
         try {
@@ -101,41 +98,6 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             this.setState({ bound: bind });
         } catch (err) {
             logger.error(`changeBinding: Unable to ${label} email address ${address}`, err);
-            this.setState({
-                verifying: false,
-                continueDisabled: false,
-                addTask: null,
-            });
-            Modal.createDialog(ErrorDialog, {
-                title: errorTitle,
-                description: extractErrorMessageFromError(err, _t("Operation failed")),
-            });
-        }
-    }
-
-    private async changeBindingTangledAddBind({ bind, label, errorTitle }: Binding): Promise<void> {
-        const { medium, address } = this.props.email;
-
-        const task = new AddThreepid(MatrixClientPeg.safeGet());
-        this.setState({
-            verifying: true,
-            continueDisabled: true,
-            addTask: task,
-        });
-
-        try {
-            await MatrixClientPeg.safeGet().deleteThreePid(medium, address);
-            if (bind) {
-                await task.bindEmailAddress(address);
-            } else {
-                await task.addEmailAddress(address);
-            }
-            this.setState({
-                continueDisabled: false,
-                bound: bind,
-            });
-        } catch (err) {
-            logger.error(`changeBindingTangledAddBind: Unable to ${label} email address ${address}`, err);
             this.setState({
                 verifying: false,
                 continueDisabled: false,
@@ -233,6 +195,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                     className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     kind="danger_sm"
                     onClick={this.onRevokeClick}
+                    disabled={this.props.disabled}
                 >
                     {_t("Revoke")}
                 </AccessibleButton>
@@ -243,8 +206,9 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                     className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     kind="primary_sm"
                     onClick={this.onShareClick}
+                    disabled={this.props.disabled}
                 >
-                    {_t("Share")}
+                    {_t("action|share")}
                 </AccessibleButton>
             );
         }
@@ -260,6 +224,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
 interface IProps {
     emails: ThirdPartyIdentifier[];
     isLoading?: boolean;
+    disabled?: boolean;
 }
 
 export default class EmailAddresses extends React.Component<IProps> {
@@ -269,7 +234,7 @@ export default class EmailAddresses extends React.Component<IProps> {
             content = <InlineSpinner />;
         } else if (this.props.emails.length > 0) {
             content = this.props.emails.map((e) => {
-                return <EmailAddress email={e} key={e.address} />;
+                return <EmailAddress email={e} key={e.address} disabled={this.props.disabled} />;
             });
         }
 

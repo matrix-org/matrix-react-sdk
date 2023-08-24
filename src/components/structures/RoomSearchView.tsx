@@ -15,11 +15,13 @@ limitations under the License.
 */
 
 import React, { forwardRef, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { ISearchResults } from "matrix-js-sdk/src/@types/search";
-import { IThreadBundledRelationship } from "matrix-js-sdk/src/models/event";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import {
+    ISearchResults,
+    IThreadBundledRelationship,
+    MatrixEvent,
+    THREAD_RELATION_TYPE,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import ScrollPanel from "./ScrollPanel";
 import { SearchScope } from "../views/rooms/SearchBar";
@@ -197,7 +199,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
             if (!results?.results?.length) {
                 ret.push(
                     <li key="search-top-marker">
-                        <h2 className="mx_RoomView_topMarker">{_t("No results")}</h2>
+                        <h2 className="mx_RoomView_topMarker">{_t("common|no_results")}</h2>
                     </li>,
                 );
             } else {
@@ -254,7 +256,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                     ret.push(
                         <li key={mxEv.getId() + "-room"}>
                             <h2>
-                                {_t("Room")}: {room.name}
+                                {_t("common|room")}: {room.name}
                             </h2>
                         </li>,
                     );

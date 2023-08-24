@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { PollEndEvent } from "matrix-js-sdk/src/extensible_events_v1/PollEndEvent";
 
 import { _t } from "../../../languageHandler";
@@ -71,9 +70,7 @@ export default class EndPollDialog extends React.Component<IProps> {
             <QuestionDialog
                 title={_t("End Poll")}
                 description={_t(
-                    "Are you sure you want to end this poll? " +
-                        "This will show the final results of the poll and " +
-                        "stop people from being able to vote.",
+                    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.",
                 )}
                 button={_t("End Poll")}
                 onFinished={(endPoll: boolean) => this.onFinished(endPoll)}

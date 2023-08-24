@@ -16,11 +16,10 @@ limitations under the License.
 */
 
 import React, { ChangeEvent } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 import { IKeyBackupInfo, IKeyBackupRestoreResult } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
@@ -339,7 +338,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 </div>
             );
         } else if (this.state.loadError) {
-            title = _t("Error");
+            title = _t("common|error");
             content = _t("Unable to load backup status");
         } else if (this.state.restoreError) {
             if (
@@ -352,8 +351,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                         <div>
                             <p>
                                 {_t(
-                                    "Backup could not be decrypted with this Security Key: " +
-                                        "please verify that you entered the correct Security Key.",
+                                    "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.",
                                 )}
                             </p>
                         </div>
@@ -364,19 +362,18 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                         <div>
                             <p>
                                 {_t(
-                                    "Backup could not be decrypted with this Security Phrase: " +
-                                        "please verify that you entered the correct Security Phrase.",
+                                    "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.",
                                 )}
                             </p>
                         </div>
                     );
                 }
             } else {
-                title = _t("Error");
+                title = _t("common|error");
                 content = _t("Unable to restore backup");
             }
         } else if (this.state.backupInfo === null) {
-            title = _t("Error");
+            title = _t("common|error");
             content = _t("No backup found!");
         } else if (this.state.recoverInfo) {
             title = _t("Keys restored");
@@ -399,7 +396,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                     </p>
                     {failedToDecrypt}
                     <DialogButtons
-                        primaryButton={_t("OK")}
+                        primaryButton={_t("action|ok")}
                         onPrimaryButtonClick={this.onDone}
                         hasCancel={false}
                         focus={true}
@@ -419,8 +416,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                     </p>
                     <p>
                         {_t(
-                            "Access your secure message history and set up secure " +
-                                "messaging by entering your Security Phrase.",
+                            "Access your secure message history and set up secure messaging by entering your Security Phrase.",
                         )}
                     </p>
 
@@ -433,7 +429,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                             autoFocus={true}
                         />
                         <DialogButtons
-                            primaryButton={_t("Next")}
+                            primaryButton={_t("action|next")}
                             onPrimaryButtonClick={this.onPassPhraseNext}
                             primaryIsSubmit={true}
                             hasCancel={true}
@@ -442,9 +438,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                         />
                     </form>
                     {_t(
-                        "If you've forgotten your Security Phrase you can " +
-                            "<button1>use your Security Key</button1> or " +
-                            "<button2>set up new recovery options</button2>",
+                        "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>",
                         {},
                         {
                             button1: (s) => (
@@ -494,8 +488,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                     </p>
                     <p>
                         {_t(
-                            "Access your secure message history and set up secure " +
-                                "messaging by entering your Security Key.",
+                            "Access your secure message history and set up secure messaging by entering your Security Key.",
                         )}
                     </p>
 
@@ -508,7 +501,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                         />
                         {keyStatus}
                         <DialogButtons
-                            primaryButton={_t("Next")}
+                            primaryButton={_t("action|next")}
                             onPrimaryButtonClick={this.onRecoveryKeyNext}
                             hasCancel={true}
                             onCancel={this.onCancel}
@@ -517,8 +510,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                         />
                     </div>
                     {_t(
-                        "If you've forgotten your Security Key you can " +
-                            "<button>set up new recovery options</button>",
+                        "If you've forgotten your Security Key you can <button>set up new recovery options</button>",
                         {},
                         {
                             button: (s) => (

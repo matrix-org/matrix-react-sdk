@@ -19,7 +19,7 @@ import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 
-import type { Room } from "matrix-js-sdk/src/models/room";
+import type { Room } from "matrix-js-sdk/src/matrix";
 import type { ConnectionState } from "../../../models/Call";
 import { Call, CallEvent, ElementCall, isConnected } from "../../../models/Call";
 import {
@@ -246,7 +246,7 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
         <div className="mx_CallView_lobby">
             {children}
             <div className="mx_CallView_preview">
-                <MemberAvatar key={me.userId} member={me} width={200} height={200} resizeMethod="scale" />
+                <MemberAvatar key={me.userId} member={me} size="200px" resizeMethod="scale" />
                 <video
                     ref={videoRef}
                     style={{ visibility: videoMuted ? "hidden" : undefined }}
@@ -284,7 +284,7 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
                 kind="primary"
                 disabled={connecting || joinCallButtonDisabledTooltip !== undefined}
                 onClick={onConnectClick}
-                label={_t("Join")}
+                label={_t("action|join")}
                 tooltip={connecting ? _t("Connecting") : joinCallButtonDisabledTooltip}
                 alignment={Alignment.Bottom}
             />
@@ -398,7 +398,7 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
             facePile = (
                 <div className="mx_CallView_participants">
                     {_t("%(count)s people joined", { count: members.length })}
-                    <FacePile members={shownMembers} faceSize={24} overflow={overflow} />
+                    <FacePile members={shownMembers} size="24px" overflow={overflow} />
                 </div>
             );
         }

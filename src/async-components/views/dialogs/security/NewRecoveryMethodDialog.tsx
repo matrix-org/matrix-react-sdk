@@ -62,10 +62,7 @@ export default class NewRecoveryMethodDialog extends React.PureComponent<IProps>
         const hackWarning = (
             <p className="warning">
                 {_t(
-                    "If you didn't set the new recovery method, an " +
-                        "attacker may be trying to access your account. " +
-                        "Change your account password and set a new recovery " +
-                        "method immediately in Settings.",
+                    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.",
                 )}
             </p>
         );
@@ -78,7 +75,7 @@ export default class NewRecoveryMethodDialog extends React.PureComponent<IProps>
                     <p>{_t("This session is encrypting history using the new recovery method.")}</p>
                     {hackWarning}
                     <DialogButtons
-                        primaryButton={_t("OK")}
+                        primaryButton={_t("action|ok")}
                         onPrimaryButtonClick={this.onOkClick}
                         cancelButton={_t("Go to Settings")}
                         onCancel={this.onGoToSettingsClick}

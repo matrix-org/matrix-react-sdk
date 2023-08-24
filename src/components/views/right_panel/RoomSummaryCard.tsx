@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
@@ -150,7 +150,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     if (cannotPin) {
         pinTitle = _t("You can only pin up to %(count)s widgets", { count: MAX_PINNED });
     } else {
-        pinTitle = isPinned ? _t("Unpin") : _t("Pin");
+        pinTitle = isPinned ? _t("action|unpin") : _t("action|pin");
     }
 
     const isMaximised = WidgetLayoutStore.instance.isInContainer(room, app, Container.Center);
@@ -162,7 +162,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
               WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center);
           };
 
-    const maximiseTitle = isMaximised ? _t("Close") : _t("Maximise");
+    const maximiseTitle = isMaximised ? _t("action|close") : _t("Maximise");
 
     let openTitle = "";
     if (isPinned) {
@@ -186,7 +186,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
                 forceHide={!(isPinned || isMaximised)}
                 disabled={isPinned || isMaximised}
             >
-                <WidgetAvatar app={app} />
+                <WidgetAvatar app={app} size="20px" />
                 <span>{name}</span>
                 {subtitle}
             </AccessibleTooltipButton>
@@ -196,7 +196,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
                     className="mx_RoomSummaryCard_app_options"
                     isExpanded={menuDisplayed}
                     onClick={openMenu}
-                    title={_t("Options")}
+                    title={_t("common|options")}
                 />
             )}
 
@@ -307,7 +307,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
     const header = (
         <React.Fragment>
             <div className="mx_RoomSummaryCard_avatar" role="presentation">
-                <RoomAvatar room={room} height={54} width={54} viewAvatarOnClick />
+                <RoomAvatar room={room} size="54px" viewAvatarOnClick />
                 <TextWithTooltip
                     tooltip={isRoomEncrypted ? _t("Encrypted") : _t("Not encrypted")}
                     class={classNames("mx_RoomSummaryCard_e2ee", {
@@ -337,9 +337,9 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
 
     return (
         <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
-            <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
+            <Group title={_t("common|about")} className="mx_RoomSummaryCard_aboutGroup">
                 <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
-                    {_t("People")}
+                    {_t("common|people")}
                     <span className="mx_BaseCard_Button_sublabel">{memberCount}</span>
                 </Button>
                 {!isVideoRoom && (

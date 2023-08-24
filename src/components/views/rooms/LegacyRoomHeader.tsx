@@ -18,12 +18,10 @@ limitations under the License.
 import React, { FC, useState, useMemo, useCallback } from "react";
 import classNames from "classnames";
 import { throttle } from "lodash";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { RoomStateEvent, ISearchResults } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
-import { ISearchResults } from "matrix-js-sdk/src/@types/search";
 
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import type { Room } from "matrix-js-sdk/src/models/room";
+import type { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { _t } from "../../../languageHandler";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -608,7 +606,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                 <AccessibleTooltipButton
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_searchButton"
                     onClick={this.props.onSearchClick}
-                    title={_t("Search")}
+                    title={_t("action|search")}
                     alignment={Alignment.Bottom}
                     key="search"
                 />,
@@ -620,7 +618,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                 <AccessibleTooltipButton
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_inviteButton"
                     onClick={this.props.onInviteClick}
-                    title={_t("Invite")}
+                    title={_t("action|invite")}
                     alignment={Alignment.Bottom}
                     key="invite"
                 />,
@@ -731,7 +729,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             roomAvatar = (
                 <DecoratedRoomAvatar
                     room={this.props.room}
-                    avatarSize={24}
+                    size="24px"
                     oobData={this.props.oobData}
                     viewAvatarOnClick={true}
                 />

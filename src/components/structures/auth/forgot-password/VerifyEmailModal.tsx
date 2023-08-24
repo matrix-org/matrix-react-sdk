@@ -54,8 +54,7 @@ export const VerifyEmailModal: React.FC<Props> = ({
             <h1>{_t("Verify your email to continue")}</h1>
             <p>
                 {_t(
-                    "We need to know it’s you before resetting your password. " +
-                        "Click the link in the email we just sent to <b>%(email)s</b>",
+                    "We need to know it’s you before resetting your password. Click the link in the email we just sent to <b>%(email)s</b>",
                     {
                         email,
                     },
@@ -74,7 +73,7 @@ export const VerifyEmailModal: React.FC<Props> = ({
                     aria-describedby={tooltipVisible ? tooltipId : undefined}
                 >
                     <RetryIcon className="mx_Icon mx_Icon_16" />
-                    {_t("Resend")}
+                    {_t("action|resend")}
                     <Tooltip
                         id={tooltipId}
                         label={_t("Verification link email resent!")}

@@ -15,15 +15,12 @@ limitations under the License.
 */
 
 import React, { useContext } from "react";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { User } from "matrix-js-sdk/src/models/user";
+import { EventType, Room, User, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import MiniAvatarUploader, { AVATAR_SIZE } from "../elements/MiniAvatarUploader";
 import RoomAvatar from "../avatars/RoomAvatar";
@@ -47,7 +44,7 @@ function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): 
     return isPublic || !privateShouldBeEncrypted(matrixClient) || isEncrypted;
 }
 
-const determineIntroMessage = (room: Room, encryptedSingle3rdPartyInvite: boolean): string => {
+const determineIntroMessage = (room: Room, encryptedSingle3rdPartyInvite: boolean): TranslationKey => {
     if (room instanceof LocalRoom) {
         return _td("Send your first message to invite <displayName/> to chat");
     }
@@ -90,8 +87,7 @@ const NewRoomIntro: React.FC = () => {
             <React.Fragment>
                 <RoomAvatar
                     room={room}
-                    width={AVATAR_SIZE}
-                    height={AVATAR_SIZE}
+                    size={AVATAR_SIZE}
                     onClick={() => {
                         defaultDispatcher.dispatch<ViewUserPayload>({
                             action: Action.ViewUser,
@@ -226,9 +222,7 @@ const NewRoomIntro: React.FC = () => {
         }
 
         const avatarUrl = room.currentState.getStateEvents(EventType.RoomAvatar, "")?.getContent()?.url;
-        let avatar = (
-            <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} viewAvatarOnClick={!!avatarUrl} />
-        );
+        let avatar = <RoomAvatar room={room} size={AVATAR_SIZE} viewAvatarOnClick={!!avatarUrl} />;
 
         if (!avatarUrl) {
             avatar = (
@@ -273,9 +267,7 @@ const NewRoomIntro: React.FC = () => {
     }
 
     const subText = _t(
-        "Your private messages are normally encrypted, but this room isn't. " +
-            "Usually this is due to an unsupported device or method being used, " +
-            "like email invites.",
+        "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.",
     );
 
     let subButton: JSX.Element | undefined;

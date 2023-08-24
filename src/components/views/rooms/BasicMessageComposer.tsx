@@ -16,10 +16,10 @@ limitations under the License.
 
 import classNames from "classnames";
 import React, { createRef, ClipboardEvent, SyntheticEvent } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import EMOTICON_REGEX from "emojibase-regex/emoticon";
 import { logger } from "matrix-js-sdk/src/logger";
+import { EMOTICON_TO_EMOJI } from "@matrix-org/emojibase-bindings";
 
 import EditorModel from "../../../editor/model";
 import HistoryManager from "../../../editor/history";
@@ -37,7 +37,6 @@ import { parseEvent, parsePlainTextMessage } from "../../../editor/deserialize";
 import { renderModel } from "../../../editor/render";
 import SettingsStore from "../../../settings/SettingsStore";
 import { IS_MAC, Key } from "../../../Keyboard";
-import { EMOTICON_TO_EMOJI } from "../../../emoji";
 import { CommandCategories, CommandMap, parseCommandString } from "../../../SlashCommands";
 import Range from "../../../editor/range";
 import MessageComposerFormatBar, { Formatting } from "./MessageComposerFormatBar";

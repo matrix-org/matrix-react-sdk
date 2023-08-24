@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { RefObject } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { RefObject } from "react";
 
 import { useRoomContext } from "../../contexts/RoomContext";
 import ResizeNotifier from "../../utils/ResizeNotifier";
@@ -76,8 +75,7 @@ export const WaitingForThirdPartyRoomView: React.FC<Props> = ({ roomView, resize
                                 className="mx_cryptoEvent mx_cryptoEvent_icon"
                                 title={_t("Waiting for users to join %(brand)s", { brand })}
                                 subtitle={_t(
-                                    "Once invited users have joined %(brand)s, " +
-                                        "you will be able to chat and the room will be end-to-end encrypted",
+                                    "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted",
                                     { brand },
                                 )}
                             />

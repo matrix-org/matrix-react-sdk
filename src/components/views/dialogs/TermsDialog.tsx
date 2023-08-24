@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
+import { SERVICE_TYPES } from "matrix-js-sdk/src/matrix";
 
 import { _t, pickBestLanguage } from "../../../languageHandler";
 import DialogButtons from "../elements/DialogButtons";
@@ -205,7 +205,7 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
                                 <th>{_t("Service")}</th>
                                 <th>{_t("Summary")}</th>
                                 <th>{_t("Document")}</th>
-                                <th>{_t("Accept")}</th>
+                                <th>{_t("action|accept")}</th>
                             </tr>
                             {rows}
                         </tbody>
@@ -213,7 +213,7 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
                 </div>
 
                 <DialogButtons
-                    primaryButton={_t("Next")}
+                    primaryButton={_t("action|next")}
                     hasCancel={true}
                     onCancel={this.onCancelClick}
                     onPrimaryButtonClick={this.onNextClick}

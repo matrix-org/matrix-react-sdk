@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { CSSTransition } from "react-transition-group";
 
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
@@ -59,7 +59,7 @@ const RoomBreadcrumbTile: React.FC<{ room: Room; onClick: (ev: ButtonEvent) => v
         >
             <DecoratedRoomAvatar
                 room={room}
-                avatarSize={32}
+                size="32px"
                 displayBadge={true}
                 forceCount={true}
                 tooltipProps={{ tabIndex: isActive ? 0 : -1 }}

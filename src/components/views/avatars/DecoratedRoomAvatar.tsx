@@ -16,11 +16,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { User, UserEvent } from "matrix-js-sdk/src/models/user";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { Room, RoomEvent, MatrixEvent, User, UserEvent, EventType, JoinRule } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import RoomAvatar from "./RoomAvatar";
@@ -37,7 +33,7 @@ import TooltipTarget from "../elements/TooltipTarget";
 
 interface IProps {
     room: Room;
-    avatarSize: number;
+    size: string;
     displayBadge?: boolean;
     forceCount?: boolean;
     oobData?: IOOBData;
@@ -71,7 +67,7 @@ function tooltipText(variant: Icon): string | undefined {
         case Icon.PresenceAway:
             return _t("Away");
         case Icon.PresenceOffline:
-            return _t("Offline");
+            return _t("common|offline");
         case Icon.PresenceBusy:
             return _t("Busy");
     }
@@ -211,8 +207,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             <div className={classes}>
                 <RoomAvatar
                     room={this.props.room}
-                    width={this.props.avatarSize}
-                    height={this.props.avatarSize}
+                    size={this.props.size}
                     oobData={this.props.oobData}
                     viewAvatarOnClick={this.props.viewAvatarOnClick}
                 />

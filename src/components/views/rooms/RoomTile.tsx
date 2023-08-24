@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
 import type { Call } from "../../../models/Call";
@@ -479,7 +479,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
                         >
                             <DecoratedRoomAvatar
                                 room={this.props.room}
-                                avatarSize={32}
+                                size="32px"
                                 displayBadge={this.props.isMinimized}
                                 tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
                             />

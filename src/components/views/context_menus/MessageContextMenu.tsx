@@ -17,12 +17,17 @@ limitations under the License.
 */
 
 import React, { createRef, useContext } from "react";
-import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { Relations } from "matrix-js-sdk/src/models/relations";
-import { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
-import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import { Thread } from "matrix-js-sdk/src/models/thread";
+import {
+    EventStatus,
+    MatrixEvent,
+    MatrixEventEvent,
+    RoomMemberEvent,
+    EventType,
+    RelationType,
+    Relations,
+    Thread,
+    M_POLL_START,
+} from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
@@ -420,7 +425,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             redactButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconRedact"
-                    label={_t("Remove")}
+                    label={_t("action|remove")}
                     onClick={this.onRedactClick}
                 />
             );
@@ -451,7 +456,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             forwardButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconForward"
-                    label={_t("Forward")}
+                    label={_t("action|forward")}
                     onClick={this.onForwardClick(forwardableEvent)}
                 />
             );
@@ -462,7 +467,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             pinButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconPin"
-                    label={this.isPinned() ? _t("Unpin") : _t("Pin")}
+                    label={this.isPinned() ? _t("action|unpin") : _t("action|pin")}
                     onClick={this.onPinClick}
                 />
             );
@@ -494,7 +499,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconPermalink"
                     onClick={this.onShareClick}
-                    label={_t("Share")}
+                    label={_t("action|share")}
                     element="a"
                     {
                         // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
@@ -525,7 +530,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             quoteButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconQuote"
-                    label={_t("Quote")}
+                    label={_t("action|quote")}
                     onClick={this.onQuoteClick}
                 />
             );
@@ -595,7 +600,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconCopy"
                     onClick={this.onCopyLinkClick}
-                    label={_t("Copy link")}
+                    label={_t("action|copy_link")}
                     element="a"
                     {
                         // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
@@ -614,7 +619,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             copyButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconCopy"
-                    label={_t("Copy")}
+                    label={_t("action|copy")}
                     triggerOnMouseDown={true} // We use onMouseDown so that the selection isn't cleared when we click
                     onClick={this.onCopyClick}
                 />
@@ -626,7 +631,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             editButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconEdit"
-                    label={_t("Edit")}
+                    label={_t("action|edit")}
                     onClick={this.onEditClick}
                 />
             );
@@ -637,7 +642,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             replyButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconReply"
-                    label={_t("Reply")}
+                    label={_t("action|reply")}
                     onClick={this.onReplyClick}
                 />
             );
@@ -659,7 +664,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             reactButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconReact"
-                    label={_t("React")}
+                    label={_t("action|react")}
                     onClick={this.onReactClick}
                     inputRef={this.reactButtonRef}
                 />

@@ -24,11 +24,12 @@ import EMOJIBASE_REGEX from "emojibase-regex";
 import { merge } from "lodash";
 import katex from "katex";
 import { decode } from "html-entities";
-import { IContent } from "matrix-js-sdk/src/models/event";
+import { IContent } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 import _Linkify from "linkify-react";
 import escapeHtml from "escape-html";
 import GraphemeSplitter from "graphemer";
+import { getEmojiFromUnicode } from "@matrix-org/emojibase-bindings";
 
 import {
     _linkifyElement,
@@ -39,7 +40,6 @@ import {
 import { IExtendedSanitizeOptions } from "./@types/sanitize-html";
 import SettingsStore from "./settings/SettingsStore";
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
-import { getEmojiFromUnicode } from "./emoji";
 import { mediaFromMxc } from "./customisations/Media";
 import { stripHTMLReply, stripPlainReply } from "./utils/Reply";
 import { PERMITTED_URL_SCHEMES } from "./utils/UrlUtils";
