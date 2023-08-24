@@ -2772,7 +2772,6 @@
     "Number of messages": "Nombro da mesaĝoj",
     "Number of messages can only be a number between %(min)s and %(max)s": "Nombro da mesaĝoj povas esti nur nombro inter %(min)s kaj %(max)s",
     "Specify a number of messages": "Indiki kelkajn mesaĝojn",
-    "Currently experimental.": "Nuntempe eksperimenta.",
     "Send read receipts": "Sendi legitajn kvitanojn",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Vi antaŭe konsentis kunhavigi anonimajn uzdatumojn kun ni. Ni ĝisdatigas kiel tio funkcias.",
     "That's fine": "Tio estas bone",
@@ -2951,7 +2950,8 @@
         "video_rooms_a_new_way_to_chat": "Nova maniero babili per voĉo kaj video en %(brand)s.",
         "video_rooms_always_on_voip_channels": "Videoĉambroj estas ĉiam ŝaltitaj VoIP-kanaloj enkonstruitaj en ĉambro en %(brand)s.",
         "video_rooms_faq1_question": "Kiel mi povas krei videoĉambron?",
-        "video_rooms_faq1_answer": "Uzu la \"+\" butonon en la ĉambro sekcio de la maldekstra panelo."
+        "video_rooms_faq1_answer": "Uzu la \"+\" butonon en la ĉambro sekcio de la maldekstra panelo.",
+        "currently_experimental": "Nuntempe eksperimenta."
     },
     "keyboard": {
         "home": "Hejmo",

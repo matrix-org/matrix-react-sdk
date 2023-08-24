@@ -2901,7 +2901,6 @@
     "This is a beta feature": "Esta é unha característica beta",
     "Use <arrows/> to scroll": "Usa <arrows/> para desprazarte",
     "Feedback sent! Thanks, we appreciate it!": "Opinión enviada! Moitas grazas!",
-    "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "Grazas por probar a beta, entra en detalles canto queiras para así axudarnos a mellorala.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
     "Maximise": "Maximizar",
     "<empty string>": "<cadea baleira>",
@@ -3492,7 +3491,8 @@
         "video_rooms_faq1_question": "Como creo unha sala de vídeo?",
         "video_rooms_faq1_answer": "Usa o botón \"+\" na sección da sala do panel esquerdo.",
         "video_rooms_faq2_question": "Podo usar chat de texto xunto á chamada de vídeo?",
-        "video_rooms_faq2_answer": "Si, a cronoloxía de texto móstrase xunto co vídeo."
+        "video_rooms_faq2_answer": "Si, a cronoloxía de texto móstrase xunto co vídeo.",
+        "thank_you": "Grazas por probar a beta, entra en detalles canto queiras para así axudarnos a mellorala."
     },
     "keyboard": {
         "home": "Inicio",

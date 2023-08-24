@@ -2925,7 +2925,6 @@
     "Maximise": "Maximaliseren",
     "You do not have permissions to add spaces to this space": "Je bent niet gemachtigd om spaces aan deze space toe te voegen",
     "Automatically send debug logs when key backup is not functioning": "Automatisch foutopsporingslogboeken versturen wanneer de sleutelback-up niet werkt",
-    "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "Bedankt voor het proberen van de bèta. Ga alsjeblieft zo gedetailleerd mogelijk in op de details zodat we deze kunnen verbeteren.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s en %(space2Name)s",
     "You do not have permission to invite people to this space.": "Je bent niet gemachtigd om mensen voor deze space uit te nodigen.",
     "No virtual room for this room": "Geen virtuele ruimte voor deze ruimte",
@@ -3575,7 +3574,8 @@
         "video_rooms_faq1_question": "Hoe kan ik een videokamer maken?",
         "video_rooms_faq1_answer": "Gebruik de knop \"+\" in het kamergedeelte van het linkerpaneel.",
         "video_rooms_faq2_question": "Kan ik tekstberichten gebruiken naast het videogesprek?",
-        "video_rooms_faq2_answer": "Ja, de gesprekstijdslijn wordt naast de video weergegeven."
+        "video_rooms_faq2_answer": "Ja, de gesprekstijdslijn wordt naast de video weergegeven.",
+        "thank_you": "Bedankt voor het proberen van de bèta. Ga alsjeblieft zo gedetailleerd mogelijk in op de details zodat we deze kunnen verbeteren."
     },
     "keyboard": {
         "home": "Home",

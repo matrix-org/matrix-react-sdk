@@ -2060,7 +2060,6 @@
     "Show stickers button": "Rodyti lipdukų mygtuką",
     "Send read receipts": "Siųsti skaitymo kvitus",
     "Explore public spaces in the new search dialog": "Tyrinėkite viešas erdves naujajame paieškos lange",
-    "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "Dėkojame, kad išbandėte beta versiją, ir prašome pateikti kuo daugiau informacijos, kad galėtume ją patobulinti.",
     "Leave the beta": "Palikti beta versiją",
     "Reply in thread": "Atsakyti temoje",
     "Developer": "Kūrėjas",
@@ -2518,7 +2517,8 @@
         "video_rooms_faq1_question": "Kaip galiu sukurti vaizdo kambarį?",
         "video_rooms_faq1_answer": "Kairiajame skydelyje esančioje kambarių skiltyje naudokite mygtuką “+”.",
         "video_rooms_faq2_question": "Ar galiu naudoti teksto pokalbius kartu su vaizdo skambučiu?",
-        "video_rooms_faq2_answer": "Taip, pokalbių laiko juosta rodoma kartu su vaizdu."
+        "video_rooms_faq2_answer": "Taip, pokalbių laiko juosta rodoma kartu su vaizdu.",
+        "thank_you": "Dėkojame, kad išbandėte beta versiją, ir prašome pateikti kuo daugiau informacijos, kad galėtume ją patobulinti."
     },
     "keyboard": {
         "home": "Pradžia",
