@@ -3064,9 +3064,9 @@
     svg2vectordrawable "^2.9.1"
 
 "@vector-im/compound-web@^0.2.3":
-  version "0.2.13"
-  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-0.2.13.tgz#9bd204f177c2758da3203ba25db0c53c0409c55f"
-  integrity sha512-qmtMptdfs2fNHa1fjv+n9XSfsjHV4SdNYqWpNuoqF6MzZti84NekvjvEcYAyZRBFnmsJNluXvwZWpJNewA187w==
+  version "0.2.15"
+  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-0.2.15.tgz#89121053cae95cc4fa82b84fc4ebf87cdf75c564"
+  integrity sha512-F4ay88XJH9LkGrHcpHyJnqqkWOdYmzwLbTQjbjokKwOPeDvcLJDZkTyRR03GbU8Ir/tlGYSx0TbrXA5XQI0g3A==
   dependencies:
     "@radix-ui/react-form" "^0.0.3"
     "@radix-ui/react-tooltip" "^1.0.6"
