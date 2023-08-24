@@ -30,6 +30,7 @@ jobs:
     jest:
         name: Jest
         runs-on: [non-dind, self-hosted]
+        container: docker.io/library/buildpack-deps:bookworm
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
@@ -77,6 +78,7 @@ jobs:
         name: Skip SonarCloud in merge queue
         if: github.event_name == 'merge_group' || inputs.disable_coverage == 'true'
         runs-on: [non-dind, self-hosted]
+        container: docker.io/library/buildpack-deps:bookworm
         needs: jest
         steps:
             - name: Skip SonarCloud
@@ -92,6 +94,7 @@ jobs:
     app-tests:
         name: Element Web Integration Tests
         runs-on: [non-dind, self-hosted]
+        container: docker.io/library/buildpack-deps:bookworm
         steps:
             - uses: actions/checkout@v3
               with:
