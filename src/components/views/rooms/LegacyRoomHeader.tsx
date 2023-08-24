@@ -606,7 +606,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                 <AccessibleTooltipButton
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_searchButton"
                     onClick={this.props.onSearchClick}
-                    title={_t("Search")}
+                    title={_t("action|search")}
                     alignment={Alignment.Bottom}
                     key="search"
                 />,
@@ -729,7 +729,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             roomAvatar = (
                 <DecoratedRoomAvatar
                     room={this.props.room}
-                    avatarSize={24}
+                    size="24px"
                     oobData={this.props.oobData}
                     viewAvatarOnClick={true}
                 />

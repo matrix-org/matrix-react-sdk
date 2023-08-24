@@ -88,7 +88,7 @@ import { Filter } from "./Filter";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
-const AVATAR_SIZE = 24;
+const AVATAR_SIZE = "24px";
 
 interface IProps {
     initialText?: string;
@@ -609,11 +609,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         endAdornment={<RoomResultContextMenus room={result.room} />}
                         {...ariaProperties}
                     >
-                        <DecoratedRoomAvatar
-                            room={result.room}
-                            avatarSize={AVATAR_SIZE}
-                            tooltipProps={{ tabIndex: -1 }}
-                        />
+                        <DecoratedRoomAvatar room={result.room} size={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
                         {result.room.name}
                         <NotificationBadge notification={notification} />
                         <RoomContextDetails
@@ -687,7 +683,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 onClick={listener}
                                 tabIndex={-1}
                             >
-                                {showViewButton ? _t("View") : _t("Join")}
+                                {showViewButton ? _t("action|view") : _t("action|join")}
                             </AccessibleButton>
                         }
                         aria-labelledby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_name`}
@@ -702,8 +698,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 avatarUrl: result.publicRoom.avatar_url,
                                 roomType: result.publicRoom.room_type,
                             }}
-                            width={AVATAR_SIZE}
-                            height={AVATAR_SIZE}
+                            size={AVATAR_SIZE}
                         />
                         <PublicRoomResultDetails
                             room={result.publicRoom}
@@ -843,11 +838,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                         idName={room.room_id}
                                         url={
                                             room.avatar_url
-                                                ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(AVATAR_SIZE)
+                                                ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(
+                                                      parseInt(AVATAR_SIZE, 10),
+                                                  )
                                                 : null
                                         }
-                                        width={AVATAR_SIZE}
-                                        height={AVATAR_SIZE}
+                                        size={AVATAR_SIZE}
                                     />
                                     {room.name || room.canonical_alias}
                                     {room.name && room.canonical_alias && (
@@ -1037,7 +1033,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 >
                                     <DecoratedRoomAvatar
                                         room={room}
-                                        avatarSize={AVATAR_SIZE}
+                                        size={AVATAR_SIZE}
                                         tooltipProps={{ tabIndex: -1 }}
                                     />
                                     {room.name}
@@ -1075,7 +1071,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                         viewRoom({ roomId: room.roomId }, false, ev.type !== "click");
                                     }}
                                 >
-                                    <DecoratedRoomAvatar room={room} avatarSize={32} tooltipProps={{ tabIndex: -1 }} />
+                                    <DecoratedRoomAvatar room={room} size="32px" tooltipProps={{ tabIndex: -1 }} />
                                     {room.name}
                                 </TooltipOption>
                             ))}
@@ -1236,13 +1232,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         autoCapitalize="off"
                         autoCorrect="off"
                         spellCheck="false"
-                        placeholder={_t("Search")}
+                        placeholder={_t("action|search")}
                         value={query}
                         onChange={setQuery}
                         onKeyDown={onKeyDown}
                         aria-owns="mx_SpotlightDialog_content"
                         aria-activedescendant={activeDescendant}
-                        aria-label={_t("Search")}
+                        aria-label={_t("action|search")}
                         aria-describedby="mx_SpotlightDialog_keyboardPrompt"
                     />
                     {(publicRoomsLoading || peopleLoading || profileLoading) && <Spinner w={24} h={24} />}

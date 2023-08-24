@@ -15,15 +15,16 @@ limitations under the License.
 */
 
 import React, { ChangeEvent, createRef } from "react";
-import { Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import {
+    Room,
+    MatrixEvent,
     KnownPollKind,
     M_POLL_KIND_DISCLOSED,
     M_POLL_KIND_UNDISCLOSED,
     M_POLL_START,
-} from "matrix-js-sdk/src/@types/polls";
+    IPartialEvent,
+} from "matrix-js-sdk/src/matrix";
 import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
-import { IPartialEvent } from "matrix-js-sdk/src/@types/extensible_events";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
 import QuestionDialog from "../dialogs/QuestionDialog";
@@ -176,8 +177,8 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 Modal.createDialog(QuestionDialog, {
                     title: _t("Failed to post poll"),
                     description: _t("Sorry, the poll you tried to create was not posted."),
-                    button: _t("Try again"),
-                    cancelButton: _t("Cancel"),
+                    button: _t("action|try_again"),
+                    cancelButton: _t("action|cancel"),
                     onFinished: (tryAgain: boolean) => {
                         if (!tryAgain) {
                             this.cancel();

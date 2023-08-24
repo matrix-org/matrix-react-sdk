@@ -103,7 +103,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
             }),
             (member) => member.getMxcAvatarUrl(),
         );
-        const avatars = uniqueMembers.map((m) => <MemberAvatar key={m.userId} member={m} width={14} height={14} />);
+        const avatars = uniqueMembers.map((m) => <MemberAvatar key={m.userId} member={m} size="14px" />);
         body = (
             <div className="mx_EventTile_line">
                 <div className="mx_EventTile_info">
@@ -130,7 +130,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
                 onClick={toggleExpanded}
                 aria-expanded={expanded}
             >
-                {expanded ? _t("collapse") : _t("expand")}
+                {expanded ? _t("action|collapse") : _t("action|expand")}
             </AccessibleButton>
             {body}
         </li>
