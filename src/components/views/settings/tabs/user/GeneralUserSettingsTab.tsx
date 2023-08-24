@@ -17,8 +17,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { SERVICE_TYPES, HTTPError } from "matrix-js-sdk/src/matrix";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { SERVICE_TYPES, HTTPError, IThreepid, ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { Icon as WarningIcon } from "../../../../../../res/img/feather-customised/warning-triangle.svg";
@@ -540,7 +539,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     height="18"
                     // override icon default values
                     aria-hidden={false}
-                    aria-label={_t("Warning")}
+                    aria-label={_t("common|warning")}
                 />
             ) : null;
             const heading = (

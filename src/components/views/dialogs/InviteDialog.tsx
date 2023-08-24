@@ -126,7 +126,7 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
     };
 
     public render(): React.ReactNode {
-        const avatarSize = 20;
+        const avatarSize = "20px";
         const avatar = <SearchResultAvatar user={this.props.member} size={avatarSize} />;
 
         let closeButton;
@@ -233,20 +233,21 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
             timestamp = <span className="mx_InviteDialog_tile--room_time">{humanTs}</span>;
         }
 
-        const avatarSize = 36;
+        const avatarSize = "36px";
         const avatar = (this.props.member as ThreepidMember).isEmail ? (
             <EmailPillAvatarIcon width={avatarSize} height={avatarSize} />
         ) : (
             <BaseAvatar
                 url={
                     this.props.member.getMxcAvatarUrl()
-                        ? mediaFromMxc(this.props.member.getMxcAvatarUrl()!).getSquareThumbnailHttp(avatarSize)
+                        ? mediaFromMxc(this.props.member.getMxcAvatarUrl()!).getSquareThumbnailHttp(
+                              parseInt(avatarSize, 10),
+                          )
                         : null
                 }
                 name={this.props.member.name}
                 idName={this.props.member.userId}
-                width={avatarSize}
-                height={avatarSize}
+                size={avatarSize}
             />
         );
 
@@ -1107,7 +1108,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     this.state.busy || (this.props.kind == InviteKind.CallTransfer && this.state.targets.length > 0)
                 }
                 autoComplete="off"
-                placeholder={hasPlaceholder ? _t("Search") : undefined}
+                placeholder={hasPlaceholder ? _t("action|search") : undefined}
                 data-testid="invite-dialog-input"
             />
         );
@@ -1419,7 +1420,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                         onClick={this.onCancel}
                         className="mx_InviteDialog_transferConsultConnect_pushRight"
                     >
-                        {_t("Cancel")}
+                        {_t("action|cancel")}
                     </AccessibleButton>
                     <AccessibleButton
                         kind="primary"

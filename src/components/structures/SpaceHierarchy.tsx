@@ -163,13 +163,13 @@ const Tile: React.FC<ITileProps> = ({
                 onFocus={onFocus}
                 tabIndex={isActive ? 0 : -1}
             >
-                {_t("View")}
+                {_t("action|view")}
             </AccessibleButton>
         );
     } else {
         button = (
             <AccessibleButton onClick={onJoinClick} kind="primary" onFocus={onFocus} tabIndex={isActive ? 0 : -1}>
-                {_t("Join")}
+                {_t("action|join")}
             </AccessibleButton>
         );
     }
@@ -194,15 +194,14 @@ const Tile: React.FC<ITileProps> = ({
 
     let avatar: ReactElement;
     if (joinedRoom) {
-        avatar = <RoomAvatar room={joinedRoom} width={20} height={20} />;
+        avatar = <RoomAvatar room={joinedRoom} size="20px" />;
     } else {
         avatar = (
             <BaseAvatar
                 name={name}
                 idName={room.room_id}
                 url={room.avatar_url ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(20) : null}
-                width={20}
-                height={20}
+                size="20px"
             />
         );
     }
