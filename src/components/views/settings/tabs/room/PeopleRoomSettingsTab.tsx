@@ -82,7 +82,7 @@ const Knock: VFC<{
 
     return (
         <div className="mx_PeopleRoomSettingsTab_knock">
-            <MemberAvatar height={42} member={roomMember} width={42} />
+            <MemberAvatar member={roomMember} size="42px" />
             <div className="mx_PeopleRoomSettingsTab_content">
                 <span className="mx_PeopleRoomSettingsTab_name">{roomMember.name}</span>
                 <Timestamp roomMember={roomMember} />
@@ -150,7 +150,7 @@ export const PeopleRoomSettingsTab: VFC<{ room: Room }> = ({ room }) => {
 
     return (
         <SettingsTab>
-            <SettingsSection heading={_t("People")}>
+            <SettingsSection heading={_t("common|people")}>
                 <SettingsFieldset legend={_t("Asking to join")}>
                     {knockMembers.length ? (
                         knockMembers.map((knockMember) => (

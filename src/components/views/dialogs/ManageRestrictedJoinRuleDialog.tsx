@@ -54,11 +54,7 @@ const Entry: React.FC<{
         <label className="mx_ManageRestrictedJoinRuleDialog_entry">
             <div>
                 <div>
-                    {localRoom ? (
-                        <RoomAvatar room={room} height={20} width={20} />
-                    ) : (
-                        <RoomAvatar oobData={room} height={20} width={20} />
-                    )}
+                    {localRoom ? <RoomAvatar room={room} size="20px" /> : <RoomAvatar oobData={room} size="20px" />}
                     <span className="mx_ManageRestrictedJoinRuleDialog_entry_name">{room.name}</span>
                 </div>
                 {description && (
@@ -152,8 +148,7 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
         >
             <p>
                 {_t(
-                    "Decide which spaces can access this room. " +
-                        "If a space is selected, its members can find and join <RoomName/>.",
+                    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.",
                     {},
                     {
                         RoomName: () => <b>{room.name}</b>,
@@ -230,7 +225,7 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
                     ) : null}
 
                     {totalResults < 1 ? (
-                        <span className="mx_ManageRestrictedJoinRuleDialog_noResults">{_t("No results")}</span>
+                        <span className="mx_ManageRestrictedJoinRuleDialog_noResults">{_t("common|no_results")}</span>
                     ) : undefined}
                 </AutoHideScrollbar>
 
@@ -238,10 +233,10 @@ const ManageRestrictedJoinRuleDialog: React.FC<IProps> = ({ room, selected = [],
                     {inviteOnlyWarning}
                     <div className="mx_ManageRestrictedJoinRuleDialog_footer_buttons">
                         <AccessibleButton kind="primary_outline" onClick={() => onFinished()}>
-                            {_t("Cancel")}
+                            {_t("action|cancel")}
                         </AccessibleButton>
                         <AccessibleButton kind="primary" onClick={() => onFinished(Array.from(newSelected))}>
-                            {_t("Confirm")}
+                            {_t("action|confirm")}
                         </AccessibleButton>
                     </div>
                 </div>

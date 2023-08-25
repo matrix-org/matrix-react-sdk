@@ -26,11 +26,11 @@ import {
     MatrixClient,
     SSOFlow,
     SSOAction,
+    RegisterResponse,
 } from "matrix-js-sdk/src/matrix";
 import React, { Fragment, ReactNode } from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RegisterResponse } from "matrix-js-sdk/src/@types/registration";
 
 import { _t } from "../../../languageHandler";
 import { adminContactStrings, messageForResourceLimitError, resourceLimitStrings } from "../../../utils/ErrorUtils";
@@ -609,7 +609,7 @@ export default class Registration extends React.Component<IProps, IState> {
         if (this.state.doingUIAuth) {
             goBack = (
                 <AccessibleButton kind="link" className="mx_AuthBody_changeFlow" onClick={this.onGoToFormClicked}>
-                    {_t("Go back")}
+                    {_t("action|go_back")}
                 </AccessibleButton>
             );
         }
@@ -622,8 +622,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     <div>
                         <p>
                             {_t(
-                                "Your new account (%(newAccountId)s) is registered, but you're already " +
-                                    "logged into a different account (%(loggedInUserId)s).",
+                                "Your new account (%(newAccountId)s) is registered, but you're already logged into a different account (%(loggedInUserId)s).",
                                 {
                                     newAccountId: this.state.registeredUsername,
                                     loggedInUserId: this.state.differentLoggedInUserId,

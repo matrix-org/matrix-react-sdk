@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _td } from "../languageHandler";
+import { _td, TranslationKey } from "../languageHandler";
 import { IS_MAC, Key } from "../Keyboard";
 import { IBaseSetting } from "../settings/Settings";
 import { KeyCombo } from "../KeyBindingsManager";
@@ -154,13 +154,15 @@ export enum KeyBindingAction {
     ToggleHiddenEventVisibility = "KeyBinding.toggleHiddenEventVisibility",
 }
 
-type KeyboardShortcutSetting = Omit<IBaseSetting<KeyCombo>, "supportedLevels">;
+export type KeyboardShortcutSetting = Omit<IBaseSetting<KeyCombo>, "supportedLevels" | "displayName"> & {
+    displayName?: TranslationKey;
+};
 
 // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
 export type IKeyboardShortcuts = Partial<Record<KeyBindingAction, KeyboardShortcutSetting>>;
 
 export interface ICategory {
-    categoryLabel?: string;
+    categoryLabel?: TranslationKey;
     // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
     settingNames: KeyBindingAction[];
 }
@@ -179,18 +181,18 @@ export enum CategoryName {
 // Meta-key representing the digits [0-9] often found at the top of standard keyboard layouts
 export const DIGITS = "digits";
 
-export const ALTERNATE_KEY_NAME: Record<string, string> = {
-    [Key.PAGE_UP]: _td("Page Up"),
-    [Key.PAGE_DOWN]: _td("Page Down"),
-    [Key.ESCAPE]: _td("Esc"),
-    [Key.ENTER]: _td("Enter"),
-    [Key.SPACE]: _td("Space"),
-    [Key.HOME]: _td("Home"),
-    [Key.END]: _td("End"),
-    [Key.ALT]: _td("Alt"),
-    [Key.CONTROL]: _td("Ctrl"),
-    [Key.SHIFT]: _td("Shift"),
-    [DIGITS]: _td("[number]"),
+export const ALTERNATE_KEY_NAME: Record<string, TranslationKey> = {
+    [Key.PAGE_UP]: _td("keyboard|page_up"),
+    [Key.PAGE_DOWN]: _td("keyboard|page_down"),
+    [Key.ESCAPE]: _td("keyboard|escape"),
+    [Key.ENTER]: _td("keyboard|enter"),
+    [Key.SPACE]: _td("keyboard|space"),
+    [Key.HOME]: _td("keyboard|home"),
+    [Key.END]: _td("keyboard|end"),
+    [Key.ALT]: _td("keyboard|alt"),
+    [Key.CONTROL]: _td("keyboard|control"),
+    [Key.SHIFT]: _td("keyboard|shift"),
+    [DIGITS]: _td("keyboard|number"),
 };
 export const KEY_ICON: Record<string, string> = {
     [Key.ARROW_UP]: "↑",
@@ -231,7 +233,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
         settingNames: [KeyBindingAction.ToggleMicInCall, KeyBindingAction.ToggleWebcamInCall],
     },
     [CategoryName.ROOM]: {
-        categoryLabel: _td("Room"),
+        categoryLabel: _td("common|room"),
         settingNames: [
             KeyBindingAction.SearchInRoom,
             KeyBindingAction.UploadFile,
@@ -301,7 +303,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
         ],
     },
     [CategoryName.LABS]: {
-        categoryLabel: _td("Labs"),
+        categoryLabel: _td("common|labs"),
         settingNames: [KeyBindingAction.ToggleHiddenEventVisibility],
     },
 };
