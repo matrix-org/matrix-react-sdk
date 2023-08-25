@@ -635,5 +635,11 @@
     "labs": {
         "pinning": "संदेश पिनिंग",
         "state_counters": "कमरे के हेडर में साधारण काउंटर रेंडर करें"
+    },
+    "power_level": {
+        "default": "डिफ़ॉल्ट",
+        "restricted": "वर्जित",
+        "moderator": "मध्यस्थ",
+        "admin": "व्यवस्थापक"
     }
 }

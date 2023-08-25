@@ -3928,5 +3928,11 @@
     },
     "Bold": "Fet",
     "Link": "Länk",
-    "Code": "Kod"
+    "Code": "Kod",
+    "power_level": {
+        "default": "Standard",
+        "restricted": "Begränsad",
+        "moderator": "Moderator",
+        "admin": "Administratör"
+    }
 }

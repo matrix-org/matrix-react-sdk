@@ -3593,5 +3593,11 @@
         "format_code_block": "Codeblok"
     },
     "Bold": "Vet",
-    "Code": "Code"
+    "Code": "Code",
+    "power_level": {
+        "default": "Standaard",
+        "restricted": "Beperkte toegang",
+        "moderator": "Moderator",
+        "admin": "Beheerder"
+    }
 }

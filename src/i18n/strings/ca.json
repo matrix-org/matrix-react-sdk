@@ -662,5 +662,11 @@
     },
     "keyboard": {
         "home": "Inici"
+    },
+    "power_level": {
+        "default": "Predeterminat",
+        "restricted": "Restringit",
+        "moderator": "Moderador",
+        "admin": "Administrador"
     }
 }

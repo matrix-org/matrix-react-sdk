@@ -311,5 +311,10 @@
         "format_bold": "Gras",
         "format_strikethrough": "Raiat"
     },
-    "Bold": "Gras"
+    "Bold": "Gras",
+    "power_level": {
+        "default": "Predefinit",
+        "moderator": "Moderator",
+        "admin": "Admin"
+    }
 }

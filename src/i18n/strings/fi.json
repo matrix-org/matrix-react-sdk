@@ -3587,5 +3587,11 @@
     },
     "Bold": "Lihavoitu",
     "Link": "Linkki",
-    "Code": "Koodi"
+    "Code": "Koodi",
+    "power_level": {
+        "default": "Oletus",
+        "restricted": "Rajoitettu",
+        "moderator": "Valvoja",
+        "admin": "Ylläpitäjä"
+    }
 }

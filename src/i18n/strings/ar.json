@@ -1346,5 +1346,11 @@
         "format_strikethrough": "مشطوب",
         "format_code_block": "كتلة برمجية"
     },
-    "Bold": "ثخين"
+    "Bold": "ثخين",
+    "power_level": {
+        "default": "المبدئي",
+        "restricted": "مقيد",
+        "moderator": "مشرف",
+        "admin": "مدير"
+    }
 }

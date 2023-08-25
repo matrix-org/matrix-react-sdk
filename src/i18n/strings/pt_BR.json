@@ -2908,5 +2908,11 @@
     },
     "Bold": "Negrito",
     "Link": "Ligação",
-    "Code": "Código"
+    "Code": "Código",
+    "power_level": {
+        "default": "Padrão",
+        "restricted": "Restrito",
+        "moderator": "Moderador/a",
+        "admin": "Administrador/a"
+    }
 }

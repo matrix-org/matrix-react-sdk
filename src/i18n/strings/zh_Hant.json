@@ -3988,5 +3988,11 @@
     },
     "Bold": "粗體",
     "Link": "連結",
-    "Code": "代碼"
+    "Code": "代碼",
+    "power_level": {
+        "default": "預設",
+        "restricted": "已限制",
+        "moderator": "版主",
+        "admin": "管理員"
+    }
 }

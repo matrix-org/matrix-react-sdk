@@ -2134,5 +2134,11 @@
         "format_code_block": "Блок с код"
     },
     "Bold": "Удебелено",
-    "Code": "Код"
+    "Code": "Код",
+    "power_level": {
+        "default": "По подразбиране",
+        "restricted": "Ограничен",
+        "moderator": "Модератор",
+        "admin": "Администратор"
+    }
 }

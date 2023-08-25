@@ -3378,5 +3378,11 @@
     },
     "Bold": "Feitletrað",
     "Link": "Tengill",
-    "Code": "Kóði"
+    "Code": "Kóði",
+    "power_level": {
+        "default": "Sjálfgefið",
+        "restricted": "Takmarkað",
+        "moderator": "Umsjónarmaður",
+        "admin": "Stjórnandi"
+    }
 }

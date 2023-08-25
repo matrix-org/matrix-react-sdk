@@ -1839,5 +1839,11 @@
     "composer": {
         "format_inline_code": "Kods"
     },
-    "Code": "Kods"
+    "Code": "Kods",
+    "power_level": {
+        "default": "Noklusējuma",
+        "restricted": "Ierobežots",
+        "moderator": "Moderators",
+        "admin": "Administrators"
+    }
 }

@@ -3988,5 +3988,11 @@
     },
     "Bold": "Gras",
     "Link": "Lien",
-    "Code": "Code"
+    "Code": "Code",
+    "power_level": {
+        "default": "Par défaut",
+        "restricted": "Restreint",
+        "moderator": "Modérateur",
+        "admin": "Administrateur"
+    }
 }

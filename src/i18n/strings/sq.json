@@ -3881,5 +3881,11 @@
     },
     "Bold": "Të trasha",
     "Link": "Lidhje",
-    "Code": "Kod"
+    "Code": "Kod",
+    "power_level": {
+        "default": "Parazgjedhje",
+        "restricted": "E kufizuar",
+        "moderator": "Moderator",
+        "admin": "Përgjegjës"
+    }
 }

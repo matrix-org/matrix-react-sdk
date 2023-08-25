@@ -488,5 +488,10 @@
         "format_link": "ลิงค์"
     },
     "Link": "ลิงค์",
-    "Code": "โค้ด"
+    "Code": "โค้ด",
+    "power_level": {
+        "default": "ค่าเริ่มต้น",
+        "moderator": "ผู้ช่วยดูแล",
+        "admin": "ผู้ดูแล"
+    }
 }

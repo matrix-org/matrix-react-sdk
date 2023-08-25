@@ -3988,5 +3988,11 @@
     },
     "Bold": "Paks kiri",
     "Link": "Link",
-    "Code": "Kood"
+    "Code": "Kood",
+    "power_level": {
+        "default": "Tavaline",
+        "restricted": "Piiratud õigustega kasutaja",
+        "moderator": "Moderaator",
+        "admin": "Peakasutaja"
+    }
 }

@@ -3510,5 +3510,11 @@
         "format_code_block": "Bloque de código"
     },
     "Bold": "Resaltado",
-    "Code": "Código"
+    "Code": "Código",
+    "power_level": {
+        "default": "Por defecto",
+        "restricted": "Restrinxido",
+        "moderator": "Moderador",
+        "admin": "Administrador"
+    }
 }

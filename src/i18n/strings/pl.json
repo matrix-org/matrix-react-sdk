@@ -3970,5 +3970,11 @@
     },
     "Bold": "Pogrubienie",
     "Link": "Link",
-    "Code": "Kod"
+    "Code": "Kod",
+    "power_level": {
+        "default": "Zwykły",
+        "restricted": "Ograniczony",
+        "moderator": "Moderator",
+        "admin": "Administrator"
+    }
 }

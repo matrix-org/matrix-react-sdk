@@ -3892,5 +3892,11 @@
     },
     "Bold": "Félkövér",
     "Link": "Hivatkozás",
-    "Code": "Kód"
+    "Code": "Kód",
+    "power_level": {
+        "default": "Alapértelmezett",
+        "restricted": "Korlátozott",
+        "moderator": "Moderátor",
+        "admin": "Admin"
+    }
 }

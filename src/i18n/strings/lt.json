@@ -2530,5 +2530,11 @@
         "format_code_block": "Kodo blokas"
     },
     "Bold": "Pusjuodis",
-    "Code": "Kodas"
+    "Code": "Kodas",
+    "power_level": {
+        "default": "Numatytas",
+        "restricted": "Apribotas",
+        "moderator": "Moderatorius",
+        "admin": "Administratorius"
+    }
 }

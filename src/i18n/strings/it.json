@@ -3993,5 +3993,11 @@
     },
     "Bold": "Grassetto",
     "Link": "Collegamento",
-    "Code": "Codice"
+    "Code": "Codice",
+    "power_level": {
+        "default": "Predefinito",
+        "restricted": "Limitato",
+        "moderator": "Moderatore",
+        "admin": "Amministratore"
+    }
 }

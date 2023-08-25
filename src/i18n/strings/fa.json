@@ -2639,5 +2639,11 @@
         "format_code_block": "بلوک کد"
     },
     "Bold": "پررنگ",
-    "Code": "کد"
+    "Code": "کد",
+    "power_level": {
+        "default": "پیشفرض",
+        "restricted": "ممنوع",
+        "moderator": "معاون",
+        "admin": "ادمین"
+    }
 }

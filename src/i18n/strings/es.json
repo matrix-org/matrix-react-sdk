@@ -3794,5 +3794,11 @@
     },
     "Bold": "Negrita",
     "Link": "Enlace",
-    "Code": "Código"
+    "Code": "Código",
+    "power_level": {
+        "default": "Por defecto",
+        "restricted": "Restringido",
+        "moderator": "Moderador",
+        "admin": "Admin"
+    }
 }

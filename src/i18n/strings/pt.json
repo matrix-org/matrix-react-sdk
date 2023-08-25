@@ -771,5 +771,11 @@
     },
     "keyboard": {
         "home": "Início"
+    },
+    "power_level": {
+        "default": "Padrão",
+        "restricted": "Restrito",
+        "moderator": "Moderador/a",
+        "admin": "Administrador"
     }
 }

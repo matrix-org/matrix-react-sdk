@@ -1598,5 +1598,11 @@
         "format_code_block": "Kodefelt"
     },
     "Bold": "Fet",
-    "Code": "Kode"
+    "Code": "Kode",
+    "power_level": {
+        "default": "Standard",
+        "restricted": "Begrenset",
+        "moderator": "Moderator",
+        "admin": "Admin"
+    }
 }

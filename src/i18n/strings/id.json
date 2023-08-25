@@ -3993,5 +3993,11 @@
     },
     "Bold": "Tebal",
     "Link": "Tautan",
-    "Code": "Kode"
+    "Code": "Kode",
+    "power_level": {
+        "default": "Bawaan",
+        "restricted": "Dibatasi",
+        "moderator": "Moderator",
+        "admin": "Admin"
+    }
 }

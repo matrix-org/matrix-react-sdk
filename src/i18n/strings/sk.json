@@ -3988,5 +3988,11 @@
     },
     "Bold": "Tučné",
     "Link": "Odkaz",
-    "Code": "Kód"
+    "Code": "Kód",
+    "power_level": {
+        "default": "Predvolené",
+        "restricted": "Obmedzené",
+        "moderator": "Moderátor",
+        "admin": "Správca"
+    }
 }

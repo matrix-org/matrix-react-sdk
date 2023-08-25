@@ -1030,5 +1030,11 @@
     "composer": {
         "format_inline_code": "Code"
     },
-    "Code": "Code"
+    "Code": "Code",
+    "power_level": {
+        "default": "Standoard",
+        "restricted": "Beperkten toegank",
+        "moderator": "Moderator",
+        "admin": "Beheerder"
+    }
 }

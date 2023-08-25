@@ -3993,5 +3993,11 @@
     },
     "Bold": "Tučně",
     "Link": "Odkaz",
-    "Code": "Kód"
+    "Code": "Kód",
+    "power_level": {
+        "default": "Výchozí",
+        "restricted": "Omezené",
+        "moderator": "Moderátor",
+        "admin": "Správce"
+    }
 }

@@ -3317,5 +3317,11 @@
         "format_code_block": "ບລັອກລະຫັດ"
     },
     "Bold": "ຕົວໜາ",
-    "Code": "ລະຫັດ"
+    "Code": "ລະຫັດ",
+    "power_level": {
+        "default": "ຄ່າເລີ່ມຕົ້ນ",
+        "restricted": "ຖືກຈຳກັດ",
+        "moderator": "ຜູ້ດຳເນິນລາຍການ",
+        "admin": "ບໍລິຫານ"
+    }
 }

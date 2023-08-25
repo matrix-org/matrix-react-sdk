@@ -2783,5 +2783,11 @@
         "format_code_block": "בלוק קוד"
     },
     "Bold": "מודגש",
-    "Code": "קוד"
+    "Code": "קוד",
+    "power_level": {
+        "default": "ברירת מחדל",
+        "restricted": "מחוץ לתחום",
+        "moderator": "מנהל",
+        "admin": "אדמין"
+    }
 }

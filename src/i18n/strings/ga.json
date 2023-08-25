@@ -744,5 +744,11 @@
         "format_inline_code": "Cód"
     },
     "Bold": "Trom",
-    "Code": "Cód"
+    "Code": "Cód",
+    "power_level": {
+        "default": "Réamhshocrú",
+        "restricted": "Teoranta",
+        "moderator": "Modhnóir",
+        "admin": "Riarthóir"
+    }
 }

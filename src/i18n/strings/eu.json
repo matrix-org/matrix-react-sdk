@@ -1643,5 +1643,11 @@
         "format_code_block": "Kode blokea"
     },
     "Bold": "Lodia",
-    "Code": "Kodea"
+    "Code": "Kodea",
+    "power_level": {
+        "default": "Lehenetsia",
+        "restricted": "Mugatua",
+        "moderator": "Moderatzailea",
+        "admin": "Kudeatzailea"
+    }
 }

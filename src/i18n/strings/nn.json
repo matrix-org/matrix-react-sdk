@@ -1105,5 +1105,11 @@
         "format_code_block": "Kodeblokk"
     },
     "Bold": "Feit",
-    "Code": "Kode"
+    "Code": "Kode",
+    "power_level": {
+        "default": "Opphavleg innstilling",
+        "restricted": "Avgrensa",
+        "moderator": "Moderator",
+        "admin": "Administrator"
+    }
 }

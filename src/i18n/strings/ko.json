@@ -1405,5 +1405,11 @@
         "format_code_block": "코드 블록"
     },
     "Bold": "굵게",
-    "Code": "코드"
+    "Code": "코드",
+    "power_level": {
+        "default": "기본",
+        "restricted": "제한됨",
+        "moderator": "조정자",
+        "admin": "관리자"
+    }
 }

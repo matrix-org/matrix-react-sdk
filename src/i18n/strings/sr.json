@@ -1348,5 +1348,11 @@
     "composer": {
         "format_inline_code": "Код"
     },
-    "Code": "Код"
+    "Code": "Код",
+    "power_level": {
+        "default": "Подразумевано",
+        "restricted": "Ограничено",
+        "moderator": "Модератор",
+        "admin": "Админ"
+    }
 }

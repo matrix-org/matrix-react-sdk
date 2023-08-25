@@ -3691,5 +3691,11 @@
     },
     "Bold": "In đậm",
     "Link": "Liên kết",
-    "Code": "Mã"
+    "Code": "Mã",
+    "power_level": {
+        "default": "Mặc định",
+        "restricted": "Bị hạn chế",
+        "moderator": "Điều phối viên",
+        "admin": "Quản trị viên"
+    }
 }

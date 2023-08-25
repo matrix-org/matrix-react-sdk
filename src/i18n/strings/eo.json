@@ -2968,5 +2968,11 @@
         "format_code_block": "Kodujo"
     },
     "Bold": "Grase",
-    "Code": "Kodo"
+    "Code": "Kodo",
+    "power_level": {
+        "default": "Ordinara",
+        "restricted": "Limigita",
+        "moderator": "Ĉambrestro",
+        "admin": "Administranto"
+    }
 }

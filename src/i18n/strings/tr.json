@@ -2041,5 +2041,11 @@
         "format_code_block": "Kod bloku"
     },
     "Bold": "Kalın",
-    "Code": "Kod"
+    "Code": "Kod",
+    "power_level": {
+        "default": "Varsayılan",
+        "restricted": "Sınırlı",
+        "moderator": "Moderatör",
+        "admin": "Admin"
+    }
 }

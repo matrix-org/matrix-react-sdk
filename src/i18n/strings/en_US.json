@@ -458,5 +458,11 @@
     },
     "keyboard": {
         "home": "Home"
+    },
+    "power_level": {
+        "default": "Default",
+        "restricted": "Restricted",
+        "moderator": "Moderator",
+        "admin": "Admin"
     }
 }

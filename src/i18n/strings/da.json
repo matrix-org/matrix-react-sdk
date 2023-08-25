@@ -722,5 +722,11 @@
     "labs": {
         "pinning": "Fastgørelse af beskeder",
         "state_counters": "Vis simple tællere i rumhovedet"
+    },
+    "power_level": {
+        "default": "Standard",
+        "restricted": "Begrænset",
+        "moderator": "Moderator",
+        "admin": "Administrator"
     }
 }

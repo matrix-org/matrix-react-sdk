@@ -3993,5 +3993,11 @@
     },
     "Bold": "Fett",
     "Link": "Link",
-    "Code": "Code"
+    "Code": "Code",
+    "power_level": {
+        "default": "Standard",
+        "restricted": "Eingeschränkt",
+        "moderator": "Moderator",
+        "admin": "Admin"
+    }
 }

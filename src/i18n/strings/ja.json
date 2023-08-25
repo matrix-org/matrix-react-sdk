@@ -3788,5 +3788,11 @@
     },
     "Bold": "太字",
     "Link": "リンク",
-    "Code": "コード"
+    "Code": "コード",
+    "power_level": {
+        "default": "既定値",
+        "restricted": "制限",
+        "moderator": "モデレーター",
+        "admin": "管理者"
+    }
 }

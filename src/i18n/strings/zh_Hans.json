@@ -3577,5 +3577,11 @@
         "format_code_block": "代码块"
     },
     "Bold": "粗体",
-    "Code": "代码"
+    "Code": "代码",
+    "power_level": {
+        "default": "默认",
+        "restricted": "受限",
+        "moderator": "协管员",
+        "admin": "管理员"
+    }
 }

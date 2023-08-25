@@ -2015,5 +2015,11 @@
         "format_code_block": "Iḥder n tengalt"
     },
     "Bold": "Azuran",
-    "Code": "Tangalt"
+    "Code": "Tangalt",
+    "power_level": {
+        "default": "Amezwer",
+        "restricted": "Yesεa tilas",
+        "moderator": "Aseɣyad",
+        "admin": "Anedbal"
+    }
 }

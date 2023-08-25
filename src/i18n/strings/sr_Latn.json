@@ -98,5 +98,11 @@
         "dismiss": "Odbaci",
         "trust": "Vjeruj",
         "sign_in": "Prijavite se"
+    },
+    "power_level": {
+        "default": "Podrazumevano",
+        "restricted": "Ograničeno",
+        "moderator": "Moderator",
+        "admin": "Administrator"
     }
 }
