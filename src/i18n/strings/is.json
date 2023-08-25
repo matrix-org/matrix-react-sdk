@@ -141,8 +141,6 @@
     "Logs sent": "Sendi atvikaskrár",
     "Thank you!": "Takk fyrir!",
     "Failed to send logs: ": "Mistókst að senda atvikaskrár: ",
-    "Submit debug logs": "Senda inn villuleitarskrár",
-    "Send logs": "Senda atvikaskrá",
     "Unavailable": "Ekki tiltækt",
     "Changelog": "Breytingaskrá",
     "Confirm Removal": "Staðfesta fjarlægingu",
@@ -356,7 +354,6 @@
     "Recently Direct Messaged": "Nýsend bein skilaboð",
     "Direct Messages": "Bein skilaboð",
     "Frequently Used": "Oft notað",
-    "Download logs": "Niðurhal atvikaskrá",
     "Preparing to download logs": "Undirbý niðurhal atvikaskráa",
     "Downloading logs": "Sæki atvikaskrá",
     "Error downloading theme information.": "Villa við að niðurhala þemaupplýsingum.",
@@ -1017,7 +1014,6 @@
     "Privacy": "Friðhelgi",
     "Keyboard shortcuts": "Flýtileiðir á lyklaborði",
     "Keyboard": "Lyklaborð",
-    "Bug reporting": "Tilkynningar um villur",
     "Credits": "Framlög",
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Phone numbers": "Símanúmer",
@@ -1755,7 +1751,6 @@
     "Please enter a name for the room": "Settu inn eitthvað nafn fyrir spjallrásina",
     "Clear all data": "Hreinsa öll gögn",
     "Reason (optional)": "Ástæða (valkvætt)",
-    "GitHub issue": "Villutilkynning á GitHub",
     "Close dialog": "Loka glugga",
     "Invite anyway": "Bjóða samt",
     "Invite anyway and never warn me again": "Bjóða samt og ekki vara mig við aftur",
@@ -2556,8 +2551,6 @@
     "Adding spaces has moved.": "Aðgerðin til að bæta við svæðum hefur verið flutt.",
     "You are not allowed to view this server's rooms list": "Þú hefur ekki heimild til að skoða spjallrásalistann á þessum netþjóni",
     "Your access token gives full access to your account. Do not share it with anyone.": "Aðgangsteiknið þitt gefur fullan aðgang að notandaaðgangnum þínum. Ekki deila því með neinum.",
-    "Debug logs contain application usage data including your username, the IDs or aliases of the rooms you have visited, which UI elements you last interacted with, and the usernames of other users. They do not contain messages.": "Atvikaskrár innihalda gögn varðandi virkni hugbúnaðarins en líka notandanafn þitt, auðkenni eða samnefni spjallrása sem þú hefur skoðað, hvaða viðmótshluta þú hefur átt við, auk notendanafna annarra notenda. Atvikaskrár innihalda ekki skilaboð.",
-    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Ef þú hefur tilkynnt vandamál í gegnum GitHub, þá geta atvikaskrár hjálpað okkur við að finna ástæður vandamálanna. ",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Aðgangurinn þinn er með auðkenni kross-undirritunar í leynigeymslu, en þessu er ekki ennþá treyst í þessari setu.",
     "Safeguard against losing access to encrypted messages & data": "Tryggðu þig gegn því að missa aðgang að dulrituðum skilaboðum og gögnum",
     "Unable to query secret storage status": "Tókst ekki að finna stöðu á leynigeymslu",
@@ -3384,5 +3377,15 @@
         "restricted": "Takmarkað",
         "moderator": "Umsjónarmaður",
         "admin": "Stjórnandi"
+    },
+    "bug_reporting": {
+        "introduction": "Ef þú hefur tilkynnt vandamál í gegnum GitHub, þá geta atvikaskrár hjálpað okkur við að finna ástæður vandamálanna. ",
+        "description": "Atvikaskrár innihalda gögn varðandi virkni hugbúnaðarins en líka notandanafn þitt, auðkenni eða samnefni spjallrása sem þú hefur skoðað, hvaða viðmótshluta þú hefur átt við, auk notendanafna annarra notenda. Atvikaskrár innihalda ekki skilaboð.",
+        "matrix_security_issue": "Til að tilkynna Matrix-tengd öryggisvandamál, skaltu lesa <a>Security Disclosure Policy</a> á matrix.org.",
+        "submit_debug_logs": "Senda inn villuleitarskrár",
+        "title": "Tilkynningar um villur",
+        "send_logs": "Senda atvikaskrá",
+        "github_issue": "Villutilkynning á GitHub",
+        "download_logs": "Niðurhal atvikaskrá"
     }
 }

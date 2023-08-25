@@ -350,8 +350,6 @@
     "Logs sent": "Loggar sende",
     "Thank you!": "Takk skal du ha!",
     "Failed to send logs: ": "Fekk ikkje til å senda loggar: ",
-    "Submit debug logs": "Send inn feil-logg",
-    "Send logs": "Send loggar inn",
     "Unavailable": "Utilgjengeleg",
     "Changelog": "Endringslogg",
     "not specified": "Ikkje spesifisert",
@@ -615,7 +613,6 @@
     "Email addresses": "E-postadresser",
     "Phone numbers": "Telefonnummer",
     "Help & About": "Hjelp og om",
-    "Bug reporting": "Feilrapportering",
     "Accept all %(invitedRooms)s invites": "Aksepter alle invitasjonar frå %(invitedRooms)s",
     "Security & Privacy": "Tryggleik og personvern",
     "Error changing power level requirement": "Feil under endring av krav for tilgangsnivå",
@@ -786,7 +783,6 @@
     "Server or user ID to ignore": "Tenar eller brukar-ID for å ignorere",
     "If this isn't what you want, please use a different tool to ignore users.": "Om det ikkje var dette du ville, bruk eit anna verktøy til å ignorera brukarar.",
     "Enter the name of a new server you want to explore.": "Skriv inn namn på ny tenar du ynskjer å utforske.",
-    "If there is additional context that would help in analysing the issue, such as what you were doing at the time, room IDs, user IDs, etc., please include those things here.": "Om du har meir info rundt korleis problemet oppstod, som kva du prøvde å gjere på det tidspunktet, brukar-IDar m.m ,inkluder gjerne den informasjonen her.",
     "Topic (optional)": "Emne (valfritt)",
     "Command Help": "Kommandohjelp",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>.",
@@ -1111,5 +1107,12 @@
         "restricted": "Avgrensa",
         "moderator": "Moderator",
         "admin": "Administrator"
+    },
+    "bug_reporting": {
+        "matrix_security_issue": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
+        "submit_debug_logs": "Send inn feil-logg",
+        "title": "Feilrapportering",
+        "additional_context": "Om du har meir info rundt korleis problemet oppstod, som kva du prøvde å gjere på det tidspunktet, brukar-IDar m.m ,inkluder gjerne den informasjonen her.",
+        "send_logs": "Send loggar inn"
     }
 }

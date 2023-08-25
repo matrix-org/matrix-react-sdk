@@ -274,7 +274,6 @@
     "Toolbox": "도구 상자",
     "Collecting logs": "로그 수집 중",
     "All Rooms": "모든 방",
-    "Send logs": "로그 보내기",
     "All messages": "모든 메시지",
     "Call invitation": "전화 초대",
     "What's new?": "새로운 점은?",
@@ -324,7 +323,6 @@
     "%(widgetName)s widget added by %(senderName)s": "%(senderName)s님이 추가한 %(widgetName)s 위젯",
     "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s님이 제거한 %(widgetName)s 위젯",
     "Send analytics data": "정보 분석 데이터 보내기",
-    "Submit debug logs": "디버그 로그 전송하기",
     "Enable inline URL previews by default": "기본으로 인라인 URL 미리 보기 사용하기",
     "Enable automatic language detection for syntax highlighting": "구문 강조를 위해 자동 언어 감지 사용하기",
     "Automatically replace plain text Emoji": "일반 문자로 된 이모지 자동으로 변환하기",
@@ -701,7 +699,6 @@
     "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "%(brand)s을 사용하다가 도움이 필요하다면, <a>여기</a>를 클릭하거나, 아래 버튼을 사용해 우리의 봇과 대화를 시작하세요.",
     "Chat with %(brand)s Bot": "%(brand)s 봇과 대화",
     "Help & About": "도움 & 정보",
-    "Bug reporting": "버그 신고하기",
     "FAQ": "자주 묻는 질문 (FAQ)",
     "Versions": "버전",
     "Always show the window menu bar": "항상 윈도우 메뉴 막대에 보이기",
@@ -828,9 +825,7 @@
     "Invite anyway": "무시하고 초대",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "무엇이 잘못되거나 더 나은 지 알려주세요, 문제를 설명하는 GitHub 이슈를 만들어주세요.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>.",
-    "GitHub issue": "GitHub 이슈",
     "Notes": "참고",
-    "If there is additional context that would help in analysing the issue, such as what you were doing at the time, room IDs, user IDs, etc., please include those things here.": "언제, 방 ID, 사용자 ID 등, 문제 분석에 도움이 되는 추가 문맥이 있다면, 그것들도 여기에 포함해주세요.",
     "Unable to load commit detail: %(msg)s": "커밋 세부 정보를 불러올 수 없음: %(msg)s",
     "Removing…": "제거 중…",
     "Clear all data": "모든 데이터 지우기",
@@ -1411,5 +1406,13 @@
         "restricted": "제한됨",
         "moderator": "조정자",
         "admin": "관리자"
+    },
+    "bug_reporting": {
+        "submit_debug_logs": "디버그 로그 전송하기",
+        "title": "버그 신고하기",
+        "additional_context": "언제, 방 ID, 사용자 ID 등, 문제 분석에 도움이 되는 추가 문맥이 있다면, 그것들도 여기에 포함해주세요.",
+        "send_logs": "로그 보내기",
+        "github_issue": "GitHub 이슈",
+        "before_submitting": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>."
     }
 }

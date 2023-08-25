@@ -208,7 +208,6 @@
     "Collecting logs": "กำลังรวบรวมล็อก",
     "All Rooms": "ทุกห้อง",
     "Wednesday": "วันพุธ",
-    "Send logs": "ส่งล็อก",
     "All messages": "ทุกข้อความ",
     "Call invitation": "คำเชิญเข้าร่วมการโทร",
     "What's new?": "มีอะไรใหม่?",
@@ -493,5 +492,8 @@
         "default": "ค่าเริ่มต้น",
         "moderator": "ผู้ช่วยดูแล",
         "admin": "ผู้ดูแล"
+    },
+    "bug_reporting": {
+        "send_logs": "ส่งล็อก"
     }
 }

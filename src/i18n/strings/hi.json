@@ -354,8 +354,6 @@
     "Credits": "क्रेडिट",
     "Check for update": "अपडेट के लिये जांचें",
     "Help & About": "सहायता और के बारे में",
-    "Bug reporting": "बग रिपोर्टिंग",
-    "Submit debug logs": "डिबग लॉग जमा करें",
     "FAQ": "सामान्य प्रश्न",
     "Versions": "संस्करण",
     "Notifications": "सूचनाएं",
@@ -641,5 +639,9 @@
         "restricted": "वर्जित",
         "moderator": "मध्यस्थ",
         "admin": "व्यवस्थापक"
+    },
+    "bug_reporting": {
+        "submit_debug_logs": "डिबग लॉग जमा करें",
+        "title": "बग रिपोर्टिंग"
     }
 }

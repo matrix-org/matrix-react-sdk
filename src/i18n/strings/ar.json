@@ -16,7 +16,6 @@
     "Collecting app version information": "تجميع المعلومات حول نسخة التطبيق",
     "Changelog": "سِجل التغييرات",
     "Waiting for response from server": "في انتظار الرد مِن الخادوم",
-    "Send logs": "إرسال السِجلات",
     "Thank you!": "شكرًا !",
     "Call invitation": "دعوة لمحادثة",
     "Developer Tools": "أدوات التطوير",
@@ -521,8 +520,6 @@
     "FAQ": "اسئلة شائعة",
     "Help & About": "المساعدة وعن البرنامج",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "للإبلاغ عن مشكلة أمنية متعلقة بMatrix ، يرجى قراءة <a>سياسة الإفصاح الأمني</a> في Matrix.org.",
-    "Submit debug logs": "إرسال سجلات تصحيح الأخطاء",
-    "Bug reporting": "الإبلاغ عن مشاكل في البرنامج",
     "Chat with %(brand)s Bot": "تخاطب مع الروبوت الخاص ب%(brand)s",
     "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "للمساعدة في استخدام %(brand)s ، انقر <a> هنا </a> أو ابدأ محادثة مع برنامج الروبوت الخاص بنا باستخدام الزر أدناه.",
     "For help with using %(brand)s, click <a>here</a>.": "للمساعدة في استخدام %(brand)s انقر <a>هنا</a>.",
@@ -1352,5 +1349,11 @@
         "restricted": "مقيد",
         "moderator": "مشرف",
         "admin": "مدير"
+    },
+    "bug_reporting": {
+        "matrix_security_issue": "للإبلاغ عن مشكلة أمنية متعلقة بMatrix ، يرجى قراءة <a>سياسة الإفصاح الأمني</a> في Matrix.org.",
+        "submit_debug_logs": "إرسال سجلات تصحيح الأخطاء",
+        "title": "الإبلاغ عن مشاكل في البرنامج",
+        "send_logs": "إرسال السِجلات"
     }
 }

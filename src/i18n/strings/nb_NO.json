@@ -364,7 +364,6 @@
     "Deactivate account": "Deaktiver kontoen",
     "Check for update": "Let etter oppdateringer",
     "Help & About": "Hjelp/Om",
-    "Bug reporting": "Feilrapportering",
     "%(brand)s version:": "'%(brand)s'-versjon:",
     "Ignored/Blocked": "Ignorert/Blokkert",
     "Server rules": "Tjenerregler",
@@ -541,7 +540,6 @@
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Hvis du ikke ønsker å bruke <server /> til å oppdage og bli oppdaget av eksisterende kontakter som du kjenner, skriv inn en annen identitetstjener nedenfor.",
     "Enter a new identity server": "Skriv inn en ny identitetstjener",
     "For help with using %(brand)s, click <a>here</a>.": "For å få hjelp til å bruke %(brand)s, klikk <a>her</a>.",
-    "Submit debug logs": "Send inn avlusingsloggbøker",
     "Clear cache and reload": "Tøm mellomlageret og last inn siden på nytt",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Import E2E room keys": "Importer E2E-romnøkler",
@@ -624,8 +622,6 @@
     },
     "Matrix": "Matrix",
     "Logs sent": "Loggbøkene ble sendt",
-    "GitHub issue": "Github-saksrapport",
-    "Send logs": "Send loggbøker",
     "Please enter a name for the room": "Vennligst skriv inn et navn for rommet",
     "Create a public room": "Opprett et offentlig rom",
     "Create a private room": "Opprett et privat rom",
@@ -1604,5 +1600,12 @@
         "restricted": "Begrenset",
         "moderator": "Moderator",
         "admin": "Admin"
+    },
+    "bug_reporting": {
+        "matrix_security_issue": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
+        "submit_debug_logs": "Send inn avlusingsloggbøker",
+        "title": "Feilrapportering",
+        "send_logs": "Send loggbøker",
+        "github_issue": "Github-saksrapport"
     }
 }

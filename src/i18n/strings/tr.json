@@ -269,7 +269,6 @@
     "All Rooms": "Tüm Odalar",
     "Wednesday": "Çarşamba",
     "Send": "Gönder",
-    "Send logs": "Kayıtları gönder",
     "All messages": "Tüm mesajlar",
     "Call invitation": "Arama davetiyesi",
     "Messages containing my display name": "İsmimi içeren mesajlar",
@@ -385,7 +384,6 @@
     "Logs sent": "Loglar gönderiliyor",
     "Thank you!": "Teşekkürler!",
     "Failed to send logs: ": "Logların gönderilmesi başarısız: ",
-    "GitHub issue": "GitHub sorunu",
     "Notes": "Notlar",
     "Removing…": "Siliniyor…",
     "Clear all data": "Bütün verileri sil",
@@ -612,7 +610,6 @@
     "Legal": "Yasal",
     "Check for update": "Güncelleme kontrolü",
     "Help & About": "Yardım & Hakkında",
-    "Bug reporting": "Hata raporlama",
     "FAQ": "FAQ",
     "Versions": "Sürümler",
     "Server rules": "Sunucu kuralları",
@@ -754,7 +751,6 @@
     "Deactivate account": "Hesabı pasifleştir",
     "For help with using %(brand)s, click <a>here</a>.": "%(brand)s kullanarak yardım etmek için, <a>buraya</a> tıklayın.",
     "Chat with %(brand)s Bot": "%(brand)s Bot ile Sohbet Et",
-    "Submit debug logs": "Hata ayıklama kayıtlarını gönder",
     "Something went wrong. Please try again or view your console for hints.": "Bir şeyler hatalı gitti. Lütfen yeniden deneyin veya ipuçları için konsolunuza bakın.",
     "Please try again or view your console for hints.": "Lütfen yeniden deneyin veya ipuçları için konsolunuza bakın.",
     "None": "Yok",
@@ -1680,7 +1676,6 @@
     "Away": "Uzakta",
     "Quick Reactions": "Hızlı Tepkiler",
     "Widgets": "Widgetlar",
-    "Download logs": "Günlükleri indir",
     "Notification options": "Bildirim ayarları",
     "Looks good!": "İyi görünüyor!",
     "Security Key": "Güvenlik anahtarı",
@@ -1737,7 +1732,6 @@
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Bu oturum <b> anahtarlarınızı yedeklemiyor</b>, ama zaten geri yükleyebileceğiniz ve ileride ekleyebileceğiniz bir yedeğiniz var.",
     "Converts the room to a DM": "Odayı birebir mesajlaşmaya dönüştürür",
     "Converts the DM to a room": "Birebir mesajlaşmayı odaya çevirir",
-    "If there is additional context that would help in analysing the issue, such as what you were doing at the time, room IDs, user IDs, etc., please include those things here.": "O sırada ne yaptığınız, oda kimlikleri, kullanıcı kimlikleri vb.gibi sorunu analiz etmede yardımcı olacak ek öğe varsa lütfen buraya ekleyin.",
     "Continue with %(provider)s": "%(provider)s ile devam et",
     "Sign in with single sign-on": "Çoklu oturum açma ile giriş yap",
     "Enter a server name": "Sunucu adı girin",
@@ -2047,5 +2041,14 @@
         "restricted": "Sınırlı",
         "moderator": "Moderatör",
         "admin": "Admin"
+    },
+    "bug_reporting": {
+        "submit_debug_logs": "Hata ayıklama kayıtlarını gönder",
+        "title": "Hata raporlama",
+        "additional_context": "O sırada ne yaptığınız, oda kimlikleri, kullanıcı kimlikleri vb.gibi sorunu analiz etmede yardımcı olacak ek öğe varsa lütfen buraya ekleyin.",
+        "send_logs": "Kayıtları gönder",
+        "github_issue": "GitHub sorunu",
+        "download_logs": "Günlükleri indir",
+        "before_submitting": "Logları göndermeden önce, probleminizi betimleyen <a>bir GitHub talebi oluşturun</a>."
     }
 }

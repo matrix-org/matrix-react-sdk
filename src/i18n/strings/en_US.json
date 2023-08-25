@@ -296,7 +296,6 @@
     "All Rooms": "All Rooms",
     "Wednesday": "Wednesday",
     "Send": "Send",
-    "Send logs": "Send logs",
     "All messages": "All messages",
     "Call invitation": "Call invitation",
     "What's new?": "What's new?",
@@ -464,5 +463,8 @@
         "restricted": "Restricted",
         "moderator": "Moderator",
         "admin": "Admin"
+    },
+    "bug_reporting": {
+        "send_logs": "Send logs"
     }
 }

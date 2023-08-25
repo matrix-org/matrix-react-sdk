@@ -299,7 +299,6 @@
     "Invite to this room": "Convidar para esta sala",
     "State Key": "Chave de estado",
     "Send": "Enviar",
-    "Send logs": "Enviar relatórios de erro",
     "All messages": "Todas as mensagens",
     "Call invitation": "Convite para chamada",
     "What's new?": "O que há de novo?",
@@ -564,7 +563,6 @@
     "New? <a>Create account</a>": "Novo? <a>Crie uma conta</a>",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, endereço de email, nome de utilizador (como <userId/>) ou <a>partilhe este espaço</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convide alguém a partir do nome, email ou nome de utilizador (como <userId/>) ou <a>partilhe esta sala</a>.",
-    "Debug logs contain application usage data including your username, the IDs or aliases of the rooms you have visited, which UI elements you last interacted with, and the usernames of other users. They do not contain messages.": "Os registos de depuração contêm dados de utilização da aplicação, incluindo o seu nome de utilizador, os IDs ou pseudónimos das salas que visitou, os últimos elementos da IU com que interagiu e os nomes de utilizador de outros utilizadores. No entanto não contêm mensagens.",
     "Unable to check if username has been taken. Try again later.": "Não foi possível verificar se o nome de utilizador já foi usado. Tente novamente mais tarde.",
     "<userName/> invited you": "<userName/> convidou-o",
     "Someone already has that username. Try another or if it is you, sign in below.": "Alguém já tem esse nome de utilizador. Tente outro ou, se fores tu, inicia sessão em baixo.",
@@ -777,5 +775,9 @@
         "restricted": "Restrito",
         "moderator": "Moderador/a",
         "admin": "Administrador"
+    },
+    "bug_reporting": {
+        "description": "Os registos de depuração contêm dados de utilização da aplicação, incluindo o seu nome de utilizador, os IDs ou pseudónimos das salas que visitou, os últimos elementos da IU com que interagiu e os nomes de utilizador de outros utilizadores. No entanto não contêm mensagens.",
+        "send_logs": "Enviar relatórios de erro"
     }
 }
