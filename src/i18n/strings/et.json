@@ -951,10 +951,7 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Sinu serveri haldur on lülitanud läbiva krüptimise omavahelistes jututubades ja otsesõnumites välja.",
     "This room has been replaced and is no longer active.": "See jututuba on asendatud teise jututoaga ning ei ole enam kasutusel.",
     "You do not have permission to post to this room": "Sul ei ole õigusi siia jututuppa kirjutamiseks",
-    "Bold": "Paks kiri",
     "Italics": "Kaldkiri",
-    "Strikethrough": "Läbikriipsutus",
-    "Code block": "Koodiplokk",
     "Message preview": "Sõnumi eelvaade",
     "List options": "Loendi valikud",
     "Show %(count)s more": {
@@ -1014,7 +1011,6 @@
     "Please review and accept the policies of this homeserver:": "Palun vaata üle selle koduserveri kasutustingimused ja nõustu nendega:",
     "A text message has been sent to %(msisdn)s": "Saatsime tekstisõnumi telefoninumbrile %(msisdn)s",
     "Please enter the code it contains:": "Palun sisesta seal kuvatud kood:",
-    "Code": "Kood",
     "Submit": "Saada",
     "Start authentication": "Alusta autentimist",
     "Sign in with SSO": "Logi sisse kasutades SSO'd ehk ühekordset autentimist",
@@ -3388,8 +3384,6 @@
     "Sorry — this call is currently full": "Vabandust, selles kõnes ei saa rohkem osalejaid olla",
     "resume voice broadcast": "jätka ringhäälingukõnet",
     "pause voice broadcast": "peata ringhäälingukõne",
-    "Underline": "Allajoonitud tekst",
-    "Italic": "Kaldkiri",
     "Notifications silenced": "Teavitused on summutatud",
     "Completing set up of your new device": "Lõpetame uue seadme seadistamise",
     "Waiting for device to sign in": "Ootame, et teine seade logiks võrku",
@@ -3519,7 +3513,6 @@
     "Text": "Tekst",
     "Create a link": "Tee link",
     "Force 15s voice broadcast chunk length": "Kasuta ringhäälingusõnumi puhul 15-sekundilist blokipikkust",
-    "Link": "Link",
     "Sign out of %(count)s sessions": {
         "one": "Logi %(count)s'st sessioonist välja",
         "other": "Logi %(count)s'st sessioonist välja"
@@ -3533,8 +3526,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Kuna sa hetkel salvestad ringhäälingukõnet, siis häälsõnumi salvestamine või esitamine ei õnnestu. Selleks palun lõpeta ringhäälingukõne.",
     "Can't start voice message": "Häälsõnumi salvestamine või esitamine ei õnnestu",
     "Edit link": "Muuda linki",
-    "Numbered list": "Nummerdatud loend",
-    "Bulleted list": "Täpploend",
     "Decrypted source unavailable": "Dekrüptitud lähteandmed pole saadaval",
     "Connection error - Recording paused": "Viga võrguühenduses - salvestamine on peatatud",
     "%(senderName)s started a voice broadcast": "%(senderName)s alustas ringhäälingukõnet",
@@ -3544,8 +3535,6 @@
     "Unable to play this voice broadcast": "Selle ringhäälingukõne esitamine ei õnnestu",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Sinu kasutajakonto lisateave on hallatav siin serveris - <code>%(hostname)s</code>.",
     "Manage account": "Halda kasutajakontot",
-    "Indent decrease": "Vähenda taandrida",
-    "Indent increase": "Suurenda taandrida",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Kõik selle kasutaja sõnumid ja kutsed saava olema peidetud. Kas sa oled kindel, et soovid teda eirata?",
     "Ignore %(user)s": "Eira kasutajat %(user)s",
     "Unable to decrypt voice broadcast": "Ringhäälingukõne dekrüptimine ei õnnestu",
@@ -3983,5 +3972,21 @@
         "default_cover_photo": "<photo>Vaikimisi kasutatava kaanepildi</photo> autoriõiguste omanik on <author>Jesús Roncero</author> ja seda fotot kasutame vastavalt <terms>CC-BY-SA 4.0</terms> litsentsi tingimustele.",
         "twemoji_colr": "<colr>Twemoji-colr</colr> kirjatüübi autoriõiguste omanik on <author>Mozilla Foundation</author> seda kasutame vastavalt <terms>Apache 2.0</terms> litsentsi tingimustele.",
         "twemoji": "<twemoji>Twemoji</twemoji> emotikonide autoriõiguste omanik on <author>Twitter, Inc koos kaasautoritega</author> ning neid kasutame vastavalt <terms>CC-BY 4.0</terms> litsentsi tingimustele."
-    }
+    },
+    "composer": {
+        "format_bold": "Paks kiri",
+        "format_italic": "Kaldkiri",
+        "format_underline": "Allajoonitud tekst",
+        "format_strikethrough": "Läbikriipsutus",
+        "format_unordered_list": "Täpploend",
+        "format_ordered_list": "Nummerdatud loend",
+        "format_increase_indent": "Suurenda taandrida",
+        "format_decrease_indent": "Vähenda taandrida",
+        "format_inline_code": "Kood",
+        "format_code_block": "Koodiplokk",
+        "format_link": "Link"
+    },
+    "Bold": "Paks kiri",
+    "Link": "Link",
+    "Code": "Kood"
 }

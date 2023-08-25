@@ -97,8 +97,6 @@
     "Verification code": "Tangalt n usenqed",
     "Email Address": "Tansa n yimayl",
     "Phone Number": "Uṭṭun n tiliɣri",
-    "Bold": "Azuran",
-    "Strikethrough": "Derrer",
     "Idle": "Arurmid",
     "Unknown": "Arussin",
     "Sign Up": "Jerred",
@@ -150,7 +148,6 @@
     "Source URL": "URL aɣbalu",
     "Home": "Agejdan",
     "powered by Matrix": "s lmendad n Matrix",
-    "Code": "Tangalt",
     "Submit": "Azen",
     "Email": "Imayl",
     "Phone": "Tiliɣri",
@@ -1161,7 +1158,6 @@
     "The conversation continues here.": "Adiwenni yettkemmil dagi.",
     "This room has been replaced and is no longer active.": "Taxxamt-a ad tettusmelsi, dayen d tarurmidt.",
     "You do not have permission to post to this room": "Ur tesεiḍ ara tasiregt ad d-tsuffɣeḍ deg texxamt-a",
-    "Code block": "Iḥder n tengalt",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -2011,5 +2007,13 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift"
-    }
+    },
+    "composer": {
+        "format_bold": "Azuran",
+        "format_strikethrough": "Derrer",
+        "format_inline_code": "Tangalt",
+        "format_code_block": "Iḥder n tengalt"
+    },
+    "Bold": "Azuran",
+    "Code": "Tangalt"
 }

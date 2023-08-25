@@ -401,7 +401,6 @@
     "<a>In reply to</a> <pill>": "<a>В ответ на</a> <pill>",
     "Failed to remove tag %(tagName)s from room": "Не удалось удалить тег %(tagName)s из комнаты",
     "Failed to add tag %(tagName)s to room": "Не удалось добавить тег %(tagName)s в комнату",
-    "Code": "Код",
     "Submit debug logs": "Отправить отладочные журналы",
     "Opens the Developer Tools dialog": "Открывает инструменты разработчика",
     "Stickerpack": "Наклейки",
@@ -998,10 +997,7 @@
     "Deactivate user?": "Деактивировать пользователя?",
     "Deactivate user": "Деактивировать пользователя",
     "Remove recent messages": "Удалить последние сообщения",
-    "Bold": "Жирный",
     "Italics": "Курсив",
-    "Strikethrough": "Перечёркнутый",
-    "Code block": "Блок кода",
     "%(count)s unread messages.": {
         "other": "%(count)s непрочитанных сообщения(-й).",
         "one": "1 непрочитанное сообщение."
@@ -3358,8 +3354,6 @@
     "Fill screen": "Заполнить экран",
     "Sorry — this call is currently full": "Извините — этот вызов в настоящее время заполнен",
     "Record the client name, version, and url to recognise sessions more easily in session manager": "Записывать название клиента, версию и URL-адрес для более лёгкого распознавания сеансов в менеджере сеансов",
-    "Italic": "Курсив",
-    "Underline": "Подчёркнутый",
     "Notifications silenced": "Оповещения приглушены",
     "Go live": "Начать эфир",
     "pause voice broadcast": "приостановить голосовую трансляцию",
@@ -3430,7 +3424,6 @@
     "Error starting verification": "Ошибка при запуске подтверждения",
     "Text": "Текст",
     "Create a link": "Создать ссылку",
-    "Link": "Ссылка",
     "Close call": "Закрыть звонок",
     "Change layout": "Изменить расположение",
     "Spotlight": "Освещение",
@@ -3483,12 +3476,8 @@
     "Last event:": "Последнее событие:",
     "WARNING: session already verified, but keys do NOT MATCH!": "ВНИМАНИЕ: сеанс уже заверен, но ключи НЕ СОВПАДАЮТ!",
     "ID: ": "ID: ",
-    "Bulleted list": "Список",
     "Edit link": "Изменить ссылку",
-    "Numbered list": "Нумерованный список",
     "Signing In…": "Выполняется вход…",
-    "Indent decrease": "Пункт",
-    "Indent increase": "Подпункт",
     "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s отреагировал(а) %(reaction)s на %(message)s",
     "Grey": "Серый",
     "Red": "Красный",
@@ -3670,5 +3659,21 @@
         "control": "Ctrl",
         "shift": "Shift",
         "number": "[количество]"
-    }
+    },
+    "composer": {
+        "format_bold": "Жирный",
+        "format_italic": "Курсив",
+        "format_underline": "Подчёркнутый",
+        "format_strikethrough": "Перечёркнутый",
+        "format_unordered_list": "Список",
+        "format_ordered_list": "Нумерованный список",
+        "format_increase_indent": "Подпункт",
+        "format_decrease_indent": "Пункт",
+        "format_inline_code": "Код",
+        "format_code_block": "Блок кода",
+        "format_link": "Ссылка"
+    },
+    "Bold": "Жирный",
+    "Link": "Ссылка",
+    "Code": "Код"
 }

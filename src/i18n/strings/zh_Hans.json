@@ -324,7 +324,6 @@
     "Idle for %(duration)s": "已闲置 %(duration)s",
     "Offline for %(duration)s": "已离线 %(duration)s",
     "Unknown for %(duration)s": "未知状态已持续 %(duration)s",
-    "Code": "代码",
     "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
     "%(severalUsers)sjoined %(count)s times": {
         "other": "%(severalUsers)s 已加入 %(count)s 次",
@@ -1109,10 +1108,7 @@
     "Close preview": "关闭预览",
     "Send a reply…": "发送回复…",
     "Send a message…": "发送消息…",
-    "Bold": "粗体",
     "Italics": "斜体",
-    "Strikethrough": "删除线",
-    "Code block": "代码块",
     "Room %(name)s": "房间 %(name)s",
     "No recently visited rooms": "没有最近访问过的房间",
     "Join the conversation with an account": "使用一个账户加入对话",
@@ -3573,5 +3569,13 @@
         "control": "Ctrl",
         "shift": "Shift",
         "number": "[number]"
-    }
+    },
+    "composer": {
+        "format_bold": "粗体",
+        "format_strikethrough": "删除线",
+        "format_inline_code": "代码",
+        "format_code_block": "代码块"
+    },
+    "Bold": "粗体",
+    "Code": "代码"
 }

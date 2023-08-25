@@ -400,7 +400,6 @@
     "<a>In reply to</a> <pill>": "<a>回覆給</a> <pill>",
     "Failed to remove tag %(tagName)s from room": "無法從聊天室移除標籤 %(tagName)s",
     "Failed to add tag %(tagName)s to room": "無法新增標籤 %(tagName)s 到聊天室",
-    "Code": "代碼",
     "Submit debug logs": "遞交除錯訊息",
     "Opens the Developer Tools dialog": "開啟開發者工具對話視窗",
     "Stickerpack": "貼圖包",
@@ -983,10 +982,7 @@
         "one": "移除 1 則訊息"
     },
     "Remove recent messages": "移除最近的訊息",
-    "Bold": "粗體",
     "Italics": "斜體",
-    "Strikethrough": "刪除線",
-    "Code block": "程式碼區塊",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "這個 %(roomName)s 的邀請已傳送給與您帳號無關聯的 %(email)s",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "在設定中連結此電子郵件與您的帳號以直接在 %(brand)s 中接收邀請。",
     "This invite to %(roomName)s was sent to %(email)s": "此 %(roomName)s 的邀請已傳送給 %(email)s",
@@ -3386,8 +3382,6 @@
     "Start %(brand)s calls": "開始 %(brand)s 通話",
     "Fill screen": "填滿螢幕",
     "Sorry — this call is currently full": "抱歉 — 此通話目前已滿",
-    "Underline": "底線",
-    "Italic": "義式斜體",
     "resume voice broadcast": "恢復語音廣播",
     "pause voice broadcast": "暫停語音廣播",
     "Notifications silenced": "通知已靜音",
@@ -3518,7 +3512,6 @@
     "Your current session is ready for secure messaging.": "您目前的工作階段已準備好安全通訊。",
     "Text": "文字",
     "Create a link": "建立連結",
-    "Link": "連結",
     "Force 15s voice broadcast chunk length": "強制 15 秒語音廣播區塊長度",
     "Sign out of %(count)s sessions": {
         "one": "登出 %(count)s 個工作階段",
@@ -3534,8 +3527,6 @@
     "Can't start voice message": "無法開始語音訊息",
     "Edit link": "編輯連結",
     "Decrypted source unavailable": "已解密的來源不可用",
-    "Numbered list": "編號清單",
-    "Bulleted list": "項目符號清單",
     "Connection error - Recording paused": "連線錯誤 - 已暫停錄音",
     "%(senderName)s started a voice broadcast": "%(senderName)s 開始了語音廣播",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
@@ -3546,8 +3537,6 @@
     "Unable to play this voice broadcast": "無法播放此語音廣播",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "來自該使用者的所有訊息與邀請都將被隱藏。您確定要忽略它們嗎？",
     "Ignore %(user)s": "忽略 %(user)s",
-    "Indent decrease": "減少縮排",
-    "Indent increase": "增加縮排",
     "Unable to decrypt voice broadcast": "無法解密語音廣播",
     "Thread Id: ": "討論串 ID： ",
     "Threads timeline": "討論串時間軸",
@@ -3983,5 +3972,21 @@
         "default_cover_photo": "<photo>預設封面照片</photo>作者為 © <author>Jesús Roncero</author>，以 <terms>CC-BY-SA 4.0</terms> 授權使用。",
         "twemoji_colr": "<colr>twemoji-colr</colr> 字型作者為 © <author>Mozilla 基金會</author>，以 <terms>Apache 2.0</terms> 授權使用。",
         "twemoji": "<twemoji>Twemoji</twemoji> 表情符號藝術作者為 © <author>Twitter 公司與其他貢獻者</author>，以 <terms>CC-BY 4.0</terms> 授權使用。"
-    }
+    },
+    "composer": {
+        "format_bold": "粗體",
+        "format_italic": "義式斜體",
+        "format_underline": "底線",
+        "format_strikethrough": "刪除線",
+        "format_unordered_list": "項目符號清單",
+        "format_ordered_list": "編號清單",
+        "format_increase_indent": "增加縮排",
+        "format_decrease_indent": "減少縮排",
+        "format_inline_code": "代碼",
+        "format_code_block": "程式碼區塊",
+        "format_link": "連結"
+    },
+    "Bold": "粗體",
+    "Link": "連結",
+    "Code": "代碼"
 }

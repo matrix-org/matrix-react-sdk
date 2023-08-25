@@ -401,7 +401,6 @@
     "Failed to remove tag %(tagName)s from room": "Fallo ao eliminar a etiqueta %(tagName)s da sala",
     "Failed to add tag %(tagName)s to room": "Fallo ao engadir a etiqueta %(tagName)s a sala",
     "Deops user with given id": "Degrada usuaria co id proporcionado",
-    "Code": "Código",
     "Submit debug logs": "Enviar informes de depuración",
     "Opens the Developer Tools dialog": "Abre o cadro de Ferramentas de desenvolvemento",
     "Stickerpack": "Iconas",
@@ -1054,9 +1053,7 @@
     "Send a message…": "Enviar mensaxe…",
     "The conversation continues here.": "A conversa continúa aquí.",
     "This room has been replaced and is no longer active.": "Esta sala foi substituída e xa non está activa.",
-    "Bold": "Resaltado",
     "Italics": "Cursiva",
-    "Code block": "Bloque de código",
     "No recently visited rooms": "Sen salas recentes visitadas",
     "Reason: %(reason)s": "Razón: %(reason)s",
     "Forget this room": "Esquecer sala",
@@ -1167,7 +1164,6 @@
     "Verify by emoji": "Verificar por emoticonas",
     "Almost there! Is %(displayName)s showing the same shield?": "Case feito! ¿está %(displayName)s mostrando as mesmas emoticonas?",
     "Verify all users in a room to ensure it's secure.": "Verificar todas as usuarias da sala para asegurar que é segura.",
-    "Strikethrough": "Sobrescrito",
     "You've successfully verified your device!": "Verificaches correctamente o teu dispositivo!",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Verificaches correctamente %(deviceName)s (%(deviceId)s)!",
     "You've successfully verified %(displayName)s!": "Verificaches correctamente a %(displayName)s!",
@@ -3506,5 +3502,13 @@
         "control": "Ctrl",
         "shift": "Maiús",
         "number": "[número]"
-    }
+    },
+    "composer": {
+        "format_bold": "Resaltado",
+        "format_strikethrough": "Sobrescrito",
+        "format_inline_code": "Código",
+        "format_code_block": "Bloque de código"
+    },
+    "Bold": "Resaltado",
+    "Code": "Código"
 }

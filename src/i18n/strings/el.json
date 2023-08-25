@@ -803,10 +803,7 @@
     "Invite to just this room": "Προσκαλέστε μόνο σε αυτό το δωμάτιο",
     "You created this room.": "Δημιουργήσατε αυτό το δωμάτιο.",
     "Insert link": "Εισαγωγή συνδέσμου",
-    "Code block": "Μπλοκ κώδικα",
-    "Strikethrough": "Διαγράμμιση",
     "Italics": "Πλάγια",
-    "Bold": "Έντονα",
     "Poll": "Ψηφοφορία",
     "You do not have permission to start polls in this room.": "Δεν έχετε άδεια να ξεκινήσετε ψηφοφορίες σε αυτήν την αίθουσα.",
     "Voice Message": "Φωνητικό μήνυμα",
@@ -1827,7 +1824,6 @@
     "Nice, strong password!": "Πολύ καλά, ισχυρός κωδικός πρόσβασης!",
     "Enter password": "Εισάγετε τον κωδικό πρόσβασης",
     "Something went wrong in confirming your identity. Cancel and try again.": "Κάτι πήγε στραβά στην επιβεβαίωση της ταυτότητάς σας. Ακυρώστε και δοκιμάστε ξανά.",
-    "Code": "Κωδικός",
     "Confirm your identity by entering your account password below.": "Ταυτοποιηθείτε εισάγοντας παρακάτω τον κωδικό πρόσβασης του λογαριασμού σας.",
     "Doesn't look like a valid email address": "Δε μοιάζει με έγκυρη διεύθυνση email",
     "Enter email address": "Εισάγετε διεύθυνση email",
@@ -3296,5 +3292,13 @@
         "control": "Ctrl",
         "shift": "Shift",
         "number": "[αριθμός]"
-    }
+    },
+    "composer": {
+        "format_bold": "Έντονα",
+        "format_strikethrough": "Διαγράμμιση",
+        "format_inline_code": "Κωδικός",
+        "format_code_block": "Μπλοκ κώδικα"
+    },
+    "Bold": "Έντονα",
+    "Code": "Κωδικός"
 }

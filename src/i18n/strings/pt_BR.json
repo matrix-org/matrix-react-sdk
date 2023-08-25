@@ -513,7 +513,6 @@
     "Click here to see older messages.": "Clique aqui para ver as mensagens mais antigas.",
     "Please review and accept all of the homeserver's policies": "Por favor, revise e aceite todas as políticas do homeserver",
     "Please review and accept the policies of this homeserver:": "Por favor, revise e aceite as políticas deste servidor local:",
-    "Code": "Código",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Não é possível carregar o evento que foi respondido, ele não existe ou você não tem permissão para visualizá-lo.",
     "Preparing to send logs": "Preparando para enviar relatórios",
     "Logs sent": "Relatórios enviados",
@@ -1312,10 +1311,7 @@
     "Close preview": "Fechar a visualização",
     "Send a reply…": "Digite sua resposta…",
     "Send a message…": "Digite uma mensagem…",
-    "Bold": "Negrito",
     "Italics": "Itálico",
-    "Strikethrough": "Riscado",
-    "Code block": "Bloco de código",
     "Failed to connect to integration manager": "Falha ao conectar-se ao gerenciador de integrações",
     "Failed to revoke invite": "Falha ao revogar o convite",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Não foi possível revogar o convite. O servidor pode estar com um problema temporário ou você não tem permissões suficientes para revogar o convite.",
@@ -2758,14 +2754,10 @@
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Se você começar a ouvir esta tramissão ao vivo, a gravação desta transmissão, será encerrada.",
     "Listen to live broadcast?": "Ouvir transmissão ao vivo?",
     "%(senderName)s started a voice broadcast": "%(senderName)s iniciou uma transmissão de voz",
-    "Underline": "Sublinhar",
-    "Numbered list": "Lista numerada",
     "Text": "Texto",
     "Edit link": "Editar ligação",
-    "Link": "Ligação",
     "Copy link to thread": "Copiar ligação para o tópico",
     "Create a link": "Criar uma ligação",
-    "Italic": "Itálico",
     "View in room": "Ver na sala",
     "common": {
         "about": "Sobre a sala",
@@ -2903,5 +2895,18 @@
         "control": "Ctrl",
         "shift": "Shift",
         "number": "[número]"
-    }
+    },
+    "composer": {
+        "format_bold": "Negrito",
+        "format_italic": "Itálico",
+        "format_underline": "Sublinhar",
+        "format_strikethrough": "Riscado",
+        "format_ordered_list": "Lista numerada",
+        "format_inline_code": "Código",
+        "format_code_block": "Bloco de código",
+        "format_link": "Ligação"
+    },
+    "Bold": "Negrito",
+    "Link": "Ligação",
+    "Code": "Código"
 }

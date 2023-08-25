@@ -742,7 +742,6 @@
     "Token incorrect": "Verkeerd bewys",
     "A text message has been sent to %(msisdn)s": "’t Is een smse noa %(msisdn)s verstuurd gewist",
     "Please enter the code it contains:": "Gift de code in da ’t er in stoat:",
-    "Code": "Code",
     "Submit": "Bevestign",
     "Start authentication": "Authenticoasje beginn",
     "Email": "E-mailadresse",
@@ -1027,5 +1026,9 @@
     },
     "keyboard": {
         "home": "Thuus"
-    }
+    },
+    "composer": {
+        "format_inline_code": "Code"
+    },
+    "Code": "Code"
 }

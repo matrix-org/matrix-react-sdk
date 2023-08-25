@@ -558,7 +558,6 @@
     "Toolbox": "Kotak Peralatan",
     "expand": "buka",
     "collapse": "tutup",
-    "Code": "Kode",
     "Refresh": "Muat Ulang",
     "%(oneUser)sleft %(count)s times": {
         "one": "%(oneUser)skeluar",
@@ -634,9 +633,7 @@
     "Activities": "Aktivitas",
     "Trusted": "Dipercayai",
     "Accepting…": "Menerima…",
-    "Strikethrough": "Coret",
     "Italics": "Miring",
-    "Bold": "Tebal",
     "Complete": "Selesai",
     "Subscribe": "Berlangganan",
     "Unsubscribe": "Berhenti Berlangganan",
@@ -733,7 +730,6 @@
     "Verified!": "Terverifikasi!",
     "Emoji Autocomplete": "Penyelesaian Otomatis Emoji",
     "Deactivate user?": "Nonaktifkan pengguna?",
-    "Code block": "Blok kode",
     "Phone (optional)": "Nomor telepon (opsional)",
     "Remove %(phone)s?": "Hapus %(phone)s?",
     "Remove %(email)s?": "Hapus %(email)s?",
@@ -3388,8 +3384,6 @@
     "Video call started in %(roomName)s.": "Panggilan video dimulai di %(roomName)s.",
     "resume voice broadcast": "lanjutkan siaran suara",
     "pause voice broadcast": "jeda siaran suara",
-    "Underline": "Garis Bawah",
-    "Italic": "Miring",
     "Notifications silenced": "Notifikasi dibisukan",
     "Completing set up of your new device": "Menyelesaikan penyiapan perangkat baru Anda",
     "Waiting for device to sign in": "Menunggu perangkat untuk masuk",
@@ -3518,7 +3512,6 @@
     "Your current session is ready for secure messaging.": "Sesi Anda saat ini siap untuk perpesanan aman.",
     "Text": "Teks",
     "Create a link": "Buat sebuah tautan",
-    "Link": "Tautan",
     "Force 15s voice broadcast chunk length": "Paksakan panjang bagian siaran suara 15d",
     "Sign out of %(count)s sessions": {
         "one": "Keluar dari %(count)s sesi",
@@ -3533,8 +3526,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Anda tidak dapat memulai sebuah pesan suara karena Anda saat ini merekam sebuah siaran langsung. Silakan mengakhiri siaran langsung Anda untuk memulai merekam sebuah pesan suara.",
     "Can't start voice message": "Tidak dapat memulai pesan suara",
     "Edit link": "Sunting tautan",
-    "Numbered list": "Daftar nomor",
-    "Bulleted list": "Daftar bulat",
     "Decrypted source unavailable": "Sumber terdekripsi tidak tersedia",
     "Connection error - Recording paused": "Kesalahan koneksi - Perekaman dijeda",
     "%(senderName)s started a voice broadcast": "%(senderName)s memulai sebuah siaran suara",
@@ -3546,8 +3537,6 @@
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Detail akun Anda dikelola secara terpisah di <code>%(hostname)s</code>.",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Semua pesan dan undangan dari pengguna ini akan disembunyikan. Apakah Anda yakin ingin mengabaikan?",
     "Ignore %(user)s": "Abaikan %(user)s",
-    "Indent increase": "Tambahkan indentasi",
-    "Indent decrease": "Kurangi indentasi",
     "Unable to decrypt voice broadcast": "Tidak dapat mendekripsi siaran suara",
     "Thread Id: ": "ID utasan: ",
     "Threads timeline": "Lini masa utasan",
@@ -3988,5 +3977,21 @@
         "default_cover_photo": "<photo>Foto kover bawaan</photo> © <author>Jesús Roncero</author> digunakan di bawah ketentuan <terms>CC-BY-SA 4.0</terms>.",
         "twemoji_colr": "Fon <colr>twemoji-colr</colr> © <author>Mozilla Foundation</author> digunakan di bawah ketentuan <terms>Apache 2.0</terms>.",
         "twemoji": "Gambar emoji <twemoji>Twemoji</twemoji> © <author>Twitter, Inc dan kontributor lainnya</author> digunakan di bawah ketentuan <terms>CC-BY 4.0</terms>."
-    }
+    },
+    "composer": {
+        "format_bold": "Tebal",
+        "format_italic": "Miring",
+        "format_underline": "Garis Bawah",
+        "format_strikethrough": "Coret",
+        "format_unordered_list": "Daftar bulat",
+        "format_ordered_list": "Daftar nomor",
+        "format_increase_indent": "Tambahkan indentasi",
+        "format_decrease_indent": "Kurangi indentasi",
+        "format_inline_code": "Kode",
+        "format_code_block": "Blok kode",
+        "format_link": "Tautan"
+    },
+    "Bold": "Tebal",
+    "Link": "Tautan",
+    "Code": "Kode"
 }

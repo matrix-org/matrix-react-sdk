@@ -448,7 +448,6 @@
     "Remove for everyone": "Herkes için sil",
     "This homeserver would like to make sure you are not a robot.": "Bu ana sunucu sizin bir robot olup olmadığınızdan emin olmak istiyor.",
     "Country Dropdown": "Ülke Listesi",
-    "Code": "Kod",
     "Use an email address to recover your account": "Hesabınızı kurtarmak için bir e-posta adresi kullanın",
     "Enter email address (required on this homeserver)": "E-posta adresi gir ( bu ana sunucuda gerekli)",
     "Doesn't look like a valid email address": "Geçerli bir e-posta adresine benzemiyor",
@@ -689,9 +688,7 @@
     "Share Link to User": "Kullanıcıya Link Paylaş",
     "Send an encrypted reply…": "Şifrelenmiş bir cevap gönder…",
     "Send an encrypted message…": "Şifreli bir mesaj gönder…",
-    "Bold": "Kalın",
     "Italics": "Eğik",
-    "Code block": "Kod bloku",
     "%(duration)ss": "%(duration)ssn",
     "%(duration)sm": "%(duration)sdk",
     "%(duration)sh": "%(duration)ssa",
@@ -1073,7 +1070,6 @@
     "This room is end-to-end encrypted": "Bu oda uçtan uça şifreli",
     "Encrypted by an unverified session": "Doğrulanmamış bir oturum tarafından şifrelenmiş",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
-    "Strikethrough": "Üstü çizili",
     "Reject & Ignore user": "Kullanıcı Reddet & Yoksay",
     "%(count)s unread messages including mentions.": {
         "one": "1 okunmamış bahis.",
@@ -2037,5 +2033,13 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift"
-    }
+    },
+    "composer": {
+        "format_bold": "Kalın",
+        "format_strikethrough": "Üstü çizili",
+        "format_inline_code": "Kod",
+        "format_code_block": "Kod bloku"
+    },
+    "Bold": "Kalın",
+    "Code": "Kod"
 }

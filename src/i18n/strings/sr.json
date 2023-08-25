@@ -451,7 +451,6 @@
     "Missing roomId.": "Недостаје roomId.",
     "You don't currently have any stickerpacks enabled": "Тренутно немате омогућено било које паковање са налепницама",
     "Stickerpack": "Паковање са налепницама",
-    "Code": "Код",
     "Preparing to send logs": "Припремам се за слање записника",
     "Logs sent": "Записници су послати",
     "Failed to send logs: ": "Нисам успео да пошаљем записнике: ",
@@ -1345,5 +1344,9 @@
     "keyboard": {
         "home": "Почетна",
         "alt": "Алт"
-    }
+    },
+    "composer": {
+        "format_inline_code": "Код"
+    },
+    "Code": "Код"
 }

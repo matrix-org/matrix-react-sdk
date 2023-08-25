@@ -240,7 +240,6 @@
     "Failed to copy": "Noko gjekk gale med kopieringa",
     "A text message has been sent to %(msisdn)s": "Ei tekstmelding vart send til %(msisdn)s",
     "Please enter the code it contains:": "Ver venleg og skriv koden den inneheld inn:",
-    "Code": "Kode",
     "Start authentication": "Start authentisering",
     "powered by Matrix": "Matrixdriven",
     "Sign in with": "Logg inn med",
@@ -641,10 +640,7 @@
     "Send a message…": "Send melding…",
     "The conversation continues here.": "Samtalen held fram her.",
     "This room has been replaced and is no longer active.": "Dette rommet er erstatta og er ikkje lenger aktivt.",
-    "Bold": "Feit",
     "Italics": "Kursiv",
-    "Strikethrough": "Gjennomstreka",
-    "Code block": "Kodeblokk",
     "Room %(name)s": "Rom %(name)s",
     "Direct Messages": "Folk",
     "Join the conversation with an account": "Bli med i samtalen med ein konto",
@@ -1101,5 +1097,13 @@
     },
     "keyboard": {
         "home": "Heim"
-    }
+    },
+    "composer": {
+        "format_bold": "Feit",
+        "format_strikethrough": "Gjennomstreka",
+        "format_inline_code": "Kode",
+        "format_code_block": "Kodeblokk"
+    },
+    "Bold": "Feit",
+    "Code": "Kode"
 }

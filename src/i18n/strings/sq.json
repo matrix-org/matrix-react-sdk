@@ -186,7 +186,6 @@
     "Copied!": "U kopjua!",
     "Add an Integration": "Shtoni një Integrim",
     "Please enter the code it contains:": "Ju lutemi, jepni kodin që përmbahet:",
-    "Code": "Kod",
     "Start authentication": "Fillo mirëfilltësim",
     "Sign in with": "Hyni me",
     "Email address": "Adresë email",
@@ -970,10 +969,7 @@
     "Share this email in Settings to receive invites directly in %(brand)s.": "Që të merrni ftesa drejt e te %(brand)s, ndajeni me të tjerët këtë email, te Rregullimet.",
     "Error changing power level": "Gabim në ndryshimin e shkallës së pushtetit",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Ndodhi një gabim gjatë ndryshimit të shkallës së pushtetit të përdoruesit. Sigurohuni se keni leje të mjaftueshme dhe riprovoni.",
-    "Bold": "Të trasha",
     "Italics": "Të pjerrëta",
-    "Strikethrough": "Hequrvije",
-    "Code block": "Bllok kodi",
     "Change identity server": "Ndryshoni shërbyes identitetesh",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Të shkëputet më mirë nga shërbyesi i identiteteve <current /> dhe të lidhet me <new />?",
     "Disconnect identity server": "Shkëpute shërbyesin e identiteteve",
@@ -3280,8 +3276,6 @@
     "iOS": "iOS",
     "Video call ended": "Thirrja video përfundoi",
     "Room info": "Hollësi dhome",
-    "Underline": "Të nënvizuara",
-    "Italic": "Të pjerrëta",
     "View chat timeline": "Shihni rrjedhë kohore fjalosjeje",
     "Close call": "Mbylli krejt",
     "Spotlight": "Projektor",
@@ -3509,7 +3503,6 @@
     "Mark as read": "Vëri shenjë si të lexuar",
     "Text": "Tekst",
     "Create a link": "Krijoni një lidhje",
-    "Link": "Lidhje",
     "Sign out of %(count)s sessions": {
         "one": "Dilni nga %(count)s sesion",
         "other": "Dilni nga %(count)s sesione"
@@ -3524,8 +3517,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "S’mund të niset mesazh zanor, ngaqë aktualisht po incizoni një transmetim të drejtpërdrejtë. Ju lutemi, përfundoni transmetimin e drejtpërdrejtë, që të mund të nisni incizimin e një mesazhi zanor.",
     "Can't start voice message": "S’niset dot mesazh zanor",
     "Edit link": "Përpunoni lidhje",
-    "Numbered list": "Listë e numërtuar",
-    "Bulleted list": "Listë me toptha",
     "Connection error - Recording paused": "Gabim lidhjeje - Regjistrimi u ndal",
     "Unfortunately we're unable to start a recording right now. Please try again later.": "Mjerisht, s’qemë në gjendje të nisnim tani një regjistrim. Ju lutemi, riprovoni më vonë.",
     "Connection error": "Gabim lidhjeje",
@@ -3550,8 +3541,6 @@
     "Room status": "Gjendje dhome",
     "Notifications debug": "Diagnostikim njoftimesh",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
-    "Indent decrease": "Zvogëlim shmangieje kryeradhe",
-    "Indent increase": "Rritje shmangieje kryeradhe",
     "unknown": "e panjohur",
     "Red": "E kuqe",
     "Grey": "Gri",
@@ -3876,5 +3865,21 @@
         "default_cover_photo": "<photo>Fotoja kopertinë parazgjedhje</photo> © <author>Jesús Roncero</author> përdoret sipas kushteve të <terms>CC-BY-SA 4.0</terms>.",
         "twemoji_colr": "Shkronjat <colr>twemoji-colr</colr> © <author>Mozilla Foundation</author> përdoren sipas kushteve të <terms>Apache 2.0</terms>.",
         "twemoji": "<twemoji>Twemoji</twemoji> © <author>Twitter, Inc dhe kontribues të tjerë</author> përdoren sipas kushteve të <terms>CC-BY 4.0</terms>."
-    }
+    },
+    "composer": {
+        "format_bold": "Të trasha",
+        "format_italic": "Të pjerrëta",
+        "format_underline": "Të nënvizuara",
+        "format_strikethrough": "Hequrvije",
+        "format_unordered_list": "Listë me toptha",
+        "format_ordered_list": "Listë e numërtuar",
+        "format_increase_indent": "Rritje shmangieje kryeradhe",
+        "format_decrease_indent": "Zvogëlim shmangieje kryeradhe",
+        "format_inline_code": "Kod",
+        "format_code_block": "Bllok kodi",
+        "format_link": "Lidhje"
+    },
+    "Bold": "Të trasha",
+    "Link": "Lidhje",
+    "Code": "Kod"
 }

@@ -403,7 +403,6 @@
     "Failed to add tag %(tagName)s to room": "Toevoegen van %(tagName)s-label aan kamer is mislukt",
     "Stickerpack": "Stickerpakket",
     "You don't currently have any stickerpacks enabled": "Je hebt momenteel geen stickerpakketten ingeschakeld",
-    "Code": "Code",
     "Submit debug logs": "Foutenlogboek versturen",
     "Opens the Developer Tools dialog": "Opent het dialoogvenster met ontwikkelaarsgereedschap",
     "Sunday": "Zondag",
@@ -986,10 +985,7 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Deze persoon deactiveren zal deze persoon uitloggen en verhinderen dat de persoon weer inlogt. Bovendien zal de persoon alle kamers waaraan de persoon deelneemt verlaten. Deze actie is niet terug te draaien. Weet je zeker dat je deze persoon wilt deactiveren?",
     "Deactivate user": "Persoon deactiveren",
     "Remove recent messages": "Recente berichten verwijderen",
-    "Bold": "Vet",
     "Italics": "Cursief",
-    "Strikethrough": "Doorstreept",
-    "Code block": "Codeblok",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Deze uitnodiging tot %(roomName)s was verstuurd naar %(email)s, dat niet aan uw account gekoppeld is",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Koppel in de instellingen dit e-mailadres aan uw account om uitnodigingen direct in %(brand)s te ontvangen.",
     "This invite to %(roomName)s was sent to %(email)s": "Deze uitnodiging tot %(roomName)s was verstuurd naar %(email)s",
@@ -3359,8 +3355,6 @@
     "Video call ended": "Video oproep beëindigd",
     "%(name)s started a video call": "%(name)s is een videogesprek gestart",
     "Room info": "Kamer informatie",
-    "Underline": "Onderstrepen",
-    "Italic": "Cursief",
     "View chat timeline": "Gesprekstijdslijn bekijken",
     "Close call": "Sluit oproep",
     "Spotlight": "Schijnwerper",
@@ -3589,5 +3583,15 @@
         "control": "Ctrl",
         "shift": "Shift",
         "number": "[number]"
-    }
+    },
+    "composer": {
+        "format_bold": "Vet",
+        "format_italic": "Cursief",
+        "format_underline": "Onderstrepen",
+        "format_strikethrough": "Doorstreept",
+        "format_inline_code": "Code",
+        "format_code_block": "Codeblok"
+    },
+    "Bold": "Vet",
+    "Code": "Code"
 }

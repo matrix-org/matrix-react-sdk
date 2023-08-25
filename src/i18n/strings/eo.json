@@ -610,7 +610,6 @@
     "Share Room": "Kunhavigi ĉambron",
     "Share User": "Kunhavigi uzanton",
     "Share Room Message": "Kunhavigi ĉambran mesaĝon",
-    "Code": "Kodo",
     "Change": "Ŝanĝi",
     "Email (optional)": "Retpoŝto (malnepra)",
     "Phone (optional)": "Telefono (malnepra)",
@@ -971,10 +970,7 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Malaktivigo de ĉi tiu uzanto adiaŭigos ĝin, kaj malebligos, ke ĝi resalutu. Plie, ĝi foriros de ĉiuj enataj ĉambroj. Tiu ago ne povas malfariĝi. Ĉu vi certe volas malaktivigi ĉi tiun uzanton?",
     "Deactivate user": "Malaktivigi uzanton",
     "Remove recent messages": "Forigi freŝajn mesaĝojn",
-    "Bold": "Grase",
     "Italics": "Kursive",
-    "Strikethrough": "Trastrekite",
-    "Code block": "Kodujo",
     "Explore rooms": "Esplori ĉambrojn",
     "Add Email Address": "Aldoni retpoŝtadreson",
     "Add Phone Number": "Aldoni telefonnumeron",
@@ -2964,5 +2960,13 @@
         "alt": "Alt-klavo",
         "control": "Stir-klavo",
         "shift": "Majuskliga klavo"
-    }
+    },
+    "composer": {
+        "format_bold": "Grase",
+        "format_strikethrough": "Trastrekite",
+        "format_inline_code": "Kodo",
+        "format_code_block": "Kodujo"
+    },
+    "Bold": "Grase",
+    "Code": "Kodo"
 }

@@ -401,7 +401,6 @@
     "<a>In reply to</a> <pill>": "<a>honi erantzunez:</a> <pill>",
     "Failed to remove tag %(tagName)s from room": "Huts egin du %(tagName)s etiketa gelatik kentzean",
     "Failed to add tag %(tagName)s to room": "Huts egin du %(tagName)s etiketa gelara gehitzean",
-    "Code": "Kodea",
     "Submit debug logs": "Bidali arazte-egunkariak",
     "Opens the Developer Tools dialog": "Garatzailearen tresnen elkarrizketa-koadroa irekitzen du",
     "Stickerpack": "Eranskailu-multzoa",
@@ -992,10 +991,7 @@
     },
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Erabiltzailea desaktibatzean saioa itxiko zaio eta ezin izango du berriro hasi. Gainera, dauden gela guztietatik aterako da. Ekintza hau ezin da aurreko egoera batera ekarri. Ziur erabiltzaile hau desaktibatu nahi duzula?",
     "Remove recent messages": "Kendu azken mezuak",
-    "Bold": "Lodia",
     "Italics": "Etzana",
-    "Strikethrough": "Marratua",
-    "Code block": "Kode blokea",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "%(roomName)s gelarako gonbidapena zure kontuarekin lotuta ez dagoen %(email)s helbidera bidali da",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Erabili identitate zerbitzari bat ezarpenetan gonbidapenak zuzenean %(brand)s-en jasotzeko.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Partekatu e-mail hau ezarpenetan gonbidapenak zuzenean %(brand)s-en jasotzeko.",
@@ -1639,5 +1635,13 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Maius."
-    }
+    },
+    "composer": {
+        "format_bold": "Lodia",
+        "format_strikethrough": "Marratua",
+        "format_inline_code": "Kodea",
+        "format_code_block": "Kode blokea"
+    },
+    "Bold": "Lodia",
+    "Code": "Kodea"
 }

@@ -401,7 +401,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Този процес Ви позволява да експортирате във файл ключовете за съобщения в шифровани стаи. Така ще можете да импортирате файла в друг Matrix клиент, така че той също да може да разшифрова такива съобщения.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Този процес позволява да импортирате ключове за шифроване, които преди сте експортирали от друг Matrix клиент. Тогава ще можете да разшифровате всяко съобщение, което другият клиент може да разшифрова.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Експортираният файл може да бъде предпазен с парола. Трябва да въведете парола тук, за да разшифровате файла.",
-    "Code": "Код",
     "Submit debug logs": "Изпрати логове за дебъгване",
     "Opens the Developer Tools dialog": "Отваря прозорец с инструменти на разработчика",
     "Stickerpack": "Пакет със стикери",
@@ -988,10 +987,7 @@
         "one": "Премахни 1 съобщение"
     },
     "Remove recent messages": "Премахни скорошни съобщения",
-    "Bold": "Удебелено",
     "Italics": "Наклонено",
-    "Strikethrough": "Задраскано",
-    "Code block": "Блок с код",
     "Please fill why you're reporting.": "Въведете защо докладвате.",
     "Report Content to Your Homeserver Administrator": "Докладвай съдържание до администратора на сървъра",
     "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Докладването на съобщението ще изпрати уникалният номер на събитието (event ID) до администратора на сървъра. Ако съобщенията в стаята са шифровани, администратора няма да може да прочете текста им или да види снимките или файловете.",
@@ -2130,5 +2126,13 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift"
-    }
+    },
+    "composer": {
+        "format_bold": "Удебелено",
+        "format_strikethrough": "Задраскано",
+        "format_inline_code": "Код",
+        "format_code_block": "Блок с код"
+    },
+    "Bold": "Удебелено",
+    "Code": "Код"
 }

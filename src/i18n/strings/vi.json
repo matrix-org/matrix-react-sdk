@@ -453,7 +453,6 @@
     "Start authentication": "Bắt đầu xác thực",
     "Something went wrong in confirming your identity. Cancel and try again.": "Đã xảy ra sự cố khi xác nhận danh tính của bạn. Hủy và thử lại.",
     "Submit": "Xác nhận",
-    "Code": "Mã",
     "Please enter the code it contains:": "Vui lòng nhập mã mà nó chứa:",
     "A text message has been sent to %(msisdn)s": "Một tin nhắn văn bản đã được gửi tới %(msisdn)s",
     "Token incorrect": "Mã thông báo không chính xác",
@@ -1365,10 +1364,7 @@
         "other": "%(severalUsers)s đã tham gia %(count)s lần"
     },
     "Insert link": "Chèn liên kết",
-    "Code block": "Khối mã",
-    "Strikethrough": "Gạch ngang",
     "Italics": "In nghiêng",
-    "Bold": "In đậm",
     "%(seconds)ss left": "Còn %(seconds)s giây",
     "You do not have permission to post to this room": "Bạn không có quyền đăng lên phòng này",
     "This room has been replaced and is no longer active.": "Phòng này đã được thay thế và không còn hoạt động nữa.",
@@ -3143,7 +3139,6 @@
     "Reset password": "Đặt lại mật khẩu",
     "%(members)s and more": "%(members)s và nhiều người khác",
     "Read receipts": "Thông báo đã đọc",
-    "Numbered list": "Danh sách đánh số",
     "Export Cancelled": "Đã hủy trích xuất",
     "Hide stickers": "Ẩn thẻ (sticker)",
     "This room or space does not exist.": "Phòng này hay space này không tồn tại.",
@@ -3157,11 +3152,9 @@
         "other": "Gửi bởi %(count)s người"
     },
     "Search all rooms": "Tìm tất cả phòng",
-    "Link": "Liên kết",
     "Rejecting invite…": "Từ chối lời mời…",
     "Are you sure you're at the right place?": "Bạn có chắc là bạn đang ở đúng chỗ?",
     "To view %(roomName)s, you need an invite": "Để xem %(roomName)s, bạn cần một lời mời",
-    "Bulleted list": "Danh sách gạch đầu dòng",
     "Event ID: %(eventId)s": "Định danh (ID) sự kiện: %(eventId)s",
     "Disinvite from room": "Không mời vào phòng nữa",
     "Your language": "Ngôn ngữ của bạn",
@@ -3200,7 +3193,6 @@
     "You do not have permission to invite users": "Bạn không có quyền mời người khác",
     "Remove them from everything I'm able to": "Loại bỏ khỏi mọi phòng mà tôi có thể",
     "Hide formatting": "Ẩn định dạng",
-    "Italic": "Nghiêng",
     "Processing…": "Đang xử lý…",
     "The beginning of the room": "Bắt đầu phòng",
     "Poll": "Bỏ phiếu",
@@ -3219,7 +3211,6 @@
     "%(members)s and %(last)s": "%(members)s và %(last)s",
     "Private room": "Phòng riêng tư",
     "Join the room to participate": "Tham gia phòng để tương tác",
-    "Underline": "Gạch chân",
     "Edit link": "Sửa liên kết",
     "Create a link": "Tạo liên kết",
     "Text": "Chữ",
@@ -3686,5 +3677,19 @@
     },
     "credits": {
         "default_cover_photo": "Các <photo>ảnh bìa mặc định</photo> Là © <author>Chúa Jesus Roncero</author> Được sử dụng theo các điều khoản của <terms>CC-BY-SA 4.0</terms>."
-    }
+    },
+    "composer": {
+        "format_bold": "In đậm",
+        "format_italic": "Nghiêng",
+        "format_underline": "Gạch chân",
+        "format_strikethrough": "Gạch ngang",
+        "format_unordered_list": "Danh sách gạch đầu dòng",
+        "format_ordered_list": "Danh sách đánh số",
+        "format_inline_code": "Mã",
+        "format_code_block": "Khối mã",
+        "format_link": "Liên kết"
+    },
+    "Bold": "In đậm",
+    "Link": "Liên kết",
+    "Code": "Mã"
 }

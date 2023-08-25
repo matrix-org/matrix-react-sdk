@@ -1277,10 +1277,7 @@
     "Topic: %(topic)s (<a>edit</a>)": "נושאים: %(topic)s (<a>עריכה</a>)",
     "This is the beginning of your direct message history with <displayName/>.": "זו ההתחלה של היסטוריית ההודעות הישירות שלך עם <displayName/>.",
     "Only the two of you are in this conversation, unless either of you invites anyone to join.": "רק שניכם נמצאים בשיחה הזו, אלא אם כן מישהו מכם מזמין מישהו להצטרף.",
-    "Code block": "בלוק קוד",
-    "Strikethrough": "קו חוצה",
     "Italics": "נטוי",
-    "Bold": "מודגש",
     "You do not have permission to post to this room": "אין לך הרשאה לפרסם בחדר זה",
     "This room has been replaced and is no longer active.": "חדר זה הוחלף ואינו פעיל יותר.",
     "The conversation continues here.": "השיחה נמשכת כאן.",
@@ -1656,7 +1653,6 @@
     "Enter password": "הזן סיסמה",
     "Start authentication": "התחל אימות",
     "Submit": "הגש",
-    "Code": "קוד",
     "Please enter the code it contains:": "אנא הכנס את הקוד שהוא מכיל:",
     "A text message has been sent to %(msisdn)s": "הודעת טקסט נשלחה אל %(msisdn)s",
     "Token incorrect": "אסימון שגוי",
@@ -2779,5 +2775,13 @@
         "alt": "ALT",
         "control": "CTRL",
         "shift": "הזזה"
-    }
+    },
+    "composer": {
+        "format_bold": "מודגש",
+        "format_strikethrough": "קו חוצה",
+        "format_inline_code": "קוד",
+        "format_code_block": "בלוק קוד"
+    },
+    "Bold": "מודגש",
+    "Code": "קוד"
 }

@@ -125,7 +125,6 @@
     "Yesterday": "Í gær",
     "Error decrypting attachment": "Villa við afkóðun viðhengis",
     "Copied!": "Afritað!",
-    "Code": "Kóði",
     "powered by Matrix": "keyrt með Matrix",
     "Email address": "Tölvupóstfang",
     "Register": "Nýskrá",
@@ -394,9 +393,7 @@
     "Activities": "Afþreying",
     "Document": "Skjal",
     "Complete": "Fullklára",
-    "Strikethrough": "Yfirstrikletrað",
     "Italics": "Skáletrað",
-    "Bold": "Feitletrað",
     "Disconnect": "Aftengjast",
     "Revoke": "Afturkalla",
     "Discovery": "Uppgötvun",
@@ -995,7 +992,6 @@
     "View message": "Sjá skilaboð",
     "Topic: %(topic)s ": "Umfjöllunarefni: %(topic)s ",
     "Insert link": "Setja inn tengil",
-    "Code block": "Kóðablokk",
     "Poll": "Könnun",
     "Voice Message": "Talskilaboð",
     "Hide stickers": "Fela límmerki",
@@ -3090,11 +3086,6 @@
     "Text": "Texti",
     "Create a link": "Búa til tengil",
     "Edit link": "Breyta tengli",
-    "Link": "Tengill",
-    "Numbered list": "Tölusettur listi",
-    "Bulleted list": "Punktalisti",
-    "Underline": "Undirstrikað",
-    "Italic": "Skáletrað",
     "View chat timeline": "Skoða tímalínu spjalls",
     "Close call": "Loka samtali",
     "Change layout": "Breyta framsetningu",
@@ -3373,5 +3364,19 @@
         "control": "Ctrl",
         "shift": "Shift",
         "number": "[tala]"
-    }
+    },
+    "composer": {
+        "format_bold": "Feitletrað",
+        "format_italic": "Skáletrað",
+        "format_underline": "Undirstrikað",
+        "format_strikethrough": "Yfirstrikletrað",
+        "format_unordered_list": "Punktalisti",
+        "format_ordered_list": "Tölusettur listi",
+        "format_inline_code": "Kóði",
+        "format_code_block": "Kóðablokk",
+        "format_link": "Tengill"
+    },
+    "Bold": "Feitletrað",
+    "Link": "Tengill",
+    "Code": "Kóði"
 }

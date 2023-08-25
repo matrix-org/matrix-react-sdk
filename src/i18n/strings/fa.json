@@ -1223,10 +1223,7 @@
     "Topic: %(topic)s (<a>edit</a>)": "موضوع: %(topic)s (<a>ویرایش</a>)",
     "This is the beginning of your direct message history with <displayName/>.": "این ابتدای تاریخچه پیام مستقیم شما با <displayName/> است.",
     "Only the two of you are in this conversation, unless either of you invites anyone to join.": "فقط شما دو نفر در این مکالمه حضور دارید ، مگر اینکه یکی از شما کس دیگری را به عضویت دعوت کند.",
-    "Code block": "بلوک کد",
-    "Strikethrough": "خط روی متن",
     "Italics": "مورب",
-    "Bold": "پررنگ",
     "%(seconds)ss left": "%(seconds)s ثانیه باقی‌مانده",
     "You do not have permission to post to this room": "شما اجازه ارسال در این اتاق را ندارید",
     "This room has been replaced and is no longer active.": "این اتاق جایگزین شده‌است و دیگر فعال نیست.",
@@ -1974,7 +1971,6 @@
     "Start authentication": "آغاز فرآیند احراز هویت",
     "Something went wrong in confirming your identity. Cancel and try again.": "تائید هویت شما با مشکل مواجه شد. لطفا فرآیند را لغو کرده و مجددا اقدام نمائید.",
     "Submit": "ارسال",
-    "Code": "کد",
     "This room is public": "این اتاق عمومی است",
     "Avatar": "نمایه",
     "Join the beta": "اضافه‌شدن به نسخه‌ی بتا",
@@ -2635,5 +2631,13 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift"
-    }
+    },
+    "composer": {
+        "format_bold": "پررنگ",
+        "format_strikethrough": "خط روی متن",
+        "format_inline_code": "کد",
+        "format_code_block": "بلوک کد"
+    },
+    "Bold": "پررنگ",
+    "Code": "کد"
 }

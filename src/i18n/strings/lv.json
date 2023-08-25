@@ -385,7 +385,6 @@
     "Stops ignoring a user, showing their messages going forward": "Atceļ lietotāja ignorēšanu, rādot viņa turpmāk sūtītās ziņas",
     "Notify the whole room": "Paziņot visai istabai",
     "Room Notification": "Istabas paziņojums",
-    "Code": "Kods",
     "%(oneUser)srejected their invitation %(count)s times": {
         "other": "%(oneUser)snoraidīja uzaicinājumu %(count)s reizes",
         "one": "%(oneUser)snoraidīja uzaicinājumu"
@@ -1836,5 +1835,9 @@
     },
     "keyboard": {
         "home": "Mājup"
-    }
+    },
+    "composer": {
+        "format_inline_code": "Kods"
+    },
+    "Code": "Kods"
 }

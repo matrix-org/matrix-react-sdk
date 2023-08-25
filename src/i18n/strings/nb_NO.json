@@ -226,9 +226,7 @@
     "Send an encrypted reply…": "Send et kryptert svar …",
     "Send an encrypted message…": "Send en kryptert beskjed …",
     "Send a message…": "Send en melding …",
-    "Bold": "Fet",
     "Italics": "Kursiv",
-    "Strikethrough": "Gjennomstreking",
     "Online": "Tilkoblet",
     "Idle": "Rolig",
     "Unknown": "Ukjent",
@@ -277,7 +275,6 @@
     "Document": "Dokument",
     "Cancel All": "Avbryt alt",
     "Home": "Hjem",
-    "Code": "Kode",
     "Submit": "Send",
     "Email": "E-post",
     "Phone": "Telefon",
@@ -567,7 +564,6 @@
     "Share Link to User": "Del en lenke til brukeren",
     "Filter room members": "Filtrer rommets medlemmer",
     "Send a reply…": "Send et svar …",
-    "Code block": "Kodefelt",
     "Replying": "Svarer på",
     "Room %(name)s": "Rom %(name)s",
     "Start chatting": "Begynn å chatte",
@@ -1594,5 +1590,13 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift"
-    }
+    },
+    "composer": {
+        "format_bold": "Fet",
+        "format_strikethrough": "Gjennomstreking",
+        "format_inline_code": "Kode",
+        "format_code_block": "Kodefelt"
+    },
+    "Bold": "Fet",
+    "Code": "Kode"
 }

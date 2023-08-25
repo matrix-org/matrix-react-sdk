@@ -746,7 +746,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varoitus</b>: sinun pitäisi ottaa avainvarmuuskopio käyttöön vain luotetulla tietokoneella.",
     "Please review and accept all of the homeserver's policies": "Tarkistathan tämän kotipalvelimen käytännöt",
     "Please review and accept the policies of this homeserver:": "Tarkistathan tämän kotipalvelimen käytännöt:",
-    "Code": "Koodi",
     "Change": "Muuta",
     "Join millions for free on the largest public server": "Liity ilmaiseksi miljoonien joukkoon suurimmalla julkisella palvelimella",
     "Other": "Muut",
@@ -962,10 +961,7 @@
         "one": "Poista yksi viesti"
     },
     "Remove recent messages": "Poista viimeaikaiset viestit",
-    "Bold": "Lihavoitu",
     "Italics": "Kursivoitu",
-    "Strikethrough": "Yliviivattu",
-    "Code block": "Ohjelmakoodia",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Kutsu huoneeseen %(roomName)s lähetettiin osoitteeseen %(email)s, joka ei ole yhteydessä tiliisi",
     "Changes the avatar of the current room": "Vaihtaa nykyisen huoneen kuvan",
     "Error changing power level requirement": "Virhe muutettaessa oikeustasovaatimusta",
@@ -3269,8 +3265,6 @@
     "Sliding Sync configuration": "Liukuvan synkronoinnin asetukset",
     "Ban them from everything I'm able to": "Anna porttikielto kaikkeen, mihin pystyn",
     "Unban them from everything I'm able to": "Poista porttikielto kaikesta, mihin pystyn",
-    "Underline": "Alleviivaus",
-    "Italic": "Kursivointi",
     "This invite was sent to %(email)s which is not associated with your account": "Tämä kutsu lähetettiin sähköpostiosoitteeseen %(email)s, joka ei ole yhteydessä tiliisi",
     "Spotlight": "Valokeila",
     "Freedom": "Vapaus",
@@ -3290,7 +3284,6 @@
     "Interactively verify by emoji": "Vahvista vuorovaikutteisesti emojilla",
     "Manually verify by text": "Vahvista manuaalisesti tekstillä",
     "Text": "Teksti",
-    "Link": "Linkki",
     "Create a link": "Luo linkki",
     " in <strong>%(room)s</strong>": " huoneessa <strong>%(room)s</strong>",
     "Sign out of %(count)s sessions": {
@@ -3373,8 +3366,6 @@
     "Ignore %(user)s": "Sivuuta %(user)s",
     "Poll history": "Kyselyhistoria",
     "Edit link": "Muokkaa linkkiä",
-    "Indent decrease": "Sisennyksen vähennys",
-    "Indent increase": "Sisennyksen lisäys",
     "Rejecting invite…": "Hylätään kutsua…",
     "Joining room…": "Liitytään huoneeseen…",
     "Once everyone has joined, you’ll be able to chat": "Voitte keskustella, kun kaikki ovat liittyneet",
@@ -3582,5 +3573,19 @@
     "credits": {
         "default_cover_photo": "<photo>Oletuskansikuva</photo> © <author>Jesús Roncero</author>, käytössä <terms>CC-BY-SA 4.0</terms>:n ehtojen mukaisesti.",
         "twemoji_colr": "<colr>twemoji-colr</colr>-fontti © <author>Mozilla Foundation</author>, käytössä <terms>Apache 2.0</terms>:n ehtojen mukaisesti."
-    }
+    },
+    "composer": {
+        "format_bold": "Lihavoitu",
+        "format_italic": "Kursivointi",
+        "format_underline": "Alleviivaus",
+        "format_strikethrough": "Yliviivattu",
+        "format_increase_indent": "Sisennyksen lisäys",
+        "format_decrease_indent": "Sisennyksen vähennys",
+        "format_inline_code": "Koodi",
+        "format_code_block": "Ohjelmakoodia",
+        "format_link": "Linkki"
+    },
+    "Bold": "Lihavoitu",
+    "Link": "Linkki",
+    "Code": "Koodi"
 }

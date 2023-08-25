@@ -670,8 +670,6 @@
     "Thumbs up": "ຍົກໂປ້",
     "Santa": "ຊານຕາ",
     "Ready": "ຄວາມພ້ອມ/ພ້ອມ",
-    "Code block": "ບລັອກລະຫັດ",
-    "Strikethrough": "ບຸກທະລຸ",
     "Italics": "ໂຕໜັງສືອຽງ",
     "Home options": "ຕົວເລືອກໜ້າຫຼັກ",
     "%(spaceName)s menu": "ເມນູ %(spaceName)s",
@@ -1640,7 +1638,6 @@
     "Start authentication": "ເລີ່ມການພິສູດຢືນຢັນ",
     "Something went wrong in confirming your identity. Cancel and try again.": "ມີບາງຢ່າງຜິດພາດໃນການຢືນຢັນຕົວຕົນຂອງທ່ານ. ຍົກເລີກແລ້ວລອງໃໝ່.",
     "Submit": "ສົ່ງ",
-    "Code": "ລະຫັດ",
     "Please enter the code it contains:": "ກະລຸນາໃສ່ລະຫັດທີ່ມີຢູ່:",
     "A text message has been sent to %(msisdn)s": "ຂໍ້ຄວາມໄດ້ຖືກສົ່ງໄປຫາ %(msisdn)s",
     "Token incorrect": "ໂທເຄັນບໍ່ຖືກຕ້ອງ",
@@ -3051,7 +3048,6 @@
     "Add people": "ເພີ່ມຄົນ",
     "You do not have permissions to invite people to this space": "ທ່ານບໍ່ມີສິດທີ່ຈະເຊີນຄົນເຂົ້າມາໃນພື້ນທີ່ນີ້",
     "Invite to space": "ເຊີນໄປຍັງພື້ນທີ່",
-    "Bold": "ຕົວໜາ",
     "a key signature": "ລາຍເຊັນຫຼັກ",
     "a device cross-signing signature": "ການ cross-signing ອຸປະກອນ",
     "a new cross-signing key signature": "ການລົງລາຍເຊັນ cross-signing ແບບໃໝ່",
@@ -3313,5 +3309,13 @@
         "control": "ປຸ່ມ Ctrl",
         "shift": "ປຸ່ມShift",
         "number": "[ຕົວເລກ]"
-    }
+    },
+    "composer": {
+        "format_bold": "ຕົວໜາ",
+        "format_strikethrough": "ບຸກທະລຸ",
+        "format_inline_code": "ລະຫັດ",
+        "format_code_block": "ບລັອກລະຫັດ"
+    },
+    "Bold": "ຕົວໜາ",
+    "Code": "ລະຫັດ"
 }

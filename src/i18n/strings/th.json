@@ -393,10 +393,6 @@
     "Message Actions": "การดำเนินการกับข้อความ",
     "Text": "ตัวอักษร",
     "Create a link": "สร้างลิงค์",
-    "Link": "ลิงค์",
-    "Code": "โค้ด",
-    "Underline": "ขีดเส้นใต้",
-    "Italic": "ตัวเอียง",
     "Stop recording": "หยุดการบันทึก",
     "We didn't find a microphone on your device. Please check your settings and try again.": "เราไม่พบไมโครโฟนบนอุปกรณ์ของคุณ โปรดตรวจสอบการตั้งค่าของคุณแล้วลองอีกครั้ง.",
     "No microphone found": "ไม่พบไมโครโฟน",
@@ -484,5 +480,13 @@
     },
     "keyboard": {
         "home": "เมนูหลัก"
-    }
+    },
+    "composer": {
+        "format_italic": "ตัวเอียง",
+        "format_underline": "ขีดเส้นใต้",
+        "format_inline_code": "โค้ด",
+        "format_link": "ลิงค์"
+    },
+    "Link": "ลิงค์",
+    "Code": "โค้ด"
 }

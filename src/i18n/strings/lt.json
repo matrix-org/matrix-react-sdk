@@ -159,7 +159,6 @@
     "Failed to copy": "Nepavyko nukopijuoti",
     "A text message has been sent to %(msisdn)s": "Tekstinė žinutė buvo išsiųsta į %(msisdn)s",
     "Please enter the code it contains:": "Įveskite joje esantį kodą:",
-    "Code": "Kodas",
     "Email address": "El. pašto adresas",
     "Something went wrong!": "Kažkas nutiko!",
     "Delete Widget": "Ištrinti valdiklį",
@@ -2295,10 +2294,7 @@
     "Topic: %(topic)s (<a>edit</a>)": "Tema: %(topic)s (<a>redaguoti</a>)",
     "Send your first message to invite <displayName/> to chat": "Siųskite pirmąją žinutę kad pakviestumėte <displayName/> į pokalbį",
     "Insert link": "Įterpti nuorodą",
-    "Code block": "Kodo blokas",
-    "Strikethrough": "Perbrauktas",
     "Italics": "Kursyvas",
-    "Bold": "Pusjuodis",
     "Poll": "Apklausa",
     "You do not have permission to start polls in this room.": "Jūs neturite leidimo pradėti apklausas šiame kambaryje.",
     "Voice Message": "Balso žinutė",
@@ -2526,5 +2522,13 @@
         "control": "Ctrl",
         "shift": "Shift",
         "number": "[skaičius]"
-    }
+    },
+    "composer": {
+        "format_bold": "Pusjuodis",
+        "format_strikethrough": "Perbrauktas",
+        "format_inline_code": "Kodas",
+        "format_code_block": "Kodo blokas"
+    },
+    "Bold": "Pusjuodis",
+    "Code": "Kodas"
 }

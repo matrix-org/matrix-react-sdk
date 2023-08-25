@@ -292,7 +292,6 @@
     "Token incorrect": "Felaktig token",
     "A text message has been sent to %(msisdn)s": "Ett SMS har skickats till %(msisdn)s",
     "Please enter the code it contains:": "Vänligen ange koden det innehåller:",
-    "Code": "Kod",
     "This server does not support authentication with a phone number.": "Denna server stöder inte autentisering via telefonnummer.",
     "Uploading %(filename)s and %(count)s others": {
         "other": "Laddar upp %(filename)s och %(count)s till",
@@ -844,10 +843,7 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Vid inaktivering av användare loggas den ut och förhindras från att logga in igen. Den kommer dessutom att lämna alla rum den befinner sig i. Den här åtgärden kan inte ångras. Är du säker på att du vill inaktivera den här användaren?",
     "Deactivate user": "Inaktivera användaren",
     "Remove recent messages": "Ta bort nyliga meddelanden",
-    "Bold": "Fet",
     "Italics": "Kursiv",
-    "Strikethrough": "Genomstruken",
-    "Code block": "Kodblock",
     "Join the conversation with an account": "Gå med i konversationen med ett konto",
     "Sign Up": "Registrera dig",
     "Prompt before sending invites to potentially invalid matrix IDs": "Fråga innan inbjudningar skickas till potentiellt ogiltiga Matrix-ID:n",
@@ -3373,8 +3369,6 @@
     "Room info": "Rumsinfo",
     "We were unable to start a chat with the other user.": "Vi kunde inte starta en chatt med den andra användaren.",
     "Error starting verification": "Fel vid start av verifiering",
-    "Underline": "Understrykning",
-    "Italic": "Kursivt",
     "View chat timeline": "Visa chattidslinje",
     "Close call": "Stäng samtal",
     "Change layout": "Byt utseende",
@@ -3509,7 +3503,6 @@
     "Text": "Text",
     "Create a link": "Skapa en länk",
     "Edit link": "Redigera länk",
-    "Link": "Länk",
     " in <strong>%(room)s</strong>": " i <strong>%(room)s</strong>",
     "Improve your account security by following these recommendations.": "Förbättra din kontosäkerhet genom att följa dessa rekommendationer.",
     "Sign out of %(count)s sessions": {
@@ -3533,8 +3526,6 @@
     "Connection error": "Anslutningsfel",
     "Failed to read events": "Misslyckades att läsa händelser",
     "Failed to send event": "Misslyckades att skicka händelse",
-    "Numbered list": "Numrerad lista",
-    "Bulleted list": "Punktlista",
     "Decrypted source unavailable": "Avkrypterad källa otillgänglig",
     "Registration token": "Registreringstoken",
     "Enter a registration token provided by the homeserver administrator.": "Ange en registreringstoken försedd av hemserveradministratören.",
@@ -3560,8 +3551,6 @@
     "Notifications debug": "Aviseringsfelsökning",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Alla meddelanden och inbjudningar från den här användaren kommer att döljas. Är du säker på att du vill ignorera denne?",
     "Ignore %(user)s": "Ignorera %(user)s",
-    "Indent decrease": "Minska indrag",
-    "Indent increase": "Öka indrad",
     "unknown": "okänd",
     "Red": "Röd",
     "Grey": "Grå",
@@ -3923,5 +3912,21 @@
         "default_cover_photo": "Det <photo>förvalda omslagsfotot</photo> är © <author>Jesús Roncero</author> och används under villkoren i <terms>CC-BY-SA 4.0</terms>.",
         "twemoji_colr": "Teckensnittet <colr>twemoji-colr</colr> är © <author>Mozilla Foundation</author> och används under villkoren för <terms>Apache 2.0</terms>.",
         "twemoji": "Emojigrafiken <twemoji>Twemoji</twemoji> är © <author>Twitter, Inc och andra bidragsgivare</author> och används under villkoren i <terms>CC-BY 4.0</terms>."
-    }
+    },
+    "composer": {
+        "format_bold": "Fet",
+        "format_italic": "Kursivt",
+        "format_underline": "Understrykning",
+        "format_strikethrough": "Genomstruken",
+        "format_unordered_list": "Punktlista",
+        "format_ordered_list": "Numrerad lista",
+        "format_increase_indent": "Öka indrad",
+        "format_decrease_indent": "Minska indrag",
+        "format_inline_code": "Kod",
+        "format_code_block": "Kodblock",
+        "format_link": "Länk"
+    },
+    "Bold": "Fet",
+    "Link": "Länk",
+    "Code": "Kod"
 }
