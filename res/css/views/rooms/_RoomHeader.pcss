@@ -23,10 +23,13 @@ limitations under the License.
 
 .mx_RoomHeader_info {
     cursor: pointer;
+    flex: 1;
 }
 
-.mx_RoomHeader_info {
-    flex: 1;
+.mx_RoomHeader_heading {
+    display: flex;
+    align-items: center;
+    gap: var(--cpd-space-2x);
 }
 
 .mx_RoomHeader_topic {
@@ -55,4 +58,19 @@ limitations under the License.
     display: flex;
     align-items: center;
     gap: var(--cpd-space-2x);
+    user-select: none;
+    cursor: pointer;
+    padding: var(--cpd-space-2x);
+    border-radius: 9999px;
+}
+
+.mx_RoomHeader_members:hover {
+    color: $primary-content;
+    background: var(--cpd-color-bg-subtle-primary);
+}
+
+.mx_RoomHeader button:disabled
+.mx_RoomHeader button:disabled:hover {
+    color: var(--cpd-color-icon-disabled);
+    background: none;
 }

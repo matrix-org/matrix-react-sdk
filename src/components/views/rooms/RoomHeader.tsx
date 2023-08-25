@@ -19,13 +19,13 @@ import { Avatar, AvatarStack, Body as BodyText, IconButton, Tooltip } from "@vec
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
 import { Icon as ThreadsIcon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
+import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
 import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/icons/notifications-solid.svg";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
-import { EventType } from "matrix-js-sdk/src/matrix";
+import { EventType, JoinRule } from "matrix-js-sdk/src/matrix";
 
 import type { Room } from "matrix-js-sdk/src/matrix";
 import { useRoomName } from "../../../hooks/useRoomName";
-import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { useTopic } from "../../../hooks/room/useTopic";
@@ -33,7 +33,7 @@ import { useAccountData } from "../../../hooks/useAccountData";
 import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 import { useRoomMemberCount, useRoomMembers } from "../../../hooks/useRoomMembers";
 import { mediaFromMxc } from "../../../customisations/Media";
-import { _t, getCurrentLanguage } from "../../../languageHandler";
+import { _t } from "../../../languageHandler";
 import { Flex } from "../../utils/Flex";
 import { Box } from "../../utils/Box";
 import { useRoomCallStatus } from "../../../hooks/room/useRoomCallStatus";
@@ -46,6 +46,9 @@ import { NotificationColor } from "../../../stores/notifications/NotificationCol
 import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
 import SdkConfig from "../../../SdkConfig";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
+import { formatCount } from "../../../utils/FormattingUtils";
+import RoomAvatar from "../avatars/RoomAvatar";
+import { useRoomState } from "../../../hooks/useRoomState";
 
 /**
  * A helper to transform a notification color to the what the Compound Icon Button
@@ -134,6 +137,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const threadNotifications = useRoomThreadNotifications(room);
     const globalNotificationState = useGlobalNotificationState();
 
+    const roomState = useRoomState(room);
+
     return (
         <Flex
             as="header"
@@ -144,7 +149,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                 showOrHidePanel(RightPanelPhases.RoomSummary);
             }}
         >
-            <DecoratedRoomAvatar room={room} size="40px" displayBadge={false} />
+            <RoomAvatar room={room} size="40px" />
             <Box flex="1" className="mx_RoomHeader_info">
                 <BodyText
                     as="div"
@@ -154,8 +159,15 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     title={roomName}
                     role="heading"
                     aria-level={1}
+                    className="mx_RoomHeader_heading"
                 >
                     {roomName}
+
+                    {roomState.getJoinRule() === JoinRule.Public && (
+                        <Tooltip label={_t("This room is public")} side="right">
+                            <PublicIcon width="16px" height="16px" className="mx-text-secondary" />
+                        </Tooltip>
+                    )}
                 </BodyText>
                 {roomTopic && (
                     <BodyText as="div" size="sm" className="mx_RoomHeader_topic">
@@ -238,7 +250,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                             );
                         })}
                     </AvatarStack>
-                    {memberCount.toLocaleString(getCurrentLanguage())}
+                    {formatCount(memberCount)}
                 </BodyText>
             )}
         </Flex>
