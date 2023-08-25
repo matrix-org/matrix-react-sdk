@@ -1220,7 +1220,6 @@
     "This is the beginning of your direct message history with <displayName/>.": "این ابتدای تاریخچه پیام مستقیم شما با <displayName/> است.",
     "Only the two of you are in this conversation, unless either of you invites anyone to join.": "فقط شما دو نفر در این مکالمه حضور دارید ، مگر اینکه یکی از شما کس دیگری را به عضویت دعوت کند.",
     "Italics": "مورب",
-    "%(seconds)ss left": "%(seconds)s ثانیه باقی‌مانده",
     "You do not have permission to post to this room": "شما اجازه ارسال در این اتاق را ندارید",
     "This room has been replaced and is no longer active.": "این اتاق جایگزین شده‌است و دیگر فعال نیست.",
     "The conversation continues here.": "گفتگو در اینجا ادامه دارد.",
@@ -2281,7 +2280,6 @@
     },
     "Some invites couldn't be sent": "بعضی از دعوت ها ارسال نشد",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "ما برای باقی ارسال کردیم، ولی افراد زیر نمی توانند به <RoomName/> دعوت شوند",
-    "%(date)s at %(time)s": "%(date)s ساعت %(time)s",
     "You cannot place calls without a connection to the server.": "شما نمی توانید بدون اتصال به سرور تماس برقرار کنید.",
     "Connectivity to the server has been lost": "اتصال با سرور قطع شده است",
     "You cannot place calls in this browser.": "شما نمیتوانید در این مرورگر تماس برقرار کنید.",
@@ -2329,10 +2327,6 @@
         "one": "%(user)s و ۱ دیگر"
     },
     "%(user1)s and %(user2)s": "%(user1)s و %(user2)s",
-    "%(value)ss": "%(value)sس",
-    "%(value)sm": "%(value)sم",
-    "%(value)sh": "%(value)sh",
-    "%(value)sd": "%(value)sd",
     "Close sidebar": "بستن نوارکناری",
     "Sidebar": "نوارکناری",
     "Show sidebar": "نمایش نوار کناری",
@@ -2649,5 +2643,13 @@
         "github_issue": "مسئله GitHub",
         "download_logs": "دانلود گزارش‌ها",
         "before_submitting": "قبل از ارسال گزارش‌ها، برای توصیف مشکل خود باید <a>یک مسئله در GitHub ایجاد کنید</a>."
+    },
+    "time": {
+        "seconds_left": "%(seconds)s ثانیه باقی‌مانده",
+        "date_at_time": "%(date)s ساعت %(time)s",
+        "short_days": "%(value)sd",
+        "short_hours": "%(value)sh",
+        "short_minutes": "%(value)sم",
+        "short_seconds": "%(value)sس"
     }
 }

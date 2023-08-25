@@ -1690,7 +1690,6 @@
     "There was an error looking up the phone number": "Podczas wyszukiwania numeru telefonu wystąpił błąd",
     "Unable to look up phone number": "Nie można wyszukać numeru telefonu",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Wysłaliśmy pozostałym, ale osoby poniżej nie mogły zostać zaproszone do <RoomName/>",
-    "%(date)s at %(time)s": "%(date)s o %(time)s",
     "%(senderDisplayName)s changed the server ACLs for this room.": "%(senderDisplayName)s zmienił ACLe serwera dla pokoju.",
     "Prepends ┬──┬ ノ( ゜-゜ノ) to a plain-text message": "Dodaje ┬──┬ ノ( ゜-゜ノ) na początku wiadomości tekstowej",
     "%(targetName)s accepted an invitation": "%(targetName)s zaakceptował zaproszenie",
@@ -1977,7 +1976,6 @@
         "other": "%(user)s i %(count)s innych"
     },
     "%(user1)s and %(user2)s": "%(user1)s i %(user2)s",
-    "%(value)sd": "%(value)sd",
     "Send your first message to invite <displayName/> to chat": "Wyślij pierwszą wiadomość, aby zaprosić <displayName/> do rozmowy",
     "Spell check": "Sprawdzanie pisowni",
     "Download %(brand)s Desktop": "Pobierz %(brand)s Desktop",
@@ -2216,15 +2214,6 @@
     "Sidebar": "Pasek boczny",
     "Export chat": "Eksportuj czat",
     "Files": "Pliki",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "pozostało %(hours)s godz. %(minutes)s min. %(seconds)ss",
-    "%(minutes)sm %(seconds)ss left": "pozostało %(minutes)s min. %(seconds)ss",
-    "%(seconds)ss left": "pozostało %(seconds)ss",
-    "%(value)ss": "%(value)ss",
-    "%(minutes)sm %(seconds)ss": "%(minutes)s min. %(seconds)ss",
-    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)s godz. %(minutes)s min. %(seconds)ss",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)s godz. %(minutes)s min. %(seconds)ss",
-    "%(value)sm": "%(value)s min.",
-    "%(value)sh": "%(value)s godz.",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Indywidualnie weryfikuj każdą sesję używaną przez użytkownika, aby oznaczyć ją jako zaufaną, nie ufając urządzeniom weryfikowanym krzyżowo.",
     "Cross-signing private keys:": "Klucze prywatne weryfikacji krzyżowej:",
     "Cross-signing public keys:": "Klucze publiczne weryfikacji krzyżowej:",
@@ -3980,5 +3969,18 @@
         "github_issue": "Zgłoszenie GitHub",
         "download_logs": "Pobierz dzienniki",
         "before_submitting": "Przed wysłaniem logów, <a>zgłoś problem na GitHubie</a> opisujący twój problem."
+    },
+    "time": {
+        "hours_minutes_seconds_left": "pozostało %(hours)s godz. %(minutes)s min. %(seconds)ss",
+        "minutes_seconds_left": "pozostało %(minutes)s min. %(seconds)ss",
+        "seconds_left": "pozostało %(seconds)ss",
+        "date_at_time": "%(date)s o %(time)s",
+        "short_days": "%(value)sd",
+        "short_hours": "%(value)s godz.",
+        "short_minutes": "%(value)s min.",
+        "short_seconds": "%(value)ss",
+        "short_days_hours_minutes_seconds": "%(days)sd %(hours)s godz. %(minutes)s min. %(seconds)ss",
+        "short_hours_minutes_seconds": "%(hours)s godz. %(minutes)s min. %(seconds)ss",
+        "short_minutes_seconds": "%(minutes)s min. %(seconds)ss"
     }
 }

@@ -1451,7 +1451,6 @@
     "St. Pierre & Miquelon": "Saint-Pierre og Miquelon",
     "St. Martin": "Saint Martin",
     "St. Barthélemy": "Saint Barthélemy",
-    "%(date)s at %(time)s": "%(date)s klokken %(time)s",
     "You cannot place calls without a connection to the server.": "Du kan ikke ringe uten tilkobling til serveren.",
     "Connectivity to the server has been lost": "Mistet forbindelsen til serveren",
     "You cannot place calls in this browser.": "Du kan ikke ringe i denne nettleseren.",
@@ -1607,5 +1606,8 @@
         "title": "Feilrapportering",
         "send_logs": "Send loggbøker",
         "github_issue": "Github-saksrapport"
+    },
+    "time": {
+        "date_at_time": "%(date)s klokken %(time)s"
     }
 }

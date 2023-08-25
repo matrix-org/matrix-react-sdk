@@ -2203,7 +2203,6 @@
     "Failed to send": "Nepodarilo sa odoslať",
     "Reset everything": "Obnoviť všetko",
     "View message": "Zobraziť správu",
-    "%(seconds)ss left": "%(seconds)ss ostáva",
     "We couldn't create your DM.": "Nemohli sme vytvoriť vašu priamu správu.",
     "unknown person": "neznáma osoba",
     "%(deviceId)s from %(ip)s": "%(deviceId)s z %(ip)s",
@@ -2350,7 +2349,6 @@
         "other": "%(spaceName)s a %(count)s ďalší"
     },
     "Some invites couldn't be sent": "Niektoré pozvánky nebolo možné odoslať",
-    "%(date)s at %(time)s": "%(date)s o %(time)s",
     "Toggle space panel": "Prepnúť panel priestoru",
     "Enter your Security Phrase a second time to confirm it.": "Zadajte svoju bezpečnostnú frázu znova, aby ste ju potvrdili.",
     "Enter a Security Phrase": "Zadajte bezpečnostnú frázu",
@@ -2982,10 +2980,6 @@
         "one": "V súčasnosti sa odstraňujú správy v %(count)s miestnosti",
         "other": "V súčasnosti sa odstraňujú správy v %(count)s miestnostiach"
     },
-    "%(value)ss": "%(value)ss",
-    "%(value)sm": "%(value)sm",
-    "%(value)sh": "%(value)sh",
-    "%(value)sd": "%(value)sd",
     "Share for %(duration)s": "Zdieľať na %(duration)s",
     "%(timeRemaining)s left": "zostáva %(timeRemaining)s",
     "Next recently visited room or space": "Ďalšia nedávno navštívená miestnosť alebo priestor",
@@ -3435,8 +3429,6 @@
     "When enabled, the other party might be able to see your IP address": "Ak je táto možnosť povolená, druhá strana môže vidieť vašu IP adresu",
     "Allow Peer-to-Peer for 1:1 calls": "Povolenie Peer-to-Peer pre hovory 1:1",
     "Go live": "Prejsť naživo",
-    "%(minutes)sm %(seconds)ss left": "ostáva %(minutes)sm %(seconds)ss",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "ostáva %(hours)sh %(minutes)sm %(seconds)ss",
     "That e-mail address or phone number is already in use.": "Táto e-mailová adresa alebo telefónne číslo sa už používa.",
     "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Toto znamená, že máte všetky kľúče potrebné na odomknutie zašifrovaných správ a potvrdzujete ostatným používateľom, že tejto relácii dôverujete.",
     "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Overené relácie sú všade tam, kde používate toto konto po zadaní svojho prístupového hesla alebo po potvrdení vašej totožnosti inou overenou reláciou.",
@@ -3459,9 +3451,6 @@
     "Too many attempts in a short time. Wait some time before trying again.": "Príliš veľa pokusov v krátkom čase. Pred ďalším pokusom počkajte nejakú dobu.",
     "Thread root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
     "Change input device": "Zmeniť vstupné zariadenie",
-    "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)ss",
-    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sh %(minutes)sm %(seconds)ss",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
     "We were unable to start a chat with the other user.": "Nepodarilo sa nám spustiť konverzáciu s druhým používateľom.",
     "Error starting verification": "Chyba pri spustení overovania",
     "Buffering…": "Načítavanie do vyrovnávacej pamäte…",
@@ -3998,5 +3987,18 @@
         "github_issue": "Správa o probléme na GitHub",
         "download_logs": "Stiahnuť záznamy",
         "before_submitting": "Pred tým, než odošlete záznamy, musíte <a>nahlásiť váš problém na GitHub</a>. Uvedte prosím podrobný popis."
+    },
+    "time": {
+        "hours_minutes_seconds_left": "ostáva %(hours)sh %(minutes)sm %(seconds)ss",
+        "minutes_seconds_left": "ostáva %(minutes)sm %(seconds)ss",
+        "seconds_left": "%(seconds)ss ostáva",
+        "date_at_time": "%(date)s o %(time)s",
+        "short_days": "%(value)sd",
+        "short_hours": "%(value)sh",
+        "short_minutes": "%(value)sm",
+        "short_seconds": "%(value)ss",
+        "short_days_hours_minutes_seconds": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
+        "short_hours_minutes_seconds": "%(hours)sh %(minutes)sm %(seconds)ss",
+        "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
     }
 }

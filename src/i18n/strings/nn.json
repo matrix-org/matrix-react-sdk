@@ -906,7 +906,6 @@
     "United States": "Sambandsstatane (USA)",
     "United Kingdom": "Storbritannia",
     "We couldn't log you in": "Vi klarte ikkje å logga deg inn",
-    "%(date)s at %(time)s": "%(date)s klokka %(time)s",
     "Too Many Calls": "For mange samtalar",
     "Unable to access microphone": "Får ikkje tilgang til mikrofonen",
     "The call could not be established": "Samtalen kunne ikkje opprettast",
@@ -1006,13 +1005,6 @@
     "Permission is granted to use the webcam": "Tilgang til nettkamera er aktivert",
     "A microphone and webcam are plugged in and set up correctly": "Du har kopla til mikrofon og nettkamera, og at desse fungerer som dei skal",
     "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "Samtalen feila fordi mikrofonen ikkje kunne aktiverast. Sjekk att ein mikrofon er tilkopla og at den fungerer.",
-    "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)ss",
-    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)st %(minutes)sm %(seconds)ss",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)st %(minutes)sm %(seconds)ss",
-    "%(value)sd": "%(value)sd",
-    "%(seconds)ss left": "%(seconds)ss att",
-    "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss att",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)st %(minutes)sm %(seconds)ss att",
     "common": {
         "analytics": "Statistikk",
         "error": "Noko gjekk gale",
@@ -1114,5 +1106,15 @@
         "title": "Feilrapportering",
         "additional_context": "Om du har meir info rundt korleis problemet oppstod, som kva du prøvde å gjere på det tidspunktet, brukar-IDar m.m ,inkluder gjerne den informasjonen her.",
         "send_logs": "Send loggar inn"
+    },
+    "time": {
+        "hours_minutes_seconds_left": "%(hours)st %(minutes)sm %(seconds)ss att",
+        "minutes_seconds_left": "%(minutes)sm %(seconds)ss att",
+        "seconds_left": "%(seconds)ss att",
+        "date_at_time": "%(date)s klokka %(time)s",
+        "short_days": "%(value)sd",
+        "short_days_hours_minutes_seconds": "%(days)sd %(hours)st %(minutes)sm %(seconds)ss",
+        "short_hours_minutes_seconds": "%(hours)st %(minutes)sm %(seconds)ss",
+        "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
     }
 }

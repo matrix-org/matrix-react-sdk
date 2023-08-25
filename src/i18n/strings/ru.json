@@ -2358,7 +2358,6 @@
     "View message": "Посмотреть сообщение",
     "End-to-end encryption isn't enabled": "Сквозное шифрование не включено",
     "Invite to just this room": "Пригласить только в эту комнату",
-    "%(seconds)ss left": "%(seconds)s осталось",
     "Show %(count)s other previews": {
         "one": "Показать %(count)s другой предварительный просмотр",
         "other": "Показать %(count)s других предварительных просмотров"
@@ -2541,7 +2540,6 @@
     "Are you sure you want to exit during this export?": "Вы уверены, что хотите выйти во время экспорта?",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s отправил(а) наклейку.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s изменил(а) аватар комнаты.",
-    "%(date)s at %(time)s": "%(date)s в %(time)s",
     "Select from the options below to export chats from your timeline": "Выберите один из приведенных ниже вариантов экспорта чатов из вашей временной шкалы",
     "Current Timeline": "Текущая лента сообщений",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "Сброс ключей проверки нельзя отменить. После сброса вы не сможете получить доступ к старым зашифрованным сообщениям, а друзья, которые ранее проверили вас, будут видеть предупреждения о безопасности, пока вы не пройдете повторную проверку.",
@@ -2974,10 +2972,6 @@
     "User is already in the room": "Пользователь уже в комнате",
     "User is already invited to the room": "Пользователь уже приглашён в комнату",
     "Failed to invite users to %(roomName)s": "Не удалось пригласить пользователей в %(roomName)s",
-    "%(value)ss": "%(value)sс",
-    "%(value)sm": "%(value)sм",
-    "%(value)sh": "%(value)sч",
-    "%(value)sd": "%(value)sд",
     "Enable Markdown": "Использовать Markdown",
     "The person who invited you has already left.": "Человек, который вас пригласил, уже ушёл.",
     "There was an error joining.": "Ошибка при вступлении.",
@@ -3357,8 +3351,6 @@
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "У вас нет необходимых разрешений, чтобы начать голосовую трансляцию в этой комнате. Свяжитесь с администратором комнаты для получения разрешений.",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Вы уже записываете голосовую трансляцию. Пожалуйста, завершите текущую голосовую трансляцию, чтобы начать новую.",
     "Can't start a new voice broadcast": "Не получилось начать новую голосовую трансляцию",
-    "%(minutes)sm %(seconds)ss left": "Осталось %(minutes)sм %(seconds)sс",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "Осталось %(hours)sч %(minutes)sм %(seconds)sс",
     "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Подтверждённые сеансы — это везде, где вы используете учётную запись после ввода кодовой фразы или идентификации через другой сеанс.",
     "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Сочтите выйти из старых сеансов (%(inactiveAgeDays)s дней и более), которые вы более не используете.",
     "This session doesn't support encryption and thus can't be verified.": "Этот сеанс не поддерживает шифрование, потому и не может быть подтверждён.",
@@ -3453,9 +3445,6 @@
     "Can’t start a call": "Невозможно начать звонок",
     "Failed to read events": "Не удалось считать события",
     "Failed to send event": "Не удалось отправить событие",
-    "%(minutes)sm %(seconds)ss": "%(minutes)s мин %(seconds)s с",
-    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)s ч %(minutes)s мин %(seconds)s с",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)s д %(hours)s ч %(minutes)s мин %(seconds)s с",
     "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "Время экспериментов? Попробуйте наши последние наработки. Эти функции не заверешены; они могут быть нестабильными, постоянно меняющимися, или вовсе отброшенными. <a>Узнайте больше</a>.",
     "Early previews": "Предпросмотр",
     "Yes, it was me": "Да, это я",
@@ -3685,5 +3674,18 @@
         "github_issue": "GitHub вопрос",
         "download_logs": "Скачать журналы",
         "before_submitting": "Перед отправкой логов необходимо <a>создать GitHub issue</a>, для описания проблемы."
+    },
+    "time": {
+        "hours_minutes_seconds_left": "Осталось %(hours)sч %(minutes)sм %(seconds)sс",
+        "minutes_seconds_left": "Осталось %(minutes)sм %(seconds)sс",
+        "seconds_left": "%(seconds)s осталось",
+        "date_at_time": "%(date)s в %(time)s",
+        "short_days": "%(value)sд",
+        "short_hours": "%(value)sч",
+        "short_minutes": "%(value)sм",
+        "short_seconds": "%(value)sс",
+        "short_days_hours_minutes_seconds": "%(days)s д %(hours)s ч %(minutes)s мин %(seconds)s с",
+        "short_hours_minutes_seconds": "%(hours)s ч %(minutes)s мин %(seconds)s с",
+        "short_minutes_seconds": "%(minutes)s мин %(seconds)s с"
     }
 }

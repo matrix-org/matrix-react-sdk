@@ -242,10 +242,6 @@
     "Only continue if you trust the owner of the server.": "ดำเนินการต่อหากคุณไว้วางใจเจ้าของเซิร์ฟเวอร์เท่านั้น.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "การดำเนินการนี้จำเป็นต้องเข้าถึงเซิร์ฟเวอร์ identity เริ่มต้น <server /> เพื่อตรวจสอบที่อยู่อีเมลหรือหมายเลขโทรศัพท์ แต่เซิร์ฟเวอร์ไม่มีข้อกำหนดในการให้บริการใดๆ.",
     "Identity server has no terms of service": "เซิร์ฟเวอร์ประจำตัวไม่มีข้อกำหนดในการให้บริการ",
-    "%(date)s at %(time)s": "%(date)s เมื่อ %(time)s",
-    "%(seconds)ss left": "%(seconds)ss ที่ผ่านมา",
-    "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss ที่ผ่านมา",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sh %(minutes)sm %(seconds)ss ที่ผ่านมา",
     "The server does not support the room version specified.": "เซิร์ฟเวอร์ไม่รองรับเวอร์ชันห้องที่ระบุ.",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "ไฟล์ '%(fileName)s' เกินขีดจำกัดขนาดของโฮมเซิร์ฟเวอร์นี้สำหรับการอัปโหลด",
     "The file '%(fileName)s' failed to upload.": "ไฟล์ '%(fileName)s' อัปโหลดไม่สำเร็จ.",
@@ -495,5 +491,11 @@
     },
     "bug_reporting": {
         "send_logs": "ส่งล็อก"
+    },
+    "time": {
+        "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss ที่ผ่านมา",
+        "minutes_seconds_left": "%(minutes)sm %(seconds)ss ที่ผ่านมา",
+        "seconds_left": "%(seconds)ss ที่ผ่านมา",
+        "date_at_time": "%(date)s เมื่อ %(time)s"
     }
 }

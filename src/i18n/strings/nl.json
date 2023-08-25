@@ -2204,7 +2204,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Alles vergeten en alle herstelmethoden verloren? <a>Alles opnieuw instellen</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Als je dat doet, let wel op dat geen van jouw berichten wordt verwijderd, maar de zoekresultaten zullen gedurende enkele ogenblikken verslechteren terwijl de index opnieuw wordt aangemaakt",
     "View message": "Bericht bekijken",
-    "%(seconds)ss left": "%(seconds)s's over",
     "Change server ACLs": "Wijzig server ACL's",
     "You can select all or individual messages to retry or delete": "Je kan alles selecteren of per individueel bericht opnieuw versturen of verwijderen",
     "Sending": "Wordt verstuurd",
@@ -2514,7 +2513,6 @@
     "Don't leave any rooms": "Geen kamers verlaten",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s Verstuurde een sticker.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s veranderde de kamerafbeelding.",
-    "%(date)s at %(time)s": "%(date)s om %(time)s",
     "Include Attachments": "Bijlages toevoegen",
     "Size Limit": "Bestandsgrootte",
     "Format": "Formaat",
@@ -2920,10 +2918,6 @@
     "No virtual room for this room": "Geen virtuele ruimte voor deze ruimte",
     "Switches to this room's virtual room, if it has one": "Schakelt over naar de virtuele kamer van deze kamer, als die er is",
     "Failed to invite users to %(roomName)s": "Kan personen niet uitnodigen voor %(roomName)s",
-    "%(value)ss": "%(value)ss",
-    "%(value)sm": "%(value)sm",
-    "%(value)sh": "%(value)sh",
-    "%(value)sd": "%(value)sd",
     "Observe only": "Alleen observeren",
     "Requester": "Aanvrager",
     "Methods": "Methoden",
@@ -3603,5 +3597,13 @@
         "github_issue": "GitHub-melding",
         "download_logs": "Logs downloaden",
         "before_submitting": "Voordat je logs indient, dien je jouw probleem te melden <a>in een GitHub issue</a>."
+    },
+    "time": {
+        "seconds_left": "%(seconds)s's over",
+        "date_at_time": "%(date)s om %(time)s",
+        "short_days": "%(value)sd",
+        "short_hours": "%(value)sh",
+        "short_minutes": "%(value)sm",
+        "short_seconds": "%(value)ss"
     }
 }

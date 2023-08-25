@@ -2532,7 +2532,6 @@
     "Mute microphone": "ປິດສຽງໄມໂຄຣໂຟນ",
     "Audio devices": "ອຸປະກອນສຽງ",
     "Dial": "ໂທ",
-    "%(date)s at %(time)s": "%(date)s at %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s%(day)s%(fullYear)s%(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Tuesday": "ວັນອັງຄານ",
@@ -3027,10 +3026,6 @@
     "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
     "* %(senderName)s %(emote)s": "* %(senderName)s%(emote)s",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "ອຸປະກອນນີ້ບໍ່ສາມາດຮັບປະກັນຄວາມຖືກຕ້ອງຂອງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດນີ້ໄດ້.",
-    "%(value)ss": "%(value)ss",
-    "%(value)sm": "%(value)sm",
-    "%(value)sh": "%(value)sh",
-    "%(value)sd": "%(value)sd",
     "Reply to encrypted thread…": "ຕອບກັບກະທູ້ທີ່ເຂົ້າລະຫັດໄວ້…",
     "Send message": "ສົ່ງຂໍ້ຄວາມ",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (power %(powerLevelNumber)s)",
@@ -3111,7 +3106,6 @@
     "Hide stickers": "ເຊື່ອງສະຕິກເກີ",
     "Emoji": "ອີໂມຈິ",
     "Send voice message": "ສົ່ງຂໍ້ຄວາມສຽງ",
-    "%(seconds)ss left": "ຍັງເຫຼືອ %(seconds)s",
     "You do not have permission to post to this room": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ໂພສໃສ່ຫ້ອງນີ້",
     "This room has been replaced and is no longer active.": "ຫ້ອງນີ້ໄດ້ໍປ່ຽນແທນ ແລະບໍ່ມີການເຄື່ອນໄຫວອີກຕໍ່ໄປ.",
     "The conversation continues here.": "ການສົນທະນາສືບຕໍ່ຢູ່ທີ່ນີ້.",
@@ -3327,5 +3321,13 @@
         "github_issue": "ບັນຫາ GitHub",
         "download_logs": "ບັນທຶກການດາວໂຫຼດ",
         "before_submitting": "ກ່ອນທີ່ຈະສົ່ງບັນທຶກ, ທ່ານຕ້ອງ <a>ສ້າງບັນຫາ GitHub</a> ເພື່ອອະທິບາຍບັນຫາຂອງທ່ານ."
+    },
+    "time": {
+        "seconds_left": "ຍັງເຫຼືອ %(seconds)s",
+        "date_at_time": "%(date)s at %(time)s",
+        "short_days": "%(value)sd",
+        "short_hours": "%(value)sh",
+        "short_minutes": "%(value)sm",
+        "short_seconds": "%(value)ss"
     }
 }

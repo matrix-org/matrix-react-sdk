@@ -1250,7 +1250,6 @@
     "Unable to look up phone number": "تعذر العثور على رقم الهاتف",
     "The user you called is busy.": "المستخدم الذي اتصلت به مشغول.",
     "User Busy": "المستخدم مشغول",
-    "%(date)s at %(time)s": "%(date)s في %(time)s",
     "You cannot place calls without a connection to the server.": "لا يمكنك إجراء المكالمات دون اتصال بالخادوم.",
     "Connectivity to the server has been lost": "فُقد الاتصال بالخادوم",
     "You cannot place calls in this browser.": "لا يمكنك إجراء المكالمات في هذا المتصفّح.",
@@ -1355,5 +1354,8 @@
         "submit_debug_logs": "إرسال سجلات تصحيح الأخطاء",
         "title": "الإبلاغ عن مشاكل في البرنامج",
         "send_logs": "إرسال السِجلات"
+    },
+    "time": {
+        "date_at_time": "%(date)s في %(time)s"
     }
 }

@@ -2092,7 +2092,6 @@
     "Connectivity to the server has been lost": "נותק החיבור מול השרת",
     "You cannot place calls in this browser.": "לא ניתן לבצע שיחות בדפדפן זה.",
     "Calls are unsupported": "שיחות לא נתמכות",
-    "%(date)s at %(time)s": "%(date)s בשעה %(time)s",
     "%(oldDisplayName)s changed their display name to %(displayName)s": "%(oldDisplayName)s בחר/ה שם תצוגה חדש - %(displayName)s",
     "Your new device is now verified. Other users will see it as trusted.": "המכשיר שלך מוגדר כעת כמאומת. משתמשים אחרים יראו אותו כמכשיר מהימן.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "המכשיר שלך מוגדר כעת כמאומת. יש לו גישה להודעות המוצפנות שלך ומשתמשים אחרים יראו אותו כמכשיר מהימן.",
@@ -2213,10 +2212,6 @@
     "%(senderDisplayName)s changed who can join this room.": "%(senderDisplayName)s שינה את הגדרת המורשים להצטרף לחדר.",
     "%(senderDisplayName)s changed who can join this room. <a>View settings</a>.": "%(senderDisplayName)s שינה את הגדרת המורשים להצטרף לחדר. <a>הגדרות</a>",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s שינה את תמונת החדר.",
-    "%(value)ss": "%(value)s שניות",
-    "%(value)sm": "%(value)s דקות",
-    "%(value)sh": "%(value)s שעות",
-    "%(value)sd": "%(value)s ימים",
     "The user you called is busy.": "המשתמש עסוק כרגע.",
     "User Busy": "המשתמש עסוק",
     "Great! This Security Phrase looks strong enough.": "מצוין! ביטוי אבטחה זה נראה מספיק חזק.",
@@ -2616,9 +2611,6 @@
     "Pinned": "הודעות נעוצות",
     "Nothing pinned, yet": "אין הודעות נעוצות, לבינתיים",
     "Files": "קבצים",
-    "%(seconds)ss left": "נשארו %(seconds)s שניות",
-    "%(minutes)sm %(seconds)ss left": "נשארו %(minutes)s דקות ו-%(seconds)s שניות",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "נשארו %(hours)s שעות, %(minutes)s דקות ו-%(seconds)s שניות",
     "Manage pinned events": "נהל אירועים נעוצים",
     "When enabled, the other party might be able to see your IP address": "כאשר מופעל, הצד השני יוכל לראות את כתובת ה-IP שלך",
     "Allow Peer-to-Peer for 1:1 calls": "אפשר חיבור ישיר (Peer-to-Peer) בשיחות 1:1",
@@ -2793,5 +2785,15 @@
         "github_issue": "סוגיית GitHub",
         "download_logs": "הורד יומנים",
         "before_submitting": "לפני שמגישים יומנים, עליכם <a> ליצור בעיה של GitHub </a> כדי לתאר את הבעיה שלכם."
+    },
+    "time": {
+        "hours_minutes_seconds_left": "נשארו %(hours)s שעות, %(minutes)s דקות ו-%(seconds)s שניות",
+        "minutes_seconds_left": "נשארו %(minutes)s דקות ו-%(seconds)s שניות",
+        "seconds_left": "נשארו %(seconds)s שניות",
+        "date_at_time": "%(date)s בשעה %(time)s",
+        "short_days": "%(value)s ימים",
+        "short_hours": "%(value)s שעות",
+        "short_minutes": "%(value)s דקות",
+        "short_seconds": "%(value)s שניות"
     }
 }

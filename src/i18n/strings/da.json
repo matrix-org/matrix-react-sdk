@@ -659,7 +659,6 @@
     "Algeria": "Algeriet",
     "Åland Islands": "Ålandsøerne",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Vi spurgte din browser om at huske hvilken homeserver du bruger for at logge på, men din browser har desværre glemt det. Gå til log ind siden og prøv igen.",
-    "%(date)s at %(time)s": "%(date)s om %(time)s",
     "Failed to transfer call": "Kunne ikke omstille opkald",
     "Transfer Failed": "Omstilling fejlede",
     "Unable to transfer call": "Kan ikke omstille opkald",
@@ -730,5 +729,8 @@
     "bug_reporting": {
         "submit_debug_logs": "Indsend debug-logfiler",
         "send_logs": "Send logs"
+    },
+    "time": {
+        "date_at_time": "%(date)s om %(time)s"
     }
 }

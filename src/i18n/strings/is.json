@@ -472,7 +472,6 @@
     "Welcome to <name/>": "Velkomin í <name/>",
     "Welcome to %(appName)s": "Velkomin í %(appName)s",
     "Identity server": "Auðkennisþjónn",
-    "%(date)s at %(time)s": "%(date)s kl. %(time)s",
     "Unable to access microphone": "Mistókst að ná aðgangi að hljóðnema",
     "Search for rooms": "Leita að spjallrásum",
     "Create a new room": "Búa til nýja spjallrás",
@@ -1391,7 +1390,6 @@
     "Topic: %(topic)s (<a>edit</a>)": "Umfjöllunarefni: %(topic)s (<a>edit</a>)",
     "You do not have permission to start polls in this room.": "Þú hefur ekki aðgangsheimildir til að hefja kannanir á þessari spjallrás.",
     "Send voice message": "Senda talskilaboð",
-    "%(seconds)ss left": "%(seconds)ssek eftir",
     "Invite to this space": "Bjóða inn á þetta svæði",
     "and %(count)s others...": {
         "one": "og einn í viðbót...",
@@ -2140,10 +2138,6 @@
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s voru ekki gefnar heimildir til að senda þér tilkynningar - reyndu aftur",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s hefur ekki heimildir til að senda þér tilkynningar - yfirfarðu stillingar vafrans þíns",
     "%(name)s is requesting verification": "%(name)s biður um sannvottun",
-    "%(value)ss": "%(value)ss",
-    "%(value)sm": "%(value)sm",
-    "%(value)sh": "%(value)sklst",
-    "%(value)sd": "%(value)sd",
     "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s er að setja dulrituð skilaboð leynilega í skyndiminni á tækinu svo þau birtist í leitarniðurstöðum:",
     "Confirm Security Phrase": "Staðfestu öryggisfrasa",
     "Confirm your Security Phrase": "Staðfestu öryggisfrasann þinn",
@@ -3126,11 +3120,6 @@
     "Failed to read events": "Mistókst að lesa atburði",
     "Failed to send event": "Mistókst að senda atburð",
     "%(senderName)s started a voice broadcast": "%(senderName)s hóf talútsendingu",
-    "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)ss",
-    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sk %(minutes)sm %(seconds)ss",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)sk %(minutes)sm %(seconds)ss",
-    "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss eftir",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sk %(minutes)sm %(seconds)ss eftir",
     "Unable to show image due to error": "Get ekki birt mynd vegna villu",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessu svæði, verður ómögulegt að ná aftur stjórn á því.",
@@ -3387,5 +3376,18 @@
         "send_logs": "Senda atvikaskrá",
         "github_issue": "Villutilkynning á GitHub",
         "download_logs": "Niðurhal atvikaskrá"
+    },
+    "time": {
+        "hours_minutes_seconds_left": "%(hours)sk %(minutes)sm %(seconds)ss eftir",
+        "minutes_seconds_left": "%(minutes)sm %(seconds)ss eftir",
+        "seconds_left": "%(seconds)ssek eftir",
+        "date_at_time": "%(date)s kl. %(time)s",
+        "short_days": "%(value)sd",
+        "short_hours": "%(value)sklst",
+        "short_minutes": "%(value)sm",
+        "short_seconds": "%(value)ss",
+        "short_days_hours_minutes_seconds": "%(days)sd %(hours)sk %(minutes)sm %(seconds)ss",
+        "short_hours_minutes_seconds": "%(hours)sk %(minutes)sm %(seconds)ss",
+        "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
     }
 }

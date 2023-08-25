@@ -2214,7 +2214,6 @@
         "one": "Ver 1 miembro",
         "other": "Ver los %(count)s miembros"
     },
-    "%(seconds)ss left": "%(seconds)ss restantes",
     "Failed to send": "No se ha podido mandar",
     "Change server ACLs": "Cambiar los ACLs del servidor",
     "Enter your Security Phrase a second time to confirm it.": "Escribe tu frase de seguridad de nuevo para confirmarla.",
@@ -2537,7 +2536,6 @@
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s cambió la imagen de la sala.",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s envió una pegatina.",
     "Size can only be a number between %(min)s MB and %(max)s MB": "El tamaño solo puede ser un número de %(min)s a %(max)s MB",
-    "%(date)s at %(time)s": "%(date)s a la(s) %(time)s",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "Parece que no tienes una clave de seguridad u otros dispositivos para la verificación.  Este dispositivo no podrá acceder los mensajes cifrados antiguos. Para verificar tu identidad en este dispositivo, tendrás que restablecer tus claves de verificación.",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "Una vez restableces las claves de verificación, no lo podrás deshacer. Después de restablecerlas, no podrás acceder a los mensajes cifrados antiguos, y cualquier persona que te haya verificado verá avisos de seguridad hasta que vuelvas a hacer la verificación con ella.",
     "I'll verify later": "La verificaré en otro momento",
@@ -2983,10 +2981,6 @@
         "one": "Borrando mensajes en %(count)s sala",
         "other": "Borrando mensajes en %(count)s salas"
     },
-    "%(value)ss": "%(value)s s",
-    "%(value)sm": "%(value)s min",
-    "%(value)sh": "%(value)s h",
-    "%(value)sd": "%(value)s d",
     "Send custom state event": "Enviar evento de estado personalizado",
     "Failed to send event!": "¡Fallo al enviar el evento!",
     "Send custom account data event": "Enviar evento personalizado de cuenta de sala",
@@ -3381,7 +3375,6 @@
     "Record the client name, version, and url to recognise sessions more easily in session manager": "Registrar el nombre del cliente, la versión y URL para reconocer de forma más fácil las sesiones en el gestor",
     "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Considera cerrar sesión en los dispositivos que ya no uses (hace %(inactiveAgeDays)s días o más).",
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Puedes usar este dispositivo para iniciar sesión en uno nuevo escaneando un código QR. Tendrás que escanearlo con el nuevo dispositivo que quieras usar para iniciar sesión.",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "queda(n) %(hours)sh %(minutes)sm %(seconds)ss",
     "That e-mail address or phone number is already in use.": "La dirección de e-mail o el número de teléfono ya está en uso.",
     "Completing set up of your new device": "Terminando de configurar tu nuevo dispositivo",
     "Waiting for device to sign in": "Esperando a que el dispositivo inicie sesión",
@@ -3396,7 +3389,6 @@
     "By approving access for this device, it will have full access to your account.": "Si apruebas acceso a este dispositivo, tendrá acceso completo a tu cuenta.",
     "Scan the QR code below with your device that's signed out.": "Escanea el siguiente código QR con tu dispositivo.",
     "Start at the sign in screen": "Ve a la pantalla de inicio de sesión",
-    "%(minutes)sm %(seconds)ss left": "queda(n) %(minutes)sm %(seconds)ss",
     "Sign in with QR code": "Iniciar sesión con código QR",
     "Automatically adjust the microphone volume": "Ajustar el volumen del micrófono automáticamente",
     "Voice settings": "Ajustes de voz",
@@ -3467,9 +3459,6 @@
     "Add privileged users": "Añadir usuarios privilegiados",
     "Requires compatible homeserver.": "Es necesario que el servidor base sea compatible.",
     "Low bandwidth mode": "Modo de bajo ancho de banda",
-    "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)ss",
-    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sh %(minutes)sm %(seconds)ss",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "No puedes empezar una llamada, porque estás grabando una retransmisión en directo. Por favor, finaliza tu retransmisión en directo para empezar la llamada.",
     "Can’t start a call": "No se ha podido empezar la llamada",
     "Failed to read events": "No se han podido leer los eventos",
@@ -3804,5 +3793,18 @@
         "github_issue": "Incidencia de GitHub",
         "download_logs": "Descargar registros",
         "before_submitting": "Antes de enviar los registros debes <a>crear una incidencia en GitHub</a> describiendo el problema."
+    },
+    "time": {
+        "hours_minutes_seconds_left": "queda(n) %(hours)sh %(minutes)sm %(seconds)ss",
+        "minutes_seconds_left": "queda(n) %(minutes)sm %(seconds)ss",
+        "seconds_left": "%(seconds)ss restantes",
+        "date_at_time": "%(date)s a la(s) %(time)s",
+        "short_days": "%(value)s d",
+        "short_hours": "%(value)s h",
+        "short_minutes": "%(value)s min",
+        "short_seconds": "%(value)s s",
+        "short_days_hours_minutes_seconds": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
+        "short_hours_minutes_seconds": "%(hours)sh %(minutes)sm %(seconds)ss",
+        "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
     }
 }

@@ -1845,7 +1845,6 @@
     "Suggested Rooms": "Önerilen Odalar",
     "View message": "Mesajı görüntüle",
     "Invite to just this room": "Sadece bu odaya davet et",
-    "%(seconds)ss left": "%(seconds)s saniye kaldı",
     "Send message": "Mesajı gönder",
     "Your message was sent": "Mesajınız gönderildi",
     "Code blocks": "Kod blokları",
@@ -2050,5 +2049,8 @@
         "github_issue": "GitHub sorunu",
         "download_logs": "Günlükleri indir",
         "before_submitting": "Logları göndermeden önce, probleminizi betimleyen <a>bir GitHub talebi oluşturun</a>."
+    },
+    "time": {
+        "seconds_left": "%(seconds)s saniye kaldı"
     }
 }

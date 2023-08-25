@@ -1972,11 +1972,6 @@
     "Not a valid identity server (status code %(code)s)": "Невалиден сървър за самоличност (статус код %(code)s)",
     "Identity server URL must be HTTPS": "Адресът на сървъра за самоличност трябва да бъде HTTPS",
     "Failed to invite users to %(roomName)s": "Неуспешна покана на потребителите към %(roomName)s",
-    "%(value)ss": "%(value)sс",
-    "%(value)sm": "%(value)sм",
-    "%(value)sh": "%(value)sч",
-    "%(value)sd": "%(value)sд",
-    "%(date)s at %(time)s": "%(date)s в %(time)s",
     "Failed to transfer call": "Неуспешно прехвърляне на повикване",
     "Transfer Failed": "Трансферът Неуспешен",
     "Unable to transfer call": "Не може да се прехвърли обаждането",
@@ -2144,5 +2139,12 @@
         "github_issue": "GitHub проблем",
         "download_logs": "Изтегли на логове",
         "before_submitting": "Преди да изпратите логове, трябва да <a>отворите доклад за проблем в Github</a>."
+    },
+    "time": {
+        "date_at_time": "%(date)s в %(time)s",
+        "short_days": "%(value)sд",
+        "short_hours": "%(value)sч",
+        "short_minutes": "%(value)sм",
+        "short_seconds": "%(value)sс"
     }
 }

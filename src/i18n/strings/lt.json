@@ -1700,7 +1700,6 @@
     "Mozambique": "Mozambikas",
     "Bahamas": "Bahamų salos",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Paprašėme naršyklės įsiminti, kurį namų serverį naudojate prisijungimui, bet, deja, naršyklė tai pamiršo. Eikite į prisijungimo puslapį ir bandykite dar kartą.",
-    "%(date)s at %(time)s": "%(date)s %(time)s",
     "Transfer Failed": "Perdavimas Nepavyko",
     "Unable to transfer call": "Nepavyksta perduoti skambučio",
     "There was an error looking up the phone number": "Įvyko klaida ieškant telefono numerio",
@@ -2293,7 +2292,6 @@
     "Voice broadcast": "Balso transliacija",
     "Hide stickers": "Slėpti lipdukus",
     "Send voice message": "Siųsti balso žinutę",
-    "%(seconds)ss left": "%(seconds)ss liko",
     "Send a reply…": "Siųsti atsakymą…",
     "Reply to thread…": "Atsakyti į temą…",
     "Reply to encrypted thread…": "Atsakyti į užšifruotą temą…",
@@ -2342,10 +2340,6 @@
     },
     "%(user1)s and %(user2)s": "%(user1)s ir %(user2)s",
     "Empty room": "Tuščias kambarys",
-    "%(value)ss": "%(value)ss",
-    "%(value)sm": "%(value)sm",
-    "%(value)sh": "%(value)sval",
-    "%(value)sd": "%(value)sd",
     "Public rooms": "Vieši kambariai",
     "Search for": "Ieškoti",
     "Original event source": "Originalus įvykio šaltinis",
@@ -2540,5 +2534,13 @@
         "github_issue": "GitHub problema",
         "download_logs": "Parsisiųsti žurnalus",
         "before_submitting": "Prieš pateikiant žurnalus jūs turite <a>sukurti GitHub problemą</a>, kad apibūdintumėte savo problemą."
+    },
+    "time": {
+        "seconds_left": "%(seconds)ss liko",
+        "date_at_time": "%(date)s %(time)s",
+        "short_days": "%(value)sd",
+        "short_hours": "%(value)sval",
+        "short_minutes": "%(value)sm",
+        "short_seconds": "%(value)ss"
     }
 }

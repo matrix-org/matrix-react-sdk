@@ -342,20 +342,9 @@
     "The file '%(fileName)s' failed to upload.": "O carregamento do ficheiro '%(fileName)s' falhou.",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "O ficheiro '%(fileName)s' excede o tamanho limite deste homeserver para carregamentos",
     "The server does not support the room version specified.": "O servidor não suporta a versão especificada da sala.",
-    "%(date)s at %(time)s": "%(date)s às %(time)s",
-    "%(value)sh": "%(value)sh",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s-%(monthName)s-%(fullYear)s",
-    "%(value)sd": "%(value)sd",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
-    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sh %(minutes)sm %(seconds)ss",
-    "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)ss",
-    "%(value)ss": "%(value)ss",
-    "%(seconds)ss left": "%(seconds)ss restantes",
-    "%(value)sm": "%(value)sm",
     "Identity server has no terms of service": "O servidor de identidade não tem termos de serviço",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Esta acção requer acesso ao servidor de identidade padrão <server /> para validar um endereço de email ou número de telefone, mas o servidor não tem quaisquer termos de serviço.",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
-    "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss restantes",
     "Only continue if you trust the owner of the server.": "Continue apenas se confia no dono do servidor.",
     "User Busy": "Utilizador ocupado",
     "The user you called is busy.": "O utilizador para o qual tentou ligar está ocupado.",
@@ -779,5 +768,18 @@
     "bug_reporting": {
         "description": "Os registos de depuração contêm dados de utilização da aplicação, incluindo o seu nome de utilizador, os IDs ou pseudónimos das salas que visitou, os últimos elementos da IU com que interagiu e os nomes de utilizador de outros utilizadores. No entanto não contêm mensagens.",
         "send_logs": "Enviar relatórios de erro"
+    },
+    "time": {
+        "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
+        "minutes_seconds_left": "%(minutes)sm %(seconds)ss restantes",
+        "seconds_left": "%(seconds)ss restantes",
+        "date_at_time": "%(date)s às %(time)s",
+        "short_days": "%(value)sd",
+        "short_hours": "%(value)sh",
+        "short_minutes": "%(value)sm",
+        "short_seconds": "%(value)ss",
+        "short_days_hours_minutes_seconds": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
+        "short_hours_minutes_seconds": "%(hours)sh %(minutes)sm %(seconds)ss",
+        "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
     }
 }

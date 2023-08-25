@@ -2206,7 +2206,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Perdidos ou esquecidos tódolos métodos de recuperación? <a>Restabléceos</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
     "View message": "Ver mensaxe",
-    "%(seconds)ss left": "%(seconds)ss restantes",
     "Change server ACLs": "Cambiar ACLs do servidor",
     "You can select all or individual messages to retry or delete": "Podes elexir todo ou mensaxes individuais para reintentar ou eliminar",
     "Sending": "Enviando",
@@ -2553,7 +2552,6 @@
     "Are you sure you want to exit during this export?": "Tes a certeza de querer saír durante esta exportación?",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s enviou un adhesivo.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s cambiou o avatar da sala.",
-    "%(date)s at %(time)s": "%(date)s ás %(time)s",
     "Show:": "Mostrar:",
     "Shows all threads from current room": "Mostra tódalas conversas da sala actual",
     "All threads": "Tódalas conversas",
@@ -2982,10 +2980,6 @@
         "other": "Eliminando agora mensaxes de %(count)s salas"
     },
     "Busy": "Ocupado",
-    "%(value)ss": "%(value)ss",
-    "%(value)sm": "%(value)sm",
-    "%(value)sh": "%(value)sh",
-    "%(value)sd": "%(value)sd",
     "Command error: Unable to handle slash command.": "Erro no comando: non se puido xestionar o comando con barra.",
     "Next recently visited room or space": "Seguinte sala ou espazo visitados recentemente",
     "Previous recently visited room or space": "Anterior sala ou espazo visitados recentemente",
@@ -3335,11 +3329,6 @@
     "Video call started in %(roomName)s.": "Chamada de vídeo iniciada en %(roomName)s.",
     "Failed to read events": "Fallou a lectura de eventos",
     "Failed to send event": "Fallo ao enviar o evento",
-    "%(minutes)sm %(seconds)ss": "%(minutes)sm %(seconds)ss",
-    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sh %(minutes)sm %(seconds)ss",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
-    "%(minutes)sm %(seconds)ss left": "%(minutes)sm %(seconds)ss restantes",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
     "common": {
         "about": "Acerca de",
         "analytics": "Análise",
@@ -3520,5 +3509,18 @@
         "github_issue": "Informe en GitHub",
         "download_logs": "Descargar rexistro",
         "before_submitting": "Antes de enviar os rexistros, deberías <a>abrir un informe en GitHub</a> para describir o problema."
+    },
+    "time": {
+        "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
+        "minutes_seconds_left": "%(minutes)sm %(seconds)ss restantes",
+        "seconds_left": "%(seconds)ss restantes",
+        "date_at_time": "%(date)s ás %(time)s",
+        "short_days": "%(value)sd",
+        "short_hours": "%(value)sh",
+        "short_minutes": "%(value)sm",
+        "short_seconds": "%(value)ss",
+        "short_days_hours_minutes_seconds": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
+        "short_hours_minutes_seconds": "%(hours)sh %(minutes)sm %(seconds)ss",
+        "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
     }
 }

@@ -1492,7 +1492,6 @@
     "Forget this room": "Aizmirst šo istabu",
     "Explore public rooms": "Pārlūkot publiskas istabas",
     "Enable encryption in settings.": "Iespējot šifrēšanu iestatījumos.",
-    "%(seconds)ss left": "%(seconds)s sekundes atlikušas",
     "Show %(count)s other previews": {
         "one": "Rādīt %(count)s citu priekšskatījumu",
         "other": "Rādīt %(count)s citus priekšskatījumus"
@@ -1847,5 +1846,8 @@
     "bug_reporting": {
         "submit_debug_logs": "Iesniegt atutošanas logfailus",
         "send_logs": "Nosūtīt logfailus"
+    },
+    "time": {
+        "seconds_left": "%(seconds)s sekundes atlikušas"
     }
 }

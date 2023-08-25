@@ -2183,7 +2183,6 @@
         "other": "Montri ĉiujn %(count)s anojn"
     },
     "Invite to just this room": "Inviti nur al ĉi tiu ĉambro",
-    "%(seconds)ss left": "%(seconds)s sekundoj restas",
     "Failed to send": "Malsukcesis sendi",
     "Change server ACLs": "Ŝanĝi servilblokajn listojn",
     "Warn before quitting": "Averti antaŭ ĉesigo",
@@ -2512,7 +2511,6 @@
     "Jump to the given date in the timeline": "Iri al la donita dato en la historio",
     "Command error: Unable to find rendering type (%(renderingType)s)": "Komanda eraro: Ne povas trovi bildigan tipon (%(renderingType)s)",
     "Failed to invite users to %(roomName)s": "Malsukcesis inviti uzantojn al %(roomName)s",
-    "%(date)s at %(time)s": "%(date)s je %(time)s",
     "You cannot place calls without a connection to the server.": "Vi ne povas voki sen konektaĵo al la servilo.",
     "Unable to find Matrix ID for phone number": "Ne povas trovi Matrix-an identigilon por tiu telefonnumero",
     "No virtual room for this room": "Tiu ĉambro ne havas virtuala ĉambro",
@@ -2654,15 +2652,6 @@
     "%(senderName)s removed %(targetName)s: %(reason)s": "%(senderName)s forigis %(targetName)s: %(reason)s",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Komando de programisto: Forĵetas la nunan eliran grupsesion kaj starigas novajn Olm-salutaĵojn",
     "Command error: Unable to handle slash command.": "Komanda eraro: Ne eblas trakti oblikvan komandon.",
-    "%(minutes)sm %(seconds)ss": "%(minutes)sm. %(seconds)ss.",
-    "%(hours)sh %(minutes)sm %(seconds)ss": "%(hours)sh. %(minutes)sm. %(seconds)ss.",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sh. %(minutes)sm. %(seconds)ss. restas",
-    "%(minutes)sm %(seconds)ss left": "%(minutes)sm. %(seconds)ss. restas",
-    "%(value)sd": "%(value)st.",
-    "%(value)sh": "%(value)sh.",
-    "%(value)sm": "%(value)sm.",
-    "%(value)ss": "%(value)ss.",
-    "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss": "%(days)st. %(hours)sh. %(minutes)sm. %(seconds)ss.",
     "What location type do you want to share?": "Kiel vi volas kunhavigi vian lokon?",
     "My live location": "Mia realtempa loko",
     "My current location": "Mia nuna loko",
@@ -2978,5 +2967,18 @@
         "github_issue": "Problemo per GitHub",
         "download_logs": "Elŝuti protokolon",
         "before_submitting": "Antaŭ ol sendi protokolon, vi devas <a>raporti problemon per GitHub</a> por priskribi la problemon."
+    },
+    "time": {
+        "hours_minutes_seconds_left": "%(hours)sh. %(minutes)sm. %(seconds)ss. restas",
+        "minutes_seconds_left": "%(minutes)sm. %(seconds)ss. restas",
+        "seconds_left": "%(seconds)s sekundoj restas",
+        "date_at_time": "%(date)s je %(time)s",
+        "short_days": "%(value)st.",
+        "short_hours": "%(value)sh.",
+        "short_minutes": "%(value)sm.",
+        "short_seconds": "%(value)ss.",
+        "short_days_hours_minutes_seconds": "%(days)st. %(hours)sh. %(minutes)sm. %(seconds)ss.",
+        "short_hours_minutes_seconds": "%(hours)sh. %(minutes)sm. %(seconds)ss.",
+        "short_minutes_seconds": "%(minutes)sm. %(seconds)ss."
     }
 }
