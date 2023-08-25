@@ -25,6 +25,10 @@ limitations under the License.
     cursor: pointer;
 }
 
+.mx_RoomHeader_info {
+    flex: 1;
+}
+
 .mx_RoomHeader_topic {
     height: 0;
     opacity: 0;
@@ -44,4 +48,11 @@ limitations under the License.
         value in pixels */
     height: calc($font-13px * 1.5);
     opacity: 1;
+}
+
+.mx_RoomHeader_members {
+    color: $secondary-content;
+    display: flex;
+    align-items: center;
+    gap: var(--cpd-space-2x);
 }
