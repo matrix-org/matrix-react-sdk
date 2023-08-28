@@ -18,10 +18,10 @@ limitations under the License.
 import React, { Dispatch } from "react";
 import { Room } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+import { DATA_BY_CATEGORY, getEmojiFromUnicode, Emoji as IEmoji } from "@matrix-org/emojibase-bindings";
 
 import { _t } from "../../../languageHandler";
 import * as recent from "../../../emojipicker/recent";
-import { DATA_BY_CATEGORY, getEmojiFromUnicode, IEmoji } from "../../../emoji";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import Header from "./Header";
 import Search from "./Search";
@@ -63,14 +63,17 @@ interface IProps {
 
 interface IState {
     filter: string;
-    previewEmoji?: IEmoji;
+    previewEmoji?: EmojiandEmotes;
     scrollTop: number;
     // initial estimation of height, dialog is hardcoded to 450px height.
     // should be enough to never have blank rows of emojis as
     // 3 rows of overflow are also rendered. The actual value is updated on scroll.
     viewportHeight: number;
 }
-
+interface EmojiandEmotes extends IEmoji {
+    customLabel?: string; // Custom label for custom emotes in emojipicker
+    customComponent?: JSX.Element; // Custom react component for rendering custom emotes in emojipicker
+}
 class EmojiPicker extends React.Component<IProps, IState> {
     private recentlyUsed: IEmoji[];
     private readonly memoizedDataByCategory: Record<CategoryKey, IEmoji[]>;
@@ -80,8 +83,8 @@ class EmojiPicker extends React.Component<IProps, IState> {
 
     private emotes?: Map<string, JSX.Element>;
     private emotesPromise?: Promise<Map<string, JSX.Element>>;
-    private finalEmotes: IEmoji[];
-    private finalEmotesMap: Map<string, IEmoji>;
+    private finalEmotes: EmojiandEmotes[];
+    private finalEmotesMap: Map<string, EmojiandEmotes>;
     public constructor(props: IProps) {
         super(props);
 

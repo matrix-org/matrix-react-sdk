@@ -16,13 +16,13 @@ limitations under the License.
 */
 
 import React from "react";
+import { Emoji as IEmoji } from "@matrix-org/emojibase-bindings";
 
-import { IEmoji } from "../../../emoji";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { RovingAccessibleButton } from "../../../accessibility/RovingTabIndex";
 
 interface IProps {
-    emoji: IEmoji;
+    emoji: EmojiandEmotes;
     selectedEmojis?: Set<string>;
     onClick(ev: ButtonEvent, emoji: IEmoji): void;
     onMouseEnter(emoji: IEmoji): void;
@@ -31,7 +31,10 @@ interface IProps {
     id?: string;
     role?: string;
 }
-
+interface EmojiandEmotes extends IEmoji {
+    customLabel?: string; // Custom label for custom emotes in emojipicker
+    customComponent?: JSX.Element; // Custom react component for rendering custom emotes in emojipicker
+}
 class Emoji extends React.PureComponent<IProps> {
     public render(): React.ReactNode {
         const { onClick, onMouseEnter, onMouseLeave, emoji, selectedEmojis } = this.props;

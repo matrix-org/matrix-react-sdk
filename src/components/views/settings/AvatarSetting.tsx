@@ -80,7 +80,7 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
     if (avatarUrl && removeAvatar) {
         removeAvatarBtn = (
             <AccessibleButton onClick={removeAvatar} kind="link_sm">
-                {_t("Remove")}
+                {_t("action|remove")}
             </AccessibleButton>
         );
     }
@@ -94,7 +94,7 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
             {avatarElement}
             <div className="mx_AvatarSetting_hover" aria-hidden="true">
                 <div className="mx_AvatarSetting_hoverBg" />
-                {uploadAvatar && <span id={a11yId.current}>{_t("Upload")}</span>}
+                {uploadAvatar && <span id={a11yId.current}>{_t("action|upload")}</span>}
             </div>
             {uploadAvatarBtn}
             {removeAvatarBtn}

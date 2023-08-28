@@ -56,7 +56,7 @@ function JoinCallButtonWithCall({ onClick, call }: JoinCallButtonWithCallProps):
             tooltip={disabledTooltip}
             kind="primary"
         >
-            {_t("Join")}
+            {_t("action|join")}
         </AccessibleTooltipButton>
     );
 }
@@ -130,7 +130,7 @@ export function IncomingCallToast({ callEvent }: Props): JSX.Element {
 
     return (
         <React.Fragment>
-            <RoomAvatar room={room ?? undefined} height={24} width={24} />
+            <RoomAvatar room={room ?? undefined} size="24px" />
             <div className="mx_IncomingCallToast_content">
                 <div className="mx_IncomingCallToast_info">
                     <span className="mx_IncomingCallToast_room">{room ? room.name : _t("Unknown room")}</span>
@@ -140,7 +140,7 @@ export function IncomingCallToast({ callEvent }: Props): JSX.Element {
                     ) : (
                         <LiveContentSummary
                             type={LiveContentType.Video}
-                            text={_t("Video")}
+                            text={_t("common|video")}
                             active={false}
                             participantCount={0}
                         />
@@ -154,14 +154,14 @@ export function IncomingCallToast({ callEvent }: Props): JSX.Element {
                         onClick={onJoinClick}
                         kind="primary"
                     >
-                        {_t("Join")}
+                        {_t("action|join")}
                     </AccessibleTooltipButton>
                 )}
             </div>
             <AccessibleTooltipButton
                 className="mx_IncomingCallToast_closeButton"
                 onClick={onCloseClick}
-                title={_t("Close")}
+                title={_t("action|close")}
             />
         </React.Fragment>
     );

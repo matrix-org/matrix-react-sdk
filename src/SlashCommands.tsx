@@ -18,10 +18,8 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { User, IContent, Direction } from "matrix-js-sdk/src/matrix";
-import * as ContentHelpers from "matrix-js-sdk/src/content-helpers";
+import { User, IContent, Direction, ContentHelpers, MRoomTopicEventContent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MRoomTopicEventContent } from "matrix-js-sdk/src/@types/topic";
 
 import dis from "./dispatcher/dispatcher";
 import { _t, _td, UserFriendlyError } from "./languageHandler";
@@ -193,8 +191,7 @@ export const Commands = [
                         const unixTimestamp = Date.parse(args);
                         if (!unixTimestamp) {
                             throw new UserFriendlyError(
-                                "We were unable to understand the given date (%(inputDate)s). " +
-                                    "Try using the format YYYY-MM-DD.",
+                                "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.",
                                 { inputDate: args, cause: undefined },
                             );
                         }
@@ -402,16 +399,14 @@ export const Commands = [
                                 description: (
                                     <p>
                                         {_t(
-                                            "Use an identity server to invite by email. " +
-                                                "Click continue to use the default identity server " +
-                                                "(%(defaultIdentityServerName)s) or manage in Settings.",
+                                            "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.",
                                             {
                                                 defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
                                             },
                                         )}
                                     </p>
                                 ),
-                                button: _t("Continue"),
+                                button: _t("action|continue"),
                             });
 
                             prom = finished.then(([useDefault]) => {
@@ -461,7 +456,7 @@ export const Commands = [
     new Command({
         command: "part",
         args: "[<room-address>]",
-        description: _td("Leave room"),
+        description: _td("action|leave_room"),
         analyticsName: "Part",
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, threadId, args) {
@@ -718,9 +713,7 @@ export const Commands = [
                             if (device.getFingerprint() !== fingerprint) {
                                 const fprint = device.getFingerprint();
                                 throw new UserFriendlyError(
-                                    "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session" +
-                                        ' %(deviceId)s is "%(fprint)s" which does not match the provided key ' +
-                                        '"%(fingerprint)s". This could mean your communications are being intercepted!',
+                                    'WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is "%(fprint)s" which does not match the provided key "%(fingerprint)s". This could mean your communications are being intercepted!',
                                     {
                                         fprint,
                                         userId,
@@ -740,8 +733,7 @@ export const Commands = [
                                     <div>
                                         <p>
                                             {_t(
-                                                "The signing key you provided matches the signing key you received " +
-                                                    "from %(userId)s's session %(deviceId)s. Session marked as verified.",
+                                                "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.",
                                                 { userId, deviceId },
                                             )}
                                         </p>

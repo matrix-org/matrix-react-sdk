@@ -26,8 +26,8 @@ import {
     EventTimelineSet,
     IStartClientOpts,
     MatrixClient,
+    MemoryStore,
 } from "matrix-js-sdk/src/matrix";
-import { MemoryStore } from "matrix-js-sdk/src/store/memory";
 import * as utils from "matrix-js-sdk/src/utils";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
 import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
@@ -212,7 +212,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                 description: _t(
                     "This may be caused by having the app open in multiple tabs or due to clearing browser data.",
                 ),
-                button: _t("Reload"),
+                button: _t("action|reload"),
             });
             const [reload] = await finished;
             if (!reload) return;

@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NotificationCountType, Room, Thread } from "matrix-js-sdk/src/matrix";
+import { NotificationCountType, Room, Thread, ReceiptType } from "matrix-js-sdk/src/matrix";
 import React, { useContext } from "react";
-import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { ReadReceipt } from "matrix-js-sdk/src/models/read-receipt";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
@@ -76,16 +75,26 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                 <h2>{_t("Room status")}</h2>
                 <ul>
                     <li>
-                        {_t(
-                            "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>",
-                            {
-                                status: humanReadableNotificationColor(color),
-                                count,
-                            },
-                            {
-                                strong: (sub) => <strong>{sub}</strong>,
-                            },
-                        )}
+                        {count > 0
+                            ? _t(
+                                  "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>",
+                                  {
+                                      status: humanReadableNotificationColor(color),
+                                      count,
+                                  },
+                                  {
+                                      strong: (sub) => <strong>{sub}</strong>,
+                                  },
+                              )
+                            : _t(
+                                  "Room unread status: <strong>%(status)s</strong>",
+                                  {
+                                      status: humanReadableNotificationColor(color),
+                                  },
+                                  {
+                                      strong: (sub) => <strong>{sub}</strong>,
+                                  },
+                              )}
                     </li>
                     <li>
                         {_t(

@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AutoDiscovery, AutoDiscoveryAction, ClientConfig } from "matrix-js-sdk/src/autodiscovery";
+import { AutoDiscovery, AutoDiscoveryAction, ClientConfig, M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
 
 import AutoDiscoveryUtils from "../../src/utils/AutoDiscoveryUtils";
 
@@ -84,6 +83,20 @@ describe("AutoDiscoveryUtils", () => {
             };
             expect(() => AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult)).toThrow(
                 "GenericFailure",
+            );
+            expect(logger.error).toHaveBeenCalled();
+        });
+
+        it("throws an error when homeserver config has fail error and recognised error string", () => {
+            const discoveryResult = {
+                ...validIsConfig,
+                "m.homeserver": {
+                    state: AutoDiscoveryAction.FAIL_ERROR,
+                    error: AutoDiscovery.ERROR_INVALID_HOMESERVER,
+                },
+            };
+            expect(() => AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult)).toThrow(
+                "Unexpected error resolving homeserver configuration",
             );
             expect(logger.error).toHaveBeenCalled();
         });
@@ -248,6 +261,14 @@ describe("AutoDiscoveryUtils", () => {
             ).toThrow(
                 "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.",
             );
+        });
+    });
+
+    describe("authComponentStateForError", () => {
+        const error = new Error("TEST");
+
+        it("should return expected error for the registration page", () => {
+            expect(AutoDiscoveryUtils.authComponentStateForError(error, "register")).toMatchSnapshot();
         });
     });
 });

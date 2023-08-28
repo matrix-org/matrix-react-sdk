@@ -24,12 +24,13 @@ import {
     IRegisterRequestParams,
     IRequestTokenResponse,
     MatrixClient,
+    SSOFlow,
+    SSOAction,
+    RegisterResponse,
 } from "matrix-js-sdk/src/matrix";
 import React, { Fragment, ReactNode } from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ISSOFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
-import { RegisterResponse } from "matrix-js-sdk/src/@types/registration";
 
 import { _t } from "../../../languageHandler";
 import { adminContactStrings, messageForResourceLimitError, resourceLimitStrings } from "../../../utils/ErrorUtils";
@@ -73,15 +74,7 @@ interface IProps {
     // - The user's password, if available and applicable (may be cached in memory
     //   for a short time so the user is not required to re-enter their password
     //   for operations like uploading cross-signing keys).
-    onLoggedIn(params: IMatrixClientCreds, password: string): void;
-    makeRegistrationUrl(params: {
-        /* eslint-disable camelcase */
-        client_secret: string;
-        hs_url: string;
-        is_url?: string;
-        session_id: string;
-        /* eslint-enable camelcase */
-    }): string;
+    onLoggedIn(params: IMatrixClientCreds, password: string): Promise<void>;
     // registration shouldn't know or care how login is done.
     onLoginClick(): void;
     onServerConfigChange(config: ValidatedServerConfig): void;
@@ -129,7 +122,7 @@ interface IState {
     differentLoggedInUserId?: string;
     // the SSO flow definition, this is fetched from /login as that's the only
     // place it is exposed.
-    ssoFlow?: ISSOFlow;
+    ssoFlow?: SSOFlow;
 }
 
 export default class Registration extends React.Component<IProps, IState> {
@@ -227,11 +220,11 @@ export default class Registration extends React.Component<IProps, IState> {
         this.loginLogic.setHomeserverUrl(hsUrl);
         this.loginLogic.setIdentityServerUrl(isUrl);
 
-        let ssoFlow: ISSOFlow | undefined;
+        let ssoFlow: SSOFlow | undefined;
         try {
             const loginFlows = await this.loginLogic.getFlows();
             if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
-            ssoFlow = loginFlows.find((f) => f.type === "m.login.sso" || f.type === "m.login.cas") as ISSOFlow;
+            ssoFlow = loginFlows.find((f) => f.type === "m.login.sso" || f.type === "m.login.cas") as SSOFlow;
         } catch (e) {
             if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             logger.error("Failed to get login flows to check for SSO support", e);
@@ -302,17 +295,7 @@ export default class Registration extends React.Component<IProps, IState> {
         sessionId: string,
     ): Promise<IRequestTokenResponse> => {
         if (!this.state.matrixClient) throw new Error("Matrix client has not yet been loaded");
-        return this.state.matrixClient.requestRegisterEmailToken(
-            emailAddress,
-            clientSecret,
-            sendAttempt,
-            this.props.makeRegistrationUrl({
-                client_secret: clientSecret,
-                hs_url: this.state.matrixClient.getHomeserverUrl(),
-                is_url: this.state.matrixClient.getIdentityServerUrl(),
-                session_id: sessionId,
-            }),
-        );
+        return this.state.matrixClient.requestRegisterEmailToken(emailAddress, clientSecret, sendAttempt);
     };
 
     private onUIAuthFinished: InteractiveAuthCallback<RegisterResponse> = async (success, response): Promise<void> => {
@@ -401,9 +384,7 @@ export default class Registration extends React.Component<IProps, IState> {
         const hasAccessToken = Boolean(accessToken);
         debuglog("Registration: ui auth finished:", { hasEmail, hasAccessToken });
         // don’t log in if we found a session for a different user
-        if (!hasEmail && hasAccessToken && !newState.differentLoggedInUserId) {
-            // we'll only try logging in if we either have no email to verify at all or we're the client that verified
-            // the email, not the client that started the registration flow
+        if (hasAccessToken && !newState.differentLoggedInUserId) {
             await this.props.onLoggedIn(
                 {
                     userId,
@@ -628,7 +609,7 @@ export default class Registration extends React.Component<IProps, IState> {
         if (this.state.doingUIAuth) {
             goBack = (
                 <AccessibleButton kind="link" className="mx_AuthBody_changeFlow" onClick={this.onGoToFormClicked}>
-                    {_t("Go back")}
+                    {_t("action|go_back")}
                 </AccessibleButton>
             );
         }
@@ -641,8 +622,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     <div>
                         <p>
                             {_t(
-                                "Your new account (%(newAccountId)s) is registered, but you're already " +
-                                    "logged into a different account (%(loggedInUserId)s).",
+                                "Your new account (%(newAccountId)s) is registered, but you're already logged into a different account (%(loggedInUserId)s).",
                                 {
                                     newAccountId: this.state.registeredUsername,
                                     loggedInUserId: this.state.differentLoggedInUserId,

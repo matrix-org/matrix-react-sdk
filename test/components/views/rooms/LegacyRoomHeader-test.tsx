@@ -28,6 +28,7 @@ import {
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
 import EventEmitter from "events";
+import { setupJestCanvasMock } from "jest-canvas-mock";
 
 import type { MatrixClient, MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import type { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
@@ -73,6 +74,10 @@ describe("LegacyRoomHeader", () => {
     let carol: RoomMember;
 
     beforeEach(async () => {
+        // some of our tests rely on the jest canvas mock, and `afterEach` will have reset the mock, so we need to
+        // restore it.
+        setupJestCanvasMock();
+
         mockPlatformPeg({ supportsJitsiScreensharing: () => true });
 
         stubClient();
@@ -610,12 +615,8 @@ describe("LegacyRoomHeader", () => {
         const rendered = mountHeader(room);
 
         // Then the room's avatar is the initial of its name
-        const initial = rendered.container.querySelector(".mx_BaseAvatar_initial");
+        const initial = rendered.container.querySelector(".mx_BaseAvatar");
         expect(initial).toHaveTextContent("X");
-
-        // And there is no image avatar (because it's not set on this room)
-        const image = rendered.container.querySelector(".mx_BaseAvatar_image");
-        expect(image).toHaveAttribute("src", "data:image/png;base64,00");
     });
 
     it("shows the room avatar in a room with 2 people", () => {
@@ -624,12 +625,8 @@ describe("LegacyRoomHeader", () => {
         const rendered = mountHeader(room);
 
         // Then the room's avatar is the initial of its name
-        const initial = rendered.container.querySelector(".mx_BaseAvatar_initial");
+        const initial = rendered.container.querySelector(".mx_BaseAvatar");
         expect(initial).toHaveTextContent("Y");
-
-        // And there is no image avatar (because it's not set on this room)
-        const image = rendered.container.querySelector(".mx_BaseAvatar_image");
-        expect(image).toHaveAttribute("src", "data:image/png;base64,00");
     });
 
     it("shows the room avatar in a room with >2 people", () => {
@@ -638,12 +635,8 @@ describe("LegacyRoomHeader", () => {
         const rendered = mountHeader(room);
 
         // Then the room's avatar is the initial of its name
-        const initial = rendered.container.querySelector(".mx_BaseAvatar_initial");
+        const initial = rendered.container.querySelector(".mx_BaseAvatar");
         expect(initial).toHaveTextContent("Z");
-
-        // And there is no image avatar (because it's not set on this room)
-        const image = rendered.container.querySelector(".mx_BaseAvatar_image");
-        expect(image).toHaveAttribute("src", "data:image/png;base64,00");
     });
 
     it("shows the room avatar in a DM with only ourselves", () => {
@@ -652,12 +645,8 @@ describe("LegacyRoomHeader", () => {
         const rendered = mountHeader(room);
 
         // Then the room's avatar is the initial of its name
-        const initial = rendered.container.querySelector(".mx_BaseAvatar_initial");
+        const initial = rendered.container.querySelector(".mx_BaseAvatar");
         expect(initial).toHaveTextContent("Z");
-
-        // And there is no image avatar (because it's not set on this room)
-        const image = rendered.container.querySelector(".mx_BaseAvatar_image");
-        expect(image).toHaveAttribute("src", "data:image/png;base64,00");
     });
 
     it("shows the user avatar in a DM with 2 people", () => {
@@ -669,11 +658,8 @@ describe("LegacyRoomHeader", () => {
         const rendered = mountHeader(room);
 
         // Then we use the other user's avatar as our room's image avatar
-        const image = rendered.container.querySelector(".mx_BaseAvatar_image");
+        const image = rendered.container.querySelector(".mx_BaseAvatar img");
         expect(image).toHaveAttribute("src", "http://this.is.a.url/example.org/other");
-
-        // And there is no initial avatar
-        expect(rendered.container.querySelector(".mx_BaseAvatar_initial")).toBeFalsy();
     });
 
     it("shows the room avatar in a DM with >2 people", () => {
@@ -686,12 +672,8 @@ describe("LegacyRoomHeader", () => {
         const rendered = mountHeader(room);
 
         // Then the room's avatar is the initial of its name
-        const initial = rendered.container.querySelector(".mx_BaseAvatar_initial");
+        const initial = rendered.container.querySelector(".mx_BaseAvatar");
         expect(initial).toHaveTextContent("Z");
-
-        // And there is no image avatar (because it's not set on this room)
-        const image = rendered.container.querySelector(".mx_BaseAvatar_image");
-        expect(image).toHaveAttribute("src", "data:image/png;base64,00");
     });
 
     it("renders call buttons normally", () => {

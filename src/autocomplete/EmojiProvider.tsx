@@ -23,6 +23,7 @@ import { uniq, sortBy, uniqBy, ListIteratee } from "lodash";
 import EMOTICON_REGEX from "emojibase-regex/emoticon";
 import { Room } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+import { EMOJI, Emoji, getEmojiFromUnicode } from "@matrix-org/emojibase-bindings";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { _t } from "../languageHandler";
@@ -31,7 +32,6 @@ import QueryMatcher from "./QueryMatcher";
 import { PillCompletion } from "./Components";
 import { ICompletion, ISelectionRange } from "./Autocompleter";
 import SettingsStore from "../settings/SettingsStore";
-import { EMOJI, IEmoji, getEmojiFromUnicode } from "../emoji";
 import { TimelineRenderingType } from "../contexts/RoomContext";
 import * as recent from "../emojipicker/recent";
 import { filterBoolean } from "../utils/arrays";
@@ -47,7 +47,7 @@ const EMOJI_REGEX = new RegExp("(" + EMOTICON_REGEX.source + "|(?:^|\\s):[+-\\w]
 const EMOTES_STATE = new UnstableValue("m.room.emotes", "org.matrix.msc3892.emotes");
 
 interface ISortedEmoji {
-    emoji: IEmoji;
+    emoji: Emoji;
     _orderBy: number;
 }
 
@@ -85,7 +85,7 @@ function colonsTrimmed(str: string): string {
 export default class EmojiProvider extends AutocompleteProvider {
     public matcher: QueryMatcher<ISortedEmoji>;
     public nameMatcher: QueryMatcher<ISortedEmoji>;
-    private readonly recentlyUsed: IEmoji[];
+    private readonly recentlyUsed: Emoji[];
     private emotes: Map<string, string> = new Map();
     private emotesPromise?: Promise<Map<string, string>>;
     public constructor(room: Room, renderingType?: TimelineRenderingType) {

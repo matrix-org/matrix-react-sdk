@@ -159,7 +159,7 @@ export const WidgetContextMenu: React.FC<IProps> = ({
             onFinished();
         };
 
-        editButton = <IconizedContextMenuOption onClick={_onEditClick} label={_t("Edit")} />;
+        editButton = <IconizedContextMenuOption onClick={_onEditClick} label={_t("action|edit")} />;
     }
 
     let snapshotButton: JSX.Element | undefined;
@@ -192,8 +192,7 @@ export const WidgetContextMenu: React.FC<IProps> = ({
                 Modal.createDialog(QuestionDialog, {
                     title: _t("Delete Widget"),
                     description: _t(
-                        "Deleting a widget removes it for all users in this room." +
-                            " Are you sure you want to delete this widget?",
+                        "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?",
                     ),
                     button: _t("Delete widget"),
                     onFinished: (confirmed) => {
@@ -209,7 +208,7 @@ export const WidgetContextMenu: React.FC<IProps> = ({
         deleteButton = (
             <IconizedContextMenuOption
                 onClick={_onDeleteClick}
-                label={userWidget ? _t("Remove") : _t("Remove for everyone")}
+                label={userWidget ? _t("action|remove") : _t("Remove for everyone")}
             />
         );
     }

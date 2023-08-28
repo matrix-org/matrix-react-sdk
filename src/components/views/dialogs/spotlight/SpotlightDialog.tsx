@@ -17,8 +17,14 @@ limitations under the License.
 import { WebSearch as WebSearchEvent } from "@matrix-org/analytics-events/types/typescript/WebSearch";
 import classNames from "classnames";
 import { capitalize, sum } from "lodash";
-import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
-import { IPublicRoomsChunkRoom, MatrixClient, RoomMember, RoomType, Room } from "matrix-js-sdk/src/matrix";
+import {
+    IPublicRoomsChunkRoom,
+    MatrixClient,
+    RoomMember,
+    RoomType,
+    Room,
+    HierarchyRoom,
+} from "matrix-js-sdk/src/matrix";
 import { normalize } from "matrix-js-sdk/src/utils";
 import React, { ChangeEvent, RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import sanitizeHtml from "sanitize-html";
@@ -65,7 +71,6 @@ import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
 import { SearchResultAvatar } from "../../avatars/SearchResultAvatar";
 import { NetworkDropdown } from "../../directory/NetworkDropdown";
 import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
-import LabelledCheckbox from "../../elements/LabelledCheckbox";
 import Spinner from "../../elements/Spinner";
 import NotificationBadge from "../../rooms/NotificationBadge";
 import BaseDialog from "../BaseDialog";
@@ -79,10 +84,11 @@ import RoomAvatar from "../../avatars/RoomAvatar";
 import { useFeatureEnabled } from "../../../../hooks/useSettings";
 import { filterBoolean } from "../../../../utils/arrays";
 import { transformSearchTerm } from "../../../../utils/SearchInput";
+import { Filter } from "./Filter";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
-const AVATAR_SIZE = 24;
+const AVATAR_SIZE = "24px";
 
 interface IProps {
     initialText?: string;
@@ -94,11 +100,11 @@ function refIsForRecentlyViewed(ref?: RefObject<HTMLElement>): boolean {
     return ref?.current?.id?.startsWith("mx_SpotlightDialog_button_recentlyViewed_") === true;
 }
 
-function getRoomTypes(showRooms: boolean, showSpaces: boolean): Set<RoomType | null> {
+function getRoomTypes(filter: Filter | null): Set<RoomType | null> {
     const roomTypes = new Set<RoomType | null>();
 
-    if (showRooms) roomTypes.add(null);
-    if (showSpaces) roomTypes.add(RoomType.Space);
+    if (filter === Filter.PublicRooms) roomTypes.add(null);
+    if (filter === Filter.PublicSpaces) roomTypes.add(RoomType.Space);
 
     return roomTypes;
 }
@@ -108,20 +114,17 @@ enum Section {
     Rooms,
     Spaces,
     Suggestions,
-    PublicRooms,
-}
-
-export enum Filter {
-    People,
-    PublicRooms,
+    PublicRoomsAndSpaces,
 }
 
 function filterToLabel(filter: Filter): string {
     switch (filter) {
         case Filter.People:
-            return _t("People");
+            return _t("common|people");
         case Filter.PublicRooms:
             return _t("Public rooms");
+        case Filter.PublicSpaces:
+            return _t("Public spaces");
     }
 }
 
@@ -162,8 +165,8 @@ const isMemberResult = (result: any): result is IMemberResult => !!result?.membe
 
 const toPublicRoomResult = (publicRoom: IPublicRoomsChunkRoom): IPublicRoomResult => ({
     publicRoom,
-    section: Section.PublicRooms,
-    filter: [Filter.PublicRooms],
+    section: Section.PublicRoomsAndSpaces,
+    filter: [Filter.PublicRooms, Filter.PublicSpaces],
     query: filterBoolean([
         publicRoom.room_id.toLowerCase(),
         publicRoom.canonical_alias?.toLowerCase(),
@@ -302,7 +305,16 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     const [inviteLinkCopied, setInviteLinkCopied] = useState<boolean>(false);
     const trimmedQuery = useMemo(() => query.trim(), [query]);
 
-    const exploringPublicSpacesEnabled = useFeatureEnabled("feature_exploring_public_spaces");
+    const [supportsSpaceFiltering, setSupportsSpaceFiltering] = useState(true); // assume it does until we find out it doesn't
+    useEffect(() => {
+        cli.isVersionSupported("v1.4")
+            .then((supported) => {
+                return supported || cli.doesServerSupportUnstableFeature("org.matrix.msc3827.stable");
+            })
+            .then((supported) => {
+                setSupportsSpaceFiltering(supported);
+            });
+    }, [cli]);
 
     const {
         loading: publicRoomsLoading,
@@ -313,21 +325,23 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         search: searchPublicRooms,
         error: publicRoomsError,
     } = usePublicRoomDirectory();
-    const [showRooms, setShowRooms] = useState(true);
-    const [showSpaces, setShowSpaces] = useState(false);
     const { loading: peopleLoading, users: userDirectorySearchResults, search: searchPeople } = useUserDirectory();
     const { loading: profileLoading, profile, search: searchProfileInfo } = useProfileInfo();
     const searchParams: [IDirectoryOpts] = useMemo(
         () => [
             {
                 query: trimmedQuery,
-                roomTypes: getRoomTypes(showRooms, showSpaces),
+                roomTypes: getRoomTypes(filter),
                 limit: SECTION_LIMIT,
             },
         ],
-        [trimmedQuery, showRooms, showSpaces],
+        [trimmedQuery, filter],
     );
-    useDebouncedCallback(filter === Filter.PublicRooms, searchPublicRooms, searchParams);
+    useDebouncedCallback(
+        filter === Filter.PublicRooms || filter === Filter.PublicSpaces,
+        searchPublicRooms,
+        searchParams,
+    );
     useDebouncedCallback(filter === Filter.People, searchPeople, searchParams);
     useDebouncedCallback(filter === Filter.People, searchProfileInfo, searchParams);
 
@@ -397,7 +411,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             [Section.Rooms]: [],
             [Section.Spaces]: [],
             [Section.Suggestions]: [],
-            [Section.PublicRooms]: [],
+            [Section.PublicRoomsAndSpaces]: [],
         };
 
         // Group results in their respective sections
@@ -430,7 +444,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
                 results[entry.section].push(entry);
             });
-        } else if (filter === Filter.PublicRooms) {
+        } else if (filter === Filter.PublicRooms || filter === Filter.PublicSpaces) {
             // return all results for public rooms if no query is given
             possibleResults.forEach((entry) => {
                 if (isPublicRoomResult(entry)) {
@@ -543,6 +557,15 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     {trimmedQuery ? _t('Use "%(query)s" to search', { query }) : _t("Search for")}
                 </h4>
                 <div>
+                    {filter !== Filter.PublicSpaces && supportsSpaceFiltering && (
+                        <Option
+                            id="mx_SpotlightDialog_button_explorePublicSpaces"
+                            className="mx_SpotlightDialog_explorePublicSpaces"
+                            onClick={() => setFilter(Filter.PublicSpaces)}
+                        >
+                            {filterToLabel(Filter.PublicSpaces)}
+                        </Option>
+                    )}
                     {filter !== Filter.PublicRooms && (
                         <Option
                             id="mx_SpotlightDialog_button_explorePublicRooms"
@@ -586,11 +609,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         endAdornment={<RoomResultContextMenus room={result.room} />}
                         {...ariaProperties}
                     >
-                        <DecoratedRoomAvatar
-                            room={result.room}
-                            avatarSize={AVATAR_SIZE}
-                            tooltipProps={{ tabIndex: -1 }}
-                        />
+                        <DecoratedRoomAvatar room={result.room} size={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
                         {result.room.name}
                         <NotificationBadge notification={notification} />
                         <RoomContextDetails
@@ -664,7 +683,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 onClick={listener}
                                 tabIndex={-1}
                             >
-                                {showViewButton ? _t("View") : _t("Join")}
+                                {showViewButton ? _t("action|view") : _t("action|join")}
                             </AccessibleButton>
                         }
                         aria-labelledby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_name`}
@@ -679,8 +698,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 avatarUrl: result.publicRoom.avatar_url,
                                 roomType: result.publicRoom.room_type,
                             }}
-                            width={AVATAR_SIZE}
-                            height={AVATAR_SIZE}
+                            size={AVATAR_SIZE}
                         />
                         <PublicRoomResultDetails
                             room={result.publicRoom}
@@ -728,7 +746,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     role="group"
                     aria-labelledby="mx_SpotlightDialog_section_suggestions"
                 >
-                    <h4 id="mx_SpotlightDialog_section_suggestions">{_t("Suggestions")}</h4>
+                    <h4 id="mx_SpotlightDialog_section_suggestions">{_t("common|suggestions")}</h4>
                     <div>{results[Section.Suggestions].slice(0, SECTION_LIMIT).map(resultMapper)}</div>
                 </div>
             );
@@ -763,22 +781,18 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
 
         let publicRoomsSection: JSX.Element | undefined;
-        if (filter === Filter.PublicRooms) {
+        if (filter === Filter.PublicRooms || filter === Filter.PublicSpaces) {
             let content: JSX.Element | JSX.Element[];
-            if (!showRooms && !showSpaces) {
+            if (publicRoomsError) {
                 content = (
                     <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
-                        {_t("You cannot search for rooms that are neither a room nor a space")}
-                    </div>
-                );
-            } else if (publicRoomsError) {
-                content = (
-                    <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
-                        {_t("Failed to query public rooms")}
+                        {filter === Filter.PublicRooms
+                            ? _t("Failed to query public rooms")
+                            : _t("Failed to query public spaces")}
                     </div>
                 );
             } else {
-                content = results[Section.PublicRooms].slice(0, SECTION_LIMIT).map(resultMapper);
+                content = results[Section.PublicRoomsAndSpaces].slice(0, SECTION_LIMIT).map(resultMapper);
             }
 
             publicRoomsSection = (
@@ -788,22 +802,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     aria-labelledby="mx_SpotlightDialog_section_publicRooms"
                 >
                     <div className="mx_SpotlightDialog_sectionHeader">
-                        <h4 id="mx_SpotlightDialog_section_publicRooms">{_t("Suggestions")}</h4>
+                        <h4 id="mx_SpotlightDialog_section_publicRooms">{_t("common|suggestions")}</h4>
                         <div className="mx_SpotlightDialog_options">
-                            {exploringPublicSpacesEnabled && (
-                                <>
-                                    <LabelledCheckbox
-                                        label={_t("Show rooms")}
-                                        value={showRooms}
-                                        onChange={setShowRooms}
-                                    />
-                                    <LabelledCheckbox
-                                        label={_t("Show spaces")}
-                                        value={showSpaces}
-                                        onChange={setShowSpaces}
-                                    />
-                                </>
-                            )}
                             <NetworkDropdown protocols={protocols} config={config ?? null} setConfig={setConfig} />
                         </div>
                     </div>
@@ -825,7 +825,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     </h4>
                     <div>
                         {spaceResults.slice(0, SECTION_LIMIT).map(
-                            (room: IHierarchyRoom): JSX.Element => (
+                            (room: HierarchyRoom): JSX.Element => (
                                 <Option
                                     id={`mx_SpotlightDialog_button_result_${room.room_id}`}
                                     key={room.room_id}
@@ -838,11 +838,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                         idName={room.room_id}
                                         url={
                                             room.avatar_url
-                                                ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(AVATAR_SIZE)
+                                                ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(
+                                                      parseInt(AVATAR_SIZE, 10),
+                                                  )
                                                 : null
                                         }
-                                        width={AVATAR_SIZE}
-                                        height={AVATAR_SIZE}
+                                        size={AVATAR_SIZE}
                                     />
                                     {room.name || room.canonical_alias}
                                     {room.name && room.canonical_alias && (
@@ -905,7 +906,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             copyPlaintext(ownInviteLink);
                         }}
                         onHideTooltip={() => setInviteLinkCopied(false)}
-                        title={inviteLinkCopied ? _t("Copied!") : _t("Copy")}
+                        title={inviteLinkCopied ? _t("Copied!") : _t("action|copy")}
                     >
                         <span className="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline">
                             {_t("Copy invite link")}
@@ -913,15 +914,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     </TooltipOption>
                 </div>
             );
-        } else if (trimmedQuery && filter === Filter.PublicRooms) {
+        } else if (trimmedQuery && (filter === Filter.PublicRooms || filter === Filter.PublicSpaces)) {
             hiddenResultsSection = (
                 <div className="mx_SpotlightDialog_section mx_SpotlightDialog_hiddenResults" role="group">
                     <h4>{_t("Some results may be hidden")}</h4>
                     <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
-                        {_t(
-                            "If you can't find the room you're looking for, " +
-                                "ask for an invite or create a new room.",
-                        )}
+                        {_t("If you can't find the room you're looking for, ask for an invite or create a new room.")}
                     </div>
                     <Option
                         id="mx_SpotlightDialog_button_createNewRoom"
@@ -1035,7 +1033,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 >
                                     <DecoratedRoomAvatar
                                         room={room}
-                                        avatarSize={AVATAR_SIZE}
+                                        size={AVATAR_SIZE}
                                         tooltipProps={{ tabIndex: -1 }}
                                     />
                                     {room.name}
@@ -1073,7 +1071,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                         viewRoom({ roomId: room.roomId }, false, ev.type !== "click");
                                     }}
                                 >
-                                    <DecoratedRoomAvatar room={room} avatarSize={32} tooltipProps={{ tabIndex: -1 }} />
+                                    <DecoratedRoomAvatar room={room} size="32px" tooltipProps={{ tabIndex: -1 }} />
                                     {room.name}
                                 </TooltipOption>
                             ))}
@@ -1212,6 +1210,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             className={classNames("mx_SpotlightDialog_filter", {
                                 mx_SpotlightDialog_filterPeople: filter === Filter.People,
                                 mx_SpotlightDialog_filterPublicRooms: filter === Filter.PublicRooms,
+                                mx_SpotlightDialog_filterPublicSpaces: filter === Filter.PublicSpaces,
                             })}
                         >
                             <span>{filterToLabel(filter)}</span>
@@ -1233,13 +1232,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         autoCapitalize="off"
                         autoCorrect="off"
                         spellCheck="false"
-                        placeholder={_t("Search")}
+                        placeholder={_t("action|search")}
                         value={query}
                         onChange={setQuery}
                         onKeyDown={onKeyDown}
                         aria-owns="mx_SpotlightDialog_content"
                         aria-activedescendant={activeDescendant}
-                        aria-label={_t("Search")}
+                        aria-label={_t("action|search")}
                         aria-describedby="mx_SpotlightDialog_keyboardPrompt"
                     />
                     {(publicRoomsLoading || peopleLoading || profileLoading) && <Spinner w={24} h={24} />}

@@ -21,16 +21,16 @@ import { VerificationPhase as Phase, VerificationRequestEvent } from "matrix-js-
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { useTypedEventEmitter, useTypedEventEmitterState } from "../../../../hooks/useEventEmitter";
-import { _t, _td } from "../../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../../languageHandler";
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import BaseTool, { DevtoolsContext, IDevtoolsProps } from "./BaseTool";
 import { Tool } from "../DevtoolsDialog";
 
-const PHASE_MAP: Record<Phase, string> = {
+const PHASE_MAP: Record<Phase, TranslationKey> = {
     [Phase.Unsent]: _td("Unsent"),
     [Phase.Requested]: _td("Requested"),
     [Phase.Ready]: _td("Ready"),
-    [Phase.Done]: _td("Done"),
+    [Phase.Done]: _td("action|done"),
     [Phase.Started]: _td("Started"),
     [Phase.Cancelled]: _td("Cancelled"),
 };

@@ -167,7 +167,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
         },
         {
             value: JoinRule.Public,
-            label: _t("Public"),
+            label: _t("common|public"),
             description: (
                 <>
                     {_t("Anyone can find and join.")}
@@ -253,7 +253,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                         {shownSpaces.map((room) => {
                             return (
                                 <span key={room.roomId}>
-                                    <RoomAvatar room={room} height={32} width={32} />
+                                    <RoomAvatar room={room} size="32px" />
                                     {room.name}
                                 </span>
                             );
@@ -323,9 +323,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                     warning = (
                         <b>
                             {_t(
-                                "This room is in some spaces you're not an admin of. " +
-                                    "In those spaces, the old room will still be shown, " +
-                                    "but people will be prompted to join the new one.",
+                                "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.",
                             )}
                         </b>
                     );
@@ -335,8 +333,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                     targetVersion,
                     <>
                         {_t(
-                            "This upgrade will allow members of selected spaces " +
-                                "access to this room without an invite.",
+                            "This upgrade will allow members of selected spaces access to this room without an invite.",
                         )}
                         {warning}
                     </>,

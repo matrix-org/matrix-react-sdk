@@ -15,17 +15,14 @@ limitations under the License.
 */
 
 .mx_RoomHeader {
-    display: flex;
-    align-items: center;
     height: 64px;
-    gap: var(--cpd-space-3x);
     padding: 0 var(--cpd-space-3x);
     border-bottom: 1px solid $separator;
     background-color: $background;
+}
 
-    &:hover {
-        cursor: pointer;
-    }
+.mx_RoomHeader_info {
+    cursor: pointer;
 }
 
 .mx_RoomHeader_topic {
@@ -39,7 +36,7 @@ limitations under the License.
     word-break: break-all;
     text-overflow: ellipsis;
 
-    transition: all var(--transition-standard) ease;
+    transition: all var(--transition-standard) ease 0.1s;
 }
 
 .mx_RoomHeader:hover .mx_RoomHeader_topic {

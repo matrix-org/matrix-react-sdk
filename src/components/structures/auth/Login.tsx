@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ISSOFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { SSOFlow, SSOAction } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td, UserFriendlyError } from "../../../languageHandler";
 import Login, { ClientLoginFlow, OidcNativeFlow } from "../../../Login";
@@ -481,13 +481,13 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     );
                 }}
             >
-                {_t("Continue")}
+                {_t("action|continue")}
             </AccessibleButton>
         );
     };
 
     private renderSsoStep = (loginType: "cas" | "sso"): JSX.Element => {
-        const flow = this.state.flows?.find((flow) => flow.type === "m.login." + loginType) as ISSOFlow;
+        const flow = this.state.flows?.find((flow) => flow.type === "m.login." + loginType) as SSOFlow;
 
         return (
             <SSOButtons
@@ -564,7 +564,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
                 <AuthBody>
                     <h1>
-                        {_t("Sign in")}
+                        {_t("action|sign_in")}
                         {loader}
                     </h1>
                     {errorTextSection}
