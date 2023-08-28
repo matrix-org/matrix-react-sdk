@@ -122,7 +122,7 @@ interface IState {
 
 export default class RoomPreviewBar extends React.Component<IProps, IState> {
     public static defaultProps = {
-        onJoinClick() { },
+        onJoinClick() {},
     };
 
     public constructor(props: IProps) {
@@ -189,13 +189,16 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         const myMember = this.getMyMember();
 
         if (myMember) {
-            const previousMembership = myMember.events.member?.event.unsigned?.prev_content?.membership;
-            if (myMember.isKicked() && previousMembership === 'join') {
-                return MessageCase.Kicked;
-            } else if (myMember.membership === "ban") {
+            const previousMembership = myMember.events.member?.event?.unsigned?.prev_content?.membership;
+          if (myMember.isKicked()) {
+              if(previousMembership === 'join') {
+                  return MessageCase.Kicked;
+              } else if (previousMembership === 'knock') {
+                  return MessageCase.RequestDenied;
+              }
+          }
+            else if (myMember.membership === "ban") {
                 return MessageCase.Banned;
-            }  else if (previousMembership === 'knock' && myMember.membership === "leave") {
-                return MessageCase.RequestDenied
             }
         }
 

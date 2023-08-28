@@ -659,8 +659,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showRightPanel: roomId ? this.context.rightPanelStore.isOpenForRoom(roomId) : false,
             threadRightPanel: roomId
                 ? [RightPanelPhases.ThreadView, RightPanelPhases.ThreadPanel].includes(
-                    this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
-                )
+                      this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
+                  )
                 : false,
             activeCall: roomId ? CallStore.instance.getActiveCall(roomId) : null,
             promptAskToJoin: this.context.roomViewStore.promptAskToJoin(),
@@ -1075,8 +1075,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showRightPanel: roomId ? this.context.rightPanelStore.isOpenForRoom(roomId) : false,
             threadRightPanel: roomId
                 ? [RightPanelPhases.ThreadView, RightPanelPhases.ThreadPanel].includes(
-                    this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
-                )
+                      this.context.rightPanelStore.currentCardForRoom(roomId).phase!,
+                  )
                 : false,
         });
     };
@@ -2196,36 +2196,20 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
 
         if (this.state.canAskToJoin && ["knock", "leave"].includes(myMembership)) {
-            const myUserId = this.context.client.getSafeUserId();
-            const myMember = this.state.room.getMember(myUserId);
-            const eventSender = myMember?.events.member?.getSender()
-
-            //TODO: add old and and current membership
-            if (myUserId !== eventSender) {
-                return (<div className="mx_RoomView">
+            return (
+                <div className="mx_RoomView">
                     <ErrorBoundary>
                         <RoomPreviewBar
                             room={this.state.room}
-                            onForgetClick={this.onForgetClick}
+                            promptAskToJoin={myMembership === "leave" || this.state.promptAskToJoin}
                             knocked={myMembership === "knock" || this.state.knocked}
+                            onSubmitAskToJoin={this.onSubmitAskToJoin}
+                            onCancelAskToJoin={this.onCancelAskToJoin}
+                            onForgetClick={this.onForgetClick}
                         />
                     </ErrorBoundary>
-                </div>)
-            } else {
-                return (
-                    <div className="mx_RoomView">
-                        <ErrorBoundary>
-                            <RoomPreviewBar
-                                room={this.state.room}
-                                promptAskToJoin={myMembership === "leave" || this.state.promptAskToJoin}
-                                knocked={myMembership === "knock" || this.state.knocked}
-                                onSubmitAskToJoin={this.onSubmitAskToJoin}
-                                onCancelAskToJoin={this.onCancelAskToJoin}
-                            />
-                        </ErrorBoundary>
-                    </div>
-                );
-            }
+                </div>
+            );
         }
 
         // We have successfully loaded this room, and are not previewing.
