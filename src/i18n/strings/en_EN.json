@@ -202,7 +202,6 @@
     "Empty room": "Empty room",
     "%(user1)s and %(user2)s": "%(user1)s and %(user2)s",
     "%(user)s and %(count)s others": {
-
         "other": "%(user)s and %(count)s others",
         "one": "%(user)s and 1 other"
     },
@@ -837,6 +836,7 @@
     "Notification Settings": "Notification Settings",
     "Introducing a simpler way to change your notification settings. Customize your %(brand)s, just the way you like.": "Introducing a simpler way to change your notification settings. Customize your %(brand)s, just the way you like.",
     "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.": "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.",
+    "Support custom emotes of MSC3892 and MSC2545": "Support custom emotes of MSC3892 and MSC2545",
     "Show current profile picture and name for users in message history": "Show current profile picture and name for users in message history",
     "Send read receipts": "Send read receipts",
     "Your server doesn't support disabling sending read receipts.": "Your server doesn't support disabling sending read receipts.",

@@ -19,9 +19,12 @@ import React from "react";
 import { Emoji } from "@matrix-org/emojibase-bindings";
 
 interface IProps {
-    emoji: Emoji;
+    emoji: EmojiandEmotes;
 }
-
+interface EmojiandEmotes extends Emoji {
+    customLabel?: string; // Custom label for custom emotes in emojipicker
+    customComponent?: JSX.Element; // Custom react component for rendering custom emotes in emojipicker
+}
 class Preview extends React.PureComponent<IProps> {
     public render(): React.ReactNode {
         const {
