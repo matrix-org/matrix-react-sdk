@@ -190,13 +190,13 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
 
         if (myMember) {
             const previousMembership = myMember.events.member?.event?.unsigned?.prev_content?.membership;
-          if (myMember.isKicked()) {
-              if(previousMembership === 'join') {
-                  return MessageCase.Kicked;
-              } else if (previousMembership === 'knock') {
-                  return MessageCase.RequestDenied;
-              }
-          }
+            if (myMember.isKicked()) {
+                if (previousMembership === 'knock') {
+                    return MessageCase.RequestDenied;
+                } else {
+                    return MessageCase.Kicked;
+                }
+            }
             else if (myMember.membership === "ban") {
                 return MessageCase.Banned;
             }
