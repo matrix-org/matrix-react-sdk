@@ -2018,7 +2018,7 @@
     "Delete": "Delete",
     "Upload Emote": "Upload Emote",
     "Emote Compatibility on Other Clients": "Emote Compatibility on Other Clients",
-    "This will allow emotes to be sent via MSC2545 which enables compatibility with clients that use this spec.Emote images will be stored on the server unencrypted.The room will have to be reloaded for this change to take effect.The first time you turn this setting on it may take some time to load, so wait until the toggle switch shows that it is on.": "This will allow emotes to be sent via MSC2545 which enables compatibility with clients that use this spec.Emote images will be stored on the server unencrypted.The room will have to be reloaded for this change to take effect.The first time you turn this setting on it may take some time to load, so wait until the toggle switch shows that it is on.",
+    "This will allow emotes to be sent via MSC2545 which enables compatibility with clients that use this spec. Emote images will be stored on the server unencrypted.": "This will allow emotes to be sent via MSC2545 which enables compatibility with clients that use this spec. Emote images will be stored on the server unencrypted.",
     "Compatibility": "Compatibility",
     "Room Name": "Room Name",
     "Room Topic": "Room Topic",

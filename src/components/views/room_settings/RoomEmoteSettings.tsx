@@ -501,10 +501,7 @@ export default class RoomEmoteSettings extends React.Component<IProps, IState> {
                 <SettingsFieldset
                     legend={_t("Emote Compatibility on Other Clients")}
                     description={_t(
-                        "This will allow emotes to be sent via MSC2545 which enables compatibility with clients that use this spec." +
-                            "Emote images will be stored on the server unencrypted." +
-                            "The room will have to be reloaded for this change to take effect." +
-                            "The first time you turn this setting on it may take some time to load, so wait until the toggle switch shows that it is on.",
+                        "This will allow emotes to be sent via MSC2545 which enables compatibility with clients that use this spec. Emote images will be stored on the server unencrypted.",
                     )}
                 >
                     <LabelledToggleSwitch
