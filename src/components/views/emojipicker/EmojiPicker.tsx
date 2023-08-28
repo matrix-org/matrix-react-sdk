@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React, { Dispatch } from "react";
+
 import { Room } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 import { DATA_BY_CATEGORY, getEmojiFromUnicode, Emoji as IEmoji } from "@matrix-org/emojibase-bindings";

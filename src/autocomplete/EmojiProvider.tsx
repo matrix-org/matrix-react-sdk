@@ -88,6 +88,7 @@ export default class EmojiProvider extends AutocompleteProvider {
     private readonly recentlyUsed: Emoji[];
     private emotes: Map<string, string> = new Map();
     private emotesPromise?: Promise<Map<string, string>>;
+
     public constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
         const emotesEvent = room?.currentState.getStateEvents(EMOTES_STATE.name, "");
