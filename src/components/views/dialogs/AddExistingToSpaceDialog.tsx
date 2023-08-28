@@ -20,7 +20,7 @@ import { Room, EventType } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import Dropdown from "../elements/Dropdown";
 import SearchBox from "../../structures/SearchBox";
@@ -62,9 +62,9 @@ export const Entry: React.FC<{
     return (
         <label className="mx_AddExistingToSpace_entry">
             {room?.isSpaceRoom() ? (
-                <RoomAvatar room={room} height={32} width={32} />
+                <RoomAvatar room={room} size="32px" />
             ) : (
-                <DecoratedRoomAvatar room={room} avatarSize={32} />
+                <DecoratedRoomAvatar room={room} size="32px" />
             )}
             <span className="mx_AddExistingToSpace_entry_name">{room.name}</span>
             <StyledCheckbox
@@ -242,11 +242,11 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
 
                 <span className="mx_AddExistingToSpaceDialog_error">
                     <div className="mx_AddExistingToSpaceDialog_errorHeading">{_t("Not all selected were added")}</div>
-                    <div className="mx_AddExistingToSpaceDialog_errorCaption">{_t("Try again")}</div>
+                    <div className="mx_AddExistingToSpaceDialog_errorCaption">{_t("action|try_again")}</div>
                 </span>
 
                 <AccessibleButton className="mx_AddExistingToSpaceDialog_retryButton" onClick={addRooms}>
-                    {_t("Retry")}
+                    {_t("action|retry")}
                 </AccessibleButton>
             </>
         );
@@ -267,7 +267,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
         if (!button || selectedToAdd.size > 0) {
             button = (
                 <AccessibleButton kind="primary" disabled={selectedToAdd.size < 1} onClick={addRooms}>
-                    {_t("Add")}
+                    {_t("action|add")}
                 </AccessibleButton>
             );
         }
@@ -348,7 +348,9 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
 
                 {dms.length > 0 && dmsRenderer ? dmsRenderer(dms, selectedToAdd, dmsScrollState, onChange) : null}
 
-                {noResults ? <span className="mx_AddExistingToSpace_noResults">{_t("No results")}</span> : undefined}
+                {noResults ? (
+                    <span className="mx_AddExistingToSpace_noResults">{_t("common|no_results")}</span>
+                ) : undefined}
             </AutoHideScrollbar>
 
             <div className="mx_AddExistingToSpace_footer">{footer}</div>
@@ -357,7 +359,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
 };
 
 const defaultRendererFactory =
-    (title: string): Renderer =>
+    (title: TranslationKey): Renderer =>
     (rooms, selectedToAdd, { scrollTop, height }, onChange) =>
         (
             <div className="mx_AddExistingToSpace_section">
@@ -425,7 +427,7 @@ export const SubspaceSelector: React.FC<ISubspaceSelectorProps> = ({ title, spac
                         });
                         return (
                             <div key={space.roomId} className={classes}>
-                                <RoomAvatar room={space} width={24} height={24} />
+                                <RoomAvatar room={space} size="24px" />
                                 {space.name || getDisplayAliasForRoom(space) || space.roomId}
                             </div>
                         );
@@ -443,7 +445,7 @@ export const SubspaceSelector: React.FC<ISubspaceSelectorProps> = ({ title, spac
 
     return (
         <div className="mx_SubspaceSelector">
-            <RoomAvatar room={value} height={40} width={40} />
+            <RoomAvatar room={value} size="40px" />
             <div>
                 <h1>{title}</h1>
                 {body}

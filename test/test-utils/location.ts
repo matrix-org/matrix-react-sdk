@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { LocationAssetType, M_LOCATION } from "matrix-js-sdk/src/@types/location";
-import { MatrixEvent, EventType, ContentHelpers } from "matrix-js-sdk/src/matrix";
+import { LocationAssetType, M_LOCATION, MatrixEvent, EventType, ContentHelpers } from "matrix-js-sdk/src/matrix";
 
 let id = 1;
 export const makeLegacyLocationEvent = (geoUri: string): MatrixEvent => {
@@ -27,6 +26,7 @@ export const makeLegacyLocationEvent = (geoUri: string): MatrixEvent => {
             msgtype: "m.location",
             geo_uri: geoUri,
         },
+        origin_server_ts: 0,
     });
 };
 
@@ -41,6 +41,7 @@ export const makeLocationEvent = (geoUri: string, assetType?: LocationAssetType)
             "Human-readable label",
             assetType,
         ),
+        origin_server_ts: 0,
     });
 };
 

@@ -96,8 +96,7 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
         bugReports = (
             <p className="mx_FeedbackDialog_section_microcopy">
                 {_t(
-                    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> " +
-                        "to help us track down the problem.",
+                    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.",
                     {},
                     {
                         debugLogsLink: (sub) => (
@@ -122,11 +121,10 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
             description={
                 <React.Fragment>
                     <div className="mx_FeedbackDialog_section mx_FeedbackDialog_reportBug">
-                        <h3>{_t("Report a bug")}</h3>
+                        <h3>{_t("common|report_a_bug")}</h3>
                         <p>
                             {_t(
-                                "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. " +
-                                    "No match? <newIssueLink>Start a new one</newIssueLink>.",
+                                "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.",
                                 {},
                                 {
                                     existingIssuesLink: (sub) => {
@@ -155,7 +153,7 @@ const FeedbackDialog: React.FC<IProps> = (props: IProps) => {
                     {feedbackSection}
                 </React.Fragment>
             }
-            button={hasFeedback ? _t("Send feedback") : _t("Go back")}
+            button={hasFeedback ? _t("Send feedback") : _t("action|go_back")}
             buttonDisabled={hasFeedback && !comment}
             onFinished={onFinished}
         />

@@ -112,7 +112,7 @@ export const ThreadPanelHeader: React.FC<{
     return (
         <div className="mx_BaseCard_header_title">
             <Heading size="4" className="mx_BaseCard_header_title_heading">
-                {_t("Threads")}
+                {_t("common|threads")}
             </Heading>
             {!empty && (
                 <>
@@ -147,8 +147,7 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
             <>
                 <p>
                     {_t(
-                        "Reply to an ongoing thread or use “%(replyInThread)s” " +
-                            "when hovering over a message to start a new one.",
+                        "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.",
                         {
                             replyInThread: _t("Reply in thread"),
                         },

@@ -333,7 +333,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 break;
             }
             case MessageCase.Loading: {
-                title = _t("Loading…");
+                title = _t("common|loading");
                 showSpinner = true;
                 break;
             }
@@ -349,7 +349,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 }
                 if (opts.canJoin) {
                     title = _t("Join the room to participate");
-                    primaryActionLabel = _t("Join");
+                    primaryActionLabel = _t("action|join");
                     primaryActionHandler = () => {
                         ModuleRunner.instance.invoke(RoomViewLifecycle.JoinFromRoomPreview, this.props.roomId);
                     };
@@ -359,7 +359,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                         primaryActionLabel = _t("Sign Up");
                         primaryActionHandler = this.onRegisterClick;
                     }
-                    secondaryActionLabel = _t("Sign In");
+                    secondaryActionLabel = _t("action|sign_in");
                     secondaryActionHandler = this.onLoginClick;
                 }
                 if (this.props.previewLoading) {
@@ -421,8 +421,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 }
                 const joinRule = this.joinRule();
                 const errCodeMessage = _t(
-                    "An error (%(errcode)s) was returned while trying to validate your " +
-                        "invite. You could try to pass this information on to the person who invited you.",
+                    "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.",
                     { errcode: this.state.threePidFetchError?.errcode || _t("unknown error code") },
                 );
                 switch (joinRule) {
@@ -447,8 +446,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             case MessageCase.InvitedEmailNotFoundInAccount: {
                 if (roomName) {
                     title = _t(
-                        "This invite to %(roomName)s was sent to %(email)s which is not " +
-                            "associated with your account",
+                        "This invite to %(roomName)s was sent to %(email)s which is not associated with your account",
                         {
                             roomName,
                             email: this.props.invitedEmail,
@@ -526,7 +524,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 } else {
                     title = _t("Do you want to join %(roomName)s?", { roomName });
                     subTitle = [avatar, _t("<userName/> invited you", {}, { userName: () => inviterElement })];
-                    primaryActionLabel = _t("Accept");
+                    primaryActionLabel = _t("action|accept");
                 }
 
                 const myUserId = MatrixClientPeg.safeGet().getSafeUserId();
@@ -543,7 +541,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 }
 
                 primaryActionHandler = this.props.onJoinClick;
-                secondaryActionLabel = _t("Reject");
+                secondaryActionLabel = _t("action|reject");
                 secondaryActionHandler = this.props.onRejectClick;
 
                 if (this.props.onRejectAndIgnoreClick) {
@@ -585,9 +583,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 subTitle = [
                     _t("Try again later, or ask a room or space admin to check if you have access."),
                     _t(
-                        "%(errcode)s was returned while trying to access the room or space. " +
-                            "If you think you're seeing this message in error, please " +
-                            "<issueLink>submit a bug report</issueLink>.",
+                        "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.",
                         { errcode: String(this.props.error?.errcode) },
                         {
                             issueLink: (label) => (
