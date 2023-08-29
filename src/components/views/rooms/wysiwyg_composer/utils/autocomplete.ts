@@ -84,6 +84,25 @@ export function getMentionDisplayText(completion: ICompletion, client: MatrixCli
     return "";
 }
 
+function getCSSProperties({
+    url,
+    initialLetter,
+    id = "",
+}: {
+    url: string;
+    initialLetter?: string;
+    id: string;
+}): string {
+    const cssProperties = [`--avatar-background: url(${url})`, `--avatar-letter: '${initialLetter}'`];
+
+    const textColor = Avatar.getAvatarTextColor(id);
+    if (textColor) {
+        cssProperties.push(textColor);
+    }
+
+    return cssProperties.join("; ");
+}
+
 /**
  * For a given completion, the attributes will change depending on the completion type
  *
@@ -120,9 +139,11 @@ export function getMentionAttributes(
         attributes.set("data-mention-type", completion.type);
         attributes.set(
             "style",
-            `--avatar-background: url(${avatarUrl}); --avatar-color: ${Avatar.getAvatarTextColor(
-                mentionedMember.userId,
-            )}; --avatar-letter: '${initialLetter}'`,
+            getCSSProperties({
+                url: avatarUrl,
+                initialLetter,
+                id: mentionedMember.userId,
+            }),
         );
     } else if (completion.type === "room") {
         // logic as used in RoomPillPart.setAvatar in parts.ts
@@ -139,9 +160,11 @@ export function getMentionAttributes(
         attributes.set("data-mention-type", completion.type);
         attributes.set(
             "style",
-            `--avatar-background: url(${avatarUrl}); --avatar-color: ${Avatar.getAvatarTextColor(
-                mentionedRoom?.roomId ?? aliasFromCompletion,
-            )}; --avatar-letter: '${initialLetter}'`,
+            getCSSProperties({
+                url: avatarUrl,
+                initialLetter,
+                id: mentionedRoom?.roomId ?? aliasFromCompletion,
+            }),
         );
     } else if (completion.type === "at-room") {
         // logic as used in RoomPillPart.setAvatar in parts.ts, but now we know the current room
@@ -157,9 +180,11 @@ export function getMentionAttributes(
         attributes.set("data-mention-type", completion.type);
         attributes.set(
             "style",
-            `--avatar-background: url(${avatarUrl}); --avatar-color: ${Avatar.getAvatarTextColor(
-                room.roomId,
-            )};  --avatar-letter: '${initialLetter}'`,
+            getCSSProperties({
+                url: avatarUrl,
+                initialLetter,
+                id: room.roomId,
+            }),
         );
     }
 
