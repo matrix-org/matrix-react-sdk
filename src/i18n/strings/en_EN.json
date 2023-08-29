@@ -1872,6 +1872,8 @@
     "Join the conversation with an account": "Join the conversation with an account",
     "Sign Up": "Sign Up",
     "Loading preview": "Loading preview",
+    "You have been denied access": "You have been denied access",
+    "As you have been denied access, please wait for an invitation from a room admin or moderator.": "As you have been denied access, please wait for an invitation from a room admin or moderator.",
     "You were removed from %(roomName)s by %(memberName)s": "You were removed from %(roomName)s by %(memberName)s",
     "You were removed by %(memberName)s": "You were removed by %(memberName)s",
     "Reason: %(reason)s": "Reason: %(reason)s",
