@@ -118,7 +118,12 @@ export function getMentionAttributes(
         }
 
         attributes.set("data-mention-type", completion.type);
-        attributes.set("style", `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`);
+        attributes.set(
+            "style",
+            `--avatar-background: url(${avatarUrl}); --avatar-color: ${Avatar.getAvatarTextColor(
+                mentionedMember.userId,
+            )}; --avatar-letter: '${initialLetter}'`,
+        );
     } else if (completion.type === "room") {
         // logic as used in RoomPillPart.setAvatar in parts.ts
         const mentionedRoom = getRoomFromCompletion(completion, client);
@@ -132,7 +137,12 @@ export function getMentionAttributes(
         }
 
         attributes.set("data-mention-type", completion.type);
-        attributes.set("style", `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`);
+        attributes.set(
+            "style",
+            `--avatar-background: url(${avatarUrl}); --avatar-color: ${Avatar.getAvatarTextColor(
+                mentionedRoom?.roomId ?? aliasFromCompletion,
+            )}; --avatar-letter: '${initialLetter}'`,
+        );
     } else if (completion.type === "at-room") {
         // logic as used in RoomPillPart.setAvatar in parts.ts, but now we know the current room
         // from the arguments passed
@@ -145,7 +155,12 @@ export function getMentionAttributes(
         }
 
         attributes.set("data-mention-type", completion.type);
-        attributes.set("style", `--avatar-background: url(${avatarUrl}); --avatar-letter: '${initialLetter}'`);
+        attributes.set(
+            "style",
+            `--avatar-background: url(${avatarUrl}); --avatar-color: ${Avatar.getAvatarTextColor(
+                room.roomId,
+            )};  --avatar-letter: '${initialLetter}'`,
+        );
     }
 
     return attributes;
