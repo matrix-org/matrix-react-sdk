@@ -184,6 +184,16 @@ describe("<RoomPreviewBar />", () => {
         expect(getMessage(component)).toMatchSnapshot();
     });
 
+    it("triggers the primary action callback for denied request", () => {
+        const onForgetClick = jest.fn();
+        const room = createRoom(roomId, otherUserId);
+        jest.spyOn(room, "getMember").mockReturnValue(makeMockRoomMember({ isKicked: true, membership: 'leave', oldMembership: 'knock' }));
+        const component = getComponent({room, promptAskToJoin: true, onForgetClick});
+
+        fireEvent.click(getPrimaryActionButton(component)!);
+        expect(onForgetClick).toHaveBeenCalled();
+    });
+
     it("renders banned message", () => {
         const room = createRoom(roomId, otherUserId);
         jest.spyOn(room, "getMember").mockReturnValue(makeMockRoomMember({ membership: "ban" }));
