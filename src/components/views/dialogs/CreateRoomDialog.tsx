@@ -33,6 +33,7 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { privateShouldBeEncrypted } from "../../../utils/rooms";
 import SettingsStore from "../../../settings/SettingsStore";
+import LabelledCheckbox from "../elements/LabelledCheckbox";
 
 interface IProps {
     type?: RoomType;
@@ -129,6 +130,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
 
         if (this.state.joinRule === JoinRule.Knock) {
             opts.joinRule = JoinRule.Knock;
+            createOpts.visibility = this.state.isPublic ? Visibility.Public : Visibility.Private;
         }
 
         return opts;
@@ -215,6 +217,10 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         return result;
     };
 
+    private onIsPublicChange = (isPublic: boolean): void => {
+        this.setState({ isPublic });
+    };
+
     private static validateRoomName = withValidation({
         rules: [
             {
@@ -295,6 +301,18 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         "Anyone can request to join, but admins or moderators need to grant access. You can change this later.",
                     )}
                 </p>
+            );
+        }
+
+        let visibilitySection: JSX.Element | undefined;
+        if (this.state.joinRule === JoinRule.Knock) {
+            visibilitySection = (
+                <LabelledCheckbox
+                    className="mx_CreateRoomDialog_labelledCheckbox"
+                    label={_t("Make this room visible in the public room directory.")}
+                    onChange={this.onIsPublicChange}
+                    value={this.state.isPublic}
+                />
             );
         }
 
@@ -383,6 +401,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         />
 
                         {publicPrivateLabel}
+                        {visibilitySection}
                         {e2eeSection}
                         {aliasField}
                         <details onToggle={this.onDetailsToggled} className="mx_CreateRoomDialog_details">
