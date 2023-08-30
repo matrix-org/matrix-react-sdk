@@ -103,11 +103,19 @@ describe("Read receipts", () => {
         });
     }
 
-    function jumpTo(room: string, message: string) {
+    /**
+     * Find and display a message.
+     *
+     * @param room the name of the room to look inside
+     * @param message the content of the message to fine
+     * @param includeThreads look for messages inside threads, not just the main timeline
+     */
+    function jumpTo(room: string, message: string, includeThreads = false) {
+        cy.log("Jump to message", room, message, includeThreads);
         cy.getClient().then((cli) => {
             findRoomByName(room).then(async ({ roomId }) => {
-                const room = cli.getRoom(roomId);
-                const foundMessage = await getMessage(room, message);
+                const roomObject = cli.getRoom(roomId);
+                const foundMessage = await getMessage(roomObject, message, includeThreads);
                 cy.visit(`/#/room/${roomId}/${foundMessage.getId()}`);
             });
         });
@@ -256,6 +264,22 @@ describe("Read receipts", () => {
         })();
     }
 
+    /**
+     * Generate MessageContentSpecs to send multiple threaded responses into a room.
+     *
+     * @param rootMessage - the body of the thread root message to send a response to
+     * @param newMessages - the contents of the messages
+     */
+    function manyThreadedOff(rootMessage: string, newMessages: Array<string>): Array<MessageContentSpec> {
+        return newMessages.map((body) => threadedOff(rootMessage, body));
+    }
+
+    /**
+     * Generate strings with the supplied prefix, suffixed with numbers.
+     *
+     * @param prefix the prefix of each string
+     * @param howMany the number of strings to generate
+     */
     function many(prefix: string, howMany: number): Array<string> {
         return Array.from(Array(howMany).keys()).map((i) => prefix + i.toFixed());
     }
@@ -357,8 +381,13 @@ describe("Read receipts", () => {
         });
     }
 
+    function backToThreadsList() {
+        cy.log("Back to threads list");
+        cy.get(".mx_RightPanel").findByTitle("Threads").click();
+    }
+
     function openThreadList() {
-        cy.log("Open thread list");
+        cy.log("Open threads list");
         cy.findByTestId("threadsButton", { log: false }).then(($button) => {
             if ($button?.attr("aria-current") !== "true") {
                 cy.findByTestId("threadsButton", { log: false }).click();
@@ -488,7 +517,21 @@ describe("Read receipts", () => {
                 // Then I still have an unread message
                 assertUnread(room2, 1);
             });
-            it.skip("A room where all messages are read is still read after restart", () => {});
+            it("A room where all messages are read is still read after restart", () => {
+                // Given I have read all messages
+                goTo(room1);
+                assertRead(room2);
+                receiveMessages(room2, ["Msg1"]);
+                assertUnread(room2, 1);
+                goTo(room2);
+                assertRead(room2);
+
+                // When I restart
+                saveAndReload();
+
+                // Then all messages are still read
+                assertRead(room2);
+            });
             it("A room that was marked as read is still read after restart", () => {
                 // Given I have marked all messages as read
                 goTo(room1);
@@ -566,7 +609,25 @@ describe("Read receipts", () => {
                 assertReadThread("Msg1");
                 assertRead(room2);
             });
-            it.skip("Reading an older thread message (via permalink) leaves the thread unread", () => {});
+            it("Reading an older thread message leaves the thread unread", () => {
+                // Given there are many messages in a thread
+                goTo(room1);
+                receiveMessages(room2, ["ThreadRoot", ...manyThreadedOff("ThreadRoot", many("InThread", 20))]);
+                assertUnread(room2, 21);
+
+                // When I read an older message in the thread
+                jumpTo(room2, "InThread1", true);
+                assertUnreadLessThan(room2, 21);
+                // TODO: for some reason, we can't find the first message
+                // "InThread0", so I am using the second here. Also, they appear
+                // out of order, with "InThread2" before "InThread1". Might be a
+                // clue to the sporadic reports we have had of messages going
+                // missing in threads?
+
+                // Then the thread is still marked as unread
+                backToThreadsList();
+                assertUnreadThread("ThreadRoot");
+            });
             it("Reading only one thread's message does not make the room read", () => {
                 // Given two threads are unread
                 goTo(room1);
