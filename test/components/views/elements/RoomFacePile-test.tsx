@@ -15,9 +15,10 @@ limitations under the License.
 import { render } from "@testing-library/react";
 import React from "react";
 
-import { mkRoom, mkRoomMember, stubClient } from "../../../test-utils";
+import { mkRoom, mkRoomMember, stubClient, withClientContextRenderOptions } from "../../../test-utils";
 import RoomFacePile from "../../../../src/components/views/elements/RoomFacePile";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 
 describe("<RoomFacePile />", () => {
     it("renders", () => {
@@ -27,7 +28,10 @@ describe("<RoomFacePile />", () => {
 
         jest.spyOn(room, "getJoinedMembers").mockReturnValue([mkRoomMember(room.roomId, "@bob:example.org", "join")]);
 
-        const { asFragment } = render(<RoomFacePile room={room} />);
+        const { asFragment } = render(
+            <RoomFacePile onlyKnownUsers={false} room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
 
         expect(asFragment()).toMatchSnapshot();
     });
