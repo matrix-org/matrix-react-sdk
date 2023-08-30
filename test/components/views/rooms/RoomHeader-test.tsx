@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import React from "react";
-import { getAllByTitle, getByText, getByTitle, render, screen } from "@testing-library/react";
-import { Room, EventType, MatrixEvent, PendingEventOrdering, MatrixCall } from "matrix-js-sdk/src/matrix";
+import { getAllByTitle, getByLabelText, getByText, getByTitle, render, screen, waitFor } from "@testing-library/react";
+import { Room, EventType, MatrixEvent, PendingEventOrdering, MatrixCall, MatrixClient } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
-import { stubClient, withClientContextRenderOptions } from "../../../test-utils";
+import { mkEvent, stubClient, withClientContextRenderOptions } from "../../../test-utils";
 import RoomHeader from "../../../../src/components/views/rooms/RoomHeader";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -32,6 +32,9 @@ import SdkConfig from "../../../../src/SdkConfig";
 import dispatcher from "../../../../src/dispatcher/dispatcher";
 import { CallStore } from "../../../../src/stores/CallStore";
 import { Call, ElementCall } from "../../../../src/models/Call";
+import * as ShieldUtils from "../../../../src/utils/ShieldUtils";
+
+jest.mock("../../../../src/utils/ShieldUtils");
 
 describe("Roomeader", () => {
     let room: Room;
@@ -325,6 +328,44 @@ describe("Roomeader", () => {
             const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
             await userEvent.click(videoButton);
             expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
+        });
+    });
+
+    describe("dm", () => {
+        let client: MatrixClient;
+        beforeEach(() => {
+            client = MatrixClientPeg.get()!;
+
+            // Make the mocked room a DM
+            jest.spyOn(client, "getAccountData").mockImplementation((eventType: string): MatrixEvent | undefined => {
+                if (eventType === EventType.Direct) {
+                    return mkEvent({
+                        event: true,
+                        content: {
+                            [client.getUserId()!]: [room.roomId],
+                        },
+                        type: EventType.Direct,
+                        user: client.getSafeUserId(),
+                    });
+                }
+
+                return undefined;
+            });
+            jest.spyOn(client, "isCryptoEnabled").mockReturnValue(true);
+        });
+
+        it.each([
+            [ShieldUtils.E2EStatus.Verified, "Verified"],
+            [ShieldUtils.E2EStatus.Warning, "Untrusted"],
+        ])("shows the %s icon", async (value: ShieldUtils.E2EStatus, expectedLabel: string) => {
+            jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(value);
+
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+
+            await waitFor(() => expect(getByLabelText(container, expectedLabel)).toBeInTheDocument());
         });
     });
 });

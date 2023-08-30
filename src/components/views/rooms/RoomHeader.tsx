@@ -124,7 +124,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const [isDirectMessage, setDirectMessage] = useState(false);
     useEffect(() => {
         for (const [, dmRoomList] of Object.entries(directRoomsList)) {
-            if (room?.roomId != "" && dmRoomList.includes(room.roomId)) {
+            if (dmRoomList.includes(room?.roomId ?? "")) {
                 setDirectMessage(true);
                 break;
             }
@@ -160,13 +160,23 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
 
                     {isDirectMessage && e2eStatus === E2EStatus.Verified && (
                         <Tooltip label={_t("Verified")}>
-                            <VerifiedIcon width="16px" height="16px" className="mx_Verified" />
+                            <VerifiedIcon
+                                width="16px"
+                                height="16px"
+                                className="mx_Verified"
+                                aria-label={_t("Verified")}
+                            />
                         </Tooltip>
                     )}
 
                     {isDirectMessage && e2eStatus === E2EStatus.Warning && (
                         <Tooltip label={_t("Untrusted")}>
-                            <ErrorIcon width="16px" height="16px" className="mx_Untrusted" />
+                            <ErrorIcon
+                                width="16px"
+                                height="16px"
+                                className="mx_Untrusted"
+                                aria-label={_t("Untrusted")}
+                            />
                         </Tooltip>
                     )}
                 </BodyText>
