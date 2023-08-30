@@ -1093,11 +1093,12 @@ describe("Read receipts", () => {
                 assertRead(room2);
                 assertReadThread("Msg1");
             });
-            it.skip("Reading an edit of a thread root makes the room read", () => {
+            it("Reading an edit of a thread root makes the room read", () => {
                 // Given a fully-read thread exists
                 goTo(room2);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
                 openThread("Msg1");
+                assertRead(room2);
                 goTo(room1);
                 assertRead(room2);
 
