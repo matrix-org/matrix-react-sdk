@@ -1,5 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2019-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,11 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* Percy screenshot test specific CSS */
-@media only percy {
-    /* Stick the default room avatar colour, so it doesn't cause a false diff on the screenshot */
-    .mx_BaseAvatar {
-        background-color: var(--percy-color-avatar) !important;
-        color: white !important;
-    }
+.mx_ConfirmSessionLockTheftView {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mx_ConfirmSessionLockTheftView_body {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    align-items: center;
 }
