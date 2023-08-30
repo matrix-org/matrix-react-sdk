@@ -19,7 +19,14 @@ import type { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import type { CypressBot } from "../../support/bot";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
-import { doTwoWaySasVerification, downloadKey, waitForVerificationRequest } from "./utils";
+import {
+    doTwoWaySasVerification,
+    downloadKey,
+    enableKeyBackup,
+    logIntoElement,
+    logOutOfElement,
+    waitForVerificationRequest,
+} from "./utils";
 import { skipIfRustCrypto } from "../../support/util";
 
 interface CryptoTestContext extends Mocha.Context {
@@ -129,12 +136,14 @@ const verify = function (this: CryptoTestContext) {
 
 describe("Cryptography", function () {
     let aliceCredentials: UserCredentials;
+    let homeserver: HomeserverInstance;
     let bob: CypressBot;
 
     beforeEach(function () {
         cy.startHomeserver("default")
             .as("homeserver")
-            .then((homeserver: HomeserverInstance) => {
+            .then((data) => {
+                homeserver = data;
                 cy.initTestUser(homeserver, "Alice", undefined, "alice_").then((credentials) => {
                     aliceCredentials = credentials;
                 });
@@ -291,14 +300,17 @@ describe("Cryptography", function () {
     });
 
     describe("event shields", () => {
+        let testRoomId: string;
+
         beforeEach(() => {
             cy.bootstrapCrossSigning(aliceCredentials);
             autoJoin(bob);
 
-            // first create the room, so that we can open the verification panel
+            // create an encrypted room
             cy.createRoom({ name: "TestRoom", invite: [bob.getUserId()] })
                 .as("testRoomId")
                 .then((roomId) => {
+                    testRoomId = roomId;
                     cy.log(`Created test room ${roomId}`);
                     cy.visit(`/#/room/${roomId}`);
 
@@ -311,6 +323,141 @@ describe("Cryptography", function () {
                     // with his join.
                     cy.findByText("Bob joined the room").should("exist");
                 });
+        });
+
+        it("should show the correct shield on e2e events", function (this: CryptoTestContext) {
+            skipIfRustCrypto();
+
+            // Bob has a second, not cross-signed, device
+            let bobSecondDevice: MatrixClient;
+            cy.loginBot(homeserver, bob.getUserId(), bob.__cypress_password, {}).then(async (data) => {
+                bobSecondDevice = data;
+            });
+
+            /* Should show an error for a decryption failure */
+            cy.wrap(0).then(() =>
+                bob.sendEvent(testRoomId, "m.room.encrypted", {
+                    algorithm: "m.megolm.v1.aes-sha2",
+                    ciphertext: "the bird is in the hand",
+                }),
+            );
+
+            cy.get(".mx_EventTile_last")
+                .should("contain", "Unable to decrypt message")
+                .find(".mx_EventTile_e2eIcon")
+                .should("have.class", "mx_EventTile_e2eIcon_decryption_failure")
+                .should("have.attr", "aria-label", "This message could not be decrypted");
+
+            /* Should show a red padlock for an unencrypted message in an e2e room */
+            cy.wrap(0)
+                .then(() =>
+                    bob.http.authedRequest<ISendEventResponse>(
+                        // @ts-ignore-next this wants a Method instance, but that is hard to get to here
+                        "PUT",
+                        `/rooms/${encodeURIComponent(testRoomId)}/send/m.room.message/test_txn_1`,
+                        undefined,
+                        {
+                            msgtype: "m.text",
+                            body: "test unencrypted",
+                        },
+                    ),
+                )
+                .then((resp) => cy.log(`Bob sent unencrypted event with event id ${resp.event_id}`));
+
+            cy.get(".mx_EventTile_last")
+                .should("contain", "test unencrypted")
+                .find(".mx_EventTile_e2eIcon")
+                .should("have.class", "mx_EventTile_e2eIcon_warning")
+                .should("have.attr", "aria-label", "Unencrypted");
+
+            /* Should show no padlock for an unverified user */
+            // bob sends a valid event
+            cy.wrap(0)
+                .then(() => bob.sendTextMessage(testRoomId, "test encrypted 1"))
+                .then((resp) => cy.log(`Bob sent message from primary device with event id ${resp.event_id}`));
+
+            // the message should appear, decrypted, with no warning, but also no "verified"
+            cy.get(".mx_EventTile_last")
+                .should("contain", "test encrypted 1")
+                // no e2e icon
+                .should("not.have.descendants", ".mx_EventTile_e2eIcon");
+
+            /* Now verify Bob */
+            verify.call(this);
+
+            /* Existing message should be updated when user is verified. */
+            cy.get(".mx_EventTile_last")
+                .should("contain", "test encrypted 1")
+                // still no e2e icon
+                .should("not.have.descendants", ".mx_EventTile_e2eIcon");
+
+            /* should show no padlock, and be verified, for a message from a verified device */
+            cy.wrap(0)
+                .then(() => bob.sendTextMessage(testRoomId, "test encrypted 2"))
+                .then((resp) => cy.log(`Bob sent second message from primary device with event id ${resp.event_id}`));
+
+            cy.get(".mx_EventTile_last")
+                .should("contain", "test encrypted 2")
+                // no e2e icon
+                .should("not.have.descendants", ".mx_EventTile_e2eIcon");
+
+            /* should show red padlock for a message from an unverified device */
+            cy.wrap(0)
+                .then(() => bobSecondDevice.sendTextMessage(testRoomId, "test encrypted from unverified"))
+                .then((resp) => cy.log(`Bob sent message from unverified device with event id ${resp.event_id}`));
+
+            cy.get(".mx_EventTile_last")
+                .should("contain", "test encrypted from unverified")
+                .find(".mx_EventTile_e2eIcon", { timeout: 100000 })
+                .should("have.class", "mx_EventTile_e2eIcon_warning")
+                .should("have.attr", "aria-label", "Encrypted by an unverified session");
+
+            /* Should show a grey padlock for a message from an unknown device */
+
+            // bob deletes his second device, making the encrypted event from the unverified device "unknown".
+            cy.wrap(0)
+                .then(() => bobSecondDevice.logout(true))
+                .then(() => cy.log(`Bob logged out second device`));
+
+            cy.get(".mx_EventTile_last")
+                .should("contain", "test encrypted from unverified")
+                .find(".mx_EventTile_e2eIcon")
+                .should("have.class", "mx_EventTile_e2eIcon_normal")
+                .should("have.attr", "aria-label", "Encrypted by a deleted session");
+        });
+
+        it("Should show a grey padlock for a key restored from backup", () => {
+            skipIfRustCrypto();
+
+            enableKeyBackup();
+
+            // bob sends a valid event
+            cy.wrap(0)
+                .then(() => bob.sendTextMessage(testRoomId, "test encrypted 1"))
+                .then((resp) => cy.log(`Bob sent message from primary device with event id ${resp.event_id}`));
+
+            cy.get(".mx_EventTile_last")
+                .should("contain", "test encrypted 1")
+                // no e2e icon
+                .should("not.have.descendants", ".mx_EventTile_e2eIcon");
+
+            /* log out, and back i */
+            logOutOfElement();
+            cy.get<string>("@securityKey").then((securityKey) => {
+                logIntoElement(homeserver.baseUrl, aliceCredentials.username, aliceCredentials.password, securityKey);
+            });
+
+            /* go back to the test room and find Bob's message again */
+            cy.viewRoomById(testRoomId);
+            cy.get(".mx_EventTile_last")
+                .should("contain", "test encrypted 1")
+                .find(".mx_EventTile_e2eIcon")
+                .should("have.class", "mx_EventTile_e2eIcon_normal")
+                .should(
+                    "have.attr",
+                    "aria-label",
+                    "The authenticity of this encrypted message can't be guaranteed on this device.",
+                );
         });
 
         it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
