@@ -124,7 +124,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const [isDirectMessage, setDirectMessage] = useState(false);
     useEffect(() => {
         for (const [, dmRoomList] of Object.entries(directRoomsList)) {
-            if (dmRoomList.includes(room?.roomId ?? "")) {
+            if (room?.roomId != "" && dmRoomList.includes(room.roomId)) {
                 setDirectMessage(true);
                 break;
             }
