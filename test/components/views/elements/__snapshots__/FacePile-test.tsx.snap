@@ -2,23 +2,22 @@
 
 exports[`<FacePile /> renders with a tooltip 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    data-state="closed"
+  >
     <div
       class="_stacked-avatars_2lhia_116 mx_FacePile"
     >
-      <button
-        aria-label="Profile picture"
-        aria-live="off"
+      <span
         class="_avatar_2lhia_17 mx_BaseAvatar _avatar-imageless_2lhia_56"
         data-color="8"
-        data-state="closed"
         data-testid="avatar-img"
         data-type="round"
-        role="button"
+        role="presentation"
         style="--cpd-avatar-size: 36px;"
       >
         4
-      </button>
+      </span>
     </div>
   </div>
 </DocumentFragment>
