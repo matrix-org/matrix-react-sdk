@@ -30,31 +30,6 @@ import AccessibleButton from "../elements/AccessibleButton";
 import Heading from "../typography/Heading";
 
 export const RoomKnocksBar: VFC<{ room: Room }> = ({ room }) => {
-    const client = room.client;
-    const userId = client.getUserId() || "";
-    const canInvite = room.canInvite(userId);
-    const member = room.getMember(userId);
-    const state = room.getLiveTimeline().getState(EventTimeline.FORWARDS);
-    const canKick = member && state ? state.hasSufficientPowerLevelFor("kick", member.powerLevel) : false;
-
-    const handleApprove = (userId: string): void => {
-        setDisabled(true);
-        client.invite(room.roomId, userId).catch(onError);
-    };
-
-    const handleDeny = (userId: string): void => {
-        setDisabled(true);
-        client.kick(room.roomId, userId).catch(onError);
-    };
-
-    const handleOpenRoomSettings = (): void =>
-        dis.dispatch({ action: "open_room_settings", room_id: room.roomId, initial_tab_id: RoomSettingsTab.People });
-
-    const onError = (error: MatrixError): void => {
-        setDisabled(false);
-        Modal.createDialog(ErrorDialog, { title: error.name, description: error.message });
-    };
-
     const [disabled, setDisabled] = useState(false);
     const knockMembers = useTypedEventEmitterState(
         room,
@@ -63,7 +38,39 @@ export const RoomKnocksBar: VFC<{ room: Room }> = ({ room }) => {
     );
     const knockMembersCount = knockMembers.length;
 
-    if (room.getJoinRule() !== JoinRule.Knock || knockMembersCount === 0 || (!canInvite && !canKick)) return null;
+    if (room.getJoinRule() !== JoinRule.Knock || knockMembersCount === 0) return null;
+
+    const client = room.client;
+    const userId = client.getUserId() || "";
+    const canInvite = room.canInvite(userId);
+    const member = room.getMember(userId);
+    const state = room.getLiveTimeline().getState(EventTimeline.FORWARDS);
+    const canKick = member && state ? state.hasSufficientPowerLevelFor("kick", member.powerLevel) : false;
+
+    if (!canInvite && !canKick) return null;
+
+    const onError = (error: MatrixError): void => {
+        Modal.createDialog(ErrorDialog, { title: error.name, description: error.message });
+    };
+
+    const handleApprove = (userId: string): void => {
+        setDisabled(true);
+        client
+            .invite(room.roomId, userId)
+            .catch(onError)
+            .finally(() => setDisabled(false));
+    };
+
+    const handleDeny = (userId: string): void => {
+        setDisabled(true);
+        client
+            .kick(room.roomId, userId)
+            .catch(onError)
+            .finally(() => setDisabled(false));
+    };
+
+    const handleOpenRoomSettings = (): void =>
+        dis.dispatch({ action: "open_room_settings", room_id: room.roomId, initial_tab_id: RoomSettingsTab.People });
 
     let buttons: ReactElement = (
         <AccessibleButton
@@ -89,7 +96,7 @@ export const RoomKnocksBar: VFC<{ room: Room }> = ({ room }) => {
                         disabled={!canKick || disabled}
                         kind="icon_primary_outline"
                         onClick={() => handleDeny(knockMembers[0].userId)}
-                        title={_t("Deny")}
+                        title={_t("action|deny")}
                     >
                         <XIcon width={18} height={18} />
                     </AccessibleButton>
@@ -98,7 +105,7 @@ export const RoomKnocksBar: VFC<{ room: Room }> = ({ room }) => {
                         disabled={!canInvite || disabled}
                         kind="icon_primary"
                         onClick={() => handleApprove(knockMembers[0].userId)}
-                        title={_t("Approve")}
+                        title={_t("action|approve")}
                     >
                         <CheckIcon width={18} height={18} />
                     </AccessibleButton>

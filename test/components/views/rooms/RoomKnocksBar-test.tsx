@@ -52,7 +52,8 @@ describe("RoomKnocksBar", () => {
     const room = new Room(roomId, client, userId);
     const state = room.getLiveTimeline().getState(EventTimeline.FORWARDS)!;
 
-    const getButton = (name: "Approve" | "Deny" | "View" | "View message") => screen.getByRole("button", { name });
+    type ButtonNames = "Approve" | "Deny" | "View" | "View message";
+    const getButton = (name: ButtonNames) => screen.getByRole("button", { name });
     const getComponent = (room: Room) =>
         render(
             <MatrixClientContext.Provider value={client}>
@@ -134,16 +135,33 @@ describe("RoomKnocksBar", () => {
             expect(getComponent(room).container.firstChild).toBeNull();
         });
 
+        it("unhides the bar when a new knock request appears", () => {
+            jest.spyOn(room, "getMembersWithMembership").mockReturnValue([]);
+            const { container } = getComponent(room);
+            expect(container.firstChild).toBeNull();
+            jest.spyOn(room, "getMembersWithMembership").mockReturnValue([bob]);
+            act(() => {
+                room.emit(RoomStateEvent.Members, new MatrixEvent(), state, bob);
+            });
+            expect(container.firstChild).not.toBeNull();
+        });
+
+        it("updates when the list of knocking users changes", () => {
+            getComponent(room);
+            expect(screen.getByRole("heading")).toHaveTextContent("Asking to join");
+            jest.spyOn(room, "getMembersWithMembership").mockReturnValue([bob, jane]);
+            act(() => {
+                room.emit(RoomStateEvent.Members, new MatrixEvent(), state, jane);
+            });
+            expect(screen.getByRole("heading")).toHaveTextContent("2 people asking to join");
+        });
+
         describe("when knock members count is 1", () => {
             beforeEach(() => jest.spyOn(room, "getMembersWithMembership").mockReturnValue([bob]));
 
-            it("renders a heading", () => {
+            it("renders a heading and a paragraph with name and user ID", () => {
                 getComponent(room);
                 expect(screen.getByRole("heading")).toHaveTextContent("Asking to join");
-            });
-
-            it("renders a paragraph", () => {
-                getComponent(room);
                 expect(screen.getByRole("paragraph")).toHaveTextContent(`${bob.name} (${bob.userId})`);
             });
 
@@ -157,20 +175,38 @@ describe("RoomKnocksBar", () => {
                 });
             });
 
+            type TestCase = [string, ButtonNames, () => void];
+            it.each<TestCase>([
+                ["deny request fails", "Deny", () => jest.spyOn(client, "kick").mockRejectedValue(error)],
+                ["deny request succeeds", "Deny", () => jest.spyOn(client, "kick").mockResolvedValue({})],
+                ["approve request fails", "Approve", () => jest.spyOn(client, "invite").mockRejectedValue(error)],
+                ["approve request succeeds", "Approve", () => jest.spyOn(client, "invite").mockResolvedValue({})],
+            ])("toggles the disabled attribute for the buttons when a %s", async (_, buttonName, setup) => {
+                setup();
+                getComponent(room);
+                fireEvent.click(getButton(buttonName));
+                expect(getButton("Deny")).toHaveAttribute("disabled");
+                expect(getButton("Approve")).toHaveAttribute("disabled");
+                await act(() => flushPromises());
+                expect(getButton("Deny")).not.toHaveAttribute("disabled");
+                expect(getButton("Approve")).not.toHaveAttribute("disabled");
+            });
+
             it("disables the deny button if the power level is insufficient", () => {
                 jest.spyOn(state, "hasSufficientPowerLevelFor").mockReturnValue(false);
                 getComponent(room);
                 expect(getButton("Deny")).toHaveAttribute("disabled");
             });
 
-            it("calls kick on deny", () => {
+            it("calls kick on deny", async () => {
                 jest.spyOn(client, "kick").mockResolvedValue({});
                 getComponent(room);
                 fireEvent.click(getButton("Deny"));
+                await act(() => flushPromises());
                 expect(client.kick).toHaveBeenCalledWith(roomId, bob.userId);
             });
 
-            it("fails to deny a request", async () => {
+            it("displays an error when a deny request fails", async () => {
                 jest.spyOn(client, "kick").mockRejectedValue(error);
                 getComponent(room);
                 fireEvent.click(getButton("Deny"));
@@ -187,14 +223,15 @@ describe("RoomKnocksBar", () => {
                 expect(getButton("Approve")).toHaveAttribute("disabled");
             });
 
-            it("calls invite on approve", () => {
+            it("calls invite on approve", async () => {
                 jest.spyOn(client, "invite").mockResolvedValue({});
                 getComponent(room);
                 fireEvent.click(getButton("Approve"));
-                expect(client.kick).toHaveBeenCalledWith(roomId, bob.userId);
+                await act(() => flushPromises());
+                expect(client.invite).toHaveBeenCalledWith(roomId, bob.userId);
             });
 
-            it("fails to approve a request", async () => {
+            it("displays an error when an approval fails", async () => {
                 jest.spyOn(client, "invite").mockRejectedValue(error);
                 getComponent(room);
                 fireEvent.click(getButton("Approve"));
@@ -205,7 +242,7 @@ describe("RoomKnocksBar", () => {
                 });
             });
 
-            it("succeeds to deny/approve a request", () => {
+            it("hides the bar when someone else approves or denies the waiting person", () => {
                 getComponent(room);
                 jest.spyOn(room, "getMembersWithMembership").mockReturnValue([]);
                 act(() => {
