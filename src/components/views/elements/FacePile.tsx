@@ -48,10 +48,10 @@ const FacePile: FC<IProps> = ({ members, size, overflow, tooltipLabel, tooltipSh
     );
 
     const content = (
-        <div>
+        <>
             <AvatarStack className="mx_FacePile">{pileContents}</AvatarStack>
             {children}
-        </div>
+        </>
     );
 
     return tooltipLabel ? (

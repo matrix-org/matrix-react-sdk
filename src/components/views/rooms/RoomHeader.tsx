@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Avatar, AvatarStack, Body as BodyText, IconButton } from "@vector-im/compound-web";
+import { Body as BodyText, IconButton } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
 import { Icon as ThreadsIcon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
@@ -32,7 +32,6 @@ import { useTopic } from "../../../hooks/room/useTopic";
 import { useAccountData } from "../../../hooks/useAccountData";
 import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 import { useRoomMemberCount, useRoomMembers } from "../../../hooks/useRoomMembers";
-import { mediaFromMxc } from "../../../customisations/Media";
 import { _t, getCurrentLanguage } from "../../../languageHandler";
 import { Flex } from "../../utils/Flex";
 import { Box } from "../../utils/Box";
@@ -46,6 +45,7 @@ import { NotificationColor } from "../../../stores/notifications/NotificationCol
 import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
 import SdkConfig from "../../../SdkConfig";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
+import FacePile from "../elements/FacePile";
 
 /**
  * A helper to transform a notification color to the what the Compound Icon Button
@@ -215,26 +215,9 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                         e.stopPropagation();
                     }}
                 >
-                    <AvatarStack>
-                        {members.slice(0, 3).map((member) => {
-                            const mxcUrl = member.getMxcAvatarUrl();
-                            return (
-                                <Avatar
-                                    key={member.userId}
-                                    id={member.userId}
-                                    name={member.name}
-                                    src={
-                                        mxcUrl
-                                            ? mediaFromMxc(mxcUrl, client).getThumbnailOfSourceHttp(32, 32, "crop") ??
-                                              undefined
-                                            : undefined
-                                    }
-                                    size="20px"
-                                />
-                            );
-                        })}
-                    </AvatarStack>
-                    {memberCount.toLocaleString(getCurrentLanguage())}
+                    <FacePile members={members.slice(0, 3)} size="20px" overflow={false}>
+                        {memberCount.toLocaleString(getCurrentLanguage())}
+                    </FacePile>
                 </BodyText>
             )}
         </Flex>
