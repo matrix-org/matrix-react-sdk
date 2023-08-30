@@ -20,7 +20,7 @@ import { Room, EventType, MatrixEvent, PendingEventOrdering, MatrixCall } from "
 import userEvent from "@testing-library/user-event";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
-import { stubClient } from "../../../test-utils";
+import { stubClient, withClientContextRenderOptions } from "../../../test-utils";
 import RoomHeader from "../../../../src/components/views/rooms/RoomHeader";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -57,7 +57,10 @@ describe("Roomeader", () => {
     });
 
     it("renders the room header", () => {
-        const { container } = render(<RoomHeader room={room} />);
+        const { container } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
         expect(container).toHaveTextContent(ROOM_ID);
     });
 
@@ -75,26 +78,38 @@ describe("Roomeader", () => {
         });
         await room.addLiveEvents([roomTopic]);
 
-        const { container } = render(<RoomHeader room={room} />);
+        const { container } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
         expect(container).toHaveTextContent(TOPIC);
     });
 
     it("opens the room summary", async () => {
-        const { container } = render(<RoomHeader room={room} />);
+        const { container } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
 
         await userEvent.click(getByText(container, ROOM_ID));
         expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.RoomSummary });
     });
 
     it("opens the thread panel", async () => {
-        const { container } = render(<RoomHeader room={room} />);
+        const { container } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
 
         await userEvent.click(getByTitle(container, "Threads"));
         expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.ThreadPanel });
     });
 
     it("opens the notifications panel", async () => {
-        const { container } = render(<RoomHeader room={room} />);
+        const { container } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
 
         await userEvent.click(getByTitle(container, "Notifications"));
         expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.NotificationPanel });
@@ -103,7 +118,10 @@ describe("Roomeader", () => {
     describe("groups call disabled", () => {
         it("you can't call if you're alone", () => {
             mockRoomMembers(room, 1);
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
             for (const button of getAllByTitle(container, "There's no one here to call")) {
                 expect(button).toBeDisabled();
             }
@@ -111,7 +129,10 @@ describe("Roomeader", () => {
 
         it("you can call when you're two in the room", async () => {
             mockRoomMembers(room, 2);
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
             const voiceButton = getByTitle(container, "Voice call");
             const videoButton = getByTitle(container, "Video call");
             expect(voiceButton).not.toBeDisabled();
@@ -132,7 +153,10 @@ describe("Roomeader", () => {
                 // The JS-SDK does not export the class `MatrixCall` only the type
                 {} as MatrixCall,
             );
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
             for (const button of getAllByTitle(container, "Ongoing call")) {
                 expect(button).toBeDisabled();
             }
@@ -141,7 +165,10 @@ describe("Roomeader", () => {
         it("can calls in large rooms if able to edit widgets", () => {
             mockRoomMembers(room, 10);
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
 
             expect(getByTitle(container, "Voice call")).not.toBeDisabled();
             expect(getByTitle(container, "Video call")).not.toBeDisabled();
@@ -150,7 +177,10 @@ describe("Roomeader", () => {
         it("disable calls in large rooms by default", () => {
             mockRoomMembers(room, 10);
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(false);
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
             expect(getByTitle(container, "You do not have permission to start voice calls")).toBeDisabled();
             expect(getByTitle(container, "You do not have permission to start video calls")).toBeDisabled();
         });
@@ -166,7 +196,10 @@ describe("Roomeader", () => {
             // allow element calls
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
 
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
 
             expect(screen.queryByTitle("Voice call")).toBeNull();
 
@@ -187,7 +220,10 @@ describe("Roomeader", () => {
 
             jest.spyOn(CallStore.instance, "getCall").mockReturnValue({} as Call);
 
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
             expect(getByTitle(container, "Ongoing call")).toBeDisabled();
         });
 
@@ -197,7 +233,10 @@ describe("Roomeader", () => {
                 // The JS-SDK does not export the class `MatrixCall` only the type
                 {} as MatrixCall,
             );
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
             for (const button of getAllByTitle(container, "Ongoing call")) {
                 expect(button).toBeDisabled();
             }
@@ -205,7 +244,10 @@ describe("Roomeader", () => {
 
         it("can't call if you have no friends", () => {
             mockRoomMembers(room, 1);
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
             for (const button of getAllByTitle(container, "There's no one here to call")) {
                 expect(button).toBeDisabled();
             }
@@ -213,7 +255,10 @@ describe("Roomeader", () => {
 
         it("calls using legacy or jitsi", async () => {
             mockRoomMembers(room, 2);
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
 
             const voiceButton = getByTitle(container, "Voice call");
             const videoButton = getByTitle(container, "Video call");
@@ -236,7 +281,10 @@ describe("Roomeader", () => {
                 return false;
             });
 
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
 
             const voiceButton = getByTitle(container, "Voice call");
             const videoButton = getByTitle(container, "Video call");
@@ -260,7 +308,10 @@ describe("Roomeader", () => {
                 return false;
             });
 
-            const { container } = render(<RoomHeader room={room} />);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
 
             const voiceButton = getByTitle(container, "Voice call");
             const videoButton = getByTitle(container, "Video call");

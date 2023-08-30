@@ -1821,6 +1821,7 @@
     "Room %(name)s": "Room %(name)s",
     "Recently visited rooms": "Recently visited rooms",
     "No recently visited rooms": "No recently visited rooms",
+    "Untrusted": "Untrusted",
     "Threads": "Threads",
     "Video room": "Video room",
     "Public space": "Public space",
