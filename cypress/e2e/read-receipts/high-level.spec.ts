@@ -341,6 +341,22 @@ describe("Read receipts", () => {
         });
     }
 
+    /**
+     * Assert a given room is marked as unread, and the number of unread
+     * messages is less than the supplied count.
+     *
+     * @param room - the name of the room to check
+     * @param lessThan - the number of unread messages that is too many
+     */
+    function assertUnreadLessThan(room: string, lessThan: number) {
+        cy.log("Assert room some unread", room);
+        return getRoomListTile(room).within(() => {
+            cy.get(".mx_NotificationBadge_count").should(($count) =>
+                expect(parseInt($count.get(0).textContent, 10)).to.be.lessThan(lessThan),
+            );
+        });
+    }
+
     function openThreadList() {
         cy.log("Open thread list");
         cy.findByTestId("threadsButton", { log: false }).then(($button) => {
@@ -419,7 +435,18 @@ describe("Read receipts", () => {
                 // Then the room becomes read
                 assertRead(room2);
             });
-            it.skip("Reading an older message leaves the room unread", () => {});
+            it("Reading an older message leaves the room unread", () => {
+                // Given there are lots of messages in a room
+                goTo(room1);
+                receiveMessages(room2, many("Msg", 30));
+                assertUnread(room2, 30);
+
+                // When I jump to one of the older messages
+                jumpTo(room2, "Msg0");
+
+                // Then the room is still unread, but some messages were read
+                assertUnreadLessThan(room2, 30);
+            });
             it("Marking a room as read makes it read", () => {
                 // Given I have some unread messages
                 goTo(room1);
