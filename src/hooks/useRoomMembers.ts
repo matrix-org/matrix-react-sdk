@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Room, RoomEvent, RoomMember, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { throttle } from "lodash";
 
@@ -59,26 +59,30 @@ export const useRoomMemberCount = (
 
     const { throttleWait, includeFunctional } = opts;
 
+    const onMembershipUpdate = useCallback(() => {
+        // At the time where `RoomStateEvent.Members` is emitted the
+        // summary API has not had a chance to update the `summaryJoinedMemberCount`
+        // value, therefore handling the logic locally here.
+        //
+        // Tracked as part of https://github.com/vector-im/element-web/issues/26033
+        const membersCount = includeFunctional
+            ? room.getMembers().reduce((count, m) => {
+                  return m.membership === "join" ? count + 1 : count;
+              }, 0)
+            : getJoinedNonFunctionalMembers(room).length;
+        setCount(membersCount);
+    }, [includeFunctional, room]);
+
     useTypedEventEmitter(
         room.currentState,
         RoomStateEvent.Members,
-        throttle(
-            () => {
-                // At the time where `RoomStateEvent.Members` is emitted the
-                // summary API has not had a chance to update the `summaryJoinedMemberCount`
-                // value, therefore handling the logic locally here.
-                //
-                // Tracked as part of https://github.com/vector-im/element-web/issues/26033
-                const membersCount = includeFunctional
-                    ? room.getMembers().reduce((count, m) => {
-                          return m.membership === "join" ? count + 1 : count;
-                      }, 0)
-                    : getJoinedNonFunctionalMembers(room).length;
-                setCount(membersCount);
-            },
-            throttleWait,
-            { leading: true, trailing: true },
-        ),
+        throttle(onMembershipUpdate, throttleWait, { leading: true, trailing: true }),
+    );
+
+    useTypedEventEmitter(
+        room,
+        RoomEvent.Summary,
+        throttle(onMembershipUpdate, throttleWait, { leading: true, trailing: true }),
     );
     return count;
 };
