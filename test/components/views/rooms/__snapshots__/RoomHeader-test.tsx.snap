@@ -16,6 +16,7 @@ exports[`RoomHeader does not show the face pile for DMs 1`] = `
         data-type="round"
         role="presentation"
         style="--cpd-avatar-size: 40px;"
+        title=""
       >
         !
       </span>
