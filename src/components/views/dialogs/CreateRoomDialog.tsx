@@ -78,6 +78,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         this.state = {
             isPublic: this.props.defaultPublic || false,
             isEncrypted: this.props.defaultEncrypted ?? privateShouldBeEncrypted(),
+            useMls: false,
             joinRule,
             name: this.props.defaultName || "",
             topic: "",

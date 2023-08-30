@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
+import { MLS_ALGORITHM } from "matrix-js-sdk/src/crypto/algorithms/dmls";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType, RoomCreateTypeField, RoomType } from "matrix-js-sdk/src/@types/event";
 import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
@@ -209,7 +210,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             type: "m.room.encryption",
             state_key: "",
             content: {
-                algorithm: opts.useMls ? "org.matrix.msc2883.v0.dmls.dhkemx25519-aes128gcm-sha256-ed25519" : "m.megolm.v1.aes-sha2",
+                algorithm: opts.useMls ? MLS_ALGORITHM.name : "m.megolm.v1.aes-sha2",
             },
         });
     }
