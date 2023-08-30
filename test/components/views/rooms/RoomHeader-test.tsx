@@ -184,200 +184,242 @@ describe("RoomHeader", () => {
         await userEvent.click(facePile);
 
         expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.RoomMemberList });
-        it("opens the thread panel", async () => {
-            const { container } = render(<RoomHeader room={room} />);
+    });
 
-            await userEvent.click(getByTitle(container, "Threads"));
-            expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.ThreadPanel });
+    it("opens the thread panel", async () => {
+        const { container } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
+
+        await userEvent.click(getByTitle(container, "Threads"));
+        expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.ThreadPanel });
+    });
+
+    it("opens the notifications panel", async () => {
+        const { container } = render(
+            <RoomHeader room={room} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
+
+        await userEvent.click(getByTitle(container, "Notifications"));
+        expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.NotificationPanel });
+    });
+
+    describe("groups call disabled", () => {
+        it("you can't call if you're alone", () => {
+            mockRoomMembers(room, 1);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+            for (const button of getAllByTitle(container, "There's no one here to call")) {
+                expect(button).toBeDisabled();
+            }
         });
 
-        it("opens the notifications panel", async () => {
-            const { container } = render(<RoomHeader room={room} />);
+        it("you can call when you're two in the room", async () => {
+            mockRoomMembers(room, 2);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+            const voiceButton = getByTitle(container, "Voice call");
+            const videoButton = getByTitle(container, "Video call");
+            expect(voiceButton).not.toBeDisabled();
+            expect(videoButton).not.toBeDisabled();
 
-            await userEvent.click(getByTitle(container, "Notifications"));
-            expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.NotificationPanel });
+            const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
+
+            await userEvent.click(voiceButton);
+            expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
+
+            await userEvent.click(videoButton);
+            expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
         });
 
-        describe("groups call disabled", () => {
-            it("you can't call if you're alone", () => {
-                mockRoomMembers(room, 1);
-                const { container } = render(<RoomHeader room={room} />);
-                for (const button of getAllByTitle(container, "There's no one here to call")) {
-                    expect(button).toBeDisabled();
-                }
-            });
-
-            it("you can call when you're two in the room", async () => {
-                mockRoomMembers(room, 2);
-                const { container } = render(<RoomHeader room={room} />);
-                const voiceButton = getByTitle(container, "Voice call");
-                const videoButton = getByTitle(container, "Video call");
-                expect(voiceButton).not.toBeDisabled();
-                expect(videoButton).not.toBeDisabled();
-
-                const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
-
-                await userEvent.click(voiceButton);
-                expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
-
-                await userEvent.click(videoButton);
-                expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
-            });
-
-            it("you can't call if there's already a call", () => {
-                mockRoomMembers(room, 2);
-                jest.spyOn(LegacyCallHandler.instance, "getCallForRoom").mockReturnValue(
-                    // The JS-SDK does not export the class `MatrixCall` only the type
-                    {} as MatrixCall,
-                );
-                const { container } = render(<RoomHeader room={room} />);
-                for (const button of getAllByTitle(container, "Ongoing call")) {
-                    expect(button).toBeDisabled();
-                }
-            });
-
-            it("can calls in large rooms if able to edit widgets", () => {
-                mockRoomMembers(room, 10);
-                jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
-                const { container } = render(<RoomHeader room={room} />);
-
-                expect(getByTitle(container, "Voice call")).not.toBeDisabled();
-                expect(getByTitle(container, "Video call")).not.toBeDisabled();
-            });
-
-            it("disable calls in large rooms by default", () => {
-                mockRoomMembers(room, 10);
-                jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(false);
-                const { container } = render(<RoomHeader room={room} />);
-                expect(getByTitle(container, "You do not have permission to start voice calls")).toBeDisabled();
-                expect(getByTitle(container, "You do not have permission to start video calls")).toBeDisabled();
-            });
+        it("you can't call if there's already a call", () => {
+            mockRoomMembers(room, 2);
+            jest.spyOn(LegacyCallHandler.instance, "getCallForRoom").mockReturnValue(
+                // The JS-SDK does not export the class `MatrixCall` only the type
+                {} as MatrixCall,
+            );
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+            for (const button of getAllByTitle(container, "Ongoing call")) {
+                expect(button).toBeDisabled();
+            }
         });
 
-        describe("group call enabled", () => {
-            beforeEach(() => {
-                jest.spyOn(SettingsStore, "getValue").mockImplementation(
-                    (feature) => feature === "feature_group_calls",
-                );
+        it("can calls in large rooms if able to edit widgets", () => {
+            mockRoomMembers(room, 10);
+            jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+
+            expect(getByTitle(container, "Voice call")).not.toBeDisabled();
+            expect(getByTitle(container, "Video call")).not.toBeDisabled();
+        });
+
+        it("disable calls in large rooms by default", () => {
+            mockRoomMembers(room, 10);
+            jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(false);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+            expect(getByTitle(container, "You do not have permission to start voice calls")).toBeDisabled();
+            expect(getByTitle(container, "You do not have permission to start video calls")).toBeDisabled();
+        });
+    });
+
+    describe("group call enabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => feature === "feature_group_calls");
+        });
+
+        it("renders only the video call element", async () => {
+            jest.spyOn(SdkConfig, "get").mockReturnValue({ use_exclusively: true });
+            // allow element calls
+            jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
+
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+
+            expect(screen.queryByTitle("Voice call")).toBeNull();
+
+            const videoCallButton = getByTitle(container, "Video call");
+            expect(videoCallButton).not.toBeDisabled();
+
+            const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
+
+            await userEvent.click(getByTitle(container, "Video call"));
+
+            expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
+        });
+
+        it("can call if there's an ongoing call", () => {
+            jest.spyOn(SdkConfig, "get").mockReturnValue({ use_exclusively: true });
+            // allow element calls
+            jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
+
+            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({} as Call);
+
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+            expect(getByTitle(container, "Ongoing call")).toBeDisabled();
+        });
+
+        it("disables calling if there's a jitsi call", () => {
+            mockRoomMembers(room, 2);
+            jest.spyOn(LegacyCallHandler.instance, "getCallForRoom").mockReturnValue(
+                // The JS-SDK does not export the class `MatrixCall` only the type
+                {} as MatrixCall,
+            );
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+            for (const button of getAllByTitle(container, "Ongoing call")) {
+                expect(button).toBeDisabled();
+            }
+        });
+
+        it("can't call if you have no friends", () => {
+            mockRoomMembers(room, 1);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+            for (const button of getAllByTitle(container, "There's no one here to call")) {
+                expect(button).toBeDisabled();
+            }
+        });
+
+        it("calls using legacy or jitsi", async () => {
+            mockRoomMembers(room, 2);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+
+            const voiceButton = getByTitle(container, "Voice call");
+            const videoButton = getByTitle(container, "Video call");
+            expect(voiceButton).not.toBeDisabled();
+            expect(videoButton).not.toBeDisabled();
+
+            const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
+            await userEvent.click(voiceButton);
+            expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
+
+            await userEvent.click(videoButton);
+            expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
+        });
+
+        it("calls using legacy or jitsi for large rooms", async () => {
+            mockRoomMembers(room, 3);
+
+            jest.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
+                if (key === "im.vector.modular.widgets") return true;
+                return false;
             });
 
-            it("renders only the video call element", async () => {
-                jest.spyOn(SdkConfig, "get").mockReturnValue({ use_exclusively: true });
-                // allow element calls
-                jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
 
-                const { container } = render(<RoomHeader room={room} />);
+            const voiceButton = getByTitle(container, "Voice call");
+            const videoButton = getByTitle(container, "Video call");
+            expect(voiceButton).not.toBeDisabled();
+            expect(videoButton).not.toBeDisabled();
 
-                expect(screen.queryByTitle("Voice call")).toBeNull();
+            const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
+            await userEvent.click(voiceButton);
+            expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
 
-                const videoCallButton = getByTitle(container, "Video call");
-                expect(videoCallButton).not.toBeDisabled();
+            await userEvent.click(videoButton);
+            expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
+        });
 
-                const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
+        it("calls using element calls for large rooms", async () => {
+            mockRoomMembers(room, 3);
 
-                await userEvent.click(getByTitle(container, "Video call"));
-
-                expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
+            jest.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
+                if (key === "im.vector.modular.widgets") return true;
+                if (key === ElementCall.CALL_EVENT_TYPE.name) return true;
+                return false;
             });
 
-            it("can call if there's an ongoing call", () => {
-                jest.spyOn(SdkConfig, "get").mockReturnValue({ use_exclusively: true });
-                // allow element calls
-                jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
 
-                jest.spyOn(CallStore.instance, "getCall").mockReturnValue({} as Call);
+            const voiceButton = getByTitle(container, "Voice call");
+            const videoButton = getByTitle(container, "Video call");
+            expect(voiceButton).not.toBeDisabled();
+            expect(videoButton).not.toBeDisabled();
 
-                const { container } = render(<RoomHeader room={room} />);
-                expect(getByTitle(container, "Ongoing call")).toBeDisabled();
-            });
+            const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
+            await userEvent.click(voiceButton);
+            expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
 
-            it("disables calling if there's a jitsi call", () => {
-                mockRoomMembers(room, 2);
-                jest.spyOn(LegacyCallHandler.instance, "getCallForRoom").mockReturnValue(
-                    // The JS-SDK does not export the class `MatrixCall` only the type
-                    {} as MatrixCall,
-                );
-                const { container } = render(<RoomHeader room={room} />);
-                for (const button of getAllByTitle(container, "Ongoing call")) {
-                    expect(button).toBeDisabled();
-                }
-            });
-
-            it("can't call if you have no friends", () => {
-                mockRoomMembers(room, 1);
-                const { container } = render(<RoomHeader room={room} />);
-                for (const button of getAllByTitle(container, "There's no one here to call")) {
-                    expect(button).toBeDisabled();
-                }
-            });
-
-            it("calls using legacy or jitsi", async () => {
-                mockRoomMembers(room, 2);
-                const { container } = render(<RoomHeader room={room} />);
-
-                const voiceButton = getByTitle(container, "Voice call");
-                const videoButton = getByTitle(container, "Video call");
-                expect(voiceButton).not.toBeDisabled();
-                expect(videoButton).not.toBeDisabled();
-
-                const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
-                await userEvent.click(voiceButton);
-                expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
-
-                await userEvent.click(videoButton);
-                expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
-            });
-
-            it("calls using legacy or jitsi for large rooms", async () => {
-                mockRoomMembers(room, 3);
-
-                jest.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
-                    if (key === "im.vector.modular.widgets") return true;
-                    return false;
-                });
-
-                const { container } = render(<RoomHeader room={room} />);
-
-                const voiceButton = getByTitle(container, "Voice call");
-                const videoButton = getByTitle(container, "Video call");
-                expect(voiceButton).not.toBeDisabled();
-                expect(videoButton).not.toBeDisabled();
-
-                const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
-                await userEvent.click(voiceButton);
-                expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
-
-                await userEvent.click(videoButton);
-                expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
-            });
-
-            it("calls using element calls for large rooms", async () => {
-                mockRoomMembers(room, 3);
-
-                jest.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
-                    if (key === "im.vector.modular.widgets") return true;
-                    if (key === ElementCall.CALL_EVENT_TYPE.name) return true;
-                    return false;
-                });
-
-                const { container } = render(<RoomHeader room={room} />);
-
-                const voiceButton = getByTitle(container, "Voice call");
-                const videoButton = getByTitle(container, "Video call");
-                expect(voiceButton).not.toBeDisabled();
-                expect(videoButton).not.toBeDisabled();
-
-                const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
-                await userEvent.click(voiceButton);
-                expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
-
-                const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
-                await userEvent.click(videoButton);
-                expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
-            });
+            const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
+            await userEvent.click(videoButton);
+            expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
         });
     });
 });
+
 /**
  *
  * @param count the number of users to create
