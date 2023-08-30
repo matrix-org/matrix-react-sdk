@@ -1025,7 +1025,7 @@ describe("Read receipts", () => {
                 // Then it is read
                 assertRead(room2);
             });
-            // XXX: fails because the room is still "bold" even though the notification counts all disappear
+            // XXX: fails because the unread dot remains after marking as read
             it.skip("Editing a thread message after marking as read makes the room unread", () => {
                 // Given a room is marked as read
                 goTo(room1);
