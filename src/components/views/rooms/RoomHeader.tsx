@@ -208,14 +208,18 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     as="div"
                     size="sm"
                     weight="medium"
-                    className="mx_RoomHeader_members"
                     aria-label={_t("%(count)s members", { count: memberCount })}
                     onClick={(e: React.MouseEvent) => {
                         showOrHidePanel(RightPanelPhases.RoomMemberList);
                         e.stopPropagation();
                     }}
                 >
-                    <FacePile members={members.slice(0, 3)} size="20px" overflow={false}>
+                    <FacePile
+                        className="mx_RoomHeader_members"
+                        members={members.slice(0, 3)}
+                        size="20px"
+                        overflow={false}
+                    >
                         {memberCount.toLocaleString(getCurrentLanguage())}
                     </FacePile>
                 </BodyText>

@@ -47,13 +47,15 @@ limitations under the License.
     opacity: 1;
 }
 
-.mx_RoomHeader_members {
+.mx_RoomHeader .mx_FacePile {
     color: $secondary-content;
     display: flex;
     align-items: center;
     gap: var(--cpd-space-2x);
     border-radius: 9999px;
     padding: var(--cpd-space-1-5x);
+    cursor: pointer;
+    user-select: none;
 
     &:hover {
         color: $primary-content;
