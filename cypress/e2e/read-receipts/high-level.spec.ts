@@ -703,21 +703,34 @@ describe("Read receipts", () => {
                 assertUnread(room2, 30);
             });
             it("Creating a new thread based on a reply makes the room unread", () => {
+                // Given a message and reply exist and are read
                 goTo(room1);
-                receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1"), threadedOff("Reply1", "Resp1")]);
-                assertUnread(room2, 3);
+                receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1")]);
+                goTo(room2);
+                goTo(room1);
+                assertRead(room2);
+
+                // When I receive a thread message created on the reply
+                receiveMessages(room2, [threadedOff("Reply1", "Resp1")]);
+
+                // Then the room is unread
+                assertUnread(room2, 1);
             });
             it("Reading a thread whose root is a reply makes the room read", () => {
+                // Given an unread thread off a reply exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1"), threadedOff("Reply1", "Resp1")]);
                 assertUnread(room2, 3);
-
                 goTo(room2);
                 assertUnread(room2, 1);
                 assertUnreadThread("Reply1");
 
+                // When I read the thread
                 openThread("Reply1");
+
+                // Then the room and thread are read
                 assertRead(room2);
+                assertReadThread("Reply1");
             });
         });
     });
@@ -873,38 +886,47 @@ describe("Read receipts", () => {
         describe("in threads", () => {
             // XXX: fails because on CI we get a dot, but locally we get a count. Must be a timing issue.
             it.skip("An edit of a threaded message makes the room unread", () => {
+                // Given we have read the thread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
                 assertUnread(room2, 2);
-
                 goTo(room2);
                 openThread("Msg1");
                 assertRead(room2);
                 goTo(room1);
 
+                // When a message inside it is edited
                 receiveMessages(room2, [editOf("Resp1", "Edit1")]);
+
+                // Then the room and thread are unread
                 assertUnread(room2, 1);
+                goTo(room2);
+                assertUnreadThread("Msg1");
             });
             // XXX: fails because on CI we get a dot, but locally we get a count. Must be a timing issue.
             it.skip("Reading an edit of a threaded message makes the room read", () => {
+                // Given an edited thread message is making the room unread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
                 assertUnread(room2, 2);
-
                 goTo(room2);
                 openThread("Msg1");
                 assertRead(room2);
                 goTo(room1);
-
                 receiveMessages(room2, [editOf("Resp1", "Edit1")]);
                 assertUnread(room2, 1);
 
+                // When I read it
                 goTo(room2);
                 openThread("Msg1");
+
+                // Then the room and thread are read
                 assertRead(room2);
+                assertReadThread("Msg1");
             });
             // XXX: fails because the room is still "bold" even though the notification counts all disappear
             it.skip("Marking a room as read after an edit in a thread makes it read", () => {
+                // Given an edit in a thread is making the room unread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), editOf("Resp1", "Edit1")]);
                 assertUnread(room2, 3); // TODO: the edit counts as a message!
@@ -932,23 +954,32 @@ describe("Read receipts", () => {
             });
             // XXX: fails because on CI the count is 2 instead of 3. Must be a timing issue.
             it.skip("A room with an edited threaded message is still unread after restart", () => {
+                // Given an edit in a thread is making a room unread
                 goTo(room1);
-                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), editOf("Resp1", "Edit1")]);
-                assertUnread(room2, 3);
+                receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
+                markAsRead(room2);
+                receiveMessages(room2, [editOf("Resp1", "Edit1")]);
+                assertUnread(room2, 1);
 
+                // When I restart
                 saveAndReload();
-                assertUnread(room2, 3);
+
+                // Then is it still unread
+                assertUnread(room2, 1);
             });
             // XXX: fails because on CI the count is 2 instead of 3. Must be a timing issue.
             it.skip("A room where all threaded edits are read is still read after restart", () => {
+                // Given I have marked an edit in a thread as read
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), editOf("Resp1", "Edit1")]);
                 assertUnread(room2, 3);
-
                 markAsRead(room2);
                 assertRead(room2);
 
+                // When I restart
                 saveAndReload();
+
+                // It is still read
                 assertRead(room2);
             });
         });
@@ -956,17 +987,23 @@ describe("Read receipts", () => {
         describe("thread roots", () => {
             // XXX: fails because on CI we get a dot, but locally we get a count. Must be a timing issue.
             it.skip("An edit of a thread root makes the room unread", () => {
+                // Given I have read a thread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
                 assertUnread(room2, 2);
-
                 goTo(room2);
                 openThread("Msg1");
                 assertRead(room2);
                 goTo(room1);
 
+                // When the thread root is edited
                 receiveMessages(room2, [editOf("Msg1", "Edit1")]);
+
+                // Then the room is unread but not the thread
                 assertUnread(room2, 1);
+                goTo(room2);
+                assertRead(room2);
+                assertReadThread("Msg1");
             });
             it.skip("Reading an edit of a thread root makes the room read", () => {
                 // Given a fully-read thread exists
