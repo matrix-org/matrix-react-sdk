@@ -19,7 +19,6 @@ import { Room, RoomEvent, RoomMember, RoomStateEvent } from "matrix-js-sdk/src/m
 import { throttle } from "lodash";
 
 import { useTypedEventEmitter } from "./useEventEmitter";
-import { getJoinedNonFunctionalMembers } from "../utils/room/getJoinedNonFunctionalMembers";
 
 // Hook to simplify watching Matrix Room joined members
 export const useRoomMembers = (room: Room, throttleWait = 250): RoomMember[] => {
@@ -43,35 +42,17 @@ type RoomMemberCountOpts = {
      * Wait time between room member count update
      */
     throttleWait?: number;
-    /**
-     * Whether to include functional members (bots, etc...) in the room count
-     * @default true
-     */
-    includeFunctional: boolean;
 };
 
 // Hook to simplify watching Matrix Room joined member count
-export const useRoomMemberCount = (
-    room: Room,
-    opts: RoomMemberCountOpts = { throttleWait: 250, includeFunctional: true },
-): number => {
+export const useRoomMemberCount = (room: Room, opts: RoomMemberCountOpts = { throttleWait: 250 }): number => {
     const [count, setCount] = useState<number>(room.getJoinedMemberCount());
 
-    const { throttleWait, includeFunctional } = opts;
+    const { throttleWait } = opts;
 
     const onMembershipUpdate = useCallback(() => {
-        // At the time where `RoomStateEvent.Members` is emitted the
-        // summary API has not had a chance to update the `summaryJoinedMemberCount`
-        // value, therefore handling the logic locally here.
-        //
-        // Tracked as part of https://github.com/vector-im/element-web/issues/26033
-        const membersCount = includeFunctional
-            ? room.getMembers().reduce((count, m) => {
-                  return m.membership === "join" ? count + 1 : count;
-              }, 0)
-            : getJoinedNonFunctionalMembers(room).length;
-        setCount(membersCount);
-    }, [includeFunctional, room]);
+        setCount(room.getJoinedMemberCount());
+    }, [room]);
 
     useTypedEventEmitter(
         room.currentState,
