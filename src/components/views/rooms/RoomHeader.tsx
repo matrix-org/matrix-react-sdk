@@ -77,20 +77,18 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const roomName = useRoomName(room);
     const roomTopic = useTopic(room);
 
-    const directRoomsList = useAccountData<Record<string, string[]>>(client, EventType.Direct);
-    const [isDirectMessage, setDirectMessage] = useState(false);
-
     const members = useRoomMembers(room);
     const memberCount = useRoomMemberCount(room);
 
-    useEffect(() => {
+    const directRoomsList = useAccountData<Record<string, string[]>>(client, EventType.Direct);
+    const isDirectMessage = useMemo(() => {
         for (const [, dmRoomList] of Object.entries(directRoomsList)) {
             if (dmRoomList.includes(room?.roomId ?? "")) {
-                setDirectMessage(true);
-                break;
+                return true;
             }
         }
-    }, [room, directRoomsList]);
+        return false;
+    }, [directRoomsList, room?.roomId]);
 
     const { voiceCallDisabledReason, voiceCallType, videoCallDisabledReason, videoCallType } = useRoomCallStatus(room);
 
