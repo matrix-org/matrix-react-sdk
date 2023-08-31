@@ -33,7 +33,7 @@ import { useTopic } from "../../../hooks/room/useTopic";
 import { useAccountData } from "../../../hooks/useAccountData";
 import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 import { useRoomMemberCount, useRoomMembers } from "../../../hooks/useRoomMembers";
-import { _t, getCurrentLanguage } from "../../../languageHandler";
+import { _t } from "../../../languageHandler";
 import { Flex } from "../../utils/Flex";
 import { Box } from "../../utils/Box";
 import { useRoomCallStatus } from "../../../hooks/room/useRoomCallStatus";
@@ -48,6 +48,7 @@ import { E2EStatus } from "../../../utils/ShieldUtils";
 import FacePile from "../elements/FacePile";
 import { useRoomState } from "../../../hooks/useRoomState";
 import RoomAvatar from "../avatars/RoomAvatar";
+import { formatCount } from "../../../utils/FormattingUtils";
 
 /**
  * A helper to transform a notification color to the what the Compound Icon Button
@@ -229,7 +230,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                         size="20px"
                         overflow={false}
                     >
-                        {memberCount.toLocaleString(getCurrentLanguage())}
+                        {formatCount(memberCount)}
                     </FacePile>
                 </BodyText>
             )}
