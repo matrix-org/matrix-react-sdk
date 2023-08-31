@@ -103,6 +103,11 @@ describe("Read receipts", () => {
         });
     }
 
+    function backToThreadsList() {
+        cy.log("Back to threads list");
+        cy.get(".mx_RightPanel").findByTitle("Threads").click();
+    }
+
     function openThread(rootMessage: string) {
         cy.log("Open thread", rootMessage);
         cy.get(".mx_RoomView_body", { log: false }).within(() => {
@@ -853,17 +858,23 @@ describe("Read receipts", () => {
         describe("in threads", () => {
             // XXX: fails because on CI we get a dot, but locally we get a count. Must be a timing issue.
             it.skip("An edit of a threaded message makes the room unread", () => {
+                // Given we have read the thread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
                 assertUnread(room2, 2);
-
                 goTo(room2);
                 openThread("Msg1");
                 assertRead(room2);
+                backToThreadsList();
                 goTo(room1);
 
+                // When a message inside it is edited
                 receiveMessages(room2, [editOf("Resp1", "Edit1")]);
+
+                // Then the room and thread are unread
                 assertUnread(room2, 1);
+                goTo(room2);
+                assertUnreadThread("Msg1");
             });
             // XXX: fails because on CI we get a dot, but locally we get a count. Must be a timing issue.
             it.skip("Reading an edit of a threaded message makes the room read", () => {
