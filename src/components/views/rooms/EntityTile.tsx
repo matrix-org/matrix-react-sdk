@@ -32,7 +32,7 @@ export enum PowerStatus {
 
 const PowerLabel: Record<PowerStatus, TranslationKey> = {
     [PowerStatus.Admin]: _td("power_level|admin"),
-    [PowerStatus.Moderator]: _td("Mod"),
+    [PowerStatus.Moderator]: _td("power_level|mod"),
 };
 
 export type PresenceState = "offline" | "online" | "unavailable";

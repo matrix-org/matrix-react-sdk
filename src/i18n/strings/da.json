@@ -13,7 +13,6 @@
     "Invites user with given id to current room": "Inviterer bruger med givet id til nuværende rum",
     "Changes your display nickname": "Ændrer dit viste navn",
     "Commands": "Kommandoer",
-    "Emoji": "Emoji",
     "Warning!": "Advarsel!",
     "Account": "Konto",
     "Admin": "Administrator",
@@ -32,7 +31,6 @@
     "unknown error code": "Ukendt fejlkode",
     "powered by Matrix": "Drevet af Matrix",
     "Failed to forget room %(errCode)s": "Kunne ikke glemme rummet %(errCode)s",
-    "Register": "Registrér",
     "Unnamed room": "Unavngivet rum",
     "This email address is already in use": "Denne email adresse er allerede i brug",
     "This phone number is already in use": "Dette telefonnummer er allerede i brug",
@@ -363,7 +361,6 @@
     "Current password": "Nuværende adgangskode",
     "Theme added!": "Tema tilføjet!",
     "Comment": "Kommentar",
-    "Privacy": "Privatliv",
     "Please enter a name for the room": "Indtast et navn for rummet",
     "Profile": "Profil",
     "Local address": "Lokal adresse",
@@ -681,7 +678,9 @@
         "theme": "Tema",
         "name": "Navn",
         "favourites": "Favoritter",
-        "description": "Beskrivelse"
+        "description": "Beskrivelse",
+        "privacy": "Privatliv",
+        "emoji": "Emoji"
     },
     "action": {
         "continue": "Fortsæt",
@@ -713,7 +712,8 @@
         "close": "Luk",
         "cancel": "Afbryd",
         "back": "Tilbage",
-        "accept": "Accepter"
+        "accept": "Accepter",
+        "register": "Registrér"
     },
     "labs": {
         "pinning": "Fastgørelse af beskeder",

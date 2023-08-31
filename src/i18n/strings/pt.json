@@ -17,7 +17,6 @@
     "Default": "Padrão",
     "Deops user with given id": "Retirar função de moderador do usuário com o identificador informado",
     "Displays action": "Visualizar atividades",
-    "Emoji": "Emoji",
     "Export E2E room keys": "Exportar chaves ponta-a-ponta da sala",
     "Failed to change password. Is your password correct?": "Falha ao alterar a palavra-passe. A sua palavra-passe está correta?",
     "Failed to reject invitation": "Falha ao tentar rejeitar convite",
@@ -210,12 +209,9 @@
     "No media permissions": "Não há permissões para o uso de vídeo/áudio no seu navegador",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Você talvez precise autorizar manualmente que o %(brand)s acesse seu microfone e webcam",
     "Default Device": "Dispositivo padrão",
-    "Microphone": "Microfone",
-    "Camera": "Câmera de vídeo",
     "Anyone": "Qualquer pessoa",
     "Are you sure you want to leave the room '%(roomName)s'?": "Você tem certeza que deseja sair da sala '%(roomName)s'?",
     "Custom level": "Nível personalizado",
-    "Register": "Registar",
     "You have <a>disabled</a> URL previews by default.": "Você <a>desabilitou</a> pré-visualizações de links por padrão.",
     "You have <a>enabled</a> URL previews by default.": "Você <a>habilitou</a> pré-visualizações de links por padrão.",
     "Create new room": "Criar nova sala",
@@ -718,7 +714,10 @@
         "home": "Início",
         "favourites": "Favoritos",
         "description": "Descrição",
-        "attachment": "Anexo"
+        "attachment": "Anexo",
+        "camera": "Câmera de vídeo",
+        "microphone": "Microfone",
+        "emoji": "Emoji"
     },
     "action": {
         "continue": "Continuar",
@@ -753,7 +752,8 @@
         "cancel": "Cancelar",
         "back": "Voltar",
         "add": "Adicionar",
-        "accept": "Aceitar"
+        "accept": "Aceitar",
+        "register": "Registar"
     },
     "keyboard": {
         "home": "Início"
