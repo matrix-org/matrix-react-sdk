@@ -191,6 +191,10 @@ describe("Read receipts", () => {
                         msgtype: content.msgtype,
                         body: newMessage,
                     },
+                    "m.relates_to": {
+                        rel_type: "m.replace",
+                        event_id: ev.getId(),
+                    },
                 };
             }
         })();
