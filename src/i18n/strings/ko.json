@@ -1081,7 +1081,6 @@
     "You are currently subscribed to:": "현재 구독 중임:",
     "⚠ These settings are meant for advanced users.": "⚠ 이 설정은 고급 사용자를 위한 것입니다.",
     "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "무시하고 싶은 사용자와 서버를 여기에 추가하세요. 별표(*)를 사용해서 %(brand)s이 이름과 문자를 맞춰볼 수 있습니다. 예를 들어, <code>@bot:*</code>이라면 모든 서버에서 'bot'이라는 문자를 가진 이름의 모든 사용자를 무시합니다.",
-    "Custom (%(level)s)": "맞춤 (%(level)s)",
     "Ignoring people is done through ban lists which contain rules for who to ban. Subscribing to a ban list means the users/servers blocked by that list will be hidden from you.": "차단당하는 사람은 규칙에 따라 차단 목록을 통해 무시됩니다. 차단 목록을 구독하면 그 목록에서 차단당한 사용자/서버를 당신으로부터 감추게됩니다.",
     "Personal ban list": "개인 차단 목록",
     "Server or user ID to ignore": "무시할 서버 또는 사용자 ID",
@@ -1405,7 +1404,8 @@
         "default": "기본",
         "restricted": "제한됨",
         "moderator": "조정자",
-        "admin": "관리자"
+        "admin": "관리자",
+        "custom": "맞춤 (%(level)s)"
     },
     "bug_reporting": {
         "submit_debug_logs": "디버그 로그 전송하기",

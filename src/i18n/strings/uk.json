@@ -283,7 +283,6 @@
     "Upload Error": "Помилка вивантаження",
     "Upload avatar": "Вивантажити аватар",
     "For security, this session has been signed out. Please sign in again.": "З метою безпеки ваш сеанс було завершено. Увійдіть знову.",
-    "Custom (%(level)s)": "Власний (%(level)s)",
     "Error upgrading room": "Помилка поліпшення кімнати",
     "Double check that your server supports the room version chosen and try again.": "Перевірте, чи підримує ваш сервер вказану версію кімнати та спробуйте ще.",
     "Send a Direct Message": "Надіслати особисте повідомлення",
@@ -3974,7 +3973,8 @@
         "default": "Типовий",
         "restricted": "Обмежено",
         "moderator": "Модератор",
-        "admin": "Адміністратор"
+        "admin": "Адміністратор",
+        "custom": "Власний (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Якщо ви надіслали звіт про ваду на GitHub, журнали зневадження можуть допомогти нам визначити проблему. ",

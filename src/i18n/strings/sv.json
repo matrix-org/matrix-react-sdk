@@ -863,7 +863,6 @@
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Den här åtgärden kräver åtkomst till standardidentitetsservern <server /> för att validera en e-postadress eller ett telefonnummer, men servern har inga användarvillkor.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Show previews/thumbnails for images": "Visa förhandsgranskning/miniatyr för bilder",
-    "Custom (%(level)s)": "Anpassad (%(level)s)",
     "Error upgrading room": "Fel vid uppgradering av rum",
     "Double check that your server supports the room version chosen and try again.": "Dubbelkolla att din server stöder den valda rumsversionen och försök igen.",
     "%(senderName)s placed a voice call.": "%(senderName)s ringde ett röstsamtal.",
@@ -3914,7 +3913,8 @@
         "default": "Standard",
         "restricted": "Begränsad",
         "moderator": "Moderator",
-        "admin": "Administratör"
+        "admin": "Administratör",
+        "custom": "Anpassad (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Om du har rapporterat en bugg via GitHub så kan felsökningsloggar hjälpa oss att hitta problemet. ",

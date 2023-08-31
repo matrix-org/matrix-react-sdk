@@ -843,7 +843,6 @@
     "Show previews/thumbnails for images": "Vorschauen für Bilder",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Diese Handlung erfordert es, auf den Standard-Identitäts-Server <server /> zuzugreifen, um eine E-Mail-Adresse oder Telefonnummer zu validieren, aber der Server hat keine Nutzungsbedingungen.",
     "Only continue if you trust the owner of the server.": "Fahre nur fort, wenn du den Server-Betreibenden vertraust.",
-    "Custom (%(level)s)": "Benutzerdefiniert (%(level)s)",
     "Sends a message as plain text, without interpreting it as markdown": "Sendet eine Nachricht als Klartext, ohne sie als Markdown darzustellen",
     "Use an identity server to invite by email. Manage in Settings.": "Verwende einen Identitäts-Server, um per E-Mail einladen zu können. Lege einen in den Einstellungen fest.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -3979,7 +3978,8 @@
         "default": "Standard",
         "restricted": "Eingeschränkt",
         "moderator": "Moderator",
-        "admin": "Admin"
+        "admin": "Admin",
+        "custom": "Benutzerdefiniert (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Wenn du uns einen Bug auf GitHub gemeldet hast, können uns Debug-Logs helfen, das Problem zu finden. ",

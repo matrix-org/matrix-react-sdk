@@ -564,7 +564,6 @@
     "Effects": "Ações",
     "Zambia": "Zâmbia",
     "Missing roomId.": "Falta ID de Sala.",
-    "Custom (%(level)s)": "Personalizado (%(level)s)",
     "Sign In or Create Account": "Iniciar Sessão ou Criar Conta",
     "Zimbabwe": "Zimbabué",
     "Yemen": "Iémen",
@@ -763,7 +762,8 @@
         "default": "Padrão",
         "restricted": "Restrito",
         "moderator": "Moderador/a",
-        "admin": "Administrador"
+        "admin": "Administrador",
+        "custom": "Personalizado (%(level)s)"
     },
     "bug_reporting": {
         "description": "Os registos de depuração contêm dados de utilização da aplicação, incluindo o seu nome de utilizador, os IDs ou pseudónimos das salas que visitou, os últimos elementos da IU com que interagiu e os nomes de utilizador de outros utilizadores. No entanto não contêm mensagens.",

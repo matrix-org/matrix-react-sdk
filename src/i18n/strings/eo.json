@@ -1060,7 +1060,6 @@
     "Notification Autocomplete": "Memkompletigo de sciigoj",
     "Room Autocomplete": "Memkompletigo de ĉambroj",
     "User Autocomplete": "Memkompletigo de uzantoj",
-    "Custom (%(level)s)": "Propra (%(level)s)",
     "%(senderName)s placed a voice call.": "%(senderName)s ekigis voĉvokon.",
     "%(senderName)s placed a voice call. (not supported by this browser)": "%(senderName)s ekigis voĉvokon. (mankas subteno en ĉi tiu foliumilo)",
     "%(senderName)s placed a video call.": "%(senderName)s ekigis vidvokon.",
@@ -2956,7 +2955,8 @@
         "default": "Ordinara",
         "restricted": "Limigita",
         "moderator": "Ĉambrestro",
-        "admin": "Administranto"
+        "admin": "Administranto",
+        "custom": "Propra (%(level)s)"
     },
     "bug_reporting": {
         "matrix_security_issue": "Por raparto de sekureca problemo rilata al Matrix, bonvolu legi la <a>Eldiran Politikon pri Sekureco</a> de Matrix.org.",

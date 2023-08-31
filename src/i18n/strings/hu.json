@@ -1090,7 +1090,6 @@
     "If this isn't what you want, please use a different tool to ignore users.": "Ha nem ez az amit szeretne, akkor használjon más eszközt a felhasználók mellőzéséhez.",
     "Subscribe": "Feliratkozás",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ezt a felhasználót figyelmen kívül hagyod, így az üzenetei el lesznek rejtve. <a>Megjelenítés mindenképpen.</a>",
-    "Custom (%(level)s)": "Egyéni (%(level)s)",
     "Trusted": "Megbízható",
     "Not trusted": "Megbízhatatlan",
     "Messages in this room are end-to-end encrypted.": "Az üzenetek a szobában végponttól végpontig titkosítottak.",
@@ -3878,7 +3877,8 @@
         "default": "Alapértelmezett",
         "restricted": "Korlátozott",
         "moderator": "Moderátor",
-        "admin": "Admin"
+        "admin": "Admin",
+        "custom": "Egyéni (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Ha a GitHubon keresztül küldött be hibajegyet, akkor a hibakeresési napló segít nekünk felderíteni a problémát. ",

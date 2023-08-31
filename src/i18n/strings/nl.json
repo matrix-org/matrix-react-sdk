@@ -1030,7 +1030,6 @@
     "Encryption upgrade available": "Versleutelingsupgrade beschikbaar",
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Typ <code>/help</code> om alle opdrachten te zien. Was het je bedoeling dit als bericht te sturen?",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Dit vergt validatie van een e-mailadres of telefoonnummer middels de standaard identiteitsserver <server />, maar die server heeft geen gebruiksvoorwaarden.",
-    "Custom (%(level)s)": "Aangepast (%(level)s)",
     "Error upgrading room": "Upgraden van kamer mislukt",
     "Double check that your server supports the room version chosen and try again.": "Ga nogmaals na dat de server de gekozen kamerversie ondersteunt, en probeer het dan opnieuw.",
     "Verifies a user, session, and pubkey tuple": "Verifieert de combinatie van persoon, sessie en publieke sleutel",
@@ -3584,7 +3583,8 @@
         "default": "Standaard",
         "restricted": "Beperkte toegang",
         "moderator": "Moderator",
-        "admin": "Beheerder"
+        "admin": "Beheerder",
+        "custom": "Aangepast (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Als je een bug via GitHub hebt ingediend, kunnen foutopsporingslogboeken ons helpen het probleem op te sporen. ",

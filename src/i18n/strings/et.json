@@ -1042,7 +1042,6 @@
     "Restricted": "Piiratud õigustega kasutaja",
     "Moderator": "Moderaator",
     "Admin": "Peakasutaja",
-    "Custom (%(level)s)": "Kohandatud õigused (%(level)s)",
     "Failed to invite": "Kutse saatmine ei õnnestunud",
     "Operation failed": "Toiming ei õnnestunud",
     "You need to be logged in.": "Sa peaksid olema sisse loginud.",
@@ -3974,7 +3973,8 @@
         "default": "Tavaline",
         "restricted": "Piiratud õigustega kasutaja",
         "moderator": "Moderaator",
-        "admin": "Peakasutaja"
+        "admin": "Peakasutaja",
+        "custom": "Kohandatud õigused (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Kui sa oled GitHub'is teinud meile veateate, siis silumislogid võivad aidata vea lahendamisel. ",

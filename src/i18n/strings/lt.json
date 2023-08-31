@@ -936,7 +936,6 @@
     "Sign In or Create Account": "Prisijungti arba Sukurti Paskyrą",
     "Use your account or create a new one to continue.": "Norėdami tęsti naudokite savo paskyrą arba sukurkite naują.",
     "Create Account": "Sukurti Paskyrą",
-    "Custom (%(level)s)": "Pasirinktinis (%(level)s)",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
     "Encryption upgrade available": "Galimas šifravimo atnaujinimas",
     "Verify this user by confirming the following number appears on their screen.": "Patvirtinkite šį vartotoją, įsitikindami, kad jo ekrane rodomas toliau esantis skaičius.",
@@ -2521,7 +2520,8 @@
         "default": "Numatytas",
         "restricted": "Apribotas",
         "moderator": "Moderatorius",
-        "admin": "Administratorius"
+        "admin": "Administratorius",
+        "custom": "Pasirinktinis (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Jei per GitHub pateikėte klaidą, derinimo žurnalai gali padėti mums nustatyti problemą. ",

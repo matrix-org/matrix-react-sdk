@@ -817,7 +817,6 @@
     "Sign In or Create Account": "登录或创建账户",
     "Use your account or create a new one to continue.": "使用已有账户或创建一个新账户。",
     "Create Account": "创建账户",
-    "Custom (%(level)s)": "自定义（%(level)s）",
     "Messages": "消息",
     "Actions": "动作",
     "Sends a message as plain text, without interpreting it as markdown": "以纯文本形式发送消息，不将其作为 markdown 处理",
@@ -3563,7 +3562,8 @@
         "default": "默认",
         "restricted": "受限",
         "moderator": "协管员",
-        "admin": "管理员"
+        "admin": "管理员",
+        "custom": "自定义（%(level)s）"
     },
     "bug_reporting": {
         "introduction": "若你通过GitHub提交bug，则调试日志能帮助我们追踪问题。 ",

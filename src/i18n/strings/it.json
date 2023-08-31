@@ -1090,7 +1090,6 @@
     "%(name)s cancelled": "%(name)s ha annullato",
     "%(name)s wants to verify": "%(name)s vuole verificare",
     "You sent a verification request": "Hai inviato una richiesta di verifica",
-    "Custom (%(level)s)": "Personalizzato (%(level)s)",
     "Trusted": "Fidato",
     "Not trusted": "Non fidato",
     "Messages in this room are end-to-end encrypted.": "I messaggi in questa stanza sono cifrati end-to-end.",
@@ -3979,7 +3978,8 @@
         "default": "Predefinito",
         "restricted": "Limitato",
         "moderator": "Moderatore",
-        "admin": "Amministratore"
+        "admin": "Amministratore",
+        "custom": "Personalizzato (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Se hai inviato un errore via GitHub, i log di debug possono aiutarci ad individuare il problema. ",

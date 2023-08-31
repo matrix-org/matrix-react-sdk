@@ -1059,7 +1059,6 @@
     "Notification Autocomplete": "Automatické doplňování oznámení",
     "Room Autocomplete": "Automatické doplňování místností",
     "User Autocomplete": "Automatické doplňování uživatelů",
-    "Custom (%(level)s)": "Vlastní (%(level)s)",
     "Error upgrading room": "Chyba při aktualizaci místnosti",
     "Double check that your server supports the room version chosen and try again.": "Zkontrolujte, že váš server opravdu podporuje zvolenou verzi místnosti.",
     "%(senderName)s placed a voice call.": "%(senderName)s zahájil(a) hovor.",
@@ -3979,7 +3978,8 @@
         "default": "Výchozí",
         "restricted": "Omezené",
         "moderator": "Moderátor",
-        "admin": "Správce"
+        "admin": "Správce",
+        "custom": "Vlastní (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Pokud jste odeslali chybu prostřednictvím GitHubu, ladící protokoly nám mohou pomoci problém vysledovat. ",

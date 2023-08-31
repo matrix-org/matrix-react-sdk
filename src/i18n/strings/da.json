@@ -293,7 +293,6 @@
     "Sign In or Create Account": "Log ind eller Opret bruger",
     "Use your account or create a new one to continue.": "Brug din konto eller opret en ny for at fortsætte.",
     "Create Account": "Opret brugerkonto",
-    "Custom (%(level)s)": "Kustomiseret %(level)s",
     "Sends a message as html, without interpreting it as markdown": "Sender besked som html, uden at tolke den som markdown",
     "Error upgrading room": "Fejl under opgradering af rum",
     "Double check that your server supports the room version chosen and try again.": "Dobbelt-tjek at din server understøtter den valgte rum-version og forsøg igen.",
@@ -724,7 +723,8 @@
         "default": "Standard",
         "restricted": "Begrænset",
         "moderator": "Moderator",
-        "admin": "Administrator"
+        "admin": "Administrator",
+        "custom": "Kustomiseret %(level)s"
     },
     "bug_reporting": {
         "submit_debug_logs": "Indsend debug-logfiler",

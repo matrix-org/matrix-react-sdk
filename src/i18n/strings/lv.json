@@ -886,7 +886,6 @@
     "Could not find user in room": "Lietotājs istabā netika atrasts",
     "You do not have the required permissions to use this command.": "Jums trūkst šīs komandas lietošanai nepieciešamo atļauju.",
     "Missing roomId.": "Trūkst roomId.",
-    "Custom (%(level)s)": "Pielāgots (%(level)s)",
     "Create Account": "Izveidot kontu",
     "Use your account or create a new one to continue.": "Izmantojiet esošu kontu vai izveidojiet jaunu, lai turpinātu.",
     "Sign In or Create Account": "Pierakstīties vai izveidot kontu",
@@ -1841,7 +1840,8 @@
         "default": "Noklusējuma",
         "restricted": "Ierobežots",
         "moderator": "Moderators",
-        "admin": "Administrators"
+        "admin": "Administrators",
+        "custom": "Pielāgots (%(level)s)"
     },
     "bug_reporting": {
         "submit_debug_logs": "Iesniegt atutošanas logfailus",

@@ -245,7 +245,6 @@
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Kami telah mengirim yang lainnya, tetapi orang berikut ini tidak dapat diundang ke <RoomName/>",
     "Some invites couldn't be sent": "Beberapa undangan tidak dapat dikirim",
     "Failed to invite": "Gagal untuk mengundang",
-    "Custom (%(level)s)": "Kustom (%(level)s)",
     "Moderator": "Moderator",
     "Restricted": "Dibatasi",
     "Sign In or Create Account": "Masuk atau Buat Akun",
@@ -3979,7 +3978,8 @@
         "default": "Bawaan",
         "restricted": "Dibatasi",
         "moderator": "Moderator",
-        "admin": "Admin"
+        "admin": "Admin",
+        "custom": "Kustom (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Jika Anda mengirim sebuah kutu via GitHub, catatan pengawakutu dapat membantu kami melacak masalahnya. ",

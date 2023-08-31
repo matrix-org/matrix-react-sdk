@@ -810,7 +810,6 @@
     "Add Email Address": "Pridať emailovú adresu",
     "Add Phone Number": "Pridať telefónne číslo",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Táto akcia vyžaduje prístup k predvolenému serveru totožností <server /> na overenie emailovej adresy alebo telefónneho čísla, ale server nemá žiadne podmienky používania.",
-    "Custom (%(level)s)": "Vlastný (%(level)s)",
     "Sends a message as plain text, without interpreting it as markdown": "Odošle správu ako obyčajný text bez interpretácie ako markdown",
     "You do not have the required permissions to use this command.": "Na použitie tohoto príkazu nemáte dostatočné povolenia.",
     "Error upgrading room": "Chyba pri aktualizácii miestnosti",
@@ -3974,7 +3973,8 @@
         "default": "Predvolené",
         "restricted": "Obmedzené",
         "moderator": "Moderátor",
-        "admin": "Správca"
+        "admin": "Správca",
+        "custom": "Vlastný (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Ak ste odoslali chybu prostredníctvom služby GitHub, záznamy o ladení nám môžu pomôcť nájsť problém. ",

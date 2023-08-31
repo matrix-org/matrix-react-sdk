@@ -1089,7 +1089,6 @@
     "If this isn't what you want, please use a different tool to ignore users.": "Nëse kjo s’është ajo çka doni, ju lutemi, përdorni një tjetër mjet për të shpërfillur përdorues.",
     "Subscribe": "Pajtohuni",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "E keni shpërfillur këtë përdorues, ndaj mesazhi i tij është fshehur. <a>Shfaqe, sido qoftë.</a>",
-    "Custom (%(level)s)": "Vetjak (%(level)s)",
     "Trusted": "E besuar",
     "Not trusted": "Jo e besuar",
     "Messages in this room are end-to-end encrypted.": "Mesazhet në këtë dhomë janë të fshehtëzuara skaj-më-skaj.",
@@ -3867,7 +3866,8 @@
         "default": "Parazgjedhje",
         "restricted": "E kufizuar",
         "moderator": "Moderator",
-        "admin": "Përgjegjës"
+        "admin": "Përgjegjës",
+        "custom": "Vetjak (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Nëse keni parashtruar një të metë përmes GitHub-i, regjistrat e diagnostikimit na ndihmojnë të kapim problemin. ",

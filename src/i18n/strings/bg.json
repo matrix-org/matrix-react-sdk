@@ -1061,7 +1061,6 @@
     "%(name)s cancelled": "%(name)s отказа",
     "%(name)s wants to verify": "%(name)s иска да извърши потвърждение",
     "You sent a verification request": "Изпратихте заявка за потвърждение",
-    "Custom (%(level)s)": "Собствен (%(level)s)",
     "%(senderName)s placed a voice call.": "%(senderName)s започна гласово обаждане.",
     "%(senderName)s placed a voice call. (not supported by this browser)": "%(senderName)s започна гласово обаждане. (не се поддържа от този браузър)",
     "%(senderName)s placed a video call.": "%(senderName)s започна видео обаждане.",
@@ -2128,7 +2127,8 @@
         "default": "По подразбиране",
         "restricted": "Ограничен",
         "moderator": "Модератор",
-        "admin": "Администратор"
+        "admin": "Администратор",
+        "custom": "Собствен (%(level)s)"
     },
     "bug_reporting": {
         "matrix_security_issue": "За да съобщените за проблем със сигурността свързан с Matrix, прочетете <a>Политиката за споделяне на проблеми със сигурността</a> на Matrix.org.",

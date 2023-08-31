@@ -580,7 +580,6 @@
     "Identity server has no terms of service": "Identitetstenaren manglar bruksvilkår",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Denne handlinga krev kommunikasjon mot <server />(standard identitetstenar) for å verifisere e-post eller telefonnummer, men tenaren manglar bruksvilkår.",
     "Only continue if you trust the owner of the server.": "Gå vidare så lenge du har tillit til eigar av tenaren.",
-    "Custom (%(level)s)": "Tilpassa (%(level)s)",
     "Error upgrading room": "Feil ved oppgradering av rom",
     "Double check that your server supports the room version chosen and try again.": "Sjekk at tenar støttar denne romversjonen, og prøv på nytt.",
     "Verifies a user, session, and pubkey tuple": "Verifiser brukar, økt eller public-key objekt (pubkey tuple)",
@@ -1098,7 +1097,8 @@
         "default": "Opphavleg innstilling",
         "restricted": "Avgrensa",
         "moderator": "Moderator",
-        "admin": "Administrator"
+        "admin": "Administrator",
+        "custom": "Tilpassa (%(level)s)"
     },
     "bug_reporting": {
         "matrix_security_issue": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",

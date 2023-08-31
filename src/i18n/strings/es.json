@@ -744,7 +744,6 @@
     "Identity server has no terms of service": "El servidor de identidad no tiene términos de servicio",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Esta acción necesita acceder al servidor de identidad por defecto <server /> para validar un correo o un teléfono, pero el servidor no tiene términos de servicio.",
     "Only continue if you trust the owner of the server.": "Continúa solamente si confías en el propietario del servidor.",
-    "Custom (%(level)s)": "Personalizado (%(level)s)",
     "Error upgrading room": "Fallo al mejorar la sala",
     "Double check that your server supports the room version chosen and try again.": "Asegúrate de que tu servidor es compatible con la versión de sala elegida y prueba de nuevo.",
     "%(senderName)s placed a voice call.": "%(senderName)s hizo una llamada de voz.",
@@ -3780,7 +3779,8 @@
         "default": "Por defecto",
         "restricted": "Restringido",
         "moderator": "Moderador",
-        "admin": "Admin"
+        "admin": "Admin",
+        "custom": "Personalizado (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Si ya has informado de un fallo a través de GitHub, los registros de depuración nos pueden ayudar a investigar mejor el problema. ",

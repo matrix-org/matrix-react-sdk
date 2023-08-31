@@ -209,7 +209,6 @@
     "You need to be able to invite users to do that.": "نیاز است که شما قادر به دعوت کاربران به آن باشید.",
     "You need to be logged in.": "شما باید وارد شوید.",
     "Failed to invite": "دعوت موفقیت‌آمیز نبود",
-    "Custom (%(level)s)": "%(level)s دلخواه",
     "Moderator": "معاون",
     "Restricted": "ممنوع",
     "Use your account or create a new one to continue.": "برای ادامه کار از حساب کاربری خود استفاده کرده و یا حساب کاربری جدیدی ایجاد کنید.",
@@ -2632,7 +2631,8 @@
         "default": "پیشفرض",
         "restricted": "ممنوع",
         "moderator": "معاون",
-        "admin": "ادمین"
+        "admin": "ادمین",
+        "custom": "%(level)s دلخواه"
     },
     "bug_reporting": {
         "matrix_security_issue": "برای گزارش مشکلات امنیتی مربوط به ماتریکس، لطفا سایت Matrix.org بخش <a>Security Disclosure Policy</a> را مطالعه فرمائید.",

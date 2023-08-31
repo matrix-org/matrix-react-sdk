@@ -170,7 +170,6 @@
     "You need to be able to invite users to do that.": "עליכם להיות מאושרים להזמין משתמשים על מנת לבצע פעולה זו.",
     "You need to be logged in.": "עליכם להיות מחוברים.",
     "Failed to invite": "הזמנה נכשלה",
-    "Custom (%(level)s)": "ידני %(level)s",
     "Admin": "אדמין",
     "Moderator": "מנהל",
     "Restricted": "מחוץ לתחום",
@@ -2772,7 +2771,8 @@
         "default": "ברירת מחדל",
         "restricted": "מחוץ לתחום",
         "moderator": "מנהל",
-        "admin": "אדמין"
+        "admin": "אדמין",
+        "custom": "ידני %(level)s"
     },
     "bug_reporting": {
         "introduction": "אם שלחתם באג דרך GitHub, שליחת לוגים יכולה לעזור לנו לאתר את הבעיה. ",

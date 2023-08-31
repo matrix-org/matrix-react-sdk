@@ -228,7 +228,6 @@
     "This email address was not found": "Tansa-a n yimayl ulac-it",
     "Sign In or Create Account": "Kcem ɣer neɣ rnu amiḍan",
     "Use your account or create a new one to continue.": "Seqdec amiḍan-ik/im neɣ snulfu-d yiwen akken ad tkemmleḍ.",
-    "Custom (%(level)s)": "Sagen (%(level)s)",
     "Failed to invite": "Ulamek i d-tnecdeḍ",
     "You need to be able to invite users to do that.": "Tesriḍ ad tizmireḍ ad d-tnecdeḍ iseqdacen ad gen ayagi.",
     "Failed to send request.": "Tuzna n usuter ur teddi ara.",
@@ -2014,7 +2013,8 @@
         "default": "Amezwer",
         "restricted": "Yesεa tilas",
         "moderator": "Aseɣyad",
-        "admin": "Anedbal"
+        "admin": "Anedbal",
+        "custom": "Sagen (%(level)s)"
     },
     "bug_reporting": {
         "matrix_security_issue": "I wakken ad d-tazneḍ ugur n tɣellist i icudden ɣer Matrix, ttxil-k·m ɣer <a>tasertit n ukcaf n tɣellist</a> deg Matrix.org.",

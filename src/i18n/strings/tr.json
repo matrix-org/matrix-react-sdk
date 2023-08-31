@@ -994,7 +994,6 @@
     "Someone is using an unknown session": "Birisi bilinmeyen bir oturum kullanıyor",
     "Everyone in this room is verified": "Bu odadaki herkes doğrulanmış",
     "Setting up keys": "Anahtarları ayarla",
-    "Custom (%(level)s)": "Özel (%(level)s)",
     "Upload %(count)s other files": {
         "other": "%(count)s diğer dosyaları yükle",
         "one": "%(count)s dosyayı sağla"
@@ -2039,7 +2038,8 @@
         "default": "Varsayılan",
         "restricted": "Sınırlı",
         "moderator": "Moderatör",
-        "admin": "Admin"
+        "admin": "Admin",
+        "custom": "Özel (%(level)s)"
     },
     "bug_reporting": {
         "submit_debug_logs": "Hata ayıklama kayıtlarını gönder",

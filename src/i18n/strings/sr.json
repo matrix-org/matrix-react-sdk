@@ -637,7 +637,6 @@
     "Setting up keys": "Постављам кључеве",
     "Are you sure you want to cancel entering passphrase?": "Заиста желите да откажете унос фразе?",
     "Cancel entering passphrase?": "Отказати унос фразе?",
-    "Custom (%(level)s)": "Посебан %(level)s",
     "Create Account": "Направи налог",
     "Use your account or create a new one to continue.": "Користите постојећи или направите нови да наставите.",
     "Sign In or Create Account": "Пријавите се или направите налог",
@@ -1351,7 +1350,8 @@
         "default": "Подразумевано",
         "restricted": "Ограничено",
         "moderator": "Модератор",
-        "admin": "Админ"
+        "admin": "Админ",
+        "custom": "Посебан %(level)s"
     },
     "bug_reporting": {
         "submit_debug_logs": "Пошаљи записнике за поправљање грешака",

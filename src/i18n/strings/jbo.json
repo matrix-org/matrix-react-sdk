@@ -133,7 +133,6 @@
     "Change Password": "nu basti fi le ka lerpoijaspu",
     "Authentication": "lo nu facki lo du'u do du ma kau",
     "Failed to set display name": ".i pu fliba lo nu galfi lo cmene",
-    "Custom (%(level)s)": "drata (%(level)s)",
     "Messages": "notci",
     "Actions": "ka'e se zukte",
     "Advanced": "macnu",
@@ -403,6 +402,7 @@
         "default": "zmiselcu'a",
         "restricted": "vlipa so'u da",
         "moderator": "vlipa so'o da",
-        "admin": "vlipa so'i da"
+        "admin": "vlipa so'i da",
+        "custom": "drata (%(level)s)"
     }
 }

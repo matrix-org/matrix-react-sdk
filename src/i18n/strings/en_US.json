@@ -371,7 +371,6 @@
     "Sign In or Create Account": "Sign In or Create Account",
     "Use your account or create a new one to continue.": "Use your account or create a new one to continue.",
     "Create Account": "Create Account",
-    "Custom (%(level)s)": "Custom (%(level)s)",
     "Sends a message as plain text, without interpreting it as markdown": "Sends a message as plain text, without interpreting it as markdown",
     "Sends a message as html, without interpreting it as markdown": "Sends a message as html, without interpreting it as markdown",
     "You do not have the required permissions to use this command.": "You do not have the required permissions to use this command.",
@@ -459,7 +458,8 @@
         "default": "Default",
         "restricted": "Restricted",
         "moderator": "Moderator",
-        "admin": "Admin"
+        "admin": "Admin",
+        "custom": "Custom (%(level)s)"
     },
     "bug_reporting": {
         "send_logs": "Send logs"

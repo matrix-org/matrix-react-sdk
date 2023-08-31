@@ -751,7 +751,6 @@
     "Sign In or Create Account": "Faça login ou crie uma conta",
     "Use your account or create a new one to continue.": "Use sua conta ou crie uma nova para continuar.",
     "Create Account": "Criar Conta",
-    "Custom (%(level)s)": "Personalizado (%(level)s)",
     "Messages": "Mensagens",
     "Actions": "Ações",
     "Other": "Outros",
@@ -2896,7 +2895,8 @@
         "default": "Padrão",
         "restricted": "Restrito",
         "moderator": "Moderador/a",
-        "admin": "Administrador/a"
+        "admin": "Administrador/a",
+        "custom": "Personalizado (%(level)s)"
     },
     "bug_reporting": {
         "matrix_security_issue": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",

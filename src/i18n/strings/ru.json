@@ -1051,7 +1051,6 @@
     "Unread messages.": "Непрочитанные сообщения.",
     "Message Actions": "Сообщение действий",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Это действие требует по умолчанию доступа к серверу идентификации <server/> для подтверждения адреса электронной почты или номера телефона, но у сервера нет никакого пользовательского соглашения.",
-    "Custom (%(level)s)": "Пользовательский (%(level)s)",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "My Ban List": "Мой список блокировки",
     "Ignored/Blocked": "Игнорируемые/Заблокированные",
@@ -3661,7 +3660,8 @@
         "default": "По умолчанию",
         "restricted": "Ограниченный пользователь",
         "moderator": "Модератор",
-        "admin": "Администратор"
+        "admin": "Администратор",
+        "custom": "Пользовательский (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Если вы отправили ошибку через GitHub, журналы отладки могут помочь нам отследить проблему. ",

@@ -759,7 +759,6 @@
     "Changes the avatar of the current room": "Zmienia awatar dla obecnego pokoju",
     "Use an identity server": "Użyj serwera tożsamości",
     "Show previews/thumbnails for images": "Pokaż podgląd/miniatury obrazów",
-    "Custom (%(level)s)": "Własny (%(level)s)",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Użyj serwera tożsamości, by zaprosić z użyciem adresu e-mail. Kliknij dalej, żeby użyć domyślnego serwera tożsamości (%(defaultIdentityServerName)s), lub zmień w Ustawieniach.",
     "Use an identity server to invite by email. Manage in Settings.": "Użyj serwera tożsamości, by zaprosić za pomocą adresu e-mail. Zarządzaj w ustawieniach.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -3956,7 +3955,8 @@
         "default": "Zwykły",
         "restricted": "Ograniczony",
         "moderator": "Moderator",
-        "admin": "Administrator"
+        "admin": "Administrator",
+        "custom": "Własny (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Jeśli zgłosiłeś błąd za pomocą serwisu GitHub, dzienniki debugowania mogą pomóc nam w namierzeniu problemu. ",

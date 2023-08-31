@@ -1332,7 +1332,6 @@
     "Setting up keys": "鍵のセットアップ",
     "Are you sure you want to cancel entering passphrase?": "パスフレーズの入力をキャンセルしてよろしいですか？",
     "Cancel entering passphrase?": "パスフレーズの入力をキャンセルしますか？",
-    "Custom (%(level)s)": "ユーザー定義（%(level)s）",
     "Use your account or create a new one to continue.": "続行するには、作成済のアカウントを使用するか、新しいアカウントを作成してください。",
     "Sign In or Create Account": "サインインするか、アカウントを作成してください",
     "Zimbabwe": "ジンバブエ",
@@ -3774,7 +3773,8 @@
         "default": "既定値",
         "restricted": "制限",
         "moderator": "モデレーター",
-        "admin": "管理者"
+        "admin": "管理者",
+        "custom": "ユーザー定義（%(level)s）"
     },
     "bug_reporting": {
         "introduction": "もしGitHubで不具合を報告した場合は、デバッグログが問題の解決に役立ちます。 ",

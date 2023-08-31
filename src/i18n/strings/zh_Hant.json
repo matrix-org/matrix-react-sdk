@@ -1089,7 +1089,6 @@
     "If this isn't what you want, please use a different tool to ignore users.": "如果您不想這樣，請使用其他工具來忽略使用者。",
     "Subscribe": "訂閱",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "您已忽略這個使用者，所以他們的訊息會隱藏。<a>無論如何都顯示。</a>",
-    "Custom (%(level)s)": "自訂 (%(level)s)",
     "Trusted": "受信任",
     "Not trusted": "未受信任",
     "Messages in this room are end-to-end encrypted.": "此聊天室內的訊息有端對端加密。",
@@ -3974,7 +3973,8 @@
         "default": "預設",
         "restricted": "已限制",
         "moderator": "版主",
-        "admin": "管理員"
+        "admin": "管理員",
+        "custom": "自訂 (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "若您透過 GitHub 遞交錯誤，除錯紀錄檔可以協助我們追蹤問題。 ",

@@ -201,7 +201,6 @@
     "Identity server has no terms of service": "Şəxsiyyət serverinin xidmət şərtləri yoxdur",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Bu hərəkət e-poçt ünvanı və ya telefon nömrəsini təsdiqləmək üçün standart şəxsiyyət serverinə <server /> girməyi tələb edir, lakin serverdə heç bir xidmət şəraiti yoxdur.",
     "Only continue if you trust the owner of the server.": "Yalnız server sahibinə etibar etsəniz davam edin.",
-    "Custom (%(level)s)": "Xüsusi (%(level)s)",
     "Room %(roomId)s not visible": "Otaq %(roomId)s görünmür",
     "Messages": "Mesajlar",
     "Actions": "Tədbirlər",
@@ -264,6 +263,7 @@
         "default": "Varsayılan olaraq",
         "restricted": "Məhduddur",
         "moderator": "Moderator",
-        "admin": "Administrator"
+        "admin": "Administrator",
+        "custom": "Xüsusi (%(level)s)"
     }
 }

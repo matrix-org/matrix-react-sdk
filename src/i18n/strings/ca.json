@@ -533,7 +533,6 @@
     "Setting up keys": "Configurant claus",
     "Are you sure you want to cancel entering passphrase?": "Estàs segur que vols cancel·lar la introducció de la frase secreta?",
     "Cancel entering passphrase?": "Vols cancel·lar la introducció de la frase secreta?",
-    "Custom (%(level)s)": "Personalitzat (%(level)s)",
     "Create Account": "Crea un compte",
     "Use your account or create a new one to continue.": "Utilitza el teu compte o crea'n un de nou per continuar.",
     "Sign In or Create Account": "Inicia sessió o Crea un compte",
@@ -665,7 +664,8 @@
         "default": "Predeterminat",
         "restricted": "Restringit",
         "moderator": "Moderador",
-        "admin": "Administrador"
+        "admin": "Administrador",
+        "custom": "Personalitzat (%(level)s)"
     },
     "bug_reporting": {
         "submit_debug_logs": "Enviar logs de depuració",

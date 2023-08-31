@@ -2242,7 +2242,6 @@
     "Cancel entering passphrase?": "Hủy nhập cụm mật khẩu?",
     "Some invites couldn't be sent": "Không thể gửi một số lời mời",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Chúng tôi đã mời những người khác, nhưng những người dưới đây không thể được mời tham gia <RoomName/>",
-    "Custom (%(level)s)": "Tùy chỉnh (%(level)s)",
     "Use your account or create a new one to continue.": "Sử dụng tài khoản của bạn hoặc tạo một tài khoản mới để tiếp tục.",
     "Sign In or Create Account": "Đăng nhập hoặc Tạo tài khoản",
     "Zimbabwe": "Zimbabwe",
@@ -3677,7 +3676,8 @@
         "default": "Mặc định",
         "restricted": "Bị hạn chế",
         "moderator": "Điều phối viên",
-        "admin": "Quản trị viên"
+        "admin": "Quản trị viên",
+        "custom": "Tùy chỉnh (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Nếu bạn đã báo cáo lỗi qua GitHub, nhật ký gỡ lỗi có thể giúp chúng tôi theo dõi vấn đề. ",

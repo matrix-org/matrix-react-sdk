@@ -1059,7 +1059,6 @@
     "%(name)s cancelled": "%(name)s utzita",
     "%(name)s wants to verify": "%(name)s(e)k egiaztatu nahi du",
     "You sent a verification request": "Egiaztaketa eskari bat bidali duzu",
-    "Custom (%(level)s)": "Pertsonalizatua (%(level)s)",
     "%(senderName)s placed a voice call.": "%(senderName)s erabiltzaileak ahots-dei bat abiatu du.",
     "%(senderName)s placed a voice call. (not supported by this browser)": "%(senderName)s erabiltzaileak ahots-dei bat abiatu du. (Nabigatzaile honek ez du onartzen)",
     "%(senderName)s placed a video call.": "%(senderName)s erabiltzaileak bideo-dei bat abiatu du.",
@@ -1643,7 +1642,8 @@
         "default": "Lehenetsia",
         "restricted": "Mugatua",
         "moderator": "Moderatzailea",
-        "admin": "Kudeatzailea"
+        "admin": "Kudeatzailea",
+        "custom": "Pertsonalizatua (%(level)s)"
     },
     "bug_reporting": {
         "matrix_security_issue": "Matrix-ekin lotutako segurtasun arazo baten berri emateko, irakurri <a>Segurtasun ezagutarazte gidalerroak</a>.",

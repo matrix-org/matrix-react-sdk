@@ -1040,7 +1040,6 @@
     "Verify the link in your inbox": "Varmista sähköpostiisi saapunut linkki",
     "Unread messages.": "Lukemattomat viestit.",
     "Message Actions": "Viestitoiminnot",
-    "Custom (%(level)s)": "Mukautettu (%(level)s)",
     "None": "Ei mitään",
     "Unsubscribe": "Lopeta tilaus",
     "View rules": "Näytä säännöt",
@@ -3573,7 +3572,8 @@
         "default": "Oletus",
         "restricted": "Rajoitettu",
         "moderator": "Valvoja",
-        "admin": "Ylläpitäjä"
+        "admin": "Ylläpitäjä",
+        "custom": "Mukautettu (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Jos olet tehnyt ilmoituksen ohjelmistovirheestä GitHubiin, vianjäljityslokit voivat auttaa ongelman selvittämisessä. ",

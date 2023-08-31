@@ -230,9 +230,9 @@
         "default": "Default",
         "restricted": "Restricted",
         "moderator": "Moderator",
-        "admin": "Admin"
+        "admin": "Admin",
+        "custom": "Custom (%(level)s)"
     },
-    "Custom (%(level)s)": "Custom (%(level)s)",
     "Failed to invite": "Failed to invite",
     "Operation failed": "Operation failed",
     "Failed to invite users to %(roomName)s": "Failed to invite users to %(roomName)s",

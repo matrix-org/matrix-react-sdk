@@ -273,7 +273,6 @@
     "Failed to invite users to %(roomName)s": "ໃນການເຊີນຜູ້ໃຊ້ໄປຫາ %(roomName)s ບໍ່ສຳເລັດ",
     "Operation failed": "ການດໍາເນີນງານບໍ່ສຳເລັດ",
     "Failed to invite": "ການເຊີນບໍ່ສຳເລັດ",
-    "Custom (%(level)s)": "ກຳນົດ(%(level)s)ເອງ",
     "Admin": "ບໍລິຫານ",
     "Moderator": "ຜູ້ດຳເນິນລາຍການ",
     "Restricted": "ຖືກຈຳກັດ",
@@ -3308,7 +3307,8 @@
         "default": "ຄ່າເລີ່ມຕົ້ນ",
         "restricted": "ຖືກຈຳກັດ",
         "moderator": "ຜູ້ດຳເນິນລາຍການ",
-        "admin": "ບໍລິຫານ"
+        "admin": "ບໍລິຫານ",
+        "custom": "ກຳນົດ(%(level)s)ເອງ"
     },
     "bug_reporting": {
         "introduction": "ຖ້າທ່ານໄດ້ສົ່ງຂໍ້ບົກພ່ອງຜ່ານ GitHub, ບັນທຶກການຂໍ້ຜິດພາດສາມາດຊ່ວຍພວກເຮົາຕິດຕາມບັນຫາໄດ້. ",

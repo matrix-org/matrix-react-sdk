@@ -88,7 +88,6 @@
     "Restricted": "مقيد",
     "Moderator": "مشرف",
     "Admin": "مدير",
-    "Custom (%(level)s)": "(%(level)s) مخصص",
     "Failed to invite": "فشلت الدعوة",
     "Operation failed": "فشلت العملية",
     "You need to be logged in.": "عليك الولوج.",
@@ -1347,7 +1346,8 @@
         "default": "المبدئي",
         "restricted": "مقيد",
         "moderator": "مشرف",
-        "admin": "مدير"
+        "admin": "مدير",
+        "custom": "(%(level)s) مخصص"
     },
     "bug_reporting": {
         "matrix_security_issue": "للإبلاغ عن مشكلة أمنية متعلقة بMatrix ، يرجى قراءة <a>سياسة الإفصاح الأمني</a> في Matrix.org.",

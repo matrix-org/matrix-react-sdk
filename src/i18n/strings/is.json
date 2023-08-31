@@ -786,7 +786,6 @@
         "one": "%(spaceName)s og %(count)s til viðbótar"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s og %(space2Name)s",
-    "Custom (%(level)s)": "Sérsniðið (%(level)s)",
     "Sign In or Create Account": "Skráðu þig inn eða búðu til aðgang",
     "Failure to create room": "Mistókst að búa til spjallrás",
     "Failed to transfer call": "Mistókst að áframsenda símtal",
@@ -3365,7 +3364,8 @@
         "default": "Sjálfgefið",
         "restricted": "Takmarkað",
         "moderator": "Umsjónarmaður",
-        "admin": "Stjórnandi"
+        "admin": "Stjórnandi",
+        "custom": "Sérsniðið (%(level)s)"
     },
     "bug_reporting": {
         "introduction": "Ef þú hefur tilkynnt vandamál í gegnum GitHub, þá geta atvikaskrár hjálpað okkur við að finna ástæður vandamálanna. ",
