@@ -25,12 +25,15 @@ import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { EventType, type Room } from "matrix-js-sdk/src/matrix";
 
-import { _t } from "../../../languageHandler";
 import { useRoomName } from "../../../hooks/useRoomName";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { useTopic } from "../../../hooks/room/useTopic";
+import { useAccountData } from "../../../hooks/useAccountData";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
+import { useRoomMemberCount, useRoomMembers } from "../../../hooks/useRoomMembers";
+import { _t, getCurrentLanguage } from "../../../languageHandler";
 import { Flex } from "../../utils/Flex";
 import { Box } from "../../utils/Box";
 import { useRoomCallStatus } from "../../../hooks/room/useRoomCallStatus";
@@ -45,8 +48,7 @@ import SdkConfig from "../../../SdkConfig";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { useEncryptionStatus } from "../../../hooks/useEncryptionStatus";
 import { E2EStatus } from "../../../utils/ShieldUtils";
-import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
-import { useAccountData } from "../../../hooks/useAccountData";
+import FacePile from "../elements/FacePile";
 
 /**
  * A helper to transform a notification color to the what the Compound Icon Button
@@ -77,6 +79,9 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
 
     const roomName = useRoomName(room);
     const roomTopic = useTopic(room);
+
+    const members = useRoomMembers(room);
+    const memberCount = useRoomMemberCount(room);
 
     const { voiceCallDisabledReason, voiceCallType, videoCallDisabledReason, videoCallType } = useRoomCallStatus(room);
 
@@ -139,10 +144,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
             gap="var(--cpd-space-3x)"
             className="mx_RoomHeader light-panel"
             onClick={() => {
-                const rightPanel = RightPanelStore.instance;
-                rightPanel.isOpen
-                    ? rightPanel.togglePanel(null)
-                    : rightPanel.setCard({ phase: RightPanelPhases.RoomSummary });
+                showOrHidePanel(RightPanelPhases.RoomSummary);
             }}
         >
             <DecoratedRoomAvatar room={room} size="40px" displayBadge={false} />
@@ -212,7 +214,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     onClick={() => {
                         showOrHidePanel(RightPanelPhases.ThreadPanel);
                     }}
-                    title={_t("Threads")}
+                    title={_t("common|threads")}
                 >
                     <ThreadsIcon />
                 </IconButton>
@@ -226,6 +228,27 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     <NotificationsIcon />
                 </IconButton>
             </Flex>
+            {!isDirectMessage && (
+                <BodyText
+                    as="div"
+                    size="sm"
+                    weight="medium"
+                    aria-label={_t("%(count)s members", { count: memberCount })}
+                    onClick={(e: React.MouseEvent) => {
+                        showOrHidePanel(RightPanelPhases.RoomMemberList);
+                        e.stopPropagation();
+                    }}
+                >
+                    <FacePile
+                        className="mx_RoomHeader_members"
+                        members={members.slice(0, 3)}
+                        size="20px"
+                        overflow={false}
+                    >
+                        {memberCount.toLocaleString(getCurrentLanguage())}
+                    </FacePile>
+                </BodyText>
+            )}
         </Flex>
     );
 }
