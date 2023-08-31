@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Room, RoomEvent, RoomMember, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { throttle } from "lodash";
 
@@ -55,20 +55,16 @@ export const useRoomMemberCount = (room: Room, opts: RoomMemberCountOpts = { thr
 
     const { throttleWait } = opts;
 
-    const updateMembershipCount = useCallback((): void => {
-        setCount(room.getJoinedMemberCount());
-    }, [room]);
-
     const throttledUpdate = useMemo(
         () =>
             throttle(
                 () => {
-                    updateMembershipCount();
+                    setCount(room.getJoinedMemberCount());
                 },
                 throttleWait,
                 { leading: true, trailing: true },
             ),
-        [throttleWait, updateMembershipCount],
+        [room, throttleWait],
     );
 
     useTypedEventEmitter(room.currentState, RoomStateEvent.Members, throttledUpdate);
