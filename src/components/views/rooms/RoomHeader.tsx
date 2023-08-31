@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Body as BodyText, IconButton, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
