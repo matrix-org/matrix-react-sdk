@@ -44,7 +44,12 @@ type RoomMemberCountOpts = {
     throttleWait?: number;
 };
 
-// Hook to simplify watching Matrix Room joined member count
+/**
+ * Returns a count of members in a given room
+ * @param room the room to track.
+ * @param opts The options.
+ * @returns the room member count.
+ */
 export const useRoomMemberCount = (room: Room, opts: RoomMemberCountOpts = { throttleWait: 250 }): number => {
     const [count, setCount] = useState<number>(room.getJoinedMemberCount());
 
@@ -60,6 +65,10 @@ export const useRoomMemberCount = (room: Room, opts: RoomMemberCountOpts = { thr
         throttle(onMembershipUpdate, throttleWait, { leading: true, trailing: true }),
     );
 
+    /**
+     * `room.getJoinedMemberCount()` caches the member count behind the room summary
+     * So we need to re-compute the member count when the summary gets updated
+     */
     useTypedEventEmitter(
         room,
         RoomEvent.Summary,
