@@ -1852,6 +1852,7 @@
     "Room %(name)s": "Room %(name)s",
     "Recently visited rooms": "Recently visited rooms",
     "No recently visited rooms": "No recently visited rooms",
+    "Public room": "Public room",
     "Untrusted": "Untrusted",
     "%(count)s members": {
         "other": "%(count)s members",
@@ -1859,7 +1860,6 @@
     },
     "Video room": "Video room",
     "Public space": "Public space",
-    "Public room": "Public room",
     "Private space": "Private space",
     "Private room": "Private room",
     "%(names)s and %(name)s": "%(names)s and %(name)s",
@@ -2089,6 +2089,7 @@
     "Edit widgets, bridges & bots": "Edit widgets, bridges & bots",
     "Add widgets, bridges & bots": "Add widgets, bridges & bots",
     "Not encrypted": "Not encrypted",
+    "Search": "Search",
     "Files": "Files",
     "Poll history": "Poll history",
     "Pinned": "Pinned",
