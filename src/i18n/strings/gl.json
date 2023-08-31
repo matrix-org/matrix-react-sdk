@@ -3185,7 +3185,6 @@
     "Send your first message to invite <displayName/> to chat": "Envía a túa primeira mensaxe para convidar a <displayName/> ao chat",
     "Choose a locale": "Elixe o idioma",
     "Spell check": "Corrección",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Mantén o control e a propiedade sobre as conversas da comunidade.\nPodendo xestionar millóns de contas, con ferramentas para a moderación e a interoperabilidade.",
     "Enable notifications": "Activa as notificacións",
     "Don’t miss a reply or important message": "Non perdas as respostas e mensaxes importantes",
     "Turn on notifications": "Activa as notificacións",
@@ -3523,6 +3522,7 @@
             "other": "Só %(count)s para comezar"
         },
         "you_did_it": "Xa está!",
-        "complete_these": "Completa esto para sacarlle partido a %(brand)s"
+        "complete_these": "Completa esto para sacarlle partido a %(brand)s",
+        "community_messaging_description": "Mantén o control e a propiedade sobre as conversas da comunidade.\nPodendo xestionar millóns de contas, con ferramentas para a moderación e a interoperabilidade."
     }
 }

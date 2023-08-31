@@ -2394,7 +2394,6 @@
     "Give one or multiple users in this room more privileges": "Dodaj jednemu lub więcej użytkownikom więcej uprawnień",
     "Add privileged users": "Dodaj użytkowników uprzywilejowanych",
     "Ignore (%(counter)s)": "Ignoruj (%(counter)s)",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Zatrzymaj własność i kontroluj dyskusję społeczności.\nRozwijaj się, aby wspierać miliony za pomocą potężnych narzędzi moderatorskich i interoperacyjnością.",
     "Go to Home View": "Przejdź do widoku Strony głównej",
     "Space home": "Przestrzeń główna",
     "About homeservers": "O serwerach domowych",
@@ -3983,6 +3982,7 @@
             "other": "Jeszcze tylko %(count)s kroki"
         },
         "you_did_it": "Udało ci się!",
-        "complete_these": "Wykonaj je, aby jak najlepiej wykorzystać %(brand)s"
+        "complete_these": "Wykonaj je, aby jak najlepiej wykorzystać %(brand)s",
+        "community_messaging_description": "Zatrzymaj własność i kontroluj dyskusję społeczności.\nRozwijaj się, aby wspierać miliony za pomocą potężnych narzędzi moderatorskich i interoperacyjnością."
     }
 }

@@ -3352,7 +3352,6 @@
     "Your server doesn't support disabling sending read receipts.": "Shërbyesi juaj nuk mbulon çaktivizimin e dërgimit të dëftesave të leximit.",
     "Share your activity and status with others.": "Ndani me të tjerët veprimtarinë dhe gjendjen tuaj.",
     "Turn off to disable notifications on all your devices and sessions": "Mbylleni që të çaktivizohen njoftimet në krejt pajisjet dhe sesionet tuaja",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Ruani pronësinë dhe kontrollin e diskutimit në bashkësi.\nPërshkallëzojeni për të mbuluar miliona, me moderim dhe ndërveprueshmëri të fuqishme.",
     "Don’t miss a reply or important message": "Mos humbni përgjigje apo mesazh të rëndësishëm",
     "Make sure people know it’s really you": "Bëni të mundur që njerëzit ta dinë se vërtet jeni ju",
     "Don’t miss a thing by taking %(brand)s with you": "Mos humbni asgjë, duke e marrë %(brand)s-in me vete",
@@ -3894,6 +3893,7 @@
             "other": "Vetëm %(count)s hapa për t’u bërë"
         },
         "you_did_it": "Ia dolët!",
-        "complete_these": "Plotësoni këto, që të përfitoni maksimumin prej %(brand)s"
+        "complete_these": "Plotësoni këto, që të përfitoni maksimumin prej %(brand)s",
+        "community_messaging_description": "Ruani pronësinë dhe kontrollin e diskutimit në bashkësi.\nPërshkallëzojeni për të mbuluar miliona, me moderim dhe ndërveprueshmëri të fuqishme."
     }
 }

@@ -3185,7 +3185,6 @@
     "Send your first message to invite <displayName/> to chat": "Envoyez votre premier message pour inviter <displayName/> à discuter",
     "Choose a locale": "Choisir une langue",
     "Spell check": "Vérificateur orthographique",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Gardez le contrôle sur la discussion de votre communauté.\nPrend en charge des millions de messages, avec une interopérabilité et une modération efficace.",
     "Enable notifications": "Activer les notifications",
     "Don’t miss a reply or important message": "Ne ratez pas une réponse ou un message important",
     "Turn on notifications": "Activer les notifications",
@@ -4001,6 +4000,7 @@
             "other": "Plus que %(count)s étapes"
         },
         "you_did_it": "Vous l’avez fait !",
-        "complete_these": "Terminez-les pour obtenir le maximum de %(brand)s"
+        "complete_these": "Terminez-les pour obtenir le maximum de %(brand)s",
+        "community_messaging_description": "Gardez le contrôle sur la discussion de votre communauté.\nPrend en charge des millions de messages, avec une interopérabilité et une modération efficace."
     }
 }

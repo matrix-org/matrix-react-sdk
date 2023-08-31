@@ -2099,7 +2099,6 @@
     "Pin to sidebar": "Prisegti prie šoninės juostos",
     "Developer tools": "Kūrėjo įrankiai",
     "Quick settings": "Greiti nustatymai",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Išlaikykite bendruomenės diskusijų nuosavybę ir kontrolę.\nPlėskitės ir palaikykite milijonus žmonių, naudodami galingą moderavimą ir sąveiką.",
     "Welcome": "Sveiki atvykę",
     "Waiting for you to verify on your other device…": "Laukiame, kol patvirtinsite kitame įrenginyje…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Laukiama, kol patvirtinsite kitame įrenginyje, %(deviceName)s (%(deviceId)s)…",
@@ -2543,6 +2542,7 @@
             "other": "Liko tik %(count)s žingsniai"
         },
         "you_did_it": "Jums pavyko!",
-        "complete_these": "Užbaikite šiuos žingsnius, kad gautumėte daugiausiai iš %(brand)s"
+        "complete_these": "Užbaikite šiuos žingsnius, kad gautumėte daugiausiai iš %(brand)s",
+        "community_messaging_description": "Išlaikykite bendruomenės diskusijų nuosavybę ir kontrolę.\nPlėskitės ir palaikykite milijonus žmonių, naudodami galingą moderavimą ir sąveiką."
     }
 }

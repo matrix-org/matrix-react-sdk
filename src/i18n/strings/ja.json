@@ -3487,7 +3487,6 @@
     "Requester": "リクエストしたユーザー",
     "Enable %(brand)s as an additional calling option in this room": "%(brand)sをこのルームの追加の通話手段として有効にする",
     "This session is backing up your keys.": "このセッションは鍵をバックアップしています。",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "コミュニティーの会話の所有権とコントロールを維持しましょう。\n強力なモデレートと相互運用性で、数百万人のユーザーまでサポートできます。",
     "There are no past polls in this room": "このルームに過去のアンケートはありません",
     "There are no active polls in this room": "このルームに実施中のアンケートはありません",
     "<b>Warning</b>: upgrading a room will <i>not automatically migrate room members to the new version of the room.</i> We'll post a link to the new room in the old version of the room - room members will have to click this link to join the new room.": "<b>警告</b>: ルームをアップグレードしても、<i>ルームのメンバーが新しいバージョンのルームに自動的に移行されることはありません。</i> 古いバージョンのルームに、新しいルームへのリンクを投稿します。ルームのメンバーは、そのリンクをクリックして新しいルームに参加する必要があります。",
@@ -3801,6 +3800,7 @@
             "other": "あと%(count)sつのステップです"
         },
         "you_did_it": "完了しました！",
-        "complete_these": "以下を完了し、%(brand)sを最大限に活用しましょう"
+        "complete_these": "以下を完了し、%(brand)sを最大限に活用しましょう",
+        "community_messaging_description": "コミュニティーの会話の所有権とコントロールを維持しましょう。\n強力なモデレートと相互運用性で、数百万人のユーザーまでサポートできます。"
     }
 }

@@ -3185,7 +3185,6 @@
     "Saved Items": "Uložené položky",
     "Choose a locale": "Zvolte jazyk",
     "Spell check": "Kontrola pravopisu",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Zachovejte si vlastnictví a kontrolu nad komunitní diskusí.\nPodpora milionů uživatelů s účinným moderováním a interoperabilitou.",
     "Enable notifications": "Povolit oznámení",
     "Don’t miss a reply or important message": "Nepropásněte odpověď nebo důležitou zprávu",
     "Turn on notifications": "Zapnout oznámení",
@@ -4006,6 +4005,7 @@
             "other": "Zbývá už jen %(count)s kroků"
         },
         "you_did_it": "Dokázali jste to!",
-        "complete_these": "Dokončete následující, abyste z %(brand)s získali co nejvíce"
+        "complete_these": "Dokončete následující, abyste z %(brand)s získali co nejvíce",
+        "community_messaging_description": "Zachovejte si vlastnictví a kontrolu nad komunitní diskusí.\nPodpora milionů uživatelů s účinným moderováním a interoperabilitou."
     }
 }

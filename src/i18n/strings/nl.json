@@ -3195,7 +3195,6 @@
     "Download %(brand)s": "%(brand)s downloaden",
     "Choose a locale": "Kies een landinstelling",
     "Spell check": "Spellingscontrole",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Houd het eigendom en de controle over de discussie in de gemeenschap.\nSchaal om miljoenen te ondersteunen, met krachtige beheersbaarheid en interoperabiliteit.",
     "Enable notifications": "Meldingen inschakelen",
     "Don’t miss a reply or important message": "Mis geen antwoord of belangrijk bericht",
     "Turn on notifications": "Meldingen aanzetten",
@@ -3606,6 +3605,7 @@
             "other": "Nog maar %(count)s stappen te gaan"
         },
         "you_did_it": "Het is je gelukt!",
-        "complete_these": "Voltooi deze om het meeste uit %(brand)s te halen"
+        "complete_these": "Voltooi deze om het meeste uit %(brand)s te halen",
+        "community_messaging_description": "Houd het eigendom en de controle over de discussie in de gemeenschap.\nSchaal om miljoenen te ondersteunen, met krachtige beheersbaarheid en interoperabiliteit."
     }
 }

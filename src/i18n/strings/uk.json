@@ -3185,7 +3185,6 @@
     "Saved Items": "Збережені елементи",
     "Choose a locale": "Вибрати локаль",
     "Spell check": "Перевірка правопису",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Зберігайте право власності та контроль над обговоренням спільноти.\nМасштабуйте для підтримки мільйонів завдяки потужній модерації та сумісності.",
     "Enable notifications": "Увімкнути сповіщення",
     "Don’t miss a reply or important message": "Не пропустіть відповідь або важливе повідомлення",
     "Turn on notifications": "Увімкніть сповіщення",
@@ -4001,6 +4000,7 @@
             "other": "Лише %(count)s кроків для налаштування"
         },
         "you_did_it": "Ви це зробили!",
-        "complete_these": "Виконайте їх, щоб отримати максимальну віддачу від %(brand)s"
+        "complete_these": "Виконайте їх, щоб отримати максимальну віддачу від %(brand)s",
+        "community_messaging_description": "Зберігайте право власності та контроль над обговоренням спільноти.\nМасштабуйте для підтримки мільйонів завдяки потужній модерації та сумісності."
     }
 }

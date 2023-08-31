@@ -3269,7 +3269,6 @@
     "Search users in this room…": "Sök efter användare i det här rummet…",
     "Give one or multiple users in this room more privileges": "Ge en eller flera användare i det här rummet fler privilegier",
     "Add privileged users": "Lägg till privilegierade användare",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Håll ägandeskap och kontroll över gemenskapsdiskussioner.\nSkala för att stöda miljoner, med kraftfull moderering och interoperabilitet.",
     "Requires compatible homeserver.": "Kräver kompatibel hemserver.",
     "Low bandwidth mode": "Lågt bandbreddsläge",
     "You have unverified sessions": "Du har overifierade sessioner",
@@ -3941,6 +3940,7 @@
             "other": "Bara %(count)s steg kvar"
         },
         "you_did_it": "Du klarade det!",
-        "complete_these": "Gör dessa för att få ut så mycket som möjligt av %(brand)s"
+        "complete_these": "Gör dessa för att få ut så mycket som möjligt av %(brand)s",
+        "community_messaging_description": "Håll ägandeskap och kontroll över gemenskapsdiskussioner.\nSkala för att stöda miljoner, med kraftfull moderering och interoperabilitet."
     }
 }

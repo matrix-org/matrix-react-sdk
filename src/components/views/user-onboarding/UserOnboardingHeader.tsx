@@ -57,6 +57,7 @@ export function UserOnboardingHeader({ useCase }: Props): JSX.Element {
             break;
         case UseCase.CommunityMessaging:
             title = _t("onboarding|community_messaging_title");
+            description = _t("onboarding|community_messaging_description");
             image = require("../../../../res/img/user-onboarding/CommunityMessaging.png");
             actionLabel = _t("onboarding|community_messaging_action");
             break;

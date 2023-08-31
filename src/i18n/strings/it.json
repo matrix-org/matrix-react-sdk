@@ -3185,7 +3185,6 @@
     "Saved Items": "Elementi salvati",
     "Choose a locale": "Scegli una lingua",
     "Spell check": "Controllo ortografico",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Mantieni il possesso e il controllo delle discussioni nella comunità.\nScalabile per supportarne milioni, con solida moderazione e interoperabilità.",
     "Enable notifications": "Attiva le notifiche",
     "Don’t miss a reply or important message": "Non perderti una risposta o un messaggio importante",
     "Turn on notifications": "Attiva le notifiche",
@@ -4006,6 +4005,7 @@
             "other": "Solo %(count)s passi per iniziare"
         },
         "you_did_it": "Ce l'hai fatta!",
-        "complete_these": "Completa questi per ottenere il meglio da %(brand)s"
+        "complete_these": "Completa questi per ottenere il meglio da %(brand)s",
+        "community_messaging_description": "Mantieni il possesso e il controllo delle discussioni nella comunità.\nScalabile per supportarne milioni, con solida moderazione e interoperabilità."
     }
 }

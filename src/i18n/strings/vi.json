@@ -3301,7 +3301,6 @@
     "Your personal ban list holds all the users/servers you personally don't want to see messages from. After ignoring your first user/server, a new room will show up in your room list named '%(myBanList)s' - stay in this room to keep the ban list in effect.": "Danh sách cấm cá nhân của bạn chứa tất cả người dùng / máy chủ mà cá nhân bạn không muốn xem tin nhắn. Sau khi bỏ qua người dùng / máy chủ đầu tiên, một phòng mới sẽ hiển thị trong danh sách phòng của bạn tên là '%(myBanList)s'- ở trong phòng này sẽ giữ danh sách cấm có hiệu lực.",
     "Group all your favourite rooms and people in one place.": "Nhóm tất cả các phòng và người mà bạn yêu thích ở một nơi.",
     "The add / bind with MSISDN flow is misconfigured": "Thêm / liên kết với luồng MSISDN sai cấu hình",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Giữ quyền sở hữu và kiểm soát thảo luận cộng đồng.\nMở rộng quy mô để hỗ trợ hàng triệu người, bằng khả năng kiểm duyệt và tương tác mạnh mẽ.",
     "Allow fallback call assist server (%(server)s)": "Cho phép máy chủ hỗ trợ cuộc gọi dự phòng (%(server)s)",
     "Past polls": "Các cuộc bỏ phiếu trước",
     "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "Những người đó sẽ chắc chắn rằng họ đang thực sự nói với bạn, nhưng cũng có nghĩa là họ sẽ thấy tên phiên mà bạn xác định tại đây.",
@@ -3704,6 +3703,7 @@
             "other": "Chỉ %(count)s bước nữa thôi"
         },
         "you_did_it": "Hoàn thành rồi!",
-        "complete_these": "Hoàn thành những việc sau để tận dụng tất cả của %(brand)s"
+        "complete_these": "Hoàn thành những việc sau để tận dụng tất cả của %(brand)s",
+        "community_messaging_description": "Giữ quyền sở hữu và kiểm soát thảo luận cộng đồng.\nMở rộng quy mô để hỗ trợ hàng triệu người, bằng khả năng kiểm duyệt và tương tác mạnh mẽ."
     }
 }

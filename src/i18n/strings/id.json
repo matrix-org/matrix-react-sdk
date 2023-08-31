@@ -3197,7 +3197,6 @@
     "Download %(brand)s Desktop": "Unduh %(brand)s Desktop",
     "Your server doesn't support disabling sending read receipts.": "Server Anda tidak mendukung penonaktifkan pengiriman laporan dibaca.",
     "Share your activity and status with others.": "Bagikan aktivitas dan status Anda dengan orang lain.",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Tetap miliki kemilikan dan kendali atas diskusi komunitas.\nBesar untuk mendukung jutaan anggota, dengan moderasi dan interoperabilitas berdaya.",
     "Enable notifications": "Nyalakan notifikasi",
     "Don’t miss a reply or important message": "Jangan lewatkan sebuah balasan atau pesan yang penting",
     "Turn on notifications": "Nyalakan notifikasi",
@@ -4006,6 +4005,7 @@
             "other": "Hanya %(count)s langkah lagi untuk dilalui"
         },
         "you_did_it": "Anda berhasil!",
-        "complete_these": "Selesaikan untuk mendapatkan hasil yang maksimal dari %(brand)s"
+        "complete_these": "Selesaikan untuk mendapatkan hasil yang maksimal dari %(brand)s",
+        "community_messaging_description": "Tetap miliki kemilikan dan kendali atas diskusi komunitas.\nBesar untuk mendukung jutaan anggota, dengan moderasi dan interoperabilitas berdaya."
     }
 }

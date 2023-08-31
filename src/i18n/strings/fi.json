@@ -3318,7 +3318,6 @@
     "Checking for an update…": "Tarkistetaan päivityksiä…",
     "Error while changing password: %(error)s": "Virhe salasanan vaihtamisessa: %(error)s",
     "Ignore (%(counter)s)": "Sivuuta (%(counter)s)",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Pidä yhteisön keskustelu hallussa. Skaalautuu miljooniin käyttäjiin ja\ntarjoaa tehokkaan moderoinnin ja yhteentoimivuuden.",
     "Log out and back in to disable": "Poista käytöstä kirjautumalla ulos ja takaisin sisään",
     "Automatic gain control": "Automaattinen vahvistuksen säätö",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
@@ -3600,6 +3599,7 @@
             "one": "Vain %(count)s vaihe jäljellä",
             "other": "Vain %(count)s vaihetta jäljellä"
         },
-        "you_did_it": "Teit sen!"
+        "you_did_it": "Teit sen!",
+        "community_messaging_description": "Pidä yhteisön keskustelu hallussa. Skaalautuu miljooniin käyttäjiin ja\ntarjoaa tehokkaan moderoinnin ja yhteentoimivuuden."
     }
 }

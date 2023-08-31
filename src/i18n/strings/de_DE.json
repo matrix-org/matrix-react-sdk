@@ -3245,7 +3245,6 @@
     "Read receipts": "Lesebestätigungen",
     "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Für besonders sichere Kommunikation verifiziere deine Sitzungen oder melde dich von ihnen ab, falls du sie nicht mehr identifizieren kannst.",
     "Verify or sign out from this session for best security and reliability.": "Für bestmögliche Sicherheit und Zuverlässigkeit verifiziere diese Sitzung oder melde sie ab.",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Verfüge und behalte die Kontrolle über Gespräche deiner Gemeinschaft.\nSkalierbar für Millionen von Nutzenden, mit mächtigen Moderationswerkzeugen und Interoperabilität.",
     "Join the room to participate": "Betrete den Raum, um teilzunehmen",
     "Show shortcut to welcome checklist above the room list": "Verknüpfung zu ersten Schritten (Willkommen) anzeigen",
     "Find people": "Finde Personen",
@@ -4006,6 +4005,7 @@
             "other": "Nur noch %(count)s Schritte"
         },
         "you_did_it": "Geschafft!",
-        "complete_these": "Vervollständige sie für die beste %(brand)s-Erfahrung"
+        "complete_these": "Vervollständige sie für die beste %(brand)s-Erfahrung",
+        "community_messaging_description": "Verfüge und behalte die Kontrolle über Gespräche deiner Gemeinschaft.\nSkalierbar für Millionen von Nutzenden, mit mächtigen Moderationswerkzeugen und Interoperabilität."
     }
 }

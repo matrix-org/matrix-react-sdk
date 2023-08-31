@@ -3182,7 +3182,6 @@
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Fejlesztői parancs: Eldobja a jelenlegi kimenő csoport kapcsolatot és új Olm munkamenetet hoz létre",
     "Send your first message to invite <displayName/> to chat": "Küldj egy üzenetet ahhoz, hogy meghívd <displayName/> felhasználót",
     "Messages in this chat will be end-to-end encrypted.": "Az üzenetek ebben a beszélgetésben végponti titkosítással vannak védve.",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Tartsa meg a közösségi beszélgetések feletti irányítást.\nAkár milliók támogatásával, hatékony moderációs és együttműködési lehetőségekkel.",
     "Enable notifications": "Értesítések bekapcsolása",
     "Don’t miss a reply or important message": "Ne maradjon le a válaszról vagy egy fontos üzenetről",
     "Turn on notifications": "Értesítések bekapcsolása",
@@ -3905,6 +3904,7 @@
             "other": "Még %(count)s lépés"
         },
         "you_did_it": "Kész!",
-        "complete_these": "Ezen lépések befejezésével hozhatja ki a legtöbbet a(z) %(brand)s használatából"
+        "complete_these": "Ezen lépések befejezésével hozhatja ki a legtöbbet a(z) %(brand)s használatából",
+        "community_messaging_description": "Tartsa meg a közösségi beszélgetések feletti irányítást.\nAkár milliók támogatásával, hatékony moderációs és együttműködési lehetőségekkel."
     }
 }

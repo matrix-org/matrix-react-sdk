@@ -3243,7 +3243,6 @@
     "Find friends": "Encontrar amigos",
     "You made it!": "¡Ya está!",
     "Show shortcut to welcome checklist above the room list": "Mostrar un atajo a los pasos de bienvenida encima de la lista de salas",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Mantén el control de las conversaciones.\nCrece hasta tener millones de mensajes, con potente moderación e interoperabilidad.",
     "Make sure people know it’s really you": "Asegúrate de que la gente sepa que eres tú de verdad",
     "Find and invite your community members": "Encuentra e invita a las personas de tu comunidad",
     "Get stuff done by finding your teammates": "Empieza a trabajar añadiendo a tus compañeros",
@@ -3807,6 +3806,7 @@
             "other": "Quedan solo %(count)s pasos"
         },
         "you_did_it": "¡Ya está!",
-        "complete_these": "Complétalos para sacar el máximo partido a %(brand)s"
+        "complete_these": "Complétalos para sacar el máximo partido a %(brand)s",
+        "community_messaging_description": "Mantén el control de las conversaciones.\nCrece hasta tener millones de mensajes, con potente moderación e interoperabilidad."
     }
 }

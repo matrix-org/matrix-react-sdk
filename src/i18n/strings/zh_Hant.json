@@ -3185,7 +3185,6 @@
     "Saved Items": "已儲存的項目",
     "Choose a locale": "選擇語系",
     "Spell check": "拼字檢查",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "保持對社群討論的所有權與控制權。\n具有強大的審核工具與互操作性，可擴充至支援數百萬人。",
     "Enable notifications": "啟用通知",
     "Don’t miss a reply or important message": "不要錯過回覆或重要訊息",
     "Turn on notifications": "開啟通知",
@@ -4001,6 +4000,7 @@
             "other": "僅需 %(count)s 步"
         },
         "you_did_it": "您做到了！",
-        "complete_these": "完成這些步驟以充分利用 %(brand)s"
+        "complete_these": "完成這些步驟以充分利用 %(brand)s",
+        "community_messaging_description": "保持對社群討論的所有權與控制權。\n具有強大的審核工具與互操作性，可擴充至支援數百萬人。"
     }
 }

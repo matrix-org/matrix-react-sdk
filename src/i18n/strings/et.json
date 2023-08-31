@@ -3182,7 +3182,6 @@
     "Choose a locale": "Vali lokaat",
     "Saved Items": "Salvestatud failid",
     "Spell check": "Õigekirja kontroll",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Halda ja kontrolli suhtlust oma kogukonnas.\nSobib ka miljonitele kasutajatele ning võimaldab mitmekesist modereerimist kui liidestust.",
     "It’s what you’re here for, so lets get to it": "Selleks sa oled ju siin, alustame siis nüüd",
     "You're in": "Kõik on tehtud",
     "Enable notifications": "Võta teavitused kasutusele",
@@ -4001,6 +4000,7 @@
             "other": "Ainult %(count)s sammu veel"
         },
         "you_did_it": "Valmis!",
-        "complete_these": "Kasutamaks kõiki %(brand)s'i võimalusi tee läbi alljärgnev"
+        "complete_these": "Kasutamaks kõiki %(brand)s'i võimalusi tee läbi alljärgnev",
+        "community_messaging_description": "Halda ja kontrolli suhtlust oma kogukonnas.\nSobib ka miljonitele kasutajatele ning võimaldab mitmekesist modereerimist kui liidestust."
     }
 }

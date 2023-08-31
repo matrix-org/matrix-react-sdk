@@ -3301,7 +3301,6 @@
     "Search users in this room…": "搜索该房间内的用户……",
     "Give one or multiple users in this room more privileges": "授权给该房间内的某人或某些人",
     "Add privileged users": "添加特权用户",
-    "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "保持对社区讨论的所有权和控制权。\n可扩展至支持数百万人，具有强大的管理审核功能和互操作性。",
     "Fill screen": "填满屏幕",
     "Get stuff done by finding your teammates": "找到队友，完成任务",
     "Sorry — this call is currently full": "抱歉——目前线路拥挤",
@@ -3590,6 +3589,7 @@
             "one": "仅需%(count)s步"
         },
         "you_did_it": "你做到了！",
-        "complete_these": "完成这些步骤以充分利用%(brand)s"
+        "complete_these": "完成这些步骤以充分利用%(brand)s",
+        "community_messaging_description": "保持对社区讨论的所有权和控制权。\n可扩展至支持数百万人，具有强大的管理审核功能和互操作性。"
     }
 }
