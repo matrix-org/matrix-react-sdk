@@ -15,25 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React from "react";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+
 import Field from "../elements/Field";
-import React, { ComponentType } from 'react';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import AccessibleButton from '../elements/AccessibleButton';
-import Spinner from '../elements/Spinner';
-import withValidation, { IFieldState, IValidationResult } from '../elements/Validation';
-import { _t } from '../../../languageHandler';
+import AccessibleButton from "../elements/AccessibleButton";
+import Spinner from "../elements/Spinner";
+import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
+import { UserFriendlyError, _t, _td } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import PassphraseField from "../auth/PassphraseField";
-import CountlyAnalytics from "../../../CountlyAnalytics";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { PASSWORD_MIN_SCORE } from '../auth/RegistrationForm';
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { PASSWORD_MIN_SCORE } from "../auth/RegistrationForm";
 import SetEmailDialog from "../dialogs/SetEmailDialog";
-import QuestionDialog from "../dialogs/QuestionDialog";
 
-const FIELD_OLD_PASSWORD = 'field_old_password';
-const FIELD_NEW_PASSWORD = 'field_new_password';
-const FIELD_NEW_PASSWORD_CONFIRM = 'field_new_password_confirm';
+const FIELD_OLD_PASSWORD = "field_old_password";
+const FIELD_NEW_PASSWORD = "field_new_password";
+const FIELD_NEW_PASSWORD_CONFIRM = "field_new_password_confirm";
+type FieldType = typeof FIELD_OLD_PASSWORD | typeof FIELD_NEW_PASSWORD | typeof FIELD_NEW_PASSWORD_CONFIRM;
 
 enum Phase {
     Edit = "edit",
@@ -42,8 +41,8 @@ enum Phase {
 }
 
 interface IProps {
-    onFinished?: ({ didSetEmail: boolean }?) => void;
-    onError?: (error: {error: string}) => void;
+    onFinished: (outcome: { didSetEmail?: boolean }) => void;
+    onError: (error: Error) => void;
     rowClassName?: string;
     buttonClassName?: string;
     buttonKind?: string;
@@ -56,15 +55,18 @@ interface IProps {
 }
 
 interface IState {
-    fieldValid: {};
+    fieldValid: Partial<Record<FieldType, boolean>>;
     phase: Phase;
     oldPassword: string;
     newPassword: string;
     newPasswordConfirm: string;
 }
 
-@replaceableComponent("views.settings.ChangePassword")
 export default class ChangePassword extends React.Component<IProps, IState> {
+    private [FIELD_OLD_PASSWORD]: Field | null = null;
+    private [FIELD_NEW_PASSWORD]: Field | null = null;
+    private [FIELD_NEW_PASSWORD_CONFIRM]: Field | null = null;
+
     public static defaultProps: Partial<IProps> = {
         onFinished() {},
         onError() {},
@@ -72,7 +74,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
         confirm: true,
     };
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -84,57 +86,22 @@ export default class ChangePassword extends React.Component<IProps, IState> {
         };
     }
 
-    private onChangePassword(oldPassword: string, newPassword: string): void {
-        const cli = MatrixClientPeg.get();
+    private async onChangePassword(oldPassword: string, newPassword: string): Promise<void> {
+        const cli = MatrixClientPeg.safeGet();
 
-        if (!this.props.confirm) {
-            this.changePassword(cli, oldPassword, newPassword);
-            return;
-        }
-
-        Modal.createTrackedDialog('Change Password', '', QuestionDialog, {
-            title: _t("Warning!"),
-            description:
-                <div>
-                    { _t(
-                        'Changing password will currently reset any end-to-end encryption keys on all sessions, ' +
-                        'making encrypted chat history unreadable, unless you first export your room keys ' +
-                        'and re-import them afterwards. ' +
-                        'In future this will be improved.',
-                    ) }
-                    { ' ' }
-                    <a href="https://github.com/vector-im/element-web/issues/2671" target="_blank" rel="noreferrer noopener">
-                        https://github.com/vector-im/element-web/issues/2671
-                    </a>
-                </div>,
-            button: _t("Continue"),
-            extraButtons: [
-                <button
-                    key="exportRoomKeys"
-                    className="mx_Dialog_primary"
-                    onClick={this.onExportE2eKeysClicked}
-                >
-                    { _t('Export E2E room keys') }
-                </button>,
-            ],
-            onFinished: (confirmed) => {
-                if (confirmed) {
-                    this.changePassword(cli, oldPassword, newPassword);
-                }
-            },
-        });
+        this.changePassword(cli, oldPassword, newPassword);
     }
 
     private changePassword(cli: MatrixClient, oldPassword: string, newPassword: string): void {
         const authDict = {
-            type: 'm.login.password',
+            type: "m.login.password",
             identifier: {
-                type: 'm.id.user',
+                type: "m.id.user",
                 user: cli.credentials.userId,
             },
             // TODO: Remove `user` once servers support proper UIA
             // See https://github.com/matrix-org/synapse/issues/5665
-            user: cli.credentials.userId,
+            user: cli.credentials.userId ?? undefined,
             password: oldPassword,
         };
 
@@ -142,60 +109,67 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             phase: Phase.Uploading,
         });
 
-        cli.setPassword(authDict, newPassword).then(() => {
-            if (this.props.shouldAskForEmail) {
-                return this.optionallySetEmail().then((confirmed) => {
-                    this.props.onFinished({
-                        didSetEmail: confirmed,
-                    });
+        cli.setPassword(authDict, newPassword, false)
+            .then(
+                () => {
+                    if (this.props.shouldAskForEmail) {
+                        return this.optionallySetEmail().then((confirmed) => {
+                            this.props.onFinished({
+                                didSetEmail: confirmed,
+                            });
+                        });
+                    } else {
+                        this.props.onFinished({});
+                    }
+                },
+                (err) => {
+                    if (err instanceof Error) {
+                        this.props.onError(err);
+                    } else {
+                        this.props.onError(
+                            new UserFriendlyError("Error while changing password: %(error)s", {
+                                error: String(err),
+                                cause: undefined,
+                            }),
+                        );
+                    }
+                },
+            )
+            .finally(() => {
+                this.setState({
+                    phase: Phase.Edit,
+                    oldPassword: "",
+                    newPassword: "",
+                    newPasswordConfirm: "",
                 });
-            } else {
-                this.props.onFinished();
-            }
-        }, (err) => {
-            this.props.onError(err);
-        }).finally(() => {
-            this.setState({
-                phase: Phase.Edit,
-                oldPassword: "",
-                newPassword: "",
-                newPasswordConfirm: "",
             });
-        });
     }
 
-    private checkPassword(oldPass: string, newPass: string, confirmPass: string): {error: string} {
+    /**
+     * Checks the `newPass` and throws an error if it is unacceptable.
+     * @param oldPass The old password
+     * @param newPass The new password that the user is trying to be set
+     * @param confirmPass The confirmation password where the user types the `newPass`
+     * again for confirmation and should match the `newPass` before we accept their new
+     * password.
+     */
+    private checkPassword(oldPass: string, newPass: string, confirmPass: string): void {
         if (newPass !== confirmPass) {
-            return {
-                error: _t("New passwords don't match"),
-            };
+            throw new UserFriendlyError("New passwords don't match");
         } else if (!newPass || newPass.length === 0) {
-            return {
-                error: _t("Passwords can't be empty"),
-            };
+            throw new UserFriendlyError("Passwords can't be empty");
         }
     }
 
     private optionallySetEmail(): Promise<boolean> {
         // Ask for an email otherwise the user has no way to reset their password
-        const modal = Modal.createTrackedDialog('Do you want to set an email address?', '', SetEmailDialog, {
-            title: _t('Do you want to set an email address?'),
+        const modal = Modal.createDialog(SetEmailDialog, {
+            title: _t("Do you want to set an email address?"),
         });
-        return modal.finished.then(([confirmed]) => confirmed);
+        return modal.finished.then(([confirmed]) => !!confirmed);
     }
 
-    private onExportE2eKeysClicked = (): void => {
-        Modal.createTrackedDialogAsync('Export E2E Keys', 'Change Password',
-            import(
-                '../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
-            ) as unknown as Promise<ComponentType<{}>>,
-            {
-                matrixClient: MatrixClientPeg.get(),
-            },
-        );
-    };
-
-    private markFieldValid(fieldID: string, valid: boolean): void {
+    private markFieldValid(fieldID: FieldType, valid?: boolean): void {
         const { fieldValid } = this.state;
         fieldValid[fieldID] = valid;
         this.setState({
@@ -269,20 +243,30 @@ export default class ChangePassword extends React.Component<IProps, IState> {
 
         const allFieldsValid = await this.verifyFieldsBeforeSubmit();
         if (!allFieldsValid) {
-            CountlyAnalytics.instance.track("onboarding_registration_submit_failed");
             return;
         }
 
         const oldPassword = this.state.oldPassword;
         const newPassword = this.state.newPassword;
         const confirmPassword = this.state.newPasswordConfirm;
-        const err = this.checkPassword(
-            oldPassword, newPassword, confirmPassword,
-        );
-        if (err) {
-            this.props.onError(err);
-        } else {
-            this.onChangePassword(oldPassword, newPassword);
+        try {
+            // TODO: We can remove this check (but should add some Cypress tests to
+            // sanity check this flow). This logic is redundant with the input field
+            // validation we do and `verifyFieldsBeforeSubmit()` above. See
+            // https://github.com/matrix-org/matrix-react-sdk/pull/10615#discussion_r1167364214
+            this.checkPassword(oldPassword, newPassword, confirmPassword);
+            return this.onChangePassword(oldPassword, newPassword);
+        } catch (err) {
+            if (err instanceof Error) {
+                this.props.onError(err);
+            } else {
+                this.props.onError(
+                    new UserFriendlyError("Error while changing password: %(error)s", {
+                        error: String(err),
+                        cause: undefined,
+                    }),
+                );
+            }
         }
     };
 
@@ -294,7 +278,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             activeElement.blur();
         }
 
-        const fieldIDsInDisplayOrder = [
+        const fieldIDsInDisplayOrder: FieldType[] = [
             FIELD_OLD_PASSWORD,
             FIELD_NEW_PASSWORD,
             FIELD_NEW_PASSWORD_CONFIRM,
@@ -336,16 +320,10 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     }
 
     private allFieldsValid(): boolean {
-        const keys = Object.keys(this.state.fieldValid);
-        for (let i = 0; i < keys.length; ++i) {
-            if (!this.state.fieldValid[keys[i]]) {
-                return false;
-            }
-        }
-        return true;
+        return Object.values(this.state.fieldValid).every(Boolean);
     }
 
-    private findFirstInvalidField(fieldIDs: string[]): Field {
+    private findFirstInvalidField(fieldIDs: FieldType[]): Field | null {
         for (const fieldID of fieldIDs) {
             if (!this.state.fieldValid[fieldID] && this[fieldID]) {
                 return this[fieldID];
@@ -354,7 +332,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
         return null;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const rowClassName = this.props.rowClassName;
         const buttonClassName = this.props.buttonClassName;
 
@@ -364,9 +342,9 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                     <form className={this.props.className} onSubmit={this.onClickChange}>
                         <div className={rowClassName}>
                             <Field
-                                ref={field => this[FIELD_OLD_PASSWORD] = field}
+                                ref={(field) => (this[FIELD_OLD_PASSWORD] = field)}
                                 type="password"
-                                label={_t('Current password')}
+                                label={_t("Current password")}
                                 value={this.state.oldPassword}
                                 onChange={this.onChangeOldPassword}
                                 onValidate={this.onOldPasswordValidate}
@@ -374,9 +352,9 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                         </div>
                         <div className={rowClassName}>
                             <PassphraseField
-                                fieldRef={field => this[FIELD_NEW_PASSWORD] = field}
+                                fieldRef={(field) => (this[FIELD_NEW_PASSWORD] = field)}
                                 type="password"
-                                label='New Password'
+                                label={_td("New Password")}
                                 minScore={PASSWORD_MIN_SCORE}
                                 value={this.state.newPassword}
                                 autoFocus={this.props.autoFocusNewPasswordInput}
@@ -387,7 +365,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                         </div>
                         <div className={rowClassName}>
                             <Field
-                                ref={field => this[FIELD_NEW_PASSWORD_CONFIRM] = field}
+                                ref={(field) => (this[FIELD_NEW_PASSWORD_CONFIRM] = field)}
                                 type="password"
                                 label={_t("Confirm password")}
                                 value={this.state.newPasswordConfirm}
@@ -396,8 +374,12 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                                 autoComplete="new-password"
                             />
                         </div>
-                        <AccessibleButton className={buttonClassName} kind={this.props.buttonKind} onClick={this.onClickChange}>
-                            { this.props.buttonLabel || _t('Change Password') }
+                        <AccessibleButton
+                            className={buttonClassName}
+                            kind={this.props.buttonKind}
+                            onClick={this.onClickChange}
+                        >
+                            {this.props.buttonLabel || _t("Change Password")}
                         </AccessibleButton>
                     </form>
                 );

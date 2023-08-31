@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import classNames from "classnames";
+import React, { PropsWithChildren } from "react";
 
-@replaceableComponent("views.auth.AuthBody")
-export default class AuthBody extends React.PureComponent {
-    public render(): React.ReactNode {
-        return <div className="mx_AuthBody">
-            { this.props.children }
-        </div>;
-    }
+interface Props {
+    className?: string;
+    flex?: boolean;
+}
+
+export default function AuthBody({ flex, className, children }: PropsWithChildren<Props>): JSX.Element {
+    return <main className={classNames("mx_AuthBody", className, { mx_AuthBody_flex: flex })}>{children}</main>;
 }

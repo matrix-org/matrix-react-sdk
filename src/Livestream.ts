@@ -15,24 +15,25 @@ limitations under the License.
 */
 
 import { ClientWidgetApi } from "matrix-widget-api";
-import { MatrixClientPeg } from "./MatrixClientPeg";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+
 import SdkConfig from "./SdkConfig";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
 
-export function getConfigLivestreamUrl() {
-    return SdkConfig.get()["audioStreamUrl"];
+export function getConfigLivestreamUrl(): string | undefined {
+    return SdkConfig.get("audio_stream_url");
 }
 
 // Dummy rtmp URL used to signal that we want a special audio-only stream
-const AUDIOSTREAM_DUMMY_URL = 'rtmp://audiostream.dummy/';
+const AUDIOSTREAM_DUMMY_URL = "rtmp://audiostream.dummy/";
 
-async function createLiveStream(roomId: string) {
-    const openIdToken = await MatrixClientPeg.get().getOpenIdToken();
+async function createLiveStream(matrixClient: MatrixClient, roomId: string): Promise<void> {
+    const openIdToken = await matrixClient.getOpenIdToken();
 
     const url = getConfigLivestreamUrl() + "/createStream";
 
     const response = await window.fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
@@ -43,11 +44,15 @@ async function createLiveStream(roomId: string) {
     });
 
     const respBody = await response.json();
-    return respBody['stream_id'];
+    return respBody["stream_id"];
 }
 
-export async function startJitsiAudioLivestream(widgetMessaging: ClientWidgetApi, roomId: string) {
-    const streamId = await createLiveStream(roomId);
+export async function startJitsiAudioLivestream(
+    matrixClient: MatrixClient,
+    widgetMessaging: ClientWidgetApi,
+    roomId: string,
+): Promise<void> {
+    const streamId = await createLiveStream(matrixClient, roomId);
 
     await widgetMessaging.transport.send(ElementWidgetActions.StartLiveStream, {
         rtmpStreamKey: AUDIOSTREAM_DUMMY_URL + streamId,

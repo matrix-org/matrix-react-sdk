@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room } from "matrix-js-sdk/src/matrix";
+
 import { GenericEchoChamber } from "./GenericEchoChamber";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomEchoChamber } from "./RoomEchoChamber";
 import { RoomEchoContext } from "./RoomEchoContext";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -38,19 +39,20 @@ export class EchoStore extends AsyncStoreWithClient<IState> {
 
     private caches = new Map<ContextKey, GenericEchoChamber<any, any, any>>();
 
-    constructor() {
+    public constructor() {
         super(defaultDispatcher);
     }
 
     public static get instance(): EchoStore {
-        if (!EchoStore._instance) {
-            EchoStore._instance = new EchoStore();
+        if (!this._instance) {
+            this._instance = new EchoStore();
+            this._instance.start();
         }
-        return EchoStore._instance;
+        return this._instance;
     }
 
     public get contexts(): EchoContext[] {
-        return Array.from(this.caches.values()).map(e => e.context);
+        return Array.from(this.caches.values()).map((e) => e.context);
     }
 
     public getOrCreateChamberForRoom(room: Room): RoomEchoChamber {
@@ -68,7 +70,7 @@ export class EchoStore extends AsyncStoreWithClient<IState> {
         return echo;
     }
 
-    private async checkContexts() {
+    private async checkContexts(): Promise<void> {
         let hasOrHadError = false;
         for (const echo of this.caches.values()) {
             hasOrHadError = echo.context.state === ContextTransactionState.PendingErrors;
@@ -97,8 +99,5 @@ export class EchoStore extends AsyncStoreWithClient<IState> {
         }
     }
 
-    protected async onAction(payload: ActionPayload): Promise<any> {
-        // We have nothing to actually listen for
-        return Promise.resolve();
-    }
+    protected async onAction(payload: ActionPayload): Promise<void> {}
 }

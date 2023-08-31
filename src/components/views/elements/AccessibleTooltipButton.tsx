@@ -15,36 +15,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { SyntheticEvent, FocusEvent } from "react";
 
 import AccessibleButton from "./AccessibleButton";
-import Tooltip, { Alignment } from './Tooltip';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import Tooltip, { Alignment } from "./Tooltip";
 
-interface ITooltipProps extends React.ComponentProps<typeof AccessibleButton> {
-    title: string;
+interface IProps extends React.ComponentProps<typeof AccessibleButton> {
+    title?: string;
     tooltip?: React.ReactNode;
-    label?: React.ReactNode;
+    label?: string;
     tooltipClassName?: string;
     forceHide?: boolean;
-    yOffset?: number;
     alignment?: Alignment;
+    onHover?: (hovering: boolean) => void;
+    onHideTooltip?(ev: SyntheticEvent): void;
 }
 
 interface IState {
     hover: boolean;
 }
 
-@replaceableComponent("views.elements.AccessibleTooltipButton")
-export default class AccessibleTooltipButton extends React.PureComponent<ITooltipProps, IState> {
-    constructor(props: ITooltipProps) {
+export default class AccessibleTooltipButton extends React.PureComponent<IProps, IState> {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             hover: false,
         };
     }
 
-    componentDidUpdate(prevProps: Readonly<ITooltipProps>) {
+    public componentDidUpdate(prevProps: Readonly<IProps>): void {
         if (!prevProps.forceHide && this.props.forceHide && this.state.hover) {
             this.setState({
                 hover: false,
@@ -52,39 +51,48 @@ export default class AccessibleTooltipButton extends React.PureComponent<IToolti
         }
     }
 
-    onMouseOver = () => {
+    private showTooltip = (): void => {
+        if (this.props.onHover) this.props.onHover(true);
         if (this.props.forceHide) return;
         this.setState({
             hover: true,
         });
     };
 
-    onMouseLeave = () => {
+    private hideTooltip = (ev: SyntheticEvent): void => {
+        if (this.props.onHover) this.props.onHover(false);
         this.setState({
             hover: false,
         });
+        this.props.onHideTooltip?.(ev);
     };
 
-    render() {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { title, tooltip, children, tooltipClassName, forceHide, yOffset, alignment, ...props } = this.props;
+    private onFocus = (ev: FocusEvent): void => {
+        // We only show the tooltip if focus arrived here from some other
+        // element, to avoid leaving tooltips hanging around when a modal closes
+        if (ev.relatedTarget) this.showTooltip();
+    };
 
-        const tip = this.state.hover && <Tooltip
-            tooltipClassName={tooltipClassName}
-            label={tooltip || title}
-            yOffset={yOffset}
-            alignment={alignment}
-        />;
+    public render(): React.ReactNode {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { title, tooltip, children, tooltipClassName, forceHide, alignment, onHideTooltip, ...props } =
+            this.props;
+
+        const tip = this.state.hover && (title || tooltip) && (
+            <Tooltip tooltipClassName={tooltipClassName} label={tooltip || title} alignment={alignment} />
+        );
         return (
             <AccessibleButton
                 {...props}
-                onMouseOver={this.onMouseOver}
-                onMouseLeave={this.onMouseLeave}
-                aria-label={title}
+                onMouseOver={this.showTooltip || props.onMouseOver}
+                onMouseLeave={this.hideTooltip || props.onMouseLeave}
+                onFocus={this.onFocus || props.onFocus}
+                onBlur={this.hideTooltip || props.onBlur}
+                aria-label={title || props["aria-label"]}
             >
-                { children }
-                { this.props.label }
-                { (tooltip || title) && tip }
+                {children}
+                {this.props.label}
+                {(tooltip || title) && tip}
             </AccessibleButton>
         );
     }

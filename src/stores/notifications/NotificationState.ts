@@ -14,18 +14,49 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventEmitter } from "events";
+import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
+
 import { NotificationColor } from "./NotificationColor";
 import { IDestroyable } from "../../utils/IDestroyable";
+import SettingsStore from "../../settings/SettingsStore";
 
-export const NOTIFICATION_STATE_UPDATE = "update";
+export interface INotificationStateSnapshotParams {
+    symbol: string | null;
+    count: number;
+    color: NotificationColor;
+    muted: boolean;
+}
 
-export abstract class NotificationState extends EventEmitter implements IDestroyable {
-    protected _symbol: string;
-    protected _count: number;
-    protected _color: NotificationColor;
+export enum NotificationStateEvents {
+    Update = "update",
+}
 
-    public get symbol(): string {
+type EventHandlerMap = {
+    [NotificationStateEvents.Update]: () => void;
+};
+
+export abstract class NotificationState
+    extends TypedEventEmitter<NotificationStateEvents, EventHandlerMap>
+    implements INotificationStateSnapshotParams, IDestroyable
+{
+    //
+    protected _symbol: string | null = null;
+    protected _count = 0;
+    protected _color: NotificationColor = NotificationColor.None;
+    protected _muted = false;
+
+    private watcherReferences: string[] = [];
+
+    public constructor() {
+        super();
+        this.watcherReferences.push(
+            SettingsStore.watchSetting("feature_hidebold", null, () => {
+                this.emit(NotificationStateEvents.Update);
+            }),
+        );
+    }
+
+    public get symbol(): string | null {
         return this._symbol;
     }
 
@@ -37,12 +68,21 @@ export abstract class NotificationState extends EventEmitter implements IDestroy
         return this._color;
     }
 
+    public get muted(): boolean {
+        return this._muted;
+    }
+
     public get isIdle(): boolean {
         return this.color <= NotificationColor.None;
     }
 
     public get isUnread(): boolean {
-        return this.color >= NotificationColor.Bold;
+        if (this.color > NotificationColor.Bold) {
+            return true;
+        } else {
+            const hideBold = SettingsStore.getValue("feature_hidebold");
+            return this.color === NotificationColor.Bold && !hideBold;
+        }
     }
 
     public get hasUnreadCount(): boolean {
@@ -53,9 +93,9 @@ export abstract class NotificationState extends EventEmitter implements IDestroy
         return this.color >= NotificationColor.Red;
     }
 
-    protected emitIfUpdated(snapshot: NotificationStateSnapshot) {
+    protected emitIfUpdated(snapshot: NotificationStateSnapshot): void {
         if (snapshot.isDifferentFrom(this)) {
-            this.emit(NOTIFICATION_STATE_UPDATE);
+            this.emit(NotificationStateEvents.Update);
         }
     }
 
@@ -64,24 +104,30 @@ export abstract class NotificationState extends EventEmitter implements IDestroy
     }
 
     public destroy(): void {
-        this.removeAllListeners(NOTIFICATION_STATE_UPDATE);
+        this.removeAllListeners(NotificationStateEvents.Update);
+        for (const watcherReference of this.watcherReferences) {
+            SettingsStore.unwatchSetting(watcherReference);
+        }
+        this.watcherReferences = [];
     }
 }
 
 export class NotificationStateSnapshot {
-    private readonly symbol: string;
+    private readonly symbol: string | null;
     private readonly count: number;
     private readonly color: NotificationColor;
+    private readonly muted: boolean;
 
-    constructor(state: NotificationState) {
+    public constructor(state: INotificationStateSnapshotParams) {
         this.symbol = state.symbol;
         this.count = state.count;
         this.color = state.color;
+        this.muted = state.muted;
     }
 
-    public isDifferentFrom(other: NotificationState): boolean {
-        const before = { count: this.count, symbol: this.symbol, color: this.color };
-        const after = { count: other.count, symbol: other.symbol, color: other.color };
+    public isDifferentFrom(other: INotificationStateSnapshotParams): boolean {
+        const before = { count: this.count, symbol: this.symbol, color: this.color, muted: this.muted };
+        const after = { count: other.count, symbol: other.symbol, color: other.color, muted: other.muted };
         return JSON.stringify(before) !== JSON.stringify(after);
     }
 }

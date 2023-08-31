@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,32 +14,116 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import React, { useCallback, useContext, useRef } from "react";
+import { Room, EventType } from "matrix-js-sdk/src/matrix";
+import classNames from "classnames";
 
-import { useEventEmitter } from "../../../hooks/useEventEmitter";
-import { linkifyElement } from "../../../HtmlUtils";
+import { useTopic } from "../../../hooks/room/useTopic";
+import { Alignment } from "./Tooltip";
+import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
+import Modal from "../../../Modal";
+import InfoDialog from "../dialogs/InfoDialog";
+import { useDispatcher } from "../../../hooks/useDispatcher";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import AccessibleButton from "./AccessibleButton";
+import TooltipTarget from "./TooltipTarget";
+import { Linkify, topicToHtml } from "../../../HtmlUtils";
+import { tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 
-interface IProps {
-    room?: Room;
-    children?(topic: string, ref: (element: HTMLElement) => void): JSX.Element;
+interface IProps extends React.HTMLProps<HTMLDivElement> {
+    room: Room;
 }
 
-export const getTopic = room => room?.currentState?.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
+export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
+    const client = useContext(MatrixClientContext);
+    const ref = useRef<HTMLDivElement>(null);
 
-const RoomTopic = ({ room, children }: IProps): JSX.Element => {
-    const [topic, setTopic] = useState(getTopic(room));
-    useEventEmitter(room.currentState, "RoomState.events", () => {
-        setTopic(getTopic(room));
+    const topic = useTopic(room);
+    const body = topicToHtml(topic?.text, topic?.html, ref);
+
+    const onClick = useCallback(
+        (e: React.MouseEvent<HTMLDivElement>) => {
+            props.onClick?.(e);
+
+            const target = e.target as HTMLElement;
+
+            if (target.tagName.toUpperCase() !== "A") {
+                dis.fire(Action.ShowRoomTopic);
+                return;
+            }
+
+            const anchor = e.target as HTMLLinkElement;
+            const localHref = tryTransformPermalinkToLocalHref(anchor.href);
+
+            if (localHref !== anchor.href) {
+                // it could be converted to a localHref -> therefore handle locally
+                e.preventDefault();
+                window.location.hash = localHref;
+            }
+        },
+        [props],
+    );
+
+    const ignoreHover = (ev: React.MouseEvent): boolean => {
+        return (ev.target as HTMLElement).tagName.toUpperCase() === "A";
+    };
+
+    useDispatcher(dis, (payload) => {
+        if (payload.action === Action.ShowRoomTopic) {
+            const canSetTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, client.getSafeUserId());
+            const body = topicToHtml(topic?.text, topic?.html, ref, true);
+
+            const modal = Modal.createDialog(InfoDialog, {
+                title: room.name,
+                description: (
+                    <div>
+                        <Linkify
+                            options={{
+                                attributes: {
+                                    onClick() {
+                                        modal.close();
+                                    },
+                                },
+                            }}
+                            as="p"
+                        >
+                            {body}
+                        </Linkify>
+                        {canSetTopic && (
+                            <AccessibleButton
+                                kind="primary_outline"
+                                onClick={() => {
+                                    modal.close();
+                                    dis.dispatch({ action: "open_room_settings" });
+                                }}
+                            >
+                                {_t("Edit topic")}
+                            </AccessibleButton>
+                        )}
+                    </div>
+                ),
+                hasCloseButton: true,
+                button: false,
+            });
+        }
     });
-    useEffect(() => {
-        setTopic(getTopic(room));
-    }, [room]);
 
-    const ref = e => e && linkifyElement(e);
-    if (children) return children(topic, ref);
-    return <span ref={ref}>{ topic }</span>;
-};
+    const className = classNames(props.className, "mx_RoomTopic");
 
-export default RoomTopic;
+    return (
+        <TooltipTarget
+            {...props}
+            ref={ref}
+            onClick={onClick}
+            dir="auto"
+            tooltipTargetClassName={className}
+            label={_t("Click to read topic")}
+            alignment={Alignment.Bottom}
+            ignoreHover={ignoreHover}
+        >
+            <Linkify>{body}</Linkify>
+        </TooltipTarget>
+    );
+}

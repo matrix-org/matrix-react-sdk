@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React from "react";
 
 interface IProps {
     element: React.ReactNode;
@@ -29,9 +28,8 @@ interface IProps {
  * This component can be used to display generic HTML content in a contextual
  * menu.
  */
-@replaceableComponent("views.context_menus.GenericElementContextMenu")
 export default class GenericElementContextMenu extends React.Component<IProps> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
     }
 
@@ -49,7 +47,7 @@ export default class GenericElementContextMenu extends React.Component<IProps> {
         }
     };
 
-    public render(): JSX.Element {
-        return <div>{ this.props.element }</div>;
+    public render(): React.ReactNode {
+        return <div>{this.props.element}</div>;
     }
 }

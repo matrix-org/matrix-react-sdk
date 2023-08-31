@@ -14,28 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { _t } from '../../../../languageHandler';
-import SdkConfig from '../../../../SdkConfig';
-import SettingsStore from "../../../../settings/SettingsStore";
+import React, { ChangeEvent } from "react";
+import { Room } from "matrix-js-sdk/src/matrix";
 
-import Modal from '../../../../Modal';
+import { _t } from "../../../../languageHandler";
+import SdkConfig from "../../../../SdkConfig";
+import SettingsStore from "../../../../settings/SettingsStore";
+import Modal from "../../../../Modal";
 import { formatBytes, formatCountLong } from "../../../../utils/FormattingUtils";
 import EventIndexPeg from "../../../../indexing/EventIndexPeg";
 import { SettingLevel } from "../../../../settings/SettingLevel";
-import Field from '../../../../components/views/elements/Field';
+import Field from "../../../../components/views/elements/Field";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import DialogButtons from "../../../../components/views/elements/DialogButtons";
-import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
+import { IIndexStats } from "../../../../indexing/BaseEventIndexManager";
 
-interface IProps extends IDialogProps {}
+interface IProps {
+    onFinished(): void;
+}
 
 interface IState {
     eventIndexSize: number;
     eventCount: number;
     crawlingRoomsCount: number;
     roomCount: number;
-    currentRoom: string;
+    currentRoom: string | null;
     crawlerSleepTime: number;
 }
 
@@ -43,7 +46,7 @@ interface IState {
  * Allows the user to introspect the event index state and disable it.
  */
 export default class ManageEventIndexDialog extends React.Component<IProps, IState> {
-    constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -52,14 +55,14 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
             crawlingRoomsCount: 0,
             roomCount: 0,
             currentRoom: null,
-            crawlerSleepTime:
-                SettingsStore.getValueAt(SettingLevel.DEVICE, 'crawlerSleepTime'),
+            crawlerSleepTime: SettingsStore.getValueAt(SettingLevel.DEVICE, "crawlerSleepTime"),
         };
     }
 
-    updateCurrentRoom = async (room) => {
+    public updateCurrentRoom = async (room: Room): Promise<void> => {
         const eventIndex = EventIndexPeg.get();
-        let stats;
+        if (!eventIndex) return;
+        let stats: IIndexStats | undefined;
 
         try {
             stats = await eventIndex.getStats();
@@ -69,7 +72,7 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
             return;
         }
 
-        let currentRoom = null;
+        let currentRoom: string | null = null;
 
         if (room) currentRoom = room.name;
         const roomStats = eventIndex.crawlingRooms();
@@ -77,15 +80,15 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         const roomCount = roomStats.totalRooms.size;
 
         this.setState({
-            eventIndexSize: stats.size,
-            eventCount: stats.eventCount,
+            eventIndexSize: stats?.size ?? 0,
+            eventCount: stats?.eventCount ?? 0,
             crawlingRoomsCount: crawlingRoomsCount,
             roomCount: roomCount,
             currentRoom: currentRoom,
         });
     };
 
-    componentWillUnmount(): void {
+    public componentWillUnmount(): void {
         const eventIndex = EventIndexPeg.get();
 
         if (eventIndex !== null) {
@@ -93,12 +96,12 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         }
     }
 
-    async componentDidMount(): Promise<void> {
+    public async componentDidMount(): Promise<void> {
         let eventIndexSize = 0;
         let crawlingRoomsCount = 0;
         let roomCount = 0;
         let eventCount = 0;
-        let currentRoom = null;
+        let currentRoom: string | null = null;
 
         const eventIndex = EventIndexPeg.get();
 
@@ -107,8 +110,10 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
 
             try {
                 const stats = await eventIndex.getStats();
-                eventIndexSize = stats.size;
-                eventCount = stats.eventCount;
+                if (stats) {
+                    eventIndexSize = stats.size;
+                    eventCount = stats.eventCount;
+                }
             } catch {
                 // This call may fail if sporadically, not a huge issue as we
                 // will try later again in the updateCurrentRoom call and
@@ -132,63 +137,63 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
         });
     }
 
-    private onDisable = async () => {
+    private onDisable = async (): Promise<void> => {
         const DisableEventIndexDialog = (await import("./DisableEventIndexDialog")).default;
-        Modal.createTrackedDialog("Disable message search", "Disable message search",
-            DisableEventIndexDialog,
-            null, null, /* priority = */ false, /* static = */ true,
-        );
+        Modal.createDialog(DisableEventIndexDialog, undefined, undefined, /* priority = */ false, /* static = */ true);
     };
 
-    private onCrawlerSleepTimeChange = (e) => {
-        this.setState({ crawlerSleepTime: e.target.value });
+    private onCrawlerSleepTimeChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        this.setState({ crawlerSleepTime: parseInt(e.target.value, 10) });
         SettingsStore.setValue("crawlerSleepTime", null, SettingLevel.DEVICE, e.target.value);
     };
 
-    render() {
+    public render(): React.ReactNode {
         const brand = SdkConfig.get().brand;
 
         let crawlerState;
         if (this.state.currentRoom === null) {
             crawlerState = _t("Not currently indexing messages for any room.");
         } else {
-            crawlerState = (
-                _t("Currently indexing: %(currentRoom)s", { currentRoom: this.state.currentRoom })
-            );
+            crawlerState = _t("Currently indexing: %(currentRoom)s", { currentRoom: this.state.currentRoom });
         }
 
-        const doneRooms = Math.max(0, (this.state.roomCount - this.state.crawlingRoomsCount));
+        const doneRooms = Math.max(0, this.state.roomCount - this.state.crawlingRoomsCount);
 
         const eventIndexingSettings = (
             <div>
-                { _t(
-                    "%(brand)s is securely caching encrypted messages locally for them " +
-                    "to appear in search results:",
-                    { brand },
-                ) }
-                <div className='mx_SettingsTab_subsectionText'>
-                    { crawlerState }<br />
-                    { _t("Space used:") } { formatBytes(this.state.eventIndexSize, 0) }<br />
-                    { _t("Indexed messages:") } { formatCountLong(this.state.eventCount) }<br />
-                    { _t("Indexed rooms:") } { _t("%(doneRooms)s out of %(totalRooms)s", {
+                {_t("%(brand)s is securely caching encrypted messages locally for them to appear in search results:", {
+                    brand,
+                })}
+                <div className="mx_SettingsTab_subsectionText">
+                    {crawlerState}
+                    <br />
+                    {_t("Space used:")} {formatBytes(this.state.eventIndexSize, 0)}
+                    <br />
+                    {_t("Indexed messages:")} {formatCountLong(this.state.eventCount)}
+                    <br />
+                    {_t("Indexed rooms:")}{" "}
+                    {_t("%(doneRooms)s out of %(totalRooms)s", {
                         doneRooms: formatCountLong(doneRooms),
                         totalRooms: formatCountLong(this.state.roomCount),
-                    }) } <br />
+                    })}{" "}
+                    <br />
                     <Field
-                        label={_t('Message downloading sleep time(ms)')}
-                        type='number'
+                        label={_t("Message downloading sleep time(ms)")}
+                        type="number"
                         value={this.state.crawlerSleepTime.toString()}
-                        onChange={this.onCrawlerSleepTimeChange} />
+                        onChange={this.onCrawlerSleepTimeChange}
+                    />
                 </div>
             </div>
         );
 
         return (
-            <BaseDialog className='mx_ManageEventIndexDialog'
+            <BaseDialog
+                className="mx_ManageEventIndexDialog"
                 onFinished={this.props.onFinished}
                 title={_t("Message search")}
             >
-                { eventIndexingSettings }
+                {eventIndexingSettings}
                 <DialogButtons
                     primaryButton={_t("Done")}
                     onPrimaryButtonClick={this.props.onFinished}

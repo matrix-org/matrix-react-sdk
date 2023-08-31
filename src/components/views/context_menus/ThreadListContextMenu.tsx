@@ -14,99 +14,118 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useEffect, useState } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src";
+import React, { useCallback, useEffect } from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+
 import { ButtonEvent } from "../elements/AccessibleButton";
-import dis from '../../../dispatcher/dispatcher';
+import dis from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../../utils/strings";
-import { ChevronFace, ContextMenuTooltipButton } from "../../structures/ContextMenu";
+import { ChevronFace, ContextMenuTooltipButton, MenuProps, useContextMenu } from "../../structures/ContextMenu";
 import { _t } from "../../../languageHandler";
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
+import { WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
-interface IProps {
+export interface ThreadListContextMenuProps {
     mxEvent: MatrixEvent;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     onMenuToggle?: (open: boolean) => void;
 }
 
-const contextMenuBelow = (elementRect: DOMRect) => {
+const contextMenuBelow = (elementRect: DOMRect): MenuProps => {
     // align the context menu's icons with the icon which opened the context menu
-    const left = elementRect.left + window.pageXOffset + elementRect.width;
-    const top = elementRect.bottom + window.pageYOffset;
+    const left = elementRect.left + window.scrollX + elementRect.width;
+    const top = elementRect.bottom + window.scrollY;
     const chevronFace = ChevronFace.None;
     return { left, top, chevronFace };
 };
 
-const ThreadListContextMenu: React.FC<IProps> = ({ mxEvent, permalinkCreator, onMenuToggle }) => {
-    const [optionsPosition, setOptionsPosition] = useState(null);
-    const closeThreadOptions = useCallback(() => {
-        setOptionsPosition(null);
-    }, []);
+const ThreadListContextMenu: React.FC<ThreadListContextMenuProps> = ({
+    mxEvent,
+    permalinkCreator,
+    onMenuToggle,
+    ...props
+}) => {
+    const [menuDisplayed, button, openMenu, closeThreadOptions] = useContextMenu();
 
-    const viewInRoom = useCallback((evt: ButtonEvent): void => {
-        evt.preventDefault();
-        evt.stopPropagation();
-        dis.dispatch({
-            action: 'view_room',
-            event_id: mxEvent.getId(),
-            highlighted: true,
-            room_id: mxEvent.getRoomId(),
-        });
-        closeThreadOptions();
-    }, [mxEvent, closeThreadOptions]);
-
-    const copyLinkToThread = useCallback(async (evt: ButtonEvent) => {
-        evt.preventDefault();
-        evt.stopPropagation();
-        const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId());
-        await copyPlaintext(matrixToUrl);
-        closeThreadOptions();
-    }, [mxEvent, closeThreadOptions, permalinkCreator]);
-
-    const toggleOptionsMenu = useCallback((ev: ButtonEvent): void => {
-        if (!!optionsPosition) {
+    const viewInRoom = useCallback(
+        (evt: ButtonEvent): void => {
+            evt.preventDefault();
+            evt.stopPropagation();
+            dis.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                event_id: mxEvent.getId(),
+                highlighted: true,
+                room_id: mxEvent.getRoomId(),
+                metricsTrigger: undefined, // room doesn't change
+            });
             closeThreadOptions();
-        } else {
-            const position = ev.currentTarget.getBoundingClientRect();
-            setOptionsPosition(position);
-        }
-    }, [closeThreadOptions, optionsPosition]);
+        },
+        [mxEvent, closeThreadOptions],
+    );
+
+    const copyLinkToThread = useCallback(
+        async (evt: ButtonEvent | undefined): Promise<void> => {
+            if (permalinkCreator) {
+                evt?.preventDefault();
+                evt?.stopPropagation();
+                const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId()!);
+                await copyPlaintext(matrixToUrl);
+                closeThreadOptions();
+            }
+        },
+        [mxEvent, closeThreadOptions, permalinkCreator],
+    );
 
     useEffect(() => {
-        if (onMenuToggle) {
-            onMenuToggle(!!optionsPosition);
-        }
-    }, [optionsPosition, onMenuToggle]);
+        onMenuToggle?.(menuDisplayed);
+    }, [menuDisplayed, onMenuToggle]);
 
-    return <React.Fragment>
-        <ContextMenuTooltipButton
-            className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton"
-            onClick={toggleOptionsMenu}
-            title={_t("Thread options")}
-            isExpanded={!!optionsPosition}
-        />
-        { !!optionsPosition && (<IconizedContextMenu
-            onFinished={closeThreadOptions}
-            className="mx_RoomTile_contextMenu"
-            compact
-            rightAligned
-            {...contextMenuBelow(optionsPosition)}
-        >
-            <IconizedContextMenuOptionList>
-                <IconizedContextMenuOption
-                    onClick={(e) => viewInRoom(e)}
-                    label={_t("View in room")}
-                    iconClassName="mx_ThreadPanel_viewInRoom"
-                />
-                <IconizedContextMenuOption
-                    onClick={(e) => copyLinkToThread(e)}
-                    label={_t("Copy link to thread")}
-                    iconClassName="mx_ThreadPanel_copyLinkToThread"
-                />
-            </IconizedContextMenuOptionList>
-        </IconizedContextMenu>) }
-    </React.Fragment>;
+    const room = MatrixClientPeg.safeGet().getRoom(mxEvent.getRoomId());
+    const isMainSplitTimelineShown = !!room && !WidgetLayoutStore.instance.hasMaximisedWidget(room);
+    return (
+        <React.Fragment>
+            <ContextMenuTooltipButton
+                {...props}
+                className="mx_BaseCard_header_title_button--option"
+                onClick={openMenu}
+                title={_t("Thread options")}
+                isExpanded={menuDisplayed}
+                inputRef={button}
+                data-testid="threadlist-dropdown-button"
+            />
+            {menuDisplayed && (
+                <IconizedContextMenu
+                    onFinished={closeThreadOptions}
+                    className="mx_RoomTile_contextMenu"
+                    compact
+                    rightAligned
+                    {...contextMenuBelow(button.current!.getBoundingClientRect())}
+                >
+                    <IconizedContextMenuOptionList>
+                        {isMainSplitTimelineShown && (
+                            <IconizedContextMenuOption
+                                onClick={(e) => viewInRoom(e)}
+                                label={_t("View in room")}
+                                iconClassName="mx_ThreadPanel_viewInRoom"
+                            />
+                        )}
+                        {permalinkCreator && (
+                            <IconizedContextMenuOption
+                                data-testid="copy-thread-link"
+                                onClick={(e) => copyLinkToThread(e)}
+                                label={_t("Copy link to thread")}
+                                iconClassName="mx_ThreadPanel_copyLinkToThread"
+                            />
+                        )}
+                    </IconizedContextMenuOptionList>
+                </IconizedContextMenu>
+            )}
+        </React.Fragment>
+    );
 };
 
 export default ThreadListContextMenu;

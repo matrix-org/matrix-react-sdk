@@ -16,47 +16,45 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room } from "matrix-js-sdk/src/matrix";
+import classNames from "classnames";
+import { Enable, Resizable } from "re-resizable";
+import { Direction } from "re-resizable/lib/resizer";
 import * as React from "react";
-import { createRef, ReactComponentElement } from "react";
-import { normalize } from "matrix-js-sdk/src/utils";
-import { Room } from "matrix-js-sdk/src/models/room";
-import classNames from 'classnames';
+import { ComponentType, createRef, ReactComponentElement, ReactNode } from "react";
+
+import { polyfillTouchEvent } from "../../../@types/polyfill";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { RovingAccessibleButton, RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
+import { Action } from "../../../dispatcher/actions";
+import defaultDispatcher, { MatrixDispatcher } from "../../../dispatcher/dispatcher";
+import { ActionPayload } from "../../../dispatcher/payloads";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../../views/elements/AccessibleButton";
-import RoomTile from "./RoomTile";
+import { ListNotificationState } from "../../../stores/notifications/ListNotificationState";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
+import { ListAlgorithm, SortAlgorithm } from "../../../stores/room-list/algorithms/models";
 import { ListLayout } from "../../../stores/room-list/ListLayout";
-import {
+import { DefaultTagID, TagID } from "../../../stores/room-list/models";
+import RoomListLayoutStore from "../../../stores/room-list/RoomListLayoutStore";
+import RoomListStore, { LISTS_UPDATE_EVENT, LISTS_LOADING_EVENT } from "../../../stores/room-list/RoomListStore";
+import { arrayFastClone, arrayHasOrderChange } from "../../../utils/arrays";
+import { objectExcluding, objectHasDiff } from "../../../utils/objects";
+import ResizeNotifier from "../../../utils/ResizeNotifier";
+import ContextMenu, {
     ChevronFace,
-    ContextMenu,
     ContextMenuTooltipButton,
     StyledMenuItemCheckbox,
     StyledMenuItemRadio,
 } from "../../structures/ContextMenu";
-import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
-import { ListAlgorithm, SortAlgorithm } from "../../../stores/room-list/algorithms/models";
-import { DefaultTagID, TagID } from "../../../stores/room-list/models";
-import dis from "../../../dispatcher/dispatcher";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import NotificationBadge from "./NotificationBadge";
+import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { Key } from "../../../Keyboard";
-import { ActionPayload } from "../../../dispatcher/payloads";
-import { Enable, Resizable } from "re-resizable";
-import { Direction } from "re-resizable/lib/resizer";
-import { polyfillTouchEvent } from "../../../@types/polyfill";
-import ResizeNotifier from "../../../utils/ResizeNotifier";
-import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
-import RoomListLayoutStore from "../../../stores/room-list/RoomListLayoutStore";
-import { arrayFastClone, arrayHasOrderChange } from "../../../utils/arrays";
-import { objectExcluding, objectHasDiff } from "../../../utils/objects";
 import ExtraTile from "./ExtraTile";
-import { ListNotificationState } from "../../../stores/notifications/ListNotificationState";
-import IconizedContextMenu from "../context_menus/IconizedContextMenu";
-import { getKeyBindingsManager, RoomListAction } from "../../../KeyBindingsManager";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
-import { UIComponent } from "../../../settings/UIFeature";
+import SettingsStore from "../../../settings/SettingsStore";
+import { SlidingSyncManager } from "../../../SlidingSyncManager";
+import NotificationBadge from "./NotificationBadge";
+import RoomTile from "./RoomTile";
 
 const SHOW_N_BUTTON_HEIGHT = 28; // As defined by CSS
 const RESIZE_HANDLE_HEIGHT = 4; // As defined by CSS
@@ -67,22 +65,28 @@ const MAX_PADDING_HEIGHT = SHOW_N_BUTTON_HEIGHT + RESIZE_HANDLE_HEIGHT;
 // HACK: We really shouldn't have to do this.
 polyfillTouchEvent();
 
+export interface IAuxButtonProps {
+    tabIndex: number;
+    dispatcher?: MatrixDispatcher;
+}
+
 interface IProps {
     forRooms: boolean;
     startAsHidden: boolean;
     label: string;
-    onAddRoom?: () => void;
-    addRoomContextMenu?: (onFinished: () => void) => React.ReactNode;
-    addRoomLabel: string;
+    AuxButtonComponent?: ComponentType<IAuxButtonProps>;
     isMinimized: boolean;
     tagId: TagID;
     showSkeleton?: boolean;
     alwaysVisible?: boolean;
+    forceExpanded?: boolean;
     resizeNotifier: ResizeNotifier;
-    extraTiles?: ReactComponentElement<typeof ExtraTile>[];
+    extraTiles?: ReactComponentElement<typeof ExtraTile>[] | null;
     onListCollapse?: (isExpanded: boolean) => void;
+}
 
-    // TODO: Account for https://github.com/vector-im/element-web/issues/14179
+function getLabelId(tagId: TagID): string {
+    return `mx_RoomSublist_label_${tagId}`;
 }
 
 // TODO: Use re-resizer's NumberSize when it is exposed as the type
@@ -94,52 +98,51 @@ interface ResizeDelta {
 type PartialDOMRect = Pick<DOMRect, "left" | "top" | "height">;
 
 interface IState {
-    contextMenuPosition: PartialDOMRect;
-    addRoomContextMenuPosition: PartialDOMRect;
+    contextMenuPosition?: PartialDOMRect;
     isResizing: boolean;
     isExpanded: boolean; // used for the for expand of the sublist when the room list is being filtered
     height: number;
     rooms: Room[];
-    filteredExtraTiles?: ReactComponentElement<typeof ExtraTile>[];
+    roomsLoading: boolean;
 }
 
-@replaceableComponent("views.rooms.RoomSublist")
 export default class RoomSublist extends React.Component<IProps, IState> {
     private headerButton = createRef<HTMLDivElement>();
     private sublistRef = createRef<HTMLDivElement>();
     private tilesRef = createRef<HTMLDivElement>();
-    private dispatcherRef: string;
+    private dispatcherRef?: string;
     private layout: ListLayout;
     private heightAtStart: number;
-    private isBeingFiltered: boolean;
     private notificationState: ListNotificationState;
 
-    constructor(props: IProps) {
+    private slidingSyncMode: boolean;
+
+    public constructor(props: IProps) {
         super(props);
+        // when this setting is toggled it restarts the app so it's safe to not watch this.
+        this.slidingSyncMode = SettingsStore.getValue("feature_sliding_sync");
 
         this.layout = RoomListLayoutStore.instance.getLayoutFor(this.props.tagId);
         this.heightAtStart = 0;
-        this.isBeingFiltered = !!RoomListStore.instance.getFirstNameFilterCondition();
         this.notificationState = RoomNotificationStateStore.instance.getListState(this.props.tagId);
         this.state = {
-            contextMenuPosition: null,
-            addRoomContextMenuPosition: null,
             isResizing: false,
-            isExpanded: this.isBeingFiltered ? this.isBeingFiltered : !this.layout.isCollapsed,
+            isExpanded: !this.layout.isCollapsed,
             height: 0, // to be fixed in a moment, we need `rooms` to calculate this.
             rooms: arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []),
+            roomsLoading: false,
         };
         // Why Object.assign() and not this.state.height? Because TypeScript says no.
         this.state = Object.assign(this.state, { height: this.calculateInitialHeight() });
     }
 
-    private calculateInitialHeight() {
+    private calculateInitialHeight(): number {
         const requestedVisibleTiles = Math.max(Math.floor(this.layout.visibleTiles), this.layout.minVisibleTiles);
         const tileCount = Math.min(this.numTiles, requestedVisibleTiles);
         return this.layout.tilesToPixelsWithPadding(tileCount, this.padding);
     }
 
-    private get padding() {
+    private get padding(): number {
         let padding = RESIZE_HANDLE_HEIGHT;
         // this is used for calculating the max height of the whole container,
         // and takes into account whether there should be room reserved for the show more/less button
@@ -159,30 +162,27 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     }
 
     private get extraTiles(): ReactComponentElement<typeof ExtraTile>[] | null {
-        if (this.state.filteredExtraTiles) {
-            return this.state.filteredExtraTiles;
-        }
-        if (this.props.extraTiles) {
-            return this.props.extraTiles;
-        }
-        return null;
+        return this.props.extraTiles ?? null;
     }
 
     private get numTiles(): number {
         return RoomSublist.calcNumTiles(this.state.rooms, this.extraTiles);
     }
 
-    private static calcNumTiles(rooms: Room[], extraTiles: any[]) {
+    private static calcNumTiles(rooms: Room[], extraTiles?: any[] | null): number {
         return (rooms || []).length + (extraTiles || []).length;
     }
 
     private get numVisibleTiles(): number {
+        if (this.slidingSyncMode) {
+            return this.state.rooms.length;
+        }
         const nVisible = Math.ceil(this.layout.visibleTiles);
         return Math.min(nVisible, this.numTiles);
     }
 
-    public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>) {
-        const prevExtraTiles = prevState.filteredExtraTiles || prevProps.extraTiles;
+    public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): void {
+        const prevExtraTiles = prevProps.extraTiles;
         // as the rooms can come in one by one we need to reevaluate
         // the amount of available rooms to cap the amount of requested visible rooms by the layout
         if (RoomSublist.calcNumTiles(prevState.rooms, prevExtraTiles) !== this.numTiles) {
@@ -197,8 +197,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }
 
         // Do the same check used on props for state, without the rooms we're going to no-op
-        const prevStateNoRooms = objectExcluding(this.state, ['rooms']);
-        const nextStateNoRooms = objectExcluding(nextState, ['rooms']);
+        const prevStateNoRooms = objectExcluding(this.state, ["rooms"]);
+        const nextStateNoRooms = objectExcluding(nextState, ["rooms"]);
         if (objectHasDiff(prevStateNoRooms, nextStateNoRooms)) {
             return true;
         }
@@ -206,7 +206,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         // If we're supposed to handle extra tiles, take the performance hit and re-render all the
         // time so we don't have to consider them as part of the visible room optimization.
         const prevExtraTiles = this.props.extraTiles || [];
-        const nextExtraTiles = (nextState.filteredExtraTiles || nextProps.extraTiles) || [];
+        const nextExtraTiles = nextProps.extraTiles || [];
         if (prevExtraTiles.length > 0 || nextExtraTiles.length > 0) {
             return true;
         }
@@ -246,32 +246,34 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         return false;
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onListsUpdated);
+        RoomListStore.instance.on(LISTS_LOADING_EVENT, this.onListsLoading);
+
         // Using the passive option to not block the main thread
         // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
         this.tilesRef.current?.addEventListener("scroll", this.onScrollPrevent, { passive: true });
     }
 
-    public componentWillUnmount() {
-        defaultDispatcher.unregister(this.dispatcherRef);
+    public componentWillUnmount(): void {
+        if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.onListsUpdated);
+        RoomListStore.instance.off(LISTS_LOADING_EVENT, this.onListsLoading);
         this.tilesRef.current?.removeEventListener("scroll", this.onScrollPrevent);
     }
 
-    private onListsUpdated = () => {
-        const stateUpdates: IState & any = {}; // &any is to avoid a cast on the initializer
-
-        if (this.props.extraTiles) {
-            const nameCondition = RoomListStore.instance.getFirstNameFilterCondition();
-            if (nameCondition) {
-                stateUpdates.filteredExtraTiles = this.props.extraTiles
-                    .filter(t => nameCondition.matches(normalize(t.props.displayName || "")));
-            } else if (this.state.filteredExtraTiles) {
-                stateUpdates.filteredExtraTiles = null;
-            }
+    private onListsLoading = (tagId: TagID, isLoading: boolean): void => {
+        if (this.props.tagId !== tagId) {
+            return;
         }
+        this.setState({
+            roomsLoading: isLoading,
+        });
+    };
+
+    private onListsUpdated = (): void => {
+        const stateUpdates = {} as IState;
 
         const currentRooms = this.state.rooms;
         const newRooms = arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []);
@@ -279,23 +281,13 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             stateUpdates.rooms = newRooms;
         }
 
-        const isStillBeingFiltered = !!RoomListStore.instance.getFirstNameFilterCondition();
-        if (isStillBeingFiltered !== this.isBeingFiltered) {
-            this.isBeingFiltered = isStillBeingFiltered;
-            if (isStillBeingFiltered) {
-                stateUpdates.isExpanded = true;
-            } else {
-                stateUpdates.isExpanded = !this.layout.isCollapsed;
-            }
-        }
-
         if (Object.keys(stateUpdates).length > 0) {
             this.setState(stateUpdates);
         }
     };
 
-    private onAction = (payload: ActionPayload) => {
-        if (payload.action === "view_room" && payload.show_room_tile && this.state.rooms) {
+    private onAction = (payload: ActionPayload): void => {
+        if (payload.action === Action.ViewRoom && payload.show_room_tile && this.state.rooms) {
             // XXX: we have to do this a tick later because we have incorrect intermediate props during a room change
             // where we lose the room we are changing from temporarily and then it comes back in an update right after.
             setImmediate(() => {
@@ -313,12 +305,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }
     };
 
-    private onAddRoom = (e) => {
-        e.stopPropagation();
-        if (this.props.onAddRoom) this.props.onAddRoom();
-    };
-
-    private applyHeightChange(newHeight: number) {
+    private applyHeightChange(newHeight: number): void {
         const heightInTiles = Math.ceil(this.layout.pixelsToTiles(newHeight - this.padding));
         this.layout.visibleTiles = Math.min(this.numTiles, heightInTiles);
     }
@@ -326,15 +313,15 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private onResize = (
         e: MouseEvent | TouchEvent,
         travelDirection: Direction,
-        refToElement: HTMLDivElement,
+        refToElement: HTMLElement,
         delta: ResizeDelta,
-    ) => {
+    ): void => {
         const newHeight = this.heightAtStart + delta.height;
         this.applyHeightChange(newHeight);
         this.setState({ height: newHeight });
     };
 
-    private onResizeStart = () => {
+    private onResizeStart = (): void => {
         this.heightAtStart = this.state.height;
         this.setState({ isResizing: true });
     };
@@ -342,15 +329,21 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private onResizeStop = (
         e: MouseEvent | TouchEvent,
         travelDirection: Direction,
-        refToElement: HTMLDivElement,
+        refToElement: HTMLElement,
         delta: ResizeDelta,
-    ) => {
+    ): void => {
         const newHeight = this.heightAtStart + delta.height;
         this.applyHeightChange(newHeight);
         this.setState({ isResizing: false, height: newHeight });
     };
 
-    private onShowAllClick = () => {
+    private onShowAllClick = async (): Promise<void> => {
+        if (this.slidingSyncMode) {
+            const count = RoomListStore.instance.getCount(this.props.tagId);
+            await SlidingSyncManager.instance.ensureListRegistered(this.props.tagId, {
+                ranges: [[0, count]],
+            });
+        }
         // read number of visible tiles before we mutate it
         const numVisibleTiles = this.numVisibleTiles;
         const newHeight = this.layout.tilesToPixelsWithPadding(this.numTiles, this.padding);
@@ -361,13 +354,13 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         });
     };
 
-    private onShowLessClick = () => {
+    private onShowLessClick = (): void => {
         const newHeight = this.layout.tilesToPixelsWithPadding(this.layout.defaultVisibleTiles, this.padding);
         this.applyHeightChange(newHeight);
         this.setState({ height: newHeight });
     };
 
-    private focusRoomTile = (index: number) => {
+    private focusRoomTile = (index: number): void => {
         if (!this.sublistRef.current) return;
         const elements = this.sublistRef.current.querySelectorAll<HTMLDivElement>(".mx_RoomTile");
         const element = elements && elements[index];
@@ -376,14 +369,14 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }
     };
 
-    private onOpenMenuClick = (ev: React.MouseEvent) => {
+    private onOpenMenuClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
         const target = ev.target as HTMLButtonElement;
         this.setState({ contextMenuPosition: target.getBoundingClientRect() });
     };
 
-    private onContextMenu = (ev: React.MouseEvent) => {
+    private onContextMenu = (ev: React.MouseEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
         this.setState({
@@ -395,38 +388,28 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         });
     };
 
-    private onAddRoomContextMenu = (ev: React.MouseEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-        const target = ev.target as HTMLButtonElement;
-        this.setState({ addRoomContextMenuPosition: target.getBoundingClientRect() });
+    private onCloseMenu = (): void => {
+        this.setState({ contextMenuPosition: undefined });
     };
 
-    private onCloseMenu = () => {
-        this.setState({ contextMenuPosition: null });
-    };
-
-    private onCloseAddRoomMenu = () => {
-        this.setState({ addRoomContextMenuPosition: null });
-    };
-
-    private onUnreadFirstChanged = () => {
+    private onUnreadFirstChanged = (): void => {
         const isUnreadFirst = RoomListStore.instance.getListOrder(this.props.tagId) === ListAlgorithm.Importance;
         const newAlgorithm = isUnreadFirst ? ListAlgorithm.Natural : ListAlgorithm.Importance;
         RoomListStore.instance.setListOrder(this.props.tagId, newAlgorithm);
         this.forceUpdate(); // because if the sublist doesn't have any changes then we will miss the list order change
     };
 
-    private onTagSortChanged = async (sort: SortAlgorithm) => {
-        await RoomListStore.instance.setTagSorting(this.props.tagId, sort);
+    private onTagSortChanged = async (sort: SortAlgorithm): Promise<void> => {
+        RoomListStore.instance.setTagSorting(this.props.tagId, sort);
+        this.forceUpdate();
     };
 
-    private onMessagePreviewChanged = () => {
+    private onMessagePreviewChanged = (): void => {
         this.layout.showPreviews = !this.layout.showPreviews;
         this.forceUpdate(); // because the layout doesn't trigger a re-render
     };
 
-    private onBadgeClick = (ev: React.MouseEvent) => {
+    private onBadgeClick = (ev: React.MouseEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -436,35 +419,39 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             room = this.state.rooms && this.state.rooms[0];
         } else {
             // find the first room with a count of the same colour as the badge count
-            room = RoomListStore.instance.unfilteredLists[this.props.tagId].find((r: Room) => {
+            room = RoomListStore.instance.orderedLists[this.props.tagId].find((r: Room) => {
                 const notifState = this.notificationState.getForRoom(r);
                 return notifState.count > 0 && notifState.color === this.notificationState.color;
             });
         }
 
         if (room) {
-            dis.dispatch({
-                action: 'view_room',
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
                 room_id: room.roomId,
                 show_room_tile: true, // to make sure the room gets scrolled into view
+                metricsTrigger: "WebRoomListNotificationBadge",
+                metricsViaKeyboard: ev.type !== "click",
             });
         }
     };
 
-    private onHeaderClick = () => {
-        const possibleSticky = this.headerButton.current.parentElement;
-        const sublist = possibleSticky.parentElement.parentElement;
-        const list = sublist.parentElement.parentElement;
+    private onHeaderClick = (): void => {
+        const possibleSticky = this.headerButton.current?.parentElement;
+        const sublist = possibleSticky?.parentElement?.parentElement;
+        const list = sublist?.parentElement?.parentElement;
+        if (!possibleSticky || !list) return;
+
         // the scrollTop is capped at the height of the header in LeftPanel, the top header is always sticky
         const listScrollTop = Math.round(list.scrollTop);
         const isAtTop = listScrollTop <= Math.round(HEADER_HEIGHT);
         const isAtBottom = listScrollTop >= Math.round(list.scrollHeight - list.offsetHeight);
-        const isStickyTop = possibleSticky.classList.contains('mx_RoomSublist_headerContainer_stickyTop');
-        const isStickyBottom = possibleSticky.classList.contains('mx_RoomSublist_headerContainer_stickyBottom');
+        const isStickyTop = possibleSticky.classList.contains("mx_RoomSublist_headerContainer_stickyTop");
+        const isStickyBottom = possibleSticky.classList.contains("mx_RoomSublist_headerContainer_stickyBottom");
 
         if ((isStickyBottom && !isAtBottom) || (isStickyTop && !isAtTop)) {
             // is sticky - jump to list
-            sublist.scrollIntoView({ behavior: 'smooth' });
+            sublist.scrollIntoView({ behavior: "smooth" });
         } else {
             // on screen - toggle collapse
             const isExpanded = this.state.isExpanded;
@@ -472,13 +459,14 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             // if the bottom list is collapsed then scroll it in so it doesn't expand off screen
             if (!isExpanded && isStickyBottom) {
                 setImmediate(() => {
-                    sublist.scrollIntoView({ behavior: 'smooth' });
+                    sublist.scrollIntoView({ behavior: "smooth" });
                 });
             }
         }
     };
 
-    private toggleCollapsed = () => {
+    private toggleCollapsed = (): void => {
+        if (this.props.forceExpanded) return;
         this.layout.isCollapsed = this.state.isExpanded;
         this.setState({ isExpanded: !this.layout.isCollapsed });
         if (this.props.onListCollapse) {
@@ -486,17 +474,17 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }
     };
 
-    private onHeaderKeyDown = (ev: React.KeyboardEvent) => {
+    private onHeaderKeyDown = (ev: React.KeyboardEvent): void => {
         const action = getKeyBindingsManager().getRoomListAction(ev);
         switch (action) {
-            case RoomListAction.CollapseSection:
+            case KeyBindingAction.CollapseRoomListSection:
                 ev.stopPropagation();
                 if (this.state.isExpanded) {
                     // Collapse the room sublist if it isn't already
                     this.toggleCollapsed();
                 }
                 break;
-            case RoomListAction.ExpandSection: {
+            case KeyBindingAction.ExpandRoomListSection: {
                 ev.stopPropagation();
                 if (!this.state.isExpanded) {
                     // Expand the room sublist if it isn't already
@@ -513,21 +501,22 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }
     };
 
-    private onKeyDown = (ev: React.KeyboardEvent) => {
-        switch (ev.key) {
-            // On ARROW_LEFT go to the sublist header
-            case Key.ARROW_LEFT:
+    private onKeyDown = (ev: React.KeyboardEvent): void => {
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            // On ArrowLeft go to the sublist header
+            case KeyBindingAction.ArrowLeft:
                 ev.stopPropagation();
-                this.headerButton.current.focus();
+                this.headerButton.current?.focus();
                 break;
-            // Consume ARROW_RIGHT so it doesn't cause focus to get sent to composer
-            case Key.ARROW_RIGHT:
+            // Consume ArrowRight so it doesn't cause focus to get sent to composer
+            case KeyBindingAction.ArrowRight:
                 ev.stopPropagation();
         }
     };
 
     private renderVisibleTiles(): React.ReactElement[] {
-        if (!this.state.isExpanded) {
+        if (!this.state.isExpanded && !this.props.forceExpanded) {
             // don't waste time on rendering
             return [];
         }
@@ -535,15 +524,21 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         const tiles: React.ReactElement[] = [];
 
         if (this.state.rooms) {
-            const visibleRooms = this.state.rooms.slice(0, this.numVisibleTiles);
+            let visibleRooms = this.state.rooms;
+            if (!this.props.forceExpanded) {
+                visibleRooms = visibleRooms.slice(0, this.numVisibleTiles);
+            }
+
             for (const room of visibleRooms) {
-                tiles.push(<RoomTile
-                    room={room}
-                    key={`room-${room.roomId}`}
-                    showMessagePreview={this.layout.showPreviews}
-                    isMinimized={this.props.isMinimized}
-                    tag={this.props.tagId}
-                />);
+                tiles.push(
+                    <RoomTile
+                        room={room}
+                        key={`room-${room.roomId}`}
+                        showMessagePreview={this.layout.showPreviews}
+                        isMinimized={this.props.isMinimized}
+                        tag={this.props.tagId}
+                    />,
+                );
             }
         }
 
@@ -556,42 +551,49 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         // to avoid spending cycles on slicing. It's generally fine to do this though
         // as users are unlikely to have more than a handful of tiles when the extra
         // tiles are used.
-        if (tiles.length > this.numVisibleTiles) {
+        if (tiles.length > this.numVisibleTiles && !this.props.forceExpanded) {
             return tiles.slice(0, this.numVisibleTiles);
         }
 
         return tiles;
     }
 
-    private renderMenu(): React.ReactElement {
-        let contextMenu = null;
+    private renderMenu(): ReactNode {
+        if (this.props.tagId === DefaultTagID.Suggested || this.props.tagId === DefaultTagID.SavedItems) return null; // not sortable
+
+        let contextMenu: JSX.Element | undefined;
         if (this.state.contextMenuPosition) {
-            const isAlphabetical = RoomListStore.instance.getTagSorting(this.props.tagId) === SortAlgorithm.Alphabetic;
-            const isUnreadFirst = RoomListStore.instance.getListOrder(this.props.tagId) === ListAlgorithm.Importance;
+            let isAlphabetical = RoomListStore.instance.getTagSorting(this.props.tagId) === SortAlgorithm.Alphabetic;
+            let isUnreadFirst = RoomListStore.instance.getListOrder(this.props.tagId) === ListAlgorithm.Importance;
+            if (this.slidingSyncMode) {
+                const slidingList = SlidingSyncManager.instance.slidingSync?.getListParams(this.props.tagId);
+                isAlphabetical = (slidingList?.sort || [])[0] === "by_name";
+                isUnreadFirst = (slidingList?.sort || [])[0] === "by_notification_level";
+            }
 
             // Invites don't get some nonsense options, so only add them if we have to.
-            let otherSections = null;
+            let otherSections: JSX.Element | undefined;
             if (this.props.tagId !== DefaultTagID.Invite) {
                 otherSections = (
                     <React.Fragment>
                         <hr />
-                        <div>
-                            <div className='mx_RoomSublist_contextMenu_title'>{ _t("Appearance") }</div>
+                        <fieldset>
+                            <legend className="mx_RoomSublist_contextMenu_title">{_t("Appearance")}</legend>
                             <StyledMenuItemCheckbox
                                 onClose={this.onCloseMenu}
                                 onChange={this.onUnreadFirstChanged}
                                 checked={isUnreadFirst}
                             >
-                                { _t("Show rooms with unread messages first") }
+                                {_t("Show rooms with unread messages first")}
                             </StyledMenuItemCheckbox>
                             <StyledMenuItemCheckbox
                                 onClose={this.onCloseMenu}
                                 onChange={this.onMessagePreviewChanged}
                                 checked={this.layout.showPreviews}
                             >
-                                { _t("Show previews of messages") }
+                                {_t("Show previews of messages")}
                             </StyledMenuItemCheckbox>
-                        </div>
+                        </fieldset>
                     </React.Fragment>
                 );
             }
@@ -604,15 +606,15 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                     onFinished={this.onCloseMenu}
                 >
                     <div className="mx_RoomSublist_contextMenu">
-                        <div>
-                            <div className='mx_RoomSublist_contextMenu_title'>{ _t("Sort by") }</div>
+                        <fieldset>
+                            <legend className="mx_RoomSublist_contextMenu_title">{_t("Sort by")}</legend>
                             <StyledMenuItemRadio
                                 onClose={this.onCloseMenu}
                                 onChange={() => this.onTagSortChanged(SortAlgorithm.Recent)}
                                 checked={!isAlphabetical}
                                 name={`mx_${this.props.tagId}_sortBy`}
                             >
-                                { _t("Activity") }
+                                {_t("Activity")}
                             </StyledMenuItemRadio>
                             <StyledMenuItemRadio
                                 onClose={this.onCloseMenu}
@@ -620,24 +622,12 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                                 checked={isAlphabetical}
                                 name={`mx_${this.props.tagId}_sortBy`}
                             >
-                                { _t("A-Z") }
+                                {_t("A-Z")}
                             </StyledMenuItemRadio>
-                        </div>
-                        { otherSections }
+                        </fieldset>
+                        {otherSections}
                     </div>
                 </ContextMenu>
-            );
-        } else if (this.state.addRoomContextMenuPosition) {
-            contextMenu = (
-                <IconizedContextMenu
-                    chevronFace={ChevronFace.None}
-                    left={this.state.addRoomContextMenuPosition.left - 7} // center align with the handle
-                    top={this.state.addRoomContextMenuPosition.top + this.state.addRoomContextMenuPosition.height}
-                    onFinished={this.onCloseAddRoomMenu}
-                    compact
-                >
-                    { this.props.addRoomContextMenu(this.onCloseAddRoomMenu) }
-                </IconizedContextMenu>
             );
         }
 
@@ -649,7 +639,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                     title={_t("List options")}
                     isExpanded={!!this.state.contextMenuPosition}
                 />
-                { contextMenu }
+                {contextMenu}
             </React.Fragment>
         );
     }
@@ -657,7 +647,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private renderHeader(): React.ReactElement {
         return (
             <RovingTabIndexWrapper inputRef={this.headerButton}>
-                { ({ onFocus, isActive, ref }) => {
+                {({ onFocus, isActive, ref }) => {
                     const tabIndex = isActive ? 0 : -1;
 
                     let ariaLabel = _t("Jump to first unread room.");
@@ -676,48 +666,23 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                         />
                     );
 
-                    let addRoomButton = null;
-                    if (!!this.props.onAddRoom && shouldShowComponent(UIComponent.CreateRooms)) {
-                        addRoomButton = (
-                            <AccessibleTooltipButton
-                                tabIndex={tabIndex}
-                                onClick={this.onAddRoom}
-                                className="mx_RoomSublist_auxButton"
-                                tooltipClassName="mx_RoomSublist_addRoomTooltip"
-                                aria-label={this.props.addRoomLabel || _t("Add room")}
-                                title={this.props.addRoomLabel}
-                            />
-                        );
-                    } else if (this.props.addRoomContextMenu) {
-                        // We assume that shouldShowComponent() is checked by the context menu itself.
-                        addRoomButton = (
-                            <ContextMenuTooltipButton
-                                tabIndex={tabIndex}
-                                onClick={this.onAddRoomContextMenu}
-                                className="mx_RoomSublist_auxButton"
-                                tooltipClassName="mx_RoomSublist_addRoomTooltip"
-                                aria-label={this.props.addRoomLabel || _t("Add room")}
-                                title={this.props.addRoomLabel}
-                                isExpanded={!!this.state.addRoomContextMenuPosition}
-                            />
-                        );
+                    let addRoomButton: JSX.Element | undefined;
+                    if (this.props.AuxButtonComponent) {
+                        const AuxButtonComponent = this.props.AuxButtonComponent;
+                        addRoomButton = <AuxButtonComponent tabIndex={tabIndex} />;
                     }
 
                     const collapseClasses = classNames({
-                        'mx_RoomSublist_collapseBtn': true,
-                        'mx_RoomSublist_collapseBtn_collapsed': !this.state.isExpanded,
+                        mx_RoomSublist_collapseBtn: true,
+                        mx_RoomSublist_collapseBtn_collapsed: !this.state.isExpanded && !this.props.forceExpanded,
                     });
 
                     const classes = classNames({
-                        'mx_RoomSublist_headerContainer': true,
-                        'mx_RoomSublist_headerContainer_withAux': !!addRoomButton,
+                        mx_RoomSublist_headerContainer: true,
+                        mx_RoomSublist_headerContainer_withAux: !!addRoomButton,
                     });
 
-                    const badgeContainer = (
-                        <div className="mx_RoomSublist_badgeContainer">
-                            { badge }
-                        </div>
-                    );
+                    const badgeContainer = <div className="mx_RoomSublist_badgeContainer">{badge}</div>;
 
                     let Button: React.ComponentType<React.ComponentProps<typeof AccessibleButton>> = AccessibleButton;
                     if (this.props.isMinimized) {
@@ -735,37 +700,41 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             onKeyDown={this.onHeaderKeyDown}
                             onFocus={onFocus}
                             aria-label={this.props.label}
+                            role="treeitem"
+                            aria-expanded={this.state.isExpanded}
+                            aria-level={1}
+                            aria-selected="false"
                         >
-                            <div className="mx_RoomSublist_stickable">
-                                <Button
-                                    onFocus={onFocus}
-                                    inputRef={ref}
-                                    tabIndex={tabIndex}
-                                    className="mx_RoomSublist_headerText"
-                                    role="treeitem"
-                                    aria-expanded={this.state.isExpanded}
-                                    aria-level={1}
-                                    onClick={this.onHeaderClick}
-                                    onContextMenu={this.onContextMenu}
-                                    title={this.props.isMinimized ? this.props.label : undefined}
-                                >
-                                    <span className={collapseClasses} />
-                                    <span>{ this.props.label }</span>
-                                </Button>
-                                { this.renderMenu() }
-                                { this.props.isMinimized ? null : badgeContainer }
-                                { this.props.isMinimized ? null : addRoomButton }
+                            <div className="mx_RoomSublist_stickableContainer">
+                                <div className="mx_RoomSublist_stickable">
+                                    <Button
+                                        onFocus={onFocus}
+                                        inputRef={ref}
+                                        tabIndex={tabIndex}
+                                        className="mx_RoomSublist_headerText"
+                                        aria-expanded={this.state.isExpanded}
+                                        onClick={this.onHeaderClick}
+                                        onContextMenu={this.onContextMenu}
+                                        title={this.props.isMinimized ? this.props.label : undefined}
+                                    >
+                                        <span className={collapseClasses} />
+                                        <span id={getLabelId(this.props.tagId)}>{this.props.label}</span>
+                                    </Button>
+                                    {this.renderMenu()}
+                                    {this.props.isMinimized ? null : badgeContainer}
+                                    {this.props.isMinimized ? null : addRoomButton}
+                                </div>
                             </div>
-                            { this.props.isMinimized ? badgeContainer : null }
-                            { this.props.isMinimized ? addRoomButton : null }
+                            {this.props.isMinimized ? badgeContainer : null}
+                            {this.props.isMinimized ? addRoomButton : null}
                         </div>
                     );
-                } }
+                }}
             </RovingTabIndexWrapper>
         );
     }
 
-    private onScrollPrevent(e: Event) {
+    private onScrollPrevent(e: Event): void {
         // the RoomTile calls scrollIntoView and the browser may scroll a div we do not wish to be scrollable
         // this fixes https://github.com/vector-im/element-web/issues/14413
         (e.target as HTMLDivElement).scrollTop = 0;
@@ -773,17 +742,26 @@ export default class RoomSublist extends React.Component<IProps, IState> {
 
     public render(): React.ReactElement {
         const visibleTiles = this.renderVisibleTiles();
+        const hidden = !this.state.rooms.length && !this.props.extraTiles?.length && this.props.alwaysVisible !== true;
         const classes = classNames({
-            'mx_RoomSublist': true,
-            'mx_RoomSublist_hasMenuOpen': !!this.state.contextMenuPosition,
-            'mx_RoomSublist_minimized': this.props.isMinimized,
-            'mx_RoomSublist_hidden': (
-                !this.state.rooms.length && !this.props.extraTiles?.length && this.props.alwaysVisible !== true
-            ),
+            mx_RoomSublist: true,
+            mx_RoomSublist_hasMenuOpen: !!this.state.contextMenuPosition,
+            mx_RoomSublist_minimized: this.props.isMinimized,
+            mx_RoomSublist_hidden: hidden,
         });
 
-        let content = null;
-        if (visibleTiles.length > 0) {
+        let content: JSX.Element | undefined;
+        if (this.state.roomsLoading) {
+            content = <div className="mx_RoomSublist_skeletonUI" />;
+        } else if (visibleTiles.length > 0 && this.props.forceExpanded) {
+            content = (
+                <div className="mx_RoomSublist_resizeBox mx_RoomSublist_resizeBox_forceExpanded">
+                    <div className="mx_RoomSublist_tiles" ref={this.tilesRef}>
+                        {visibleTiles}
+                    </div>
+                </div>
+            );
+        } else if (visibleTiles.length > 0) {
             const layout = this.layout; // to shorten calls
 
             const minTiles = Math.min(layout.minVisibleTiles, this.numTiles);
@@ -792,25 +770,26 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             const minTilesPx = layout.tilesToPixelsWithPadding(minTiles, minHeightPadding);
             const maxTilesPx = layout.tilesToPixelsWithPadding(this.numTiles, this.padding);
             const showMoreBtnClasses = classNames({
-                'mx_RoomSublist_showNButton': true,
+                mx_RoomSublist_showNButton: true,
             });
 
             // If we're hiding rooms, show a 'show more' button to the user. This button
             // floats above the resize handle, if we have one present. If the user has all
             // tiles visible, it becomes 'show less'.
-            let showNButton = null;
+            let showNButton: JSX.Element | undefined;
+            const hasMoreSlidingSync =
+                this.slidingSyncMode && RoomListStore.instance.getCount(this.props.tagId) > this.state.rooms.length;
 
-            if (maxTilesPx > this.state.height) {
+            if (maxTilesPx > this.state.height || hasMoreSlidingSync) {
                 // the height of all the tiles is greater than the section height: we need a 'show more' button
                 const nonPaddedHeight = this.state.height - RESIZE_HANDLE_HEIGHT - SHOW_N_BUTTON_HEIGHT;
                 const amountFullyShown = Math.floor(nonPaddedHeight / this.layout.tileHeight);
-                const numMissing = this.numTiles - amountFullyShown;
+                let numMissing = this.numTiles - amountFullyShown;
+                if (this.slidingSyncMode) {
+                    numMissing = RoomListStore.instance.getCount(this.props.tagId) - amountFullyShown;
+                }
                 const label = _t("Show %(count)s more", { count: numMissing });
-                let showMoreText = (
-                    <span className='mx_RoomSublist_showNButtonText'>
-                        { label }
-                    </span>
-                );
+                let showMoreText: ReactNode = <span className="mx_RoomSublist_showNButtonText">{label}</span>;
                 if (this.props.isMinimized) showMoreText = null;
                 showNButton = (
                     <RovingAccessibleButton
@@ -819,20 +798,16 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                         className={showMoreBtnClasses}
                         aria-label={label}
                     >
-                        <span className='mx_RoomSublist_showMoreButtonChevron mx_RoomSublist_showNButtonChevron'>
-                            { /* set by CSS masking */ }
+                        <span className="mx_RoomSublist_showMoreButtonChevron mx_RoomSublist_showNButtonChevron">
+                            {/* set by CSS masking */}
                         </span>
-                        { showMoreText }
+                        {showMoreText}
                     </RovingAccessibleButton>
                 );
             } else if (this.numTiles > this.layout.defaultVisibleTiles) {
                 // we have all tiles visible - add a button to show less
                 const label = _t("Show less");
-                let showLessText = (
-                    <span className='mx_RoomSublist_showNButtonText'>
-                        { label }
-                    </span>
-                );
+                let showLessText: ReactNode = <span className="mx_RoomSublist_showNButtonText">{label}</span>;
                 if (this.props.isMinimized) showLessText = null;
                 showNButton = (
                     <RovingAccessibleButton
@@ -841,10 +816,10 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                         className={showMoreBtnClasses}
                         aria-label={label}
                     >
-                        <span className='mx_RoomSublist_showLessButtonChevron mx_RoomSublist_showNButtonChevron'>
-                            { /* set by CSS masking */ }
+                        <span className="mx_RoomSublist_showLessButtonChevron mx_RoomSublist_showNButtonChevron">
+                            {/* set by CSS masking */}
                         </span>
-                        { showLessText }
+                        {showLessText}
                     </RovingAccessibleButton>
                 );
             }
@@ -876,8 +851,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             // only mathematically 7 possible).
 
             const handleWrapperClasses = classNames({
-                'mx_RoomSublist_resizerHandles': true,
-                'mx_RoomSublist_resizerHandles_showNButton': !!showNButton,
+                mx_RoomSublist_resizerHandles: true,
+                mx_RoomSublist_resizerHandles_showNButton: !!showNButton,
             });
 
             content = (
@@ -895,9 +870,9 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                         enable={handles}
                     >
                         <div className="mx_RoomSublist_tiles" ref={this.tilesRef}>
-                            { visibleTiles }
+                            {visibleTiles}
                         </div>
-                        { showNButton }
+                        {showNButton}
                     </Resizable>
                 </React.Fragment>
             );
@@ -910,11 +885,12 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 ref={this.sublistRef}
                 className={classes}
                 role="group"
-                aria-label={this.props.label}
+                aria-hidden={hidden}
+                aria-labelledby={getLabelId(this.props.tagId)}
                 onKeyDown={this.onKeyDown}
             >
-                { this.renderHeader() }
-                { content }
+                {this.renderHeader()}
+                {content}
             </div>
         );
     }

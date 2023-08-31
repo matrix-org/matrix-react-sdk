@@ -14,22 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import classNames from 'classnames';
-import { _t } from '../../../languageHandler';
-import dis from '../../../dispatcher/dispatcher';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
+import React, { createRef } from "react";
+import classNames from "classnames";
+import { MatrixEvent, MatrixEventEvent, EventType, MsgType } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import SenderProfile from "../messages/SenderProfile";
 import MImageReplyBody from "../messages/MImageReplyBody";
-import * as sdk from '../../../index';
-import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
-import { replaceableComponent } from '../../../utils/replaceableComponent';
-import { getEventDisplayInfo, isVoiceMessage } from '../../../utils/EventUtils';
+import { isVoiceMessage } from "../../../utils/EventUtils";
+import { getEventDisplayInfo } from "../../../utils/EventRenderingUtils";
 import MFileBody from "../messages/MFileBody";
+import MemberAvatar from "../avatars/MemberAvatar";
 import MVoiceMessageBody from "../messages/MVoiceMessageBody";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { renderReplyTile } from "../../../events/EventTileFactory";
+import { GetRelationsForEvent } from "../rooms/EventTile";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -38,26 +42,26 @@ interface IProps {
     highlightLink?: string;
     onHeightChanged?(): void;
     toggleExpandedQuote?: () => void;
+    getRelationsForEvent?: GetRelationsForEvent;
 }
 
-@replaceableComponent("views.rooms.ReplyTile")
 export default class ReplyTile extends React.PureComponent<IProps> {
     private anchorElement = createRef<HTMLAnchorElement>();
 
-    static defaultProps = {
+    public static defaultProps = {
         onHeightChanged: () => {},
     };
 
-    componentDidMount() {
-        this.props.mxEvent.on("Event.decrypted", this.onDecrypted);
-        this.props.mxEvent.on("Event.beforeRedaction", this.onEventRequiresUpdate);
-        this.props.mxEvent.on("Event.replaced", this.onEventRequiresUpdate);
+    public componentDidMount(): void {
+        this.props.mxEvent.on(MatrixEventEvent.Decrypted, this.onDecrypted);
+        this.props.mxEvent.on(MatrixEventEvent.BeforeRedaction, this.onEventRequiresUpdate);
+        this.props.mxEvent.on(MatrixEventEvent.Replaced, this.onEventRequiresUpdate);
     }
 
-    componentWillUnmount() {
-        this.props.mxEvent.removeListener("Event.decrypted", this.onDecrypted);
-        this.props.mxEvent.removeListener("Event.beforeRedaction", this.onEventRequiresUpdate);
-        this.props.mxEvent.removeListener("Event.replaced", this.onEventRequiresUpdate);
+    public componentWillUnmount(): void {
+        this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
+        this.props.mxEvent.removeListener(MatrixEventEvent.BeforeRedaction, this.onEventRequiresUpdate);
+        this.props.mxEvent.removeListener(MatrixEventEvent.Replaced, this.onEventRequiresUpdate);
     }
 
     private onDecrypted = (): void => {
@@ -89,35 +93,41 @@ export default class ReplyTile extends React.PureComponent<IProps> {
             if (this.props.toggleExpandedQuote && e.shiftKey) {
                 this.props.toggleExpandedQuote();
             } else {
-                dis.dispatch({
-                    action: 'view_room',
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
                     event_id: this.props.mxEvent.getId(),
                     highlighted: true,
                     room_id: this.props.mxEvent.getRoomId(),
+                    metricsTrigger: undefined, // room doesn't change
                 });
             }
         }
     };
 
-    render() {
+    public render(): React.ReactNode {
         const mxEvent = this.props.mxEvent;
         const msgType = mxEvent.getContent().msgtype;
-        const evType = mxEvent.getType() as EventType;
+        const evType = mxEvent.getType();
 
-        const { tileHandler, isInfoMessage } = getEventDisplayInfo(mxEvent);
+        const { hasRenderer, isInfoMessage, isSeeingThroughMessageHiddenForModeration } = getEventDisplayInfo(
+            MatrixClientPeg.safeGet(),
+            mxEvent,
+            false /* Replies are never hidden, so this should be fine */,
+        );
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
-        if (!tileHandler) {
+        if (!hasRenderer) {
             const { mxEvent } = this.props;
             logger.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
-            return <div className="mx_ReplyTile mx_ReplyTile_info mx_MNoticeBody">
-                { _t('This event could not be displayed') }
-            </div>;
+            return (
+                <div className="mx_ReplyTile mx_ReplyTile_info mx_MNoticeBody">
+                    {_t("This event could not be displayed")}
+                </div>
+            );
         }
 
-        const EventTileType = sdk.getComponent(tileHandler);
-
         const classes = classNames("mx_ReplyTile", {
+            mx_ReplyTile_inline: msgType === MsgType.Emote,
             mx_ReplyTile_info: isInfoMessage && !mxEvent.isRedacted(),
             mx_ReplyTile_audio: msgType === MsgType.Audio,
             mx_ReplyTile_video: msgType === MsgType.Video,
@@ -125,31 +135,27 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
         let permalink = "#";
         if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId());
+            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId()!);
         }
 
         let sender;
-        const needsSenderProfile = (
-            !isInfoMessage &&
-            msgType !== MsgType.Image &&
-            tileHandler !== EventType.RoomCreate &&
-            evType !== EventType.Sticker
-        );
-
-        if (needsSenderProfile) {
-            sender = <SenderProfile
-                mxEvent={mxEvent}
-                enableFlair={false}
-            />;
+        const hasOwnSender = isInfoMessage || evType === EventType.RoomCreate;
+        if (!hasOwnSender) {
+            sender = (
+                <div className="mx_ReplyTile_sender">
+                    <MemberAvatar member={mxEvent.sender} fallbackUserId={mxEvent.getSender()} width={16} height={16} />
+                    <SenderProfile mxEvent={mxEvent} />
+                </div>
+            );
         }
 
-        const msgtypeOverrides = {
+        const msgtypeOverrides: Record<string, typeof React.Component> = {
             [MsgType.Image]: MImageReplyBody,
             // Override audio and video body with file body. We also hide the download/decrypt button using CSS
             [MsgType.Audio]: isVoiceMessage(mxEvent) ? MVoiceMessageBody : MFileBody,
             [MsgType.Video]: MFileBody,
         };
-        const evOverrides = {
+        const evOverrides: Record<string, typeof React.Component> = {
             // Use MImageReplyBody so that the sticker isn't taking up a lot of space
             [EventType.Sticker]: MImageReplyBody,
         };
@@ -157,18 +163,27 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         return (
             <div className={classes}>
                 <a href={permalink} onClick={this.onClick} ref={this.anchorElement}>
-                    { sender }
-                    <EventTileType
-                        ref="tile"
-                        mxEvent={mxEvent}
-                        highlights={this.props.highlights}
-                        highlightLink={this.props.highlightLink}
-                        onHeightChanged={this.props.onHeightChanged}
-                        showUrlPreview={false}
-                        overrideBodyTypes={msgtypeOverrides}
-                        overrideEventTypes={evOverrides}
-                        replacingEventId={mxEvent.replacingEventId()}
-                        maxImageHeight={96} />
+                    {sender}
+                    {renderReplyTile(
+                        {
+                            ...this.props,
+
+                            // overrides
+                            ref: undefined,
+                            showUrlPreview: false,
+                            overrideBodyTypes: msgtypeOverrides,
+                            overrideEventTypes: evOverrides,
+                            maxImageHeight: 96,
+                            isSeeingThroughMessageHiddenForModeration,
+
+                            // appease TS
+                            highlights: this.props.highlights,
+                            highlightLink: this.props.highlightLink,
+                            onHeightChanged: this.props.onHeightChanged,
+                            permalinkCreator: this.props.permalinkCreator,
+                        },
+                        false /* showHiddenEvents shouldn't be relevant */,
+                    )}
                 </a>
             </div>
         );

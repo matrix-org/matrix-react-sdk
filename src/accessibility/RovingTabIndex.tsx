@@ -25,9 +25,11 @@ import React, {
     Reducer,
     Dispatch,
     RefObject,
+    ReactNode,
 } from "react";
 
-import { Key } from "../Keyboard";
+import { getKeyBindingsManager } from "../KeyBindingsManager";
+import { KeyBindingAction } from "./KeyboardShortcuts";
 import { FocusHandler, Ref } from "./roving/types";
 
 /**
@@ -43,21 +45,29 @@ import { FocusHandler, Ref } from "./roving/types";
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets#Technique_1_Roving_tabindex
  */
 
-const DOCUMENT_POSITION_PRECEDING = 2;
+// Check for form elements which utilize the arrow keys for native functions
+// like many of the text input varieties.
+//
+// i.e. it's ok to press the down arrow on a radio button to move to the next
+// radio. But it's not ok to press the down arrow on a <input type="text"> to
+// move away because the down arrow should move the cursor to the end of the
+// input.
+export function checkInputableElement(el: HTMLElement): boolean {
+    return el.matches('input:not([type="radio"]):not([type="checkbox"]), textarea, select, [contenteditable=true]');
+}
 
 export interface IState {
-    activeRef: Ref;
+    activeRef?: Ref;
     refs: Ref[];
 }
 
-interface IContext {
+export interface IContext {
     state: IState;
     dispatch: Dispatch<IAction>;
 }
 
-const RovingTabIndexContext = createContext<IContext>({
+export const RovingTabIndexContext = createContext<IContext>({
     state: {
-        activeRef: null,
         refs: [], // list of refs in DOM order
     },
     dispatch: () => {},
@@ -68,54 +78,56 @@ export enum Type {
     Register = "REGISTER",
     Unregister = "UNREGISTER",
     SetFocus = "SET_FOCUS",
+    Update = "UPDATE",
 }
 
-interface IAction {
-    type: Type;
+export interface IAction {
+    type: Exclude<Type, Type.Update>;
     payload: {
         ref: Ref;
     };
 }
 
-export const reducer = (state: IState, action: IAction) => {
+interface UpdateAction {
+    type: Type.Update;
+    payload?: undefined;
+}
+
+type Action = IAction | UpdateAction;
+
+const refSorter = (a: Ref, b: Ref): number => {
+    if (a === b) {
+        return 0;
+    }
+
+    const position = a.current!.compareDocumentPosition(b.current!);
+
+    if (position & Node.DOCUMENT_POSITION_FOLLOWING || position & Node.DOCUMENT_POSITION_CONTAINED_BY) {
+        return -1;
+    } else if (position & Node.DOCUMENT_POSITION_PRECEDING || position & Node.DOCUMENT_POSITION_CONTAINS) {
+        return 1;
+    } else {
+        return 0;
+    }
+};
+
+export const reducer: Reducer<IState, Action> = (state: IState, action: Action) => {
     switch (action.type) {
         case Type.Register: {
-            let left = 0;
-            let right = state.refs.length - 1;
-            let index = state.refs.length; // by default append to the end
-
-            // do a binary search to find the right slot
-            while (left <= right) {
-                index = Math.floor((left + right) / 2);
-                const ref = state.refs[index];
-
-                if (ref === action.payload.ref) {
-                    return state; // already in refs, this should not happen
-                }
-
-                if (action.payload.ref.current.compareDocumentPosition(ref.current) & DOCUMENT_POSITION_PRECEDING) {
-                    left = ++index;
-                } else {
-                    right = index - 1;
-                }
-            }
-
             if (!state.activeRef) {
                 // Our list of refs was empty, set activeRef to this first item
                 state.activeRef = action.payload.ref;
             }
 
-            // update the refs list
-            if (index < state.refs.length) {
-                state.refs.splice(index, 0, action.payload.ref);
-            } else {
-                state.refs.push(action.payload.ref);
-            }
+            // Sadly due to the potential of DOM elements swapping order we can't do anything fancy like a binary insert
+            state.refs.push(action.payload.ref);
+            state.refs.sort(refSorter);
+
             return { ...state };
         }
 
         case Type.Unregister: {
-            const oldIndex = state.refs.findIndex(r => r === action.payload.ref);
+            const oldIndex = state.refs.findIndex((r) => r === action.payload.ref);
 
             if (oldIndex === -1) {
                 return state; // already removed, this should not happen
@@ -123,9 +135,17 @@ export const reducer = (state: IState, action: IAction) => {
 
             if (state.refs.splice(oldIndex, 1)[0] === state.activeRef) {
                 // we just removed the active ref, need to replace it
-                // pick the ref which is now in the index the old ref was in
-                const len = state.refs.length;
-                state.activeRef = oldIndex >= len ? state.refs[len - 1] : state.refs[oldIndex];
+                // pick the ref closest to the index the old ref was in
+                if (oldIndex >= state.refs.length) {
+                    state.activeRef = findSiblingElement(state.refs, state.refs.length - 1, true);
+                } else {
+                    state.activeRef =
+                        findSiblingElement(state.refs, oldIndex) || findSiblingElement(state.refs, oldIndex, true);
+                }
+                if (document.activeElement === document.body) {
+                    // if the focus got reverted to the body then the user was likely focused on the unmounted element
+                    state.activeRef?.current?.focus();
+                }
             }
 
             // update the refs list
@@ -133,8 +153,15 @@ export const reducer = (state: IState, action: IAction) => {
         }
 
         case Type.SetFocus: {
+            // if the ref doesn't change just return the same object reference to skip a re-render
+            if (state.activeRef === action.payload.ref) return state;
             // update active ref
             state.activeRef = action.payload.ref;
+            return { ...state };
+        }
+
+        case Type.Update: {
+            state.refs.sort(refSorter);
             return { ...state };
         }
 
@@ -144,31 +171,37 @@ export const reducer = (state: IState, action: IAction) => {
 };
 
 interface IProps {
+    handleLoop?: boolean;
     handleHomeEnd?: boolean;
     handleUpDown?: boolean;
     handleLeftRight?: boolean;
-    children(renderProps: {
-        onKeyDownHandler(ev: React.KeyboardEvent);
-    });
-    onKeyDown?(ev: React.KeyboardEvent, state: IState);
+    children(renderProps: { onKeyDownHandler(ev: React.KeyboardEvent): void; onDragEndHandler(): void }): ReactNode;
+    onKeyDown?(ev: React.KeyboardEvent, state: IState, dispatch: Dispatch<IAction>): void;
 }
 
 export const findSiblingElement = (
     refs: RefObject<HTMLElement>[],
     startIndex: number,
     backwards = false,
-): RefObject<HTMLElement> => {
+    loop = false,
+): RefObject<HTMLElement> | undefined => {
     if (backwards) {
         for (let i = startIndex; i < refs.length && i >= 0; i--) {
-            if (refs[i].current.offsetParent !== null) {
+            if (refs[i].current?.offsetParent !== null) {
                 return refs[i];
             }
         }
+        if (loop) {
+            return findSiblingElement(refs.slice(startIndex + 1), refs.length - 1, true, false);
+        }
     } else {
         for (let i = startIndex; i < refs.length && i >= 0; i++) {
-            if (refs[i].current.offsetParent !== null) {
+            if (refs[i].current?.offsetParent !== null) {
                 return refs[i];
             }
+        }
+        if (loop) {
+            return findSiblingElement(refs.slice(0, startIndex), 0, false, false);
         }
     }
 };
@@ -178,77 +211,122 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
     handleHomeEnd,
     handleUpDown,
     handleLeftRight,
+    handleLoop,
     onKeyDown,
 }) => {
-    const [state, dispatch] = useReducer<Reducer<IState, IAction>>(reducer, {
-        activeRef: null,
+    const [state, dispatch] = useReducer<Reducer<IState, Action>>(reducer, {
         refs: [],
     });
 
     const context = useMemo<IContext>(() => ({ state, dispatch }), [state]);
 
-    const onKeyDownHandler = useCallback((ev) => {
-        if (onKeyDown) {
-            onKeyDown(ev, context.state);
-            if (ev.defaultPrevented) {
-                return;
+    const onKeyDownHandler = useCallback(
+        (ev: React.KeyboardEvent) => {
+            if (onKeyDown) {
+                onKeyDown(ev, context.state, context.dispatch);
+                if (ev.defaultPrevented) {
+                    return;
+                }
             }
-        }
 
-        let handled = false;
-        // Don't interfere with input default keydown behaviour
-        if (ev.target.tagName !== "INPUT" && ev.target.tagName !== "TEXTAREA") {
-            // check if we actually have any items
-            switch (ev.key) {
-                case Key.HOME:
-                    if (handleHomeEnd) {
-                        handled = true;
-                        // move focus to first (visible) item
-                        findSiblingElement(context.state.refs, 0)?.current?.focus();
-                    }
-                    break;
-
-                case Key.END:
-                    if (handleHomeEnd) {
-                        handled = true;
-                        // move focus to last (visible) item
-                        findSiblingElement(context.state.refs, context.state.refs.length - 1, true)?.current?.focus();
-                    }
-                    break;
-
-                case Key.ARROW_UP:
-                case Key.ARROW_RIGHT:
-                    if ((ev.key === Key.ARROW_UP && handleUpDown) || (ev.key === Key.ARROW_RIGHT && handleLeftRight)) {
+            let handled = false;
+            const action = getKeyBindingsManager().getAccessibilityAction(ev);
+            let focusRef: RefObject<HTMLElement> | undefined;
+            // Don't interfere with input default keydown behaviour
+            // but allow people to move focus from it with Tab.
+            if (checkInputableElement(ev.target as HTMLElement)) {
+                switch (action) {
+                    case KeyBindingAction.Tab:
                         handled = true;
                         if (context.state.refs.length > 0) {
-                            const idx = context.state.refs.indexOf(context.state.activeRef);
-                            findSiblingElement(context.state.refs, idx - 1)?.current?.focus();
+                            const idx = context.state.refs.indexOf(context.state.activeRef!);
+                            focusRef = findSiblingElement(
+                                context.state.refs,
+                                idx + (ev.shiftKey ? -1 : 1),
+                                ev.shiftKey,
+                            );
                         }
-                    }
-                    break;
+                        break;
+                }
+            } else {
+                // check if we actually have any items
+                switch (action) {
+                    case KeyBindingAction.Home:
+                        if (handleHomeEnd) {
+                            handled = true;
+                            // move focus to first (visible) item
+                            focusRef = findSiblingElement(context.state.refs, 0);
+                        }
+                        break;
 
-                case Key.ARROW_DOWN:
-                case Key.ARROW_LEFT:
-                    if ((ev.key === Key.ARROW_DOWN && handleUpDown) || (ev.key === Key.ARROW_LEFT && handleLeftRight)) {
-                        handled = true;
-                        if (context.state.refs.length > 0) {
-                            const idx = context.state.refs.indexOf(context.state.activeRef);
-                            findSiblingElement(context.state.refs, idx + 1, true)?.current?.focus();
+                    case KeyBindingAction.End:
+                        if (handleHomeEnd) {
+                            handled = true;
+                            // move focus to last (visible) item
+                            focusRef = findSiblingElement(context.state.refs, context.state.refs.length - 1, true);
                         }
-                    }
-                    break;
+                        break;
+
+                    case KeyBindingAction.ArrowDown:
+                    case KeyBindingAction.ArrowRight:
+                        if (
+                            (action === KeyBindingAction.ArrowDown && handleUpDown) ||
+                            (action === KeyBindingAction.ArrowRight && handleLeftRight)
+                        ) {
+                            handled = true;
+                            if (context.state.refs.length > 0) {
+                                const idx = context.state.refs.indexOf(context.state.activeRef!);
+                                focusRef = findSiblingElement(context.state.refs, idx + 1, false, handleLoop);
+                            }
+                        }
+                        break;
+
+                    case KeyBindingAction.ArrowUp:
+                    case KeyBindingAction.ArrowLeft:
+                        if (
+                            (action === KeyBindingAction.ArrowUp && handleUpDown) ||
+                            (action === KeyBindingAction.ArrowLeft && handleLeftRight)
+                        ) {
+                            handled = true;
+                            if (context.state.refs.length > 0) {
+                                const idx = context.state.refs.indexOf(context.state.activeRef!);
+                                focusRef = findSiblingElement(context.state.refs, idx - 1, true, handleLoop);
+                            }
+                        }
+                        break;
+                }
             }
-        }
 
-        if (handled) {
-            ev.preventDefault();
-            ev.stopPropagation();
-        }
-    }, [context.state, onKeyDown, handleHomeEnd, handleUpDown, handleLeftRight]);
+            if (handled) {
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
 
-    return <RovingTabIndexContext.Provider value={context}>
-        { children({ onKeyDownHandler }) }
-    </RovingTabIndexContext.Provider>;
+            if (focusRef) {
+                focusRef.current?.focus();
+                // programmatic focus doesn't fire the onFocus handler, so we must do the do ourselves
+                dispatch({
+                    type: Type.SetFocus,
+                    payload: {
+                        ref: focusRef,
+                    },
+                });
+            }
+        },
+        [context, onKeyDown, handleHomeEnd, handleUpDown, handleLeftRight, handleLoop],
+    );
+
+    const onDragEndHandler = useCallback(() => {
+        dispatch({
+            type: Type.Update,
+        });
+    }, []);
+
+    return (
+        <RovingTabIndexContext.Provider value={context}>
+            {children({ onKeyDownHandler, onDragEndHandler })}
+        </RovingTabIndexContext.Provider>
+    );
 };
 
 // Hook to register a roving tab index
@@ -256,9 +334,11 @@ export const RovingTabIndexProvider: React.FC<IProps> = ({
 // onFocus should be called when the index gained focus in any manner
 // isActive should be used to set tabIndex in a manner such as `tabIndex={isActive ? 0 : -1}`
 // ref should be passed to a DOM node which will be used for DOM compareDocumentPosition
-export const useRovingTabIndex = (inputRef?: Ref): [FocusHandler, boolean, Ref] => {
+export const useRovingTabIndex = <T extends HTMLElement>(
+    inputRef?: RefObject<T>,
+): [FocusHandler, boolean, RefObject<T>] => {
     const context = useContext(RovingTabIndexContext);
-    let ref = useRef<HTMLElement>(null);
+    let ref = useRef<T>(null);
 
     if (inputRef) {
         // if we are given a ref, use it instead of ours
@@ -285,7 +365,7 @@ export const useRovingTabIndex = (inputRef?: Ref): [FocusHandler, boolean, Ref] 
             type: Type.SetFocus,
             payload: { ref },
         });
-    }, [ref, context]);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const isActive = context.state.activeRef === ref;
     return [onFocus, isActive, ref];

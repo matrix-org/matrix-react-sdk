@@ -1,5 +1,6 @@
 /*
 Copyright 2017 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,41 +15,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import highlight from 'highlight.js';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React from "react";
+import hljs from "highlight.js";
 
 interface IProps {
-    className?: string;
-    children?: React.ReactNode;
+    language?: string;
+    children: string;
 }
 
-@replaceableComponent("views.elements.SyntaxHighlight")
-export default class SyntaxHighlight extends React.Component<IProps> {
-    private el: HTMLPreElement = null;
+export default class SyntaxHighlight extends React.PureComponent<IProps> {
+    public render(): React.ReactNode {
+        const { children: content, language } = this.props;
+        const highlighted = language ? hljs.highlight(content, { language }) : hljs.highlightAuto(content);
 
-    constructor(props: IProps) {
-        super(props);
-    }
-
-    // componentDidUpdate used here for reusability
-    public componentDidUpdate(): void {
-        if (this.el) highlight.highlightElement(this.el);
-    }
-
-    // call componentDidUpdate because _ref is fired on initial render
-    // which does not fire componentDidUpdate
-    private ref = (el: HTMLPreElement): void => {
-        this.el = el;
-        this.componentDidUpdate();
-    };
-
-    public render(): JSX.Element {
-        const { className, children } = this.props;
-
-        return <pre className={`${className} mx_SyntaxHighlight`} ref={this.ref}>
-            <code>{ children }</code>
-        </pre>;
+        return (
+            <pre className={`mx_SyntaxHighlight hljs language-${highlighted.language}`}>
+                <code dangerouslySetInnerHTML={{ __html: highlighted.value }} />
+            </pre>
+        );
     }
 }
-

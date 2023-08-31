@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,22 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Playback, PlaybackState } from "../../../audio/Playback";
-import { TileShape } from "../rooms/EventTile";
-import React, { ReactNode } from "react";
-import { UPDATE_EVENT } from "../../../stores/AsyncStore";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { _t } from "../../../languageHandler";
-
+import React, { createRef, ReactNode, RefObject } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-interface IProps {
+import { Playback, PlaybackState } from "../../../audio/Playback";
+import { UPDATE_EVENT } from "../../../stores/AsyncStore";
+import { _t } from "../../../languageHandler";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import SeekBar from "./SeekBar";
+import PlayPauseButton from "./PlayPauseButton";
+
+export interface IProps {
     // Playback instance to render. Cannot change during component lifecycle: create
     // an all-new component instead.
     playback: Playback;
 
     mediaName?: string;
-    tileShape?: TileShape;
 }
 
 interface IState {
@@ -37,13 +38,16 @@ interface IState {
     error?: boolean;
 }
 
-@replaceableComponent("views.audio_messages.AudioPlayerBase")
-export default abstract class AudioPlayerBase extends React.PureComponent<IProps, IState> {
-    constructor(props: IProps) {
+export default abstract class AudioPlayerBase<T extends IProps = IProps> extends React.PureComponent<T, IState> {
+    protected seekRef: RefObject<SeekBar> = createRef();
+    protected playPauseRef: RefObject<PlayPauseButton> = createRef();
+
+    public constructor(props: T) {
         super(props);
 
+        // Playback instances can be reused in the composer
         this.state = {
-            playbackPhase: PlaybackState.Decoding, // default assumption
+            playbackPhase: this.props.playback.currentState,
         };
 
         // We don't need to de-register: the class handles this for us internally
@@ -51,22 +55,51 @@ export default abstract class AudioPlayerBase extends React.PureComponent<IProps
 
         // Don't wait for the promise to complete - it will emit a progress update when it
         // is done, and it's not meant to take long anyhow.
-        this.props.playback.prepare().catch(e => {
+        this.props.playback.prepare().catch((e) => {
             logger.error("Error processing audio file:", e);
             this.setState({ error: true });
         });
     }
 
-    private onPlaybackUpdate = (ev: PlaybackState) => {
+    protected onKeyDown = (ev: React.KeyboardEvent): void => {
+        let handled = true;
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+
+        switch (action) {
+            case KeyBindingAction.Space:
+                this.playPauseRef.current?.toggleState();
+                break;
+            case KeyBindingAction.ArrowLeft:
+                this.seekRef.current?.left();
+                break;
+            case KeyBindingAction.ArrowRight:
+                this.seekRef.current?.right();
+                break;
+            default:
+                handled = false;
+                break;
+        }
+
+        // stopPropagation() prevents the FocusComposer catch-all from triggering,
+        // but we need to do it on key down instead of press (even though the user
+        // interaction is typically on press).
+        if (handled) {
+            ev.stopPropagation();
+        }
+    };
+
+    private onPlaybackUpdate = (ev: PlaybackState): void => {
         this.setState({ playbackPhase: ev });
     };
 
     protected abstract renderComponent(): ReactNode;
 
     public render(): ReactNode {
-        return <>
-            { this.renderComponent() }
-            { this.state.error && <div className="text-warning">{ _t("Error downloading audio") }</div> }
-        </>;
+        return (
+            <>
+                {this.renderComponent()}
+                {this.state.error && <div className="text-warning">{_t("Error downloading audio")}</div>}
+            </>
+        );
     }
 }

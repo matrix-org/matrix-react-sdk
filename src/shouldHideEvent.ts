@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, EventType, RelationType } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "./settings/SettingsStore";
 import { IRoomState } from "./components/structures/RoomView";
@@ -29,7 +29,7 @@ interface IDiff {
 
 function memberEventDiff(ev: MatrixEvent): IDiff {
     const diff: IDiff = {
-        isMemberEvent: ev.getType() === 'm.room.member',
+        isMemberEvent: ev.getType() === EventType.RoomMember,
     };
 
     // If is not a Member Event then the other checks do not apply, so bail early.
@@ -39,10 +39,10 @@ function memberEventDiff(ev: MatrixEvent): IDiff {
     const prevContent = ev.getPrevContent();
 
     const isMembershipChanged = content.membership !== prevContent.membership;
-    diff.isJoin = isMembershipChanged && content.membership === 'join';
-    diff.isPart = isMembershipChanged && content.membership === 'leave' && ev.getStateKey() === ev.getSender();
+    diff.isJoin = isMembershipChanged && content.membership === "join";
+    diff.isPart = isMembershipChanged && content.membership === "leave" && ev.getStateKey() === ev.getSender();
 
-    const isJoinToJoin = !isMembershipChanged && content.membership === 'join';
+    const isJoinToJoin = !isMembershipChanged && content.membership === "join";
     diff.isDisplaynameChange = isJoinToJoin && content.displayname !== prevContent.displayname;
     diff.isAvatarChange = isJoinToJoin && content.avatar_url !== prevContent.avatar_url;
     return diff;
@@ -57,22 +57,24 @@ function memberEventDiff(ev: MatrixEvent): IDiff {
 export default function shouldHideEvent(ev: MatrixEvent, ctx?: IRoomState): boolean {
     // Accessing the settings store directly can be expensive if done frequently,
     // so we should prefer using cached values if a RoomContext is available
-    const isEnabled = ctx ?
-        name => ctx[name] :
-        name => SettingsStore.getValue(name, ev.getRoomId());
+    const isEnabled = ctx
+        ? (name: keyof IRoomState) => ctx[name]
+        : (name: string) => SettingsStore.getValue(name, ev.getRoomId());
 
     // Hide redacted events
-    if (ev.isRedacted() && !isEnabled('showRedactions')) return true;
+    // Deleted events with a thread are always shown regardless of user preference
+    // to make sure that a thread can be accessible even if the root message is deleted
+    if (ev.isRedacted() && !isEnabled("showRedactions") && !ev.getThread()) return true;
 
     // Hide replacement events since they update the original tile (if enabled)
-    if (ev.isRelation("m.replace")) return true;
+    if (ev.isRelation(RelationType.Replace)) return true;
 
     const eventDiff = memberEventDiff(ev);
 
     if (eventDiff.isMemberEvent) {
-        if ((eventDiff.isJoin || eventDiff.isPart) && !isEnabled('showJoinLeaves')) return true;
-        if (eventDiff.isAvatarChange && !isEnabled('showAvatarChanges')) return true;
-        if (eventDiff.isDisplaynameChange && !isEnabled('showDisplaynameChanges')) return true;
+        if ((eventDiff.isJoin || eventDiff.isPart) && !isEnabled("showJoinLeaves")) return true;
+        if (eventDiff.isAvatarChange && !isEnabled("showAvatarChanges")) return true;
+        if (eventDiff.isDisplaynameChange && !isEnabled("showDisplaynameChanges")) return true;
     }
 
     return false;

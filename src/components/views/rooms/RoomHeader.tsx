@@ -1,6 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2019, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,257 +14,54 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import React from "react";
+import { Body as BodyText } from "@vector-im/compound-web";
 
-import SettingsStore from "../../../settings/SettingsStore";
-import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
-import E2EIcon from './E2EIcon';
+import type { Room } from "matrix-js-sdk/src/matrix";
+import { useRoomName } from "../../../hooks/useRoomName";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import RoomTopic from "../elements/RoomTopic";
-import RoomName from "../elements/RoomName";
-import { PlaceCallType } from "../../../CallHandler";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import Modal from '../../../Modal';
-import InfoDialog from "../dialogs/InfoDialog";
-import { throttle } from 'lodash';
-import { MatrixEvent, Room, RoomState } from 'matrix-js-sdk/src';
-import { E2EStatus } from '../../../utils/ShieldUtils';
-import { IOOBData } from '../../../stores/ThreepidInviteStore';
-import { SearchScope } from './SearchBar';
-import { ContextMenuTooltipButton } from '../../structures/ContextMenu';
-import RoomContextMenu from "../context_menus/RoomContextMenu";
-import { contextMenuBelow } from './RoomTile';
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { useTopic } from "../../../hooks/room/useTopic";
+import { Flex } from "../../utils/Flex";
+import { Box } from "../../utils/Box";
 
-export interface ISearchInfo {
-    searchTerm: string;
-    searchScope: SearchScope;
-    searchCount: number;
-}
+export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+    const roomName = useRoomName(room);
+    const roomTopic = useTopic(room);
 
-interface IProps {
-    room: Room;
-    oobData?: IOOBData;
-    inRoom: boolean;
-    onSearchClick: () => void;
-    onForgetClick: () => void;
-    onCallPlaced: (type: PlaceCallType) => void;
-    onAppsClick: () => void;
-    e2eStatus: E2EStatus;
-    appsShown: boolean;
-    searchInfo: ISearchInfo;
-}
-
-interface IState {
-    contextMenuPosition?: DOMRect;
-}
-
-@replaceableComponent("views.rooms.RoomHeader")
-export default class RoomHeader extends React.Component<IProps, IState> {
-    static defaultProps = {
-        editing: false,
-        inRoom: false,
-    };
-
-    constructor(props, context) {
-        super(props, context);
-
-        this.state = {};
-    }
-
-    public componentDidMount() {
-        const cli = MatrixClientPeg.get();
-        cli.on("RoomState.events", this.onRoomStateEvents);
-    }
-
-    public componentWillUnmount() {
-        const cli = MatrixClientPeg.get();
-        if (cli) {
-            cli.removeListener("RoomState.events", this.onRoomStateEvents);
-        }
-    }
-
-    private onRoomStateEvents = (event: MatrixEvent, state: RoomState) => {
-        if (!this.props.room || event.getRoomId() !== this.props.room.roomId) {
-            return;
-        }
-
-        // redisplay the room name, topic, etc.
-        this.rateLimitedUpdate();
-    };
-
-    private rateLimitedUpdate = throttle(() => {
-        this.forceUpdate();
-    }, 500, { leading: true, trailing: true });
-
-    private displayInfoDialogAboutScreensharing() {
-        Modal.createDialog(InfoDialog, {
-            title: _t("Screen sharing is here!"),
-            description: _t("You can now share your screen by pressing the \"screen share\" " +
-            "button during a call. You can even do this in audio calls if both sides support it!"),
-        });
-    }
-
-    private onContextMenuOpenClick = (ev: React.MouseEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-        const target = ev.target as HTMLButtonElement;
-        this.setState({ contextMenuPosition: target.getBoundingClientRect() });
-    };
-
-    private onContextMenuCloseClick = () => {
-        this.setState({ contextMenuPosition: null });
-    };
-
-    public render() {
-        let searchStatus = null;
-
-        // don't display the search count until the search completes and
-        // gives us a valid (possibly zero) searchCount.
-        if (this.props.searchInfo &&
-            this.props.searchInfo.searchCount !== undefined &&
-            this.props.searchInfo.searchCount !== null) {
-            searchStatus = <div className="mx_RoomHeader_searchStatus">&nbsp;
-                { _t("(~%(count)s results)", { count: this.props.searchInfo.searchCount }) }
-            </div>;
-        }
-
-        // XXX: this is a bit inefficient - we could just compare room.name for 'Empty room'...
-        let settingsHint = false;
-        const members = this.props.room ? this.props.room.getJoinedMembers() : undefined;
-        if (members) {
-            if (members.length === 1 && members[0].userId === MatrixClientPeg.get().credentials.userId) {
-                const nameEvent = this.props.room.currentState.getStateEvents('m.room.name', '');
-                if (!nameEvent || !nameEvent.getContent().name) {
-                    settingsHint = true;
-                }
-            }
-        }
-
-        let oobName = _t("Join Room");
-        if (this.props.oobData && this.props.oobData.name) {
-            oobName = this.props.oobData.name;
-        }
-
-        let contextMenu: JSX.Element;
-        if (this.state.contextMenuPosition && this.props.room) {
-            contextMenu = (
-                <RoomContextMenu
-                    {...contextMenuBelow(this.state.contextMenuPosition)}
-                    room={this.props.room}
-                    onFinished={this.onContextMenuCloseClick}
-                />
-            );
-        }
-
-        const textClasses = classNames('mx_RoomHeader_nametext', { mx_RoomHeader_settingsHint: settingsHint });
-        const name = (
-            <ContextMenuTooltipButton
-                className="mx_RoomHeader_name"
-                onClick={this.onContextMenuOpenClick}
-                isExpanded={!!this.state.contextMenuPosition}
-                title={_t("Room options")}
-            >
-                <RoomName room={this.props.room}>
-                    { (name) => {
-                        const roomName = name || oobName;
-                        return <div dir="auto" className={textClasses} title={roomName}>{ roomName }</div>;
-                    } }
-                </RoomName>
-                { this.props.room && <div className="mx_RoomHeader_chevron" /> }
-                { contextMenu }
-            </ContextMenuTooltipButton>
-        );
-
-        const topicElement = <RoomTopic room={this.props.room}>
-            { (topic, ref) => <div className="mx_RoomHeader_topic" ref={ref} title={topic} dir="auto">
-                { topic }
-            </div> }
-        </RoomTopic>;
-
-        let roomAvatar;
-        if (this.props.room) {
-            roomAvatar = <DecoratedRoomAvatar
-                room={this.props.room}
-                avatarSize={24}
-                oobData={this.props.oobData}
-                viewAvatarOnClick={true}
-            />;
-        }
-
-        const buttons: JSX.Element[] = [];
-
-        if (this.props.inRoom && SettingsStore.getValue("showCallButtonsInComposer")) {
-            const voiceCallButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
-                onClick={() => this.props.onCallPlaced(PlaceCallType.Voice)}
-                title={_t("Voice call")}
-                key="voice"
-            />;
-            const videoCallButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
-                onClick={(ev: React.MouseEvent<Element>) => ev.shiftKey ?
-                    this.displayInfoDialogAboutScreensharing() : this.props.onCallPlaced(PlaceCallType.Video)}
-                title={_t("Video call")}
-                key="video"
-            />;
-            buttons.push(voiceCallButton, videoCallButton);
-        }
-
-        if (this.props.onForgetClick) {
-            const forgetButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_forgetButton"
-                onClick={this.props.onForgetClick}
-                title={_t("Forget room")}
-                key="forget"
-            />;
-            buttons.push(forgetButton);
-        }
-
-        if (this.props.onAppsClick) {
-            const appsButton = <AccessibleTooltipButton
-                className={classNames("mx_RoomHeader_button mx_RoomHeader_appsButton", {
-                    mx_RoomHeader_appsButton_highlight: this.props.appsShown,
-                })}
-                onClick={this.props.onAppsClick}
-                title={this.props.appsShown ? _t("Hide Widgets") : _t("Show Widgets")}
-                key="apps"
-            />;
-            buttons.push(appsButton);
-        }
-
-        if (this.props.onSearchClick && this.props.inRoom) {
-            const searchButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_searchButton"
-                onClick={this.props.onSearchClick}
-                title={_t("Search")}
-                key="search"
-            />;
-            buttons.push(searchButton);
-        }
-
-        const rightRow =
-            <div className="mx_RoomHeader_buttons">
-                { buttons }
-            </div>;
-
-        const e2eIcon = this.props.e2eStatus ? <E2EIcon status={this.props.e2eStatus} /> : undefined;
-
-        return (
-            <div className="mx_RoomHeader light-panel">
-                <div className="mx_RoomHeader_wrapper" aria-owns="mx_RightPanel">
-                    <div className="mx_RoomHeader_avatar">{ roomAvatar }</div>
-                    <div className="mx_RoomHeader_e2eIcon">{ e2eIcon }</div>
-                    { name }
-                    { searchStatus }
-                    { topicElement }
-                    { rightRow }
-                    <RoomHeaderButtons room={this.props.room} />
-                </div>
-            </div>
-        );
-    }
+    return (
+        <Flex
+            as="header"
+            align="center"
+            gap="var(--cpd-space-3x)"
+            className="mx_RoomHeader light-panel"
+            onClick={() => {
+                const rightPanel = RightPanelStore.instance;
+                rightPanel.isOpen
+                    ? rightPanel.togglePanel(null)
+                    : rightPanel.setCard({ phase: RightPanelPhases.RoomSummary });
+            }}
+        >
+            <DecoratedRoomAvatar room={room} avatarSize={40} displayBadge={false} />
+            <Box flex="1" className="mx_RoomHeader_info">
+                <BodyText
+                    as="div"
+                    size="lg"
+                    weight="semibold"
+                    dir="auto"
+                    title={roomName}
+                    role="heading"
+                    aria-level={1}
+                >
+                    {roomName}
+                </BodyText>
+                {roomTopic && (
+                    <BodyText as="div" size="sm" className="mx_RoomHeader_topic">
+                        {roomTopic.text}
+                    </BodyText>
+                )}
+            </Box>
+        </Flex>
+    );
 }

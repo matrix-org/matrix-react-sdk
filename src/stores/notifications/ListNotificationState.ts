@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room } from "matrix-js-sdk/src/matrix";
+
 import { NotificationColor } from "./NotificationColor";
-import { TagID } from "../room-list/models";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { arrayDiff } from "../../utils/arrays";
 import { RoomNotificationState } from "./RoomNotificationState";
-import { NOTIFICATION_STATE_UPDATE, NotificationState } from "./NotificationState";
+import { NotificationState, NotificationStateEvents } from "./NotificationState";
 
 export type FetchRoomFn = (room: Room) => RoomNotificationState;
 
@@ -27,15 +27,15 @@ export class ListNotificationState extends NotificationState {
     private rooms: Room[] = [];
     private states: { [roomId: string]: RoomNotificationState } = {};
 
-    constructor(private byTileCount = false, private tagId: TagID, private getRoomFn: FetchRoomFn) {
+    public constructor(private byTileCount = false, private getRoomFn: FetchRoomFn) {
         super();
     }
 
-    public get symbol(): string {
+    public get symbol(): string | null {
         return this._color === NotificationColor.Unsent ? "!" : null;
     }
 
-    public setRooms(rooms: Room[]) {
+    public setRooms(rooms: Room[]): void {
         // If we're only concerned about the tile count, don't bother setting up listeners.
         if (this.byTileCount) {
             this.rooms = rooms;
@@ -45,41 +45,41 @@ export class ListNotificationState extends NotificationState {
 
         const oldRooms = this.rooms;
         const diff = arrayDiff(oldRooms, rooms);
-        this.rooms = rooms;
+        this.rooms = [...rooms];
         for (const oldRoom of diff.removed) {
             const state = this.states[oldRoom.roomId];
             if (!state) continue; // We likely just didn't have a badge (race condition)
             delete this.states[oldRoom.roomId];
-            state.off(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
         }
         for (const newRoom of diff.added) {
             const state = this.getRoomFn(newRoom);
-            state.on(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.on(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
             this.states[newRoom.roomId] = state;
         }
 
         this.calculateTotalState();
     }
 
-    public getForRoom(room: Room) {
+    public getForRoom(room: Room): RoomNotificationState {
         const state = this.states[room.roomId];
         if (!state) throw new Error("Unknown room for notification state");
         return state;
     }
 
-    public destroy() {
+    public destroy(): void {
         super.destroy();
         for (const state of Object.values(this.states)) {
-            state.off(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
         }
         this.states = {};
     }
 
-    private onRoomNotificationStateUpdate = () => {
+    private onRoomNotificationStateUpdate = (): void => {
         this.calculateTotalState();
     };
 
-    private calculateTotalState() {
+    private calculateTotalState(): void {
         const snapshot = this.snapshot();
 
         if (this.byTileCount) {
@@ -98,4 +98,3 @@ export class ListNotificationState extends NotificationState {
         this.emitIfUpdated(snapshot);
     }
 }
-

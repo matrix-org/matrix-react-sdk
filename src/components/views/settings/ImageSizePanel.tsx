@@ -15,11 +15,13 @@ limitations under the License.
 */
 
 import React from "react";
+
 import SettingsStore from "../../../settings/SettingsStore";
 import StyledRadioButton from "../elements/StyledRadioButton";
 import { _t } from "../../../languageHandler";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { ImageSize } from "../../../settings/enums/ImageSize";
+import SettingsSubsection from "./shared/SettingsSubsection";
 
 interface IProps {
     // none
@@ -30,7 +32,7 @@ interface IState {
 }
 
 export default class ImageSizePanel extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -46,13 +48,9 @@ export default class ImageSizePanel extends React.Component<IProps, IState> {
         SettingsStore.setValue("Images.size", null, SettingLevel.ACCOUNT, newSize);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
-            <div className="mx_SettingsTab_section mx_ImageSizePanel">
-                <span className="mx_SettingsTab_subheading">
-                    { _t("Image size in the timeline") }
-                </span>
-
+            <SettingsSubsection heading={_t("Image size in the timeline")}>
                 <div className="mx_ImageSizePanel_radios">
                     <label>
                         <div className="mx_ImageSizePanel_size mx_ImageSizePanel_sizeDefault" />
@@ -61,7 +59,9 @@ export default class ImageSizePanel extends React.Component<IProps, IState> {
                             value={ImageSize.Normal}
                             checked={this.state.size === ImageSize.Normal}
                             onChange={this.onSizeChange}
-                        >{ _t("Default") }</StyledRadioButton>
+                        >
+                            {_t("Default")}
+                        </StyledRadioButton>
                     </label>
                     <label>
                         <div className="mx_ImageSizePanel_size mx_ImageSizePanel_sizeLarge" />
@@ -70,10 +70,12 @@ export default class ImageSizePanel extends React.Component<IProps, IState> {
                             value={ImageSize.Large}
                             checked={this.state.size === ImageSize.Large}
                             onChange={this.onSizeChange}
-                        >{ _t("Large") }</StyledRadioButton>
+                        >
+                            {_t("Large")}
+                        </StyledRadioButton>
                     </label>
                 </div>
-            </div>
+            </SettingsSubsection>
         );
     }
 }

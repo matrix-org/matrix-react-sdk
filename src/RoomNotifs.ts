@@ -1,6 +1,5 @@
 /*
-Copyright 2016 OpenMarket Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2016, 2019, 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,85 +14,53 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClientPeg } from './MatrixClientPeg';
-import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { ConditionKind, IPushRule, PushRuleActionName, PushRuleKind } from "matrix-js-sdk/src/@types/PushRules";
+import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
+import {
+    NotificationCountType,
+    ConditionKind,
+    PushRuleActionName,
+    PushRuleKind,
+    TweakName,
+} from "matrix-js-sdk/src/matrix";
+
+import type { IPushRule, Room, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { NotificationColor } from "./stores/notifications/NotificationColor";
+import { getUnsentMessages } from "./components/structures/RoomStatusBar";
+import { doesRoomHaveUnreadMessages, doesRoomOrThreadHaveUnreadMessages } from "./Unread";
+import { EffectiveMembership, getEffectiveMembership } from "./utils/membership";
+import SettingsStore from "./settings/SettingsStore";
 
 export enum RoomNotifState {
-    AllMessagesLoud = 'all_messages_loud',
-    AllMessages = 'all_messages',
-    MentionsOnly = 'mentions_only',
-    Mute = 'mute',
+    AllMessagesLoud = "all_messages_loud",
+    AllMessages = "all_messages",
+    MentionsOnly = "mentions_only",
+    Mute = "mute",
 }
 
-export const BADGE_STATES = [RoomNotifState.AllMessages, RoomNotifState.AllMessagesLoud];
-export const MENTION_BADGE_STATES = [...BADGE_STATES, RoomNotifState.MentionsOnly];
-
-export function shouldShowNotifBadge(roomNotifState: RoomNotifState): boolean {
-    return BADGE_STATES.includes(roomNotifState);
-}
-
-export function shouldShowMentionBadge(roomNotifState: RoomNotifState): boolean {
-    return MENTION_BADGE_STATES.includes(roomNotifState);
-}
-
-export function aggregateNotificationCount(rooms: Room[]): {count: number, highlight: boolean} {
-    return rooms.reduce<{count: number, highlight: boolean}>((result, room) => {
-        const roomNotifState = getRoomNotifsState(room.roomId);
-        const highlight = room.getUnreadNotificationCount(NotificationCountType.Highlight) > 0;
-        // use helper method to include highlights in the previous version of the room
-        const notificationCount = getUnreadNotificationCount(room);
-
-        const notifBadges = notificationCount > 0 && shouldShowNotifBadge(roomNotifState);
-        const mentionBadges = highlight && shouldShowMentionBadge(roomNotifState);
-        const badges = notifBadges || mentionBadges;
-
-        if (badges) {
-            result.count += notificationCount;
-            if (highlight) {
-                result.highlight = true;
-            }
-        }
-        return result;
-    }, { count: 0, highlight: false });
-}
-
-export function getRoomHasBadge(room: Room): boolean {
-    const roomNotifState = getRoomNotifsState(room.roomId);
-    const highlight = room.getUnreadNotificationCount(NotificationCountType.Highlight) > 0;
-    const notificationCount = room.getUnreadNotificationCount();
-
-    const notifBadges = notificationCount > 0 && shouldShowNotifBadge(roomNotifState);
-    const mentionBadges = highlight && shouldShowMentionBadge(roomNotifState);
-
-    return notifBadges || mentionBadges;
-}
-
-export function getRoomNotifsState(roomId: string): RoomNotifState {
-    if (MatrixClientPeg.get().isGuest()) return RoomNotifState.AllMessages;
+export function getRoomNotifsState(client: MatrixClient, roomId: string): RoomNotifState | null {
+    if (client.isGuest()) return RoomNotifState.AllMessages;
 
     // look through the override rules for a rule affecting this room:
     // if one exists, it will take precedence.
-    const muteRule = findOverrideMuteRule(roomId);
+    const muteRule = findOverrideMuteRule(client, roomId);
     if (muteRule) {
         return RoomNotifState.Mute;
     }
 
     // for everything else, look at the room rule.
-    let roomRule = null;
+    let roomRule: IPushRule | undefined;
     try {
-        roomRule = MatrixClientPeg.get().getRoomPushRule('global', roomId);
+        roomRule = client.getRoomPushRule("global", roomId);
     } catch (err) {
         // Possible that the client doesn't have pushRules yet. If so, it
-        // hasn't started eiher, so indicate that this room is not notifying.
+        // hasn't started either, so indicate that this room is not notifying.
         return null;
     }
 
     // XXX: We have to assume the default is to notify for all messages
     // (in particular this will be 'wrong' for one to one rooms because
     // they will notify loudly for all messages)
-    if (!roomRule || !roomRule.enabled) return RoomNotifState.AllMessages;
+    if (!roomRule?.enabled) return RoomNotifState.AllMessages;
 
     // a mute at the room level will still allow mentions
     // to notify
@@ -105,24 +72,28 @@ export function getRoomNotifsState(roomId: string): RoomNotifState {
     return null;
 }
 
-export function setRoomNotifsState(roomId: string, newState: RoomNotifState): Promise<void> {
+export function setRoomNotifsState(client: MatrixClient, roomId: string, newState: RoomNotifState): Promise<void> {
     if (newState === RoomNotifState.Mute) {
-        return setRoomNotifsStateMuted(roomId);
+        return setRoomNotifsStateMuted(client, roomId);
     } else {
-        return setRoomNotifsStateUnmuted(roomId, newState);
+        return setRoomNotifsStateUnmuted(client, roomId, newState);
     }
 }
 
-export function getUnreadNotificationCount(room: Room, type: NotificationCountType = null): number {
-    let notificationCount = room.getUnreadNotificationCount(type);
+export function getUnreadNotificationCount(room: Room, type: NotificationCountType, threadId?: string): number {
+    let notificationCount = !!threadId
+        ? room.getThreadUnreadNotificationCount(threadId, type)
+        : room.getUnreadNotificationCount(type);
 
     // Check notification counts in the old room just in case there's some lost
     // there. We only go one level down to avoid performance issues, and theory
     // is that 1st generation rooms will have already been read by the 3rd generation.
-    const createEvent = room.currentState.getStateEvents("m.room.create", "");
-    if (createEvent && createEvent.getContent()['predecessor']) {
-        const oldRoomId = createEvent.getContent()['predecessor']['room_id'];
-        const oldRoom = MatrixClientPeg.get().getRoom(oldRoomId);
+    const msc3946ProcessDynamicPredecessor = SettingsStore.getValue("feature_dynamic_room_predecessors");
+    const predecessor = room.findPredecessor(msc3946ProcessDynamicPredecessor);
+    // Exclude threadId, as the same thread can't continue over a room upgrade
+    if (!threadId && predecessor?.roomId) {
+        const oldRoomId = predecessor.roomId;
+        const oldRoom = room.client.getRoom(oldRoomId);
         if (oldRoom) {
             // We only ever care if there's highlights in the old room. No point in
             // notifying the user for unread messages because they would have extreme
@@ -135,14 +106,13 @@ export function getUnreadNotificationCount(room: Room, type: NotificationCountTy
     return notificationCount;
 }
 
-function setRoomNotifsStateMuted(roomId: string): Promise<any> {
-    const cli = MatrixClientPeg.get();
-    const promises = [];
+function setRoomNotifsStateMuted(cli: MatrixClient, roomId: string): Promise<any> {
+    const promises: Promise<unknown>[] = [];
 
     // delete the room rule
-    const roomRule = cli.getRoomPushRule('global', roomId);
+    const roomRule = cli.getRoomPushRule("global", roomId);
     if (roomRule) {
-        promises.push(cli.deletePushRule('global', PushRuleKind.RoomSpecific, roomRule.rule_id));
+        promises.push(cli.deletePushRule("global", PushRuleKind.RoomSpecific, roomRule.rule_id));
     }
 
     // add/replace an override rule to squelch everything in this room
@@ -150,84 +120,150 @@ function setRoomNotifsStateMuted(roomId: string): Promise<any> {
     // is an override rule, not a room rule: it still pertains to this room
     // though, so using the room ID as the rule ID is logical and prevents
     // duplicate copies of the rule.
-    promises.push(cli.addPushRule('global', PushRuleKind.Override, roomId, {
-        conditions: [
-            {
-                kind: 'event_match',
-                key: 'room_id',
-                pattern: roomId,
-            },
-        ],
-        actions: [
-            'dont_notify',
-        ],
-    }));
+    promises.push(
+        cli.addPushRule("global", PushRuleKind.Override, roomId, {
+            conditions: [
+                {
+                    kind: ConditionKind.EventMatch,
+                    key: "room_id",
+                    pattern: roomId,
+                },
+            ],
+            actions: [PushRuleActionName.DontNotify],
+        }),
+    );
 
     return Promise.all(promises);
 }
 
-function setRoomNotifsStateUnmuted(roomId: string, newState: RoomNotifState): Promise<any> {
-    const cli = MatrixClientPeg.get();
-    const promises = [];
+function setRoomNotifsStateUnmuted(cli: MatrixClient, roomId: string, newState: RoomNotifState): Promise<any> {
+    const promises: Promise<unknown>[] = [];
 
-    const overrideMuteRule = findOverrideMuteRule(roomId);
+    const overrideMuteRule = findOverrideMuteRule(cli, roomId);
     if (overrideMuteRule) {
-        promises.push(cli.deletePushRule('global', PushRuleKind.Override, overrideMuteRule.rule_id));
+        promises.push(cli.deletePushRule("global", PushRuleKind.Override, overrideMuteRule.rule_id));
     }
 
     if (newState === RoomNotifState.AllMessages) {
-        const roomRule = cli.getRoomPushRule('global', roomId);
+        const roomRule = cli.getRoomPushRule("global", roomId);
         if (roomRule) {
-            promises.push(cli.deletePushRule('global', PushRuleKind.RoomSpecific, roomRule.rule_id));
+            promises.push(cli.deletePushRule("global", PushRuleKind.RoomSpecific, roomRule.rule_id));
         }
     } else if (newState === RoomNotifState.MentionsOnly) {
-        promises.push(cli.addPushRule('global', PushRuleKind.RoomSpecific, roomId, {
-            actions: [
-                'dont_notify',
-            ],
-        }));
-        // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled('global', PushRuleKind.RoomSpecific, roomId, true));
+        promises.push(
+            cli.addPushRule("global", PushRuleKind.RoomSpecific, roomId, {
+                actions: [PushRuleActionName.DontNotify],
+            }),
+        );
     } else if (newState === RoomNotifState.AllMessagesLoud) {
-        promises.push(cli.addPushRule('global', PushRuleKind.RoomSpecific, roomId, {
-            actions: [
-                'notify',
-                {
-                    set_tweak: 'sound',
-                    value: 'default',
-                },
-            ],
-        }));
-        // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled('global', PushRuleKind.RoomSpecific, roomId, true));
+        promises.push(
+            cli.addPushRule("global", PushRuleKind.RoomSpecific, roomId, {
+                actions: [
+                    PushRuleActionName.Notify,
+                    {
+                        set_tweak: TweakName.Sound,
+                        value: "default",
+                    },
+                ],
+            }),
+        );
     }
 
     return Promise.all(promises);
 }
 
-function findOverrideMuteRule(roomId: string): IPushRule {
-    const cli = MatrixClientPeg.get();
+function findOverrideMuteRule(cli: MatrixClient | undefined, roomId: string): IPushRule | null {
     if (!cli?.pushRules?.global?.override) {
         return null;
     }
     for (const rule of cli.pushRules.global.override) {
-        if (isRuleForRoom(roomId, rule)) {
-            if (isMuteRule(rule) && rule.enabled) {
-                return rule;
-            }
+        if (rule.enabled && isRuleRoomMuteRuleForRoomId(roomId, rule)) {
+            return rule;
         }
     }
     return null;
 }
 
-function isRuleForRoom(roomId: string, rule: IPushRule): boolean {
-    if (rule.conditions.length !== 1) {
+/**
+ * Checks if a given rule is a room mute rule as implemented by EW
+ * - matches every event in one room (one condition that is an event match on roomId)
+ * - silences notifications (one action that is `DontNotify`)
+ * @param rule - push rule
+ * @returns {boolean} - true when rule mutes a room
+ */
+export function isRuleMaybeRoomMuteRule(rule: IPushRule): boolean {
+    return (
+        // matches every event in one room
+        rule.conditions?.length === 1 &&
+        rule.conditions[0].kind === ConditionKind.EventMatch &&
+        rule.conditions[0].key === "room_id" &&
+        // silences notifications
+        isMuteRule(rule)
+    );
+}
+
+/**
+ * Checks if a given rule is a room mute rule as implemented by EW
+ * @param roomId - id of room to match
+ * @param rule - push rule
+ * @returns {boolean} true when rule mutes the given room
+ */
+function isRuleRoomMuteRuleForRoomId(roomId: string, rule: IPushRule): boolean {
+    if (!isRuleMaybeRoomMuteRule(rule)) {
         return false;
     }
-    const cond = rule.conditions[0];
-    return (cond.kind === ConditionKind.EventMatch && cond.key === 'room_id' && cond.pattern === roomId);
+    // isRuleMaybeRoomMuteRule checks this condition exists
+    const cond = rule.conditions![0]!;
+    return cond.pattern === roomId;
 }
 
 function isMuteRule(rule: IPushRule): boolean {
-    return (rule.actions.length === 1 && rule.actions[0] === PushRuleActionName.DontNotify);
+    // DontNotify is equivalent to the empty actions array
+    return (
+        rule.actions.length === 0 || (rule.actions.length === 1 && rule.actions[0] === PushRuleActionName.DontNotify)
+    );
+}
+
+export function determineUnreadState(
+    room?: Room,
+    threadId?: string,
+): { color: NotificationColor; symbol: string | null; count: number } {
+    if (!room) {
+        return { symbol: null, count: 0, color: NotificationColor.None };
+    }
+
+    if (getUnsentMessages(room, threadId).length > 0) {
+        return { symbol: "!", count: 1, color: NotificationColor.Unsent };
+    }
+
+    if (getEffectiveMembership(room.getMyMembership()) === EffectiveMembership.Invite) {
+        return { symbol: "!", count: 1, color: NotificationColor.Red };
+    }
+
+    if (getRoomNotifsState(room.client, room.roomId) === RoomNotifState.Mute) {
+        return { symbol: null, count: 0, color: NotificationColor.None };
+    }
+
+    const redNotifs = getUnreadNotificationCount(room, NotificationCountType.Highlight, threadId);
+    const greyNotifs = getUnreadNotificationCount(room, NotificationCountType.Total, threadId);
+
+    const trueCount = greyNotifs || redNotifs;
+    if (redNotifs > 0) {
+        return { symbol: null, count: trueCount, color: NotificationColor.Red };
+    }
+
+    if (greyNotifs > 0) {
+        return { symbol: null, count: trueCount, color: NotificationColor.Grey };
+    }
+
+    // We don't have any notified messages, but we might have unread messages. Let's find out.
+    let hasUnread: boolean;
+    if (threadId) hasUnread = doesRoomOrThreadHaveUnreadMessages(room.getThread(threadId)!);
+    else hasUnread = doesRoomHaveUnreadMessages(room);
+
+    return {
+        symbol: null,
+        count: trueCount,
+        color: hasUnread ? NotificationColor.Bold : NotificationColor.None,
+    };
 }

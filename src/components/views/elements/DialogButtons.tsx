@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React, { ReactNode } from "react";
+
+import { _t } from "../../../languageHandler";
 
 interface IProps {
     // The primary button which is styled differently and has default focus.
@@ -30,8 +30,9 @@ interface IProps {
     // If true, make the primary button a form submit button (input type="submit")
     primaryIsSubmit?: boolean;
 
-    // onClick handler for the primary button.
-    onPrimaryButtonClick?: (ev: React.MouseEvent) => void;
+    // onClick handler for the primary button. Note that the returned promise, if
+    // returning a promise, is not used.
+    onPrimaryButtonClick?: (ev: React.MouseEvent) => void | Promise<void>;
 
     // should there be a cancel button? default: true
     hasCancel?: boolean;
@@ -52,15 +53,15 @@ interface IProps {
     primaryDisabled?: boolean;
 
     // something to stick next to the buttons, optionally
-    additive?: React.ReactNode;
+    additive?: ReactNode;
 
     primaryButtonClass?: string;
+    children?: ReactNode;
 }
 
 /**
  * Basic container for buttons in modal dialogs.
  */
-@replaceableComponent("views.elements.DialogButtons")
 export default class DialogButtons extends React.Component<IProps> {
     public static defaultProps: Partial<IProps> = {
         hasCancel: true,
@@ -68,47 +69,54 @@ export default class DialogButtons extends React.Component<IProps> {
     };
 
     private onCancelClick = (event: React.MouseEvent): void => {
-        this.props.onCancel(event);
+        this.props.onCancel?.(event);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let primaryButtonClassName = "mx_Dialog_primary";
         if (this.props.primaryButtonClass) {
             primaryButtonClassName += " " + this.props.primaryButtonClass;
         }
-        let cancelButton;
 
-        if (this.props.cancelButton || this.props.hasCancel) {
-            cancelButton = <button
-                // important: the default type is 'submit' and this button comes before the
-                // primary in the DOM so will get form submissions unless we make it not a submit.
-                type="button"
-                onClick={this.onCancelClick}
-                className={this.props.cancelButtonClass}
-                disabled={this.props.disabled}
-            >
-                { this.props.cancelButton || _t("Cancel") }
-            </button>;
+        let cancelButton: JSX.Element | undefined;
+        if (this.props.hasCancel) {
+            cancelButton = (
+                <button
+                    // important: the default type is 'submit' and this button comes before the
+                    // primary in the DOM so will get form submissions unless we make it not a submit.
+                    data-testid="dialog-cancel-button"
+                    type="button"
+                    onClick={this.onCancelClick}
+                    className={this.props.cancelButtonClass}
+                    disabled={this.props.disabled}
+                >
+                    {this.props.cancelButton || _t("Cancel")}
+                </button>
+            );
         }
 
-        let additive = null;
+        let additive: JSX.Element | undefined;
         if (this.props.additive) {
-            additive = <div className="mx_Dialog_buttons_additive">{ this.props.additive }</div>;
+            additive = <div className="mx_Dialog_buttons_additive">{this.props.additive}</div>;
         }
 
         return (
             <div className="mx_Dialog_buttons">
-                { additive }
-                { cancelButton }
-                { this.props.children }
-                <button type={this.props.primaryIsSubmit ? 'submit' : 'button'}
-                    className={primaryButtonClassName}
-                    onClick={this.props.onPrimaryButtonClick}
-                    autoFocus={this.props.focus}
-                    disabled={this.props.disabled || this.props.primaryDisabled}
-                >
-                    { this.props.primaryButton }
-                </button>
+                {additive}
+                <span className="mx_Dialog_buttons_row">
+                    {cancelButton}
+                    {this.props.children}
+                    <button
+                        type={this.props.primaryIsSubmit ? "submit" : "button"}
+                        data-testid="dialog-primary-button"
+                        className={primaryButtonClassName}
+                        onClick={this.props.onPrimaryButtonClick}
+                        autoFocus={this.props.focus}
+                        disabled={this.props.disabled || this.props.primaryDisabled}
+                    >
+                        {this.props.primaryButton}
+                    </button>
+                </span>
             </div>
         );
     }

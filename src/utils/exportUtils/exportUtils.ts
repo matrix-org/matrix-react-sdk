@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
+
 import { _t } from "../../languageHandler";
 
 export enum ExportFormat {
@@ -23,12 +24,16 @@ export enum ExportFormat {
     Json = "Json",
 }
 
+export type ExportFormatKey = "Html" | "PlainText" | "Json";
+
 export enum ExportType {
     Timeline = "Timeline",
     Beginning = "Beginning",
     LastNMessages = "LastNMessages",
     // START_DATE = "START_DATE",
 }
+
+export type ExportTypeKey = "Timeline" | "Beginning" | "LastNMessages";
 
 export const textForFormat = (format: ExportFormat): string => {
     switch (format) {
@@ -58,7 +63,7 @@ export const textForType = (type: ExportType): string => {
     }
 };
 
-export const textForReplyEvent = (content: IContent) => {
+export const textForReplyEvent = (content: IContent): string => {
     const REPLY_REGEX = /> <(.*?)>(.*?)\n\n(.*)/s;
     const REPLY_SOURCE_MAX_LENGTH = 32;
 
@@ -73,13 +78,13 @@ export const textForReplyEvent = (content: IContent) => {
 
     rplSource = match[2].substring(1);
     // Get the first non-blank line from the source.
-    const lines = rplSource.split('\n').filter((line) => !/^\s*$/.test(line));
+    const lines = rplSource.split("\n").filter((line) => !/^\s*$/.test(line));
     if (lines.length > 0) {
         // Cut to a maximum length.
         rplSource = lines[0].substring(0, REPLY_SOURCE_MAX_LENGTH);
         // Ellipsis if needed.
         if (lines[0].length > REPLY_SOURCE_MAX_LENGTH) {
-            rplSource = rplSource + "…";
+            rplSource = rplSource + "...";
         }
         // Wrap in formatting
         rplSource = ` "${rplSource}"`;
@@ -92,7 +97,11 @@ export const textForReplyEvent = (content: IContent) => {
 };
 
 export const isReply = (event: MatrixEvent): boolean => {
-    return !!event.replyEventId;
+    const isEncrypted = event.isEncrypted();
+    // If encrypted, in_reply_to lies in event.event.content
+    const content = isEncrypted ? event.event.content! : event.getContent();
+    const relatesTo = content["m.relates_to"];
+    return !!(relatesTo && relatesTo["m.in_reply_to"]);
 };
 
 export interface IExportOptions {

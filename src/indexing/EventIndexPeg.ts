@@ -19,19 +19,25 @@ limitations under the License.
  * platform supports event indexing.
  */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import PlatformPeg from "../PlatformPeg";
 import EventIndex from "../indexing/EventIndex";
 import { MatrixClientPeg } from "../MatrixClientPeg";
-import SettingsStore from '../settings/SettingsStore';
+import SettingsStore from "../settings/SettingsStore";
 import { SettingLevel } from "../settings/SettingLevel";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const INDEX_VERSION = 1;
 
+/**
+ * Holds the current instance of the `EventIndex` to use across the codebase.
+ * Looking for an `EventIndex`? Just look for the `EventIndexPeg` on the peg
+ * board. "Peg" is the literal meaning of something you hang something on. So
+ * you'll find a `EventIndex` hanging on the `EventIndexPeg`.
+ */
 export class EventIndexPeg {
-    public index: EventIndex = null;
-    public error: Error = null;
+    public index: EventIndex | null = null;
+    public error: unknown;
 
     private _supportIsInstalled = false;
 
@@ -42,8 +48,8 @@ export class EventIndexPeg {
      * @return {Promise<boolean>} A promise that will resolve to true if an
      * EventIndex was successfully initialized, false otherwise.
      */
-    async init() {
-        const indexManager = PlatformPeg.get().getEventIndexingManager();
+    public async init(): Promise<boolean> {
+        const indexManager = PlatformPeg.get()?.getEventIndexingManager();
         if (!indexManager) {
             logger.log("EventIndex: Platform doesn't support event indexing, not initializing.");
             return false;
@@ -56,7 +62,7 @@ export class EventIndexPeg {
             return false;
         }
 
-        if (!SettingsStore.getValueAt(SettingLevel.DEVICE, 'enableEventIndexing')) {
+        if (!SettingsStore.getValueAt(SettingLevel.DEVICE, "enableEventIndexing")) {
             logger.log("EventIndex: Event indexing is disabled, not initializing");
             return false;
         }
@@ -67,16 +73,19 @@ export class EventIndexPeg {
     /**
      * Initialize the event index.
      *
-     * @returns {boolean} True if the event index was succesfully initialized,
+     * @returns {boolean} True if the event index was successfully initialized,
      * false otherwise.
      */
-    async initEventIndex() {
+    public async initEventIndex(): Promise<boolean> {
         const index = new EventIndex();
-        const indexManager = PlatformPeg.get().getEventIndexingManager();
+        const indexManager = PlatformPeg.get()?.getEventIndexingManager();
         const client = MatrixClientPeg.get();
+        if (!indexManager || !client) {
+            throw new Error("Unable to init event index");
+        }
 
-        const userId = client.getUserId();
-        const deviceId = client.getDeviceId();
+        const userId = client.getUserId()!;
+        const deviceId = client.getDeviceId()!;
 
         try {
             await indexManager.initEventIndex(userId, deviceId);
@@ -113,12 +122,12 @@ export class EventIndexPeg {
      * @return {boolean} True if it has support, false otherwise. Note that this
      * does not mean that support is installed.
      */
-    platformHasSupport(): boolean {
-        return PlatformPeg.get().getEventIndexingManager() !== null;
+    public platformHasSupport(): boolean {
+        return PlatformPeg.get()?.getEventIndexingManager() != null;
     }
 
     /**
-     * Check if event indexing support is installed for the platfrom.
+     * Check if event indexing support is installed for the platform.
      *
      * Event indexing might require additional optional modules to be installed,
      * this tells us if those are installed. Note that this should only be
@@ -126,7 +135,7 @@ export class EventIndexPeg {
      *
      * @return {boolean} True if support is installed, false otherwise.
      */
-    supportIsInstalled(): boolean {
+    public supportIsInstalled(): boolean {
         return this._supportIsInstalled;
     }
 
@@ -135,16 +144,16 @@ export class EventIndexPeg {
      *
      * @return {EventIndex} The current event index.
      */
-    get() {
+    public get(): EventIndex | null {
         return this.index;
     }
 
-    start() {
+    public start(): void {
         if (this.index === null) return;
         this.index.startCrawler();
     }
 
-    stop() {
+    public stop(): void {
         if (this.index === null) return;
         this.index.stopCrawler();
     }
@@ -157,7 +166,7 @@ export class EventIndexPeg {
      * @return {Promise} A promise that will resolve once the event index is
      * closed.
      */
-    async unset() {
+    public async unset(): Promise<void> {
         if (this.index === null) return;
         await this.index.close();
         this.index = null;
@@ -171,10 +180,10 @@ export class EventIndexPeg {
      * @return {Promise} A promise that will resolve once the event index is
      * deleted.
      */
-    async deleteEventIndex() {
-        const indexManager = PlatformPeg.get().getEventIndexingManager();
+    public async deleteEventIndex(): Promise<void> {
+        const indexManager = PlatformPeg.get()?.getEventIndexingManager();
 
-        if (indexManager !== null) {
+        if (indexManager) {
             await this.unset();
             logger.log("EventIndex: Deleting event index.");
             await indexManager.deleteEventIndex();

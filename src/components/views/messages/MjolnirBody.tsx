@@ -14,33 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import React from "react";
 
-interface IProps {
-    mxEvent: MatrixEvent;
-    onMessageAllowed: () => void;
-}
+import { _t } from "../../../languageHandler";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { IBodyProps } from "./IBodyProps";
 
-@replaceableComponent("views.messages.MjolnirBody")
-export default class MjolnirBody extends React.Component<IProps> {
-    private onAllowClick = (e: React.MouseEvent): void => {
+export default class MjolnirBody extends React.Component<IBodyProps> {
+    private onAllowClick = (e: ButtonEvent): void => {
         e.preventDefault();
         e.stopPropagation();
 
         const key = `mx_mjolnir_render_${this.props.mxEvent.getRoomId()}__${this.props.mxEvent.getId()}`;
         localStorage.setItem(key, "true");
-        this.props.onMessageAllowed();
+        this.props.onMessageAllowed?.();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
-            <div className='mx_MjolnirBody'><i>{ _t(
-                "You have ignored this user, so their message is hidden. <a>Show anyways.</a>",
-                {}, { a: (sub) => <a href="#" onClick={this.onAllowClick}>{ sub }</a> },
-            ) }</i></div>
+            <div className="mx_MjolnirBody">
+                <i>
+                    {_t(
+                        "You have ignored this user, so their message is hidden. <a>Show anyways.</a>",
+                        {},
+                        {
+                            a: (sub) => (
+                                <AccessibleButton kind="link_inline" onClick={this.onAllowClick}>
+                                    {sub}
+                                </AccessibleButton>
+                            ),
+                        },
+                    )}
+                </i>
+            </div>
         );
     }
 }

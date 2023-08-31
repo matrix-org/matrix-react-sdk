@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
+
 import { TagID } from "../../models";
 import { IAlgorithm } from "./IAlgorithm";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import * as Unread from "../../../../Unread";
 import { EffectiveMembership, getEffectiveMembership } from "../../../../utils/membership";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 export function shouldCauseReorder(event: MatrixEvent): boolean {
     const type = event.getType();
@@ -31,9 +30,6 @@ export function shouldCauseReorder(event: MatrixEvent): boolean {
     // Never ignore membership changes
     if (type === EventType.RoomMember && prevContent.membership !== content.membership) return true;
 
-    // Ignore status changes
-    // XXX: This should be an enum
-    if (type === "im.vector.user_status") return false;
     // Ignore display name changes
     if (type === EventType.RoomMember && prevContent.displayname !== content.displayname) return false;
     // Ignore avatar changes
@@ -56,64 +52,67 @@ export const sortRooms = (rooms: Room[]): Room[] => {
 
     // TODO: Don't assume we're using the same client as the peg
     // See https://github.com/vector-im/element-web/issues/14458
-    let myUserId = '';
+    let myUserId = "";
     if (MatrixClientPeg.get()) {
-        myUserId = MatrixClientPeg.get().getUserId();
+        myUserId = MatrixClientPeg.get()!.getSafeUserId();
     }
 
     const tsCache: { [roomId: string]: number } = {};
-    const getLastTs = (r: Room) => {
-        if (tsCache[r.roomId]) {
-            return tsCache[r.roomId];
-        }
-
-        const ts = (() => {
-            // Apparently we can have rooms without timelines, at least under testing
-            // environments. Just return MAX_INT when this happens.
-            if (!r || !r.timeline) {
-                return Number.MAX_SAFE_INTEGER;
-            }
-
-            // If the room hasn't been joined yet, it probably won't have a timeline to
-            // parse. We'll still fall back to the timeline if this fails, but chances
-            // are we'll at least have our own membership event to go off of.
-            const effectiveMembership = getEffectiveMembership(r.getMyMembership());
-            if (effectiveMembership !== EffectiveMembership.Join) {
-                const membershipEvent = r.currentState.getStateEvents("m.room.member", myUserId);
-                if (membershipEvent && !Array.isArray(membershipEvent)) {
-                    return membershipEvent.getTs();
-                }
-            }
-
-            for (let i = r.timeline.length - 1; i >= 0; --i) {
-                const ev = r.timeline[i];
-                if (!ev.getTs()) continue; // skip events that don't have timestamps (tests only?)
-
-                if (
-                    (ev.getSender() === myUserId && shouldCauseReorder(ev)) ||
-                    Unread.eventTriggersUnreadCount(ev)
-                ) {
-                    return ev.getTs();
-                }
-            }
-
-            // we might only have events that don't trigger the unread indicator,
-            // in which case use the oldest event even if normally it wouldn't count.
-            // This is better than just assuming the last event was forever ago.
-            if (r.timeline.length && r.timeline[0].getTs()) {
-                return r.timeline[0].getTs();
-            } else {
-                return Number.MAX_SAFE_INTEGER;
-            }
-        })();
-
-        tsCache[r.roomId] = ts;
-        return ts;
-    };
 
     return rooms.sort((a, b) => {
-        return getLastTs(b) - getLastTs(a);
+        const roomALastTs = tsCache[a.roomId] ?? getLastTs(a, myUserId);
+        const roomBLastTs = tsCache[b.roomId] ?? getLastTs(b, myUserId);
+
+        tsCache[a.roomId] = roomALastTs;
+        tsCache[b.roomId] = roomBLastTs;
+
+        return roomBLastTs - roomALastTs;
     });
+};
+
+const getLastTs = (r: Room, userId: string): number => {
+    const mainTimelineLastTs = ((): number => {
+        // Apparently we can have rooms without timelines, at least under testing
+        // environments. Just return MAX_INT when this happens.
+        if (!r?.timeline) {
+            return Number.MAX_SAFE_INTEGER;
+        }
+
+        // If the room hasn't been joined yet, it probably won't have a timeline to
+        // parse. We'll still fall back to the timeline if this fails, but chances
+        // are we'll at least have our own membership event to go off of.
+        const effectiveMembership = getEffectiveMembership(r.getMyMembership());
+        if (effectiveMembership !== EffectiveMembership.Join) {
+            const membershipEvent = r.currentState.getStateEvents(EventType.RoomMember, userId);
+            if (membershipEvent && !Array.isArray(membershipEvent)) {
+                return membershipEvent.getTs();
+            }
+        }
+
+        for (let i = r.timeline.length - 1; i >= 0; --i) {
+            const ev = r.timeline[i];
+            if (!ev.getTs()) continue; // skip events that don't have timestamps (tests only?)
+
+            if (
+                (ev.getSender() === userId && shouldCauseReorder(ev)) ||
+                Unread.eventTriggersUnreadCount(r.client, ev)
+            ) {
+                return ev.getTs();
+            }
+        }
+
+        // we might only have events that don't trigger the unread indicator,
+        // in which case use the oldest event even if normally it wouldn't count.
+        // This is better than just assuming the last event was forever ago.
+        return r.timeline[0]?.getTs() ?? Number.MAX_SAFE_INTEGER;
+    })();
+
+    const threadLastEventTimestamps = r.getThreads().map((thread) => {
+        const event = thread.replyToEvent ?? thread.rootEvent;
+        return event?.getTs() ?? 0;
+    });
+
+    return Math.max(mainTimelineLastTs, ...threadLastEventTimestamps);
 };
 
 /**
@@ -123,5 +122,9 @@ export const sortRooms = (rooms: Room[]): Room[] => {
 export class RecentAlgorithm implements IAlgorithm {
     public sortRooms(rooms: Room[], tagId: TagID): Room[] {
         return sortRooms(rooms);
+    }
+
+    public getLastTs(room: Room, userId: string): number {
+        return getLastTs(room, userId);
     }
 }

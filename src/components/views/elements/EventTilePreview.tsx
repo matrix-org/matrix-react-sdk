@@ -14,18 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classnames from 'classnames';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import React from "react";
+import classnames from "classnames";
+import { MatrixEvent, RoomMember, MsgType } from "matrix-js-sdk/src/matrix";
 
-import * as Avatar from '../../../Avatar';
-import EventTile from '../rooms/EventTile';
-import SettingsStore from "../../../settings/SettingsStore";
+import * as Avatar from "../../../Avatar";
+import EventTile from "../rooms/EventTile";
 import { Layout } from "../../../settings/enums/Layout";
-import { UIFeature } from "../../../settings/UIFeature";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import Spinner from './Spinner';
+import Spinner from "./Spinner";
 
 interface IProps {
     /**
@@ -65,16 +61,15 @@ interface IState {
 
 const AVATAR_SIZE = 32;
 
-@replaceableComponent("views.elements.EventTilePreview")
 export default class EventTilePreview extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             message: props.message,
         };
     }
 
-    private fakeEvent({ message }: IState) {
+    private fakeEvent({ message }: IState): MatrixEvent {
         // Fake it till we make it
         /* eslint-disable quote-props */
         const rawEvent = {
@@ -82,15 +77,15 @@ export default class EventTilePreview extends React.Component<IProps, IState> {
             sender: this.props.userId,
             content: {
                 "m.new_content": {
-                    msgtype: "m.text",
+                    msgtype: MsgType.Text,
                     body: message,
                     displayname: this.props.displayName,
                     avatar_url: this.props.avatarUrl,
                 },
-                msgtype: "m.text",
-                body: message,
-                displayname: this.props.displayName,
-                avatar_url: this.props.avatarUrl,
+                "msgtype": MsgType.Text,
+                "body": message,
+                "displayname": this.props.displayName,
+                "avatar_url": this.props.avatarUrl,
             },
             unsigned: {
                 age: 97,
@@ -107,10 +102,7 @@ export default class EventTilePreview extends React.Component<IProps, IState> {
             rawDisplayName: this.props.displayName,
             userId: this.props.userId,
             getAvatarUrl: (..._) => {
-                return Avatar.avatarUrlForUser(
-                    { avatarUrl: this.props.avatarUrl },
-                    AVATAR_SIZE, AVATAR_SIZE, "crop",
-                );
+                return Avatar.avatarUrlForUser({ avatarUrl: this.props.avatarUrl }, AVATAR_SIZE, AVATAR_SIZE, "crop");
             },
             getMxcAvatarUrl: () => this.props.avatarUrl,
         } as RoomMember;
@@ -118,24 +110,25 @@ export default class EventTilePreview extends React.Component<IProps, IState> {
         return event;
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const className = classnames(this.props.className, {
-            "mx_IRCLayout": this.props.layout == Layout.IRC,
-            "mx_GroupLayout": this.props.layout == Layout.Group,
-            "mx_EventTilePreview_loader": !this.props.userId,
+            mx_IRCLayout: this.props.layout == Layout.IRC,
+            mx_EventTilePreview_loader: !this.props.userId,
         });
 
-        if (!this.props.userId) return <div className={className}><Spinner /></div>;
+        if (!this.props.userId)
+            return (
+                <div className={className}>
+                    <Spinner />
+                </div>
+            );
 
         const event = this.fakeEvent(this.state);
 
-        return <div className={className}>
-            <EventTile
-                mxEvent={event}
-                layout={this.props.layout}
-                enableFlair={SettingsStore.getValue(UIFeature.Flair)}
-                as="div"
-            />
-        </div>;
+        return (
+            <div className={className} role="presentation">
+                <EventTile mxEvent={event} layout={this.props.layout} as="div" hideTimestamp inhibitInteraction />
+            </div>
+        );
     }
 }

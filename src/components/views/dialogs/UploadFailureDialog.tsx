@@ -14,20 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import filesize from 'filesize';
+import React from "react";
 
-import React from 'react';
-import { _t } from '../../../languageHandler';
-import ContentMessages from '../../../ContentMessages';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { _t } from "../../../languageHandler";
+import ContentMessages from "../../../ContentMessages";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
-import { IDialogProps } from "./IDialogProps";
+import { fileSize } from "../../../utils/FileUtils";
 
-interface IProps extends IDialogProps {
+interface IProps {
     badFiles: File[];
     totalFiles: number;
     contentMessages: ContentMessages;
+    onFinished(upload?: boolean): void;
 }
 
 /*
@@ -35,7 +34,6 @@ interface IProps extends IDialogProps {
  * them. This is named fairly generically but the only thing we check right now is
  * the size of the file.
  */
-@replaceableComponent("views.dialogs.UploadFailureDialog")
 export default class UploadFailureDialog extends React.Component<IProps> {
     private onCancelClick = (): void => {
         this.props.onFinished(false);
@@ -45,74 +43,84 @@ export default class UploadFailureDialog extends React.Component<IProps> {
         this.props.onFinished(true);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let message;
         let preview;
         let buttons;
         if (this.props.totalFiles === 1 && this.props.badFiles.length === 1) {
             message = _t(
                 "This file is <b>too large</b> to upload. " +
-                "The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.",
+                    "The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.",
                 {
-                    limit: filesize(this.props.contentMessages.getUploadLimit()),
-                    sizeOfThisFile: filesize(this.props.badFiles[0].size),
-                }, {
-                    b: sub => <b>{ sub }</b>,
+                    limit: fileSize(this.props.contentMessages.getUploadLimit()),
+                    sizeOfThisFile: fileSize(this.props.badFiles[0].size),
+                },
+                {
+                    b: (sub) => <b>{sub}</b>,
                 },
             );
-            buttons = <DialogButtons primaryButton={_t('OK')}
-                hasCancel={false}
-                onPrimaryButtonClick={this.onCancelClick}
-                focus={true}
-            />;
+            buttons = (
+                <DialogButtons
+                    primaryButton={_t("OK")}
+                    hasCancel={false}
+                    onPrimaryButtonClick={this.onCancelClick}
+                    focus={true}
+                />
+            );
         } else if (this.props.totalFiles === this.props.badFiles.length) {
             message = _t(
-                "These files are <b>too large</b> to upload. " +
-                "The file size limit is %(limit)s.",
+                "These files are <b>too large</b> to upload. " + "The file size limit is %(limit)s.",
                 {
-                    limit: filesize(this.props.contentMessages.getUploadLimit()),
-                }, {
-                    b: sub => <b>{ sub }</b>,
+                    limit: fileSize(this.props.contentMessages.getUploadLimit()),
+                },
+                {
+                    b: (sub) => <b>{sub}</b>,
                 },
             );
-            buttons = <DialogButtons primaryButton={_t('OK')}
-                hasCancel={false}
-                onPrimaryButtonClick={this.onCancelClick}
-                focus={true}
-            />;
+            buttons = (
+                <DialogButtons
+                    primaryButton={_t("OK")}
+                    hasCancel={false}
+                    onPrimaryButtonClick={this.onCancelClick}
+                    focus={true}
+                />
+            );
         } else {
             message = _t(
-                "Some files are <b>too large</b> to be uploaded. " +
-                "The file size limit is %(limit)s.",
+                "Some files are <b>too large</b> to be uploaded. " + "The file size limit is %(limit)s.",
                 {
-                    limit: filesize(this.props.contentMessages.getUploadLimit()),
-                }, {
-                    b: sub => <b>{ sub }</b>,
+                    limit: fileSize(this.props.contentMessages.getUploadLimit()),
+                },
+                {
+                    b: (sub) => <b>{sub}</b>,
                 },
             );
             const howManyOthers = this.props.totalFiles - this.props.badFiles.length;
-            buttons = <DialogButtons
-                primaryButton={_t('Upload %(count)s other files', { count: howManyOthers })}
-                onPrimaryButtonClick={this.onUploadClick}
-                hasCancel={true}
-                cancelButton={_t("Cancel All")}
-                onCancel={this.onCancelClick}
-                focus={true}
-            />;
+            buttons = (
+                <DialogButtons
+                    primaryButton={_t("Upload %(count)s other files", { count: howManyOthers })}
+                    onPrimaryButtonClick={this.onUploadClick}
+                    hasCancel={true}
+                    cancelButton={_t("Cancel All")}
+                    onCancel={this.onCancelClick}
+                    focus={true}
+                />
+            );
         }
 
         return (
-            <BaseDialog className='mx_UploadFailureDialog'
+            <BaseDialog
+                className="mx_UploadFailureDialog"
                 onFinished={this.onCancelClick}
                 title={_t("Upload Error")}
-                contentId='mx_Dialog_content'
+                contentId="mx_Dialog_content"
             >
-                <div id='mx_Dialog_content'>
-                    { message }
-                    { preview }
+                <div id="mx_Dialog_content">
+                    {message}
+                    {preview}
                 </div>
 
-                { buttons }
+                {buttons}
             </BaseDialog>
         );
     }

@@ -1,6 +1,8 @@
 /*
 Copyright 2019 New Vector Ltd
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2023 The Matrix.org Foundation C.I.C.
+
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,7 +17,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
+import { RoomEvent, Room, RoomStateEvent, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
+
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
 import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsTab";
@@ -28,134 +32,233 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
+import { Action } from "../../../dispatcher/actions";
+import { VoipRoomSettingsTab } from "../settings/tabs/room/VoipRoomSettingsTab";
+import { ActionPayload } from "../../../dispatcher/payloads";
+import { NonEmptyArray } from "../../../@types/common";
+import { PollHistoryTab } from "../settings/tabs/room/PollHistoryTab";
+import ErrorBoundary from "../elements/ErrorBoundary";
+import { PeopleRoomSettingsTab } from "../settings/tabs/room/PeopleRoomSettingsTab";
 
-export const ROOM_GENERAL_TAB = "ROOM_GENERAL_TAB";
-export const ROOM_SECURITY_TAB = "ROOM_SECURITY_TAB";
-export const ROOM_ROLES_TAB = "ROOM_ROLES_TAB";
-export const ROOM_NOTIFICATIONS_TAB = "ROOM_NOTIFICATIONS_TAB";
-export const ROOM_BRIDGES_TAB = "ROOM_BRIDGES_TAB";
-export const ROOM_ADVANCED_TAB = "ROOM_ADVANCED_TAB";
+export const enum RoomSettingsTab {
+    General = "ROOM_GENERAL_TAB",
+    People = "ROOM_PEOPLE_TAB",
+    Voip = "ROOM_VOIP_TAB",
+    Security = "ROOM_SECURITY_TAB",
+    Roles = "ROOM_ROLES_TAB",
+    Notifications = "ROOM_NOTIFICATIONS_TAB",
+    Bridges = "ROOM_BRIDGES_TAB",
+    Advanced = "ROOM_ADVANCED_TAB",
+    PollHistory = "ROOM_POLL_HISTORY_TAB",
+}
 
 interface IProps {
     roomId: string;
-    onFinished: (success: boolean) => void;
+    onFinished: (success?: boolean) => void;
     initialTabId?: string;
 }
 
 interface IState {
-    roomName: string;
+    room: Room;
 }
 
-@replaceableComponent("views.dialogs.RoomSettingsDialog")
-export default class RoomSettingsDialog extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
+class RoomSettingsDialog extends React.Component<IProps, IState> {
+    private dispatcherRef?: string;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
-        this.state = { roomName: '' };
+
+        const room = this.getRoom();
+        this.state = { room };
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
-        MatrixClientPeg.get().on("Room.name", this.onRoomName);
+        MatrixClientPeg.safeGet().on(RoomEvent.Name, this.onRoomName);
+        MatrixClientPeg.safeGet().on(RoomStateEvent.Events, this.onStateEvent);
         this.onRoomName();
     }
 
-    public componentWillUnmount() {
+    public componentDidUpdate(): void {
+        if (this.props.roomId !== this.state.room.roomId) {
+            const room = this.getRoom();
+            this.setState({ room });
+        }
+    }
+
+    public componentWillUnmount(): void {
         if (this.dispatcherRef) {
             dis.unregister(this.dispatcherRef);
         }
 
-        MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
+        MatrixClientPeg.get()?.removeListener(RoomEvent.Name, this.onRoomName);
+        MatrixClientPeg.get()?.removeListener(RoomStateEvent.Events, this.onStateEvent);
     }
 
-    private onAction = (payload): void => {
+    /**
+     * Get room from client
+     * @returns Room
+     * @throws when room is not found
+     */
+    private getRoom(): Room {
+        const room = MatrixClientPeg.safeGet().getRoom(this.props.roomId)!;
+
+        // something is really wrong if we encounter this
+        if (!room) {
+            throw new Error(`Cannot find room ${this.props.roomId}`);
+        }
+        return room;
+    }
+
+    private onAction = (payload: ActionPayload): void => {
         // When view changes below us, close the room settings
         // whilst the modal is open this can only be triggered when someone hits Leave Room
-        if (payload.action === 'view_home_page') {
+        if (payload.action === Action.ViewHomePage) {
             this.props.onFinished(true);
         }
     };
 
     private onRoomName = (): void => {
-        this.setState({
-            roomName: MatrixClientPeg.get().getRoom(this.props.roomId).name,
-        });
+        // rerender when the room name changes
+        this.forceUpdate();
     };
 
-    private getTabs(): Tab[] {
-        const tabs: Tab[] = [];
+    private onStateEvent = (event: MatrixEvent): void => {
+        if (event.getType() === EventType.RoomJoinRules) this.forceUpdate();
+    };
 
-        tabs.push(new Tab(
-            ROOM_GENERAL_TAB,
-            _td("General"),
-            "mx_RoomSettingsDialog_settingsIcon",
-            <GeneralRoomSettingsTab roomId={this.props.roomId} />,
-        ));
-        tabs.push(new Tab(
-            ROOM_SECURITY_TAB,
-            _td("Security & Privacy"),
-            "mx_RoomSettingsDialog_securityIcon",
-            <SecurityRoomSettingsTab
-                roomId={this.props.roomId}
-                closeSettingsFn={() => this.props.onFinished(true)}
-            />,
-        ));
-        tabs.push(new Tab(
-            ROOM_ROLES_TAB,
-            _td("Roles & Permissions"),
-            "mx_RoomSettingsDialog_rolesIcon",
-            <RolesRoomSettingsTab roomId={this.props.roomId} />,
-        ));
-        tabs.push(new Tab(
-            ROOM_NOTIFICATIONS_TAB,
-            _td("Notifications"),
-            "mx_RoomSettingsDialog_notificationsIcon",
-            <NotificationSettingsTab roomId={this.props.roomId} closeSettingsFn={() => this.props.onFinished(true)} />,
-        ));
+    private getTabs(): NonEmptyArray<Tab<RoomSettingsTab>> {
+        const tabs: Tab<RoomSettingsTab>[] = [];
+
+        tabs.push(
+            new Tab(
+                RoomSettingsTab.General,
+                _td("General"),
+                "mx_RoomSettingsDialog_settingsIcon",
+                <GeneralRoomSettingsTab room={this.state.room} />,
+                "RoomSettingsGeneral",
+            ),
+        );
+        if (SettingsStore.getValue("feature_ask_to_join") && this.state.room.getJoinRule() === "knock") {
+            tabs.push(
+                new Tab(
+                    RoomSettingsTab.People,
+                    _td("People"),
+                    "mx_RoomSettingsDialog_peopleIcon",
+                    <PeopleRoomSettingsTab room={this.state.room} />,
+                ),
+            );
+        }
+        if (SettingsStore.getValue("feature_group_calls")) {
+            tabs.push(
+                new Tab(
+                    RoomSettingsTab.Voip,
+                    _td("Voice & Video"),
+                    "mx_RoomSettingsDialog_voiceIcon",
+                    <VoipRoomSettingsTab room={this.state.room} />,
+                ),
+            );
+        }
+        tabs.push(
+            new Tab(
+                RoomSettingsTab.Security,
+                _td("Security & Privacy"),
+                "mx_RoomSettingsDialog_securityIcon",
+                <SecurityRoomSettingsTab room={this.state.room} closeSettingsFn={() => this.props.onFinished(true)} />,
+                "RoomSettingsSecurityPrivacy",
+            ),
+        );
+        tabs.push(
+            new Tab(
+                RoomSettingsTab.Roles,
+                _td("Roles & Permissions"),
+                "mx_RoomSettingsDialog_rolesIcon",
+                <RolesRoomSettingsTab room={this.state.room} />,
+                "RoomSettingsRolesPermissions",
+            ),
+        );
+        tabs.push(
+            new Tab(
+                RoomSettingsTab.Notifications,
+                _td("Notifications"),
+                "mx_RoomSettingsDialog_notificationsIcon",
+                (
+                    <NotificationSettingsTab
+                        roomId={this.state.room.roomId}
+                        closeSettingsFn={() => this.props.onFinished(true)}
+                    />
+                ),
+                "RoomSettingsNotifications",
+            ),
+        );
 
         if (SettingsStore.getValue("feature_bridge_state")) {
-            tabs.push(new Tab(
-                ROOM_BRIDGES_TAB,
-                _td("Bridges"),
-                "mx_RoomSettingsDialog_bridgesIcon",
-                <BridgeSettingsTab roomId={this.props.roomId} />,
-            ));
+            tabs.push(
+                new Tab(
+                    RoomSettingsTab.Bridges,
+                    _td("Bridges"),
+                    "mx_RoomSettingsDialog_bridgesIcon",
+                    <BridgeSettingsTab room={this.state.room} />,
+                    "RoomSettingsBridges",
+                ),
+            );
         }
+
+        tabs.push(
+            new Tab(
+                RoomSettingsTab.PollHistory,
+                _td("Poll history"),
+                "mx_RoomSettingsDialog_pollsIcon",
+                <PollHistoryTab room={this.state.room} onFinished={() => this.props.onFinished(true)} />,
+            ),
+        );
 
         if (SettingsStore.getValue(UIFeature.AdvancedSettings)) {
-            tabs.push(new Tab(
-                ROOM_ADVANCED_TAB,
-                _td("Advanced"),
-                "mx_RoomSettingsDialog_warningIcon",
-                <AdvancedRoomSettingsTab
-                    roomId={this.props.roomId}
-                    closeSettingsFn={() => this.props.onFinished(true)}
-                />,
-            ));
+            tabs.push(
+                new Tab(
+                    RoomSettingsTab.Advanced,
+                    _td("Advanced"),
+                    "mx_RoomSettingsDialog_warningIcon",
+                    (
+                        <AdvancedRoomSettingsTab
+                            room={this.state.room}
+                            closeSettingsFn={() => this.props.onFinished(true)}
+                        />
+                    ),
+                    "RoomSettingsAdvanced",
+                ),
+            );
         }
 
-        return tabs;
+        return tabs as NonEmptyArray<Tab<RoomSettingsTab>>;
     }
 
-    render() {
-        const roomName = this.state.roomName;
+    public render(): React.ReactNode {
+        const roomName = this.state.room.name;
         return (
             <BaseDialog
-                className='mx_RoomSettingsDialog'
+                className="mx_RoomSettingsDialog"
                 hasCancel={true}
                 onFinished={this.props.onFinished}
                 title={_t("Room Settings - %(roomName)s", { roomName })}
             >
-                <div className='mx_SettingsDialog_content'>
+                <div className="mx_SettingsDialog_content">
                     <TabbedView
                         tabs={this.getTabs()}
                         initialTabId={this.props.initialTabId}
+                        screenName="RoomSettings"
                     />
                 </div>
             </BaseDialog>
         );
     }
 }
+
+const WrappedRoomSettingsDialog: React.FC<IProps> = (props) => (
+    <ErrorBoundary>
+        <RoomSettingsDialog {...props} />
+    </ErrorBoundary>
+);
+
+export default WrappedRoomSettingsDialog;

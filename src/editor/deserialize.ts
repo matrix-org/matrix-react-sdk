@@ -15,180 +15,120 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 
-import { walkDOMDepthFirst } from "./dom";
 import { checkBlockNode } from "../HtmlUtils";
 import { getPrimaryPermalinkEntity } from "../utils/permalinks/Permalinks";
 import { Part, PartCreator, Type } from "./parts";
 import SdkConfig from "../SdkConfig";
 import { textToHtmlRainbow } from "../utils/colour";
+import { stripPlainReply } from "../utils/Reply";
 
-function parseAtRoomMentions(text: string, partCreator: PartCreator) {
+const LIST_TYPES = ["UL", "OL", "LI"];
+
+// Escapes all markup in the given text
+function escape(text: string): string {
+    return text.replace(/[\\*_[\]`<]|^>/g, (match) => `\\${match}`);
+}
+
+// Finds the length of the longest backtick sequence in the given text, used for
+// escaping backticks in code blocks
+export function longestBacktickSequence(text: string): number {
+    let length = 0;
+    let currentLength = 0;
+
+    for (const c of text) {
+        if (c === "`") {
+            currentLength++;
+        } else {
+            length = Math.max(length, currentLength);
+            currentLength = 0;
+        }
+    }
+
+    return Math.max(length, currentLength);
+}
+
+function isListChild(n: Node): boolean {
+    return LIST_TYPES.includes(n.parentNode?.nodeName || "");
+}
+
+function parseAtRoomMentions(text: string, pc: PartCreator, opts: IParseOptions): Part[] {
     const ATROOM = "@room";
-    const parts = [];
+    const parts: Part[] = [];
     text.split(ATROOM).forEach((textPart, i, arr) => {
         if (textPart.length) {
-            parts.push(partCreator.plain(textPart));
+            parts.push(...pc.plainWithEmoji(opts.shouldEscape ? escape(textPart) : textPart));
         }
         // it's safe to never append @room after the last textPart
         // as split will report an empty string at the end if
         // `text` ended in @room.
         const isLast = i === arr.length - 1;
         if (!isLast) {
-            parts.push(partCreator.atRoomPill(ATROOM));
+            parts.push(pc.atRoomPill(ATROOM));
         }
     });
     return parts;
 }
 
-function parseLink(a: HTMLAnchorElement, partCreator: PartCreator) {
-    const { href } = a;
+function parseLink(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
+    const { href } = n as HTMLAnchorElement;
     const resourceId = getPrimaryPermalinkEntity(href); // The room/user ID
-    const prefix = resourceId ? resourceId[0] : undefined; // First character of ID
-    switch (prefix) {
+
+    switch (resourceId?.[0]) {
         case "@":
-            return partCreator.userPill(a.textContent, resourceId);
+            return [pc.userPill(n.textContent || "", resourceId)];
         case "#":
-            return partCreator.roomPill(resourceId);
-        default: {
-            if (href === a.textContent) {
-                return partCreator.plain(a.textContent);
-            } else {
-                return partCreator.plain(`[${a.textContent.replace(/[[\\\]]/g, c => "\\" + c)}](${href})`);
-            }
-        }
+            return [pc.roomPill(resourceId)];
+    }
+
+    const children = Array.from(n.childNodes);
+    if (href === n.textContent && children.every((c) => c.nodeType === Node.TEXT_NODE)) {
+        return parseAtRoomMentions(n.textContent, pc, opts);
+    } else {
+        return [pc.plain("["), ...parseChildren(n, pc, opts), pc.plain(`](${href})`)];
     }
 }
 
-function parseImage(img: HTMLImageElement, partCreator: PartCreator) {
-    const { src } = img;
-    return partCreator.plain(`![${img.alt.replace(/[[\\\]]/g, c => "\\" + c)}](${src})`);
+function parseImage(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
+    const { alt, src } = n as HTMLImageElement;
+    return pc.plainWithEmoji(`![${escape(alt)}](${src})`);
 }
 
-function parseCodeBlock(n: HTMLElement, partCreator: PartCreator) {
-    const parts = [];
+function parseCodeBlock(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
+    if (!n.textContent) return [];
+
     let language = "";
-    if (n.firstChild && n.firstChild.nodeName === "CODE") {
-        for (const className of (<HTMLElement>n.firstChild).classList) {
+    if (n.firstChild?.nodeName === "CODE") {
+        for (const className of (n.firstChild as HTMLElement).classList) {
             if (className.startsWith("language-") && !className.startsWith("language-_")) {
-                language = className.substr("language-".length);
+                language = className.slice("language-".length);
                 break;
             }
         }
     }
-    const preLines = ("```" + language + "\n" + n.textContent + "```").split("\n");
-    preLines.forEach((l, i) => {
-        parts.push(partCreator.plain(l));
-        if (i < preLines.length - 1) {
-            parts.push(partCreator.newline());
-        }
+
+    const text = n.textContent.replace(/\n$/, "");
+    // Escape backticks by using even more backticks for the fence if necessary
+    const fence = "`".repeat(Math.max(3, longestBacktickSequence(text) + 1));
+    const parts: Part[] = [...pc.plainWithEmoji(fence + language), pc.newline()];
+
+    text.split("\n").forEach((line) => {
+        parts.push(...pc.plainWithEmoji(line));
+        parts.push(pc.newline());
     });
+
+    parts.push(pc.plain(fence));
     return parts;
 }
 
-function parseHeader(el: HTMLElement, partCreator: PartCreator) {
-    const depth = parseInt(el.nodeName.substr(1), 10);
-    return partCreator.plain("#".repeat(depth) + " ");
+function parseHeader(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
+    const depth = parseInt(n.nodeName.slice(1), 10);
+    const prefix = pc.plain("#".repeat(depth) + " ");
+    return [prefix, ...parseChildren(n, pc, opts)];
 }
 
-interface IState {
-    listIndex: number[];
-    listDepth?: number;
-}
-
-function parseElement(n: HTMLElement, partCreator: PartCreator, lastNode: HTMLElement | undefined, state: IState) {
-    switch (n.nodeName) {
-        case "H1":
-        case "H2":
-        case "H3":
-        case "H4":
-        case "H5":
-        case "H6":
-            return parseHeader(n, partCreator);
-        case "A":
-            return parseLink(<HTMLAnchorElement>n, partCreator);
-        case "IMG":
-            return parseImage(<HTMLImageElement>n, partCreator);
-        case "BR":
-            return partCreator.newline();
-        case "EM":
-            return partCreator.plain(`_${n.textContent}_`);
-        case "STRONG":
-            return partCreator.plain(`**${n.textContent}**`);
-        case "PRE":
-            return parseCodeBlock(n, partCreator);
-        case "CODE":
-            return partCreator.plain(`\`${n.textContent}\``);
-        case "DEL":
-            return partCreator.plain(`<del>${n.textContent}</del>`);
-        case "SUB":
-            return partCreator.plain(`<sub>${n.textContent}</sub>`);
-        case "SUP":
-            return partCreator.plain(`<sup>${n.textContent}</sup>`);
-        case "U":
-            return partCreator.plain(`<u>${n.textContent}</u>`);
-        case "LI": {
-            const indent = "  ".repeat(state.listDepth - 1);
-            if (n.parentElement.nodeName === "OL") {
-                // The markdown parser doesn't do nested indexed lists at all, but this supports it anyway.
-                const index = state.listIndex[state.listIndex.length - 1];
-                state.listIndex[state.listIndex.length - 1] += 1;
-                return partCreator.plain(`${indent}${index}. `);
-            } else {
-                return partCreator.plain(`${indent}- `);
-            }
-        }
-        case "P": {
-            if (lastNode) {
-                return partCreator.newline();
-            }
-            break;
-        }
-        case "DIV":
-        case "SPAN": {
-            // math nodes are translated back into delimited latex strings
-            if (n.hasAttribute("data-mx-maths")) {
-                const delimLeft = (n.nodeName == "SPAN") ?
-                    ((SdkConfig.get()['latex_maths_delims'] || {})['inline'] || {})['left'] || "\\(" :
-                    ((SdkConfig.get()['latex_maths_delims'] || {})['display'] || {})['left'] || "\\[";
-                const delimRight = (n.nodeName == "SPAN") ?
-                    ((SdkConfig.get()['latex_maths_delims'] || {})['inline'] || {})['right'] || "\\)" :
-                    ((SdkConfig.get()['latex_maths_delims'] || {})['display'] || {})['right'] || "\\]";
-                const tex = n.getAttribute("data-mx-maths");
-                return partCreator.plain(delimLeft + tex + delimRight);
-            } else if (!checkDescendInto(n)) {
-                return partCreator.plain(n.textContent);
-            }
-            break;
-        }
-        case "OL":
-            state.listIndex.push((<HTMLOListElement>n).start || 1);
-            /* falls through */
-        case "UL":
-            state.listDepth = (state.listDepth || 0) + 1;
-            /* falls through */
-        default:
-            // don't textify block nodes we'll descend into
-            if (!checkDescendInto(n)) {
-                return partCreator.plain(n.textContent);
-            }
-    }
-}
-
-function checkDescendInto(node) {
-    switch (node.nodeName) {
-        case "PRE":
-            // a code block is textified in parseCodeBlock
-            // as we don't want to preserve markup in it,
-            // so no need to descend into it
-            return false;
-        default:
-            return checkBlockNode(node);
-    }
-}
-
-function checkIgnored(n) {
+function checkIgnored(n: Node): boolean {
     if (n.nodeType === Node.TEXT_NODE) {
         // Element adds \n text nodes in a lot of places,
         // which should be ignored
@@ -199,132 +139,176 @@ function checkIgnored(n) {
     return true;
 }
 
-const QUOTE_LINE_PREFIX = "> ";
-function prefixQuoteLines(isFirstNode, parts, partCreator) {
-    // a newline (to append a > to) wouldn't be added to parts for the first line
-    // if there was no content before the BLOCKQUOTE, so handle that
-    if (isFirstNode) {
-        parts.splice(0, 0, partCreator.plain(QUOTE_LINE_PREFIX));
-    }
-    for (let i = 0; i < parts.length; i += 1) {
+function prefixLines(parts: Part[], prefix: string, pc: PartCreator): void {
+    parts.unshift(pc.plain(prefix));
+    for (let i = 0; i < parts.length; i++) {
         if (parts[i].type === Type.Newline) {
-            parts.splice(i + 1, 0, partCreator.plain(QUOTE_LINE_PREFIX));
+            parts.splice(i + 1, 0, pc.plain(prefix));
             i += 1;
         }
     }
 }
 
-function parseHtmlMessage(html: string, partCreator: PartCreator, isQuotedMessage: boolean): Part[] {
+function parseChildren(n: Node, pc: PartCreator, opts: IParseOptions, mkListItem?: (li: Node) => Part[]): Part[] {
+    let prev: ChildNode | undefined;
+    return Array.from(n.childNodes).flatMap((c) => {
+        const parsed = parseNode(c, pc, opts, mkListItem);
+        if (parsed.length && prev && (checkBlockNode(prev) || checkBlockNode(c))) {
+            if (isListChild(c)) {
+                // Use tighter spacing within lists
+                parsed.unshift(pc.newline());
+            } else {
+                parsed.unshift(pc.newline(), pc.newline());
+            }
+        }
+        if (parsed.length) prev = c;
+        return parsed;
+    });
+}
+
+function parseNode(n: Node, pc: PartCreator, opts: IParseOptions, mkListItem?: (li: Node) => Part[]): Part[] {
+    if (checkIgnored(n)) return [];
+
+    switch (n.nodeType) {
+        case Node.TEXT_NODE:
+            return parseAtRoomMentions(n.nodeValue || "", pc, opts);
+        case Node.ELEMENT_NODE:
+            switch (n.nodeName) {
+                case "H1":
+                case "H2":
+                case "H3":
+                case "H4":
+                case "H5":
+                case "H6":
+                    return parseHeader(n, pc, opts);
+                case "A":
+                    return parseLink(n, pc, opts);
+                case "IMG":
+                    return parseImage(n, pc, opts);
+                case "BR":
+                    return [pc.newline()];
+                case "HR":
+                    return [pc.plain("---")];
+                case "EM":
+                    return [pc.plain("_"), ...parseChildren(n, pc, opts), pc.plain("_")];
+                case "STRONG":
+                    return [pc.plain("**"), ...parseChildren(n, pc, opts), pc.plain("**")];
+                case "DEL":
+                    return [pc.plain("<del>"), ...parseChildren(n, pc, opts), pc.plain("</del>")];
+                case "SUB":
+                    return [pc.plain("<sub>"), ...parseChildren(n, pc, opts), pc.plain("</sub>")];
+                case "SUP":
+                    return [pc.plain("<sup>"), ...parseChildren(n, pc, opts), pc.plain("</sup>")];
+                case "U":
+                    return [pc.plain("<u>"), ...parseChildren(n, pc, opts), pc.plain("</u>")];
+                case "PRE":
+                    return parseCodeBlock(n, pc, opts);
+                case "CODE": {
+                    // Escape backticks by using multiple backticks for the fence if necessary
+                    const fence = "`".repeat(longestBacktickSequence(n.textContent || "") + 1);
+                    return pc.plainWithEmoji(`${fence}${n.textContent}${fence}`);
+                }
+                case "BLOCKQUOTE": {
+                    const parts = parseChildren(n, pc, opts);
+                    prefixLines(parts, "> ", pc);
+                    return parts;
+                }
+                case "LI":
+                    return mkListItem?.(n) ?? parseChildren(n, pc, opts);
+                case "UL": {
+                    const parts = parseChildren(n, pc, opts, (li) => [pc.plain("- "), ...parseChildren(li, pc, opts)]);
+                    if (isListChild(n)) {
+                        prefixLines(parts, "    ", pc);
+                    }
+                    return parts;
+                }
+                case "OL": {
+                    let counter = (n as HTMLOListElement).start ?? 1;
+                    const parts = parseChildren(n, pc, opts, (li) => {
+                        const parts = [pc.plain(`${counter}. `), ...parseChildren(li, pc, opts)];
+                        counter++;
+                        return parts;
+                    });
+                    if (isListChild(n)) {
+                        prefixLines(parts, "    ", pc);
+                    }
+                    return parts;
+                }
+                case "DIV":
+                case "SPAN":
+                    // Math nodes are translated back into delimited latex strings
+                    if ((n as Element).hasAttribute("data-mx-maths")) {
+                        const delims = SdkConfig.get().latex_maths_delims;
+                        const delimLeft =
+                            n.nodeName === "SPAN" ? delims?.inline?.left ?? "\\(" : delims?.display?.left ?? "\\[";
+                        const delimRight =
+                            n.nodeName === "SPAN" ? delims?.inline?.right ?? "\\)" : delims?.display?.right ?? "\\]";
+                        const tex = (n as Element).getAttribute("data-mx-maths");
+
+                        return pc.plainWithEmoji(`${delimLeft}${tex}${delimRight}`);
+                    }
+            }
+    }
+
+    return parseChildren(n, pc, opts);
+}
+
+interface IParseOptions {
+    isQuotedMessage?: boolean;
+    shouldEscape?: boolean;
+}
+
+function parseHtmlMessage(html: string, pc: PartCreator, opts: IParseOptions): Part[] {
     // no nodes from parsing here should be inserted in the document,
     // as scripts in event handlers, etc would be executed then.
     // we're only taking text, so that is fine
-    const rootNode = new DOMParser().parseFromString(html, "text/html").body;
-    const parts: Part[] = [];
-    let lastNode;
-    let inQuote = isQuotedMessage;
-    const state: IState = {
-        listIndex: [],
-    };
-
-    function onNodeEnter(n) {
-        if (checkIgnored(n)) {
-            return false;
-        }
-        if (n.nodeName === "BLOCKQUOTE") {
-            inQuote = true;
-        }
-
-        const newParts: Part[] = [];
-        if (lastNode && (checkBlockNode(lastNode) || checkBlockNode(n))) {
-            newParts.push(partCreator.newline());
-        }
-
-        if (n.nodeType === Node.TEXT_NODE) {
-            newParts.push(...parseAtRoomMentions(n.nodeValue, partCreator));
-        } else if (n.nodeType === Node.ELEMENT_NODE) {
-            const parseResult = parseElement(n, partCreator, lastNode, state);
-            if (parseResult) {
-                if (Array.isArray(parseResult)) {
-                    newParts.push(...parseResult);
-                } else {
-                    newParts.push(parseResult);
-                }
-            }
-        }
-
-        if (newParts.length && inQuote) {
-            const isFirstPart = parts.length === 0;
-            prefixQuoteLines(isFirstPart, newParts, partCreator);
-        }
-
-        parts.push(...newParts);
-
-        const descend = checkDescendInto(n);
-        // when not descending (like for PRE), onNodeLeave won't be called to set lastNode
-        // so do that here.
-        lastNode = descend ? null : n;
-        return descend;
+    const parts = parseNode(new DOMParser().parseFromString(html, "text/html").body, pc, opts);
+    if (opts.isQuotedMessage) {
+        prefixLines(parts, "> ", pc);
     }
-
-    function onNodeLeave(n) {
-        if (checkIgnored(n)) {
-            return;
-        }
-        switch (n.nodeName) {
-            case "BLOCKQUOTE":
-                inQuote = false;
-                break;
-            case "OL":
-                state.listIndex.pop();
-                /* falls through */
-            case "UL":
-                state.listDepth -= 1;
-                break;
-        }
-        lastNode = n;
-    }
-
-    walkDOMDepthFirst(rootNode, onNodeEnter, onNodeLeave);
-
     return parts;
 }
 
-export function parsePlainTextMessage(body: string, partCreator: PartCreator, isQuotedMessage?: boolean): Part[] {
+export function parsePlainTextMessage(body: string, pc: PartCreator, opts: IParseOptions): Part[] {
     const lines = body.split(/\r\n|\r|\n/g); // split on any new-line combination not just \n, collapses \r\n
     return lines.reduce((parts, line, i) => {
-        if (isQuotedMessage) {
-            parts.push(partCreator.plain(QUOTE_LINE_PREFIX));
+        if (opts.isQuotedMessage) {
+            parts.push(pc.plain("> "));
         }
-        parts.push(...parseAtRoomMentions(line, partCreator));
+        parts.push(...parseAtRoomMentions(line, pc, opts));
         const isLast = i === lines.length - 1;
         if (!isLast) {
-            parts.push(partCreator.newline());
+            parts.push(pc.newline());
         }
         return parts;
     }, [] as Part[]);
 }
 
-export function parseEvent(event: MatrixEvent, partCreator: PartCreator, { isQuotedMessage = false } = {}) {
+export function parseEvent(event: MatrixEvent, pc: PartCreator, opts: IParseOptions = { shouldEscape: true }): Part[] {
     const content = event.getContent();
     let parts: Part[];
-    const isEmote = content.msgtype === "m.emote";
+    const isEmote = content.msgtype === MsgType.Emote;
     let isRainbow = false;
 
     if (content.format === "org.matrix.custom.html") {
-        parts = parseHtmlMessage(content.formatted_body || "", partCreator, isQuotedMessage);
+        parts = parseHtmlMessage(content.formatted_body || "", pc, opts);
         if (content.body && content.formatted_body && textToHtmlRainbow(content.body) === content.formatted_body) {
             isRainbow = true;
         }
     } else {
-        parts = parsePlainTextMessage(content.body || "", partCreator, isQuotedMessage);
+        let body = content.body || "";
+        if (event.replyEventId) {
+            body = stripPlainReply(body);
+        }
+        parts = parsePlainTextMessage(body, pc, opts);
     }
 
     if (isEmote && isRainbow) {
-        parts.unshift(partCreator.plain("/rainbowme "));
+        parts.unshift(pc.plain("/rainbowme "));
     } else if (isRainbow) {
-        parts.unshift(partCreator.plain("/rainbow "));
+        parts.unshift(pc.plain("/rainbow "));
     } else if (isEmote) {
-        parts.unshift(partCreator.plain("/me "));
+        parts.unshift(pc.plain("/me "));
     }
 
     return parts;

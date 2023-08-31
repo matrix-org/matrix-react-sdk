@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { formatFullDate, formatTime, formatFullTime, formatRelativeTime } from '../../../DateUtils';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React from "react";
+
+import { formatFullDate, formatTime, formatFullTime, formatRelativeTime } from "../../../DateUtils";
 
 interface IProps {
     ts: number;
@@ -27,11 +27,10 @@ interface IProps {
     showRelative?: boolean;
 }
 
-@replaceableComponent("views.messages.MessageTimestamp")
 export default class MessageTimestamp extends React.Component<IProps> {
-    public render() {
+    public render(): React.ReactNode {
         const date = new Date(this.props.ts);
-        let timestamp;
+        let timestamp: string;
         if (this.props.showRelative) {
             timestamp = formatRelativeTime(date, this.props.showTwelveHour);
         } else if (this.props.showFullDate) {
@@ -47,8 +46,9 @@ export default class MessageTimestamp extends React.Component<IProps> {
                 className="mx_MessageTimestamp"
                 title={formatFullDate(date, this.props.showTwelveHour)}
                 aria-hidden={true}
+                aria-live="off"
             >
-                { timestamp }
+                {timestamp}
             </span>
         );
     }

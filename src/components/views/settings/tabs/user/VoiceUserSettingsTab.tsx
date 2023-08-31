@@ -15,40 +15,53 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ReactNode } from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+import { FALLBACK_ICE_SERVER } from "matrix-js-sdk/src/webrtc/call";
+
 import { _t } from "../../../../../languageHandler";
-import SdkConfig from "../../../../../SdkConfig";
 import MediaDeviceHandler, { IMediaDevices, MediaDeviceKindEnum } from "../../../../../MediaDeviceHandler";
 import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
-import Modal from "../../../../../Modal";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
-import SettingsFlag from '../../../elements/SettingsFlag';
-import ErrorDialog from '../../../dialogs/ErrorDialog';
+import SettingsFlag from "../../../elements/SettingsFlag";
+import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
+import { requestMediaPermissions } from "../../../../../utils/media/requestMediaPermissions";
+import SettingsTab from "../SettingsTab";
+import { SettingsSection } from "../../shared/SettingsSection";
+import SettingsSubsection from "../../shared/SettingsSubsection";
+import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 
-import { logger } from "matrix-js-sdk/src/logger";
+interface IState {
+    mediaDevices: IMediaDevices | null;
+    [MediaDeviceKindEnum.AudioOutput]: string | null;
+    [MediaDeviceKindEnum.AudioInput]: string | null;
+    [MediaDeviceKindEnum.VideoInput]: string | null;
+    audioAutoGainControl: boolean;
+    audioEchoCancellation: boolean;
+    audioNoiseSuppression: boolean;
+}
 
-const getDefaultDevice = (devices: Array<Partial<MediaDeviceInfo>>) => {
-    // Note we're looking for a device with deviceId 'default' but adding a device
-    // with deviceId == the empty string: this is because Chrome gives us a device
-    // with deviceId 'default', so we're looking for this, not the one we are adding.
-    if (!devices.some((i) => i.deviceId === 'default')) {
-        devices.unshift({ deviceId: '', label: _t('Default Device') });
-        return '';
-    } else {
-        return 'default';
+/**
+ * Maps deviceKind to the right get method on MediaDeviceHandler
+ * Helpful for setting state
+ */
+const mapDeviceKindToHandlerValue = (deviceKind: MediaDeviceKindEnum): string | null => {
+    switch (deviceKind) {
+        case MediaDeviceKindEnum.AudioOutput:
+            return MediaDeviceHandler.getAudioOutput();
+        case MediaDeviceKindEnum.AudioInput:
+            return MediaDeviceHandler.getAudioInput();
+        case MediaDeviceKindEnum.VideoInput:
+            return MediaDeviceHandler.getVideoInput();
     }
 };
 
-interface IState extends Record<MediaDeviceKindEnum, string> {
-    mediaDevices: IMediaDevices;
-}
-
-@replaceableComponent("views.settings.tabs.user.VoiceUserSettingsTab")
 export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
-    constructor(props: {}) {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
+    public constructor(props: {}) {
         super(props);
 
         this.state = {
@@ -56,22 +69,25 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
             [MediaDeviceKindEnum.AudioOutput]: null,
             [MediaDeviceKindEnum.AudioInput]: null,
             [MediaDeviceKindEnum.VideoInput]: null,
+            audioAutoGainControl: MediaDeviceHandler.getAudioAutoGainControl(),
+            audioEchoCancellation: MediaDeviceHandler.getAudioEchoCancellation(),
+            audioNoiseSuppression: MediaDeviceHandler.getAudioNoiseSuppression(),
         };
     }
 
-    async componentDidMount() {
+    public async componentDidMount(): Promise<void> {
         const canSeeDeviceLabels = await MediaDeviceHandler.hasAnyLabeledDevices();
         if (canSeeDeviceLabels) {
-            this.refreshMediaDevices();
+            await this.refreshMediaDevices();
         }
     }
 
     private refreshMediaDevices = async (stream?: MediaStream): Promise<void> => {
         this.setState({
-            mediaDevices: await MediaDeviceHandler.getDevices(),
-            [MediaDeviceKindEnum.AudioOutput]: MediaDeviceHandler.getAudioOutput(),
-            [MediaDeviceKindEnum.AudioInput]: MediaDeviceHandler.getAudioInput(),
-            [MediaDeviceKindEnum.VideoInput]: MediaDeviceHandler.getVideoInput(),
+            mediaDevices: (await MediaDeviceHandler.getDevices()) ?? null,
+            [MediaDeviceKindEnum.AudioOutput]: mapDeviceKindToHandlerValue(MediaDeviceKindEnum.AudioOutput),
+            [MediaDeviceKindEnum.AudioInput]: mapDeviceKindToHandlerValue(MediaDeviceKindEnum.AudioInput),
+            [MediaDeviceKindEnum.VideoInput]: mapDeviceKindToHandlerValue(MediaDeviceKindEnum.VideoInput),
         });
         if (stream) {
             // kill stream (after we've enumerated the devices, otherwise we'd get empty labels again)
@@ -82,65 +98,47 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
     };
 
     private requestMediaPermissions = async (): Promise<void> => {
-        let constraints;
-        let stream;
-        let error;
-        try {
-            constraints = { video: true, audio: true };
-            stream = await navigator.mediaDevices.getUserMedia(constraints);
-        } catch (err) {
-            // user likely doesn't have a webcam,
-            // we should still allow to select a microphone
-            if (err.name === "NotFoundError") {
-                constraints = { audio: true };
-                try {
-                    stream = await navigator.mediaDevices.getUserMedia(constraints);
-                } catch (err) {
-                    error = err;
-                }
-            } else {
-                error = err;
-            }
-        }
-        if (error) {
-            logger.log("Failed to list userMedia devices", error);
-            const brand = SdkConfig.get().brand;
-            Modal.createTrackedDialog('No media permissions', '', ErrorDialog, {
-                title: _t('No media permissions'),
-                description: _t(
-                    'You may need to manually permit %(brand)s to access your microphone/webcam',
-                    { brand },
-                ),
-            });
-        } else {
-            this.refreshMediaDevices(stream);
+        const stream = await requestMediaPermissions();
+        if (stream) {
+            await this.refreshMediaDevices(stream);
         }
     };
 
-    private setDevice = (deviceId: string, kind: MediaDeviceKindEnum): void => {
-        MediaDeviceHandler.instance.setDevice(deviceId, kind);
-        this.setState<null>({ [kind]: deviceId });
+    private setDevice = async (deviceId: string, kind: MediaDeviceKindEnum): Promise<void> => {
+        // set state immediately so UI is responsive
+        this.setState<any>({ [kind]: deviceId });
+        try {
+            await MediaDeviceHandler.instance.setDevice(deviceId, kind);
+        } catch (error) {
+            logger.error(`Failed to set device ${kind}: ${deviceId}`);
+            // reset state to current value
+            this.setState<any>({ [kind]: mapDeviceKindToHandlerValue(kind) });
+        }
     };
 
     private changeWebRtcMethod = (p2p: boolean): void => {
-        MatrixClientPeg.get().setForceTURN(!p2p);
+        this.context.setForceTURN(!p2p);
     };
 
     private changeFallbackICEServerAllowed = (allow: boolean): void => {
-        MatrixClientPeg.get().setFallbackICEServerAllowed(allow);
+        this.context.setFallbackICEServerAllowed(allow);
     };
 
     private renderDeviceOptions(devices: Array<MediaDeviceInfo>, category: MediaDeviceKindEnum): Array<JSX.Element> {
         return devices.map((d) => {
-            return (<option key={`${category}-${d.deviceId}`} value={d.deviceId}>{ d.label }</option>);
+            return (
+                <option key={`${category}-${d.deviceId}`} value={d.deviceId}>
+                    {d.label}
+                </option>
+            );
         });
     }
 
-    private renderDropdown(kind: MediaDeviceKindEnum, label: string): JSX.Element {
-        const devices = this.state.mediaDevices[kind].slice(0);
-        if (devices.length === 0) return null;
+    private renderDropdown(kind: MediaDeviceKindEnum, label: string): ReactNode {
+        const devices = this.state.mediaDevices?.[kind].slice(0);
+        if (!devices?.length) return null;
 
-        const defaultDevice = getDefaultDevice(devices);
+        const defaultDevice = MediaDeviceHandler.getDefaultDevice(devices);
         return (
             <Field
                 element="select"
@@ -148,61 +146,98 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
                 value={this.state[kind] || defaultDevice}
                 onChange={(e) => this.setDevice(e.target.value, kind)}
             >
-                { this.renderDeviceOptions(devices, kind) }
+                {this.renderDeviceOptions(devices, kind)}
             </Field>
         );
     }
 
-    render() {
-        let requestButton = null;
-        let speakerDropdown = null;
-        let microphoneDropdown = null;
-        let webcamDropdown = null;
+    public render(): ReactNode {
+        let requestButton: ReactNode | undefined;
+        let speakerDropdown: ReactNode | undefined;
+        let microphoneDropdown: ReactNode | undefined;
+        let webcamDropdown: ReactNode | undefined;
         if (!this.state.mediaDevices) {
             requestButton = (
-                <div className='mx_VoiceUserSettingsTab_missingMediaPermissions'>
-                    <p>{ _t("Missing media permissions, click the button below to request.") }</p>
+                <div>
+                    <p>{_t("Missing media permissions, click the button below to request.")}</p>
                     <AccessibleButton onClick={this.requestMediaPermissions} kind="primary">
-                        { _t("Request media permissions") }
+                        {_t("Request media permissions")}
                     </AccessibleButton>
                 </div>
             );
         } else if (this.state.mediaDevices) {
-            speakerDropdown = (
-                this.renderDropdown(MediaDeviceKindEnum.AudioOutput, _t("Audio Output")) ||
-                <p>{ _t('No Audio Outputs detected') }</p>
+            speakerDropdown = this.renderDropdown(MediaDeviceKindEnum.AudioOutput, _t("Audio Output")) || (
+                <p>{_t("No Audio Outputs detected")}</p>
             );
-            microphoneDropdown = (
-                this.renderDropdown(MediaDeviceKindEnum.AudioInput, _t("Microphone")) ||
-                <p>{ _t('No Microphones detected') }</p>
+            microphoneDropdown = this.renderDropdown(MediaDeviceKindEnum.AudioInput, _t("Microphone")) || (
+                <p>{_t("No Microphones detected")}</p>
             );
-            webcamDropdown = (
-                this.renderDropdown(MediaDeviceKindEnum.VideoInput, _t("Camera")) ||
-                <p>{ _t('No Webcams detected') }</p>
+            webcamDropdown = this.renderDropdown(MediaDeviceKindEnum.VideoInput, _t("Camera")) || (
+                <p>{_t("No Webcams detected")}</p>
             );
         }
 
         return (
-            <div className="mx_SettingsTab mx_VoiceUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{ _t("Voice & Video") }</div>
-                <div className="mx_SettingsTab_section">
-                    { requestButton }
-                    { speakerDropdown }
-                    { microphoneDropdown }
-                    { webcamDropdown }
-                    <SettingsFlag name='VideoView.flipVideoHorizontally' level={SettingLevel.ACCOUNT} />
-                    <SettingsFlag
-                        name='webRtcAllowPeerToPeer'
-                        level={SettingLevel.DEVICE}
-                        onChange={this.changeWebRtcMethod}
-                    />
-                    <SettingsFlag
-                        name='fallbackICEServerAllowed'
-                        level={SettingLevel.DEVICE}
-                        onChange={this.changeFallbackICEServerAllowed}
-                    />
-                </div>
-            </div>
+            <SettingsTab>
+                <SettingsSection heading={_t("Voice & Video")}>
+                    {requestButton}
+                    <SettingsSubsection heading={_t("Voice settings")} stretchContent>
+                        {speakerDropdown}
+                        {microphoneDropdown}
+                        <LabelledToggleSwitch
+                            value={this.state.audioAutoGainControl}
+                            onChange={async (v): Promise<void> => {
+                                await MediaDeviceHandler.setAudioAutoGainControl(v);
+                                this.setState({ audioAutoGainControl: MediaDeviceHandler.getAudioAutoGainControl() });
+                            }}
+                            label={_t("Automatically adjust the microphone volume")}
+                            data-testid="voice-auto-gain"
+                        />
+                    </SettingsSubsection>
+                    <SettingsSubsection heading={_t("Video settings")} stretchContent>
+                        {webcamDropdown}
+                        <SettingsFlag name="VideoView.flipVideoHorizontally" level={SettingLevel.ACCOUNT} />
+                    </SettingsSubsection>
+                </SettingsSection>
+
+                <SettingsSection heading={_t("Advanced")}>
+                    <SettingsSubsection heading={_t("Voice processing")}>
+                        <LabelledToggleSwitch
+                            value={this.state.audioNoiseSuppression}
+                            onChange={async (v): Promise<void> => {
+                                await MediaDeviceHandler.setAudioNoiseSuppression(v);
+                                this.setState({ audioNoiseSuppression: MediaDeviceHandler.getAudioNoiseSuppression() });
+                            }}
+                            label={_t("Noise suppression")}
+                            data-testid="voice-noise-suppression"
+                        />
+                        <LabelledToggleSwitch
+                            value={this.state.audioEchoCancellation}
+                            onChange={async (v): Promise<void> => {
+                                await MediaDeviceHandler.setAudioEchoCancellation(v);
+                                this.setState({ audioEchoCancellation: MediaDeviceHandler.getAudioEchoCancellation() });
+                            }}
+                            label={_t("Echo cancellation")}
+                            data-testid="voice-echo-cancellation"
+                        />
+                    </SettingsSubsection>
+                    <SettingsSubsection heading={_t("Connection")}>
+                        <SettingsFlag
+                            name="webRtcAllowPeerToPeer"
+                            level={SettingLevel.DEVICE}
+                            onChange={this.changeWebRtcMethod}
+                        />
+                        <SettingsFlag
+                            name="fallbackICEServerAllowed"
+                            label={_t("Allow fallback call assist server (%(server)s)", {
+                                server: new URL(FALLBACK_ICE_SERVER).pathname,
+                            })}
+                            level={SettingLevel.DEVICE}
+                            onChange={this.changeFallbackICEServerAllowed}
+                        />
+                    </SettingsSubsection>
+                </SettingsSection>
+            </SettingsTab>
         );
     }
 }

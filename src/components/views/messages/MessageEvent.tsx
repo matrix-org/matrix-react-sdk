@@ -14,116 +14,167 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import * as sdk from '../../../index';
+import React, { createRef } from "react";
+import { EventType, MsgType, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
+import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
+import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
+import { M_POLL_END, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
+
 import SettingsStore from "../../../settings/SettingsStore";
 import { Mjolnir } from "../../../mjolnir/Mjolnir";
 import RedactedBody from "./RedactedBody";
 import UnknownBody from "./UnknownBody";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IMediaBody } from "./IMediaBody";
-import { IOperableEventTile } from "../context_menus/MessageContextMenu";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
-import { ReactAnyComponent } from "../../../@types/common";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { IBodyProps } from "./IBodyProps";
-import { POLL_START_EVENT_TYPE } from '../../../polls/consts';
-import { Relations } from 'matrix-js-sdk/src/models/relations';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import TextualBody from "./TextualBody";
+import MImageBody from "./MImageBody";
+import MFileBody from "./MFileBody";
+import MVoiceOrAudioBody from "./MVoiceOrAudioBody";
+import MVideoBody from "./MVideoBody";
+import MStickerBody from "./MStickerBody";
+import MPollBody from "./MPollBody";
+import { MPollEndBody } from "./MPollEndBody";
+import MLocationBody from "./MLocationBody";
+import MjolnirBody from "./MjolnirBody";
+import MBeaconBody from "./MBeaconBody";
+import { DecryptionFailureBody } from "./DecryptionFailureBody";
+import { GetRelationsForEvent, IEventTileOps } from "../rooms/EventTile";
+import { VoiceBroadcastBody, VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "../../../voice-broadcast";
 
 // onMessageAllowed is handled internally
-interface IProps extends Omit<IBodyProps, "onMessageAllowed"> {
+interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper"> {
     /* overrides for the msgtype-specific components, used by ReplyTile to override file rendering */
-    overrideBodyTypes?: Record<string, React.Component>;
-    overrideEventTypes?: Record<string, React.Component>;
+    overrideBodyTypes?: Record<string, typeof React.Component>;
+    overrideEventTypes?: Record<string, typeof React.Component>;
 
     // helper function to access relations for this event
-    getRelationsForEvent?: (eventId: string, relationType: string, eventType: string) => Relations;
+    getRelationsForEvent?: GetRelationsForEvent;
+
+    isSeeingThroughMessageHiddenForModeration?: boolean;
 }
 
-@replaceableComponent("views.messages.MessageEvent")
+export interface IOperableEventTile {
+    getEventTileOps(): IEventTileOps | null;
+}
+
+const baseBodyTypes = new Map<string, typeof React.Component>([
+    [MsgType.Text, TextualBody],
+    [MsgType.Notice, TextualBody],
+    [MsgType.Emote, TextualBody],
+    [MsgType.Image, MImageBody],
+    [MsgType.File, MFileBody],
+    [MsgType.Audio, MVoiceOrAudioBody],
+    [MsgType.Video, MVideoBody],
+]);
+const baseEvTypes = new Map<string, React.ComponentType<IBodyProps>>([
+    [EventType.Sticker, MStickerBody],
+    [M_POLL_START.name, MPollBody],
+    [M_POLL_START.altName, MPollBody],
+    [M_POLL_END.name, MPollEndBody],
+    [M_POLL_END.altName, MPollEndBody],
+    [M_BEACON_INFO.name, MBeaconBody],
+    [M_BEACON_INFO.altName, MBeaconBody],
+]);
+
 export default class MessageEvent extends React.Component<IProps> implements IMediaBody, IOperableEventTile {
     private body: React.RefObject<React.Component | IOperableEventTile> = createRef();
-    private mediaHelper: MediaEventHelper;
+    private mediaHelper?: MediaEventHelper;
+    private bodyTypes = new Map<string, typeof React.Component>(baseBodyTypes.entries());
+    private evTypes = new Map<string, React.ComponentType<IBodyProps>>(baseEvTypes.entries());
 
-    public constructor(props: IProps) {
-        super(props);
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+        super(props, context);
 
         if (MediaEventHelper.isEligible(this.props.mxEvent)) {
             this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
         }
+
+        this.updateComponentMaps();
     }
 
-    public componentWillUnmount() {
+    public componentDidMount(): void {
+        this.props.mxEvent.addListener(MatrixEventEvent.Decrypted, this.onDecrypted);
+    }
+
+    public componentWillUnmount(): void {
+        this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
         this.mediaHelper?.destroy();
     }
 
-    public componentDidUpdate(prevProps: Readonly<IProps>) {
+    public componentDidUpdate(prevProps: Readonly<IProps>): void {
         if (this.props.mxEvent !== prevProps.mxEvent && MediaEventHelper.isEligible(this.props.mxEvent)) {
             this.mediaHelper?.destroy();
             this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
         }
+
+        this.updateComponentMaps();
     }
 
-    private get bodyTypes(): Record<string, React.Component> {
-        return {
-            [MsgType.Text]: sdk.getComponent('messages.TextualBody'),
-            [MsgType.Notice]: sdk.getComponent('messages.TextualBody'),
-            [MsgType.Emote]: sdk.getComponent('messages.TextualBody'),
-            [MsgType.Image]: sdk.getComponent('messages.MImageBody'),
-            [MsgType.File]: sdk.getComponent('messages.MFileBody'),
-            [MsgType.Audio]: sdk.getComponent('messages.MVoiceOrAudioBody'),
-            [MsgType.Video]: sdk.getComponent('messages.MVideoBody'),
+    private updateComponentMaps(): void {
+        this.bodyTypes = new Map<string, typeof React.Component>(baseBodyTypes.entries());
+        for (const [bodyType, bodyComponent] of Object.entries(this.props.overrideBodyTypes ?? {})) {
+            this.bodyTypes.set(bodyType, bodyComponent);
+        }
 
-            ...(this.props.overrideBodyTypes || {}),
-        };
+        this.evTypes = new Map<string, React.ComponentType<IBodyProps>>(baseEvTypes.entries());
+        for (const [evType, evComponent] of Object.entries(this.props.overrideEventTypes ?? {})) {
+            this.evTypes.set(evType, evComponent);
+        }
     }
 
-    private get evTypes(): Record<string, React.Component> {
-        return {
-            [EventType.Sticker]: sdk.getComponent('messages.MStickerBody'),
-
-            ...(this.props.overrideEventTypes || {}),
-        };
-    }
-
-    public getEventTileOps = () => {
+    public getEventTileOps = (): IEventTileOps | null => {
         return (this.body.current as IOperableEventTile)?.getEventTileOps?.() || null;
     };
 
-    public getMediaHelper() {
+    public getMediaHelper(): MediaEventHelper | undefined {
         return this.mediaHelper;
     }
 
-    private onTileUpdate = () => {
+    private onDecrypted = (): void => {
+        // Recheck MediaEventHelper eligibility as it can change when the event gets decrypted
+        if (MediaEventHelper.isEligible(this.props.mxEvent)) {
+            this.mediaHelper?.destroy();
+            this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
+        }
+    };
+
+    private onTileUpdate = (): void => {
         this.forceUpdate();
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const content = this.props.mxEvent.getContent();
         const type = this.props.mxEvent.getType();
         const msgtype = content.msgtype;
-        let BodyType: ReactAnyComponent = RedactedBody;
+        let BodyType: React.ComponentType<IBodyProps> = RedactedBody;
         if (!this.props.mxEvent.isRedacted()) {
             // only resolve BodyType if event is not redacted
-            if (type && this.evTypes[type]) {
-                BodyType = this.evTypes[type];
-            } else if (msgtype && this.bodyTypes[msgtype]) {
-                BodyType = this.bodyTypes[msgtype];
+            if (this.props.mxEvent.isDecryptionFailure()) {
+                BodyType = DecryptionFailureBody;
+            } else if (type && this.evTypes.has(type)) {
+                BodyType = this.evTypes.get(type)!;
+            } else if (msgtype && this.bodyTypes.has(msgtype)) {
+                BodyType = this.bodyTypes.get(msgtype)!;
             } else if (content.url) {
                 // Fallback to MFileBody if there's a content URL
-                BodyType = this.bodyTypes[MsgType.File];
+                BodyType = this.bodyTypes.get(MsgType.File)!;
             } else {
                 // Fallback to UnknownBody otherwise if not redacted
                 BodyType = UnknownBody;
             }
 
-            if (type && type === POLL_START_EVENT_TYPE.name) {
-                // TODO: this can all disappear when Polls comes out of labs -
-                // instead, add something like this into this.evTypes:
-                // [EventType.Poll]: "messages.MPollBody"
-                if (SettingsStore.getValue("feature_polls")) {
-                    BodyType = sdk.getComponent('messages.MPollBody');
-                }
+            // TODO: move to eventTypes when location sharing spec stabilises
+            if (M_LOCATION.matches(type) || (type === EventType.RoomMessage && msgtype === MsgType.Location)) {
+                BodyType = MLocationBody;
+            }
+
+            if (type === VoiceBroadcastInfoEventType && content?.state === VoiceBroadcastInfoState.Started) {
+                BodyType = VoiceBroadcastBody;
             }
         }
 
@@ -132,33 +183,35 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             const allowRender = localStorage.getItem(key) === "true";
 
             if (!allowRender) {
-                const userDomain = this.props.mxEvent.getSender().split(':').slice(1).join(':');
-                const userBanned = Mjolnir.sharedInstance().isUserBanned(this.props.mxEvent.getSender());
-                const serverBanned = Mjolnir.sharedInstance().isServerBanned(userDomain);
+                const userDomain = this.props.mxEvent.getSender()?.split(":").slice(1).join(":");
+                const userBanned = Mjolnir.sharedInstance().isUserBanned(this.props.mxEvent.getSender()!);
+                const serverBanned = userDomain && Mjolnir.sharedInstance().isServerBanned(userDomain);
 
                 if (userBanned || serverBanned) {
-                    BodyType = sdk.getComponent('messages.MjolnirBody');
+                    BodyType = MjolnirBody;
                 }
             }
         }
 
-        // @ts-ignore - this is a dynamic react component
-        return BodyType ? <BodyType
-            ref={this.body}
-            mxEvent={this.props.mxEvent}
-            highlights={this.props.highlights}
-            highlightLink={this.props.highlightLink}
-            showUrlPreview={this.props.showUrlPreview}
-            tileShape={this.props.tileShape}
-            forExport={this.props.forExport}
-            maxImageHeight={this.props.maxImageHeight}
-            replacingEventId={this.props.replacingEventId}
-            editState={this.props.editState}
-            onHeightChanged={this.props.onHeightChanged}
-            onMessageAllowed={this.onTileUpdate}
-            permalinkCreator={this.props.permalinkCreator}
-            mediaEventHelper={this.mediaHelper}
-            getRelationsForEvent={this.props.getRelationsForEvent}
-        /> : null;
+        return BodyType ? (
+            <BodyType
+                ref={this.body}
+                mxEvent={this.props.mxEvent}
+                highlights={this.props.highlights}
+                highlightLink={this.props.highlightLink}
+                showUrlPreview={this.props.showUrlPreview}
+                forExport={this.props.forExport}
+                maxImageHeight={this.props.maxImageHeight}
+                replacingEventId={this.props.replacingEventId}
+                editState={this.props.editState}
+                onHeightChanged={this.props.onHeightChanged}
+                onMessageAllowed={this.onTileUpdate}
+                permalinkCreator={this.props.permalinkCreator}
+                mediaEventHelper={this.mediaHelper}
+                getRelationsForEvent={this.props.getRelationsForEvent}
+                isSeeingThroughMessageHiddenForModeration={this.props.isSeeingThroughMessageHiddenForModeration}
+                inhibitInteraction={this.props.inhibitInteraction}
+            />
+        ) : null;
     }
 }

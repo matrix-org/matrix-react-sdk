@@ -13,32 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
-import { Action } from "../actions";
-import dis from '../dispatcher';
-import { SetRightPanelPhasePayload } from "../payloads/SetRightPanelPhasePayload";
 
-export const dispatchShowThreadEvent = (
-    rootEvent: MatrixEvent,
-    initialEvent?: MatrixEvent,
-    highlighted?: boolean,
-) => {
-    dis.dispatch({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.ThreadView,
-        refireParams: {
-            event: rootEvent,
-            initialEvent,
-            highlighted,
-        },
-    });
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
+
+export const showThreadPanel = (): void => {
+    RightPanelStore.instance.setCard({ phase: RightPanelPhases.ThreadPanel });
 };
-
-export const dispatchShowThreadsPanelEvent = () => {
-    dis.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.ThreadPanel,
-    });
-};
-

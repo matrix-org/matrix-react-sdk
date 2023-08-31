@@ -15,23 +15,27 @@ limitations under the License.
 */
 
 import React from "react";
+import {
+    canAcceptVerificationRequest,
+    VerificationRequest,
+    VerificationRequestEvent,
+} from "matrix-js-sdk/src/crypto-api";
+import { logger } from "matrix-js-sdk/src/logger";
+import { Device } from "matrix-js-sdk/src/matrix";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import { userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
 import dis from "../../../dispatcher/dispatcher";
 import ToastStore from "../../../stores/ToastStore";
 import Modal from "../../../Modal";
 import GenericToast from "./GenericToast";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { Action } from "../../../dispatcher/actions";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import VerificationRequestDialog from "../dialogs/VerificationRequestDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { getDeviceCryptoInfo } from "../../../utils/crypto/deviceInfo";
 
 interface IProps {
     toastKey: string;
@@ -39,63 +43,63 @@ interface IProps {
 }
 
 interface IState {
+    /** number of seconds left in the timeout counter. Zero if there is no timeout. */
     counter: number;
-    device?: DeviceInfo;
+    device?: Device;
     ip?: string;
 }
 
-@replaceableComponent("views.toasts.VerificationRequestToast")
 export default class VerificationRequestToast extends React.PureComponent<IProps, IState> {
-    private intervalHandle: number;
+    private intervalHandle?: number;
 
-    constructor(props) {
+    public constructor(props: IProps) {
         super(props);
-        this.state = { counter: Math.ceil(props.request.timeout / 1000) };
+        this.state = { counter: Math.ceil((props.request.timeout ?? 0) / 1000) };
     }
 
-    async componentDidMount() {
+    public async componentDidMount(): Promise<void> {
         const { request } = this.props;
         if (request.timeout && request.timeout > 0) {
-            this.intervalHandle = setInterval(() => {
+            this.intervalHandle = window.setInterval(() => {
                 let { counter } = this.state;
                 counter = Math.max(0, counter - 1);
                 this.setState({ counter });
             }, 1000);
         }
-        request.on("change", this.checkRequestIsPending);
+        request.on(VerificationRequestEvent.Change, this.checkRequestIsPending);
         // We should probably have a separate class managing the active verification toasts,
         // rather than monitoring this in the toast component itself, since we'll get problems
-        // like the toasdt not going away when the verification is cancelled unless it's the
+        // like the toast not going away when the verification is cancelled unless it's the
         // one on the top (ie. the one that's mounted).
         // As a quick & dirty fix, check the toast is still relevant when it mounts (this prevents
         // a toast hanging around after logging in if you did a verification as part of login).
         this.checkRequestIsPending();
 
-        if (request.isSelfVerification) {
-            const cli = MatrixClientPeg.get();
-            const device = await cli.getDevice(request.channel.deviceId);
-            const ip = device.last_seen_ip;
+        const otherDeviceId = request.otherDeviceId;
+        if (request.isSelfVerification && !!otherDeviceId) {
+            const cli = MatrixClientPeg.safeGet();
+            const device = await cli.getDevice(otherDeviceId);
             this.setState({
-                device: cli.getStoredDevice(cli.getUserId(), request.channel.deviceId),
-                ip,
+                ip: device.last_seen_ip,
+                device: await getDeviceCryptoInfo(cli, cli.getSafeUserId(), otherDeviceId),
             });
         }
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         clearInterval(this.intervalHandle);
         const { request } = this.props;
-        request.off("change", this.checkRequestIsPending);
+        request.off(VerificationRequestEvent.Change, this.checkRequestIsPending);
     }
 
-    private checkRequestIsPending = () => {
+    private checkRequestIsPending = (): void => {
         const { request } = this.props;
-        if (!request.canAccept) {
+        if (!canAcceptVerificationRequest(request)) {
             ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         }
     };
 
-    cancel = () => {
+    public cancel = (): void => {
         ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         try {
             this.props.request.cancel();
@@ -104,76 +108,86 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         }
     };
 
-    accept = async () => {
+    public accept = async (): Promise<void> => {
         ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         const { request } = this.props;
         // no room id for to_device requests
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         try {
-            if (request.channel.roomId) {
-                dis.dispatch({
-                    action: 'view_room',
-                    room_id: request.channel.roomId,
+            if (request.roomId) {
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    room_id: request.roomId,
                     should_peek: false,
+                    metricsTrigger: "VerificationRequest",
                 });
-                dis.dispatch<SetRightPanelPhasePayload>({
-                    action: Action.SetRightPanelPhase,
-                    phase: RightPanelPhases.EncryptionPanel,
-                    refireParams: {
-                        verificationRequest: request,
-                        member: cli.getUser(request.otherUserId),
-                    },
-                });
+                const member = cli.getUser(request.otherUserId) ?? undefined;
+                RightPanelStore.instance.setCards(
+                    [
+                        { phase: RightPanelPhases.RoomSummary },
+                        { phase: RightPanelPhases.RoomMemberInfo, state: { member } },
+                        { phase: RightPanelPhases.EncryptionPanel, state: { verificationRequest: request, member } },
+                    ],
+                    undefined,
+                    request.roomId,
+                );
             } else {
-                Modal.createTrackedDialog('Incoming Verification', '', VerificationRequestDialog, {
-                    verificationRequest: request,
-                    onFinished: () => {
-                        request.cancel();
+                Modal.createDialog(
+                    VerificationRequestDialog,
+                    {
+                        verificationRequest: request,
+                        onFinished: () => {
+                            request.cancel();
+                        },
                     },
-                }, null, /* priority = */ false, /* static = */ true);
+                    undefined,
+                    /* priority = */ false,
+                    /* static = */ true,
+                );
             }
             await request.accept();
         } catch (err) {
-            logger.error(err.message);
+            logger.error("Failed to accept verification request", err);
         }
     };
 
-    render() {
+    public render(): React.ReactNode {
         const { request } = this.props;
         let description;
         let detail;
         if (request.isSelfVerification) {
             if (this.state.device) {
-                description = this.state.device.getDisplayName();
+                description = this.state.device.displayName;
                 detail = _t("%(deviceId)s from %(ip)s", {
                     deviceId: this.state.device.deviceId,
                     ip: this.state.ip,
                 });
             }
         } else {
+            const client = MatrixClientPeg.safeGet();
             const userId = request.otherUserId;
-            const roomId = request.channel.roomId;
-            description = roomId ? userLabelForEventRoom(userId, roomId) : userId;
+            const roomId = request.roomId;
+            description = roomId ? userLabelForEventRoom(client, userId, roomId) : userId;
             // for legacy to_device verification requests
             if (description === userId) {
-                const client = MatrixClientPeg.get();
                 const user = client.getUser(userId);
                 if (user && user.displayName) {
                     description = _t("%(name)s (%(userId)s)", { name: user.displayName, userId });
                 }
             }
         }
-        const declineLabel = this.state.counter === 0 ?
-            _t("Decline") :
-            _t("Decline (%(counter)s)", { counter: this.state.counter });
+        const declineLabel =
+            this.state.counter === 0 ? _t("Ignore") : _t("Ignore (%(counter)s)", { counter: this.state.counter });
 
-        return <GenericToast
-            description={description}
-            detail={detail}
-            acceptLabel={_t("Accept")}
-            onAccept={this.accept}
-            rejectLabel={declineLabel}
-            onReject={this.cancel}
-        />;
+        return (
+            <GenericToast
+                description={description}
+                detail={detail}
+                acceptLabel={_t("Verify Session")}
+                onAccept={this.accept}
+                rejectLabel={declineLabel}
+                onReject={this.cancel}
+            />
+        );
     }
 }

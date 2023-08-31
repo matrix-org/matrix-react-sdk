@@ -15,29 +15,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, RefObject } from 'react';
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import React, { createRef, RefObject } from "react";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
-import { formatDate } from '../../../DateUtils';
 import NodeAnimator from "../../../NodeAnimator";
 import { toPx } from "../../../utils/units";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { LegacyMemberAvatar as MemberAvatar } from "../avatars/MemberAvatar";
+import { READ_AVATAR_SIZE } from "./ReadReceiptGroup";
 
-import MemberAvatar from '../avatars/MemberAvatar';
-
-import { logger } from "matrix-js-sdk/src/logger";
+export interface IReadReceiptInfo {
+    top?: number;
+    right?: number;
+    parent?: Element;
+}
 
 interface IProps {
     // the RoomMember to show the RR for
-    member?: RoomMember;
+    member?: RoomMember | null;
     // userId to fallback the avatar to
     // if the member hasn't been loaded yet
     fallbackUserId: string;
 
     // number of pixels to offset the avatar from the right of its parent;
     // typically a negative value.
-    leftOffset?: number;
+    offset: number;
 
     // true to hide the avatar (it will still be animated)
     hidden?: boolean;
@@ -45,18 +47,13 @@ interface IProps {
     // don't animate this RR into position
     suppressAnimation?: boolean;
 
-    // an opaque object for storing information about this user's RR in
-    // this room
-    // TODO: proper typing for RR info
-    readReceiptInfo: any;
+    // an opaque object for storing information about this user's RR in this room
+    readReceiptInfo?: IReadReceiptInfo;
 
     // A function which is used to check if the parent panel is being
     // unmounted, to avoid unnecessary work. Should return true if we
     // are being unmounted.
     checkUnmounting?: () => boolean;
-
-    // callback for clicks on this RR
-    onClick?: (e: React.MouseEvent) => void;
 
     // Timestamp when the receipt was read
     timestamp?: number;
@@ -72,18 +69,13 @@ interface IState {
 
 interface IReadReceiptMarkerStyle {
     top: number;
-    left: number;
+    right: number;
 }
 
-@replaceableComponent("views.rooms.ReadReceiptMarker")
 export default class ReadReceiptMarker extends React.PureComponent<IProps, IState> {
     private avatar: React.RefObject<HTMLDivElement | HTMLImageElement | HTMLSpanElement> = createRef();
 
-    static defaultProps = {
-        leftOffset: 0,
-    };
-
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -110,10 +102,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
             return;
         }
 
-        const avatarNode = this.avatar.current;
-        rrInfo.top = avatarNode.offsetTop;
-        rrInfo.left = avatarNode.offsetLeft;
-        rrInfo.parent = avatarNode.offsetParent;
+        this.buildReadReceiptInfo(rrInfo);
     }
 
     public componentDidMount(): void {
@@ -125,85 +114,103 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
     }
 
     public componentDidUpdate(prevProps: IProps): void {
-        const differentLeftOffset = prevProps.leftOffset !== this.props.leftOffset;
+        const differentOffset = prevProps.offset !== this.props.offset;
         const visibilityChanged = prevProps.hidden !== this.props.hidden;
-        if (differentLeftOffset || visibilityChanged) {
+        if (differentOffset || visibilityChanged) {
             this.animateMarker();
         }
     }
 
-    private animateMarker(): void {
-        // treat new RRs as though they were off the top of the screen
-        let oldTop = -15;
-
-        const oldInfo = this.props.readReceiptInfo;
-        if (oldInfo && oldInfo.parent) {
-            oldTop = oldInfo.top + oldInfo.parent.getBoundingClientRect().top;
-        }
-
-        const newElement = this.avatar.current;
-        let startTopOffset;
-        if (!newElement.offsetParent) {
+    private buildReadReceiptInfo(target: IReadReceiptInfo = {}): IReadReceiptInfo {
+        const element = this.avatar.current;
+        // this is the mx_ReadReceiptsGroup_container
+        const horizontalContainer = element?.offsetParent;
+        if (!horizontalContainer || !(horizontalContainer instanceof HTMLElement)) {
             // this seems to happen sometimes for reasons I don't understand
             // the docs for `offsetParent` say it may be null if `display` is
             // `none`, but I can't see why that would happen.
-            logger.warn(
-                `ReadReceiptMarker for ${this.props.fallbackUserId} in has no offsetParent`,
-            );
-            startTopOffset = 0;
-        } else {
-            startTopOffset = oldTop - newElement.offsetParent.getBoundingClientRect().top;
+            logger.warn(`ReadReceiptMarker for ${this.props.fallbackUserId} has no valid horizontalContainer`);
+
+            target.top = 0;
+            target.right = 0;
+            target.parent = undefined;
+            return target;
+        }
+        // this is the mx_ReadReceiptsGroup
+        const verticalContainer = horizontalContainer.offsetParent;
+        if (!verticalContainer || !(verticalContainer instanceof HTMLElement)) {
+            // this seems to happen sometimes for reasons I don't understand
+            // the docs for `offsetParent` say it may be null if `display` is
+            // `none`, but I can't see why that would happen.
+            logger.warn(`ReadReceiptMarker for ${this.props.fallbackUserId} has no valid verticalContainer`);
+
+            target.top = 0;
+            target.right = 0;
+            target.parent = undefined;
+            return target;
         }
 
-        const startStyles = [];
+        target.top = element.offsetTop;
+        target.right = element.getBoundingClientRect().right - horizontalContainer.getBoundingClientRect().right;
+        target.parent = verticalContainer;
+        return target;
+    }
 
-        if (oldInfo && oldInfo.left) {
-            // start at the old height and in the old h pos
-            startStyles.push({ top: startTopOffset+"px",
-                left: toPx(oldInfo.left) });
+    private readReceiptPosition(info: IReadReceiptInfo): number {
+        if (!info.parent) {
+            // this seems to happen sometimes for reasons I don't understand
+            // the docs for `offsetParent` say it may be null if `display` is
+            // `none`, but I can't see why that would happen.
+            logger.warn(`ReadReceiptMarker for ${this.props.fallbackUserId} has no offsetParent`);
+            return 0;
         }
 
-        startStyles.push({ top: startTopOffset+'px', left: '0' });
+        return (info.top ?? 0) + info.parent.getBoundingClientRect().top;
+    }
+
+    private animateMarker(): void {
+        const oldInfo = this.props.readReceiptInfo;
+        const newInfo = this.buildReadReceiptInfo();
+
+        const newPosition = this.readReceiptPosition(newInfo);
+        const oldPosition = oldInfo
+            ? // start at the old height and in the old h pos
+              this.readReceiptPosition(oldInfo)
+            : // treat new RRs as though they were off the top of the screen
+              -READ_AVATAR_SIZE;
+
+        const startStyles: IReadReceiptMarkerStyle[] = [];
+        if (oldInfo?.right) {
+            startStyles.push({
+                top: oldPosition - newPosition,
+                right: oldInfo.right,
+            });
+        }
+        startStyles.push({
+            top: oldPosition - newPosition,
+            right: 0,
+        });
 
         this.setState({
             suppressDisplay: false,
-            startStyles: startStyles,
+            startStyles,
         });
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.suppressDisplay) {
             return <div ref={this.avatar as RefObject<HTMLDivElement>} />;
         }
 
         const style = {
-            left: toPx(this.props.leftOffset),
-            top: '0px',
+            right: toPx(this.props.offset),
+            top: "0px",
         };
-
-        let title;
-        if (this.props.timestamp) {
-            const dateString = formatDate(new Date(this.props.timestamp), this.props.showTwelveHour);
-            if (!this.props.member || this.props.fallbackUserId === this.props.member.rawDisplayName) {
-                title = _t(
-                    "Seen by %(userName)s at %(dateTime)s",
-                    { userName: this.props.fallbackUserId,
-                        dateTime: dateString },
-                );
-            } else {
-                title = _t(
-                    "Seen by %(displayName)s (%(userName)s) at %(dateTime)s",
-                    { displayName: this.props.member.rawDisplayName,
-                        userName: this.props.fallbackUserId,
-                        dateTime: dateString },
-                );
-            }
-        }
 
         return (
             <NodeAnimator startStyles={this.state.startStyles}>
                 <MemberAvatar
-                    member={this.props.member}
+                    member={this.props.member ?? null}
                     fallbackUserId={this.props.fallbackUserId}
                     aria-hidden="true"
                     aria-live="off"
@@ -211,9 +218,9 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
                     height={14}
                     resizeMethod="crop"
                     style={style}
-                    title={title}
-                    onClick={this.props.onClick}
                     inputRef={this.avatar as RefObject<HTMLImageElement>}
+                    hideTitle
+                    tabIndex={-1}
                 />
             </NodeAnimator>
         );

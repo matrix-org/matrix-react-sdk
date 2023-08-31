@@ -13,19 +13,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import {
+    MatrixClient,
+    createClient,
+    ICreateClientOpts,
+    MemoryCryptoStore,
+    MemoryStore,
+    IndexedDBCryptoStore,
+    IndexedDBStore,
+    LocalStorageCryptoStore,
+} from "matrix-js-sdk/src/matrix";
 
 // @ts-ignore - `.ts` is needed here to make TS happy
 import IndexedDBWorker from "../workers/indexeddb.worker.ts";
-import { createClient, ICreateClientOpts } from "matrix-js-sdk/src/matrix";
-import { IndexedDBCryptoStore } from "matrix-js-sdk/src/crypto/store/indexeddb-crypto-store";
-import { WebStorageSessionStore } from "matrix-js-sdk/src/store/session/webstorage";
-import { IndexedDBStore } from "matrix-js-sdk/src/store/indexeddb";
 
 const localStorage = window.localStorage;
 
 // just *accessing* indexedDB throws an exception in firefox with
 // indexeddb disabled.
-let indexedDB;
+let indexedDB: IDBFactory;
 try {
     indexedDB = window.indexedDB;
 } catch (e) {}
@@ -39,7 +45,7 @@ try {
  *
  * @returns {MatrixClient} the newly-created MatrixClient
  */
-export default function createMatrixClient(opts: ICreateClientOpts) {
+export default function createMatrixClient(opts: ICreateClientOpts): MatrixClient {
     const storeOpts: Partial<ICreateClientOpts> = {
         useAuthorizationHeader: true,
     };
@@ -48,19 +54,19 @@ export default function createMatrixClient(opts: ICreateClientOpts) {
         storeOpts.store = new IndexedDBStore({
             indexedDB: indexedDB,
             dbName: "riot-web-sync",
-            localStorage: localStorage,
+            localStorage,
             workerFactory: () => new IndexedDBWorker(),
         });
-    }
-
-    if (localStorage) {
-        storeOpts.sessionStore = new WebStorageSessionStore(localStorage);
+    } else if (localStorage) {
+        storeOpts.store = new MemoryStore({ localStorage });
     }
 
     if (indexedDB) {
-        storeOpts.cryptoStore = new IndexedDBCryptoStore(
-            indexedDB, "matrix-js-sdk:crypto",
-        );
+        storeOpts.cryptoStore = new IndexedDBCryptoStore(indexedDB, "matrix-js-sdk:crypto");
+    } else if (localStorage) {
+        storeOpts.cryptoStore = new LocalStorageCryptoStore(localStorage);
+    } else {
+        storeOpts.cryptoStore = new MemoryCryptoStore();
     }
 
     return createClient({

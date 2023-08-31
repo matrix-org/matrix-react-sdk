@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
+
 import { ComponentClass } from "../@types/common";
 import { UPDATE_EVENT } from "./AsyncStore";
 
@@ -43,7 +44,7 @@ export default class NonUrgentToastStore extends EventEmitter {
         return ref;
     }
 
-    public removeToast(ref: ToastReference) {
+    public removeToast(ref: ToastReference): void {
         this.toasts.delete(ref);
         this.emit(UPDATE_EVENT);
     }

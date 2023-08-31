@@ -1,6 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,8 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { createClient, IRequestTokenResponse, MatrixClient } from 'matrix-js-sdk/src/matrix';
-import { _t } from './languageHandler';
+import { createClient, IRequestTokenResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
+
+import { _t } from "./languageHandler";
 
 /**
  * Allows a user to reset their password on a homeserver.
@@ -28,44 +29,53 @@ import { _t } from './languageHandler';
 export default class PasswordReset {
     private client: MatrixClient;
     private clientSecret: string;
-    private identityServerDomain: string;
-    private password: string;
-    private sessionId: string;
+    private password = "";
+    private sessionId = "";
+    private logoutDevices = false;
+    private sendAttempt = 0;
 
     /**
      * Configure the endpoints for password resetting.
      * @param {string} homeserverUrl The URL to the HS which has the account to reset.
      * @param {string} identityUrl The URL to the IS which has linked the email -> mxid mapping.
      */
-    constructor(homeserverUrl: string, identityUrl: string) {
+    public constructor(homeserverUrl: string, identityUrl: string) {
         this.client = createClient({
             baseUrl: homeserverUrl,
             idBaseUrl: identityUrl,
         });
         this.clientSecret = this.client.generateClientSecret();
-        this.identityServerDomain = identityUrl ? identityUrl.split("://")[1] : null;
     }
 
     /**
-     * Attempt to reset the user's password. This will trigger a side-effect of
-     * sending an email to the provided email address.
-     * @param {string} emailAddress The email address
-     * @param {string} newPassword The new password for the account.
-     * @return {Promise} Resolves when the email has been sent. Then call checkEmailLinkClicked().
+     * Request a password reset token.
+     * This will trigger a side-effect of sending an email to the provided email address.
      */
-    public resetPassword(emailAddress: string, newPassword: string): Promise<IRequestTokenResponse> {
-        this.password = newPassword;
-        return this.client.requestPasswordEmailToken(emailAddress, this.clientSecret, 1).then((res) => {
-            this.sessionId = res.sid;
-            return res;
-        }, function(err) {
-            if (err.errcode === 'M_THREEPID_NOT_FOUND') {
-                err.message = _t('This email address was not found');
-            } else if (err.httpStatus) {
-                err.message = err.message + ` (Status ${err.httpStatus})`;
-            }
-            throw err;
-        });
+    public requestResetToken(emailAddress: string): Promise<IRequestTokenResponse> {
+        this.sendAttempt++;
+        return this.client.requestPasswordEmailToken(emailAddress, this.clientSecret, this.sendAttempt).then(
+            (res) => {
+                this.sessionId = res.sid;
+                return res;
+            },
+            function (err) {
+                if (err.errcode === "M_THREEPID_NOT_FOUND") {
+                    err.message = _t("This email address was not found");
+                } else if (err.httpStatus) {
+                    err.message = err.message + ` (Status ${err.httpStatus})`;
+                }
+                throw err;
+            },
+        );
+    }
+
+    public setLogoutDevices(logoutDevices: boolean): void {
+        this.logoutDevices = logoutDevices;
+    }
+
+    public async setNewPassword(password: string): Promise<void> {
+        this.password = password;
+        await this.checkEmailLinkClicked();
     }
 
     /**
@@ -82,22 +92,27 @@ export default class PasswordReset {
         };
 
         try {
-            await this.client.setPassword({
-                // Note: Though this sounds like a login type for identity servers only, it
-                // has a dual purpose of being used for homeservers too.
-                type: "m.login.email.identity",
-                // TODO: Remove `threepid_creds` once servers support proper UIA
-                // See https://github.com/matrix-org/synapse/issues/5665
-                // See https://github.com/matrix-org/matrix-doc/issues/2220
-                threepid_creds: creds,
-                threepidCreds: creds,
-            }, this.password);
-        } catch (err) {
+            await this.client.setPassword(
+                {
+                    // Note: Though this sounds like a login type for identity servers only, it
+                    // has a dual purpose of being used for homeservers too.
+                    type: "m.login.email.identity",
+                    // TODO: Remove `threepid_creds` once servers support proper UIA
+                    // See https://github.com/matrix-org/synapse/issues/5665
+                    // See https://github.com/matrix-org/matrix-doc/issues/2220
+                    threepid_creds: creds,
+                    threepidCreds: creds,
+                },
+                this.password,
+                this.logoutDevices,
+            );
+        } catch (err: any) {
             if (err.httpStatus === 401) {
-                err.message = _t('Failed to verify email address: make sure you clicked the link in the email');
+                err.message = _t("Failed to verify email address: make sure you clicked the link in the email");
             } else if (err.httpStatus === 404) {
-                err.message =
-                    _t('Your email address does not appear to be associated with a Matrix ID on this Homeserver.');
+                err.message = _t(
+                    "Your email address does not appear to be associated with a Matrix ID on this homeserver.",
+                );
             } else if (err.httpStatus) {
                 err.message += ` (Status ${err.httpStatus})`;
             }
@@ -105,4 +120,3 @@ export default class PasswordReset {
         }
     }
 }
-

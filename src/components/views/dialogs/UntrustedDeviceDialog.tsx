@@ -15,59 +15,67 @@ limitations under the License.
 */
 
 import React from "react";
-import { User } from "matrix-js-sdk/src/models/user";
+import { User } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import E2EIcon, { E2EState } from "../rooms/E2EIcon";
 import AccessibleButton from "../elements/AccessibleButton";
 import BaseDialog from "./BaseDialog";
-import { IDialogProps } from "./IDialogProps";
 import { IDevice } from "../right_panel/UserInfo";
 
-interface IProps extends IDialogProps {
+interface IProps {
     user: User;
     device: IDevice;
+    onFinished(mode?: "legacy" | "sas" | false): void;
 }
 
 const UntrustedDeviceDialog: React.FC<IProps> = ({ device, user, onFinished }) => {
-    let askToVerifyText;
-    let newSessionText;
+    let askToVerifyText: string;
+    let newSessionText: string;
 
-    if (MatrixClientPeg.get().getUserId() === user.userId) {
+    if (MatrixClientPeg.safeGet().getUserId() === user.userId) {
         newSessionText = _t("You signed in to a new session without verifying it:");
         askToVerifyText = _t("Verify your other session using one of the options below.");
     } else {
-        newSessionText = _t("%(name)s (%(userId)s) signed in to a new session without verifying it:",
-            { name: user.displayName, userId: user.userId });
+        newSessionText = _t("%(name)s (%(userId)s) signed in to a new session without verifying it:", {
+            name: user.displayName,
+            userId: user.userId,
+        });
         askToVerifyText = _t("Ask this user to verify their session, or manually verify it below.");
     }
 
-    return <BaseDialog
-        onFinished={onFinished}
-        className="mx_UntrustedDeviceDialog"
-        title={<>
-            <E2EIcon status={E2EState.Warning} size={24} hideTooltip={true} />
-            { _t("Not Trusted") }
-        </>}
-    >
-        <div className="mx_Dialog_content" id='mx_Dialog_content'>
-            <p>{ newSessionText }</p>
-            <p>{ device.getDisplayName() } ({ device.deviceId })</p>
-            <p>{ askToVerifyText }</p>
-        </div>
-        <div className='mx_Dialog_buttons'>
-            <AccessibleButton element="button" kind="secondary" onClick={() => onFinished("legacy")}>
-                { _t("Manually Verify by Text") }
-            </AccessibleButton>
-            <AccessibleButton element="button" kind="secondary" onClick={() => onFinished("sas")}>
-                { _t("Interactively verify by Emoji") }
-            </AccessibleButton>
-            <AccessibleButton kind="primary" onClick={() => onFinished(false)}>
-                { _t("Done") }
-            </AccessibleButton>
-        </div>
-    </BaseDialog>;
+    return (
+        <BaseDialog
+            onFinished={onFinished}
+            className="mx_UntrustedDeviceDialog"
+            title={
+                <>
+                    <E2EIcon status={E2EState.Warning} isUser size={24} hideTooltip={true} />
+                    {_t("Not Trusted")}
+                </>
+            }
+        >
+            <div className="mx_Dialog_content" id="mx_Dialog_content">
+                <p>{newSessionText}</p>
+                <p>
+                    {device.displayName} ({device.deviceId})
+                </p>
+                <p>{askToVerifyText}</p>
+            </div>
+            <div className="mx_Dialog_buttons">
+                <AccessibleButton kind="primary_outline" onClick={() => onFinished("legacy")}>
+                    {_t("Manually verify by text")}
+                </AccessibleButton>
+                <AccessibleButton kind="primary_outline" onClick={() => onFinished("sas")}>
+                    {_t("Interactively verify by emoji")}
+                </AccessibleButton>
+                <AccessibleButton kind="primary" onClick={() => onFinished(false)}>
+                    {_t("Done")}
+                </AccessibleButton>
+            </div>
+        </BaseDialog>
+    );
 };
 
 export default UntrustedDeviceDialog;

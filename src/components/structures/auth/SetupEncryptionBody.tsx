@@ -14,28 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import Modal from '../../../Modal';
-import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
-import { SetupEncryptionStore, Phase } from '../../../stores/SetupEncryptionStore';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { ISecretStorageKeyInfo } from 'matrix-js-sdk/src/crypto/api';
-import EncryptionPanel from "../../views/right_panel/EncryptionPanel";
-import AccessibleButton from '../../views/elements/AccessibleButton';
-import Spinner from '../../views/elements/Spinner';
+import React from "react";
+import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-
+import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { logger } from "matrix-js-sdk/src/logger";
 
+import { _t } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import Modal from "../../../Modal";
+import VerificationRequestDialog from "../../views/dialogs/VerificationRequestDialog";
+import { SetupEncryptionStore, Phase } from "../../../stores/SetupEncryptionStore";
+import EncryptionPanel from "../../views/right_panel/EncryptionPanel";
+import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
+import Spinner from "../../views/elements/Spinner";
+
 function keyHasPassphrase(keyInfo: ISecretStorageKeyInfo): boolean {
-    return Boolean(
-        keyInfo.passphrase &&
-        keyInfo.passphrase.salt &&
-        keyInfo.passphrase.iterations,
-    );
+    return Boolean(keyInfo.passphrase && keyInfo.passphrase.salt && keyInfo.passphrase.iterations);
 }
 
 interface IProps {
@@ -43,15 +38,14 @@ interface IProps {
 }
 
 interface IState {
-    phase: Phase;
-    verificationRequest: VerificationRequest;
-    backupInfo: IKeyBackupInfo;
+    phase?: Phase;
+    verificationRequest: VerificationRequest | null;
+    backupInfo: IKeyBackupInfo | null;
     lostKeys: boolean;
 }
 
-@replaceableComponent("structures.auth.SetupEncryptionBody")
 export default class SetupEncryptionBody extends React.Component<IProps, IState> {
-    constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         const store = SetupEncryptionStore.sharedInstance();
         store.on("update", this.onStoreUpdate);
@@ -67,7 +61,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
         };
     }
 
-    private onStoreUpdate = () => {
+    private onStoreUpdate = (): void => {
         const store = SetupEncryptionStore.sharedInstance();
         if (store.phase === Phase.Finished) {
             this.props.onFinished();
@@ -81,29 +75,29 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
         });
     };
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         const store = SetupEncryptionStore.sharedInstance();
         store.off("update", this.onStoreUpdate);
         store.stop();
     }
 
-    private onUsePassphraseClick = async () => {
+    private onUsePassphraseClick = async (): Promise<void> => {
         const store = SetupEncryptionStore.sharedInstance();
         store.usePassPhrase();
     };
 
-    private onVerifyClick = () => {
-        const cli = MatrixClientPeg.get();
-        const userId = cli.getUserId();
-        const requestPromise = cli.requestVerification(userId);
+    private onVerifyClick = (): void => {
+        const cli = MatrixClientPeg.safeGet();
+        const userId = cli.getSafeUserId();
+        const requestPromise = cli.getCrypto()!.requestOwnUserVerification();
 
         // We need to call onFinished now to close this dialog, and
         // again later to signal that the verification is complete.
         this.props.onFinished();
-        Modal.createTrackedDialog('New Session Verification', 'Starting dialog', VerificationRequestDialog, {
+        Modal.createDialog(VerificationRequestDialog, {
             verificationRequestPromise: requestPromise,
-            member: cli.getUser(userId),
-            onFinished: async () => {
+            member: cli.getUser(userId) ?? undefined,
+            onFinished: async (): Promise<void> => {
                 const request = await requestPromise;
                 request.cancel();
                 this.props.onFinished();
@@ -111,70 +105,72 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
         });
     };
 
-    private onSkipConfirmClick = () => {
+    private onSkipConfirmClick = (): void => {
         const store = SetupEncryptionStore.sharedInstance();
         store.skipConfirm();
     };
 
-    private onSkipBackClick = () => {
+    private onSkipBackClick = (): void => {
         const store = SetupEncryptionStore.sharedInstance();
         store.returnAfterSkip();
     };
 
-    private onResetClick = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+    private onResetClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
         const store = SetupEncryptionStore.sharedInstance();
         store.reset();
     };
 
-    private onResetConfirmClick = () => {
+    private onResetConfirmClick = (): void => {
         this.props.onFinished();
         const store = SetupEncryptionStore.sharedInstance();
         store.resetConfirm();
     };
 
-    private onResetBackClick = () => {
+    private onResetBackClick = (): void => {
         const store = SetupEncryptionStore.sharedInstance();
         store.returnAfterReset();
     };
 
-    private onDoneClick = () => {
+    private onDoneClick = (): void => {
         const store = SetupEncryptionStore.sharedInstance();
         store.done();
     };
 
-    private onEncryptionPanelClose = () => {
+    private onEncryptionPanelClose = (): void => {
         this.props.onFinished();
     };
 
-    public render() {
-        const {
-            phase,
-            lostKeys,
-        } = this.state;
+    public render(): React.ReactNode {
+        const cli = MatrixClientPeg.safeGet();
+        const { phase, lostKeys } = this.state;
 
-        if (this.state.verificationRequest) {
-            return <EncryptionPanel
-                layout="dialog"
-                verificationRequest={this.state.verificationRequest}
-                onClose={this.onEncryptionPanelClose}
-                member={MatrixClientPeg.get().getUser(this.state.verificationRequest.otherUserId)}
-                isRoomEncrypted={false}
-            />;
+        if (this.state.verificationRequest && cli.getUser(this.state.verificationRequest.otherUserId)) {
+            return (
+                <EncryptionPanel
+                    layout="dialog"
+                    verificationRequest={this.state.verificationRequest}
+                    onClose={this.onEncryptionPanelClose}
+                    member={cli.getUser(this.state.verificationRequest.otherUserId)!}
+                    isRoomEncrypted={false}
+                />
+            );
         } else if (phase === Phase.Intro) {
             if (lostKeys) {
                 return (
                     <div>
-                        <p>{ _t(
-                            "It looks like you don't have a Security Key or any other devices you can " +
-                            "verify against.  This device will not be able to access old encrypted messages. " +
-                            "In order to verify your identity on this device, you'll need to reset " +
-                            "your verification keys.",
-                        ) }</p>
+                        <p>
+                            {_t(
+                                "It looks like you don't have a Security Key or any other devices you can " +
+                                    "verify against.  This device will not be able to access old encrypted messages. " +
+                                    "In order to verify your identity on this device, you'll need to reset " +
+                                    "your verification keys.",
+                            )}
+                        </p>
 
                         <div className="mx_CompleteSecurity_actionRow">
                             <AccessibleButton kind="primary" onClick={this.onResetConfirmClick}>
-                                { _t("Proceed with reset") }
+                                {_t("Proceed with reset")}
                             </AccessibleButton>
                         </div>
                     </div>
@@ -190,61 +186,69 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
 
                 let useRecoveryKeyButton;
                 if (recoveryKeyPrompt) {
-                    useRecoveryKeyButton = <AccessibleButton kind="primary" onClick={this.onUsePassphraseClick}>
-                        { recoveryKeyPrompt }
-                    </AccessibleButton>;
+                    useRecoveryKeyButton = (
+                        <AccessibleButton kind="primary" onClick={this.onUsePassphraseClick}>
+                            {recoveryKeyPrompt}
+                        </AccessibleButton>
+                    );
                 }
 
                 let verifyButton;
                 if (store.hasDevicesToVerifyAgainst) {
-                    verifyButton = <AccessibleButton kind="primary" onClick={this.onVerifyClick}>
-                        { _t("Verify with another login") }
-                    </AccessibleButton>;
+                    verifyButton = (
+                        <AccessibleButton kind="primary" onClick={this.onVerifyClick}>
+                            {_t("Verify with another device")}
+                        </AccessibleButton>
+                    );
                 }
 
                 return (
                     <div>
-                        <p>{ _t(
-                            "Verify your identity to access encrypted messages and prove your identity to others.",
-                        ) }</p>
+                        <p>
+                            {_t("Verify your identity to access encrypted messages and prove your identity to others.")}
+                        </p>
 
                         <div className="mx_CompleteSecurity_actionRow">
-                            { verifyButton }
-                            { useRecoveryKeyButton }
+                            {verifyButton}
+                            {useRecoveryKeyButton}
                         </div>
                         <div className="mx_SetupEncryptionBody_reset">
-                            { _t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
-                                a: (sub) => <a
-                                    href=""
-                                    onClick={this.onResetClick}
-                                    className="mx_SetupEncryptionBody_reset_link">{ sub }</a>,
-                            }) }
+                            {_t("Forgotten or lost all recovery methods? <a>Reset all</a>", undefined, {
+                                a: (sub) => (
+                                    <AccessibleButton
+                                        kind="link_inline"
+                                        className="mx_SetupEncryptionBody_reset_link"
+                                        onClick={this.onResetClick}
+                                    >
+                                        {sub}
+                                    </AccessibleButton>
+                                ),
+                            })}
                         </div>
                     </div>
                 );
             }
         } else if (phase === Phase.Done) {
-            let message;
+            let message: JSX.Element;
             if (this.state.backupInfo) {
-                message = <p>{ _t(
-                    "Your new session is now verified. It has access to your " +
-                    "encrypted messages, and other users will see it as trusted.",
-                ) }</p>;
+                message = (
+                    <p>
+                        {_t(
+                            "Your new device is now verified. It has access to your " +
+                                "encrypted messages, and other users will see it as trusted.",
+                        )}
+                    </p>
+                );
             } else {
-                message = <p>{ _t(
-                    "Your new session is now verified. Other users will see it as trusted.",
-                ) }</p>;
+                message = <p>{_t("Your new device is now verified. Other users will see it as trusted.")}</p>;
             }
             return (
                 <div>
                     <div className="mx_CompleteSecurity_heroIcon mx_E2EIcon_verified" />
-                    { message }
+                    {message}
                     <div className="mx_CompleteSecurity_actionRow">
-                        <AccessibleButton
-                            kind="primary"
-                            onClick={this.onDoneClick}
-                        >
-                            { _t("Done") }
+                        <AccessibleButton kind="primary" onClick={this.onDoneClick}>
+                            {_t("Done")}
                         </AccessibleButton>
                     </div>
                 </div>
@@ -252,22 +256,18 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
         } else if (phase === Phase.ConfirmSkip) {
             return (
                 <div>
-                    <p>{ _t(
-                        "Without verifying, you won't have access to all your messages " +
-                        "and may appear as untrusted to others.",
-                    ) }</p>
+                    <p>
+                        {_t(
+                            "Without verifying, you won't have access to all your messages " +
+                                "and may appear as untrusted to others.",
+                        )}
+                    </p>
                     <div className="mx_CompleteSecurity_actionRow">
-                        <AccessibleButton
-                            kind="danger_outline"
-                            onClick={this.onSkipConfirmClick}
-                        >
-                            { _t("I'll verify later") }
+                        <AccessibleButton kind="danger_outline" onClick={this.onSkipConfirmClick}>
+                            {_t("I'll verify later")}
                         </AccessibleButton>
-                        <AccessibleButton
-                            kind="primary"
-                            onClick={this.onSkipBackClick}
-                        >
-                            { _t("Go Back") }
+                        <AccessibleButton kind="primary" onClick={this.onSkipBackClick}>
+                            {_t("Go Back")}
                         </AccessibleButton>
                     </div>
                 </div>
@@ -275,23 +275,27 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
         } else if (phase === Phase.ConfirmReset) {
             return (
                 <div>
-                    <p>{ _t(
-                        "Resetting your verification keys cannot be undone. After resetting, " +
-                        "you won't have access to old encrypted messages, and any friends who " +
-                        "have previously verified you will see security warnings until you " +
-                        "re-verify with them.",
-                    ) }</p>
-                    <p>{ _t(
-                        "Please only proceed if you're sure you've lost all of your other " +
-                        "devices and your security key.",
-                    ) }</p>
+                    <p>
+                        {_t(
+                            "Resetting your verification keys cannot be undone. After resetting, " +
+                                "you won't have access to old encrypted messages, and any friends who " +
+                                "have previously verified you will see security warnings until you " +
+                                "re-verify with them.",
+                        )}
+                    </p>
+                    <p>
+                        {_t(
+                            "Please only proceed if you're sure you've lost all of your other " +
+                                "devices and your Security Key.",
+                        )}
+                    </p>
 
                     <div className="mx_CompleteSecurity_actionRow">
                         <AccessibleButton kind="danger_outline" onClick={this.onResetConfirmClick}>
-                            { _t("Proceed with reset") }
+                            {_t("Proceed with reset")}
                         </AccessibleButton>
                         <AccessibleButton kind="primary" onClick={this.onResetBackClick}>
-                            { _t("Go Back") }
+                            {_t("Go Back")}
                         </AccessibleButton>
                     </div>
                 </div>

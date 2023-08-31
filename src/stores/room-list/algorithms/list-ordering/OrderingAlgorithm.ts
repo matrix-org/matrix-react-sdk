@@ -14,19 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { RoomUpdateCause, TagID } from "../../models";
 import { SortAlgorithm } from "../models";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 /**
  * Represents a list ordering algorithm. Subclasses should populate the
  * `cachedOrderedRooms` field.
  */
 export abstract class OrderingAlgorithm {
-    protected cachedOrderedRooms: Room[];
-    protected sortingAlgorithm: SortAlgorithm;
+    protected cachedOrderedRooms: Room[] = [];
+
+    // set by setSortAlgorithm() in ctor
+    protected sortingAlgorithm!: SortAlgorithm;
 
     protected constructor(protected tagId: TagID, initialSortingAlgorithm: SortAlgorithm) {
         // noinspection JSIgnoredPromiseFromCall
@@ -37,7 +39,11 @@ export abstract class OrderingAlgorithm {
      * The rooms as ordered by the algorithm.
      */
     public get orderedRooms(): Room[] {
-        return this.cachedOrderedRooms || [];
+        return this.cachedOrderedRooms;
+    }
+
+    public get isMutedToBottom(): boolean {
+        return this.sortingAlgorithm === SortAlgorithm.Recent;
     }
 
     /**
@@ -45,7 +51,7 @@ export abstract class OrderingAlgorithm {
      * @param newAlgorithm The new algorithm. Must be defined.
      * @returns Resolves when complete.
      */
-    public setSortAlgorithm(newAlgorithm: SortAlgorithm) {
+    public setSortAlgorithm(newAlgorithm: SortAlgorithm): void {
         if (!newAlgorithm) throw new Error("A sorting algorithm must be defined");
         this.sortingAlgorithm = newAlgorithm;
 
@@ -72,9 +78,10 @@ export abstract class OrderingAlgorithm {
 
     protected getRoomIndex(room: Room): number {
         let roomIdx = this.cachedOrderedRooms.indexOf(room);
-        if (roomIdx === -1) { // can only happen if the js-sdk's store goes sideways.
+        if (roomIdx === -1) {
+            // can only happen if the js-sdk's store goes sideways.
             logger.warn(`Degrading performance to find missing room in "${this.tagId}": ${room.roomId}`);
-            roomIdx = this.cachedOrderedRooms.findIndex(r => r.roomId === room.roomId);
+            roomIdx = this.cachedOrderedRooms.findIndex((r) => r.roomId === room.roomId);
         }
         return roomIdx;
     }

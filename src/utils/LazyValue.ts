@@ -18,18 +18,17 @@ limitations under the License.
  * Utility class for lazily getting a variable.
  */
 export class LazyValue<T> {
-    private val: T;
-    private prom: Promise<T>;
+    private val?: T;
+    private prom?: Promise<T>;
     private done = false;
 
-    public constructor(private getFn: () => Promise<T>) {
-    }
+    public constructor(private getFn: () => Promise<T>) {}
 
     /**
      * Whether or not a cached value is present.
      */
     public get present(): boolean {
-        // we use a tracking variable just in case the final value is falsey
+        // we use a tracking variable just in case the final value is falsy
         return this.done;
     }
 
@@ -37,7 +36,7 @@ export class LazyValue<T> {
      * Gets the value without invoking a get. May be undefined until the
      * value is fetched properly.
      */
-    public get cachedValue(): T {
+    public get cachedValue(): T | undefined {
         return this.val;
     }
 
@@ -48,12 +47,10 @@ export class LazyValue<T> {
         if (this.prom) return this.prom;
         this.prom = this.getFn();
 
-        // Fork the promise chain to avoid accidentally making it return undefined always.
-        this.prom.then(v => {
+        return this.prom.then((v) => {
             this.val = v;
             this.done = true;
+            return v;
         });
-
-        return this.prom;
     }
 }

@@ -15,78 +15,103 @@ limitations under the License.
 */
 
 import * as React from "react";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
-const BUTTONS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'];
-const BUTTON_LETTERS = ['', 'ABC', 'DEF', 'GHI', 'JKL', 'MNO', 'PQRS', 'TUV', 'WXYZ', '', '+', ''];
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { _t } from "../../../languageHandler";
+import { XOR } from "../../../@types/common";
+
+export const BUTTONS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"];
+export const BUTTON_LETTERS = ["", "ABC", "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ", "", "+", ""];
 
 enum DialPadButtonKind {
     Digit,
     Dial,
 }
 
-interface IButtonProps {
-    kind: DialPadButtonKind;
-    digit?: string;
-    digitSubtext?: string;
+type DigitButtonProps = {
+    kind: DialPadButtonKind.Digit;
+    digit: string;
+    digitSubtext: string;
     onButtonPress: (digit: string, ev: ButtonEvent) => void;
-}
+};
 
-class DialPadButton extends React.PureComponent<IButtonProps> {
-    onClick = (ev: ButtonEvent) => {
-        this.props.onButtonPress(this.props.digit, ev);
-    };
+type DialButtonProps = {
+    kind: DialPadButtonKind.Dial;
+    onButtonPress: () => void;
+};
 
-    render() {
+class DialPadButton extends React.PureComponent<DigitButtonProps | DialButtonProps> {
+    public onClick = (ev: ButtonEvent): void => {
         switch (this.props.kind) {
             case DialPadButtonKind.Digit:
-                return <AccessibleButton className="mx_DialPad_button" onClick={this.onClick}>
-                    { this.props.digit }
-                    <div className="mx_DialPad_buttonSubText">
-                        { this.props.digitSubtext }
-                    </div>
-                </AccessibleButton>;
+                this.props.onButtonPress(this.props.digit, ev);
+                break;
             case DialPadButtonKind.Dial:
-                return <AccessibleButton className="mx_DialPad_button mx_DialPad_dialButton" onClick={this.onClick} />;
+                this.props.onButtonPress();
+                break;
+        }
+    };
+
+    public render(): React.ReactNode {
+        switch (this.props.kind) {
+            case DialPadButtonKind.Digit:
+                return (
+                    <AccessibleButton className="mx_DialPad_button" onClick={this.onClick}>
+                        {this.props.digit}
+                        <div className="mx_DialPad_buttonSubText">{this.props.digitSubtext}</div>
+                    </AccessibleButton>
+                );
+            case DialPadButtonKind.Dial:
+                return (
+                    <AccessibleButton
+                        className="mx_DialPad_button mx_DialPad_dialButton"
+                        onClick={this.onClick}
+                        aria-label={_t("Dial")}
+                    />
+                );
         }
     }
 }
 
-interface IProps {
+interface IBaseProps {
     onDigitPress: (digit: string, ev: ButtonEvent) => void;
-    hasDial: boolean;
     onDeletePress?: (ev: ButtonEvent) => void;
-    onDialPress?: () => void;
+    hasDial: boolean;
 }
 
-@replaceableComponent("views.voip.DialPad")
-export default class Dialpad extends React.PureComponent<IProps> {
-    render() {
-        const buttonNodes = [];
+interface IProps extends IBaseProps {
+    hasDial: false;
+}
+
+interface IDialProps extends IBaseProps {
+    hasDial: true;
+    onDialPress: () => void;
+}
+
+export default class DialPad extends React.PureComponent<XOR<IProps, IDialProps>> {
+    public render(): React.ReactNode {
+        const buttonNodes: JSX.Element[] = [];
 
         for (let i = 0; i < BUTTONS.length; i++) {
             const button = BUTTONS[i];
             const digitSubtext = BUTTON_LETTERS[i];
-            buttonNodes.push(<DialPadButton
-                key={button}
-                kind={DialPadButtonKind.Digit}
-                digit={button}
-                digitSubtext={digitSubtext}
-                onButtonPress={this.props.onDigitPress}
-            />);
+            buttonNodes.push(
+                <DialPadButton
+                    key={button}
+                    kind={DialPadButtonKind.Digit}
+                    digit={button}
+                    digitSubtext={digitSubtext}
+                    onButtonPress={this.props.onDigitPress}
+                />,
+            );
         }
 
         if (this.props.hasDial) {
-            buttonNodes.push(<DialPadButton
-                key="dial"
-                kind={DialPadButtonKind.Dial}
-                onButtonPress={this.props.onDialPress}
-            />);
+            buttonNodes.push(
+                <DialPadButton key="dial" kind={DialPadButtonKind.Dial} onButtonPress={this.props.onDialPress} />,
+            );
         }
 
-        return <div className="mx_DialPad">
-            { buttonNodes }
-        </div>;
+        return <div className="mx_DialPad">{buttonNodes}</div>;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
+ * Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, MatrixEvent, MatrixEventEvent, MatrixClient, ClientEvent } from "matrix-js-sdk/src/matrix";
 import {
     ClientWidgetApi,
+    IModalWidgetOpenRequest,
+    IRoomEvent,
     IStickerActionRequest,
     IStickyActionRequest,
     ITemplateParams,
     IWidget,
+    IWidgetApiErrorResponseData,
     IWidgetApiRequest,
     IWidgetApiRequestEmptyData,
     IWidgetData,
@@ -28,44 +31,45 @@ import {
     runTemplate,
     Widget,
     WidgetApiFromWidgetAction,
-    IModalWidgetOpenRequest,
-    IWidgetApiErrorResponseData,
     WidgetKind,
 } from "matrix-widget-api";
-import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
+import { Optional } from "matrix-events-sdk";
 import { EventEmitter } from "events";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { _t, getUserLanguage } from "../../languageHandler";
+import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { WidgetMessagingStore } from "./WidgetMessagingStore";
-import RoomViewStore from "../RoomViewStore";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { OwnProfileStore } from "../OwnProfileStore";
-import WidgetUtils from '../../utils/WidgetUtils';
+import WidgetUtils from "../../utils/WidgetUtils";
 import { IntegrationManagers } from "../../integrations/IntegrationManagers";
 import SettingsStore from "../../settings/SettingsStore";
 import { WidgetType } from "../../widgets/WidgetType";
 import ActiveWidgetStore from "../ActiveWidgetStore";
 import { objectShallowClone } from "../../utils/objects";
 import defaultDispatcher from "../../dispatcher/dispatcher";
-import { ElementWidgetActions, IViewRoomApiRequest } from "./ElementWidgetActions";
+import { Action } from "../../dispatcher/actions";
+import { ElementWidgetActions, IHangupCallApiRequest, IViewRoomApiRequest } from "./ElementWidgetActions";
 import { ModalWidgetStore } from "../ModalWidgetStore";
+import { IApp, isAppWidget } from "../WidgetStore";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { getCustomTheme } from "../../theme";
-import CountlyAnalytics from "../../CountlyAnalytics";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ELEMENT_CLIENT_ID } from "../../identifiers";
-import { getUserLanguage } from "../../languageHandler";
 import { WidgetVariableCustomisations } from "../../customisations/WidgetVariables";
 import { arrayFastClone } from "../../utils/arrays";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import Modal from "../../Modal";
+import ErrorDialog from "../../components/views/dialogs/ErrorDialog";
+import { SdkContextClass } from "../../contexts/SDKContext";
 
 // TODO: Destroy all of this code
 
 interface IAppTileProps {
     // Note: these are only the props we care about
-
-    app: IWidget;
-    room: Room;
+    app: IApp | IWidget;
+    room?: Room; // without a room it is a user widget
     userId: string;
     creatorUserId: string;
     waitForIframeLoad: boolean;
@@ -75,7 +79,7 @@ interface IAppTileProps {
 
 // TODO: Don't use this because it's wrong
 export class ElementWidget extends Widget {
-    constructor(private rawDefinition: IWidget) {
+    public constructor(private rawDefinition: IWidget) {
         super(rawDefinition);
     }
 
@@ -100,21 +104,21 @@ export class ElementWidget extends Widget {
     }
 
     public get rawData(): IWidgetData {
-        let conferenceId = super.rawData['conferenceId'];
+        let conferenceId = super.rawData["conferenceId"];
         if (conferenceId === undefined) {
             // we'll need to parse the conference ID out of the URL for v1 Jitsi widgets
             const parsedUrl = new URL(super.templateUrl); // use super to get the raw widget URL
             conferenceId = parsedUrl.searchParams.get("confId");
         }
-        let domain = super.rawData['domain'];
+        let domain = super.rawData["domain"];
         if (domain === undefined) {
-            // v1 widgets default to jitsi.riot.im regardless of user settings
-            domain = "jitsi.riot.im";
+            // v1 widgets default to meet.element.io regardless of user settings
+            domain = "meet.element.io";
         }
 
         let theme = new ThemeWatcher().getEffectiveTheme();
         if (theme.startsWith("custom-")) {
-            const customTheme = getCustomTheme(theme.substr(7));
+            const customTheme = getCustomTheme(theme.slice(7));
             // Jitsi only understands light/dark
             theme = customTheme.is_dark ? "dark" : "light";
         }
@@ -136,37 +140,45 @@ export class ElementWidget extends Widget {
     }
 
     public getCompleteUrl(params: ITemplateParams, asPopout = false): string {
-        return runTemplate(asPopout ? this.popoutTemplateUrl : this.templateUrl, {
-            ...this.rawDefinition,
-            data: this.rawData,
-        }, params);
+        return runTemplate(
+            asPopout ? this.popoutTemplateUrl : this.templateUrl,
+            {
+                ...this.rawDefinition,
+                data: this.rawData,
+            },
+            params,
+        );
     }
 }
 
 export class StopGapWidget extends EventEmitter {
-    private messaging: ClientWidgetApi;
+    private client: MatrixClient;
+    private messaging: ClientWidgetApi | null = null;
     private mockWidget: ElementWidget;
-    private scalarToken: string;
+    private scalarToken?: string;
     private roomId?: string;
     private kind: WidgetKind;
+    private readonly virtual: boolean;
     private readUpToMap: { [roomId: string]: string } = {}; // room ID to event ID
 
-    constructor(private appTileProps: IAppTileProps) {
+    public constructor(private appTileProps: IAppTileProps) {
         super();
-        let app = appTileProps.app;
+        this.client = MatrixClientPeg.safeGet();
 
+        let app = appTileProps.app;
         // Backwards compatibility: not all old widgets have a creatorUserId
         if (!app.creatorUserId) {
             app = objectShallowClone(app); // clone to prevent accidental mutation
-            app.creatorUserId = MatrixClientPeg.get().getUserId();
+            app.creatorUserId = this.client.getUserId()!;
         }
 
         this.mockWidget = new ElementWidget(app);
         this.roomId = appTileProps.room?.roomId;
         this.kind = appTileProps.userWidget ? WidgetKind.Account : WidgetKind.Room; // probably
+        this.virtual = isAppWidget(app) && app.eventId === undefined;
     }
 
-    private get eventListenerRoomId(): string {
+    private get eventListenerRoomId(): Optional<string> {
         // When widgets are listening to events, we need to make sure they're only
         // receiving events for the right room. In particular, room widgets get locked
         // to the room they were added in while account widgets listen to the currently
@@ -174,10 +186,10 @@ export class StopGapWidget extends EventEmitter {
 
         if (this.roomId) return this.roomId;
 
-        return RoomViewStore.getRoomId();
+        return SdkContextClass.instance.roomViewStore.getRoomId();
     }
 
-    public get widgetApi(): ClientWidgetApi {
+    public get widgetApi(): ClientWidgetApi | null {
         return this.messaging;
     }
 
@@ -199,12 +211,13 @@ export class StopGapWidget extends EventEmitter {
         const fromCustomisation = WidgetVariableCustomisations?.provideVariables?.() ?? {};
         const defaults: ITemplateParams = {
             widgetRoomId: this.roomId,
-            currentUserId: MatrixClientPeg.get().getUserId(),
-            userDisplayName: OwnProfileStore.instance.displayName,
-            userHttpAvatarUrl: OwnProfileStore.instance.getHttpAvatarUrl(),
+            currentUserId: this.client.getUserId()!,
+            userDisplayName: OwnProfileStore.instance.displayName ?? undefined,
+            userHttpAvatarUrl: OwnProfileStore.instance.getHttpAvatarUrl() ?? undefined,
             clientId: ELEMENT_CLIENT_ID,
             clientTheme: SettingsStore.getValue("theme"),
             clientLanguage: getUserLanguage(),
+            deviceId: this.client.getDeviceId() ?? undefined,
         };
         const templated = this.mockWidget.getCompleteUrl(Object.assign(defaults, fromCustomisation), opts?.asPopout);
 
@@ -214,61 +227,67 @@ export class StopGapWidget extends EventEmitter {
         // TODO: Replace these with proper widget params
         // See https://github.com/matrix-org/matrix-doc/pull/1958/files#r405714833
         if (!opts?.asPopout) {
-            parsed.searchParams.set('widgetId', this.mockWidget.id);
-            parsed.searchParams.set('parentUrl', window.location.href.split('#', 2)[0]);
+            parsed.searchParams.set("widgetId", this.mockWidget.id);
+            parsed.searchParams.set("parentUrl", window.location.href.split("#", 2)[0]);
 
             // Give the widget a scalar token if we're supposed to (more legacy)
             // TODO: Stop doing this
             if (this.scalarToken) {
-                parsed.searchParams.set('scalar_token', this.scalarToken);
+                parsed.searchParams.set("scalar_token", this.scalarToken);
             }
         }
 
         // Replace the encoded dollar signs back to dollar signs. They have no special meaning
         // in HTTP, but URL parsers encode them anyways.
-        return parsed.toString().replace(/%24/g, '$');
-    }
-
-    public get isManagedByManager(): boolean {
-        return !!this.scalarToken;
+        return parsed.toString().replace(/%24/g, "$");
     }
 
     public get started(): boolean {
         return !!this.messaging;
     }
 
-    private get widgetId() {
-        return this.messaging.widget.id;
-    }
-
-    private onOpenModal = async (ev: CustomEvent<IModalWidgetOpenRequest>) => {
+    private onOpenModal = async (ev: CustomEvent<IModalWidgetOpenRequest>): Promise<void> => {
         ev.preventDefault();
         if (ModalWidgetStore.instance.canOpenModalWidget()) {
-            ModalWidgetStore.instance.openModalWidget(ev.detail.data, this.mockWidget);
-            this.messaging.transport.reply(ev.detail, {}); // ack
+            ModalWidgetStore.instance.openModalWidget(ev.detail.data, this.mockWidget, this.roomId);
+            this.messaging?.transport.reply(ev.detail, {}); // ack
         } else {
-            this.messaging.transport.reply(ev.detail, {
+            this.messaging?.transport.reply(ev.detail, {
                 error: {
                     message: "Unable to open modal at this time",
                 },
             });
         }
     };
-
-    public start(iframe: HTMLIFrameElement) {
+    /**
+     * This starts the messaging for the widget if it is not in the state `started` yet.
+     * @param iframe the iframe the widget should use
+     */
+    public startMessaging(iframe: HTMLIFrameElement): any {
         if (this.started) return;
+
         const allowedCapabilities = this.appTileProps.whitelistCapabilities || [];
-        const driver = new StopGapWidgetDriver(allowedCapabilities, this.mockWidget, this.kind, this.roomId);
+        const driver = new StopGapWidgetDriver(
+            allowedCapabilities,
+            this.mockWidget,
+            this.kind,
+            this.virtual,
+            this.roomId,
+        );
+
         this.messaging = new ClientWidgetApi(this.mockWidget, iframe, driver);
         this.messaging.on("preparing", () => this.emit("preparing"));
-        this.messaging.on("ready", () => this.emit("ready"));
+        this.messaging.on("error:preparing", (err: unknown) => this.emit("error:preparing", err));
+        this.messaging.on("ready", () => {
+            WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.roomId, this.messaging!);
+            this.emit("ready");
+        });
         this.messaging.on("capabilitiesNotified", () => this.emit("capabilitiesNotified"));
         this.messaging.on(`action:${WidgetApiFromWidgetAction.OpenModalWidget}`, this.onOpenModal);
-        WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.messaging);
-
-        if (!this.appTileProps.userWidget && this.appTileProps.room) {
-            ActiveWidgetStore.instance.setRoomId(this.mockWidget.id, this.appTileProps.room.roomId);
-        }
+        this.messaging.on(`action:${ElementWidgetActions.JoinCall}`, () => {
+            // pause voice broadcast recording when any widget sends a "join"
+            SdkContextClass.instance.voiceBroadcastRecordingsStore.getCurrent()?.pause();
+        });
 
         // Always attach a handler for ViewRoom, but permission check it internally
         this.messaging.on(`action:${ElementWidgetActions.ViewRoom}`, (ev: CustomEvent<IViewRoomApiRequest>) => {
@@ -277,22 +296,23 @@ export class StopGapWidget extends EventEmitter {
             // Check up front if this is even a valid request
             const targetRoomId = (ev.detail.data || {}).room_id;
             if (!targetRoomId) {
-                return this.messaging.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+                return this.messaging?.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
                     error: { message: "Room ID not supplied." },
                 });
             }
 
             // Check the widget's permission
-            if (!this.messaging.hasCapability(ElementWidgetCapabilities.CanChangeViewedRoom)) {
-                return this.messaging.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
+            if (!this.messaging?.hasCapability(ElementWidgetCapabilities.CanChangeViewedRoom)) {
+                return this.messaging?.transport.reply(ev.detail, <IWidgetApiErrorResponseData>{
                     error: { message: "This widget does not have permission for this action (denied)." },
                 });
             }
 
             // at this point we can change rooms, so do that
-            defaultDispatcher.dispatch({
-                action: 'view_room',
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
                 room_id: targetRoomId,
+                metricsTrigger: "Widget",
             });
 
             // acknowledge so the widget doesn't freak out
@@ -302,25 +322,28 @@ export class StopGapWidget extends EventEmitter {
         // Populate the map of "read up to" events for this widget with the current event in every room.
         // This is a bit inefficient, but should be okay. We do this for all rooms in case the widget
         // requests timeline capabilities in other rooms down the road. It's just easier to manage here.
-        for (const room of MatrixClientPeg.get().getRooms()) {
+        for (const room of this.client.getRooms()) {
             // Timelines are most recent last
             const events = room.getLiveTimeline()?.getEvents() || [];
             const roomEvent = events[events.length - 1];
             if (!roomEvent) continue; // force later code to think the room is fresh
-            this.readUpToMap[room.roomId] = roomEvent.getId();
+            this.readUpToMap[room.roomId] = roomEvent.getId()!;
         }
 
         // Attach listeners for feeding events - the underlying widget classes handle permissions for us
-        MatrixClientPeg.get().on('event', this.onEvent);
-        MatrixClientPeg.get().on('Event.decrypted', this.onEventDecrypted);
+        this.client.on(ClientEvent.Event, this.onEvent);
+        this.client.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        this.client.on(ClientEvent.ToDeviceEvent, this.onToDeviceEvent);
 
-        this.messaging.on(`action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
+        this.messaging.on(
+            `action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
             (ev: CustomEvent<IStickyActionRequest>) => {
-                if (this.messaging.hasCapability(MatrixCapabilities.AlwaysOnScreen)) {
-                    if (WidgetType.JITSI.matches(this.mockWidget.type)) {
-                        CountlyAnalytics.instance.trackJoinCall(this.appTileProps.room.roomId, true, true);
-                    }
-                    ActiveWidgetStore.instance.setWidgetPersistence(this.mockWidget.id, ev.detail.data.value);
+                if (this.messaging?.hasCapability(MatrixCapabilities.AlwaysOnScreen)) {
+                    ActiveWidgetStore.instance.setWidgetPersistence(
+                        this.mockWidget.id,
+                        this.roomId ?? null,
+                        ev.detail.data.value,
+                    );
                     ev.preventDefault();
                     this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{}); // ack
                 }
@@ -329,16 +352,17 @@ export class StopGapWidget extends EventEmitter {
 
         // TODO: Replace this event listener with appropriate driver functionality once the API
         // establishes a sane way to send events back and forth.
-        this.messaging.on(`action:${WidgetApiFromWidgetAction.SendSticker}`,
+        this.messaging.on(
+            `action:${WidgetApiFromWidgetAction.SendSticker}`,
             (ev: CustomEvent<IStickerActionRequest>) => {
-                if (this.messaging.hasCapability(MatrixCapabilities.StickerSending)) {
+                if (this.messaging?.hasCapability(MatrixCapabilities.StickerSending)) {
                     // Acknowledge first
                     ev.preventDefault();
                     this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
 
                     // Send the sticker
                     defaultDispatcher.dispatch({
-                        action: 'm.sticker',
+                        action: "m.sticker",
                         data: ev.detail.data,
                         widgetId: this.mockWidget.id,
                     });
@@ -347,11 +371,12 @@ export class StopGapWidget extends EventEmitter {
         );
 
         if (WidgetType.STICKERPICKER.matches(this.mockWidget.type)) {
-            this.messaging.on(`action:${ElementWidgetActions.OpenIntegrationManager}`,
+            this.messaging.on(
+                `action:${ElementWidgetActions.OpenIntegrationManager}`,
                 (ev: CustomEvent<IWidgetApiRequest>) => {
                     // Acknowledge first
                     ev.preventDefault();
-                    this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
+                    this.messaging?.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
 
                     // First close the stickerpicker
                     defaultDispatcher.dispatch({ action: "stickerpicker_close" });
@@ -359,25 +384,32 @@ export class StopGapWidget extends EventEmitter {
                     // Now open the integration manager
                     // TODO: Spec this interaction.
                     const data = ev.detail.data;
-                    const integType = data?.integType;
+                    const integType = data?.integType as string;
                     const integId = <string>data?.integId;
 
-                    // TODO: Open the right integration manager for the widget
-                    if (SettingsStore.getValue("feature_many_integration_managers")) {
-                        IntegrationManagers.sharedInstance().openAll(
-                            MatrixClientPeg.get().getRoom(RoomViewStore.getRoomId()),
-                            `type_${integType}`,
-                            integId,
-                        );
-                    } else {
-                        IntegrationManagers.sharedInstance().getPrimaryManager().open(
-                            MatrixClientPeg.get().getRoom(RoomViewStore.getRoomId()),
-                            `type_${integType}`,
-                            integId,
-                        );
-                    }
+                    const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
+                    const room = roomId ? this.client.getRoom(roomId) : undefined;
+                    if (!room) return;
+
+                    // noinspection JSIgnoredPromiseFromCall
+                    IntegrationManagers.sharedInstance()?.getPrimaryManager()?.open(room, `type_${integType}`, integId);
                 },
             );
+        }
+
+        if (WidgetType.JITSI.matches(this.mockWidget.type)) {
+            this.messaging.on(`action:${ElementWidgetActions.HangupCall}`, (ev: CustomEvent<IHangupCallApiRequest>) => {
+                ev.preventDefault();
+                if (ev.detail.data?.errorMessage) {
+                    Modal.createDialog(ErrorDialog, {
+                        title: _t("Connection lost"),
+                        description: _t("You were disconnected from the call. (Error: %(message)s)", {
+                            message: ev.detail.data.errorMessage,
+                        }),
+                    });
+                }
+                this.messaging?.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{});
+            });
         }
     }
 
@@ -386,7 +418,7 @@ export class StopGapWidget extends EventEmitter {
         await (WidgetVariableCustomisations?.isReady?.() ?? Promise.resolve());
 
         if (this.scalarToken) return;
-        const existingMessaging = WidgetMessagingStore.instance.getMessaging(this.mockWidget);
+        const existingMessaging = WidgetMessagingStore.instance.getMessaging(this.mockWidget, this.roomId);
         if (existingMessaging) this.messaging = existingMessaging;
         try {
             if (WidgetUtils.isScalarUrl(this.mockWidget.templateUrl)) {
@@ -394,7 +426,7 @@ export class StopGapWidget extends EventEmitter {
                 if (managers.hasManager()) {
                     // TODO: Pick the right manager for the widget
                     const defaultManager = managers.getPrimaryManager();
-                    if (WidgetUtils.isScalarUrl(defaultManager.apiUrl)) {
+                    if (defaultManager && WidgetUtils.isScalarUrl(defaultManager.apiUrl)) {
                         const scalar = defaultManager.getScalarClient();
                         this.scalarToken = await scalar.getScalarToken();
                     }
@@ -406,33 +438,46 @@ export class StopGapWidget extends EventEmitter {
         }
     }
 
-    public stop(opts = { forceDestroy: false }) {
-        if (!opts?.forceDestroy && ActiveWidgetStore.instance.getPersistentWidgetId() === this.mockWidget.id) {
+    /**
+     * Stops the widget messaging for if it is started. Skips stopping if it is an active
+     * widget.
+     * @param opts
+     */
+    public stopMessaging(opts = { forceDestroy: false }): void {
+        if (
+            !opts?.forceDestroy &&
+            ActiveWidgetStore.instance.getWidgetPersistence(this.mockWidget.id, this.roomId ?? null)
+        ) {
             logger.log("Skipping destroy - persistent widget");
             return;
         }
         if (!this.started) return;
-        WidgetMessagingStore.instance.stopMessaging(this.mockWidget);
-        ActiveWidgetStore.instance.delRoomId(this.mockWidget.id);
+        WidgetMessagingStore.instance.stopMessaging(this.mockWidget, this.roomId);
+        this.messaging = null;
 
-        if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().off('event', this.onEvent);
-            MatrixClientPeg.get().off('Event.decrypted', this.onEventDecrypted);
-        }
+        this.client.off(ClientEvent.Event, this.onEvent);
+        this.client.off(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        this.client.off(ClientEvent.ToDeviceEvent, this.onToDeviceEvent);
     }
 
-    private onEvent = (ev: MatrixEvent) => {
-        MatrixClientPeg.get().decryptEventIfNeeded(ev);
+    private onEvent = (ev: MatrixEvent): void => {
+        this.client.decryptEventIfNeeded(ev);
         if (ev.isBeingDecrypted() || ev.isDecryptionFailure()) return;
         this.feedEvent(ev);
     };
 
-    private onEventDecrypted = (ev: MatrixEvent) => {
+    private onEventDecrypted = (ev: MatrixEvent): void => {
         if (ev.isDecryptionFailure()) return;
         this.feedEvent(ev);
     };
 
-    private feedEvent(ev: MatrixEvent) {
+    private onToDeviceEvent = async (ev: MatrixEvent): Promise<void> => {
+        await this.client.decryptEventIfNeeded(ev);
+        if (ev.isDecryptionFailure()) return;
+        await this.messaging?.feedToDevice(ev.getEffectiveEvent() as IRoomEvent, ev.isEncrypted());
+    };
+
+    private feedEvent(ev: MatrixEvent): void {
         if (!this.messaging) return;
 
         // Check to see if this event would be before or after our "read up to" marker. If it's
@@ -441,7 +486,7 @@ export class StopGapWidget extends EventEmitter {
         //
         // This approach of "read up to" prevents widgets receiving decryption spam from startup or
         // receiving out-of-order events from backfill and such.
-        const upToEventId = this.readUpToMap[ev.getRoomId()];
+        const upToEventId = this.readUpToMap[ev.getRoomId()!];
         if (upToEventId) {
             // Small optimization for exact match (prevent search)
             if (upToEventId === ev.getId()) {
@@ -450,9 +495,11 @@ export class StopGapWidget extends EventEmitter {
 
             let isBeforeMark = true;
 
+            const room = this.client.getRoom(ev.getRoomId()!);
+            if (!room) return;
             // Timelines are most recent last, so reverse the order and limit ourselves to 100 events
             // to avoid overusing the CPU.
-            const timeline = MatrixClientPeg.get().getRoom(ev.getRoomId()).getLiveTimeline();
+            const timeline = room.getLiveTimeline();
             const events = arrayFastClone(timeline.getEvents()).reverse().slice(0, 100);
 
             for (const timelineEvent of events) {
@@ -470,10 +517,20 @@ export class StopGapWidget extends EventEmitter {
             }
         }
 
-        this.readUpToMap[ev.getRoomId()] = ev.getId();
+        // Skip marker assignment if membership is 'invite', otherwise 'm.room.member' from
+        // invitation room will assign it and new state events will be not forwarded to the widget
+        // because of empty timeline for invitation room and assigned marker.
+        const evRoomId = ev.getRoomId();
+        const evId = ev.getId();
+        if (evRoomId && evId) {
+            const room = this.client.getRoom(evRoomId);
+            if (room && room.getMyMembership() === "join") {
+                this.readUpToMap[evRoomId] = evId;
+            }
+        }
 
         const raw = ev.getEffectiveEvent();
-        this.messaging.feedEvent(raw, this.eventListenerRoomId).catch(e => {
+        this.messaging.feedEvent(raw as IRoomEvent, this.eventListenerRoomId!).catch((e) => {
             logger.error("Error sending event to widget: ", e);
         });
     }

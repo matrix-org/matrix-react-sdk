@@ -14,20 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import React, { ForwardRefExoticComponent, useContext } from "react";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { formatFullDate } from "../../../DateUtils";
 import SettingsStore from "../../../settings/SettingsStore";
 import { IBodyProps } from "./IBodyProps";
 
-interface IProps {
-    mxEvent: MatrixEvent;
-}
-
-const RedactedBody = React.forwardRef<any, IProps | IBodyProps>(({ mxEvent }, ref) => {
+const RedactedBody = React.forwardRef<any, IBodyProps>(({ mxEvent }, ref) => {
     const cli: MatrixClient = useContext(MatrixClientContext);
     let text = _t("Message deleted");
     const unsigned = mxEvent.getUnsigned();
@@ -39,14 +35,16 @@ const RedactedBody = React.forwardRef<any, IProps | IBodyProps>(({ mxEvent }, re
     }
 
     const showTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
-    const fullDate = formatFullDate(new Date(unsigned.redacted_because.origin_server_ts), showTwelveHour);
-    const titleText = _t("Message deleted on %(date)s", { date: fullDate });
+    const fullDate = unsigned.redacted_because
+        ? formatFullDate(new Date(unsigned.redacted_because.origin_server_ts), showTwelveHour)
+        : undefined;
+    const titleText = fullDate ? _t("Message deleted on %(date)s", { date: fullDate }) : undefined;
 
     return (
         <span className="mx_RedactedBody" ref={ref} title={titleText}>
-            { text }
+            {text}
         </span>
     );
-});
+}) as ForwardRefExoticComponent<IBodyProps>;
 
 export default RedactedBody;

@@ -14,53 +14,39 @@
  limitations under the License.
  */
 
-import React from 'react';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import Tooltip from "./Tooltip";
+import React, { HTMLAttributes } from "react";
+import classNames from "classnames";
 
-interface IProps {
+import TooltipTarget from "./TooltipTarget";
+
+interface IProps extends HTMLAttributes<HTMLSpanElement> {
     class?: string;
     tooltipClass?: string;
     tooltip: React.ReactNode;
-    tooltipProps?: {};
-    onClick?: (ev?: React.MouseEvent) => void;
+    tooltipProps?: Omit<React.ComponentProps<typeof TooltipTarget>, "label" | "tooltipClassName" | "className">;
+    onClick?: (ev: React.MouseEvent) => void;
 }
 
-interface IState {
-    hover: boolean;
-}
-
-@replaceableComponent("views.elements.TextWithTooltip")
-export default class TextWithTooltip extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+export default class TextWithTooltip extends React.Component<IProps> {
+    public constructor(props: IProps) {
         super(props);
-
-        this.state = {
-            hover: false,
-        };
     }
 
-    private onMouseOver = (): void => {
-        this.setState({ hover: true });
-    };
-
-    private onMouseLeave = (): void => {
-        this.setState({ hover: false });
-    };
-
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { class: className, children, tooltip, tooltipClass, tooltipProps, ...props } = this.props;
 
         return (
-            <span {...props} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave} onClick={this.props.onClick} className={className}>
-                { children }
-                { this.state.hover && <Tooltip
-                    {...tooltipProps}
-                    label={tooltip}
-                    tooltipClassName={tooltipClass}
-                    className="mx_TextWithTooltip_tooltip"
-                /> }
-            </span>
+            <TooltipTarget
+                onClick={this.props.onClick}
+                tooltipTargetClassName={classNames("mx_TextWithTooltip_target", className)}
+                {...tooltipProps}
+                label={tooltip}
+                tooltipClassName={tooltipClass}
+                className="mx_TextWithTooltip_tooltip"
+                {...props}
+            >
+                {children}
+            </TooltipTarget>
         );
     }
 }

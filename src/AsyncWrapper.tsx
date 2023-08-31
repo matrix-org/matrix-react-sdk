@@ -14,23 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from "react";
-
-import * as sdk from './index';
-import { _t } from './languageHandler';
-import { IDialogProps } from "./components/views/dialogs/IDialogProps";
-
+import React, { ComponentType, PropsWithChildren } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
+
+import { _t } from "./languageHandler";
+import BaseDialog from "./components/views/dialogs/BaseDialog";
+import DialogButtons from "./components/views/elements/DialogButtons";
+import Spinner from "./components/views/elements/Spinner";
 
 type AsyncImport<T> = { default: T };
 
-interface IProps extends IDialogProps {
+interface IProps {
     // A promise which resolves with the real component
-    prom: Promise<ComponentType | AsyncImport<ComponentType>>;
+    prom: Promise<ComponentType<any> | AsyncImport<ComponentType<any>>>;
+    onFinished(): void;
 }
 
 interface IState {
-    component?: ComponentType;
+    component?: ComponentType<PropsWithChildren<any>>;
     error?: Error;
 }
 
@@ -41,59 +42,53 @@ interface IState {
 export default class AsyncWrapper extends React.Component<IProps, IState> {
     private unmounted = false;
 
-    public state = {
-        component: null,
-        error: null,
-    };
+    public state: IState = {};
 
-    componentDidMount() {
-        // XXX: temporary logging to try to diagnose
-        // https://github.com/vector-im/element-web/issues/3148
-        logger.log('Starting load of AsyncWrapper for modal');
-        this.props.prom.then((result) => {
-            if (this.unmounted) return;
+    public componentDidMount(): void {
+        this.props.prom
+            .then((result) => {
+                if (this.unmounted) return;
 
-            // Take the 'default' member if it's there, then we support
-            // passing in just an import()ed module, since ES6 async import
-            // always returns a module *namespace*.
-            const component = (result as AsyncImport<ComponentType>).default
-                ? (result as AsyncImport<ComponentType>).default
-                : result as ComponentType;
-            this.setState({ component });
-        }).catch((e) => {
-            logger.warn('AsyncWrapper promise failed', e);
-            this.setState({ error: e });
-        });
+                // Take the 'default' member if it's there, then we support
+                // passing in just an import()ed module, since ES6 async import
+                // always returns a module *namespace*.
+                const component = (result as AsyncImport<ComponentType>).default
+                    ? (result as AsyncImport<ComponentType>).default
+                    : (result as ComponentType);
+                this.setState({ component });
+            })
+            .catch((e) => {
+                logger.warn("AsyncWrapper promise failed", e);
+                this.setState({ error: e });
+            });
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.unmounted = true;
     }
 
-    private onWrapperCancelClick = () => {
-        this.props.onFinished(false);
+    private onWrapperCancelClick = (): void => {
+        this.props.onFinished();
     };
 
-    render() {
+    public render(): React.ReactNode {
         if (this.state.component) {
             const Component = this.state.component;
             return <Component {...this.props} />;
         } else if (this.state.error) {
-            // FIXME: Using an import will result in test failures
-            const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-            const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-            return <BaseDialog onFinished={this.props.onFinished} title={_t("Error")}>
-                { _t("Unable to load! Check your network connectivity and try again.") }
-                <DialogButtons primaryButton={_t("Dismiss")}
-                    onPrimaryButtonClick={this.onWrapperCancelClick}
-                    hasCancel={false}
-                />
-            </BaseDialog>;
+            return (
+                <BaseDialog onFinished={this.props.onFinished} title={_t("Error")}>
+                    {_t("Unable to load! Check your network connectivity and try again.")}
+                    <DialogButtons
+                        primaryButton={_t("Dismiss")}
+                        onPrimaryButtonClick={this.onWrapperCancelClick}
+                        hasCancel={false}
+                    />
+                </BaseDialog>
+            );
         } else {
             // show a spinner until the component is loaded.
-            const Spinner = sdk.getComponent("elements.Spinner");
             return <Spinner />;
         }
     }
 }
-

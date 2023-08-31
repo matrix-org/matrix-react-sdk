@@ -15,30 +15,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { CrossSigningKeys } from 'matrix-js-sdk/src/client';
-
-import { MatrixClientPeg } from '../../../../MatrixClientPeg';
-import { _t } from '../../../../languageHandler';
-import Modal from '../../../../Modal';
-import { SSOAuthEntry } from '../../auth/InteractiveAuthEntryComponents';
-import DialogButtons from '../../elements/DialogButtons';
-import BaseDialog from '../BaseDialog';
-import Spinner from '../../elements/Spinner';
-import InteractiveAuthDialog from '../InteractiveAuthDialog';
-import { replaceableComponent } from "../../../../utils/replaceableComponent";
-
+import React from "react";
+import { CrossSigningKeys, AuthDict, MatrixError, UIAFlow, UIAResponse } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+
+import { MatrixClientPeg } from "../../../../MatrixClientPeg";
+import { _t } from "../../../../languageHandler";
+import Modal from "../../../../Modal";
+import { SSOAuthEntry } from "../../auth/InteractiveAuthEntryComponents";
+import DialogButtons from "../../elements/DialogButtons";
+import BaseDialog from "../BaseDialog";
+import Spinner from "../../elements/Spinner";
+import InteractiveAuthDialog from "../InteractiveAuthDialog";
 
 interface IProps {
     accountPassword?: string;
     tokenLogin?: boolean;
-    onFinished?: (success: boolean) => void;
+    onFinished: (success?: boolean) => void;
 }
 
 interface IState {
-    error: Error | null;
-    canUploadKeysWithPasswordOnly?: boolean;
+    error: boolean;
+    canUploadKeysWithPasswordOnly: boolean | null;
     accountPassword: string;
 }
 
@@ -47,13 +45,12 @@ interface IState {
  * cases, only a spinner is shown, but for more complex auth like SSO, the user
  * may need to complete some steps to proceed.
  */
-@replaceableComponent("views.dialogs.security.CreateCrossSigningDialog")
 export default class CreateCrossSigningDialog extends React.PureComponent<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
-            error: null,
+            error: false,
             // Does the server offer a UI auth flow with just m.login.password
             // for /keys/device_signing/upload?
             // If we have an account password in memory, let's simplify and
@@ -75,18 +72,18 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
 
     private async queryKeyUploadAuth(): Promise<void> {
         try {
-            await MatrixClientPeg.get().uploadDeviceSigningKeys(null, {} as CrossSigningKeys);
+            await MatrixClientPeg.safeGet().uploadDeviceSigningKeys(undefined, {} as CrossSigningKeys);
             // We should never get here: the server should always require
             // UI auth to upload device signing keys. If we do, we upload
             // no keys which would be a no-op.
             logger.log("uploadDeviceSigningKeys unexpectedly succeeded without UI auth!");
         } catch (error) {
-            if (!error.data || !error.data.flows) {
+            if (!(error instanceof MatrixError) || !error.data || !error.data.flows) {
                 logger.log("uploadDeviceSigningKeys advertised no flows!");
                 return;
             }
-            const canUploadKeysWithPasswordOnly = error.data.flows.some(f => {
-                return f.stages.length === 1 && f.stages[0] === 'm.login.password';
+            const canUploadKeysWithPasswordOnly = error.data.flows.some((f: UIAFlow) => {
+                return f.stages.length === 1 && f.stages[0] === "m.login.password";
             });
             this.setState({
                 canUploadKeysWithPasswordOnly,
@@ -94,17 +91,19 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
         }
     }
 
-    private doBootstrapUIAuth = async (makeRequest: (authData: any) => void): Promise<void> => {
+    private doBootstrapUIAuth = async (
+        makeRequest: (authData: AuthDict) => Promise<UIAResponse<void>>,
+    ): Promise<void> => {
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
             await makeRequest({
-                type: 'm.login.password',
+                type: "m.login.password",
                 identifier: {
-                    type: 'm.id.user',
-                    user: MatrixClientPeg.get().getUserId(),
+                    type: "m.id.user",
+                    user: MatrixClientPeg.safeGet().getUserId(),
                 },
                 // TODO: Remove `user` once servers support proper UIA
                 // See https://github.com/matrix-org/synapse/issues/5665
-                user: MatrixClientPeg.get().getUserId(),
+                user: MatrixClientPeg.safeGet().getUserId(),
                 password: this.state.accountPassword,
             });
         } else if (this.props.tokenLogin) {
@@ -126,18 +125,15 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                 },
             };
 
-            const { finished } = Modal.createTrackedDialog(
-                'Cross-signing keys dialog', '', InteractiveAuthDialog,
-                {
-                    title: _t("Setting up keys"),
-                    matrixClient: MatrixClientPeg.get(),
-                    makeRequest,
-                    aestheticsForStagePhases: {
-                        [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
-                        [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
-                    },
+            const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                title: _t("Setting up keys"),
+                matrixClient: MatrixClientPeg.safeGet(),
+                makeRequest,
+                aestheticsForStagePhases: {
+                    [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
+                    [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
                 },
-            );
+            });
             const [confirmed] = await finished;
             if (!confirmed) {
                 throw new Error("Cross-signing key upload auth canceled");
@@ -147,12 +143,11 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
 
     private bootstrapCrossSigning = async (): Promise<void> => {
         this.setState({
-            error: null,
+            error: false,
         });
 
-        const cli = MatrixClientPeg.get();
-
         try {
+            const cli = MatrixClientPeg.safeGet();
             await cli.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: this.doBootstrapUIAuth,
             });
@@ -164,7 +159,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                 return;
             }
 
-            this.setState({ error: e });
+            this.setState({ error: true });
             logger.error("Error bootstrapping cross-signing", e);
         }
     };
@@ -173,34 +168,38 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
         this.props.onFinished(false);
     };
 
-    render() {
+    public render(): React.ReactNode {
         let content;
         if (this.state.error) {
-            content = <div>
-                <p>{ _t("Unable to set up keys") }</p>
-                <div className="mx_Dialog_buttons">
-                    <DialogButtons primaryButton={_t('Retry')}
-                        onPrimaryButtonClick={this.bootstrapCrossSigning}
-                        onCancel={this.onCancel}
-                    />
+            content = (
+                <div>
+                    <p>{_t("Unable to set up keys")}</p>
+                    <div className="mx_Dialog_buttons">
+                        <DialogButtons
+                            primaryButton={_t("Retry")}
+                            onPrimaryButtonClick={this.bootstrapCrossSigning}
+                            onCancel={this.onCancel}
+                        />
+                    </div>
                 </div>
-            </div>;
+            );
         } else {
-            content = <div>
-                <Spinner />
-            </div>;
+            content = (
+                <div>
+                    <Spinner />
+                </div>
+            );
         }
 
         return (
-            <BaseDialog className="mx_CreateCrossSigningDialog"
+            <BaseDialog
+                className="mx_CreateCrossSigningDialog"
                 onFinished={this.props.onFinished}
                 title={_t("Setting up keys")}
                 hasCancel={false}
                 fixedWidth={false}
             >
-                <div>
-                    { content }
-                </div>
+                <div>{content}</div>
             </BaseDialog>
         );
     }

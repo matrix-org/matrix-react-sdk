@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import { IWidget } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getCallBehaviourWellKnown } from "../utils/WellKnownUtils";
 import WidgetUtils from "../utils/WidgetUtils";
@@ -22,8 +24,7 @@ import { IStoredLayout, WidgetLayoutStore } from "../stores/widgets/WidgetLayout
 import WidgetEchoStore from "../stores/WidgetEchoStore";
 import WidgetStore from "../stores/WidgetStore";
 import SdkConfig from "../SdkConfig";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import DMRoomMap from "../utils/DMRoomMap";
 
 /* eslint-disable camelcase */
 interface IManagedHybridWidgetData {
@@ -33,34 +34,43 @@ interface IManagedHybridWidgetData {
 }
 /* eslint-enable camelcase */
 
-function getWidgetBuildUrl(): string {
+function getWidgetBuildUrl(roomId: string): string | undefined {
+    const isDm = !!DMRoomMap.shared().getUserIdForRoomId(roomId);
     if (SdkConfig.get().widget_build_url) {
+        if (isDm && SdkConfig.get().widget_build_url_ignore_dm) {
+            return undefined;
+        }
         return SdkConfig.get().widget_build_url;
     }
+
+    const wellKnown = getCallBehaviourWellKnown(MatrixClientPeg.safeGet());
+    if (isDm && wellKnown?.ignore_dm) {
+        return undefined;
+    }
     /* eslint-disable-next-line camelcase */
-    return getCallBehaviourWellKnown()?.widget_build_url;
+    return wellKnown?.widget_build_url;
 }
 
-export function isManagedHybridWidgetEnabled(): boolean {
-    return !!getWidgetBuildUrl();
+export function isManagedHybridWidgetEnabled(roomId: string): boolean {
+    return !!getWidgetBuildUrl(roomId);
 }
 
-export async function addManagedHybridWidget(roomId: string) {
-    const cli = MatrixClientPeg.get();
+export async function addManagedHybridWidget(roomId: string): Promise<void> {
+    const cli = MatrixClientPeg.safeGet();
     const room = cli.getRoom(roomId);
     if (!room) {
         return;
     }
 
     // Check for permission
-    if (!WidgetUtils.canUserModifyWidgets(roomId)) {
+    if (!WidgetUtils.canUserModifyWidgets(cli, roomId)) {
         logger.error(`User not allowed to modify widgets in ${roomId}`);
         return;
     }
 
     // Get widget data
     /* eslint-disable-next-line camelcase */
-    const widgetBuildUrl = getWidgetBuildUrl();
+    const widgetBuildUrl = getWidgetBuildUrl(roomId);
     if (!widgetBuildUrl) {
         return;
     }
@@ -79,10 +89,7 @@ export async function addManagedHybridWidget(roomId: string) {
 
     // Ensure the widget is not already present in the room
     let widgets = WidgetStore.instance.getApps(roomId);
-    const existing = (
-        widgets.some(w => w.id === widgetId) ||
-        WidgetEchoStore.roomHasPendingWidgets(roomId, [])
-    );
+    const existing = widgets.some((w) => w.id === widgetId) || WidgetEchoStore.roomHasPendingWidgets(roomId, []);
     if (existing) {
         logger.error(`Managed hybrid widget already present in room ${roomId}`);
         return;
@@ -90,7 +97,7 @@ export async function addManagedHybridWidget(roomId: string) {
 
     // Add the widget
     try {
-        await WidgetUtils.setRoomWidgetContent(roomId, widgetId, widgetContent);
+        await WidgetUtils.setRoomWidgetContent(cli, roomId, widgetId, widgetContent);
     } catch (e) {
         logger.error(`Unable to add managed hybrid widget in room ${roomId}`, e);
         return;
@@ -101,7 +108,7 @@ export async function addManagedHybridWidget(roomId: string) {
         return;
     }
     widgets = WidgetStore.instance.getApps(roomId);
-    const installedWidget = widgets.find(w => w.id === widgetId);
+    const installedWidget = widgets.find((w) => w.id === widgetId);
     if (!installedWidget) {
         return;
     }

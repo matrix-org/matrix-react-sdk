@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import classNames from "classnames";
+
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";
 import { Playback, PlaybackState } from "../../../audio/Playback";
-import classNames from "classnames";
 
 // omitted props are handled by render function
 interface IProps extends Omit<React.ComponentProps<typeof AccessibleTooltipButton>, "title" | "onClick" | "disabled"> {
@@ -34,18 +34,17 @@ interface IProps extends Omit<React.ComponentProps<typeof AccessibleTooltipButto
  * Displays a play/pause button (activating the play/pause function of the recorder)
  * to be displayed in reference to a recording.
  */
-@replaceableComponent("views.audio_messages.PlayPauseButton")
 export default class PlayPauseButton extends React.PureComponent<IProps> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
     }
 
-    private onClick = () => {
+    private onClick = (): void => {
         // noinspection JSIgnoredPromiseFromCall
         this.toggleState();
     };
 
-    public async toggleState() {
+    public async toggleState(): Promise<void> {
         await this.props.playback.toggle();
     }
 
@@ -53,17 +52,21 @@ export default class PlayPauseButton extends React.PureComponent<IProps> {
         const { playback, playbackPhase, ...restProps } = this.props;
         const isPlaying = playback.isPlaying;
         const isDisabled = playbackPhase === PlaybackState.Decoding;
-        const classes = classNames('mx_PlayPauseButton', {
-            'mx_PlayPauseButton_play': !isPlaying,
-            'mx_PlayPauseButton_pause': isPlaying,
-            'mx_PlayPauseButton_disabled': isDisabled,
+        const classes = classNames("mx_PlayPauseButton", {
+            mx_PlayPauseButton_play: !isPlaying,
+            mx_PlayPauseButton_pause: isPlaying,
+            mx_PlayPauseButton_disabled: isDisabled,
         });
-        return <AccessibleTooltipButton
-            className={classes}
-            title={isPlaying ? _t("Pause") : _t("Play")}
-            onClick={this.onClick}
-            disabled={isDisabled}
-            {...restProps}
-        />;
+
+        return (
+            <AccessibleTooltipButton
+                data-testid="play-pause-button"
+                className={classes}
+                title={isPlaying ? _t("Pause") : _t("Play")}
+                onClick={this.onClick}
+                disabled={isDisabled}
+                {...restProps}
+            />
+        );
     }
 }

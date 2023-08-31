@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { replaceableComponent } from "../../utils/replaceableComponent";
+import React from "react";
 
 interface IProps {
     title: React.ReactNode;
     message: React.ReactNode;
 }
 
-@replaceableComponent("structures.GenericErrorPage")
 export default class GenericErrorPage extends React.PureComponent<IProps> {
-    render() {
-        return <div className='mx_GenericErrorPage'>
-            <div className='mx_GenericErrorPage_box'>
-                <h1>{ this.props.title }</h1>
-                <p>{ this.props.message }</p>
+    public render(): React.ReactNode {
+        return (
+            <div className="mx_GenericErrorPage">
+                <div className="mx_GenericErrorPage_box">
+                    <h1>{this.props.title}</h1>
+                    <p>{this.props.message}</p>
+                </div>
             </div>
-        </div>;
+        );
     }
 }

@@ -15,32 +15,32 @@ limitations under the License.
 */
 
 import { useCallback, useEffect, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomState } from "matrix-js-sdk/src/models/room-state";
+import { Room, RoomState, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
-import { useEventEmitter } from "./useEventEmitter";
+import { useTypedEventEmitter } from "./useEventEmitter";
 
 type Mapper<T> = (roomState: RoomState) => T;
 const defaultMapper: Mapper<RoomState> = (roomState: RoomState) => roomState;
 
 // Hook to simplify watching Matrix Room state
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
 export const useRoomState = <T extends any = RoomState>(
     room?: Room,
     mapper: Mapper<T> = defaultMapper as Mapper<T>,
 ): T => {
-    const [value, setValue] = useState<T>(room ? mapper(room.currentState) : undefined);
+    const [value, setValue] = useState<T>(room ? mapper(room.currentState) : (undefined as T));
 
     const update = useCallback(() => {
         if (!room) return;
         setValue(mapper(room.currentState));
     }, [room, mapper]);
 
-    useEventEmitter(room?.currentState, "RoomState.events", update);
+    useTypedEventEmitter(room?.currentState, RoomStateEvent.Update, update);
     useEffect(() => {
         update();
         return () => {
-            setValue(undefined);
+            setValue(room ? mapper(room.currentState) : (undefined as T));
         };
-    }, [update]);
+    }, [room, mapper, update]);
     return value;
 };

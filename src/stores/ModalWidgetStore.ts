@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { IModalWidgetOpenRequestData, IModalWidgetReturnData, Widget } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import Modal, { IHandle, IModal } from "../Modal";
 import ModalWidgetDialog from "../components/views/dialogs/ModalWidgetDialog";
 import { WidgetMessagingStore } from "./widgets/WidgetMessagingStore";
-import { IModalWidgetOpenRequestData, IModalWidgetReturnData, Widget } from "matrix-widget-api";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IState {
     modal?: IModal<any>;
@@ -30,9 +30,14 @@ interface IState {
 }
 
 export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
-    private static internalInstance = new ModalWidgetStore();
-    private modalInstance: IHandle<void[]> = null;
-    private openSourceWidgetId: string = null;
+    private static readonly internalInstance = (() => {
+        const instance = new ModalWidgetStore();
+        instance.start();
+        return instance;
+    })();
+    private modalInstance: IHandle<typeof ModalWidgetDialog> | null = null;
+    private openSourceWidgetId: string | null = null;
+    private openSourceWidgetRoomId: string | null = null;
 
     private constructor() {
         super(defaultDispatcher, {});
@@ -46,7 +51,7 @@ export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
         // nothing
     }
 
-    public canOpenModalWidget = () => {
+    public canOpenModalWidget = (): boolean => {
         return !this.modalInstance;
     };
 
@@ -54,34 +59,43 @@ export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
         requestData: IModalWidgetOpenRequestData,
         sourceWidget: Widget,
         widgetRoomId?: string,
-    ) => {
+    ): void => {
         if (this.modalInstance) return;
         this.openSourceWidgetId = sourceWidget.id;
-        this.modalInstance = Modal.createTrackedDialog('Modal Widget', '', ModalWidgetDialog, {
-            widgetDefinition: { ...requestData },
-            widgetRoomId,
-            sourceWidgetId: sourceWidget.id,
-            onFinished: (success: boolean, data?: IModalWidgetReturnData) => {
-                if (!success) {
-                    this.closeModalWidget(sourceWidget, { "m.exited": true });
-                } else {
-                    this.closeModalWidget(sourceWidget, data);
-                }
+        this.openSourceWidgetRoomId = widgetRoomId ?? null;
+        this.modalInstance = Modal.createDialog(
+            ModalWidgetDialog,
+            {
+                widgetDefinition: { ...requestData },
+                widgetRoomId,
+                sourceWidgetId: sourceWidget.id,
+                onFinished: (success, data) => {
+                    this.closeModalWidget(sourceWidget, widgetRoomId, success && data ? data : { "m.exited": true });
 
-                this.openSourceWidgetId = null;
-                this.modalInstance = null;
+                    this.openSourceWidgetId = null;
+                    this.openSourceWidgetRoomId = null;
+                    this.modalInstance = null;
+                },
             },
-        }, null, /* priority = */ false, /* static = */ true);
+            undefined,
+            /* priority = */ false,
+            /* static = */ true,
+        );
     };
 
-    public closeModalWidget = (sourceWidget: Widget, data?: IModalWidgetReturnData) => {
+    public closeModalWidget = (
+        sourceWidget: Widget,
+        widgetRoomId: string | undefined,
+        data: IModalWidgetReturnData,
+    ): void => {
         if (!this.modalInstance) return;
-        if (this.openSourceWidgetId === sourceWidget.id) {
+        if (this.openSourceWidgetId === sourceWidget.id && this.openSourceWidgetRoomId === widgetRoomId) {
             this.openSourceWidgetId = null;
+            this.openSourceWidgetRoomId = null;
             this.modalInstance.close();
             this.modalInstance = null;
 
-            const sourceMessaging = WidgetMessagingStore.instance.getMessaging(sourceWidget);
+            const sourceMessaging = WidgetMessagingStore.instance.getMessaging(sourceWidget, widgetRoomId);
             if (!sourceMessaging) {
                 logger.error("No source widget messaging for modal widget");
                 return;

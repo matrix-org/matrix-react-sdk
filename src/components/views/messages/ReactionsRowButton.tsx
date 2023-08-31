@@ -16,16 +16,14 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-import { _t } from '../../../languageHandler';
-import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
+import { _t } from "../../../languageHandler";
+import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
 import dis from "../../../dispatcher/dispatcher";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-
 interface IProps {
     // The event we're displaying reactions for
     mxEvent: MatrixEvent;
@@ -33,10 +31,12 @@ interface IProps {
     content: string;
     // The count of votes for this key
     count: number;
-    // A Set of Matrix reaction events for this key
-    reactionEvents: Set<MatrixEvent>;
+    // A list of Matrix reaction events for this key
+    reactionEvents: MatrixEvent[];
     // A possible Matrix event if the current user has voted for this type
     myReactionEvent?: MatrixEvent;
+    // Whether to prevent quick-reactions by clicking on this reaction
+    disabled?: boolean;
 }
 
 interface IState {
@@ -44,35 +44,32 @@ interface IState {
     tooltipVisible: boolean;
 }
 
-@replaceableComponent("views.messages.ReactionsRowButton")
 export default class ReactionsRowButton extends React.PureComponent<IProps, IState> {
-    static contextType = MatrixClientContext;
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
-    state = {
+    public state = {
         tooltipRendered: false,
         tooltipVisible: false,
     };
 
-    onClick = () => {
+    public onClick = (): void => {
         const { mxEvent, myReactionEvent, content } = this.props;
         if (myReactionEvent) {
-            this.context.redactEvent(
-                mxEvent.getRoomId(),
-                myReactionEvent.getId(),
-            );
+            this.context.redactEvent(mxEvent.getRoomId()!, myReactionEvent.getId()!);
         } else {
-            this.context.sendEvent(mxEvent.getRoomId(), "m.reaction", {
+            this.context.sendEvent(mxEvent.getRoomId()!, "m.reaction", {
                 "m.relates_to": {
-                    "rel_type": "m.annotation",
-                    "event_id": mxEvent.getId(),
-                    "key": content,
+                    rel_type: "m.annotation",
+                    event_id: mxEvent.getId(),
+                    key: content,
                 },
             });
             dis.dispatch({ action: "message_sent" });
         }
     };
 
-    onMouseOver = () => {
+    public onMouseOver = (): void => {
         this.setState({
             // To avoid littering the DOM with a tooltip for every reaction,
             // only render it on first use.
@@ -81,13 +78,13 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
         });
     };
 
-    onMouseLeave = () => {
+    public onMouseLeave = (): void => {
         this.setState({
             tooltipVisible: false,
         });
     };
 
-    render() {
+    public render(): React.ReactNode {
         const { mxEvent, content, count, reactionEvents, myReactionEvent } = this.props;
 
         const classes = classNames({
@@ -95,23 +92,25 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
             mx_ReactionsRowButton_selected: !!myReactionEvent,
         });
 
-        let tooltip;
+        let tooltip: JSX.Element | undefined;
         if (this.state.tooltipRendered) {
-            tooltip = <ReactionsRowButtonTooltip
-                mxEvent={this.props.mxEvent}
-                content={content}
-                reactionEvents={reactionEvents}
-                visible={this.state.tooltipVisible}
-            />;
+            tooltip = (
+                <ReactionsRowButtonTooltip
+                    mxEvent={this.props.mxEvent}
+                    content={content}
+                    reactionEvents={reactionEvents}
+                    visible={this.state.tooltipVisible}
+                />
+            );
         }
 
         const room = this.context.getRoom(mxEvent.getRoomId());
-        let label: string;
+        let label: string | undefined;
         if (room) {
-            const senders = [];
+            const senders: string[] = [];
             for (const reactionEvent of reactionEvents) {
-                const member = room.getMember(reactionEvent.getSender());
-                senders.push(member?.name || reactionEvent.getSender());
+                const member = room.getMember(reactionEvent.getSender()!);
+                senders.push(member?.name || reactionEvent.getSender()!);
             }
 
             const reactors = formatCommaSeparatedList(senders, 6);
@@ -121,22 +120,24 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
                 label = reactors;
             }
         }
-        const isPeeking = room.getMyMembership() !== "join";
-        return <AccessibleButton
-            className={classes}
-            aria-label={label}
-            onClick={this.onClick}
-            disabled={isPeeking}
-            onMouseOver={this.onMouseOver}
-            onMouseLeave={this.onMouseLeave}
-        >
-            <span className="mx_ReactionsRowButton_content" aria-hidden="true">
-                { content }
-            </span>
-            <span className="mx_ReactionsRowButton_count" aria-hidden="true">
-                { count }
-            </span>
-            { tooltip }
-        </AccessibleButton>;
+
+        return (
+            <AccessibleButton
+                className={classes}
+                aria-label={label}
+                onClick={this.onClick}
+                disabled={this.props.disabled}
+                onMouseOver={this.onMouseOver}
+                onMouseLeave={this.onMouseLeave}
+            >
+                <span className="mx_ReactionsRowButton_content" aria-hidden="true">
+                    {content}
+                </span>
+                <span className="mx_ReactionsRowButton_count" aria-hidden="true">
+                    {count}
+                </span>
+                {tooltip}
+            </AccessibleButton>
+        );
     }
 }

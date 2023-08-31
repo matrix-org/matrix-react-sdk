@@ -1,8 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2018 New Vector Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
-Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,124 +14,155 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { CallType, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
-import classNames from 'classnames';
-import { replaceableComponent } from '../utils/replaceableComponent';
-import CallHandler, { CallHandlerEvent } from '../CallHandler';
-import dis from '../dispatcher/dispatcher';
-import { MatrixClientPeg } from '../MatrixClientPeg';
-import { _t } from '../languageHandler';
-import RoomAvatar from '../components/views/avatars/RoomAvatar';
-import AccessibleTooltipButton from '../components/views/elements/AccessibleTooltipButton';
-import AccessibleButton from '../components/views/elements/AccessibleButton';
+import React, { useCallback, useEffect } from "react";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 
-export const getIncomingCallToastKey = (callId: string) => `call_${callId}`;
+import { _t } from "../languageHandler";
+import RoomAvatar from "../components/views/avatars/RoomAvatar";
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import defaultDispatcher from "../dispatcher/dispatcher";
+import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
+import { Action } from "../dispatcher/actions";
+import ToastStore from "../stores/ToastStore";
+import AccessibleTooltipButton from "../components/views/elements/AccessibleTooltipButton";
+import {
+    LiveContentSummary,
+    LiveContentSummaryWithCall,
+    LiveContentType,
+} from "../components/views/rooms/LiveContentSummary";
+import { useCall, useJoinCallButtonDisabledTooltip } from "../hooks/useCall";
+import { useRoomState } from "../hooks/useRoomState";
+import { ButtonEvent } from "../components/views/elements/AccessibleButton";
+import { useDispatcher } from "../hooks/useDispatcher";
+import { ActionPayload } from "../dispatcher/payloads";
+import { Call } from "../models/Call";
+import { useTypedEventEmitter } from "../hooks/useEventEmitter";
 
-interface IProps {
-    call: MatrixCall;
+export const getIncomingCallToastKey = (stateKey: string): string => `call_${stateKey}`;
+
+interface JoinCallButtonWithCallProps {
+    onClick: (e: ButtonEvent) => void;
+    call: Call;
 }
 
-interface IState {
-    silenced: boolean;
+function JoinCallButtonWithCall({ onClick, call }: JoinCallButtonWithCallProps): JSX.Element {
+    const disabledTooltip = useJoinCallButtonDisabledTooltip(call);
+
+    return (
+        <AccessibleTooltipButton
+            className="mx_IncomingCallToast_joinButton"
+            onClick={onClick}
+            disabled={disabledTooltip !== null}
+            tooltip={disabledTooltip}
+            kind="primary"
+        >
+            {_t("Join")}
+        </AccessibleTooltipButton>
+    );
 }
 
-@replaceableComponent("views.voip.IncomingCallToast")
-export default class IncomingCallToast extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
+interface Props {
+    callEvent: MatrixEvent;
+}
 
-        this.state = {
-            silenced: CallHandler.sharedInstance().isCallSilenced(this.props.call.callId),
-        };
-    }
+export function IncomingCallToast({ callEvent }: Props): JSX.Element {
+    const roomId = callEvent.getRoomId()!;
+    const room = MatrixClientPeg.safeGet().getRoom(roomId) ?? undefined;
+    const call = useCall(roomId);
 
-    public componentDidMount = (): void => {
-        CallHandler.sharedInstance().addListener(CallHandlerEvent.SilencedCallsChanged, this.onSilencedCallsChanged);
-    };
+    const dismissToast = useCallback((): void => {
+        ToastStore.sharedInstance().dismissToast(getIncomingCallToastKey(callEvent.getStateKey()!));
+    }, [callEvent]);
 
-    public componentWillUnmount(): void {
-        CallHandler.sharedInstance().removeListener(CallHandlerEvent.SilencedCallsChanged, this.onSilencedCallsChanged);
-    }
+    const latestEvent = useRoomState(
+        room,
+        useCallback(
+            (state) => {
+                return state.getStateEvents(callEvent.getType(), callEvent.getStateKey()!);
+            },
+            [callEvent],
+        ),
+    );
 
-    private onSilencedCallsChanged = (): void => {
-        this.setState({ silenced: CallHandler.sharedInstance().isCallSilenced(this.props.call.callId) });
-    };
+    useEffect(() => {
+        if ("m.terminated" in latestEvent.getContent()) {
+            dismissToast();
+        }
+    }, [latestEvent, dismissToast]);
 
-    private onAnswerClick = (e: React.MouseEvent): void => {
-        e.stopPropagation();
-        dis.dispatch({
-            action: 'answer',
-            room_id: CallHandler.sharedInstance().roomIdForCall(this.props.call),
-        });
-    };
+    useTypedEventEmitter(latestEvent, MatrixEventEvent.BeforeRedaction, dismissToast);
 
-    private onRejectClick= (e: React.MouseEvent): void => {
-        e.stopPropagation();
-        dis.dispatch({
-            action: 'reject',
-            room_id: CallHandler.sharedInstance().roomIdForCall(this.props.call),
-        });
-    };
+    useDispatcher(
+        defaultDispatcher,
+        useCallback(
+            (payload: ActionPayload) => {
+                if (payload.action === Action.ViewRoom && payload.room_id === roomId && payload.view_call) {
+                    dismissToast();
+                }
+            },
+            [roomId, dismissToast],
+        ),
+    );
 
-    private onSilenceClick = (e: React.MouseEvent): void => {
-        e.stopPropagation();
-        const callId = this.props.call.callId;
-        this.state.silenced ?
-            CallHandler.sharedInstance().unSilenceCall(callId) :
-            CallHandler.sharedInstance().silenceCall(callId);
-    };
+    const onJoinClick = useCallback(
+        (e: ButtonEvent): void => {
+            e.stopPropagation();
 
-    public render() {
-        const call = this.props.call;
-        const room = MatrixClientPeg.get().getRoom(CallHandler.sharedInstance().roomIdForCall(call));
-        const isVoice = call.type === CallType.Voice;
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                room_id: room?.roomId,
+                view_call: true,
+                metricsTrigger: undefined,
+            });
+            dismissToast();
+        },
+        [room, dismissToast],
+    );
 
-        const contentClass = classNames("mx_IncomingCallToast_content", {
-            "mx_IncomingCallToast_content_voice": isVoice,
-            "mx_IncomingCallToast_content_video": !isVoice,
-        });
-        const silenceClass = classNames("mx_IncomingCallToast_iconButton", {
-            "mx_IncomingCallToast_unSilence": this.state.silenced,
-            "mx_IncomingCallToast_silence": !this.state.silenced,
-        });
+    const onCloseClick = useCallback(
+        (e: ButtonEvent): void => {
+            e.stopPropagation();
 
-        return <React.Fragment>
-            <RoomAvatar
-                room={room}
-                height={32}
-                width={32}
-            />
-            <div className={contentClass}>
-                <span className="mx_CallEvent_caller">
-                    { room ? room.name : _t("Unknown caller") }
-                </span>
-                <div className="mx_CallEvent_type">
-                    <div className="mx_CallEvent_type_icon" />
-                    { isVoice ? _t("Voice call") : _t("Video call") }
+            dismissToast();
+        },
+        [dismissToast],
+    );
+
+    return (
+        <React.Fragment>
+            <RoomAvatar room={room ?? undefined} height={24} width={24} />
+            <div className="mx_IncomingCallToast_content">
+                <div className="mx_IncomingCallToast_info">
+                    <span className="mx_IncomingCallToast_room">{room ? room.name : _t("Unknown room")}</span>
+                    <div className="mx_IncomingCallToast_message">{_t("Video call started")}</div>
+                    {call ? (
+                        <LiveContentSummaryWithCall call={call} />
+                    ) : (
+                        <LiveContentSummary
+                            type={LiveContentType.Video}
+                            text={_t("Video")}
+                            active={false}
+                            participantCount={0}
+                        />
+                    )}
                 </div>
-                <div className="mx_IncomingCallToast_buttons">
-                    <AccessibleButton
-                        className="mx_IncomingCallToast_button mx_IncomingCallToast_button_decline"
-                        onClick={this.onRejectClick}
-                        kind="danger"
-                    >
-                        <span> { _t("Decline") } </span>
-                    </AccessibleButton>
-                    <AccessibleButton
-                        className="mx_IncomingCallToast_button mx_IncomingCallToast_button_accept"
-                        onClick={this.onAnswerClick}
+                {call ? (
+                    <JoinCallButtonWithCall onClick={onJoinClick} call={call} />
+                ) : (
+                    <AccessibleTooltipButton
+                        className="mx_IncomingCallToast_joinButton"
+                        onClick={onJoinClick}
                         kind="primary"
                     >
-                        <span> { _t("Accept") } </span>
-                    </AccessibleButton>
-                </div>
+                        {_t("Join")}
+                    </AccessibleTooltipButton>
+                )}
             </div>
             <AccessibleTooltipButton
-                className={silenceClass}
-                onClick={this.onSilenceClick}
-                title={this.state.silenced ? _t("Sound on") : _t("Silence call")}
+                className="mx_IncomingCallToast_closeButton"
+                onClick={onCloseClick}
+                title={_t("Close")}
             />
-        </React.Fragment>;
-    }
+        </React.Fragment>
+    );
 }

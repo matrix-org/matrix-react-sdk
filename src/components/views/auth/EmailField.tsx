@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 import React, { PureComponent, RefCallback, RefObject } from "react";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+
 import Field, { IInputProps } from "../elements/Field";
 import { _t, _td } from "../../../languageHandler";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import * as Email from "../../../email";
 
-interface IProps extends Omit<IInputProps, "onValidate"> {
+interface IProps extends Omit<IInputProps, "onValidate" | "element"> {
     id?: string;
     fieldRef?: RefCallback<Field> | RefObject<Field>;
     value: string;
@@ -38,9 +38,8 @@ interface IProps extends Omit<IInputProps, "onValidate"> {
     onValidate?(result: IValidationResult): void;
 }
 
-@replaceableComponent("views.auth.EmailField")
 class EmailField extends PureComponent<IProps> {
-    static defaultProps = {
+    public static defaultProps = {
         label: _td("Email"),
         labelRequired: _td("Enter email address"),
         labelInvalid: _td("Doesn't look like a valid email address"),
@@ -51,17 +50,17 @@ class EmailField extends PureComponent<IProps> {
             {
                 key: "required",
                 test: ({ value, allowEmpty }) => allowEmpty || !!value,
-                invalid: () => _t(this.props.labelRequired),
+                invalid: () => _t(this.props.labelRequired!),
             },
             {
                 key: "email",
                 test: ({ value }) => !value || Email.looksValid(value),
-                invalid: () => _t(this.props.labelInvalid),
+                invalid: () => _t(this.props.labelInvalid!),
             },
         ],
     });
 
-    onValidate = async (fieldState: IFieldState) => {
+    public onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         let validate = this.validate;
         if (this.props.validationRules) {
             validate = this.props.validationRules;
@@ -75,17 +74,19 @@ class EmailField extends PureComponent<IProps> {
         return result;
     };
 
-    render() {
-        return <Field
-            id={this.props.id}
-            ref={this.props.fieldRef}
-            type="text"
-            label={_t(this.props.label)}
-            value={this.props.value}
-            autoFocus={this.props.autoFocus}
-            onChange={this.props.onChange}
-            onValidate={this.onValidate}
-        />;
+    public render(): React.ReactNode {
+        return (
+            <Field
+                id={this.props.id}
+                ref={this.props.fieldRef}
+                type="text"
+                label={_t(this.props.label!)}
+                value={this.props.value}
+                autoFocus={this.props.autoFocus}
+                onChange={this.props.onChange}
+                onValidate={this.onValidate}
+            />
+        );
     }
 }
 

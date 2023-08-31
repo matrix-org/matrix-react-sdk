@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,17 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room, RoomEvent, ClientEvent } from "matrix-js-sdk/src/matrix";
+import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
+
 import SettingsStore from "../settings/SettingsStore";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import defaultDispatcher from "../dispatcher/dispatcher";
-import { arrayHasDiff } from "../utils/arrays";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
+import { arrayHasDiff, filterBoolean } from "../utils/arrays";
 import { SettingLevel } from "../settings/SettingLevel";
-import SpaceStore from "./spaces/SpaceStore";
 import { Action } from "../dispatcher/actions";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
+import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
+import { JoinRoomPayload } from "../dispatcher/payloads/JoinRoomPayload";
 
 const MAX_ROOMS = 20; // arbitrary
 const AUTOJOIN_WAIT_THRESHOLD_MS = 90000; // 90s, the time we wait for an autojoined room to show up
@@ -35,9 +36,13 @@ interface IState {
 }
 
 export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
-    private static internalInstance = new BreadcrumbsStore();
+    private static readonly internalInstance = (() => {
+        const instance = new BreadcrumbsStore();
+        instance.start();
+        return instance;
+    })();
 
-    private waitingRooms: { roomId: string, addedTs: number }[] = [];
+    private waitingRooms: { roomId: string; addedTs: number }[] = [];
 
     private constructor() {
         super(defaultDispatcher);
@@ -55,90 +60,103 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
     }
 
     public get visible(): boolean {
-        return this.state.enabled && this.meetsRoomRequirement;
+        return !!this.state.enabled && this.meetsRoomRequirement;
     }
 
-    private get meetsRoomRequirement(): boolean {
-        return this.matrixClient && this.matrixClient.getVisibleRooms().length >= 20;
+    /**
+     * Do we have enough rooms to justify showing the breadcrumbs?
+     * (Or is the labs feature enabled?)
+     *
+     * @returns true if there are at least 20 visible rooms.
+     */
+    public get meetsRoomRequirement(): boolean {
+        const msc3946ProcessDynamicPredecessor = SettingsStore.getValue("feature_dynamic_room_predecessors");
+        return !!this.matrixClient && this.matrixClient.getVisibleRooms(msc3946ProcessDynamicPredecessor).length >= 20;
     }
 
-    protected async onAction(payload: ActionPayload) {
+    protected async onAction(payload: SettingUpdatedPayload | ViewRoomPayload | JoinRoomPayload): Promise<void> {
         if (!this.matrixClient) return;
-
         if (payload.action === Action.SettingUpdated) {
-            const settingUpdatedPayload = payload as SettingUpdatedPayload;
-            if (settingUpdatedPayload.settingName === 'breadcrumb_rooms') {
+            if (payload.settingName === "breadcrumb_rooms") {
                 await this.updateRooms();
-            } else if (settingUpdatedPayload.settingName === 'breadcrumbs') {
+            } else if (payload.settingName === "breadcrumbs") {
                 await this.updateState({ enabled: SettingsStore.getValue("breadcrumbs", null) });
             }
-        } else if (payload.action === 'view_room') {
-            if (payload.auto_join && !this.matrixClient.getRoom(payload.room_id)) {
+        } else if (payload.action === Action.ViewRoom) {
+            if (payload.auto_join && payload.room_id && !this.matrixClient.getRoom(payload.room_id)) {
                 // Queue the room instead of pushing it immediately. We're probably just
                 // waiting for a room join to complete.
                 this.waitingRooms.push({ roomId: payload.room_id, addedTs: Date.now() });
             } else {
                 // The tests might not result in a valid room object.
                 const room = this.matrixClient.getRoom(payload.room_id);
-                if (room) await this.appendRoom(room);
+                const membership = room?.getMyMembership();
+                if (room && membership === "join") await this.appendRoom(room);
             }
+        } else if (payload.action === Action.JoinRoom) {
+            const room = this.matrixClient.getRoom(payload.roomId);
+            if (room) await this.appendRoom(room);
         }
     }
 
-    protected async onReady() {
+    protected async onReady(): Promise<void> {
         await this.updateRooms();
         await this.updateState({ enabled: SettingsStore.getValue("breadcrumbs", null) });
 
-        this.matrixClient.on("Room.myMembership", this.onMyMembership);
-        this.matrixClient.on("Room", this.onRoom);
+        if (this.matrixClient) {
+            this.matrixClient.on(RoomEvent.MyMembership, this.onMyMembership);
+            this.matrixClient.on(ClientEvent.Room, this.onRoom);
+        }
     }
 
-    protected async onNotReady() {
-        this.matrixClient.removeListener("Room.myMembership", this.onMyMembership);
-        this.matrixClient.removeListener("Room", this.onRoom);
+    protected async onNotReady(): Promise<void> {
+        if (this.matrixClient) {
+            this.matrixClient.removeListener(RoomEvent.MyMembership, this.onMyMembership);
+            this.matrixClient.removeListener(ClientEvent.Room, this.onRoom);
+        }
     }
 
-    private onMyMembership = async (room: Room) => {
+    private onMyMembership = async (room: Room): Promise<void> => {
         // Only turn on breadcrumbs is the user hasn't explicitly turned it off again.
-        const settingValueRaw = SettingsStore.getValue("breadcrumbs", null, /*excludeDefault=*/true);
+        const settingValueRaw = SettingsStore.getValue("breadcrumbs", null, /*excludeDefault=*/ true);
         if (this.meetsRoomRequirement && isNullOrUndefined(settingValueRaw)) {
             await SettingsStore.setValue("breadcrumbs", null, SettingLevel.ACCOUNT, true);
         }
     };
 
-    private onRoom = async (room: Room) => {
-        const waitingRoom = this.waitingRooms.find(r => r.roomId === room.roomId);
+    private onRoom = async (room: Room): Promise<void> => {
+        const waitingRoom = this.waitingRooms.find((r) => r.roomId === room.roomId);
         if (!waitingRoom) return;
         this.waitingRooms.splice(this.waitingRooms.indexOf(waitingRoom), 1);
 
-        if ((Date.now() - waitingRoom.addedTs) > AUTOJOIN_WAIT_THRESHOLD_MS) return; // Too long ago.
+        if (Date.now() - waitingRoom.addedTs > AUTOJOIN_WAIT_THRESHOLD_MS) return; // Too long ago.
         await this.appendRoom(room);
     };
 
-    private async updateRooms() {
-        let roomIds = SettingsStore.getValue("breadcrumb_rooms");
+    private async updateRooms(): Promise<void> {
+        let roomIds = SettingsStore.getValue<string[]>("breadcrumb_rooms");
         if (!roomIds || roomIds.length === 0) roomIds = [];
 
-        const rooms = roomIds.map(r => this.matrixClient.getRoom(r)).filter(r => !!r);
+        const rooms = filterBoolean(roomIds.map((r) => this.matrixClient?.getRoom(r)));
         const currentRooms = this.state.rooms || [];
         if (!arrayHasDiff(rooms, currentRooms)) return; // no change (probably echo)
         await this.updateState({ rooms });
     }
 
-    private async appendRoom(room: Room) {
-        if (SpaceStore.spacesEnabled && room.isSpaceRoom()) return; // hide space rooms
+    private async appendRoom(room: Room): Promise<void> {
         let updated = false;
         const rooms = (this.state.rooms || []).slice(); // cheap clone
+        const msc3946ProcessDynamicPredecessor = SettingsStore.getValue("feature_dynamic_room_predecessors");
 
         // If the room is upgraded, use that room instead. We'll also splice out
         // any children of the room.
-        const history = this.matrixClient.getRoomUpgradeHistory(room.roomId);
-        if (history.length > 1) {
+        const history = this.matrixClient?.getRoomUpgradeHistory(room.roomId, false, msc3946ProcessDynamicPredecessor);
+        if (history && history.length > 1) {
             room = history[history.length - 1]; // Last room is most recent in history
 
             // Take out any room that isn't the most recent room
             for (let i = 0; i < history.length - 1; i++) {
-                const idx = rooms.findIndex(r => r.roomId === history[i].roomId);
+                const idx = rooms.findIndex((r) => r.roomId === history[i].roomId);
                 if (idx !== -1) {
                     rooms.splice(idx, 1);
                     updated = true;
@@ -147,7 +165,7 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
         }
 
         // Remove the existing room, if it is present
-        const existingIdx = rooms.findIndex(r => r.roomId === room.roomId);
+        const existingIdx = rooms.findIndex((r) => r.roomId === room.roomId);
 
         // If we're focusing on the first room no-op
         if (existingIdx !== 0) {
@@ -170,7 +188,7 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
         if (updated) {
             // Update the breadcrumbs
             await this.updateState({ rooms });
-            const roomIds = rooms.map(r => r.roomId);
+            const roomIds = rooms.map((r) => r.roomId);
             if (roomIds.length > 0) {
                 await SettingsStore.setValue("breadcrumb_rooms", null, SettingLevel.ACCOUNT, roomIds);
             }

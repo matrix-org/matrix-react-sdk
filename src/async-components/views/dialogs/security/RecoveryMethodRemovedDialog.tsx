@@ -15,16 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from "react";
+import React from "react";
+
 import dis from "../../../../dispatcher/dispatcher";
 import { _t } from "../../../../languageHandler";
-import Modal from "../../../../Modal";
+import Modal, { ComponentType } from "../../../../Modal";
 import { Action } from "../../../../dispatcher/actions";
-import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import DialogButtons from "../../../../components/views/elements/DialogButtons";
 
-interface IProps extends IDialogProps {}
+interface IProps {
+    onFinished(): void;
+}
 
 export default class RecoveryMethodRemovedDialog extends React.PureComponent<IProps> {
     private onGoToSettingsClick = (): void => {
@@ -34,38 +36,42 @@ export default class RecoveryMethodRemovedDialog extends React.PureComponent<IPr
 
     private onSetupClick = (): void => {
         this.props.onFinished();
-        Modal.createTrackedDialogAsync("Key Backup", "Key Backup",
-            import("./CreateKeyBackupDialog") as unknown as Promise<ComponentType<{}>>,
-            null, null, /* priority = */ false, /* static = */ true,
+        Modal.createDialogAsync(
+            import("./CreateKeyBackupDialog") as unknown as Promise<ComponentType>,
+            undefined,
+            undefined,
+            /* priority = */ false,
+            /* static = */ true,
         );
     };
 
-    public render(): JSX.Element {
-        const title = <span className="mx_KeyBackupFailedDialog_title">
-            { _t("Recovery Method Removed") }
-        </span>;
+    public render(): React.ReactNode {
+        const title = <span className="mx_KeyBackupFailedDialog_title">{_t("Recovery Method Removed")}</span>;
 
         return (
-            <BaseDialog className="mx_KeyBackupFailedDialog"
-                onFinished={this.props.onFinished}
-                title={title}
-            >
+            <BaseDialog className="mx_KeyBackupFailedDialog" onFinished={this.props.onFinished} title={title}>
                 <div>
-                    <p>{ _t(
-                        "This session has detected that your Security Phrase and key " +
-                        "for Secure Messages have been removed.",
-                    ) }</p>
-                    <p>{ _t(
-                        "If you did this accidentally, you can setup Secure Messages on " +
-                        "this session which will re-encrypt this session's message " +
-                        "history with a new recovery method.",
-                    ) }</p>
-                    <p className="warning">{ _t(
-                        "If you didn't remove the recovery method, an " +
-                        "attacker may be trying to access your account. " +
-                        "Change your account password and set a new recovery " +
-                        "method immediately in Settings.",
-                    ) }</p>
+                    <p>
+                        {_t(
+                            "This session has detected that your Security Phrase and key " +
+                                "for Secure Messages have been removed.",
+                        )}
+                    </p>
+                    <p>
+                        {_t(
+                            "If you did this accidentally, you can setup Secure Messages on " +
+                                "this session which will re-encrypt this session's message " +
+                                "history with a new recovery method.",
+                        )}
+                    </p>
+                    <p className="warning">
+                        {_t(
+                            "If you didn't remove the recovery method, an " +
+                                "attacker may be trying to access your account. " +
+                                "Change your account password and set a new recovery " +
+                                "method immediately in Settings.",
+                        )}
+                    </p>
                     <DialogButtons
                         primaryButton={_t("Set up Secure Messages")}
                         onPrimaryButtonClick={this.onSetupClick}

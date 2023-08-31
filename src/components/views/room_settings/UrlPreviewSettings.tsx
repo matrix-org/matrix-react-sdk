@@ -17,97 +17,116 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { _t, _td } from '../../../languageHandler';
+import React, { ReactNode } from "react";
+import { Room } from "matrix-js-sdk/src/matrix";
+
+import { _t, _td } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Action } from "../../../dispatcher/actions";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { Room } from "matrix-js-sdk/src/models/room";
 import SettingsFlag from "../elements/SettingsFlag";
+import SettingsFieldset from "../settings/SettingsFieldset";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     room: Room;
 }
 
-@replaceableComponent("views.room_settings.UrlPreviewSettings")
 export default class UrlPreviewSettings extends React.Component<IProps> {
-    private onClickUserSettings = (e: React.MouseEvent): void => {
+    private onClickUserSettings = (e: ButtonEvent): void => {
         e.preventDefault();
         e.stopPropagation();
         dis.fire(Action.ViewUserSettings);
     };
 
-    public render(): JSX.Element {
+    public render(): ReactNode {
         const roomId = this.props.room.roomId;
-        const isEncrypted = MatrixClientPeg.get().isRoomEncrypted(roomId);
+        const isEncrypted = MatrixClientPeg.safeGet().isRoomEncrypted(roomId);
 
-        let previewsForAccount = null;
-        let previewsForRoom = null;
+        let previewsForAccount: ReactNode | undefined;
+        let previewsForRoom: ReactNode | undefined;
 
         if (!isEncrypted) {
             // Only show account setting state and room state setting state in non-e2ee rooms where they apply
             const accountEnabled = SettingsStore.getValueAt(SettingLevel.ACCOUNT, "urlPreviewsEnabled");
             if (accountEnabled) {
-                previewsForAccount = (
-                    _t("You have <a>enabled</a> URL previews by default.", {}, {
-                        'a': (sub)=><a onClick={this.onClickUserSettings} href=''>{ sub }</a>,
-                    })
+                previewsForAccount = _t(
+                    "You have <a>enabled</a> URL previews by default.",
+                    {},
+                    {
+                        a: (sub) => (
+                            <AccessibleButton kind="link_inline" onClick={this.onClickUserSettings}>
+                                {sub}
+                            </AccessibleButton>
+                        ),
+                    },
                 );
             } else {
-                previewsForAccount = (
-                    _t("You have <a>disabled</a> URL previews by default.", {}, {
-                        'a': (sub)=><a onClick={this.onClickUserSettings} href=''>{ sub }</a>,
-                    })
+                previewsForAccount = _t(
+                    "You have <a>disabled</a> URL previews by default.",
+                    {},
+                    {
+                        a: (sub) => (
+                            <AccessibleButton kind="link_inline" onClick={this.onClickUserSettings}>
+                                {sub}
+                            </AccessibleButton>
+                        ),
+                    },
                 );
             }
 
             if (SettingsStore.canSetValue("urlPreviewsEnabled", roomId, SettingLevel.ROOM)) {
                 previewsForRoom = (
-                    <label>
-                        <SettingsFlag
-                            name="urlPreviewsEnabled"
-                            level={SettingLevel.ROOM}
-                            roomId={roomId}
-                            isExplicit={true}
-                        />
-                    </label>
+                    <SettingsFlag
+                        name="urlPreviewsEnabled"
+                        level={SettingLevel.ROOM}
+                        roomId={roomId}
+                        isExplicit={true}
+                    />
                 );
             } else {
                 let str = _td("URL previews are enabled by default for participants in this room.");
-                if (!SettingsStore.getValueAt(SettingLevel.ROOM, "urlPreviewsEnabled", roomId, /*explicit=*/true)) {
+                if (!SettingsStore.getValueAt(SettingLevel.ROOM, "urlPreviewsEnabled", roomId, /*explicit=*/ true)) {
                     str = _td("URL previews are disabled by default for participants in this room.");
                 }
-                previewsForRoom = (<label>{ _t(str) }</label>);
+                previewsForRoom = <div>{_t(str)}</div>;
             }
         } else {
-            previewsForAccount = (
-                _t("In encrypted rooms, like this one, URL previews are disabled by default to ensure that your " +
+            previewsForAccount = _t(
+                "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your " +
                     "homeserver (where the previews are generated) cannot gather information about links you see in " +
-                    "this room.")
+                    "this room.",
             );
         }
 
-        const previewsForRoomAccount = ( // in an e2ee room we use a special key to enforce per-room opt-in
-            <SettingsFlag name={isEncrypted ? 'urlPreviewsEnabled_e2ee' : 'urlPreviewsEnabled'}
-                level={SettingLevel.ROOM_ACCOUNT}
-                roomId={roomId} />
+        const previewsForRoomAccount = // in an e2ee room we use a special key to enforce per-room opt-in
+            (
+                <SettingsFlag
+                    name={isEncrypted ? "urlPreviewsEnabled_e2ee" : "urlPreviewsEnabled"}
+                    level={SettingLevel.ROOM_ACCOUNT}
+                    roomId={roomId}
+                />
+            );
+
+        const description = (
+            <>
+                <p>
+                    {_t(
+                        "When someone puts a URL in their message, a URL preview can be shown to give more " +
+                            "information about that link such as the title, description, and an image from the website.",
+                    )}
+                </p>
+                <p>{previewsForAccount}</p>
+            </>
         );
 
         return (
-            <div>
-                <div className='mx_SettingsTab_subsectionText'>
-                    { _t('When someone puts a URL in their message, a URL preview can be shown to give more ' +
-                        'information about that link such as the title, description, and an image from the website.') }
-                </div>
-                <div className='mx_SettingsTab_subsectionText'>
-                    { previewsForAccount }
-                </div>
-                { previewsForRoom }
-                <label>{ previewsForRoomAccount }</label>
-            </div>
+            <SettingsFieldset legend={_t("URL Previews")} description={description}>
+                {previewsForRoom}
+                {previewsForRoomAccount}
+            </SettingsFieldset>
         );
     }
 }

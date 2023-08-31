@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Matrix.org Foundation C.I.C.
+Copyright 2018, 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,29 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IInstance } from "matrix-js-sdk/src/client";
-import { Protocols } from "../components/views/directory/NetworkDropdown";
+import { IProtocol } from "matrix-js-sdk/src/matrix";
 
-// Find a protocol 'instance' with a given instance_id
-// in the supplied protocols dict
-export function instanceForInstanceId(protocols: Protocols, instanceId: string): IInstance {
-    if (!instanceId) return null;
-    for (const proto of Object.keys(protocols)) {
-        if (!protocols[proto].instances && protocols[proto].instances instanceof Array) continue;
-        for (const instance of protocols[proto].instances) {
-            if (instance.instance_id == instanceId) return instance;
-        }
-    }
-}
-
-// given an instance_id, return the name of the protocol for
-// that instance ID in the supplied protocols dict
-export function protocolNameForInstanceId(protocols: Protocols, instanceId: string): string {
-    if (!instanceId) return null;
-    for (const proto of Object.keys(protocols)) {
-        if (!protocols[proto].instances && protocols[proto].instances instanceof Array) continue;
-        for (const instance of protocols[proto].instances) {
-            if (instance.instance_id == instanceId) return proto;
-        }
-    }
-}
+export type Protocols = Record<string, IProtocol>;

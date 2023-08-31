@@ -14,29 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../languageHandler";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { IntegrationManagerInstance } from "../../../integrations/IntegrationManagerInstance";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import ToggleSwitch from "../elements/ToggleSwitch";
+import Heading from "../typography/Heading";
+import { SettingsSubsectionText } from "./shared/SettingsSubsection";
 
-import { logger } from "matrix-js-sdk/src/logger";
-
-interface IProps {
-
-}
+interface IProps {}
 
 interface IState {
-    currentManager: IntegrationManagerInstance;
+    currentManager: IntegrationManagerInstance | null;
     provisioningEnabled: boolean;
 }
 
-@replaceableComponent("views.settings.SetIntegrationManager")
 export default class SetIntegrationManager extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         const currentManager = IntegrationManagers.sharedInstance().getPrimaryManager();
@@ -49,7 +47,7 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
 
     private onProvisioningToggled = (): void => {
         const current = this.state.provisioningEnabled;
-        SettingsStore.setValue("integrationProvisioning", null, SettingLevel.ACCOUNT, !current).catch(err => {
+        SettingsStore.setValue("integrationProvisioning", null, SettingLevel.ACCOUNT, !current).catch((err) => {
             logger.error("Error changing integration manager provisioning");
             logger.error(err);
 
@@ -65,36 +63,40 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
         if (currentManager) {
             managerName = `(${currentManager.name})`;
             bodyText = _t(
-                "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, " +
-                "and sticker packs.",
+                "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, " + "and sticker packs.",
                 { serverName: currentManager.name },
-                { b: sub => <b>{ sub }</b> },
+                { b: (sub) => <b>{sub}</b> },
             );
         } else {
             bodyText = _t("Use an integration manager to manage bots, widgets, and sticker packs.");
         }
 
         return (
-            <div className='mx_SetIntegrationManager'>
-                <div className="mx_SettingsTab_heading">
-                    <span>{ _t("Manage integrations") }</span>
-                    <span className="mx_SettingsTab_subheading">{ managerName }</span>
+            <label
+                className="mx_SetIntegrationManager"
+                data-testid="mx_SetIntegrationManager"
+                htmlFor="toggle_integration"
+            >
+                <div className="mx_SettingsFlag">
+                    <div className="mx_SetIntegrationManager_heading_manager">
+                        <Heading size="2">{_t("Manage integrations")}</Heading>
+                        <Heading size="3">{managerName}</Heading>
+                    </div>
                     <ToggleSwitch
+                        id="toggle_integration"
                         checked={this.state.provisioningEnabled}
                         disabled={false}
                         onChange={this.onProvisioningToggled}
                     />
                 </div>
-                <span className="mx_SettingsTab_subsectionText">
-                    { bodyText }
-                    <br />
-                    <br />
-                    { _t(
+                <SettingsSubsectionText>{bodyText}</SettingsSubsectionText>
+                <SettingsSubsectionText>
+                    {_t(
                         "Integration managers receive configuration data, and can modify widgets, " +
-                        "send room invites, and set power levels on your behalf.",
-                    ) }
-                </span>
-            </div>
+                            "send room invites, and set power levels on your behalf.",
+                    )}
+                </SettingsSubsectionText>
+            </label>
         );
     }
 }

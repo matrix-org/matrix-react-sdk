@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,16 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { sleep } from "matrix-js-sdk/src/utils";
-
-import { MatrixClientPeg } from "../MatrixClientPeg";
-import { _t } from "../languageHandler";
-import Modal from "../Modal";
-import ErrorDialog from "../components/views/dialogs/ErrorDialog";
-import React from "react";
-import dis from "../dispatcher/dispatcher";
-import RoomViewStore from "../stores/RoomViewStore";
+import { Room, RoomMember, RoomState, RoomStateEvent, MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 /**
  * Approximation of a membership status for a given room.
@@ -49,10 +40,9 @@ export enum EffectiveMembership {
     Leave = "LEAVE",
 }
 
-export interface MembershipSplit {
-    // @ts-ignore - TS wants this to be a string key, but we know better.
-    [state: EffectiveMembership]: Room[];
-}
+export type MembershipSplit = {
+    [state in EffectiveMembership]: Room[];
+};
 
 export function splitRoomsByMembership(rooms: Room[]): MembershipSplit {
     const split: MembershipSplit = {
@@ -62,16 +52,20 @@ export function splitRoomsByMembership(rooms: Room[]): MembershipSplit {
     };
 
     for (const room of rooms) {
-        split[getEffectiveMembership(room.getMyMembership())].push(room);
+        const membership = room.getMyMembership();
+        // Filter out falsey relationship as this will be peeked rooms
+        if (!!membership) {
+            split[getEffectiveMembership(membership)].push(room);
+        }
     }
 
     return split;
 }
 
 export function getEffectiveMembership(membership: string): EffectiveMembership {
-    if (membership === 'invite') {
+    if (membership === "invite") {
         return EffectiveMembership.Invite;
-    } else if (membership === 'join') {
+    } else if (membership === "join") {
         // TODO: Include knocks? Update docs as needed in the enum. https://github.com/vector-im/element-web/issues/14237
         return EffectiveMembership.Join;
     } else {
@@ -85,72 +79,36 @@ export function isJoinedOrNearlyJoined(membership: string): boolean {
     return effective === EffectiveMembership.Join || effective === EffectiveMembership.Invite;
 }
 
-export async function leaveRoomBehaviour(roomId: string, retry = true) {
-    const cli = MatrixClientPeg.get();
-    let leavingAllVersions = true;
-    const history = cli.getRoomUpgradeHistory(roomId);
-    if (history && history.length > 0) {
-        const currentRoom = history[history.length - 1];
-        if (currentRoom.roomId !== roomId) {
-            // The user is trying to leave an older version of the room. Let them through
-            // without making them leave the current version of the room.
-            leavingAllVersions = false;
-        }
+/**
+ * Try to ensure the user is in the room (invited or joined) before continuing
+ */
+export async function waitForMember(
+    client: MatrixClient,
+    roomId: string,
+    userId: string,
+    opts = { timeout: 1500 },
+): Promise<boolean> {
+    const { timeout } = opts;
+    let handler: (event: MatrixEvent, state: RoomState, member: RoomMember) => void;
+
+    // check if the user is in the room before we start -- in which case, no need to wait.
+    if ((client.getRoom(roomId)?.getMember(userId) ?? null) !== null) {
+        return true;
     }
 
-    let results: { [roomId: string]: Error & { errcode?: string, message: string, data?: Record<string, any> } } = {};
-    if (!leavingAllVersions) {
-        try {
-            await cli.leave(roomId);
-        } catch (e) {
-            if (e?.data?.errcode) {
-                const message = e.data.error || _t("Unexpected server error trying to leave the room");
-                results[roomId] = Object.assign(new Error(message), { errcode: e.data.errcode, data: e.data });
-            } else {
-                results[roomId] = e || new Error("Failed to leave room for unknown causes");
-            }
-        }
-    } else {
-        results = await cli.leaveRoomChain(roomId, retry);
-    }
+    return new Promise<boolean>((resolve) => {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        handler = function (_, __, member: RoomMember) {
+            if (member.userId !== userId) return;
+            if (member.roomId !== roomId) return;
+            resolve(true);
+        };
+        client.on(RoomStateEvent.NewMember, handler);
 
-    if (retry) {
-        const limitExceededError = Object.values(results).find(e => e?.errcode === "M_LIMIT_EXCEEDED");
-        if (limitExceededError) {
-            await sleep(limitExceededError.data.retry_after_ms ?? 100);
-            return leaveRoomBehaviour(roomId, false);
-        }
-    }
-
-    const errors = Object.entries(results).filter(r => !!r[1]);
-    if (errors.length > 0) {
-        const messages = [];
-        for (const roomErr of errors) {
-            const err = roomErr[1]; // [0] is the roomId
-            let message = _t("Unexpected server error trying to leave the room");
-            if (err.errcode && err.message) {
-                if (err.errcode === 'M_CANNOT_LEAVE_SERVER_NOTICE_ROOM') {
-                    Modal.createTrackedDialog('Error Leaving Room', '', ErrorDialog, {
-                        title: _t("Can't leave Server Notices room"),
-                        description: _t(
-                            "This room is used for important messages from the Homeserver, " +
-                            "so you cannot leave it.",
-                        ),
-                    });
-                    return;
-                }
-                message = results[roomId].message;
-            }
-            messages.push(message, React.createElement('BR')); // createElement to avoid using a tsx file in utils
-        }
-        Modal.createTrackedDialog('Error Leaving Room', '', ErrorDialog, {
-            title: _t("Error leaving room"),
-            description: messages,
-        });
-        return;
-    }
-
-    if (RoomViewStore.getRoomId() === roomId) {
-        dis.dispatch({ action: 'view_home_page' });
-    }
+        /* We don't want to hang if this goes wrong, so we proceed and hope the other
+           user is already in the room */
+        window.setTimeout(resolve, timeout, false);
+    }).finally(() => {
+        client.removeListener(RoomStateEvent.NewMember, handler);
+    });
 }

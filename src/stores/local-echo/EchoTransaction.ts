@@ -30,10 +30,7 @@ export class EchoTransaction extends Whenable<TransactionStatus> {
 
     public readonly startTime = new Date();
 
-    public constructor(
-        public readonly auditName,
-        public runFn: RunFn,
-    ) {
+    public constructor(public readonly auditName: string, public runFn: RunFn) {
         super();
     }
 
@@ -45,7 +42,7 @@ export class EchoTransaction extends Whenable<TransactionStatus> {
         return this._status;
     }
 
-    public run() {
+    public run(): void {
         if (this.status === TransactionStatus.Success) {
             throw new Error("Cannot re-run a successful echo transaction");
         }
@@ -55,12 +52,12 @@ export class EchoTransaction extends Whenable<TransactionStatus> {
             .catch(() => this.setStatus(TransactionStatus.Error));
     }
 
-    public cancel() {
+    public cancel(): void {
         // Success basically means "done"
         this.setStatus(TransactionStatus.Success);
     }
 
-    private setStatus(status: TransactionStatus) {
+    private setStatus(status: TransactionStatus): void {
         this._status = status;
         if (status === TransactionStatus.Error) {
             this.didFail = true;

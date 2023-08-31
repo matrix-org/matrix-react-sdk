@@ -14,17 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { IAnnotatedPushRule, IPushRules, PushRuleKind, PushRuleSet } from "matrix-js-sdk/src/matrix";
+
 import { PushRuleVectorState, VectorState } from "./PushRuleVectorState";
-import { IAnnotatedPushRule, IPushRules, PushRuleKind } from "matrix-js-sdk/src/@types/PushRules";
 
 export interface IContentRules {
     vectorState: VectorState;
     rules: IAnnotatedPushRule[];
     externalRules: IAnnotatedPushRule[];
 }
-
-export const SCOPE = "global";
-export const KIND = "content";
 
 export class ContentRules {
     /**
@@ -94,8 +92,13 @@ export class ContentRules {
         }
     }
 
-    private static categoriseContentRules(rulesets: IPushRules) {
-        const contentRules: Record<"on"|"on_but_disabled"|"loud"|"loud_but_disabled"|"other", IAnnotatedPushRule[]> = {
+    private static categoriseContentRules(
+        rulesets: IPushRules,
+    ): Record<"on" | "on_but_disabled" | "loud" | "loud_but_disabled" | "other", IAnnotatedPushRule[]> {
+        const contentRules: Record<
+            "on" | "on_but_disabled" | "loud" | "loud_but_disabled" | "other",
+            IAnnotatedPushRule[]
+        > = {
             on: [],
             on_but_disabled: [],
             loud: [],
@@ -104,11 +107,11 @@ export class ContentRules {
         };
 
         for (const kind in rulesets.global) {
-            for (let i = 0; i < Object.keys(rulesets.global[kind]).length; ++i) {
-                const r = rulesets.global[kind][i];
+            for (let i = 0; i < Object.keys(rulesets.global[kind as keyof PushRuleSet]!).length; ++i) {
+                const r = rulesets.global[kind as keyof PushRuleSet]![i] as IAnnotatedPushRule;
 
                 // check it's not a default rule
-                if (r.rule_id[0] === '.' || kind !== PushRuleKind.ContentSpecific) {
+                if (r.rule_id[0] === "." || kind !== PushRuleKind.ContentSpecific) {
                     continue;
                 }
 

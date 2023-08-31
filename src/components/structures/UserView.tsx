@@ -16,21 +16,21 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixClientPeg } from "../../MatrixClientPeg";
-import Modal from '../../Modal';
-import { _t } from '../../languageHandler';
-import HomePage from "./HomePage";
-import { replaceableComponent } from "../../utils/replaceableComponent";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { MatrixEvent, RoomMember, MatrixClient } from "matrix-js-sdk/src/matrix";
+
+import Modal from "../../Modal";
+import { _t } from "../../languageHandler";
 import ErrorDialog from "../views/dialogs/ErrorDialog";
 import MainSplit from "./MainSplit";
 import RightPanel from "./RightPanel";
 import Spinner from "../views/elements/Spinner";
 import ResizeNotifier from "../../utils/ResizeNotifier";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
+import { UserOnboardingPage } from "../views/user-onboarding/UserOnboardingPage";
+import MatrixClientContext from "../../contexts/MatrixClientContext";
 
 interface IProps {
-    userId?: string;
+    userId: string;
     resizeNotifier: ResizeNotifier;
 }
 
@@ -39,9 +39,11 @@ interface IState {
     member?: RoomMember;
 }
 
-@replaceableComponent("structures.UserView")
 export default class UserView extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             loading: true,
@@ -64,35 +66,42 @@ export default class UserView extends React.Component<IProps, IState> {
     }
 
     private async loadProfileInfo(): Promise<void> {
-        const cli = MatrixClientPeg.get();
         this.setState({ loading: true });
-        let profileInfo;
+        let profileInfo: Awaited<ReturnType<MatrixClient["getProfileInfo"]>>;
         try {
-            profileInfo = await cli.getProfileInfo(this.props.userId);
+            profileInfo = await this.context.getProfileInfo(this.props.userId);
         } catch (err) {
-            Modal.createTrackedDialog(_t('Could not load user profile'), '', ErrorDialog, {
-                title: _t('Could not load user profile'),
-                description: ((err && err.message) ? err.message : _t("Operation failed")),
+            Modal.createDialog(ErrorDialog, {
+                title: _t("Could not load user profile"),
+                description: err instanceof Error ? err.message : _t("Operation failed"),
             });
             this.setState({ loading: false });
             return;
         }
         const fakeEvent = new MatrixEvent({ type: "m.room.member", content: profileInfo });
-        const member = new RoomMember(null, this.props.userId);
+        // We pass an empty string room ID here, this is slight abuse of the class to simplify code
+        const member = new RoomMember("", this.props.userId);
         member.setMembershipEvent(fakeEvent);
         this.setState({ member, loading: false });
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.loading) {
             return <Spinner />;
         } else if (this.state.member) {
-            const panel = <RightPanel member={this.state.member} resizeNotifier={this.props.resizeNotifier} />;
-            return (<MainSplit panel={panel} resizeNotifier={this.props.resizeNotifier}>
-                <HomePage />
-            </MainSplit>);
+            const panel = (
+                <RightPanel
+                    overwriteCard={{ phase: RightPanelPhases.RoomMemberInfo, state: { member: this.state.member } }}
+                    resizeNotifier={this.props.resizeNotifier}
+                />
+            );
+            return (
+                <MainSplit panel={panel} resizeNotifier={this.props.resizeNotifier}>
+                    <UserOnboardingPage />
+                </MainSplit>
+            );
         } else {
-            return (<div />);
+            return <div />;
         }
     }
 }

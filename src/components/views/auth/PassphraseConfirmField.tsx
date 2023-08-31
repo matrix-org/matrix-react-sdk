@@ -15,28 +15,28 @@ limitations under the License.
 */
 
 import React, { PureComponent, RefCallback, RefObject } from "react";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+
 import Field, { IInputProps } from "../elements/Field";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import { _t, _td } from "../../../languageHandler";
 
-interface IProps extends Omit<IInputProps, "onValidate"> {
+interface IProps extends Omit<IInputProps, "onValidate" | "label" | "element"> {
     id?: string;
     fieldRef?: RefCallback<Field> | RefObject<Field>;
     autoComplete?: string;
     value: string;
     password: string; // The password we're confirming
 
-    labelRequired?: string;
-    labelInvalid?: string;
+    label: string;
+    labelRequired: string;
+    labelInvalid: string;
 
-    onChange(ev: React.FormEvent<HTMLElement>);
-    onValidate?(result: IValidationResult);
+    onChange(ev: React.FormEvent<HTMLElement>): void;
+    onValidate?(result: IValidationResult): void;
 }
 
-@replaceableComponent("views.auth.EmailField")
 class PassphraseConfirmField extends PureComponent<IProps> {
-    static defaultProps = {
+    public static defaultProps = {
         label: _td("Confirm password"),
         labelRequired: _td("Confirm password"),
         labelInvalid: _td("Passwords don't match"),
@@ -57,7 +57,7 @@ class PassphraseConfirmField extends PureComponent<IProps> {
         ],
     });
 
-    private onValidate = async (fieldState: IFieldState) => {
+    private onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const result = await this.validate(fieldState);
         if (this.props.onValidate) {
             this.props.onValidate(result);
@@ -66,17 +66,19 @@ class PassphraseConfirmField extends PureComponent<IProps> {
         return result;
     };
 
-    render() {
-        return <Field
-            id={this.props.id}
-            ref={this.props.fieldRef}
-            type="password"
-            label={_t(this.props.label)}
-            autoComplete={this.props.autoComplete}
-            value={this.props.value}
-            onChange={this.props.onChange}
-            onValidate={this.onValidate}
-        />;
+    public render(): React.ReactNode {
+        return (
+            <Field
+                id={this.props.id}
+                ref={this.props.fieldRef}
+                type="password"
+                label={_t(this.props.label)}
+                autoComplete={this.props.autoComplete}
+                value={this.props.value}
+                onChange={this.props.onChange}
+                onValidate={this.onValidate}
+            />
+        );
     }
 }
 

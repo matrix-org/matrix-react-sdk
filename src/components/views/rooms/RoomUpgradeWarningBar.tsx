@@ -14,18 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { RoomState } from 'matrix-js-sdk/src/models/room-state';
+import React from "react";
+import { MatrixEvent, Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
-import Modal from '../../../Modal';
-
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import RoomUpgradeDialog from '../dialogs/RoomUpgradeDialog';
-import AccessibleButton from '../elements/AccessibleButton';
+import Modal from "../../../Modal";
+import { _t } from "../../../languageHandler";
+import RoomUpgradeDialog from "../dialogs/RoomUpgradeDialog";
+import AccessibleButton from "../elements/AccessibleButton";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     room: Room;
@@ -35,23 +31,28 @@ interface IState {
     upgraded?: boolean;
 }
 
-@replaceableComponent("views.rooms.RoomUpgradeWarningBar")
 export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, IState> {
-    public componentDidMount(): void {
-        const tombstone = this.props.room.currentState.getStateEvents("m.room.tombstone", "");
-        this.setState({ upgraded: tombstone && tombstone.getContent().replacement_room });
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
-        MatrixClientPeg.get().on("RoomState.events", this.onStateEvents);
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+        super(props, context);
+
+        const tombstone = this.props.room.currentState.getStateEvents("m.room.tombstone", "");
+        this.state = {
+            upgraded: tombstone?.getContent().replacement_room,
+        };
+    }
+
+    public componentDidMount(): void {
+        this.context.on(RoomStateEvent.Events, this.onStateEvents);
     }
 
     public componentWillUnmount(): void {
-        const cli = MatrixClientPeg.get();
-        if (cli) {
-            cli.removeListener("RoomState.events", this.onStateEvents);
-        }
+        this.context.removeListener(RoomStateEvent.Events, this.onStateEvents);
     }
 
-    private onStateEvents = (event: MatrixEvent, state: RoomState): void => {
+    private onStateEvents = (event: MatrixEvent): void => {
         if (!this.props.room || event.getRoomId() !== this.props.room.roomId) {
             return;
         }
@@ -63,34 +64,35 @@ export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, I
     };
 
     private onUpgradeClick = (): void => {
-        Modal.createTrackedDialog('Upgrade Room Version', '', RoomUpgradeDialog, { room: this.props.room });
+        Modal.createDialog(RoomUpgradeDialog, { room: this.props.room });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let doUpgradeWarnings = (
             <div>
                 <div className="mx_RoomUpgradeWarningBar_body">
                     <p>
-                        { _t(
+                        {_t(
                             "Upgrading this room will shut down the current instance of the room and create " +
-                            "an upgraded room with the same name.",
-                        ) }
+                                "an upgraded room with the same name.",
+                        )}
                     </p>
                     <p>
-                        { _t(
-                            "<b>Warning</b>: Upgrading a room will <i>not automatically migrate room members " +
-                            "to the new version of the room.</i> We'll post a link to the new room in the old " +
-                            "version of the room - room members will have to click this link to join the new room.",
-                            {}, {
-                                "b": (sub) => <b>{ sub }</b>,
-                                "i": (sub) => <i>{ sub }</i>,
+                        {_t(
+                            "<b>Warning</b>: upgrading a room will <i>not automatically migrate room members " +
+                                "to the new version of the room.</i> We'll post a link to the new room in the old " +
+                                "version of the room - room members will have to click this link to join the new room.",
+                            {},
+                            {
+                                b: (sub) => <b>{sub}</b>,
+                                i: (sub) => <i>{sub}</i>,
                             },
-                        ) }
+                        )}
                     </p>
                 </div>
                 <p className="mx_RoomUpgradeWarningBar_upgradelink">
                     <AccessibleButton onClick={this.onUpgradeClick}>
-                        { _t("Upgrade this room to the recommended room version") }
+                        {_t("Upgrade this room to the recommended room version")}
                     </AccessibleButton>
                 </p>
             </div>
@@ -99,9 +101,7 @@ export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, I
         if (this.state.upgraded) {
             doUpgradeWarnings = (
                 <div className="mx_RoomUpgradeWarningBar_body">
-                    <p>
-                        { _t("This room has already been upgraded.") }
-                    </p>
+                    <p>{_t("This room has already been upgraded.")}</p>
                 </div>
             );
         }
@@ -110,19 +110,19 @@ export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, I
             <div className="mx_RoomUpgradeWarningBar">
                 <div className="mx_RoomUpgradeWarningBar_wrapped">
                     <div className="mx_RoomUpgradeWarningBar_header">
-                        { _t(
+                        {_t(
                             "This room is running room version <roomVersion />, which this homeserver has " +
-                            "marked as <i>unstable</i>.",
+                                "marked as <i>unstable</i>.",
                             {},
                             {
-                                "roomVersion": () => <code>{ this.props.room.getVersion() }</code>,
-                                "i": (sub) => <i>{ sub }</i>,
+                                roomVersion: () => <code>{this.props.room.getVersion()}</code>,
+                                i: (sub) => <i>{sub}</i>,
                             },
-                        ) }
+                        )}
                     </div>
-                    { doUpgradeWarnings }
+                    {doUpgradeWarnings}
                     <div className="mx_RoomUpgradeWarningBar_small">
-                        { _t("Only room administrators will see this warning") }
+                        {_t("Only room administrators will see this warning")}
                     </div>
                 </div>
             </div>

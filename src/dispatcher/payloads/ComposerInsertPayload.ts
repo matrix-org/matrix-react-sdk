@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { ActionPayload } from "../payloads";
 import { Action } from "../actions";
@@ -28,7 +28,7 @@ export enum ComposerType {
 interface IBaseComposerInsertPayload extends ActionPayload {
     action: Action.ComposerInsert;
     timelineRenderingType: TimelineRenderingType;
-    composerType?: ComposerType; // falsey if should be re-dispatched to the correct composer
+    composerType?: ComposerType; // falsy if should be re-dispatched to the correct composer
 }
 
 interface IComposerInsertMentionPayload extends IBaseComposerInsertPayload {
@@ -44,7 +44,6 @@ interface IComposerInsertPlaintextPayload extends IBaseComposerInsertPayload {
 }
 
 export type ComposerInsertPayload =
-    IComposerInsertMentionPayload |
-    IComposerInsertQuotePayload |
-    IComposerInsertPlaintextPayload;
-
+    | IComposerInsertMentionPayload
+    | IComposerInsertQuotePayload
+    | IComposerInsertPlaintextPayload;

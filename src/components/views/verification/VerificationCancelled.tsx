@@ -14,27 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React from "react";
+
+import { _t } from "../../../languageHandler";
 import DialogButtons from "../elements/DialogButtons";
 
 interface IProps {
     onDone: () => void;
 }
 
-@replaceableComponent("views.verification.VerificationCancelled")
 export default class VerificationCancelled extends React.Component<IProps> {
     public render(): React.ReactNode {
-        return <div>
-            <p>{ _t(
-                "The other party cancelled the verification.",
-            ) }</p>
-            <DialogButtons
-                primaryButton={_t('OK')}
-                hasCancel={false}
-                onPrimaryButtonClick={this.props.onDone}
-            />
-        </div>;
+        return (
+            <div>
+                <p>{_t("The other party cancelled the verification.")}</p>
+                <DialogButtons primaryButton={_t("OK")} hasCancel={false} onPrimaryButtonClick={this.props.onDone} />
+            </div>
+        );
     }
 }

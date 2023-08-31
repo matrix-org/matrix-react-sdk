@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
-import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { _t } from "../../../languageHandler";
+
+const BUSY_PRESENCE_NAME = new UnstableValue("busy", "org.matrix.msc3026.busy");
 
 interface IProps {
     // number of milliseconds ago this user was last active.
@@ -30,16 +32,14 @@ interface IProps {
     presenceState?: string;
 }
 
-@replaceableComponent("views.rooms.PresenceLabel")
 export default class PresenceLabel extends React.Component<IProps> {
-    static defaultProps = {
+    public static defaultProps = {
         activeAgo: -1,
-        presenceState: null,
     };
 
     // Return duration as a string using appropriate time units
     // XXX: This would be better handled using a culture-aware library, but we don't use one yet.
-    private getDuration(time: number): string {
+    private getDuration(time: number): string | undefined {
         if (!time) return;
         const t = Math.round(time / 1000);
         const s = t % 60;
@@ -61,7 +61,12 @@ export default class PresenceLabel extends React.Component<IProps> {
         return _t("%(duration)sd", { duration: d });
     }
 
-    private getPrettyPresence(presence: string, activeAgo: number, currentlyActive: boolean): string {
+    private getPrettyPresence(presence?: string, activeAgo?: number, currentlyActive?: boolean): string {
+        // for busy presence, we ignore the 'currentlyActive' flag: they're busy whether
+        // they're active or not. It can be set while the user is active in which case
+        // the 'active ago' ends up being 0.
+        if (presence && BUSY_PRESENCE_NAME.matches(presence)) return _t("Busy");
+
         if (!currentlyActive && activeAgo !== undefined && activeAgo > 0) {
             const duration = this.getDuration(activeAgo);
             if (presence === "online") return _t("Online for %(duration)s", { duration: duration });
@@ -76,10 +81,10 @@ export default class PresenceLabel extends React.Component<IProps> {
         }
     }
 
-    render() {
+    public render(): React.ReactNode {
         return (
             <div className="mx_PresenceLabel">
-                { this.getPrettyPresence(this.props.presenceState, this.props.activeAgo, this.props.currentlyActive) }
+                {this.getPrettyPresence(this.props.presenceState, this.props.activeAgo, this.props.currentlyActive)}
             </div>
         );
     }

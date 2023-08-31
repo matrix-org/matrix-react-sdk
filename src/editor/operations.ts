@@ -16,10 +16,54 @@ limitations under the License.
 
 import Range from "./range";
 import { Part, Type } from "./parts";
+import { Formatting } from "../components/views/rooms/MessageComposerFormatBar";
+import { longestBacktickSequence } from "./deserialize";
 
 /**
  * Some common queries and transformations on the editor model
  */
+
+/**
+ * Formats a given range with a given action
+ * @param {Range} range the range that should be formatted
+ * @param {Formatting} action the action that should be performed on the range
+ */
+export function formatRange(range: Range, action: Formatting): void {
+    // If the selection was empty we select the current word instead
+    if (range.wasInitializedEmpty()) {
+        selectRangeOfWordAtCaret(range);
+    } else {
+        // Remove whitespace or new lines in our selection
+        range.trim();
+    }
+
+    // Edge case when just selecting whitespace or new line.
+    // There should be no reason to format whitespace, so we can just return.
+    if (range.length === 0) {
+        return;
+    }
+
+    switch (action) {
+        case Formatting.Bold:
+            toggleInlineFormat(range, "**");
+            break;
+        case Formatting.Italics:
+            toggleInlineFormat(range, "_");
+            break;
+        case Formatting.Strikethrough:
+            toggleInlineFormat(range, "<del>", "</del>");
+            break;
+        case Formatting.Code:
+            formatRangeAsCode(range);
+            break;
+        case Formatting.Quote:
+            formatRangeAsQuote(range);
+            break;
+        case Formatting.InsertLink:
+            formatRangeAsLink(range);
+            break;
+    }
+}
 
 export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]): void {
     const { model } = range;
@@ -32,15 +76,72 @@ export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]): 
     });
 }
 
-export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset = 0): void {
+export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset = 0, atNodeEnd = false): void {
     const { model } = range;
     model.transform(() => {
         const oldLen = range.length;
         const addedLen = range.replace(newParts);
         const firstOffset = range.start.asOffset(model);
-        const lastOffset = firstOffset.add(oldLen + addedLen + offset);
+        const lastOffset = firstOffset.add(oldLen + addedLen + offset, atNodeEnd);
         return lastOffset.asPosition(model);
     });
+}
+
+/**
+ * Replaces a range with formatting or removes existing formatting and
+ * positions the cursor with respect to the prefix and suffix length.
+ * @param {Range} range the previous value
+ * @param {Part[]} newParts the new value
+ * @param {boolean} rangeHasFormatting the new value
+ * @param {number} prefixLength the length of the formatting prefix
+ * @param {number} suffixLength the length of the formatting suffix, defaults to prefix length
+ */
+export function replaceRangeAndAutoAdjustCaret(
+    range: Range,
+    newParts: Part[],
+    rangeHasFormatting = false,
+    prefixLength: number,
+    suffixLength = prefixLength,
+): void {
+    const { model } = range;
+    const lastStartingPosition = range.getLastStartingPosition();
+    const relativeOffset = lastStartingPosition.offset - range.start.offset;
+    const distanceFromEnd = range.length - relativeOffset;
+    // Handle edge case where the caret is located within the suffix or prefix
+    if (rangeHasFormatting) {
+        if (relativeOffset < prefixLength) {
+            // Was the caret at the left format string?
+            replaceRangeAndMoveCaret(range, newParts, -(range.length - 2 * suffixLength));
+            return;
+        }
+        if (distanceFromEnd < suffixLength) {
+            // Was the caret at the right format string?
+            replaceRangeAndMoveCaret(range, newParts, 0, true);
+            return;
+        }
+    }
+    // Calculate new position with respect to the previous position
+    model.transform(() => {
+        const offsetDirection = Math.sign(range.replace(newParts)); // Compensates for shrinkage or expansion
+        const atEnd = distanceFromEnd === suffixLength;
+        return lastStartingPosition
+            .asOffset(model)
+            .add(offsetDirection * prefixLength, atEnd)
+            .asPosition(model);
+    });
+}
+
+const isFormattable = (_index: number, offset: number, part: Part): boolean => {
+    return part.text[offset] !== " " && part.type === Type.Plain;
+};
+
+export function selectRangeOfWordAtCaret(range: Range): void {
+    // Select right side of word
+    range.expandForwardsWhile(isFormattable);
+    // Select left side of word
+    range.expandBackwardsWhile(isFormattable);
+    // Trim possibly selected new lines
+    range.trim();
 }
 
 export function rangeStartsAtBeginningOfLine(range: Range): boolean {
@@ -76,7 +177,6 @@ export function formatRangeAsQuote(range: Range): void {
     if (!rangeEndsAtEndOfLine(range)) {
         parts.push(partCreator.newline());
     }
-
     parts.push(partCreator.newline());
     replaceRangeAndExpandSelection(range, parts);
 }
@@ -84,45 +184,66 @@ export function formatRangeAsQuote(range: Range): void {
 export function formatRangeAsCode(range: Range): void {
     const { model, parts } = range;
     const { partCreator } = model;
-    const needsBlock = parts.some(p => p.type === Type.Newline);
-    if (needsBlock) {
+
+    const hasBlockFormatting =
+        range.length > 0 && range.text.startsWith("```") && range.text.endsWith("```") && range.text.includes("\n");
+
+    const needsBlockFormatting = parts.some((p) => p.type === Type.Newline);
+
+    if (hasBlockFormatting) {
+        parts.shift();
+        parts.pop();
+        if (parts[0]?.text === "\n" && parts[parts.length - 1]?.text === "\n") {
+            parts.shift();
+            parts.pop();
+        }
+    } else if (needsBlockFormatting) {
         parts.unshift(partCreator.plain("```"), partCreator.newline());
         if (!rangeStartsAtBeginningOfLine(range)) {
             parts.unshift(partCreator.newline());
         }
-        parts.push(
-            partCreator.newline(),
-            partCreator.plain("```"));
+        parts.push(partCreator.newline(), partCreator.plain("```"));
         if (!rangeEndsAtEndOfLine(range)) {
             parts.push(partCreator.newline());
         }
     } else {
-        parts.unshift(partCreator.plain("`"));
-        parts.push(partCreator.plain("`"));
+        const fenceLen = longestBacktickSequence(range.text);
+        const hasInlineFormatting = range.text.startsWith("`") && range.text.endsWith("`");
+        //if it's already formatted untoggle based on fenceLen which returns the max. num of backtick within a text else increase the fence backticks with a factor of 1.
+        toggleInlineFormat(range, "`".repeat(hasInlineFormatting ? fenceLen : fenceLen + 1));
+        return;
     }
+
     replaceRangeAndExpandSelection(range, parts);
 }
 
-export function formatRangeAsLink(range: Range) {
-    const { model, parts } = range;
+export function formatRangeAsLink(range: Range, text?: string): void {
+    const { model } = range;
     const { partCreator } = model;
-    parts.unshift(partCreator.plain("["));
-    parts.push(partCreator.plain("]()"));
-    // We set offset to -1 here so that the caret lands between the brackets
-    replaceRangeAndMoveCaret(range, parts, -1);
+    const linkRegex = /\[(.*?)]\(.*?\)/g;
+    const isFormattedAsLink = linkRegex.test(range.text);
+    if (isFormattedAsLink) {
+        const linkDescription = range.text.replace(linkRegex, "$1");
+        const newParts = [partCreator.plain(linkDescription)];
+        replaceRangeAndMoveCaret(range, newParts, 0);
+    } else {
+        // We set offset to -1 here so that the caret lands between the brackets
+        replaceRangeAndMoveCaret(range, [partCreator.plain("[" + range.text + "]" + "(" + (text ?? "") + ")")], -1);
+    }
 }
 
 // parts helper methods
-const isBlank = part => !part.text || !/\S/.test(part.text);
-const isNL = part => part.type === Type.Newline;
+const isBlank = (part: Part): boolean => !part.text || !/\S/.test(part.text);
+const isNL = (part: Part): boolean => part.type === Type.Newline;
 
 export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix): void {
     const { model, parts } = range;
     const { partCreator } = model;
 
     // compute paragraph [start, end] indexes
-    const paragraphIndexes = [];
+    const paragraphIndexes: [number, number][] = [];
     let startIndex = 0;
+
     // start at i=2 because we look at i and up to two parts behind to detect paragraph breaks at their end
     for (let i = 2; i < parts.length; i++) {
         // paragraph breaks can be denoted in a multitude of ways,
@@ -157,20 +278,25 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
         const base = startIdx + offset;
         const index = endIdx + offset;
 
-        const isFormatted = (index - base > 0) &&
-            parts[base].text.startsWith(prefix) &&
-            parts[index - 1].text.endsWith(suffix);
+        const isFormatted =
+            index - base > 0 && parts[base].text.startsWith(prefix) && parts[index - 1].text.endsWith(suffix);
 
         if (isFormatted) {
-            // remove prefix and suffix
+            // remove prefix and suffix formatting string
             const partWithoutPrefix = parts[base].serialize();
-            partWithoutPrefix.text = partWithoutPrefix.text.substr(prefix.length);
-            parts[base] = partCreator.deserializePart(partWithoutPrefix);
+            partWithoutPrefix.text = partWithoutPrefix.text.slice(prefix.length);
+            let deserializedPart = partCreator.deserializePart(partWithoutPrefix);
+            if (deserializedPart) {
+                parts[base] = deserializedPart;
+            }
 
             const partWithoutSuffix = parts[index - 1].serialize();
             const suffixPartText = partWithoutSuffix.text;
             partWithoutSuffix.text = suffixPartText.substring(0, suffixPartText.length - suffix.length);
-            parts[index - 1] = partCreator.deserializePart(partWithoutSuffix);
+            deserializedPart = partCreator.deserializePart(partWithoutSuffix);
+            if (deserializedPart) {
+                parts[index - 1] = deserializedPart;
+            }
         } else {
             parts.splice(index, 0, partCreator.plain(suffix)); // splice in the later one first to not change offset
             parts.splice(base, 0, partCreator.plain(prefix));
@@ -178,5 +304,13 @@ export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix
         }
     });
 
-    replaceRangeAndExpandSelection(range, parts);
+    // If the user didn't select something initially, we want to just restore
+    // the caret position instead of making a new selection.
+    if (range.wasInitializedEmpty() && prefix === suffix) {
+        // Check if we need to add a offset for a toggle or untoggle
+        const hasFormatting = range.text.startsWith(prefix) && range.text.endsWith(suffix);
+        replaceRangeAndAutoAdjustCaret(range, parts, hasFormatting, prefix.length);
+    } else {
+        replaceRangeAndExpandSelection(range, parts);
+    }
 }

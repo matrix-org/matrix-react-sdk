@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
+import { Room, HierarchyRoom } from "matrix-js-sdk/src/matrix";
+
+import { _t } from "../../languageHandler";
 
 // The consts & types are moved out here to prevent cyclical imports
 
@@ -33,8 +34,30 @@ export enum MetaSpace {
     Orphans = "orphans-space",
 }
 
+export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): string => {
+    switch (spaceKey) {
+        case MetaSpace.Home:
+            return allRoomsInHome ? _t("All rooms") : _t("Home");
+        case MetaSpace.Favourites:
+            return _t("Favourites");
+        case MetaSpace.People:
+            return _t("People");
+        case MetaSpace.Orphans:
+            return _t("Other rooms");
+    }
+};
+
 export type SpaceKey = MetaSpace | Room["roomId"];
 
-export interface ISuggestedRoom extends IHierarchyRoom {
+export interface ISuggestedRoom extends HierarchyRoom {
     viaServers: string[];
+}
+
+export function isMetaSpace(spaceKey?: SpaceKey): boolean {
+    return (
+        spaceKey === MetaSpace.Home ||
+        spaceKey === MetaSpace.Favourites ||
+        spaceKey === MetaSpace.People ||
+        spaceKey === MetaSpace.Orphans
+    );
 }

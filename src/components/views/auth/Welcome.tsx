@@ -14,60 +14,54 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import classNames from "classnames";
 
-import * as sdk from "../../../index";
-import SdkConfig from '../../../SdkConfig';
+import SdkConfig from "../../../SdkConfig";
 import AuthPage from "./AuthPage";
 import { _td } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
-import CountlyAnalytics from "../../../CountlyAnalytics";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import LanguageSelector from "./LanguageSelector";
+import EmbeddedPage from "../../structures/EmbeddedPage";
+import { MATRIX_LOGO_HTML } from "../../structures/static-page-vars";
 
 // translatable strings for Welcome pages
 _td("Sign in with SSO");
 
-interface IProps {
+interface IProps {}
 
-}
-
-@replaceableComponent("views.auth.Welcome")
 export default class Welcome extends React.PureComponent<IProps> {
-    constructor(props: IProps) {
-        super(props);
-
-        CountlyAnalytics.instance.track("onboarding_welcome");
-    }
-
     public render(): React.ReactNode {
-        // FIXME: Using an import will result in wrench-element-tests failures
-        const EmbeddedPage = sdk.getComponent("structures.EmbeddedPage");
-
-        const pagesConfig = SdkConfig.get().embeddedPages;
-        let pageUrl = null;
+        const pagesConfig = SdkConfig.getObject("embedded_pages");
+        let pageUrl: string | undefined;
         if (pagesConfig) {
-            pageUrl = pagesConfig.welcomeUrl;
+            pageUrl = pagesConfig.get("welcome_url");
         }
+
+        const replaceMap: Record<string, string> = {
+            "$riot:ssoUrl": "#/start_sso",
+            "$riot:casUrl": "#/start_cas",
+            "$matrixLogo": MATRIX_LOGO_HTML,
+            "[matrix]": MATRIX_LOGO_HTML,
+        };
+
         if (!pageUrl) {
-            pageUrl = 'welcome.html';
+            // Fall back to default and replace $logoUrl in welcome.html
+            const brandingConfig = SdkConfig.getObject("branding");
+            const logoUrl = brandingConfig?.get("auth_header_logo_url") ?? "themes/element/img/logos/element-logo.svg";
+            replaceMap["$logoUrl"] = logoUrl;
+            pageUrl = "welcome.html";
         }
 
         return (
             <AuthPage>
-                <div className={classNames("mx_Welcome", {
-                    mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
-                })}>
-                    <EmbeddedPage
-                        className="mx_WelcomePage"
-                        url={pageUrl}
-                        replaceMap={{
-                            "$riot:ssoUrl": "#/start_sso",
-                            "$riot:casUrl": "#/start_cas",
-                        }}
-                    />
+                <div
+                    className={classNames("mx_Welcome", {
+                        mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
+                    })}
+                >
+                    <EmbeddedPage className="mx_WelcomePage" url={pageUrl} replaceMap={replaceMap} />
                     <LanguageSelector />
                 </div>
             </AuthPage>

@@ -41,9 +41,24 @@ export enum Action {
     ViewUserSettings = "view_user_settings",
 
     /**
+     * Open the user device settings. No additional payload information required.
+     */
+    ViewUserDeviceSettings = "view_user_device_settings",
+
+    /**
      * Opens the room directory. No additional payload information required.
      */
     ViewRoomDirectory = "view_room_directory",
+
+    /**
+     * Fires when viewing room by room_alias fails to find room
+     */
+    ViewRoomError = "view_room_error",
+
+    /**
+     * Navigates to app home
+     */
+    ViewHomePage = "view_home_page",
 
     /**
      * Forces the theme to reload. No additional payload information required.
@@ -61,14 +76,18 @@ export enum Action {
     FocusSendMessageComposer = "focus_send_message_composer",
 
     /**
+     * Clear the  to the send message composer. Should be used with a FocusComposerPayload.
+     */
+    ClearAndFocusSendMessageComposer = "clear_focus_send_message_composer",
+
+    /**
      * Focuses the user's cursor to the edit message composer. Should be used with a FocusComposerPayload.
      */
     FocusEditMessageComposer = "focus_edit_message_composer",
 
     /**
      * Focuses the user's cursor to the edit message composer or send message
-     * composer based on the current edit state. No additional payload
-     * information required.
+     * composer based on the current edit state. Should be used with a FocusComposerPayload.
      */
     FocusAComposer = "focus_a_composer",
 
@@ -76,6 +95,16 @@ export enum Action {
      * Opens the user menu (previously known as the top left menu). No additional payload information required.
      */
     ToggleUserMenu = "toggle_user_menu",
+
+    /**
+     * Toggles the Space panel. No additional payload information required.
+     */
+    ToggleSpacePanel = "toggle_space_panel",
+
+    /**
+     * Sets the apps root font size. Should be used with UpdateFontSizePayload
+     */
+    MigrateBaseFontSize = "migrate_base_font_size",
 
     /**
      * Sets the apps root font size. Should be used with UpdateFontSizePayload
@@ -88,24 +117,19 @@ export enum Action {
     UpdateSystemFont = "update_system_font",
 
     /**
+     * Changes room based on payload parameters. Should be used with JoinRoomPayload.
+     */
+    ViewRoom = "view_room",
+
+    /**
+     * Changes thread based on payload parameters. Should be used with ThreadPayload.
+     */
+    ViewThread = "view_thread",
+
+    /**
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
      */
     ViewRoomDelta = "view_room_delta",
-
-    /**
-     * Sets the phase for the right panel. Should be used with SetRightPanelPhasePayload.
-     */
-    SetRightPanelPhase = "set_right_panel_phase",
-
-    /**
-     * Toggles the right panel. Should be used with ToggleRightPanelPayload.
-     */
-    ToggleRightPanel = "toggle_right_panel",
-
-    /**
-     * Trigged after the phase of the right panel is set. Should be used with AfterRightPanelPhaseChangePayload.
-     */
-    AfterRightPanelPhaseChange = "after_right_panel_phase_change",
 
     /**
      * Opens the modal dial pad
@@ -117,18 +141,6 @@ export enum Action {
      * payload: DialNumberPayload
      */
     DialNumber = "dial_number",
-
-    /**
-     * Start a call transfer to a Matrix ID
-     * payload: TransferCallPayload
-     */
-    TransferCallToMatrixID = "transfer_call_to_matrix_id",
-
-    /**
-     * Start a call transfer to a phone number
-     * payload: TransferCallPayload
-     */
-    TransferCallToPhoneNumber = "transfer_call_to_phone_number",
 
     /**
      * Fired when CallHandler has checked for PSTN protocol support
@@ -170,12 +182,12 @@ export enum Action {
     UploadCanceled = "upload_canceled",
 
     /**
-     * Fired when requesting to join a room
+     * Fired when requesting to join a room. Should be used with JoinRoomPayload.
      */
     JoinRoom = "join_room",
 
     /**
-     * Fired when successfully joining a room
+     * Fired when successfully joining a room. Should be used with a JoinRoomReadyPayload.
      */
     JoinRoomReady = "join_room_ready",
 
@@ -185,7 +197,17 @@ export enum Action {
     JoinRoomError = "join_room_error",
 
     /**
-     * Inserts content into the active composer. Should be used with ComposerInsertPayload
+     * Fired when starting to bulk redact messages from a user in a room.
+     */
+    BulkRedactStart = "bulk_redact_start",
+
+    /**
+     * Fired when done bulk redacting messages from a user in a room.
+     */
+    BulkRedactEnd = "bulk_redact_end",
+
+    /**
+     * Inserts content into the active composer. Should be used with ComposerInsertPayload.
      */
     ComposerInsert = "composer_insert",
 
@@ -195,7 +217,7 @@ export enum Action {
     SwitchSpace = "switch_space",
 
     /**
-     * Signals to the visible space hierarchy that a change has occurred an that it should refresh.
+     * Signals to the visible space hierarchy that a change has occurred and that it should refresh.
      */
     UpdateSpaceHierarchy = "update_space_hierarchy",
 
@@ -210,4 +232,143 @@ export enum Action {
      * Fires when a user starts to edit event (e.g. up arrow in compositor)
      */
     EditEvent = "edit_event",
+
+    /**
+     * The user accepted pseudonymous analytics (i.e. posthog) from the toast
+     * Payload: none
+     */
+    PseudonymousAnalyticsAccept = "pseudonymous_analytics_accept",
+
+    /**
+     * The user rejected pseudonymous analytics (i.e. posthog) from the toast
+     * Payload: none
+     */
+    PseudonymousAnalyticsReject = "pseudonymous_analytics_reject",
+
+    /**
+     * Fires after crypto is setup if key backup is not enabled
+     * Used to trigger auto rageshakes when configured
+     */
+    ReportKeyBackupNotEnabled = "report_key_backup_not_enabled",
+
+    /**
+     * Dispatched after leave room or space is finished
+     */
+    AfterLeaveRoom = "after_leave_room",
+
+    /**
+     * Used to defer actions until after sync is complete
+     * LifecycleStore will emit deferredAction payload after 'MatrixActions.sync'
+     */
+    DoAfterSyncPrepared = "do_after_sync_prepared",
+
+    /**
+     * Fired when clicking user name from group view
+     */
+    ViewStartChatOrReuse = "view_start_chat_or_reuse",
+
+    /**
+     * Fired when the user's active room changed, possibly from/to a non-room view.
+     * Payload: ActiveRoomChangedPayload
+     */
+    ActiveRoomChanged = "active_room_changed",
+
+    /**
+     * Fired when the forward dialog needs to be opened.
+     * Payload: OpenForwardDialogPayload
+     */
+    OpenForwardDialog = "open_forward_dialog",
+
+    /**
+     * Fired when the "report event" dialog needs to be opened.
+     * Payload: OpenReportEventDialogPayload.
+     */
+    OpenReportEventDialog = "open_report_event_dialog",
+
+    /**
+     * Fired when something within the application has determined that a logout,
+     * or logout-like behaviour, needs to happen. Specifically meant to target
+     * storage deletion rather than calling the logout API.
+     *
+     * No payload.
+     */
+    TriggerLogout = "trigger_logout",
+
+    /**
+     * Opens the user's preferences for the given space. Used with a OpenSpacePreferencesPayload.
+     */
+    OpenSpacePreferences = "open_space_preferences",
+
+    /**
+     * Opens the settings for the given space. Used with a OpenSpaceSettingsPayload.
+     */
+    OpenSpaceSettings = "open_space_settings",
+
+    /**
+     * Opens the invite dialog. Used with a OpenInviteDialogPayload.
+     */
+    OpenInviteDialog = "open_invite_dialog",
+
+    /**
+     * Opens a dialog to add an existing object to a space. Used with a OpenAddExistingToSpaceDialogPayload.
+     */
+    OpenAddToExistingSpaceDialog = "open_add_to_existing_space_dialog",
+
+    /**
+     * Let components know that they should log any useful debugging information
+     * because we're probably about to send bug report which includes all of the
+     * logs. Fires with no payload.
+     */
+    DumpDebugLogs = "dump_debug_logs",
+
+    /**
+     * Show current room topic
+     */
+    ShowRoomTopic = "show_room_topic",
+
+    /**
+     * Fired when the client was logged out. No additional payload information required.
+     */
+    OnLoggedOut = "on_logged_out",
+
+    /**
+     * Fired when the client was logged in. No additional payload information required.
+     */
+    OnLoggedIn = "on_logged_in",
+
+    /**
+     * Overwrites the existing login with fresh session credentials. Use with a OverwriteLoginPayload.
+     */
+    OverwriteLogin = "overwrite_login",
+
+    /**
+     * Fired when the PlatformPeg gets a new platform set upon it, should only happen once per app load lifecycle.
+     * Fires with the PlatformSetPayload.
+     */
+    PlatformSet = "platform_set",
+
+    /**
+     * Fired when we want to view a thread, either a new one or an existing one
+     */
+    ShowThread = "show_thread",
+
+    /**
+     * Fired when requesting to prompt for ask to join a room.
+     */
+    PromptAskToJoin = "prompt_ask_to_join",
+
+    /**
+     * Fired when requesting to submit an ask to join a room. Use with a SubmitAskToJoinPayload.
+     */
+    SubmitAskToJoin = "submit_ask_to_join",
+
+    /**
+     * Fired when requesting to cancel an ask to join a room. Use with a CancelAskToJoinPayload.
+     */
+    CancelAskToJoin = "cancel_ask_to_join",
+
+    /**
+     * Fired when we want to open spotlight search. Use with a OpenSpotlightPayload.
+     */
+    OpenSpotlight = "open_spotlight",
 }

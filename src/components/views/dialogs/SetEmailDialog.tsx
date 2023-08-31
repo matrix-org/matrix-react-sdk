@@ -15,23 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import * as Email from '../../../email';
-import AddThreepid from '../../../AddThreepid';
-import { _t } from '../../../languageHandler';
-import Modal from '../../../Modal';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixError } from "matrix-js-sdk/src/matrix";
+
+import * as Email from "../../../email";
+import AddThreepid from "../../../AddThreepid";
+import { _t, UserFriendlyError } from "../../../languageHandler";
+import Modal from "../../../Modal";
 import Spinner from "../elements/Spinner";
-import ErrorDialog from "./ErrorDialog";
+import ErrorDialog, { extractErrorMessageFromError } from "./ErrorDialog";
 import QuestionDialog from "./QuestionDialog";
 import BaseDialog from "./BaseDialog";
 import EditableText from "../elements/EditableText";
-import { IDialogProps } from "./IDialogProps";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
-import { logger } from "matrix-js-sdk/src/logger";
-
-interface IProps extends IDialogProps {
+interface IProps {
     title: string;
+    onFinished(ok?: boolean): void;
 }
 
 interface IState {
@@ -44,15 +45,14 @@ interface IState {
  *
  * On success, `onFinished(true)` is called.
  */
-@replaceableComponent("views.dialogs.SetEmailDialog")
 export default class SetEmailDialog extends React.Component<IProps, IState> {
-    private addThreepid: AddThreepid;
+    private addThreepid?: AddThreepid;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
-            emailAddress: '',
+            emailAddress: "",
             emailBusy: false,
         };
     }
@@ -66,31 +66,34 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
     private onSubmit = (): void => {
         const emailAddress = this.state.emailAddress;
         if (!Email.looksValid(emailAddress)) {
-            Modal.createTrackedDialog('Invalid Email Address', '', ErrorDialog, {
+            Modal.createDialog(ErrorDialog, {
                 title: _t("Invalid Email Address"),
                 description: _t("This doesn't appear to be a valid email address"),
             });
             return;
         }
-        this.addThreepid = new AddThreepid();
-        this.addThreepid.addEmailAddress(emailAddress).then(() => {
-            Modal.createTrackedDialog('Verification Pending', '', QuestionDialog, {
-                title: _t("Verification Pending"),
-                description: _t(
-                    "Please check your email and click on the link it contains. Once this " +
-                    "is done, click continue.",
-                ),
-                button: _t('Continue'),
-                onFinished: this.onEmailDialogFinished,
-            });
-        }, (err) => {
-            this.setState({ emailBusy: false });
-            logger.error("Unable to add email address " + emailAddress + " " + err);
-            Modal.createTrackedDialog('Unable to add email address', '', ErrorDialog, {
-                title: _t("Unable to add email address"),
-                description: ((err && err.message) ? err.message : _t("Operation failed")),
-            });
-        });
+        this.addThreepid = new AddThreepid(MatrixClientPeg.safeGet());
+        this.addThreepid.addEmailAddress(emailAddress).then(
+            () => {
+                Modal.createDialog(QuestionDialog, {
+                    title: _t("Verification Pending"),
+                    description: _t(
+                        "Please check your email and click on the link it contains. Once this " +
+                            "is done, click continue.",
+                    ),
+                    button: _t("Continue"),
+                    onFinished: this.onEmailDialogFinished,
+                });
+            },
+            (err) => {
+                this.setState({ emailBusy: false });
+                logger.error("Unable to add email address " + emailAddress + " " + err);
+                Modal.createDialog(ErrorDialog, {
+                    title: _t("Unable to add email address"),
+                    description: extractErrorMessageFromError(err, _t("Operation failed")),
+                });
+            },
+        );
         this.setState({ emailBusy: true });
     };
 
@@ -107,61 +110,72 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
     };
 
     private verifyEmailAddress(): void {
-        this.addThreepid.checkEmailLinkClicked().then(() => {
-            this.props.onFinished(true);
-        }, (err) => {
-            this.setState({ emailBusy: false });
-            if (err.errcode == 'M_THREEPID_AUTH_FAILED') {
-                const message = _t("Unable to verify email address.") + " " +
-                    _t("Please check your email and click on the link it contains. Once this is done, click continue.");
-                Modal.createTrackedDialog('Verification Pending', '3pid Auth Failed', QuestionDialog, {
-                    title: _t("Verification Pending"),
-                    description: message,
-                    button: _t('Continue'),
-                    onFinished: this.onEmailDialogFinished,
-                });
-            } else {
-                logger.error("Unable to verify email address: " + err);
-                Modal.createTrackedDialog('Unable to verify email address', '', ErrorDialog, {
-                    title: _t("Unable to verify email address."),
-                    description: ((err && err.message) ? err.message : _t("Operation failed")),
-                });
-            }
-        });
+        this.addThreepid?.checkEmailLinkClicked().then(
+            () => {
+                this.props.onFinished(true);
+            },
+            (err) => {
+                this.setState({ emailBusy: false });
+
+                let underlyingError = err;
+                if (err instanceof UserFriendlyError) {
+                    underlyingError = err.cause;
+                }
+
+                if (underlyingError instanceof MatrixError && underlyingError.errcode === "M_THREEPID_AUTH_FAILED") {
+                    const message =
+                        _t("Unable to verify email address.") +
+                        " " +
+                        _t(
+                            "Please check your email and click on the link it contains. Once this is done, click continue.",
+                        );
+                    Modal.createDialog(QuestionDialog, {
+                        title: _t("Verification Pending"),
+                        description: message,
+                        button: _t("Continue"),
+                        onFinished: this.onEmailDialogFinished,
+                    });
+                } else {
+                    logger.error("Unable to verify email address: " + err);
+                    Modal.createDialog(ErrorDialog, {
+                        title: _t("Unable to verify email address."),
+                        description: extractErrorMessageFromError(err, _t("Operation failed")),
+                    });
+                }
+            },
+        );
     }
 
-    public render(): JSX.Element {
-        const emailInput = this.state.emailBusy ? <Spinner /> : <EditableText
-            initialValue={this.state.emailAddress}
-            className="mx_SetEmailDialog_email_input"
-            placeholder={_t("Email address")}
-            placeholderClassName="mx_SetEmailDialog_email_input_placeholder"
-            blurToCancel={false}
-            onValueChanged={this.onEmailAddressChanged} />;
+    public render(): React.ReactNode {
+        const emailInput = this.state.emailBusy ? (
+            <Spinner />
+        ) : (
+            <EditableText
+                initialValue={this.state.emailAddress}
+                className="mx_SetEmailDialog_email_input"
+                placeholder={_t("Email address")}
+                placeholderClassName="mx_SetEmailDialog_email_input_placeholder"
+                blurToCancel={false}
+                onValueChanged={this.onEmailAddressChanged}
+            />
+        );
 
         return (
-            <BaseDialog className="mx_SetEmailDialog"
+            <BaseDialog
+                className="mx_SetEmailDialog"
                 onFinished={this.onCancelled}
                 title={this.props.title}
-                contentId='mx_Dialog_content'
+                contentId="mx_Dialog_content"
             >
                 <div className="mx_Dialog_content">
-                    <p id='mx_Dialog_content'>
-                        { _t('This will allow you to reset your password and receive notifications.') }
+                    <p id="mx_Dialog_content">
+                        {_t("This will allow you to reset your password and receive notifications.")}
                     </p>
-                    { emailInput }
+                    {emailInput}
                 </div>
                 <div className="mx_Dialog_buttons">
-                    <input className="mx_Dialog_primary"
-                        type="submit"
-                        value={_t("Continue")}
-                        onClick={this.onSubmit}
-                    />
-                    <input
-                        type="submit"
-                        value={_t("Skip")}
-                        onClick={this.onCancelled}
-                    />
+                    <input className="mx_Dialog_primary" type="submit" value={_t("Continue")} onClick={this.onSubmit} />
+                    <input type="submit" value={_t("Skip")} onClick={this.onCancelled} />
                 </div>
             </BaseDialog>
         );

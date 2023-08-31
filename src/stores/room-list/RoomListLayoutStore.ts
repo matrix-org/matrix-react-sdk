@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { TagID } from "./models";
 import { ListLayout } from "./ListLayout";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IState {}
 
@@ -29,18 +29,19 @@ export default class RoomListLayoutStore extends AsyncStoreWithClient<IState> {
 
     private readonly layoutMap = new Map<TagID, ListLayout>();
 
-    constructor() {
+    public constructor() {
         super(defaultDispatcher);
     }
 
     public static get instance(): RoomListLayoutStore {
-        if (!RoomListLayoutStore.internalInstance) {
-            RoomListLayoutStore.internalInstance = new RoomListLayoutStore();
+        if (!this.internalInstance) {
+            this.internalInstance = new RoomListLayoutStore();
+            this.internalInstance.start();
         }
         return RoomListLayoutStore.internalInstance;
     }
 
-    public ensureLayoutExists(tagId: TagID) {
+    public ensureLayoutExists(tagId: TagID): void {
         if (!this.layoutMap.has(tagId)) {
             this.layoutMap.set(tagId, new ListLayout(tagId));
         }
@@ -50,11 +51,11 @@ export default class RoomListLayoutStore extends AsyncStoreWithClient<IState> {
         if (!this.layoutMap.has(tagId)) {
             this.layoutMap.set(tagId, new ListLayout(tagId));
         }
-        return this.layoutMap.get(tagId);
+        return this.layoutMap.get(tagId)!;
     }
 
     // Note: this primarily exists for debugging, and isn't really intended to be used by anything.
-    public async resetLayouts() {
+    public async resetLayouts(): Promise<void> {
         logger.warn("Resetting layouts for room list");
         for (const layout of this.layoutMap.values()) {
             layout.reset();
@@ -67,9 +68,7 @@ export default class RoomListLayoutStore extends AsyncStoreWithClient<IState> {
     }
 
     // We don't need this function, but our contract says we do
-    protected async onAction(payload: ActionPayload): Promise<any> {
-        return Promise.resolve();
-    }
+    protected async onAction(payload: ActionPayload): Promise<void> {}
 }
 
 window.mxRoomListLayoutStore = RoomListLayoutStore.instance;

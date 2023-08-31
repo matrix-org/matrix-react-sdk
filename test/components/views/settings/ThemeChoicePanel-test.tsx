@@ -14,47 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { mount } from "enzyme";
+import React from "react";
+import { render } from "@testing-library/react";
 
-import '../../../skinned-sdk';
 import * as TestUtils from "../../../test-utils";
-import _ThemeChoicePanel from '../../../../src/components/views/settings/ThemeChoicePanel';
+import ThemeChoicePanel from "../../../../src/components/views/settings/ThemeChoicePanel";
 
-const ThemeChoicePanel = TestUtils.wrapInMatrixClientContext(_ThemeChoicePanel);
-
-// Avoid errors about global.matchMedia. See:
-// https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
-Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: jest.fn().mockImplementation(query => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: jest.fn(), // Deprecated
-        removeListener: jest.fn(), // Deprecated
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
-    })),
-});
-
-// Fake random strings to give a predictable snapshot
-jest.mock(
-    'matrix-js-sdk/src/randomstring',
-    () => {
-        return {
-            randomString: () => "abdefghi",
-        };
-    },
-);
-
-describe('ThemeChoicePanel', () => {
-    it('renders the theme choice UI', () => {
+describe("ThemeChoicePanel", () => {
+    it("renders the theme choice UI", () => {
         TestUtils.stubClient();
-        const wrapper = mount(
-            <ThemeChoicePanel />,
-        );
-        expect(wrapper).toMatchSnapshot();
+        const { asFragment } = render(<ThemeChoicePanel />);
+        expect(asFragment()).toMatchSnapshot();
     });
 });

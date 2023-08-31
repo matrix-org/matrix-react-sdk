@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Exporter from "./Exporter";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { formatFullDateNoDay } from "../../DateUtils";
-import { _t } from "../../languageHandler";
-import { haveTileForEvent } from "../../components/views/rooms/EventTile";
-import { ExportType, isReply, textForReplyEvent } from "./exportUtils";
-import { IExportOptions } from "./exportUtils";
-import { textForEvent } from "../../TextForEvent";
-
+import { Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+import React from "react";
+
+import Exporter from "./Exporter";
+import { _t } from "../../languageHandler";
+import { ExportType, IExportOptions, isReply, textForReplyEvent } from "./exportUtils";
+import { textForEvent } from "../../TextForEvent";
+import { haveRendererForEvent } from "../../events/EventTileFactory";
+import SettingsStore from "../../settings/SettingsStore";
+import { formatFullDate } from "../../DateUtils";
 
 export default class PlainTextExporter extends Exporter {
     protected totalSize: number;
     protected mediaOmitText: string;
 
-    constructor(
+    public constructor(
         room: Room,
         exportType: ExportType,
         exportOptions: IExportOptions,
@@ -43,7 +43,11 @@ export default class PlainTextExporter extends Exporter {
             : _t("Media omitted - file size limit exceeded");
     }
 
-    protected plainTextForEvent = async (mxEv: MatrixEvent) => {
+    public get destinationFileName(): string {
+        return this.makeFileNameNoExtension() + ".txt";
+    }
+
+    protected plainTextForEvent = async (mxEv: MatrixEvent): Promise<string> => {
         const senderDisplayName = mxEv.sender && mxEv.sender.name ? mxEv.sender.name : mxEv.getSender();
         let mediaText = "";
         if (this.isAttachment(mxEv)) {
@@ -68,40 +72,52 @@ export default class PlainTextExporter extends Exporter {
             } else mediaText = ` (${this.mediaOmitText})`;
         }
         if (isReply(mxEv)) return senderDisplayName + ": " + textForReplyEvent(mxEv.getContent()) + mediaText;
-        else return textForEvent(mxEv) + mediaText;
+        else return textForEvent(mxEv, this.room.client) + mediaText;
     };
 
-    protected async createOutput(events: MatrixEvent[]) {
+    protected async createOutput(events: MatrixEvent[]): Promise<string> {
         let content = "";
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            this.updateProgress(`Processing event ${i + 1} out of ${events.length}`, false, true);
+            this.updateProgress(
+                _t("Processing event %(number)s out of %(total)s", {
+                    number: i + 1,
+                    total: events.length,
+                }),
+                false,
+                true,
+            );
             if (this.cancelled) return this.cleanUp();
-            if (!haveTileForEvent(event)) continue;
+            if (!haveRendererForEvent(event, this.room.client, false)) continue;
             const textForEvent = await this.plainTextForEvent(event);
-            content += textForEvent && `${new Date(event.getTs()).toLocaleString()} - ${textForEvent}\n`;
+            content +=
+                textForEvent &&
+                `${formatFullDate(
+                    new Date(event.getTs()),
+                    SettingsStore.getValue("showTwelveHourTimestamps"),
+                )} - ${textForEvent}\n`;
         }
         return content;
     }
 
-    public async export() {
-        this.updateProgress("Starting export process...");
-        this.updateProgress("Fetching events...");
+    public async export(): Promise<void> {
+        this.updateProgress(_t("Starting export process…"));
+        this.updateProgress(_t("Fetching events…"));
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
         const fetchEnd = performance.now();
 
-        logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart)/1000}s`);
+        logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart) / 1000}s`);
 
-        this.updateProgress("Creating output...");
+        this.updateProgress(_t("Creating output…"));
         const text = await this.createOutput(res);
 
         if (this.files.length) {
             this.addFile("export.txt", new Blob([text]));
             await this.downloadZIP();
         } else {
-            const fileName = `matrix-export-${formatFullDateNoDay(new Date())}.txt`;
+            const fileName = this.destinationFileName;
             this.downloadPlainText(fileName, text);
         }
 
@@ -111,10 +127,9 @@ export default class PlainTextExporter extends Exporter {
             logger.info("Export cancelled successfully");
         } else {
             logger.info("Export successful!");
-            logger.log(`Exported ${res.length} events in ${(exportEnd - fetchStart)/1000} seconds`);
+            logger.log(`Exported ${res.length} events in ${(exportEnd - fetchStart) / 1000} seconds`);
         }
 
         this.cleanUp();
     }
 }
-

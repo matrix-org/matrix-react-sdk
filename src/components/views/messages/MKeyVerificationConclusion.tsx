@@ -14,44 +14,44 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { _t } from '../../../languageHandler';
-import { getNameForEventRoom, userLabelForEventRoom } from '../../../utils/KeyVerificationStateObserver';
+import React from "react";
+import classNames from "classnames";
+import { MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
+import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
+import { getNameForEventRoom, userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
 import EventTileBubble from "./EventTileBubble";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
 interface IProps {
     /* the MatrixEvent to show */
     mxEvent: MatrixEvent;
+    timestamp?: JSX.Element;
 }
 
-@replaceableComponent("views.messages.MKeyVerificationConclusion")
 export default class MKeyVerificationConclusion extends React.Component<IProps> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
     }
 
     public componentDidMount(): void {
         const request = this.props.mxEvent.verificationRequest;
         if (request) {
-            request.on("change", this.onRequestChanged);
+            request.on(VerificationRequestEvent.Change, this.onRequestChanged);
         }
-        MatrixClientPeg.get().on("userTrustStatusChanged", this.onTrustChanged);
+        MatrixClientPeg.safeGet().on(CryptoEvent.UserTrustStatusChanged, this.onTrustChanged);
     }
 
     public componentWillUnmount(): void {
         const request = this.props.mxEvent.verificationRequest;
         if (request) {
-            request.off("change", this.onRequestChanged);
+            request.off(VerificationRequestEvent.Change, this.onRequestChanged);
         }
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener("userTrustStatusChanged", this.onTrustChanged);
+            cli.removeListener(CryptoEvent.UserTrustStatusChanged, this.onTrustChanged);
         }
     }
 
@@ -68,17 +68,17 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
         this.forceUpdate();
     };
 
-    public static shouldRender(mxEvent: MatrixEvent, request: VerificationRequest): boolean {
+    public static shouldRender(mxEvent: MatrixEvent, request?: VerificationRequest): boolean {
         // normally should not happen
         if (!request) {
             return false;
         }
         // .cancel event that was sent after the verification finished, ignore
-        if (mxEvent.getType() === EventType.KeyVerificationCancel && !request.cancelled) {
+        if (mxEvent.getType() === EventType.KeyVerificationCancel && request.phase !== VerificationPhase.Cancelled) {
             return false;
         }
         // .done event that was sent after the verification cancelled, ignore
-        if (mxEvent.getType() === EventType.KeyVerificationDone && !request.done) {
+        if (mxEvent.getType() === EventType.KeyVerificationDone && request.phase !== VerificationPhase.Done) {
             return false;
         }
 
@@ -88,51 +88,55 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
         }
 
         // User isn't actually verified
-        if (!MatrixClientPeg.get().checkUserTrust(request.otherUserId).isCrossSigningVerified()) {
+        if (!MatrixClientPeg.safeGet().checkUserTrust(request.otherUserId).isCrossSigningVerified()) {
             return false;
         }
 
         return true;
     }
 
-    public render(): JSX.Element {
+    public render(): JSX.Element | null {
         const { mxEvent } = this.props;
-        const request = mxEvent.verificationRequest;
+        const request = mxEvent.verificationRequest!;
 
         if (!MKeyVerificationConclusion.shouldRender(mxEvent, request)) {
             return null;
         }
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         const myUserId = client.getUserId();
 
-        let title;
+        let title: string | undefined;
 
-        if (request.done) {
-            title = _t(
-                "You verified %(name)s",
-                { name: getNameForEventRoom(request.otherUserId, mxEvent.getRoomId()) },
-            );
-        } else if (request.cancelled) {
+        if (request.phase === VerificationPhase.Done) {
+            title = _t("You verified %(name)s", {
+                name: getNameForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!),
+            });
+        } else if (request.phase === VerificationPhase.Cancelled) {
             const userId = request.cancellingUserId;
             if (userId === myUserId) {
-                title = _t("You cancelled verifying %(name)s",
-                    { name: getNameForEventRoom(request.otherUserId, mxEvent.getRoomId()) });
-            } else {
-                title = _t("%(name)s cancelled verifying",
-                    { name: getNameForEventRoom(userId, mxEvent.getRoomId()) });
+                title = _t("You cancelled verifying %(name)s", {
+                    name: getNameForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!),
+                });
+            } else if (userId) {
+                title = _t("%(name)s cancelled verifying", {
+                    name: getNameForEventRoom(client, userId, mxEvent.getRoomId()!),
+                });
             }
         }
 
         if (title) {
             const classes = classNames("mx_cryptoEvent mx_cryptoEvent_icon", {
-                mx_cryptoEvent_icon_verified: request.done,
+                mx_cryptoEvent_icon_verified: request.phase === VerificationPhase.Done,
             });
-            return <EventTileBubble
-                className={classes}
-                title={title}
-                subtitle={userLabelForEventRoom(request.otherUserId, mxEvent.getRoomId())}
-            />;
+            return (
+                <EventTileBubble
+                    className={classes}
+                    title={title}
+                    subtitle={userLabelForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!)}
+                    timestamp={this.props.timestamp}
+                />
+            );
         }
 
         return null;

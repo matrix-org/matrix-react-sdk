@@ -14,28 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, FormEvent, ReactNode } from 'react';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import React, { ChangeEvent, FormEvent, ReactNode } from "react";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
-import { _t } from '../../../languageHandler';
-import { GroupMemberType } from '../../../groups';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { mediaFromMxc } from "../../../customisations/Media";
-import MemberAvatar from '../avatars/MemberAvatar';
-import BaseAvatar from '../avatars/BaseAvatar';
+import { _t } from "../../../languageHandler";
+import MemberAvatar from "../avatars/MemberAvatar";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
-import Field from '../elements/Field';
+import Field from "../elements/Field";
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 
 interface IProps {
-    // matrix-js-sdk (room) member object. Supply either this or 'groupMember'
-    member?: RoomMember;
-    // group member object. Supply either this or 'member'
-    groupMember?: GroupMemberType;
-    // needed if a group member is specified
-    matrixClient?: MatrixClient;
+    // matrix-js-sdk (room) member object.
+    member: RoomMember;
     action: string; // eg. 'Ban'
     title: string; // eg. 'Ban this user?'
 
@@ -46,7 +38,8 @@ interface IProps {
     danger?: boolean;
     children?: ReactNode;
     className?: string;
-    onFinished: (success: boolean, reason?: string) => void;
+    roomId?: string;
+    onFinished: (success?: boolean, reason?: string) => void;
 }
 
 interface IState {
@@ -61,14 +54,13 @@ interface IState {
  * to make it obvious what is going to happen.
  * Also tweaks the style for 'dangerous' actions (albeit only with colour)
  */
-@replaceableComponent("views.dialogs.ConfirmUserActionDialog")
 export default class ConfirmUserActionDialog extends React.Component<IProps, IState> {
-    static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         danger: false,
         askReason: false,
     };
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -85,14 +77,14 @@ export default class ConfirmUserActionDialog extends React.Component<IProps, ISt
         this.props.onFinished(false);
     };
 
-    private onReasonChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    private onReasonChange = (ev: ChangeEvent<HTMLInputElement>): void => {
         this.setState({
             reason: ev.target.value,
         });
     };
 
-    public render() {
-        const confirmButtonClass = this.props.danger ? 'danger' : '';
+    public render(): React.ReactNode {
+        const confirmButtonClass = this.props.danger ? "danger" : "";
 
         let reasonBox;
         if (this.props.askReason) {
@@ -110,47 +102,39 @@ export default class ConfirmUserActionDialog extends React.Component<IProps, ISt
             );
         }
 
-        let avatar;
-        let name;
-        let userId;
-        if (this.props.member) {
-            avatar = <MemberAvatar member={this.props.member} width={48} height={48} />;
-            name = this.props.member.name;
-            userId = this.props.member.userId;
-        } else {
-            const httpAvatarUrl = this.props.groupMember.avatarUrl
-                ? mediaFromMxc(this.props.groupMember.avatarUrl).getSquareThumbnailHttp(48)
-                : null;
-            name = this.props.groupMember.displayname || this.props.groupMember.userId;
-            userId = this.props.groupMember.userId;
-            avatar = <BaseAvatar name={name} url={httpAvatarUrl} width={48} height={48} />;
-        }
+        const avatar = <MemberAvatar member={this.props.member} width={48} height={48} />;
+        const name = this.props.member.name;
+        const userId = this.props.member.userId;
+
+        const displayUserIdentifier = UserIdentifierCustomisations.getDisplayUserIdentifier(userId, {
+            roomId: this.props.roomId,
+            withDisplayName: true,
+        });
 
         return (
             <BaseDialog
                 className={classNames("mx_ConfirmUserActionDialog", this.props.className)}
                 onFinished={this.props.onFinished}
                 title={this.props.title}
-                contentId='mx_Dialog_content'
+                contentId="mx_Dialog_content"
             >
                 <div id="mx_Dialog_content" className="mx_Dialog_content">
                     <div className="mx_ConfirmUserActionDialog_user">
-                        <div className="mx_ConfirmUserActionDialog_avatar">
-                            { avatar }
-                        </div>
-                        <div className="mx_ConfirmUserActionDialog_name">{ name }</div>
-                        <div className="mx_ConfirmUserActionDialog_userId">{ userId }</div>
+                        <div className="mx_ConfirmUserActionDialog_avatar">{avatar}</div>
+                        <div className="mx_ConfirmUserActionDialog_name">{name}</div>
+                        <div className="mx_ConfirmUserActionDialog_userId">{displayUserIdentifier}</div>
                     </div>
 
-                    { reasonBox }
-                    { this.props.children }
+                    {reasonBox}
+                    {this.props.children}
                 </div>
                 <DialogButtons
                     primaryButton={this.props.action}
                     onPrimaryButtonClick={this.onOk}
                     primaryButtonClass={confirmButtonClass}
                     focus={!this.props.askReason}
-                    onCancel={this.onCancel} />
+                    onCancel={this.onCancel}
+                />
             </BaseDialog>
         );
     }

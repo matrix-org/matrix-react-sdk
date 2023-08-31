@@ -1,5 +1,5 @@
 /*
-Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ClipboardEvent, createRef, KeyboardEvent } from 'react';
-import EMOJI_REGEX from 'emojibase-regex';
-import { IContent, MatrixEvent, IEventRelation } from 'matrix-js-sdk/src/models/event';
-import { DebouncedFunc, throttle } from 'lodash';
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import React, { createRef, KeyboardEvent, SyntheticEvent } from "react";
+import EMOJI_REGEX from "emojibase-regex";
+import {
+    IContent,
+    MatrixEvent,
+    IEventRelation,
+    IMentions,
+    Room,
+    EventType,
+    MsgType,
+    RelationType,
+    THREAD_RELATION_TYPE,
+} from "matrix-js-sdk/src/matrix";
+import { DebouncedFunc, throttle } from "lodash";
 import { logger } from "matrix-js-sdk/src/logger";
+import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 
-import dis from '../../../dispatcher/dispatcher';
-import EditorModel from '../../../editor/model';
+import dis from "../../../dispatcher/dispatcher";
+import EditorModel from "../../../editor/model";
 import {
     containsEmote,
     htmlSerializeIfNeeded,
@@ -31,72 +41,149 @@ import {
     stripPrefix,
     textSerialize,
     unescapeMessage,
-} from '../../../editor/serialize';
+} from "../../../editor/serialize";
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
-import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from '../../../editor/parts';
-import ReplyChain from "../elements/ReplyChain";
-import { findEditableEvent } from '../../../utils/EventUtils';
+import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from "../../../editor/parts";
+import { findEditableEvent } from "../../../utils/EventUtils";
 import SendHistoryManager from "../../../SendHistoryManager";
-import { Command, CommandCategories, getCommand } from '../../../SlashCommands';
-import Modal from '../../../Modal';
-import { _t, _td } from '../../../languageHandler';
-import ContentMessages from '../../../ContentMessages';
+import { CommandCategories } from "../../../SlashCommands";
+import ContentMessages from "../../../ContentMessages";
 import { withMatrixClientHOC, MatrixClientProps } from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { containsEmoji } from "../../../effects/utils";
-import { CHAT_EFFECTS } from '../../../effects';
-import CountlyAnalytics from "../../../CountlyAnalytics";
+import { CHAT_EFFECTS } from "../../../effects";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import SettingsStore from '../../../settings/SettingsStore';
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import SettingsStore from "../../../settings/SettingsStore";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import { Room } from 'matrix-js-sdk/src/models/room';
-import ErrorDialog from "../dialogs/ErrorDialog";
-import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
-import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
+import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { PosthogAnalytics } from "../../../PosthogAnalytics";
+import { addReplyToMessageContent } from "../../../utils/Reply";
+import { doMaybeLocalRoomAction } from "../../../utils/local-room";
+import { Caret } from "../../../editor/caret";
+import { IDiff } from "../../../editor/diff";
+import { getBlobSafeMimeType } from "../../../utils/blobs";
 
-function addReplyToMessageContent(
+/**
+ * Build the mentions information based on the editor model (and any related events):
+ *
+ * 1. Search the model parts for room or user pills and fill in the mentions object.
+ * 2. If this is a reply to another event, include any user mentions from that
+ *    (but do not include a room mention).
+ *
+ * @param sender - The Matrix ID of the user sending the event.
+ * @param content - The event content.
+ * @param model - The editor model to search for mentions, null if there is no editor.
+ * @param replyToEvent - The event being replied to or undefined if it is not a reply.
+ * @param editedContent - The content of the parent event being edited.
+ */
+export function attachMentions(
+    sender: string,
     content: IContent,
-    replyToEvent: MatrixEvent,
-    permalinkCreator: RoomPermalinkCreator,
+    model: EditorModel | null,
+    replyToEvent: MatrixEvent | undefined,
+    editedContent: IContent | null = null,
 ): void {
-    const replyContent = ReplyChain.makeReplyMixIn(replyToEvent);
-    Object.assign(content, replyContent);
+    // If this feature is disabled, do nothing.
+    if (!SettingsStore.getValue("feature_intentional_mentions")) {
+        return;
+    }
 
-    // Part of Replies fallback support - prepend the text we're sending
-    // with the text we're replying to
-    const nestedReply = ReplyChain.getNestedReplyText(replyToEvent, permalinkCreator);
-    if (nestedReply) {
-        if (content.formatted_body) {
-            content.formatted_body = nestedReply.html + content.formatted_body;
+    // The mentions property *always* gets included to disable legacy push rules.
+    const mentions: IMentions = (content["m.mentions"] = {});
+
+    const userMentions = new Set<string>();
+    let roomMention = false;
+
+    // If there's a reply, initialize the mentioned users as the sender of that
+    // event + any mentioned users in that event.
+    if (replyToEvent) {
+        userMentions.add(replyToEvent.sender!.userId);
+        // TODO What do we do if the reply event *doeesn't* have this property?
+        // Try to fish out replies from the contents?
+        const userIds = replyToEvent.getContent()["m.mentions"]?.user_ids;
+        if (Array.isArray(userIds)) {
+            userIds.forEach((userId) => userMentions.add(userId));
         }
-        content.body = nestedReply.body + content.body;
+    }
+
+    // If user provided content is available, check to see if any users are mentioned.
+    if (model) {
+        // Add any mentioned users in the current content.
+        for (const part of model.parts) {
+            if (part.type === Type.UserPill) {
+                userMentions.add(part.resourceId);
+            } else if (part.type === Type.AtRoomPill) {
+                roomMention = true;
+            }
+        }
+    }
+
+    // Ensure the *current* user isn't listed in the mentioned users.
+    userMentions.delete(sender);
+
+    // Finally, if this event is editing a previous event, only include users who
+    // were not previously mentioned and a room mention if the previous event was
+    // not a room mention.
+    if (editedContent) {
+        // First, the new event content gets the *full* set of users.
+        const newContent = content["m.new_content"];
+        const newMentions: IMentions = (newContent["m.mentions"] = {});
+
+        // Only include the users/room if there is any content.
+        if (userMentions.size) {
+            newMentions.user_ids = [...userMentions];
+        }
+        if (roomMention) {
+            newMentions.room = true;
+        }
+
+        // Fetch the mentions from the original event and remove any previously
+        // mentioned users.
+        const prevMentions = editedContent["m.mentions"];
+        if (Array.isArray(prevMentions?.user_ids)) {
+            prevMentions!.user_ids.forEach((userId) => userMentions.delete(userId));
+        }
+
+        // If the original event mentioned the room, nothing to do here.
+        if (prevMentions?.room) {
+            roomMention = false;
+        }
+    }
+
+    // Only include the users/room if there is any content.
+    if (userMentions.size) {
+        mentions.user_ids = [...userMentions];
+    }
+    if (roomMention) {
+        mentions.room = true;
     }
 }
 
-export function attachRelation(
-    content: IContent,
-    relation?: IEventRelation,
-): void {
+// Merges favouring the given relation
+export function attachRelation(content: IContent, relation?: IEventRelation): void {
     if (relation) {
-        content['m.relates_to'] = {
-            ...relation, // the composer can have a default
-            ...content['m.relates_to'],
+        content["m.relates_to"] = {
+            ...(content["m.relates_to"] || {}),
+            ...relation,
         };
     }
 }
 
 // exported for tests
 export function createMessageContent(
+    sender: string,
     model: EditorModel,
-    replyToEvent: MatrixEvent,
-    relation: IEventRelation,
-    permalinkCreator: RoomPermalinkCreator,
+    replyToEvent: MatrixEvent | undefined,
+    relation: IEventRelation | undefined,
+    permalinkCreator?: RoomPermalinkCreator,
+    includeReplyLegacyFallback = true,
 ): IContent {
     const isEmote = containsEmote(model);
     if (isEmote) {
@@ -108,25 +195,29 @@ export function createMessageContent(
     model = unescapeMessage(model);
 
     const body = textSerialize(model);
+
     const content: IContent = {
-        msgtype: isEmote ? "m.emote" : "m.text",
+        msgtype: isEmote ? MsgType.Emote : MsgType.Text,
         body: body,
     };
-    const formattedBody = htmlSerializeIfNeeded(model, { forceHTML: !!replyToEvent });
+    const formattedBody = htmlSerializeIfNeeded(model, {
+        forceHTML: !!replyToEvent,
+        useMarkdown: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
+    });
     if (formattedBody) {
         content.format = "org.matrix.custom.html";
         content.formatted_body = formattedBody;
     }
 
-    if (replyToEvent) {
-        addReplyToMessageContent(content, replyToEvent, permalinkCreator);
-    }
+    // Build the mentions property and add it to the event content.
+    attachMentions(sender, content, model, replyToEvent);
 
-    if (relation) {
-        content['m.relates_to'] = {
-            ...relation,
-            ...content['m.relates_to'],
-        };
+    attachRelation(content, relation);
+    if (replyToEvent) {
+        addReplyToMessageContent(content, replyToEvent, {
+            permalinkCreator,
+            includeLegacyFallback: includeReplyLegacyFallback,
+        });
     }
 
     return content;
@@ -143,8 +234,7 @@ export function isQuickReaction(model: EditorModel): boolean {
         const hasShortcut = text.startsWith("+") || text.startsWith("+ ");
         const emojiMatch = text.match(EMOJI_REGEX);
         if (hasShortcut && emojiMatch && emojiMatch.length == 1) {
-            return emojiMatch[0] === text.substring(1) ||
-                emojiMatch[0] === text.substring(2);
+            return emojiMatch[0] === text.substring(1) || emojiMatch[0] === text.substring(2);
         }
     }
     return false;
@@ -153,41 +243,58 @@ export function isQuickReaction(model: EditorModel): boolean {
 interface ISendMessageComposerProps extends MatrixClientProps {
     room: Room;
     placeholder?: string;
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     relation?: IEventRelation;
     replyToEvent?: MatrixEvent;
     disabled?: boolean;
     onChange?(model: EditorModel): void;
+    includeReplyLegacyFallback?: boolean;
+    toggleStickerPickerOpen: () => void;
 }
 
-@replaceableComponent("views.rooms.SendMessageComposer")
 export class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
-    static contextType = RoomContext;
+    public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
     private readonly prepareToEncrypt?: DebouncedFunc<() => void>;
     private readonly editorRef = createRef<BasicMessageComposer>();
-    private model: EditorModel = null;
-    private currentlyComposedEditorState: SerializedPart[] = null;
+    private model: EditorModel;
+    private currentlyComposedEditorState: SerializedPart[] | null = null;
     private dispatcherRef: string;
     private sendHistoryManager: SendHistoryManager;
 
-    constructor(props: ISendMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
-        super(props);
+    public static defaultProps = {
+        includeReplyLegacyFallback: true,
+    };
+
+    public constructor(props: ISendMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
+        super(props, context);
+        this.context = context; // otherwise React will only set it prior to render due to type def above
+
         if (this.props.mxClient.isCryptoEnabled() && this.props.mxClient.isRoomEncrypted(this.props.room.roomId)) {
-            this.prepareToEncrypt = throttle(() => {
-                this.props.mxClient.prepareToEncrypt(this.props.room);
-            }, 60000, { leading: true, trailing: false });
+            this.prepareToEncrypt = throttle(
+                () => {
+                    this.props.mxClient.prepareToEncrypt(this.props.room);
+                },
+                60000,
+                { leading: true, trailing: false },
+            );
         }
 
         window.addEventListener("beforeunload", this.saveStoredEditorState);
+
+        const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
+        const parts = this.restoreStoredEditorState(partCreator) || [];
+        this.model = new EditorModel(parts, partCreator);
+        this.dispatcherRef = dis.register(this.onAction);
+        this.sendHistoryManager = new SendHistoryManager(this.props.room.roomId, "mx_cider_history_");
     }
 
     public componentDidUpdate(prevProps: ISendMessageComposerProps): void {
-        const replyingToThread = this.props.relation?.key === RelationType.Thread;
+        const replyingToThread = this.props.relation?.key === THREAD_RELATION_TYPE.name;
         const differentEventTarget = this.props.relation?.event_id !== prevProps.relation?.event_id;
 
-        const threadChanged = replyingToThread && (differentEventTarget);
+        const threadChanged = replyingToThread && differentEventTarget;
         if (threadChanged) {
             const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
             const parts = this.restoreStoredEditorState(partCreator) || [];
@@ -201,33 +308,44 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         if (this.editorRef.current?.isComposing(event)) {
             return;
         }
-        const replyingToThread = this.props.relation?.key === RelationType.Thread;
+        const replyingToThread = this.props.relation?.key === THREAD_RELATION_TYPE.name;
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
-            case MessageComposerAction.Send:
+            case KeyBindingAction.SendMessage:
                 this.sendMessage();
                 event.preventDefault();
                 break;
-            case MessageComposerAction.SelectPrevSendHistory:
-            case MessageComposerAction.SelectNextSendHistory: {
+            case KeyBindingAction.SelectPrevSendHistory:
+            case KeyBindingAction.SelectNextSendHistory: {
                 // Try select composer history
-                const selected = this.selectSendHistory(action === MessageComposerAction.SelectPrevSendHistory);
+                const selected = this.selectSendHistory(action === KeyBindingAction.SelectPrevSendHistory);
                 if (selected) {
                     // We're selecting history, so prevent the key event from doing anything else
                     event.preventDefault();
                 }
                 break;
             }
-            case MessageComposerAction.EditPrevMessage:
+            case KeyBindingAction.ShowStickerPicker: {
+                if (!SettingsStore.getValue("MessageComposerInput.showStickersButton")) {
+                    return; // Do nothing if there is no Stickers button
+                }
+                this.props.toggleStickerPickerOpen();
+                event.preventDefault();
+                break;
+            }
+            case KeyBindingAction.EditPrevMessage:
                 // selection must be collapsed and caret at start
                 if (this.editorRef.current?.isSelectionCollapsed() && this.editorRef.current?.isCaretAtStart()) {
-                    const events =
-                        this.context.liveTimeline.getEvents()
-                            .concat(replyingToThread ? [] : this.props.room.getPendingEvents());
-                    const editEvent = findEditableEvent({
-                        events,
-                        isForward: false,
-                    });
+                    const events = this.context.liveTimeline
+                        ?.getEvents()
+                        .concat(replyingToThread ? [] : this.props.room.getPendingEvents());
+                    const editEvent = events
+                        ? findEditableEvent({
+                              events,
+                              isForward: false,
+                              matrixClient: MatrixClientPeg.safeGet(),
+                          })
+                        : undefined;
                     if (editEvent) {
                         // We're selecting history, so prevent the key event from doing anything else
                         event.preventDefault();
@@ -239,18 +357,17 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     }
                 }
                 break;
-            case MessageComposerAction.CancelEditing:
-                dis.dispatch({
-                    action: 'reply_to_event',
-                    event: null,
-                    context: this.context.timelineRenderingType,
-                });
-                break;
-            default:
-                if (this.prepareToEncrypt) {
-                    // This needs to be last!
-                    this.prepareToEncrypt();
+            case KeyBindingAction.CancelReplyOrEdit:
+                if (!!this.context.replyToEvent) {
+                    dis.dispatch({
+                        action: "reply_to_event",
+                        event: null,
+                        context: this.context.timelineRenderingType,
+                    });
+                    event.preventDefault();
+                    event.stopPropagation();
                 }
+                break;
         }
     };
 
@@ -265,7 +382,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 return false;
             }
             this.currentlyComposedEditorState = this.model.serializeParts();
-        } else if (this.sendHistoryManager.currentIndex + delta === this.sendHistoryManager.history.length) {
+        } else if (
+            this.currentlyComposedEditorState &&
+            this.sendHistoryManager.currentIndex + delta === this.sendHistoryManager.history.length
+        ) {
             // True when we return to the message being composed currently
             this.model.reset(this.currentlyComposedEditorState);
             this.sendHistoryManager.currentIndex = this.sendHistoryManager.history.length;
@@ -273,7 +393,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
         const { parts, replyEventId } = this.sendHistoryManager.getItem(delta);
         dis.dispatch({
-            action: 'reply_to_event',
+            action: "reply_to_event",
             event: replyEventId ? this.props.room.findEventById(replyEventId) : null,
             context: this.context.timelineRenderingType,
         });
@@ -284,113 +404,43 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         return true;
     }
 
-    private isSlashCommand(): boolean {
-        const parts = this.model.parts;
-        const firstPart = parts[0];
-        if (firstPart) {
-            if (firstPart.type === Type.Command && firstPart.text.startsWith("/") && !firstPart.text.startsWith("//")) {
-                return true;
-            }
-            // be extra resilient when somehow the AutocompleteWrapperModel or
-            // CommandPartCreator fails to insert a command part, so we don't send
-            // a command as a message
-            if (firstPart.text.startsWith("/") && !firstPart.text.startsWith("//")
-                && (firstPart.type === Type.Plain || firstPart.type === Type.PillCandidate)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private sendQuickReaction(): void {
         const timeline = this.context.liveTimeline;
+        if (!timeline) return;
         const events = timeline.getEvents();
         const reaction = this.model.parts[1].text;
         for (let i = events.length - 1; i >= 0; i--) {
             if (events[i].getType() === EventType.RoomMessage) {
                 let shouldReact = true;
                 const lastMessage = events[i];
-                const userId = MatrixClientPeg.get().getUserId();
-                const messageReactions = this.props.room.getUnfilteredTimelineSet()
-                    .getRelationsForEvent(lastMessage.getId(), RelationType.Annotation, EventType.Reaction);
+                const userId = MatrixClientPeg.safeGet().getSafeUserId();
+                const messageReactions = this.props.room.relations.getChildEventsForEvent(
+                    lastMessage.getId()!,
+                    RelationType.Annotation,
+                    EventType.Reaction,
+                );
 
                 // if we have already sent this reaction, don't redact but don't re-send
                 if (messageReactions) {
-                    const myReactionEvents = messageReactions.getAnnotationsBySender()[userId] || [];
+                    const myReactionEvents =
+                        messageReactions.getAnnotationsBySender()?.[userId] || new Set<MatrixEvent>();
                     const myReactionKeys = [...myReactionEvents]
-                        .filter(event => !event.isRedacted())
-                        .map(event => event.getRelation().key);
+                        .filter((event) => !event.isRedacted())
+                        .map((event) => event.getRelation()?.key);
                     shouldReact = !myReactionKeys.includes(reaction);
                 }
                 if (shouldReact) {
-                    MatrixClientPeg.get().sendEvent(lastMessage.getRoomId(), EventType.Reaction, {
+                    MatrixClientPeg.safeGet().sendEvent(lastMessage.getRoomId()!, EventType.Reaction, {
                         "m.relates_to": {
-                            "rel_type": RelationType.Annotation,
-                            "event_id": lastMessage.getId(),
-                            "key": reaction,
+                            rel_type: RelationType.Annotation,
+                            event_id: lastMessage.getId(),
+                            key: reaction,
                         },
                     });
                     dis.dispatch({ action: "message_sent" });
                 }
                 break;
             }
-        }
-    }
-
-    private getSlashCommand(): [Command, string, string] {
-        const commandText = this.model.parts.reduce((text, part) => {
-            // use mxid to textify user pills in a command
-            if (part.type === "user-pill") {
-                return text + part.resourceId;
-            }
-            return text + part.text;
-        }, "");
-        const { cmd, args } = getCommand(commandText);
-        return [cmd, args, commandText];
-    }
-
-    private async runSlashCommand(cmd: Command, args: string): Promise<void> {
-        const threadId = this.props.relation?.rel_type === RelationType.Thread
-            ? this.props.relation?.event_id
-            : null;
-
-        const result = cmd.run(this.props.room.roomId, threadId, args);
-        let messageContent;
-        let error = result.error;
-        if (result.promise) {
-            try {
-                if (cmd.category === CommandCategories.messages) {
-                    // The command returns a modified message that we need to pass on
-                    messageContent = await result.promise;
-                } else {
-                    await result.promise;
-                }
-            } catch (err) {
-                error = err;
-            }
-        }
-        if (error) {
-            logger.error("Command failure: %s", error);
-            // assume the error is a server error when the command is async
-            const isServerError = !!result.promise;
-            const title = isServerError ? _td("Server error") : _td("Command error");
-
-            let errText;
-            if (typeof error === 'string') {
-                errText = error;
-            } else if (error.message) {
-                errText = error.message;
-            } else {
-                errText = _t("Server unavailable, overloaded, or something else went wrong.");
-            }
-
-            Modal.createTrackedDialog(title, '', ErrorDialog, {
-                title: _t(title),
-                description: errText,
-            });
-        } else {
-            logger.log("Command success.");
-            if (messageContent) return messageContent;
         }
     }
 
@@ -401,8 +451,21 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             return;
         }
 
+        const posthogEvent: ComposerEvent = {
+            eventName: "Composer",
+            isEditing: false,
+            isLocation: false,
+            isReply: !!this.props.replyToEvent,
+            inThread: this.props.relation?.rel_type === THREAD_RELATION_TYPE.name,
+        };
+        if (posthogEvent.inThread && this.props.relation!.event_id) {
+            const threadRoot = this.props.room.findEventById(this.props.relation!.event_id);
+            posthogEvent.startsThread = threadRoot?.getThread()?.events.length === 1;
+        }
+        PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
+
         // Replace emoticon at the end of the message
-        if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
+        if (SettingsStore.getValue("MessageComposerInput.autoReplaceEmoji")) {
             const indexOfLastPart = model.parts.length - 1;
             const positionInLastPart = model.parts[indexOfLastPart].text.length;
             this.editorRef.current?.replaceEmoticon(
@@ -413,48 +476,47 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         const replyToEvent = this.props.replyToEvent;
         let shouldSend = true;
-        let content;
+        let content: IContent | null = null;
 
-        if (!containsEmote(model) && this.isSlashCommand()) {
-            const [cmd, args, commandText] = this.getSlashCommand();
+        if (!containsEmote(model) && isSlashCommand(this.model)) {
+            const [cmd, args, commandText] = getSlashCommand(this.model);
             if (cmd) {
-                if (cmd.category === CommandCategories.messages) {
-                    content = await this.runSlashCommand(cmd, args);
-                    if (replyToEvent) {
-                        addReplyToMessageContent(
-                            content,
-                            replyToEvent,
-                            this.props.permalinkCreator,
-                        );
-                    }
+                const threadId =
+                    this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation?.event_id : null;
+
+                let commandSuccessful: boolean;
+                [content, commandSuccessful] = await runSlashCommand(
+                    MatrixClientPeg.safeGet(),
+                    cmd,
+                    args,
+                    this.props.room.roomId,
+                    threadId ?? null,
+                );
+                if (!commandSuccessful) {
+                    return; // errored
+                }
+
+                if (content && [CommandCategories.messages, CommandCategories.effects].includes(cmd.category)) {
+                    // Attach any mentions which might be contained in the command content.
+                    attachMentions(this.props.mxClient.getSafeUserId(), content, model, replyToEvent);
                     attachRelation(content, this.props.relation);
+                    if (replyToEvent) {
+                        addReplyToMessageContent(content, replyToEvent, {
+                            permalinkCreator: this.props.permalinkCreator,
+                            // Exclude the legacy fallback for custom event types such as those used by /fireworks
+                            includeLegacyFallback: content.msgtype?.startsWith("m.") ?? true,
+                        });
+                    }
                 } else {
-                    this.runSlashCommand(cmd, args);
                     shouldSend = false;
                 }
             } else {
-                // ask the user if their unknown command should be sent as a message
-                const { finished } = Modal.createTrackedDialog("Unknown command", "", QuestionDialog, {
-                    title: _t("Unknown Command"),
-                    description: <div>
-                        <p>
-                            { _t("Unrecognised command: %(commandText)s", { commandText }) }
-                        </p>
-                        <p>
-                            { _t("You can use <code>/help</code> to list available commands. " +
-                                "Did you mean to send this as a message?", {}, {
-                                code: t => <code>{ t }</code>,
-                            }) }
-                        </p>
-                        <p>
-                            { _t("Hint: Begin your message with <code>//</code> to start it with a slash.", {}, {
-                                code: t => <code>{ t }</code>,
-                            }) }
-                        </p>
-                    </div>,
-                    button: _t('Send as message'),
+                const sendAnyway = await shouldSendAnyway(commandText);
+                // re-focus the composer after QuestionDialog is closed
+                dis.dispatch({
+                    action: Action.FocusAComposer,
+                    context: this.context.timelineRenderingType,
                 });
-                const [sendAnyway] = await finished;
                 // if !sendAnyway bail to let the user edit the composer and try again
                 if (!sendAnyway) return;
             }
@@ -466,14 +528,15 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
 
         if (shouldSend) {
-            const startTime = CountlyAnalytics.getTimestamp();
             const { roomId } = this.props.room;
             if (!content) {
                 content = createMessageContent(
+                    this.props.mxClient.getSafeUserId(),
                     model,
                     replyToEvent,
                     this.props.relation,
                     this.props.permalinkCreator,
+                    this.props.includeReplyLegacyFallback,
                 );
             }
             // don't bother sending an empty message
@@ -483,37 +546,39 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 decorateStartSendingTime(content);
             }
 
-            const threadId = this.props.relation?.rel_type === RelationType.Thread
-                ? this.props.relation.event_id
-                : null;
+            const threadId =
+                this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation.event_id : null;
 
-            const prom = this.props.mxClient.sendMessage(roomId, threadId, content);
+            const prom = doMaybeLocalRoomAction(
+                roomId,
+                (actualRoomId: string) => this.props.mxClient.sendMessage(actualRoomId, threadId ?? null, content!),
+                this.props.mxClient,
+            );
             if (replyToEvent) {
                 // Clear reply_to_event as we put the message into the queue
                 // if the send fails, retry will handle resending.
                 dis.dispatch({
-                    action: 'reply_to_event',
+                    action: "reply_to_event",
                     event: null,
                     context: this.context.timelineRenderingType,
                 });
             }
             dis.dispatch({ action: "message_sent" });
             CHAT_EFFECTS.forEach((effect) => {
-                if (containsEmoji(content, effect.emojis)) {
+                if (containsEmoji(content!, effect.emojis)) {
                     // For initial threads launch, chat effects are disabled
                     // see #19731
-                    const isNotThread = this.props.relation?.rel_type !== RelationType.Thread;
-                    if (!SettingsStore.getValue("feature_thread") || isNotThread) {
+                    const isNotThread = this.props.relation?.rel_type !== THREAD_RELATION_TYPE.name;
+                    if (isNotThread) {
                         dis.dispatch({ action: `effects.${effect.command}` });
                     }
                 }
             });
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
-                prom.then(resp => {
+                prom.then((resp) => {
                     sendRoundTripMetric(this.props.mxClient, roomId, resp.event_id);
                 });
             }
-            CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, !!replyToEvent, content);
         }
 
         this.sendHistoryManager.save(model, replyToEvent);
@@ -522,7 +587,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         this.editorRef.current?.clearUndoHistory();
         this.editorRef.current?.focus();
         this.clearStoredEditorState();
-        if (SettingsStore.getValue("scrollToBottomOnMessageSent")) {
+        if (shouldSend && SettingsStore.getValue("scrollToBottomOnMessageSent")) {
             dis.dispatch({
                 action: "scroll_to_bottom",
                 timelineRenderingType: this.context.timelineRenderingType,
@@ -530,26 +595,16 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         dis.unregister(this.dispatcherRef);
         window.removeEventListener("beforeunload", this.saveStoredEditorState);
         this.saveStoredEditorState();
     }
 
-    // TODO: [REACT-WARNING] Move this to constructor
-    UNSAFE_componentWillMount() { // eslint-disable-line
-        const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
-        const parts = this.restoreStoredEditorState(partCreator) || [];
-        this.model = new EditorModel(parts, partCreator);
-        this.dispatcherRef = dis.register(this.onAction);
-        this.sendHistoryManager = new SendHistoryManager(this.props.room.roomId, 'mx_cider_history_');
-    }
-
-    private get editorStateKey() {
+    private get editorStateKey(): string {
         let key = `mx_cider_state_${this.props.room.roomId}`;
-        const thread = this.props.replyToEvent?.getThread();
-        if (thread) {
-            key += `_${thread.id}`;
+        if (this.props.relation?.rel_type === THREAD_RELATION_TYPE.name) {
+            key += `_${this.props.relation.event_id}`;
         }
         return key;
     }
@@ -558,8 +613,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         localStorage.removeItem(this.editorStateKey);
     }
 
-    private restoreStoredEditorState(partCreator: PartCreator): Part[] {
-        const replyingToThread = this.props.relation?.key === RelationType.Thread;
+    private restoreStoredEditorState(partCreator: PartCreator): Part[] | null {
+        const replyingToThread = this.props.relation?.key === THREAD_RELATION_TYPE.name;
         if (replyingToThread) {
             return null;
         }
@@ -568,10 +623,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         if (json) {
             try {
                 const { parts: serializedParts, replyEventId } = JSON.parse(json);
-                const parts: Part[] = serializedParts.map(p => partCreator.deserializePart(p));
+                const parts: Part[] = serializedParts.map((p: SerializedPart) => partCreator.deserializePart(p));
                 if (replyEventId) {
                     dis.dispatch({
-                        action: 'reply_to_event',
+                        action: "reply_to_event",
                         event: this.props.room.findEventById(replyEventId),
                         context: this.context.timelineRenderingType,
                     });
@@ -581,6 +636,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 logger.error(e);
             }
         }
+
+        return null;
     }
 
     // should save state when editor has contents or reply is open
@@ -603,7 +660,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         if (this.props.disabled) return;
 
         switch (payload.action) {
-            case 'reply_to_event':
+            case "reply_to_event":
             case Action.FocusSendMessageComposer:
                 if ((payload.context ?? TimelineRenderingType.Room) === this.context.timelineRenderingType) {
                     this.editorRef.current?.focus();
@@ -624,32 +681,92 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
     };
 
-    private onPaste = (event: ClipboardEvent<HTMLDivElement>): boolean => {
-        const { clipboardData } = event;
+    private onPaste = (event: Event | SyntheticEvent, data: DataTransfer): boolean => {
         // Prioritize text on the clipboard over files if RTF is present as Office on macOS puts a bitmap
         // in the clipboard as well as the content being copied. Modern versions of Office seem to not do this anymore.
         // We check text/rtf instead of text/plain as when copy+pasting a file from Finder or Gnome Image Viewer
         // it puts the filename in as text/plain which we want to ignore.
-        if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
+        if (data.files.length && !data.types.includes("text/rtf")) {
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files), this.props.room.roomId, this.props.relation, this.props.mxClient,
+                Array.from(data.files),
+                this.props.room.roomId,
+                this.props.relation,
+                this.props.mxClient,
+                this.context.timelineRenderingType,
             );
             return true; // to skip internal onPaste handler
         }
+
+        // Safari `Insert from iPhone or iPad`
+        // data.getData("text/html") returns a string like: <img src="blob:https://...">
+        if (data.types.includes("text/html")) {
+            const imgElementStr = data.getData("text/html");
+            const parser = new DOMParser();
+            const imgDoc = parser.parseFromString(imgElementStr, "text/html");
+
+            if (
+                imgDoc.getElementsByTagName("img").length !== 1 ||
+                !imgDoc.querySelector("img")?.src.startsWith("blob:") ||
+                imgDoc.childNodes.length !== 1
+            ) {
+                console.log("Failed to handle pasted content as Safari inserted content");
+
+                // Fallback to internal onPaste handler
+                return false;
+            }
+            const imgSrc = imgDoc!.querySelector("img")!.src;
+
+            fetch(imgSrc).then(
+                (response) => {
+                    response.blob().then(
+                        (imgBlob) => {
+                            const type = imgBlob.type;
+                            const safetype = getBlobSafeMimeType(type);
+                            const ext = type.split("/")[1];
+                            const parts = response.url.split("/");
+                            const filename = parts[parts.length - 1];
+                            const file = new File([imgBlob], filename + "." + ext, { type: safetype });
+                            ContentMessages.sharedInstance().sendContentToRoom(
+                                file,
+                                this.props.room.roomId,
+                                this.props.relation,
+                                this.props.mxClient,
+                                this.context.replyToEvent,
+                            );
+                        },
+                        (error) => {
+                            console.log(error);
+                        },
+                    );
+                },
+                (error) => {
+                    console.log(error);
+                },
+            );
+
+            // Skip internal onPaste handler
+            return true;
+        }
+
+        return false;
     };
 
-    private onChange = (): void => {
-        if (this.props.onChange) this.props.onChange(this.model);
+    private onChange = (selection?: Caret, inputType?: string, diff?: IDiff): void => {
+        // We call this in here rather than onKeyDown as that would trip it on global shortcuts e.g. Ctrl-k also
+        if (!!diff) {
+            this.prepareToEncrypt?.();
+        }
+
+        this.props.onChange?.(this.model);
     };
 
     private focusComposer = (): void => {
         this.editorRef.current?.focus();
     };
 
-    render() {
-        const threadId = this.props.relation?.rel_type === RelationType.Thread
-            ? this.props.relation.event_id
-            : null;
+    public render(): React.ReactNode {
+        const threadId =
+            this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation.event_id : undefined;
         return (
             <div className="mx_SendMessageComposer" onClick={this.focusComposer} onKeyDown={this.onKeyDown}>
                 <BasicMessageComposer
