@@ -31,7 +31,7 @@ export enum PowerStatus {
 }
 
 const PowerLabel: Record<PowerStatus, TranslationKey> = {
-    [PowerStatus.Admin]: _td("Admin"),
+    [PowerStatus.Admin]: _td("power_level|admin"),
     [PowerStatus.Moderator]: _td("Mod"),
 };
 
