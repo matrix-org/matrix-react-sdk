@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Room, RoomEvent, RoomMember, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { throttle } from "lodash";
 
@@ -55,25 +55,29 @@ export const useRoomMemberCount = (room: Room, opts: RoomMemberCountOpts = { thr
 
     const { throttleWait } = opts;
 
-    const onMembershipUpdate = useCallback(() => {
+    const updateMembershipCount = useCallback((): void => {
         setCount(room.getJoinedMemberCount());
     }, [room]);
 
-    useTypedEventEmitter(
-        room.currentState,
-        RoomStateEvent.Members,
-        throttle(onMembershipUpdate, throttleWait, { leading: true, trailing: true }),
+    const throttledUpdate = useMemo(
+        () =>
+            throttle(
+                () => {
+                    updateMembershipCount();
+                },
+                throttleWait,
+                { leading: true, trailing: true },
+            ),
+        [throttleWait, updateMembershipCount],
     );
+
+    useTypedEventEmitter(room.currentState, RoomStateEvent.Members, throttledUpdate);
 
     /**
      * `room.getJoinedMemberCount()` caches the member count behind the room summary
      * So we need to re-compute the member count when the summary gets updated
      */
-    useTypedEventEmitter(
-        room,
-        RoomEvent.Summary,
-        throttle(onMembershipUpdate, throttleWait, { leading: true, trailing: true }),
-    );
+    useTypedEventEmitter(room, RoomEvent.Summary, throttledUpdate);
     return count;
 };
 
