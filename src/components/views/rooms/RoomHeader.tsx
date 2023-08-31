@@ -77,8 +77,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const roomName = useRoomName(room);
     const roomTopic = useTopic(room);
 
-    const members = useRoomMembers(room);
-    const memberCount = useRoomMemberCount(room);
+    const members = useRoomMembers(room, 2500);
+    const memberCount = useRoomMemberCount(room, { throttleWait: 2500 });
 
     const { voiceCallDisabledReason, voiceCallType, videoCallDisabledReason, videoCallType } = useRoomCallStatus(room);
 
