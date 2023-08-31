@@ -339,6 +339,33 @@ export default abstract class BasePlatform {
     }
 
     /**
+     * Get a previously stored generic secret.
+     * @param {string} key a unique identifier for this secret.
+     * @returns {string|null} the previously stored secret, or null if no such secret has been stored.
+     */
+    public async getPlatformSecret(key: string): Promise<string | null> {
+        return null;
+    }
+
+    /**
+     * Store a generic secret.
+     * @param {string} key a unique identifier for this secret.
+     * @param {string} value the secret to be stored.
+     * @returns {string|null} the stored secret, or null is could not be stored.
+     */
+    public async savePlatformSecret(key: string, value: string): Promise<string | null> {
+        return null;
+    }
+
+    /**
+     * Delete a generic secret from storage.
+     * @param {string} key a unique identifier for this secret.
+     */
+    public async destroyPlatformSecret(key: string): Promise<void> {
+        return;
+    }
+
+    /**
      * Get a previously stored pickle key.  The pickle key is used for
      * encrypting libolm objects.
      * @param {string} userId the user ID for the user that the pickle key is for.
