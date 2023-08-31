@@ -3064,8 +3064,6 @@
     "Send custom room account data event": "发送自定义房间账户资料事件",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "你的消息未被发送，因为此家服务器已被其管理员屏蔽。请<a>联系你的服务管理员</a>以继续使用服务。",
     "Spell check": "拼写检查",
-    "Find your co-workers": "找到你的同事",
-    "Start your first chat": "开始你的第一个聊天",
     "Enable notifications": "启用通知",
     "Turn on notifications": "打开通知",
     "Your profile": "你的用户资料",
@@ -3078,8 +3076,6 @@
     "Poll type": "投票类型",
     "App Store® and the Apple logo® are trademarks of Apple Inc.": "App Store®和Apple logo®是Apple Inc.的商标",
     "Google Play and the Google Play logo are trademarks of Google LLC.": "Google Play及其logo是Google LLC的商标。",
-    "Community ownership": "社群所有权",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "%(brand)s提供免费的端到端加密消息传递以及无限制的语音和视频通话，是保持联系的绝佳方式。",
     "Don’t miss a reply or important message": "不要错过回复或重要消息",
     "Make sure people know it’s really you": "确保人们知道这真的是你",
     "Find and invite your community members": "发现并邀请你的社群成员",
@@ -3087,19 +3083,12 @@
     "Find and invite your co-workers": "发现并邀请你的同事",
     "Find friends": "发现朋友",
     "Find and invite your friends": "发现并邀请你的朋友",
-    "Find your people": "寻找你的人",
-    "Welcome to %(brand)s": "欢迎来到%(brand)s",
-    "Only %(count)s steps to go": {
-        "other": "仅需%(count)s步",
-        "one": "仅需%(count)s步"
-    },
     "Download %(brand)s": "下载%(brand)s",
     "Download %(brand)s Desktop": "下载%(brand)s桌面版",
     "Download on the App Store": "在App Store下载",
     "Send read receipts": "发送已读回执",
     "Share your activity and status with others.": "与别人分享你的活动和状态。",
     "Your server doesn't support disabling sending read receipts.": "你的服务器不支持禁用发送已读回执。",
-    "Complete these to get the most out of %(brand)s": "完成这些步骤以充分利用%(brand)s",
     "iOS": "iOS",
     "Android": "Android",
     "We're creating a room with %(names)s": "正在创建房间%(names)s",
@@ -3225,8 +3214,6 @@
     "It’s what you’re here for, so lets get to it": "这就是你来这里的目的，所以让我们开始吧",
     "You made it!": "你做到了！",
     "Send custom timeline event": "发送自定义时间线事件",
-    "Secure messaging for work": "用于工作的安全的消息传送",
-    "Secure messaging for friends and family": "和朋友家人安全地收发消息",
     "Create room": "创建房间",
     "Create video room": "创建视频房间",
     "Create a video room": "创建视频房间",
@@ -3314,7 +3301,6 @@
     "Search users in this room…": "搜索该房间内的用户……",
     "Give one or multiple users in this room more privileges": "授权给该房间内的某人或某些人",
     "Add privileged users": "添加特权用户",
-    "You did it!": "你做到了！",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "保持对社区讨论的所有权和控制权。\n可扩展至支持数百万人，具有强大的管理审核功能和互操作性。",
     "Fill screen": "填满屏幕",
     "Get stuff done by finding your teammates": "找到队友，完成任务",
@@ -3589,5 +3575,21 @@
         "short_days_hours_minutes_seconds": "%(days)s天%(hours)s小时%(minutes)s分钟%(seconds)s秒",
         "short_hours_minutes_seconds": "%(hours)s小时%(minutes)s分钟%(seconds)s秒",
         "short_minutes_seconds": "%(minutes)s分钟%(seconds)s秒"
+    },
+    "onboarding": {
+        "personal_messaging_title": "和朋友家人安全地收发消息",
+        "free_e2ee_messaging_unlimited_voip": "%(brand)s提供免费的端到端加密消息传递以及无限制的语音和视频通话，是保持联系的绝佳方式。",
+        "personal_messaging_action": "开始你的第一个聊天",
+        "work_messaging_title": "用于工作的安全的消息传送",
+        "work_messaging_action": "找到你的同事",
+        "community_messaging_title": "社群所有权",
+        "community_messaging_action": "寻找你的人",
+        "welcome_to_brand": "欢迎来到%(brand)s",
+        "only_n_steps_to_go": {
+            "other": "仅需%(count)s步",
+            "one": "仅需%(count)s步"
+        },
+        "you_did_it": "你做到了！",
+        "complete_these": "完成这些步骤以充分利用%(brand)s"
     }
 }

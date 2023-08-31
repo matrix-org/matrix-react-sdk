@@ -3185,21 +3185,7 @@
     "Saved Items": "Uložené položky",
     "Choose a locale": "Zvolte jazyk",
     "Spell check": "Kontrola pravopisu",
-    "Complete these to get the most out of %(brand)s": "Dokončete následující, abyste z %(brand)s získali co nejvíce",
-    "You did it!": "Dokázali jste to!",
-    "Only %(count)s steps to go": {
-        "one": "Zbývá už jen %(count)s krok",
-        "other": "Zbývá už jen %(count)s kroků"
-    },
-    "Welcome to %(brand)s": "Vítejte v aplikaci %(brand)s",
-    "Find your people": "Najděte své lidi",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Zachovejte si vlastnictví a kontrolu nad komunitní diskusí.\nPodpora milionů uživatelů s účinným moderováním a interoperabilitou.",
-    "Community ownership": "Vlastnictví komunity",
-    "Find your co-workers": "Najděte své spolupracovníky",
-    "Secure messaging for work": "Zabezpečené zasílání pracovních zpráv",
-    "Start your first chat": "Začněte svůj první chat",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Díky bezplatným šifrovaným zprávám a neomezeným hlasovým a videohovorům je služba %(brand)s skvělým způsobem, jak zůstat v kontaktu.",
-    "Secure messaging for friends and family": "Zabezpečené zasílání zpráv pro přátele a rodinu",
     "Enable notifications": "Povolit oznámení",
     "Don’t miss a reply or important message": "Nepropásněte odpověď nebo důležitou zprávu",
     "Turn on notifications": "Zapnout oznámení",
@@ -4005,5 +3991,21 @@
         "short_days_hours_minutes_seconds": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
         "short_hours_minutes_seconds": "%(hours)sh %(minutes)sm %(seconds)ss",
         "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Zabezpečené zasílání zpráv pro přátele a rodinu",
+        "free_e2ee_messaging_unlimited_voip": "Díky bezplatným šifrovaným zprávám a neomezeným hlasovým a videohovorům je služba %(brand)s skvělým způsobem, jak zůstat v kontaktu.",
+        "personal_messaging_action": "Začněte svůj první chat",
+        "work_messaging_title": "Zabezpečené zasílání pracovních zpráv",
+        "work_messaging_action": "Najděte své spolupracovníky",
+        "community_messaging_title": "Vlastnictví komunity",
+        "community_messaging_action": "Najděte své lidi",
+        "welcome_to_brand": "Vítejte v aplikaci %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Zbývá už jen %(count)s krok",
+            "other": "Zbývá už jen %(count)s kroků"
+        },
+        "you_did_it": "Dokázali jste to!",
+        "complete_these": "Dokončete následující, abyste z %(brand)s získali co nejvíce"
     }
 }

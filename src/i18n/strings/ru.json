@@ -3158,10 +3158,6 @@
     "Friends and family": "Друзья и семья",
     "Messages in this chat will be end-to-end encrypted.": "Сообщения в этой переписке будут защищены сквозным шифрованием.",
     "Spell check": "Проверка орфографии",
-    "Welcome to %(brand)s": "Добро пожаловать в %(brand)s",
-    "Find your people": "Найдите людей",
-    "Find your co-workers": "Найдите коллег",
-    "Secure messaging for work": "Безопасный обмен сообщениями для работы",
     "Enable notifications": "Включить уведомления",
     "Your profile": "Ваш профиль",
     "Location not available": "Местоположение недоступно",
@@ -3194,7 +3190,6 @@
     "We'll help you get connected.": "Мы поможем вам подключиться.",
     "Join the room to participate": "Присоединяйтесь к комнате для участия",
     "This session is ready for secure messaging.": "Этот сеанс готов к безопасному обмену сообщениями.",
-    "Start your first chat": "Начните свою первую беседу",
     "We're creating a room with %(names)s": "Мы создаем комнату с %(names)s",
     "You can't disable this later. The room will be encrypted but the embedded call will not.": "Вы не сможете отключить это позже. Комната будет зашифрована, а встроенный вызов — нет.",
     "Google Play and the Google Play logo are trademarks of Google LLC.": "Google Play и Логотип Google Play являются торговыми знаками Google LLC.",
@@ -3216,16 +3211,7 @@
     "Verify or sign out from this session for best security and reliability.": "Заверьте или выйдите из этого сеанса для лучшей безопасности и надёжности.",
     "Your server doesn't support disabling sending read receipts.": "Ваш сервер не поддерживает отключение отправки уведомлений о прочтении.",
     "Share your activity and status with others.": "Поделитесь своей активностью и статусом с другими.",
-    "Complete these to get the most out of %(brand)s": "Выполните их, чтобы получить максимальную отдачу от %(brand)s",
-    "You did it!": "Вы сделали это!",
-    "Only %(count)s steps to go": {
-        "one": "Осталось всего %(count)s шагов до конца",
-        "other": "Осталось всего %(count)s шагов"
-    },
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Сохраняйте право над владением и контроль над обсуждением в сообществе.\nМасштабируйте, чтобы поддерживать миллионы, с мощной модерацией и функциональной совместимостью.",
-    "Community ownership": "Владение сообществом",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Благодаря бесплатному сквозному шифрованному обмену сообщениями и неограниченным голосовым и видеозвонкам, %(brand)s это отличный способ оставаться на связи.",
-    "Secure messaging for friends and family": "Безопасный обмен сообщениями для друзей и семьи",
     "Don’t miss a reply or important message": "Не пропустите ответ или важное сообщение",
     "Turn on notifications": "Включить уведомления",
     "Make sure people know it’s really you": "Убедитесь, что люди знают, что это действительно вы",
@@ -3687,5 +3673,21 @@
         "short_days_hours_minutes_seconds": "%(days)s д %(hours)s ч %(minutes)s мин %(seconds)s с",
         "short_hours_minutes_seconds": "%(hours)s ч %(minutes)s мин %(seconds)s с",
         "short_minutes_seconds": "%(minutes)s мин %(seconds)s с"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Безопасный обмен сообщениями для друзей и семьи",
+        "free_e2ee_messaging_unlimited_voip": "Благодаря бесплатному сквозному шифрованному обмену сообщениями и неограниченным голосовым и видеозвонкам, %(brand)s это отличный способ оставаться на связи.",
+        "personal_messaging_action": "Начните свою первую беседу",
+        "work_messaging_title": "Безопасный обмен сообщениями для работы",
+        "work_messaging_action": "Найдите коллег",
+        "community_messaging_title": "Владение сообществом",
+        "community_messaging_action": "Найдите людей",
+        "welcome_to_brand": "Добро пожаловать в %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Осталось всего %(count)s шагов до конца",
+            "other": "Осталось всего %(count)s шагов"
+        },
+        "you_did_it": "Вы сделали это!",
+        "complete_these": "Выполните их, чтобы получить максимальную отдачу от %(brand)s"
     }
 }

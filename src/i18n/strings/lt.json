@@ -2099,21 +2099,7 @@
     "Pin to sidebar": "Prisegti prie šoninės juostos",
     "Developer tools": "Kūrėjo įrankiai",
     "Quick settings": "Greiti nustatymai",
-    "Complete these to get the most out of %(brand)s": "Užbaikite šiuos žingsnius, kad gautumėte daugiausiai iš %(brand)s",
-    "You did it!": "Jums pavyko!",
-    "Only %(count)s steps to go": {
-        "one": "Liko tik %(count)s žingsnis",
-        "other": "Liko tik %(count)s žingsniai"
-    },
-    "Welcome to %(brand)s": "Sveiki atvykę į %(brand)s",
-    "Find your people": "Rasti savo žmones",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Išlaikykite bendruomenės diskusijų nuosavybę ir kontrolę.\nPlėskitės ir palaikykite milijonus žmonių, naudodami galingą moderavimą ir sąveiką.",
-    "Community ownership": "Bendruomenės nuosavybė",
-    "Find your co-workers": "Rasti savo bendradarbius",
-    "Secure messaging for work": "Saugūs pokalbiai darbui",
-    "Start your first chat": "Pradėkite pirmąjį pokalbį",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "%(brand)s - tai puikus būdas palaikyti ryšį: nemokamos visapusiškai šifruotos žinutės ir neriboti balso bei vaizdo skambučiai.",
-    "Secure messaging for friends and family": "Saugūs pokalbiai draugams ir šeimai",
     "Welcome": "Sveiki atvykę",
     "Waiting for you to verify on your other device…": "Laukiame, kol patvirtinsite kitame įrenginyje…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Laukiama, kol patvirtinsite kitame įrenginyje, %(deviceName)s (%(deviceId)s)…",
@@ -2542,5 +2528,21 @@
         "short_hours": "%(value)sval",
         "short_minutes": "%(value)sm",
         "short_seconds": "%(value)ss"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Saugūs pokalbiai draugams ir šeimai",
+        "free_e2ee_messaging_unlimited_voip": "%(brand)s - tai puikus būdas palaikyti ryšį: nemokamos visapusiškai šifruotos žinutės ir neriboti balso bei vaizdo skambučiai.",
+        "personal_messaging_action": "Pradėkite pirmąjį pokalbį",
+        "work_messaging_title": "Saugūs pokalbiai darbui",
+        "work_messaging_action": "Rasti savo bendradarbius",
+        "community_messaging_title": "Bendruomenės nuosavybė",
+        "community_messaging_action": "Rasti savo žmones",
+        "welcome_to_brand": "Sveiki atvykę į %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Liko tik %(count)s žingsnis",
+            "other": "Liko tik %(count)s žingsniai"
+        },
+        "you_did_it": "Jums pavyko!",
+        "complete_these": "Užbaikite šiuos žingsnius, kad gautumėte daugiausiai iš %(brand)s"
     }
 }

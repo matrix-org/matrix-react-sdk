@@ -55,7 +55,7 @@ export function UserOnboardingList({ tasks }: Props): JSX.Element {
                         ? _t("Only %(count)s steps to go", {
                               count: waiting,
                           })
-                        : _t("You did it!")}
+                        : _t("onboarding|you_did_it")}
                 </Heading>
                 <div className="mx_UserOnboardingList_hint">
                     {_t("Complete these to get the most out of %(brand)s", {

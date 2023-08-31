@@ -2907,7 +2907,6 @@
     "Add privileged users": "Thêm người dùng quyền lực",
     "Saving…": "Đang lưu…",
     "Creating…": "Đang tạo…",
-    "Secure messaging for friends and family": "Tin nhắn bảo mật cho bạn bè và gia đình",
     "%(count)s people joined": {
         "one": "%(count)s người đã tham gia",
         "other": "%(count)s người đã tham gia"
@@ -2995,11 +2994,6 @@
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Để bảo mật nhất, hãy xác thực các phiên và đăng xuất khỏi phiên nào bạn không nhận ra hay dùng nữa.",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (Trạng thái HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Lỗi không xác định khi đổi mật khẩu (%(stringifiedError)s)",
-    "You did it!": "Hoàn thành rồi!",
-    "Only %(count)s steps to go": {
-        "one": "Chỉ %(count)s bước nữa thôi",
-        "other": "Chỉ %(count)s bước nữa thôi"
-    },
     "Ignore (%(counter)s)": "Ẩn (%(counter)s)",
     "Developer tools": "Công cụ phát triển",
     "Match system": "Theo hệ thống",
@@ -3029,7 +3023,6 @@
     "View older version of %(spaceName)s.": "Xem phiên bản cũ của %(spaceName)s.",
     "Start %(brand)s calls": "Bắt đầu %(brand)s cuộc gọi",
     "play voice broadcast": "nghe phát thanh",
-    "Find your people": "Tìm người thân",
     "Make sure people know it’s really you": "Đảm bảo mọi người nhận ra bạn",
     "Automatically adjust the microphone volume": "Tự điều chỉnh âm lượng cho micrô",
     "Enable notifications for this account": "Bật thông báo cho tài khoản này",
@@ -3044,7 +3037,6 @@
     "Turn off to disable notifications on all your devices and sessions": "Tắt để vô hiệu thông bao trên tất cả các thiết bị và phiên",
     "Automatically send debug logs on decryption errors": "Tự động gửi nhật ký gỡ lỗi mỗi lúc gặp lỗi khi giải mã",
     "Verify Session": "Xác thực phiên",
-    "Start your first chat": "Bắt đầu cuộc trò chuyện đầu tiên",
     "Sends the given message with hearts": "Gửi tin nhắn cùng với thả tim",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Thông tin tài khoản bạn được quản lý riêng ở <code>%(hostname)s</code>.",
     "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Space là một cách mới để nhóm các phòng và mọi người. Loại space nào bạn muốn tạo? Bạn có thể thay đổi sau.",
@@ -3057,19 +3049,14 @@
     "Go live": "Phát trực tiếp",
     "Don’t miss a reply or important message": "Đừng bỏ lỡ một tin nhắn trả lời hay tin nhắn quan trọng",
     "New room": "Tạo phòng",
-    "Secure messaging for work": "Tin nhắn bảo mật cho công việc",
     "Stop live broadcasting?": "Ngừng phát thanh trực tiếp?",
-    "Welcome to %(brand)s": "Chào mừng bạn tới %(brand)s",
     "Automatically send debug logs when key backup is not functioning": "Tự động gửi nhật ký gỡ lỗi mỗi lúc sao lưu khóa không hoạt động",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Với mã hóa đầu cuối miễn phí, cuộc gọi thoại và truyền hình không giới hạn, %(brand)s là cách tuyệt vời để giữ liên lạc.",
     "Connecting to integration manager…": "Đang kết nối tới quản lý tích hợp…",
     "IRC (Experimental)": "IRC (thử nghiệm)",
     "Unfortunately we're unable to start a recording right now. Please try again later.": "Thật không may là chúng tôi không thể bắt đầu ghi âm. Vui lòng thử lại.",
     "Don’t miss a thing by taking %(brand)s with you": "Không bỏ lỡ gì bằng cách mang %(brand)s bên bạn",
-    "Community ownership": "Làm chủ cộng đồng",
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Ngoài ra, bạn còn có thể thử dùng máy chủ công cộng tại <server/>, nhưng máy chủ này sẽ không đáng tin cậy, sẽ chia sẻ địa chỉ IP của bạn với máy chủ đó. Bạn cũng có thể quản lý ở phần Cài đặt.",
     "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Bạn tìm cách tham gia một phòng bằng định danh (ID) phòng nhưng không cung cấp danh sách các máy chủ để tham gia qua. Định danh phòng là nội bộ và không thể được dùng để tham gia phòng mà không có thông tin thêm.",
-    "Complete these to get the most out of %(brand)s": "Hoàn thành những việc sau để tận dụng tất cả của %(brand)s",
     "Try using %(server)s": "Thử dùng %(server)s",
     "User is not logged in": "Người dùng đang không đăng nhập",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Bạn không thể bắt đầu gọi vì bạn đang ghi âm để cuộc phát thanh trực tiếp. Hãy ngừng phát thanh để bắt đầu gọi.",
@@ -3224,7 +3211,6 @@
     "Something went wrong with your invite.": "Đã xảy ra sự cố với lời mời của bạn.",
     "Remove from space": "Loại bỏ khỏi space",
     "Loading preview": "Đang tải xem trước",
-    "Find your co-workers": "Tìm các đồng nghiệp của bạn",
     "This room or space is not accessible at this time.": "Phòng hoặc space này không thể truy cập được bây giờ.",
     "Currently removing messages in %(count)s rooms": {
         "one": "Hiện đang xóa tin nhắn ở %(count)s phòng",
@@ -3703,5 +3689,21 @@
         "short_days_hours_minutes_seconds": "%(days)s ngày %(hours)s giờ %(minutes)s phút %(seconds)s giây",
         "short_hours_minutes_seconds": "%(hours)s giờ %(minutes)s phút %(seconds)s giây",
         "short_minutes_seconds": "%(minutes)s phút %(seconds)s giây"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Tin nhắn bảo mật cho bạn bè và gia đình",
+        "free_e2ee_messaging_unlimited_voip": "Với mã hóa đầu cuối miễn phí, cuộc gọi thoại và truyền hình không giới hạn, %(brand)s là cách tuyệt vời để giữ liên lạc.",
+        "personal_messaging_action": "Bắt đầu cuộc trò chuyện đầu tiên",
+        "work_messaging_title": "Tin nhắn bảo mật cho công việc",
+        "work_messaging_action": "Tìm các đồng nghiệp của bạn",
+        "community_messaging_title": "Làm chủ cộng đồng",
+        "community_messaging_action": "Tìm người thân",
+        "welcome_to_brand": "Chào mừng bạn tới %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Chỉ %(count)s bước nữa thôi",
+            "other": "Chỉ %(count)s bước nữa thôi"
+        },
+        "you_did_it": "Hoàn thành rồi!",
+        "complete_these": "Hoàn thành những việc sau để tận dụng tất cả của %(brand)s"
     }
 }

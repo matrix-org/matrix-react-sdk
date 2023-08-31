@@ -3209,14 +3209,6 @@
     "Your server doesn't support disabling sending read receipts.": "Tu servidor no permite desactivar los acuses de recibo.",
     "Share your activity and status with others.": "Comparte tu actividad y estado con los demás.",
     "Spell check": "Corrector ortográfico",
-    "Complete these to get the most out of %(brand)s": "Complétalos para sacar el máximo partido a %(brand)s",
-    "You did it!": "¡Ya está!",
-    "Only %(count)s steps to go": {
-        "one": "Solo queda %(count)s paso",
-        "other": "Quedan solo %(count)s pasos"
-    },
-    "Welcome to %(brand)s": "Te damos la bienvenida a %(brand)s",
-    "Secure messaging for friends and family": "Mensajería segura para amigos y familia",
     "Enable notifications": "Activar notificaciones",
     "Don’t miss a reply or important message": "No te pierdas ninguna respuesta ni mensaje importante",
     "Turn on notifications": "Activar notificaciones",
@@ -3246,18 +3238,12 @@
     "Verify or sign out from this session for best security and reliability.": "Verifica o cierra esta sesión, para mayor seguridad y estabilidad.",
     "Verified sessions": "Sesiones verificadas",
     "Inactive for %(inactiveAgeDays)s+ days": "Inactivo durante más de %(inactiveAgeDays)s días",
-    "Find your people": "Encuentra a tus contactos",
-    "Find your co-workers": "Encuentra a tus compañeros",
-    "Secure messaging for work": "Mensajería segura para el trabajo",
-    "Start your first chat": "Empieza tu primera conversación",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Gracias a la mensajería cifrada de extremo a extremo, y a las llamadas de voz y vídeo sin límite, %(brand)s es una buena manera de mantenerte en contacto.",
     "Welcome": "Te damos la bienvenida",
     "Find and invite your co-workers": "Encuentra o invita a tus compañeros",
     "Find friends": "Encontrar amigos",
     "You made it!": "¡Ya está!",
     "Show shortcut to welcome checklist above the room list": "Mostrar un atajo a los pasos de bienvenida encima de la lista de salas",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Mantén el control de las conversaciones.\nCrece hasta tener millones de mensajes, con potente moderación e interoperabilidad.",
-    "Community ownership": "Propiedad de la comunidad",
     "Make sure people know it’s really you": "Asegúrate de que la gente sepa que eres tú de verdad",
     "Find and invite your community members": "Encuentra e invita a las personas de tu comunidad",
     "Get stuff done by finding your teammates": "Empieza a trabajar añadiendo a tus compañeros",
@@ -3806,5 +3792,21 @@
         "short_days_hours_minutes_seconds": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
         "short_hours_minutes_seconds": "%(hours)sh %(minutes)sm %(seconds)ss",
         "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Mensajería segura para amigos y familia",
+        "free_e2ee_messaging_unlimited_voip": "Gracias a la mensajería cifrada de extremo a extremo, y a las llamadas de voz y vídeo sin límite, %(brand)s es una buena manera de mantenerte en contacto.",
+        "personal_messaging_action": "Empieza tu primera conversación",
+        "work_messaging_title": "Mensajería segura para el trabajo",
+        "work_messaging_action": "Encuentra a tus compañeros",
+        "community_messaging_title": "Propiedad de la comunidad",
+        "community_messaging_action": "Encuentra a tus contactos",
+        "welcome_to_brand": "Te damos la bienvenida a %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Solo queda %(count)s paso",
+            "other": "Quedan solo %(count)s pasos"
+        },
+        "you_did_it": "¡Ya está!",
+        "complete_these": "Complétalos para sacar el máximo partido a %(brand)s"
     }
 }

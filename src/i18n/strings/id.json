@@ -3186,8 +3186,6 @@
     "Choose a locale": "Pilih locale",
     "Spell check": "Pemeriksa ejaan",
     "Download %(brand)s": "Unduh %(brand)s",
-    "Complete these to get the most out of %(brand)s": "Selesaikan untuk mendapatkan hasil yang maksimal dari %(brand)s",
-    "Welcome to %(brand)s": "Selamat datang di %(brand)s",
     "We're creating a room with %(names)s": "Kami sedang membuat sebuah ruangan dengan %(names)s",
     "Google Play and the Google Play logo are trademarks of Google LLC.": "Google Play dan logo Google Play adalah merek dagang Google LLC.",
     "App Store® and the Apple logo® are trademarks of Apple Inc.": "App Store® dan logo Apple® adalah merek dagang Apple Inc.",
@@ -3199,19 +3197,7 @@
     "Download %(brand)s Desktop": "Unduh %(brand)s Desktop",
     "Your server doesn't support disabling sending read receipts.": "Server Anda tidak mendukung penonaktifkan pengiriman laporan dibaca.",
     "Share your activity and status with others.": "Bagikan aktivitas dan status Anda dengan orang lain.",
-    "You did it!": "Anda berhasil!",
-    "Only %(count)s steps to go": {
-        "one": "Hanya %(count)s langkah lagi untuk dilalui",
-        "other": "Hanya %(count)s langkah lagi untuk dilalui"
-    },
-    "Find your people": "Temukan orang-orang Anda",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Tetap miliki kemilikan dan kendali atas diskusi komunitas.\nBesar untuk mendukung jutaan anggota, dengan moderasi dan interoperabilitas berdaya.",
-    "Community ownership": "Kemilikan komunitas",
-    "Find your co-workers": "Temukan rekan kerja Anda",
-    "Secure messaging for work": "Perpesanan aman untuk berkerja",
-    "Start your first chat": "Mulai obrolan pertama Anda",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Dengan perpesanan terenkripsi ujung ke ujung gratis, dan panggilan suara & video tidak terbatas, %(brand)s adalah cara yang baik untuk tetap terhubung.",
-    "Secure messaging for friends and family": "Perpesanan aman untuk teman dan keluarga",
     "Enable notifications": "Nyalakan notifikasi",
     "Don’t miss a reply or important message": "Jangan lewatkan sebuah balasan atau pesan yang penting",
     "Turn on notifications": "Nyalakan notifikasi",
@@ -4005,5 +3991,21 @@
         "short_days_hours_minutes_seconds": "%(days)sh %(hours)sj %(minutes)sm %(seconds)sd",
         "short_hours_minutes_seconds": "%(hours)sj %(minutes)sm %(seconds)sd",
         "short_minutes_seconds": "%(minutes)sm %(seconds)sd"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Perpesanan aman untuk teman dan keluarga",
+        "free_e2ee_messaging_unlimited_voip": "Dengan perpesanan terenkripsi ujung ke ujung gratis, dan panggilan suara & video tidak terbatas, %(brand)s adalah cara yang baik untuk tetap terhubung.",
+        "personal_messaging_action": "Mulai obrolan pertama Anda",
+        "work_messaging_title": "Perpesanan aman untuk berkerja",
+        "work_messaging_action": "Temukan rekan kerja Anda",
+        "community_messaging_title": "Kemilikan komunitas",
+        "community_messaging_action": "Temukan orang-orang Anda",
+        "welcome_to_brand": "Selamat datang di %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Hanya %(count)s langkah lagi untuk dilalui",
+            "other": "Hanya %(count)s langkah lagi untuk dilalui"
+        },
+        "you_did_it": "Anda berhasil!",
+        "complete_these": "Selesaikan untuk mendapatkan hasil yang maksimal dari %(brand)s"
     }
 }

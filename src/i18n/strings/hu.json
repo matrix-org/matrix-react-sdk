@@ -3182,20 +3182,7 @@
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Fejlesztői parancs: Eldobja a jelenlegi kimenő csoport kapcsolatot és új Olm munkamenetet hoz létre",
     "Send your first message to invite <displayName/> to chat": "Küldj egy üzenetet ahhoz, hogy meghívd <displayName/> felhasználót",
     "Messages in this chat will be end-to-end encrypted.": "Az üzenetek ebben a beszélgetésben végponti titkosítással vannak védve.",
-    "You did it!": "Kész!",
-    "Only %(count)s steps to go": {
-        "one": "Még %(count)s lépés",
-        "other": "Még %(count)s lépés"
-    },
-    "Welcome to %(brand)s": "Üdvözli a(z) %(brand)s",
-    "Find your people": "Találja meg az embereket",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Tartsa meg a közösségi beszélgetések feletti irányítást.\nAkár milliók támogatásával, hatékony moderációs és együttműködési lehetőségekkel.",
-    "Community ownership": "Közösségi tulajdon",
-    "Find your co-workers": "Találja meg a munkatársait",
-    "Secure messaging for work": "Biztonságos üzenetküldés munkához",
-    "Start your first chat": "Kezdje el az első csevegését",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Az ingyenes, végpontok közti titkosítással rendelkező üzenetküldéssel, a korlátlan hang- és videóhívással, a(z) %(brand)s használata nagyszerű módja a kapcsolattartásnak.",
-    "Secure messaging for friends and family": "Biztonságos üzenetküldés barátokkal, családdal",
     "Enable notifications": "Értesítések bekapcsolása",
     "Don’t miss a reply or important message": "Ne maradjon le a válaszról vagy egy fontos üzenetről",
     "Turn on notifications": "Értesítések bekapcsolása",
@@ -3230,7 +3217,6 @@
     "Your server doesn't support disabling sending read receipts.": "A kiszolgálója nem támogatja az olvasási visszajelzések elküldésének kikapcsolását.",
     "Share your activity and status with others.": "Ossza meg a tevékenységét és állapotát másokkal.",
     "Spell check": "Helyesírás-ellenőrzés",
-    "Complete these to get the most out of %(brand)s": "Ezen lépések befejezésével hozhatja ki a legtöbbet a(z) %(brand)s használatából",
     "Unverified": "Ellenőrizetlen",
     "Verified": "Ellenőrizve",
     "Inactive for %(inactiveAgeDays)s+ days": "Utolsó használat %(inactiveAgeDays)s+ napja",
@@ -3904,5 +3890,21 @@
         "short_days_hours_minutes_seconds": "%(days)s n %(hours)s ó %(minutes)s p %(seconds)s mp",
         "short_hours_minutes_seconds": "%(hours)s ó %(minutes)s p %(seconds)s mp",
         "short_minutes_seconds": "%(minutes)s p %(seconds)s mp"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Biztonságos üzenetküldés barátokkal, családdal",
+        "free_e2ee_messaging_unlimited_voip": "Az ingyenes, végpontok közti titkosítással rendelkező üzenetküldéssel, a korlátlan hang- és videóhívással, a(z) %(brand)s használata nagyszerű módja a kapcsolattartásnak.",
+        "personal_messaging_action": "Kezdje el az első csevegését",
+        "work_messaging_title": "Biztonságos üzenetküldés munkához",
+        "work_messaging_action": "Találja meg a munkatársait",
+        "community_messaging_title": "Közösségi tulajdon",
+        "community_messaging_action": "Találja meg az embereket",
+        "welcome_to_brand": "Üdvözli a(z) %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Még %(count)s lépés",
+            "other": "Még %(count)s lépés"
+        },
+        "you_did_it": "Kész!",
+        "complete_these": "Ezen lépések befejezésével hozhatja ki a legtöbbet a(z) %(brand)s használatából"
     }
 }

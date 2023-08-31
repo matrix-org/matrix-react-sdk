@@ -1071,21 +1071,7 @@
     "They match": "They match",
     "To be secure, do this in person or use a trusted way to communicate.": "To be secure, do this in person or use a trusted way to communicate.",
     "Welcome": "Welcome",
-    "Secure messaging for friends and family": "Secure messaging for friends and family",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.",
-    "Start your first chat": "Start your first chat",
-    "Secure messaging for work": "Secure messaging for work",
-    "Find your co-workers": "Find your co-workers",
-    "Community ownership": "Community ownership",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.",
-    "Find your people": "Find your people",
-    "Welcome to %(brand)s": "Welcome to %(brand)s",
-    "Only %(count)s steps to go": {
-        "other": "Only %(count)s steps to go",
-        "one": "Only %(count)s step to go"
-    },
-    "You did it!": "You did it!",
-    "Complete these to get the most out of %(brand)s": "Complete these to get the most out of %(brand)s",
     "Your server isn't responding to some <a>requests</a>.": "Your server isn't responding to some <a>requests</a>.",
     "%(deviceId)s from %(ip)s": "%(deviceId)s from %(ip)s",
     "Ignore (%(counter)s)": "Ignore (%(counter)s)",
@@ -3651,5 +3637,21 @@
     "Activate selected button": "Activate selected button",
     "New line": "New line",
     "Force complete": "Force complete",
-    "Search (must be enabled)": "Search (must be enabled)"
+    "Search (must be enabled)": "Search (must be enabled)",
+    "onboarding": {
+        "personal_messaging_title": "Secure messaging for friends and family",
+        "free_e2ee_messaging_unlimited_voip": "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.",
+        "personal_messaging_action": "Start your first chat",
+        "work_messaging_title": "Secure messaging for work",
+        "work_messaging_action": "Find your co-workers",
+        "community_messaging_title": "Community ownership",
+        "community_messaging_action": "Find your people",
+        "welcome_to_brand": "Welcome to %(brand)s",
+        "only_n_steps_to_go": {
+            "other": "Only %(count)s steps to go",
+            "one": "Only %(count)s step to go"
+        },
+        "you_did_it": "You did it!",
+        "complete_these": "Complete these to get the most out of %(brand)s"
+    }
 }

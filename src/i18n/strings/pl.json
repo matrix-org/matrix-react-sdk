@@ -2030,19 +2030,6 @@
     "Pin to sidebar": "Przypnij do paska bocznego",
     "Developer tools": "Ustawienia deweloperskie",
     "Quick settings": "Szybkie ustawienia",
-    "Complete these to get the most out of %(brand)s": "Wykonaj je, aby jak najlepiej wykorzystać %(brand)s",
-    "You did it!": "Udało ci się!",
-    "Only %(count)s steps to go": {
-        "one": "Jeszcze tylko %(count)s krok",
-        "other": "Jeszcze tylko %(count)s kroki"
-    },
-    "Welcome to %(brand)s": "Witaj w %(brand)s",
-    "Find your people": "Znajdź swoich ludzi",
-    "Find your co-workers": "Znajdź swoich współpracowników",
-    "Secure messaging for work": "Bezpieczna komunikacja w pracy",
-    "Start your first chat": "Zacznij swoją pierwszą rozmowę",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Za pomocą darmowych wiadomości szyfrowanych end-to-end i nielimitowanymi rozmowami głosowymi i wideo, %(brand)s jest świetnym sposobem, aby pozostać w kontakcie.",
-    "Secure messaging for friends and family": "Bezpieczna komunikacja dla znajomych i rodziny",
     "Welcome": "Witaj",
     "Waiting for you to verify on your other device…": "Oczekiwanie na zweryfikowanie przez ciebie twojego innego urządzenia…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Oczekiwanie na zweryfikowanie przez ciebie twojego innego urządzenia, %(deviceName)s (%(deviceId)s)…",
@@ -2408,7 +2395,6 @@
     "Add privileged users": "Dodaj użytkowników uprzywilejowanych",
     "Ignore (%(counter)s)": "Ignoruj (%(counter)s)",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Zatrzymaj własność i kontroluj dyskusję społeczności.\nRozwijaj się, aby wspierać miliony za pomocą potężnych narzędzi moderatorskich i interoperacyjnością.",
-    "Community ownership": "Własność społeczności",
     "Go to Home View": "Przejdź do widoku Strony głównej",
     "Space home": "Przestrzeń główna",
     "About homeservers": "O serwerach domowych",
@@ -3982,5 +3968,21 @@
         "short_days_hours_minutes_seconds": "%(days)sd %(hours)s godz. %(minutes)s min. %(seconds)ss",
         "short_hours_minutes_seconds": "%(hours)s godz. %(minutes)s min. %(seconds)ss",
         "short_minutes_seconds": "%(minutes)s min. %(seconds)ss"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Bezpieczna komunikacja dla znajomych i rodziny",
+        "free_e2ee_messaging_unlimited_voip": "Za pomocą darmowych wiadomości szyfrowanych end-to-end i nielimitowanymi rozmowami głosowymi i wideo, %(brand)s jest świetnym sposobem, aby pozostać w kontakcie.",
+        "personal_messaging_action": "Zacznij swoją pierwszą rozmowę",
+        "work_messaging_title": "Bezpieczna komunikacja w pracy",
+        "work_messaging_action": "Znajdź swoich współpracowników",
+        "community_messaging_title": "Własność społeczności",
+        "community_messaging_action": "Znajdź swoich ludzi",
+        "welcome_to_brand": "Witaj w %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Jeszcze tylko %(count)s krok",
+            "other": "Jeszcze tylko %(count)s kroki"
+        },
+        "you_did_it": "Udało ci się!",
+        "complete_these": "Wykonaj je, aby jak najlepiej wykorzystać %(brand)s"
     }
 }

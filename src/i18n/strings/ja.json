@@ -3098,9 +3098,6 @@
     "Your firewall or anti-virus is blocking the request.": "ファイアーウォールまたはアンチウイルスソフトがリクエストをブロックしています。",
     "We're creating a room with %(names)s": "%(names)sという名前のルームを作成しています",
     "Enable notifications for this account": "このアカウントで通知を有効にする",
-    "Welcome to %(brand)s": "%(brand)sにようこそ",
-    "Find your co-workers": "同僚を見つける",
-    "Start your first chat": "最初のチャットを始めましょう",
     "%(count)s people joined": {
         "one": "%(count)s人が参加しました",
         "other": "%(count)s人が参加しました"
@@ -3187,7 +3184,6 @@
     "Hide details": "詳細を非表示にする",
     "Security recommendations": "セキュリティーに関する勧告",
     "Unverified session": "未認証のセッション",
-    "Community ownership": "コミュニティーの手に",
     "Text": "テキスト",
     "Freedom": "自由",
     "%(count)s sessions selected": {
@@ -3263,14 +3259,6 @@
     "An error occurred whilst sharing your live location": "位置情報（ライブ）を共有している際にエラーが発生しました",
     "An error occurred while stopping your live location": "位置情報（ライブ）を停止する際にエラーが発生しました",
     "Leaving the beta will reload %(brand)s.": "ベータ版を終了すると%(brand)sをリロードします。",
-    "Only %(count)s steps to go": {
-        "one": "あと%(count)sつのステップです",
-        "other": "あと%(count)sつのステップです"
-    },
-    "You did it!": "完了しました！",
-    "Find your people": "知人を見つける",
-    "Secure messaging for work": "仕事で安全なメッセージングを",
-    "Secure messaging for friends and family": "友達や家族と安全なメッセージングを",
     "Failed to set direct message tag": "ダイレクトメッセージのタグの設定に失敗しました",
     "Download %(brand)s Desktop": "%(brand)sデスクトップをダウンロード",
     "Online community members": "オンラインコミュニティーのメンバー",
@@ -3367,8 +3355,6 @@
     "It’s what you’re here for, so lets get to it": "友達を見つけて、チャットを開始しましょう",
     "Don’t miss a thing by taking %(brand)s with you": "%(brand)sを持ち歩いて、情報を見逃さないようにしましょう",
     "Get stuff done by finding your teammates": "同僚を見つけて、仕事を片付けましょう",
-    "Complete these to get the most out of %(brand)s": "以下を完了し、%(brand)sを最大限に活用しましょう",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "自由なエンドツーエンド暗号化のメッセージのやり取りと音声・ビデオ通話で、%(brand)sは連絡を取るのに最適な手段です。",
     "Decrypted source unavailable": "復号化したソースコードが利用できません",
     "Thread root ID: %(threadRootId)s": "スレッドのルートID：%(threadRootId)s",
     "Reset your password": "パスワードを再設定",
@@ -3800,5 +3786,21 @@
         "short_days_hours_minutes_seconds": "%(days)s日%(hours)s時%(minutes)s分%(seconds)s秒",
         "short_hours_minutes_seconds": "%(hours)s時%(minutes)s分%(seconds)s秒",
         "short_minutes_seconds": "%(minutes)s分%(seconds)s秒"
+    },
+    "onboarding": {
+        "personal_messaging_title": "友達や家族と安全なメッセージングを",
+        "free_e2ee_messaging_unlimited_voip": "自由なエンドツーエンド暗号化のメッセージのやり取りと音声・ビデオ通話で、%(brand)sは連絡を取るのに最適な手段です。",
+        "personal_messaging_action": "最初のチャットを始めましょう",
+        "work_messaging_title": "仕事で安全なメッセージングを",
+        "work_messaging_action": "同僚を見つける",
+        "community_messaging_title": "コミュニティーの手に",
+        "community_messaging_action": "知人を見つける",
+        "welcome_to_brand": "%(brand)sにようこそ",
+        "only_n_steps_to_go": {
+            "one": "あと%(count)sつのステップです",
+            "other": "あと%(count)sつのステップです"
+        },
+        "you_did_it": "完了しました！",
+        "complete_these": "以下を完了し、%(brand)sを最大限に活用しましょう"
     }
 }

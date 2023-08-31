@@ -3185,21 +3185,7 @@
     "Saved Items": "Збережені елементи",
     "Choose a locale": "Вибрати локаль",
     "Spell check": "Перевірка правопису",
-    "Complete these to get the most out of %(brand)s": "Виконайте їх, щоб отримати максимальну віддачу від %(brand)s",
-    "You did it!": "Ви це зробили!",
-    "Only %(count)s steps to go": {
-        "one": "Лише %(count)s крок для налаштування",
-        "other": "Лише %(count)s кроків для налаштування"
-    },
-    "Welcome to %(brand)s": "Вітаємо в %(brand)s",
-    "Find your people": "Знайдіть своїх людей",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Зберігайте право власності та контроль над обговоренням спільноти.\nМасштабуйте для підтримки мільйонів завдяки потужній модерації та сумісності.",
-    "Community ownership": "Громадська власність",
-    "Find your co-workers": "Знайдіть своїх колег",
-    "Secure messaging for work": "Безпечний обмін повідомленнями для роботи",
-    "Start your first chat": "Розпочніть свою першу бесіду",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Завдяки безплатному обміну повідомленнями з наскрізним шифруванням і необмеженим голосовим і відеовикликами, %(brand)s — це чудовий спосіб залишатися на зв’язку.",
-    "Secure messaging for friends and family": "Безпечний обмін повідомленнями з друзями та родиною",
     "Enable notifications": "Увімкнути сповіщення",
     "Don’t miss a reply or important message": "Не пропустіть відповідь або важливе повідомлення",
     "Turn on notifications": "Увімкніть сповіщення",
@@ -4000,5 +3986,21 @@
         "short_days_hours_minutes_seconds": "%(days)sд %(hours)sгод %(minutes)sхв %(seconds)sс",
         "short_hours_minutes_seconds": "%(hours)sгод %(minutes)sхв %(seconds)sс",
         "short_minutes_seconds": "%(minutes)sхв %(seconds)sс"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Безпечний обмін повідомленнями з друзями та родиною",
+        "free_e2ee_messaging_unlimited_voip": "Завдяки безплатному обміну повідомленнями з наскрізним шифруванням і необмеженим голосовим і відеовикликами, %(brand)s — це чудовий спосіб залишатися на зв’язку.",
+        "personal_messaging_action": "Розпочніть свою першу бесіду",
+        "work_messaging_title": "Безпечний обмін повідомленнями для роботи",
+        "work_messaging_action": "Знайдіть своїх колег",
+        "community_messaging_title": "Громадська власність",
+        "community_messaging_action": "Знайдіть своїх людей",
+        "welcome_to_brand": "Вітаємо в %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Лише %(count)s крок для налаштування",
+            "other": "Лише %(count)s кроків для налаштування"
+        },
+        "you_did_it": "Ви це зробили!",
+        "complete_these": "Виконайте їх, щоб отримати максимальну віддачу від %(brand)s"
     }
 }

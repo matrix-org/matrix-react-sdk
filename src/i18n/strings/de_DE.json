@@ -3181,17 +3181,6 @@
     "Other sessions": "Andere Sitzungen",
     "Sessions": "Sitzungen",
     "Spell check": "Rechtschreibprüfung",
-    "Complete these to get the most out of %(brand)s": "Vervollständige sie für die beste %(brand)s-Erfahrung",
-    "You did it!": "Geschafft!",
-    "Only %(count)s steps to go": {
-        "one": "Nur noch %(count)s Schritt",
-        "other": "Nur noch %(count)s Schritte"
-    },
-    "Welcome to %(brand)s": "Willkommen bei %(brand)s",
-    "Find your co-workers": "Finde deine Kollegen",
-    "Secure messaging for work": "Sichere Kommunikation für die Arbeit",
-    "Start your first chat": "Beginne eine Unterhaltung",
-    "Secure messaging for friends and family": "Sichere Kommunikation für Freunde und Familie",
     "Welcome": "Willkommen",
     "Enable notifications": "Benachrichtigungen aktivieren",
     "Turn on notifications": "Benachrichtigungen einschalten",
@@ -3240,7 +3229,6 @@
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Falls du den Zugriff auf deinen Nachrichtenverlauf behalten willst, richte die Schlüsselsicherung ein oder exportiere deine Verschlüsselungsschlüssel von einem deiner Geräte bevor du weiter machst.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Das Abmelden deines Geräts wird die Verschlüsselungsschlüssel löschen, woraufhin verschlüsselte Nachrichtenverläufe nicht mehr lesbar sein werden.",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Tipp:</b> Nutze “%(replyInThread)s” beim Schweben über eine Nachricht.",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Dank freien, Ende-zu-Ende verschlüsselter Kommunikation und unbegrenzten Sprach- und Videoanrufen ist %(brand)s eine großartige Möglichkeit, um in Kontakt zu bleiben.",
     "Don’t miss a reply or important message": "Verpasse keine Antworten oder wichtigen Nachrichten",
     "Make sure people know it’s really you": "Lass andere wissen, dass du es wirklich bist",
     "Don’t miss a thing by taking %(brand)s with you": "Nimm %(brand)s mit, um nichts mehr zu verpassen",
@@ -3258,11 +3246,9 @@
     "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Für besonders sichere Kommunikation verifiziere deine Sitzungen oder melde dich von ihnen ab, falls du sie nicht mehr identifizieren kannst.",
     "Verify or sign out from this session for best security and reliability.": "Für bestmögliche Sicherheit und Zuverlässigkeit verifiziere diese Sitzung oder melde sie ab.",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Verfüge und behalte die Kontrolle über Gespräche deiner Gemeinschaft.\nSkalierbar für Millionen von Nutzenden, mit mächtigen Moderationswerkzeugen und Interoperabilität.",
-    "Community ownership": "In gemeinschaftlicher Hand",
     "Join the room to participate": "Betrete den Raum, um teilzunehmen",
     "Show shortcut to welcome checklist above the room list": "Verknüpfung zu ersten Schritten (Willkommen) anzeigen",
     "Find people": "Finde Personen",
-    "Find your people": "Finde deine Leute",
     "It’s what you’re here for, so lets get to it": "Dafür bist du hier, also dann mal los",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Verschlüsselung ist für öffentliche Räume nicht empfohlen.</b> Jeder kann öffentliche Räume finden und betreten, also kann auch jeder die Nachrichten lesen. Du wirst keine der Vorteile von Verschlüsselung erhalten und kannst sie später auch nicht mehr deaktivieren. Nachrichten in öffentlichen Räumen zu verschlüsseln, wird das empfangen und senden verlangsamen.",
     "Empty room (was %(oldName)s)": "Leerer Raum (war %(oldName)s)",
@@ -4005,5 +3991,21 @@
         "short_days_hours_minutes_seconds": "%(days)s d %(hours)s h %(minutes)s m %(seconds)s s",
         "short_hours_minutes_seconds": "%(hours)s h %(minutes)s m %(seconds)s s",
         "short_minutes_seconds": "%(minutes)s m %(seconds)s s"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Sichere Kommunikation für Freunde und Familie",
+        "free_e2ee_messaging_unlimited_voip": "Dank freien, Ende-zu-Ende verschlüsselter Kommunikation und unbegrenzten Sprach- und Videoanrufen ist %(brand)s eine großartige Möglichkeit, um in Kontakt zu bleiben.",
+        "personal_messaging_action": "Beginne eine Unterhaltung",
+        "work_messaging_title": "Sichere Kommunikation für die Arbeit",
+        "work_messaging_action": "Finde deine Kollegen",
+        "community_messaging_title": "In gemeinschaftlicher Hand",
+        "community_messaging_action": "Finde deine Leute",
+        "welcome_to_brand": "Willkommen bei %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Nur noch %(count)s Schritt",
+            "other": "Nur noch %(count)s Schritte"
+        },
+        "you_did_it": "Geschafft!",
+        "complete_these": "Vervollständige sie für die beste %(brand)s-Erfahrung"
     }
 }

@@ -1711,7 +1711,6 @@
     "Search for spaces": "Meklēt vietas",
     "Recently viewed": "Nesen skatītie",
     "Who will you chat to the most?": "Ar ko jūs sarakstīsieties visvairāk?",
-    "Start your first chat": "Sāciet savu pirmo čatu",
     "Start new chat": "Uzsākt jaunu čatu",
     "Start a group chat": "Uzsākt grupas čatu",
     "Send your first message to invite <displayName/> to chat": "Nosūtiet savu pirmo ziņu, lai uzaicinātu <displayName/> uz čatu",
@@ -1849,5 +1848,8 @@
     },
     "time": {
         "seconds_left": "%(seconds)s sekundes atlikušas"
+    },
+    "onboarding": {
+        "personal_messaging_action": "Sāciet savu pirmo čatu"
     }
 }

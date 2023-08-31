@@ -2885,7 +2885,6 @@
     "Share your activity and status with others.": "Deila virkni og stöðu þinni með öðrum.",
     "Deactivating your account is a permanent action — be careful!": "Að gera aðganginn þinn óvirkan er endanleg aðgerð - farðu varlega!",
     "Your password was successfully changed.": "Það tókst að breyta lykilorðinu þínu.",
-    "Welcome to %(brand)s": "Velkomin í %(brand)s",
     "Welcome": "Velkomin/n",
     "Find and invite your friends": "Finndu og bjóddu vinum þínum",
     "You made it!": "Þú hafðir það!",
@@ -2991,7 +2990,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessari spjallrás, verður ómögulegt að ná aftur stjórn á henni.",
     "Select the roles required to change various parts of the room": "Veldu þau hlutverk sem krafist er til að breyta ýmsum þáttum spjallrásarinnar",
     "Enable notifications for this account": "Virkja tilkynningar fyrir þennan notandaaðgang",
-    "Secure messaging for friends and family": "Örugg skilaboð fyrir vini og fjölskyldu",
     "Requires compatible homeserver.": "Krefst samhæfðs heimaþjóns.",
     "Noise suppression": "Truflanabæling",
     "Echo cancellation": "Útrýming bergmáls",
@@ -3059,16 +3057,6 @@
     "Video settings": "Myndstillingar",
     "Voice settings": "Raddstillingar",
     "Search users in this room…": "Leita að notendum á þessari spjallrás…",
-    "Complete these to get the most out of %(brand)s": "Kláraðu þetta til að fá sem mest út úr %(brand)s",
-    "You did it!": "Þú kláraðir þetta!",
-    "Only %(count)s steps to go": {
-        "one": "Aðeins %(count)s skref í viðbót",
-        "other": "Aðeins %(count)s skref í viðbót"
-    },
-    "Find your people": "Finndu fólkið þitt",
-    "Find your co-workers": "Finndu samstarfsaðilana þína",
-    "Secure messaging for work": "Örugg skilaboð í vinnunni",
-    "Start your first chat": "Byrjaðu fyrsta spjallið þitt",
     "Fill screen": "Fylla skjá",
     "Low bandwidth mode": "Hamur fyrir litla bandbreidd",
     "Automatic gain control": "Sjálfvirk stýring styrkaukningar",
@@ -3144,7 +3132,6 @@
     "Enable notifications for this device": "Virkja tilkynningar á þessu tæki",
     "Give one or multiple users in this room more privileges": "Gefðu einum eða fleiri notendum á þessari spjallrás auknar heimildir",
     "Add privileged users": "Bæta við notendum með auknar heimildir",
-    "Community ownership": "Samfélagslegt eignarhald",
     "Don’t miss a reply or important message": "Ekki missa af svari eða áríðandi skilaboðum",
     "Don’t miss a thing by taking %(brand)s with you": "Ekki missa af neinu og taktu %(brand)s með þér",
     "Find and invite your community members": "Finndu og bjóddu meðlimum í samfélaginu þínu",
@@ -3389,5 +3376,20 @@
         "short_days_hours_minutes_seconds": "%(days)sd %(hours)sk %(minutes)sm %(seconds)ss",
         "short_hours_minutes_seconds": "%(hours)sk %(minutes)sm %(seconds)ss",
         "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Örugg skilaboð fyrir vini og fjölskyldu",
+        "personal_messaging_action": "Byrjaðu fyrsta spjallið þitt",
+        "work_messaging_title": "Örugg skilaboð í vinnunni",
+        "work_messaging_action": "Finndu samstarfsaðilana þína",
+        "community_messaging_title": "Samfélagslegt eignarhald",
+        "community_messaging_action": "Finndu fólkið þitt",
+        "welcome_to_brand": "Velkomin í %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Aðeins %(count)s skref í viðbót",
+            "other": "Aðeins %(count)s skref í viðbót"
+        },
+        "you_did_it": "Þú kláraðir þetta!",
+        "complete_these": "Kláraðu þetta til að fá sem mest út úr %(brand)s"
     }
 }

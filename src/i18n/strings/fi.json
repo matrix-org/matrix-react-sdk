@@ -3012,17 +3012,6 @@
     "Enable notifications for this device": "Ota ilmoitukset käyttöön tälle laitteelle",
     "Turn off to disable notifications on all your devices and sessions": "Poista käytöstä, niin kaikkien laitteiden ja istuntojen ilmoitukset ovat pois päältä",
     "Enable notifications for this account": "Ota ilmoitukset käyttöön tälle tilille",
-    "Only %(count)s steps to go": {
-        "one": "Vain %(count)s vaihe jäljellä",
-        "other": "Vain %(count)s vaihetta jäljellä"
-    },
-    "Welcome to %(brand)s": "Tervetuloa, tämä on %(brand)s",
-    "Find your people": "Löydä ihmiset",
-    "Community ownership": "Yhteisön omistajuus",
-    "Find your co-workers": "Löydä työkaverisi",
-    "Secure messaging for work": "Turvallista viestintää työelämään",
-    "Start your first chat": "Aloita ensimmäinen keskustelu",
-    "Secure messaging for friends and family": "Turvallista viestintää kavereiden ja perheen kanssa",
     "Welcome": "Tervetuloa",
     "Enable notifications": "Käytä ilmoituksia",
     "Don’t miss a reply or important message": "Älä anna vastauksen tai tärkeän viestin jäädä huomiotta",
@@ -3242,8 +3231,6 @@
     },
     "Your current session is ready for secure messaging.": "Nykyinen istuntosi on valmis turvalliseen viestintään.",
     "Sign out of all other sessions (%(otherSessionsCount)s)": "Kirjaudu ulos kaikista muista istunnoista (%(otherSessionsCount)s)",
-    "You did it!": "Teit sen!",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Ilmaisen päästä päähän -salauksen sekä rajoittamattomien ääni- ja videopuhelujen myötä %(brand)s on oiva tapa pysyä yhteydessä.",
     "%(senderName)s ended a voice broadcast": "%(senderName)s lopetti äänen yleislähetyksen",
     "You ended a voice broadcast": "Lopetit äänen yleislähetyksen",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s lopetti <a>äänen yleislähetyksen</a>",
@@ -3599,5 +3586,20 @@
         "short_days_hours_minutes_seconds": "%(days)s pv %(hours)s t %(minutes)s min %(seconds)s s",
         "short_hours_minutes_seconds": "%(hours)s t %(minutes)s min %(seconds)s s",
         "short_minutes_seconds": "%(minutes)s min %(seconds)s s"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Turvallista viestintää kavereiden ja perheen kanssa",
+        "free_e2ee_messaging_unlimited_voip": "Ilmaisen päästä päähän -salauksen sekä rajoittamattomien ääni- ja videopuhelujen myötä %(brand)s on oiva tapa pysyä yhteydessä.",
+        "personal_messaging_action": "Aloita ensimmäinen keskustelu",
+        "work_messaging_title": "Turvallista viestintää työelämään",
+        "work_messaging_action": "Löydä työkaverisi",
+        "community_messaging_title": "Yhteisön omistajuus",
+        "community_messaging_action": "Löydä ihmiset",
+        "welcome_to_brand": "Tervetuloa, tämä on %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Vain %(count)s vaihe jäljellä",
+            "other": "Vain %(count)s vaihetta jäljellä"
+        },
+        "you_did_it": "Teit sen!"
     }
 }

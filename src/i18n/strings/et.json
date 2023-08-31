@@ -3182,23 +3182,9 @@
     "Choose a locale": "Vali lokaat",
     "Saved Items": "Salvestatud failid",
     "Spell check": "Õigekirja kontroll",
-    "Find your people": "Leia oma kaasteelisi",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Halda ja kontrolli suhtlust oma kogukonnas.\nSobib ka miljonitele kasutajatele ning võimaldab mitmekesist modereerimist kui liidestust.",
-    "Community ownership": "Kogukonnad, mida te ise haldate",
-    "Find your co-workers": "Leia oma kolleege",
-    "Secure messaging for work": "Turvalised sõnumid töökeskkonna jaoks",
-    "Start your first chat": "Alusta oma esimest vestlust",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "%(brand)s on parim viis suhtluseks - siin on tasuta läbiv krüptimine kui piiramatult heli- ja videokõnesid.",
-    "Secure messaging for friends and family": "Turvaline suhtlus pere ja sõprade jaoks",
     "It’s what you’re here for, so lets get to it": "Selleks sa oled ju siin, alustame siis nüüd",
-    "Welcome to %(brand)s": "Tere tulemast %(brand)s'i kasutajaks",
-    "Complete these to get the most out of %(brand)s": "Kasutamaks kõiki %(brand)s'i võimalusi tee läbi alljärgnev",
     "You're in": "Kõik on tehtud",
-    "You did it!": "Valmis!",
-    "Only %(count)s steps to go": {
-        "one": "Ainult %(count)s samm veel",
-        "other": "Ainult %(count)s sammu veel"
-    },
     "Enable notifications": "Võta teavitused kasutusele",
     "Don’t miss a reply or important message": "Ära jäta vahele vastuseid ega olulisi sõnumeid",
     "Turn on notifications": "Lülita seadistused välja",
@@ -4000,5 +3986,21 @@
         "short_days_hours_minutes_seconds": "%(days)s pv %(hours)s t %(minutes)s m %(seconds)s s",
         "short_hours_minutes_seconds": "%(hours)s t %(minutes)s m %(seconds)s s",
         "short_minutes_seconds": "%(minutes)s m %(seconds)s s"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Turvaline suhtlus pere ja sõprade jaoks",
+        "free_e2ee_messaging_unlimited_voip": "%(brand)s on parim viis suhtluseks - siin on tasuta läbiv krüptimine kui piiramatult heli- ja videokõnesid.",
+        "personal_messaging_action": "Alusta oma esimest vestlust",
+        "work_messaging_title": "Turvalised sõnumid töökeskkonna jaoks",
+        "work_messaging_action": "Leia oma kolleege",
+        "community_messaging_title": "Kogukonnad, mida te ise haldate",
+        "community_messaging_action": "Leia oma kaasteelisi",
+        "welcome_to_brand": "Tere tulemast %(brand)s'i kasutajaks",
+        "only_n_steps_to_go": {
+            "one": "Ainult %(count)s samm veel",
+            "other": "Ainult %(count)s sammu veel"
+        },
+        "you_did_it": "Valmis!",
+        "complete_these": "Kasutamaks kõiki %(brand)s'i võimalusi tee läbi alljärgnev"
     }
 }

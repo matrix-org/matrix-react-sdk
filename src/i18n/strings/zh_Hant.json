@@ -3185,21 +3185,7 @@
     "Saved Items": "已儲存的項目",
     "Choose a locale": "選擇語系",
     "Spell check": "拼字檢查",
-    "Complete these to get the most out of %(brand)s": "完成這些步驟以充分利用 %(brand)s",
-    "You did it!": "您做到了！",
-    "Only %(count)s steps to go": {
-        "one": "僅需 %(count)s 步",
-        "other": "僅需 %(count)s 步"
-    },
-    "Welcome to %(brand)s": "歡迎使用 %(brand)s",
-    "Find your people": "尋找您的夥伴",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "保持對社群討論的所有權與控制權。\n具有強大的審核工具與互操作性，可擴充至支援數百萬人。",
-    "Community ownership": "社群所有權",
-    "Find your co-workers": "尋找您的同事",
-    "Secure messaging for work": "工作用的安全通訊",
-    "Start your first chat": "開始您的第一個聊天",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "%(brand)s 提供免費的端對端加密通訊，以及無限制的語音及視訊通話，是維持聯絡的絕佳方式。",
-    "Secure messaging for friends and family": "為朋友與家人提供的安全訊息",
     "Enable notifications": "啟用通知",
     "Don’t miss a reply or important message": "不要錯過回覆或重要訊息",
     "Turn on notifications": "開啟通知",
@@ -4000,5 +3986,21 @@
         "short_days_hours_minutes_seconds": "%(days)s 天 %(hours)s 小時 %(minutes)s 分鐘 %(seconds)s 秒",
         "short_hours_minutes_seconds": "%(hours)s 小時 %(minutes)s 分鐘 %(seconds)s 秒",
         "short_minutes_seconds": "%(minutes)s 分鐘 %(seconds)s 秒"
+    },
+    "onboarding": {
+        "personal_messaging_title": "為朋友與家人提供的安全訊息",
+        "free_e2ee_messaging_unlimited_voip": "%(brand)s 提供免費的端對端加密通訊，以及無限制的語音及視訊通話，是維持聯絡的絕佳方式。",
+        "personal_messaging_action": "開始您的第一個聊天",
+        "work_messaging_title": "工作用的安全通訊",
+        "work_messaging_action": "尋找您的同事",
+        "community_messaging_title": "社群所有權",
+        "community_messaging_action": "尋找您的夥伴",
+        "welcome_to_brand": "歡迎使用 %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "僅需 %(count)s 步",
+            "other": "僅需 %(count)s 步"
+        },
+        "you_did_it": "您做到了！",
+        "complete_these": "完成這些步驟以充分利用 %(brand)s"
     }
 }

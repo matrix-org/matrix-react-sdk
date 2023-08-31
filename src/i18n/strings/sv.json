@@ -3241,7 +3241,6 @@
     "When enabled, the other party might be able to see your IP address": "När aktiverat så kan den andra parten kanske se din IP-adress",
     "Allow Peer-to-Peer for 1:1 calls": "Tillåt peer-to-peer för direktsamtal",
     "Go live": "Börja sända",
-    "Secure messaging for friends and family": "Säkra meddelanden för vänner och familj",
     "Change input device": "Byt ingångsenhet",
     "30s forward": "30s framåt",
     "30s backward": "30s bakåt",
@@ -3270,20 +3269,7 @@
     "Search users in this room…": "Sök efter användare i det här rummet…",
     "Give one or multiple users in this room more privileges": "Ge en eller flera användare i det här rummet fler privilegier",
     "Add privileged users": "Lägg till privilegierade användare",
-    "Complete these to get the most out of %(brand)s": "Gör dessa för att få ut så mycket som möjligt av %(brand)s",
-    "You did it!": "Du klarade det!",
-    "Only %(count)s steps to go": {
-        "one": "Bara %(count)s steg kvar",
-        "other": "Bara %(count)s steg kvar"
-    },
-    "Welcome to %(brand)s": "Välkommen till %(brand)s",
-    "Find your people": "Hitta ditt folk",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Håll ägandeskap och kontroll över gemenskapsdiskussioner.\nSkala för att stöda miljoner, med kraftfull moderering och interoperabilitet.",
-    "Community ownership": "Ägandeskap i gemenskap",
-    "Find your co-workers": "Hitta dina medarbetare",
-    "Secure messaging for work": "Säkra meddelanden för jobbet",
-    "Start your first chat": "Starta din första chatt",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Med gratis totalsträckskrypterade meddelanden och obegränsade röst och videosamtal så är %(brand)s ett jättebra sätt att hålla kontakten.",
     "Requires compatible homeserver.": "Kräver kompatibel hemserver.",
     "Low bandwidth mode": "Lågt bandbreddsläge",
     "You have unverified sessions": "Du har overifierade sessioner",
@@ -3940,5 +3926,21 @@
         "short_days_hours_minutes_seconds": "%(days)sd %(hours)st %(minutes)sm %(seconds)ss",
         "short_hours_minutes_seconds": "%(hours)st %(minutes)sm %(seconds)ss",
         "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Säkra meddelanden för vänner och familj",
+        "free_e2ee_messaging_unlimited_voip": "Med gratis totalsträckskrypterade meddelanden och obegränsade röst och videosamtal så är %(brand)s ett jättebra sätt att hålla kontakten.",
+        "personal_messaging_action": "Starta din första chatt",
+        "work_messaging_title": "Säkra meddelanden för jobbet",
+        "work_messaging_action": "Hitta dina medarbetare",
+        "community_messaging_title": "Ägandeskap i gemenskap",
+        "community_messaging_action": "Hitta ditt folk",
+        "welcome_to_brand": "Välkommen till %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Bara %(count)s steg kvar",
+            "other": "Bara %(count)s steg kvar"
+        },
+        "you_did_it": "Du klarade det!",
+        "complete_these": "Gör dessa för att få ut så mycket som möjligt av %(brand)s"
     }
 }

@@ -3186,7 +3186,6 @@
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Nuk rekomandohet të shtohet fshehtëzim në dhoma publike.</b>Dhomat publike mund t’i gjejë dhe hyjë në to kushdo, pra cilido të mund të lexojë mesazhet në to. S’do të përfitoni asnjë nga të mirat e fshehtëzimit dhe s’do të jeni në gjendje ta çaktivizoni më vonë. Fshehtëzimi i mesazheve në një dhomë publike do të ngadalësojë marrjen dhe dërgimin e mesazheve.",
     "Start %(brand)s calls": "Nisni thirrje %(brand)s",
     "Enable notifications for this device": "Aktivizo njoftime për këtë pajisje",
-    "Community ownership": "Pronësi e bashkësisë",
     "Fill screen": "Mbushe ekranin",
     "Download apps": "Shkarko aplikacione",
     "Download %(brand)s": "Shkarko %(brand)s",
@@ -3204,10 +3203,6 @@
         "other": "%(user)s dhe %(count)s të tjerë"
     },
     "%(user1)s and %(user2)s": "%(user1)s dhe %(user2)s",
-    "Only %(count)s steps to go": {
-        "one": "Vetëm %(count)s hap për t’u bërë",
-        "other": "Vetëm %(count)s hapa për t’u bërë"
-    },
     "play voice broadcast": "luaj transmetim zanor",
     "Waiting for device to sign in": "Po pritet që të bëhet hyrja te pajisja",
     "Review and approve the sign in": "Shqyrtoni dhe miratojeni hyrjen",
@@ -3299,13 +3294,6 @@
     "Other sessions": "Sesione të tjerë",
     "Sessions": "Sesione",
     "Enable notifications for this account": "Aktivizo njoftime për këtë llogari",
-    "You did it!": "Ia dolët!",
-    "Welcome to %(brand)s": "Mirë se vini te %(brand)s",
-    "Find your people": "Gjeni njerëzit tuaj",
-    "Find your co-workers": "Gjeni kolegë tuajt",
-    "Secure messaging for work": "Shkëmbim i sigurt mesazhesh për në punë",
-    "Start your first chat": "Filloni fjalosjen tuaj të parë",
-    "Secure messaging for friends and family": "Shkëmbim i sigurt mesazhesh për shokë dhe familje",
     "Welcome": "Mirë se vini",
     "Enable notifications": "Aktivizo njoftimet",
     "Turn on notifications": "Aktivizo njoftimet",
@@ -3364,9 +3352,7 @@
     "Your server doesn't support disabling sending read receipts.": "Shërbyesi juaj nuk mbulon çaktivizimin e dërgimit të dëftesave të leximit.",
     "Share your activity and status with others.": "Ndani me të tjerët veprimtarinë dhe gjendjen tuaj.",
     "Turn off to disable notifications on all your devices and sessions": "Mbylleni që të çaktivizohen njoftimet në krejt pajisjet dhe sesionet tuaja",
-    "Complete these to get the most out of %(brand)s": "Plotësoni këto, që të përfitoni maksimumin prej %(brand)s",
     "Keep ownership and control of community discussion.\nScale to support millions, with powerful moderation and interoperability.": "Ruani pronësinë dhe kontrollin e diskutimit në bashkësi.\nPërshkallëzojeni për të mbuluar miliona, me moderim dhe ndërveprueshmëri të fuqishme.",
-    "With free end-to-end encrypted messaging, and unlimited voice and video calls, %(brand)s is a great way to stay in touch.": "Me shkëmbim mesazhesh të fshehtëzuar skaj-më-skaj dhe thirrje pa kufi me zë dhe video, %(brand)s është një rrugë e fuqishme për të mbajtur lidhjet.",
     "Don’t miss a reply or important message": "Mos humbni përgjigje apo mesazh të rëndësishëm",
     "Make sure people know it’s really you": "Bëni të mundur që njerëzit ta dinë se vërtet jeni ju",
     "Don’t miss a thing by taking %(brand)s with you": "Mos humbni asgjë, duke e marrë %(brand)s-in me vete",
@@ -3893,5 +3879,21 @@
         "short_days_hours_minutes_seconds": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
         "short_hours_minutes_seconds": "%(hours)sh %(minutes)sm %(seconds)ss",
         "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
+    },
+    "onboarding": {
+        "personal_messaging_title": "Shkëmbim i sigurt mesazhesh për shokë dhe familje",
+        "free_e2ee_messaging_unlimited_voip": "Me shkëmbim mesazhesh të fshehtëzuar skaj-më-skaj dhe thirrje pa kufi me zë dhe video, %(brand)s është një rrugë e fuqishme për të mbajtur lidhjet.",
+        "personal_messaging_action": "Filloni fjalosjen tuaj të parë",
+        "work_messaging_title": "Shkëmbim i sigurt mesazhesh për në punë",
+        "work_messaging_action": "Gjeni kolegë tuajt",
+        "community_messaging_title": "Pronësi e bashkësisë",
+        "community_messaging_action": "Gjeni njerëzit tuaj",
+        "welcome_to_brand": "Mirë se vini te %(brand)s",
+        "only_n_steps_to_go": {
+            "one": "Vetëm %(count)s hap për t’u bërë",
+            "other": "Vetëm %(count)s hapa për t’u bërë"
+        },
+        "you_did_it": "Ia dolët!",
+        "complete_these": "Plotësoni këto, që të përfitoni maksimumin prej %(brand)s"
     }
 }
