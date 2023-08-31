@@ -23,8 +23,12 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import EventTileBubble from "./EventTileBubble";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import DMRoomMap from "../../../utils/DMRoomMap";
+import { CardContext } from "../right_panel/context";
 import { objectHasDiff } from "../../../utils/objects";
 import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
+import AccessibleButton from "../elements/AccessibleButton";
+import dis from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -40,21 +44,46 @@ const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp
 
     const prevContent = mxEvent.getPrevContent() as IRoomEncryption;
     const content = mxEvent.getContent<IRoomEncryption>();
+    const card = useContext(CardContext);
 
     // if no change happened then skip rendering this, a shallow check is enough as all known fields are top-level.
     if (!objectHasDiff(prevContent, content)) return null; // nop
 
     if (content.algorithm === ALGORITHM && isRoomEncrypted) {
-        let subtitle: string;
+        let subtitle: React.ReactNode | string;
         const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
         const room = cli?.getRoom(roomId);
         if (prevContent.algorithm === ALGORITHM) {
             subtitle = _t("Some encryption parameters have been changed.");
         } else if (dmPartner) {
-            const displayName = room?.getMember(dmPartner)?.rawDisplayName || dmPartner;
+            console.log("dmPartner is", dmPartner);
+            const dmPartnerRoomMember = room?.getMember(dmPartner);
+            console.log("dmPartnerRoomMember is", dmPartnerRoomMember);
+            const displayName = dmPartnerRoomMember?.rawDisplayName || dmPartner;
+            const profileLinkOnClick = () => {
+                if (!dmPartnerRoomMember) {
+                    // We were unable to fetch membership info for the other user in this DM. Do nothing.
+                    return;
+                }
+
+                // Display the other user's profile information.
+                dis.dispatch({
+                    action: Action.ViewUser,
+                    member: dmPartnerRoomMember,
+                    push: card.isCard,
+                });
+            };
+
             subtitle = _t(
-                "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.",
+                "Messages here are end-to-end encrypted. Verify %(displayName)s in <a>their profile</a>.",
                 { displayName },
+                {
+                    a: (sub) => (
+                        <AccessibleButton kind="link_inline" onClick={profileLinkOnClick}>
+                            {sub}
+                        </AccessibleButton>
+                    )
+                }
             );
         } else if (room && isLocalRoom(room)) {
             subtitle = _t("Messages in this chat will be end-to-end encrypted.");
