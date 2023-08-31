@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Body as BodyText, IconButton } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
@@ -31,7 +31,7 @@ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { useTopic } from "../../../hooks/room/useTopic";
 import { Flex } from "../../utils/Flex";
 import { Box } from "../../utils/Box";
-import { PlatformCallType, useRoomCallStatus } from "../../../hooks/room/useRoomCallStatus";
+import { useRoomCallStatus } from "../../../hooks/room/useRoomCallStatus";
 import { useRoomThreadNotifications } from "../../../hooks/room/useRoomThreadNotifications";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
@@ -78,13 +78,6 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
         return SdkConfig.get("element_call").use_exclusively && groupCallsEnabled;
     }, [groupCallsEnabled]);
 
-    const makeCall = useCallback(
-        (callType: CallType, platformCallType: PlatformCallType) => {
-            placeCall(room, callType, platformCallType);
-        },
-        [room],
-    );
-
     const threadNotifications = useRoomThreadNotifications(room);
     const globalNotificationState = useGlobalNotificationState();
 
@@ -125,8 +118,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     <IconButton
                         disabled={!!voiceCallDisabledReason}
                         title={!voiceCallDisabledReason ? _t("Voice call") : voiceCallDisabledReason!}
-                        onClick={async () => {
-                            makeCall(CallType.Voice, voiceCallType);
+                        onClick={() => {
+                            placeCall(room, CallType.Voice, voiceCallType);
                         }}
                     >
                         <VoiceCallIcon />
@@ -136,7 +129,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     disabled={!!videoCallDisabledReason}
                     title={!videoCallDisabledReason ? _t("Video call") : videoCallDisabledReason!}
                     onClick={() => {
-                        makeCall(CallType.Video, videoCallType);
+                        placeCall(room, CallType.Video, videoCallType);
                     }}
                 >
                     <VideoCallIcon />
