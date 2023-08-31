@@ -1753,12 +1753,12 @@
         "dark": "Tumša",
         "attachment": "Pielikums",
         "appearance": "Izskats",
+        "timeline": "Laika skala",
+        "microphone": "Mikrofons",
         "guest": "Viesis",
         "faq": "BUJ",
-        "timeline": "Laika skala",
-        "camera": "Kamera",
-        "microphone": "Mikrofons",
-        "emoji": "Emocijzīmes"
+        "emoji": "Emocijzīmes",
+        "camera": "Kamera"
     },
     "action": {
         "continue": "Turpināt",
