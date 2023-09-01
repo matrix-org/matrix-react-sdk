@@ -324,7 +324,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "useOnlyCurrentProfiles": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show current profile picture and name for users in message history"),
+        displayName: _td("settings|disable_historical_profile"),
         default: false,
     },
     "mjolnirRooms": {
@@ -497,7 +497,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "MessageComposerInput.showStickersButton": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show stickers button"),
+        displayName: _td("settings|show_stickers_button"),
         default: true,
         controller: new UIFeatureController(UIFeature.Widgets, false),
     },
@@ -508,7 +508,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "MessageComposerInput.insertTrailingColon": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Insert a trailing colon after user mentions at the start of a message"),
+        displayName: _td("settings|insert_trailing_colon_mentions"),
         default: true,
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
@@ -560,31 +560,31 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "showRedactions": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td("Show a placeholder for removed messages"),
+        displayName: _td("settings|show_redaction_placeholder"),
         default: true,
         invertedSettingName: "hideRedactions",
     },
     "showJoinLeaves": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td("Show join/leave messages (invites/removes/bans unaffected)"),
+        displayName: _td("settings|show_join_leave"),
         default: true,
         invertedSettingName: "hideJoinLeaves",
     },
     "showAvatarChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td("Show profile picture changes"),
+        displayName: _td("settings|show_avatar_changes"),
         default: true,
         invertedSettingName: "hideAvatarChanges",
     },
     "showDisplaynameChanges": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td("Show display name changes"),
+        displayName: _td("settings|show_displayname_changes"),
         default: true,
         invertedSettingName: "hideDisplaynameChanges",
     },
     "showReadReceipts": {
         supportedLevels: LEVELS_ROOM_SETTINGS,
-        displayName: _td("Show read receipts sent by other users"),
+        displayName: _td("settings|show_read_receipts"),
         default: true,
         invertedSettingName: "hideReadReceipts",
     },
@@ -600,32 +600,32 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "autoplayGifs": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Autoplay GIFs"),
+        displayName: _td("settings|autoplay_gifs"),
         default: false,
     },
     "autoplayVideo": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Autoplay videos"),
+        displayName: _td("settings|autoplay_videos"),
         default: false,
     },
     "enableSyntaxHighlightLanguageDetection": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Enable automatic language detection for syntax highlighting"),
+        displayName: _td("settings|automatic_language_detection_syntax_highlight"),
         default: false,
     },
     "expandCodeByDefault": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Expand code blocks by default"),
+        displayName: _td("settings|code_block_expand_default"),
         default: false,
     },
     "showCodeLineNumbers": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show line numbers in code blocks"),
+        displayName: _td("settings|code_block_line_numbers"),
         default: true,
     },
     "scrollToBottomOnMessageSent": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Jump to the bottom of the timeline when you send a message"),
+        displayName: _td("settings|jump_to_bottom_on_send"),
         default: true,
     },
     "Pill.shouldShowPillAvatar": {
@@ -636,7 +636,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "TextualBody.enableBigEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Enable big emoji in chat"),
+        displayName: _td("settings|big_emoji"),
         default: true,
         invertedSettingName: "TextualBody.disableBigEmoji",
     },
@@ -656,7 +656,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "showTypingNotifications": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show typing notifications"),
+        displayName: _td("settings|show_typing_notifications"),
         default: true,
     },
     "ctrlFForSearch": {
@@ -684,12 +684,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "MessageComposerInput.useMarkdown": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("settings|enable_markdown"),
-        description: () =>
-            _t(
-                "Start messages with <code>/plain</code> to send without markdown.",
-                {},
-                { code: (sub) => <code>{sub}</code> },
-            ),
+        description: () => _t("settings|enable_markdown_description", {}, { code: (sub) => <code>{sub}</code> }),
         default: true,
     },
     "VideoView.flipVideoHorizontally": {
@@ -778,7 +773,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "SpotlightSearch.showNsfwPublicRooms": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show NSFW content"),
+        displayName: _td("settings|show_nsfw_content"),
         default: false,
     },
     "room_directory_servers": {
@@ -842,7 +837,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "urlPreviewsEnabled": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
         displayName: {
-            "default": _td("Enable inline URL previews by default"),
+            "default": _td("settings|inline_url_previews_default"),
             "room-account": _td("Enable URL previews for this room (only affects you)"),
             "room": _td("Enable URL previews by default for participants in this room"),
         },
@@ -886,7 +881,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "promptBeforeInviteUnknownUsers": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Prompt before sending invites to potentially invalid matrix IDs"),
+        displayName: _td("settings|prompt_invite"),
         default: true,
     },
     "widgetOpenIDPermissions": {
@@ -929,7 +924,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "showImages": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show previews/thumbnails for images"),
+        displayName: _td("settings|image_thumbnails"),
         default: true,
     },
     "RightPanel.phasesGlobal": {
@@ -987,7 +982,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "showChatEffects": {
         supportedLevels: LEVELS_ROOM_SETTINGS_WITH_ROOM,
-        displayName: _td("Show chat effects (animations when receiving e.g. confetti)"),
+        displayName: _td("settings|show_chat_effects"),
         default: true,
         controller: new ReducedMotionController(),
     },
@@ -1005,7 +1000,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: {},
     },
     "Spaces.allRoomsInHome": {
-        displayName: _td("Show all rooms in Home"),
+        displayName: _td("settings|all_rooms_home"),
         description: _td("settings|all_rooms_home_description"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
@@ -1149,12 +1144,12 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     // We store them over there are they are necessary to know before the renderer process launches.
     "Electron.autoLaunch": {
         supportedLevels: [SettingLevel.PLATFORM],
-        displayName: _td("Start automatically after system login"),
+        displayName: _td("settings|start_automatically"),
         default: false,
     },
     "Electron.warnBeforeExit": {
         supportedLevels: [SettingLevel.PLATFORM],
-        displayName: _td("Warn before quitting"),
+        displayName: _td("settings|warn_quit"),
         default: true,
     },
     "Electron.alwaysShowMenuBar": {

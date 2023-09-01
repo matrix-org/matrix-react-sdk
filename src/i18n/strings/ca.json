@@ -94,8 +94,6 @@
     "Your browser does not support the required cryptography extensions": "El vostre navegador no és compatible amb els complements criptogràfics necessaris",
     "Not a valid %(brand)s keyfile": "El fitxer no és un fitxer de claus de %(brand)s vàlid",
     "Authentication check failed: incorrect password?": "Ha fallat l'autenticació: heu introduït correctament la contrasenya?",
-    "Enable automatic language detection for syntax highlighting": "Activa la detecció automàtica d'idiomes per al ressaltat de sintaxi",
-    "Enable inline URL previews by default": "Activa per defecte la vista prèvia d'URL en línia",
     "Enable URL previews for this room (only affects you)": "Activa la vista prèvia d'URL d'aquesta sala (no afecta altres usuaris)",
     "Enable URL previews by default for participants in this room": "Activa per defecte la vista prèvia d'URL per als participants d'aquesta sala",
     "Incorrect verification code": "El codi de verificació és incorrecte",
@@ -464,9 +462,6 @@
     "Avoid years that are associated with you": "Eviteu anys que es puguin relacionar amb vós",
     "Avoid dates and years that are associated with you": "Eviteu dates i anys que estiguin associats amb vós",
     "Please contact your homeserver administrator.": "Si us plau contacteu amb l'administrador del vostre homeserver.",
-    "Show display name changes": "Mostra els canvis de nom",
-    "Show read receipts sent by other users": "Mostra les confirmacions de lectura enviades pels altres usuaris",
-    "Enable big emoji in chat": "Activa Emojis grans en xats",
     "Send analytics data": "Envia dades d'anàlisi",
     "Email addresses": "Adreces de correu electrònic",
     "Phone numbers": "Números de telèfon",
@@ -673,6 +668,11 @@
         "always_show_message_timestamps": "Mostra sempre la marca de temps del missatge",
         "send_typing_notifications": "Envia notificacions d'escriptura",
         "replace_plain_emoji": "Substitueix automàticament Emoji de text pla",
-        "emoji_autocomplete": "Habilita els suggeriments d'Emojis mentre escric"
+        "emoji_autocomplete": "Habilita els suggeriments d'Emojis mentre escric",
+        "automatic_language_detection_syntax_highlight": "Activa la detecció automàtica d'idiomes per al ressaltat de sintaxi",
+        "inline_url_previews_default": "Activa per defecte la vista prèvia d'URL en línia",
+        "show_read_receipts": "Mostra les confirmacions de lectura enviades pels altres usuaris",
+        "show_displayname_changes": "Mostra els canvis de nom",
+        "big_emoji": "Activa Emojis grans en xats"
     }
 }

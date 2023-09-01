@@ -190,7 +190,6 @@
     "Online": "Online",
     "Idle": "Ocioso",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este processo faz com que você possa importar as chaves de criptografia que tinha previamente exportado de outro cliente Matrix. Você poderá então descriptografar todas as mensagens que o outro cliente pôde criptografar.",
-    "Start automatically after system login": "Iniciar automaticamente ao iniciar o sistema",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será levado agora a um site de terceiros para poder autenticar a sua conta para uso com o serviço %(integrationsUrl)s. Você quer continuar?",
     "Incorrect username and/or password.": "Nome de utilizador e/ou palavra-passe incorreta.",
     "Invited": "Convidada(o)",
@@ -232,7 +231,6 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s não está acessível neste momento.",
     "Delete widget": "Apagar widget",
     "Define the power level of a user": "Definir o nível de privilégios de um utilizador",
-    "Enable automatic language detection for syntax highlighting": "Ativar deteção automática da linguagem para realce da sintaxe",
     "Publish this room to the public in %(domain)s's room directory?": "Publicar esta sala ao público no diretório de salas de %(domain)s's?",
     "AM": "AM",
     "PM": "PM",
@@ -784,6 +782,8 @@
     "settings": {
         "use_12_hour_format": "Mostrar os horários em formato de 12h (p.ex: 2:30pm)",
         "always_show_message_timestamps": "Sempre mostrar as datas das mensagens",
-        "replace_plain_emoji": "Substituir Emoji de texto automaticamente"
+        "replace_plain_emoji": "Substituir Emoji de texto automaticamente",
+        "automatic_language_detection_syntax_highlight": "Ativar deteção automática da linguagem para realce da sintaxe",
+        "start_automatically": "Iniciar automaticamente ao iniciar o sistema"
     }
 }
