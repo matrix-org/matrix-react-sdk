@@ -3528,5 +3528,6 @@
         "hardware_acceleration": "Activar aceleración por hardware (reiniciar %(appName)s para aplicar)",
         "start_automatically": "Iniciar automaticamente despois de iniciar sesión",
         "warn_quit": "Aviso antes de saír"
-    }
+    },
+    "Download %(brand)s": "Descargar %(brand)s"
 }

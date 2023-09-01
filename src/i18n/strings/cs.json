@@ -4011,5 +4011,6 @@
         "hardware_acceleration": "Povolit hardwarovou akceleraci (restartuje %(appName)s, aby se změna projevila)",
         "start_automatically": "Zahájit automaticky po přihlášení do systému",
         "warn_quit": "Varovat před ukončením"
-    }
+    },
+    "Download %(brand)s": "Stáhnout %(brand)s"
 }

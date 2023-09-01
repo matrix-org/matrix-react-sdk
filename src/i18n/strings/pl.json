@@ -3988,5 +3988,6 @@
         "hardware_acceleration": "Włącz akceleracje sprzętową (uruchom ponownie %(appName)s, aby zastosować zmiany)",
         "start_automatically": "Uruchom automatycznie po zalogowaniu się do systemu",
         "warn_quit": "Ostrzeż przed wyjściem"
-    }
+    },
+    "Download %(brand)s": "Pobierz %(brand)s"
 }

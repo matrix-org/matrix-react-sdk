@@ -4006,5 +4006,6 @@
         "hardware_acceleration": "Kasuta riistvaralist kiirendust (jõustamine eeldab %(appName)s rakenduse uuesti käivitamist)",
         "start_automatically": "Käivita Element automaatselt peale arvutisse sisselogimist",
         "warn_quit": "Hoiata enne rakenduse töö lõpetamist"
-    }
+    },
+    "Download %(brand)s": "Laadi alla %(brand)s"
 }

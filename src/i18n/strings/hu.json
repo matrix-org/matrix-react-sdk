@@ -3910,5 +3910,6 @@
         "hardware_acceleration": "Hardveres gyorsítás bekapcsolása (a(z) %(appName)s alkalmazást újra kell indítani)",
         "start_automatically": "Automatikus indítás rendszerindítás után",
         "warn_quit": "Figyelmeztetés kilépés előtt"
-    }
+    },
+    "Download %(brand)s": "A(z) %(brand)s letöltése"
 }

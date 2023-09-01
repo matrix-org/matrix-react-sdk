@@ -4006,5 +4006,6 @@
         "hardware_acceleration": "Povoliť hardvérovú akceleráciu (reštartujte %(appName)s, aby sa to prejavilo)",
         "start_automatically": "Spustiť automaticky po prihlásení do systému",
         "warn_quit": "Upozorniť pred ukončením"
-    }
+    },
+    "Download %(brand)s": "Stiahnuť %(brand)s"
 }

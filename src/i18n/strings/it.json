@@ -4011,5 +4011,6 @@
         "hardware_acceleration": "Attiva accelerazione hardware (riavvia %(appName)s per applicare)",
         "start_automatically": "Esegui automaticamente all'avvio del sistema",
         "warn_quit": "Avvisa prima di uscire"
-    }
+    },
+    "Download %(brand)s": "Scarica %(brand)s"
 }

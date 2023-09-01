@@ -4011,5 +4011,6 @@
         "hardware_acceleration": "Hardwarebeschleunigung aktivieren (Neustart von %(appName)s erforderlich)",
         "start_automatically": "Nach Systemstart automatisch starten",
         "warn_quit": "Vor Beenden warnen"
-    }
+    },
+    "Download %(brand)s": "%(brand)s herunterladen"
 }

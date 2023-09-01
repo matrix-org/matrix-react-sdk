@@ -4011,5 +4011,6 @@
         "hardware_acceleration": "Aktifkan akselerasi perangkat keras (mulai ulang %(appName)s untuk mengaktifkan)",
         "start_automatically": "Mulai setelah login sistem secara otomatis",
         "warn_quit": "Beri tahu sebelum keluar"
-    }
+    },
+    "Download %(brand)s": "Unduh %(brand)s"
 }

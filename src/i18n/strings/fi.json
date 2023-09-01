@@ -3605,5 +3605,6 @@
         "hardware_acceleration": "Ota laitteistokiihdytys käyttöön (käynnistä %(appName)s uudelleen, jotta asetus tulee voimaan)",
         "start_automatically": "Käynnistä automaattisesti käyttöjärjestelmään kirjautumisen jälkeen",
         "warn_quit": "Varoita ennen lopettamista"
-    }
+    },
+    "Download %(brand)s": "Lataa %(brand)s"
 }

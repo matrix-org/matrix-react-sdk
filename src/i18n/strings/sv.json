@@ -3946,5 +3946,6 @@
         "hardware_acceleration": "Aktivera hårdvaruacceleration (starta om %(appName)s för att det ska börja gälla)",
         "start_automatically": "Starta automatiskt vid systeminloggning",
         "warn_quit": "Varna innan avslutning"
-    }
+    },
+    "Download %(brand)s": "Ladda ner %(brand)s"
 }

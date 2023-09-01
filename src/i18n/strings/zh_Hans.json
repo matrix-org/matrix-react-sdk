@@ -3595,5 +3595,6 @@
         "hardware_acceleration": "启用硬件加速（重启%(appName)s生效）",
         "start_automatically": "开机自启",
         "warn_quit": "退出前警告"
-    }
+    },
+    "Download %(brand)s": "下载%(brand)s"
 }

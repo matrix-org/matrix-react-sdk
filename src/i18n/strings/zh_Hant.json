@@ -4006,5 +4006,6 @@
         "hardware_acceleration": "啟用硬體加速（重新啟動 %(appName)s 才會生效）",
         "start_automatically": "在系統登入後自動開始",
         "warn_quit": "離開前警告"
-    }
+    },
+    "Download %(brand)s": "下載 %(brand)s"
 }

@@ -3709,5 +3709,6 @@
         "hardware_acceleration": "Bật tăng tốc phần cứng (khởi động lại %(appName)s để có hiệu lực)",
         "start_automatically": "Tự động khởi động sau khi đăng nhập hệ thống",
         "warn_quit": "Cảnh báo trước khi bỏ thuốc lá"
-    }
+    },
+    "Download %(brand)s": "Tải xuống %(brand)s"
 }

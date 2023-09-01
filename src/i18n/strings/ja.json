@@ -3806,5 +3806,6 @@
         "hardware_acceleration": "ハードウェアアクセラレーションを有効にする（%(appName)sを再起動すると有効になります）",
         "start_automatically": "システムログイン後に自動的に起動",
         "warn_quit": "終了する際に警告"
-    }
+    },
+    "Download %(brand)s": "%(brand)sをダウンロード"
 }

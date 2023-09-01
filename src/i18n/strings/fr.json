@@ -4006,5 +4006,6 @@
         "hardware_acceleration": "Activer l’accélération matérielle (redémarrer %(appName)s pour appliquer)",
         "start_automatically": "Démarrer automatiquement après la phase d'authentification du système",
         "warn_quit": "Avertir avant de quitter"
-    }
+    },
+    "Download %(brand)s": "Télécharger %(brand)s"
 }

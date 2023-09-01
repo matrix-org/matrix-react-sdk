@@ -3395,5 +3395,6 @@
         "hardware_acceleration": "Virkja vélbúnaðarhröðun (endurræstu %(appName)s til að breytingar taki gildi)",
         "start_automatically": "Ræsa sjálfvirkt við innskráningu í kerfi",
         "warn_quit": "Aðvara áður en hætt er"
-    }
+    },
+    "Download %(brand)s": "Sækja %(brand)s"
 }

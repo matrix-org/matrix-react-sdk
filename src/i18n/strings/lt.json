@@ -2548,5 +2548,6 @@
         "hardware_acceleration": "Įjungti aparatinį pagreitinimą (kad įsigaliotų, iš naujo paleiskite %(appName)s)",
         "start_automatically": "Pradėti automatiškai prisijungus prie sistemos",
         "warn_quit": "Įspėti prieš išeinant"
-    }
+    },
+    "Download %(brand)s": "Atsisiųsti %(brand)s"
 }

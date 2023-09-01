@@ -3611,5 +3611,6 @@
         "hardware_acceleration": "Schakel hardwareversnelling in (start %(appName)s opnieuw op)",
         "start_automatically": "Automatisch starten na systeemlogin",
         "warn_quit": "Waarschuwen voordat je afsluit"
-    }
+    },
+    "Download %(brand)s": "%(brand)s downloaden"
 }
