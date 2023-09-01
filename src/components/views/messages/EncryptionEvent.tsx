@@ -80,8 +80,8 @@ const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp
                         <AccessibleButton kind="link_inline" onClick={profileLinkOnClick}>
                             {sub}
                         </AccessibleButton>
-                    )
-                }
+                    ),
+                },
             );
         } else if (room && isLocalRoom(room)) {
             subtitle = _t("Messages in this chat will be end-to-end encrypted.");
