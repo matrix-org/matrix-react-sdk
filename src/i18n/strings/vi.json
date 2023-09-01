@@ -175,16 +175,11 @@
     "Straight rows of keys are easy to guess": "Hàng phím thẳng là rất dễ đoán",
     "Short keyboard patterns are easy to guess": "Các mẫu bàn phím ngắn là rất dễ đoán",
     "Please contact your homeserver administrator.": "Vui lòng liên hệ quản trị viên homeserver của bạn.",
-    "Enable Emoji suggestions while typing": "Cho phép gợi ý Emoji khi đánh máy",
     "Show a placeholder for removed messages": "Hiển thị người gửi các tin nhắn đã xóa",
     "Show display name changes": "Hiển thị thay đổi tên hiển thị",
     "Show read receipts sent by other users": "Hiển thị báo đã đọc gửi bởi người dùng khác",
-    "Show timestamps in 12 hour format (e.g. 2:30pm)": "Hiển thị thời gian theo mẫu 12 giờ (ví dụ 2:30pm)",
-    "Always show message timestamps": "Luôn hiện mốc thời gian",
     "Enable automatic language detection for syntax highlighting": "Bật chức năng tự động xác định ngôn ngữ đẻ hiển thị quy tắc",
     "Enable big emoji in chat": "Bật chức năng emoji lớn ở tin nhắn",
-    "Send typing notifications": "Gửi thông báo đang gõ tin nhắn",
-    "Automatically replace plain text Emoji": "Tự động thay thế hình biểu tượng",
     "Mirror local video feed": "Lập đường dẫn video dự phòng",
     "Send analytics data": "Gửi dữ liệu phân tích",
     "Enable inline URL previews by default": "Bật xem trước nội dung liên kết theo mặc định",
@@ -1839,7 +1834,6 @@
     "Collecting logs": "Thu thập nhật ký",
     "Collecting app version information": "Thu thập thông tin phiên bản ứng dụng",
     "Developer mode": "Chế độ nhà phát triển",
-    "All rooms you're in will appear in Home.": "Tất cả các phòng bạn đang ở sẽ xuất hiện trong Trang chủ.",
     "Show all rooms in Home": "Hiển thị tất cả các phòng trong Home",
     "Show chat effects (animations when receiving e.g. confetti)": "Hiển thị các hiệu ứng trò chuyện (hình ảnh động khi nhận được ví dụ như hoa giấy)",
     "IRC display name width": "Chiều rộng tên hiển thị IRC",
@@ -2336,7 +2330,6 @@
     "Guinea-Bissau": "Guinea-Bissau",
     "Show previews/thumbnails for images": "Hiển thị bản xem trước / hình thu nhỏ cho hình ảnh",
     "Show hidden events in timeline": "Hiện các sự kiện ẩn trong dòng thời gian",
-    "Show shortcuts to recently viewed rooms above the room list": "Hiển thị shortcuts cho các phòng đã xem gần đây phía trên danh sách phòng",
     "Prompt before sending invites to potentially invalid matrix IDs": "Nhắc trước khi gửi lời mời đến các ID Matrix có khả năng không hợp lệ",
     "Never send encrypted messages to unverified sessions in this room from this session": "Không bao giờ gửi tin nhắn được mã hóa đến các phiên chưa được xác thực trong phòng này từ phiên này",
     "Never send encrypted messages to unverified sessions from this session": "Không bao giờ gửi tin nhắn được mã hóa đến các phiên chưa được xác thực từ phiên này",
@@ -2344,10 +2337,6 @@
     "Use a system font": "Sử dụng phông chữ hệ thống",
     "Match system theme": "Theo chủ đề hệ thống",
     "Surround selected text when typing special characters": "Bao quanh văn bản đã chọn khi nhập các ký tự đặc biệt",
-    "Use Ctrl + Enter to send a message": "Sử dụng Ctrl + Enter để gửi tin nhắn",
-    "Use Command + Enter to send a message": "Sử dụng Command + Enter để gửi tin nhắn",
-    "Use Ctrl + F to search timeline": "Sử dụng Ctrl + F để tìm kiếm dòng thời gian",
-    "Use Command + F to search timeline": "Sử dụng Command + F để tìm kiếm dòng thời gian",
     "Show typing notifications": "Hiển thị thông báo \"đang gõ\"",
     "Jump to the bottom of the timeline when you send a message": "Chuyển đến cuối dòng thời gian khi bạn gửi tin nhắn",
     "Show line numbers in code blocks": "Hiển thị số dòng trong các khối mã",
@@ -2497,7 +2486,6 @@
     "The email address doesn't appear to be valid.": "Địa chỉ thư điện tử dường như không hợp lệ.",
     "Skip verification for now": "Bỏ qua xác thực ngay bây giờ",
     "Really reset verification keys?": "Thực sự đặt lại các khóa xác minh?",
-    "Clear": "Xoá",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Đang tải lên %(filename)s và %(count)s tập tin khác",
         "other": "Đang tải lên %(filename)s và %(count)s tập tin khác"
@@ -2746,7 +2734,6 @@
     "Sorry, your homeserver is too old to participate here.": "Xin lỗi, homeserver của bạn quá cũ để tham gia vào đây.",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Bật tăng tốc phần cứng (khởi động lại %(appName)s để có hiệu lực)",
     "Enable hardware acceleration": "Bật tăng tốc phần cứng",
-    "Enable Markdown": "Bật đánh dấu",
     "There was an error joining.": "Đã xảy ra lỗi khi tham gia.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s đang thử nghiệm trên trình duyệt web di động. Để có trải nghiệm tốt hơn và các tính năng mới nhất, hãy sử dụng ứng dụng gốc miễn phí của chúng tôi.",
     "Reset bearing to north": "Đặt lại trục theo phương Bắc",
@@ -2883,7 +2870,6 @@
     "No identity access token found": "Không tìm thấy mã thông báo danh tính",
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Các phiên chưa được xác thực là các phiên đăng nhập bằng thông tin đăng nhập nhưng chưa được xác thực chéo.",
     "Secure Backup successful": "Sao lưu bảo mật thành công",
-    "Send read receipts": "Gửi thông báo đã đọc",
     "Start messages with <code>/plain</code> to send without markdown.": "Bắt đầu tin nhắn với <code>/plain</code> để gửi mà không dùng Markdown.",
     "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s đã kết thúc một <a>cuộc phát thanh</a>",
     "Audio devices": "Thiết bị âm thanh",
@@ -3541,7 +3527,8 @@
         "maximise": "Phóng to",
         "mention": "Nhắc đến",
         "submit": "Xác nhận",
-        "send_report": "Gửi báo cáo"
+        "send_report": "Gửi báo cáo",
+        "clear": "Xoá"
     },
     "a11y": {
         "user_menu": "Menu người dùng"
@@ -3707,5 +3694,20 @@
         "edit_setting": "Chỉnh sửa cài đặt",
         "no_verification_requests_found": "Không tìm thấy yêu cầu xác thực nào",
         "failed_to_find_widget": "Đã xảy ra lỗi khi tìm tiện ích widget này."
+    },
+    "settings": {
+        "show_breadcrumbs": "Hiển thị shortcuts cho các phòng đã xem gần đây phía trên danh sách phòng",
+        "all_rooms_home_description": "Tất cả các phòng bạn đang ở sẽ xuất hiện trong Trang chủ.",
+        "use_command_f_search": "Sử dụng Command + F để tìm kiếm dòng thời gian",
+        "use_control_f_search": "Sử dụng Ctrl + F để tìm kiếm dòng thời gian",
+        "use_12_hour_format": "Hiển thị thời gian theo mẫu 12 giờ (ví dụ 2:30pm)",
+        "always_show_message_timestamps": "Luôn hiện mốc thời gian",
+        "send_read_receipts": "Gửi thông báo đã đọc",
+        "send_typing_notifications": "Gửi thông báo đang gõ tin nhắn",
+        "replace_plain_emoji": "Tự động thay thế hình biểu tượng",
+        "enable_markdown": "Bật đánh dấu",
+        "emoji_autocomplete": "Cho phép gợi ý Emoji khi đánh máy",
+        "use_command_enter_send_message": "Sử dụng Command + Enter để gửi tin nhắn",
+        "use_control_enter_send_message": "Sử dụng Ctrl + Enter để gửi tin nhắn"
     }
 }

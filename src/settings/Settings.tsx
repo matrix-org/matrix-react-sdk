@@ -369,7 +369,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "sendReadReceipts": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Send read receipts"),
+        displayName: _td("settings|send_read_receipts"),
         default: true,
         controller: new ServerSupportUnstableFeatureController(
             "sendReadReceipts",
@@ -491,7 +491,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "MessageComposerInput.suggestEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Enable Emoji suggestions while typing"),
+        displayName: _td("settings|emoji_autocomplete"),
         default: true,
         invertedSettingName: "MessageComposerInput.dontSuggestEmoji",
     },
@@ -590,12 +590,12 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "showTwelveHourTimestamps": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show timestamps in 12 hour format (e.g. 2:30pm)"),
+        displayName: _td("settings|use_12_hour_format"),
         default: false,
     },
     "alwaysShowTimestamps": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Always show message timestamps"),
+        displayName: _td("settings|always_show_message_timestamps"),
         default: false,
     },
     "autoplayGifs": {
@@ -650,7 +650,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "sendTypingNotifications": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Send typing notifications"),
+        displayName: _td("settings|send_typing_notifications"),
         default: true,
         invertedSettingName: "dontSendTypingNotifications",
     },
@@ -661,12 +661,14 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "ctrlFForSearch": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: IS_MAC ? _td("Use Command + F to search timeline") : _td("Use Ctrl + F to search timeline"),
+        displayName: IS_MAC ? _td("settings|use_command_f_search") : _td("settings|use_control_f_search"),
         default: false,
     },
     "MessageComposerInput.ctrlEnterToSend": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: IS_MAC ? _td("Use Command + Enter to send a message") : _td("Use Ctrl + Enter to send a message"),
+        displayName: IS_MAC
+            ? _td("settings|use_command_enter_send_message")
+            : _td("settings|use_control_enter_send_message"),
         default: false,
     },
     "MessageComposerInput.surroundWith": {
@@ -676,12 +678,12 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "MessageComposerInput.autoReplaceEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Automatically replace plain text Emoji"),
+        displayName: _td("settings|replace_plain_emoji"),
         default: false,
     },
     "MessageComposerInput.useMarkdown": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Enable Markdown"),
+        displayName: _td("settings|enable_markdown"),
         description: () =>
             _t(
                 "Start messages with <code>/plain</code> to send without markdown.",
@@ -896,7 +898,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "breadcrumbs": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show shortcuts to recently viewed rooms above the room list"),
+        displayName: _td("settings|show_breadcrumbs"),
         default: true,
     },
     "FTUE.userOnboardingButton": {
@@ -1004,7 +1006,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "Spaces.allRoomsInHome": {
         displayName: _td("Show all rooms in Home"),
-        description: _td("All rooms you're in will appear in Home."),
+        description: _td("settings|all_rooms_home_description"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
     },

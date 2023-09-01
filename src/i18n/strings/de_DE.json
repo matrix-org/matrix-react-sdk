@@ -148,7 +148,6 @@
     "Failed to load timeline position": "Laden der Verlaufsposition fehlgeschlagen",
     "%(items)s and %(lastItem)s": "%(items)s und %(lastItem)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s %(time)s",
-    "Always show message timestamps": "Nachrichtenzeitstempel immer anzeigen",
     "Authentication": "Authentifizierung",
     "An error has occurred.": "Ein Fehler ist aufgetreten.",
     "Confirm password": "Passwort bestätigen",
@@ -157,7 +156,6 @@
     "New passwords don't match": "Die neuen Passwörter stimmen nicht überein",
     "Passwords can't be empty": "Passwortfelder dürfen nicht leer sein",
     "%(brand)s version:": "Version von %(brand)s:",
-    "Show timestamps in 12 hour format (e.g. 2:30pm)": "Uhrzeiten im 12-Stundenformat (z. B. 2:30 p. m.)",
     "Email address": "E-Mail-Adresse",
     "Error decrypting attachment": "Fehler beim Entschlüsseln des Anhangs",
     "Operation failed": "Aktion fehlgeschlagen",
@@ -245,7 +243,6 @@
     "Unable to create widget.": "Widget kann nicht erstellt werden.",
     "You are not in this room.": "Du bist nicht in diesem Raum.",
     "You do not have permission to do that in this room.": "Du hast dafür keine Berechtigung.",
-    "Automatically replace plain text Emoji": "Klartext-Emoji automatisch ersetzen",
     "AM": "a. m.",
     "PM": "p. m.",
     "%(widgetName)s widget added by %(senderName)s": "%(senderName)s hat das Widget %(widgetName)s hinzugefügt",
@@ -576,10 +573,8 @@
         "one": "%(names)s und eine weitere Person tippen …"
     },
     "%(names)s and %(lastPerson)s are typing …": "%(names)s und %(lastPerson)s tippen …",
-    "Enable Emoji suggestions while typing": "Emoji-Vorschläge während Eingabe",
     "Show a placeholder for removed messages": "Platzhalter für gelöschte Nachrichten",
     "Show display name changes": "Änderungen von Anzeigenamen",
-    "Send typing notifications": "Tippbenachrichtigungen senden",
     "Enable big emoji in chat": "Große Emojis im Verlauf anzeigen",
     "Messages containing my username": "Nachrichten mit meinem Benutzernamen",
     "The other party cancelled the verification.": "Die Gegenstelle hat die Überprüfung abgebrochen.",
@@ -1039,7 +1034,6 @@
     "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Wenn du diese Nachricht meldest, wird die eindeutige Ereignis-ID an die Administration deines Heim-Servers übermittelt. Wenn die Nachrichten in diesem Raum verschlüsselt sind, wird deine Heim-Server-Administration nicht in der Lage sein, Nachrichten zu lesen oder Medien einzusehen.",
     "%(creator)s created and configured the room.": "%(creator)s hat den Raum erstellt und konfiguriert.",
     "Sends a message as html, without interpreting it as markdown": "Sendet eine Nachricht als HTML, ohne sie als Markdown darzustellen",
-    "Show shortcuts to recently viewed rooms above the room list": "Kürzlich besuchte Räume anzeigen",
     "Use Single Sign On to continue": "Einmalanmeldung zum Fortfahren nutzen",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Bestätige die neue E-Mail-Adresse mit Single-Sign-On, um deine Identität nachzuweisen.",
     "Single Sign On": "Single Sign-on",
@@ -1648,8 +1642,6 @@
     "New version of %(brand)s is available": "Neue Version von %(brand)s verfügbar",
     "You ended the call": "Du hast den Anruf beendet",
     "%(senderName)s ended the call": "%(senderName)s hat den Anruf beendet",
-    "Use Command + Enter to send a message": "Benutze Betriebssystemtaste + Eingabe um eine Nachricht zu senden",
-    "Use Ctrl + Enter to send a message": "Nutze Strg + Enter, um Nachrichten zu senden",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
         "other": "Verschlüsselte Nachrichten sicher lokal zwischenspeichern, um sie in Suchergebnissen finden zu können. Es werden %(size)s benötigt, um die Nachrichten von %(rooms)s Räumen zu speichern.",
         "one": "Verschlüsselte Nachrichten sicher lokal zwischenspeichern, um sie in Suchergebnissen finden zu können. Es werden %(size)s benötigt, um die Nachrichten vom Raum %(rooms)s zu speichern."
@@ -2310,7 +2302,6 @@
     "An error occurred whilst saving your notification preferences.": "Beim Speichern der Benachrichtigungseinstellungen ist ein Fehler aufgetreten.",
     "Error saving notification preferences": "Fehler beim Speichern der Benachrichtigungseinstellungen",
     "Messages containing keywords": "Nachrichten mit Schlüsselwörtern",
-    "Use Ctrl + F to search timeline": "Nutze Strg + F, um den Verlauf zu durchsuchen",
     "The call is in an unknown state!": "Dieser Anruf ist in einem unbekannten Zustand!",
     "Call back": "Zurückrufen",
     "Connection failed": "Verbindung fehlgeschlagen",
@@ -2368,7 +2359,6 @@
     "Delete avatar": "Avatar löschen",
     "%(sharerName)s is presenting": "%(sharerName)s präsentiert",
     "You are presenting": "Du präsentierst",
-    "All rooms you're in will appear in Home.": "Alle Räume, denen du beigetreten bist, werden auf der Startseite erscheinen.",
     "Only people invited will be able to find and join this room.": "Nur eingeladene Personen können den Raum finden und betreten.",
     "Anyone will be able to find and join this room.": "Alle können diesen Raum finden und betreten.",
     "Anyone will be able to find and join this room, not just members of <SpaceName/>.": "Finden und Betreten ist allen, nicht nur Mitgliedern von <SpaceName/>, möglich.",
@@ -2405,7 +2395,6 @@
     "Enable encryption in settings.": "Aktiviere Verschlüsselung in den Einstellungen.",
     "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "Dieser Raum ist nicht verschlüsselt. Oft ist dies aufgrund eines nicht unterstützten Geräts oder Methode wie E-Mail-Einladungen der Fall.",
     "Cross-signing is ready but keys are not backed up.": "Quersignatur ist bereit, die Schlüssel sind aber nicht gesichert.",
-    "Use Command + F to search timeline": "Nutze Command + F um den Verlauf zu durchsuchen",
     "Reply to thread…": "Nachricht an Thread senden …",
     "Reply to encrypted thread…": "Verschlüsselte Nachricht an Thread senden …",
     "Role in <RoomName/>": "Rolle in <RoomName/>",
@@ -2593,7 +2582,6 @@
     "Get notified for every message": "Bei jeder Nachricht benachrichtigen",
     "Rooms outside of a space": "Räume außerhalb von Spaces",
     "Manage rooms in this space": "Räume in diesem Space verwalten",
-    "Clear": "Löschen",
     "%(count)s votes": {
         "one": "%(count)s Stimme",
         "other": "%(count)s Stimmen"
@@ -2907,7 +2895,6 @@
     },
     "%(timeRemaining)s left": "%(timeRemaining)s übrig",
     "Share for %(duration)s": "Geteilt für %(duration)s",
-    "Enable Markdown": "Markdown aktivieren",
     "Failed to join": "Betreten fehlgeschlagen",
     "The person who invited you has already left, or their server is offline.": "Die dich einladende Person hat den Raum verlassen oder ihr Heim-Server ist außer Betrieb.",
     "The person who invited you has already left.": "Die Person, die dich eingeladen hat, hat den Raum wieder verlassen.",
@@ -3073,7 +3060,6 @@
     "Messages in this chat will be end-to-end encrypted.": "Nachrichten in dieser Unterhaltung werden Ende-zu-Ende-verschlüsselt.",
     "Send your first message to invite <displayName/> to chat": "Schreibe deine erste Nachricht, um <displayName/> zur Unterhaltung einzuladen",
     "Your server doesn't support disabling sending read receipts.": "Dein Server unterstützt das Deaktivieren von Lesebestätigungen nicht.",
-    "Send read receipts": "Sende Lesebestätigungen",
     "Share your activity and status with others.": "Teile anderen deine Aktivität und deinen Status mit.",
     "Deactivating your account is a permanent action — be careful!": "Die Deaktivierung deines Kontos ist unwiderruflich — sei vorsichtig!",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Entwicklungsbefehl: Verwirft die aktuell ausgehende Gruppensitzung und setzt eine neue Olm-Sitzung auf",
@@ -3799,7 +3785,8 @@
         "maximise": "Maximieren",
         "mention": "Erwähnen",
         "submit": "Absenden",
-        "send_report": "Bericht senden"
+        "send_report": "Bericht senden",
+        "clear": "Löschen"
     },
     "a11y": {
         "user_menu": "Benutzermenü"
@@ -4009,5 +3996,20 @@
         "observe_only": "Nur beobachten",
         "no_verification_requests_found": "Keine Verifizierungsanfrage gefunden",
         "failed_to_find_widget": "Fehler beim Finden dieses Widgets."
+    },
+    "settings": {
+        "show_breadcrumbs": "Kürzlich besuchte Räume anzeigen",
+        "all_rooms_home_description": "Alle Räume, denen du beigetreten bist, werden auf der Startseite erscheinen.",
+        "use_command_f_search": "Nutze Command + F um den Verlauf zu durchsuchen",
+        "use_control_f_search": "Nutze Strg + F, um den Verlauf zu durchsuchen",
+        "use_12_hour_format": "Uhrzeiten im 12-Stundenformat (z. B. 2:30 p. m.)",
+        "always_show_message_timestamps": "Nachrichtenzeitstempel immer anzeigen",
+        "send_read_receipts": "Sende Lesebestätigungen",
+        "send_typing_notifications": "Tippbenachrichtigungen senden",
+        "replace_plain_emoji": "Klartext-Emoji automatisch ersetzen",
+        "enable_markdown": "Markdown aktivieren",
+        "emoji_autocomplete": "Emoji-Vorschläge während Eingabe",
+        "use_command_enter_send_message": "Benutze Betriebssystemtaste + Eingabe um eine Nachricht zu senden",
+        "use_control_enter_send_message": "Nutze Strg + Enter, um Nachrichten zu senden"
     }
 }

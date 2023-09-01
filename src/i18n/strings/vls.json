@@ -168,16 +168,11 @@
     "Straight rows of keys are easy to guess": "Zulk’n aneengeslootn riksje toetsn es gemakkelik te roadn",
     "Short keyboard patterns are easy to guess": "Korte patroonn ip ’t toetsenbord wordn gemakkelik geroadn",
     "Please contact your homeserver administrator.": "Gelieve contact ip te neemn me den beheerder van je thuusserver.",
-    "Enable Emoji suggestions while typing": "Emoticons voorstelln binst ’t typn",
     "Show a placeholder for removed messages": "Vullienge toogn vo verwyderde berichtn",
     "Show display name changes": "Veranderiengn van weergavenoamn toogn",
     "Show read receipts sent by other users": "Deur andere gebruukers verstuurde leesbevestigiengn toogn",
-    "Show timestamps in 12 hour format (e.g. 2:30pm)": "Tyd in 12-uursformoat weregeevn (bv. 2:30pm)",
-    "Always show message timestamps": "Assan de tydstempels van berichtn toogn",
     "Enable automatic language detection for syntax highlighting": "Automatische toaldetectie vo zinsbouwmarkeriengn inschoakeln",
     "Enable big emoji in chat": "Grote emoticons in gesprekkn inschoakeln",
-    "Send typing notifications": "Typmeldiengn verstuurn",
-    "Automatically replace plain text Emoji": "Tekst automatisch vervangn deur emoticons",
     "Mirror local video feed": "Lokoale videoanvoer ook elders ipsloan (spiegeln)",
     "Send analytics data": "Statistische gegeevns (analytics) verstuurn",
     "Enable inline URL previews by default": "Inline URL-voorvertoniengn standoard inschoakeln",
@@ -1041,5 +1036,12 @@
         "state_key": "Toestandssleuter",
         "event_sent": "Gebeurtenisse verstuurd!",
         "event_content": "Gebeurtenisinhoud"
+    },
+    "settings": {
+        "use_12_hour_format": "Tyd in 12-uursformoat weregeevn (bv. 2:30pm)",
+        "always_show_message_timestamps": "Assan de tydstempels van berichtn toogn",
+        "send_typing_notifications": "Typmeldiengn verstuurn",
+        "replace_plain_emoji": "Tekst automatisch vervangn deur emoticons",
+        "emoji_autocomplete": "Emoticons voorstelln binst ’t typn"
     }
 }

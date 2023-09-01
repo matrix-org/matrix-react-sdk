@@ -3,7 +3,6 @@
     "No Microphones detected": "No s'ha detectat cap micròfon",
     "No Webcams detected": "No s'ha detectat cap càmera web",
     "Advanced": "Avançat",
-    "Always show message timestamps": "Mostra sempre la marca de temps del missatge",
     "Create new room": "Crea una sala nova",
     "Failed to forget room %(errCode)s": "No s'ha pogut oblidar la sala %(errCode)s",
     "Favourite": "Favorit",
@@ -95,9 +94,7 @@
     "Your browser does not support the required cryptography extensions": "El vostre navegador no és compatible amb els complements criptogràfics necessaris",
     "Not a valid %(brand)s keyfile": "El fitxer no és un fitxer de claus de %(brand)s vàlid",
     "Authentication check failed: incorrect password?": "Ha fallat l'autenticació: heu introduït correctament la contrasenya?",
-    "Show timestamps in 12 hour format (e.g. 2:30pm)": "Mostra les marques de temps en format de 12 hores (p.e. 2:30pm)",
     "Enable automatic language detection for syntax highlighting": "Activa la detecció automàtica d'idiomes per al ressaltat de sintaxi",
-    "Automatically replace plain text Emoji": "Substitueix automàticament Emoji de text pla",
     "Enable inline URL previews by default": "Activa per defecte la vista prèvia d'URL en línia",
     "Enable URL previews for this room (only affects you)": "Activa la vista prèvia d'URL d'aquesta sala (no afecta altres usuaris)",
     "Enable URL previews by default for participants in this room": "Activa per defecte la vista prèvia d'URL per als participants d'aquesta sala",
@@ -467,7 +464,6 @@
     "Avoid years that are associated with you": "Eviteu anys que es puguin relacionar amb vós",
     "Avoid dates and years that are associated with you": "Eviteu dates i anys que estiguin associats amb vós",
     "Please contact your homeserver administrator.": "Si us plau contacteu amb l'administrador del vostre homeserver.",
-    "Enable Emoji suggestions while typing": "Habilita els suggeriments d'Emojis mentre escric",
     "Show display name changes": "Mostra els canvis de nom",
     "Show read receipts sent by other users": "Mostra les confirmacions de lectura enviades pels altres usuaris",
     "Enable big emoji in chat": "Activa Emojis grans en xats",
@@ -476,7 +472,6 @@
     "Phone numbers": "Números de telèfon",
     "Language and region": "Idioma i regió",
     "Phone Number": "Número de telèfon",
-    "Send typing notifications": "Envia notificacions d'escriptura",
     "We encountered an error trying to restore your previous session.": "Hem trobat un error en intentar recuperar la teva sessió prèvia.",
     "Upload Error": "Error de pujada",
     "A connection error occurred while trying to contact the server.": "S'ha produït un error de connexió mentre s'intentava connectar al servidor.",
@@ -672,5 +667,12 @@
         "state_key": "Clau d'estat",
         "event_sent": "Esdeveniment enviat!",
         "event_content": "Contingut de l'esdeveniment"
+    },
+    "settings": {
+        "use_12_hour_format": "Mostra les marques de temps en format de 12 hores (p.e. 2:30pm)",
+        "always_show_message_timestamps": "Mostra sempre la marca de temps del missatge",
+        "send_typing_notifications": "Envia notificacions d'escriptura",
+        "replace_plain_emoji": "Substitueix automàticament Emoji de text pla",
+        "emoji_autocomplete": "Habilita els suggeriments d'Emojis mentre escric"
     }
 }

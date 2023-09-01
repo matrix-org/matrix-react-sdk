@@ -29,7 +29,6 @@
     "Phone": "Telefonoa",
     "Advanced": "Aurreratua",
     "Cryptography": "Kriptografia",
-    "Always show message timestamps": "Erakutsi beti mezuen denbora-zigilua",
     "Authentication": "Autentifikazioa",
     "Verification Pending": "Egiaztaketa egiteke",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Irakurri zure e-maila eta egin klik dakarren estekan. Behin eginda, egin klik Jarraitu botoian.",
@@ -137,7 +136,6 @@
     "Server error": "Zerbitzari-errorea",
     "Server may be unavailable, overloaded, or search timed out :(": "Zerbitzaria eskuraezin edo gainezka egon daiteke, edo bilaketaren denbora muga gainditu da :(",
     "Server unavailable, overloaded, or something else went wrong.": "Zerbitzaria eskuraezin edo gainezka egon daiteke edo zerbaitek huts egin du.",
-    "Show timestamps in 12 hour format (e.g. 2:30pm)": "Erakutsi denbora-zigiluak 12 ordutako formatuan (adib. 2:30pm)",
     "Signed Out": "Saioa amaituta",
     "This email address was not found": "Ez da e-mail helbide hau aurkitu",
     "This room is not recognised.": "Ez da gela hau ezagutzen.",
@@ -247,7 +245,6 @@
     "Unable to create widget.": "Ezin izan da trepeta sortu.",
     "You are not in this room.": "Ez zaude gela honetan.",
     "You do not have permission to do that in this room.": "Ez duzu gela honetan hori egiteko baimenik.",
-    "Automatically replace plain text Emoji": "Automatikoki ordezkatu Emoji testu soila",
     "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s trepeta gehitu du %(senderName)s erabiltzaileak",
     "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s trepeta kendu du %(senderName)s erabiltzaileak",
     "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s trepeta aldatu du %(senderName)s erabiltzaileak",
@@ -580,11 +577,9 @@
         "one": "%(names)s eta beste bat idazten ari dira …"
     },
     "%(names)s and %(lastPerson)s are typing …": "%(names)s eta %(lastPerson)s idazten ari dira …",
-    "Enable Emoji suggestions while typing": "Proposatu emojiak  idatzi bitartean",
     "Show a placeholder for removed messages": "Erakutsi kendutako mezuek utzitako hutsunea",
     "Show display name changes": "Erakutsi pantaila-izenen aldaketak",
     "Enable big emoji in chat": "Gaitu emoji handiak txatean",
-    "Send typing notifications": "Bidali idazte-jakinarazpenak",
     "Messages containing my username": "Nire erabiltzaile-izena duten mezuak",
     "The other party cancelled the verification.": "Beste parteak egiaztaketa ezeztatu du.",
     "Verified!": "Egiaztatuta!",
@@ -1242,7 +1237,6 @@
     "Sign In or Create Account": "Hasi saioa edo sortu kontua",
     "Use your account or create a new one to continue.": "Erabili zure kontua edo sortu berri bat jarraitzeko.",
     "Create Account": "Sortu kontua",
-    "Show shortcuts to recently viewed rooms above the room list": "Erakutsi ikusitako azken geletara lasterbideak gelen zerrendaren goialdean",
     "Cancelling…": "Ezeztatzen…",
     "Your homeserver does not support cross-signing.": "Zure hasiera-zerbitzariak ez du zeharkako sinatzea onartzen.",
     "Homeserver feature support:": "Hasiera-zerbitzariaren ezaugarrien euskarria:",
@@ -1655,5 +1649,13 @@
         "state_key": "Egoera gakoa",
         "event_sent": "Gertaera bidalita!",
         "event_content": "Gertaeraren edukia"
+    },
+    "settings": {
+        "show_breadcrumbs": "Erakutsi ikusitako azken geletara lasterbideak gelen zerrendaren goialdean",
+        "use_12_hour_format": "Erakutsi denbora-zigiluak 12 ordutako formatuan (adib. 2:30pm)",
+        "always_show_message_timestamps": "Erakutsi beti mezuen denbora-zigilua",
+        "send_typing_notifications": "Bidali idazte-jakinarazpenak",
+        "replace_plain_emoji": "Automatikoki ordezkatu Emoji testu soila",
+        "emoji_autocomplete": "Proposatu emojiak  idatzi bitartean"
     }
 }

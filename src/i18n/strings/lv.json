@@ -8,7 +8,6 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Jums varētu būt nepieciešams manuāli atļaut %(brand)s piekļuvi mikrofonam vai tīmekļa kamerai",
     "Default Device": "Noklusējuma ierīce",
     "Advanced": "Papildu",
-    "Always show message timestamps": "Vienmēr rādīt ziņas laika zīmogu",
     "Authentication": "Autentifikācija",
     "%(items)s and %(lastItem)s": "%(items)s un %(lastItem)s",
     "A new password must be entered.": "Nepieciešams ievadīt jauno paroli.",
@@ -138,7 +137,6 @@
     "Server may be unavailable, overloaded, or you hit a bug.": "Serveris ir nesasniedzams, pārslogots, vai arī esat saskārties ar kļūdu programmā.",
     "Server unavailable, overloaded, or something else went wrong.": "Serveris ir nesasniedzams, pārslogots, vai arī esi uzdūries kļūdai.",
     "Session ID": "Sesijas ID",
-    "Show timestamps in 12 hour format (e.g. 2:30pm)": "Rādīt laiku 12 stundu formātā (piemēram 2:30pm)",
     "Signed Out": "Izrakstījās",
     "Start authentication": "Sākt autentifikāciju",
     "This email address is already in use": "Šī epasta adrese jau tiek izmantota",
@@ -247,7 +245,6 @@
     "Unable to create widget.": "Neizdevās izveidot widžetu.",
     "You are not in this room.": "Tu neatrodies šajā istabā.",
     "You do not have permission to do that in this room.": "Tev nav atļaujas šai darbībai šajā istabā.",
-    "Automatically replace plain text Emoji": "Automātiski aizstāt vienkāršā teksta emocijzīmes",
     "%(widgetName)s widget added by %(senderName)s": "%(senderName)s pievienoja %(widgetName)s vidžetu",
     "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s dzēsa vidžetu %(widgetName)s",
     "Send": "Sūtīt",
@@ -457,9 +454,7 @@
         "one": "%(names)s un vēl viens raksta…"
     },
     "%(names)s and %(lastPerson)s are typing …": "%(names)s un %(lastPerson)s raksta…",
-    "Enable Emoji suggestions while typing": "Iespējot emocijzīmju ieteikumus rakstīšanas laikā",
     "Show typing notifications": "Rādīt paziņojumus par rakstīšanu",
-    "Send typing notifications": "Sūtīt paziņojumus par rakstīšanu",
     "Philippines": "Filipīnas",
     "%(displayName)s is typing …": "%(displayName)s raksta…",
     "Got It": "Sapratu",
@@ -842,7 +837,6 @@
     "Compare unique emoji": "Salīdziniet unikālās emocijzīmes",
     "Scan this unique code": "Noskenējiet šo unikālo kodu",
     "The other party cancelled the verification.": "Pretējā puse pārtrauca verificēšanu.",
-    "Show shortcuts to recently viewed rooms above the room list": "Rādīt saīsnes uz nesen skatītajām istabām istabu saraksta augšpusē",
     "Send analytics data": "Sūtīt analītikas datus",
     "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
     "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
@@ -1500,10 +1494,6 @@
     "Show hidden events in timeline": "Rādīt slēptos notikumus laika skalā",
     "Match system theme": "Pielāgoties sistēmas tēmai",
     "Surround selected text when typing special characters": "Iekļaut iezīmēto tekstu, rakstot speciālās rakstzīmes",
-    "Use Ctrl + Enter to send a message": "Lietot Ctrl + Enter ziņas nosūtīšanai",
-    "Use Command + Enter to send a message": "Lietot Command + Enter ziņas nosūtīšanai",
-    "Use Ctrl + F to search timeline": "Lietot Ctrl + F meklēšanai laika skalā",
-    "Use Command + F to search timeline": "Lietot Command + F meklēšanai laika skalā",
     "Enable big emoji in chat": "Iespējot lielas emocijzīmes čatā",
     "Jump to the bottom of the timeline when you send a message": "Nosūtot ziņu, pāriet uz laika skalas beigām",
     "Show line numbers in code blocks": "Rādīt rindu numurus koda blokos",
@@ -1662,7 +1652,6 @@
     "New video room": "Jauna video istaba",
     "Loading new room": "Ielādē jaunu istabu",
     "New room": "Jauna istaba",
-    "Clear": "Notīrīt",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Pārlūkprogrammas krātuves dzēšana var atrisināt problēmu, taču tas nozīmē, ka jūs izrakstīsieties un šifrēto čata vēsturi vairs nebūs iespējams nolasīt.",
     "Clear Storage and Sign Out": "Iztīrīt krātuvi un izrakstīties",
     "Clear cache and resync": "Iztīrīt kešatmiņu un atkārtoti sinhronizēt",
@@ -1815,7 +1804,8 @@
         "export": "Eksportēt",
         "mention": "Pieminēt",
         "submit": "Iesniegt",
-        "send_report": "Nosūtīt ziņojumu"
+        "send_report": "Nosūtīt ziņojumu",
+        "clear": "Notīrīt"
     },
     "a11y": {
         "user_menu": "Lietotāja izvēlne"
@@ -1853,5 +1843,17 @@
         "state_key": "Stāvokļa atslēga",
         "event_sent": "Notikums nosūtīts!",
         "event_content": "Notikuma saturs"
+    },
+    "settings": {
+        "show_breadcrumbs": "Rādīt saīsnes uz nesen skatītajām istabām istabu saraksta augšpusē",
+        "use_command_f_search": "Lietot Command + F meklēšanai laika skalā",
+        "use_control_f_search": "Lietot Ctrl + F meklēšanai laika skalā",
+        "use_12_hour_format": "Rādīt laiku 12 stundu formātā (piemēram 2:30pm)",
+        "always_show_message_timestamps": "Vienmēr rādīt ziņas laika zīmogu",
+        "send_typing_notifications": "Sūtīt paziņojumus par rakstīšanu",
+        "replace_plain_emoji": "Automātiski aizstāt vienkāršā teksta emocijzīmes",
+        "emoji_autocomplete": "Iespējot emocijzīmju ieteikumus rakstīšanas laikā",
+        "use_command_enter_send_message": "Lietot Command + Enter ziņas nosūtīšanai",
+        "use_control_enter_send_message": "Lietot Ctrl + Enter ziņas nosūtīšanai"
     }
 }

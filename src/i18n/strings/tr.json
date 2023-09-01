@@ -8,7 +8,6 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "%(brand)s'un mikrofonunuza / web kameranıza el le erişmesine izin vermeniz gerekebilir",
     "Default Device": "Varsayılan Cihaz",
     "Advanced": "Gelişmiş",
-    "Always show message timestamps": "Her zaman mesaj zaman dalgalarını (timestamps) gösterin",
     "Authentication": "Doğrulama",
     "%(items)s and %(lastItem)s": "%(items)s ve %(lastItem)s",
     "and %(count)s others...": {
@@ -122,7 +121,6 @@
     "Server may be unavailable, overloaded, or you hit a bug.": "Sunucu kullanılamıyor , aşırı yüklenmiş , veya bir hatayla karşılaşmış olabilirsiniz.",
     "Server unavailable, overloaded, or something else went wrong.": "Sunucu kullanılamıyor , aşırı yüklenmiş veya başka bir şey ters gitmiş olabilir.",
     "Session ID": "Oturum ID",
-    "Show timestamps in 12 hour format (e.g. 2:30pm)": "Zaman damgalarını 12 biçiminde göster (örn. 2:30 pm)",
     "Signed Out": "Oturum Kapatıldı",
     "Start authentication": "Kimlik Doğrulamayı başlatın",
     "This email address is already in use": "Bu e-posta adresi zaten kullanımda",
@@ -540,9 +538,7 @@
     "Checking server": "Sunucu kontrol ediliyor",
     "Change identity server": "Kimlik sunucu değiştir",
     "Please contact your homeserver administrator.": "Lütfen anasunucu yöneticiniz ile bağlantıya geçin.",
-    "Enable Emoji suggestions while typing": "Yazarken Emoji önerilerini aç",
     "Enable big emoji in chat": "Sohbette büyük emojileri aç",
-    "Send typing notifications": "Yazma bildirimlerini gönder",
     "Send analytics data": "Analiz verilerini gönder",
     "Messages containing my username": "Kullanıcı adımı içeren mesajlar",
     "When rooms are upgraded": "Odalar güncellendiğinde",
@@ -1125,11 +1121,9 @@
     "Short keyboard patterns are easy to guess": "Kısa klavye desenleri kolay tahmin edilir",
     "Show read receipts sent by other users": "Diğer kullanıcılar tarafından gönderilen okundu bilgisini göster",
     "Enable automatic language detection for syntax highlighting": "Sözdizimi vurgularken otomatik dil algılamayı etkinleştir",
-    "Automatically replace plain text Emoji": "Düz metini otomatik olarak emoji ile değiştir",
     "Never send encrypted messages to unverified sessions from this session": "Şifreli mesajları asla bu oturumdaki doğrulanmamış oturumlara iletme",
     "Never send encrypted messages to unverified sessions in this room from this session": "Şifreli mesajları asla oturumdaki bu odadaki doğrulanmamış oturumlara iletme",
     "Prompt before sending invites to potentially invalid matrix IDs": "Potansiyel olarak geçersiz matrix kimliği olanlara davet gönderirken uyarı ver",
-    "Show shortcuts to recently viewed rooms above the room list": "Oda listesinin üzerinde en son kullanılan odaları göster",
     "Error downloading theme information.": "Tema bilgisi indirilirken hata.",
     "Theme added!": "Tema eklendi!",
     "Add theme": "Tema ekle",
@@ -1497,8 +1491,6 @@
     "Show previews/thumbnails for images": "Fotoğraflar için ön izleme/küçük resim göster",
     "System font name": "Sistem yazı tipi ismi",
     "Use a system font": "Bir sistem yazı tipi kullanın",
-    "Use Ctrl + Enter to send a message": "Mesaj göndermek için Ctrl + Enter tuşlarını kullanın",
-    "Use Command + Enter to send a message": "Mesaj göndermek için Command + Enter tuşlarını kullanın",
     "Use custom size": "Özel büyüklük kullan",
     "Font size": "Yazı boyutu",
     "%(senderName)s: %(stickerName)s": "%(senderName)s%(stickerName)s",
@@ -2054,5 +2046,15 @@
         "state_key": "Durum Anahtarı",
         "event_sent": "Olay gönderildi!",
         "event_content": "Olay İçeriği"
+    },
+    "settings": {
+        "show_breadcrumbs": "Oda listesinin üzerinde en son kullanılan odaları göster",
+        "use_12_hour_format": "Zaman damgalarını 12 biçiminde göster (örn. 2:30 pm)",
+        "always_show_message_timestamps": "Her zaman mesaj zaman dalgalarını (timestamps) gösterin",
+        "send_typing_notifications": "Yazma bildirimlerini gönder",
+        "replace_plain_emoji": "Düz metini otomatik olarak emoji ile değiştir",
+        "emoji_autocomplete": "Yazarken Emoji önerilerini aç",
+        "use_command_enter_send_message": "Mesaj göndermek için Command + Enter tuşlarını kullanın",
+        "use_control_enter_send_message": "Mesaj göndermek için Ctrl + Enter tuşlarını kullanın"
     }
 }

@@ -1681,7 +1681,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "ເພື່ອຊ່ວຍພວກເຮົາປ້ອງກັນສິ່ງນີ້ໃນອະນາຄົດ, ກະລຸນາ <a>ສົ່ງບັນທຶກໃຫ້ພວກເຮົາ</a>.",
     "Search Dialog": "ຊອກຫາ ກ່ອງໂຕ້ຕອບ",
     "Use <arrows/> to scroll": "ໃຊ້ <arrows/> ເພື່ອເລື່ອນ",
-    "Clear": "ຈະແຈ້ງ",
     "Recent searches": "ການຄົ້ນຫາທີ່ຜ່ານມາ",
     "To search messages, look for this icon at the top of a room <icon/>": "ເພື່ອຊອກຫາຂໍ້ຄວາມ, ຊອກຫາໄອຄອນນີ້ຢູ່ເທິງສຸດຂອງຫ້ອງ <icon/>",
     "Other searches": "ການຄົ້ນຫາອື່ນໆ",
@@ -2044,7 +2043,6 @@
     "Automatically send debug logs on decryption errors": "ສົ່ງບັນທຶກການດີບັ໊ກໂດຍອັດຕະໂນມັດໃນຄວາມຜິດພາດການຖອດລະຫັດ",
     "Automatically send debug logs on any error": "ສົ່ງບັນທຶກ ບັນຫາບັກ ໂດຍອັດຕະໂນມັດກ່ຽວກັບຂໍ້ຜິດພາດໃດໆ",
     "Developer mode": "ຮູບແບບນັກພັດທະນາ",
-    "All rooms you're in will appear in Home.": "ຫ້ອງທັງໝົດທີ່ທ່ານຢູ່ຈະປາກົດຢູ່ໃນໜ້າ Home.",
     "Show all rooms in Home": "ສະແດງຫ້ອງທັງໝົດໃນໜ້າ Home",
     "Show chat effects (animations when receiving e.g. confetti)": "ສະແດງຜົນກະທົບການສົນທະນາ (ພາບເຄື່ອນໄຫວໃນເວລາທີ່ໄດ້ຮັບເຊັ່ນ: confetti)",
     "IRC display name width": "ຄວາມກວ້າງຂອງຊື່ສະແດງ IRC",
@@ -2053,7 +2051,6 @@
     "Enable message search in encrypted rooms": "ເປີດໃຊ້ການຊອກຫາຂໍ້ຄວາມຢູ່ໃນຫ້ອງທີ່ຖືກເຂົ້າລະຫັດ",
     "Show previews/thumbnails for images": "ສະແດງຕົວຢ່າງ/ຮູບຕົວຢ່າງສຳລັບຮູບພາບ",
     "Show hidden events in timeline": "ສະແດງເຫດການທີ່ເຊື່ອງໄວ້ໃນທາມລາຍ",
-    "Show shortcuts to recently viewed rooms above the room list": "ສະແດງທາງລັດໄປຫາຫ້ອງທີ່ເບິ່ງເມື່ອບໍ່ດົນມານີ້ຂ້າງເທິງລາຍການຫ້ອງ",
     "Prompt before sending invites to potentially invalid matrix IDs": "ເຕືອນກ່ອນທີ່ຈະສົ່ງຄໍາເຊີນໄປຫາ ID matrix ທີ່ອາດຈະບໍ່ຖືກຕ້ອງ",
     "Enable widget screenshots on supported widgets": "ເປີດໃຊ້ widget ຖ່າຍໜ້າຈໍໃນ widget ທີ່ຮອງຮັບ",
     "Enable URL previews by default for participants in this room": "ເປີດໃຊ້ການສະແດງຕົວຢ່າງ URL ໂດຍຄ່າເລີ່ມຕົ້ນສໍາລັບຜູ້ເຂົ້າຮ່ວມໃນຫ້ອງນີ້",
@@ -2066,15 +2063,8 @@
     "Use a system font": "ໃຊ້ຕົວອັກສອນຂອງລະບົບ",
     "Match system theme": "ລະບົບຈັບຄູ່ຫົວຂໍ້",
     "Mirror local video feed": "ເບິ່ງຟີດວິດີໂອທ້ອງຖິ່ນ",
-    "Enable Markdown": "ເປີດໃຊ້ Markdown",
-    "Automatically replace plain text Emoji": "ປ່ຽນແທນ Emoji ຂໍ້ຄວາມທຳມະດາໂດຍອັດຕະໂນມັດ",
     "Surround selected text when typing special characters": "ອ້ອມຮອບຂໍ້ຄວາມທີ່ເລືອກໃນເວລາພິມຕົວອັກສອນພິເສດ",
-    "Use Ctrl + Enter to send a message": "ໃຊ້ Ctrl + Enter ເພື່ອສົ່ງຂໍ້ຄວາມ",
-    "Use Command + Enter to send a message": "ໃຊ້ Command + Enter ເພື່ອສົ່ງຂໍ້ຄວາມ",
-    "Use Ctrl + F to search timeline": "ໃຊ້ Ctrl + F ເພື່ອຊອກຫາເສັ້ນເວລາ",
-    "Use Command + F to search timeline": "ໃຊ້ຄໍາສັ່ງ + F ເພື່ອຊອກຫາເສັ້ນເວລາ",
     "Show typing notifications": "ສະແດງການແຈ້ງເຕືອນການພິມ",
-    "Send typing notifications": "ສົ່ງການແຈ້ງເຕືອນການພິມ",
     "Enable big emoji in chat": "ເປີດໃຊ້ emoji ໃຫຍ່ໃນການສົນທະນາ",
     "Jump to the bottom of the timeline when you send a message": "ໄປຫາລຸ່ມສຸດຂອງທາມລາຍເມື່ອທ່ານສົ່ງຂໍ້ຄວາມ",
     "Show line numbers in code blocks": "ສະແດງຕົວເລກແຖວຢູ່ໃນບລັອກລະຫັດ",
@@ -2082,8 +2072,6 @@
     "Enable automatic language detection for syntax highlighting": "ເປີດໃຊ້ການກວດຫາພາສາອັດຕະໂນມັດສຳລັບການເນັ້ນໄວຍະກອນ",
     "Autoplay videos": "ຫຼິ້ນວິດີໂອອັດຕະໂນມັດ",
     "Autoplay GIFs": "ຫຼິ້ນ GIFs ອັດຕະໂນມັດ",
-    "Always show message timestamps": "ສະແດງເວລາຂອງຂໍ້ຄວາມສະເໝີ",
-    "Show timestamps in 12 hour format (e.g. 2:30pm)": "ສະແດງເວລາໃນຮູບແບບ 12 ຊົ່ວໂມງ (ເຊັ່ນ: 2:30 ໂມງແລງ)",
     "Show read receipts sent by other users": "ສະແດງໃບຮັບຮອງການອ່ານທີ່ສົ່ງໂດຍຜູ້ໃຊ້ອື່ນ",
     "Show display name changes": "ສະແດງການປ່ຽນແປງຊື່",
     "Show join/leave messages (invites/removes/bans unaffected)": "ສະແດງໃຫ້ເຫັນການເຂົ້າຮ່ວມ / ອອກຈາກຂໍ້ຄວາມ (ການເຊື້ອເຊີນ / ເອົາ / ຫ້າມ ບໍ່ໄຫ້ມີຜົນກະທົບ)",
@@ -2092,7 +2080,6 @@
     "Insert a trailing colon after user mentions at the start of a message": "ຈໍ້າສອງເມັດພາຍຫຼັງຈາກຜູ້ໃຊ້ກ່າວເຖິງໃນຕອນເລີ່ມຕົ້ນຂອງຂໍ້ຄວາມ",
     "Show polls button": "ສະແດງປຸ່ມແບບສຳຫຼວດ",
     "Show stickers button": "ສະແດງປຸ່ມສະຕິກເກີ",
-    "Enable Emoji suggestions while typing": "ເປີດໃຊ້ການແນະນຳອີໂມຈິໃນຂະນະທີ່ພິມ",
     "Use custom size": "ໃຊ້ຂະຫນາດທີ່ກໍາຫນົດເອງ",
     "Font size": "ຂະໜາດຕົວອັກສອນ",
     "Leave the beta": "ອອກຈາກເບຕ້າ",
@@ -3213,7 +3200,8 @@
         "maximise": "ສູງສຸດ",
         "mention": "ກ່າວເຖິງ",
         "submit": "ສົ່ງ",
-        "send_report": "ສົ່ງບົດລາຍງານ"
+        "send_report": "ສົ່ງບົດລາຍງານ",
+        "clear": "ຈະແຈ້ງ"
     },
     "a11y": {
         "user_menu": "ເມນູຜູ້ໃຊ້"
@@ -3331,5 +3319,19 @@
         "observe_only": "ສັງເກດເທົ່ານັ້ນ",
         "no_verification_requests_found": "ບໍ່ພົບການຮ້ອງຂໍການຢັ້ງຢືນ",
         "failed_to_find_widget": "ມີຄວາມຜິດພາດໃນການຊອກຫາວິດເຈັດນີ້."
+    },
+    "settings": {
+        "show_breadcrumbs": "ສະແດງທາງລັດໄປຫາຫ້ອງທີ່ເບິ່ງເມື່ອບໍ່ດົນມານີ້ຂ້າງເທິງລາຍການຫ້ອງ",
+        "all_rooms_home_description": "ຫ້ອງທັງໝົດທີ່ທ່ານຢູ່ຈະປາກົດຢູ່ໃນໜ້າ Home.",
+        "use_command_f_search": "ໃຊ້ຄໍາສັ່ງ + F ເພື່ອຊອກຫາເສັ້ນເວລາ",
+        "use_control_f_search": "ໃຊ້ Ctrl + F ເພື່ອຊອກຫາເສັ້ນເວລາ",
+        "use_12_hour_format": "ສະແດງເວລາໃນຮູບແບບ 12 ຊົ່ວໂມງ (ເຊັ່ນ: 2:30 ໂມງແລງ)",
+        "always_show_message_timestamps": "ສະແດງເວລາຂອງຂໍ້ຄວາມສະເໝີ",
+        "send_typing_notifications": "ສົ່ງການແຈ້ງເຕືອນການພິມ",
+        "replace_plain_emoji": "ປ່ຽນແທນ Emoji ຂໍ້ຄວາມທຳມະດາໂດຍອັດຕະໂນມັດ",
+        "enable_markdown": "ເປີດໃຊ້ Markdown",
+        "emoji_autocomplete": "ເປີດໃຊ້ການແນະນຳອີໂມຈິໃນຂະນະທີ່ພິມ",
+        "use_command_enter_send_message": "ໃຊ້ Command + Enter ເພື່ອສົ່ງຂໍ້ຄວາມ",
+        "use_control_enter_send_message": "ໃຊ້ Ctrl + Enter ເພື່ອສົ່ງຂໍ້ຄວາມ"
     }
 }

@@ -92,10 +92,7 @@
     "Your browser does not support the required cryptography extensions": "Вашият браузър не поддържа необходимите разширения за шифроване",
     "Not a valid %(brand)s keyfile": "Невалиден файл с ключ за %(brand)s",
     "Authentication check failed: incorrect password?": "Неуспешна автентикация: неправилна парола?",
-    "Show timestamps in 12 hour format (e.g. 2:30pm)": "Показване на времето в 12-часов формат (напр. 2:30pm)",
-    "Always show message timestamps": "Винаги показвай часа на съобщението",
     "Enable automatic language detection for syntax highlighting": "Включване на автоматично разпознаване на език за подчертаване на синтаксиса",
-    "Automatically replace plain text Emoji": "Автоматично откриване и заместване на емотикони в текста",
     "Mirror local video feed": "Показвай ми огледално моя видео образ",
     "Enable inline URL previews by default": "Включване по подразбиране на URL прегледи",
     "Enable URL previews for this room (only affects you)": "Включване на URL прегледи за тази стая (засяга само Вас)",
@@ -576,11 +573,9 @@
         "one": "%(names)s и още един пишат …"
     },
     "%(names)s and %(lastPerson)s are typing …": "%(names)s и %(lastPerson)s пишат …",
-    "Enable Emoji suggestions while typing": "Включи емоджи предложенията по време на писане",
     "Show a placeholder for removed messages": "Показвай индикатор на позицията на изтритите съобщения",
     "Show display name changes": "Показвай промените в имената",
     "Enable big emoji in chat": "Включи големи емоджита в чатовете",
-    "Send typing notifications": "Изпращай индикация, че пиша",
     "Messages containing my username": "Съобщения съдържащи потребителското ми име",
     "The other party cancelled the verification.": "Другата страна прекрати потвърждението.",
     "Verified!": "Потвърдено!",
@@ -1191,7 +1186,6 @@
     "Show typing notifications": "Показвай уведомления за писане",
     "Never send encrypted messages to unverified sessions from this session": "Никога не изпращай шифровани съобщения към непотвърдени сесии от тази сесия",
     "Never send encrypted messages to unverified sessions in this room from this session": "Никога не изпращай шифровани съобщения към непотвърдени сесии в тази стая от тази сесия",
-    "Show shortcuts to recently viewed rooms above the room list": "Показвай преки пътища до скоро-прегледаните стаи над списъка със стаи",
     "Enable message search in encrypted rooms": "Включи търсенето на съобщения в шифровани стаи",
     "How fast should messages be downloaded.": "Колко бързо да се изтеглят съобщенията.",
     "Manually verify all remote sessions": "Ръчно потвърждаване на всички отдалечени сесии",
@@ -1905,8 +1899,6 @@
     "sends confetti": "изпраща конфети",
     "Sends the given message with confetti": "Изпраща даденото съобщение с конфети",
     "Show chat effects (animations when receiving e.g. confetti)": "Покажи чат ефектите (анимации при получаване, като например конфети)",
-    "Use Ctrl + Enter to send a message": "Използвай Ctrl + Enter за изпращане на съобщение",
-    "Use Command + Enter to send a message": "Използвай Command + Enter за изпращане на съобщение",
     "Spaces": "Пространства",
     "%(deviceId)s from %(ip)s": "%(deviceId)s от %(ip)s",
     "Use app for a better experience": "Използвайте приложението за по-добра работа",
@@ -2148,5 +2140,15 @@
         "state_key": "State ключ",
         "event_sent": "Събитието е изпратено!",
         "event_content": "Съдържание на събитието"
+    },
+    "settings": {
+        "show_breadcrumbs": "Показвай преки пътища до скоро-прегледаните стаи над списъка със стаи",
+        "use_12_hour_format": "Показване на времето в 12-часов формат (напр. 2:30pm)",
+        "always_show_message_timestamps": "Винаги показвай часа на съобщението",
+        "send_typing_notifications": "Изпращай индикация, че пиша",
+        "replace_plain_emoji": "Автоматично откриване и заместване на емотикони в текста",
+        "emoji_autocomplete": "Включи емоджи предложенията по време на писане",
+        "use_command_enter_send_message": "Използвай Command + Enter за изпращане на съобщение",
+        "use_control_enter_send_message": "Използвай Ctrl + Enter за изпращане на съобщение"
     }
 }

@@ -82,10 +82,7 @@
     "Your browser does not support the required cryptography extensions": "Ваш прегледач не подржава потребна криптографска проширења",
     "Not a valid %(brand)s keyfile": "Није исправана %(brand)s кључ-датотека",
     "Authentication check failed: incorrect password?": "Провера идентитета није успела: нетачна лозинка?",
-    "Show timestamps in 12 hour format (e.g. 2:30pm)": "Прикажи временске жигове у 12-сатном облику (нпр.: 2:30 ПоП)",
-    "Always show message timestamps": "Увек прикажи временске жигове",
     "Enable automatic language detection for syntax highlighting": "Омогући самостално препознавање језика за истицање синтаксе",
-    "Automatically replace plain text Emoji": "Самостално замени емоџије писане обичним текстом",
     "Mirror local video feed": "Копирај довод локалног видеа",
     "Enable inline URL previews by default": "Подразумевано укључи УРЛ прегледе",
     "Enable URL previews for this room (only affects you)": "Укључи УРЛ прегледе у овој соби (утиче само на вас)",
@@ -496,7 +493,6 @@
     "%(senderName)s placed a video call. (not supported by this browser)": "%(senderName)s је започео видео позив. (није подржано од стране овог прегледача)",
     "You do not have permission to invite people to this room.": "Немате дозволу за позивање људи у ову собу.",
     "Encryption upgrade available": "Надоградња шифровања је доступна",
-    "Enable Emoji suggestions while typing": "Омогући предлоге емоџија приликом куцања",
     "Show more": "Прикажи више",
     "Cannot connect to integration manager": "Не могу се повезати на управника уградњи",
     "Email addresses": "Мејл адресе",
@@ -1358,5 +1354,11 @@
         "event_sent": "Догађај је послат!",
         "event_content": "Садржај догађаја",
         "caution_colon": "Опрез:"
+    },
+    "settings": {
+        "use_12_hour_format": "Прикажи временске жигове у 12-сатном облику (нпр.: 2:30 ПоП)",
+        "always_show_message_timestamps": "Увек прикажи временске жигове",
+        "replace_plain_emoji": "Самостално замени емоџије писане обичним текстом",
+        "emoji_autocomplete": "Омогући предлоге емоџија приликом куцања"
     }
 }
