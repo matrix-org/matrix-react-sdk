@@ -301,6 +301,8 @@ describe("Read receipts", () => {
         cy.log("Marking room as read", room);
         getRoomListTile(room).rightclick();
         cy.findByText("Mark as read").click();
+        // Wait until the room has responded by becoming read
+        assertRead(room);
     }
 
     function assertRead(room: string) {
@@ -426,7 +428,6 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
-                assertRead(room2);
 
                 // When I receive a new message
                 receiveMessages(room2, ["Msg2"]);
@@ -455,7 +456,6 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
-                assertRead(room2);
 
                 // When I restart
                 saveAndReload();
@@ -591,7 +591,6 @@ describe("Read receipts", () => {
 
                 // When I mark the room as read
                 markAsRead(room2);
-                assertRead(room2);
 
                 // Then another message appears in the thread
                 receiveMessages(room2, [threadedOff("Msg1", "Resp3")]);
@@ -609,7 +608,6 @@ describe("Read receipts", () => {
 
                 // When I mark the room as read (making an unthreaded receipt for t2a)
                 markAsRead(room2);
-                assertRead(room2);
 
                 // Then another message appears in the other thread
                 receiveMessages(room2, [threadedOff("Thread1", "t1b")]);
@@ -699,7 +697,6 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
-                assertRead(room2);
 
                 // When an edit appears in the room
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
@@ -734,7 +731,6 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
-                assertRead(room2);
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
                 assertUnread(room2, 1);
 
@@ -750,7 +746,6 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
-                assertRead(room2);
 
                 // When a message is edited
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
@@ -781,7 +776,6 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1")]);
                 assertUnread(room2, 2);
                 markAsRead(room2);
-                assertRead(room2);
 
                 // When the reply is edited
                 receiveMessages(room2, [editOf("Reply1", "Reply1 Edit1")]);
@@ -795,7 +789,6 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
-                assertRead(room2);
 
                 // When an edit appears in the room
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
@@ -813,7 +806,6 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
-                assertRead(room2);
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
                 assertUnread(room2, 1);
 
@@ -879,7 +871,6 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
                 assertUnread(room2, 2);
                 markAsRead(room2);
-                assertRead(room2);
 
                 // When a message is edited
                 receiveMessages(room2, [editOf("Resp1", "Edit1")]);
@@ -901,7 +892,6 @@ describe("Read receipts", () => {
                 assertUnread(room2, 3);
 
                 markAsRead(room2);
-                assertRead(room2);
 
                 saveAndReload();
                 assertRead(room2);
@@ -971,7 +961,6 @@ describe("Read receipts", () => {
                 assertUnread(room2, 2);
 
                 markAsRead(room2);
-                assertRead(room2);
 
                 receiveMessages(room2, [reactionTo("Msg2", "🪿")]);
                 assertRead(room2);
@@ -983,7 +972,6 @@ describe("Read receipts", () => {
                 assertUnread(room2, 2);
 
                 markAsRead(room2);
-                assertRead(room2);
 
                 receiveMessages(room2, [reactionTo("Msg2", "🪿")]);
                 assertRead(room2);
@@ -998,7 +986,6 @@ describe("Read receipts", () => {
                 assertUnread(room2, 2);
 
                 markAsRead(room2);
-                assertRead(room2);
 
                 saveAndReload();
                 assertRead(room2);
@@ -1183,7 +1170,6 @@ describe("Read receipts", () => {
             assertUnread(room2, 2);
 
             markAsRead(room2);
-            assertRead(room2);
 
             receiveMessages(room2, [customEvent("org.custom.event", { body: "foobar" })]);
             assertRead(room2);
@@ -1195,7 +1181,6 @@ describe("Read receipts", () => {
             assertUnread(room2, 2);
 
             markAsRead(room2);
-            assertRead(room2);
 
             receiveMessages(room2, [customEvent("org.custom.event", { body: "foobar" })]);
             assertRead(room2);
