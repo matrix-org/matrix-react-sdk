@@ -2919,13 +2919,6 @@
     "Download apps": "Lataa sovellukset",
     "Don’t miss a thing by taking %(brand)s with you": "Älä jää mistään paitsi, ota %(brand)s mukaasi",
     "Download %(brand)s": "Lataa %(brand)s",
-    "Find and invite your community members": "Etsi ja kutsu yhteisöjäseniä",
-    "Find people": "Etsi ihmisiä",
-    "Get stuff done by finding your teammates": "Saa asiat hoidetuksi löytämällä tiimikaverisi",
-    "Find and invite your co-workers": "Etsi ja kutsu työkavereita",
-    "Find friends": "Etsi kavereita",
-    "It’s what you’re here for, so lets get to it": "Sen vuoksi olet täällä, joten aloitetaan",
-    "Find and invite your friends": "Etsi ja kutsu ystäviä",
     "Sorry — this call is currently full": "Pahoittelut — tämä puhelu on täynnä",
     "Notifications silenced": "Ilmoitukset hiljennetty",
     "Video call started": "Videopuhelu aloitettu",
@@ -3110,7 +3103,6 @@
     "Enable %(brand)s as an additional calling option in this room": "Ota %(brand)s käyttöön puheluiden lisävaihtoehtona tässä huoneessa",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Julkisten huoneiden salaamista ei suositella.</b> Kuka vain voi löytää julkisen huoneen ja liittyä siihen, joten kuka vain voi lukea sen viestejä. Salauksesta ei ole hyötyä eikä sitä voi poistaa käytöstä myöhemmin. Julkisen huoneen viestien salaaminen hidastaa viestien vastaanottamista ja lähettämistä.",
     "Early previews": "Ennakot",
-    "You made it!": "Onnistui!",
     "Noise suppression": "Kohinanvaimennus",
     "Allow Peer-to-Peer for 1:1 calls": "Salli vertaisyhteydet kahdenvälisissä puheluissa",
     "View List": "Näytä luettelo",
@@ -3522,7 +3514,15 @@
             "other": "Vain %(count)s vaihetta jäljellä"
         },
         "you_did_it": "Teit sen!",
-        "community_messaging_description": "Pidä yhteisön keskustelu hallussa. Skaalautuu miljooniin käyttäjiin ja\ntarjoaa tehokkaan moderoinnin ja yhteentoimivuuden."
+        "community_messaging_description": "Pidä yhteisön keskustelu hallussa. Skaalautuu miljooniin käyttäjiin ja\ntarjoaa tehokkaan moderoinnin ja yhteentoimivuuden.",
+        "you_made_it": "Onnistui!",
+        "find_friends": "Etsi ja kutsu ystäviä",
+        "find_friends_description": "Sen vuoksi olet täällä, joten aloitetaan",
+        "find_friends_action": "Etsi kavereita",
+        "find_coworkers": "Etsi ja kutsu työkavereita",
+        "get_stuff_done": "Saa asiat hoidetuksi löytämällä tiimikaverisi",
+        "find_people": "Etsi ihmisiä",
+        "find_community_members": "Etsi ja kutsu yhteisöjäseniä"
     },
     "devtools": {
         "event_type": "Tapahtuman tyyppi",

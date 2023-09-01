@@ -3078,18 +3078,12 @@
     "Your profile": "Dein Profil",
     "Set up your profile": "Richte dein Profil ein",
     "Download apps": "Apps herunterladen",
-    "Find and invite your co-workers": "Finde deine Kollegen und lade sie ein",
-    "Find friends": "Freunde finden",
-    "Find and invite your friends": "Finde deine Freunde und lade sie ein",
-    "You made it!": "Geschafft!",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Im Space %(spaceName)s und %(count)s weiteren Spaces.",
         "other": "In %(spaceName)s und %(count)s weiteren Spaces."
     },
     "In %(spaceName)s.": "Im Space %(spaceName)s.",
     "Download %(brand)s": "%(brand)s herunterladen",
-    "Find and invite your community members": "Finde deine Community-Mitglieder und lade sie ein",
-    "Get stuff done by finding your teammates": "Finde dein Team und werdet produktiv",
     "Reset bearing to north": "Ausrichtung nach Norden zurücksetzen",
     "Mapbox logo": "Mapbox Logo",
     "Location not available": "Standort nicht verfügbar",
@@ -3135,8 +3129,6 @@
     "Verify or sign out from this session for best security and reliability.": "Für bestmögliche Sicherheit und Zuverlässigkeit verifiziere diese Sitzung oder melde sie ab.",
     "Join the room to participate": "Betrete den Raum, um teilzunehmen",
     "Show shortcut to welcome checklist above the room list": "Verknüpfung zu ersten Schritten (Willkommen) anzeigen",
-    "Find people": "Finde Personen",
-    "It’s what you’re here for, so lets get to it": "Dafür bist du hier, also dann mal los",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Verschlüsselung ist für öffentliche Räume nicht empfohlen.</b> Jeder kann öffentliche Räume finden und betreten, also kann auch jeder die Nachrichten lesen. Du wirst keine der Vorteile von Verschlüsselung erhalten und kannst sie später auch nicht mehr deaktivieren. Nachrichten in öffentlichen Räumen zu verschlüsseln, wird das empfangen und senden verlangsamen.",
     "Empty room (was %(oldName)s)": "Leerer Raum (war %(oldName)s)",
     "Inviting %(user)s and %(count)s others": {
@@ -3893,7 +3885,15 @@
         },
         "you_did_it": "Geschafft!",
         "complete_these": "Vervollständige sie für die beste %(brand)s-Erfahrung",
-        "community_messaging_description": "Verfüge und behalte die Kontrolle über Gespräche deiner Gemeinschaft.\nSkalierbar für Millionen von Nutzenden, mit mächtigen Moderationswerkzeugen und Interoperabilität."
+        "community_messaging_description": "Verfüge und behalte die Kontrolle über Gespräche deiner Gemeinschaft.\nSkalierbar für Millionen von Nutzenden, mit mächtigen Moderationswerkzeugen und Interoperabilität.",
+        "you_made_it": "Geschafft!",
+        "find_friends": "Finde deine Freunde und lade sie ein",
+        "find_friends_description": "Dafür bist du hier, also dann mal los",
+        "find_friends_action": "Freunde finden",
+        "find_coworkers": "Finde deine Kollegen und lade sie ein",
+        "get_stuff_done": "Finde dein Team und werdet produktiv",
+        "find_people": "Finde Personen",
+        "find_community_members": "Finde deine Community-Mitglieder und lade sie ein"
     },
     "devtools": {
         "send_custom_account_data_event": "Sende benutzerdefiniertes Kontodatenereignis",

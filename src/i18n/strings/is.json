@@ -2724,8 +2724,6 @@
     "Enable notifications": "Virkja tilkynningar",
     "Your profile": "Notandasnið þitt",
     "Download apps": "Sækja forrit",
-    "Find people": "Finna fólk",
-    "Find friends": "Finna vini",
     "Spell check": "Stafsetningaryfirferð",
     "Saved Items": "Vistuð atriði",
     "Exit fullscreen": "Fara úr fullskjásstillingu",
@@ -2777,8 +2775,6 @@
     "Share your activity and status with others.": "Deila virkni og stöðu þinni með öðrum.",
     "Deactivating your account is a permanent action — be careful!": "Að gera aðganginn þinn óvirkan er endanleg aðgerð - farðu varlega!",
     "Your password was successfully changed.": "Það tókst að breyta lykilorðinu þínu.",
-    "Find and invite your friends": "Finndu og bjóddu vinum þínum",
-    "You made it!": "Þú hafðir það!",
     "Mapbox logo": "Mapbox-táknmerki",
     "Location not available": "Staðsetning ekki tiltæk",
     "Find my location": "Finna staðsetningu mína",
@@ -2865,7 +2861,6 @@
     "Turn on notifications": "Kveikja á tilkynningum",
     "Make sure people know it’s really you": "Láttu fólk vita að þetta sért þú",
     "Set up your profile": "Settu upp notandasniðið þitt",
-    "Find and invite your co-workers": "Finndu og bjóddu samstarfsaðilum þínum",
     "You were disconnected from the call. (Error: %(message)s)": "Þú varst aftengd/ur frá samtalinu. (Villa: %(message)s)",
     "Reset bearing to north": "Frumstilla stefnu á norður",
     "Toggle attribution": "Víxla tilvísun af/á",
@@ -3021,9 +3016,6 @@
     "Add privileged users": "Bæta við notendum með auknar heimildir",
     "Don’t miss a reply or important message": "Ekki missa af svari eða áríðandi skilaboðum",
     "Don’t miss a thing by taking %(brand)s with you": "Ekki missa af neinu og taktu %(brand)s með þér",
-    "Find and invite your community members": "Finndu og bjóddu meðlimum í samfélaginu þínu",
-    "Get stuff done by finding your teammates": "Komdu hlutum í verk með því að finna félaga í teyminu þínu",
-    "It’s what you’re here for, so lets get to it": "Það er nú einusinni það sem þú komst hingað til að gera, þannug að við skulum skella okkur í málið",
     "Sorry — this call is currently full": "Því miður - þetta símtal er fullt í augnablikinu",
     "common": {
         "about": "Um hugbúnaðinn",
@@ -3307,7 +3299,15 @@
             "other": "Aðeins %(count)s skref í viðbót"
         },
         "you_did_it": "Þú kláraðir þetta!",
-        "complete_these": "Kláraðu þetta til að fá sem mest út úr %(brand)s"
+        "complete_these": "Kláraðu þetta til að fá sem mest út úr %(brand)s",
+        "you_made_it": "Þú hafðir það!",
+        "find_friends": "Finndu og bjóddu vinum þínum",
+        "find_friends_description": "Það er nú einusinni það sem þú komst hingað til að gera, þannug að við skulum skella okkur í málið",
+        "find_friends_action": "Finna vini",
+        "find_coworkers": "Finndu og bjóddu samstarfsaðilum þínum",
+        "get_stuff_done": "Komdu hlutum í verk með því að finna félaga í teyminu þínu",
+        "find_people": "Finna fólk",
+        "find_community_members": "Finndu og bjóddu meðlimum í samfélaginu þínu"
     },
     "devtools": {
         "event_type": "Tegund atburðar",

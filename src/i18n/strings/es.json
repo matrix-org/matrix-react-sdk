@@ -3105,8 +3105,6 @@
     "Your profile": "Tu perfil",
     "Set up your profile": "Completar perfil",
     "Download apps": "Descargar apps",
-    "Find people": "Encontrar gente",
-    "Find and invite your friends": "Encuentra e invita a tus amigos",
     "Interactively verify by emoji": "Verificar interactivamente usando emojis",
     "Manually verify by text": "Verificar manualmente usando un texto",
     "Security recommendations": "Consejos de seguridad",
@@ -3127,13 +3125,8 @@
     "Verify or sign out from this session for best security and reliability.": "Verifica o cierra esta sesión, para mayor seguridad y estabilidad.",
     "Verified sessions": "Sesiones verificadas",
     "Inactive for %(inactiveAgeDays)s+ days": "Inactivo durante más de %(inactiveAgeDays)s días",
-    "Find and invite your co-workers": "Encuentra o invita a tus compañeros",
-    "Find friends": "Encontrar amigos",
-    "You made it!": "¡Ya está!",
     "Show shortcut to welcome checklist above the room list": "Mostrar un atajo a los pasos de bienvenida encima de la lista de salas",
     "Make sure people know it’s really you": "Asegúrate de que la gente sepa que eres tú de verdad",
-    "Find and invite your community members": "Encuentra e invita a las personas de tu comunidad",
-    "Get stuff done by finding your teammates": "Empieza a trabajar añadiendo a tus compañeros",
     "Inviting %(user)s and %(count)s others": {
         "one": "Invitando a %(user)s y 1 más",
         "other": "Invitando a %(user)s y %(count)s más"
@@ -3142,7 +3135,6 @@
     "We're creating a room with %(names)s": "Estamos creando una sala con %(names)s",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>No está recomendado activar el cifrado en salas públicas.</b> Cualquiera puede encontrarlas y unirse a ellas, así que cualquiera puede leer los mensajes en ellas. No disfrutarás de ninguno de los beneficios del cifrado, y no podrás desactivarlo en el futuro. Cifrar los mensajes en una sala pública ralentizará el envío y la recepción de mensajes.",
     "Don’t miss a thing by taking %(brand)s with you": "No te pierdas nada llevándote %(brand)s contigo",
-    "It’s what you’re here for, so lets get to it": "Es para lo que estás aquí, así que vamos a ello",
     "Empty room (was %(oldName)s)": "Sala vacía (antes era %(oldName)s)",
     "%(user)s and %(count)s others": {
         "one": "%(user)s y 1 más",
@@ -3713,7 +3705,15 @@
         },
         "you_did_it": "¡Ya está!",
         "complete_these": "Complétalos para sacar el máximo partido a %(brand)s",
-        "community_messaging_description": "Mantén el control de las conversaciones.\nCrece hasta tener millones de mensajes, con potente moderación e interoperabilidad."
+        "community_messaging_description": "Mantén el control de las conversaciones.\nCrece hasta tener millones de mensajes, con potente moderación e interoperabilidad.",
+        "you_made_it": "¡Ya está!",
+        "find_friends": "Encuentra e invita a tus amigos",
+        "find_friends_description": "Es para lo que estás aquí, así que vamos a ello",
+        "find_friends_action": "Encontrar amigos",
+        "find_coworkers": "Encuentra o invita a tus compañeros",
+        "get_stuff_done": "Empieza a trabajar añadiendo a tus compañeros",
+        "find_people": "Encontrar gente",
+        "find_community_members": "Encuentra e invita a las personas de tu comunidad"
     },
     "devtools": {
         "send_custom_account_data_event": "Enviar evento personalizado de cuenta de sala",

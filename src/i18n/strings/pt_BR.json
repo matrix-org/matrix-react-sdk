@@ -2516,7 +2516,6 @@
     "Turn off camera": "Desligar câmera",
     "Turn on camera": "Ligar câmera",
     "Your profile": "Seu perfil",
-    "Find people": "Encontrar pessoas",
     "Enable hardware acceleration": "Habilitar aceleração de hardware",
     "Export successful!": "Exportação realizada com sucesso!",
     "Generating a ZIP": "Gerando um ZIP",
@@ -2868,7 +2867,8 @@
         "last_month": "Último mês"
     },
     "onboarding": {
-        "welcome_to_brand": "Bem-vindo a %(brand)s"
+        "welcome_to_brand": "Bem-vindo a %(brand)s",
+        "find_people": "Encontrar pessoas"
     },
     "devtools": {
         "event_type": "Tipo do Evento",
