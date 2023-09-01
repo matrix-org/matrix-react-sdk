@@ -231,6 +231,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                         members={members.slice(0, 3)}
                         size="20px"
                         overflow={false}
+                        viewUserOnClick={false}
                     >
                         {formatCount(memberCount)}
                     </FacePile>
