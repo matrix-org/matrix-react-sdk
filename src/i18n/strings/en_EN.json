@@ -232,9 +232,7 @@
         "in_about_hour": "about an hour from now",
         "in_n_hours": "%(num)s hours from now",
         "in_about_day": "about a day from now",
-        "in_n_days": "%(num)s days from now",
-        "last_week": "Last week",
-        "last_month": "Last month"
+        "in_n_days": "%(num)s days from now"
     },
     "Identity server has no terms of service": "Identity server has no terms of service",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.",
