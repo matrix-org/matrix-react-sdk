@@ -142,8 +142,6 @@
         "one": "%(names)s og én annen bruker skriver …"
     },
     "%(names)s and %(lastPerson)s are typing …": "%(names)s og %(lastPerson)s skriver …",
-    "%(num)s minutes ago": "%(num)s minutter siden",
-    "%(num)s hours ago": "%(num)s timer siden",
     "This is a very common password": "Dette er et veldig vanlig passord",
     "Dog": "Hund",
     "Cat": "Katt",
@@ -471,11 +469,6 @@
         "one": "%(items)s og én annen"
     },
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
-    "a few seconds ago": "noen sekunder siden",
-    "about a minute ago": "cirka 1 minutt siden",
-    "about an hour ago": "cirka 1 time siden",
-    "about a day ago": "cirka 1 dag siden",
-    "%(num)s days ago": "%(num)s dager siden",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Never send encrypted messages to unverified sessions in this room from this session": "Aldri send krypterte meldinger til uverifiserte økter i dette rommet fra denne økten",
     "Enable URL previews for this room (only affects you)": "Skru på URL-forhåndsvisninger for dette rommet (Påvirker bare deg)",
@@ -690,13 +683,6 @@
     "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s-modulen ble lagt til av %(senderName)s",
     "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s-modulen ble fjernet av %(senderName)s",
     "Your %(brand)s is misconfigured": "Ditt %(brand)s-oppsett er feiloppsatt",
-    "a few seconds from now": "om noen sekunder fra nå",
-    "about a minute from now": "rundt et minutt fra nå",
-    "%(num)s minutes from now": "%(num)s minutter fra nå",
-    "about an hour from now": "rundt en time fra nå",
-    "%(num)s hours from now": "%(num)s timer fra nå",
-    "about a day from now": "rundt en dag fra nå",
-    "%(num)s days from now": "%(num)s dager fra nå",
     "Not a valid %(brand)s keyfile": "Ikke en gyldig %(brand)s-nøkkelfil",
     "Unrecognised address": "Adressen ble ikke gjenkjent",
     "Unknown server error": "Ukjent tjenerfeil",
@@ -1580,7 +1566,21 @@
         "github_issue": "Github-saksrapport"
     },
     "time": {
-        "date_at_time": "%(date)s klokken %(time)s"
+        "date_at_time": "%(date)s klokken %(time)s",
+        "few_seconds_ago": "noen sekunder siden",
+        "about_minute_ago": "cirka 1 minutt siden",
+        "n_minutes_ago": "%(num)s minutter siden",
+        "about_hour_ago": "cirka 1 time siden",
+        "n_hours_ago": "%(num)s timer siden",
+        "about_day_ago": "cirka 1 dag siden",
+        "n_days_ago": "%(num)s dager siden",
+        "in_few_seconds": "om noen sekunder fra nå",
+        "in_about_minute": "rundt et minutt fra nå",
+        "in_n_minutes": "%(num)s minutter fra nå",
+        "in_about_hour": "rundt en time fra nå",
+        "in_n_hours": "%(num)s timer fra nå",
+        "in_about_day": "rundt en dag fra nå",
+        "in_n_days": "%(num)s dager fra nå"
     },
     "devtools": {
         "event_type": "Hendelsestype",

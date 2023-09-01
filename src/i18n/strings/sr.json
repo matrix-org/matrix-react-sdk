@@ -551,13 +551,6 @@
     "Feedback": "Повратни подаци",
     "General failure": "Општа грешка",
     "Send a bug report with logs": "Пошаљи извештај о грешци са записницима",
-    "a few seconds ago": "пре неколико секунди",
-    "about a minute ago": "пре једног минута",
-    "%(num)s minutes ago": "пре %(num)s минута",
-    "about an hour ago": "пре једног часа",
-    "%(num)s hours ago": "пре %(num)s часова",
-    "about a day ago": "пре једног дана",
-    "%(num)s days ago": "пре %(num)s дана",
     "Font size": "Величина фонта",
     "Use custom size": "Користи прилагођену величину",
     "Match system theme": "Прати тему система",
@@ -955,7 +948,6 @@
     "Changes your display nickname in the current room only": "Мења ваше приказно име само у тренутној соби",
     "We couldn't log you in": "Не могу да вас пријавим",
     "Double check that your server supports the room version chosen and try again.": "Добро проверите да ли сервер подржава изабрану верзију собе и пробајте поново.",
-    "a few seconds from now": "за неколико секунди",
     "Folder": "фасцикла",
     "Headphones": "слушалице",
     "Anchor": "сидро",
@@ -1360,5 +1352,15 @@
         "automatic_language_detection_syntax_highlight": "Омогући самостално препознавање језика за истицање синтаксе",
         "inline_url_previews_default": "Подразумевано укључи УРЛ прегледе",
         "start_automatically": "Самостално покрећи након пријаве на систем"
+    },
+    "time": {
+        "few_seconds_ago": "пре неколико секунди",
+        "about_minute_ago": "пре једног минута",
+        "n_minutes_ago": "пре %(num)s минута",
+        "about_hour_ago": "пре једног часа",
+        "n_hours_ago": "пре %(num)s часова",
+        "about_day_ago": "пре једног дана",
+        "n_days_ago": "пре %(num)s дана",
+        "in_few_seconds": "за неколико секунди"
     }
 }
