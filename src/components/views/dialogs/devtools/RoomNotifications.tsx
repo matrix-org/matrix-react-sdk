@@ -89,7 +89,7 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                                   },
                               )
                             : _t(
-                                  "Room unread status: <strong>%(status)s</strong>",
+                                  "devtools|room_unread_status",
                                   {
                                       status: humanReadableNotificationColor(color),
                                   },
@@ -145,7 +145,8 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                                 {_t("devtools|room_notifications_last_event")}
                                 <ul>
                                     <li>
-                                        {_t("ID: ")} <strong>{room.timeline[room.timeline.length - 1].getId()}</strong>
+                                        {_t("devtools|id")}{" "}
+                                        <strong>{room.timeline[room.timeline.length - 1].getId()}</strong>
                                     </li>
                                     <li>
                                         {_t("devtools|room_notifications_type")}{" "}
@@ -199,7 +200,7 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                                         {_t("devtools|room_notifications_last_event")}
                                         <ul>
                                             <li>
-                                                {_t("ID: ")} <strong>{thread.lastReply()?.getId()}</strong>
+                                                {_t("devtools|id")} <strong>{thread.lastReply()?.getId()}</strong>
                                             </li>
                                             <li>
                                                 {_t("devtools|room_notifications_type")}{" "}

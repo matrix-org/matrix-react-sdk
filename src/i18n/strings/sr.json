@@ -1172,7 +1172,6 @@
     "Who are you working with?": "Са ким радите?",
     "Autocomplete": "Аутоматско довршавање",
     "This room is public": "Ова соба је јавна",
-    "Caution:": "Опрез:",
     "Change room avatar": "Промените аватар собе",
     "Browse": "Прегледајте",
     "Versions": "Верзије",
@@ -1357,6 +1356,7 @@
         "event_type": "Врста догађаја",
         "state_key": "Кључ стања",
         "event_sent": "Догађај је послат!",
-        "event_content": "Садржај догађаја"
+        "event_content": "Садржај догађаја",
+        "caution_colon": "Опрез:"
     }
 }

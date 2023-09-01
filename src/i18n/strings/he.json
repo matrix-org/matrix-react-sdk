@@ -1985,7 +1985,6 @@
     "Dial pad": "לוח חיוג",
     "There was an error looking up the phone number": "אירעה שגיאה בחיפוש מספר הטלפון",
     "Unable to look up phone number": "לא ניתן לחפש את מספר הטלפון",
-    "There was an error finding this widget.": "אירעה שגיאה במציאת היישומון הזה.",
     "Active Widgets": "יישומונים פעילים",
     "Set my room layout for everyone": "הגדר את פריסת החדר שלי עבור כולם",
     "Open dial pad": "פתח לוח חיוג",
@@ -2209,11 +2208,6 @@
     "Previous room or DM": "חדר קודם או התכתבות ישירה",
     "Next room or DM": "חדר הבא או התכתבות ישירה",
     "No unverified sessions found.": "לא נמצאו הפעלות לא מאומתות.",
-    "Server Versions": "גירסאות שרת",
-    "Client Versions": "גירסאות",
-    "Failed to load.": "נכשל בטעינה.",
-    "Capabilities": "יכולות",
-    "Send custom state event": "שלח אירוע מצב מותאם אישית",
     "Friends and family": "חברים ומשפחה",
     "An error occurred whilst sharing your live location, please try again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב",
     "Only invited people can join.": "רק משתשים מוזמנים יכולים להצטרף.",
@@ -2404,9 +2398,6 @@
     "All rooms you're in will appear in Home.": "כל החדרים שבהם אתם נמצאים יופיעו בדף הבית.",
     "Messages containing keywords": "הודעות המכילות מילות מפתח",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
-    "Server": "שרת",
-    "Value:": "ערך:",
-    "Phase": "שלב",
     "@mentions & keywords": "אזכורים ומילות מפתח",
     "Mentions & keywords": "אזכורים ומילות מפתח",
     "Failed to invite users to %(roomName)s": "נכשל בהזמנת משתמשים לחדר - %(roomName)",
@@ -2635,7 +2626,9 @@
         "android": "אנדרויד",
         "trusted": "אמין",
         "not_trusted": "לא אמין",
-        "accessibility": "נגישות"
+        "accessibility": "נגישות",
+        "capabilities": "יכולות",
+        "server": "שרת"
     },
     "action": {
         "continue": "המשך",
@@ -2796,6 +2789,13 @@
         "spaces": {
             "one": "<רווח>"
         },
-        "empty_string": "<מחרוזת ריקה>"
+        "empty_string": "<מחרוזת ריקה>",
+        "send_custom_state_event": "שלח אירוע מצב מותאם אישית",
+        "failed_to_load": "נכשל בטעינה.",
+        "client_versions": "גירסאות",
+        "server_versions": "גירסאות שרת",
+        "value_colon": "ערך:",
+        "phase": "שלב",
+        "failed_to_find_widget": "אירעה שגיאה במציאת היישומון הזה."
     }
 }

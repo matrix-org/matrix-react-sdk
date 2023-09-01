@@ -1566,11 +1566,6 @@
     "You don't have permission to do this": "Jūs neturite leidimo tai daryti",
     "Comment": "Komentaras",
     "Feedback sent": "Atsiliepimas išsiųstas",
-    "Level": "Lygis",
-    "Setting:": "Nustatymas:",
-    "Value": "Reikšmė",
-    "Setting ID": "Nustatymo ID",
-    "There was an error finding this widget.": "Įvyko klaida ieškant šio valdiklio.",
     "Active Widgets": "Aktyvūs Valdikliai",
     "Server did not return valid authentication information.": "Serveris negrąžino galiojančios autentifikavimo informacijos.",
     "Server did not require any authentication": "Serveris nereikalavo jokio autentifikavimo",
@@ -2545,6 +2540,11 @@
         "event_type": "Įvykio tipas",
         "state_key": "Būklės raktas",
         "event_sent": "Įvykis išsiųstas!",
-        "event_content": "Įvykio turinys"
+        "event_content": "Įvykio turinys",
+        "setting_colon": "Nustatymas:",
+        "level": "Lygis",
+        "setting_id": "Nustatymo ID",
+        "value": "Reikšmė",
+        "failed_to_find_widget": "Įvyko klaida ieškant šio valdiklio."
     }
 }

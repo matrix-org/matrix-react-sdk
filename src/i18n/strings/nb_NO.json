@@ -998,7 +998,6 @@
     "Private space": "Privat område",
     "Suggested": "Anbefalte",
     "%(deviceId)s from %(ip)s": "%(deviceId)s fra %(ip)s",
-    "Value:": "Verdi:",
     "Leave Space": "Forlat området",
     "Save Changes": "Lagre endringer",
     "You don't have permission": "Du har ikke tillatelse",
@@ -1020,10 +1019,6 @@
     },
     "Add existing rooms": "Legg til eksisterende rom",
     "Create a new room": "Opprett et nytt rom",
-    "Value": "Verdi",
-    "Setting:": "Innstilling:",
-    "Caution:": "Advarsel:",
-    "Level": "Nivå",
     "Skip for now": "Hopp over for nå",
     "Share %(name)s": "Del %(name)s",
     "Just me": "Bare meg selv",
@@ -1610,6 +1605,11 @@
     },
     "devtools": {
         "event_type": "Hendelsestype",
-        "event_content": "Hendelsesinnhold"
+        "event_content": "Hendelsesinnhold",
+        "setting_colon": "Innstilling:",
+        "caution_colon": "Advarsel:",
+        "level": "Nivå",
+        "value_colon": "Verdi:",
+        "value": "Verdi"
     }
 }

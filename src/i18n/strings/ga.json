@@ -61,11 +61,6 @@
     "Permission Required": "Is Teastáil Cead",
     "Call Failed": "Chlis an glaoch",
     "Spaces": "Spásanna",
-    "Value:": "Luach:",
-    "Level": "Leibhéal",
-    "Caution:": "Faichill:",
-    "Setting:": "Socrú:",
-    "Value": "Luach",
     "Transfer": "Aistrigh",
     "Hold": "Fan",
     "Resume": "Tosaigh arís",
@@ -750,5 +745,12 @@
         "moderator": "Modhnóir",
         "admin": "Riarthóir",
         "mod": "Mod"
+    },
+    "devtools": {
+        "setting_colon": "Socrú:",
+        "caution_colon": "Faichill:",
+        "level": "Leibhéal",
+        "value_colon": "Luach:",
+        "value": "Luach"
     }
 }
