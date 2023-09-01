@@ -56,11 +56,9 @@ const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp
         if (prevContent.algorithm === ALGORITHM) {
             subtitle = _t("Some encryption parameters have been changed.");
         } else if (dmPartner) {
-            console.log("dmPartner is", dmPartner);
             const dmPartnerRoomMember = room?.getMember(dmPartner);
-            console.log("dmPartnerRoomMember is", dmPartnerRoomMember);
             const displayName = dmPartnerRoomMember?.rawDisplayName || dmPartner;
-            const profileLinkOnClick = () => {
+            const profileLinkOnClick = (): void => {
                 if (!dmPartnerRoomMember) {
                     // We were unable to fetch membership info for the other user in this DM. Do nothing.
                     return;
