@@ -77,6 +77,9 @@ describe("Read receipts", () => {
                 cy.viewRoomById(betaRoomId);
                 cy.findByText(botName + " joined the room").should("exist");
             });
+
+        // Ensure we don't make annoying beeps when we receive messages
+        cy.window().then((w) => (w.mxNotifier.playAudioNotification = async () => {}));
     });
 
     after(() => {
