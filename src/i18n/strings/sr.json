@@ -411,13 +411,11 @@
     "Collecting app version information": "Прикупљам податке о издању апликације",
     "Search…": "Претрага…",
     "Tuesday": "Уторак",
-    "Event sent!": "Догађај је послат!",
     "Saturday": "Субота",
     "Monday": "Понедељак",
     "Toolbox": "Алатница",
     "Collecting logs": "Прикупљам записнике",
     "All Rooms": "Све собе",
-    "State Key": "Кључ стања",
     "Wednesday": "Среда",
     "All messages": "Све поруке",
     "Call invitation": "Позивница за позив",
@@ -431,11 +429,9 @@
     "Messages in group chats": "Поруке у групним ћаскањима",
     "Yesterday": "Јуче",
     "Error encountered (%(errorDetail)s).": "Догодила се грешка (%(errorDetail)s).",
-    "Event Type": "Врста догађаја",
     "Low Priority": "Најмања важност",
     "What's New": "Шта је ново",
     "Developer Tools": "Програмерске алатке",
-    "Event Content": "Садржај догађаја",
     "Thank you!": "Хвала вам!",
     "Popout widget": "Виџет за искакање",
     "Missing roomId.": "Недостаје roomId.",
@@ -1356,5 +1352,11 @@
     "bug_reporting": {
         "submit_debug_logs": "Пошаљи записнике за поправљање грешака",
         "send_logs": "Пошаљи записнике"
+    },
+    "devtools": {
+        "event_type": "Врста догађаја",
+        "state_key": "Кључ стања",
+        "event_sent": "Догађај је послат!",
+        "event_content": "Садржај догађаја"
     }
 }

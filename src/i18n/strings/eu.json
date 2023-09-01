@@ -415,7 +415,6 @@
     "No update available.": "Ez dago eguneraketarik eskuragarri.",
     "Collecting app version information": "Aplikazioaren bertsio-informazioa biltzen",
     "Tuesday": "Asteartea",
-    "Event sent!": "Gertaera bidalita!",
     "Preparing to send logs": "Egunkariak bidaltzeko prestatzen",
     "Saturday": "Larunbata",
     "Monday": "Astelehena",
@@ -426,7 +425,6 @@
     "You cannot delete this message. (%(code)s)": "Ezin duzu mezu hau ezabatu. (%(code)s)",
     "All messages": "Mezu guztiak",
     "Call invitation": "Dei gonbidapena",
-    "State Key": "Egoera gakoa",
     "What's new?": "Zer dago berri?",
     "When I'm invited to a room": "Gela batetara gonbidatzen nautenean",
     "Invite to this room": "Gonbidatu gela honetara",
@@ -439,9 +437,7 @@
     "Error encountered (%(errorDetail)s).": "Errorea aurkitu da (%(errorDetail)s).",
     "Low Priority": "Lehentasun baxua",
     "Off": "Ez",
-    "Event Type": "Gertaera mota",
     "Developer Tools": "Garatzaile-tresnak",
-    "Event Content": "Gertaeraren edukia",
     "Thank you!": "Eskerrik asko!",
     "Missing roomId.": "Gelaren ID-a falta da.",
     "Popout widget": "Laster-leiho trepeta",
@@ -1653,5 +1649,11 @@
         "send_logs": "Bidali egunkariak",
         "github_issue": "GitHub arazo-txostena",
         "before_submitting": "Egunkariak bidali aurretik, <a>GitHub arazo bat sortu</a> behar duzu gertatzen zaizuna azaltzeko."
+    },
+    "devtools": {
+        "event_type": "Gertaera mota",
+        "state_key": "Egoera gakoa",
+        "event_sent": "Gertaera bidalita!",
+        "event_content": "Gertaeraren edukia"
     }
 }

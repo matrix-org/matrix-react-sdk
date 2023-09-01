@@ -423,7 +423,6 @@
     "Toolbox": "Ferramentas",
     "Collecting logs": "Obtendo rexistros",
     "All Rooms": "Todas as Salas",
-    "State Key": "Chave do estado",
     "Wednesday": "Mércores",
     "All messages": "Todas as mensaxes",
     "Call invitation": "Convite de chamada",
@@ -439,9 +438,6 @@
     "Error encountered (%(errorDetail)s).": "Houbo un erro (%(errorDetail)s).",
     "Low Priority": "Baixa prioridade",
     "Off": "Off",
-    "Event Type": "Tipo de evento",
-    "Event sent!": "Evento enviado!",
-    "Event Content": "Contido do evento",
     "Thank you!": "Grazas!",
     "Missing roomId.": "Falta o ID da sala.",
     "Popout widget": "trebello emerxente",
@@ -2845,11 +2841,6 @@
     "Use <arrows/> to scroll": "Usa <arrows/> para desprazarte",
     "Feedback sent! Thanks, we appreciate it!": "Opinión enviada! Moitas grazas!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "<empty string>": "<cadea baleira>",
-    "<%(count)s spaces>": {
-        "one": "<spazo>",
-        "other": "<%(count)s espazos>"
-    },
     "%(oneUser)ssent %(count)s hidden messages": {
         "one": "%(oneUser)s enviou unha mensaxe oculta",
         "other": "%(oneUser)s enviou %(count)s mensaxes ocultas"
@@ -2959,10 +2950,6 @@
     "Failed to load.": "Fallou a carga.",
     "Capabilities": "Capacidades",
     "Send custom state event": "Enviar evento de estado personalizado",
-    "Failed to send event!": "Fallou o envio do evento!",
-    "Doesn't look like valid JSON.": "Non semella un JSON válido.",
-    "Send custom room account data event": "Enviar evento de datos da sala personalizado",
-    "Send custom account data event": "Enviar evento de datos da conta personalizado",
     "Room ID: %(roomId)s": "ID da sala: %(roomId)s",
     "Server info": "Info do servidor",
     "Settings explorer": "Explorar axustes",
@@ -3524,5 +3511,20 @@
         "you_did_it": "Xa está!",
         "complete_these": "Completa esto para sacarlle partido a %(brand)s",
         "community_messaging_description": "Mantén o control e a propiedade sobre as conversas da comunidade.\nPodendo xestionar millóns de contas, con ferramentas para a moderación e a interoperabilidade."
+    },
+    "devtools": {
+        "send_custom_account_data_event": "Enviar evento de datos da conta personalizado",
+        "send_custom_room_account_data_event": "Enviar evento de datos da sala personalizado",
+        "event_type": "Tipo de evento",
+        "state_key": "Chave do estado",
+        "invalid_json": "Non semella un JSON válido.",
+        "failed_to_send": "Fallou o envio do evento!",
+        "event_sent": "Evento enviado!",
+        "event_content": "Contido do evento",
+        "spaces": {
+            "one": "<spazo>",
+            "other": "<%(count)s espazos>"
+        },
+        "empty_string": "<cadea baleira>"
     }
 }

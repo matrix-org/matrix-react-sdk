@@ -952,10 +952,6 @@
         "other": "%(count)s بار رفع تحریم شد"
     },
     "Filter results": "پالایش نتایج",
-    "Event Content": "محتوای رخداد",
-    "State Key": "کلید حالت",
-    "Event Type": "نوع رخداد",
-    "Event sent!": "رخداد ارسال شد!",
     "Server did not return valid authentication information.": "سرور اطلاعات احراز هویت معتبری را باز نگرداند.",
     "Server did not require any authentication": "سرور به احراز هویت احتیاج نداشت",
     "There was a problem communicating with the server. Please try again.": "مشکلی در برقراری ارتباط با سرور وجود داشت. لطفا دوباره تلاش کنید.",
@@ -2651,5 +2647,11 @@
         "short_hours": "%(value)sh",
         "short_minutes": "%(value)sم",
         "short_seconds": "%(value)sس"
+    },
+    "devtools": {
+        "event_type": "نوع رخداد",
+        "state_key": "کلید حالت",
+        "event_sent": "رخداد ارسال شد!",
+        "event_content": "محتوای رخداد"
     }
 }

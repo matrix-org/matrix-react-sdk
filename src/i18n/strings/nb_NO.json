@@ -596,7 +596,6 @@
     "Topic (optional)": "Tema (valgfritt)",
     "Hide advanced": "Skjul avansert",
     "Show advanced": "Vis avansert",
-    "Event Type": "Hendelsestype",
     "Developer Tools": "Utviklerverktøy",
     "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
@@ -835,7 +834,6 @@
     "This address is available to use": "Denne adressen er allerede i bruk",
     "Failed to send logs: ": "Mislyktes i å sende loggbøker: ",
     "Incompatible Database": "Inkompatibel database",
-    "Event Content": "Hendelsesinnhold",
     "Integrations are disabled": "Integreringer er skrudd av",
     "Integrations not allowed": "Integreringer er ikke tillatt",
     "Confirm to continue": "Bekreft for å fortsette",
@@ -1609,5 +1607,9 @@
     },
     "time": {
         "date_at_time": "%(date)s klokken %(time)s"
+    },
+    "devtools": {
+        "event_type": "Hendelsestype",
+        "event_content": "Hendelsesinnhold"
     }
 }

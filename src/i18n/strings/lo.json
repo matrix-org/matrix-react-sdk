@@ -1641,14 +1641,6 @@
     "Send custom state event": "ສົ່ງທາງລັດແບບກຳນົດເອງ",
     "No results found": "ບໍ່ພົບຜົນການຊອກຫາ",
     "Filter results": "ການກັ່ນຕອງຜົນຮັບ",
-    "Event Content": "ເນື້ອໃນວຽກ",
-    "Event sent!": "ສົ່ງວຽກແລ້ວ!",
-    "Failed to send event!": "ສົ່ງນັດໝາຍບໍ່ສຳເລັດ!",
-    "Doesn't look like valid JSON.": "ເບິ່ງຄືວ່າ JSON ບໍ່ຖືກຕ້ອງ.",
-    "State Key": "ປຸມລັດ",
-    "Event Type": "ປະເພດວຽກ",
-    "Send custom room account data event": "ສົ່ງຂໍ້ມູນບັນຊີຫ້ອງແບບກຳນົດເອງ",
-    "Send custom account data event": "ສົ່ງຂໍ້ມູນບັນຊີແບບກຳນົດເອງທຸກເຫດການ",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "ຖ້າທ່ານລືມກະແຈຄວາມປອດໄພຂອງທ່ານ ທ່ານສາມາດ <button>ຕັ້ງຄ່າຕົວເລືອກການຟື້ນຕົວໃຫມ່</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "ເຂົ້າເຖິງປະຫວັດຂໍ້ຄວາມທີ່ປອດໄພຂອງທ່ານ ແລະ ຕັ້ງຄ່າການສົ່ງຂໍ້ຄວາມທີ່ປອດໄພໂດຍການໃສ່ກະແຈຄວາມປອດໄພຂອງທ່ານ.",
     "Not a valid Security Key": "ກະແຈຄວາມປອດໄພບໍ່ຖືກຕ້ອງ",
@@ -2996,11 +2988,6 @@
     "a new cross-signing key signature": "ການລົງລາຍເຊັນ cross-signing ແບບໃໝ່",
     "Thank you!": "ຂອບໃຈ!",
     "Please pick a nature and describe what makes this message abusive.": "ກະລຸນາເລືອກລັກສະນະ ແລະ ການອະທິບາຍຂອງຂໍ້ຄວາມໃດໜຶ່ງທີ່ສຸພາບ.",
-    "<empty string>": "<Empty string>",
-    "<%(count)s spaces>": {
-        "one": "<space>",
-        "other": "<%(count)s spaces>"
-    },
     "Link to room": "ເຊື່ອມຕໍ່ທີ່ຫ້ອງ",
     "Link to selected message": "ເຊື່ອມຕໍ່ກັບຂໍ້ຄວາມທີ່ເລືອກ",
     "Share Room Message": "ແບ່ງປັນຂໍ້ຄວາມໃນຫ້ອງ",
@@ -3329,5 +3316,20 @@
         "short_seconds": "%(value)ss",
         "last_week": "ອາທິດທີ່ແລ້ວ",
         "last_month": "ເດືອນທີ່ແລ້ວ"
+    },
+    "devtools": {
+        "send_custom_account_data_event": "ສົ່ງຂໍ້ມູນບັນຊີແບບກຳນົດເອງທຸກເຫດການ",
+        "send_custom_room_account_data_event": "ສົ່ງຂໍ້ມູນບັນຊີຫ້ອງແບບກຳນົດເອງ",
+        "event_type": "ປະເພດວຽກ",
+        "state_key": "ປຸມລັດ",
+        "invalid_json": "ເບິ່ງຄືວ່າ JSON ບໍ່ຖືກຕ້ອງ.",
+        "failed_to_send": "ສົ່ງນັດໝາຍບໍ່ສຳເລັດ!",
+        "event_sent": "ສົ່ງວຽກແລ້ວ!",
+        "event_content": "ເນື້ອໃນວຽກ",
+        "spaces": {
+            "one": "<space>",
+            "other": "<%(count)s spaces>"
+        },
+        "empty_string": "<Empty string>"
     }
 }

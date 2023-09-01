@@ -423,7 +423,6 @@
     "Invite to this room": "Uitnodigen voor deze kamer",
     "All messages": "Alle berichten",
     "Call invitation": "Oproep-uitnodiging",
-    "State Key": "Toestandssleutel",
     "What's new?": "Wat is er nieuw?",
     "When I'm invited to a room": "Wanneer ik uitgenodigd word in een kamer",
     "All Rooms": "Alle kamers",
@@ -436,9 +435,6 @@
     "Low Priority": "Lage prioriteit",
     "Off": "Uit",
     "Wednesday": "Woensdag",
-    "Event Type": "Gebeurtenistype",
-    "Event sent!": "Gebeurtenis verstuurd!",
-    "Event Content": "Gebeurtenisinhoud",
     "Thank you!": "Bedankt!",
     "Logs sent": "Logs verstuurd",
     "Failed to send logs: ": "Versturen van logs mislukt: ",
@@ -2844,11 +2840,6 @@
     "This is a beta feature": "Dit is een bètafunctie",
     "Use <arrows/> to scroll": "Gebruik <arrows/> om te scrollen",
     "Feedback sent! Thanks, we appreciate it!": "Reactie verzonden! Bedankt, we waarderen het!",
-    "<empty string>": "<empty string>",
-    "<%(count)s spaces>": {
-        "one": "<space>",
-        "other": "<%(count)s spaces>"
-    },
     "%(oneUser)ssent %(count)s hidden messages": {
         "one": "%(oneUser)sverzond een verborgen bericht",
         "other": "%(oneUser)sverzond %(count)s verborgen berichten"
@@ -2892,10 +2883,6 @@
     "Failed to load.": "Laden mislukt.",
     "Capabilities": "Mogelijkheden",
     "Send custom state event": "Aangepaste statusgebeurtenis versturen",
-    "Failed to send event!": "Kan gebeurtenis niet versturen!",
-    "Doesn't look like valid JSON.": "Lijkt niet op geldige JSON.",
-    "Send custom room account data event": "Gegevensgebeurtenis van aangepaste kamer account versturen",
-    "Send custom account data event": "Aangepaste accountgegevens gebeurtenis versturen",
     "Search Dialog": "Dialoogvenster Zoeken",
     "Join %(roomAddress)s": "%(roomAddress)s toetreden",
     "Export Cancelled": "Export geannuleerd",
@@ -3607,5 +3594,20 @@
         "you_did_it": "Het is je gelukt!",
         "complete_these": "Voltooi deze om het meeste uit %(brand)s te halen",
         "community_messaging_description": "Houd het eigendom en de controle over de discussie in de gemeenschap.\nSchaal om miljoenen te ondersteunen, met krachtige beheersbaarheid en interoperabiliteit."
+    },
+    "devtools": {
+        "send_custom_account_data_event": "Aangepaste accountgegevens gebeurtenis versturen",
+        "send_custom_room_account_data_event": "Gegevensgebeurtenis van aangepaste kamer account versturen",
+        "event_type": "Gebeurtenistype",
+        "state_key": "Toestandssleutel",
+        "invalid_json": "Lijkt niet op geldige JSON.",
+        "failed_to_send": "Kan gebeurtenis niet versturen!",
+        "event_sent": "Gebeurtenis verstuurd!",
+        "event_content": "Gebeurtenisinhoud",
+        "spaces": {
+            "one": "<space>",
+            "other": "<%(count)s spaces>"
+        },
+        "empty_string": "<empty string>"
     }
 }

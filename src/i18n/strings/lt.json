@@ -27,7 +27,6 @@
     "When I'm invited to a room": "Kai mane pakviečia į kambarį",
     "Tuesday": "Antradienis",
     "Search…": "Paieška…",
-    "Event sent!": "Įvykis išsiųstas!",
     "Unnamed room": "Kambarys be pavadinimo",
     "Saturday": "Šeštadienis",
     "Online": "Prisijungęs",
@@ -43,7 +42,6 @@
     "unknown error code": "nežinomas klaidos kodas",
     "Call invitation": "Skambučio pakvietimas",
     "Messages containing my display name": "Žinutės, kuriose yra mano rodomas vardas",
-    "State Key": "Būklės raktas",
     "What's new?": "Kas naujo?",
     "Invite to this room": "Pakviesti į šį kambarį",
     "You cannot delete this message. (%(code)s)": "Jūs negalite trinti šios žinutės. (%(code)s)",
@@ -54,9 +52,7 @@
     "Error encountered (%(errorDetail)s).": "Susidurta su klaida (%(errorDetail)s).",
     "Low Priority": "Žemo prioriteto",
     "Off": "Išjungta",
-    "Event Type": "Įvykio tipas",
     "Developer Tools": "Programuotojo Įrankiai",
-    "Event Content": "Įvykio turinys",
     "Thank you!": "Ačiū!",
     "Call Failed": "Skambutis Nepavyko",
     "Permission Required": "Reikalingas Leidimas",
@@ -2544,5 +2540,11 @@
         "you_did_it": "Jums pavyko!",
         "complete_these": "Užbaikite šiuos žingsnius, kad gautumėte daugiausiai iš %(brand)s",
         "community_messaging_description": "Išlaikykite bendruomenės diskusijų nuosavybę ir kontrolę.\nPlėskitės ir palaikykite milijonus žmonių, naudodami galingą moderavimą ir sąveiką."
+    },
+    "devtools": {
+        "event_type": "Įvykio tipas",
+        "state_key": "Būklės raktas",
+        "event_sent": "Įvykis išsiųstas!",
+        "event_content": "Įvykio turinys"
     }
 }

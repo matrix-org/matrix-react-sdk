@@ -419,7 +419,6 @@
     "Invite to this room": "Convidar para esta sala",
     "All messages": "Todas as mensagens novas",
     "Call invitation": "Recebendo chamada",
-    "State Key": "Chave do Estado",
     "What's new?": "O que há de novidades?",
     "When I'm invited to a room": "Quando eu for convidada(o) a uma sala",
     "All Rooms": "Todas as salas",
@@ -432,9 +431,6 @@
     "Low Priority": "Baixa prioridade",
     "Off": "Desativado",
     "Wednesday": "Quarta-feira",
-    "Event Type": "Tipo do Evento",
-    "Event sent!": "Evento enviado!",
-    "Event Content": "Conteúdo do Evento",
     "Thank you!": "Obrigado!",
     "Permission Required": "Permissão necessária",
     "You do not have permission to start a conference call in this room": "Você não tem permissão para iniciar uma chamada em grupo nesta sala",
@@ -2922,5 +2918,11 @@
     },
     "onboarding": {
         "welcome_to_brand": "Bem-vindo a %(brand)s"
+    },
+    "devtools": {
+        "event_type": "Tipo do Evento",
+        "state_key": "Chave do Estado",
+        "event_sent": "Evento enviado!",
+        "event_content": "Conteúdo do Evento"
     }
 }

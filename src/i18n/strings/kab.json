@@ -670,7 +670,6 @@
     "Continue With Encryption Disabled": "Kemmel s uwgelhen yensan",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Sentem asensi n umiḍan s useqdec n unekcum asuf i ubeggen n timagit-ik·im.",
     "Confirm account deactivation": "Sentem asensi n umiḍan",
-    "Event sent!": "Tadyant tettwazen!",
     "Filter results": "Igmaḍ n usizdeg",
     "Incoming Verification Request": "Tuttra n usenqed i d-ikecmen",
     "Confirm to continue": "Sentem i wakken ad tkemmleḍ",
@@ -1239,9 +1238,6 @@
     "On": "Yermed",
     "Noisy": "Sɛan ṣṣut",
     "wait and try again later": "ṛǧu syen ɛreḍ tikkelt-nniḍen",
-    "Event Type": "Anaw n tedyant",
-    "State Key": "Tasarut n waddad",
-    "Event Content": "Agbur n tedyant",
     "Please fill why you're reporting.": "Ttxil-k·m ini-aɣ-d ayɣer i d-tettazneḍ alɣu.",
     "Report Content to Your Homeserver Administrator": "Ttxil-k·m azen aneqqis i unedbal-ik·im n usebter agejdan",
     "Security Phrase": "Tafyirt n tɣellist",
@@ -2025,5 +2021,11 @@
         "github_issue": "Ugur Github",
         "download_logs": "Sider imisen",
         "before_submitting": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem."
+    },
+    "devtools": {
+        "event_type": "Anaw n tedyant",
+        "state_key": "Tasarut n waddad",
+        "event_sent": "Tadyant tettwazen!",
+        "event_content": "Agbur n tedyant"
     }
 }

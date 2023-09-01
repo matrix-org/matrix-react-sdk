@@ -408,7 +408,6 @@
     "Collecting app version information": "Kolektante informon pri versio de la aplikaĵo",
     "Tuesday": "Mardo",
     "Search…": "Serĉi…",
-    "Event sent!": "Okazo sendiĝis!",
     "Saturday": "Sabato",
     "Monday": "Lundo",
     "Toolbox": "Ilaro",
@@ -418,7 +417,6 @@
     "You cannot delete this message. (%(code)s)": "Vi ne povas forigi tiun ĉi mesaĝon. (%(code)s)",
     "All messages": "Ĉiuj mesaĝoj",
     "Call invitation": "Invito al voko",
-    "State Key": "Stata ŝlosilo",
     "What's new?": "Kio novas?",
     "When I'm invited to a room": "Kiam mi estas invitita al ĉambro",
     "All Rooms": "Ĉiuj ĉambroj",
@@ -430,10 +428,8 @@
     "Low Priority": "Malalta prioritato",
     "Off": "Ne",
     "Failed to remove tag %(tagName)s from room": "Malsukcesis forigi etikedon %(tagName)s el la ĉambro",
-    "Event Type": "Tipo de okazo",
     "Thank you!": "Dankon!",
     "Developer Tools": "Evoluigiloj",
-    "Event Content": "Enhavo de okazo",
     "Logs sent": "Protokolo sendiĝis",
     "Failed to send logs: ": "Malsukcesis sendi protokolon: ",
     "Preparing to send logs": "Pretigante sendon de protokolo",
@@ -2690,7 +2686,6 @@
     "Current Timeline": "Nuna historio",
     "Plain Text": "Plata Teksto",
     "HTML": "HTML",
-    "Doesn't look like valid JSON.": "Ŝajnas ne esti valida JSON.",
     "JSON": "JSON",
     "Include Attachments": "Inkluzivi Aldonaĵojn",
     "Size Limit": "Grandeca Limo",
@@ -2980,5 +2975,12 @@
         "short_days_hours_minutes_seconds": "%(days)st. %(hours)sh. %(minutes)sm. %(seconds)ss.",
         "short_hours_minutes_seconds": "%(hours)sh. %(minutes)sm. %(seconds)ss.",
         "short_minutes_seconds": "%(minutes)sm. %(seconds)ss."
+    },
+    "devtools": {
+        "event_type": "Tipo de okazo",
+        "state_key": "Stata ŝlosilo",
+        "invalid_json": "Ŝajnas ne esti valida JSON.",
+        "event_sent": "Okazo sendiĝis!",
+        "event_content": "Enhavo de okazo"
     }
 }

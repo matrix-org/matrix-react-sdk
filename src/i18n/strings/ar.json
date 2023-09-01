@@ -19,7 +19,6 @@
     "Thank you!": "شكرًا !",
     "Call invitation": "دعوة لمحادثة",
     "Developer Tools": "أدوات التطوير",
-    "State Key": "مفتاح الحالة",
     "What's new?": "ما الجديد ؟",
     "powered by Matrix": "مشغل بواسطة Matrix",
     "Use Single Sign On to continue": "استعمل الولوج الموحّد للمواصلة",
@@ -1357,5 +1356,8 @@
     },
     "time": {
         "date_at_time": "%(date)s في %(time)s"
+    },
+    "devtools": {
+        "state_key": "مفتاح الحالة"
     }
 }

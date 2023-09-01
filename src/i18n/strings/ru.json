@@ -424,7 +424,6 @@
     "Invite to this room": "Пригласить в комнату",
     "All messages": "Все сообщения",
     "Call invitation": "Звонки",
-    "State Key": "Ключ состояния",
     "What's new?": "Что нового?",
     "When I'm invited to a room": "Приглашения в комнаты",
     "All Rooms": "Везде",
@@ -438,9 +437,6 @@
     "Low Priority": "Маловажные",
     "Off": "Выключить",
     "Wednesday": "Среда",
-    "Event Type": "Тип события",
-    "Event sent!": "Событие отправлено!",
-    "Event Content": "Содержимое события",
     "Thank you!": "Спасибо!",
     "Missing roomId.": "Отсутствует идентификатор комнаты.",
     "You don't currently have any stickerpacks enabled": "У вас ещё нет наклеек",
@@ -2851,11 +2847,6 @@
     "Join %(roomAddress)s": "Присоединиться к %(roomAddress)s",
     "Feedback sent! Thanks, we appreciate it!": "Отзыв отправлен! Спасибо, мы ценим это!",
     "Export Cancelled": "Экспорт отменён",
-    "<empty string>": "<пустая строка>",
-    "<%(count)s spaces>": {
-        "one": "<пространство>",
-        "other": "<%(count)s пространств>"
-    },
     "Results are only revealed when you end the poll": "Результаты отображаются только после завершения опроса",
     "Voters see results as soon as they have voted": "Голосующие увидят результаты сразу после голосования",
     "Closed poll": "Закрытый опрос",
@@ -3036,10 +3027,6 @@
     "Failed to load.": "Не удалось загрузить.",
     "Capabilities": "Возможности",
     "Send custom state event": "Оправить пользовательское событие состояния",
-    "Failed to send event!": "Не удалось отправить событие!",
-    "Doesn't look like valid JSON.": "Не похоже на действующий JSON.",
-    "Send custom room account data event": "Отправить пользовательское событие данных учётной записи комнаты",
-    "Send custom account data event": "Отправить пользовательское событие данных учётной записи",
     "Remove search filter for %(filter)s": "Удалить фильтр поиска для %(filter)s",
     "Start a group chat": "Начать групповой чат",
     "Other options": "Другие опции",
@@ -3379,7 +3366,6 @@
     "Checking for an update…": "Проверка наличия обновлений…",
     "Formatting": "Форматирование",
     "%(oldDisplayName)s changed their display name and profile picture": "%(oldDisplayName)s изменил(а) имя и аватар",
-    "Last event:": "Последнее событие:",
     "WARNING: session already verified, but keys do NOT MATCH!": "ВНИМАНИЕ: сеанс уже заверен, но ключи НЕ СОВПАДАЮТ!",
     "ID: ": "ID: ",
     "Edit link": "Изменить ссылку",
@@ -3393,7 +3379,6 @@
     "Your language": "Ваш язык",
     "Message in %(room)s": "Сообщение в %(room)s",
     "Message from %(user)s": "Сообщение от %(user)s",
-    "Thread Id: ": "Id обсуждения: ",
     "Creating rooms…": "Создание комнат…",
     "Sign out of all devices": "Выйти из всех сеансов",
     "Set a new account password…": "Установите новый пароль…",
@@ -3689,5 +3674,22 @@
         "you_did_it": "Вы сделали это!",
         "complete_these": "Выполните их, чтобы получить максимальную отдачу от %(brand)s",
         "community_messaging_description": "Сохраняйте право над владением и контроль над обсуждением в сообществе.\nМасштабируйте, чтобы поддерживать миллионы, с мощной модерацией и функциональной совместимостью."
+    },
+    "devtools": {
+        "send_custom_account_data_event": "Отправить пользовательское событие данных учётной записи",
+        "send_custom_room_account_data_event": "Отправить пользовательское событие данных учётной записи комнаты",
+        "event_type": "Тип события",
+        "state_key": "Ключ состояния",
+        "invalid_json": "Не похоже на действующий JSON.",
+        "failed_to_send": "Не удалось отправить событие!",
+        "event_sent": "Событие отправлено!",
+        "event_content": "Содержимое события",
+        "room_notifications_last_event": "Последнее событие:",
+        "room_notifications_thread_id": "Id обсуждения: ",
+        "spaces": {
+            "one": "<пространство>",
+            "other": "<%(count)s пространств>"
+        },
+        "empty_string": "<пустая строка>"
     }
 }

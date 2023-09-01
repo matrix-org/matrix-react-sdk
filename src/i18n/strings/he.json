@@ -59,14 +59,12 @@
     "No update available.": "אין עדכון זמין.",
     "Collecting app version information": "אוסף מידע על גרסת היישום",
     "Tuesday": "שלישי",
-    "Event sent!": "ארוע נשלח!",
     "Preparing to send logs": "מתכונן לשלוח יומנים",
     "Saturday": "שבת",
     "Monday": "שני",
     "Toolbox": "תיבת כלים",
     "Collecting logs": "אוסף יומנים לנפוי שגיאה (דבאג)",
     "All Rooms": "כל החדרים",
-    "State Key": "מקש מצב",
     "Wednesday": "רביעי",
     "All messages": "כל ההודעות",
     "Call invitation": "הזמנה לשיחה",
@@ -84,9 +82,7 @@
     "Low Priority": "עדיפות נמוכה",
     "Off": "ללא",
     "Failed to remove tag %(tagName)s from room": "נכשל בעת נסיון הסרת תג %(tagName)s מהחדר",
-    "Event Type": "סוג ארוע",
     "Developer Tools": "כלי מפתחים",
-    "Event Content": "תוכן הארוע",
     "Thank you!": "רב תודות!",
     "Your %(brand)s is misconfigured": "ה %(brand)s שלך מוגדר באופן שגוי",
     "Add Phone Number": "הוסף מספר טלפון",
@@ -2218,10 +2214,6 @@
     "Failed to load.": "נכשל בטעינה.",
     "Capabilities": "יכולות",
     "Send custom state event": "שלח אירוע מצב מותאם אישית",
-    "<empty string>": "<מחרוזת ריקה>",
-    "<%(count)s spaces>": {
-        "one": "<רווח>"
-    },
     "Friends and family": "חברים ומשפחה",
     "An error occurred whilst sharing your live location, please try again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב",
     "Only invited people can join.": "רק משתשים מוזמנים יכולים להצטרף.",
@@ -2412,7 +2404,6 @@
     "All rooms you're in will appear in Home.": "כל החדרים שבהם אתם נמצאים יופיעו בדף הבית.",
     "Messages containing keywords": "הודעות המכילות מילות מפתח",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
-    "Doesn't look like valid JSON.": "תבנית JSON לא חוקית",
     "Server": "שרת",
     "Value:": "ערך:",
     "Phase": "שלב",
@@ -2795,5 +2786,16 @@
         "short_hours": "%(value)s שעות",
         "short_minutes": "%(value)s דקות",
         "short_seconds": "%(value)s שניות"
+    },
+    "devtools": {
+        "event_type": "סוג ארוע",
+        "state_key": "מקש מצב",
+        "invalid_json": "תבנית JSON לא חוקית",
+        "event_sent": "ארוע נשלח!",
+        "event_content": "תוכן הארוע",
+        "spaces": {
+            "one": "<רווח>"
+        },
+        "empty_string": "<מחרוזת ריקה>"
     }
 }

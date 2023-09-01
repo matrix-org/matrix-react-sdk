@@ -289,7 +289,6 @@
     "Monday": "Segunda-feira",
     "Collecting logs": "A recolher logs",
     "Invite to this room": "Convidar para esta sala",
-    "State Key": "Chave de estado",
     "Send": "Enviar",
     "All messages": "Todas as mensagens",
     "Call invitation": "Convite para chamada",
@@ -305,9 +304,6 @@
     "Off": "Desativado",
     "Failed to remove tag %(tagName)s from room": "Não foi possível remover a marcação %(tagName)s desta sala",
     "Wednesday": "Quarta-feira",
-    "Event Type": "Tipo de evento",
-    "Event sent!": "Evento enviado!",
-    "Event Content": "Conteúdo do evento",
     "Thank you!": "Obrigado!",
     "Add Email Address": "Adicione adresso de e-mail",
     "Add Phone Number": "Adicione número de telefone",
@@ -781,5 +777,11 @@
         "short_days_hours_minutes_seconds": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
         "short_hours_minutes_seconds": "%(hours)sh %(minutes)sm %(seconds)ss",
         "short_minutes_seconds": "%(minutes)sm %(seconds)ss"
+    },
+    "devtools": {
+        "event_type": "Tipo de evento",
+        "state_key": "Chave de estado",
+        "event_sent": "Evento enviado!",
+        "event_content": "Conteúdo do evento"
     }
 }

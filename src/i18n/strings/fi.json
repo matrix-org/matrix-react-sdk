@@ -409,7 +409,6 @@
     "All messages": "Kaikki viestit",
     "Call invitation": "Puhelukutsu",
     "Messages containing my display name": "Viestit, jotka sisältävät näyttönimeni",
-    "State Key": "Tila-avain",
     "What's new?": "Mitä uutta?",
     "When I'm invited to a room": "Kun minut kutsutaan huoneeseen",
     "Invite to this room": "Kutsu käyttäjiä",
@@ -423,9 +422,6 @@
     "Off": "Ei päällä",
     "Failed to remove tag %(tagName)s from room": "Tagin %(tagName)s poistaminen huoneesta epäonnistui",
     "Wednesday": "Keskiviikko",
-    "Event Type": "Tapahtuman tyyppi",
-    "Event sent!": "Tapahtuma lähetetty!",
-    "Event Content": "Tapahtuman sisältö",
     "Thank you!": "Kiitos!",
     "Send an encrypted reply…": "Lähetä salattu vastaus…",
     "Send an encrypted message…": "Lähetä salattu viesti…",
@@ -2556,7 +2552,6 @@
     "No virtual room for this room": "Tällä huoneella ei ole virtuaalihuonetta",
     "Switches to this room's virtual room, if it has one": "Vaihtaa tämän huoneen virtuaalihuoneeseen, mikäli huoneella sellainen on",
     "Removes user with given id from this room": "Poistaa tunnuksen mukaisen käyttäjän tästä huoneesta",
-    "Failed to send event!": "Tapahtuman lähettäminen epäonnistui!",
     "Recent searches": "Viimeaikaiset haut",
     "Other searches": "Muut haut",
     "Public rooms": "Julkiset huoneet",
@@ -2668,7 +2663,6 @@
     "Server": "Palvelin",
     "Failed to load.": "Lataaminen epäonnistui.",
     "Capabilities": "Kyvykkyydet",
-    "Doesn't look like valid JSON.": "Ei vaikuta kelvolliselta JSON:ilta.",
     "Verify other device": "Vahvista toinen laite",
     "Use <arrows/> to scroll": "Käytä <arrows/> vierittääksesi",
     "Clear": "Tyhjennä",
@@ -2767,9 +2761,6 @@
     "Input devices": "Sisääntulolaitteet",
     "Client Versions": "Asiakasversiot",
     "Server Versions": "Palvelinversiot",
-    "<%(count)s spaces>": {
-        "other": "<%(count)s avaruutta>"
-    },
     "Click the button below to confirm setting up encryption.": "Napsauta alla olevaa painiketta vahvistaaksesi salauksen asettamisen.",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Unohtanut tai kadottanut kaikki palautustavat? <a>Nollaa kaikki</a>",
     "Open room": "Avaa huone",
@@ -3236,9 +3227,6 @@
     "Keep going…": "Jatka…",
     "Connecting…": "Yhdistetään…",
     "Mute room": "Mykistä huone",
-    "Sender: ": "Lähettäjä: ",
-    "No receipt found": "Kuittausta ei löytynyt",
-    "Main timeline": "Pääaikajana",
     "Fetching keys from server…": "Noudetaan avaimia palvelimelta…",
     "Checking…": "Tarkistetaan…",
     "Invites by email can only be sent one at a time": "Sähköpostikutsuja voi lähettää vain yhden kerrallaan",
@@ -3601,5 +3589,19 @@
         },
         "you_did_it": "Teit sen!",
         "community_messaging_description": "Pidä yhteisön keskustelu hallussa. Skaalautuu miljooniin käyttäjiin ja\ntarjoaa tehokkaan moderoinnin ja yhteentoimivuuden."
+    },
+    "devtools": {
+        "event_type": "Tapahtuman tyyppi",
+        "state_key": "Tila-avain",
+        "invalid_json": "Ei vaikuta kelvolliselta JSON:ilta.",
+        "failed_to_send": "Tapahtuman lähettäminen epäonnistui!",
+        "event_sent": "Tapahtuma lähetetty!",
+        "event_content": "Tapahtuman sisältö",
+        "no_receipt_found": "Kuittausta ei löytynyt",
+        "main_timeline": "Pääaikajana",
+        "room_notifications_sender": "Lähettäjä: ",
+        "spaces": {
+            "other": "<%(count)s avaruutta>"
+        }
     }
 }

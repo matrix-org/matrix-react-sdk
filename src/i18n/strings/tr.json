@@ -384,10 +384,6 @@
     "Hide advanced": "Gelişmiş gizle",
     "Show advanced": "Gelişmiş göster",
     "Incompatible Database": "Uyumsuz Veritabanı",
-    "Event sent!": "Olay gönderildi!",
-    "Event Type": "Olay Tipi",
-    "State Key": "Durum Anahtarı",
-    "Event Content": "Olay İçeriği",
     "Filter results": "Sonuçları filtrele",
     "Toolbox": "Araç Kutusu",
     "Developer Tools": "Geliştirici Araçları",
@@ -2052,5 +2048,11 @@
     },
     "time": {
         "seconds_left": "%(seconds)s saniye kaldı"
+    },
+    "devtools": {
+        "event_type": "Olay Tipi",
+        "state_key": "Durum Anahtarı",
+        "event_sent": "Olay gönderildi!",
+        "event_content": "Olay İçeriği"
     }
 }

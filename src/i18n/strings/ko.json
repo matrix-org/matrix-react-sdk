@@ -423,9 +423,6 @@
         "other": "%(count)s번 초대했습니다",
         "one": "초대했습니다"
     },
-    "Event Content": "이벤트 내용",
-    "Event Type": "이벤트 종류",
-    "Event sent!": "이벤트를 보냈습니다!",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "응답한 이벤트를 불러오지 못했습니다, 존재하지 않거나 볼 수 있는 권한이 없습니다.",
     "A text message has been sent to %(msisdn)s": "%(msisdn)s님에게 문자 메시지를 보냈습니다",
     "was invited %(count)s times": {
@@ -452,7 +449,6 @@
     "Room Notification": "방 알림",
     "Notify the whole room": "방 전체에 알림",
     "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "홈서버 %(homeserverDomain)s을(를) 계속 사용하기 위해서는 저희 이용 약관을 검토하고 동의해주세요.",
-    "State Key": "상태 키",
     "Clear Storage and Sign Out": "저장소를 지우고 로그아웃",
     "Send Logs": "로그 보내기",
     "We encountered an error trying to restore your previous session.": "이전 활동을 복구하는 중 에러가 발생했습니다.",
@@ -1265,7 +1261,6 @@
     "Spell check": "맞춤법 검사",
     "Unverified sessions": "검증되지 않은 세션들",
     "Match system theme": "시스템 테마 사용",
-    "Threads timeline": "스레드 타임라인",
     "Sessions": "세션목록",
     "Unverified session": "검증되지 않은 세션",
     "Favourited": "즐겨찾기 됨",
@@ -1414,5 +1409,12 @@
         "send_logs": "로그 보내기",
         "github_issue": "GitHub 이슈",
         "before_submitting": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>."
+    },
+    "devtools": {
+        "event_type": "이벤트 종류",
+        "state_key": "상태 키",
+        "event_sent": "이벤트를 보냈습니다!",
+        "event_content": "이벤트 내용",
+        "threads_timeline": "스레드 타임라인"
     }
 }

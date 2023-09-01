@@ -425,7 +425,6 @@
     "All messages": "Всички съобщения",
     "Call invitation": "Покана за разговор",
     "Messages containing my display name": "Съобщения, съдържащи моя псевдоним",
-    "State Key": "State ключ",
     "What's new?": "Какво ново?",
     "When I'm invited to a room": "Когато ме поканят в стая",
     "Invite to this room": "Покани в тази стая",
@@ -436,12 +435,9 @@
     "Messages in group chats": "Съобщения в групови чатове",
     "Yesterday": "Вчера",
     "Error encountered (%(errorDetail)s).": "Възникна грешка (%(errorDetail)s).",
-    "Event Type": "Вид на събитие",
     "Low Priority": "Нисък приоритет",
     "What's New": "Какво ново",
     "Off": "Изкл.",
-    "Event sent!": "Събитието е изпратено!",
-    "Event Content": "Съдържание на събитието",
     "Thank you!": "Благодарим!",
     "Missing roomId.": "Липсва идентификатор на стая.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не може да се зареди събитието, на което е отговорено. Или не съществува или нямате достъп да го видите.",
@@ -2146,5 +2142,11 @@
         "short_hours": "%(value)sч",
         "short_minutes": "%(value)sм",
         "short_seconds": "%(value)sс"
+    },
+    "devtools": {
+        "event_type": "Вид на събитие",
+        "state_key": "State ключ",
+        "event_sent": "Събитието е изпратено!",
+        "event_content": "Съдържание на събитието"
     }
 }

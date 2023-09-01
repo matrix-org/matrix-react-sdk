@@ -417,7 +417,6 @@
     "You cannot delete this message. (%(code)s)": "你无法删除这条消息。(%(code)s)",
     "All messages": "全部消息",
     "Call invitation": "当受到通话邀请时",
-    "State Key": "状态键（State Key）",
     "What's new?": "有何新变动？",
     "When I'm invited to a room": "当我被邀请进入房间",
     "Invite to this room": "邀请到此房间",
@@ -430,9 +429,6 @@
     "Error encountered (%(errorDetail)s).": "遇到错误 (%(errorDetail)s)。",
     "Low Priority": "低优先级",
     "Off": "关闭",
-    "Event Type": "事件类型",
-    "Event sent!": "事件已发送！",
-    "Event Content": "事件内容",
     "Thank you!": "谢谢！",
     "You need to be able to invite users to do that.": "你需要有邀请用户的权限才能进行此操作。",
     "Missing roomId.": "缺少roomId。",
@@ -3037,14 +3033,6 @@
     "Client Versions": "客户端版本",
     "Failed to load.": "载入失败。",
     "Send custom state event": "发送自定义状态事件",
-    "<empty string>": "<空字符串>",
-    "<%(count)s spaces>": {
-        "one": "<空间>",
-        "other": "<%(count)s个空间>"
-    },
-    "Failed to send event!": "发送事件失败！",
-    "Doesn't look like valid JSON.": "看起来不像有效的JSON。",
-    "Send custom room account data event": "发送自定义房间账户资料事件",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "你的消息未被发送，因为此家服务器已被其管理员屏蔽。请<a>联系你的服务管理员</a>以继续使用服务。",
     "Spell check": "拼写检查",
     "Enable notifications": "启用通知",
@@ -3109,7 +3097,6 @@
     "Number of users": "用户数",
     "Server": "服务器",
     "Server Versions": "服务器版本",
-    "Send custom account data event": "发送自定义账户数据事件",
     "Search Dialog": "搜索对话",
     "Join %(roomAddress)s": "加入%(roomAddress)s",
     "Ignore user": "忽略用户",
@@ -3591,5 +3578,20 @@
         "you_did_it": "你做到了！",
         "complete_these": "完成这些步骤以充分利用%(brand)s",
         "community_messaging_description": "保持对社区讨论的所有权和控制权。\n可扩展至支持数百万人，具有强大的管理审核功能和互操作性。"
+    },
+    "devtools": {
+        "send_custom_account_data_event": "发送自定义账户数据事件",
+        "send_custom_room_account_data_event": "发送自定义房间账户资料事件",
+        "event_type": "事件类型",
+        "state_key": "状态键（State Key）",
+        "invalid_json": "看起来不像有效的JSON。",
+        "failed_to_send": "发送事件失败！",
+        "event_sent": "事件已发送！",
+        "event_content": "事件内容",
+        "spaces": {
+            "one": "<空间>",
+            "other": "<%(count)s个空间>"
+        },
+        "empty_string": "<空字符串>"
     }
 }

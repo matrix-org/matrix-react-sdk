@@ -116,13 +116,11 @@
     "Search…": "Søg…",
     "When I'm invited to a room": "Når jeg bliver inviteret til et rum",
     "Tuesday": "Tirsdag",
-    "Event sent!": "Begivenhed sendt!",
     "Saturday": "Lørdag",
     "Monday": "Mandag",
     "Toolbox": "Værktøjer",
     "Collecting logs": "Indsamler logfiler",
     "Invite to this room": "Inviter til dette rum",
-    "State Key": "Tilstandsnøgle",
     "Send": "Send",
     "All messages": "Alle beskeder",
     "Call invitation": "Opkalds invitation",
@@ -134,12 +132,10 @@
     "Messages in group chats": "Beskeder i gruppechats",
     "Yesterday": "I går",
     "Error encountered (%(errorDetail)s).": "En fejl er opstået (%(errorDetail)s).",
-    "Event Type": "Begivenhedstype",
     "Low Priority": "Lav prioritet",
     "Failed to remove tag %(tagName)s from room": "Kunne ikke fjerne tag(s): %(tagName)s fra rummet",
     "Wednesday": "Onsdag",
     "Developer Tools": "Udviklingsværktøjer",
-    "Event Content": "Begivenhedsindhold",
     "Thank you!": "Tak!",
     "Logs sent": "Logfiler sendt",
     "Failed to send logs: ": "Kunne ikke sende logfiler: ",
@@ -732,5 +728,11 @@
     },
     "time": {
         "date_at_time": "%(date)s om %(time)s"
+    },
+    "devtools": {
+        "event_type": "Begivenhedstype",
+        "state_key": "Tilstandsnøgle",
+        "event_sent": "Begivenhed sendt!",
+        "event_content": "Begivenhedsindhold"
     }
 }

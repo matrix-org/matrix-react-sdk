@@ -207,8 +207,6 @@
     "And %(count)s more...": {
         "other": "Og %(count)s til viðbótar..."
     },
-    "Event sent!": "Atburður sendur!",
-    "State Key": "Stöðulykill",
     "Clear Storage and Sign Out": "Hreinsa gagnageymslu og skrá út",
     "Unable to restore session": "Tókst ekki að endurheimta setu",
     "This doesn't appear to be a valid email address": "Þetta lítur ekki út eins og gilt tölvupóstfang",
@@ -882,11 +880,6 @@
     "Setting:": "Stilling:",
     "Edit setting": "Breyta stillingu",
     "Value": "Gildi",
-    "<empty string>": "<auður strengur>",
-    "<%(count)s spaces>": {
-        "one": "<svæði>",
-        "other": "<%(count)s svæði>"
-    },
     "Public space": "Opinbert svæði",
     "Private space (invite only)": "Einkasvæði (einungis gegn boði)",
     "Public room": "Almenningsspjallrás",
@@ -1913,7 +1906,6 @@
     "Setting ID": "Auðkenni stillingar",
     "There was an error finding this widget.": "Það kom upp villa við að finna þennan viðmótshluta.",
     "Active Widgets": "Virkir viðmótshlutar",
-    "Event Content": "Efni atburðar",
     "Search for spaces": "Leita að svæðum",
     "Want to add a new space instead?": "Viltu frekar bæta við nýju svæði?",
     "Add existing space": "Bæta við fyrirliggjandi svæði",
@@ -2200,7 +2192,6 @@
     "Failed to upgrade room": "Mistókst að uppfæra spjallrás",
     "Export Chat": "Flytja út spjall",
     "Exporting your data": "Útflutningur gagnanna þinna",
-    "Event Type": "Tegund atburðar",
     "Error - Mixed content": "Villa - blandað efni",
     "Error loading Widget": "Villa við að hlaða inn viðmótshluta",
     "Failed to fetch your location. Please try again later.": "Mistókst að sækja staðsetninguna þína. Reyndu aftur síðar.",
@@ -2252,8 +2243,6 @@
     "Failed to load.": "Mistókst að hlaða inn.",
     "Capabilities": "Geta",
     "Send custom state event": "Senda sérsniðinn stöðuatburð",
-    "Failed to send event!": "Mistókst að senda atburð!",
-    "Doesn't look like valid JSON.": "Þetta lítur ekki út eins og gilt JSON.",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Gleymdirðu eða týndir öllum aðferðum til endurheimtu? <a>Endurstilla allt</a>",
     "Wrong file type": "Röng skráartegund",
     "This widget would like to:": "Þessi viðmótshluti vill:",
@@ -3391,5 +3380,18 @@
         },
         "you_did_it": "Þú kláraðir þetta!",
         "complete_these": "Kláraðu þetta til að fá sem mest út úr %(brand)s"
+    },
+    "devtools": {
+        "event_type": "Tegund atburðar",
+        "state_key": "Stöðulykill",
+        "invalid_json": "Þetta lítur ekki út eins og gilt JSON.",
+        "failed_to_send": "Mistókst að senda atburð!",
+        "event_sent": "Atburður sendur!",
+        "event_content": "Efni atburðar",
+        "spaces": {
+            "one": "<svæði>",
+            "other": "<%(count)s svæði>"
+        },
+        "empty_string": "<auður strengur>"
     }
 }

@@ -414,7 +414,6 @@
     "Collecting app version information": "Tiek iegūta programmas versijas informācija",
     "Tuesday": "Otrdiena",
     "Search…": "Meklēt…",
-    "Event sent!": "Notikums nosūtīts!",
     "Preparing to send logs": "Gatavojos nosūtīt atutošanas logfailus",
     "Saturday": "Sestdiena",
     "Monday": "Pirmdiena",
@@ -425,7 +424,6 @@
     "You cannot delete this message. (%(code)s)": "Tu nevari dzēst šo ziņu. (%(code)s)",
     "All messages": "Visas ziņas",
     "Call invitation": "Uzaicinājuma zvans",
-    "State Key": "Stāvokļa atslēga",
     "What's new?": "Kas jauns?",
     "When I'm invited to a room": "Kad esmu uzaicināts/a istabā",
     "Invite to this room": "Uzaicināt uz šo istabu",
@@ -437,9 +435,7 @@
     "Error encountered (%(errorDetail)s).": "Gadījās kļūda (%(errorDetail)s).",
     "Low Priority": "Zema prioritāte",
     "Off": "Izslēgt",
-    "Event Type": "Notikuma tips",
     "Developer Tools": "Izstrādātāja rīki",
-    "Event Content": "Notikuma saturs",
     "Thank you!": "Tencinam!",
     "Permission Required": "Nepieciešama atļauja",
     "You do not have permission to start a conference call in this room": "Šajā istabā nav atļaujas sākt konferences zvanu",
@@ -1851,5 +1847,11 @@
     },
     "onboarding": {
         "personal_messaging_action": "Sāciet savu pirmo čatu"
+    },
+    "devtools": {
+        "event_type": "Notikuma tips",
+        "state_key": "Stāvokļa atslēga",
+        "event_sent": "Notikums nosūtīts!",
+        "event_content": "Notikuma saturs"
     }
 }

@@ -97,7 +97,7 @@ const StateEventButton: React.FC<StateEventButtonProps> = ({ label, onClick }) =
 
     let content = label;
     if (!trimmed) {
-        content = label.length > 0 ? _t("<%(count)s spaces>", { count: label.length }) : _t("<empty string>");
+        content = label.length > 0 ? _t("devtools|spaces", { count: label.length }) : _t("devtools|empty_string");
     }
 
     return (

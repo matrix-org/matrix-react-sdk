@@ -2775,13 +2775,8 @@
     "Server": "Διακομιστής",
     "Failed to load.": "Αποτυχία φόρτωσης.",
     "Capabilities": "Δυνατότητες",
-    "<%(count)s spaces>": {
-        "one": "<χώρος>",
-        "other": "<%(count)s χώροι>"
-    },
     "No results found": "Δε βρέθηκαν αποτελέσματα",
     "Filter results": "Φιλτράρισμα αποτελεσμάτων",
-    "Doesn't look like valid JSON.": "Δε μοιάζει με έγκυρο JSON.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Για να μας βοηθήσετε να το αποτρέψουμε αυτό στο μέλλον, <a>στείλτε μας τα αρχεία καταγραφής</a>.",
     "To search messages, look for this icon at the top of a room <icon/>": "Για να αναζητήσετε μηνύματα, βρείτε αυτό το εικονίδιο στην κορυφή ενός δωματίου <icon/>",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Η εκκαθάριση του αποθηκευτικού χώρου του προγράμματος περιήγησής σας μπορεί να διορθώσει το πρόβλημα, αλλά θα αποσυνδεθείτε και θα κάνει τυχόν κρυπτογραφημένο ιστορικό συνομιλιών να μην είναι αναγνώσιμο.",
@@ -2934,14 +2929,6 @@
     "Server Versions": "Εκδόσεις διακομιστή",
     "Client Versions": "Εκδόσεις πελάτη",
     "Send custom state event": "Αποστολή προσαρμοσμένου συμβάντος κατάστασης",
-    "<empty string>": "<empty string>",
-    "Event Content": "Περιεχόμενο συμβάντος",
-    "Event sent!": "Το συμβάν στάλθηκε!",
-    "Failed to send event!": "Αποτυχία αποστολής συμβάντος!",
-    "State Key": "Κλειδί κατάστασης",
-    "Event Type": "Τύπος συμβάντος",
-    "Send custom account data event": "Αποστολή προσαρμοσμένου συμβάντος δεδομένων λογαριασμού",
-    "Send custom room account data event": "Αποστολή προσαρμοσμένου συμβάντος δεδομένων λογαριασμού δωματίου",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Εάν έχετε ξεχάσει το κλειδί ασφαλείας σας, μπορείτε να <button>ρυθμίσετε νέες επιλογές ανάκτησης</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Αποκτήστε πρόσβαση στο ιστορικό ασφαλών μηνυμάτων σας και ρυθμίστε την ασφαλή ανταλλαγή μηνυμάτων εισάγοντας το Κλειδί ασφαλείας σας.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Εάν έχετε ξεχάσει τη φράση ασφαλείας σας, μπορείτε να <button1>χρησιμοποιήσετε το κλειδί ασφαλείας</button1> ή <button2>να ρυθμίστε νέες επιλογές ανάκτησης</button2>",
@@ -3312,5 +3299,20 @@
         "short_seconds": "%(value)s\"",
         "last_week": "Προηγούμενη εβδομάδα",
         "last_month": "Προηγούμενο μήνα"
+    },
+    "devtools": {
+        "send_custom_account_data_event": "Αποστολή προσαρμοσμένου συμβάντος δεδομένων λογαριασμού",
+        "send_custom_room_account_data_event": "Αποστολή προσαρμοσμένου συμβάντος δεδομένων λογαριασμού δωματίου",
+        "event_type": "Τύπος συμβάντος",
+        "state_key": "Κλειδί κατάστασης",
+        "invalid_json": "Δε μοιάζει με έγκυρο JSON.",
+        "failed_to_send": "Αποτυχία αποστολής συμβάντος!",
+        "event_sent": "Το συμβάν στάλθηκε!",
+        "event_content": "Περιεχόμενο συμβάντος",
+        "spaces": {
+            "one": "<χώρος>",
+            "other": "<%(count)s χώροι>"
+        },
+        "empty_string": "<empty string>"
     }
 }
