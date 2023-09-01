@@ -170,10 +170,10 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
                 stateNode = (
                     <div className="mx_cryptoEvent_buttons">
                         <AccessibleButton kind="danger" onClick={this.onRejectClicked}>
-                            {_t("Decline")}
+                            {_t("action|decline")}
                         </AccessibleButton>
                         <AccessibleButton kind="primary" onClick={this.onAcceptClicked}>
-                            {_t("Accept")}
+                            {_t("action|accept")}
                         </AccessibleButton>
                     </div>
                 );

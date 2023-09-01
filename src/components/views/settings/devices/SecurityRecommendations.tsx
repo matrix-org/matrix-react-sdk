@@ -63,8 +63,7 @@ const SecurityRecommendations: React.FC<Props> = ({ devices, currentDeviceId, go
                     description={
                         <>
                             {_t(
-                                `Verify your sessions for enhanced secure messaging` +
-                                    ` or sign out from those you don't recognize or use anymore.`,
+                                "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.",
                             )}
                             <DeviceSecurityLearnMore variation={DeviceSecurityVariation.Unverified} />
                         </>
@@ -75,7 +74,7 @@ const SecurityRecommendations: React.FC<Props> = ({ devices, currentDeviceId, go
                         onClick={() => goToFilteredList(DeviceSecurityVariation.Unverified)}
                         data-testid="unverified-devices-cta"
                     >
-                        {_t("View all") + ` (${unverifiedDevicesCount})`}
+                        {_t("action|view_all") + ` (${unverifiedDevicesCount})`}
                     </AccessibleButton>
                 </DeviceSecurityCard>
             )}
@@ -88,8 +87,7 @@ const SecurityRecommendations: React.FC<Props> = ({ devices, currentDeviceId, go
                         description={
                             <>
                                 {_t(
-                                    `Consider signing out from old sessions ` +
-                                        `(%(inactiveAgeDays)s days or older) you don't use anymore.`,
+                                    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.",
                                     { inactiveAgeDays },
                                 )}
                                 <DeviceSecurityLearnMore variation={DeviceSecurityVariation.Inactive} />
@@ -101,7 +99,7 @@ const SecurityRecommendations: React.FC<Props> = ({ devices, currentDeviceId, go
                             onClick={() => goToFilteredList(DeviceSecurityVariation.Inactive)}
                             data-testid="inactive-devices-cta"
                         >
-                            {_t("View all") + ` (${inactiveDevicesCount})`}
+                            {_t("action|view_all") + ` (${inactiveDevicesCount})`}
                         </AccessibleButton>
                     </DeviceSecurityCard>
                 </>

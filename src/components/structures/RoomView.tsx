@@ -286,7 +286,7 @@ function LocalRoomView(props: LocalRoomViewProps): ReactElement {
     if (room.isError) {
         const buttons = (
             <AccessibleButton onClick={onRetryClicked} className="mx_RoomStatusBar_unsentRetry">
-                {_t("Retry")}
+                {_t("action|retry")}
             </AccessibleButton>
         );
 
@@ -2443,6 +2443,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 resizeNotifier={this.props.resizeNotifier}
                 permalinkCreator={this.permalinkCreator}
                 e2eStatus={this.state.e2eStatus}
+                onSearchClick={this.onSearchClick}
             />
         ) : undefined;
 

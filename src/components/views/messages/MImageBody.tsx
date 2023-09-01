@@ -107,7 +107,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             if (!httpUrl) return;
             const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
                 src: httpUrl,
-                name: content.body && content.body.length > 0 ? content.body : _t("Attachment"),
+                name: content.body && content.body.length > 0 ? content.body : _t("common|attachment"),
                 mxEvent: this.props.mxEvent,
                 permalinkCreator: this.props.permalinkCreator,
             };
@@ -395,7 +395,11 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             return null;
         }
 
-        return <span className="mx_MImageBody_banner">{presentableTextForFile(content, _t("Image"), true, true)}</span>;
+        return (
+            <span className="mx_MImageBody_banner">
+                {presentableTextForFile(content, _t("common|image"), true, true)}
+            </span>
+        );
     }
 
     protected messageContent(

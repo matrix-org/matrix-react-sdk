@@ -40,14 +40,14 @@ export const showToast = (
 
     ToastStore.sharedInstance().addOrReplaceToast({
         key: TOAST_KEY,
-        title: _t("Warning"),
+        title: _t("common|warning"),
         props: {
             description: (
                 <React.Fragment>
                     {errorText} {contactText}
                 </React.Fragment>
             ),
-            acceptLabel: _t("Ok"),
+            acceptLabel: _t("action|ok"),
             onAccept: () => {
                 hideToast();
                 if (onHideToast) onHideToast();

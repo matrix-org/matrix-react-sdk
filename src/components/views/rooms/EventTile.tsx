@@ -981,9 +981,6 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             mx_EventTile_lastInSection: this.props.lastInSection,
             mx_EventTile_contextual: this.props.contextual,
             mx_EventTile_actionBarFocused: this.state.actionBarFocused,
-            mx_EventTile_verified: !isBubbleMessage && this.state.verified === E2EState.Verified,
-            mx_EventTile_unverified: !isBubbleMessage && this.state.verified === E2EState.Warning,
-            mx_EventTile_unknown: !isBubbleMessage && this.state.verified === E2EState.Unknown,
             mx_EventTile_bad: isEncryptionFailure,
             mx_EventTile_emote: msgtype === MsgType.Emote,
             mx_EventTile_noSender: this.props.hideSender,
@@ -1006,28 +1003,28 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         let avatar: JSX.Element | null = null;
         let sender: JSX.Element | null = null;
-        let avatarSize: number;
+        let avatarSize: string;
         let needsSenderProfile: boolean;
 
         if (isRenderingNotification) {
-            avatarSize = 24;
+            avatarSize = "24px";
             needsSenderProfile = true;
         } else if (isInfoMessage) {
             // a small avatar, with no sender profile, for
             // joins/parts/etc
-            avatarSize = 14;
+            avatarSize = "14px";
             needsSenderProfile = false;
         } else if (
             this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
             (this.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation)
         ) {
-            avatarSize = 32;
+            avatarSize = "32px";
             needsSenderProfile = true;
         } else if (eventType === EventType.RoomCreate || isBubbleMessage) {
-            avatarSize = 0;
+            avatarSize = "0";
             needsSenderProfile = false;
         } else if (this.props.layout == Layout.IRC) {
-            avatarSize = 14;
+            avatarSize = "14px";
             needsSenderProfile = true;
         } else if (
             (this.props.continuation && this.context.timelineRenderingType !== TimelineRenderingType.File) ||
@@ -1035,10 +1032,10 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             ElementCall.CALL_EVENT_TYPE.matches(eventType)
         ) {
             // no avatar or sender profile for continuation messages and call tiles
-            avatarSize = 0;
+            avatarSize = "0";
             needsSenderProfile = false;
         } else {
-            avatarSize = 30;
+            avatarSize = "30px";
             needsSenderProfile = true;
         }
 
@@ -1062,8 +1059,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                 <div className="mx_EventTile_avatar">
                     <MemberAvatar
                         member={member}
-                        width={avatarSize}
-                        height={avatarSize}
+                        size={avatarSize}
                         viewUserOnClick={viewUserOnClick}
                         forceHistorical={this.props.mxEvent.getType() === EventType.RoomMember}
                     />
@@ -1309,7 +1305,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         </div>
                         {isRenderingNotification && room ? (
                             <div className="mx_EventTile_avatar">
-                                <RoomAvatar room={room} width={28} height={28} />
+                                <RoomAvatar room={room} size="28px" />
                             </div>
                         ) : (
                             avatar

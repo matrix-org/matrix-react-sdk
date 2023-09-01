@@ -4,33 +4,22 @@ exports[`<BeaconMarker /> renders marker when beacon has location 1`] = `
 <DocumentFragment>
   <span>
     <div
-      class="mx_Marker mx_Username_color4"
+      class="mx_Marker mx_Username_color8"
       id="!room:server_@alice:server"
     >
       <div
         class="mx_Marker_border"
       >
         <span
-          class="mx_BaseAvatar"
+          class="_avatar_2lhia_17 mx_BaseAvatar _avatar-imageless_2lhia_56"
+          data-color="8"
+          data-testid="avatar-img"
+          data-type="round"
           role="presentation"
+          style="--cpd-avatar-size: 36px;"
+          title="@alice:server"
         >
-          <span
-            aria-hidden="true"
-            class="mx_BaseAvatar_initial"
-            style="font-size: 23.400000000000002px; width: 36px; line-height: 36px;"
-          >
-            A
-          </span>
-          <img
-            alt=""
-            aria-hidden="true"
-            class="mx_BaseAvatar_image"
-            data-testid="avatar-img"
-            loading="lazy"
-            src="data:image/png;base64,00"
-            style="width: 36px; height: 36px;"
-            title="@alice:server"
-          />
+          a
         </span>
       </div>
     </div>

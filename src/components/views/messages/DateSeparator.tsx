@@ -18,9 +18,10 @@ limitations under the License.
 import React from "react";
 import { Direction, ConnectionError, MatrixError, HTTPError } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+import { capitalize } from "lodash";
 
-import { _t } from "../../../languageHandler";
-import { formatFullDateNoDay, formatFullDateNoTime } from "../../../DateUtils";
+import { _t, getUserLanguage } from "../../../languageHandler";
+import { formatFullDateNoDay, formatFullDateNoTime, getDaysArray } from "../../../DateUtils";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -39,10 +40,6 @@ import IconizedContextMenu, {
 import JumpToDatePicker from "./JumpToDatePicker";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { SdkContextClass } from "../../../contexts/SDKContext";
-
-function getDaysArray(): string[] {
-    return [_t("Sunday"), _t("Monday"), _t("Tuesday"), _t("Wednesday"), _t("Thursday"), _t("Friday"), _t("Saturday")];
-}
 
 interface IProps {
     roomId: string;
@@ -96,6 +93,10 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         });
     };
 
+    private get relativeTimeFormat(): Intl.RelativeTimeFormat {
+        return new Intl.RelativeTimeFormat(getUserLanguage(), { style: "long", numeric: "auto" });
+    }
+
     private getLabel(): string {
         const date = new Date(this.props.ts);
         const disableRelativeTimestamps = !SettingsStore.getValue(UIFeature.TimelineEnableRelativeDates);
@@ -105,15 +106,15 @@ export default class DateSeparator extends React.Component<IProps, IState> {
 
         const today = new Date();
         const yesterday = new Date();
-        const days = getDaysArray();
+        const days = getDaysArray("long");
         yesterday.setDate(today.getDate() - 1);
 
         if (date.toDateString() === today.toDateString()) {
-            return _t("Today");
+            return this.relativeTimeFormat.format(0, "day"); // Today
         } else if (date.toDateString() === yesterday.toDateString()) {
-            return _t("Yesterday");
+            return this.relativeTimeFormat.format(-1, "day"); // Yesterday
         } else if (today.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
-            return days[date.getDay()];
+            return days[date.getDay()]; // Sunday-Saturday
         } else {
             return formatFullDateNoTime(date);
         }
@@ -170,16 +171,12 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 let submitDebugLogsContent: JSX.Element = <></>;
                 if (err instanceof ConnectionError) {
                     friendlyErrorMessage = _t(
-                        "A network error occurred while trying to find and jump to the given date. " +
-                            "Your homeserver might be down or there was just a temporary problem with " +
-                            "your internet connection. Please try again. If this continues, please " +
-                            "contact your homeserver administrator.",
+                        "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.",
                     );
                 } else if (err instanceof MatrixError) {
                     if (err?.errcode === "M_NOT_FOUND") {
                         friendlyErrorMessage = _t(
-                            "We were unable to find an event looking forwards from %(dateString)s. " +
-                                "Try choosing an earlier date.",
+                            "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.",
                             { dateString: formatFullDateNoDay(new Date(unixTimestamp)) },
                         );
                     } else {
@@ -195,8 +192,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                     submitDebugLogsContent = (
                         <p>
                             {_t(
-                                "Please submit <debugLogsLink>debug logs</debugLogsLink> to help us " +
-                                    "track down the problem.",
+                                "Please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.",
                                 {},
                                 {
                                     debugLogsLink: (sub) => (
@@ -271,6 +267,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
     private renderJumpToDateMenu(): React.ReactElement {
         let contextMenu: JSX.Element | undefined;
         if (this.state.contextMenuPosition) {
+            const relativeTimeFormat = this.relativeTimeFormat;
             contextMenu = (
                 <IconizedContextMenu
                     {...contextMenuBelow(this.state.contextMenuPosition)}
@@ -278,12 +275,12 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 >
                     <IconizedContextMenuOptionList first>
                         <IconizedContextMenuOption
-                            label={_t("Last week")}
+                            label={capitalize(relativeTimeFormat.format(-1, "week"))}
                             onClick={this.onLastWeekClicked}
                             data-testid="jump-to-date-last-week"
                         />
                         <IconizedContextMenuOption
-                            label={_t("Last month")}
+                            label={capitalize(relativeTimeFormat.format(-1, "month"))}
                             onClick={this.onLastMonthClicked}
                             data-testid="jump-to-date-last-month"
                         />

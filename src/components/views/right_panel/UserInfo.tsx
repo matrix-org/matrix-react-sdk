@@ -68,7 +68,6 @@ import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
 import { mediaFromMxc } from "../../../customisations/Media";
-import UIStore from "../../../stores/UIStore";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import ConfirmSpaceUserActionDialog from "../dialogs/ConfirmSpaceUserActionDialog";
 import { bulkSpaceBehaviour } from "../../../utils/space";
@@ -83,6 +82,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../utils/direct-messages";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { asyncSome } from "../../../utils/arrays";
+import UIStore from "../../../stores/UIStore";
 
 export interface IDevice extends Device {
     ambiguous?: boolean;
@@ -205,7 +205,7 @@ export function DeviceItem({ userId, device }: { userId: string; device: IDevice
     }
 
     let trustedLabel: string | undefined;
-    if (userTrust.isVerified()) trustedLabel = isVerified ? _t("Trusted") : _t("Not trusted");
+    if (userTrust.isVerified()) trustedLabel = isVerified ? _t("common|trusted") : _t("common|not_trusted");
 
     if (isVerified === undefined) {
         // we're still deciding if the device is verified
@@ -343,7 +343,7 @@ const MessageButton = ({ member }: { member: Member }): JSX.Element => {
             className="mx_UserInfo_field"
             disabled={busy}
         >
-            {_t("Message")}
+            {_t("common|message")}
         </AccessibleButton>
     );
 };
@@ -382,12 +382,11 @@ export const UserOptionsSection: React.FC<{
             description: (
                 <div>
                     {_t(
-                        "All messages and invites from this user will be hidden. " +
-                            "Are you sure you want to ignore them?",
+                        "All messages and invites from this user will be hidden. Are you sure you want to ignore them?",
                     )}
                 </div>
             ),
-            button: _t("Ignore"),
+            button: _t("action|ignore"),
         });
         const [confirmed] = await finished;
 
@@ -407,7 +406,7 @@ export const UserOptionsSection: React.FC<{
                 kind="link"
                 className={classNames("mx_UserInfo_field", { mx_UserInfo_destructive: !isIgnored })}
             >
-                {isIgnored ? _t("Unignore") : _t("Ignore")}
+                {isIgnored ? _t("Unignore") : _t("action|ignore")}
             </AccessibleButton>
         );
 
@@ -443,7 +442,7 @@ export const UserOptionsSection: React.FC<{
 
             insertPillButton = (
                 <AccessibleButton kind="link" onClick={onInsertPillButton} className="mx_UserInfo_field">
-                    {_t("Mention")}
+                    {_t("action|mention")}
                 </AccessibleButton>
             );
         }
@@ -486,7 +485,7 @@ export const UserOptionsSection: React.FC<{
 
             inviteUserButton = (
                 <AccessibleButton kind="link" onClick={onInviteUserButton} className="mx_UserInfo_field">
-                    {_t("Invite")}
+                    {_t("action|invite")}
                 </AccessibleButton>
             );
         }
@@ -502,7 +501,7 @@ export const UserOptionsSection: React.FC<{
 
     return (
         <div className="mx_UserInfo_container">
-            <h3>{_t("Options")}</h3>
+            <h3>{_t("common|options")}</h3>
             <div>
                 {directMessageButton}
                 {readReceiptButton}
@@ -522,14 +521,10 @@ export const warnSelfDemote = async (isSpace: boolean): Promise<boolean> => {
             <div>
                 {isSpace
                     ? _t(
-                          "You will not be able to undo this change as you are demoting yourself, " +
-                              "if you are the last privileged user in the space it will be impossible " +
-                              "to regain privileges.",
+                          "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.",
                       )
                     : _t(
-                          "You will not be able to undo this change as you are demoting yourself, " +
-                              "if you are the last privileged user in the room it will be impossible " +
-                              "to regain privileges.",
+                          "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.",
                       )}
             </div>
         ),
@@ -849,7 +844,7 @@ export const BanToggleButton = ({
                 function (err) {
                     logger.error("Ban error: " + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Error"),
+                        title: _t("common|error"),
                         description: _t("Failed to ban user"),
                     });
                 },
@@ -931,7 +926,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({
                 function (err) {
                     logger.error("Mute error: " + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Error"),
+                        title: _t("common|error"),
                         description: _t("Failed to mute user"),
                     });
                 },
@@ -945,7 +940,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({
         mx_UserInfo_destructive: !muted,
     });
 
-    const muteLabel = muted ? _t("Unmute") : _t("Mute");
+    const muteLabel = muted ? _t("common|unmute") : _t("common|mute");
     return (
         <AccessibleButton kind="link" className={classes} onClick={onMuteToggle} disabled={isUpdating}>
             {muteLabel}
@@ -1163,7 +1158,7 @@ export const PowerLevelEditor: React.FC<{
                     function (err) {
                         logger.error("Failed to change power level " + err);
                         Modal.createDialog(ErrorDialog, {
-                            title: _t("Error"),
+                            title: _t("common|error"),
                             description: _t("Failed to change power level"),
                         });
                     },
@@ -1184,14 +1179,13 @@ export const PowerLevelEditor: React.FC<{
                     description: (
                         <div>
                             {_t(
-                                "You will not be able to undo this change as you are promoting the user " +
-                                    "to have the same power level as yourself.",
+                                "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.",
                             )}
                             <br />
                             {_t("Are you sure?")}
                         </div>
                     ),
-                    button: _t("Continue"),
+                    button: _t("action|continue"),
                 });
 
                 const [confirmed] = await finished;
@@ -1354,9 +1348,7 @@ const BasicUserInfo: React.FC<{
             description: (
                 <div>
                     {_t(
-                        "Deactivating this user will log them out and prevent them from logging back in. Additionally, " +
-                            "they will leave all the rooms they are in. This action cannot be reversed. Are you sure you " +
-                            "want to deactivate this user?",
+                        "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?",
                     )}
                 </div>
             ),
@@ -1490,7 +1482,7 @@ const BasicUserInfo: React.FC<{
                             }
                         }}
                     >
-                        {_t("Verify")}
+                        {_t("action|verify")}
                     </AccessibleButton>
                 </div>
             );
@@ -1523,7 +1515,7 @@ const BasicUserInfo: React.FC<{
 
     const securitySection = (
         <div className="mx_UserInfo_container">
-            <h3>{_t("Security")}</h3>
+            <h3>{_t("common|security")}</h3>
             <p>{text}</p>
             {verifyButton}
             {cryptoEnabled && (
@@ -1586,8 +1578,7 @@ export const UserInfoHeader: React.FC<{
                     <MemberAvatar
                         key={member.userId} // to instantly blank the avatar when UserInfo changes members
                         member={member as RoomMember}
-                        width={2 * 0.3 * UIStore.instance.windowHeight} // 2x@30vh
-                        height={2 * 0.3 * UIStore.instance.windowHeight} // 2x@30vh
+                        size={UIStore.instance.windowHeight * 0.3 + "px"}
                         resizeMethod="scale"
                         fallbackUserId={member.userId}
                         onClick={onMemberAvatarClick}
@@ -1723,7 +1714,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     if (phase === RightPanelPhases.EncryptionPanel) {
         const verificationRequest = (props as React.ComponentProps<typeof EncryptionPanel>).verificationRequest;
         if (verificationRequest && verificationRequest.pending) {
-            closeLabel = _t("Cancel");
+            closeLabel = _t("action|cancel");
         }
     }
 
@@ -1731,7 +1722,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     if (room?.isSpaceRoom()) {
         scopeHeader = (
             <div data-testid="space-header" className="mx_RightPanel_scopeHeader">
-                <RoomAvatar room={room} height={32} width={32} />
+                <RoomAvatar room={room} size="32px" />
                 <RoomName room={room} />
             </div>
         );

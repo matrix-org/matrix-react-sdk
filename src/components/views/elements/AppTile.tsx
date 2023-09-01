@@ -526,7 +526,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         return (
             <span>
-                <WidgetAvatar app={this.props.app} />
+                <WidgetAvatar app={this.props.app} size="20px" />
                 <b>{name}</b>
                 <span>
                     {title ? titleSpacer : ""}
@@ -620,7 +620,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         const loadingElement = (
             <div className="mx_AppTileBody_fadeInSpinner">
-                <Spinner message={_t("Loading…")} />
+                <Spinner message={_t("common|loading")} />
             </div>
         );
 
@@ -737,7 +737,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 <AccessibleButton
                     key="toggleMaximised"
                     className="mx_AppTileMenuBar_widgets_button"
-                    title={isMaximised ? _t("Un-maximise") : _t("Maximise")}
+                    title={isMaximised ? _t("Un-maximise") : _t("action|maximise")}
                     onClick={this.onToggleMaximisedClick}
                 >
                     {isMaximised ? (
@@ -752,7 +752,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 <AccessibleButton
                     key="minimise"
                     className="mx_AppTileMenuBar_widgets_button"
-                    title={_t("Minimise")}
+                    title={_t("action|minimise")}
                     onClick={this.onMinimiseClicked}
                 >
                     <MinimiseIcon className="mx_Icon mx_Icon_12" />
@@ -785,7 +785,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                                 {this.state.hasContextMenuOptions && (
                                     <ContextMenuButton
                                         className="mx_AppTileMenuBar_widgets_button"
-                                        label={_t("Options")}
+                                        label={_t("common|options")}
                                         isExpanded={this.state.menuDisplayed}
                                         inputRef={this.contextMenuButton}
                                         onClick={this.onContextMenuClick}

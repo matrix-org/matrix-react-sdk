@@ -82,7 +82,7 @@ const Knock: VFC<{
 
     return (
         <div className="mx_PeopleRoomSettingsTab_knock">
-            <MemberAvatar height={42} member={roomMember} width={42} />
+            <MemberAvatar className="mx_PeopleRoomSettingsTab_avatar" member={roomMember} size="42px" />
             <div className="mx_PeopleRoomSettingsTab_content">
                 <span className="mx_PeopleRoomSettingsTab_name">{roomMember.name}</span>
                 <Timestamp roomMember={roomMember} />
@@ -94,7 +94,7 @@ const Knock: VFC<{
                 disabled={!canKick || disabled}
                 kind="icon_primary_outline"
                 onClick={() => handleDeny(roomMember.userId)}
-                title={_t("Deny")}
+                title={_t("action|deny")}
             >
                 <XIcon width={18} height={18} />
             </AccessibleButton>
@@ -103,7 +103,7 @@ const Knock: VFC<{
                 disabled={!canInvite || disabled}
                 kind="icon_primary"
                 onClick={() => handleApprove(roomMember.userId)}
-                title={_t("Approve")}
+                title={_t("action|approve")}
             >
                 <CheckIcon width={18} height={18} />
             </AccessibleButton>
@@ -150,7 +150,7 @@ export const PeopleRoomSettingsTab: VFC<{ room: Room }> = ({ room }) => {
 
     return (
         <SettingsTab>
-            <SettingsSection heading={_t("People")}>
+            <SettingsSection heading={_t("common|people")}>
                 <SettingsFieldset legend={_t("Asking to join")}>
                     {knockMembers.length ? (
                         knockMembers.map((knockMember) => (
