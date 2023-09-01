@@ -186,6 +186,8 @@
         "forward_message": "Forward message",
         "suggestions": "Suggestions",
         "labs": "Labs",
+        "capabilities": "Capabilities",
+        "server": "Server",
         "space": "Space",
         "beta": "Beta",
         "password": "Password",
@@ -194,9 +196,7 @@
         "support": "Support",
         "room_name": "Room name",
         "thread": "Thread",
-        "accessibility": "Accessibility",
-        "capabilities": "Capabilities",
-        "server": "Server"
+        "accessibility": "Accessibility"
     },
     "Unable to load! Check your network connectivity and try again.": "Unable to load! Check your network connectivity and try again.",
     "The file '%(fileName)s' failed to upload.": "The file '%(fileName)s' failed to upload.",
@@ -3107,6 +3107,7 @@
         "room_unread_status_count": {
             "other": "Room unread status: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>"
         },
+        "room_unread_status": "Room unread status: <strong>%(status)s</strong>",
         "notification_state": "Notification state is <strong>%(notificationState)s</strong>",
         "room_encrypted": "Room is <strong>encrypted ✅</strong>",
         "room_not_encrypted": "Room is <strong>not encrypted 🚨</strong>",
@@ -3115,6 +3116,7 @@
         "room_notifications_highlight": "Highlight: ",
         "room_notifications_dot": "Dot: ",
         "room_notifications_last_event": "Last event:",
+        "id": "ID: ",
         "room_notifications_type": "Type: ",
         "room_notifications_sender": "Sender: ",
         "threads_timeline": "Threads timeline",
@@ -3124,10 +3126,8 @@
             "one": "<space>"
         },
         "empty_string": "<empty string>",
-        "room_unread_status": "Room unread status: <strong>%(status)s</strong>",
-        "id": "ID: ",
-        "send_custom_state_event": "Send custom state event",
         "see_history": "See history",
+        "send_custom_state_event": "Send custom state event",
         "failed_to_load": "Failed to load.",
         "client_versions": "Client Versions",
         "server_versions": "Server Versions",
