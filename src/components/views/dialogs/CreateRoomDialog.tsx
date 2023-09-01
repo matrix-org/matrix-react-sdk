@@ -46,15 +46,25 @@ interface IProps {
 }
 
 interface IState {
+    // The selected room join rule.
     joinRule: JoinRule;
-    isPublic: boolean;
+    // Indicates whether the knock room is public visible. Applies only for rooms with knock join rule.
+    isPublicKnockRoom: boolean;
+    // Indicates whether end-to-end encryption is enabled for the room.
     isEncrypted: boolean;
+    // The room name.
     name: string;
+    // The room topic.
     topic: string;
+    // The room alias.
     alias: string;
+    // Indicates whether the details section is open.
     detailsOpen: boolean;
+    // Indicates whether federation is disabled for the room.
     noFederate: boolean;
+    // Indicates whether the room name is valid.
     nameIsValid: boolean;
+    // Indicates whether the user can change encryption settings for the room.
     canChangeEncryption: boolean;
 }
 
@@ -79,7 +89,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
 
         const cli = MatrixClientPeg.safeGet();
         this.state = {
-            isPublic: this.props.defaultPublic || false,
+            isPublicKnockRoom: this.props.defaultPublic || false,
             isEncrypted: this.props.defaultEncrypted ?? privateShouldBeEncrypted(cli),
             joinRule,
             name: this.props.defaultName || "",
@@ -130,7 +140,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
 
         if (this.state.joinRule === JoinRule.Knock) {
             opts.joinRule = JoinRule.Knock;
-            createOpts.visibility = this.state.isPublic ? Visibility.Public : Visibility.Private;
+            createOpts.visibility = this.state.isPublicKnockRoom ? Visibility.Public : Visibility.Private;
         }
 
         return opts;
@@ -217,8 +227,8 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         return result;
     };
 
-    private onIsPublicChange = (isPublic: boolean): void => {
-        this.setState({ isPublic });
+    private onIsPublicKnockRoomChange = (isPublicKnockRoom: boolean): void => {
+        this.setState({ isPublicKnockRoom });
     };
 
     private static validateRoomName = withValidation({
@@ -310,8 +320,8 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                 <LabelledCheckbox
                     className="mx_CreateRoomDialog_labelledCheckbox"
                     label={_t("Make this room visible in the public room directory.")}
-                    onChange={this.onIsPublicChange}
-                    value={this.state.isPublic}
+                    onChange={this.onIsPublicKnockRoomChange}
+                    value={this.state.isPublicKnockRoom}
                 />
             );
         }

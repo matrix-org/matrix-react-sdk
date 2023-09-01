@@ -30,7 +30,7 @@ interface IProps {
     disabled?: boolean;
     // The function to call when the value changes
     onChange(checked: boolean): void;
-    // Optional CSS class to apply to the label
+    // Optional additional CSS class to apply to the label
     className?: string;
 }
 

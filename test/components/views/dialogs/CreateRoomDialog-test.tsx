@@ -210,7 +210,7 @@ describe("<CreateRoomDialog />", () => {
     });
 
     describe("for a knock room", () => {
-        describe("when disabling feature", () => {
+        describe("when feature is disabled", () => {
             it("should not have the option to create a knock room", async () => {
                 jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
                 getComponent();
@@ -219,11 +219,12 @@ describe("<CreateRoomDialog />", () => {
             });
         });
 
-        describe("when enabling feature", () => {
+        describe("when feature is enabled", () => {
             const onFinished = jest.fn();
             const roomName = "Test Room Name";
 
             beforeEach(async () => {
+                onFinished.mockReset();
                 jest.spyOn(SettingsStore, "getValue").mockImplementation(
                     (setting) => setting === "feature_ask_to_join",
                 );
@@ -245,7 +246,7 @@ describe("<CreateRoomDialog />", () => {
                 ).toBeInTheDocument();
             });
 
-            it("should create a private knock room", async () => {
+            it("should create a knock room with private visibility", async () => {
                 fireEvent.click(screen.getByText("Create room"));
                 await flushPromises();
                 expect(onFinished).toHaveBeenCalledWith(true, {
@@ -260,7 +261,7 @@ describe("<CreateRoomDialog />", () => {
                 });
             });
 
-            it("should create a public knock room", async () => {
+            it("should create a knock room with public visibility", async () => {
                 fireEvent.click(
                     screen.getByRole("checkbox", { name: "Make this room visible in the public room directory." }),
                 );
