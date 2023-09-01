@@ -2863,7 +2863,6 @@
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "Izin %(brand)s ditolak untuk mengakses lokasi Anda. Mohon izinkan akses lokasi di pengaturan peramban Anda.",
     "Developer tools": "Alat pengembang",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s bersifat eksperimental pada peramban web ponsel. Untuk pengalaman yang lebih baik dan fitur-fitur terkini, gunakan aplikasi natif gratis kami.",
-    "Event ID: %(eventId)s": "ID peristiwa: %(eventId)s",
     "Unsent": "Belum dikirim",
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Bantu kami mengidentifikasi masalah-masalah dan membuat %(analyticsOwner)s lebih baik dengan membagikan data penggunaan anonim. Untuk memahami bagaimana orang-orang menggunakan beberapa perangkat-perangkat, kami akan membuat pengenal acak, yang dibagikan oleh perangkat Anda.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s didapatkan saat mencoba mengakses ruangan atau space. Jika Anda pikir Anda melihat pesan ini secara tidak benar, silakan <issueLink>kirim sebuah laporan kutu</issueLink>.",
@@ -4011,6 +4010,7 @@
         "toolbox": "Kotak Peralatan",
         "developer_tools": "Alat Pengembang",
         "room_id": "ID ruangan: %(roomId)s",
-        "thread_root_id": "ID Akar Utas: %(threadRootId)s"
+        "thread_root_id": "ID Akar Utas: %(threadRootId)s",
+        "event_id": "ID peristiwa: %(eventId)s"
     }
 }

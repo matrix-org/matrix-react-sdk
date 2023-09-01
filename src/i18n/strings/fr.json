@@ -2845,7 +2845,6 @@
     "Previous recently visited room or space": "Salon ou espace précédemment visité",
     "Toggle Link": "Afficher/masquer le lien",
     "Toggle Code Block": "Afficher/masquer le bloc de code",
-    "Event ID: %(eventId)s": "Identifiant d’événement : %(eventId)s",
     "%(timeRemaining)s left": "%(timeRemaining)s restant",
     "You are sharing your live location": "Vous partagez votre position en direct",
     "Unsent": "Non envoyé",
@@ -4006,6 +4005,7 @@
         "toolbox": "Boîte à outils",
         "developer_tools": "Outils de développement",
         "room_id": "Identifiant du salon : %(roomId)s",
-        "thread_root_id": "ID du fil de discussion racine : %(threadRootId)s"
+        "thread_root_id": "ID du fil de discussion racine : %(threadRootId)s",
+        "event_id": "Identifiant d’événement : %(eventId)s"
     }
 }

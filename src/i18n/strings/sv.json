@@ -2889,7 +2889,6 @@
     "Previous recently visited room or space": "Föregående nyligen besökta rum eller utrymme",
     "Toggle Link": "Växla länk av/på",
     "Toggle Code Block": "Växla kodblock av/på",
-    "Event ID: %(eventId)s": "Händelse-ID: %(eventId)s",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Tips:</b> Välj \"%(replyInThread)s\" när du håller över ett meddelande.",
     "Threads help keep your conversations on-topic and easy to track.": "Trådar underlättar för att hålla konversationer till ämnet och gör dem lättare att följa.",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Svara i en pågående tråd eller använd \"%(replyInThread)s\" när du håller över ett meddelande för att starta en ny tråd.",
@@ -3946,6 +3945,7 @@
         "server_info": "Serverinformation",
         "toolbox": "Verktygslåda",
         "developer_tools": "Utvecklarverktyg",
-        "room_id": "Rums-ID: %(roomId)s"
+        "room_id": "Rums-ID: %(roomId)s",
+        "event_id": "Händelse-ID: %(eventId)s"
     }
 }

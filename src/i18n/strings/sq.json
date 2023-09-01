@@ -2855,7 +2855,6 @@
     "Next recently visited room or space": "Dhoma ose hapësira pasuese vizituar së fundi",
     "Previous recently visited room or space": "Dhoma ose hapësira e mëparshme vizituar së fundi",
     "%(timeRemaining)s left": "Edhe %(timeRemaining)s",
-    "Event ID: %(eventId)s": "ID Veprimtarie: %(eventId)s",
     "Unsent": "Të padërguar",
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Ndihmonani të gjejmë probleme dhe të përmirësojmë %(analyticsOwner)s-in duke ndarë me ne të dhëna anonime përdorimi. Që të kuptohet se si përdorin njerëzit disa pajisje, do të prodhojmë një identifikues kuturu, që na jepet nga pajisjet tuaja.",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Që të bëni hyrjen te shërbyes të tjerë Matrix, duke specifikuar një URL të një shërbyesi Home tjetër, mund të përdorni mundësitë vetjake për shërbyesin. Kjo ju lejon të përdorni %(brand)s në një tjetër shërbyes Home me një llogari Matrix ekzistuese.",
@@ -3899,6 +3898,7 @@
         "server_info": "Hollësi shërbyesi",
         "toolbox": "Grup mjetesh",
         "developer_tools": "Mjete Zhvilluesi",
-        "room_id": "ID Dhome: %(roomId)s"
+        "room_id": "ID Dhome: %(roomId)s",
+        "event_id": "ID Veprimtarie: %(eventId)s"
     }
 }

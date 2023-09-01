@@ -846,7 +846,6 @@
     "Device verified": "ຢັ້ງຢືນອຸປະກອນແລ້ວ",
     "Verify this device": "ຢັ້ງຢືນອຸປະກອນນີ້",
     "Unable to verify this device": "ບໍ່ສາມາດຢັ້ງຢືນອຸປະກອນນີ້ໄດ້",
-    "Event ID: %(eventId)s": "ກໍລິນີ ID %(eventId)s",
     "Original event source": "ແຫຼ່ງຕົ້ນສະບັບ",
     "Decrypted event source": "ບ່ອນທີ່ຖືກຖອດລະຫັດໄວ້",
     "Could not load user profile": "ບໍ່ສາມາດໂຫຼດໂປຣໄຟລ໌ຂອງຜູ້ໃຊ້ໄດ້",
@@ -3332,6 +3331,7 @@
         "server_info": "ຂໍ້ມູນເຊີບເວີ",
         "toolbox": "ກ່ອງເຄື່ອງມື",
         "developer_tools": "ເຄື່ອງມືພັດທະນາ",
-        "room_id": "ID ຫ້ອງ: %(roomId)s"
+        "room_id": "ID ຫ້ອງ: %(roomId)s",
+        "event_id": "ກໍລິນີ ID %(eventId)s"
     }
 }

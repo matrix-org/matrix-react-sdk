@@ -3034,7 +3034,6 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "你已登出全部设备，并将不再收到推送通知。要重新启用通知，请在每台设备上再次登入。",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "若想保留对加密房间的聊天历史的访问权，请设置密钥备份或从其他设备导出消息密钥，然后再继续。",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "登出你的设备会删除存储在其上的消息加密密钥，使加密的聊天历史不可读。",
-    "Event ID: %(eventId)s": "事件ID：%(eventId)s",
     "Resent!": "已重新发送！",
     "Did not receive it? <a>Resend it</a>": "没收到吗？<a>重新发送</a>",
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "要创建账户，请打开我们刚刚发送到%(emailAddress)s的电子邮件里的链接。",
@@ -3595,6 +3594,7 @@
         "server_info": "服务器信息",
         "toolbox": "工具箱",
         "developer_tools": "开发者工具",
-        "room_id": "房间ID: %(roomId)s"
+        "room_id": "房间ID: %(roomId)s",
+        "event_id": "事件ID：%(eventId)s"
     }
 }

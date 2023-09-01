@@ -2858,7 +2858,6 @@
     "Command error: Unable to handle slash command.": "Erro no comando: non se puido xestionar o comando con barra.",
     "Next recently visited room or space": "Seguinte sala ou espazo visitados recentemente",
     "Previous recently visited room or space": "Anterior sala ou espazo visitados recentemente",
-    "Event ID: %(eventId)s": "ID do evento: %(eventId)s",
     "%(timeRemaining)s left": "%(timeRemaining)s restante",
     "Unsent": "Sen enviar",
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Axúdanos a atopar problemas e mellorar %(analyticsOwner)s compartindo datos anónimos de uso. Para comprender de que xeito as persoas usan varios dispositivos imos crear un identificador aleatorio compartido polos teus dispositivos.",
@@ -3528,6 +3527,7 @@
         "server_info": "Info do servidor",
         "toolbox": "Ferramentas",
         "developer_tools": "Ferramentas para desenvolver",
-        "room_id": "ID da sala: %(roomId)s"
+        "room_id": "ID da sala: %(roomId)s",
+        "event_id": "ID do evento: %(eventId)s"
     }
 }

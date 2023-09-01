@@ -2978,7 +2978,6 @@
     "Rejecting invite…": "Từ chối lời mời…",
     "Are you sure you're at the right place?": "Bạn có chắc là bạn đang ở đúng chỗ?",
     "To view %(roomName)s, you need an invite": "Để xem %(roomName)s, bạn cần một lời mời",
-    "Event ID: %(eventId)s": "Định danh (ID) sự kiện: %(eventId)s",
     "Disinvite from room": "Không mời vào phòng nữa",
     "Your language": "Ngôn ngữ của bạn",
     "%(count)s participants": {
@@ -3709,6 +3708,7 @@
         "server_info": "Thông tin máy chủ",
         "toolbox": "Hộp công cụ",
         "developer_tools": "Những công cụ phát triển",
-        "room_id": "Định danh phòng: %(roomId)s"
+        "room_id": "Định danh phòng: %(roomId)s",
+        "event_id": "Định danh (ID) sự kiện: %(eventId)s"
     }
 }

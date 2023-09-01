@@ -2910,7 +2910,6 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Вы вышли из всех устройств и больше не будете получать push-уведомления. Для повторного включения уведомлений снова войдите на каждом устройстве.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Если вы хотите сохранить доступ к истории общения в зашифрованных комнатах, настройте резервное копирование ключей или экспортируйте ключи сообщений с одного из других ваших устройств, прежде чем продолжить.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "При выходе из устройств удаляются хранящиеся на них ключи шифрования сообщений, что сделает зашифрованную историю чатов нечитаемой.",
-    "Event ID: %(eventId)s": "ID события: %(eventId)s",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Ваше сообщение не отправлено, поскольку домашний сервер заблокирован его администратором. <a>Обратитесь к администратору службы</a>, чтобы продолжить её использование.",
     "Resent!": "Отправлено повторно!",
     "Did not receive it? <a>Resend it</a>": "Не получили? <a>Отправить его повторно</a>",
@@ -3693,6 +3692,7 @@
         "server_info": "Информация сервера",
         "toolbox": "Панель инструментов",
         "developer_tools": "Инструменты разработчика",
-        "room_id": "ID комнаты: %(roomId)s"
+        "room_id": "ID комнаты: %(roomId)s",
+        "event_id": "ID события: %(eventId)s"
     }
 }

@@ -2403,7 +2403,6 @@
     "Device verified": "Η συσκευή επαληθεύτηκε",
     "Verify this device": "Επαληθεύστε αυτήν τη συσκευή",
     "Unable to verify this device": "Αδυναμία επαλήθευσης αυτής της συσκευής",
-    "Event ID: %(eventId)s": "ID συμβάντος: %(eventId)s",
     "Original event source": "Αρχική πηγή συμβάντος",
     "Decrypted event source": "Αποκρυπτογραφημένη πηγή συμβάντος",
     "Could not load user profile": "Αδυναμία φόρτωσης του προφίλ χρήστη",
@@ -3315,6 +3314,7 @@
         "server_info": "Πληροφορίες διακομιστή",
         "toolbox": "Εργαλειοθήκη",
         "developer_tools": "Εργαλεία προγραμματιστή",
-        "room_id": "ID δωματίου: %(roomId)s"
+        "room_id": "ID δωματίου: %(roomId)s",
+        "event_id": "ID συμβάντος: %(eventId)s"
     }
 }

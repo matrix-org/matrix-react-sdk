@@ -2858,7 +2858,6 @@
     },
     "Next recently visited room or space": "Siguiente sala o espacio visitado",
     "Previous recently visited room or space": "Anterior sala o espacio visitado",
-    "Event ID: %(eventId)s": "ID del evento: %(eventId)s",
     "%(timeRemaining)s left": "Queda %(timeRemaining)s",
     "Unsent": "No enviado",
     "Developer tools": "Herramientas de desarrollo",
@@ -3812,6 +3811,7 @@
         "server_info": "Info del servidor",
         "toolbox": "Caja de herramientas",
         "developer_tools": "Herramientas de desarrollo",
-        "room_id": "ID de la sala: %(roomId)s"
+        "room_id": "ID de la sala: %(roomId)s",
+        "event_id": "ID del evento: %(eventId)s"
     }
 }

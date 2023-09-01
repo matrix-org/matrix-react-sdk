@@ -2802,7 +2802,6 @@
     "Previous autocomplete suggestion": "Edellinen automaattitäydennyksen ehdotus",
     "Next autocomplete suggestion": "Seuraava automaattitäydennyksen ehdotus",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s tai %(copyButton)s",
-    "Event ID: %(eventId)s": "Tapahtuman ID-tunniste: %(eventId)s",
     "Waiting for device to sign in": "Odotetaan laitteen sisäänkirjautumista",
     "Review and approve the sign in": "Katselmoi ja hyväksy sisäänkirjautuminen",
     "Devices connected": "Yhdistetyt laitteet",
@@ -3605,6 +3604,7 @@
         "server_info": "Palvelimen tiedot",
         "toolbox": "Työkalut",
         "developer_tools": "Kehittäjätyökalut",
-        "room_id": "Huoneen ID-tunniste: %(roomId)s"
+        "room_id": "Huoneen ID-tunniste: %(roomId)s",
+        "event_id": "Tapahtuman ID-tunniste: %(eventId)s"
     }
 }

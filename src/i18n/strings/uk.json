@@ -2865,7 +2865,6 @@
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s у мобільних браузерах ще випробовується. Поки що кращі враження й новіші функції — у нашому вільному мобільному застосунку.",
     "Developer tools": "Інструменти розробника",
     "Unsent": "Не надіслано",
-    "Event ID: %(eventId)s": "ID події: %(eventId)s",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Під час спроби отримати доступ до кімнати або простору було повернено помилку %(errcode)s. Якщо ви думаєте, що ви бачите це повідомлення помилково, будь ласка, <issueLink>надішліть звіт про помилку</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Повторіть спробу пізніше, або запитайте у кімнати або простору перевірку, чи маєте ви доступ.",
     "This room or space is not accessible at this time.": "Ця кімната або простір на разі не доступні.",
@@ -4006,6 +4005,7 @@
         "toolbox": "Панель інструментів",
         "developer_tools": "Інструменти розробника",
         "room_id": "ID кімнати: %(roomId)s",
-        "thread_root_id": "ID кореневої гілки: %(threadRootId)s"
+        "thread_root_id": "ID кореневої гілки: %(threadRootId)s",
+        "event_id": "ID події: %(eventId)s"
     }
 }

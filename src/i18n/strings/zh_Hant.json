@@ -2859,7 +2859,6 @@
     "%(timeRemaining)s left": "剩下 %(timeRemaining)s",
     "Next recently visited room or space": "下一個最近造訪過的聊天室或聊天空間",
     "Previous recently visited room or space": "上一個最近造訪過的聊天室或群組空間",
-    "Event ID: %(eventId)s": "事件 ID：%(eventId)s",
     "Unsent": "未傳送",
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "匿名分享使用資料能幫我們辨識錯誤和改善 %(analyticsOwner)s。為了瞭解使用者如何使用多種裝置，我們會隨機產生能夠辨識您裝置的辨識碼。",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "您可以透過指定不同的家伺服器網址，來登入至其他的 Matrix 伺服器。使用自訂伺服器選項讓您可以使用 %(brand)s 登入到不同家伺服器上的 Matrix 帳號。",
@@ -4006,6 +4005,7 @@
         "toolbox": "工具箱",
         "developer_tools": "開發者工具",
         "room_id": "聊天室 ID：%(roomId)s",
-        "thread_root_id": "討論串 Root ID：%(threadRootId)s"
+        "thread_root_id": "討論串 Root ID：%(threadRootId)s",
+        "event_id": "事件 ID：%(eventId)s"
     }
 }

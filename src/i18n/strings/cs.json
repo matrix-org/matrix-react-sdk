@@ -2859,7 +2859,6 @@
     "%(timeRemaining)s left": "%(timeRemaining)s zbývá",
     "Next recently visited room or space": "Další nedávno navštívená místnost nebo prostor",
     "Previous recently visited room or space": "Předchozí nedávno navštívená místnost nebo prostor",
-    "Event ID: %(eventId)s": "ID události: %(eventId)s",
     "Unsent": "Neodeslané",
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Pomozte nám identifikovat problémy a zlepšit %(analyticsOwner)s sdílením anonymních údajů o používání. Abychom pochopili, jak lidé používají více zařízení, vygenerujeme náhodný identifikátor sdílený vašimi zařízeními.",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Můžete použít vlastní volbu serveru a přihlásit se k jiným Matrix serverům zadáním adresy URL domovského serveru. To vám umožní používat %(brand)s s existujícím Matrix účtem na jiném domovském serveru.",
@@ -4011,6 +4010,7 @@
         "toolbox": "Sada nástrojů",
         "developer_tools": "Nástroje pro vývojáře",
         "room_id": "ID místnosti: %(roomId)s",
-        "thread_root_id": "ID kořenového vlákna: %(threadRootId)s"
+        "thread_root_id": "ID kořenového vlákna: %(threadRootId)s",
+        "event_id": "ID události: %(eventId)s"
     }
 }

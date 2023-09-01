@@ -2859,7 +2859,6 @@
     "%(timeRemaining)s left": "%(timeRemaining)s rimasti",
     "Next recently visited room or space": "Successiva stanza o spazio visitati di recente",
     "Previous recently visited room or space": "Precedente stanza o spazio visitati di recente",
-    "Event ID: %(eventId)s": "ID evento: %(eventId)s",
     "Unsent": "Non inviato",
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Aiutaci a identificare problemi e a migliorare %(analyticsOwner)s condividendo dati di utilizzo anonimi. Per capire come le persone usano diversi dispositivi, genereremo un identificativo casuale, condiviso dai tuoi dispositivi.",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Puoi usare le opzioni server personalizzate per accedere ad altri server Matrix specificando un URL homeserver diverso. Ciò ti permette di usare %(brand)s con un account Matrix esistente su un homeserver differente.",
@@ -4011,6 +4010,7 @@
         "toolbox": "Strumenti",
         "developer_tools": "Strumenti per sviluppatori",
         "room_id": "ID stanza: %(roomId)s",
-        "thread_root_id": "ID root del thread: %(threadRootId)s"
+        "thread_root_id": "ID root del thread: %(threadRootId)s",
+        "event_id": "ID evento: %(eventId)s"
     }
 }

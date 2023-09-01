@@ -2858,7 +2858,6 @@
     "%(timeRemaining)s left": "jäänud %(timeRemaining)s",
     "Next recently visited room or space": "Järgmine viimati külastatud jututuba või kogukond",
     "Previous recently visited room or space": "Eelmine viimati külastatud jututuba või kogukond",
-    "Event ID: %(eventId)s": "Sündmuse tunnus: %(eventId)s",
     "Unsent": "Saatmata",
     "Developer tools": "Arendusvahendid",
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Võimalike vigade leidmiseks ja %(analyticsOwner)s'i arendamiseks jaga meiega anonüümseid andmeid. Selleks, et mõistaksime, kuidas kasutajad erinevaid seadmeid pruugivad me loome sinu seadmetele ühise juhusliku tunnuse.",
@@ -4006,6 +4005,7 @@
         "toolbox": "Töövahendid",
         "developer_tools": "Arendusvahendid",
         "room_id": "Jututoa tunnus: %(roomId)s",
-        "thread_root_id": "Jutulõnga esimese kirje tunnus: %(threadRootId)s"
+        "thread_root_id": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
+        "event_id": "Sündmuse tunnus: %(eventId)s"
     }
 }

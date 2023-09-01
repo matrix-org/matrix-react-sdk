@@ -2852,7 +2852,6 @@
     },
     "Next recently visited room or space": "Következő, nemrég meglátogatott szoba vagy tér",
     "Previous recently visited room or space": "Előző, nemrég meglátogatott szoba vagy tér",
-    "Event ID: %(eventId)s": "Esemény azon.: %(eventId)s",
     "%(timeRemaining)s left": "Maradék idő: %(timeRemaining)s",
     "Unsent": "Elküldetlen",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Törölje a kijelölést ha a rendszer üzeneteket is törölni szeretné ettől a felhasználótól (pl. tagság változás, profil változás…)",
@@ -3910,6 +3909,7 @@
         "server_info": "Kiszolgálóinformációk",
         "toolbox": "Eszköztár",
         "developer_tools": "Fejlesztői eszközök",
-        "room_id": "Szoba azon.: %(roomId)s"
+        "room_id": "Szoba azon.: %(roomId)s",
+        "event_id": "Esemény azon.: %(eventId)s"
     }
 }

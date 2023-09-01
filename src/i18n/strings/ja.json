@@ -2827,7 +2827,6 @@
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)sは携帯端末のウェブブラウザーでは実験的です。よりよい使用経験や最新機能を求める場合は、フリーのネイティブアプリをご利用ください。",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)sは位置情報を取得できませんでした。ブラウザーの設定画面から位置情報の取得を許可してください。",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "異なるホームサーバーのURLを設定すると、他のMatrixのサーバーにサインインできます。それにより、異なるホームサーバーにある既存のMatrixのアカウントを%(brand)sで使用できます。",
-    "Event ID: %(eventId)s": "イベントID：%(eventId)s",
     "Upgrade this space to the recommended room version": "このスペースを推奨のバージョンにアップグレード",
     "View older version of %(spaceName)s.": "%(spaceName)sの以前のバージョンを表示。",
     "Loading preview": "プレビューを読み込んでいます",
@@ -3806,6 +3805,7 @@
         "server_info": "サーバーの情報",
         "toolbox": "ツールボックス",
         "developer_tools": "開発者ツール",
-        "room_id": "ルームID：%(roomId)s"
+        "room_id": "ルームID：%(roomId)s",
+        "event_id": "イベントID：%(eventId)s"
     }
 }

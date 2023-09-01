@@ -2269,7 +2269,6 @@
     "Unknown for %(duration)s": "Óþekkt í %(duration)s",
     "<a>Add a topic</a> to help people know what it is about.": "<a>Bættu við umfjöllunarefni</a> svo fólk viti að um hvað málin snúist.",
     "Unable to verify this device": "Tókst ekki að sannreyna þetta tæki",
-    "Event ID: %(eventId)s": "Auðkenni atburðar: %(eventId)s",
     "Scroll to most recent messages": "Skruna að nýjustu skilaboðunum",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Þetta boð í %(roomName)s var sent til %(email)s sem er ekki tengt notandaaðgangnum þínum",
     "You must <a>register</a> to use this functionality": "Þú verður að <a>skrá þig</a> til að geta notað þennan eiginleika",
@@ -3395,6 +3394,7 @@
         "server_info": "Upplýsingar um þjón",
         "toolbox": "Verkfærakassi",
         "developer_tools": "Forritunartól",
-        "room_id": "Auðkenni spjallrásar: %(roomId)s"
+        "room_id": "Auðkenni spjallrásar: %(roomId)s",
+        "event_id": "Auðkenni atburðar: %(eventId)s"
     }
 }
