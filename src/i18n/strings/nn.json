@@ -349,8 +349,6 @@
     "Unknown error": "Noko ukjend gjekk galt",
     "Incorrect password": "Urett passord",
     "Deactivate Account": "Avliv Brukaren",
-    "Toolbox": "Verktøykasse",
-    "Developer Tools": "Utviklarverktøy",
     "An error has occurred.": "Noko gjekk gale.",
     "Clear Storage and Sign Out": "Tøm Lager og Logg Ut",
     "Send Logs": "Send Loggar",
@@ -1092,7 +1090,9 @@
         "event_type": "Hendingsort",
         "state_key": "Tilstandsnykel",
         "event_sent": "Hending send!",
-        "event_content": "Hendingsinnhald"
+        "event_content": "Hendingsinnhald",
+        "toolbox": "Verktøykasse",
+        "developer_tools": "Utviklarverktøy"
     },
     "settings": {
         "show_breadcrumbs": "Vis snarvegar til sist synte rom over romkatalogen",

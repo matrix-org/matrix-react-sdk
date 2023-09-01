@@ -412,7 +412,6 @@
     "Preparing to send logs": "Egunkariak bidaltzeko prestatzen",
     "Saturday": "Larunbata",
     "Monday": "Astelehena",
-    "Toolbox": "Tresna-kutxa",
     "Collecting logs": "Egunkariak biltzen",
     "All Rooms": "Gela guztiak",
     "Wednesday": "Asteazkena",
@@ -431,7 +430,6 @@
     "Error encountered (%(errorDetail)s).": "Errorea aurkitu da (%(errorDetail)s).",
     "Low Priority": "Lehentasun baxua",
     "Off": "Ez",
-    "Developer Tools": "Garatzaile-tresnak",
     "Thank you!": "Eskerrik asko!",
     "Missing roomId.": "Gelaren ID-a falta da.",
     "Popout widget": "Laster-leiho trepeta",
@@ -1638,7 +1636,9 @@
         "event_type": "Gertaera mota",
         "state_key": "Egoera gakoa",
         "event_sent": "Gertaera bidalita!",
-        "event_content": "Gertaeraren edukia"
+        "event_content": "Gertaeraren edukia",
+        "toolbox": "Tresna-kutxa",
+        "developer_tools": "Garatzaile-tresnak"
     },
     "settings": {
         "show_breadcrumbs": "Erakutsi ikusitako azken geletara lasterbideak gelen zerrendaren goialdean",

@@ -278,7 +278,6 @@
     "Collecting app version information": "A recolher informação da versão da app",
     "Tuesday": "Terça-feira",
     "Search…": "Pesquisar…",
-    "Developer Tools": "Ferramentas de desenvolvedor",
     "Unnamed room": "Sala sem nome",
     "Saturday": "Sábado",
     "Monday": "Segunda-feira",
@@ -777,7 +776,8 @@
         "event_type": "Tipo de evento",
         "state_key": "Chave de estado",
         "event_sent": "Evento enviado!",
-        "event_content": "Conteúdo do evento"
+        "event_content": "Conteúdo do evento",
+        "developer_tools": "Ferramentas de desenvolvedor"
     },
     "settings": {
         "use_12_hour_format": "Mostrar os horários em formato de 12h (p.ex: 2:30pm)",

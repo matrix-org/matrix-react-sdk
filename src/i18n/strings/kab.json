@@ -1179,8 +1179,6 @@
     "No update available.": "Ulac lqem i yellan.",
     "Hey you. You're the best!": "Kečč·kemm. Ulac win i ak·akem-yifen!",
     "Use between %(min)s pt and %(max)s pt": "Seqdec gar %(min)s pt d %(max)s pt",
-    "Toolbox": "Tabewwaḍt n yifecka",
-    "Developer Tools": "Ifecka n uneflay",
     "An error has occurred.": "Tella-d tuccḍa.",
     "Integrations are disabled": "Imsidaf ttwasensen",
     "Integrations not allowed": "Imsidaf ur ttusirgen ara",
@@ -2010,7 +2008,9 @@
         "event_type": "Anaw n tedyant",
         "state_key": "Tasarut n waddad",
         "event_sent": "Tadyant tettwazen!",
-        "event_content": "Agbur n tedyant"
+        "event_content": "Agbur n tedyant",
+        "toolbox": "Tabewwaḍt n yifecka",
+        "developer_tools": "Ifecka n uneflay"
     },
     "settings": {
         "show_breadcrumbs": "Sken inegzumen i texxamin i d-ibanen melmi kan nnig tebdart n texxamt",

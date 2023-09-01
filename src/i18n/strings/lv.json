@@ -411,7 +411,6 @@
     "Preparing to send logs": "Gatavojos nosūtīt atutošanas logfailus",
     "Saturday": "Sestdiena",
     "Monday": "Pirmdiena",
-    "Toolbox": "Instrumentārijs",
     "Collecting logs": "Tiek iegūti logfaili",
     "All Rooms": "Visās istabās",
     "Wednesday": "Trešdiena",
@@ -429,7 +428,6 @@
     "Error encountered (%(errorDetail)s).": "Gadījās kļūda (%(errorDetail)s).",
     "Low Priority": "Zema prioritāte",
     "Off": "Izslēgt",
-    "Developer Tools": "Izstrādātāja rīki",
     "Thank you!": "Tencinam!",
     "Permission Required": "Nepieciešama atļauja",
     "You do not have permission to start a conference call in this room": "Šajā istabā nav atļaujas sākt konferences zvanu",
@@ -1828,7 +1826,9 @@
         "event_type": "Notikuma tips",
         "state_key": "Stāvokļa atslēga",
         "event_sent": "Notikums nosūtīts!",
-        "event_content": "Notikuma saturs"
+        "event_content": "Notikuma saturs",
+        "toolbox": "Instrumentārijs",
+        "developer_tools": "Izstrādātāja rīki"
     },
     "settings": {
         "show_breadcrumbs": "Rādīt saīsnes uz nesen skatītajām istabām istabu saraksta augšpusē",

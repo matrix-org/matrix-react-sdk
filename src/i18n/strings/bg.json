@@ -408,11 +408,9 @@
     "Collecting app version information": "Събиране на информация за версията на приложението",
     "Search…": "Търсене…",
     "Tuesday": "Вторник",
-    "Developer Tools": "Инструменти за разработчика",
     "Preparing to send logs": "Подготовка за изпращане на логове",
     "Saturday": "Събота",
     "Monday": "Понеделник",
-    "Toolbox": "Инструменти",
     "Collecting logs": "Събиране на логове",
     "All Rooms": "Във всички стаи",
     "Wednesday": "Сряда",
@@ -2128,7 +2126,9 @@
         "event_type": "Вид на събитие",
         "state_key": "State ключ",
         "event_sent": "Събитието е изпратено!",
-        "event_content": "Съдържание на събитието"
+        "event_content": "Съдържание на събитието",
+        "toolbox": "Инструменти",
+        "developer_tools": "Инструменти за разработчика"
     },
     "settings": {
         "show_breadcrumbs": "Показвай преки пътища до скоро-прегледаните стаи над списъка със стаи",

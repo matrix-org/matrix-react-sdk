@@ -289,7 +289,6 @@
     "Favourite": "Cuir mar ceanán",
     "Summary": "Achoimre",
     "Service": "Seirbhís",
-    "Toolbox": "Uirlisí",
     "Removing…": "ag Baint…",
     "Changelog": "Loga na n-athruithe",
     "Unavailable": "Níl sé ar fáil",
@@ -750,7 +749,8 @@
         "caution_colon": "Faichill:",
         "level": "Leibhéal",
         "value_colon": "Luach:",
-        "value": "Luach"
+        "value": "Luach",
+        "toolbox": "Uirlisí"
     },
     "settings": {
         "always_show_message_timestamps": "Taispeáin stampaí ama teachtaireachta i gcónaí"

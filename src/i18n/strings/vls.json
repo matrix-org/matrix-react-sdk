@@ -630,8 +630,6 @@
     "Unknown error": "Ounbekende foute",
     "Incorrect password": "Verkeerd paswoord",
     "Filter results": "Resultoatn filtern",
-    "Toolbox": "Gereedschap",
-    "Developer Tools": "Ountwikkeliengsgereedschap",
     "An error has occurred.": "’t Is e foute ipgetreedn.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifieert deze gebruuker vo n’hem/heur als vertrouwd te markeern. Gebruukers vertrouwn gift je extra gemoedsrust by ’t gebruuk van eind-tout-eind-versleuterde berichtn.",
     "Incoming Verification Request": "Inkomend verificoasjeverzoek",
@@ -1027,7 +1025,9 @@
         "event_type": "Gebeurtenistype",
         "state_key": "Toestandssleuter",
         "event_sent": "Gebeurtenisse verstuurd!",
-        "event_content": "Gebeurtenisinhoud"
+        "event_content": "Gebeurtenisinhoud",
+        "toolbox": "Gereedschap",
+        "developer_tools": "Ountwikkeliengsgereedschap"
     },
     "settings": {
         "use_12_hour_format": "Tyd in 12-uursformoat weregeevn (bv. 2:30pm)",

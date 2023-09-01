@@ -31,7 +31,6 @@
     "Saturday": "Šeštadienis",
     "Online": "Prisijungęs",
     "Monday": "Pirmadienis",
-    "Toolbox": "Įrankinė",
     "Collecting logs": "Renkami žurnalai",
     "Rooms": "Kambariai",
     "Failed to forget room %(errCode)s": "Nepavyko pamiršti kambario %(errCode)s",
@@ -52,7 +51,6 @@
     "Error encountered (%(errorDetail)s).": "Susidurta su klaida (%(errorDetail)s).",
     "Low Priority": "Žemo prioriteto",
     "Off": "Išjungta",
-    "Developer Tools": "Programuotojo Įrankiai",
     "Thank you!": "Ačiū!",
     "Call Failed": "Skambutis Nepavyko",
     "Permission Required": "Reikalingas Leidimas",
@@ -1550,7 +1548,6 @@
     "You don't have permission to do this": "Jūs neturite leidimo tai daryti",
     "Comment": "Komentaras",
     "Feedback sent": "Atsiliepimas išsiųstas",
-    "Active Widgets": "Aktyvūs Valdikliai",
     "Server did not return valid authentication information.": "Serveris negrąžino galiojančios autentifikavimo informacijos.",
     "Server did not require any authentication": "Serveris nereikalavo jokio autentifikavimo",
     "There was a problem communicating with the server. Please try again.": "Kilo problemų bendraujant su serveriu. Bandykite dar kartą.",
@@ -2510,7 +2507,10 @@
         "level": "Lygis",
         "setting_id": "Nustatymo ID",
         "value": "Reikšmė",
-        "failed_to_find_widget": "Įvyko klaida ieškant šio valdiklio."
+        "failed_to_find_widget": "Įvyko klaida ieškant šio valdiklio.",
+        "active_widgets": "Aktyvūs Valdikliai",
+        "toolbox": "Įrankinė",
+        "developer_tools": "Programuotojo Įrankiai"
     },
     "settings": {
         "show_breadcrumbs": "Rodyti neseniai peržiūrėtų kambarių nuorodas virš kambarių sąrašo",

@@ -244,7 +244,6 @@
     "Incorrect password": "Feil passord",
     "Session name": "Øktens navn",
     "Filter results": "Filtrerresultater",
-    "Toolbox": "Verktøykasse",
     "An error has occurred.": "En feil har oppstått.",
     "Email address": "E-postadresse",
     "Share Room Message": "Del rommelding",
@@ -581,7 +580,6 @@
     "Topic (optional)": "Tema (valgfritt)",
     "Hide advanced": "Skjul avansert",
     "Show advanced": "Vis avansert",
-    "Developer Tools": "Utviklerverktøy",
     "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
     "To continue you need to accept the terms of this service.": "For å gå videre må du akseptere brukervilkårene til denne tjenesten.",
@@ -1084,7 +1082,6 @@
     "Transfer": "Overfør",
     "Invite by email": "Inviter gjennom E-post",
     "Comment": "Kommentar",
-    "Active Widgets": "Aktive moduler",
     "Reason (optional)": "Årsak (valgfritt)",
     "Explore public rooms": "Utforsk offentlige rom",
     "Verify the link in your inbox": "Verifiser lenken i innboksen din",
@@ -1592,7 +1589,10 @@
         "caution_colon": "Advarsel:",
         "level": "Nivå",
         "value_colon": "Verdi:",
-        "value": "Verdi"
+        "value": "Verdi",
+        "active_widgets": "Aktive moduler",
+        "toolbox": "Verktøykasse",
+        "developer_tools": "Utviklerverktøy"
     },
     "settings": {
         "show_breadcrumbs": "Vis snarveier til de nyligst viste rommene ovenfor romlisten",

@@ -759,9 +759,6 @@
     "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "نکته‌ای برای کاربران حرفه‌ای: اگر به مشکل نرم‌افزاری در برنامه برخورد کردید، لطفاً <debugLogsLink>لاگ‌های مشکل</debugLogsLink> را ارسال کنید تا به ما در ردیابی و رفع آن کمک کند.",
     "Comment": "نظر",
     "Feedback sent": "بازخورد ارسال شد",
-    "Developer Tools": "ابزارهای توسعه‌دهنده",
-    "Toolbox": "جعبه ابزار",
-    "Active Widgets": "ابزارک‌های فعال",
     "Search names and descriptions": "جستجوی نام‌ها و توضیحات",
     "Failed to create initial space rooms": "ایجاد اتاق‌های اولیه در فضای کاری موفق نبود",
     "What do you want to organise?": "چه چیزی را می‌خواهید سازماندهی کنید؟",
@@ -2624,7 +2621,10 @@
         "setting_id": "شناسه تنظیم",
         "value": "مقدار",
         "value_in_this_room": "مقدار در این اتاق",
-        "failed_to_find_widget": "هنگام یافتن این ابزارک خطایی روی داد."
+        "failed_to_find_widget": "هنگام یافتن این ابزارک خطایی روی داد.",
+        "active_widgets": "ابزارک‌های فعال",
+        "toolbox": "جعبه ابزار",
+        "developer_tools": "ابزارهای توسعه‌دهنده"
     },
     "settings": {
         "show_breadcrumbs": "نمایش میانبر در بالای لیست اتاق‌ها برای مشاهده‌ی اتاق‌هایی که اخیرا باز کرده‌اید",

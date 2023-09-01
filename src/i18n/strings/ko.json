@@ -256,11 +256,9 @@
     "Collecting app version information": "앱 버전 정보를 수집하는 중",
     "Tuesday": "화요일",
     "Search…": "찾기…",
-    "Developer Tools": "개발자 도구",
     "Unnamed room": "이름 없는 방",
     "Saturday": "토요일",
     "Monday": "월요일",
-    "Toolbox": "도구 상자",
     "Collecting logs": "로그 수집 중",
     "All Rooms": "모든 방",
     "All messages": "모든 메시지",
@@ -1400,7 +1398,9 @@
         "state_key": "상태 키",
         "event_sent": "이벤트를 보냈습니다!",
         "event_content": "이벤트 내용",
-        "threads_timeline": "스레드 타임라인"
+        "threads_timeline": "스레드 타임라인",
+        "toolbox": "도구 상자",
+        "developer_tools": "개발자 도구"
     },
     "settings": {
         "use_12_hour_format": "시간을 12시간제로 보이기(예: 오후 2:30)",

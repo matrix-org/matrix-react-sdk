@@ -407,7 +407,6 @@
     "Tuesday": "Уторак",
     "Saturday": "Субота",
     "Monday": "Понедељак",
-    "Toolbox": "Алатница",
     "Collecting logs": "Прикупљам записнике",
     "All Rooms": "Све собе",
     "Wednesday": "Среда",
@@ -425,7 +424,6 @@
     "Error encountered (%(errorDetail)s).": "Догодила се грешка (%(errorDetail)s).",
     "Low Priority": "Најмања важност",
     "What's New": "Шта је ново",
-    "Developer Tools": "Програмерске алатке",
     "Thank you!": "Хвала вам!",
     "Popout widget": "Виџет за искакање",
     "Missing roomId.": "Недостаје roomId.",
@@ -1349,7 +1347,9 @@
         "state_key": "Кључ стања",
         "event_sent": "Догађај је послат!",
         "event_content": "Садржај догађаја",
-        "caution_colon": "Опрез:"
+        "caution_colon": "Опрез:",
+        "toolbox": "Алатница",
+        "developer_tools": "Програмерске алатке"
     },
     "settings": {
         "use_12_hour_format": "Прикажи временске жигове у 12-сатном облику (нпр.: 2:30 ПоП)",

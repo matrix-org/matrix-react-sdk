@@ -382,8 +382,6 @@
     "Show advanced": "Gelişmiş göster",
     "Incompatible Database": "Uyumsuz Veritabanı",
     "Filter results": "Sonuçları filtrele",
-    "Toolbox": "Araç Kutusu",
-    "Developer Tools": "Geliştirici Araçları",
     "Integrations are disabled": "Bütünleştirmeler kapatılmış",
     "Integrations not allowed": "Bütünleştirmelere izin verilmiyor",
     "Incompatible local cache": "Yerel geçici bellek uyumsuz",
@@ -2032,7 +2030,9 @@
         "event_type": "Olay Tipi",
         "state_key": "Durum Anahtarı",
         "event_sent": "Olay gönderildi!",
-        "event_content": "Olay İçeriği"
+        "event_content": "Olay İçeriği",
+        "toolbox": "Araç Kutusu",
+        "developer_tools": "Geliştirici Araçları"
     },
     "settings": {
         "show_breadcrumbs": "Oda listesinin üzerinde en son kullanılan odaları göster",
