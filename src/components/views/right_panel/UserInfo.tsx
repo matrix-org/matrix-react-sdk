@@ -152,10 +152,7 @@ function useHasCrossSigningKeys(
         }
         setUpdating(true);
         try {
-            // We call it to populate the user keys and devices
-            await cli.getCrypto()?.getUserDeviceInfo([member.userId], true);
-            const xsi = await cli.getStoredCrossSigningForUser(member.userId);
-            return Boolean(xsi?.getId());
+            return await cli.getCrypto()?.userHasCrossSigningKeys(member.userId, true);
         } finally {
             setUpdating(false);
         }
