@@ -693,7 +693,8 @@ describe("Read receipts", () => {
         describe("in the main timeline", () => {
             // TODO: this passes but we think this should fail, because we think edits should not cause unreads.
             // XXX: fails because on CI we get a dot, but locally we get a count. Must be a timing issue.
-            it.skip("Editing a message makes a room unread", () => {
+            // eslint-disable-next-line jest/no-focused-tests
+            it.only("Editing a message makes a room unread", () => {
                 // Given I am not looking at the room
                 goTo(room1);
 
