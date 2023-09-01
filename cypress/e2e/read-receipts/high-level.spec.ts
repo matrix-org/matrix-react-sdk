@@ -700,8 +700,9 @@ describe("Read receipts", () => {
 
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
-                markAsRead(room2);
+                goTo(room2);
                 assertRead(room2);
+                goTo(room1);
 
                 // When an edit appears in the room
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
