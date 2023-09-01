@@ -725,6 +725,10 @@
     "time": {
         "date_at_time": "%(date)s om %(time)s"
     },
+    "settings": {
+        "emoji_autocomplete": "Aktiver emoji forslag under indtastning",
+        "show_redaction_placeholder": "Vis en pladsholder for fjernede beskeder"
+    },
     "devtools": {
         "event_type": "Begivenhedstype",
         "state_key": "Tilstandsnøgle",
@@ -732,9 +736,5 @@
         "event_content": "Begivenhedsindhold",
         "toolbox": "Værktøjer",
         "developer_tools": "Udviklingsværktøjer"
-    },
-    "settings": {
-        "emoji_autocomplete": "Aktiver emoji forslag under indtastning",
-        "show_redaction_placeholder": "Vis en pladsholder for fjernede beskeder"
     }
 }

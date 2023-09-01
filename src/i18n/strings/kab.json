@@ -1990,13 +1990,21 @@
         "download_logs": "Sider imisen",
         "before_submitting": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem."
     },
-    "devtools": {
-        "event_type": "Anaw n tedyant",
-        "state_key": "Tasarut n waddad",
-        "event_sent": "Tadyant tettwazen!",
-        "event_content": "Agbur n tedyant",
-        "toolbox": "Tabewwaḍt n yifecka",
-        "developer_tools": "Ifecka n uneflay"
+    "time": {
+        "few_seconds_ago": "kra n tesinin seg yimir-nni",
+        "about_minute_ago": "tasdidt seg yimir-nni",
+        "n_minutes_ago": "%(num)s tesdat seg yimir-nni",
+        "about_hour_ago": "azal n usrag seg yimir-nni",
+        "n_hours_ago": "%(num)s usrag seg yimir-nni",
+        "about_day_ago": "azal n wass seg yimir-nni",
+        "n_days_ago": "%(num)s wussan seg yimir-nni",
+        "in_few_seconds": "kra n tesinin seg yimir-a",
+        "in_about_minute": "akka tsasdidt seg yimir-a",
+        "in_n_minutes": "%(num)s tesdidin seg yimir-nni",
+        "in_about_hour": "akka asrag seg yimir-a",
+        "in_n_hours": "%(num)s yisragen seg yimir-a",
+        "in_about_day": "akka ass seg yimir-a",
+        "in_n_days": "%(num)s wussan seg yimir-a"
     },
     "settings": {
         "show_breadcrumbs": "Sken inegzumen i texxamin i d-ibanen melmi kan nnig tebdart n texxamt",
@@ -2016,20 +2024,12 @@
         "prompt_invite": "Suter send tuzna n tnubgiwin i yisulayen i izmren ad ilin d arimeɣta",
         "start_automatically": "Bdu s wudem awurman seld tuqqna ɣer unagraw"
     },
-    "time": {
-        "few_seconds_ago": "kra n tesinin seg yimir-nni",
-        "about_minute_ago": "tasdidt seg yimir-nni",
-        "n_minutes_ago": "%(num)s tesdat seg yimir-nni",
-        "about_hour_ago": "azal n usrag seg yimir-nni",
-        "n_hours_ago": "%(num)s usrag seg yimir-nni",
-        "about_day_ago": "azal n wass seg yimir-nni",
-        "n_days_ago": "%(num)s wussan seg yimir-nni",
-        "in_few_seconds": "kra n tesinin seg yimir-a",
-        "in_about_minute": "akka tsasdidt seg yimir-a",
-        "in_n_minutes": "%(num)s tesdidin seg yimir-nni",
-        "in_about_hour": "akka asrag seg yimir-a",
-        "in_n_hours": "%(num)s yisragen seg yimir-a",
-        "in_about_day": "akka ass seg yimir-a",
-        "in_n_days": "%(num)s wussan seg yimir-a"
+    "devtools": {
+        "event_type": "Anaw n tedyant",
+        "state_key": "Tasarut n waddad",
+        "event_sent": "Tadyant tettwazen!",
+        "event_content": "Agbur n tedyant",
+        "toolbox": "Tabewwaḍt n yifecka",
+        "developer_tools": "Ifecka n uneflay"
     }
 }

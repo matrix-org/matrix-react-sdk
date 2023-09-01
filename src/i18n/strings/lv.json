@@ -1803,32 +1803,24 @@
     },
     "time": {
         "seconds_left": "%(seconds)s sekundes atlikušas",
-        "few_seconds_ago": "pirms dažām sekundēm",
-        "about_minute_ago": "aptuveni minūti iepriekš",
         "n_minutes_ago": "%(num)s minūtes iepriekš",
-        "about_hour_ago": "aptuveni stundu iepriekš",
         "n_hours_ago": "%(num)s stundas iepriekš",
-        "about_day_ago": "aptuveni dienu iepriekš",
         "n_days_ago": "%(num)s dienas iepriekš",
+        "in_n_minutes": "%(num)s minūtes kopš šī brīža",
+        "in_n_hours": "%(num)s stundas kopš šī brīža",
+        "in_n_days": "%(num)s dienas kopš šī brīža",
         "in_few_seconds": "dažas sekundes kopš šī brīža",
         "in_about_minute": "aptuveni minūti kopš šī brīža",
-        "in_n_minutes": "%(num)s minūtes kopš šī brīža",
         "in_about_hour": "aptuveni stundu kopš šī brīža",
-        "in_n_hours": "%(num)s stundas kopš šī brīža",
         "in_about_day": "aptuveni dienu kopš šī brīža",
-        "in_n_days": "%(num)s dienas kopš šī brīža"
+        "few_seconds_ago": "pirms dažām sekundēm",
+        "about_minute_ago": "aptuveni minūti iepriekš",
+        "about_hour_ago": "aptuveni stundu iepriekš",
+        "about_day_ago": "aptuveni dienu iepriekš"
     },
     "onboarding": {
         "personal_messaging_action": "Sāciet savu pirmo čatu",
         "set_up_profile_action": "Jūsu profils"
-    },
-    "devtools": {
-        "event_type": "Notikuma tips",
-        "state_key": "Stāvokļa atslēga",
-        "event_sent": "Notikums nosūtīts!",
-        "event_content": "Notikuma saturs",
-        "toolbox": "Instrumentārijs",
-        "developer_tools": "Izstrādātāja rīki"
     },
     "settings": {
         "show_breadcrumbs": "Rādīt saīsnes uz nesen skatītajām istabām istabu saraksta augšpusē",
@@ -1855,5 +1847,13 @@
         "big_emoji": "Iespējot lielas emocijzīmes čatā",
         "jump_to_bottom_on_send": "Nosūtot ziņu, pāriet uz laika skalas beigām",
         "start_automatically": "Startēt pie ierīces ielādes"
+    },
+    "devtools": {
+        "event_type": "Notikuma tips",
+        "state_key": "Stāvokļa atslēga",
+        "event_sent": "Notikums nosūtīts!",
+        "event_content": "Notikuma saturs",
+        "toolbox": "Instrumentārijs",
+        "developer_tools": "Izstrādātāja rīki"
     }
 }

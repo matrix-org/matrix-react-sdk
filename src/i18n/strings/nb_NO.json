@@ -1567,32 +1567,20 @@
     },
     "time": {
         "date_at_time": "%(date)s klokken %(time)s",
-        "few_seconds_ago": "noen sekunder siden",
-        "about_minute_ago": "cirka 1 minutt siden",
         "n_minutes_ago": "%(num)s minutter siden",
-        "about_hour_ago": "cirka 1 time siden",
         "n_hours_ago": "%(num)s timer siden",
-        "about_day_ago": "cirka 1 dag siden",
         "n_days_ago": "%(num)s dager siden",
+        "in_n_minutes": "%(num)s minutter fra nå",
+        "in_n_hours": "%(num)s timer fra nå",
+        "in_n_days": "%(num)s dager fra nå",
         "in_few_seconds": "om noen sekunder fra nå",
         "in_about_minute": "rundt et minutt fra nå",
-        "in_n_minutes": "%(num)s minutter fra nå",
         "in_about_hour": "rundt en time fra nå",
-        "in_n_hours": "%(num)s timer fra nå",
         "in_about_day": "rundt en dag fra nå",
-        "in_n_days": "%(num)s dager fra nå"
-    },
-    "devtools": {
-        "event_type": "Hendelsestype",
-        "event_content": "Hendelsesinnhold",
-        "setting_colon": "Innstilling:",
-        "caution_colon": "Advarsel:",
-        "level": "Nivå",
-        "value_colon": "Verdi:",
-        "value": "Verdi",
-        "active_widgets": "Aktive moduler",
-        "toolbox": "Verktøykasse",
-        "developer_tools": "Utviklerverktøy"
+        "few_seconds_ago": "noen sekunder siden",
+        "about_minute_ago": "cirka 1 minutt siden",
+        "about_hour_ago": "cirka 1 time siden",
+        "about_day_ago": "cirka 1 dag siden"
     },
     "settings": {
         "show_breadcrumbs": "Vis snarveier til de nyligst viste rommene ovenfor romlisten",
@@ -1613,5 +1601,17 @@
         "big_emoji": "Skru på store emojier i chatrom",
         "prompt_invite": "Si ifra før det sendes invitasjoner til potensielt ugyldige Matrix-ID-er",
         "warn_quit": "Advar før avslutning"
+    },
+    "devtools": {
+        "event_type": "Hendelsestype",
+        "event_content": "Hendelsesinnhold",
+        "setting_colon": "Innstilling:",
+        "caution_colon": "Advarsel:",
+        "level": "Nivå",
+        "value_colon": "Verdi:",
+        "value": "Verdi",
+        "active_widgets": "Aktive moduler",
+        "toolbox": "Verktøykasse",
+        "developer_tools": "Utviklerverktøy"
     }
 }

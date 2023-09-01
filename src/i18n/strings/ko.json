@@ -1388,14 +1388,12 @@
         "github_issue": "GitHub 이슈",
         "before_submitting": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>."
     },
-    "devtools": {
-        "event_type": "이벤트 종류",
-        "state_key": "상태 키",
-        "event_sent": "이벤트를 보냈습니다!",
-        "event_content": "이벤트 내용",
-        "threads_timeline": "스레드 타임라인",
-        "toolbox": "도구 상자",
-        "developer_tools": "개발자 도구"
+    "time": {
+        "n_minutes_ago": "%(num)s분 전",
+        "about_hour_ago": "약 1 시간 전",
+        "n_hours_ago": "%(num)s 시간 전",
+        "about_day_ago": "약 1일 전",
+        "n_days_ago": "%(num)s일 전"
     },
     "settings": {
         "use_12_hour_format": "시간을 12시간제로 보이기(예: 오후 2:30)",
@@ -1414,11 +1412,13 @@
         "prompt_invite": "잠재적으로 올바르지 않은 Matrix ID로 초대를 보내기 전에 확인",
         "start_automatically": "컴퓨터를 시작할 때 자동으로 실행하기"
     },
-    "time": {
-        "n_minutes_ago": "%(num)s분 전",
-        "about_hour_ago": "약 1 시간 전",
-        "n_hours_ago": "%(num)s 시간 전",
-        "about_day_ago": "약 1일 전",
-        "n_days_ago": "%(num)s일 전"
+    "devtools": {
+        "event_type": "이벤트 종류",
+        "state_key": "상태 키",
+        "event_sent": "이벤트를 보냈습니다!",
+        "event_content": "이벤트 내용",
+        "threads_timeline": "스레드 타임라인",
+        "toolbox": "도구 상자",
+        "developer_tools": "개발자 도구"
     }
 }

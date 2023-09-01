@@ -1021,14 +1021,6 @@
         "github_issue": "GitHub-meldienge",
         "before_submitting": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft."
     },
-    "devtools": {
-        "event_type": "Gebeurtenistype",
-        "state_key": "Toestandssleuter",
-        "event_sent": "Gebeurtenisse verstuurd!",
-        "event_content": "Gebeurtenisinhoud",
-        "toolbox": "Gereedschap",
-        "developer_tools": "Ountwikkeliengsgereedschap"
-    },
     "settings": {
         "use_12_hour_format": "Tyd in 12-uursformoat weregeevn (bv. 2:30pm)",
         "always_show_message_timestamps": "Assan de tydstempels van berichtn toogn",
@@ -1043,5 +1035,13 @@
         "big_emoji": "Grote emoticons in gesprekkn inschoakeln",
         "prompt_invite": "Bevestigienge vroagn voda uutnodigiengn noar meuglik oungeldige Matrix-ID’s wordn verstuurd",
         "start_automatically": "Automatisch startn achter systeemanmeldienge"
+    },
+    "devtools": {
+        "event_type": "Gebeurtenistype",
+        "state_key": "Toestandssleuter",
+        "event_sent": "Gebeurtenisse verstuurd!",
+        "event_content": "Gebeurtenisinhoud",
+        "toolbox": "Gereedschap",
+        "developer_tools": "Ountwikkeliengsgereedschap"
     }
 }

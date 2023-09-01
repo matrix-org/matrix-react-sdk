@@ -2011,28 +2011,20 @@
     },
     "time": {
         "seconds_left": "%(seconds)s saniye kaldı",
-        "few_seconds_ago": "bir kaç saniye önce",
-        "about_minute_ago": "yaklaşık bir dakika önce",
         "n_minutes_ago": "%(num)s dakika önce",
-        "about_hour_ago": "yaklaşık bir saat önce",
         "n_hours_ago": "%(num)s saat önce",
-        "about_day_ago": "yaklaşık bir gün önce",
         "n_days_ago": "%(num)s gün önce",
+        "in_n_minutes": "şu andan itibaren %(num)s dakika",
+        "in_n_hours": "şu andan itibaren %(num)s saat",
+        "in_n_days": "şu andan itibaren %(num)s gün",
         "in_few_seconds": "şu andan itibaren bir kaç saniye",
         "in_about_minute": "şu andan itibaren yaklaşık bir dakika",
-        "in_n_minutes": "şu andan itibaren %(num)s dakika",
         "in_about_hour": "şu andan itibaren yaklaşık bir saat",
-        "in_n_hours": "şu andan itibaren %(num)s saat",
         "in_about_day": "şu andan itibaren yaklaşık bir gün",
-        "in_n_days": "şu andan itibaren %(num)s gün"
-    },
-    "devtools": {
-        "event_type": "Olay Tipi",
-        "state_key": "Durum Anahtarı",
-        "event_sent": "Olay gönderildi!",
-        "event_content": "Olay İçeriği",
-        "toolbox": "Araç Kutusu",
-        "developer_tools": "Geliştirici Araçları"
+        "few_seconds_ago": "bir kaç saniye önce",
+        "about_minute_ago": "yaklaşık bir dakika önce",
+        "about_hour_ago": "yaklaşık bir saat önce",
+        "about_day_ago": "yaklaşık bir gün önce"
     },
     "settings": {
         "show_breadcrumbs": "Oda listesinin üzerinde en son kullanılan odaları göster",
@@ -2056,5 +2048,13 @@
         "big_emoji": "Sohbette büyük emojileri aç",
         "prompt_invite": "Potansiyel olarak geçersiz matrix kimliği olanlara davet gönderirken uyarı ver",
         "start_automatically": "Sisteme giriş yaptıktan sonra otomatik başlat"
+    },
+    "devtools": {
+        "event_type": "Olay Tipi",
+        "state_key": "Durum Anahtarı",
+        "event_sent": "Olay gönderildi!",
+        "event_content": "Olay İçeriği",
+        "toolbox": "Araç Kutusu",
+        "developer_tools": "Geliştirici Araçları"
     }
 }
