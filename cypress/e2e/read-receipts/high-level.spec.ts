@@ -699,6 +699,7 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
+                assertRead(room2);
 
                 // When an edit appears in the room
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
@@ -733,6 +734,7 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
+                assertRead(room2);
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
                 assertUnread(room2, 1);
 
@@ -748,6 +750,7 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
+                assertRead(room2);
 
                 // When a message is edited
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
@@ -778,6 +781,7 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1")]);
                 assertUnread(room2, 2);
                 markAsRead(room2);
+                assertRead(room2);
 
                 // When the reply is edited
                 receiveMessages(room2, [editOf("Reply1", "Reply1 Edit1")]);
@@ -791,6 +795,7 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
+                assertRead(room2);
 
                 // When an edit appears in the room
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
@@ -808,6 +813,7 @@ describe("Read receipts", () => {
                 receiveMessages(room2, ["Msg1"]);
                 assertUnread(room2, 1);
                 markAsRead(room2);
+                assertRead(room2);
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
                 assertUnread(room2, 1);
 
@@ -1177,6 +1183,7 @@ describe("Read receipts", () => {
             assertUnread(room2, 2);
 
             markAsRead(room2);
+            assertRead(room2);
 
             receiveMessages(room2, [customEvent("org.custom.event", { body: "foobar" })]);
             assertRead(room2);
@@ -1188,6 +1195,7 @@ describe("Read receipts", () => {
             assertUnread(room2, 2);
 
             markAsRead(room2);
+            assertRead(room2);
 
             receiveMessages(room2, [customEvent("org.custom.event", { body: "foobar" })]);
             assertRead(room2);
