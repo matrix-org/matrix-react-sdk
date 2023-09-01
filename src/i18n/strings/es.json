@@ -3084,7 +3084,6 @@
     "Get it on Google Play": "Disponible en Google Play",
     "Download on the App Store": "Descargar en la App Store",
     "Download %(brand)s Desktop": "Descargar %(brand)s para escritorio",
-    "Download %(brand)s": "Descargar %(brand)s",
     "Choose a locale": "Elige un idioma",
     "Session details": "Detalles de la sesión",
     "IP address": "Dirección IP",
@@ -3099,12 +3098,6 @@
     "Your server doesn't support disabling sending read receipts.": "Tu servidor no permite desactivar los acuses de recibo.",
     "Share your activity and status with others.": "Comparte tu actividad y estado con los demás.",
     "Spell check": "Corrector ortográfico",
-    "Enable notifications": "Activar notificaciones",
-    "Don’t miss a reply or important message": "No te pierdas ninguna respuesta ni mensaje importante",
-    "Turn on notifications": "Activar notificaciones",
-    "Your profile": "Tu perfil",
-    "Set up your profile": "Completar perfil",
-    "Download apps": "Descargar apps",
     "Interactively verify by emoji": "Verificar interactivamente usando emojis",
     "Manually verify by text": "Verificar manualmente usando un texto",
     "Security recommendations": "Consejos de seguridad",
@@ -3126,7 +3119,6 @@
     "Verified sessions": "Sesiones verificadas",
     "Inactive for %(inactiveAgeDays)s+ days": "Inactivo durante más de %(inactiveAgeDays)s días",
     "Show shortcut to welcome checklist above the room list": "Mostrar un atajo a los pasos de bienvenida encima de la lista de salas",
-    "Make sure people know it’s really you": "Asegúrate de que la gente sepa que eres tú de verdad",
     "Inviting %(user)s and %(count)s others": {
         "one": "Invitando a %(user)s y 1 más",
         "other": "Invitando a %(user)s y %(count)s más"
@@ -3134,7 +3126,6 @@
     "Inviting %(user1)s and %(user2)s": "Invitando a %(user1)s y %(user2)s",
     "We're creating a room with %(names)s": "Estamos creando una sala con %(names)s",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>No está recomendado activar el cifrado en salas públicas.</b> Cualquiera puede encontrarlas y unirse a ellas, así que cualquiera puede leer los mensajes en ellas. No disfrutarás de ninguno de los beneficios del cifrado, y no podrás desactivarlo en el futuro. Cifrar los mensajes en una sala pública ralentizará el envío y la recepción de mensajes.",
-    "Don’t miss a thing by taking %(brand)s with you": "No te pierdas nada llevándote %(brand)s contigo",
     "Empty room (was %(oldName)s)": "Sala vacía (antes era %(oldName)s)",
     "%(user)s and %(count)s others": {
         "one": "%(user)s y 1 más",
@@ -3713,7 +3704,16 @@
         "find_coworkers": "Encuentra o invita a tus compañeros",
         "get_stuff_done": "Empieza a trabajar añadiendo a tus compañeros",
         "find_people": "Encontrar gente",
-        "find_community_members": "Encuentra e invita a las personas de tu comunidad"
+        "find_community_members": "Encuentra e invita a las personas de tu comunidad",
+        "download_app": "Descargar %(brand)s",
+        "download_app_description": "No te pierdas nada llevándote %(brand)s contigo",
+        "download_app_action": "Descargar apps",
+        "set_up_profile": "Completar perfil",
+        "set_up_profile_description": "Asegúrate de que la gente sepa que eres tú de verdad",
+        "set_up_profile_action": "Tu perfil",
+        "enable_notifications": "Activar notificaciones",
+        "enable_notifications_description": "No te pierdas ninguna respuesta ni mensaje importante",
+        "enable_notifications_action": "Activar notificaciones"
     },
     "devtools": {
         "send_custom_account_data_event": "Enviar evento personalizado de cuenta de sala",

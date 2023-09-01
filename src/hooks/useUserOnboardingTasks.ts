@@ -96,16 +96,16 @@ const tasks: UserOnboardingTask[] = [
     {
         id: "download-apps",
         title: () =>
-            _t("Download %(brand)s", {
+            _t("onboarding|download_app", {
                 brand: SdkConfig.get("brand"),
             }),
         description: () =>
-            _t("Don’t miss a thing by taking %(brand)s with you", {
+            _t("onboarding|download_app_description", {
                 brand: SdkConfig.get("brand"),
             }),
         completed: (ctx: UserOnboardingContext) => ctx.hasDevices,
         action: {
-            label: _t("Download apps"),
+            label: _t("onboarding|download_app_action"),
             onClick: (ev: ButtonEvent) => {
                 PosthogTrackers.trackInteraction("WebUserOnboardingTaskDownloadApps", ev);
                 Modal.createDialog(AppDownloadDialog, {}, "mx_AppDownloadDialog_wrapper", false, true);
@@ -114,11 +114,11 @@ const tasks: UserOnboardingTask[] = [
     },
     {
         id: "setup-profile",
-        title: _t("Set up your profile"),
-        description: _t("Make sure people know it’s really you"),
+        title: _t("onboarding|set_up_profile"),
+        description: _t("onboarding|set_up_profile_description"),
         completed: (ctx: UserOnboardingContext) => ctx.hasAvatar,
         action: {
-            label: _t("Your profile"),
+            label: _t("onboarding|set_up_profile_action"),
             onClick: (ev: ButtonEvent) => {
                 PosthogTrackers.trackInteraction("WebUserOnboardingTaskSetupProfile", ev);
                 defaultDispatcher.dispatch({
@@ -130,11 +130,11 @@ const tasks: UserOnboardingTask[] = [
     },
     {
         id: "permission-notifications",
-        title: _t("Turn on notifications"),
-        description: _t("Don’t miss a reply or important message"),
+        title: _t("onboarding|enable_notifications"),
+        description: _t("onboarding|enable_notifications_description"),
         completed: (ctx: UserOnboardingContext) => ctx.hasNotificationsEnabled,
         action: {
-            label: _t("Enable notifications"),
+            label: _t("onboarding|enable_notifications_action"),
             onClick: (ev: ButtonEvent) => {
                 PosthogTrackers.trackInteraction("WebUserOnboardingTaskEnableNotifications", ev);
                 Notifier.setEnabled(true);

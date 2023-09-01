@@ -2515,7 +2515,6 @@
     "IRC (Experimental)": "IRC (experimental)",
     "Turn off camera": "Desligar câmera",
     "Turn on camera": "Ligar câmera",
-    "Your profile": "Seu perfil",
     "Enable hardware acceleration": "Habilitar aceleração de hardware",
     "Export successful!": "Exportação realizada com sucesso!",
     "Generating a ZIP": "Gerando um ZIP",
@@ -2560,8 +2559,6 @@
     "Unmute microphone": "Habilitar microfone",
     "Mute microphone": "Silenciar microfone",
     "Video devices": "Dispositivos de vídeo",
-    "Make sure people know it’s really you": "Certifique-se de que as pessoas saibam que é realmente você",
-    "Set up your profile": "Configure seu perfil",
     "Room members": "Membros da sala",
     "Back to chat": "Voltar ao chat",
     "Connection lost": "Conexão perdida",
@@ -2868,7 +2865,10 @@
     },
     "onboarding": {
         "welcome_to_brand": "Bem-vindo a %(brand)s",
-        "find_people": "Encontrar pessoas"
+        "find_people": "Encontrar pessoas",
+        "set_up_profile": "Configure seu perfil",
+        "set_up_profile_description": "Certifique-se de que as pessoas saibam que é realmente você",
+        "set_up_profile_action": "Seu perfil"
     },
     "devtools": {
         "event_type": "Tipo do Evento",

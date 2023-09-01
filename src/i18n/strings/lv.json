@@ -1610,7 +1610,6 @@
     },
     "Files": "Faili",
     "Your private space": "Jūsu privāta vieta",
-    "Your profile": "Jūsu profils",
     "To join a space you'll need an invite.": "Lai pievienotos vietai, ir nepieciešams uzaicinājums.",
     "Your public space": "Jūsu publiska vieta",
     "Share your public space": "Dalīties ar jūsu publisko vietu",
@@ -1822,7 +1821,8 @@
         "seconds_left": "%(seconds)s sekundes atlikušas"
     },
     "onboarding": {
-        "personal_messaging_action": "Sāciet savu pirmo čatu"
+        "personal_messaging_action": "Sāciet savu pirmo čatu",
+        "set_up_profile_action": "Jūsu profils"
     },
     "devtools": {
         "event_type": "Notikuma tips",
