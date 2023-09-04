@@ -1,8 +1,6 @@
 {
     "Account": "บัญชี",
-    "Microphone": "ไมโครโฟน",
     "No Microphones detected": "ไม่พบไมโครโฟน",
-    "Camera": "กล้อง",
     "Advanced": "ขึ้นสูง",
     "Change Password": "เปลี่ยนรหัสผ่าน",
     "Default": "ค่าเริ่มต้น",
@@ -10,11 +8,9 @@
     "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s เปลี่ยนหัวข้อเป็น \"%(topic)s\"",
     "Decrypt %(text)s": "ถอดรหัส %(text)s",
     "Download %(text)s": "ดาวน์โหลด %(text)s",
-    "Emoji": "อีโมจิ",
     "Low priority": "ความสำคัญต่ำ",
     "Profile": "โปรไฟล์",
     "Reason": "เหตุผล",
-    "Register": "ลงทะเบียน",
     "%(brand)s version:": "เวอร์ชัน %(brand)s:",
     "Notifications": "การแจ้งเตือน",
     "Operation failed": "การดำเนินการล้มเหลว",
@@ -51,7 +47,6 @@
     "Email": "อีเมล",
     "Email address": "ที่อยู่อีเมล",
     "Error decrypting attachment": "การถอดรหัสไฟล์แนบผิดพลาด",
-    "Export": "ส่งออก",
     "Failed to ban user": "การแบนผู้ใช้ล้มเหลว",
     "Failed to change password. Is your password correct?": "การเปลี่ยนรหัสผ่านล้มเหลว รหัสผ่านของคุณถูกต้องหรือไม่?",
     "Failed to reject invite": "การปฏิเสธคำเชิญล้มเหลว",
@@ -66,7 +61,6 @@
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s จาก %(fromPowerLevel)s ไปเป็น %(toPowerLevel)s",
     "Hangup": "วางสาย",
     "Historical": "ประวัติแชทเก่า",
-    "Import": "นำเข้า",
     "Incorrect username and/or password.": "ชื่อผู้ใช้และ/หรือรหัสผ่านไม่ถูกต้อง",
     "Incorrect verification code": "รหัสยืนยันไม่ถูกต้อง",
     "Invalid Email Address": "ที่อยู่อีเมลไม่ถูกต้อง",
@@ -101,10 +95,6 @@
     "Server may be unavailable, overloaded, or you hit a bug.": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือเจอจุดบกพร่อง",
     "Server unavailable, overloaded, or something else went wrong.": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือบางอย่างผิดปกติ",
     "Signed Out": "ออกจากระบบแล้ว",
-    "Someone": "ใครบางคน",
-    "Always show message timestamps": "แสดงเวลาในแชทเสมอ",
-    "Show timestamps in 12 hour format (e.g. 2:30pm)": "แสดงเวลาในแชทในรูปแบบ 12 ชั่วโมง (เช่น 2:30pm)",
-    "Submit": "ส่ง",
     "This email address is already in use": "ที่อยู่อีเมลถูกใช้แล้ว",
     "This email address was not found": "ไม่พบที่อยู่อีเมล",
     "This phone number is already in use": "หมายเลขโทรศัพท์นี้ถูกใช้งานแล้ว",
@@ -295,9 +285,6 @@
     "IP address": "ที่อยู่ IP",
     "Browser": "เบราว์เซอร์",
     "Operating system": "ระบบปฏิบัติการ",
-    "Device": "อุปกรณ์",
-    "Version": "รุ่น",
-    "Application": "แอปพลิเคชัน",
     "Last activity": "กิจกรรมสุดท้าย",
     "Session ID": "รหัสเซสชัน",
     "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "สิ่งนี้ทำให้พวกเขามั่นใจว่าพวกเขากำลังพูดกับคุณจริงๆ แต่ก็หมายความว่าพวกเขาสามารถเห็นชื่อเซสชันที่คุณป้อนที่นี่.",
@@ -414,7 +401,6 @@
     "Idle": "ว่าง",
     "Online": "ออนไลน์",
     "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "ที่อยู่อีเมลของคุณไม่ได้เชื่อมโยงกับ Matrix ID บนโฮมเซิร์ฟเวอร์นี้",
-    "Timeline": "เส้นเวลา",
     "common": {
         "encryption_enabled": "เปิดใช้งานการเข้ารหัส",
         "error": "ข้อผิดพลาด",
@@ -433,7 +419,15 @@
         "labs": "ห้องทดลอง",
         "home": "เมนูหลัก",
         "favourites": "รายการโปรด",
-        "attachment": "ไฟล์แนบ"
+        "attachment": "ไฟล์แนบ",
+        "timeline": "เส้นเวลา",
+        "camera": "กล้อง",
+        "microphone": "ไมโครโฟน",
+        "emoji": "อีโมจิ",
+        "someone": "ใครบางคน",
+        "application": "แอปพลิเคชัน",
+        "version": "รุ่น",
+        "device": "อุปกรณ์"
     },
     "action": {
         "continue": "ดำเนินการต่อ",
@@ -471,7 +465,11 @@
         "close": "ปิด",
         "cancel": "ยกเลิก",
         "add": "เพิ่ม",
-        "accept": "ยอมรับ"
+        "accept": "ยอมรับ",
+        "register": "ลงทะเบียน",
+        "import": "นำเข้า",
+        "export": "ส่งออก",
+        "submit": "ส่ง"
     },
     "keyboard": {
         "home": "เมนูหลัก"
@@ -497,5 +495,9 @@
         "minutes_seconds_left": "%(minutes)sm %(seconds)ss ที่ผ่านมา",
         "seconds_left": "%(seconds)ss ที่ผ่านมา",
         "date_at_time": "%(date)s เมื่อ %(time)s"
+    },
+    "settings": {
+        "use_12_hour_format": "แสดงเวลาในแชทในรูปแบบ 12 ชั่วโมง (เช่น 2:30pm)",
+        "always_show_message_timestamps": "แสดงเวลาในแชทเสมอ"
     }
 }
