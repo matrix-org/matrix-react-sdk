@@ -214,7 +214,7 @@ describe("Spotlight", () => {
         cy.stopHomeserver(homeserver);
     });
 
-    it.skip("should be able to add and remove filters via keyboard", () => {
+    it("should be able to add and remove filters via keyboard", () => {
         cy.openSpotlightDialog().within(() => {
             cy.wait(1000); // wait for the dialog to settle, otherwise our keypresses might race with an update
 
@@ -237,7 +237,7 @@ describe("Spotlight", () => {
         });
     });
 
-    it("kerry sshould find joined rooms", () => {
+    it("should find joined rooms", () => {
         cy.openSpotlightDialog()
             .within(() => {
                 cy.spotlightSearch().clear().type(room1Name);
