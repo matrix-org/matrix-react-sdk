@@ -19,5 +19,13 @@ limitations under the License.
     /* Stick the default room avatar colour, so it doesn't cause a false diff on the screenshot */
     .mx_BaseAvatar {
         background-color: var(--percy-color-avatar) !important;
+        color: white !important;
     }
+}
+
+button.mx_BaseAvatar {
+    /* The user agent stylesheet overrides the font-size in this scenario
+       And that breaks the alignment, emojis, and all sorts of things
+     */
+    font-size: inherit;
 }

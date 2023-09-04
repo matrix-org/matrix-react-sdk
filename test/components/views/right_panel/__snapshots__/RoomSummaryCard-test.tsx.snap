@@ -20,12 +20,13 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         role="presentation"
       >
         <span
-          class="_avatar_i91o9_17 mx_BaseAvatar"
+          class="_avatar_2lhia_17 mx_BaseAvatar _avatar-imageless_2lhia_56"
           data-color="7"
           data-testid="avatar-img"
           data-type="round"
           role="presentation"
           style="--cpd-avatar-size: 54px;"
+          title="!room:domain.org"
         >
           !
         </span>
@@ -67,6 +68,13 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
           >
             0
           </span>
+        </div>
+        <div
+          class="mx_AccessibleButton mx_BaseCard_Button mx_RoomSummaryCard_Button mx_RoomSummaryCard_icon_search"
+          role="button"
+          tabindex="0"
+        >
+          Search
         </div>
         <div
           class="mx_AccessibleButton mx_BaseCard_Button mx_RoomSummaryCard_Button mx_RoomSummaryCard_icon_files"

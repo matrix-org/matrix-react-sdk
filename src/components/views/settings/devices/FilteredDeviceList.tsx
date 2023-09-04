@@ -160,7 +160,7 @@ const NoResults: React.FC<NoResultsProps> = ({ filter, clearFilter }) => (
                 <>
                     &nbsp;
                     <AccessibleButton kind="link_inline" onClick={clearFilter} data-testid="devices-clear-filter-btn">
-                        {_t("Show all")}
+                        {_t("action|show_all")}
                     </AccessibleButton>
                 </>
             )
@@ -284,12 +284,12 @@ export const FilteredDeviceList = forwardRef(
             { id: ALL_FILTER_ID, label: _t("All") },
             {
                 id: DeviceSecurityVariation.Verified,
-                label: _t("Verified"),
+                label: _t("common|verified"),
                 description: _t("Ready for secure messaging"),
             },
             {
                 id: DeviceSecurityVariation.Unverified,
-                label: _t("Unverified"),
+                label: _t("common|unverified"),
                 description: _t("Not ready for secure messaging"),
             },
             {
@@ -353,7 +353,7 @@ export const FilteredDeviceList = forwardRef(
                             value={filter || ALL_FILTER_ID}
                             onOptionChange={onFilterOptionChange}
                             options={options}
-                            selectedLabel={_t("Show")}
+                            selectedLabel={_t("action|show")}
                         />
                     )}
                 </FilteredDeviceListHeader>

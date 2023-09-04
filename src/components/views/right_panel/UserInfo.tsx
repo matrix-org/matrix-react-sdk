@@ -82,6 +82,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../utils/direct-messages";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { asyncSome } from "../../../utils/arrays";
+import UIStore from "../../../stores/UIStore";
 
 export interface IDevice extends Device {
     ambiguous?: boolean;
@@ -205,7 +206,7 @@ export function DeviceItem({ userId, device }: { userId: string; device: IDevice
     }
 
     let trustedLabel: string | undefined;
-    if (userTrust.isVerified()) trustedLabel = isVerified ? _t("Trusted") : _t("Not trusted");
+    if (userTrust.isVerified()) trustedLabel = isVerified ? _t("common|trusted") : _t("common|not_trusted");
 
     if (isVerified === undefined) {
         // we're still deciding if the device is verified
@@ -442,7 +443,7 @@ export const UserOptionsSection: React.FC<{
 
             insertPillButton = (
                 <AccessibleButton kind="link" onClick={onInsertPillButton} className="mx_UserInfo_field">
-                    {_t("Mention")}
+                    {_t("action|mention")}
                 </AccessibleButton>
             );
         }
@@ -1578,7 +1579,7 @@ export const UserInfoHeader: React.FC<{
                     <MemberAvatar
                         key={member.userId} // to instantly blank the avatar when UserInfo changes members
                         member={member as RoomMember}
-                        size="30vh" // 2x@30vh
+                        size={UIStore.instance.windowHeight * 0.3 + "px"}
                         resizeMethod="scale"
                         fallbackUserId={member.userId}
                         onClick={onMemberAvatarClick}
