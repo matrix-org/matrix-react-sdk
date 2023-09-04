@@ -37,4 +37,6 @@ jobs:
               run: "yarn install --frozen-lockfile"
 
             - name: i18n Check
-              run: "yarn run diff-i18n"
+              run: |
+                  yarn run i18n
+                  git diff --exit-code
