@@ -19,7 +19,7 @@ import type { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import type { CypressBot } from "../../support/bot";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
-import { doTwoWaySasVerification, waitForVerificationRequest } from "./utils";
+import { doTwoWaySasVerification, downloadKey, waitForVerificationRequest } from "./utils";
 import { skipIfRustCrypto } from "../../support/util";
 
 interface CryptoTestContext extends Mocha.Context {
@@ -167,15 +167,6 @@ describe("Cryptography", function () {
                         expect(key.iv).to.exist;
                         expect(key.mac).to.exist;
                     });
-            }
-
-            /**
-             * Click on download button and continue
-             */
-            function downloadKey() {
-                // Clicking download instead of Copy because of https://github.com/cypress-io/cypress/issues/2851
-                cy.findByRole("button", { name: "Download" }).click();
-                cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
             }
 
             it("by recovery code", () => {

@@ -139,3 +139,12 @@ export function doTwoWaySasVerification(verifier: Verifier): void {
         });
     });
 }
+
+/**
+ * Queue up cypress commands to click on download button and continue
+ */
+export function downloadKey() {
+    // Clicking download instead of Copy because of https://github.com/cypress-io/cypress/issues/2851
+    cy.findByRole("button", { name: "Download" }).click();
+    cy.contains(".mx_Dialog_primary:not([disabled])", "Continue").click();
+}
