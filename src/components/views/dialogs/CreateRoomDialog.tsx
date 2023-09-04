@@ -46,25 +46,46 @@ interface IProps {
 }
 
 interface IState {
-    // The selected room join rule.
+    /**
+     * The selected room join rule.
+     */
     joinRule: JoinRule;
-    // Indicates whether the knock room is public visible. Applies only for rooms with knock join rule.
+    /**
+     * Indicates whether the created room should have public visibility (ie, it should be
+     * shown in the public room list). Only applicable if `joinRule` == `JoinRule.Knock`.
+     */
     isPublicKnockRoom: boolean;
-    // Indicates whether end-to-end encryption is enabled for the room.
+    /**
+     * Indicates whether end-to-end encryption is enabled for the room.
+     */
     isEncrypted: boolean;
-    // The room name.
+    /**
+     * The room name.
+     */
     name: string;
-    // The room topic.
+    /**
+     * The room topic.
+     */
     topic: string;
-    // The room alias.
+    /**
+     * The room alias.
+     */
     alias: string;
-    // Indicates whether the details section is open.
+    /**
+     * Indicates whether the details section is open.
+     */
     detailsOpen: boolean;
-    // Indicates whether federation is disabled for the room.
+    /**
+     * Indicates whether federation is disabled for the room.
+     */
     noFederate: boolean;
-    // Indicates whether the room name is valid.
+    /**
+     * Indicates whether the room name is valid.
+     */
     nameIsValid: boolean;
-    // Indicates whether the user can change encryption settings for the room.
+    /**
+     * Indicates whether the user can change encryption settings for the room.
+     */
     canChangeEncryption: boolean;
 }
 
