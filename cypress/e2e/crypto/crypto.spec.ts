@@ -129,6 +129,7 @@ const verify = function (this: CryptoTestContext) {
 
 describe("Cryptography", function () {
     let aliceCredentials: UserCredentials;
+    let bob: CypressBot;
 
     beforeEach(function () {
         cy.startHomeserver("default")
@@ -137,11 +138,15 @@ describe("Cryptography", function () {
                 cy.initTestUser(homeserver, "Alice", undefined, "alice_").then((credentials) => {
                     aliceCredentials = credentials;
                 });
-                cy.getBot(homeserver, {
+                return cy.getBot(homeserver, {
                     displayName: "Bob",
                     autoAcceptInvites: false,
                     userIdPrefix: "bob_",
-                }).as("bob");
+                });
+            })
+            .as("bob")
+            .then((data) => {
+                bob = data;
             });
     });
 
@@ -286,17 +291,12 @@ describe("Cryptography", function () {
     });
 
     describe("event shields", () => {
-        it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
-            skipIfRustCrypto();
+        beforeEach(() => {
             cy.bootstrapCrossSigning(aliceCredentials);
-
-            // bob has a second, not cross-signed, device
-            cy.loginBot(this.homeserver, this.bob.getUserId(), this.bob.__cypress_password, {}).as("bobSecondDevice");
-
-            autoJoin(this.bob);
+            autoJoin(bob);
 
             // first create the room, so that we can open the verification panel
-            cy.createRoom({ name: "TestRoom", invite: [this.bob.getUserId()] })
+            cy.createRoom({ name: "TestRoom", invite: [bob.getUserId()] })
                 .as("testRoomId")
                 .then((roomId) => {
                     cy.log(`Created test room ${roomId}`);
@@ -311,7 +311,15 @@ describe("Cryptography", function () {
                     // with his join.
                     cy.findByText("Bob joined the room").should("exist");
                 });
+        });
 
+        it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
+            skipIfRustCrypto();
+
+            // bob has a second, not cross-signed, device
+            cy.loginBot(this.homeserver, this.bob.getUserId(), this.bob.__cypress_password, {}).as("bobSecondDevice");
+
+            // verify Bob
             verify.call(this);
 
             cy.get<string>("@testRoomId").then((roomId) => {
