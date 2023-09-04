@@ -939,8 +939,6 @@
     "Read Marker off-screen lifetime (ms)": "畫面外讀取標記的生命週期（毫秒）",
     "e.g. my-room": "例如：my-room",
     "Please enter a name for the room": "請輸入聊天室名稱",
-    "Create a public room": "建立公開聊天室",
-    "Create a private room": "建立私密聊天室",
     "Topic (optional)": "主題（選擇性）",
     "Hide advanced": "隱藏進階設定",
     "Show advanced": "顯示進階設定",
@@ -2852,9 +2850,6 @@
     "Failed to invite users to %(roomName)s": "邀請使用者加入 %(roomName)s 失敗",
     "An error occurred while stopping your live location, please try again": "停止您的即時位置時發生錯誤，請再試一次",
     "Threads help keep your conversations on-topic and easy to track.": "「討論串」功能可以協助您的對話不離題且易於追蹤。",
-    "Create room": "建立聊天室",
-    "Create video room": "建立視訊聊天室",
-    "Create a video room": "建立視訊聊天室",
     "%(featureName)s Beta feedback": "%(featureName)s Beta 測試回饋",
     "%(count)s participants": {
         "one": "1 位成員",
@@ -4011,5 +4006,12 @@
         "file_attached": "已附加檔案",
         "fetching_events": "正在取得事件…",
         "creating_output": "正在建立輸出…"
+    },
+    "create_room": {
+        "title_video_room": "建立視訊聊天室",
+        "title_public_room": "建立公開聊天室",
+        "title_private_room": "建立私密聊天室",
+        "action_create_video_room": "建立視訊聊天室",
+        "action_create_room": "建立聊天室"
     }
 }

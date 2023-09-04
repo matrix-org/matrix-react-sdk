@@ -853,8 +853,6 @@
     "Public room": "Almenningsspjallrás",
     "Private room (invite only)": "Einkaspjallrás (einungis gegn boði)",
     "Room visibility": "Sýnileiki spjallrásar",
-    "Create a private room": "Búa til einkaspjallrás",
-    "Create a public room": "Búa til opinbera almenningsspjallrás",
     "Notes": "Minnispunktar",
     "Want to add a new room instead?": "Viltu frekar bæta við nýrri spjallrás?",
     "Add existing rooms": "Bæta við fyrirliggjandi spjallrásum",
@@ -2605,8 +2603,6 @@
         "other": "%(count)s meðlimir"
     },
     "Ignore user": "Hunsa notanda",
-    "Create room": "Búa til spjallrás",
-    "Create video room": "Búa til myndspjallrás",
     "Add new server…": "Bæta við nýjum þjóni…",
     "%(count)s participants": {
         "one": "1 þáttakandi",
@@ -2665,7 +2661,6 @@
     "Proxy URL (optional)": "Slóð milliþjóns (valfrjálst)",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. <default>Notaðu sjálfgefinn auðkennisþjón (%(defaultIdentityServerName)s(</default> eða sýslaðu með þetta í <settings>stillingunum</settings>.",
     "Open room": "Opin spjallrás",
-    "Create a video room": "Búa til myndspjallrás",
     "Get it on F-Droid": "Ná í á F-Droid",
     "Get it on Google Play": "Ná í á Google Play",
     "Download on the App Store": "Sækja á App Store forritasafni",
@@ -3400,5 +3395,12 @@
         "topic": "Umfjöllunarefni: %(topic)s",
         "error_fetching_file": "Villa við að sækja skrá",
         "file_attached": "Viðhengd skrá"
+    },
+    "create_room": {
+        "title_video_room": "Búa til myndspjallrás",
+        "title_public_room": "Búa til opinbera almenningsspjallrás",
+        "title_private_room": "Búa til einkaspjallrás",
+        "action_create_video_room": "Búa til myndspjallrás",
+        "action_create_room": "Búa til spjallrás"
     }
 }

@@ -1397,8 +1397,6 @@
     "Private room (invite only)": "Приватна кімната (лише за запрошенням)",
     "Room visibility": "Видимість кімнати",
     "Topic (optional)": "Тема (не обов'язково)",
-    "Create a private room": "Створити приватну кімнату",
-    "Create a public room": "Створити загальнодоступну кімнату",
     "Everyone in <SpaceName/> will be able to find and join this room.": "Усі в <SpaceName/> зможуть знайти та приєднатися до цієї кімнати.",
     "Please enter a name for the room": "Введіть назву кімнати",
     "Reason (optional)": "Причина (не обов'язково)",
@@ -2851,9 +2849,6 @@
     "You do not have permission to invite people to this space.": "Ви не маєте дозволу запрошувати людей у цей простір.",
     "Failed to invite users to %(roomName)s": "Не вдалося запросити користувачів до %(roomName)s",
     "An error occurred while stopping your live location, please try again": "Сталася помилка припинення надсилання вашого місцеперебування, повторіть спробу",
-    "Create room": "Створити кімнату",
-    "Create video room": "Створити відеокімнату",
-    "Create a video room": "Створити відеокімнату",
     "%(count)s participants": {
         "one": "1 учасник",
         "other": "%(count)s учасників"
@@ -4011,5 +4006,12 @@
         "file_attached": "Файл прикріплено",
         "fetching_events": "Отримання подій…",
         "creating_output": "Створення виводу…"
+    },
+    "create_room": {
+        "title_video_room": "Створити відеокімнату",
+        "title_public_room": "Створити загальнодоступну кімнату",
+        "title_private_room": "Створити приватну кімнату",
+        "action_create_video_room": "Створити відеокімнату",
+        "action_create_room": "Створити кімнату"
     }
 }

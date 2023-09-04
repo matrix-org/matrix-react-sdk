@@ -953,8 +953,6 @@
     "e.g. my-room": "bv. mijn-kamer",
     "Close dialog": "Dialoog sluiten",
     "Please enter a name for the room": "Geef een naam voor de kamer op",
-    "Create a public room": "Maak een publieke kamer aan",
-    "Create a private room": "Maak een privékamer aan",
     "Topic (optional)": "Onderwerp (optioneel)",
     "Hide advanced": "Geavanceerde info verbergen",
     "Show advanced": "Geavanceerde info tonen",
@@ -2753,9 +2751,6 @@
     "Search Dialog": "Dialoogvenster Zoeken",
     "Join %(roomAddress)s": "%(roomAddress)s toetreden",
     "Export Cancelled": "Export geannuleerd",
-    "Create room": "Ruimte aanmaken",
-    "Create video room": "Videokamer maken",
-    "Create a video room": "Creëer een videokamer",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Schakel het vinkje uit als je ook systeemberichten van deze persoon wil verwijderen (bijv. lidmaatschapswijziging, profielwijziging...)",
     "Preserve system messages": "Systeemberichten behouden",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
@@ -3616,5 +3611,12 @@
         "topic": "Onderwerp: %(topic)s",
         "error_fetching_file": "Fout bij bestand opvragen",
         "file_attached": "Bijgevoegd bestand"
+    },
+    "create_room": {
+        "title_video_room": "Creëer een videokamer",
+        "title_public_room": "Maak een publieke kamer aan",
+        "title_private_room": "Maak een privékamer aan",
+        "action_create_video_room": "Videokamer maken",
+        "action_create_room": "Ruimte aanmaken"
     }
 }

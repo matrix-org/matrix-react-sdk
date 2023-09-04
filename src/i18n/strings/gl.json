@@ -1185,8 +1185,6 @@
     "Clear all data": "Eliminar todos os datos",
     "Please enter a name for the room": "Escribe un nome para a sala",
     "Enable end-to-end encryption": "Activar cifrado extremo-a-extremo",
-    "Create a public room": "Crear sala pública",
-    "Create a private room": "Crear sala privada",
     "Topic (optional)": "Asunto (optativo)",
     "Hide advanced": "Ocultar Avanzado",
     "Show advanced": "Mostrar Avanzado",
@@ -2829,9 +2827,6 @@
     "Failed to invite users to %(roomName)s": "Fallou o convite das usuarias para %(roomName)s",
     "Threads help keep your conversations on-topic and easy to track.": "Os fíos axúdanche a manter as conversas no tema e facilitan o seguimento.",
     "An error occurred while stopping your live location, please try again": "Algo fallou ao deter a túa localización en directo, inténtao outra vez",
-    "Create room": "Crear sala",
-    "Create video room": "Crear sala de vídeo",
-    "Create a video room": "Crear sala de vídeo",
     "%(featureName)s Beta feedback": "Informe sobre %(featureName)s Beta",
     "%(count)s participants": {
         "one": "1 participante",
@@ -3533,5 +3528,12 @@
         "topic": "Asunto: %(topic)s",
         "error_fetching_file": "Erro ao obter o ficheiro",
         "file_attached": "Ficheiro anexado"
+    },
+    "create_room": {
+        "title_video_room": "Crear sala de vídeo",
+        "title_public_room": "Crear sala pública",
+        "title_private_room": "Crear sala privada",
+        "action_create_video_room": "Crear sala de vídeo",
+        "action_create_room": "Crear sala"
     }
 }

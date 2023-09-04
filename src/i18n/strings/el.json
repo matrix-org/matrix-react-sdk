@@ -2100,8 +2100,6 @@
     "Private room (invite only)": "Ιδιωτικό δωμάτιο (μόνο με πρόσκληση)",
     "Room visibility": "Ορατότητα δωματίου",
     "Topic (optional)": "Θέμα (προαιρετικό)",
-    "Create a private room": "Δημιουργήστε ένα ιδιωτικό δωμάτιο",
-    "Create a public room": "Δημιουργήστε ένα δημόσιο δωμάτιο",
     "Enable end-to-end encryption": "Ενεργοποίηση κρυπτογράφησης από άκρο-σε-άκρο",
     "Only people invited will be able to find and join this room.": "Μόνο τα άτομα που έχουν προσκληθεί θα μπορούν να βρουν και να εγγραφούν σε αυτό τον δωμάτιο.",
     "Anyone will be able to find and join this room.": "Οποιοσδήποτε θα μπορεί να βρει και να εγγραφεί σε αυτό το δωμάτιο.",
@@ -2858,9 +2856,6 @@
     "Output devices": "Συσκευές εξόδου",
     "Input devices": "Συσκευές εισόδου",
     "To continue, please enter your account password:": "Για να συνεχίσετε παρακαλώ εισάγετε τον κωδικό σας:",
-    "Create room": "Δημιουργία δωματίου",
-    "Create video room": "Δημιουργία δωματίου βίντεο",
-    "Create a video room": "Δημιουργήστε ένα δωμάτιο βίντεο",
     "New room": "Νέο δωμάτιο",
     "Private room": "Ιδιωτικό δωμάτιο",
     "Your password was successfully changed.": "Ο κωδικός πρόσβασης σας άλλαξε με επιτυχία.",
@@ -3320,5 +3315,12 @@
         "topic": "Θέμα: %(topic)s",
         "error_fetching_file": "Σφάλμα κατά την ανάκτηση του αρχείου",
         "file_attached": "Tο αρχείο επισυνάφθηκε"
+    },
+    "create_room": {
+        "title_video_room": "Δημιουργήστε ένα δωμάτιο βίντεο",
+        "title_public_room": "Δημιουργήστε ένα δημόσιο δωμάτιο",
+        "title_private_room": "Δημιουργήστε ένα ιδιωτικό δωμάτιο",
+        "action_create_video_room": "Δημιουργία δωματίου βίντεο",
+        "action_create_room": "Δημιουργία δωματίου"
     }
 }

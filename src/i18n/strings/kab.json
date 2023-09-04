@@ -1402,8 +1402,6 @@
     "Destroy cross-signing keys?": "Erẓ tisura n uzmul anmidag?",
     "Clear cross-signing keys": "Sfeḍ tisura n uzmul anmidag",
     "Clear all data in this session?": "Sfeḍ akk isefka seg tɣimit-a?",
-    "Create a public room": "Rnu taxxamt tazayezt",
-    "Create a private room": "Rnu taxxamt tusligt",
     "Hide advanced": "Ffer talqayt",
     "Show advanced": "Sken talqayt",
     "Incompatible Database": "Taffa n yisefka ur temada ara",
@@ -2033,5 +2031,9 @@
         "event_content": "Agbur n tedyant",
         "toolbox": "Tabewwaḍt n yifecka",
         "developer_tools": "Ifecka n uneflay"
+    },
+    "create_room": {
+        "title_public_room": "Rnu taxxamt tazayezt",
+        "title_private_room": "Rnu taxxamt tusligt"
     }
 }

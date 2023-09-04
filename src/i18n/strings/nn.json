@@ -791,7 +791,6 @@
     "Add a new server": "Legg til ein ny tenar",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Tømming av data frå denne sesjonen er permanent. Krypterte meldingar vil gå tapt med mindre krypteringsnøklane har blitt sikkerheitskopierte.",
     "Enable end-to-end encryption": "Skru på ende-til-ende kryptering",
-    "Create a private room": "Lag eit privat rom",
     "Hide advanced": "Gøym avanserte alternativ",
     "Show advanced": "Vis avanserte alternativ",
     "I don't want my encrypted messages": "Eg treng ikkje mine krypterte meldingar",
@@ -1122,5 +1121,8 @@
         "event_content": "Hendingsinnhald",
         "toolbox": "Verktøykasse",
         "developer_tools": "Utviklarverktøy"
+    },
+    "create_room": {
+        "title_private_room": "Lag eit privat rom"
     }
 }

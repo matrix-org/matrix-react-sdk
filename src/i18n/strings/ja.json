@@ -581,7 +581,6 @@
     "Once enabled, encryption cannot be disabled.": "いったん有効にすると、暗号化を無効にすることはできません。",
     "Email Address": "メールアドレス",
     "Main address": "メインアドレス",
-    "Create a private room": "非公開ルームを作成",
     "Topic (optional)": "トピック（任意）",
     "Hide advanced": "高度な設定を非表示にする",
     "Show advanced": "高度な設定を表示",
@@ -661,7 +660,6 @@
     "Clear cross-signing keys": "クロス署名鍵を削除",
     "Clear all data in this session?": "このセッションの全てのデータを削除してよろしいですか？",
     "Clear all data": "全てのデータを消去",
-    "Create a public room": "公開ルームを作成",
     "Message edits": "メッセージの編集履歴",
     "Report Content to Your Homeserver Administrator": "あなたのホームサーバーの管理者にコンテンツを報告",
     "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "このメッセージを報告すると、このメッセージの一意の「イベントID」があなたのホームサーバーの管理者に送信されます。このルーム内のメッセージが暗号化されている場合、ホームサーバーの管理者はメッセージのテキストを読んだり、ファイルや画像を表示したりすることはできません。",
@@ -2761,9 +2759,6 @@
         "other": "%(count)s人の参加者",
         "one": "1人の参加者"
     },
-    "Create a video room": "ビデオ通話ルームを作成",
-    "Create video room": "ビデオ通話ルームを作成",
-    "Create room": "ルームを作成",
     "Threads help keep your conversations on-topic and easy to track.": "スレッド機能を使うと、会話のテーマを維持したり、会話を簡単に追跡したりすることができます。",
     "Confirm this user's session by comparing the following with their User Settings:": "ユーザー設定画面で以下を比較し、このユーザーのセッションを承認してください：",
     "Confirm by comparing the following with the User Settings in your other session:": "他のセッションのユーザー設定で、以下を比較して承認してください：",
@@ -3811,5 +3806,12 @@
         "file_attached": "添付されたファイル",
         "fetching_events": "イベントを取得しています…",
         "creating_output": "出力しています…"
+    },
+    "create_room": {
+        "title_video_room": "ビデオ通話ルームを作成",
+        "title_public_room": "公開ルームを作成",
+        "title_private_room": "非公開ルームを作成",
+        "action_create_video_room": "ビデオ通話ルームを作成",
+        "action_create_room": "ルームを作成"
     }
 }

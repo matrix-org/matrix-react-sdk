@@ -883,8 +883,6 @@
     "Add Phone Number": "Добавить номер телефона",
     "Changes the avatar of the current room": "Меняет аватар текущей комнаты",
     "Change identity server": "Изменить сервер идентификации",
-    "Create a public room": "Создать публичную комнату",
-    "Create a private room": "Создать приватную комнату",
     "Topic (optional)": "Тема (опционально)",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Отключиться от сервера идентификации <current /> и вместо этого подключиться к <new />?",
     "Disconnect identity server": "Отключить идентификационный сервер",
@@ -2918,9 +2916,6 @@
     "Confirm that you would like to deactivate your account. If you proceed:": "Подтвердите, что вы хотите деактивировать свою учётную запись. Если продолжите:",
     "You will not be able to reactivate your account": "Вы не сможете повторно активировать свою учётную запись",
     "To continue, please enter your account password:": "Для продолжения введите пароль учётной записи:",
-    "Create room": "Создать комнату",
-    "Create video room": "Создать видеокомнату",
-    "Create a video room": "Создайте видеокомнату",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Отключите, чтобы удалить системные сообщения о пользователе (изменения членства, редактирование профиля…)",
     "Preserve system messages": "Оставить системные сообщения",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
@@ -3698,5 +3693,12 @@
         "topic": "Тема: %(topic)s",
         "error_fetching_file": "Ошибка при получении файла",
         "file_attached": "Файл прикреплен"
+    },
+    "create_room": {
+        "title_video_room": "Создайте видеокомнату",
+        "title_public_room": "Создать публичную комнату",
+        "title_private_room": "Создать приватную комнату",
+        "action_create_video_room": "Создать видеокомнату",
+        "action_create_room": "Создать комнату"
     }
 }

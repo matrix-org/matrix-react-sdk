@@ -926,8 +926,6 @@
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Linkitä tämä sähköposti tilisi kanssa asetuksissa, jotta voit saada kutsuja suoraan %(brand)sissa.",
     "e.g. my-room": "esim. oma-huone",
     "Please enter a name for the room": "Syötä huoneelle nimi",
-    "Create a public room": "Luo julkinen huone",
-    "Create a private room": "Luo yksityinen huone",
     "Topic (optional)": "Aihe (valinnainen)",
     "Clear cache and reload": "Tyhjennä välimuisti ja lataa uudelleen",
     "%(count)s unread messages including mentions.": {
@@ -2548,9 +2546,6 @@
     "Spam or propaganda": "Roskapostitusta tai propagandaa",
     "Toxic Behaviour": "Myrkyllinen käyttäytyminen",
     "Feedback sent! Thanks, we appreciate it!": "Palaute lähetetty. Kiitos, arvostamme sitä!",
-    "Create room": "Luo huone",
-    "Create video room": "Luo videohuone",
-    "Create a video room": "Luo videohuone",
     "%(featureName)s Beta feedback": "Ominaisuuden %(featureName)s beetapalaute",
     "Including you, %(commaSeparatedMembers)s": "Mukaan lukien sinä, %(commaSeparatedMembers)s",
     "The beginning of the room": "Huoneen alku",
@@ -3610,5 +3605,12 @@
         "file_attached": "Tiedosto liitetty",
         "fetching_events": "Noudetaan tapahtumia…",
         "creating_output": "Luodaan tulostetta…"
+    },
+    "create_room": {
+        "title_video_room": "Luo videohuone",
+        "title_public_room": "Luo julkinen huone",
+        "title_private_room": "Luo yksityinen huone",
+        "action_create_video_room": "Luo videohuone",
+        "action_create_room": "Luo huone"
     }
 }

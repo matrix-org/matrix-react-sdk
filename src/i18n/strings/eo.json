@@ -986,8 +986,6 @@
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Uzu identigan servilon por inviti per retpoŝto. Administru per <settings>Agordoj</settings>.",
     "Close dialog": "Fermi interagujon",
     "Please enter a name for the room": "Bonvolu enigi nomon por la ĉambro",
-    "Create a public room": "Krei publikan ĉambron",
-    "Create a private room": "Krei privatan ĉambron",
     "Topic (optional)": "Temo (malnepra)",
     "Hide advanced": "Kaŝi specialajn",
     "Show advanced": "Montri specialajn",
@@ -2988,5 +2986,9 @@
         "error_fetching_file": "Eraro alportante dosieron",
         "fetching_events": "Alportante okazojn…",
         "creating_output": "Kreante eligon…"
+    },
+    "create_room": {
+        "title_public_room": "Krei publikan ĉambron",
+        "title_private_room": "Krei privatan ĉambron"
     }
 }

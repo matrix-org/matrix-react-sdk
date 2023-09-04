@@ -936,8 +936,6 @@
     "e.g. my-room": "es. mia-stanza",
     "Close dialog": "Chiudi finestra",
     "Please enter a name for the room": "Inserisci un nome per la stanza",
-    "Create a public room": "Crea una stanza pubblica",
-    "Create a private room": "Crea una stanza privata",
     "Topic (optional)": "Argomento (facoltativo)",
     "Hide advanced": "Nascondi avanzate",
     "Show advanced": "Mostra avanzate",
@@ -2851,9 +2849,6 @@
     "You do not have permission to invite people to this space.": "Non hai l'autorizzazione di invitare persone in questo spazio.",
     "Failed to invite users to %(roomName)s": "Impossibile invitare gli utenti in %(roomName)s",
     "An error occurred while stopping your live location, please try again": "Si è verificato un errore fermando la tua posizione in tempo reale, riprova",
-    "Create room": "Crea stanza",
-    "Create video room": "Crea stanza video",
-    "Create a video room": "Crea una stanza video",
     "%(count)s participants": {
         "one": "1 partecipante",
         "other": "%(count)s partecipanti"
@@ -4016,5 +4011,12 @@
         "file_attached": "File allegato",
         "fetching_events": "Ricezione eventi…",
         "creating_output": "Creazione output…"
+    },
+    "create_room": {
+        "title_video_room": "Crea una stanza video",
+        "title_public_room": "Crea una stanza pubblica",
+        "title_private_room": "Crea una stanza privata",
+        "action_create_video_room": "Crea stanza video",
+        "action_create_room": "Crea stanza"
     }
 }

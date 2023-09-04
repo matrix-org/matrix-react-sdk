@@ -1809,8 +1809,6 @@
     "Private room (invite only)": "Ruangan privat (undangan saja)",
     "Room visibility": "Visibilitas ruangan",
     "Topic (optional)": "Topik (opsional)",
-    "Create a private room": "Buat sebuah ruangan privat",
-    "Create a public room": "Buat sebuah ruangan publik",
     "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.": "Anda mungkin menonaktifkannya jika ruangan ini akan digunakan untuk berkolabroasi dengan tim eksternal yang mempunyai homeserver sendiri. Ini tidak dapat diubah nanti.",
     "You might enable this if the room will only be used for collaborating with internal teams on your homeserver. This cannot be changed later.": "Anda mungkin aktifkan jika ruangan ini hanya digunakan untuk berkolabroasi dengan tim internal di homeserver Anda. Ini tidak dapat diubah nanti.",
     "Enable end-to-end encryption": "Aktifkan enkripsi ujung ke ujung",
@@ -2851,9 +2849,6 @@
     "You do not have permission to invite people to this space.": "Anda tidak memiliki izin untuk mengundang seseorang ke space ini.",
     "Failed to invite users to %(roomName)s": "Gagal mengundang pengguna ke %(roomName)s",
     "An error occurred while stopping your live location, please try again": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda, mohon coba lagi",
-    "Create room": "Buat ruangan",
-    "Create video room": "Buat ruangan video",
-    "Create a video room": "Buat sebuah ruangan video",
     "%(count)s participants": {
         "one": "1 perserta",
         "other": "%(count)s perserta"
@@ -4016,5 +4011,12 @@
         "file_attached": "File Dilampirkan",
         "fetching_events": "Mendapatkan peristiwa…",
         "creating_output": "Membuat keluaran…"
+    },
+    "create_room": {
+        "title_video_room": "Buat sebuah ruangan video",
+        "title_public_room": "Buat sebuah ruangan publik",
+        "title_private_room": "Buat sebuah ruangan privat",
+        "action_create_video_room": "Buat ruangan video",
+        "action_create_room": "Buat ruangan"
     }
 }

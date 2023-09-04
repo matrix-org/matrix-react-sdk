@@ -863,8 +863,6 @@
     "Removing…": "Odstaňování…",
     "Clear all data": "Smazat všechna data",
     "Please enter a name for the room": "Zadejte prosím název místnosti",
-    "Create a public room": "Vytvořit veřejnou místnost",
-    "Create a private room": "Vytvořit neveřejnou místnost",
     "Topic (optional)": "Téma (volitelné)",
     "Hide advanced": "Skrýt pokročilé možnosti",
     "Show advanced": "Zobrazit pokročilé možnosti",
@@ -2851,9 +2849,6 @@
     "You do not have permission to invite people to this space.": "Nemáte oprávnění zvát lidi do tohoto prostoru.",
     "Failed to invite users to %(roomName)s": "Nepodařilo se pozvat uživatele do %(roomName)s",
     "An error occurred while stopping your live location, please try again": "Při ukončování vaší polohy živě došlo k chybě, zkuste to prosím znovu",
-    "Create room": "Vytvořit místnost",
-    "Create video room": "Vytvořit video místnost",
-    "Create a video room": "Vytvořit video místnost",
     "%(count)s participants": {
         "one": "1 účastník",
         "other": "%(count)s účastníků"
@@ -4016,5 +4011,12 @@
         "file_attached": "Přiložený soubor",
         "fetching_events": "Stahování událostí…",
         "creating_output": "Vytváření výstupu…"
+    },
+    "create_room": {
+        "title_video_room": "Vytvořit video místnost",
+        "title_public_room": "Vytvořit veřejnou místnost",
+        "title_private_room": "Vytvořit neveřejnou místnost",
+        "action_create_video_room": "Vytvořit video místnost",
+        "action_create_room": "Vytvořit místnost"
     }
 }

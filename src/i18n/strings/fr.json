@@ -942,8 +942,6 @@
     "e.g. my-room": "par ex. mon-salon",
     "Close dialog": "Fermer la boîte de dialogue",
     "Please enter a name for the room": "Veuillez renseigner un nom pour le salon",
-    "Create a public room": "Créer un salon public",
-    "Create a private room": "Créer un salon privé",
     "Topic (optional)": "Sujet (facultatif)",
     "Hide advanced": "Masquer les paramètres avancés",
     "Show advanced": "Afficher les paramètres avancés",
@@ -2821,9 +2819,6 @@
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s est expérimental sur un navigateur mobile. Pour une meilleure expérience et bénéficier des dernières fonctionnalités, utilisez notre application native gratuite.",
     "Threads help keep your conversations on-topic and easy to track.": "Les fils de discussion vous permettent de recentrer vos conversations et de les rendre facile à suivre.",
     "An error occurred while stopping your live location, please try again": "Une erreur s’est produite en arrêtant le partage de votre position, veuillez réessayer",
-    "Create room": "Créer un salon",
-    "Create video room": "Crée le salon visio",
-    "Create a video room": "Créer un salon visio",
     "%(featureName)s Beta feedback": "Commentaires sur la bêta de %(featureName)s",
     "%(count)s participants": {
         "one": "1 participant",
@@ -4011,5 +4006,12 @@
         "file_attached": "Fichier attaché",
         "fetching_events": "Récupération des évènements…",
         "creating_output": "Création du résultat…"
+    },
+    "create_room": {
+        "title_video_room": "Créer un salon visio",
+        "title_public_room": "Créer un salon public",
+        "title_private_room": "Créer un salon privé",
+        "action_create_video_room": "Crée le salon visio",
+        "action_create_room": "Créer un salon"
     }
 }

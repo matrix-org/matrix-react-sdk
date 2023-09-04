@@ -453,7 +453,6 @@
     "<userName/> invited you": "<userName/> jus pakvietė",
     "You're previewing %(roomName)s. Want to join it?": "Jūs peržiūrite %(roomName)s. Norite prie jo prisijungti?",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s negali būti peržiūrėtas. Ar jūs norite prie jo prisijungti?",
-    "Create a public room": "Sukurti viešą kambarį",
     "Room Settings - %(roomName)s": "Kambario nustatymai - %(roomName)s",
     "Upgrade public room": "Atnaujinti viešą kambarį",
     "Upload files (%(current)s of %(total)s)": "Įkelti failus (%(current)s iš %(total)s)",
@@ -602,7 +601,6 @@
     "Enter the name of a new server you want to explore.": "Įveskite naujo, norimo žvalgyti serverio pavadinimą.",
     "Server name": "Serverio pavadinimas",
     "Please enter a name for the room": "Įveskite kambario pavadinimą",
-    "Create a private room": "Sukurti privatų kambarį",
     "Topic (optional)": "Tema (nebūtina)",
     "Hide advanced": "Paslėpti išplėstinius",
     "Show advanced": "Rodyti išplėstinius",
@@ -2553,5 +2551,9 @@
             "other": "Eksportavome %(count)s įvykius per %(seconds)s sekundes"
         },
         "file_attached": "Failas pridėtas"
+    },
+    "create_room": {
+        "title_public_room": "Sukurti viešą kambarį",
+        "title_private_room": "Sukurti privatų kambarį"
     }
 }

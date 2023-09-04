@@ -263,8 +263,6 @@
     "This homeserver has hit its Monthly Active User limit.": "See koduserver on saavutanud igakuise aktiivsete kasutajate piiri.",
     "Are you sure?": "Kas sa oled kindel?",
     "Jump to read receipt": "Hüppa lugemisteatise juurde",
-    "Create a public room": "Loo avalik jututuba",
-    "Create a private room": "Loo omavaheline jututuba",
     "Topic (optional)": "Jututoa teema (kui soovid lisada)",
     "Hide advanced": "Peida lisaseadistused",
     "Show advanced": "Näita lisaseadistusi",
@@ -2851,9 +2849,6 @@
     "You do not have permission to invite people to this space.": "Sul pole õigusi siia kogukonda osalejate kutsumiseks.",
     "Failed to invite users to %(roomName)s": "Kasutajate kutsumine %(roomName)s jututuppa ei õnnestunud",
     "An error occurred while stopping your live location, please try again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
-    "Create room": "Loo jututuba",
-    "Create video room": "Loo videotuba",
-    "Create a video room": "Loo uus videotuba",
     "%(count)s participants": {
         "one": "1 osaleja",
         "other": "%(count)s oselejat"
@@ -4011,5 +4006,12 @@
         "file_attached": "Fail on manustatud",
         "fetching_events": "Laadime sündmusi…",
         "creating_output": "Loome väljundit…"
+    },
+    "create_room": {
+        "title_video_room": "Loo uus videotuba",
+        "title_public_room": "Loo avalik jututuba",
+        "title_private_room": "Loo omavaheline jututuba",
+        "action_create_video_room": "Loo videotuba",
+        "action_create_room": "Loo jututuba"
     }
 }

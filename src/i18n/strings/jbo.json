@@ -306,8 +306,6 @@
     "Revoke invite": "nu zukte le ka na ckaji le se friti",
     "collapse": "nu tcila be na ku viska",
     "expand": "nu tcila viska",
-    "Create a public room": "nu cupra pa ve zilbe'i poi gubni",
-    "Create a private room": "nu cupra pa ve zilbe'i poi na gubni",
     "Are you sure you want to sign out?": ".i xu do birti le du'u do kaidji le ka co'u se jaspu",
     "Sign out and remove encryption keys?": ".i xu do djica lo nu co'u jaspu do je lo nu tolmo'i le du'u mifra ckiku",
     "Upload %(count)s other files": {
@@ -408,5 +406,9 @@
             "rule_suppress_notices": "nu da zilbe'i fi pa sampre",
             "rule_encrypted_room_one_to_one": "nu pa mifra cu zilbe'i pa prenu"
         }
+    },
+    "create_room": {
+        "title_public_room": "nu cupra pa ve zilbe'i poi gubni",
+        "title_private_room": "nu cupra pa ve zilbe'i poi na gubni"
     }
 }

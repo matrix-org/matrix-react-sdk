@@ -940,8 +940,6 @@
     "Changes the avatar of the current room": "현재 방의 아바타 변경하기",
     "e.g. my-room": "예: my-room",
     "Please enter a name for the room": "방 이름을 입력해주세요",
-    "Create a public room": "공개 방 만들기",
-    "Create a private room": "개인 방 만들기",
     "Topic (optional)": "주제 (선택)",
     "Hide advanced": "고급 숨기기",
     "Show advanced": "고급 보이기",
@@ -1422,5 +1420,9 @@
         "threads_timeline": "스레드 타임라인",
         "toolbox": "도구 상자",
         "developer_tools": "개발자 도구"
+    },
+    "create_room": {
+        "title_public_room": "공개 방 만들기",
+        "title_private_room": "개인 방 만들기"
     }
 }

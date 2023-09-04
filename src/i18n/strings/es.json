@@ -1040,8 +1040,6 @@
     "Clear all data": "Borrar todos los datos",
     "Please enter a name for the room": "Elige un nombre para la sala",
     "Enable end-to-end encryption": "Activar el cifrado de extremo a extremo",
-    "Create a public room": "Crear una sala pública",
-    "Create a private room": "Crear una sala privada",
     "Topic (optional)": "Asunto (opcional)",
     "Hide advanced": "Ocultar ajustes avanzados",
     "Show advanced": "Mostrar ajustes avanzados",
@@ -2819,9 +2817,6 @@
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "Se le han denegado a %(brand)s los permisos para acceder a tu ubicación. Por favor, permite acceso a tu ubicación en los ajustes de tu navegador.",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Puedes usar la opción de servidor personalizado para iniciar sesión a otro servidor de Matrix, escribiendo una dirección URL de servidor base diferente. Esto te permite usar %(brand)s con una cuenta de Matrix que ya exista en otro servidor base.",
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Ayúdanos a identificar problemas y a mejorar %(analyticsOwner)s. Comparte datos anónimos sobre cómo usas la aplicación para que entendamos mejor cómo usa la gente varios dispositivos. Generaremos un identificador aleatorio que usarán todos tus dispositivos.",
-    "Create room": "Crear sala",
-    "Create a video room": "Crear una sala de vídeo",
-    "Create video room": "Crear sala de vídeo",
     "%(featureName)s Beta feedback": "Danos tu opinión sobre la beta de %(featureName)s",
     "%(count)s participants": {
         "one": "1 participante",
@@ -3817,5 +3812,12 @@
         "file_attached": "Archivo adjunto",
         "fetching_events": "Recuperando eventos…",
         "creating_output": "Creando resultado…"
+    },
+    "create_room": {
+        "title_video_room": "Crear una sala de vídeo",
+        "title_public_room": "Crear una sala pública",
+        "title_private_room": "Crear una sala privada",
+        "action_create_video_room": "Crear sala de vídeo",
+        "action_create_room": "Crear sala"
     }
 }

@@ -941,8 +941,6 @@
     "Changes the avatar of the current room": "Променя снимката на текущата стая",
     "e.g. my-room": "например my-room",
     "Please enter a name for the room": "Въведете име на стаята",
-    "Create a public room": "Създай публична стая",
-    "Create a private room": "Създай частна стая",
     "Topic (optional)": "Тема (незадължително)",
     "Hide advanced": "Скрий разширени настройки",
     "Show advanced": "Покажи разширени настройки",
@@ -2152,5 +2150,9 @@
         "event_content": "Съдържание на събитието",
         "toolbox": "Инструменти",
         "developer_tools": "Инструменти за разработчика"
+    },
+    "create_room": {
+        "title_public_room": "Създай публична стая",
+        "title_private_room": "Създай частна стая"
     }
 }

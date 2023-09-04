@@ -341,11 +341,14 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
 
         let title: string;
         if (isVideoRoom) {
-            title = _t("Create a video room");
+            title = _t("create_room|title_video_room");
         } else if (this.props.parentSpace || this.state.joinRule === JoinRule.Knock) {
             title = _t("action|create_a_room");
         } else {
-            title = this.state.joinRule === JoinRule.Public ? _t("Create a public room") : _t("Create a private room");
+            title =
+                this.state.joinRule === JoinRule.Public
+                    ? _t("create_room|title_public_room")
+                    : _t("create_room|title_private_room");
         }
 
         return (
@@ -401,7 +404,9 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                     </div>
                 </form>
                 <DialogButtons
-                    primaryButton={isVideoRoom ? _t("Create video room") : _t("Create room")}
+                    primaryButton={
+                        isVideoRoom ? _t("create_room|action_create_video_room") : _t("create_room|action_create_room")
+                    }
                     onPrimaryButtonClick={this.onOk}
                     onCancel={this.onCancel}
                 />

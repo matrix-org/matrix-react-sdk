@@ -951,8 +951,6 @@
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. Kudeatu <settings>Ezarpenak</settings> atalean.",
     "Close dialog": "Itxi elkarrizketa-koadroa",
     "Please enter a name for the room": "Sartu gelaren izena",
-    "Create a public room": "Sortu gela publikoa",
-    "Create a private room": "Sortu gela pribatua",
     "Topic (optional)": "Mintzagaia (aukerakoa)",
     "Hide advanced": "Ezkutatu aurreratua",
     "Show advanced": "Erakutsi aurreratua",
@@ -1661,5 +1659,9 @@
         "event_content": "Gertaeraren edukia",
         "toolbox": "Tresna-kutxa",
         "developer_tools": "Garatzaile-tresnak"
+    },
+    "create_room": {
+        "title_public_room": "Sortu gela publikoa",
+        "title_private_room": "Sortu gela pribatua"
     }
 }

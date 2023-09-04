@@ -934,8 +934,6 @@
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "برای جلوگیری از دست دادن تاریخچه‌ی گفتگوی خود باید قبل از ورود به برنامه ، کلیدهای اتاق خود را استخراج (Export) کنید. برای این کار باید از نسخه جدیدتر %(brand)s استفاده کنید",
     "Block anyone not part of %(serverName)s from ever joining this room.": "از عضوشدن کاربرانی در این اتاق که حساب آن‌ها متعلق به سرور %(serverName)s است، جلوگیری کن.",
     "Topic (optional)": "موضوع (اختیاری)",
-    "Create a private room": "ساختن اتاق خصوصی",
-    "Create a public room": "ساختن اتاق عمومی",
     "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.": "اگر از اتاق برای همکاری با تیم های خارجی که سرور خود را دارند استفاده شود ، ممکن است این را غیرفعال کنید. این نمی‌تواند بعدا تغییر کند.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "تا زمانی که <consentLink>شرایط و ضوابط سرویس ما</consentLink> را مطالعه و با آن موافقت نکنید، نمی توانید هیچ پیامی ارسال کنید.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "پیام شما ارسال نشد زیرا این سرور به محدودیت تعداد کاربر فعال ماهانه‌ی خود رسیده است. لطفاً برای ادامه استفاده از سرویس <a> با مدیر سرور خود تماس بگیرید </a>.",
@@ -2659,5 +2657,9 @@
         "topic": "عنوان: %(topic)s",
         "error_fetching_file": "خطا در واکشی فایل",
         "file_attached": "فایل ضمیمه شد"
+    },
+    "create_room": {
+        "title_public_room": "ساختن اتاق عمومی",
+        "title_private_room": "ساختن اتاق خصوصی"
     }
 }

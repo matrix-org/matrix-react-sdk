@@ -1297,8 +1297,6 @@
     "Enable end-to-end encryption": "Aktivera totalsträckskryptering",
     "You might enable this if the room will only be used for collaborating with internal teams on your homeserver. This cannot be changed later.": "Du kanske vill aktivera detta om rummet endast kommer att användas för samarbete med interna lag på din hemserver. Detta kan inte ändras senare.",
     "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.": "Du kanske vill inaktivera detta om rummet kommer att användas för samarbete med externa lag som har sin egen hemserver. Detta kan inte ändras senare.",
-    "Create a public room": "Skapa ett offentligt rum",
-    "Create a private room": "Skapa ett privat rum",
     "Topic (optional)": "Ämne (valfritt)",
     "Hide advanced": "Dölj avancerat",
     "Show advanced": "Visa avancerat",
@@ -2861,9 +2859,6 @@
     "Updated %(humanizedUpdateTime)s": "Uppdaterade %(humanizedUpdateTime)s",
     "Unsent": "Ej skickat",
     "Export Cancelled": "Exportering avbruten",
-    "Create room": "Skapa rum",
-    "Create video room": "Skapa videorum",
-    "Create a video room": "Skapa ett videorum",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Bocka ur om du även vill ta bort systemmeddelanden för denna användaren (förändrat medlemskap, ny profilbild, m.m.)",
     "Preserve system messages": "Bevara systemmeddelanden",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
@@ -3951,5 +3946,12 @@
         "file_attached": "Fil bifogad",
         "fetching_events": "Hämtar händelser …",
         "creating_output": "Skapar utdata …"
+    },
+    "create_room": {
+        "title_video_room": "Skapa ett videorum",
+        "title_public_room": "Skapa ett offentligt rum",
+        "title_private_room": "Skapa ett privat rum",
+        "action_create_video_room": "Skapa videorum",
+        "action_create_room": "Skapa rum"
     }
 }

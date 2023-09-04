@@ -938,8 +938,6 @@
     "e.g. my-room": "p.sh., dhoma-ime",
     "Close dialog": "Mbylle dialogun",
     "Please enter a name for the room": "Ju lutemi, jepni një emër për dhomën",
-    "Create a public room": "Krijoni një dhomë publike",
-    "Create a private room": "Krijoni një dhomë private",
     "Topic (optional)": "Temë (në daçi)",
     "Hide advanced": "Fshihi të mëtejshmet",
     "Show advanced": "Shfaqi të mëtejshmet",
@@ -2847,9 +2845,6 @@
     "You do not have permission to invite people to this space.": "S’keni leje të ftoni njerëz në këtë hapësirë.",
     "Failed to invite users to %(roomName)s": "S’u arrit të ftoheshin përdoruesit te %(roomName)s",
     "An error occurred while stopping your live location, please try again": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj, ju lutemi, riprovoni",
-    "Create room": "Krijoje dhomën",
-    "Create video room": "Krijoni dhomë me video",
-    "Create a video room": "Krijoni një dhomë me video",
     "%(count)s participants": {
         "one": "1 pjesëmarrës",
         "other": "%(count)s pjesëmarrës"
@@ -3904,5 +3899,12 @@
         "error_fetching_file": "Gabim në sjellje kartele",
         "file_attached": "Kartelë Bashkëngjitur",
         "fetching_events": "Po sillen veprimtari…"
+    },
+    "create_room": {
+        "title_video_room": "Krijoni një dhomë me video",
+        "title_public_room": "Krijoni një dhomë publike",
+        "title_private_room": "Krijoni një dhomë private",
+        "action_create_video_room": "Krijoni dhomë me video",
+        "action_create_room": "Krijoje dhomën"
     }
 }

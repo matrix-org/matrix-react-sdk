@@ -1239,8 +1239,6 @@
     "Clear all data": "清除所有数据",
     "Please enter a name for the room": "请输入房间名称",
     "Enable end-to-end encryption": "启用端到端加密",
-    "Create a public room": "创建一个公共房间",
-    "Create a private room": "创建一个私人房间",
     "Topic (optional)": "话题（可选）",
     "Hide advanced": "隐藏高级",
     "Show advanced": "显示高级",
@@ -3022,9 +3020,6 @@
         "one": "%(oneUser)s移除了一条消息",
         "other": "%(oneUser)s移除了%(count)s条消息"
     },
-    "Create room": "创建房间",
-    "Create video room": "创建视频房间",
-    "Create a video room": "创建视频房间",
     "%(user1)s and %(user2)s": "%(user1)s和%(user2)s",
     "Choose a locale": "选择区域设置",
     "Empty room (was %(oldName)s)": "空房间（曾是%(oldName)s）",
@@ -3600,5 +3595,12 @@
         "topic": "话题：%(topic)s",
         "error_fetching_file": "获取文件出错",
         "file_attached": "已附加文件"
+    },
+    "create_room": {
+        "title_video_room": "创建视频房间",
+        "title_public_room": "创建一个公共房间",
+        "title_private_room": "创建一个私人房间",
+        "action_create_video_room": "创建视频房间",
+        "action_create_room": "创建房间"
     }
 }

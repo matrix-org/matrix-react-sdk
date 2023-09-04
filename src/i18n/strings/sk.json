@@ -1584,7 +1584,6 @@
     "A private space to organise your rooms": "Súkromný priestor na usporiadanie vašich miestností",
     "Private space": "Súkromný priestor",
     "Upgrade private room": "Aktualizovať súkromnú miestnosť",
-    "Create a private room": "Vytvoriť súkromnú miestnosť",
     "Master private key:": "Hlavný súkromný kľúč:",
     "Your private space": "Váš súkromný priestor",
     "This space is not public. You will not be able to rejoin without an invite.": "Tento priestor nie je verejný. Bez pozvánky sa doň nebudete môcť opätovne pripojiť.",
@@ -1593,7 +1592,6 @@
     "Public rooms": "Verejné miestnosti",
     "Upgrade public room": "Aktualizovať verejnú miestnosť",
     "Public room": "Verejná miestnosť",
-    "Create a public room": "Vytvoriť verejnú miestnosť",
     "Join public room": "Pripojiť sa k verejnej miestnosti",
     "Explore public rooms": "Preskúmajte verejné miestnosti",
     "Are you sure you want to add encryption to this public room?": "Ste si istí, že chcete pridať šifrovanie do tejto verejnej miestnosti?",
@@ -2851,9 +2849,6 @@
     "You do not have permission to invite people to this space.": "Nemáte povolenie pozývať ľudí do tohto priestoru.",
     "Failed to invite users to %(roomName)s": "Nepodarilo pozvať používateľov do %(roomName)s",
     "An error occurred while stopping your live location, please try again": "Pri vypínaní polohy v reálnom čase došlo k chybe, skúste to prosím znova",
-    "Create room": "Vytvoriť miestnosť",
-    "Create video room": "Vytvoriť video miestnosť",
-    "Create a video room": "Vytvoriť video miestnosť",
     "%(count)s participants": {
         "one": "1 účastník",
         "other": "%(count)s účastníkov"
@@ -4011,5 +4006,12 @@
         "file_attached": "Priložený súbor",
         "fetching_events": "Získavanie udalostí…",
         "creating_output": "Vytváranie výstupu…"
+    },
+    "create_room": {
+        "title_video_room": "Vytvoriť video miestnosť",
+        "title_public_room": "Vytvoriť verejnú miestnosť",
+        "title_private_room": "Vytvoriť súkromnú miestnosť",
+        "action_create_video_room": "Vytvoriť video miestnosť",
+        "action_create_room": "Vytvoriť miestnosť"
     }
 }

@@ -891,7 +891,6 @@
     "%(name)s wants to verify": "%(name)s will eine Verifizierung",
     "Your display name": "Dein Anzeigename",
     "Please enter a name for the room": "Bitte gib einen Namen für den Raum ein",
-    "Create a private room": "Einen privaten Raum erstellen",
     "Topic (optional)": "Thema (optional)",
     "Hide advanced": "Erweiterte Einstellungen ausblenden",
     "Session name": "Sitzungsname",
@@ -988,7 +987,6 @@
     "e.g. my-room": "z. B. mein-raum",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Verwende einen Identitäts-Server, um per E-Mail einzuladen. <default>Nutze den Standardidentitäts-Server (%(defaultIdentityServerName)s)</default> oder konfiguriere einen in den <settings>Einstellungen</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Verwende einen Identitäts-Server, um per E-Mail-Adresse einladen zu können. Lege einen in den <settings>Einstellungen</settings> fest.",
-    "Create a public room": "Öffentlichen Raum erstellen",
     "Show advanced": "Erweiterte Einstellungen",
     "Verify session": "Sitzung verifizieren",
     "Session key": "Sitzungsschlüssel",
@@ -2893,7 +2891,6 @@
     "You will not be able to reactivate your account": "Du wirst dein Konto nicht reaktivieren können",
     "Confirm that you would like to deactivate your account. If you proceed:": "Bestätige, dass du dein Konto deaktivieren möchtest. Wenn du fortfährst, tritt folgendes ein:",
     "To continue, please enter your account password:": "Um fortzufahren, gib bitte das Passwort deines Kontos ein:",
-    "Create room": "Raum erstellen",
     "%(featureName)s Beta feedback": "Rückmeldung zur %(featureName)s-Beta",
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Hilf uns dabei Probleme zu identifizieren und %(analyticsOwner)s zu verbessern, indem du anonyme Nutzungsdaten teilst. Um zu verstehen, wie Personen mehrere Geräte verwenden, werden wir eine zufällige Kennung generieren, die zwischen deinen Geräten geteilt wird.",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Du kannst in den benutzerdefinierten Server-Optionen eine andere Heim-Server-URL angeben, um dich bei anderen Matrix-Servern anzumelden. Dadurch kannst du %(brand)s mit einem auf einem anderen Heim-Server liegenden Matrix-Konto nutzen.",
@@ -2924,7 +2921,6 @@
     "Add new server…": "Neuen Server hinzufügen …",
     "Show: %(instance)s rooms (%(server)s)": "%(instance)s Räume zeigen (%(server)s)",
     "Show: Matrix rooms": "Zeige: Matrix-Räume",
-    "Create a video room": "Videoraum erstellen",
     "Open room": "Raum öffnen",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Wenn du dich abmeldest, werden die Schlüssel auf diesem Gerät gelöscht. Das bedeutet, dass du keine verschlüsselten Nachrichten mehr lesen kannst, wenn du die Schlüssel nicht auf einem anderen Gerät oder eine Sicherung auf dem Server hast.",
     "Ignore user": "Nutzer ignorieren",
@@ -3020,7 +3016,6 @@
     "Online community members": "Online Community-Mitglieder",
     "You don't have permission to share locations": "Dir fehlt die Berechtigung, Echtzeit-Standorte freigeben zu dürfen",
     "Un-maximise": "Maximieren rückgängig machen",
-    "Create video room": "Videoraum erstellen",
     "Google Play and the Google Play logo are trademarks of Google LLC.": "Google Play und das Google Play Logo sind eingetragene Markenzeichen von Google LLC.",
     "App Store® and the Apple logo® are trademarks of Apple Inc.": "App Store® und das Apple Logo® sind eingetragene Markenzeichen von Apple Inc.",
     "Download on the App Store": "Im App Store herunterladen",
@@ -4016,5 +4011,12 @@
         "file_attached": "Datei angehängt",
         "fetching_events": "Rufe Ereignisse ab …",
         "creating_output": "Erstelle Ausgabe …"
+    },
+    "create_room": {
+        "title_video_room": "Videoraum erstellen",
+        "title_public_room": "Öffentlichen Raum erstellen",
+        "title_private_room": "Einen privaten Raum erstellen",
+        "action_create_video_room": "Videoraum erstellen",
+        "action_create_room": "Raum erstellen"
     }
 }

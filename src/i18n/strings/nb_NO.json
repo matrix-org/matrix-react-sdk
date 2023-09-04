@@ -556,8 +556,6 @@
     },
     "Logs sent": "Loggbøkene ble sendt",
     "Please enter a name for the room": "Vennligst skriv inn et navn for rommet",
-    "Create a public room": "Opprett et offentlig rom",
-    "Create a private room": "Opprett et privat rom",
     "Topic (optional)": "Tema (valgfritt)",
     "Hide advanced": "Skjul avansert",
     "Show advanced": "Vis avansert",
@@ -1617,5 +1615,9 @@
         "html": "HTML",
         "json": "JSON",
         "text": "Ren tekst"
+    },
+    "create_room": {
+        "title_public_room": "Opprett et offentlig rom",
+        "title_private_room": "Opprett et privat rom"
     }
 }

@@ -832,8 +832,6 @@
     "Server name": "Nazwa serwera",
     "Please enter a name for the room": "Proszę podać nazwę pokoju",
     "Enable end-to-end encryption": "Włącz szyfrowanie end-to-end",
-    "Create a public room": "Utwórz publiczny pokój",
-    "Create a private room": "Utwórz prywatny pokój",
     "Topic (optional)": "Temat (opcjonalnie)",
     "Hide advanced": "Ukryj zaawansowane",
     "Show advanced": "Pokaż zaawansowane",
@@ -2855,8 +2853,6 @@
     "Only people invited will be able to find and join this space.": "Tylko osoby zaproszone będą mogły znaleźć i dołączyć do tej przestrzeni.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Każdy będzie mógł znaleźć i dołączyć do tej przestrzeni, nie tylko członkowie <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Każdy w <SpaceName/> będzie mógł znaleźć i dołączyć.",
-    "Create room": "Utwórz pokój",
-    "Create video room": "Utwórz pokój wideo",
     "Visible to space members": "Widoczne dla członków przestrzeni",
     "Online community members": "Członkowie społeczności online",
     "View all %(count)s members": {
@@ -2865,7 +2861,6 @@
     },
     "Private room (invite only)": "Pokój prywatny (tylko na zaproszenie)",
     "Room visibility": "Widoczność pokoju",
-    "Create a video room": "Utwórz pokój wideo",
     "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.": "Możesz wyłączyć tę opcję, jeśli pokój będzie wykorzystywany jedynie do współpracy z wewnętrznymi zespołami, które posiadają swój serwer domowy. Nie będzie można zmienić tej opcji.",
     "Your server requires encryption to be enabled in private rooms.": "Twój serwer wymaga włączenia szyfrowania w pokojach prywatnych.",
     "You can't disable this later. The room will be encrypted but the embedded call will not.": "Nie będzie można tego później wyłączyć. Pokój zostanie zaszyfrowany, lecz wbudowane połączenia nie.",
@@ -3993,5 +3988,12 @@
         "file_attached": "Plik załączony",
         "fetching_events": "Pobieranie wydarzeń…",
         "creating_output": "Tworzenie danych wyjściowych…"
+    },
+    "create_room": {
+        "title_video_room": "Utwórz pokój wideo",
+        "title_public_room": "Utwórz publiczny pokój",
+        "title_private_room": "Utwórz prywatny pokój",
+        "action_create_video_room": "Utwórz pokój wideo",
+        "action_create_room": "Utwórz pokój"
     }
 }

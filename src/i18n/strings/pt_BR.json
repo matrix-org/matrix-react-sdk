@@ -909,8 +909,6 @@
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Por favor, diga-nos o que aconteceu de errado ou, ainda melhor, crie um bilhete de erro no GitHub que descreva o problema.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Apagar todos os dados desta sessão é uma ação permanente. Mensagens criptografadas serão perdidas, a não ser que as chaves delas tenham sido copiadas para o backup.",
     "Enable end-to-end encryption": "Ativar a criptografia de ponta a ponta",
-    "Create a public room": "Criar uma sala pública",
-    "Create a private room": "Criar uma sala privada",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Você já usou uma versão mais recente do %(brand)s nesta sessão. Para usar esta versão novamente com a criptografia de ponta a ponta, você terá que se desconectar e entrar novamente.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Confirme este usuário para torná-lo confiável. Confiar nos usuários fornece segurança adicional ao trocar mensagens criptografadas de ponta a ponta.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Confirme este aparelho para torná-lo confiável. Confiar neste aparelho fornecerá segurança adicional para você e aos outros ao trocarem mensagens criptografadas de ponta a ponta.",
@@ -2426,9 +2424,6 @@
     "Public rooms": "Salas públicas",
     "%(qrCode)s or %(appLinks)s": "%(qrCode)s ou %(appLinks)s",
     "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s ou %(emojiCompare)s",
-    "Create a video room": "Criar uma sala de vídeo",
-    "Create video room": "Criar sala de vídeo",
-    "Create room": "Criar sala",
     "Add new server…": "Adicionar um novo servidor…",
     "were removed %(count)s times": {
         "other": "foram removidos %(count)s vezes",
@@ -2930,5 +2925,12 @@
         "topic": "Tópico: %(topic)s",
         "error_fetching_file": "Erro ao buscar arquivo",
         "file_attached": "Arquivo Anexado"
+    },
+    "create_room": {
+        "title_video_room": "Criar uma sala de vídeo",
+        "title_public_room": "Criar uma sala pública",
+        "title_private_room": "Criar uma sala privada",
+        "action_create_video_room": "Criar sala de vídeo",
+        "action_create_room": "Criar sala"
     }
 }

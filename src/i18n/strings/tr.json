@@ -370,7 +370,6 @@
     "Removing…": "Siliniyor…",
     "Clear all data": "Bütün verileri sil",
     "Please enter a name for the room": "Lütfen oda için bir ad girin",
-    "Create a private room": "Özel bir oda oluştur",
     "Hide advanced": "Gelişmiş gizle",
     "Show advanced": "Gelişmiş göster",
     "Incompatible Database": "Uyumsuz Veritabanı",
@@ -857,7 +856,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Altta belirtilen Matrix ID li profiller bulunamıyor - Onları yinede davet etmek ister misiniz?",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Lütfen neyin yanlış gittiğini bize bildirin ya da en güzeli problemi tanımlayan bir GitHub talebi oluşturun.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Logları göndermeden önce, probleminizi betimleyen <a>bir GitHub talebi oluşturun</a>.",
-    "Create a public room": "Halka açık bir oda oluşturun",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Sohbet tarihçesini kaybetmemek için, çıkmadan önce odanızın anahtarlarını dışarıya aktarın. Bunu yapabilmek için %(brand)sun daha yeni sürümü gerekli. Ulaşmak için geri gitmeye ihtiyacınız var",
     "Continue With Encryption Disabled": "Şifreleme Kapalı Şekilde Devam Et",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "%(fileName)s dosyası anasunucunun yükleme boyutu limitini aşıyor",
@@ -2060,5 +2058,9 @@
     },
     "export_chat": {
         "text": "Düz Metin"
+    },
+    "create_room": {
+        "title_public_room": "Halka açık bir oda oluşturun",
+        "title_private_room": "Özel bir oda oluştur"
     }
 }

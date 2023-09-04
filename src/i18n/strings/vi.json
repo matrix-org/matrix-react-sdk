@@ -739,8 +739,6 @@
     "Private room (invite only)": "Phòng riêng (chỉ mời)",
     "Room visibility": "Khả năng hiển thị phòng",
     "Topic (optional)": "Chủ đề (không bắt buộc)",
-    "Create a private room": "Tạo một phòng riêng",
-    "Create a public room": "Tạo một phòng công cộng",
     "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.": "Bạn có thể tắt tính năng này nếu phòng sẽ được sử dụng để cộng tác với các nhóm bên ngoài có máy chủ của riêng họ. Điều này không thể được thay đổi sau này.",
     "You might enable this if the room will only be used for collaborating with internal teams on your homeserver. This cannot be changed later.": "Bạn có thể bật điều này nếu phòng sẽ chỉ được sử dụng để cộng tác với các nhóm nội bộ trên nhà của bạn. Điều này không thể thay đổi sau này.",
     "Enable end-to-end encryption": "Bật mã hóa đầu cuối",
@@ -3195,7 +3193,6 @@
     },
     "Error downloading image": "Lỗi khi tải hình ảnh",
     "Unable to show image due to error": "Không thể hiển thị hình ảnh do lỗi",
-    "Create room": "Tạo phòng",
     "To continue, please enter your account password:": "Để tiếp tục, vui lòng nhập mật khẩu tài khoản của bạn:",
     "were removed %(count)s times": {
         "one": "",
@@ -3204,10 +3201,8 @@
     "Closed poll": "Bỏ phiếu kín",
     "Edit poll": "Chỉnh sửa bỏ phiếu",
     "Declining…": "Đang từ chối…",
-    "Create a video room": "Tạo một phòng truyền hình",
     "Image view": "Xem ảnh",
     "Get it on Google Play": "Tải trên CH Play",
-    "Create video room": "Tạo phòng truyền hình",
     "People cannot join unless access is granted.": "Người khác không thể tham gia khi chưa có phép.",
     "Something went wrong.": "Đã xảy ra lỗi.",
     "Changes your profile picture in this current room only": "Đổi ảnh hồ sơ của bạn chỉ trong phòng này",
@@ -3714,5 +3709,12 @@
         "file_attached": "Tệp được đính kèm",
         "fetching_events": "Đang tìm các sự kiện…",
         "creating_output": "Đang tạo kết quả…"
+    },
+    "create_room": {
+        "title_video_room": "Tạo một phòng truyền hình",
+        "title_public_room": "Tạo một phòng công cộng",
+        "title_private_room": "Tạo một phòng riêng",
+        "action_create_video_room": "Tạo phòng truyền hình",
+        "action_create_room": "Tạo phòng"
     }
 }

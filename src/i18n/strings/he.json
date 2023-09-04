@@ -860,8 +860,6 @@
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "כדי להימנע מאיבוד היסטוריית הצ'אט שלכם, עליכם לייצא את מפתחות החדר שלכם לפני שאתם מתנתקים. יהיה עליכם לחזור לגרסה החדשה יותר של %(brand)s כדי לעשות זאת",
     "Block anyone not part of %(serverName)s from ever joining this room.": "חסום ממישהו שאינו חלק מ- %(serverName)s מלהצטרף אי פעם לחדר זה.",
     "Topic (optional)": "נושא (לא חובה)",
-    "Create a private room": "צור חדר פרטי",
-    "Create a public room": "צור חדר ציבורי",
     "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.": "ייתכן שתשבית זאת אם החדר ישמש לשיתוף פעולה עם צוותים חיצוניים שיש להם שרת בית משלהם. לא ניתן לשנות זאת מאוחר יותר.",
     "You might enable this if the room will only be used for collaborating with internal teams on your homeserver. This cannot be changed later.": "ייתכן שתאפשר זאת אם החדר ישמש רק לשיתוף פעולה עם צוותים פנימיים בשרת הבית שלך. לא ניתן לשנות זאת מאוחר יותר.",
     "Enable end-to-end encryption": "אפשר הצפנה מקצה לקצה",
@@ -2150,7 +2148,6 @@
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s.קולות הצביעו כדי לראות את התוצאות"
     },
-    "Create a video room": "צרו חדר וידאו",
     "Verification requested": "התבקש אימות",
     "Verify this device by completing one of the following:": "אמתו מכשיר זה על ידי מילוי אחת מהפעולות הבאות:",
     "Your server doesn't support disabling sending read receipts.": "השרת שלכם לא תומך בביטול שליחת אישורי קריאה.",
@@ -2803,5 +2800,10 @@
         "topic": "נושא: %(topic)s",
         "error_fetching_file": "שגיאה באחזור הקובץ",
         "file_attached": "מצורף קובץ"
+    },
+    "create_room": {
+        "title_video_room": "צרו חדר וידאו",
+        "title_public_room": "צור חדר ציבורי",
+        "title_private_room": "צור חדר פרטי"
     }
 }

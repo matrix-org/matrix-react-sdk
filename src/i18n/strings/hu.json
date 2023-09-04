@@ -941,8 +941,6 @@
     "Changes the avatar of the current room": "Megváltoztatja a profilképét a jelenlegi szobában",
     "e.g. my-room": "pl.: szobam",
     "Please enter a name for the room": "Kérlek adj meg egy nevet a szobához",
-    "Create a public room": "Nyilvános szoba létrehozása",
-    "Create a private room": "Privát szoba létrehozása",
     "Topic (optional)": "Téma (nem kötelező)",
     "Hide advanced": "Speciális beállítások elrejtése",
     "Show advanced": "Speciális beállítások megjelenítése",
@@ -2846,9 +2844,6 @@
     "Live location ended": "Élő pozíció megosztás befejeződött",
     "Live until %(expiryTime)s": "Élő eddig: %(expiryTime)s",
     "Updated %(humanizedUpdateTime)s": "Frissítve %(humanizedUpdateTime)s",
-    "Create room": "Szoba létrehozása",
-    "Create video room": "Videó szoba készítése",
-    "Create a video room": "Videó szoba készítése",
     "%(featureName)s Beta feedback": "%(featureName)s béta visszajelzés",
     "View live location": "Élő földrajzi helyzet megtekintése",
     "Ban from room": "Kitiltás a szobából",
@@ -3915,5 +3910,12 @@
         "file_attached": "Fájl mellékelve",
         "fetching_events": "Események lekérése…",
         "creating_output": "Kimenet létrehozása…"
+    },
+    "create_room": {
+        "title_video_room": "Videó szoba készítése",
+        "title_public_room": "Nyilvános szoba létrehozása",
+        "title_private_room": "Privát szoba létrehozása",
+        "action_create_video_room": "Videó szoba készítése",
+        "action_create_room": "Szoba létrehozása"
     }
 }

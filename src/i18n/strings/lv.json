@@ -697,8 +697,6 @@
     "Hide advanced": "Slēpt papildu iestatījumus",
     "Your server requires encryption to be enabled in private rooms.": "Jūsu serveris pieprasa iespējotu šifrēšānu privātās istabās.",
     "Enable end-to-end encryption": "Iespējot pilnīgu šifrēšanu",
-    "Create a private room": "Izveidot privātu istabu",
-    "Create a public room": "Izveidot publisku istabu",
     "Add a new server": "Pievienot jaunu serveri",
     "Your homeserver": "Jūsu bāzes serveris",
     "Your server": "Jūsu serveris",
@@ -1591,9 +1589,6 @@
     "Let's create a room for each of them.": "Izveidojam katram no tiem savu istabu!",
     "We'll create rooms for each of them.": "Mēs izveidosim istabas katram no tiem.",
     "Failed to create initial space rooms": "Neizdevās izveidot sākotnējās vietas istabas",
-    "Create a video room": "Izveidot video istabu",
-    "Create room": "Izveidot istabu",
-    "Create video room": "Izveidot video istabu",
     "Update any local room aliases to point to the new room": "Atjaunināt jebkurus vietējās istabas aizstājvārdus, lai tie norādītu uz jauno istabu",
     "Unrecognised room address: %(roomAlias)s": "Neatpazīta istabas adrese: %(roomAlias)s",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Šī istabā atrodas dažās vietās, kurās jūs neesat administrators. Šajās vietās vecā istaba joprojām būs redzama, bet cilvēki tiks aicināti pievienoties jaunajai istabai.",
@@ -1859,5 +1854,12 @@
     },
     "export_chat": {
         "creator_summary": "%(creatorName)s izveidoja šo istabu."
+    },
+    "create_room": {
+        "title_video_room": "Izveidot video istabu",
+        "title_public_room": "Izveidot publisku istabu",
+        "title_private_room": "Izveidot privātu istabu",
+        "action_create_video_room": "Izveidot video istabu",
+        "action_create_room": "Izveidot istabu"
     }
 }
