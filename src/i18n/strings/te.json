@@ -71,7 +71,6 @@
     "Notifications": "ప్రకటనలు",
     "Operation failed": "కార్యం విఫలమైంది",
     "Sunday": "ఆదివారం",
-    "Messages sent by bot": "బాట్ పంపిన సందేశాలు",
     "Notification targets": "తాఖీదు లక్ష్యాలు",
     "Today": "ఈ రోజు",
     "Friday": "శుక్రువారం",
@@ -79,8 +78,6 @@
     "Changelog": "మార్పు వివరణ",
     "Source URL": "మూల URL",
     "Noisy": "శబ్దం",
-    "Messages containing my display name": "నా ప్రదర్శన పేరును కలిగి ఉన్న సందేశాలు",
-    "Messages in one-to-one chats": "సందేశాలు నుండి ఒకరికి ఒకటి మాటామంతి",
     "Failed to add tag %(tagName)s to room": "%(tagName)s ను బొందు జోడించడంలో విఫలమైంది",
     "No update available.": "ఏ నవీకరణ అందుబాటులో లేదు.",
     "Collecting app version information": "అనువర్తన సంస్కరణ సమాచారాన్ని సేకరించడం",
@@ -91,11 +88,9 @@
     "Wednesday": "బుధవారం",
     "Send": "పంపండి",
     "All messages": "అన్ని సందేశాలు",
-    "Call invitation": "మాట్లాడడానికి ఆహ్వానం",
     "Invite to this room": "ఈ గదికి ఆహ్వానించండి",
     "Thursday": "గురువారం",
     "Search…": "శోధన…",
-    "Messages in group chats": "సమూహ మాటామంతిలో సందేశాలు",
     "Yesterday": "నిన్న",
     "Error encountered (%(errorDetail)s).": "లోపం సంభవించింది (%(errorDetail)s).",
     "Low Priority": "తక్కువ ప్రాధాన్యత",
@@ -139,6 +134,13 @@
         "send_logs": "నమోదును పంపు"
     },
     "settings": {
-        "always_show_message_timestamps": "ఎల్లప్పుడూ సందేశాల సమయ ముద్రలు చూపించు"
+        "always_show_message_timestamps": "ఎల్లప్పుడూ సందేశాల సమయ ముద్రలు చూపించు",
+        "notifications": {
+            "rule_contains_display_name": "నా ప్రదర్శన పేరును కలిగి ఉన్న సందేశాలు",
+            "rule_room_one_to_one": "సందేశాలు నుండి ఒకరికి ఒకటి మాటామంతి",
+            "rule_message": "సమూహ మాటామంతిలో సందేశాలు",
+            "rule_call": "మాట్లాడడానికి ఆహ్వానం",
+            "rule_suppress_notices": "బాట్ పంపిన సందేశాలు"
+        }
     }
 }

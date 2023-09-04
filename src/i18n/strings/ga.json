@@ -339,7 +339,6 @@
     "Light bulb": "Bolgán solais",
     "Thumbs up": "Ordógí suas",
     "Got It": "Tuigthe",
-    "Call invitation": "Nuair a fhaighim cuireadh glaoigh",
     "Collecting logs": "ag Bailiú logaí",
     "Invited": "Le cuireadh",
     "Demote": "Bain ceadanna",
@@ -745,7 +744,10 @@
         "mod": "Mod"
     },
     "settings": {
-        "always_show_message_timestamps": "Taispeáin stampaí ama teachtaireachta i gcónaí"
+        "always_show_message_timestamps": "Taispeáin stampaí ama teachtaireachta i gcónaí",
+        "notifications": {
+            "rule_call": "Nuair a fhaighim cuireadh glaoigh"
+        }
     },
     "devtools": {
         "setting_colon": "Socrú:",

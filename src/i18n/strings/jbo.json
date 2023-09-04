@@ -104,12 +104,6 @@
     "Collecting app version information": ".i ca'o facki le du'u favytcinymupli",
     "Collecting logs": ".i ca'o facki le du'u citri",
     "Waiting for response from server": ".i ca'o denpa lo nu le samtcise'u cu spuda",
-    "Messages containing my display name": "nu pa se pagbu be le cmene be mi cu zilbe'i",
-    "Messages in one-to-one chats": "nu da zilbe'i pa prenu",
-    "Messages in group chats": "nu da zilbe'i lu'o pa prenu",
-    "When I'm invited to a room": "nu da friti le ka ziljmina lo se zilbe'i kei do",
-    "Call invitation": "nu da co'a fonjo'e do",
-    "Messages sent by bot": "nu da zilbe'i fi pa sampre",
     "Incorrect verification code": ".i na'e drani ke lacri lerpoi",
     "Phone": "fonxa",
     "No display name": ".i na da cmene",
@@ -255,10 +249,6 @@
     "Cannot reach homeserver": ".i ca ku na da ka'e zilbe'i le samtcise'u",
     "Match system theme": "nu mapti le jvinu be le vanbi",
     "Never send encrypted messages to unverified sessions in this room from this session": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u le cei'i",
-    "Messages containing my username": "nu pa se pagbu be le judri be mi cu zilbe'i",
-    "Messages containing @room": "nu pa se pagbu be zoi zoi. @room .zoi cu zilbe'i",
-    "Encrypted messages in one-to-one chats": "nu pa mifra cu zilbe'i pa prenu",
-    "Encrypted messages in group chats": "nu pa mifra cu zilbe'i lu'o pa prenu",
     "The other party cancelled the verification.": ".i le na du be do co'u troci le ka co'a lacri",
     "Verified!": ".i mo'u co'a lacri",
     "You've successfully verified this user.": ".i mo'u co'a lacri le pilno",
@@ -405,6 +395,18 @@
         "always_show_message_timestamps": "lo du'u xu kau do ro roi viska ka'e lo tcika be tu'a lo notci",
         "replace_plain_emoji": "lo du'u xu kau zmiku basti lo cinmo lerpoi",
         "automatic_language_detection_syntax_highlight": "lo du'u xu kau zmiku facki lo du'u ma kau bangu ku te zu'e lo nu skari ba'argau lo gensu'a",
-        "inline_url_previews_default": "lo zmiselcu'a pe lo du'u xu kau zmiku purzga lo se urli"
+        "inline_url_previews_default": "lo zmiselcu'a pe lo du'u xu kau zmiku purzga lo se urli",
+        "notifications": {
+            "rule_contains_display_name": "nu pa se pagbu be le cmene be mi cu zilbe'i",
+            "rule_contains_user_name": "nu pa se pagbu be le judri be mi cu zilbe'i",
+            "rule_roomnotif": "nu pa se pagbu be zoi zoi. @room .zoi cu zilbe'i",
+            "rule_room_one_to_one": "nu da zilbe'i pa prenu",
+            "rule_message": "nu da zilbe'i lu'o pa prenu",
+            "rule_encrypted": "nu pa mifra cu zilbe'i lu'o pa prenu",
+            "rule_invite_for_me": "nu da friti le ka ziljmina lo se zilbe'i kei do",
+            "rule_call": "nu da co'a fonjo'e do",
+            "rule_suppress_notices": "nu da zilbe'i fi pa sampre",
+            "rule_encrypted_room_one_to_one": "nu pa mifra cu zilbe'i pa prenu"
+        }
     }
 }

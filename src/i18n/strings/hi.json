@@ -107,12 +107,6 @@
     "Collecting app version information": "ऐप संस्करण जानकारी एकत्रित कर रहा हैं",
     "Collecting logs": "लॉग एकत्रित कर रहा हैं",
     "Waiting for response from server": "सर्वर से प्रतिक्रिया की प्रतीक्षा कर रहा है",
-    "Messages containing my display name": "मेरे प्रदर्शन नाम वाले संदेश",
-    "Messages in one-to-one chats": "एक-से-एक चैट में संदेश",
-    "Messages in group chats": "समूह चैट में संदेश",
-    "When I'm invited to a room": "जब मुझे एक रूम में आमंत्रित किया जाता है",
-    "Call invitation": "कॉल आमंत्रण",
-    "Messages sent by bot": "रोबॉट द्वारा भेजे गए संदेश",
     "Incorrect verification code": "गलत सत्यापन कोड",
     "Phone": "फ़ोन",
     "No display name": "कोई प्रदर्शन नाम नहीं",
@@ -157,9 +151,6 @@
     "A word by itself is easy to guess": "सिर्फ एक शब्द अनुमान लगाना आसान है",
     "Names and surnames by themselves are easy to guess": "खुद के नाम और उपनाम अनुमान लगाना आसान है",
     "Common names and surnames are easy to guess": "सामान्य नाम और उपनाम अनुमान लगाना आसान है",
-    "Messages containing @room": "@Room युक्त संदेश",
-    "Encrypted messages in one-to-one chats": "एक एक के साथ चैट में एन्क्रिप्टेड संदेश",
-    "Encrypted messages in group chats": "समूह चैट में एन्क्रिप्टेड संदेश",
     "Show message in desktop notification": "डेस्कटॉप अधिसूचना में संदेश दिखाएं",
     "Off": "बंद",
     "On": "चालू",
@@ -229,7 +220,6 @@
     "Unrecognised address": "अपरिचित पता",
     "Straight rows of keys are easy to guess": "कुंजी की सीधी पंक्तियों का अनुमान लगाना आसान है",
     "Short keyboard patterns are easy to guess": "लघु कीबोर्ड पैटर्न का अनुमान लगाना आसान है",
-    "Messages containing my username": "मेरे उपयोगकर्ता नाम वाले संदेश",
     "The other party cancelled the verification.": "दूसरे पक्ष ने सत्यापन रद्द कर दिया।",
     "Verified!": "सत्यापित!",
     "You've successfully verified this user.": "आपने इस उपयोगकर्ता को सफलतापूर्वक सत्यापित कर लिया है।",
@@ -646,6 +636,18 @@
         "show_displayname_changes": "प्रदर्शन नाम परिवर्तन दिखाएं",
         "big_emoji": "चैट में बड़े इमोजी सक्षम करें",
         "prompt_invite": "संभावित अवैध मैट्रिक्स आईडी को निमंत्रण भेजने से पहले सूचित करें",
-        "start_automatically": "सिस्टम लॉगिन के बाद स्वचालित रूप से प्रारंभ करें"
+        "start_automatically": "सिस्टम लॉगिन के बाद स्वचालित रूप से प्रारंभ करें",
+        "notifications": {
+            "rule_contains_display_name": "मेरे प्रदर्शन नाम वाले संदेश",
+            "rule_contains_user_name": "मेरे उपयोगकर्ता नाम वाले संदेश",
+            "rule_roomnotif": "@Room युक्त संदेश",
+            "rule_room_one_to_one": "एक-से-एक चैट में संदेश",
+            "rule_message": "समूह चैट में संदेश",
+            "rule_encrypted": "समूह चैट में एन्क्रिप्टेड संदेश",
+            "rule_invite_for_me": "जब मुझे एक रूम में आमंत्रित किया जाता है",
+            "rule_call": "कॉल आमंत्रण",
+            "rule_suppress_notices": "रोबॉट द्वारा भेजे गए संदेश",
+            "rule_encrypted_room_one_to_one": "एक एक के साथ चैट में एन्क्रिप्टेड संदेश"
+        }
     }
 }
