@@ -46,7 +46,6 @@
     "Usage": "Notkun",
     "Reason": "Ástæða",
     "Send": "Senda",
-    "Unnamed Room": "Nafnlaus spjallrás",
     "Send analytics data": "Senda greiningargögn",
     "Collecting app version information": "Safna upplýsingum um útgáfu smáforrits",
     "Collecting logs": "Safna atvikaskrám",
@@ -717,12 +716,6 @@
     "Use app": "Nota smáforrit",
     "Later": "Seinna",
     "That's fine": "Það er í góðu",
-    "Topic: %(topic)s": "Umfjöllunarefni: %(topic)s",
-    "Current Timeline": "Núverandi tímalína",
-    "From the beginning": "Frá byrjun",
-    "Plain Text": "Ósniðinn texti",
-    "JSON": "JSON",
-    "HTML": "HTML",
     "Unknown App": "Óþekkt forrit",
     "%(displayName)s is typing …": "%(displayName)s er að skrifa…",
     "Light high contrast": "Ljóst með mikil birtuskil",
@@ -854,7 +847,6 @@
     "Upload completed": "Innsendingu er lokið",
     "User Directory": "Mappa notanda",
     "Transfer": "Flutningur",
-    "Unnamed Space": "Nafnlaust svæði",
     "Terms of Service": "Þjónustuskilmálar",
     "Message preview": "Forskoðun skilaboða",
     "Sent": "Sent",
@@ -1016,8 +1008,6 @@
     "Match system theme": "Samsvara þema kerfis",
     "Messaging": "Skilaboð",
     "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
-    "File Attached": "Viðhengd skrá",
-    "Export successful!": "Útflutningur tókst!",
     "Share your public space": "Deildu opinbera svæðinu þínu",
     "Invite to %(spaceName)s": "Bjóða inn á %(spaceName)s",
     "Short keyboard patterns are easy to guess": "Auðvelt er að giska á styttri mynstur á lyklaborði",
@@ -1200,30 +1190,6 @@
     "Don't miss a reply": "Ekki missa af svari",
     "Review to ensure your account is safe": "Yfirfarðu þetta til að tryggja að aðgangurinn þinn sé öruggur",
     "Help improve %(analyticsOwner)s": "Hjálpaðu okkur að bæta %(analyticsOwner)s",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Flutti út %(count)s atburð á %(seconds)ssek",
-        "other": "Flutti út %(count)s atburði á %(seconds)ssek"
-    },
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Hef náð í %(count)s atburð á %(seconds)ssek",
-        "other": "Hef náð í %(count)s atburði á %(seconds)ssek"
-    },
-    "Processing event %(number)s out of %(total)s": "Vinn með atburð %(number)s af %(total)s",
-    "Error fetching file": "Villa við að sækja skrá",
-    "%(creatorName)s created this room.": "%(creatorName)s bjó til þessa spjallrás.",
-    "Media omitted - file size limit exceeded": "Myndefni sleppt - skráastærð fer fram úr hámarki",
-    "Media omitted": "Myndefni sleppt",
-    "Fetched %(count)s events so far": {
-        "one": "Hef náð í %(count)s atburð að svo komnu",
-        "other": "Hef náð í %(count)s atburði að svo komnu"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Hef náð í %(count)s atburð af %(total)s",
-        "other": "Hef náð í %(count)s atburði af %(total)s"
-    },
-    "Specify a number of messages": "Skilgreindu fjölda skilaboða",
-    "Generating a ZIP": "Útbý ZIP-safnskrá",
-    "Are you sure you want to exit during this export?": "Ertu viss um að þú viljir hætta á meðan þessum útflutningi stendur?",
     "Error upgrading room": "Villa við að uppfæra spjallrás",
     "Predictable substitutions like '@' instead of 'a' don't help very much": "Augljósar útskiptingar á borð við '@' í stað 'a' hjálpa ekki mikið",
     "Use a longer keyboard pattern with more turns": "Notaðu lengri lyklaborðsmynstur með fleiri beygjum",
@@ -1980,7 +1946,6 @@
     "New version of %(brand)s is available": "Ný útgáfa %(brand)s er tiltæk",
     "Set up Secure Backup": "Setja upp varið öryggisafrit",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Þú hefur áður samþykkt að deila nafnlausum upplýsingum um notkun forritsins með okkur. Við erum að uppfæra hvernig það virkar.",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Þetta er upphaf útflutning á <roomName/>. Var flutt út af <exporterDetails/> þann %(exportDate)s.",
     "Authentication check failed: incorrect password?": "Sannvottun auðkenningar mistókst: er lykilorðið rangt?",
     "Your browser does not support the required cryptography extensions": "Vafrinn þinn styður ekki nauðsynlegar dulritunarviðbætur",
     "This homeserver has been blocked by its administrator.": "Þessi heimaþjónn hefur verið útilokaður af kerfisstjóra hans.",
@@ -3062,7 +3027,9 @@
         "not_trusted": "Ekki treyst",
         "accessibility": "Auðveldað aðgengi",
         "server": "Netþjónn",
-        "capabilities": "Geta"
+        "capabilities": "Geta",
+        "unnamed_room": "Nafnlaus spjallrás",
+        "unnamed_space": "Nafnlaust svæði"
     },
     "action": {
         "continue": "Halda áfram",
@@ -3396,5 +3363,40 @@
         "developer_tools": "Forritunartól",
         "room_id": "Auðkenni spjallrásar: %(roomId)s",
         "event_id": "Auðkenni atburðar: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Ósniðinn texti",
+        "from_the_beginning": "Frá byrjun",
+        "number_of_messages": "Skilgreindu fjölda skilaboða",
+        "current_timeline": "Núverandi tímalína",
+        "export_successful": "Útflutningur tókst!",
+        "unload_confirm": "Ertu viss um að þú viljir hætta á meðan þessum útflutningi stendur?",
+        "generating_zip": "Útbý ZIP-safnskrá",
+        "processing_event_n": "Vinn með atburð %(number)s af %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "Hef náð í %(count)s atburð af %(total)s",
+            "other": "Hef náð í %(count)s atburði af %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "Hef náð í %(count)s atburð að svo komnu",
+            "other": "Hef náð í %(count)s atburði að svo komnu"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Hef náð í %(count)s atburð á %(seconds)ssek",
+            "other": "Hef náð í %(count)s atburði á %(seconds)ssek"
+        },
+        "exported_n_events_in_time": {
+            "one": "Flutti út %(count)s atburð á %(seconds)ssek",
+            "other": "Flutti út %(count)s atburði á %(seconds)ssek"
+        },
+        "media_omitted": "Myndefni sleppt",
+        "media_omitted_file_size": "Myndefni sleppt - skráastærð fer fram úr hámarki",
+        "creator_summary": "%(creatorName)s bjó til þessa spjallrás.",
+        "export_info": "Þetta er upphaf útflutning á <roomName/>. Var flutt út af <exporterDetails/> þann %(exportDate)s.",
+        "topic": "Umfjöllunarefni: %(topic)s",
+        "error_fetching_file": "Villa við að sækja skrá",
+        "file_attached": "Viðhengd skrá"
     }
 }

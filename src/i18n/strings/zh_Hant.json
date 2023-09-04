@@ -151,7 +151,6 @@
     "Unable to remove contact information": "無法移除聯絡人資訊",
     "Unable to verify email address.": "無法驗證電子郵件。",
     "Unban": "解除封鎖",
-    "Unnamed Room": "未命名的聊天室",
     "Uploading %(filename)s": "正在上傳 %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "正在上傳 %(filename)s 與另 %(count)s 個檔案",
@@ -2017,7 +2016,6 @@
     "Failed to save space settings.": "無法儲存聊天空間設定。",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "使用某人的名字、使用者名稱（如 <userId/>）或<a>分享此聊天室</a>來邀請人。",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "使用某人的名字、電子郵件地址、使用者名稱（如 <userId/>）或<a>分享此聊天空間</a>來邀請人。",
-    "Unnamed Space": "未命名聊天空間",
     "Invite to %(spaceName)s": "邀請加入 %(spaceName)s",
     "Create a new room": "建立新聊天室",
     "Spaces": "聊天空間",
@@ -2417,20 +2415,6 @@
     "Enter a number between %(min)s and %(max)s": "輸入介於 %(min)s 至 %(max)s 間的數字",
     "In reply to <a>this message</a>": "回覆<a>此訊息</a>",
     "Export chat": "匯出聊天",
-    "File Attached": "已附加檔案",
-    "Error fetching file": "取得檔案錯誤",
-    "Topic: %(topic)s": "主題：%(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "這是 <roomName/> 匯出的開始。由 <exporterDetails/> 於 %(exportDate)s 匯出。",
-    "%(creatorName)s created this room.": "%(creatorName)s 建立了此聊天室。",
-    "Media omitted - file size limit exceeded": "媒體省略 - 超過檔案大小限制",
-    "Media omitted": "媒體省略",
-    "Current Timeline": "目前時間軸",
-    "Specify a number of messages": "指定訊息數量",
-    "From the beginning": "從一開始",
-    "Plain Text": "純文字",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "您確定要從此匯出流程中退出嗎？",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s 傳送了貼圖。",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s 變更了聊天室大頭照。",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "重設您的驗證金鑰將無法復原。重設後，您將無法存取舊的加密訊息，之前任何驗證過您的朋友也會看到安全警告，直到您重新驗證。",
@@ -2634,25 +2618,6 @@
     "Failed to load list of rooms.": "無法載入聊天室清單。",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "將您與此空間成員的聊天進行分組。關閉此功能，將會在您的 %(spaceName)s 畫面中隱藏那些聊天室。",
     "Sections to show": "要顯示的部份",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "已在 %(seconds)s 秒內匯出 %(count)s 個事件",
-        "other": "已在 %(seconds)s 秒內匯出 %(count)s 個事件"
-    },
-    "Export successful!": "匯出成功！",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "已在 %(seconds)s 秒內取得 %(count)s 個事件",
-        "other": "已在 %(seconds)s 秒內取得 %(count)s 個事件"
-    },
-    "Processing event %(number)s out of %(total)s": "正在處理 %(total)s 個事件中的第 %(number)s 個",
-    "Fetched %(count)s events so far": {
-        "one": "到目前為止已取得 %(count)s 個事件",
-        "other": "到目前為止已成功取得 %(count)s 個事件"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "已取得 %(total)s 個事件中的 %(count)s 個",
-        "other": "從 %(total)s 個事件中取得了 %(count)s 個"
-    },
-    "Generating a ZIP": "產生 ZIP",
     "Open in OpenStreetMap": "在 OpenStreetMap 中開啟",
     "toggle event": "切換事件",
     "This address had invalid server or is already in use": "此位址的伺服器無效或已被使用",
@@ -3360,11 +3325,7 @@
     "Connecting to integration manager…": "正在連線至整合管理員…",
     "Saving…": "正在儲存…",
     "Creating…": "正在建立…",
-    "Creating output…": "正在建立輸出…",
-    "Fetching events…": "正在取得事件…",
     "Starting export process…": "正在開始匯出流程…",
-    "Creating HTML…": "正在建立 HTML…",
-    "Starting export…": "開始匯入…",
     "Unable to connect to Homeserver. Retrying…": "無法連線至家伺服器。正在重試…",
     "Secure Backup successful": "安全備份成功",
     "Your keys are now being backed up from this device.": "您已備份此裝置的金鑰。",
@@ -3460,8 +3421,6 @@
     "Changes your profile picture in this current room only": "僅變更目前房間中的個人檔案圖片",
     "Changes your profile picture in all rooms": "變更您在所有聊天室中的個人檔案圖片",
     "%(senderDisplayName)s changed the join rule to ask to join.": "%(senderDisplayName)s 變更了加入規則以要求加入。",
-    "Next group of messages": "下一組訊息",
-    "Exported Data": "已匯出的資料",
     "Views room with given address": "檢視指定聊天室的地址",
     "Notification Settings": "通知設定",
     "Enable new native OIDC flows (Under active development)": "啟用新的原生 OIDC 流程（正在積極開發中）",
@@ -3477,7 +3436,6 @@
     "People, Mentions and Keywords": "人們、提及與關鍵字",
     "This setting will be applied by default to all your rooms.": "預設情況下，此設定將會套用於您所有的聊天室。",
     "User cannot be invited until they are unbanned": "在解除封鎖前，無法邀請使用者",
-    "Previous group of messages": "上一組訊息",
     "Receive an email summary of missed notifications": "接收錯過通知的電子郵件摘要",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>更新：</strong>我們簡化了通知設定，讓選項更容易找到。您過去選擇的一些自訂設定未在此處顯示，但它們仍然作用中。若繼續，您的某些設定可能會發生變化。<a>取得更多資訊</a>",
     "Other things we think you might be interested in:": "我們認為您可能感興趣的其他事情：",
@@ -3610,7 +3568,9 @@
         "not_trusted": "未受信任",
         "accessibility": "可近用性",
         "server": "伺服器",
-        "capabilities": "功能"
+        "capabilities": "功能",
+        "unnamed_room": "未命名的聊天室",
+        "unnamed_space": "未命名聊天空間"
     },
     "action": {
         "continue": "繼續",
@@ -4007,5 +3967,47 @@
         "room_id": "聊天室 ID：%(roomId)s",
         "thread_root_id": "討論串 Root ID：%(threadRootId)s",
         "event_id": "事件 ID：%(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "純文字",
+        "from_the_beginning": "從一開始",
+        "number_of_messages": "指定訊息數量",
+        "current_timeline": "目前時間軸",
+        "creating_html": "正在建立 HTML…",
+        "starting_export": "開始匯入…",
+        "export_successful": "匯出成功！",
+        "unload_confirm": "您確定要從此匯出流程中退出嗎？",
+        "generating_zip": "產生 ZIP",
+        "processing_event_n": "正在處理 %(total)s 個事件中的第 %(number)s 個",
+        "fetched_n_events_with_total": {
+            "one": "已取得 %(total)s 個事件中的 %(count)s 個",
+            "other": "從 %(total)s 個事件中取得了 %(count)s 個"
+        },
+        "fetched_n_events": {
+            "one": "到目前為止已取得 %(count)s 個事件",
+            "other": "到目前為止已成功取得 %(count)s 個事件"
+        },
+        "fetched_n_events_in_time": {
+            "one": "已在 %(seconds)s 秒內取得 %(count)s 個事件",
+            "other": "已在 %(seconds)s 秒內取得 %(count)s 個事件"
+        },
+        "exported_n_events_in_time": {
+            "one": "已在 %(seconds)s 秒內匯出 %(count)s 個事件",
+            "other": "已在 %(seconds)s 秒內匯出 %(count)s 個事件"
+        },
+        "media_omitted": "媒體省略",
+        "media_omitted_file_size": "媒體省略 - 超過檔案大小限制",
+        "creator_summary": "%(creatorName)s 建立了此聊天室。",
+        "export_info": "這是 <roomName/> 匯出的開始。由 <exporterDetails/> 於 %(exportDate)s 匯出。",
+        "topic": "主題：%(topic)s",
+        "previous_page": "上一組訊息",
+        "next_page": "下一組訊息",
+        "html_title": "已匯出的資料",
+        "error_fetching_file": "取得檔案錯誤",
+        "file_attached": "已附加檔案",
+        "fetching_events": "正在取得事件…",
+        "creating_output": "正在建立輸出…"
     }
 }

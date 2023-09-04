@@ -78,7 +78,6 @@
     "Failure to create room": "Неуспех при прављењу собе",
     "Server may be unavailable, overloaded, or you hit a bug.": "Сервер је можда недоступан, преоптерећен или сте нашли грешку.",
     "Send": "Пошаљи",
-    "Unnamed Room": "Неименована соба",
     "Your browser does not support the required cryptography extensions": "Ваш прегледач не подржава потребна криптографска проширења",
     "Not a valid %(brand)s keyfile": "Није исправана %(brand)s кључ-датотека",
     "Authentication check failed: incorrect password?": "Провера идентитета није успела: нетачна лозинка?",
@@ -1250,7 +1249,8 @@
         "someone": "Неко",
         "matrix": "Матрикс",
         "trusted": "поуздан",
-        "not_trusted": "није поуздан"
+        "not_trusted": "није поуздан",
+        "unnamed_room": "Неименована соба"
     },
     "action": {
         "continue": "Настави",

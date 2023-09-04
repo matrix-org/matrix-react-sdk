@@ -110,7 +110,6 @@
     "We couldn't log you in": "نتوانستیم شما را وارد کنیم",
     "Only continue if you trust the owner of the server.": "تنها در صورتی که به صاحب سرور اطمینان دارید، ادامه دهید.",
     "Identity server has no terms of service": "سرور هویت هیچگونه شرایط خدمات ندارد",
-    "Unnamed Room": "اتاق بدون نام",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s.%(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(time)s",
@@ -705,7 +704,6 @@
     "Consult first": "ابتدا مشورت کنید",
     "Save Changes": "ذخیره تغییرات",
     "Leave Space": "ترک فضای کاری",
-    "Unnamed Space": "فضای کاری بدون نام",
     "Remember this": "این را به یاد داشته باش",
     "Invalid URL": "آدرس URL نامعتبر",
     "About homeservers": "درباره سرورها",
@@ -2254,7 +2252,6 @@
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "عبارت امنیتی خود را وارد کنید و یا <button>کلید امنیتی خود را استفاده کنید</button>.",
     "You were disconnected from the call. (Error: %(message)s)": "شما از تماس قطع شدید.(خطا: %(message)s)",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "اطلاعات خود را به صورت ناشناس با ما به اشتراک بگذارید تا متوجه مشکلات موجود شویم. بدون استفاده شخصی توسط خود و یا شرکا<LearnMoreLink>یادگیری بیشتر</LearnMoreLink>",
-    "%(creatorName)s created this room.": "%(creatorName)s این اتاق ساخته شده.",
     "In %(spaceName)s.": "در فضای %(spaceName)s.",
     "In %(spaceName)s and %(count)s other spaces.": {
         "other": "در %(spaceName)s و %(count)s دیگر فضاها."
@@ -2286,20 +2283,6 @@
     "Help improve %(analyticsOwner)s": "بهتر کردن راهنمای کاربری %(analyticsOwner)s",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "شما به ارسال گزارش چگونگی استفاده از سرویس رضایت داده بودید. ما نحوه استفاده از این اطلاعات را بروز میکنیم.",
     "That's fine": "بسیارعالی",
-    "File Attached": "فایل ضمیمه شد",
-    "Export successful!": "استخراج موفق!",
-    "Error fetching file": "خطا در واکشی فایل",
-    "Topic: %(topic)s": "عنوان: %(topic)s",
-    "Media omitted - file size limit exceeded": "فایل چند رسانه ای حذف شد - حجم فایل بیش از مقدار تعیین شده است",
-    "Media omitted": "فایل چند رسانه ای حذف شد",
-    "Current Timeline": "جدول زمانی فعلی",
-    "Specify a number of messages": "تعیین تعداد پیام ها",
-    "From the beginning": "از ابتدا",
-    "Plain Text": "متن ساده",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Generating a ZIP": "تهیه یک فایل زیپ",
-    "Are you sure you want to exit during this export?": "آیا میخواهید در حال استخراج خارج شوید؟",
     "Reset bearing to north": "بازنشانی جهت شمال",
     "Mapbox logo": "لوگوی جعبه نقشه",
     "Location not available": "مکان در دسترس نیست",
@@ -2437,7 +2420,9 @@
         "matrix": "ماتریکس",
         "trusted": "قابل اعتماد",
         "not_trusted": "غیرقابل اعتماد",
-        "accessibility": "دسترسی"
+        "accessibility": "دسترسی",
+        "unnamed_room": "اتاق بدون نام",
+        "unnamed_space": "فضای کاری بدون نام"
     },
     "action": {
         "continue": "ادامه",
@@ -2655,5 +2640,22 @@
         "active_widgets": "ابزارک‌های فعال",
         "toolbox": "جعبه ابزار",
         "developer_tools": "ابزارهای توسعه‌دهنده"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "متن ساده",
+        "from_the_beginning": "از ابتدا",
+        "number_of_messages": "تعیین تعداد پیام ها",
+        "current_timeline": "جدول زمانی فعلی",
+        "export_successful": "استخراج موفق!",
+        "unload_confirm": "آیا میخواهید در حال استخراج خارج شوید؟",
+        "generating_zip": "تهیه یک فایل زیپ",
+        "media_omitted": "فایل چند رسانه ای حذف شد",
+        "media_omitted_file_size": "فایل چند رسانه ای حذف شد - حجم فایل بیش از مقدار تعیین شده است",
+        "creator_summary": "%(creatorName)s این اتاق ساخته شده.",
+        "topic": "عنوان: %(topic)s",
+        "error_fetching_file": "خطا در واکشی فایل",
+        "file_attached": "فایل ضمیمه شد"
     }
 }

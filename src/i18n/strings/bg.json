@@ -88,7 +88,6 @@
     "%(widgetName)s widget removed by %(senderName)s": "Приспособлението %(widgetName)s беше премахнато от %(senderName)s",
     "Failure to create room": "Неуспешно създаване на стая",
     "Server may be unavailable, overloaded, or you hit a bug.": "Сървърът може би е претоварен, недостъпен или се натъкнахте на проблем.",
-    "Unnamed Room": "Стая без име",
     "Your browser does not support the required cryptography extensions": "Вашият браузър не поддържа необходимите разширения за шифроване",
     "Not a valid %(brand)s keyfile": "Невалиден файл с ключ за %(brand)s",
     "Authentication check failed: incorrect password?": "Неуспешна автентикация: неправилна парола?",
@@ -1973,7 +1972,8 @@
         "encrypted": "Шифровано",
         "matrix": "Matrix",
         "trusted": "Доверени",
-        "not_trusted": "Недоверени"
+        "not_trusted": "Недоверени",
+        "unnamed_room": "Стая без име"
     },
     "action": {
         "continue": "Продължи",

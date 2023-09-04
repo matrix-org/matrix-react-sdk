@@ -140,7 +140,6 @@
     "Unable to verify email address.": "Az e-mail cím ellenőrzése sikertelen.",
     "Unban": "Kitiltás visszavonása",
     "Unable to enable Notifications": "Az értesítések engedélyezése sikertelen",
-    "Unnamed Room": "Névtelen szoba",
     "Uploading %(filename)s": "%(filename)s feltöltése",
     "Uploading %(filename)s and %(count)s others": {
         "one": "%(filename)s és még %(count)s db másik feltöltése",
@@ -2017,7 +2016,6 @@
     "Failed to save space settings.": "A tér beállításának mentése sikertelen.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Hívjon meg valakit a nevével, felhasználói nevével (pl. <userId/>) vagy <a>oszd meg ezt a teret</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Hívjon meg valakit a nevét, e-mail címét, vagy felhasználónevét (például <userId/>) megadva, vagy <a>oszd meg ezt a teret</a>.",
-    "Unnamed Space": "Névtelen tér",
     "Invite to %(spaceName)s": "Meghívás ide: %(spaceName)s",
     "Create a new room": "Új szoba készítése",
     "Spaces": "Terek",
@@ -2411,19 +2409,6 @@
     "Number of messages": "Üzenetek száma",
     "In reply to <a>this message</a>": "Válasz erre az <a>üzenetre</a>",
     "Export chat": "Beszélgetés exportálása",
-    "File Attached": "Fájl mellékelve",
-    "Error fetching file": "Fájlletöltési hiba",
-    "Topic: %(topic)s": "Téma: %(topic)s",
-    "%(creatorName)s created this room.": "%(creatorName)s hozta létre ezt a szobát.",
-    "Media omitted - file size limit exceeded": "Média nélkül – fájlméretkorlát túllépve",
-    "Media omitted": "Média nélkül",
-    "Current Timeline": "Jelenlegi idővonal",
-    "Specify a number of messages": "Üzenetek számának megadása",
-    "From the beginning": "Az elejétől",
-    "Plain Text": "Egyszerű szöveg",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "Biztos, hogy kilép az exportálás közben?",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s matricát küldött.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s megváltoztatta a szoba profilképét.",
     "I'll verify later": "Később ellenőrzöm",
@@ -2440,7 +2425,6 @@
     "Verify with Security Key or Phrase": "Ellenőrzés Biztonsági Kulccsal vagy Jelmondattal",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "Úgy tűnik, hogy nem rendelkezik biztonsági kulccsal, vagy másik eszközzel, amelyikkel ellenőrizhetné. Ezzel az eszközzel nem fér majd hozzá a régi titkosított üzenetekhez. Ahhoz, hogy a személyazonosságát ezen az eszközön ellenőrizni lehessen, az ellenőrzédi kulcsokat alaphelyzetbe kell állítani.",
     "Select from the options below to export chats from your timeline": "Az idővonalon a beszélgetés exportálásához tartozó beállítások kiválasztása",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Ez a(z) <roomName/> szoba exportálásának kezdete. Exportálta: <exporterDetails/>, időpont: %(exportDate)s.",
     "Create poll": "Szavazás létrehozása",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Terek frissítése…",
@@ -2615,25 +2599,6 @@
     "Failed to end poll": "Nem sikerült a szavazás lezárása",
     "The poll has ended. Top answer: %(topAnswer)s": "A szavazás le lett zárva. Nyertes válasz: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "A szavazás le lett zárva. Nem lettek leadva szavazatok.",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "%(count)s esemény exportálva %(seconds)s másodperc alatt",
-        "other": "%(count)s esemény exportálva %(seconds)s másodperc alatt"
-    },
-    "Export successful!": "Sikeres exportálás!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "%(count)s esemény lekérve %(seconds)s másodperc alatt",
-        "other": "%(count)s esemény lekérve %(seconds)s másodperc alatt"
-    },
-    "Processing event %(number)s out of %(total)s": "Esemény feldolgozása: %(number)s. / %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "Eddig %(count)s esemény lett lekérve",
-        "other": "Eddig %(count)s esemény lett lekérve"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "%(count)s / %(total)s esemény lekérve",
-        "other": "%(count)s / %(total)s esemény lekérve"
-    },
-    "Generating a ZIP": "ZIP előállítása",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "A megadott dátum (%(inputDate)s) nem értelmezhető. Próbálja meg az ÉÉÉÉ-HH-NN formátum használatát.",
     "Failed to load list of rooms.": "A szobák listájának betöltése nem sikerült.",
     "Open in OpenStreetMap": "Megnyitás az OpenStreetMapen",
@@ -3362,11 +3327,7 @@
     "This session is backing up your keys.": "Ez a munkamenet elmenti a kulcsait.",
     "Connecting to integration manager…": "Kapcsolódás az integrációkezelőhöz…",
     "Creating…": "Létrehozás…",
-    "Creating output…": "Kimenet létrehozása…",
-    "Fetching events…": "Események lekérése…",
     "Starting export process…": "Exportálási folyamat indítása…",
-    "Creating HTML…": "HTML létrehozása…",
-    "Starting export…": "Exportálás kezdése…",
     "Unable to connect to Homeserver. Retrying…": "A Matrix-kiszolgálóval nem lehet felvenni a kapcsolatot. Újrapróbálkozás…",
     "Loading polls": "Szavazások betöltése",
     "Ended a poll": "Lezárta a szavazást",
@@ -3527,7 +3488,9 @@
         "not_trusted": "Megbízhatatlan",
         "accessibility": "Akadálymentesség",
         "server": "Kiszolgáló",
-        "capabilities": "Képességek"
+        "capabilities": "Képességek",
+        "unnamed_room": "Névtelen szoba",
+        "unnamed_space": "Névtelen tér"
     },
     "action": {
         "continue": "Folytatás",
@@ -3911,5 +3874,44 @@
         "developer_tools": "Fejlesztői eszközök",
         "room_id": "Szoba azon.: %(roomId)s",
         "event_id": "Esemény azon.: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Egyszerű szöveg",
+        "from_the_beginning": "Az elejétől",
+        "number_of_messages": "Üzenetek számának megadása",
+        "current_timeline": "Jelenlegi idővonal",
+        "creating_html": "HTML létrehozása…",
+        "starting_export": "Exportálás kezdése…",
+        "export_successful": "Sikeres exportálás!",
+        "unload_confirm": "Biztos, hogy kilép az exportálás közben?",
+        "generating_zip": "ZIP előállítása",
+        "processing_event_n": "Esemény feldolgozása: %(number)s. / %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "%(count)s / %(total)s esemény lekérve",
+            "other": "%(count)s / %(total)s esemény lekérve"
+        },
+        "fetched_n_events": {
+            "one": "Eddig %(count)s esemény lett lekérve",
+            "other": "Eddig %(count)s esemény lett lekérve"
+        },
+        "fetched_n_events_in_time": {
+            "one": "%(count)s esemény lekérve %(seconds)s másodperc alatt",
+            "other": "%(count)s esemény lekérve %(seconds)s másodperc alatt"
+        },
+        "exported_n_events_in_time": {
+            "one": "%(count)s esemény exportálva %(seconds)s másodperc alatt",
+            "other": "%(count)s esemény exportálva %(seconds)s másodperc alatt"
+        },
+        "media_omitted": "Média nélkül",
+        "media_omitted_file_size": "Média nélkül – fájlméretkorlát túllépve",
+        "creator_summary": "%(creatorName)s hozta létre ezt a szobát.",
+        "export_info": "Ez a(z) <roomName/> szoba exportálásának kezdete. Exportálta: <exporterDetails/>, időpont: %(exportDate)s.",
+        "topic": "Téma: %(topic)s",
+        "error_fetching_file": "Fájlletöltési hiba",
+        "file_attached": "Fájl mellékelve",
+        "fetching_events": "Események lekérése…",
+        "creating_output": "Kimenet létrehozása…"
     }
 }

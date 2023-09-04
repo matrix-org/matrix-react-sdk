@@ -193,7 +193,6 @@
     "The call could not be established": "לא ניתן להתקשר",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "פעולה זו דורשת להכנס אל שרת הזיהוי <server /> לאשר מייל או טלפון, אבל לשרת אין כללי שרות.",
     "Identity server has no terms of service": "לשרת הזיהוי אין כללי שרות",
-    "Unnamed Room": "חדר ללא שם",
     "Only continue if you trust the owner of the server.": "המשיכו רק אם הנכם בוטחים בבעלים של השרת.",
     "American Samoa": "סמואה האמריקאית",
     "Algeria": "אלג'ריה",
@@ -2024,10 +2023,6 @@
     "Failed to remove user": "הסרת המשתמש נכשלה",
     "Failed to send": "השליחה נכשלה",
     "Message search initialisation failed": "אתחול חיפוש הודעות נכשל",
-    "Specify a number of messages": "ציין מספר הודעות",
-    "From the beginning": "מההתחלה",
-    "Plain Text": "טקסט רגיל",
-    "Are you sure you want to exit during this export?": "האם אתם בטוחים שברצונכם לצאת במהלך הייצוא הזה?",
     "Share your public space": "שתף את מרחב העבודה הציבורי שלך",
     "Command error: Unable to find rendering type (%(renderingType)s)": "שגיאת פקודה: לא ניתן למצוא את סוג העיבוד (%(renderingType)s)",
     "Command error: Unable to handle slash command.": "שגיאת פקודה: לא ניתן לטפל בפקודת לוכסן.",
@@ -2043,10 +2038,6 @@
     "Back to chat": "חזרה לצ'אט",
     "Sound on": "צליל דולק",
     "That's fine": "זה בסדר",
-    "File Attached": "מצורף קובץ",
-    "Export successful!": "הייצוא הצליח!",
-    "Error fetching file": "שגיאה באחזור הקובץ",
-    "Current Timeline": "ציר הזמן הנוכחי",
     "Voice Message": "הודעה קולית",
     "Send voice message": "שלח הודעה קולית",
     "Reply to thread…": "תשובה לשרשור…",
@@ -2109,17 +2100,6 @@
     "Other rooms": "חדרים אחרים",
     "Silence call": "השתקת שיחה",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "הסכמתם בעבר לשתף איתנו מידע אנונימי לגבי השימוש שלכם. אנחנו מעדכנים איך זה מתבצע.",
-    "Topic: %(topic)s": "נושא: %(topic)s",
-    "%(creatorName)s created this room.": "%(creatorName)s יצר/ה חדר זה.",
-    "Fetched %(count)s events so far": {
-        "other": "נטענו %(count)s אירועים עד כה",
-        "one": "נטענו %(count)s אירועים עד כה"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "other": "טוען %(count)s אירועים מתוך %(total)s",
-        "one": "טוען %(count)s אירועים מתוך %(total)s"
-    },
-    "Generating a ZIP": "מייצר קובץ ZIP",
     "This homeserver has been blocked by its administrator.": "שרת זה נחסם על ידי מנהלו.",
     "%(senderName)s has shared their location": "%(senderName)s שיתף/ה מיקום",
     "%(senderDisplayName)s changed who can join this room.": "%(senderDisplayName)s שינה את הגדרת המורשים להצטרף לחדר.",
@@ -2282,20 +2262,6 @@
     "Review to ensure your account is safe": "בידקו כדי לוודא שהחשבון שלך בטוח",
     "Help improve %(analyticsOwner)s": "עזרו בשיפור %(analyticsOwner)s",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "שתף נתונים אנונימיים כדי לעזור לנו לזהות בעיות. ללא אישי. אין צדדים שלישיים. <LearnMoreLink>למידע נוסף</LearnMoreLink>",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "ייצא %(count)s תוך %(seconds)s שניות",
-        "other": "ייצא %(count)s אירועים תוך %(seconds)s שניות"
-    },
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "משך %(count)s אירועים תוך %(seconds)s שניות",
-        "other": "עיבד %(count)s אירועים תוך %(seconds)s שניות"
-    },
-    "Processing event %(number)s out of %(total)s": "מעבד אירוע %(number)s מתוך %(total)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "זאת התחלת ייצוא של <roomName/>. ייצוא ע\"י <exporterDetails/> ב %(exportDate)s.",
-    "Media omitted - file size limit exceeded": "מדיה הושמטה - גודל קובץ חרג מהמותר",
-    "Media omitted": "מדיה הושמטה",
-    "JSON": "JSON",
-    "HTML": "HTML",
     "Reset bearing to north": "נעלו את המפה לכיוון צפון",
     "Mapbox logo": "לוגו",
     "Location not available": "מיקום אינו זמין",
@@ -2577,7 +2543,8 @@
         "not_trusted": "לא אמין",
         "accessibility": "נגישות",
         "server": "שרת",
-        "capabilities": "יכולות"
+        "capabilities": "יכולות",
+        "unnamed_room": "חדר ללא שם"
     },
     "action": {
         "continue": "המשך",
@@ -2799,5 +2766,40 @@
         "toolbox": "תיבת כלים",
         "developer_tools": "כלי מפתחים",
         "room_id": "זיהוי חדר: %(roomId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "טקסט רגיל",
+        "from_the_beginning": "מההתחלה",
+        "number_of_messages": "ציין מספר הודעות",
+        "current_timeline": "ציר הזמן הנוכחי",
+        "export_successful": "הייצוא הצליח!",
+        "unload_confirm": "האם אתם בטוחים שברצונכם לצאת במהלך הייצוא הזה?",
+        "generating_zip": "מייצר קובץ ZIP",
+        "processing_event_n": "מעבד אירוע %(number)s מתוך %(total)s",
+        "fetched_n_events_with_total": {
+            "other": "טוען %(count)s אירועים מתוך %(total)s",
+            "one": "טוען %(count)s אירועים מתוך %(total)s"
+        },
+        "fetched_n_events": {
+            "other": "נטענו %(count)s אירועים עד כה",
+            "one": "נטענו %(count)s אירועים עד כה"
+        },
+        "fetched_n_events_in_time": {
+            "one": "משך %(count)s אירועים תוך %(seconds)s שניות",
+            "other": "עיבד %(count)s אירועים תוך %(seconds)s שניות"
+        },
+        "exported_n_events_in_time": {
+            "one": "ייצא %(count)s תוך %(seconds)s שניות",
+            "other": "ייצא %(count)s אירועים תוך %(seconds)s שניות"
+        },
+        "media_omitted": "מדיה הושמטה",
+        "media_omitted_file_size": "מדיה הושמטה - גודל קובץ חרג מהמותר",
+        "creator_summary": "%(creatorName)s יצר/ה חדר זה.",
+        "export_info": "זאת התחלת ייצוא של <roomName/>. ייצוא ע\"י <exporterDetails/> ב %(exportDate)s.",
+        "topic": "נושא: %(topic)s",
+        "error_fetching_file": "שגיאה באחזור הקובץ",
+        "file_attached": "מצורף קובץ"
     }
 }

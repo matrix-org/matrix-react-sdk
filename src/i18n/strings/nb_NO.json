@@ -68,7 +68,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s kl. %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s kl. %(time)s",
-    "Unnamed Room": "Navnløst rom",
     "Unable to load! Check your network connectivity and try again.": "Klarte ikke laste! Sjekk nettverstilkoblingen din og prøv igjen.",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s har ikke tillatelse til å sende deg varsler - vennligst sjekk nettleserinnstillingene",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s fikk ikke tillatelse til å sende deg varsler - vennligst prøv igjen",
@@ -1341,9 +1340,6 @@
     "Stop the camera": "Stopp kameraet",
     "Start the camera": "Start kameraet",
     "Connecting": "Kobler til",
-    "Plain Text": "Ren tekst",
-    "JSON": "JSON",
-    "HTML": "HTML",
     "Change the name of this room": "Endre rommets navn",
     "%(senderDisplayName)s changed guest access to %(rule)s": "%(senderDisplayName)s endret gjestetilgangen til %(rule)s",
     "%(senderDisplayName)s made the room invite only.": "%(senderDisplayName)s merket rommet som kun for inviterte.",
@@ -1437,7 +1433,8 @@
         "encrypted": "Kryptert",
         "matrix": "Matrix",
         "trusted": "Betrodd",
-        "not_trusted": "Ikke betrodd"
+        "not_trusted": "Ikke betrodd",
+        "unnamed_room": "Navnløst rom"
     },
     "action": {
         "continue": "Fortsett",
@@ -1613,5 +1610,10 @@
         "active_widgets": "Aktive moduler",
         "toolbox": "Verktøykasse",
         "developer_tools": "Utviklerverktøy"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Ren tekst"
     }
 }

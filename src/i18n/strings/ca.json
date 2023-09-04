@@ -90,7 +90,6 @@
     "Failure to create room": "No s'ha pogut crear la sala",
     "Server may be unavailable, overloaded, or you hit a bug.": "És possible que el servidor no estigui disponible, sobrecarregat o que hagi topat amb un error.",
     "Send": "Envia",
-    "Unnamed Room": "Sala sense nom",
     "Your browser does not support the required cryptography extensions": "El vostre navegador no és compatible amb els complements criptogràfics necessaris",
     "Not a valid %(brand)s keyfile": "El fitxer no és un fitxer de claus de %(brand)s vàlid",
     "Authentication check failed: incorrect password?": "Ha fallat l'autenticació: heu introduït correctament la contrasenya?",
@@ -594,7 +593,8 @@
         "guest": "Visitant",
         "camera": "Càmera",
         "microphone": "Micròfon",
-        "someone": "Algú"
+        "someone": "Algú",
+        "unnamed_room": "Sala sense nom"
     },
     "action": {
         "continue": "Continua",

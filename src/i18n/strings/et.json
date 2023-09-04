@@ -244,7 +244,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Encryption upgrade available": "Krüptimise uuendus on saadaval",
     "New login. Was this you?": "Uus sisselogimine. Kas see olid sina?",
-    "Unnamed Room": "Ilma nimeta jututuba",
     "Identity server has no terms of service": "Isikutuvastusserveril puuduvad kasutustingimused",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "E-posti aadressi või telefoninumbri kontrolliks see tegevus eeldab päringut vaikimisi isikutuvastusserverisse <server />, aga sellel serveril puuduvad kasutustingimused.",
     "Only continue if you trust the owner of the server.": "Jätka vaid siis, kui sa usaldad serveri omanikku.",
@@ -2004,7 +2003,6 @@
     "Failed to save space settings.": "Kogukonnakeskuse seadistuste salvestamine ei õnnestunud.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Kutsu kedagi tema nime, kasutajanime (nagu <userId/>) alusel või <a>jaga seda kogukonnakeskust</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Kutsu teist osapoolt tema nime, e-posti aadressi, kasutajanime (nagu <userId/>) alusel või <a>jaga seda kogukonnakeskust</a>.",
-    "Unnamed Space": "Nimetu kogukonnakeskus",
     "Invite to %(spaceName)s": "Kutsu kogukonnakeskusesse %(spaceName)s",
     "Create a new room": "Loo uus jututuba",
     "Spaces": "Kogukonnakeskused",
@@ -2399,8 +2397,6 @@
     "Leave some rooms": "Lahku mõnedest jututubadest",
     "Leave all rooms": "Lahku kõikidest jututubadest",
     "Don't leave any rooms": "Ära lahku ühestki jututoast",
-    "Media omitted": "Osa meediat jäi eksportimata",
-    "Media omitted - file size limit exceeded": "Osa meediat jäi vahele failisuuruse piirangu tõttu",
     "Include Attachments": "Kaasa manused",
     "Size Limit": "Andmemahu piir",
     "Format": "Vorming",
@@ -2418,18 +2414,6 @@
     "Enter a number between %(min)s and %(max)s": "Sisesta number %(min)s ja %(max)s vahemikust",
     "In reply to <a>this message</a>": "Vastuseks <a>sellele sõnumile</a>",
     "Export chat": "Ekspordi vestlus",
-    "File Attached": "Fail on manustatud",
-    "Error fetching file": "Viga faili laadimisel",
-    "Topic: %(topic)s": "Teema: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "See on <roomName/> jututoast eksporditud andmekogu. Viited: <exporterDetails/>, %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s lõi selle jututoa.",
-    "Current Timeline": "Praegune ajajoon",
-    "Specify a number of messages": "Määra sõnumite arv",
-    "From the beginning": "Algusest alates",
-    "Plain Text": "Vormindamata tekst",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "Kas sa oled kindel, et soovid lõpetada tegevuse selle ekspordi ajal?",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s saatis kleepsu.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s muutis jututoa tunnuspilti.",
     "Proceed with reset": "Jätka kustutamisega",
@@ -2630,26 +2614,7 @@
     "Link to room": "Link jututoale",
     "Including you, %(commaSeparatedMembers)s": "Seahulgas Sina, %(commaSeparatedMembers)s",
     "Copy room link": "Kopeeri jututoa link",
-    "Processing event %(number)s out of %(total)s": "Sündmuste töötlemine %(number)s / %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "%(count)s sündmust laaditud",
-        "other": "%(count)s sündmust laaditud"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Laadisin %(count)s / %(total)s sündmust",
-        "other": "Laadisin %(count)s / %(total)s sündmust"
-    },
-    "Generating a ZIP": "Pakin ZIP faili",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "Me ei suutnud sellist kuupäeva mõista (%(inputDate)s). Pigem kasuta aaaa-kk-pp vormingut.",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Eksporditud %(count)s sündmus %(seconds)s sekundiga",
-        "other": "Eksporditud %(count)s sündmust %(seconds)s sekundiga"
-    },
-    "Export successful!": "Eksport õnnestus!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "%(count)s sündmus laaditud %(seconds)s sekundiga",
-        "other": "%(count)s sündmust laaditud %(seconds)s sekundiga"
-    },
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Sellega rühmitad selle kogukonna liikmetega peetavaid vestlusi. Kui seadistus pole kasutusel, siis on neid vestlusi %(spaceName)s kogukonna vaates ei kuvata.",
     "Sections to show": "Näidatavad valikud",
     "Failed to load list of rooms.": "Jututubade loendi laadimine ei õnnestunud.",
@@ -3360,11 +3325,7 @@
     "Connecting to integration manager…": "Ühendamisel lõiminguhalduriga…",
     "Saving…": "Salvestame…",
     "Creating…": "Loome…",
-    "Creating output…": "Loome väljundit…",
-    "Fetching events…": "Laadime sündmusi…",
     "Starting export process…": "Alustame eksportimist…",
-    "Creating HTML…": "Loon HTML-faile…",
-    "Starting export…": "Alustame eksportimist…",
     "Unable to connect to Homeserver. Retrying…": "Ei saa ühendust koduserveriga. Proovin uuesti…",
     "Secure Backup successful": "Krüptovõtmete varundus õnnestus",
     "Your keys are now being backed up from this device.": "Sinu krüptovõtmed on parasjagu sellest seadmest varundamisel.",
@@ -3464,11 +3425,8 @@
     "Changes your profile picture in this current room only": "Sellega muudad sinu tunnuspilti vaid selles jututoas",
     "%(senderDisplayName)s changed the join rule to ask to join.": "%(senderDisplayName)s muutis liitumisreegleid nii, et liitumiseks peab luba küsima.",
     "User cannot be invited until they are unbanned": "Kasutajale ei saa kutset saata enne, kui temalt on suhtluskeeld eemaldatud",
-    "Previous group of messages": "Eelmine sõnumite grupp",
     "Views room with given address": "Vaata sellise aadressiga jututuba",
     "Changes your profile picture in all rooms": "Sellega muudad sinu tunnuspilti kõikides jututubades",
-    "Next group of messages": "Järgmine sõnumite grupp",
-    "Exported Data": "Eksporditud andmed",
     "Notification Settings": "Teavituste seadistused",
     "Ask to join": "Küsi võimalust liitumiseks",
     "People cannot join unless access is granted.": "Kasutajade ei saa liituda enne, kui selleks vastav luba on antud.",
@@ -3610,7 +3568,9 @@
         "not_trusted": "Ei ole usaldusväärne",
         "accessibility": "Ligipääsetavus",
         "server": "Server",
-        "capabilities": "Funktsionaalsused ja võimed"
+        "capabilities": "Funktsionaalsused ja võimed",
+        "unnamed_room": "Ilma nimeta jututuba",
+        "unnamed_space": "Nimetu kogukonnakeskus"
     },
     "action": {
         "continue": "Jätka",
@@ -4007,5 +3967,47 @@
         "room_id": "Jututoa tunnus: %(roomId)s",
         "thread_root_id": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
         "event_id": "Sündmuse tunnus: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Vormindamata tekst",
+        "from_the_beginning": "Algusest alates",
+        "number_of_messages": "Määra sõnumite arv",
+        "current_timeline": "Praegune ajajoon",
+        "creating_html": "Loon HTML-faile…",
+        "starting_export": "Alustame eksportimist…",
+        "export_successful": "Eksport õnnestus!",
+        "unload_confirm": "Kas sa oled kindel, et soovid lõpetada tegevuse selle ekspordi ajal?",
+        "generating_zip": "Pakin ZIP faili",
+        "processing_event_n": "Sündmuste töötlemine %(number)s / %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "Laadisin %(count)s / %(total)s sündmust",
+            "other": "Laadisin %(count)s / %(total)s sündmust"
+        },
+        "fetched_n_events": {
+            "one": "%(count)s sündmust laaditud",
+            "other": "%(count)s sündmust laaditud"
+        },
+        "fetched_n_events_in_time": {
+            "one": "%(count)s sündmus laaditud %(seconds)s sekundiga",
+            "other": "%(count)s sündmust laaditud %(seconds)s sekundiga"
+        },
+        "exported_n_events_in_time": {
+            "one": "Eksporditud %(count)s sündmus %(seconds)s sekundiga",
+            "other": "Eksporditud %(count)s sündmust %(seconds)s sekundiga"
+        },
+        "media_omitted": "Osa meediat jäi eksportimata",
+        "media_omitted_file_size": "Osa meediat jäi vahele failisuuruse piirangu tõttu",
+        "creator_summary": "%(creatorName)s lõi selle jututoa.",
+        "export_info": "See on <roomName/> jututoast eksporditud andmekogu. Viited: <exporterDetails/>, %(exportDate)s.",
+        "topic": "Teema: %(topic)s",
+        "previous_page": "Eelmine sõnumite grupp",
+        "next_page": "Järgmine sõnumite grupp",
+        "html_title": "Eksporditud andmed",
+        "error_fetching_file": "Viga faili laadimisel",
+        "file_attached": "Fail on manustatud",
+        "fetching_events": "Laadime sündmusi…",
+        "creating_output": "Loome väljundit…"
     }
 }

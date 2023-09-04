@@ -154,7 +154,6 @@
     "Unable to verify email address.": "Nepodařilo se ověřit e-mailovou adresu.",
     "Unban": "Zrušit vykázání",
     "Unable to enable Notifications": "Nepodařilo se povolit oznámení",
-    "Unnamed Room": "Nepojmenovaná místnost",
     "Uploading %(filename)s and %(count)s others": {
         "zero": "Nahrávání souboru %(filename)s",
         "one": "Nahrávání souboru %(filename)s a %(count)s dalších",
@@ -2011,7 +2010,6 @@
     "Failed to save space settings.": "Nastavení prostoru se nepodařilo uložit.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Pozvěte někoho pomocí jeho jména, uživatelského jména (například <userId/>) nebo <a>sdílejte tento prostor</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Pozvěte někoho pomocí jeho jména, e-mailové adresy, uživatelského jména (například <userId/>) nebo <a>sdílejte tento prostor</a>.",
-    "Unnamed Space": "Nejmenovaný prostor",
     "Invite to %(spaceName)s": "Pozvat do %(spaceName)s",
     "Create a new room": "Vytvořit novou místnost",
     "Spaces": "Prostory",
@@ -2417,20 +2415,6 @@
     "Enter a number between %(min)s and %(max)s": "Zadejte číslo mezi %(min)s a %(max)s",
     "In reply to <a>this message</a>": "V odpovědi na <a>tuto zprávu</a>",
     "Export chat": "Exportovat chat",
-    "File Attached": "Přiložený soubor",
-    "Error fetching file": "Chyba při načítání souboru",
-    "Topic: %(topic)s": "Téma: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Toto je začátek exportu <roomName/>. Exportováno pomocí <exporterDetails/> v %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s vytvořil(a) tuto místnost.",
-    "Media omitted - file size limit exceeded": "Vynechaná média - překročen limit velikosti souboru",
-    "Media omitted": "Vynechaná média",
-    "Current Timeline": "Aktuální časová osa",
-    "Specify a number of messages": "Zadejte počet zpráv",
-    "From the beginning": "Od začátku",
-    "Plain Text": "Prostý text",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "Opravdu chcete skončit během tohoto exportu?",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s poslal(a) nálepku.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s změnil(a) avatar místnosti.",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "Resetování ověřovacích klíčů nelze vrátit zpět. Po jejich resetování nebudete mít přístup ke starým zašifrovaným zprávám a všem přátelům, kteří vás dříve ověřili, se zobrazí bezpečnostní varování, dokud se u nich znovu neověříte.",
@@ -2631,25 +2615,6 @@
     "Including you, %(commaSeparatedMembers)s": "Včetně vás, %(commaSeparatedMembers)s",
     "Copy room link": "Kopírovat odkaz",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "Nebyli jsme schopni porozumět zadanému datu (%(inputDate)s). Zkuste použít formát RRRR-MM-DD.",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Exportována %(count)s událost za %(seconds)s sekund",
-        "other": "Exportováno %(count)s událostí za %(seconds)s sekund"
-    },
-    "Export successful!": "Export byl úspěšný!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Načtena %(count)s událost za %(seconds)ss",
-        "other": "Načteno %(count)s událostí za %(seconds)ss"
-    },
-    "Processing event %(number)s out of %(total)s": "Zpracování události %(number)s z %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "Načtena %(count)s událost",
-        "other": "Načteno %(count)s událostí"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Načtena %(count)s událost z %(total)s",
-        "other": "Načteno %(count)s událostí z %(total)s"
-    },
-    "Generating a ZIP": "Vytvoření souboru ZIP",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Vaše konverzace s členy tohoto prostoru se seskupí. Vypnutím této funkce se tyto chaty skryjí z vašeho pohledu na %(spaceName)s.",
     "Sections to show": "Sekce pro zobrazení",
     "Failed to load list of rooms.": "Nepodařilo se načíst seznam místností.",
@@ -3358,11 +3323,7 @@
     "Connecting to integration manager…": "Připojování ke správci integrací…",
     "Saving…": "Ukládání…",
     "Creating…": "Vytváření…",
-    "Creating output…": "Vytváření výstupu…",
-    "Fetching events…": "Stahování událostí…",
     "Starting export process…": "Zahájení procesu exportu…",
-    "Creating HTML…": "Vytváření HTML…",
-    "Starting export…": "Zahájení exportu…",
     "Unable to connect to Homeserver. Retrying…": "Nelze se připojit k domovskému serveru. Opakovaný pokus…",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Zadejte bezpečnostní frázi, kterou znáte jen vy, protože slouží k ochraně vašich dat. V zájmu bezpečnosti byste neměli heslo k účtu používat opakovaně.",
     "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": "Pokračujte pouze v případě, že jste si jisti, že jste ztratili všechna ostatní zařízení a bezpečnostní klíč.",
@@ -3464,9 +3425,6 @@
     "Changes your profile picture in this current room only": "Změní váš profilový obrázek pouze pro tuto místnost",
     "Changes your profile picture in all rooms": "Změní váš profilový obrázek ve všech místnostech",
     "User cannot be invited until they are unbanned": "Uživatel nemůže být pozván, dokud nebude jeho vykázání zrušeno",
-    "Previous group of messages": "Předchozí skupina zpráv",
-    "Next group of messages": "Následující skupina zpráv",
-    "Exported Data": "Exportovaná data",
     "Views room with given address": "Zobrazí místnost s danou adresou",
     "Notification Settings": "Nastavení oznámení",
     "Email summary": "E-mailový souhrn",
@@ -3614,7 +3572,9 @@
         "not_trusted": "Nedůvěryhodné",
         "accessibility": "Přístupnost",
         "server": "Server",
-        "capabilities": "Schopnosti"
+        "capabilities": "Schopnosti",
+        "unnamed_room": "Nepojmenovaná místnost",
+        "unnamed_space": "Nejmenovaný prostor"
     },
     "action": {
         "continue": "Pokračovat",
@@ -4012,5 +3972,47 @@
         "room_id": "ID místnosti: %(roomId)s",
         "thread_root_id": "ID kořenového vlákna: %(threadRootId)s",
         "event_id": "ID události: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Prostý text",
+        "from_the_beginning": "Od začátku",
+        "number_of_messages": "Zadejte počet zpráv",
+        "current_timeline": "Aktuální časová osa",
+        "creating_html": "Vytváření HTML…",
+        "starting_export": "Zahájení exportu…",
+        "export_successful": "Export byl úspěšný!",
+        "unload_confirm": "Opravdu chcete skončit během tohoto exportu?",
+        "generating_zip": "Vytvoření souboru ZIP",
+        "processing_event_n": "Zpracování události %(number)s z %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "Načtena %(count)s událost z %(total)s",
+            "other": "Načteno %(count)s událostí z %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "Načtena %(count)s událost",
+            "other": "Načteno %(count)s událostí"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Načtena %(count)s událost za %(seconds)ss",
+            "other": "Načteno %(count)s událostí za %(seconds)ss"
+        },
+        "exported_n_events_in_time": {
+            "one": "Exportována %(count)s událost za %(seconds)s sekund",
+            "other": "Exportováno %(count)s událostí za %(seconds)s sekund"
+        },
+        "media_omitted": "Vynechaná média",
+        "media_omitted_file_size": "Vynechaná média - překročen limit velikosti souboru",
+        "creator_summary": "%(creatorName)s vytvořil(a) tuto místnost.",
+        "export_info": "Toto je začátek exportu <roomName/>. Exportováno pomocí <exporterDetails/> v %(exportDate)s.",
+        "topic": "Téma: %(topic)s",
+        "previous_page": "Předchozí skupina zpráv",
+        "next_page": "Následující skupina zpráv",
+        "html_title": "Exportovaná data",
+        "error_fetching_file": "Chyba při načítání souboru",
+        "file_attached": "Přiložený soubor",
+        "fetching_events": "Stahování událostí…",
+        "creating_output": "Vytváření výstupu…"
     }
 }

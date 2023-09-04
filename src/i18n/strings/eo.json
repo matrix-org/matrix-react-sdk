@@ -77,7 +77,6 @@
     "%(widgetName)s widget removed by %(senderName)s": "Fenestraĵon %(widgetName)s forigis %(senderName)s",
     "Failure to create room": "Malsukcesis krei ĉambron",
     "Server may be unavailable, overloaded, or you hit a bug.": "Servilo povas esti neatingebla, troŝarĝita, aŭ vi renkontis cimon.",
-    "Unnamed Room": "Sennoma Ĉambro",
     "Your browser does not support the required cryptography extensions": "Via foliumilo ne subtenas la bezonatajn ĉifrajn kromprogramojn",
     "Not a valid %(brand)s keyfile": "Nevalida ŝlosila dosiero de %(brand)s",
     "Authentication check failed: incorrect password?": "Aŭtentikiga kontrolo malsukcesis: ĉu pro malĝusta pasvorto?",
@@ -2022,7 +2021,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invitu iun per ĝia nomo, uzantonomo (kiel <userId/>), aŭ <a>diskonigu ĉi tiun aron</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invitu iun per ĝia nomo, retpoŝtadreso, uzantonomo (kiel <userId/>), aŭ <a>diskonigu ĉi tiun aron</a>.",
     "Invite to %(roomName)s": "Inviti al %(roomName)s",
-    "Unnamed Space": "Sennoma aro",
     "Invite to %(spaceName)s": "Inviti al %(spaceName)s",
     "Create a new room": "Krei novan ĉambron",
     "Spaces": "Aroj",
@@ -2619,14 +2617,8 @@
     "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Neaktivaj salutaĵoj estas salutaĵoj, kiujn vi ne uzis dum kelka tempo, sed ili daŭre ricevas ĉifrajn ŝlosilojn.",
     "Inactive sessions": "Neaktivaj salutaĵoj",
     "Unverified sessions": "Nekontrolitaj salutaĵoj",
-    "From the beginning": "De la komenco",
-    "Current Timeline": "Nuna historio",
-    "Plain Text": "Plata Teksto",
-    "HTML": "HTML",
-    "JSON": "JSON",
     "Include Attachments": "Inkluzivi Aldonaĵojn",
     "Size Limit": "Grandeca Limo",
-    "Media omitted - file size limit exceeded": "Amaskomunikilaro preterlasis - dosiero tro granda",
     "Select from the options below to export chats from your timeline": "Elektu el la subaj elektoj por eksporti babilojn el via historio",
     "Public rooms": "Publikajn ĉambrojn",
     "Show details": "Montri detalojn",
@@ -2639,24 +2631,8 @@
     "Add privileged users": "Aldoni rajtigitan uzanton",
     "Number of messages": "Nombro da mesaĝoj",
     "Number of messages can only be a number between %(min)s and %(max)s": "Nombro da mesaĝoj povas esti nur nombro inter %(min)s kaj %(max)s",
-    "Specify a number of messages": "Indiki kelkajn mesaĝojn",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Vi antaŭe konsentis kunhavigi anonimajn uzdatumojn kun ni. Ni ĝisdatigas kiel tio funkcias.",
     "That's fine": "Tio estas bone",
-    "Export successful!": "Eksporto sukcesa!",
-    "Error fetching file": "Eraro alportante dosieron",
-    "Topic: %(topic)s": "Temo: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Ĉi tio estas la komenco de eksporto de <roomName/>. Eksportite de <exporterDetails/> ĉe %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s kreis ĉi tiun ĉambron.",
-    "Fetched %(count)s events so far": {
-        "one": "Ĝis nun akiris %(count)s okazon",
-        "other": "Ĝis nun akiris %(count)s okazojn"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Elportis %(count)s okazon el %(total)s",
-        "other": "Elportis %(count)s okazojn el %(total)s"
-    },
-    "Generating a ZIP": "ZIP-arkivo estas generita",
-    "Are you sure you want to exit during this export?": "Ĉu vi vere volas nuligi la eksportadon?",
     "Map feedback": "Sugestoj pri la mapo",
     "Developer": "Programisto",
     "unknown": "nekonata",
@@ -2669,9 +2645,6 @@
     "Notifications silenced": "Sciigoj silentigitaj",
     "Video call started": "Videovoko komenciĝis",
     "Unknown room": "Nekonata ĉambro",
-    "Creating output…": "Kreante eligon…",
-    "Fetching events…": "Alportante okazojn…",
-    "Creating HTML…": "Kreante HTML…",
     "Unable to connect to Homeserver. Retrying…": "Ne povas konektiĝi al hejmservilo. Reprovante…",
     "Are you sure you want to stop your live broadcast? This will end the broadcast and the full recording will be available in the room.": "Ĉu vi certas, ke vi volas fini la elsendon? Ĉi tio finos la transdonon kaj provizos la plenan registradon en la ĉambro.",
     "Unable to play this voice broadcast": "Ne eblas ludi ĉi tiun voĉan elsendon",
@@ -2744,7 +2717,9 @@
         "matrix": "Matrix",
         "trusted": "Fidata",
         "not_trusted": "Nefidata",
-        "accessibility": "Alirebleco"
+        "accessibility": "Alirebleco",
+        "unnamed_room": "Sennoma Ĉambro",
+        "unnamed_space": "Sennoma aro"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -2984,5 +2959,32 @@
         "active_widgets": "Aktivaj fenestraĵoj",
         "toolbox": "Ilaro",
         "developer_tools": "Evoluigiloj"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Plata Teksto",
+        "from_the_beginning": "De la komenco",
+        "number_of_messages": "Indiki kelkajn mesaĝojn",
+        "current_timeline": "Nuna historio",
+        "creating_html": "Kreante HTML…",
+        "export_successful": "Eksporto sukcesa!",
+        "unload_confirm": "Ĉu vi vere volas nuligi la eksportadon?",
+        "generating_zip": "ZIP-arkivo estas generita",
+        "fetched_n_events_with_total": {
+            "one": "Elportis %(count)s okazon el %(total)s",
+            "other": "Elportis %(count)s okazojn el %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "Ĝis nun akiris %(count)s okazon",
+            "other": "Ĝis nun akiris %(count)s okazojn"
+        },
+        "media_omitted_file_size": "Amaskomunikilaro preterlasis - dosiero tro granda",
+        "creator_summary": "%(creatorName)s kreis ĉi tiun ĉambron.",
+        "export_info": "Ĉi tio estas la komenco de eksporto de <roomName/>. Eksportite de <exporterDetails/> ĉe %(exportDate)s.",
+        "topic": "Temo: %(topic)s",
+        "error_fetching_file": "Eraro alportante dosieron",
+        "fetching_events": "Alportante okazojn…",
+        "creating_output": "Kreante eligon…"
     }
 }

@@ -147,7 +147,6 @@
     "Unable to remove contact information": "Ezin izan da kontaktuaren informazioa kendu",
     "Unable to verify email address.": "Ezin izan da e-mail helbidea egiaztatu.",
     "Unable to enable Notifications": "Ezin izan dira jakinarazpenak gaitu",
-    "Unnamed Room": "Izen gabeko gela",
     "Uploading %(filename)s": "%(filename)s igotzen",
     "Uploading %(filename)s and %(count)s others": {
         "one": "%(filename)s eta beste %(count)s igotzen",
@@ -1496,7 +1495,8 @@
         "encrypted": "Zifratuta",
         "matrix": "Matrix",
         "trusted": "Konfiantzazkoa",
-        "not_trusted": "Ez konfiantzazkoa"
+        "not_trusted": "Ez konfiantzazkoa",
+        "unnamed_room": "Izen gabeko gela"
     },
     "action": {
         "continue": "Jarraitu",

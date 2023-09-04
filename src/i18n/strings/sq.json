@@ -32,7 +32,6 @@
     "Nov": "Nën",
     "Dec": "Dhj",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "Unnamed Room": "Dhomë e Paemërtuar",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s-i s’ka leje t’ju dërgojë njoftime - Ju lutemi, kontrolloni rregullimet e shfletuesit tuaj",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s-it s’iu dha leje të dërgojë njoftime - ju lutemi, riprovoni",
     "Unable to enable Notifications": "S’arrihet të aktivizohen njoftimet",
@@ -2011,7 +2010,6 @@
     "Failed to save space settings.": "S’u arrit të ruhen rregullime hapësire.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Ftoni dikë duke përdorur emrin e tij, emrin e tij të përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë hapësirë</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Ftoni dikë duke përdorur emrin e tij, adresën email, emrin e përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë hapësirë</a>.",
-    "Unnamed Space": "Hapësirë e Paemërtuar",
     "Invite to %(spaceName)s": "Ftojeni te %(spaceName)s",
     "Create a new room": "Krijoni dhomë të re",
     "Spaces": "Hapësira",
@@ -2397,8 +2395,6 @@
     "Don't leave any rooms": "Mos braktis ndonjë dhomë",
     "Format": "Format",
     "MB": "MB",
-    "JSON": "JSON",
-    "HTML": "HTML",
     "Include Attachments": "Përfshi Bashkëngjitje",
     "Size Limit": "Kufi Madhësie",
     "Select from the options below to export chats from your timeline": "Që të eksportohen fjalosje prej rrjedhës tuaj kohore, përzgjidhni prej mundësive më poshtë",
@@ -2414,18 +2410,6 @@
     "Enter a number between %(min)s and %(max)s": "Jepni një numër mes %(min)s dhe %(max)s",
     "In reply to <a>this message</a>": "Në përgjigje të <a>këtij mesazhi</a>",
     "Export chat": "Eksportoni fjalosje",
-    "File Attached": "Kartelë Bashkëngjitur",
-    "Error fetching file": "Gabim në sjellje kartele",
-    "Topic: %(topic)s": "Temë: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Ky është fillimi i eksportimit të <roomName/>. Eksportuar nga <exporterDetails/> më %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s krijoi këtë dhomë.",
-    "Media omitted - file size limit exceeded": "U la jashtë media - u tejkalua kufi madhësie kartele",
-    "Media omitted": "U la jashtë media",
-    "Current Timeline": "Rrjedhë Kohore e Tanishme",
-    "Specify a number of messages": "Përcaktoni një numër mesazhesh",
-    "From the beginning": "Që nga fillimi",
-    "Plain Text": "Tekst i Thjeshtë",
-    "Are you sure you want to exit during this export?": "Jeni i sigurt se doni të dilet gjatë këtij eksportimi?",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s dërgoi një ngjitës.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s ndryshoi avatarin e dhomës.",
     "I'll verify later": "Do ta verifikoj më vonë",
@@ -2634,25 +2618,6 @@
     "Open in OpenStreetMap": "Hape në OpenStreetMap",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Kjo grupon fjalosjet tuaja me anëtarë në këtë hapësirë. Çaktivizimi i kësaj do t’i fshehë këto fjalosje prej pamjes tuaj për %(spaceName)s.",
     "Sections to show": "Ndarje për t’u shfaqur",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "U eksportua %(count)s veprimtari për %(seconds)s sekonda",
-        "other": "U eksportuan %(count)s veprimtari për %(seconds)s sekonda"
-    },
-    "Export successful!": "Eksportim i suksesshëm!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "U pru %(count)s veprimtari për %(seconds)ss",
-        "other": "U prunë %(count)s veprimtari për %(seconds)ss"
-    },
-    "Processing event %(number)s out of %(total)s": "Po përpunohet veprimtaria %(number)s nga %(total)s gjithsej",
-    "Fetched %(count)s events so far": {
-        "one": "U pru %(count)s veprimtari deri tani",
-        "other": "U prunë %(count)s veprimtari deri tani"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "U pru %(count)s veprimtari nga %(total)s gjithsej",
-        "other": "U prunë %(count)s veprimtari nga %(total)s gjithsej"
-    },
-    "Generating a ZIP": "Po prodhohet një ZIP",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "S’qemë në gjendje të kuptojmë datën e dhënë (%(inputDate)s). Provoni të përdorni formatin YYYY-MM-DD.",
     "This address had invalid server or is already in use": "Kjo adresë kishte një shërbyes të pavlefshëm ose është e përdorur tashmë",
     "Missing room name or separator e.g. (my-room:domain.org)": "Mungon emër ose ndarës dhome, p.sh. (dhoma-ime:përkatësi.org)",
@@ -3352,10 +3317,7 @@
     "Connecting to integration manager…": "Po lidhet me përgjegjës integrimesh…",
     "Saving…": "Po ruhet…",
     "Creating…": "Po krijohet…",
-    "Fetching events…": "Po sillen veprimtari…",
     "Starting export process…": "Po niset procesi i eksportimit…",
-    "Creating HTML…": "Po krijohet HTML…",
-    "Starting export…": "Po niset eksportimi…",
     "Unable to connect to Homeserver. Retrying…": "S’u arrit të lidhej me shërbyesin Home. Po riprovohet…",
     "WARNING: session already verified, but keys do NOT MATCH!": "KUJDES: sesion tashmë i verifikuar, por kyçet NUK PËRPUTHEN!",
     "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Adresa juaj email s’duket të jetë e përshoqëruar me ndonjë ID Matrix në këtë shërbyes Home.",
@@ -3521,7 +3483,9 @@
         "not_trusted": "Jo e besuar",
         "accessibility": "Përdorim nga persona me aftësi të kufizuara",
         "server": "Shërbyes",
-        "capabilities": "Aftësi"
+        "capabilities": "Aftësi",
+        "unnamed_room": "Dhomë e Paemërtuar",
+        "unnamed_space": "Hapësirë e Paemërtuar"
     },
     "action": {
         "continue": "Vazhdo",
@@ -3900,5 +3864,43 @@
         "developer_tools": "Mjete Zhvilluesi",
         "room_id": "ID Dhome: %(roomId)s",
         "event_id": "ID Veprimtarie: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Tekst i Thjeshtë",
+        "from_the_beginning": "Që nga fillimi",
+        "number_of_messages": "Përcaktoni një numër mesazhesh",
+        "current_timeline": "Rrjedhë Kohore e Tanishme",
+        "creating_html": "Po krijohet HTML…",
+        "starting_export": "Po niset eksportimi…",
+        "export_successful": "Eksportim i suksesshëm!",
+        "unload_confirm": "Jeni i sigurt se doni të dilet gjatë këtij eksportimi?",
+        "generating_zip": "Po prodhohet një ZIP",
+        "processing_event_n": "Po përpunohet veprimtaria %(number)s nga %(total)s gjithsej",
+        "fetched_n_events_with_total": {
+            "one": "U pru %(count)s veprimtari nga %(total)s gjithsej",
+            "other": "U prunë %(count)s veprimtari nga %(total)s gjithsej"
+        },
+        "fetched_n_events": {
+            "one": "U pru %(count)s veprimtari deri tani",
+            "other": "U prunë %(count)s veprimtari deri tani"
+        },
+        "fetched_n_events_in_time": {
+            "one": "U pru %(count)s veprimtari për %(seconds)ss",
+            "other": "U prunë %(count)s veprimtari për %(seconds)ss"
+        },
+        "exported_n_events_in_time": {
+            "one": "U eksportua %(count)s veprimtari për %(seconds)s sekonda",
+            "other": "U eksportuan %(count)s veprimtari për %(seconds)s sekonda"
+        },
+        "media_omitted": "U la jashtë media",
+        "media_omitted_file_size": "U la jashtë media - u tejkalua kufi madhësie kartele",
+        "creator_summary": "%(creatorName)s krijoi këtë dhomë.",
+        "export_info": "Ky është fillimi i eksportimit të <roomName/>. Eksportuar nga <exporterDetails/> më %(exportDate)s.",
+        "topic": "Temë: %(topic)s",
+        "error_fetching_file": "Gabim në sjellje kartele",
+        "file_attached": "Kartelë Bashkëngjitur",
+        "fetching_events": "Po sillen veprimtari…"
     }
 }

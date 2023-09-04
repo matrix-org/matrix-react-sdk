@@ -123,6 +123,7 @@
         "someone": "Someone",
         "light": "Light",
         "dark": "Dark",
+        "unnamed_room": "Unnamed Room",
         "video": "Video",
         "warning": "Warning",
         "guest": "Guest",
@@ -183,6 +184,7 @@
         "matrix": "Matrix",
         "ios": "iOS",
         "android": "Android",
+        "unnamed_space": "Unnamed Space",
         "report_a_bug": "Report a bug",
         "forward_message": "Forward message",
         "suggestions": "Suggestions",
@@ -714,48 +716,48 @@
     "Failed to fetch your location. Please try again later.": "Failed to fetch your location. Please try again later.",
     "Timed out trying to fetch your location. Please try again later.": "Timed out trying to fetch your location. Please try again later.",
     "Unknown error fetching location. Please try again later.": "Unknown error fetching location. Please try again later.",
-    "Are you sure you want to exit during this export?": "Are you sure you want to exit during this export?",
-    "Unnamed Room": "Unnamed Room",
-    "Generating a ZIP": "Generating a ZIP",
-    "Fetched %(count)s events out of %(total)s": {
-        "other": "Fetched %(count)s events out of %(total)s",
-        "one": "Fetched %(count)s event out of %(total)s"
+    "export_chat": {
+        "unload_confirm": "Are you sure you want to exit during this export?",
+        "generating_zip": "Generating a ZIP",
+        "fetched_n_events_with_total": {
+            "other": "Fetched %(count)s events out of %(total)s",
+            "one": "Fetched %(count)s event out of %(total)s"
+        },
+        "fetched_n_events": {
+            "other": "Fetched %(count)s events so far",
+            "one": "Fetched %(count)s event so far"
+        },
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Plain Text",
+        "from_the_beginning": "From the beginning",
+        "number_of_messages": "Specify a number of messages",
+        "current_timeline": "Current Timeline",
+        "media_omitted": "Media omitted",
+        "media_omitted_file_size": "Media omitted - file size limit exceeded",
+        "creator_summary": "%(creatorName)s created this room.",
+        "export_info": "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.",
+        "topic": "Topic: %(topic)s",
+        "previous_page": "Previous group of messages",
+        "next_page": "Next group of messages",
+        "html_title": "Exported Data",
+        "error_fetching_file": "Error fetching file",
+        "processing_event_n": "Processing event %(number)s out of %(total)s",
+        "starting_export": "Starting export…",
+        "fetched_n_events_in_time": {
+            "other": "Fetched %(count)s events in %(seconds)ss",
+            "one": "Fetched %(count)s event in %(seconds)ss"
+        },
+        "creating_html": "Creating HTML…",
+        "export_successful": "Export successful!",
+        "exported_n_events_in_time": {
+            "other": "Exported %(count)s events in %(seconds)s seconds",
+            "one": "Exported %(count)s event in %(seconds)s seconds"
+        },
+        "file_attached": "File Attached",
+        "fetching_events": "Fetching events…",
+        "creating_output": "Creating output…"
     },
-    "Fetched %(count)s events so far": {
-        "other": "Fetched %(count)s events so far",
-        "one": "Fetched %(count)s event so far"
-    },
-    "HTML": "HTML",
-    "JSON": "JSON",
-    "Plain Text": "Plain Text",
-    "From the beginning": "From the beginning",
-    "Specify a number of messages": "Specify a number of messages",
-    "Current Timeline": "Current Timeline",
-    "Media omitted": "Media omitted",
-    "Media omitted - file size limit exceeded": "Media omitted - file size limit exceeded",
-    "%(creatorName)s created this room.": "%(creatorName)s created this room.",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.",
-    "Topic: %(topic)s": "Topic: %(topic)s",
-    "Previous group of messages": "Previous group of messages",
-    "Next group of messages": "Next group of messages",
-    "Exported Data": "Exported Data",
-    "Error fetching file": "Error fetching file",
-    "Processing event %(number)s out of %(total)s": "Processing event %(number)s out of %(total)s",
-    "Starting export…": "Starting export…",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "other": "Fetched %(count)s events in %(seconds)ss",
-        "one": "Fetched %(count)s event in %(seconds)ss"
-    },
-    "Creating HTML…": "Creating HTML…",
-    "Export successful!": "Export successful!",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "other": "Exported %(count)s events in %(seconds)s seconds",
-        "one": "Exported %(count)s event in %(seconds)s seconds"
-    },
-    "File Attached": "File Attached",
-    "Starting export process…": "Starting export process…",
-    "Fetching events…": "Fetching events…",
-    "Creating output…": "Creating output…",
     "That's fine": "That's fine",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "You previously consented to share anonymous usage data with us. We're updating how that works.",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>",
@@ -2685,7 +2687,6 @@
     "Clear all data": "Clear all data",
     "Please enter a name for the room": "Please enter a name for the room",
     "Everyone in <SpaceName/> will be able to find and join this room.": "Everyone in <SpaceName/> will be able to find and join this room.",
-    "Unnamed Space": "Unnamed Space",
     "You can change this at any time from room settings.": "You can change this at any time from room settings.",
     "Anyone will be able to find and join this room, not just members of <SpaceName/>.": "Anyone will be able to find and join this room, not just members of <SpaceName/>.",
     "Anyone will be able to find and join this room.": "Anyone will be able to find and join this room.",

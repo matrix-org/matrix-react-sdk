@@ -38,7 +38,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Unnamed Room": "Phòng Không tên",
     "Unable to load! Check your network connectivity and try again.": "Không thể tải dữ liệu! Kiểm tra kết nối mạng và thử lại.",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s chưa có quyền để gửi thông báo cho bạn - vui lòng kiểm tra thiết lập trình duyệt",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s vẫn chưa được cấp quyền để gửi thông báo - vui lòng thử lại",
@@ -627,7 +626,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Mời ai đó sử dụng tên hiển thị, tên đăng nhập của họ (như <userId/>) hoặc <a>chia sẻ space này</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Mời ai đó bằng tên, địa chỉ thư điện tử, tên người dùng của họ (như <userId/>) hoặc <a>chia sẻ space này</a>.",
     "Invite to %(roomName)s": "Mời tham gia %(roomName)s",
-    "Unnamed Space": "space không tên",
     "Or send invite link": "Hoặc gửi liên kết mời",
     "Some suggestions may be hidden for privacy.": "Một số đề xuất có thể được ẩn để bảo mật.",
     "Start a conversation with someone using their name or username (like <userId/>).": "Bắt đầu cuộc trò chuyện với ai đó bằng tên hoặc tên người dùng của họ (như <userId/>).",
@@ -1850,20 +1848,6 @@
     "Don't miss a reply": "Đừng bỏ lỡ một câu trả lời",
     "Later": "Để sau",
     "Review to ensure your account is safe": "Xem lại để đảm bảo tài khoản của bạn an toàn",
-    "File Attached": "Tệp được đính kèm",
-    "Error fetching file": "Lỗi lấy tệp",
-    "Topic: %(topic)s": "Chủ đề: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Đây là khởi đầu của việc xuất <roomName/>. Xuất bởi <exporterDetails/> lúc %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s đã tạo phòng này.",
-    "Media omitted - file size limit exceeded": "Phương tiện bị bỏ qua - kích thước tệp vượt quá giới hạn",
-    "Media omitted": "Phương tiện bị bỏ qua",
-    "Current Timeline": "Dòng thời gian hiện tại",
-    "Specify a number of messages": "Chỉ rõ một số tin nhắn",
-    "From the beginning": "Ngày từ đầu",
-    "Plain Text": "Văn bản thuần",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "Bạn có chắc muốn thoát trong quá trinh xuất này?",
     "Unknown App": "Ứng dụng không xác định",
     "Share your public space": "Chia sẻ space công cộng của bạn",
     "Invite to %(spaceName)s": "Mời tham gia %(spaceName)s",
@@ -2660,25 +2644,6 @@
     "Back to thread": "Quay lại luồng",
     "Room members": "Thành viên phòng",
     "Back to chat": "Quay lại trò chuyện",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Đã xuất %(count)s sự kiện trong %(seconds)s giây",
-        "other": "Đã xuất %(count)s sự kiện trong %(seconds)s giây"
-    },
-    "Export successful!": "Xuất thành công!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Đã tìm thấy %(count)s sự kiện trong %(seconds)s giây",
-        "other": "Đã tìm thấy %(count)s sự kiện trong %(seconds)s giây"
-    },
-    "Processing event %(number)s out of %(total)s": "Đang sử lý %(number)s sự kiện trong %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "Đã tìm thấy %(count)s sự kiện đến hiện tại",
-        "other": "Đã tìm thấy %(count)s sự kiện đến hiện tại"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Đã tìm thấy %(count)s sự kiện trong %(total)s",
-        "other": "Đã tìm thấy %(count)s sự kiện trong %(total)s"
-    },
-    "Generating a ZIP": "Tạo ZIP",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "Chúng tôi không thể hiểu ngày được nhập (%(inputDate)s). Hãy thử dùng định dạng YYYY-MM-DD.",
     "Command failed: Unable to find room (%(roomId)s": "Lỗi khi thực hiện lệnh: Không tìm thấy phòng (%(roomId)s)",
     "Failed to get room topic: Unable to find room (%(roomId)s": "Không thể lấy chủ đề phòng: Không tìm thấy phòng (%(roomId)s)",
@@ -2868,8 +2833,6 @@
     "Video call started": "Cuộc gọi truyền hình đã bắt đầu",
     "Unknown room": "Phòng không xác định",
     "Starting export process…": "Bắt đầu trích xuất…",
-    "Creating HTML…": "Đang tạo HTML…",
-    "Starting export…": "Bắt đầu trích xuất…",
     "Yes, stop broadcast": "Đúng rồi, dừng phát thanh",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Bạn hiện đang ghi một cuộc phát thanh. Kết thúc phát thanh để thực hiện một cái mới.",
     "Video call started in %(roomName)s. (not supported by this browser)": "Cuộc gọi truyền hình đã được bắt đầu ở %(roomName)s. (không được trình duyệt này hỗ trợ)",
@@ -2896,7 +2859,6 @@
     "Fill screen": "Vừa màn hình",
     "Show polls button": "Hiện nút thăm dò ý kiến",
     "Unsent": "Chưa gửi",
-    "Fetching events…": "Đang tìm các sự kiện…",
     "Unknown error fetching location. Please try again later.": "Lỗi không xác định khi tìm vị trí của bạn. Hãy thử lại sau.",
     "Timed out trying to fetch your location. Please try again later.": "Tìm vị trí của bạn mất quá lâu. Hãy thử lại sau.",
     "Failed to fetch your location. Please try again later.": "Không tìm được vị trí của bạn. Hãy thử lại sau.",
@@ -3113,7 +3075,6 @@
     "Are you sure you want to stop your live broadcast? This will end the broadcast and the full recording will be available in the room.": "Bạn có chắc chắn muốn dừng phát sóng trực tiếp của mình không? Điều này sẽ kết thúc chương trình phát sóng và bản ghi đầy đủ sẽ có sẵn trong phòng.",
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Nếu bạn bắt đầu nghe chương trình phát thanh trực tiếp này, quá trình ghi chương trình phát thanh trực tiếp hiện tại của bạn sẽ kết thúc.",
     "Live": "Trực tiếp",
-    "Creating output…": "Đang tạo kết quả…",
     "Listen to live broadcast?": "Nghe phát thanh trực tiếp không?",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s không được cho phép để tìm vị trí của bạn. Vui lòng cho phép truy cập vị trí trong cài đặt trình duyệt của bạn.",
     "Notifications silenced": "Thông báo đã được tắt tiếng",
@@ -3263,9 +3224,6 @@
     "Changes your profile picture in this current room only": "Đổi ảnh hồ sơ của bạn chỉ trong phòng này",
     "Changes your profile picture in all rooms": "Đổi ảnh hồ sơ của bạn trong tất cả phòng",
     "User cannot be invited until they are unbanned": "Người dùng không thể được mời nếu không được bỏ cấm",
-    "Previous group of messages": "Nhóm tin nhắn trước",
-    "Next group of messages": "Nhóm tin nhắn sau",
-    "Exported Data": "Dữ liệu được trích xuất",
     "Views room with given address": "Phòng truyền hình với địa chỉ đã cho",
     "Notification Settings": "Cài đặt thông báo",
     "Your server requires encryption to be disabled.": "Máy chủ của bạn yêu cầu mã hóa phải được vô hiệu hóa.",
@@ -3360,7 +3318,9 @@
         "android": "Android",
         "trusted": "Tin cậy",
         "not_trusted": "Không đáng tin cậy",
-        "server": "Máy chủ"
+        "server": "Máy chủ",
+        "unnamed_room": "Phòng Không tên",
+        "unnamed_space": "space không tên"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -3710,5 +3670,47 @@
         "developer_tools": "Những công cụ phát triển",
         "room_id": "Định danh phòng: %(roomId)s",
         "event_id": "Định danh (ID) sự kiện: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Văn bản thuần",
+        "from_the_beginning": "Ngày từ đầu",
+        "number_of_messages": "Chỉ rõ một số tin nhắn",
+        "current_timeline": "Dòng thời gian hiện tại",
+        "creating_html": "Đang tạo HTML…",
+        "starting_export": "Bắt đầu trích xuất…",
+        "export_successful": "Xuất thành công!",
+        "unload_confirm": "Bạn có chắc muốn thoát trong quá trinh xuất này?",
+        "generating_zip": "Tạo ZIP",
+        "processing_event_n": "Đang sử lý %(number)s sự kiện trong %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "Đã tìm thấy %(count)s sự kiện trong %(total)s",
+            "other": "Đã tìm thấy %(count)s sự kiện trong %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "Đã tìm thấy %(count)s sự kiện đến hiện tại",
+            "other": "Đã tìm thấy %(count)s sự kiện đến hiện tại"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Đã tìm thấy %(count)s sự kiện trong %(seconds)s giây",
+            "other": "Đã tìm thấy %(count)s sự kiện trong %(seconds)s giây"
+        },
+        "exported_n_events_in_time": {
+            "one": "Đã xuất %(count)s sự kiện trong %(seconds)s giây",
+            "other": "Đã xuất %(count)s sự kiện trong %(seconds)s giây"
+        },
+        "media_omitted": "Phương tiện bị bỏ qua",
+        "media_omitted_file_size": "Phương tiện bị bỏ qua - kích thước tệp vượt quá giới hạn",
+        "creator_summary": "%(creatorName)s đã tạo phòng này.",
+        "export_info": "Đây là khởi đầu của việc xuất <roomName/>. Xuất bởi <exporterDetails/> lúc %(exportDate)s.",
+        "topic": "Chủ đề: %(topic)s",
+        "previous_page": "Nhóm tin nhắn trước",
+        "next_page": "Nhóm tin nhắn sau",
+        "html_title": "Dữ liệu được trích xuất",
+        "error_fetching_file": "Lỗi lấy tệp",
+        "file_attached": "Tệp được đính kèm",
+        "fetching_events": "Đang tìm các sự kiện…",
+        "creating_output": "Đang tạo kết quả…"
     }
 }

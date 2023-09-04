@@ -190,7 +190,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Unnamed Room": "Taxxamt war isem",
     "The server does not support the room version specified.": "Aqeddac ur issefrek ara lqem n texxamt yettwafernen.",
     "Cancel entering passphrase?": "Sefsex tafyirt tuffirt n uεeddi?",
     "Identity server has no terms of service": "Timagit n uqeddac ulac ɣer-sen iferdisen n umeẓlu",
@@ -1862,7 +1861,8 @@
         "encrypted": "Yettwawgelhen",
         "matrix": "Matrix",
         "trusted": "Yettwattkal",
-        "not_trusted": "Ur yettwattkal ara"
+        "not_trusted": "Ur yettwattkal ara",
+        "unnamed_room": "Taxxamt war isem"
     },
     "action": {
         "continue": "Kemmel",

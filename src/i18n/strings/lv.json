@@ -154,7 +154,6 @@
     "Unable to verify email address.": "Neizdevās apstiprināt epasta adresi.",
     "Unban": "Atcelt pieejas liegumu",
     "unknown error code": "nezināms kļūdas kods",
-    "Unnamed Room": "Istaba bez nosaukuma",
     "Create new room": "Izveidot jaunu istabu",
     "You have <a>enabled</a> URL previews by default.": "URL priekšskatījumi pēc noklusējuma jums ir<a>iespējoti</a> .",
     "Upload avatar": "Augšupielādēt avataru",
@@ -1603,7 +1602,6 @@
     "We'll create rooms for each of them.": "Mēs izveidosim istabas katram no tiem.",
     "Failed to create initial space rooms": "Neizdevās izveidot sākotnējās vietas istabas",
     "Create a video room": "Izveidot video istabu",
-    "%(creatorName)s created this room.": "%(creatorName)s izveidoja šo istabu.",
     "Create room": "Izveidot istabu",
     "Create video room": "Izveidot video istabu",
     "Update any local room aliases to point to the new room": "Atjaunināt jebkurus vietējās istabas aizstājvārdus, lai tie norādītu uz jauno istabu",
@@ -1706,7 +1704,8 @@
         "someone": "Kāds",
         "encrypted": "Šifrēts",
         "trusted": "Uzticama",
-        "not_trusted": "Neuzticama"
+        "not_trusted": "Neuzticama",
+        "unnamed_room": "Istaba bez nosaukuma"
     },
     "action": {
         "continue": "Turpināt",
@@ -1855,5 +1854,8 @@
         "event_content": "Notikuma saturs",
         "toolbox": "Instrumentārijs",
         "developer_tools": "Izstrādātāja rīki"
+    },
+    "export_chat": {
+        "creator_summary": "%(creatorName)s izveidoja šo istabu."
     }
 }

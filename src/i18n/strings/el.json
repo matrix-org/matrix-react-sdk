@@ -106,7 +106,6 @@
     "Unable to verify email address.": "Αδυναμία επιβεβαίωσης διεύθυνσης ηλεκτρονικής αλληλογραφίας.",
     "Unban": "Άρση αποκλεισμού",
     "Unable to enable Notifications": "Αδυναμία ενεργοποίησης των ειδοποιήσεων",
-    "Unnamed Room": "Ανώνυμο δωμάτιο",
     "Upload avatar": "Αποστολή προσωπικής εικόνας",
     "Upload Failed": "Απέτυχε η αποστολή",
     "Usage": "Χρήση",
@@ -904,8 +903,6 @@
     "Invite people": "Προσκαλέστε άτομα",
     "Add some details to help people recognise it.": "Προσθέστε ορισμένες λεπτομέρειες για να βοηθήσετε τους άλλους να το αναγνωρίσουν.",
     "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Οι Χώροι είναι ένας νέος τρόπος ομαδοποίησης δωματίων και ατόμων. Τι είδους Χώρο θέλετε να δημιουργήσετε; Μπορείτε αυτό να το αλλάξετε αργότερα.",
-    "Generating a ZIP": "Δημιουργία ZIP",
-    "Are you sure you want to exit during this export?": "Είστε βέβαιοι ότι θέλετε να αποχωρήσετε κατά τη διάρκεια αυτής της εξαγωγής;",
     "Unknown App": "Άγνωστη εφαρμογή",
     "Share your public space": "Μοιραστείτε τον δημόσιο χώρο σας",
     "Invite to %(spaceName)s": "Πρόσκληση σε %(spaceName)s",
@@ -1021,20 +1018,6 @@
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Άγνωστο ζευγάρι (χρήστης, συνεδρία): (%(userId)s, %(deviceId)s)",
     "Command failed: Unable to find room (%(roomId)s": "Η εντολή απέτυχε: Δεν είναι δυνατή η εύρεση δωματίου (%(roomId)s",
     "Command error: Unable to find rendering type (%(renderingType)s)": "Σφάλμα εντολής: Δεν είναι δυνατή η εύρεση του τύπου απόδοσης (%(renderingType)s)",
-    "Current Timeline": "Τρέχον χρονοδιάγραμμα",
-    "Specify a number of messages": "Καθορίστε έναν αριθμό μηνυμάτων",
-    "From the beginning": "Από την αρχή",
-    "Plain Text": "Απλό κείμενο",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Fetched %(count)s events so far": {
-        "one": "Ανακτήθηκαν %(count)s συμβάντα μέχρι τώρα",
-        "other": "Ανακτήθηκαν %(count)s συμβάντα μέχρι τώρα"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Ανακτήθηκαν %(count)s συμβάντα από %(total)s",
-        "other": "Ανακτήθηκαν %(count)s συμβάντα από %(total)s"
-    },
     "This homeserver has been blocked by its administrator.": "Αυτός ο κεντρικός διακομιστής έχει αποκλειστεί από τον διαχειριστή του.",
     "This homeserver has hit its Monthly Active User limit.": "Αυτός ο κεντρικός διακομιστής έχει φτάσει το μηνιαίο όριο ενεργού χρήστη.",
     "Unexpected error resolving homeserver configuration": "Μη αναμενόμενο σφάλμα κατά την επίλυση της διαμόρφωσης του κεντρικού διακομιστή",
@@ -1054,21 +1037,6 @@
     "Send stickers to your active room as you": "Στείλτε αυτοκόλλητα στο ενεργό δωμάτιό σας",
     "Send stickers to this room as you": "Στείλτε αυτοκόλλητα σε αυτό το δωμάτιο",
     "Command error: Unable to handle slash command.": "Σφάλμα εντολής: Δεν είναι δυνατή η χρήση της εντολής slash.",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Έγινε εξαγωγή %(count)s συμβάντος σε %(seconds)s δευτερόλεπτα",
-        "other": "Έγινε εξαγωγή %(count)s συμβάντων σε %(seconds)s δευτερόλεπτα"
-    },
-    "Export successful!": "Επιτυχής εξαγωγή!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Λήφθηκε %(count)s συμβάν σε %(seconds)s''",
-        "other": "Λήφθηκαν %(count)s συμβάντα σε %(seconds)s''"
-    },
-    "Processing event %(number)s out of %(total)s": "Επεξεργασία συμβάντος %(number)s από %(total)s",
-    "Error fetching file": "Σφάλμα κατά την ανάκτηση του αρχείου",
-    "Topic: %(topic)s": "Θέμα: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Αυτή είναι η αρχή της εξαγωγής του <roomName/>. Εξήχθησαν από <exporterDetails/> στις %(exportDate)s.",
-    "%(creatorName)s created this room.": "Ο %(creatorName)s δημιούργησε αυτό το δωμάτιο.",
-    "Media omitted - file size limit exceeded": "Τα μέσα παραλείφθηκαν - υπέρβαση του ορίου μεγέθους αρχείου",
     "Developer": "Προγραμματιστής",
     "Experimental": "Πειραματικό",
     "Encryption": "Κρυπτογράφηση",
@@ -1112,11 +1080,9 @@
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Έχετε συμφωνήσει να μοιραστείτε ανώνυμα δεδομένα χρήσης μαζί μας. Ενημερώνουμε τον τρόπο που λειτουργεί.",
     "Help improve %(analyticsOwner)s": "Βοηθήστε στη βελτίωση του %(analyticsOwner)s",
     "That's fine": "Είναι εντάξει",
-    "File Attached": "Tο αρχείο επισυνάφθηκε",
     "Surround selected text when typing special characters": "Περιτριγυριστείτε το επιλεγμένο κείμενο κατά την πληκτρολόγηση ειδικών χαρακτήρων",
     "Use a more compact 'Modern' layout": "Χρησιμοποιήστε μια πιο συμπαγή \"Μοντέρνα\" διάταξη",
     "Show polls button": "Εμφάνιση κουμπιού δημοσκοπήσεων",
-    "Media omitted": "Τα μέσα παραλείφθηκαν",
     "Enable widget screenshots on supported widgets": "Ενεργοποίηση στιγμιότυπων οθόνης μικροεφαρμογών σε υποστηριζόμενες μικροεφαρμογές",
     "Enable URL previews by default for participants in this room": "Ενεργοποιήστε τις προεπισκοπήσεις URL από προεπιλογή για τους συμμετέχοντες σε αυτό το δωμάτιο",
     "Match system theme": "Αντιστοίχιση θέματος συστήματος",
@@ -2728,7 +2694,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Προσκαλέστε κάποιον χρησιμοποιώντας το όνομά του, το όνομα χρήστη (όπως <userId/>) ή <a>κοινή χρήση αυτού του χώρου</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Προσκαλέστε κάποιον χρησιμοποιώντας το όνομά του, τη διεύθυνση ηλεκτρονικού ταχυδρομείου, το όνομα χρήστη (όπως <userId/>) ή <a>κοινή χρήση αυτού του χώρου</a>.",
     "Invite to %(roomName)s": "Πρόσκληση στο %(roomName)s",
-    "Unnamed Space": "Χώρος χωρίς όνομα",
     "Or send invite link": "Ή στείλτε σύνδεσμο πρόσκλησης",
     "If you can't see who you're looking for, send them your invite link below.": "Εάν δεν μπορείτε να βρείτε αυτόν που ψάχνετε, στείλτε τους τον παρακάτω σύνδεσμο πρόσκλησης.",
     "Some suggestions may be hidden for privacy.": "Ορισμένες προτάσεις ενδέχεται να είναι κρυφές λόγω απορρήτου.",
@@ -3034,7 +2999,9 @@
         "not_trusted": "Μη Έμπιστο",
         "accessibility": "Προσβασιμότητα",
         "server": "Διακομιστής",
-        "capabilities": "Δυνατότητες"
+        "capabilities": "Δυνατότητες",
+        "unnamed_room": "Ανώνυμο δωμάτιο",
+        "unnamed_space": "Χώρος χωρίς όνομα"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -3316,5 +3283,40 @@
         "developer_tools": "Εργαλεία προγραμματιστή",
         "room_id": "ID δωματίου: %(roomId)s",
         "event_id": "ID συμβάντος: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Απλό κείμενο",
+        "from_the_beginning": "Από την αρχή",
+        "number_of_messages": "Καθορίστε έναν αριθμό μηνυμάτων",
+        "current_timeline": "Τρέχον χρονοδιάγραμμα",
+        "export_successful": "Επιτυχής εξαγωγή!",
+        "unload_confirm": "Είστε βέβαιοι ότι θέλετε να αποχωρήσετε κατά τη διάρκεια αυτής της εξαγωγής;",
+        "generating_zip": "Δημιουργία ZIP",
+        "processing_event_n": "Επεξεργασία συμβάντος %(number)s από %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "Ανακτήθηκαν %(count)s συμβάντα από %(total)s",
+            "other": "Ανακτήθηκαν %(count)s συμβάντα από %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "Ανακτήθηκαν %(count)s συμβάντα μέχρι τώρα",
+            "other": "Ανακτήθηκαν %(count)s συμβάντα μέχρι τώρα"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Λήφθηκε %(count)s συμβάν σε %(seconds)s''",
+            "other": "Λήφθηκαν %(count)s συμβάντα σε %(seconds)s''"
+        },
+        "exported_n_events_in_time": {
+            "one": "Έγινε εξαγωγή %(count)s συμβάντος σε %(seconds)s δευτερόλεπτα",
+            "other": "Έγινε εξαγωγή %(count)s συμβάντων σε %(seconds)s δευτερόλεπτα"
+        },
+        "media_omitted": "Τα μέσα παραλείφθηκαν",
+        "media_omitted_file_size": "Τα μέσα παραλείφθηκαν - υπέρβαση του ορίου μεγέθους αρχείου",
+        "creator_summary": "Ο %(creatorName)s δημιούργησε αυτό το δωμάτιο.",
+        "export_info": "Αυτή είναι η αρχή της εξαγωγής του <roomName/>. Εξήχθησαν από <exporterDetails/> στις %(exportDate)s.",
+        "topic": "Θέμα: %(topic)s",
+        "error_fetching_file": "Σφάλμα κατά την ανάκτηση του αρχείου",
+        "file_attached": "Tο αρχείο επισυνάφθηκε"
     }
 }

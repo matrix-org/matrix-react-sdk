@@ -152,7 +152,6 @@
     "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)sウィジェットが%(senderName)sによって削除されました",
     "Failure to create room": "ルームの作成に失敗",
     "Server may be unavailable, overloaded, or you hit a bug.": "サーバーが使用できないか、オーバーロードしているか、または不具合が発生した可能性があります。",
-    "Unnamed Room": "名前のないルーム",
     "This homeserver has hit its Monthly Active User limit.": "このホームサーバーは月間アクティブユーザー数の上限に達しました 。",
     "This homeserver has exceeded one of its resource limits.": "このホームサーバーはリソースの上限に達しました。",
     "Your browser does not support the required cryptography extensions": "お使いのブラウザーは、必要な暗号化拡張機能をサポートしていません",
@@ -1778,10 +1777,6 @@
     "Report": "報告",
     "Files": "ファイル",
     "Number of messages": "メッセージ数",
-    "Plain Text": "プレーンテキスト",
-    "Specify a number of messages": "メッセージ数を指定",
-    "From the beginning": "一番最初から",
-    "Current Timeline": "現在のタイムライン",
     "Include Attachments": "添付ファイルを含める",
     "Size Limit": "サイズ制限",
     "Format": "形式",
@@ -1850,7 +1845,6 @@
     "Stop the camera": "カメラを停止",
     "sends space invaders": "スペースインベーダーを送る",
     "Failed to transfer call": "通話の転送に失敗しました",
-    "Topic: %(topic)s": "トピック：%(topic)s",
     "Command error: Unable to handle slash command.": "コマンドエラー：スラッシュコマンドは使えません。",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sと他%(count)s個",
@@ -1860,7 +1854,6 @@
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>アップグレードすると、このルームの新しいバージョンが作成されます。</b>今ある全てのメッセージは、アーカイブしたルームに残ります。",
     "Nothing pinned, yet": "固定メッセージはありません",
     "Pinned messages": "固定メッセージ",
-    "Export successful!": "エクスポートが成功しました！",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "以下の人たちを<RoomName/>に招待できませんでした",
     "Widgets do not use message encryption.": "ウィジェットはメッセージの暗号化を行いません。",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "このウィジェットを使うと、データ<helpIcon />が%(widgetDomain)sと共有される可能性があります。",
@@ -2228,9 +2221,6 @@
     "Invalid URL": "不正なURL",
     "The server is offline.": "サーバーはオフラインです。",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "匿名のデータを共有すると、問題の特定に役立ちます。個人情報の収集や、第三者とのデータ共有はありません。<LearnMoreLink>詳細を確認</LearnMoreLink>",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Generating a ZIP": "ZIPファイルを生成しています",
     "New Recovery Method": "新しい復元方法",
     "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)sがこのルームの<a>固定メッセージ</a>を変更しました。",
     "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)sがメッセージの固定を解除しました。全ての固定メッセージを表示。",
@@ -2368,8 +2358,6 @@
     "Couldn't load page": "ページを読み込めませんでした",
     "Confirm the emoji below are displayed on both devices, in the same order:": "以下の絵文字が、両方の端末で、同じ順番で表示されているかどうか確認してください：",
     "Show sidebar": "サイドバーを表示",
-    "File Attached": "添付されたファイル",
-    "%(creatorName)s created this room.": "%(creatorName)sがこのルームを作成しました。",
     "We couldn't create your DM.": "ダイレクトメッセージを作成できませんでした。",
     "Confirm to continue": "確認して続行",
     "Failed to find the following users": "次のユーザーの発見に失敗しました",
@@ -2396,7 +2384,6 @@
     "Space selection": "スペースの選択",
     "Looks good!": "問題ありません！",
     "Backspace": "バックスペース",
-    "Unnamed Space": "名前のないスペース",
     "Emoji Autocomplete": "絵文字の自動補完",
     "Notification Autocomplete": "通知の自動補完",
     "Cancel All": "全てキャンセル",
@@ -2406,25 +2393,6 @@
     "You cancelled verification on your other device.": "他の端末で認証がキャンセルされました。",
     "You won't be able to rejoin unless you are re-invited.": "再び招待されない限り、再参加することはできません。",
     "Search %(spaceName)s": "%(spaceName)sを検索",
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "計%(total)s個のうち%(count)s個のイベントを取得しました",
-        "other": "計%(total)s個のうち%(count)s個のイベントを取得しました"
-    },
-    "Are you sure you want to exit during this export?": "エクスポートを中断してよろしいですか？",
-    "Fetched %(count)s events so far": {
-        "one": "%(count)s個のイベントを取得しました",
-        "other": "%(count)s個のイベントを取得しました"
-    },
-    "Processing event %(number)s out of %(total)s": "計%(total)s個のうち%(number)s個のイベントを処理しています",
-    "Error fetching file": "ファイルの取得中にエラーが発生しました",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "%(count)s個のイベントを%(seconds)s秒でエクスポートしました",
-        "other": "%(count)s個のイベントを%(seconds)s秒でエクスポートしました"
-    },
-    "Fetched %(count)s events in %(seconds)ss": {
-        "other": "%(count)s個のイベントを%(seconds)s秒で取得しました",
-        "one": "%(count)s個のイベントを%(seconds)s秒で取得しました"
-    },
     "That's fine": "問題ありません",
     "Your new device is now verified. Other users will see it as trusted.": "端末が認証されました。他のユーザーに「信頼済」として表示されます。",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "新しい端末が認証されました。端末は暗号化されたメッセージにアクセスすることができます。また、端末は他のユーザーに「信頼済」として表示されます。",
@@ -2702,9 +2670,6 @@
     "Missing room name or separator e.g. (my-room:domain.org)": "ルーム名あるいはセパレーターが入力されていません。例はmy-room:domain.orgとなります",
     "This address had invalid server or is already in use": "このアドレスは不正なサーバーを含んでいるか、既に使用されています",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "端末 %(deviceName)s（%(deviceId)s）での認証を待機しています…",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "ここが<roomName/>のエクスポートの先頭です。<exporterDetails/>により%(exportDate)sにエクスポートされました。",
-    "Media omitted - file size limit exceeded": "ファイルのサイズの超過により、メディアファイルは省かれました",
-    "Media omitted": "メディアファイルは省かれました",
     "See when people join, leave, or are invited to your active room": "アクティブなルームに参加、退出、招待された日時を表示",
     "Remove, ban, or invite people to your active room, and make you leave": "アクティブなルームから追放、ブロック、ルームに招待、また、退出を要求",
     "What are some things you want to discuss in %(spaceName)s?": "%(spaceName)sのテーマは何でしょうか？",
@@ -3353,11 +3318,7 @@
     "Connecting to integration manager…": "インテグレーションマネージャーに接続しています…",
     "Saving…": "保存しています…",
     "Creating…": "作成しています…",
-    "Creating output…": "出力しています…",
-    "Fetching events…": "イベントを取得しています…",
     "Starting export process…": "エクスポートのプロセスを開始しています…",
-    "Creating HTML…": "HTMLファイルを作成しています…",
-    "Starting export…": "エクスポートを開始しています…",
     "Unable to connect to Homeserver. Retrying…": "ホームサーバーに接続できません。 再試行しています…",
     "Secure Backup successful": "セキュアバックアップに成功しました",
     "Your keys are now being backed up from this device.": "鍵はこの端末からバックアップされています。",
@@ -3441,7 +3402,9 @@
         "not_trusted": "信頼されていません",
         "accessibility": "アクセシビリティー",
         "server": "サーバー",
-        "capabilities": "機能"
+        "capabilities": "機能",
+        "unnamed_room": "名前のないルーム",
+        "unnamed_space": "名前のないスペース"
     },
     "action": {
         "continue": "続行",
@@ -3807,5 +3770,44 @@
         "developer_tools": "開発者ツール",
         "room_id": "ルームID：%(roomId)s",
         "event_id": "イベントID：%(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "プレーンテキスト",
+        "from_the_beginning": "一番最初から",
+        "number_of_messages": "メッセージ数を指定",
+        "current_timeline": "現在のタイムライン",
+        "creating_html": "HTMLファイルを作成しています…",
+        "starting_export": "エクスポートを開始しています…",
+        "export_successful": "エクスポートが成功しました！",
+        "unload_confirm": "エクスポートを中断してよろしいですか？",
+        "generating_zip": "ZIPファイルを生成しています",
+        "processing_event_n": "計%(total)s個のうち%(number)s個のイベントを処理しています",
+        "fetched_n_events_with_total": {
+            "one": "計%(total)s個のうち%(count)s個のイベントを取得しました",
+            "other": "計%(total)s個のうち%(count)s個のイベントを取得しました"
+        },
+        "fetched_n_events": {
+            "one": "%(count)s個のイベントを取得しました",
+            "other": "%(count)s個のイベントを取得しました"
+        },
+        "fetched_n_events_in_time": {
+            "other": "%(count)s個のイベントを%(seconds)s秒で取得しました",
+            "one": "%(count)s個のイベントを%(seconds)s秒で取得しました"
+        },
+        "exported_n_events_in_time": {
+            "one": "%(count)s個のイベントを%(seconds)s秒でエクスポートしました",
+            "other": "%(count)s個のイベントを%(seconds)s秒でエクスポートしました"
+        },
+        "media_omitted": "メディアファイルは省かれました",
+        "media_omitted_file_size": "ファイルのサイズの超過により、メディアファイルは省かれました",
+        "creator_summary": "%(creatorName)sがこのルームを作成しました。",
+        "export_info": "ここが<roomName/>のエクスポートの先頭です。<exporterDetails/>により%(exportDate)sにエクスポートされました。",
+        "topic": "トピック：%(topic)s",
+        "error_fetching_file": "ファイルの取得中にエラーが発生しました",
+        "file_attached": "添付されたファイル",
+        "fetching_events": "イベントを取得しています…",
+        "creating_output": "出力しています…"
     }
 }

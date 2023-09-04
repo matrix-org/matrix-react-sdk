@@ -54,7 +54,6 @@
     "Unignore": "Stop ag tabhairt neamhaird air",
     "Missing roomId.": "Comhartha aitheantais seomra ar iarraidh.",
     "Operation failed": "Chlis an oibríocht",
-    "Unnamed Room": "Seomra gan ainm",
     "%(weekDayName)s %(time)s": "%(weekDayName)s ar a %(time)s",
     "Upload Failed": "Chlis an uaslódáil",
     "Permission Required": "Is Teastáil Cead",
@@ -637,7 +636,8 @@
         "someone": "Duine éigin",
         "encrypted": "Criptithe",
         "matrix": "Matrix",
-        "trusted": "Dílis"
+        "trusted": "Dílis",
+        "unnamed_room": "Seomra gan ainm"
     },
     "action": {
         "continue": "Lean ar aghaidh",

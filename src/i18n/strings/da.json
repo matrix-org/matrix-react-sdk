@@ -149,7 +149,6 @@
     "The server does not support the room version specified.": "Serveren understøtter ikke den oplyste rumversion.",
     "Failure to create room": "Rummet kunne ikke oprettes",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
-    "Unnamed Room": "Unavngivet rum",
     "Unable to load! Check your network connectivity and try again.": "Kunne ikke hente! Tjek din netværksforbindelse og prøv igen.",
     "Missing roomId.": "roomId mangler.",
     "Messages": "Beskeder",
@@ -672,7 +671,8 @@
         "emoji": "Emoji",
         "someone": "Nogen",
         "encrypted": "Krypteret",
-        "matrix": "Matrix"
+        "matrix": "Matrix",
+        "unnamed_room": "Unavngivet rum"
     },
     "action": {
         "continue": "Fortsæt",

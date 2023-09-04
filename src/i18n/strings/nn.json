@@ -89,7 +89,6 @@
     "Failure to create room": "Klarte ikkje å laga rommet",
     "Server may be unavailable, overloaded, or you hit a bug.": "Tenaren er kanskje utilgjengeleg, overlasta elles så traff du ein bug.",
     "Send": "Send",
-    "Unnamed Room": "Rom utan namn",
     "Your browser does not support the required cryptography extensions": "Nettlesaren din støttar ikkje dei naudsynte kryptografiske utvidingane",
     "Not a valid %(brand)s keyfile": "Ikkje ei gyldig %(brand)s-nykelfil",
     "Authentication check failed: incorrect password?": "Authentiseringsforsøk mislukkast: feil passord?",
@@ -991,7 +990,8 @@
         "emoji": "Emoji",
         "someone": "Nokon",
         "encrypted": "Kryptert",
-        "matrix": "Matrix"
+        "matrix": "Matrix",
+        "unnamed_room": "Rom utan namn"
     },
     "action": {
         "continue": "Fortset",

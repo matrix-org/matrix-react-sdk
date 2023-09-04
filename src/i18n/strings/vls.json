@@ -38,7 +38,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s, %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s, %(time)s",
-    "Unnamed Room": "Noamloos gesprek",
     "Unable to load! Check your network connectivity and try again.": "Loadn mislukt! Controleer je netwerktoegang en herprobeer ’t e ki.",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s èt geen toestemmienge vo je meldiengn te verstuurn - controleert je browserinstelliengn",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s èt geen toestemmienge gekreegn ghed vo joun meldiengn te verstuurn - herprobeer ’t e ki",
@@ -940,7 +939,8 @@
         "microphone": "Microfoon",
         "emoji": "Emoticons",
         "someone": "Etwien",
-        "encrypted": "Versleuterd"
+        "encrypted": "Versleuterd",
+        "unnamed_room": "Noamloos gesprek"
     },
     "action": {
         "continue": "Verdergoan",

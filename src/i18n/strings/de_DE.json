@@ -224,7 +224,6 @@
     "%(roomName)s does not exist.": "%(roomName)s existiert nicht.",
     "%(roomName)s is not accessible at this time.": "Auf %(roomName)s kann momentan nicht zugegriffen werden.",
     "Start authentication": "Authentifizierung beginnen",
-    "Unnamed Room": "Unbenannter Raum",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (Berechtigungslevel %(powerLevelNumber)s)",
     "(~%(count)s results)": {
         "one": "(~%(count)s Ergebnis)",
@@ -2039,7 +2038,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Lade Leute mittels Anzeigename oder Benutzername (z. B. <userId/>) ein oder <a>teile diesen Space</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Lade Leute mittels Anzeigename, E-Mail-Adresse oder Benutzername (z. B. <userId/>) ein oder <a>teile diesen Space</a>.",
     "Invite to %(roomName)s": "In %(roomName)s einladen",
-    "Unnamed Space": "Unbenannter Space",
     "Invite to %(spaceName)s": "In %(spaceName)s einladen",
     "Spaces": "Spaces",
     "Invite with email or username": "Personen mit E-Mail oder Benutzernamen einladen",
@@ -2443,20 +2441,6 @@
     "Loading new room": "Neuer Raum wird geladen",
     "Upgrading room": "Raum wird aktualisiert",
     "Developer mode": "Entwicklungsmodus",
-    "File Attached": "Datei angehängt",
-    "Error fetching file": "Fehler beim Laden der Datei",
-    "Topic: %(topic)s": "Themen: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Das ist der Anfang des Exports von <roomName/>. Von <exporterDetails/> um %(exportDate)s exportiert.",
-    "%(creatorName)s created this room.": "%(creatorName)s hat diesen Raum erstellt.",
-    "Media omitted - file size limit exceeded": "Medien ausgelassen - Datei zu groß",
-    "Media omitted": "Medien ausgelassen",
-    "Current Timeline": "Aktueller Verlauf",
-    "Specify a number of messages": "Nachrichtenanzahl angeben",
-    "From the beginning": "Von Anfang an",
-    "Plain Text": "Klartext",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "Willst du den Export wirklich abbrechen?",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s hat einen Sticker gesendet.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s hat das Raumbild geändert.",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Bewahre deinen Sicherheitsschlüssel sicher auf, etwa in einem Passwortmanager oder einem Safe, da er verwendet wird, um deine Daten zu sichern.",
@@ -2626,25 +2610,6 @@
     "Copy room link": "Raumlink kopieren",
     "Manage pinned events": "Angeheftete Ereignisse verwalten",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Teile anonyme Nutzungsdaten mit uns, damit wir Probleme in Element finden können. Nichts Persönliches. Keine Drittparteien.",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "%(count)s Ereignis in %(seconds)s Sekunden exportiert",
-        "other": "%(count)s Ereignisse in %(seconds)s Sekunden exportiert"
-    },
-    "Export successful!": "Die Daten wurden erfolgreich exportiert!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "%(count)s Ereignis in %(seconds)s s abgerufen",
-        "other": "%(count)s Ereignisse in %(seconds)s s abgerufen"
-    },
-    "Processing event %(number)s out of %(total)s": "Verarbeite Event %(number)s von %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "Bisher wurde %(count)s Ereignis abgerufen",
-        "other": "Bisher wurden %(count)s Ereignisse abgerufen"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "%(count)s von %(total)s Ereignis abgerufen",
-        "other": "%(count)s von %(total)s Ereignisse abgerufen"
-    },
-    "Generating a ZIP": "ZIP-Archiv wird generiert",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "Ups! Leider können wir das Datum \"%(inputDate)s\" nicht verstehen. Bitte gib es im Format JJJJ-MM-TT (Jahr-Monat-Tag) ein.",
     "Messaging": "Kommunikation",
     "Close this widget to view it in this panel": "Widget schließen und in diesem Panel anzeigen",
@@ -3358,11 +3323,7 @@
     "Connecting to integration manager…": "Verbinde mit Integrationsassistent …",
     "Saving…": "Speichere …",
     "Creating…": "Erstelle …",
-    "Creating output…": "Erstelle Ausgabe …",
-    "Fetching events…": "Rufe Ereignisse ab …",
     "Starting export process…": "Beginne Exportvorgang …",
-    "Creating HTML…": "Erstelle HTML …",
-    "Starting export…": "Beginne Export …",
     "Unable to connect to Homeserver. Retrying…": "Verbindung mit Heim-Server fehlgeschlagen. Versuche es erneut …",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Gib eine nur dir bekannte Sicherheitsphrase ein, die dem Schutz deiner Daten dient. Um die Sicherheit zu gewährleisten, sollte dies nicht dein Kontopasswort sein.",
     "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": "Bitte fahre nur fort, wenn du sicher bist, dass du alle anderen Geräte und deinen Sicherheitsschlüssel verloren hast.",
@@ -3464,9 +3425,6 @@
     "Changes your profile picture in this current room only": "Ändert dein Profilbild ausschließlich im aktuellen Raum",
     "%(senderDisplayName)s changed the join rule to ask to join.": "%(senderDisplayName)s hat die Zutrittsregel auf Beitrittsanfragen geändert.",
     "User cannot be invited until they are unbanned": "Benutzer kann nicht eingeladen werden, solange er nicht entbannt ist",
-    "Previous group of messages": "Vorherige Nachrichtengruppe",
-    "Next group of messages": "Nächste Nachrichtengruppe",
-    "Exported Data": "Exportierte Daten",
     "Notification Settings": "Benachrichtigungseinstellungen",
     "People, Mentions and Keywords": "Personen, Erwähnungen und Schlüsselwörter",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>Aktualisierung:</strong> Wir haben die Benachrichtigungseinstellungen vereinfacht, damit Optionen schneller zu finden sind. Einige benutzerdefinierte Einstellungen werden hier nicht angezeigt, sind aber dennoch aktiv. Wenn du fortfährst, könnten sich einige Einstellungen ändern. <a>Erfahre mehr</a>",
@@ -3614,7 +3572,9 @@
         "not_trusted": "Nicht vertrauenswürdig",
         "accessibility": "Barrierefreiheit",
         "server": "Server",
-        "capabilities": "Funktionen"
+        "capabilities": "Funktionen",
+        "unnamed_room": "Unbenannter Raum",
+        "unnamed_space": "Unbenannter Space"
     },
     "action": {
         "continue": "Fortfahren",
@@ -4012,5 +3972,47 @@
         "room_id": "Raum-ID: %(roomId)s",
         "thread_root_id": "Thread-Ursprungs-ID: %(threadRootId)s",
         "event_id": "Event-ID: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Klartext",
+        "from_the_beginning": "Von Anfang an",
+        "number_of_messages": "Nachrichtenanzahl angeben",
+        "current_timeline": "Aktueller Verlauf",
+        "creating_html": "Erstelle HTML …",
+        "starting_export": "Beginne Export …",
+        "export_successful": "Die Daten wurden erfolgreich exportiert!",
+        "unload_confirm": "Willst du den Export wirklich abbrechen?",
+        "generating_zip": "ZIP-Archiv wird generiert",
+        "processing_event_n": "Verarbeite Event %(number)s von %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "%(count)s von %(total)s Ereignis abgerufen",
+            "other": "%(count)s von %(total)s Ereignisse abgerufen"
+        },
+        "fetched_n_events": {
+            "one": "Bisher wurde %(count)s Ereignis abgerufen",
+            "other": "Bisher wurden %(count)s Ereignisse abgerufen"
+        },
+        "fetched_n_events_in_time": {
+            "one": "%(count)s Ereignis in %(seconds)s s abgerufen",
+            "other": "%(count)s Ereignisse in %(seconds)s s abgerufen"
+        },
+        "exported_n_events_in_time": {
+            "one": "%(count)s Ereignis in %(seconds)s Sekunden exportiert",
+            "other": "%(count)s Ereignisse in %(seconds)s Sekunden exportiert"
+        },
+        "media_omitted": "Medien ausgelassen",
+        "media_omitted_file_size": "Medien ausgelassen - Datei zu groß",
+        "creator_summary": "%(creatorName)s hat diesen Raum erstellt.",
+        "export_info": "Das ist der Anfang des Exports von <roomName/>. Von <exporterDetails/> um %(exportDate)s exportiert.",
+        "topic": "Themen: %(topic)s",
+        "previous_page": "Vorherige Nachrichtengruppe",
+        "next_page": "Nächste Nachrichtengruppe",
+        "html_title": "Exportierte Daten",
+        "error_fetching_file": "Fehler beim Laden der Datei",
+        "file_attached": "Datei angehängt",
+        "fetching_events": "Rufe Ereignisse ab …",
+        "creating_output": "Erstelle Ausgabe …"
     }
 }

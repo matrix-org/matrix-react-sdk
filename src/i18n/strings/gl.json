@@ -77,7 +77,6 @@
     "Failure to create room": "Fallou a creación da sala",
     "Server may be unavailable, overloaded, or you hit a bug.": "O servidor podería non estar dispoñible, con sobrecarga ou ter un fallo.",
     "Send": "Enviar",
-    "Unnamed Room": "Sala sen nome",
     "Your browser does not support the required cryptography extensions": "O seu navegador non soporta as extensións de criptografía necesarias",
     "Not a valid %(brand)s keyfile": "Non é un ficheiro de chaves %(brand)s válido",
     "Authentication check failed: incorrect password?": "Fallou a comprobación de autenticación: contrasinal incorrecto?",
@@ -2017,7 +2016,6 @@
     "Failed to save space settings.": "Fallo ao gardar os axustes do espazo.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Convida a alguén usando o seu nome, nome de usuaria (como <userId/>) ou <a>comparte este espazo</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte este espazo</a>.",
-    "Unnamed Space": "Espazo sen nome",
     "Invite to %(spaceName)s": "Convidar a %(spaceName)s",
     "Create a new room": "Crear unha nova sala",
     "Spaces": "Espazos",
@@ -2425,20 +2423,6 @@
     "Enter a number between %(min)s and %(max)s": "Escribe un número entre %(min)s e %(max)s",
     "In reply to <a>this message</a>": "En resposta a <a>esta mensaxe</a>",
     "Export chat": "Exportar chat",
-    "File Attached": "Ficheiro anexado",
-    "Error fetching file": "Erro ao obter o ficheiro",
-    "Topic: %(topic)s": "Asunto: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Este é o inicio da exportación de <roomName/>. Exportada por <exporterDetails/> o %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s creou esta sala.",
-    "Media omitted - file size limit exceeded": "Multimedia omitido - excedeuse o límite de tamaño",
-    "Media omitted": "Omitir multimedia",
-    "Current Timeline": "Cronoloxía actual",
-    "Specify a number of messages": "Indica un número de mensaxes",
-    "From the beginning": "Desde o comezo",
-    "Plain Text": "Texto plano",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "Tes a certeza de querer saír durante esta exportación?",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s enviou un adhesivo.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s cambiou o avatar da sala.",
     "Show:": "Mostrar:",
@@ -2631,25 +2615,6 @@
     },
     "Copy room link": "Copiar ligazón á sala",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "Non entendemos a data proporcionada (%(inputDate)s). Intenta usar o formato AAAA-MM-DD.",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Exportado %(count)s evento en %(seconds)s segundos",
-        "other": "Exportados %(count)s eventos en %(seconds)s segundos"
-    },
-    "Export successful!": "Exportación correcta!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Obtido %(count)s evento en %(seconds)ss",
-        "other": "Obtidos %(count)s eventos en %(seconds)ss"
-    },
-    "Processing event %(number)s out of %(total)s": "Procesando evento %(number)s de %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "Obtido %(count)s evento por agora",
-        "other": "Obtidos %(count)s eventos por agora"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Obtido %(count)s evento de %(total)s",
-        "other": "Obtidos %(count)s eventos de %(total)s"
-    },
-    "Generating a ZIP": "Creando un ZIP",
     "Remove, ban, or invite people to your active room, and make you leave": "Eliminar, vetar ou convidar persoas á túa sala activa, e saír ti mesmo",
     "Remove, ban, or invite people to this room, and make you leave": "Eliminar, vetar, ou convidar persas a esta sala, e saír ti mesmo",
     "%(senderName)s has ended a poll": "%(senderName)s finalizou a enquisa",
@@ -3201,7 +3166,9 @@
         "not_trusted": "Non confiable",
         "accessibility": "Accesibilidade",
         "server": "Servidor",
-        "capabilities": "Capacidades"
+        "capabilities": "Capacidades",
+        "unnamed_room": "Sala sen nome",
+        "unnamed_space": "Espazo sen nome"
     },
     "action": {
         "continue": "Continuar",
@@ -3529,5 +3496,40 @@
         "developer_tools": "Ferramentas para desenvolver",
         "room_id": "ID da sala: %(roomId)s",
         "event_id": "ID do evento: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Texto plano",
+        "from_the_beginning": "Desde o comezo",
+        "number_of_messages": "Indica un número de mensaxes",
+        "current_timeline": "Cronoloxía actual",
+        "export_successful": "Exportación correcta!",
+        "unload_confirm": "Tes a certeza de querer saír durante esta exportación?",
+        "generating_zip": "Creando un ZIP",
+        "processing_event_n": "Procesando evento %(number)s de %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "Obtido %(count)s evento de %(total)s",
+            "other": "Obtidos %(count)s eventos de %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "Obtido %(count)s evento por agora",
+            "other": "Obtidos %(count)s eventos por agora"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Obtido %(count)s evento en %(seconds)ss",
+            "other": "Obtidos %(count)s eventos en %(seconds)ss"
+        },
+        "exported_n_events_in_time": {
+            "one": "Exportado %(count)s evento en %(seconds)s segundos",
+            "other": "Exportados %(count)s eventos en %(seconds)s segundos"
+        },
+        "media_omitted": "Omitir multimedia",
+        "media_omitted_file_size": "Multimedia omitido - excedeuse o límite de tamaño",
+        "creator_summary": "%(creatorName)s creou esta sala.",
+        "export_info": "Este é o inicio da exportación de <roomName/>. Exportada por <exporterDetails/> o %(exportDate)s.",
+        "topic": "Asunto: %(topic)s",
+        "error_fetching_file": "Erro ao obter o ficheiro",
+        "file_attached": "Ficheiro anexado"
     }
 }

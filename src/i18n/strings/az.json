@@ -162,7 +162,6 @@
     "Send": "Göndər",
     "PM": "24:00",
     "AM": "12:00",
-    "Unnamed Room": "Adı açıqlanmayan otaq",
     "Unable to load! Check your network connectivity and try again.": "Yükləmək olmur! Şəbəkə bağlantınızı yoxlayın və yenidən cəhd edin.",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s-un sizə bildiriş göndərmək icazəsi yoxdur - brauzerinizin parametrlərini yoxlayın",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s bildiriş göndərmək üçün icazə verilmədi - lütfən yenidən cəhd edin",
@@ -236,7 +235,8 @@
         "home": "Başlanğıc",
         "favourites": "Seçilmişlər",
         "attachment": "Əlavə",
-        "emoji": "Smaylar"
+        "emoji": "Smaylar",
+        "unnamed_room": "Adı açıqlanmayan otaq"
     },
     "action": {
         "continue": "Davam etmək",

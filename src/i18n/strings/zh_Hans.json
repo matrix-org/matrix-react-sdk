@@ -150,7 +150,6 @@
     "Unable to create widget.": "无法创建挂件。",
     "Unban": "解除封禁",
     "Unable to enable Notifications": "无法启用通知",
-    "Unnamed Room": "未命名的房间",
     "Upload avatar": "上传头像",
     "Upload Failed": "上传失败",
     "Usage": "用法",
@@ -1637,7 +1636,6 @@
     "Other homeserver": "其他家服务器",
     "Specify a homeserver": "指定家服务器",
     "Transfer": "传输",
-    "Unnamed Space": "未命名空间",
     "Send feedback": "发送反馈",
     "Reason (optional)": "理由（可选）",
     "Create a new room": "创建新房间",
@@ -2417,20 +2415,6 @@
     "Enter a number between %(min)s and %(max)s": "输入一个 %(min)s 和 %(max)s 之间的数字",
     "In reply to <a>this message</a>": "答复<a>此消息</a>",
     "Export chat": "导出聊天",
-    "File Attached": "已附加文件",
-    "Error fetching file": "获取文件出错",
-    "Topic: %(topic)s": "话题：%(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "这是 <roomName/> 导出的开始。导出人 <exporterDetails/>，导出日期 %(exportDate)s。",
-    "%(creatorName)s created this room.": "%(creatorName)s 创建了此房间。",
-    "Media omitted - file size limit exceeded": "省略了媒体文件 - 超出了文件大小限制",
-    "Media omitted": "省略了媒体文件",
-    "Current Timeline": "当前时间线",
-    "Specify a number of messages": "指定消息数",
-    "From the beginning": "从开头",
-    "Plain Text": "纯文本",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "你确定要在导出过程中退出吗？",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s 发送了一张贴纸。",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s 更改了房间头像。",
     "Verify with Security Key or Phrase": "使用安全密钥或短语进行验证",
@@ -2631,27 +2615,8 @@
     "Including you, %(commaSeparatedMembers)s": "包括你，%(commaSeparatedMembers)s",
     "Copy room link": "复制房间链接",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "我们无法理解给定日期 (%(inputDate)s)。尝试使用如下格式 YYYY-MM-DD。",
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "已获取总共 %(total)s 事件中的 %(count)s 个",
-        "other": "已获取 %(total)s 事件中的 %(count)s 个"
-    },
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "将您与该空间的成员的聊天进行分组。关闭这个后你将无法在 %(spaceName)s 内看到这些聊天。",
     "Sections to show": "要显示的部分",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "在 %(seconds)s 秒内导出了 %(count)s 个事件",
-        "other": "在 %(seconds)s 秒内导出了 %(count)s 个事件"
-    },
-    "Export successful!": "成功导出！",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "%(seconds)s 秒内获取了 %(count)s 个事件",
-        "other": "%(seconds)s 秒内获取了 %(count)s 个事件"
-    },
-    "Processing event %(number)s out of %(total)s": "正在处理总共 %(total)s 事件中的事件 %(number)s",
-    "Fetched %(count)s events so far": {
-        "one": "迄今获取了 %(count)s 事件",
-        "other": "迄今获取了 %(count)s 事件"
-    },
-    "Generating a ZIP": "生成 ZIP",
     "Failed to load list of rooms.": "加载房间列表失败。",
     "Open in OpenStreetMap": "在 OpenStreetMap 中打开",
     "Jump to the given date in the timeline": "跳转到时间线中的给定日期",
@@ -3260,7 +3225,9 @@
         "android": "Android",
         "trusted": "受信任的",
         "not_trusted": "不受信任的",
-        "server": "服务器"
+        "server": "服务器",
+        "unnamed_room": "未命名的房间",
+        "unnamed_space": "未命名空间"
     },
     "action": {
         "continue": "继续",
@@ -3596,5 +3563,40 @@
         "developer_tools": "开发者工具",
         "room_id": "房间ID: %(roomId)s",
         "event_id": "事件ID：%(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "纯文本",
+        "from_the_beginning": "从开头",
+        "number_of_messages": "指定消息数",
+        "current_timeline": "当前时间线",
+        "export_successful": "成功导出！",
+        "unload_confirm": "你确定要在导出过程中退出吗？",
+        "generating_zip": "生成 ZIP",
+        "processing_event_n": "正在处理总共 %(total)s 事件中的事件 %(number)s",
+        "fetched_n_events_with_total": {
+            "one": "已获取总共 %(total)s 事件中的 %(count)s 个",
+            "other": "已获取 %(total)s 事件中的 %(count)s 个"
+        },
+        "fetched_n_events": {
+            "one": "迄今获取了 %(count)s 事件",
+            "other": "迄今获取了 %(count)s 事件"
+        },
+        "fetched_n_events_in_time": {
+            "one": "%(seconds)s 秒内获取了 %(count)s 个事件",
+            "other": "%(seconds)s 秒内获取了 %(count)s 个事件"
+        },
+        "exported_n_events_in_time": {
+            "one": "在 %(seconds)s 秒内导出了 %(count)s 个事件",
+            "other": "在 %(seconds)s 秒内导出了 %(count)s 个事件"
+        },
+        "media_omitted": "省略了媒体文件",
+        "media_omitted_file_size": "省略了媒体文件 - 超出了文件大小限制",
+        "creator_summary": "%(creatorName)s 创建了此房间。",
+        "export_info": "这是 <roomName/> 导出的开始。导出人 <exporterDetails/>，导出日期 %(exportDate)s。",
+        "topic": "话题：%(topic)s",
+        "error_fetching_file": "获取文件出错",
+        "file_attached": "已附加文件"
     }
 }

@@ -174,7 +174,6 @@
     "Unable to remove contact information": "Nie można usunąć informacji kontaktowych",
     "Unable to verify email address.": "Weryfikacja adresu e-mail nie powiodła się.",
     "Unable to enable Notifications": "Nie można włączyć powiadomień",
-    "Unnamed Room": "Pokój bez nazwy",
     "Uploading %(filename)s": "Przesyłanie %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Przesyłanie %(filename)s oraz %(count)s innych",
@@ -1672,39 +1671,6 @@
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Wcześniej wyraziłeś zgodę na udostępnianie zanonimizowanych danych z nami. Teraz aktualizujemy jak to działa.",
     "Help improve %(analyticsOwner)s": "Pomóż poprawić %(analyticsOwner)s",
     "That's fine": "To jest w porządku",
-    "File Attached": "Plik załączony",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Wyeksportowano %(count)s wydarzenie w %(seconds)s sekund",
-        "other": "Wyeksportowano %(count)s wydarzeń w %(seconds)s sekund"
-    },
-    "Export successful!": "Eksport zakończony pomyślnie!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Pobrano %(count)s wydarzenie w %(seconds)ss",
-        "other": "Pobrano %(count)s wydarzeń w %(seconds)ss"
-    },
-    "Processing event %(number)s out of %(total)s": "Przetwarzanie wydarzenia %(number)s z %(total)s",
-    "Error fetching file": "Wystąpił błąd przy pobieraniu pliku",
-    "Topic: %(topic)s": "Temat: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "To rozpocznie eksport <roomName/>. Wyeksportowano przez <exporterDetails/> o %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s stworzył ten pokój.",
-    "Media omitted - file size limit exceeded": "Media pominięte - przekroczono limit wielkości pliku",
-    "Media omitted": "Media pominięte",
-    "Current Timeline": "Obecna linia czasu",
-    "Specify a number of messages": "Podaj ilość wiadomości",
-    "From the beginning": "Od początku",
-    "Plain Text": "Tekst",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Fetched %(count)s events so far": {
-        "one": "Pobrano %(count)s wydarzenie",
-        "other": "Pobrano %(count)s wydarzeń"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Pobrano %(count)s wydarzenie z %(total)s",
-        "other": "Pobrano %(count)s wydarzeń z %(total)s"
-    },
-    "Generating a ZIP": "Generowanie pliku ZIP",
-    "Are you sure you want to exit during this export?": "Czy na pewno chcesz wyjść podczas tego eksportu?",
     "Share your public space": "Zaproś do swojej publicznej przestrzeni",
     "Invite to %(spaceName)s": "Zaproś do %(spaceName)s",
     "Use a longer keyboard pattern with more turns": "Użyj wzoru z klawiatury z większą ilością zakrętów",
@@ -2158,11 +2124,7 @@
     "Video call started": "Rozpoczęto rozmowę wideo",
     "Unknown room": "Nieznany pokój",
     "You have unverified sessions": "Masz niezweryfikowane sesje",
-    "Creating output…": "Tworzenie danych wyjściowych…",
-    "Fetching events…": "Pobieranie wydarzeń…",
     "Starting export process…": "Rozpoczynanie procesu eksportowania…",
-    "Creating HTML…": "Tworzenie HTML…",
-    "Starting export…": "Rozpoczynam eksportowanie…",
     "Unknown error fetching location. Please try again later.": "Wystąpił nieznany błąd podczas pobierania lokalizacji. Spróbuj ponownie później.",
     "Timed out trying to fetch your location. Please try again later.": "Upłynął czas oczekiwania podczas pobierania lokalizacji. Spróbuj ponownie później.",
     "Failed to fetch your location. Please try again later.": "Nie udało się pobrać Twojej lokalizacji. Spróbuj ponownie później.",
@@ -2923,7 +2885,6 @@
     "Anyone will be able to find and join this room.": "Każdy będzie mógł znaleźć i dołączyć do tego pokoju.",
     "Anyone will be able to find and join this room, not just members of <SpaceName/>.": "Każdy będzie mógł znaleźć i dołączyć do tego pokoju, nie tylko członkowie <SpaceName/>.",
     "You can change this at any time from room settings.": "Możesz to zmienić w każdym momencie w ustawieniach pokoju.",
-    "Unnamed Space": "Przestrzeń bez nazwy",
     "Everyone in <SpaceName/> will be able to find and join this room.": "Każdy w <SpaceName/> będzie mógł znaleźć i dołączyć do tego pokoju.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Wyczyszczenie wszystkich danych z tej sesji jest permanentne. Wiadomości szyfrowane zostaną utracone, jeśli nie zabezpieczono ich kluczy.",
     "Clear all data in this session?": "Wyczyścić wszystkie dane w tej sesji?",
@@ -3468,9 +3429,6 @@
     "Changes your profile picture in all rooms": "Zdjęcie profilowe zostanie zmienione we wszystkich pokojach",
     "%(senderDisplayName)s changed the join rule to ask to join.": "%(senderDisplayName)s zmienił zasady dołączenia do pokoju.",
     "User cannot be invited until they are unbanned": "Nie można zaprosić użytkownika, dopóki nie zostanie odbanowany",
-    "Previous group of messages": "Poprzednia grupa wiadomości",
-    "Next group of messages": "Następna grupa wiadomości",
-    "Exported Data": "Eksportowane dane",
     "Views room with given address": "Przegląda pokój z podanym adresem",
     "Notification Settings": "Ustawienia powiadomień",
     "Mentions and Keywords only": "Wyłącznie wzmianki i słowa kluczowe",
@@ -3592,7 +3550,9 @@
         "not_trusted": "Nie zaufane",
         "accessibility": "Ułatwienia dostępu",
         "server": "Serwer",
-        "capabilities": "Możliwości"
+        "capabilities": "Możliwości",
+        "unnamed_room": "Pokój bez nazwy",
+        "unnamed_space": "Przestrzeń bez nazwy"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -3989,5 +3949,47 @@
         "room_id": "ID pokoju: %(roomId)s",
         "thread_root_id": "ID Root Wątku:%(threadRootId)s",
         "event_id": "ID wydarzenia: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Tekst",
+        "from_the_beginning": "Od początku",
+        "number_of_messages": "Podaj ilość wiadomości",
+        "current_timeline": "Obecna linia czasu",
+        "creating_html": "Tworzenie HTML…",
+        "starting_export": "Rozpoczynam eksportowanie…",
+        "export_successful": "Eksport zakończony pomyślnie!",
+        "unload_confirm": "Czy na pewno chcesz wyjść podczas tego eksportu?",
+        "generating_zip": "Generowanie pliku ZIP",
+        "processing_event_n": "Przetwarzanie wydarzenia %(number)s z %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "Pobrano %(count)s wydarzenie z %(total)s",
+            "other": "Pobrano %(count)s wydarzeń z %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "Pobrano %(count)s wydarzenie",
+            "other": "Pobrano %(count)s wydarzeń"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Pobrano %(count)s wydarzenie w %(seconds)ss",
+            "other": "Pobrano %(count)s wydarzeń w %(seconds)ss"
+        },
+        "exported_n_events_in_time": {
+            "one": "Wyeksportowano %(count)s wydarzenie w %(seconds)s sekund",
+            "other": "Wyeksportowano %(count)s wydarzeń w %(seconds)s sekund"
+        },
+        "media_omitted": "Media pominięte",
+        "media_omitted_file_size": "Media pominięte - przekroczono limit wielkości pliku",
+        "creator_summary": "%(creatorName)s stworzył ten pokój.",
+        "export_info": "To rozpocznie eksport <roomName/>. Wyeksportowano przez <exporterDetails/> o %(exportDate)s.",
+        "topic": "Temat: %(topic)s",
+        "previous_page": "Poprzednia grupa wiadomości",
+        "next_page": "Następna grupa wiadomości",
+        "html_title": "Eksportowane dane",
+        "error_fetching_file": "Wystąpił błąd przy pobieraniu pliku",
+        "file_attached": "Plik załączony",
+        "fetching_events": "Pobieranie wydarzeń…",
+        "creating_output": "Tworzenie danych wyjściowych…"
     }
 }

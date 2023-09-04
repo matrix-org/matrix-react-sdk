@@ -139,7 +139,6 @@
     "Unban": "Yasağı Kaldır",
     "Unable to enable Notifications": "Bildirimler aktif edilemedi",
     "unknown error code": "bilinmeyen hata kodu",
-    "Unnamed Room": "İsimsiz Oda",
     "Uploading %(filename)s": "%(filename)s yükleniyor",
     "Uploading %(filename)s and %(count)s others": {
         "one": "%(filename)s ve %(count)s kadarı yükleniyor",
@@ -1800,7 +1799,6 @@
     "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s Bu odadan bir mesajın sabitlemesini kaldırdı. Bütün sabitlenmiş mesajları görün.",
     "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s bu odaya bir mesaj sabitledi, Bütün sabitlenmiş mesajları görün.",
     "Failed to transfer call": "Arama aktarılırken hata oluştu",
-    "Plain Text": "Düz Metin",
     "For best security, sign out from any session that you don't recognize or use anymore.": "En iyi güvenlik için, tanımadığın ya da artık kullanmadığın oturumlardan çıkış yap.",
     "Security recommendations": "Güvenlik önerileri",
     "Filter devices": "Cihazları filtrele",
@@ -1881,7 +1879,8 @@
         "unverified": "Doğrulanmamış",
         "matrix": "Matrix",
         "trusted": "Güvenilir",
-        "not_trusted": "Güvenilir değil"
+        "not_trusted": "Güvenilir değil",
+        "unnamed_room": "İsimsiz Oda"
     },
     "action": {
         "continue": "Devam Et",
@@ -2056,5 +2055,8 @@
         "event_content": "Olay İçeriği",
         "toolbox": "Araç Kutusu",
         "developer_tools": "Geliştirici Araçları"
+    },
+    "export_chat": {
+        "text": "Düz Metin"
     }
 }

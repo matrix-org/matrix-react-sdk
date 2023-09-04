@@ -174,7 +174,6 @@
     "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s вилучає віджет %(widgetName)s",
     "Failure to create room": "Не вдалося створити кімнату",
     "Server may be unavailable, overloaded, or you hit a bug.": "Сервер може бути недоступний, перевантажений, або ж ви натрапили на ваду.",
-    "Unnamed Room": "Кімната без назви",
     "This homeserver has hit its Monthly Active User limit.": "Цей домашній сервер досягнув свого ліміту щомісячних активних користувачів.",
     "This homeserver has exceeded one of its resource limits.": "Цей домашній сервер досягнув одного зі своїх лімітів ресурсів.",
     "Your browser does not support the required cryptography extensions": "Ваш браузер не підтримує необхідних криптографічних функцій",
@@ -1913,7 +1912,6 @@
     "Reply to thread…": "Відповісти в гілці…",
     "Reply to encrypted thread…": "Відповісти в зашифрованій гілці…",
     "Reply in thread": "Відповісти у гілці",
-    "%(creatorName)s created this room.": "%(creatorName)s створює цю кімнату.",
     "See when people join, leave, or are invited to this room": "Бачити, коли хтось додається, виходить чи запрошується до цієї кімнати",
     "You cannot place calls without a connection to the server.": "Неможливо здійснювати виклики без з'єднання з сервером.",
     "You cannot place calls in this browser.": "Цей браузер не підтримує викликів.",
@@ -2018,12 +2016,6 @@
     "Select the roles required to change various parts of the space": "Оберіть ролі, потрібні для зміни різних частин простору",
     "To join a space you'll need an invite.": "Щоб приєднатись до простору, вам потрібне запрошення.",
     "You are about to leave <spaceName/>.": "Ви збираєтеся вийти з <spaceName/>.",
-    "HTML": "HTML",
-    "JSON": "JSON",
-    "Plain Text": "Текстові дані",
-    "From the beginning": "З самого початку",
-    "Specify a number of messages": "Вказати кількість повідомлень",
-    "Current Timeline": "Ця стрічка",
     "Enter a number between %(min)s and %(max)s": "Введіть число між %(min)s і %(max)s",
     "Size can only be a number between %(min)s MB and %(max)s MB": "Розмір може бути лише числом між %(min)s МБ і %(max)s МБ",
     "Number of messages can only be a number between %(min)s and %(max)s": "Кількість повідомлень може бути лише числом між %(min)s і %(max)s",
@@ -2166,7 +2158,6 @@
     "Jump to first unread message.": "Перейти до першого непрочитаного повідомлення.",
     "a new cross-signing key signature": "новий підпис ключа перехресного підписування",
     "a new master key signature": "новий підпис головного ключа",
-    "Unnamed Space": "Простір без назви",
     "Or send invite link": "Або надішліть запрошувальне посилання",
     "Spaces you're in": "Ваші простори",
     "Other rooms in %(spaceName)s": "Інші кімнати в %(spaceName)s",
@@ -2401,13 +2392,6 @@
     "Sends the given message with rainfall": "Надсилає це повідомлення з дощем",
     "Other rooms": "Інші кімнати",
     "That's fine": "Гаразд",
-    "File Attached": "Файл прикріплено",
-    "Error fetching file": "Збій отримання файлу",
-    "Topic: %(topic)s": "Тема: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Експорт <roomName/> починає <exporterDetails/> о %(exportDate)s.",
-    "Media omitted - file size limit exceeded": "Медіа пропущено — перевищує обмеження розміру файлу",
-    "Media omitted": "Медіа пропущено",
-    "Are you sure you want to exit during this export?": "Точно вийти, поки триває експорт?",
     "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Можете ввійти, але деякі можливості будуть недоступні, поки сервер ідентифікації не відновить роботу. Якщо часто бачите це застереження, перевірте свої параметри чи зв'яжіться з адміністратором сервера.",
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Можете скинути пароль, але деякі можливості будуть недоступні, поки сервер ідентифікації не відновить роботу. Якщо часто бачите це застереження, перевірте свої параметри чи зв'яжіться з адміністратором сервера.",
     "Continue with %(ssoButtons)s": "Продовжити з %(ssoButtons)s",
@@ -2623,25 +2607,6 @@
     "Recent Conversations": "Недавні бесіди",
     "A call can only be transferred to a single user.": "Виклик можна переадресувати лише на одного користувача.",
     "Search for rooms or people": "Пошук кімнат або людей",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Експортовано %(count)s подій за %(seconds)s секунд",
-        "other": "Експортовано %(count)s подій за %(seconds)s секунд"
-    },
-    "Export successful!": "Успішно експортовано!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Знайдено %(count)s подій за %(seconds)sс",
-        "other": "Знайдено %(count)s подій за %(seconds)sс"
-    },
-    "Processing event %(number)s out of %(total)s": "Оброблено %(number)s з %(total)s подій",
-    "Fetched %(count)s events so far": {
-        "one": "Знайдено %(count)s подій",
-        "other": "Знайдено %(count)s подій"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Знайдено %(count)s з %(total)s подій",
-        "other": "Знайдено %(count)s з %(total)s подій"
-    },
-    "Generating a ZIP": "Генерування ZIP-файлу",
     "Failed to load list of rooms.": "Не вдалося отримати список кімнат.",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Це групує ваші бесіди з учасниками цього простору. Вимкніть, щоб сховати ці бесіди з вашого огляду %(spaceName)s.",
     "Disagree": "Відхилити",
@@ -3360,11 +3325,7 @@
     "Connecting to integration manager…": "Під'єднання до менеджера інтеграцій…",
     "Saving…": "Збереження…",
     "Creating…": "Створення…",
-    "Creating output…": "Створення виводу…",
-    "Fetching events…": "Отримання подій…",
     "Starting export process…": "Початок процесу експорту…",
-    "Creating HTML…": "Створення HTML…",
-    "Starting export…": "Початок експорту…",
     "Unable to connect to Homeserver. Retrying…": "Не вдалося під'єднатися до домашнього сервера. Повторна спроба…",
     "Secure Backup successful": "Безпечне резервне копіювання виконано успішно",
     "Your keys are now being backed up from this device.": "На цьому пристрої створюється резервна копія ваших ключів.",
@@ -3457,11 +3418,8 @@
     "User is not logged in": "Користувач не увійшов",
     "Allow fallback call assist server (%(server)s)": "Дозволити резервний сервер підтримки викликів (%(server)s)",
     "Changes your profile picture in this current room only": "Змінює ваше зображення профілю лише для поточної кімнати",
-    "Exported Data": "Експортовані дані",
     "Notification Settings": "Налаштування сповіщень",
     "Something went wrong.": "Щось пішло не так.",
-    "Previous group of messages": "Попередня група повідомлень",
-    "Next group of messages": "Наступна група повідомлень",
     "Changes your profile picture in all rooms": "Змінює зображення профілю в усіх кімнатах",
     "Views room with given address": "Перегляд кімнати з вказаною адресою",
     "Ask to join": "Запит на приєднання",
@@ -3610,7 +3568,9 @@
         "not_trusted": "Не довірений",
         "accessibility": "Доступність",
         "server": "Сервер",
-        "capabilities": "Можливості"
+        "capabilities": "Можливості",
+        "unnamed_room": "Кімната без назви",
+        "unnamed_space": "Простір без назви"
     },
     "action": {
         "continue": "Продовжити",
@@ -4007,5 +3967,47 @@
         "room_id": "ID кімнати: %(roomId)s",
         "thread_root_id": "ID кореневої гілки: %(threadRootId)s",
         "event_id": "ID події: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Текстові дані",
+        "from_the_beginning": "З самого початку",
+        "number_of_messages": "Вказати кількість повідомлень",
+        "current_timeline": "Ця стрічка",
+        "creating_html": "Створення HTML…",
+        "starting_export": "Початок експорту…",
+        "export_successful": "Успішно експортовано!",
+        "unload_confirm": "Точно вийти, поки триває експорт?",
+        "generating_zip": "Генерування ZIP-файлу",
+        "processing_event_n": "Оброблено %(number)s з %(total)s подій",
+        "fetched_n_events_with_total": {
+            "one": "Знайдено %(count)s з %(total)s подій",
+            "other": "Знайдено %(count)s з %(total)s подій"
+        },
+        "fetched_n_events": {
+            "one": "Знайдено %(count)s подій",
+            "other": "Знайдено %(count)s подій"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Знайдено %(count)s подій за %(seconds)sс",
+            "other": "Знайдено %(count)s подій за %(seconds)sс"
+        },
+        "exported_n_events_in_time": {
+            "one": "Експортовано %(count)s подій за %(seconds)s секунд",
+            "other": "Експортовано %(count)s подій за %(seconds)s секунд"
+        },
+        "media_omitted": "Медіа пропущено",
+        "media_omitted_file_size": "Медіа пропущено — перевищує обмеження розміру файлу",
+        "creator_summary": "%(creatorName)s створює цю кімнату.",
+        "export_info": "Експорт <roomName/> починає <exporterDetails/> о %(exportDate)s.",
+        "topic": "Тема: %(topic)s",
+        "previous_page": "Попередня група повідомлень",
+        "next_page": "Наступна група повідомлень",
+        "html_title": "Експортовані дані",
+        "error_fetching_file": "Збій отримання файлу",
+        "file_attached": "Файл прикріплено",
+        "fetching_events": "Отримання подій…",
+        "creating_output": "Створення виводу…"
     }
 }

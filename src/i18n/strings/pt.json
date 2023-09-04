@@ -224,7 +224,6 @@
     "Start authentication": "Iniciar autenticação",
     "New Password": "Nova Palavra-Passe",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede.",
-    "Unnamed Room": "Sala sem nome",
     "Home": "Início",
     "Something went wrong!": "Algo deu errado!",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (nível de permissão %(powerLevelNumber)s)",
@@ -704,7 +703,8 @@
         "camera": "Câmera de vídeo",
         "microphone": "Microfone",
         "emoji": "Emoji",
-        "someone": "Alguém"
+        "someone": "Alguém",
+        "unnamed_room": "Sala sem nome"
     },
     "action": {
         "continue": "Continuar",

@@ -228,7 +228,6 @@
     "%(roomName)s does not exist.": "%(roomName)s does not exist.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s is not accessible at this time.",
     "Start authentication": "Start authentication",
-    "Unnamed Room": "Unnamed Room",
     "Uploading %(filename)s": "Uploading %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Uploading %(filename)s and %(count)s other",
@@ -408,7 +407,8 @@
         "camera": "Camera",
         "microphone": "Microphone",
         "emoji": "Emoji",
-        "someone": "Someone"
+        "someone": "Someone",
+        "unnamed_room": "Unnamed Room"
     },
     "action": {
         "continue": "Continue",

@@ -251,7 +251,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         "Everyone in <SpaceName/> will be able to find and join this room.",
                         {},
                         {
-                            SpaceName: () => <b>{this.props.parentSpace?.name ?? _t("Unnamed Space")}</b>,
+                            SpaceName: () => <b>{this.props.parentSpace?.name ?? _t("common|unnamed_space")}</b>,
                         },
                     )}
                     &nbsp;
@@ -265,7 +265,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         "Anyone will be able to find and join this room, not just members of <SpaceName/>.",
                         {},
                         {
-                            SpaceName: () => <b>{this.props.parentSpace?.name ?? _t("Unnamed Space")}</b>,
+                            SpaceName: () => <b>{this.props.parentSpace?.name ?? _t("common|unnamed_space")}</b>,
                         },
                     )}
                     &nbsp;

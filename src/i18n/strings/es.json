@@ -161,7 +161,6 @@
     "Unable to verify email address.": "No es posible verificar la dirección de correo electrónico.",
     "Unban": "Quitar Veto",
     "Unable to enable Notifications": "No se han podido activar las notificaciones",
-    "Unnamed Room": "Sala sin nombre",
     "Uploading %(filename)s": "Subiendo %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Subiendo %(filename)s y otros %(count)s",
@@ -2017,7 +2016,6 @@
     "Failed to save space settings.": "No se han podido guardar los ajustes del espacio.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invita a más gente usando su nombre, correo electrónico, nombre de usuario (ej.: <userId/>) o <a>compartiendo el enlace a este espacio</a>.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invita a más gente usando su nombre, nombre de usuario (ej.: <userId/>) o <a>compartiendo el enlace a este espacio</a>.",
-    "Unnamed Space": "Espacio sin nombre",
     "Invite to %(spaceName)s": "Invitar a %(spaceName)s",
     "Create a new room": "Crear una sala nueva",
     "Spaces": "Espacios",
@@ -2400,9 +2398,6 @@
     "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s ha dejado de fijar un mensaje de esta sala. Ver todos los mensajes fijados.",
     "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s ha dejado de fijar <a>un mensaje</a> de esta sala. Ver todos los <b>mensajes fijados</b>.",
     "%(reactors)s reacted with %(content)s": "%(reactors)s han reaccionado con %(content)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Aquí empieza la exportación de <roomName/>. Exportado por <exporterDetails/> el %(exportDate)s.",
-    "Media omitted - file size limit exceeded": "Archivo omitido - supera el límite de tamaño",
-    "Media omitted": "Archivo omitido",
     "Exporting your data": "Exportando tus datos",
     "Export Chat": "Exportar conversación",
     "Include Attachments": "Incluir archivos adjuntos",
@@ -2411,17 +2406,6 @@
     "MB": "MB",
     "In reply to <a>this message</a>": "En respuesta a <a>este mensaje</a>",
     "Export chat": "Exportar conversación",
-    "File Attached": "Archivo adjunto",
-    "Error fetching file": "Error al recuperar el archivo",
-    "Topic: %(topic)s": "Asunto: %(topic)s",
-    "%(creatorName)s created this room.": "%(creatorName)s creó esta sala.",
-    "Current Timeline": "Línea de tiempo actual",
-    "Specify a number of messages": "Un número máximo de mensajes",
-    "From the beginning": "Desde el principio",
-    "Plain Text": "Texto",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "¿Seguro que quieres salir durante la exportación?",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s cambió la imagen de la sala.",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s envió una pegatina.",
     "Size can only be a number between %(min)s MB and %(max)s MB": "El tamaño solo puede ser un número de %(min)s a %(max)s MB",
@@ -2610,25 +2594,6 @@
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "En su momento, aceptaste compartir información anónima de uso con nosotros. Estamos cambiando cómo funciona el sistema.",
     "Help improve %(analyticsOwner)s": "Ayúdanos a mejorar %(analyticsOwner)s",
     "That's fine": "Vale",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "%(count)s evento exportado en %(seconds)s segundos",
-        "other": "%(count)s eventos exportados en %(seconds)s segundos"
-    },
-    "Export successful!": "¡Exportación completada!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Recibido %(count)s evento en %(seconds)ss",
-        "other": "Recibidos %(count)s eventos en %(seconds)ss"
-    },
-    "Processing event %(number)s out of %(total)s": "Procesando evento %(number)s de %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "Recibido %(count)s evento por ahora",
-        "other": "Recibidos %(count)s eventos por ahora"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Recibido %(count)s evento de %(total)s",
-        "other": "Recibidos %(count)s eventos de %(total)s"
-    },
-    "Generating a ZIP": "Generar un archivo ZIP",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "El formato de la fecha no es el que esperábamos (%(inputDate)s). Prueba con AAAA-MM-DD, año-mes-día.",
     "You cannot place calls without a connection to the server.": "No puedes llamar porque no hay conexión con el servidor.",
     "Connectivity to the server has been lost": "Se ha perdido la conexión con el servidor",
@@ -3309,11 +3274,7 @@
     "Grey": "Gris",
     "Yes, it was me": "Sí, fui yo",
     "You have unverified sessions": "Tienes sesiones sin verificar",
-    "Creating output…": "Creando resultado…",
-    "Fetching events…": "Recuperando eventos…",
     "Starting export process…": "Iniciando el proceso de exportación…",
-    "Creating HTML…": "Creando HTML…",
-    "Starting export…": "Comenzando la exportación…",
     "WebGL is required to display maps, please enable it in your browser settings.": "WebGL es necesario para mostrar mapas. Por favor, actívalo en los ajustes de tu navegador.",
     "Connection error - Recording paused": "Error de conexión, grabación detenida",
     "play voice broadcast": "reproducir difusión de voz",
@@ -3446,7 +3407,9 @@
         "not_trusted": "No de confianza",
         "accessibility": "Accesibilidad",
         "server": "Servidor",
-        "capabilities": "Funcionalidades"
+        "capabilities": "Funcionalidades",
+        "unnamed_room": "Sala sin nombre",
+        "unnamed_space": "Espacio sin nombre"
     },
     "action": {
         "continue": "Continuar",
@@ -3813,5 +3776,44 @@
         "developer_tools": "Herramientas de desarrollo",
         "room_id": "ID de la sala: %(roomId)s",
         "event_id": "ID del evento: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Texto",
+        "from_the_beginning": "Desde el principio",
+        "number_of_messages": "Un número máximo de mensajes",
+        "current_timeline": "Línea de tiempo actual",
+        "creating_html": "Creando HTML…",
+        "starting_export": "Comenzando la exportación…",
+        "export_successful": "¡Exportación completada!",
+        "unload_confirm": "¿Seguro que quieres salir durante la exportación?",
+        "generating_zip": "Generar un archivo ZIP",
+        "processing_event_n": "Procesando evento %(number)s de %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "Recibido %(count)s evento de %(total)s",
+            "other": "Recibidos %(count)s eventos de %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "Recibido %(count)s evento por ahora",
+            "other": "Recibidos %(count)s eventos por ahora"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Recibido %(count)s evento en %(seconds)ss",
+            "other": "Recibidos %(count)s eventos en %(seconds)ss"
+        },
+        "exported_n_events_in_time": {
+            "one": "%(count)s evento exportado en %(seconds)s segundos",
+            "other": "%(count)s eventos exportados en %(seconds)s segundos"
+        },
+        "media_omitted": "Archivo omitido",
+        "media_omitted_file_size": "Archivo omitido - supera el límite de tamaño",
+        "creator_summary": "%(creatorName)s creó esta sala.",
+        "export_info": "Aquí empieza la exportación de <roomName/>. Exportado por <exporterDetails/> el %(exportDate)s.",
+        "topic": "Asunto: %(topic)s",
+        "error_fetching_file": "Error al recuperar el archivo",
+        "file_attached": "Archivo adjunto",
+        "fetching_events": "Recuperando eventos…",
+        "creating_output": "Creando resultado…"
     }
 }

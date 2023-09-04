@@ -1700,9 +1700,7 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "ເຊີນຄົນທີ່ໃຊ້ຊື່ຂອງເຂົາເຈົ້າ, ທີ່ຢູ່ອີເມວ, ຊື່ຜູ້ໃຊ້ (ເຊັ່ນ <userId/>) ຫຼື <a>ແບ່ງປັນຫ້ອງນີ້</a>.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "ເຊີນຄົນທີ່ໃຊ້ຊື່ຂອງເຂົາເຈົ້າ, ຊື່ຜູ້ໃຊ້ (ເຊັ່ນ <userId/>) ຫຼື <a>ແບ່ງປັນພື້ນທີ່ນີ້</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "ເຊີນບຸຄົນອຶ່ນໂດຍໃຊ້ຊື່, ທີ່ຢູ່ອີເມວ, ຊື່ຜູ້ໃຊ້ (ເຊັ່ນ<userId/> ຫຼື <a>share this space</a>.",
-    "Unnamed Room": "ບໍ່ມີຊື່ຫ້ອງ",
     "Invite to %(roomName)s": "ຊີນໄປຫາ %(roomName)s",
-    "Unnamed Space": "ພື້ນທີ່ບໍ່ລະບຸຊື່",
     "Or send invite link": "ຫຼື ສົ່ງລິ້ງເຊີນ",
     "If you can't see who you're looking for, send them your invite link below.": "ຖ້າທ່ານບໍ່ສາມາດເຫັນຜູ້ທີ່ທ່ານກໍາລັງຊອກຫາ, ໃຫ້ສົ່ງລິ້ງເຊີນຂອງເຈົ້າຢູ່ລຸ່ມນີ້ໃຫ້ເຂົາເຈົ້າ.",
     "Some suggestions may be hidden for privacy.": "ບາງຄໍາແນະນໍາອາດຈະຖືກເຊື່ອງໄວ້ເພື່ອຄວາມເປັນສ່ວນຕົວ.",
@@ -2214,39 +2212,6 @@
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "ກ່ອນໜ້ານີ້ທ່ານໄດ້ຍິນຍອມທີ່ຈະແບ່ງປັນຂໍ້ມູນການນຳໃຊ້ທີ່ບໍ່ເປີດເຜີຍຊື່ກັບພວກເຮົາ. ພວກເຮົາກຳລັງອັບເດດວິທີການເຮັດວຽກນັ້ນ.",
     "Help improve %(analyticsOwner)s": "ຊ່ວຍປັບປຸງ %(analyticsOwner)s",
     "That's fine": "ບໍ່ເປັນຫຍັງ",
-    "File Attached": "ແນບໄຟລ໌",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "ສົ່ງອອກ %(count)s ເຫດການໃນ %(seconds)sວິນາທີ",
-        "other": "ສົ່ງອອກ %(count)s ເຫດການໃນ %(seconds)s ວິນາທີ"
-    },
-    "Export successful!": "ສົ່ງອອກສຳເລັດ!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "ດຶງເອົາ %(count)s ໃນເຫດການ%(seconds)ss",
-        "other": "ດຶງເອົາເຫດການ %(count)s ໃນ %(seconds)s"
-    },
-    "Processing event %(number)s out of %(total)s": "ກຳລັງປະມວນຜົນເຫດການ %(number)s ຈາກທັງໝົດ %(total)s",
-    "Error fetching file": "ເກີດຄວາມຜິດພາດໃນການດຶງໄຟລ໌",
-    "Topic: %(topic)s": "ຫົວຂໍ້: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "ນີ້ແມ່ນຈຸດເລີ່ມຕົ້ນຂອງການສົ່ງອອກຂອງ <roomName/>. ສົ່ງອອກໂດຍ <exporterDetails/> ທີ່ %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s ສ້າງຫ້ອງນີ້.",
-    "Media omitted - file size limit exceeded": "ລະເວັ້ນສື່ - ຂະໜາດໄຟລ໌ເກີນຂີດຈຳກັດ",
-    "Media omitted": "ລະເວັ້ນສື່ມິເດຍ",
-    "Current Timeline": "ທາມລາຍປັດຈຸບັນ",
-    "Specify a number of messages": "ກຳນົດຈໍານວນຂໍ້ຄວາມ",
-    "From the beginning": "ຕັ້ງແຕ່ເລີ່ມຕົ້ນ",
-    "Plain Text": "ຂໍ້ຄວາມທຳມະດາ",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Fetched %(count)s events so far": {
-        "one": "ດຶງເອົາເຫດການ %(count)s ຈົນເຖິງຕອນນັ້ນ",
-        "other": "ດຶງເອົາເຫດການ %(count)s ຈົນເຖິງຕອນນັ້ນ"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "ດຶງເອົາເຫດການ %(count)s ອອກຈາກ %(total)s ແລ້ວ",
-        "other": "ດຶງເອົາ %(count)sunt)s ເຫດການອອກຈາກ %(total)s"
-    },
-    "Generating a ZIP": "ການສ້າງ ZIP",
-    "Are you sure you want to exit during this export?": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການອອກໃນລະຫວ່າງການສົ່ງອອກນີ້?",
     "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "homeserver ນີ້ບໍ່ໄດ້ຖືກຕັ້ງຄ່າຢ່າງຖືກຕ້ອງເພື່ອສະແດງແຜນທີ່, ຫຼື ເຊີບເວີແຜນທີ່ ທີ່ຕັ້ງໄວ້ອາດຈະບໍ່ສາມາດຕິດຕໍ່ໄດ້.",
     "This homeserver is not configured to display maps.": "homeserver ນີ້ບໍ່ໄດ້ຕັ້ງຄ່າເພື່ອສະແດງແຜນທີ່.",
     "Unknown App": "ແອັບທີ່ບໍ່ຮູ້ຈັກ",
@@ -3058,7 +3023,9 @@
         "not_trusted": "ເຊື່ອຖືບໍ່ໄດ້",
         "accessibility": "ການເຂົ້າເຖິງ",
         "server": "ເຊີບເວີ",
-        "capabilities": "ຄວາມສາມາດ"
+        "capabilities": "ຄວາມສາມາດ",
+        "unnamed_room": "ບໍ່ມີຊື່ຫ້ອງ",
+        "unnamed_space": "ພື້ນທີ່ບໍ່ລະບຸຊື່"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -3333,5 +3300,40 @@
         "developer_tools": "ເຄື່ອງມືພັດທະນາ",
         "room_id": "ID ຫ້ອງ: %(roomId)s",
         "event_id": "ກໍລິນີ ID %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "ຂໍ້ຄວາມທຳມະດາ",
+        "from_the_beginning": "ຕັ້ງແຕ່ເລີ່ມຕົ້ນ",
+        "number_of_messages": "ກຳນົດຈໍານວນຂໍ້ຄວາມ",
+        "current_timeline": "ທາມລາຍປັດຈຸບັນ",
+        "export_successful": "ສົ່ງອອກສຳເລັດ!",
+        "unload_confirm": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການອອກໃນລະຫວ່າງການສົ່ງອອກນີ້?",
+        "generating_zip": "ການສ້າງ ZIP",
+        "processing_event_n": "ກຳລັງປະມວນຜົນເຫດການ %(number)s ຈາກທັງໝົດ %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "ດຶງເອົາເຫດການ %(count)s ອອກຈາກ %(total)s ແລ້ວ",
+            "other": "ດຶງເອົາ %(count)sunt)s ເຫດການອອກຈາກ %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "ດຶງເອົາເຫດການ %(count)s ຈົນເຖິງຕອນນັ້ນ",
+            "other": "ດຶງເອົາເຫດການ %(count)s ຈົນເຖິງຕອນນັ້ນ"
+        },
+        "fetched_n_events_in_time": {
+            "one": "ດຶງເອົາ %(count)s ໃນເຫດການ%(seconds)ss",
+            "other": "ດຶງເອົາເຫດການ %(count)s ໃນ %(seconds)s"
+        },
+        "exported_n_events_in_time": {
+            "one": "ສົ່ງອອກ %(count)s ເຫດການໃນ %(seconds)sວິນາທີ",
+            "other": "ສົ່ງອອກ %(count)s ເຫດການໃນ %(seconds)s ວິນາທີ"
+        },
+        "media_omitted": "ລະເວັ້ນສື່ມິເດຍ",
+        "media_omitted_file_size": "ລະເວັ້ນສື່ - ຂະໜາດໄຟລ໌ເກີນຂີດຈຳກັດ",
+        "creator_summary": "%(creatorName)s ສ້າງຫ້ອງນີ້.",
+        "export_info": "ນີ້ແມ່ນຈຸດເລີ່ມຕົ້ນຂອງການສົ່ງອອກຂອງ <roomName/>. ສົ່ງອອກໂດຍ <exporterDetails/> ທີ່ %(exportDate)s.",
+        "topic": "ຫົວຂໍ້: %(topic)s",
+        "error_fetching_file": "ເກີດຄວາມຜິດພາດໃນການດຶງໄຟລ໌",
+        "file_attached": "ແນບໄຟລ໌"
     }
 }

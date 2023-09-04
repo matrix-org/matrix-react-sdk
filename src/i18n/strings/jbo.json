@@ -35,7 +35,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": ".i li %(monthName)s %(day)s %(weekDayName)s %(time)s detri",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": ".i li %(fullYear)s %(monthName)s %(day)s %(weekDayName)s detri",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": ".i li %(fullYear)s %(monthName)s %(day)s %(weekDayName)s %(time)s detri",
-    "Unnamed Room": "na da cmene",
     "Unable to enable Notifications": ".i na kakne lo nu co'a kakne lo nu benji lo sajgau",
     "This email address was not found": ".i na da zo'u facki le du'u samymri judri da",
     "Default": "zmiselcu'a",
@@ -356,7 +355,8 @@
         "emoji": "cinmo sinxa",
         "someone": "da",
         "trusted": "se lacri",
-        "not_trusted": "na se lacri"
+        "not_trusted": "na se lacri",
+        "unnamed_room": "na da cmene"
     },
     "action": {
         "continue": "",

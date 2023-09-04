@@ -96,7 +96,6 @@
     "This room has no local addresses": "Tällä huoneella ei ole paikallista osoitetta",
     "This room is not accessible by remote Matrix servers": "Tähän huoneeseen ei pääse ulkopuolisilta Matrix-palvelimilta",
     "Unban": "Poista porttikielto",
-    "Unnamed Room": "Nimeämätön huone",
     "Uploading %(filename)s": "Lähetetään %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Lähetetään %(filename)s ja %(count)s muuta",
@@ -2000,7 +1999,6 @@
     "Settings - %(spaceName)s": "Asetukset - %(spaceName)s",
     "Report the entire room": "Raportoi koko huone",
     "Search spaces": "Etsi avaruuksia",
-    "Unnamed Space": "Nimetön avaruus",
     "You may contact me if you have any follow up questions": "Voitte olla yhteydessä minuun, jos teillä on lisäkysymyksiä",
     "Search for rooms or people": "Etsi huoneita tai ihmisiä",
     "Message preview": "Viestin esikatselu",
@@ -2070,12 +2068,7 @@
     "%(sharerName)s is presenting": "%(sharerName)s esittää",
     "You are presenting": "Esität parhaillaan",
     "Set up Secure Backup": "Määritä turvallinen varmuuskopio",
-    "Error fetching file": "Virhe tiedostoa noutaessa",
     "Review to ensure your account is safe": "Katselmoi varmistaaksesi, että tilisi on turvassa",
-    "%(creatorName)s created this room.": "%(creatorName)s loi tämän huoneen.",
-    "Plain Text": "Raakateksti",
-    "JSON": "JSON",
-    "HTML": "HTML",
     "Share your public space": "Jaa julkinen avaruutesi",
     "Invite to %(spaceName)s": "Kutsu avaruuteen %(spaceName)s",
     "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s kiinnitti viestin tähän huoneeseen. Katso kaikki kiinnitetyt viestit.",
@@ -2193,12 +2186,6 @@
     "Silence call": "Hiljennä puhelu",
     "Sound on": "Ääni päällä",
     "Don't miss a reply": "Älä jätä vastauksia huomiotta",
-    "Current Timeline": "Nykyinen aikajana",
-    "Specify a number of messages": "Määritä viestien lukumäärä",
-    "From the beginning": "Alusta lähtien",
-    "Are you sure you want to exit during this export?": "Haluatko varmasti poistua tämän viennin aikana?",
-    "File Attached": "Tiedosto liitetty",
-    "Topic: %(topic)s": "Aihe: %(topic)s",
     "Show:": "Näytä:",
     "This room is suggested as a good one to join": "Tähän huoneeseen liittymistä suositellaan",
     "View in room": "Näytä huoneessa",
@@ -2240,9 +2227,6 @@
     "Message search initialisation failed": "Viestihaun alustus epäonnistui",
     "More": "Lisää",
     "Developer mode": "Kehittäjätila",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Tämä on huoneen <roomName/> viennin alku. Vienyt <exporterDetails/> %(exportDate)s.",
-    "Media omitted - file size limit exceeded": "Media jätetty pois – tiedoston kokoraja ylitetty",
-    "Media omitted": "Media jätetty pois",
     "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s muutti huoneen <a>kiinnitettyjä viestejä</a>.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s vaihtoi huoneen kuvan.",
     "%(senderName)s unbanned %(targetName)s": "%(senderName)s poisti porttikiellon käyttäjältä %(targetName)s",
@@ -2409,25 +2393,6 @@
     "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "Jaa anonyymiä tietoa ongelmien tunnistamiseksi. Ei mitään henkilökohtaista. Ei kolmansia tahoja. <LearnMoreLink>Lue lisää</LearnMoreLink>",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Olet aiemmin suostunut jakamaan anonyymiä käyttötietoa kanssamme. Päivitämme jakamisen toimintaperiaatteita.",
     "That's fine": "Sopii",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "%(count)s tapahtuma viety %(seconds)s sekunnissa",
-        "other": "%(count)s tapahtumaa viety %(seconds)s sekunnissa"
-    },
-    "Export successful!": "Vienti onnistui!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "%(count)s tapahtuma noudettu %(seconds)s sekunnissa",
-        "other": "%(count)s tapahtumaa noudettu %(seconds)s sekunnissa"
-    },
-    "Processing event %(number)s out of %(total)s": "Käsitellään tapahtumaa %(number)s / %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "%(count)s tapahtuma noudettu tähän mennessä",
-        "other": "%(count)s tapahtumaa noudettu tähän mennessä"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "%(count)s / %(total)s tapahtumaa noudettu",
-        "other": "%(count)s / %(total)s tapahtumaa noudettu"
-    },
-    "Generating a ZIP": "Luodaan ZIPiä",
     "Light high contrast": "Vaalea, suuri kontrasti",
     "%(senderName)s has ended a poll": "%(senderName)s on lopettanut kyselyn",
     "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s on aloittanut kyselyn - %(pollQuestion)s",
@@ -3104,11 +3069,7 @@
     "Red": "Punainen",
     "Grey": "Harmaa",
     "Yes, it was me": "Kyllä, se olin minä",
-    "Creating output…": "Luodaan tulostetta…",
-    "Fetching events…": "Noudetaan tapahtumia…",
     "Starting export process…": "Käynnistetään vientitoimenpide…",
-    "Creating HTML…": "Luodaan HTML…",
-    "Starting export…": "Käynnistetään vienti…",
     "Unable to connect to Homeserver. Retrying…": "Kotipalvelimeen yhdistäminen ei onnistunut. Yritetään uudelleen…",
     "Could not find room": "Huonetta ei löytynyt",
     "WARNING: session already verified, but keys do NOT MATCH!": "VAROITUS: istunto on jo vahvistettu, mutta avaimet EIVÄT TÄSMÄÄ!",
@@ -3273,7 +3234,9 @@
         "not_trusted": "Ei-luotettu",
         "accessibility": "Saavutettavuus",
         "server": "Palvelin",
-        "capabilities": "Kyvykkyydet"
+        "capabilities": "Kyvykkyydet",
+        "unnamed_room": "Nimeämätön huone",
+        "unnamed_space": "Nimetön avaruus"
     },
     "action": {
         "continue": "Jatka",
@@ -3606,5 +3569,44 @@
         "developer_tools": "Kehittäjätyökalut",
         "room_id": "Huoneen ID-tunniste: %(roomId)s",
         "event_id": "Tapahtuman ID-tunniste: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Raakateksti",
+        "from_the_beginning": "Alusta lähtien",
+        "number_of_messages": "Määritä viestien lukumäärä",
+        "current_timeline": "Nykyinen aikajana",
+        "creating_html": "Luodaan HTML…",
+        "starting_export": "Käynnistetään vienti…",
+        "export_successful": "Vienti onnistui!",
+        "unload_confirm": "Haluatko varmasti poistua tämän viennin aikana?",
+        "generating_zip": "Luodaan ZIPiä",
+        "processing_event_n": "Käsitellään tapahtumaa %(number)s / %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "%(count)s / %(total)s tapahtumaa noudettu",
+            "other": "%(count)s / %(total)s tapahtumaa noudettu"
+        },
+        "fetched_n_events": {
+            "one": "%(count)s tapahtuma noudettu tähän mennessä",
+            "other": "%(count)s tapahtumaa noudettu tähän mennessä"
+        },
+        "fetched_n_events_in_time": {
+            "one": "%(count)s tapahtuma noudettu %(seconds)s sekunnissa",
+            "other": "%(count)s tapahtumaa noudettu %(seconds)s sekunnissa"
+        },
+        "exported_n_events_in_time": {
+            "one": "%(count)s tapahtuma viety %(seconds)s sekunnissa",
+            "other": "%(count)s tapahtumaa viety %(seconds)s sekunnissa"
+        },
+        "media_omitted": "Media jätetty pois",
+        "media_omitted_file_size": "Media jätetty pois – tiedoston kokoraja ylitetty",
+        "creator_summary": "%(creatorName)s loi tämän huoneen.",
+        "export_info": "Tämä on huoneen <roomName/> viennin alku. Vienyt <exporterDetails/> %(exportDate)s.",
+        "topic": "Aihe: %(topic)s",
+        "error_fetching_file": "Virhe tiedostoa noutaessa",
+        "file_attached": "Tiedosto liitetty",
+        "fetching_events": "Noudetaan tapahtumia…",
+        "creating_output": "Luodaan tulostetta…"
     }
 }

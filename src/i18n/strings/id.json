@@ -499,7 +499,6 @@
     "Only continue if you trust the owner of the server.": "Hanya lanjutkan jika Anda mempercayai pemilik server ini.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Aksi ini memerlukan mengakses server identitas bawaan <server /> untuk memvalidasi sebuah alamat email atau nomor telepon, tetapi server ini tidak memiliki syarat layanan apa pun.",
     "Identity server has no terms of service": "Identitas server ini tidak memiliki syarat layanan",
-    "Unnamed Room": "Ruangan Tanpa Nama",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -812,8 +811,6 @@
     "Privileged Users": "Pengguna Istimewa",
     "URL Previews": "Tampilan URL",
     "Upload avatar": "Unggah avatar",
-    "JSON": "JSON",
-    "HTML": "HTML",
     "Report": "Laporkan",
     "Confirm passphrase": "Konfirmasi frasa sandi",
     "Enter passphrase": "Masukkan frasa sandi",
@@ -1207,7 +1204,6 @@
     "Accept <policyLink /> to continue:": "Terima <policyLink /> untuk melanjutkan:",
     "Your server isn't responding to some <a>requests</a>.": "Server Anda tidak menanggapi beberapa <a>permintaan</a>.",
     "Update %(brand)s": "Perbarui %(brand)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Ini adalah awalan dari ekspor <roomName/>. Diekspor oleh <exporterDetails/> di %(exportDate)s.",
     "Waiting for %(displayName)s to verify…": "Menunggu %(displayName)s untuk memverifikasi…",
     "To be secure, do this in person or use a trusted way to communicate.": "Supaya aman, lakukan ini secara langsung atau gunakan cara lain yang terpercaya untuk berkomunikasi.",
     "They match": "Mereka cocok",
@@ -1309,17 +1305,6 @@
     "Enable desktop notifications": "Aktifkan notifikasi desktop",
     "Don't miss a reply": "Jangan lewatkan sebuah balasan",
     "Review to ensure your account is safe": "Periksa untuk memastikan akun Anda aman",
-    "File Attached": "File Dilampirkan",
-    "Error fetching file": "Terjadi kesalahan saat mendapatkan file",
-    "Topic: %(topic)s": "Topik: %(topic)s",
-    "%(creatorName)s created this room.": "%(creatorName)s membuat ruangan ini.",
-    "Media omitted - file size limit exceeded": "Media tidak disertakan — melebihi batas ukuran file",
-    "Media omitted": "Media tidak disertakan",
-    "Current Timeline": "Lini Masa Saat Ini",
-    "Specify a number of messages": "Tentukan berapa pesan",
-    "From the beginning": "Dari awal",
-    "Plain Text": "Teks Biasa",
-    "Are you sure you want to exit during this export?": "Apakah Anda yakin untuk membatalkan ekspor ini?",
     "Unknown App": "Aplikasi Tidak Diketahui",
     "Share your public space": "Bagikan space publik Anda",
     "Invite to %(spaceName)s": "Undang ke %(spaceName)s",
@@ -2473,7 +2458,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Undang seseorang menggunakan namanya, nama pengguna (seperti <userId/>) atau <a>bagikan space ini</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Undang seseorang menggunakan namanya, alamat email, nama pengguna (seperti <userId/>) atau <a>bagikan space ini</a>.",
     "Invite to %(roomName)s": "Undang ke %(roomName)s",
-    "Unnamed Space": "Space Tidak Dinamai",
     "Or send invite link": "Atau kirim tautan undangan",
     "If you can't see who you're looking for, send them your invite link below.": "Jika Anda tidak dapat menemukan siapa yang Anda mencari, kirimkan tautan undangan Anda di bawah.",
     "Some suggestions may be hidden for privacy.": "Beberapa saran mungkin disembunyikan untuk privasi.",
@@ -2631,25 +2615,6 @@
     "Including you, %(commaSeparatedMembers)s": "Termasuk Anda, %(commaSeparatedMembers)s",
     "Copy room link": "Salin tautan ruangan",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "Kami tidak dapat mengerti tanggal yang dicantumkan (%(inputDate)s). Coba menggunakan format TTTT-BB-HH.",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Telah mengekspor %(count)s peristiwa dalam %(seconds)s detik",
-        "other": "Telah mengekspor %(count)s peristiwa dalam %(seconds)s detik"
-    },
-    "Export successful!": "Pengeksporan berhasil!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Telah mendapatkan %(count)s peristiwa dalam %(seconds)sd",
-        "other": "Telah mendapatkan %(count)s peristiwa dalam %(seconds)sd"
-    },
-    "Processing event %(number)s out of %(total)s": "Memproses peristiwa %(number)s dari %(total)s peristiwa",
-    "Fetched %(count)s events so far": {
-        "one": "Telah mendapatkan %(count)s peristiwa sejauh ini",
-        "other": "Telah mendapatkan %(count)s peristiwa sejauh ini"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Mendapatkan %(count)s peristiwa dari %(total)s peristiwa",
-        "other": "Mendapatkan %(count)s peristiwa dari %(total)s peristiwa"
-    },
-    "Generating a ZIP": "Membuat sebuah ZIP",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ini mengelompokkan obrolan Anda dengan anggota space ini. Menonaktifkan ini akan menyembunyikan obrolan dari tampilan %(spaceName)s Anda.",
     "Sections to show": "Bagian untuk ditampilkan",
     "Failed to load list of rooms.": "Gagal untuk memuat daftar ruangan.",
@@ -3330,7 +3295,6 @@
     "<b>Warning</b>: upgrading a room will <i>not automatically migrate room members to the new version of the room.</i> We'll post a link to the new room in the old version of the room - room members will have to click this link to join the new room.": "<b>Peringatan</b>: meningkatkan sebuah ruangan <i>tidak akan memindahkan anggota ruang ke versi baru ruangan secara otomatis.</i> Kami akan mengirimkan sebuah tautan ke ruangan yang baru di versi lama ruangan - anggota ruangan harus mengeklik tautan ini untuk bergabung dengan ruangan yang baru.",
     "Your personal ban list holds all the users/servers you personally don't want to see messages from. After ignoring your first user/server, a new room will show up in your room list named '%(myBanList)s' - stay in this room to keep the ban list in effect.": "Daftar larangan pribadi Anda menampung semua pengguna/server yang secara pribadi tidak ingin Anda lihat pesannya. Setelah mengabaikan pengguna/server pertama Anda, sebuah ruangan yang baru akan muncul di daftar ruangan Anda yang bernama '%(myBanList)s' - tetaplah di ruangan ini agar daftar larangan tetap berlaku.",
     "WARNING: session already verified, but keys do NOT MATCH!": "PERINGATAN: sesi telah diverifikasi, tetapi kuncinya TIDAK COCOK!",
-    "Starting export…": "Memulai pengeksporan…",
     "Unable to connect to Homeserver. Retrying…": "Tidak dapat menghubungkan ke Homeserver. Mencoba ulang…",
     "Starting backup…": "Memulai pencadangan…",
     "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": "Hanya lanjutkan jika Anda yakin Anda telah kehilangan semua perangkat lainnya dan kunci keamanan Anda.",
@@ -3361,10 +3325,7 @@
     "Connecting to integration manager…": "Menghubungkan ke pengelola integrasi…",
     "Saving…": "Menyimpan…",
     "Creating…": "Membuat…",
-    "Creating output…": "Membuat keluaran…",
-    "Fetching events…": "Mendapatkan peristiwa…",
     "Starting export process…": "Memulai proses pengeksporan…",
-    "Creating HTML…": "Membuat HTML…",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Masukkan frasa keamanan yang hanya Anda tahu, yang digunakan untuk mengamankan data Anda. Supaya aman, jangan menggunakan ulang kata sandi akun Anda.",
     "Secure Backup successful": "Pencadangan Aman berhasil",
     "Your keys are now being backed up from this device.": "Kunci Anda sekarang dicadangkan dari perangkat ini.",
@@ -3507,9 +3468,6 @@
     "Changes your profile picture in all rooms": "Ubah foto profil Anda dalam semua ruangan",
     "%(senderDisplayName)s changed the join rule to ask to join.": "%(senderDisplayName)s mengubah peraturan bergabung menjadi bertanya untuk bergabung.",
     "User cannot be invited until they are unbanned": "Pengguna tidak dapat diundang sampai dibatalkan cekalannya",
-    "Previous group of messages": "Grup pesan sebelumnya",
-    "Next group of messages": "Grup pesan berikutnya",
-    "Exported Data": "Data Terekspor",
     "Views room with given address": "Menampilkan ruangan dengan alamat yang ditentukan",
     "Notification Settings": "Pengaturan Notifikasi",
     "This homeserver doesn't offer any login flows that are supported by this client.": "Homeserver ini tidak menawarkan alur masuk yang tidak didukung oleh klien ini.",
@@ -3614,7 +3572,9 @@
         "not_trusted": "Tidak dipercayai",
         "accessibility": "Aksesibilitas",
         "server": "Server",
-        "capabilities": "Kemampuan"
+        "capabilities": "Kemampuan",
+        "unnamed_room": "Ruangan Tanpa Nama",
+        "unnamed_space": "Space Tidak Dinamai"
     },
     "action": {
         "continue": "Lanjut",
@@ -4012,5 +3972,47 @@
         "room_id": "ID ruangan: %(roomId)s",
         "thread_root_id": "ID Akar Utas: %(threadRootId)s",
         "event_id": "ID peristiwa: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Teks Biasa",
+        "from_the_beginning": "Dari awal",
+        "number_of_messages": "Tentukan berapa pesan",
+        "current_timeline": "Lini Masa Saat Ini",
+        "creating_html": "Membuat HTML…",
+        "starting_export": "Memulai pengeksporan…",
+        "export_successful": "Pengeksporan berhasil!",
+        "unload_confirm": "Apakah Anda yakin untuk membatalkan ekspor ini?",
+        "generating_zip": "Membuat sebuah ZIP",
+        "processing_event_n": "Memproses peristiwa %(number)s dari %(total)s peristiwa",
+        "fetched_n_events_with_total": {
+            "one": "Mendapatkan %(count)s peristiwa dari %(total)s peristiwa",
+            "other": "Mendapatkan %(count)s peristiwa dari %(total)s peristiwa"
+        },
+        "fetched_n_events": {
+            "one": "Telah mendapatkan %(count)s peristiwa sejauh ini",
+            "other": "Telah mendapatkan %(count)s peristiwa sejauh ini"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Telah mendapatkan %(count)s peristiwa dalam %(seconds)sd",
+            "other": "Telah mendapatkan %(count)s peristiwa dalam %(seconds)sd"
+        },
+        "exported_n_events_in_time": {
+            "one": "Telah mengekspor %(count)s peristiwa dalam %(seconds)s detik",
+            "other": "Telah mengekspor %(count)s peristiwa dalam %(seconds)s detik"
+        },
+        "media_omitted": "Media tidak disertakan",
+        "media_omitted_file_size": "Media tidak disertakan — melebihi batas ukuran file",
+        "creator_summary": "%(creatorName)s membuat ruangan ini.",
+        "export_info": "Ini adalah awalan dari ekspor <roomName/>. Diekspor oleh <exporterDetails/> di %(exportDate)s.",
+        "topic": "Topik: %(topic)s",
+        "previous_page": "Grup pesan sebelumnya",
+        "next_page": "Grup pesan berikutnya",
+        "html_title": "Data Terekspor",
+        "error_fetching_file": "Terjadi kesalahan saat mendapatkan file",
+        "file_attached": "File Dilampirkan",
+        "fetching_events": "Mendapatkan peristiwa…",
+        "creating_output": "Membuat keluaran…"
     }
 }

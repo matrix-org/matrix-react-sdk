@@ -163,7 +163,6 @@
     "Unable to verify email address.": "Kan e-mailadres niet verifiëren.",
     "Unban": "Ontbannen",
     "Unable to enable Notifications": "Kan meldingen niet inschakelen",
-    "Unnamed Room": "Naamloze Kamer",
     "Uploading %(filename)s": "%(filename)s wordt geüpload",
     "Uploading %(filename)s and %(count)s others": {
         "one": "%(filename)s en %(count)s ander worden geüpload",
@@ -2015,7 +2014,6 @@
     "Edit settings relating to your space.": "Bewerk instellingen gerelateerd aan jouw space.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Nodig iemand uit per naam, inlognaam (zoals <userId/>) of <a>deel deze Space</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Nodig iemand uit per naam, e-mail, inlognaam (zoals <userId/>) of <a>deel deze Space</a>.",
-    "Unnamed Space": "Naamloze Space",
     "Invite to %(spaceName)s": "Voor %(spaceName)s uitnodigen",
     "Create a new room": "Nieuwe kamer aanmaken",
     "Spaces": "Spaces",
@@ -2419,20 +2417,6 @@
     "Enter a number between %(min)s and %(max)s": "Voer een nummer tussen %(min)s en %(max)s in",
     "In reply to <a>this message</a>": "In antwoord op <a>dit bericht</a>",
     "Export chat": "Chat exporteren",
-    "File Attached": "Bijgevoegd bestand",
-    "Error fetching file": "Fout bij bestand opvragen",
-    "Topic: %(topic)s": "Onderwerp: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Dit is de start van de export van <roomName/>. Geëxporteerd door <exporterDetails/> op %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s heeft deze kamer gemaakt.",
-    "Media omitted - file size limit exceeded": "Media weggelaten - limiet bestandsgrootte overschreden",
-    "Media omitted": "Media weglaten",
-    "Current Timeline": "Huidige tijdlijn",
-    "Specify a number of messages": "Kies het aantal berichten",
-    "From the beginning": "Van het begin",
-    "Plain Text": "Platte tekst",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "Weet je zeker dat je wilt afsluiten tijdens een export?",
     "See room timeline (devtools)": "Kamer tijdlijn bekijken (dev tools)",
     "View in room": "In kamer bekijken",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
@@ -2635,25 +2619,6 @@
     "Link to room": "Link naar kamer",
     "Including you, %(commaSeparatedMembers)s": "Inclusief jij, %(commaSeparatedMembers)s",
     "Copy room link": "Kamerlink kopiëren",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "%(count)s gebeurtenis geëxporteerd in %(seconds)s seconden",
-        "other": "%(count)s gebeurtenissen geëxporteerd in %(seconds)s seconden"
-    },
-    "Export successful!": "Export gelukt!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "%(count)s gebeurtenis opgehaald in %(seconds)s",
-        "other": "%(count)s gebeurtenissen opgehaald in %(seconds)s"
-    },
-    "Processing event %(number)s out of %(total)s": "%(number)s gebeurtenis verwerkt van de %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "%(count)s gebeurtenis opgehaald zover",
-        "other": "%(count)s gebeurtenissen opgehaald zover"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "%(count)s gebeurtenis opgehaald van de %(total)s",
-        "other": "%(count)s gebeurtenissen opgehaald van de %(total)s"
-    },
-    "Generating a ZIP": "Genereer een ZIP",
     "Your new device is now verified. Other users will see it as trusted.": "Jouw nieuwe apparaat is nu geverifieerd. Andere personen zien het nu als vertrouwd.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Jouw nieuwe apparaat is nu geverifieerd. Het heeft toegang tot je versleutelde berichten en andere personen zien het als vertrouwd.",
     "Verify with another device": "Verifieer met andere apparaat",
@@ -3286,7 +3251,9 @@
         "not_trusted": "Niet vertrouwd",
         "accessibility": "Toegankelijkheid",
         "server": "Server",
-        "capabilities": "Mogelijkheden"
+        "capabilities": "Mogelijkheden",
+        "unnamed_room": "Naamloze Kamer",
+        "unnamed_space": "Naamloze Space"
     },
     "action": {
         "continue": "Doorgaan",
@@ -3612,5 +3579,40 @@
         "developer_tools": "Ontwikkelgereedschap",
         "room_id": "Kamer ID: %(roomId)s",
         "event_id": "Gebeurtenis ID: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Platte tekst",
+        "from_the_beginning": "Van het begin",
+        "number_of_messages": "Kies het aantal berichten",
+        "current_timeline": "Huidige tijdlijn",
+        "export_successful": "Export gelukt!",
+        "unload_confirm": "Weet je zeker dat je wilt afsluiten tijdens een export?",
+        "generating_zip": "Genereer een ZIP",
+        "processing_event_n": "%(number)s gebeurtenis verwerkt van de %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "%(count)s gebeurtenis opgehaald van de %(total)s",
+            "other": "%(count)s gebeurtenissen opgehaald van de %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "%(count)s gebeurtenis opgehaald zover",
+            "other": "%(count)s gebeurtenissen opgehaald zover"
+        },
+        "fetched_n_events_in_time": {
+            "one": "%(count)s gebeurtenis opgehaald in %(seconds)s",
+            "other": "%(count)s gebeurtenissen opgehaald in %(seconds)s"
+        },
+        "exported_n_events_in_time": {
+            "one": "%(count)s gebeurtenis geëxporteerd in %(seconds)s seconden",
+            "other": "%(count)s gebeurtenissen geëxporteerd in %(seconds)s seconden"
+        },
+        "media_omitted": "Media weglaten",
+        "media_omitted_file_size": "Media weggelaten - limiet bestandsgrootte overschreden",
+        "creator_summary": "%(creatorName)s heeft deze kamer gemaakt.",
+        "export_info": "Dit is de start van de export van <roomName/>. Geëxporteerd door <exporterDetails/> op %(exportDate)s.",
+        "topic": "Onderwerp: %(topic)s",
+        "error_fetching_file": "Fout bij bestand opvragen",
+        "file_attached": "Bijgevoegd bestand"
     }
 }

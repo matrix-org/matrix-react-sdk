@@ -222,7 +222,6 @@
     "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s-widget har ändrats av %(senderName)s",
     "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s-widget har lagts till av %(senderName)s",
     "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s-widget har tagits bort av %(senderName)s",
-    "Unnamed Room": "Namnlöst rum",
     "Your browser does not support the required cryptography extensions": "Din webbläsare stödjer inte nödvändiga kryptografitillägg",
     "Unignore": "Avignorera",
     "Voice call": "Röstsamtal",
@@ -2015,7 +2014,6 @@
     "Failed to save space settings.": "Misslyckades att spara utrymmesinställningar.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Bjud in någon med deras namn eller användarnamn (som <userId/>), eller <a>dela det här utrymmet</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Bjud in någon med deras namn, e-postadress eller användarnamn (som <userId/>), eller <a>dela det här rummet</a>.",
-    "Unnamed Space": "Namnlöst utrymme",
     "Invite to %(spaceName)s": "Bjud in till %(spaceName)s",
     "Create a new room": "Skapa ett nytt rum",
     "Spaces": "Utrymmen",
@@ -2402,19 +2400,6 @@
     "Don't leave any rooms": "Lämna inga rum",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s skickade en dekal.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s bytte rummets avatar.",
-    "Error fetching file": "Fel vid hämtning av fil",
-    "Topic: %(topic)s": "Ämne: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Det här är början på exporten av <roomName/>. Exporterad av <exporterDetails/> vid %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s skapade det här rummet.",
-    "Media omitted - file size limit exceeded": "Media uteslutet - filstorleksgräns överskriden",
-    "Media omitted": "Media uteslutet",
-    "Current Timeline": "Nuvarande tidslinje",
-    "Specify a number of messages": "Specificera ett antal meddelanden",
-    "From the beginning": "Från början",
-    "Plain Text": "Vanlig text",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "Är du säker på att du vill avsluta under den här exporten?",
     "In reply to <a>this message</a>": "Som svar på <a>detta meddelande</a>",
     "Downloading": "Laddar ner",
     "They won't be able to access whatever you're not an admin of.": "Personen kommer inte kunna komma åt saker du inte är admin för.",
@@ -2442,7 +2427,6 @@
     },
     "Loading new room": "Laddar nytt rum",
     "Upgrading room": "Uppgraderar rum",
-    "File Attached": "Fil bifogad",
     "What projects are your team working on?": "Vilka projekt jobbar ditt team på?",
     "See room timeline (devtools)": "Se rummets tidslinje (utvecklingsverktyg)",
     "View in room": "Visa i rum",
@@ -2559,25 +2543,6 @@
     "Show tray icon and minimise window to it on close": "Visa ikon i systembrickan och minimera programmet till den när fönstret stängs",
     "Large": "Stor",
     "Image size in the timeline": "Bildstorlek i tidslinjen",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Exporterade %(count)s händelse på %(seconds)s sekunder",
-        "other": "Exporterade %(count)s händelser på %(seconds)s sekunder"
-    },
-    "Export successful!": "Export lyckades!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Hämtade %(count)s händelse på %(seconds)s s",
-        "other": "Hämtade %(count)s händelser på %(seconds)s s"
-    },
-    "Processing event %(number)s out of %(total)s": "Hanterade händelse %(number)s av %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "Hämtade %(count)s händelse än så länge",
-        "other": "Hämtade %(count)s händelser än så länge"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Hämtade %(count)s händelse av %(total)s",
-        "other": "Hämtade %(count)s händelser av %(total)s"
-    },
-    "Generating a ZIP": "Genererar en ZIP",
     "%(senderName)s has ended a poll": "%(senderName)s har avslutat en omröstning",
     "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s har startat en omröstning - %(pollQuestion)s",
     "%(senderName)s has shared their location": "%(senderName)s har delat sin plats",
@@ -3332,10 +3297,6 @@
     "WARNING: session already verified, but keys do NOT MATCH!": "VARNING: sessionen är redan verifierad, men nycklarna MATCHAR INTE!",
     "Unable to connect to Homeserver. Retrying…": "Kunde inte kontakta hemservern. Försöker igen …",
     "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Det här rummet är dedikerat till olagligt eller stötande innehåll eller så har moderatorerna misslyckats med att moderera olagligt eller stötande innehåll.\nDet här kommer att rapporteras till %(homeserver)ss administratörer.",
-    "Creating output…": "Skapar utdata …",
-    "Fetching events…": "Hämtar händelser …",
-    "Creating HTML…": "Skapar HTML …",
-    "Starting export…": "Påbörjar export …",
     "Secure Backup successful": "Säkerhetskopiering lyckades",
     "Your keys are now being backed up from this device.": "Dina nycklar säkerhetskopieras nu från denna enhet.",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Ange en säkerhetsfras som bara du känner till, eftersom den används för att säkra din data. För att vara säker, bör du inte återanvända ditt kontolösenord.",
@@ -3468,9 +3429,6 @@
     "Changes your profile picture in all rooms": "Byter din profilbild i alla rum",
     "%(senderDisplayName)s changed the join rule to ask to join.": "%(senderDisplayName)s ändrade regeln för att gå med till att kräva att man frågar om att gå med.",
     "User cannot be invited until they are unbanned": "Användaren kan inte bjudas in förrän den avbannas",
-    "Previous group of messages": "Föregående grupp meddelanden",
-    "Next group of messages": "Nästa grupp meddelanden",
-    "Exported Data": "Exportera data",
     "Notification Settings": "Aviseringsinställningar",
     "People cannot join unless access is granted.": "Personer kan inte gå med om inte åtkomst ges.",
     "Failed to cancel": "Misslyckades att avbryta",
@@ -3556,7 +3514,9 @@
         "not_trusted": "Inte betrodd",
         "accessibility": "Tillgänglighet",
         "server": "Server",
-        "capabilities": "Förmågor"
+        "capabilities": "Förmågor",
+        "unnamed_room": "Namnlöst rum",
+        "unnamed_space": "Namnlöst utrymme"
     },
     "action": {
         "continue": "Fortsätt",
@@ -3947,5 +3907,47 @@
         "developer_tools": "Utvecklarverktyg",
         "room_id": "Rums-ID: %(roomId)s",
         "event_id": "Händelse-ID: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Vanlig text",
+        "from_the_beginning": "Från början",
+        "number_of_messages": "Specificera ett antal meddelanden",
+        "current_timeline": "Nuvarande tidslinje",
+        "creating_html": "Skapar HTML …",
+        "starting_export": "Påbörjar export …",
+        "export_successful": "Export lyckades!",
+        "unload_confirm": "Är du säker på att du vill avsluta under den här exporten?",
+        "generating_zip": "Genererar en ZIP",
+        "processing_event_n": "Hanterade händelse %(number)s av %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "Hämtade %(count)s händelse av %(total)s",
+            "other": "Hämtade %(count)s händelser av %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "Hämtade %(count)s händelse än så länge",
+            "other": "Hämtade %(count)s händelser än så länge"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Hämtade %(count)s händelse på %(seconds)s s",
+            "other": "Hämtade %(count)s händelser på %(seconds)s s"
+        },
+        "exported_n_events_in_time": {
+            "one": "Exporterade %(count)s händelse på %(seconds)s sekunder",
+            "other": "Exporterade %(count)s händelser på %(seconds)s sekunder"
+        },
+        "media_omitted": "Media uteslutet",
+        "media_omitted_file_size": "Media uteslutet - filstorleksgräns överskriden",
+        "creator_summary": "%(creatorName)s skapade det här rummet.",
+        "export_info": "Det här är början på exporten av <roomName/>. Exporterad av <exporterDetails/> vid %(exportDate)s.",
+        "topic": "Ämne: %(topic)s",
+        "previous_page": "Föregående grupp meddelanden",
+        "next_page": "Nästa grupp meddelanden",
+        "html_title": "Exportera data",
+        "error_fetching_file": "Fel vid hämtning av fil",
+        "file_attached": "Fil bifogad",
+        "fetching_events": "Hämtar händelser …",
+        "creating_output": "Skapar utdata …"
     }
 }

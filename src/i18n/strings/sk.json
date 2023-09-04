@@ -74,7 +74,6 @@
     "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s odstránil widget %(widgetName)s",
     "Failure to create room": "Nepodarilo sa vytvoriť miestnosť",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server môže byť nedostupný, preťažený, alebo ste narazili na chybu.",
-    "Unnamed Room": "Nepomenovaná miestnosť",
     "Your browser does not support the required cryptography extensions": "Váš prehliadač nepodporuje požadované kryptografické rozšírenia",
     "Not a valid %(brand)s keyfile": "Toto nie je správny súbor s kľúčmi %(brand)s",
     "Authentication check failed: incorrect password?": "Kontrola overenia zlyhala: Nesprávne heslo?",
@@ -1540,8 +1539,6 @@
     "Downloading": "Preberanie",
     "Show:": "Zobraziť:",
     "MB": "MB",
-    "JSON": "JSON",
-    "HTML": "HTML",
     "Results": "Výsledky",
     "More": "Viac",
     "Decrypting": "Dešifrovanie",
@@ -1593,7 +1590,6 @@
     "Backup version:": "Verzia zálohy:",
     "New version of %(brand)s is available": "K dispozícii je nová verzia %(brand)s",
     "Role in <RoomName/>": "Rola v <RoomName/>",
-    "Plain Text": "Obyčajný text",
     "To publish an address, it needs to be set as a local address first.": "Ak chcete zverejniť adresu, je potrebné ju najprv nastaviť ako lokálnu adresu.",
     "A private space for you and your teammates": "Súkromný priestor pre vás a vašich spolupracovníkov",
     "A private space to organise your rooms": "Súkromný priestor na usporiadanie vašich miestností",
@@ -1634,7 +1630,6 @@
     "To join a space you'll need an invite.": "Ak sa chcete pripojiť k priestoru, budete potrebovať pozvánku.",
     "Great, that'll help people know it's you": "Skvelé, to pomôže ľuďom zistiť, že ste to vy",
     "This is the start of <roomName/>.": "Toto je začiatok miestnosti <roomName/>.",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Toto je začiatok exportu miestnosti <roomName/>. Exportované <exporterDetails/> dňa %(exportDate)s.",
     "You created this room.": "Túto miestnosť ste vytvorili vy.",
     "Hide sessions": "Skryť relácie",
     "%(count)s sessions": {
@@ -1732,7 +1727,6 @@
         "one": "Zobraziť 1 člena",
         "other": "Zobraziť všetkých %(count)s členov"
     },
-    "Topic: %(topic)s": "Téma: %(topic)s",
     "Server isn't responding": "Server neodpovedá",
     "Edited at %(date)s": "Upravené %(date)s",
     "Confirm Security Phrase": "Potvrdiť bezpečnostnú frázu",
@@ -1857,11 +1851,8 @@
     "Only people invited will be able to find and join this room.": "Len pozvaní ľudia budú môcť nájsť túto miestnosť a pripojiť sa k nej.",
     "You can't disable this later. Bridges & most bots won't work yet.": "Toto neskôr nemôžete vypnúť. Premostenia a väčšina botov zatiaľ nebudú fungovať.",
     "Specify a homeserver": "Zadajte domovský server",
-    "Specify a number of messages": "Zadajte počet správ",
-    "From the beginning": "Od začiatku",
     "See room timeline (devtools)": "Pozrite si časovú os miestnosti (devtools)",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Skúste sa posunúť nahor na časovej osi a pozrite sa, či tam nie sú nejaké skoršie.",
-    "Current Timeline": "Aktuálna časová os",
     "Upgrade required": "Vyžaduje sa aktualizácia",
     "Automatically invite members from this room to the new one": "Automaticky pozvať členov z tejto miestnosti do novej",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s vaším %(brand)s, nahláste prosím <a>chybu</a>.",
@@ -1958,7 +1949,6 @@
     "Remember my selection for this widget": "Zapamätať si môj výber pre tento widget",
     "Invited by %(sender)s": "Pozvaný používateľom %(sender)s",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Aktualizáciou tejto miestnosti sa vypne aktuálna inštancia miestnosti a vytvorí sa aktualizovaná miestnosť s rovnakým názvom.",
-    "Export successful!": "Export úspešný!",
     "Open in OpenStreetMap": "Otvoriť v OpenStreetMap",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Aktualizujte túto reláciu, aby mohla overovať ostatné relácie, udeľovať im prístup k zašifrovaným správam a označovať ich ako dôveryhodné pre ostatných používateľov.",
     "You'll need to authenticate with the server to confirm the upgrade.": "Na potvrdenie aktualizácie sa budete musieť overiť na serveri.",
@@ -2130,7 +2120,6 @@
     "Save Changes": "Uložiť zmeny",
     "Edit settings relating to your space.": "Upravte nastavenia týkajúce sa vášho priestoru.",
     "Failed to save space settings.": "Nepodarilo sa uložiť nastavenia priestoru.",
-    "Unnamed Space": "Nepomenovaný priestor",
     "Create a new room": "Vytvoriť novú miestnosť",
     "Space selection": "Výber priestoru",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Túto zmenu nebudete môcť vrátiť späť, pretože sa degradujete, a ak ste posledným privilegovaným používateľom v priestore, nebude možné získať oprávnenia späť.",
@@ -2504,8 +2493,6 @@
     "Review to ensure your account is safe": "Skontrolujte, či je vaše konto bezpečné",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Predtým ste nám udelili súhlas so zdieľaním anonymných údajov o používaní. Aktualizujeme spôsob, akým to funguje.",
     "That's fine": "To je v poriadku",
-    "%(creatorName)s created this room.": "%(creatorName)s vytvoril túto miestnosť.",
-    "Are you sure you want to exit during this export?": "Ste si istí, že chcete odísť počas tohto exportu?",
     "This homeserver has been blocked by its administrator.": "Tento domovský server bol zablokovaný jeho správcom.",
     "See general files posted to your active room": "Zobraziť všeobecné súbory zverejnené vo vašej aktívnej miestnosti",
     "See videos posted to your active room": "Zobraziť videá zverejnené vo vašej aktívnej miestnosti",
@@ -2667,15 +2654,6 @@
     "Move left": "Presun doľava",
     "The export was cancelled successfully": "Export bol úspešne zrušený",
     "Size can only be a number between %(min)s MB and %(max)s MB": "Veľkosť môže byť len medzi %(min)s MB a %(max)s MB",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Načítaná %(count)s udalosť za %(seconds)ss",
-        "other": "Načítaných %(count)s udalostí za %(seconds)ss"
-    },
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Exportovaná %(count)s udalosť za %(seconds)s sekúnd",
-        "other": "Exportovaných %(count)s udalostí za %(seconds)s sekúnd"
-    },
-    "File Attached": "Priložený súbor",
     "Unban from %(roomName)s": "Zrušiť zákaz vstup do %(roomName)s",
     "Ban from %(roomName)s": "Zakázať vstup do %(roomName)s",
     "Decide where your account is hosted": "Rozhodnite sa, kde bude váš účet hostovaný",
@@ -2729,8 +2707,6 @@
     "sends rainfall": "odošle dážď",
     "Sends the given message with rainfall": "Odošle danú správu s dažďom",
     "Automatically send debug logs when key backup is not functioning": "Automaticky odosielať záznamy o ladení, ak zálohovanie kľúčov nefunguje",
-    "Error fetching file": "Chyba pri načítaní súboru",
-    "Generating a ZIP": "Vytváranie súboru ZIP",
     "See <b>%(msgtype)s</b> messages posted to your active room": "Zobraziť <b>%(msgtype)s</b> správy zverejnené vo vašej aktívnej miestnosti",
     "See <b>%(msgtype)s</b> messages posted to this room": "Zobraziť <b>%(msgtype)s</b> správy zverejnené v tejto miestnosti",
     "Send <b>%(msgtype)s</b> messages as you in your active room": "Odoslať <b>%(msgtype)s</b> správy pod vaším menom vo vašej aktívnej miestnosti",
@@ -2768,17 +2744,6 @@
     "No virtual room for this room": "Žiadna virtuálna miestnosť pre túto miestnosť",
     "Switches to this room's virtual room, if it has one": "Prepne do virtuálnej miestnosti tejto miestnosti, ak ju má",
     "Sends the given message as a spoiler": "Odošle danú správu ako spojler",
-    "Processing event %(number)s out of %(total)s": "Spracovanie udalosti %(number)s z %(total)s",
-    "Media omitted": "Médium vynechané",
-    "Media omitted - file size limit exceeded": "Médium vynechané - prekročený limit veľkosti súboru",
-    "Fetched %(count)s events so far": {
-        "one": "Zatiaľ získaná %(count)s udalosť",
-        "other": "Zatiaľ získané %(count)s udalosti"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Získaná %(count)s udalosť z %(total)s",
-        "other": "Získané %(count)s udalosti z %(total)s"
-    },
     "Command error: Unable to find rendering type (%(renderingType)s)": "Chyba príkazu: Nie je možné nájsť typ vykresľovania (%(renderingType)s)",
     "Command error: Unable to handle slash command.": "Chyba príkazu: Nie je možné spracovať lomkový príkaz.",
     "Already in call": "Hovor už prebieha",
@@ -3359,11 +3324,7 @@
     "Connecting to integration manager…": "Pripájanie k správcovi integrácie…",
     "Saving…": "Ukladanie…",
     "Creating…": "Vytváranie…",
-    "Creating output…": "Vytváranie výstupu…",
-    "Fetching events…": "Získavanie udalostí…",
     "Starting export process…": "Spustenie procesu exportu…",
-    "Creating HTML…": "Vytváranie HTML…",
-    "Starting export…": "Začína sa exportovanie…",
     "Unable to connect to Homeserver. Retrying…": "Nie je možné sa pripojiť k domovskému serveru. Prebieha pokus o opätovné pripojenie…",
     "WARNING: session already verified, but keys do NOT MATCH!": "VAROVANIE: Relácia je už overená, ale kľúče sa NEZHODUJÚ!",
     "Secure Backup successful": "Bezpečné zálohovanie bolo úspešné",
@@ -3472,9 +3433,6 @@
     "Changes your profile picture in all rooms": "Zmení váš profilový obrázok vo všetkých miestnostiach",
     "%(senderDisplayName)s changed the join rule to ask to join.": "%(senderDisplayName)s zmenil/a pravidlo pripojenia na žiadosť o vstup.",
     "User cannot be invited until they are unbanned": "Používateľ nemôže byť pozvaný, kým nie je zrušený jeho zákaz",
-    "Previous group of messages": "Predchádzajúca skupina správ",
-    "Next group of messages": "Ďalšia skupina správ",
-    "Exported Data": "Exportované údaje",
     "Views room with given address": "Zobrazí miestnosti s danou adresou",
     "Notification Settings": "Nastavenia oznámení",
     "Ask to join": "Požiadať o pripojenie",
@@ -3610,7 +3568,9 @@
         "not_trusted": "Nedôveryhodné",
         "accessibility": "Prístupnosť",
         "server": "Server",
-        "capabilities": "Schopnosti"
+        "capabilities": "Schopnosti",
+        "unnamed_room": "Nepomenovaná miestnosť",
+        "unnamed_space": "Nepomenovaný priestor"
     },
     "action": {
         "continue": "Pokračovať",
@@ -4007,5 +3967,47 @@
         "room_id": "ID miestnosti: %(roomId)s",
         "thread_root_id": "ID koreňového vlákna: %(threadRootId)s",
         "event_id": "ID udalosti: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Obyčajný text",
+        "from_the_beginning": "Od začiatku",
+        "number_of_messages": "Zadajte počet správ",
+        "current_timeline": "Aktuálna časová os",
+        "creating_html": "Vytváranie HTML…",
+        "starting_export": "Začína sa exportovanie…",
+        "export_successful": "Export úspešný!",
+        "unload_confirm": "Ste si istí, že chcete odísť počas tohto exportu?",
+        "generating_zip": "Vytváranie súboru ZIP",
+        "processing_event_n": "Spracovanie udalosti %(number)s z %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "Získaná %(count)s udalosť z %(total)s",
+            "other": "Získané %(count)s udalosti z %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "Zatiaľ získaná %(count)s udalosť",
+            "other": "Zatiaľ získané %(count)s udalosti"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Načítaná %(count)s udalosť za %(seconds)ss",
+            "other": "Načítaných %(count)s udalostí za %(seconds)ss"
+        },
+        "exported_n_events_in_time": {
+            "one": "Exportovaná %(count)s udalosť za %(seconds)s sekúnd",
+            "other": "Exportovaných %(count)s udalostí za %(seconds)s sekúnd"
+        },
+        "media_omitted": "Médium vynechané",
+        "media_omitted_file_size": "Médium vynechané - prekročený limit veľkosti súboru",
+        "creator_summary": "%(creatorName)s vytvoril túto miestnosť.",
+        "export_info": "Toto je začiatok exportu miestnosti <roomName/>. Exportované <exporterDetails/> dňa %(exportDate)s.",
+        "topic": "Téma: %(topic)s",
+        "previous_page": "Predchádzajúca skupina správ",
+        "next_page": "Ďalšia skupina správ",
+        "html_title": "Exportované údaje",
+        "error_fetching_file": "Chyba pri načítaní súboru",
+        "file_attached": "Priložený súbor",
+        "fetching_events": "Získavanie udalostí…",
+        "creating_output": "Vytváranie výstupu…"
     }
 }

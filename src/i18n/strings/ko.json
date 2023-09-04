@@ -144,7 +144,6 @@
     "Unable to verify email address.": "이메일 주소를 인증할 수 없습니다.",
     "Unban": "출입 금지 풀기",
     "Unable to enable Notifications": "알림을 사용할 수 없음",
-    "Unnamed Room": "이름 없는 방",
     "Uploading %(filename)s": "%(filename)s을(를) 올리는 중",
     "Uploading %(filename)s and %(count)s others": {
         "one": "%(filename)s 외 %(count)s개를 올리는 중",
@@ -1289,7 +1288,8 @@
         "unverified": "검증 되지 않음",
         "trusted": "신뢰함",
         "not_trusted": "신뢰하지 않음",
-        "accessibility": "접근성"
+        "accessibility": "접근성",
+        "unnamed_room": "이름 없는 방"
     },
     "action": {
         "continue": "계속하기",

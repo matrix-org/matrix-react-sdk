@@ -94,7 +94,6 @@
     "Failure to create room": "रूम बनाने में विफलता",
     "Server may be unavailable, overloaded, or you hit a bug.": "सर्वर अनुपलब्ध, अधिभारित हो सकता है, या अपने एक सॉफ्टवेयर गर्बरी को पाया।",
     "Send": "भेजें",
-    "Unnamed Room": "अनाम रूम",
     "This homeserver has hit its Monthly Active User limit.": "इस होमसर्वर ने अपनी मासिक सक्रिय उपयोगकर्ता सीमा को प्राप्त कर लिया हैं।",
     "This homeserver has exceeded one of its resource limits.": "यह होम सर्वर अपनी संसाधन सीमाओं में से एक से अधिक हो गया है।",
     "Your browser does not support the required cryptography extensions": "आपका ब्राउज़र आवश्यक क्रिप्टोग्राफी एक्सटेंशन का समर्थन नहीं करता है",
@@ -585,7 +584,8 @@
         "timeline": "समयसीमा",
         "camera": "कैमरा",
         "microphone": "माइक्रोफ़ोन",
-        "someone": "कोई"
+        "someone": "कोई",
+        "unnamed_room": "अनाम रूम"
     },
     "action": {
         "continue": "आगे बढ़ें",

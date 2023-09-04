@@ -153,7 +153,6 @@
     "Unknown error": "ข้อผิดพลาดที่ไม่รู้จัก",
     "Incorrect password": "รหัสผ่านไม่ถูกต้อง",
     "Home": "เมนูหลัก",
-    "Unnamed Room": "ห้องที่ยังไม่ได้ตั้งชื่อ",
     "(~%(count)s results)": {
         "one": "(~%(count)s ผลลัพท์)",
         "other": "(~%(count)s ผลลัพท์)"
@@ -427,7 +426,8 @@
         "someone": "ใครบางคน",
         "application": "แอปพลิเคชัน",
         "version": "รุ่น",
-        "device": "อุปกรณ์"
+        "device": "อุปกรณ์",
+        "unnamed_room": "ห้องที่ยังไม่ได้ตั้งชื่อ"
     },
     "action": {
         "continue": "ดำเนินการต่อ",

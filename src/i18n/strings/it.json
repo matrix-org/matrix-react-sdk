@@ -94,7 +94,6 @@
     "Failure to create room": "Creazione della stanza fallita",
     "Server may be unavailable, overloaded, or you hit a bug.": "Il server potrebbe essere non disponibile, sovraccarico o hai trovato un errore.",
     "Send": "Invia",
-    "Unnamed Room": "Stanza senza nome",
     "Your browser does not support the required cryptography extensions": "Il tuo browser non supporta l'estensione crittografica richiesta",
     "Not a valid %(brand)s keyfile": "Non è una chiave di %(brand)s valida",
     "Authentication check failed: incorrect password?": "Controllo di autenticazione fallito: password sbagliata?",
@@ -2017,7 +2016,6 @@
     "Failed to save space settings.": "Impossibile salvare le impostazioni dello spazio.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invita qualcuno usando il suo nome, nome utente (come <userId/>) o <a>condividi questo spazio</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invita qualcuno usando il suo nome, indirizzo email, nome utente (come <userId/>) o <a>condividi questo spazio</a>.",
-    "Unnamed Space": "Spazio senza nome",
     "Invite to %(spaceName)s": "Invita in %(spaceName)s",
     "Create a new room": "Crea nuova stanza",
     "Spaces": "Spazi",
@@ -2399,13 +2397,6 @@
     "Leave some rooms": "Esci da alcune stanze",
     "Leave all rooms": "Esci da tutte le stanze",
     "Don't leave any rooms": "Non uscire da alcuna stanza",
-    "Current Timeline": "Linea temporale attuale",
-    "Specify a number of messages": "Specifica un numero di messaggi",
-    "From the beginning": "Dall'inizio",
-    "Plain Text": "Testo semplice",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "Vuoi davvero uscire durante l'esportazione?",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s ha inviato uno sticker.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s ha cambiato l'avatar della stanza.",
     "Displaying time": "Visualizzazione dell'ora",
@@ -2434,13 +2425,6 @@
     "Enter a number between %(min)s and %(max)s": "Inserisci un numero tra %(min)s e %(max)s",
     "In reply to <a>this message</a>": "In risposta a <a>questo messaggio</a>",
     "Export chat": "Esporta conversazione",
-    "File Attached": "File allegato",
-    "Error fetching file": "Errore di recupero del file",
-    "Topic: %(topic)s": "Argomento: %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Questo è l'inizio dell'esportazione di <roomName/>. Esportata da <exporterDetails/> il %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s ha creato questa stanza.",
-    "Media omitted - file size limit exceeded": "File omesso - superata dimensione massima",
-    "Media omitted": "File omesso",
     "Create poll": "Crea sondaggio",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Aggiornamento spazio...",
@@ -2634,25 +2618,6 @@
     "Failed to load list of rooms.": "Caricamento dell'elenco di stanze fallito.",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ciò raggruppa le tue chat con i membri di questo spazio. Se lo disattivi le chat verranno nascoste dalla tua vista di %(spaceName)s.",
     "Sections to show": "Sezioni da mostrare",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Esportato %(count)s evento in %(seconds)s secondi",
-        "other": "Esportati %(count)s eventi in %(seconds)s secondi"
-    },
-    "Export successful!": "Esportazione riuscita!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Ricevuto %(count)s evento in %(seconds)ss",
-        "other": "Ricevuti %(count)s eventi in %(seconds)ss"
-    },
-    "Processing event %(number)s out of %(total)s": "Elaborazione evento %(number)s di %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "Ricevuto %(count)s evento finora",
-        "other": "Ricevuti %(count)s eventi finora"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "Ricevuto %(count)s evento di %(total)s",
-        "other": "Ricevuti %(count)s eventi di %(total)s"
-    },
-    "Generating a ZIP": "Generazione di uno ZIP",
     "Open in OpenStreetMap": "Apri in OpenStreetMap",
     "This address had invalid server or is already in use": "Questo indirizzo aveva un server non valido o è già in uso",
     "Missing room name or separator e.g. (my-room:domain.org)": "Nome o separatore della stanza mancante, es. (mia-stanza:dominio.org)",
@@ -3360,11 +3325,7 @@
     "Connecting to integration manager…": "Connessione al gestore di integrazioni…",
     "Saving…": "Salvataggio…",
     "Creating…": "Creazione…",
-    "Creating output…": "Creazione output…",
-    "Fetching events…": "Ricezione eventi…",
     "Starting export process…": "Inizio processo di esportazione…",
-    "Creating HTML…": "Creazione HTML…",
-    "Starting export…": "Inizio esportazione…",
     "Unable to connect to Homeserver. Retrying…": "Impossibile connettersi all'homeserver. Riprovo…",
     "Secure Backup successful": "Backup Sicuro completato",
     "Your keys are now being backed up from this device.": "Viene ora fatto il backup delle tue chiavi da questo dispositivo.",
@@ -3478,9 +3439,6 @@
     "Changes your profile picture in this current room only": "Cambia la tua immagine del profilo solo nella stanza attuale",
     "Changes your profile picture in all rooms": "Cambia la tua immagine del profilo in tutte le stanze",
     "User cannot be invited until they are unbanned": "L'utente non può essere invitato finché è bandito",
-    "Previous group of messages": "Gruppo di messaggi precedente",
-    "Next group of messages": "Gruppo di messaggi successivo",
-    "Exported Data": "Dati esportati",
     "Notification Settings": "Impostazioni di notifica",
     "Email Notifications": "Notifiche email",
     "Email summary": "Riepilogo email",
@@ -3614,7 +3572,9 @@
         "not_trusted": "Non fidato",
         "accessibility": "Accessibilità",
         "server": "Server",
-        "capabilities": "Capacità"
+        "capabilities": "Capacità",
+        "unnamed_room": "Stanza senza nome",
+        "unnamed_space": "Spazio senza nome"
     },
     "action": {
         "continue": "Continua",
@@ -4012,5 +3972,47 @@
         "room_id": "ID stanza: %(roomId)s",
         "thread_root_id": "ID root del thread: %(threadRootId)s",
         "event_id": "ID evento: %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Testo semplice",
+        "from_the_beginning": "Dall'inizio",
+        "number_of_messages": "Specifica un numero di messaggi",
+        "current_timeline": "Linea temporale attuale",
+        "creating_html": "Creazione HTML…",
+        "starting_export": "Inizio esportazione…",
+        "export_successful": "Esportazione riuscita!",
+        "unload_confirm": "Vuoi davvero uscire durante l'esportazione?",
+        "generating_zip": "Generazione di uno ZIP",
+        "processing_event_n": "Elaborazione evento %(number)s di %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "Ricevuto %(count)s evento di %(total)s",
+            "other": "Ricevuti %(count)s eventi di %(total)s"
+        },
+        "fetched_n_events": {
+            "one": "Ricevuto %(count)s evento finora",
+            "other": "Ricevuti %(count)s eventi finora"
+        },
+        "fetched_n_events_in_time": {
+            "one": "Ricevuto %(count)s evento in %(seconds)ss",
+            "other": "Ricevuti %(count)s eventi in %(seconds)ss"
+        },
+        "exported_n_events_in_time": {
+            "one": "Esportato %(count)s evento in %(seconds)s secondi",
+            "other": "Esportati %(count)s eventi in %(seconds)s secondi"
+        },
+        "media_omitted": "File omesso",
+        "media_omitted_file_size": "File omesso - superata dimensione massima",
+        "creator_summary": "%(creatorName)s ha creato questa stanza.",
+        "export_info": "Questo è l'inizio dell'esportazione di <roomName/>. Esportata da <exporterDetails/> il %(exportDate)s.",
+        "topic": "Argomento: %(topic)s",
+        "previous_page": "Gruppo di messaggi precedente",
+        "next_page": "Gruppo di messaggi successivo",
+        "html_title": "Dati esportati",
+        "error_fetching_file": "Errore di recupero del file",
+        "file_attached": "File allegato",
+        "fetching_events": "Ricezione eventi…",
+        "creating_output": "Creazione output…"
     }
 }

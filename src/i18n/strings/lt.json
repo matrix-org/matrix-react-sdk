@@ -103,7 +103,6 @@
     "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s pakeitė temą į \"%(topic)s\".",
     "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s pakeitė kambario pavadinimą į %(roomName)s.",
     "%(senderDisplayName)s sent an image.": "%(senderDisplayName)s išsiuntė vaizdą.",
-    "Unnamed Room": "Bevardis Kambarys",
     "Incorrect verification code": "Neteisingas patvirtinimo kodas",
     "Phone": "Telefonas",
     "No display name": "Nėra rodomo vardo",
@@ -1584,8 +1583,6 @@
     "Could not connect to identity server": "Nepavyko prisijungti prie tapatybės serverio",
     "Not a valid identity server (status code %(code)s)": "Netinkamas tapatybės serveris (statuso kodas %(code)s)",
     "Identity server URL must be HTTPS": "Tapatybės serverio URL privalo būti HTTPS",
-    "From the beginning": "Nuo pradžios",
-    "Plain Text": "Paprastas Tekstas",
     "Invite to %(spaceName)s": "Pakvietimas į %(spaceName)s",
     "This homeserver has been blocked by its administrator.": "Šis namų serveris buvo užblokuotas jo administratoriaus.",
     "See when the name changes in your active room": "Matyti kada jūsų aktyvaus kambario pavadinimas pasikeičia",
@@ -1983,15 +1980,6 @@
     "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "Dalinkitės anoniminiais duomenimis, kurie padės mums nustatyti problemas. Nieko asmeniško. Jokių trečiųjų šalių. <LearnMoreLink>Sužinokite daugiau</LearnMoreLink>",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "Anksčiau sutikote su mumis dalytis anoniminiais naudojimo duomenimis. Atnaujiname, kaip tai veikia.",
     "That's fine": "Tai gerai",
-    "File Attached": "Failas pridėtas",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "Eksportavome %(count)s įvyki per %(seconds)s sekundes",
-        "other": "Eksportavome %(count)s įvykius per %(seconds)s sekundes"
-    },
-    "Export successful!": "Eksportas sėkmingas!",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "Surinkome %(count)s įvykius per %(seconds)ss"
-    },
     "Preview Space": "Peržiūrėti erdvę",
     "Failed to update the visibility of this space": "Nepavyko atnaujinti šios erdvės matomumo",
     "Access": "Prieiga",
@@ -2231,8 +2219,6 @@
     "Live": "Gyvai",
     "Stop live broadcasting?": "Sustabdyti transliaciją gyvai?",
     "Yes, stop broadcast": "Taip, sustabdyti transliaciją",
-    "JSON": "JSON",
-    "HTML": "HTML",
     "common": {
         "about": "Apie",
         "analytics": "Analitika",
@@ -2294,7 +2280,8 @@
         "verified": "Patvirtinta",
         "unverified": "Nepatvirtinta",
         "trusted": "Patikimas",
-        "not_trusted": "Nepatikimas"
+        "not_trusted": "Nepatikimas",
+        "unnamed_room": "Bevardis Kambarys"
     },
     "action": {
         "continue": "Tęsti",
@@ -2549,5 +2536,20 @@
         "active_widgets": "Aktyvūs Valdikliai",
         "toolbox": "Įrankinė",
         "developer_tools": "Programuotojo Įrankiai"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Paprastas Tekstas",
+        "from_the_beginning": "Nuo pradžios",
+        "export_successful": "Eksportas sėkmingas!",
+        "fetched_n_events_in_time": {
+            "one": "Surinkome %(count)s įvykius per %(seconds)ss"
+        },
+        "exported_n_events_in_time": {
+            "one": "Eksportavome %(count)s įvyki per %(seconds)s sekundes",
+            "other": "Eksportavome %(count)s įvykius per %(seconds)s sekundes"
+        },
+        "file_attached": "Failas pridėtas"
     }
 }

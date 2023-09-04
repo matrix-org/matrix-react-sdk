@@ -221,7 +221,6 @@
     "%(roomName)s does not exist.": "%(roomName)s n’existe pas.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s n’est pas joignable pour le moment.",
     "Start authentication": "Commencer l’authentification",
-    "Unnamed Room": "Salon anonyme",
     "(~%(count)s results)": {
         "one": "(~%(count)s résultat)",
         "other": "(~%(count)s résultats)"
@@ -2017,7 +2016,6 @@
     "Leave Space": "Quitter l’espace",
     "Edit settings relating to your space.": "Modifiez les paramètres de votre espace.",
     "Failed to save space settings.": "Échec de l’enregistrement des paramètres.",
-    "Unnamed Space": "Espace sans nom",
     "Invite to %(spaceName)s": "Inviter à %(spaceName)s",
     "Create a new room": "Créer un nouveau salon",
     "Spaces": "Espaces",
@@ -2417,20 +2415,6 @@
     "Enter a number between %(min)s and %(max)s": "Entrez un nombre entre %(min)s et %(max)s",
     "In reply to <a>this message</a>": "En réponse à <a>ce message</a>",
     "Export chat": "Exporter la conversation",
-    "File Attached": "Fichier attaché",
-    "Error fetching file": "Erreur lors de la récupération du fichier",
-    "Topic: %(topic)s": "Sujet : %(topic)s",
-    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "C’est le début de l’export de <roomName/>. Exporté par <exporterDetails/> le %(exportDate)s.",
-    "%(creatorName)s created this room.": "%(creatorName)s a créé ce salon.",
-    "Media omitted - file size limit exceeded": "Média ignoré – taille limite de fichier dépassée",
-    "Media omitted": "Média ignorés",
-    "Current Timeline": "Historique actuel",
-    "Specify a number of messages": "Spécifiez un nombre de messages",
-    "From the beginning": "Depuis le début",
-    "Plain Text": "Texte brut",
-    "JSON": "JSON",
-    "HTML": "HTML",
-    "Are you sure you want to exit during this export?": "Êtes vous sûr de vouloir quitter pendant cet export ?",
     "%(senderDisplayName)s sent a sticker.": "%(senderDisplayName)s a envoyé un autocollant.",
     "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s a changé l’avatar du salon.",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "La réinitialisation de vos clés de vérification ne peut pas être annulé. Après la réinitialisation, vous n’aurez plus accès à vos anciens messages chiffrés, et tous les amis que vous aviez précédemment vérifiés verront des avertissement de sécurité jusqu'à ce vous les vérifiiez à nouveau.",
@@ -2630,25 +2614,6 @@
     "Spaces you're in": "Espaces où vous êtes",
     "Including you, %(commaSeparatedMembers)s": "Dont vous, %(commaSeparatedMembers)s",
     "Copy room link": "Copier le lien du salon",
-    "Exported %(count)s events in %(seconds)s seconds": {
-        "one": "%(count)s évènement exporté en %(seconds)s secondes",
-        "other": "%(count)s évènements exportés en %(seconds)s secondes"
-    },
-    "Export successful!": "Export réussi !",
-    "Fetched %(count)s events in %(seconds)ss": {
-        "one": "%(count)s évènement récupéré en %(seconds)ss",
-        "other": "%(count)s évènements récupérés en %(seconds)ss"
-    },
-    "Processing event %(number)s out of %(total)s": "Traitement de l’évènement %(number)s sur %(total)s",
-    "Fetched %(count)s events so far": {
-        "one": "%(count)s évènements récupéré jusqu’ici",
-        "other": "%(count)s évènements récupérés jusqu’ici"
-    },
-    "Fetched %(count)s events out of %(total)s": {
-        "one": "%(count)s sur %(total)s évènement récupéré",
-        "other": "%(count)s sur %(total)s évènements récupérés"
-    },
-    "Generating a ZIP": "Génération d’un ZIP",
     "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "Nous n’avons pas pu comprendre la date saisie (%(inputDate)s). Veuillez essayer en utilisant le format AAAA-MM-JJ.",
     "Failed to load list of rooms.": "Impossible de charger la liste des salons.",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Cela rassemble vos conversations privées avec les membres de cet espace. Le désactiver masquera ces conversations de votre vue de %(spaceName)s.",
@@ -3360,11 +3325,7 @@
     "Connecting to integration manager…": "Connexion au gestionnaire d’intégrations…",
     "Saving…": "Enregistrement…",
     "Creating…": "Création…",
-    "Creating output…": "Création du résultat…",
-    "Fetching events…": "Récupération des évènements…",
     "Starting export process…": "Démarrage du processus d’export…",
-    "Creating HTML…": "Création de l’HTML…",
-    "Starting export…": "Démarrage de l’export…",
     "Unable to connect to Homeserver. Retrying…": "Impossible de se connecter au serveur d’accueil. Reconnexion…",
     "Secure Backup successful": "Sauvegarde sécurisée réalisée avec succès",
     "Your keys are now being backed up from this device.": "Vos clés sont maintenant sauvegardées depuis cet appareil.",
@@ -3456,13 +3417,10 @@
     "Changes your profile picture in this current room only": "Modifie votre image de profil seulement dans le salon actuel",
     "Changes your profile picture in all rooms": "Modifier votre image de profil dans tous les salons",
     "User cannot be invited until they are unbanned": "L’utilisateur ne peut pas être invité tant qu’il est banni",
-    "Previous group of messages": "Groupe précédent de messages",
-    "Next group of messages": "Groupe suivant de messages",
     "Try using %(server)s": "Essayer d’utiliser %(server)s",
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Vous pouvez sinon essayer d’utiliser le serveur public <server/>, mais ça ne sera pas aussi fiable et votre adresse IP sera partagée avec ce serveur. Vous pouvez aussi gérer ce réglage dans les paramètres.",
     "%(senderDisplayName)s changed the join rule to ask to join.": "%(senderDisplayName)s a changé la règle pour venir : il faut demander à venir.",
     "User is not logged in": "L’utilisateur n’est pas identifié",
-    "Exported Data": "Données exportées",
     "Views room with given address": "Affiche le salon avec cette adresse",
     "Ask to join": "Demander à venir",
     "Notification Settings": "Paramètres de notification",
@@ -3610,7 +3568,9 @@
         "not_trusted": "Non fiable",
         "accessibility": "Accessibilité",
         "server": "Serveur",
-        "capabilities": "Capacités"
+        "capabilities": "Capacités",
+        "unnamed_room": "Salon anonyme",
+        "unnamed_space": "Espace sans nom"
     },
     "action": {
         "continue": "Continuer",
@@ -4007,5 +3967,47 @@
         "room_id": "Identifiant du salon : %(roomId)s",
         "thread_root_id": "ID du fil de discussion racine : %(threadRootId)s",
         "event_id": "Identifiant d’événement : %(eventId)s"
+    },
+    "export_chat": {
+        "html": "HTML",
+        "json": "JSON",
+        "text": "Texte brut",
+        "from_the_beginning": "Depuis le début",
+        "number_of_messages": "Spécifiez un nombre de messages",
+        "current_timeline": "Historique actuel",
+        "creating_html": "Création de l’HTML…",
+        "starting_export": "Démarrage de l’export…",
+        "export_successful": "Export réussi !",
+        "unload_confirm": "Êtes vous sûr de vouloir quitter pendant cet export ?",
+        "generating_zip": "Génération d’un ZIP",
+        "processing_event_n": "Traitement de l’évènement %(number)s sur %(total)s",
+        "fetched_n_events_with_total": {
+            "one": "%(count)s sur %(total)s évènement récupéré",
+            "other": "%(count)s sur %(total)s évènements récupérés"
+        },
+        "fetched_n_events": {
+            "one": "%(count)s évènements récupéré jusqu’ici",
+            "other": "%(count)s évènements récupérés jusqu’ici"
+        },
+        "fetched_n_events_in_time": {
+            "one": "%(count)s évènement récupéré en %(seconds)ss",
+            "other": "%(count)s évènements récupérés en %(seconds)ss"
+        },
+        "exported_n_events_in_time": {
+            "one": "%(count)s évènement exporté en %(seconds)s secondes",
+            "other": "%(count)s évènements exportés en %(seconds)s secondes"
+        },
+        "media_omitted": "Média ignorés",
+        "media_omitted_file_size": "Média ignoré – taille limite de fichier dépassée",
+        "creator_summary": "%(creatorName)s a créé ce salon.",
+        "export_info": "C’est le début de l’export de <roomName/>. Exporté par <exporterDetails/> le %(exportDate)s.",
+        "topic": "Sujet : %(topic)s",
+        "previous_page": "Groupe précédent de messages",
+        "next_page": "Groupe suivant de messages",
+        "html_title": "Données exportées",
+        "error_fetching_file": "Erreur lors de la récupération du fichier",
+        "file_attached": "Fichier attaché",
+        "fetching_events": "Récupération des évènements…",
+        "creating_output": "Création du résultat…"
     }
 }

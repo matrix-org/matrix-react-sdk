@@ -69,7 +69,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s، ‏%(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s، ‏%(day)s %(monthName)s %(fullYear)s ‏%(time)s",
-    "Unnamed Room": "غرفة بدون اسم",
     "Identity server has no terms of service": "ليس لخادوم الهويّة أيّ شروط خدمة",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "يطلب هذا الإجراء الوصول إلى خادوم الهويّات المبدئي<server />للتثبّت من عنوان البريد الإلكتروني أو رقم الهاتف، ولكن ليس للخادوم أيّ شروط خدمة.",
     "Only continue if you trust the owner of the server.": "لا تُواصل لو لم تكن تثق بمالك الخادوم.",
@@ -1250,7 +1249,8 @@
         "someone": "شخص ما",
         "encrypted": "التشفير",
         "trusted": "موثوق",
-        "not_trusted": "غير موثوق"
+        "not_trusted": "غير موثوق",
+        "unnamed_room": "غرفة بدون اسم"
     },
     "action": {
         "continue": "واصِل",
