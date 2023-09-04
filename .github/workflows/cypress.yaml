@@ -115,11 +115,6 @@ jobs:
             issues: read
             pull-requests: read
         environment: Cypress
-        strategy:
-            fail-fast: false
-            matrix:
-                # Run 4 instances in Parallel
-                runner: [1, 2, 3, 4]
         steps:
             - uses: browser-actions/setup-chrome@c485fa3bab6be59dce18dbc18ef6ab7cbc8ff5f1
             - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
@@ -171,8 +166,6 @@ jobs:
                   headed: true
                   start: npx serve -p 8080 -L ../webapp
                   wait-on: "http://localhost:8080"
-                  record: true
-                  parallel: true
                   command-prefix: "yarn percy exec --parallel --"
                   config: '{"reporter":"cypress-multi-reporters", "reporterOptions": { "configFile": "cypress-ci-reporter-config.json" } }'
                   ci-build-id: ${{ needs.prepare.outputs.uuid }}
