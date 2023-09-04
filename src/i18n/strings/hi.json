@@ -73,12 +73,6 @@
     "Displays action": "कार्रवाई प्रदर्शित करता है",
     "Forces the current outbound group session in an encrypted room to be discarded": "एक एन्क्रिप्टेड रूम में मौजूदा आउटबाउंड समूह सत्र को त्यागने के लिए मजबूर करता है",
     "Reason": "कारण",
-    "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s ने विषय को \"%(topic)s\" में बदल दिया।",
-    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s ने रूम का नाम हटा दिया।",
-    "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s कमरे का नाम बदलकर %(roomName)s कर दिया।",
-    "%(senderDisplayName)s sent an image.": "%(senderDisplayName)s ने एक छवि भेजी।",
-    "%(senderName)s set the main address for this room to %(address)s.": "%(senderName)s ने इस कमरे के लिए मुख्य पता %(address)s पर सेट किया।",
-    "%(senderName)s removed the main address for this room.": "%(senderName)s ने इस कमरे के लिए मुख्य पता हटा दिया।",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s रूम में शामिल होने के लिए %(targetDisplayName)s को निमंत्रण भेजा।",
     "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s ने भविष्य के रूम का इतिहास सभी रूम के सदस्यों के लिए प्रकाशित कर दिया जिस बिंदु से उन्हें आमंत्रित किया गया था।",
     "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s ने भविष्य के रूम का इतिहास सभी रूम के सदस्यों के लिए दृश्यमान किया, जिस बिंदु में वे शामिल हुए थे।",
@@ -204,13 +198,6 @@
     "Gets or sets the room topic": "रूम का विषय प्राप्त या सेट करना",
     "This room has no topic.": "इस रूम का कोई विषय नहीं है।",
     "Sets the room name": "रूम का नाम सेट करता हैं",
-    "%(senderDisplayName)s upgraded this room.": "%(senderDisplayName)s ने रूम को अपग्रेड किया",
-    "%(senderDisplayName)s made the room public to whoever knows the link.": "%(senderDisplayName)s ने कमरे को सार्वजनिक कर दिया, जो कोई भी लिंक जानता है।",
-    "%(senderDisplayName)s made the room invite only.": "%(senderDisplayName)s ने कमरे को सिर्फ आमंत्रित रखा।",
-    "%(senderDisplayName)s changed the join rule to %(rule)s": "%(senderDisplayName)s ने नियम को %(rule)s में बदल दिया",
-    "%(senderDisplayName)s has allowed guests to join the room.": "%(senderDisplayName)s ने मेहमानों को कमरे में शामिल होने की अनुमति दी है।",
-    "%(senderDisplayName)s has prevented guests from joining the room.": "%(senderDisplayName)s ने मेहमानों को कमरे में शामिल होने से रोका है।",
-    "%(senderDisplayName)s changed guest access to %(rule)s": "%(senderDisplayName)s ने अतिथि पहुंच %(rule)s में बदल दी",
     "%(displayName)s is typing …": "%(displayName)s टाइप कर रहा है …",
     "%(names)s and %(count)s others are typing …": {
         "other": "%(names)s और %(count)s अन्य टाइप कर रहे हैं …",
@@ -648,6 +635,29 @@
             "rule_call": "कॉल आमंत्रण",
             "rule_suppress_notices": "रोबॉट द्वारा भेजे गए संदेश",
             "rule_encrypted_room_one_to_one": "एक एक के साथ चैट में एन्क्रिप्टेड संदेश"
+        }
+    },
+    "timeline": {
+        "m.room.topic": "%(senderDisplayName)s ने विषय को \"%(topic)s\" में बदल दिया।",
+        "m.room.name": {
+            "remove": "%(senderDisplayName)s ने रूम का नाम हटा दिया।",
+            "set": "%(senderDisplayName)s कमरे का नाम बदलकर %(roomName)s कर दिया।"
+        },
+        "m.room.tombstone": "%(senderDisplayName)s ने रूम को अपग्रेड किया",
+        "m.room.join_rules": {
+            "public": "%(senderDisplayName)s ने कमरे को सार्वजनिक कर दिया, जो कोई भी लिंक जानता है।",
+            "invite": "%(senderDisplayName)s ने कमरे को सिर्फ आमंत्रित रखा।",
+            "unknown": "%(senderDisplayName)s ने नियम को %(rule)s में बदल दिया"
+        },
+        "m.room.guest_access": {
+            "can_join": "%(senderDisplayName)s ने मेहमानों को कमरे में शामिल होने की अनुमति दी है।",
+            "forbidden": "%(senderDisplayName)s ने मेहमानों को कमरे में शामिल होने से रोका है।",
+            "unknown": "%(senderDisplayName)s ने अतिथि पहुंच %(rule)s में बदल दी"
+        },
+        "m.image": "%(senderDisplayName)s ने एक छवि भेजी।",
+        "m.room.canonical_alias": {
+            "set": "%(senderName)s ने इस कमरे के लिए मुख्य पता %(address)s पर सेट किया।",
+            "removed": "%(senderName)s ने इस कमरे के लिए मुख्य पता हटा दिया।"
         }
     }
 }

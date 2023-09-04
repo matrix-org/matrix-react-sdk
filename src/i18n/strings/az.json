@@ -53,8 +53,6 @@
     "Deops user with given id": "Verilmiş ID-lə istifadəçidən operatorun səlahiyyətlərini çıxardır",
     "Displays action": "Hərəkətlərin nümayişi",
     "Reason": "Səbəb",
-    "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s otağın mövzusunu \"%(topic)s\" dəyişdirdi.",
-    "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s otağın adını %(roomName)s dəyişdirdi.",
     "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s dəvət edilmiş iştirakçılar üçün danışıqların tarixini açdı.",
     "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s girmiş iştirakçılar üçün danışıqların tarixini açdı.",
     "%(senderName)s made future room history visible to all room members.": "%(senderName)s iştirakçılar üçün danışıqların tarixini açdı.",
@@ -206,14 +204,6 @@
     "Please supply a https:// or http:// widget URL": "Zəhmət olmasa https:// və ya http:// widget URL təmin edin",
     "Forces the current outbound group session in an encrypted room to be discarded": "Şifrəli bir otaqda mövcud qrup sessiyasını ləğv etməyə məcbur edir",
     "Displays list of commands with usages and descriptions": "İstifadə qaydaları və təsvirləri ilə komanda siyahısını göstərir",
-    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s otaq otağını sildi.",
-    "%(senderDisplayName)s upgraded this room.": "%(senderDisplayName)s bu otağı təkmilləşdirdi.",
-    "%(senderDisplayName)s made the room public to whoever knows the link.": "%(senderDisplayName)s linki olanlara otağı açıq etdi.",
-    "%(senderDisplayName)s made the room invite only.": "%(senderDisplayName)s otağı yalnız dəvətlə açıq etdi.",
-    "%(senderDisplayName)s changed the join rule to %(rule)s": "%(senderDisplayName)s qoşulma qaydasını %(rule)s olaraq dəyişdirdi",
-    "%(senderDisplayName)s has allowed guests to join the room.": "%(senderDisplayName)s qonaq otağa qoşulmasına icazə verdi.",
-    "%(senderDisplayName)s has prevented guests from joining the room.": "%(senderDisplayName)s qonaqların otağa daxil olmasının qarşısını aldı.",
-    "%(senderDisplayName)s changed guest access to %(rule)s": "%(senderDisplayName)s %(rule)s-a qonaq girişi dəyişdirildi.",
     "powered by Matrix": "Matrix tərəfindən təchiz edilmişdir",
     "Create Account": "Hesab Aç",
     "Explore rooms": "Otaqları kəşf edin",
@@ -268,6 +258,24 @@
             "rule_invite_for_me": "Nə vaxt ki, məni otağa dəvət edirlər",
             "rule_call": "Dəvət zəngi",
             "rule_suppress_notices": "Botla göndərilmiş mesajlar"
+        }
+    },
+    "timeline": {
+        "m.room.topic": "%(senderDisplayName)s otağın mövzusunu \"%(topic)s\" dəyişdirdi.",
+        "m.room.name": {
+            "remove": "%(senderDisplayName)s otaq otağını sildi.",
+            "set": "%(senderDisplayName)s otağın adını %(roomName)s dəyişdirdi."
+        },
+        "m.room.tombstone": "%(senderDisplayName)s bu otağı təkmilləşdirdi.",
+        "m.room.join_rules": {
+            "public": "%(senderDisplayName)s linki olanlara otağı açıq etdi.",
+            "invite": "%(senderDisplayName)s otağı yalnız dəvətlə açıq etdi.",
+            "unknown": "%(senderDisplayName)s qoşulma qaydasını %(rule)s olaraq dəyişdirdi"
+        },
+        "m.room.guest_access": {
+            "can_join": "%(senderDisplayName)s qonaq otağa qoşulmasına icazə verdi.",
+            "forbidden": "%(senderDisplayName)s qonaqların otağa daxil olmasının qarşısını aldı.",
+            "unknown": "%(senderDisplayName)s %(rule)s-a qonaq girişi dəyişdirildi."
         }
     }
 }

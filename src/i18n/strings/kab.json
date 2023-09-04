@@ -274,13 +274,6 @@
     "Opens chat with the given user": "Yeldi adiwenni d useqdac i d-yettunefken",
     "Sends a message to the given user": "Yuzen iznan i useqdac i d-yettunefken",
     "Displays action": "Yeskan tigawt",
-    "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s ibeddel asentel ɣer \"%(topic)s\".",
-    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s yekkes isem n texxamt.",
-    "%(senderDisplayName)s upgraded this room.": "%(senderDisplayName)s ileqqem taxxamt-a.",
-    "%(senderDisplayName)s made the room invite only.": "%(senderDisplayName)s yerra taxxamt s tinnubga kan.",
-    "%(senderDisplayName)s has allowed guests to join the room.": "%(senderDisplayName)s yefka tisirag i uttekki deg texxamt.",
-    "%(senderDisplayName)s sent an image.": "%(senderDisplayName)s yuzen-d tugna.",
-    "%(senderName)s removed the main address for this room.": "%(senderName)s yekkes tansa tagejdant n texxamt-a.",
     "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
         "other": "%(senderName)s yerna tansiwin-nniḍen %(addresses)s ɣer texxamt-a.",
         "one": "%(senderName)s yerna tansa-nniḍen %(addresses)s i texxamt-a."
@@ -312,7 +305,6 @@
     "%(senderName)s is calling": "%(senderName)s yessawal",
     "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
     "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
-    "%(senderName)s invited %(targetName)s": "%(senderName)s yettusnubget %(targetName)s",
     "Collecting logs": "Alqaḍ n yiɣmisen",
     "Waiting for response from server": "Aṛaǧu n tririt sɣur aqeddac",
     "Failed to set display name": "Asbadu n yisem yettwaskanen ur yeddi ara",
@@ -413,13 +405,6 @@
     "Adds a custom widget by URL to the room": "Yerna awiǧit udmawan s URL ɣer texxamt",
     "Please supply a widget URL or embed code": "Ttxil-k·m mudd URL n uwiǧit neɣ tangalt tusliɣt",
     "Verifies a user, session, and pubkey tuple": "Yessenqad tagrumma-a: aseqdac, tiɣimit d tsarut tazayezt",
-    "%(senderDisplayName)s changed the room name from %(oldRoomName)s to %(newRoomName)s.": "%(senderDisplayName)s ibeddel isem n texxamt seg %(oldRoomName)s ɣer %(newRoomName)s.",
-    "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s ibeddel isem n texxamt s %(roomName)s.",
-    "%(senderDisplayName)s made the room public to whoever knows the link.": "%(senderDisplayName)s yerra taxxamt d tazayazt i kra n win yessnen aseɣwen.",
-    "%(senderDisplayName)s changed the join rule to %(rule)s": "%(senderDisplayName)s ibeddel alugen n uttekki s %(rule)s",
-    "%(senderDisplayName)s has prevented guests from joining the room.": "%(senderDisplayName)s ur yeǧǧi ara i yimerza ad kecmen ɣer texxamt.",
-    "%(senderDisplayName)s changed guest access to %(rule)s": "%(senderDisplayName)s ibeddel anekcum n yimerza s %(rule)s",
-    "%(senderName)s set the main address for this room to %(address)s.": "%(senderName)s yesbadu tansa tagejdant i texxamt-a s %(address)s.",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
         "other": "%(senderName)s yekkes tansa-nni-nniḍen %(addresses)s i texxamt-a.",
         "one": "%(senderName)s yekkes tansa-nni tayeḍ %(addresses)s i texxamt-a."
@@ -431,10 +416,6 @@
     "Sends the given message coloured as a rainbow": "Yuzen iznan i d-yettunefken yeɣman s yiniten am teslit n Unẓar",
     "Sends the given emote coloured as a rainbow": "Yuzen tanfalit i d-yettunefken yeɣman s yiniten am teslit n Unẓar",
     "%(senderName)s changed the addresses for this room.": "%(senderName)s ibeddel tansiwin n texxamt-a.",
-    "%(senderName)s placed a voice call.": "%(senderName)s isɛedda asiwel s taɣect.",
-    "%(senderName)s placed a voice call. (not supported by this browser)": "%(senderName)s isɛedda asiwel s taɣect. (ur yettusefrak ara s yiming-a)",
-    "%(senderName)s placed a video call.": "%(senderName)s isɛedda asiwel s tvidyut.",
-    "%(senderName)s placed a video call. (not supported by this browser)": "%(senderName)s isɛedda asiwel s tvidyut. (ur yettusefrak ara s yiming-a)",
     "%(senderName)s made future room history visible to anyone.": "%(senderName)s yerra amazray n texxamt i d-iteddun yettban i yal amdan.",
     "%(senderName)s changed the pinned messages for the room.": "%(senderName)s ibeddel iznan yerzin n texxamt.",
     "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s awiǧit yettwabeddel sɣur %(senderName)s",
@@ -1773,7 +1754,6 @@
     "The call was answered on another device.": "Tiririt ɣef usiwel tella-d ɣef yibenk-nniḍen.",
     "Answered Elsewhere": "Yerra-d seg wadeg-nniḍen",
     "The call could not be established": "Asiwel ur yeqεid ara",
-    "%(senderDisplayName)s changed the server ACLs for this room.": "%(senderDisplayName)s isenfel iɣewwaren n unekcum ɣer texxamt-a.",
     "Decide where your account is hosted": "Wali anida ara yezdeɣ umiḍan-ik·im",
     "Host account on": "Sezdeɣ amiḍan deg",
     "Already have an account? <a>Sign in here</a>": "Tesεiḍ yakan amiḍan? <a>Kcem ɣer da</a>",
@@ -1782,13 +1762,11 @@
     "Go to Home View": "Uɣal ɣer usebter agejdan",
     "Send videos as you in this room": "Azen tividyutin deg texxamt-a am wakken d kečč",
     "See images posted to your active room": "Wali tignatin i d-yeffɣen deg texxamt-a iremden",
-    "%(senderDisplayName)s set the server ACLs for this room.": "%(senderDisplayName)s yesbadu ACLs n uqeddac i texxamt-a.",
     "Takes the call in the current room off hold": "Uɣal ɣer usiwel ara iteddun deg -texxamt-a",
     "Places the call in the current room on hold": "Seḥbes asiwel deg texxamt-a i kra n wakud",
     "Prepends ┬──┬ ノ( ゜-゜ノ) to a plain-text message": "Yerna ┬──┬ ノ( ゜-゜ノ) ɣer tazwara n yizen",
     "Prepends (╯°□°）╯︵ ┻━┻ to a plain-text message": "Yerna (╯°□°）╯︵ ┻━┻ ɣer tazwara n yizen",
     "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "Tawuri tecceḍ acku asawaḍ ur yessaweḍ ara ad yekcem. Senqed ma yella usawaḍ yeqqnen yerna yettusbadu akken iwata.",
-    "🎉 All servers are banned from participating! This room can no longer be used.": "🎉 Iqeddcen akk ttwagedlen seg uttekki! Taxxamt-a dayen ur tettuseqdac ara.",
     "Integration manager": "Amsefrak n umsidef",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-ik·im ur ak·am yefki ara tisirag i useqdec n umsefrak n umsidef i wakken ad tgeḍ aya. Ttxil-k·m nermes anedbal.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Aseqdec n uwiǧit-a yezmer ad yebḍu isefka <helpIcon/> d %(widgetDomain)s & amsefrak-inek·inem n umsidef.",
@@ -2035,5 +2013,43 @@
     "create_room": {
         "title_public_room": "Rnu taxxamt tazayezt",
         "title_private_room": "Rnu taxxamt tusligt"
+    },
+    "timeline": {
+        "m.call.invite": {
+            "voice_call": "%(senderName)s isɛedda asiwel s taɣect.",
+            "voice_call_unsupported": "%(senderName)s isɛedda asiwel s taɣect. (ur yettusefrak ara s yiming-a)",
+            "video_call": "%(senderName)s isɛedda asiwel s tvidyut.",
+            "video_call_unsupported": "%(senderName)s isɛedda asiwel s tvidyut. (ur yettusefrak ara s yiming-a)"
+        },
+        "m.room.member": {
+            "invite": "%(senderName)s yettusnubget %(targetName)s"
+        },
+        "m.room.topic": "%(senderDisplayName)s ibeddel asentel ɣer \"%(topic)s\".",
+        "m.room.name": {
+            "remove": "%(senderDisplayName)s yekkes isem n texxamt.",
+            "change": "%(senderDisplayName)s ibeddel isem n texxamt seg %(oldRoomName)s ɣer %(newRoomName)s.",
+            "set": "%(senderDisplayName)s ibeddel isem n texxamt s %(roomName)s."
+        },
+        "m.room.tombstone": "%(senderDisplayName)s ileqqem taxxamt-a.",
+        "m.room.join_rules": {
+            "public": "%(senderDisplayName)s yerra taxxamt d tazayazt i kra n win yessnen aseɣwen.",
+            "invite": "%(senderDisplayName)s yerra taxxamt s tinnubga kan.",
+            "unknown": "%(senderDisplayName)s ibeddel alugen n uttekki s %(rule)s"
+        },
+        "m.room.guest_access": {
+            "can_join": "%(senderDisplayName)s yefka tisirag i uttekki deg texxamt.",
+            "forbidden": "%(senderDisplayName)s ur yeǧǧi ara i yimerza ad kecmen ɣer texxamt.",
+            "unknown": "%(senderDisplayName)s ibeddel anekcum n yimerza s %(rule)s"
+        },
+        "m.image": "%(senderDisplayName)s yuzen-d tugna.",
+        "m.room.server_acl": {
+            "set": "%(senderDisplayName)s yesbadu ACLs n uqeddac i texxamt-a.",
+            "changed": "%(senderDisplayName)s isenfel iɣewwaren n unekcum ɣer texxamt-a.",
+            "all_servers_banned": "🎉 Iqeddcen akk ttwagedlen seg uttekki! Taxxamt-a dayen ur tettuseqdac ara."
+        },
+        "m.room.canonical_alias": {
+            "set": "%(senderName)s yesbadu tansa tagejdant i texxamt-a s %(address)s.",
+            "removed": "%(senderName)s yekkes tansa tagejdant n texxamt-a."
+        }
     }
 }

@@ -26,9 +26,6 @@
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",
     "Change Password": "Change Password",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s changed the power level of %(powerLevelDiffText)s.",
-    "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s changed the room name to %(roomName)s.",
-    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s removed the room name.",
-    "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s changed the topic to \"%(topic)s\".",
     "Changes your display nickname": "Changes your display nickname",
     "Command error": "Command error",
     "Commands": "Commands",
@@ -119,7 +116,6 @@
     "Room %(roomId)s not visible": "Room %(roomId)s not visible",
     "Rooms": "Rooms",
     "Search failed": "Search failed",
-    "%(senderDisplayName)s sent an image.": "%(senderDisplayName)s sent an image.",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.",
     "Server error": "Server error",
     "Server may be unavailable, overloaded, or search timed out :(": "Server may be unavailable, overloaded, or search timed out :(",
@@ -315,15 +311,6 @@
     "Adds a custom widget by URL to the room": "Adds a custom widget by URL to the room",
     "Please supply a https:// or http:// widget URL": "Please supply an https:// or http:// widget URL",
     "You cannot modify widgets in this room.": "You cannot modify widgets in this room.",
-    "%(senderDisplayName)s upgraded this room.": "%(senderDisplayName)s upgraded this room.",
-    "%(senderDisplayName)s made the room public to whoever knows the link.": "%(senderDisplayName)s made the room public to whoever knows the link.",
-    "%(senderDisplayName)s made the room invite only.": "%(senderDisplayName)s made the room invite only.",
-    "%(senderDisplayName)s changed the join rule to %(rule)s": "%(senderDisplayName)s changed the join rule to %(rule)s",
-    "%(senderDisplayName)s has allowed guests to join the room.": "%(senderDisplayName)s has allowed guests to join the room.",
-    "%(senderDisplayName)s has prevented guests from joining the room.": "%(senderDisplayName)s has prevented guests from joining the room.",
-    "%(senderDisplayName)s changed guest access to %(rule)s": "%(senderDisplayName)s changed guest access to %(rule)s",
-    "%(senderName)s set the main address for this room to %(address)s.": "%(senderName)s set the main address for this room to %(address)s.",
-    "%(senderName)s removed the main address for this room.": "%(senderName)s removed the main address for this room.",
     "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.",
     "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s widget modified by %(senderName)s",
     "%(displayName)s is typing …": "%(displayName)s is typing …",
@@ -471,6 +458,29 @@
             "rule_invite_for_me": "When I'm invited to a room",
             "rule_call": "Call invitation",
             "rule_suppress_notices": "Messages sent by bot"
+        }
+    },
+    "timeline": {
+        "m.room.topic": "%(senderDisplayName)s changed the topic to \"%(topic)s\".",
+        "m.room.name": {
+            "remove": "%(senderDisplayName)s removed the room name.",
+            "set": "%(senderDisplayName)s changed the room name to %(roomName)s."
+        },
+        "m.room.tombstone": "%(senderDisplayName)s upgraded this room.",
+        "m.room.join_rules": {
+            "public": "%(senderDisplayName)s made the room public to whoever knows the link.",
+            "invite": "%(senderDisplayName)s made the room invite only.",
+            "unknown": "%(senderDisplayName)s changed the join rule to %(rule)s"
+        },
+        "m.room.guest_access": {
+            "can_join": "%(senderDisplayName)s has allowed guests to join the room.",
+            "forbidden": "%(senderDisplayName)s has prevented guests from joining the room.",
+            "unknown": "%(senderDisplayName)s changed guest access to %(rule)s"
+        },
+        "m.image": "%(senderDisplayName)s sent an image.",
+        "m.room.canonical_alias": {
+            "set": "%(senderName)s set the main address for this room to %(address)s.",
+            "removed": "%(senderName)s removed the main address for this room."
         }
     }
 }

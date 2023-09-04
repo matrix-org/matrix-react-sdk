@@ -75,12 +75,6 @@
     "Displays action": ".i mrilu lo nu do gasnu",
     "Forces the current outbound group session in an encrypted room to be discarded": ".i macnu vimcu lo ca barkla termifckiku gunma lo kumfa pe'a poi mifra",
     "Reason": "krinu",
-    "%(senderDisplayName)s changed the topic to \"%(topic)s\".": ".i gau la'o zoi. %(senderDisplayName)s .zoi zoi zoi. %(topic)s .zoi basti da le ka skicu lerpoi",
-    "%(senderDisplayName)s removed the room name.": ".i gau la'o zoi. %(senderDisplayName)s .zoi da co'u cmene le se zilbe'i",
-    "%(senderDisplayName)s changed the room name to %(roomName)s.": ".i gau la'o zoi. %(senderDisplayName)s .zoi zoi zoi. %(roomName)s .zoi basti da le ka cmene le se zilbe'i",
-    "%(senderDisplayName)s sent an image.": ".i pa pixra cu zilbe'i fi la'o zoi. %(senderDisplayName)s .zoi",
-    "%(senderName)s set the main address for this room to %(address)s.": ".i gau la'o zoi. %(senderName)s .zoi zoi zoi. %(address)s .zoi co'a ralju le'i judri be le ve zilbe'i",
-    "%(senderName)s removed the main address for this room.": ".i gau la'o zoi. %(senderName)s .zoi da co'u ralju le'i judri be le ve zilbe'i",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": ".i la'o zoi. %(senderName)s .zoi friti le ka ziljmina le se zilbe'i kei la'o zoi. %(targetDisplayName)s .zoi",
     "%(senderName)s made future room history visible to all room members, from the point they are invited.": ".i ro da poi pagbu le se zilbe'i zo'u gau la'o zoi. %(senderName)s .zoi da ka'e tcidu ro notci poi ba lo nu da te friti ba zilbe'i",
     "%(senderName)s made future room history visible to all room members, from the point they joined.": ".i ro da poi pagbu le se zilbe'i zo'u gau la'o zoi. %(senderName)s .zoi da ka'e tcidu ro notci poi ba lo nu da ziljmina ba zilbe'i",
@@ -126,11 +120,6 @@
     "This room has no topic.": ".i na da skicu lerpoi le ve zilbe'i",
     "Could not find user in room": ".i le pilno na pagbu le se zilbe'i",
     "Session already verified!": ".i xa'o lacri le se samtcise'u",
-    "%(senderDisplayName)s changed the room name from %(oldRoomName)s to %(newRoomName)s.": ".i gau la'o zoi. %(senderDisplayName)s .zoi zoi zoi. %(newRoomName)s .zoi basti zoi zoi. %(oldRoomName)s .zoi le ka cmene le se zilbe'i",
-    "%(senderDisplayName)s made the room public to whoever knows the link.": ".i gau la'o zoi. %(senderDisplayName)s .zoi ro djuno be le du'u judri cu ka'e ziljmina le se zilbe'i",
-    "%(senderDisplayName)s made the room invite only.": ".i ro da zo'u gau la'o zoi. %(senderDisplayName)s .zoi lo nu de friti le ka ziljmina le se zilbe'i kei da sarcu",
-    "%(senderDisplayName)s has allowed guests to join the room.": ".i la'o zoi. %(senderDisplayName)s .zoi curmi lo nu ro na te friti cu ka'e ziljmina le se zilbe'i",
-    "%(senderDisplayName)s has prevented guests from joining the room.": ".i la'o zoi. %(senderDisplayName)s .zoi na curmi lo nu ro na te friti cu ka'e ziljmina le se zilbe'i",
     "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
         "other": ".i gau la'o zoi. %(senderName)s .zoi zoi zoi. %(addresses)s .zoi poi na ralju co'a judri le se zilbe'i",
         "one": ".i gau la'o zoi. %(senderName)s .zoi zoi zoi. %(addresses)s .zoi poi na ralju co'a judri le se zilbe'i"
@@ -142,10 +131,6 @@
     "%(senderName)s changed the alternative addresses for this room.": ".i gau la'o zoi. %(senderName)s .zoi pa na ralju cu basti da le ka judri le se zilbe'i",
     "%(senderName)s changed the main and alternative addresses for this room.": ".i gau la'o zoi. %(senderName)s .zoi pa ralju je pa na ralju cu basti da le ka judri le se zilbe'i",
     "%(senderName)s changed the addresses for this room.": ".i gau la'o zoi. %(senderName)s .zoi da basti de le ka judri le se zilbe'i",
-    "%(senderName)s placed a voice call.": ".i la'o zoi. %(senderName)s .zoi co'a fonjo'e",
-    "%(senderName)s placed a voice call. (not supported by this browser)": ".i la'o zoi. %(senderName)s .zoi co'a fonjo'e .i le do kibrbrauzero na kakne",
-    "%(senderName)s placed a video call.": ".i la'o zoi. %(senderName)s .zoi co'a vidvi fonjo'e",
-    "%(senderName)s placed a video call. (not supported by this browser)": ".i la'o zoi. %(senderName)s .zoi co'a vidvi fonjo'e .i le do kibrbrauzero na kakne",
     "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": ".i la'o zoi. %(senderName)s .zoi co'u friti le ka ziljmina le se zilbe'i kei la'o zoi. %(targetDisplayName)s .zoi",
     "You signed in to a new session without verifying it:": ".i fe le di'e se samtcise'u pu co'a jaspu vau je za'o na lacri",
     "They match": "du",
@@ -269,7 +254,6 @@
     "%(senderName)s is calling": ".i la'o zoi. %(senderName)s .zoi co'a fonjo'e",
     "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
     "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
-    "%(senderName)s invited %(targetName)s": ".i la'o zoi. %(senderName)s .zoi friti le ka ziljmina kei la'o zoi. %(targetName)s .zoi",
     "Use a system font": "nu da pe le vanbi cu ci'artai",
     "System font name": "cmene le ci'artai pe le vanbi",
     "Never send encrypted messages to unverified sessions from this session": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u",
@@ -410,5 +394,35 @@
     "create_room": {
         "title_public_room": "nu cupra pa ve zilbe'i poi gubni",
         "title_private_room": "nu cupra pa ve zilbe'i poi na gubni"
+    },
+    "timeline": {
+        "m.call.invite": {
+            "voice_call": ".i la'o zoi. %(senderName)s .zoi co'a fonjo'e",
+            "voice_call_unsupported": ".i la'o zoi. %(senderName)s .zoi co'a fonjo'e .i le do kibrbrauzero na kakne",
+            "video_call": ".i la'o zoi. %(senderName)s .zoi co'a vidvi fonjo'e",
+            "video_call_unsupported": ".i la'o zoi. %(senderName)s .zoi co'a vidvi fonjo'e .i le do kibrbrauzero na kakne"
+        },
+        "m.room.member": {
+            "invite": ".i la'o zoi. %(senderName)s .zoi friti le ka ziljmina kei la'o zoi. %(targetName)s .zoi"
+        },
+        "m.room.topic": ".i gau la'o zoi. %(senderDisplayName)s .zoi zoi zoi. %(topic)s .zoi basti da le ka skicu lerpoi",
+        "m.room.name": {
+            "remove": ".i gau la'o zoi. %(senderDisplayName)s .zoi da co'u cmene le se zilbe'i",
+            "change": ".i gau la'o zoi. %(senderDisplayName)s .zoi zoi zoi. %(newRoomName)s .zoi basti zoi zoi. %(oldRoomName)s .zoi le ka cmene le se zilbe'i",
+            "set": ".i gau la'o zoi. %(senderDisplayName)s .zoi zoi zoi. %(roomName)s .zoi basti da le ka cmene le se zilbe'i"
+        },
+        "m.room.join_rules": {
+            "public": ".i gau la'o zoi. %(senderDisplayName)s .zoi ro djuno be le du'u judri cu ka'e ziljmina le se zilbe'i",
+            "invite": ".i ro da zo'u gau la'o zoi. %(senderDisplayName)s .zoi lo nu de friti le ka ziljmina le se zilbe'i kei da sarcu"
+        },
+        "m.room.guest_access": {
+            "can_join": ".i la'o zoi. %(senderDisplayName)s .zoi curmi lo nu ro na te friti cu ka'e ziljmina le se zilbe'i",
+            "forbidden": ".i la'o zoi. %(senderDisplayName)s .zoi na curmi lo nu ro na te friti cu ka'e ziljmina le se zilbe'i"
+        },
+        "m.image": ".i pa pixra cu zilbe'i fi la'o zoi. %(senderDisplayName)s .zoi",
+        "m.room.canonical_alias": {
+            "set": ".i gau la'o zoi. %(senderName)s .zoi zoi zoi. %(address)s .zoi co'a ralju le'i judri be le ve zilbe'i",
+            "removed": ".i gau la'o zoi. %(senderName)s .zoi da co'u ralju le'i judri be le ve zilbe'i"
+        }
     }
 }

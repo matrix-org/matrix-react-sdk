@@ -7,7 +7,6 @@
     "Are you sure you want to reject the invitation?": "Você tem certeza que deseja rejeitar este convite?",
     "Banned users": "Usuárias/os banidas/os",
     "Bans user with given id": "Banir usuários com o identificador informado",
-    "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s mudou o tópico para \"%(topic)s\".",
     "Changes your display nickname": "Troca o seu apelido",
     "Commands": "Comandos",
     "Confirm password": "Confirmar palavra-passe",
@@ -86,7 +85,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s às %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s às %(time)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s alterou o nível de permissões de %(powerLevelDiffText)s.",
-    "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s alterou o nome da sala para %(roomName)s.",
     "Failed to send request.": "Não foi possível mandar requisição.",
     "Failed to verify email address: make sure you clicked the link in the email": "Não foi possível verificar o endereço de email: verifique se você realmente clicou no link que está no seu email",
     "Failure to create room": "Não foi possível criar a sala",
@@ -103,7 +101,6 @@
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s não tem permissões para enviar notificações a você - por favor, verifique as configurações do seu navegador",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s não tem permissões para enviar notificações a você - por favor, tente novamente",
     "Room %(roomId)s not visible": "A sala %(roomId)s não está visível",
-    "%(senderDisplayName)s sent an image.": "%(senderDisplayName)s enviou uma imagem.",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s enviou um convite para %(targetDisplayName)s entrar na sala.",
     "This email address is already in use": "Este endereço de email já está sendo usado",
     "This email address was not found": "Este endereço de email não foi encontrado",
@@ -161,7 +158,6 @@
     "Operation failed": "A operação falhou",
     "%(brand)s version:": "versão do %(brand)s:",
     "Warning!": "Atenção!",
-    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s apagou o nome da sala.",
     "Passphrases must match": "As frases-passe devem coincidir",
     "Passphrase must not be empty": "A frase-passe não pode estar vazia",
     "Export room keys": "Exportar chaves de sala",
@@ -787,5 +783,13 @@
         "event_sent": "Evento enviado!",
         "event_content": "Conteúdo do evento",
         "developer_tools": "Ferramentas de desenvolvedor"
+    },
+    "timeline": {
+        "m.room.topic": "%(senderDisplayName)s mudou o tópico para \"%(topic)s\".",
+        "m.room.name": {
+            "remove": "%(senderDisplayName)s apagou o nome da sala.",
+            "set": "%(senderDisplayName)s alterou o nome da sala para %(roomName)s."
+        },
+        "m.image": "%(senderDisplayName)s enviou uma imagem."
     }
 }

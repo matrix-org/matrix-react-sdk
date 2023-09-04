@@ -127,7 +127,6 @@
     "Reason": "Årsak",
     "Add Email Address": "Legg til E-postadresse",
     "Add Phone Number": "Legg til telefonnummer",
-    "%(senderDisplayName)s sent an image.": "%(senderDisplayName)s sendte et bilde.",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s sendte en invitasjon til %(targetDisplayName)s om å bli med i rommet.",
     "%(displayName)s is typing …": "%(displayName)s skriver …",
     "%(names)s and %(count)s others are typing …": {
@@ -449,8 +448,6 @@
     "Indexed rooms:": "Indekserte rom:",
     "Verify this session": "Verifiser denne økten",
     "Create Account": "Opprett konto",
-    "%(senderDisplayName)s changed the room name from %(oldRoomName)s to %(newRoomName)s.": "%(senderDisplayName)s endret rommets navn fra %(oldRoomName)s til %(newRoomName)s.",
-    "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s endret rommets navn til %(roomName)s.",
     "Not Trusted": "Ikke betrodd",
     "%(items)s and %(count)s others": {
         "other": "%(items)s og %(count)s andre",
@@ -656,13 +653,6 @@
     "Could not find user in room": "Klarte ikke å finne brukeren i rommet",
     "Session already verified!": "Økten er allerede verifisert!",
     "Displays information about a user": "Viser informasjon om en bruker",
-    "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s endret temaet til «%(topic)s».",
-    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s fjernet rommets navn.",
-    "%(senderDisplayName)s upgraded this room.": "%(senderDisplayName)s oppgraderte dette rommet.",
-    "%(senderDisplayName)s made the room public to whoever knows the link.": "%(senderDisplayName)s gjorde rommet offentlig for alle som kjenner til denne lenken.",
-    "%(senderDisplayName)s has allowed guests to join the room.": "%(senderDisplayName)s har tillatt gjester å bli med i rommet.",
-    "%(senderDisplayName)s has prevented guests from joining the room.": "%(senderDisplayName)s har hindret gjester fra å bli med i rommet.",
-    "%(senderName)s removed the main address for this room.": "%(senderName)s fjernet hovedadressen til dette rommet.",
     "%(senderName)s changed the addresses for this room.": "%(senderName)s endret adressene til dette rommet.",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s gikk fra %(fromPowerLevel)s til %(toPowerLevel)s",
     "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s-modulen ble endret på av %(senderName)s",
@@ -1328,27 +1318,6 @@
     "Start the camera": "Start kameraet",
     "Connecting": "Kobler til",
     "Change the name of this room": "Endre rommets navn",
-    "%(senderDisplayName)s changed guest access to %(rule)s": "%(senderDisplayName)s endret gjestetilgangen til %(rule)s",
-    "%(senderDisplayName)s made the room invite only.": "%(senderDisplayName)s merket rommet som kun for inviterte.",
-    "%(senderDisplayName)s changed the room avatar.": "%(senderDisplayName)s endret rommets avatar.",
-    "%(senderName)s withdrew %(targetName)s's invitation: %(reason)s": "%(senderName)s trakk tilbake invitasjonen til %(targetName)s: %(reason)s",
-    "%(senderName)s unbanned %(targetName)s": "%(senderName)s opphevde bannlysningen av %(targetName)s",
-    "%(targetName)s left the room": "%(targetName)s forlot rommet",
-    "%(targetName)s left the room: %(reason)s": "%(targetName)s forlot rommet: %(reason)s",
-    "%(targetName)s rejected the invitation": "%(targetName)s avslo invitasjonen",
-    "%(targetName)s joined the room": "%(targetName)s ble med i rommet",
-    "%(senderName)s made no change": "%(senderName)s gjorde ingen endringer",
-    "%(senderName)s set a profile picture": "%(senderName)s valgte seg et profilbilde",
-    "%(senderName)s changed their profile picture": "%(senderName)s endret profilbildet sitt",
-    "%(senderName)s removed their profile picture": "%(senderName)s fjernet profilbildet sitt",
-    "%(senderName)s removed their display name (%(oldDisplayName)s)": "%(senderName)s fjernet visningsnavnet sitt (%(oldDisplayName)s)",
-    "%(senderName)s set their display name to %(displayName)s": "%(senderName)s satte visningsnavnet sitt til %(displayName)s",
-    "%(oldDisplayName)s changed their display name to %(displayName)s": "%(oldDisplayName)s endret visningsnavnet sitt til %(displayName)s",
-    "%(senderName)s banned %(targetName)s": "%(senderName)s bannlyste %(targetName)s",
-    "%(senderName)s banned %(targetName)s: %(reason)s": "%(senderName)s bannlyste %(targetName)s: %(reason)s",
-    "%(senderName)s invited %(targetName)s": "%(senderName)s inviterte %(targetName)s",
-    "%(targetName)s accepted an invitation": "%(targetName)s aksepterte en invitasjon",
-    "%(targetName)s accepted the invitation for %(displayName)s": "%(targetName)s aksepterte invitasjonen til %(displayName)s",
     "St. Pierre & Miquelon": "Saint-Pierre og Miquelon",
     "St. Martin": "Saint Martin",
     "St. Barthélemy": "Saint Barthélemy",
@@ -1619,5 +1588,48 @@
     "create_room": {
         "title_public_room": "Opprett et offentlig rom",
         "title_private_room": "Opprett et privat rom"
+    },
+    "timeline": {
+        "m.room.member": {
+            "accepted_3pid_invite": "%(targetName)s aksepterte invitasjonen til %(displayName)s",
+            "accepted_invite": "%(targetName)s aksepterte en invitasjon",
+            "invite": "%(senderName)s inviterte %(targetName)s",
+            "ban_reason": "%(senderName)s bannlyste %(targetName)s: %(reason)s",
+            "ban": "%(senderName)s bannlyste %(targetName)s",
+            "change_name": "%(oldDisplayName)s endret visningsnavnet sitt til %(displayName)s",
+            "set_name": "%(senderName)s satte visningsnavnet sitt til %(displayName)s",
+            "remove_name": "%(senderName)s fjernet visningsnavnet sitt (%(oldDisplayName)s)",
+            "remove_avatar": "%(senderName)s fjernet profilbildet sitt",
+            "change_avatar": "%(senderName)s endret profilbildet sitt",
+            "set_avatar": "%(senderName)s valgte seg et profilbilde",
+            "no_change": "%(senderName)s gjorde ingen endringer",
+            "join": "%(targetName)s ble med i rommet",
+            "reject_invite": "%(targetName)s avslo invitasjonen",
+            "left_reason": "%(targetName)s forlot rommet: %(reason)s",
+            "left": "%(targetName)s forlot rommet",
+            "unban": "%(senderName)s opphevde bannlysningen av %(targetName)s",
+            "withdrew_invite_reason": "%(senderName)s trakk tilbake invitasjonen til %(targetName)s: %(reason)s"
+        },
+        "m.room.topic": "%(senderDisplayName)s endret temaet til «%(topic)s».",
+        "m.room.avatar": "%(senderDisplayName)s endret rommets avatar.",
+        "m.room.name": {
+            "remove": "%(senderDisplayName)s fjernet rommets navn.",
+            "change": "%(senderDisplayName)s endret rommets navn fra %(oldRoomName)s til %(newRoomName)s.",
+            "set": "%(senderDisplayName)s endret rommets navn til %(roomName)s."
+        },
+        "m.room.tombstone": "%(senderDisplayName)s oppgraderte dette rommet.",
+        "m.room.join_rules": {
+            "public": "%(senderDisplayName)s gjorde rommet offentlig for alle som kjenner til denne lenken.",
+            "invite": "%(senderDisplayName)s merket rommet som kun for inviterte."
+        },
+        "m.room.guest_access": {
+            "can_join": "%(senderDisplayName)s har tillatt gjester å bli med i rommet.",
+            "forbidden": "%(senderDisplayName)s har hindret gjester fra å bli med i rommet.",
+            "unknown": "%(senderDisplayName)s endret gjestetilgangen til %(rule)s"
+        },
+        "m.image": "%(senderDisplayName)s sendte et bilde.",
+        "m.room.canonical_alias": {
+            "removed": "%(senderName)s fjernet hovedadressen til dette rommet."
+        }
     }
 }

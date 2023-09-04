@@ -5,7 +5,6 @@
     "Change Password": "เปลี่ยนรหัสผ่าน",
     "Default": "ค่าเริ่มต้น",
     "Default Device": "อุปกรณ์เริ่มต้น",
-    "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s เปลี่ยนหัวข้อเป็น \"%(topic)s\"",
     "Decrypt %(text)s": "ถอดรหัส %(text)s",
     "Download %(text)s": "ดาวน์โหลด %(text)s",
     "Low priority": "ความสำคัญต่ำ",
@@ -35,8 +34,6 @@
     "Are you sure you want to reject the invitation?": "คุณแน่ใจหรือว่าต้องการจะปฏิเสธคำเชิญ?",
     "Banned users": "ผู้ใช้ที่ถูกแบน",
     "Bans user with given id": "ผู้ใช้และ id ที่ถูกแบน",
-    "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s เปลี่ยนชื่อห้องไปเป็น %(roomName)s",
-    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s ลบชื่อห้อง",
     "Changes your display nickname": "เปลี่ยนชื่อเล่นที่แสดงของคุณ",
     "Command error": "คำสั่งผิดพลาด",
     "Commands": "คำสั่ง",
@@ -88,7 +85,6 @@
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s ไม่ได้รับสิทธิ์ส่งการแจ้งเตือน - กรุณาลองใหม่อีกครั้ง",
     "Rooms": "ห้องสนทนา",
     "Search failed": "การค้นหาล้มเหลว",
-    "%(senderDisplayName)s sent an image.": "%(senderDisplayName)s ได้ส่งรูป",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s ได้ส่งคำเชิญให้ %(targetDisplayName)s เข้าร่วมห้อง",
     "Server error": "เซิร์ฟเวอร์ผิดพลาด",
     "Server may be unavailable, overloaded, or search timed out :(": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือการค้นหาหมดเวลา :(",
@@ -501,5 +497,13 @@
             "rule_call": "คำเชิญเข้าร่วมการโทร",
             "rule_suppress_notices": "ข้อความจากบอท"
         }
+    },
+    "timeline": {
+        "m.room.topic": "%(senderDisplayName)s เปลี่ยนหัวข้อเป็น \"%(topic)s\"",
+        "m.room.name": {
+            "remove": "%(senderDisplayName)s ลบชื่อห้อง",
+            "set": "%(senderDisplayName)s เปลี่ยนชื่อห้องไปเป็น %(roomName)s"
+        },
+        "m.image": "%(senderDisplayName)s ได้ส่งรูป"
     }
 }

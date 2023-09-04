@@ -70,10 +70,6 @@
     "Verified key": "Godkjend nøkkel",
     "Displays action": "Visar handlingar",
     "Reason": "Grunnlag",
-    "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s gjorde emnet om til \"%(topic)s\".",
-    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s fjerna romnamnet.",
-    "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s gjorde romnamnet om til %(roomName)s.",
-    "%(senderDisplayName)s sent an image.": "%(senderDisplayName)s sende eit bilete.",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s inviterte %(targetDisplayName)s til å bli med i rommet.",
     "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s gjorde slik at den framtidige romhistoria er tilgjengeleg for alle rommedlemmar frå då dei vart invitert.",
     "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s gjorde slik at framtidig romhistorie er tilgjengeleg for alle rommedlemmar frå då dei kom inn.",
@@ -542,7 +538,6 @@
     "Forces the current outbound group session in an encrypted room to be discarded": "Tvingar i eit kryptert rom kassering av gjeldande utgåande gruppe-økt",
     "Sends the given message coloured as a rainbow": "Sender den bestemte meldinga farga som ein regnboge",
     "Displays list of commands with usages and descriptions": "Viser ei liste over kommandoar med bruksområde og skildringar",
-    "%(senderDisplayName)s upgraded this room.": "%(senderDisplayName)s oppgraderte dette rommet.",
     "Cancel entering passphrase?": "Avbryte inntasting av passfrase ?",
     "Setting up keys": "Setter opp nøklar",
     "Verify this session": "Stadfest denne økta",
@@ -556,18 +551,6 @@
     "Session already verified!": "Sesjon er tidligare verifisert!",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ÅTVARING: NØKKELVERIFIKASJON FEILA! Signeringsnøkkel for %(userId)s og økt %(deviceId)s er \"%(fprint)s\" stemmer ikkje med innsendt nøkkel \"%(fingerprint)s\". Dette kan vere teikn på at kommunikasjonen er avlytta!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Innsendt signeringsnøkkel er lik nøkkelen du mottok frå %(userId)s med økt %(deviceId)s. Sesjonen no er verifisert.",
-    "%(senderDisplayName)s made the room public to whoever knows the link.": "%(senderDisplayName)s satte rommet til offentleg for alle som har linken.",
-    "%(senderDisplayName)s made the room invite only.": "%(senderDisplayName)s avgrensa romtilgang til inviterte deltakarar.",
-    "%(senderDisplayName)s changed the join rule to %(rule)s": "%(senderDisplayName)s satte tilgangsregelen til %(rule)s",
-    "%(senderDisplayName)s has allowed guests to join the room.": "%(senderDisplayName)s har opna for gjestetilgang i rommet.",
-    "%(senderDisplayName)s has prevented guests from joining the room.": "%(senderDisplayName)s har hindra gjestetilgang i rommet.",
-    "%(senderDisplayName)s changed guest access to %(rule)s": "%(senderDisplayName)s endra gjestetilgang til %(rule)s",
-    "%(senderName)s set the main address for this room to %(address)s.": "%(senderName)s satte standardadressa for dette rommet til %(address)s.",
-    "%(senderName)s removed the main address for this room.": "%(senderName)s fjerna standardadressa for dette rommet.",
-    "%(senderName)s placed a voice call.": "%(senderName)s starta ein talesamtale.",
-    "%(senderName)s placed a voice call. (not supported by this browser)": "%(senderName)s starta ein talesamtale. (ikkje støtta av denne nettlesaren)",
-    "%(senderName)s placed a video call.": "%(senderName)s starta ein videosamtale.",
-    "%(senderName)s placed a video call. (not supported by this browser)": "%(senderName)s starta ein videosamtale. (ikkje støtta av denne nettlesaren)",
     "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s trekte tilbake invitasjonen for at %(targetDisplayName)s kan bli medlem i rommet.",
     "Sign In or Create Account": "Logg inn eller opprett konto",
     "Create Account": "Opprett konto",
@@ -757,7 +740,6 @@
     "Send a bug report with logs": "Send ein feilrapport med loggar",
     "Opens chat with the given user": "Opna ein samtale med den spesifiserte brukaren",
     "Sends a message to the given user": "Send ein melding til den spesifiserte brukaren",
-    "%(senderDisplayName)s changed the room name from %(oldRoomName)s to %(newRoomName)s.": "%(senderDisplayName)s endra romnamnet frå %(oldRoomName)s til %(newRoomName)s.",
     "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
         "other": "%(senderName)s la til dei alternative adressene %(addresses)s for dette rommet.",
         "one": "%(senderName)s la til ei alternativ adresse %(addresses)s for dette rommet."
@@ -919,7 +901,6 @@
     "Match system": "Følg systemet",
     "You can change this at any time from room settings.": "Du kan endra dette kva tid som helst frå rominnstillingar.",
     "Room settings": "Rominnstillingar",
-    "%(senderDisplayName)s changed who can join this room. <a>View settings</a>.": "%(senderDisplayName)s endra kven som kan bli med i rommet. <a>Vis innstillingar</a>.",
     "Join the conference from the room information card on the right": "Bli med i konferanse frå rominfo-kortet til høgre",
     "Final result based on %(count)s votes": {
         "one": "Endeleg resultat basert etter %(count)s stemme",
@@ -1124,5 +1105,36 @@
     },
     "create_room": {
         "title_private_room": "Lag eit privat rom"
+    },
+    "timeline": {
+        "m.call.invite": {
+            "voice_call": "%(senderName)s starta ein talesamtale.",
+            "voice_call_unsupported": "%(senderName)s starta ein talesamtale. (ikkje støtta av denne nettlesaren)",
+            "video_call": "%(senderName)s starta ein videosamtale.",
+            "video_call_unsupported": "%(senderName)s starta ein videosamtale. (ikkje støtta av denne nettlesaren)"
+        },
+        "m.room.topic": "%(senderDisplayName)s gjorde emnet om til \"%(topic)s\".",
+        "m.room.name": {
+            "remove": "%(senderDisplayName)s fjerna romnamnet.",
+            "change": "%(senderDisplayName)s endra romnamnet frå %(oldRoomName)s til %(newRoomName)s.",
+            "set": "%(senderDisplayName)s gjorde romnamnet om til %(roomName)s."
+        },
+        "m.room.tombstone": "%(senderDisplayName)s oppgraderte dette rommet.",
+        "m.room.join_rules": {
+            "public": "%(senderDisplayName)s satte rommet til offentleg for alle som har linken.",
+            "invite": "%(senderDisplayName)s avgrensa romtilgang til inviterte deltakarar.",
+            "restricted_settings": "%(senderDisplayName)s endra kven som kan bli med i rommet. <a>Vis innstillingar</a>.",
+            "unknown": "%(senderDisplayName)s satte tilgangsregelen til %(rule)s"
+        },
+        "m.room.guest_access": {
+            "can_join": "%(senderDisplayName)s har opna for gjestetilgang i rommet.",
+            "forbidden": "%(senderDisplayName)s har hindra gjestetilgang i rommet.",
+            "unknown": "%(senderDisplayName)s endra gjestetilgang til %(rule)s"
+        },
+        "m.image": "%(senderDisplayName)s sende eit bilete.",
+        "m.room.canonical_alias": {
+            "set": "%(senderName)s satte standardadressa for dette rommet til %(address)s.",
+            "removed": "%(senderName)s fjerna standardadressa for dette rommet."
+        }
     }
 }

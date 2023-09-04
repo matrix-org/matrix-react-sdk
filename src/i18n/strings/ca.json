@@ -71,10 +71,6 @@
     "You are no longer ignoring %(userId)s": "Ja no estàs ignorant l'usuari %(userId)s",
     "Verified key": "Claus verificades",
     "Reason": "Raó",
-    "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s ha canviat el tema a \"%(topic)s\".",
-    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s ha eliminat el nom de la sala.",
-    "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s ha canviat el nom de la sala a %(roomName)s.",
-    "%(senderDisplayName)s sent an image.": "%(senderDisplayName)s ha enviat una imatge.",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s ha convidat a %(targetDisplayName)s a entrar a la sala.",
     "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a tots els seus membres, a partir de que hi són convidats.",
     "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a tots els seus membres des de que s'hi uneixen.",
@@ -403,15 +399,6 @@
     "Gets or sets the room topic": "Obté o estableix el tema de la sala",
     "This room has no topic.": "Aquesta sala no té tema.",
     "Sets the room name": "Estableix el nom de la sala",
-    "%(senderDisplayName)s upgraded this room.": "%(senderDisplayName)s ha actualitzat aquesta sala.",
-    "%(senderDisplayName)s made the room public to whoever knows the link.": "%(senderDisplayName)s ha fet la sala pública a tothom qui conegui l'adreça.",
-    "%(senderDisplayName)s made the room invite only.": "%(senderDisplayName)s ha limitat la sala als convidats.",
-    "%(senderDisplayName)s changed the join rule to %(rule)s": "%(senderDisplayName)s ha canviat la regla d'entrada a %(rule)s",
-    "%(senderDisplayName)s has allowed guests to join the room.": "%(senderDisplayName)s ha permès que els convidats puguin entrar a la sala.",
-    "%(senderDisplayName)s has prevented guests from joining the room.": "%(senderDisplayName)s ha prohibit l'entrada a la sala als visitants.",
-    "%(senderDisplayName)s changed guest access to %(rule)s": "%(senderDisplayName)s ha canviat l'accés dels visitants a %(rule)s",
-    "%(senderName)s set the main address for this room to %(address)s.": "%(senderName)s ha canviat l'adreça principal d'aquesta sala a %(address)s.",
-    "%(senderName)s removed the main address for this room.": "%(senderName)s ha retirat l'adreça principal d'aquesta sala.",
     "%(displayName)s is typing …": "%(displayName)s està escrivint…",
     "%(names)s and %(count)s others are typing …": {
         "other": "%(names)s i %(count)s més estan escrivint…",
@@ -676,5 +663,28 @@
         "event_content": "Contingut de l'esdeveniment",
         "toolbox": "Caixa d'eines",
         "developer_tools": "Eines de desenvolupador"
+    },
+    "timeline": {
+        "m.room.topic": "%(senderDisplayName)s ha canviat el tema a \"%(topic)s\".",
+        "m.room.name": {
+            "remove": "%(senderDisplayName)s ha eliminat el nom de la sala.",
+            "set": "%(senderDisplayName)s ha canviat el nom de la sala a %(roomName)s."
+        },
+        "m.room.tombstone": "%(senderDisplayName)s ha actualitzat aquesta sala.",
+        "m.room.join_rules": {
+            "public": "%(senderDisplayName)s ha fet la sala pública a tothom qui conegui l'adreça.",
+            "invite": "%(senderDisplayName)s ha limitat la sala als convidats.",
+            "unknown": "%(senderDisplayName)s ha canviat la regla d'entrada a %(rule)s"
+        },
+        "m.room.guest_access": {
+            "can_join": "%(senderDisplayName)s ha permès que els convidats puguin entrar a la sala.",
+            "forbidden": "%(senderDisplayName)s ha prohibit l'entrada a la sala als visitants.",
+            "unknown": "%(senderDisplayName)s ha canviat l'accés dels visitants a %(rule)s"
+        },
+        "m.image": "%(senderDisplayName)s ha enviat una imatge.",
+        "m.room.canonical_alias": {
+            "set": "%(senderName)s ha canviat l'adreça principal d'aquesta sala a %(address)s.",
+            "removed": "%(senderName)s ha retirat l'adreça principal d'aquesta sala."
+        }
     }
 }

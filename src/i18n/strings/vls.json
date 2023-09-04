@@ -90,19 +90,6 @@
     "Sends the given message coloured as a rainbow": "Verstuurt ’t gegeevn bericht in regenboogkleurn",
     "Sends the given emote coloured as a rainbow": "Verstuurt de gegeevn emoticon in regenboogkleurn",
     "Reason": "Reedn",
-    "%(senderDisplayName)s changed the topic to \"%(topic)s\".": "%(senderDisplayName)s èt ’t ounderwerp gewyzigd noa ‘%(topic)s’.",
-    "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)s èt de gespreksnoame verwyderd.",
-    "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)s èt de gespreksnoame gewyzigd noa %(roomName)s.",
-    "%(senderDisplayName)s upgraded this room.": "%(senderDisplayName)s èt da gesprek hier geactualiseerd.",
-    "%(senderDisplayName)s made the room public to whoever knows the link.": "%(senderDisplayName)s èt ’t gesprek toegankelik gemakt voor iedereen da de verwyzienge kent.",
-    "%(senderDisplayName)s made the room invite only.": "%(senderDisplayName)s èt ’t gesprek alleene moa ip uutnodigienge toegankelik gemakt.",
-    "%(senderDisplayName)s changed the join rule to %(rule)s": "%(senderDisplayName)s èt de toegangsregel veranderd noa ‘%(rule)s’",
-    "%(senderDisplayName)s has allowed guests to join the room.": "%(senderDisplayName)s èt gastn toegeloatn van ’t gesprek te betreedn.",
-    "%(senderDisplayName)s has prevented guests from joining the room.": "%(senderDisplayName)s èt gastn den toegank tout ’t gesprek ountzeid.",
-    "%(senderDisplayName)s changed guest access to %(rule)s": "%(senderDisplayName)s èt de toegangsregel vo gastn ip ‘%(rule)s’ ingesteld",
-    "%(senderDisplayName)s sent an image.": "%(senderDisplayName)s èt e fotootje gestuurd.",
-    "%(senderName)s set the main address for this room to %(address)s.": "%(senderName)s èt %(address)s als hoofdadresse vo dit gesprek ingesteld.",
-    "%(senderName)s removed the main address for this room.": "%(senderName)s èt ’t hoofdadresse vo dit gesprek verwyderd.",
     "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s èt d’uutnodigienge vo %(targetDisplayName)s vo toe te treedn tout ’t gesprek ingetrokkn.",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s èt %(targetDisplayName)s in ’t gesprek uutgenodigd.",
     "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s èt de toekomstige gespreksgeschiedenisse zichtboar gemakt voor alle gespreksleedn, vanaf de moment dan ze uutgenodigd gewist zyn.",
@@ -1045,5 +1032,28 @@
         "event_content": "Gebeurtenisinhoud",
         "toolbox": "Gereedschap",
         "developer_tools": "Ountwikkeliengsgereedschap"
+    },
+    "timeline": {
+        "m.room.topic": "%(senderDisplayName)s èt ’t ounderwerp gewyzigd noa ‘%(topic)s’.",
+        "m.room.name": {
+            "remove": "%(senderDisplayName)s èt de gespreksnoame verwyderd.",
+            "set": "%(senderDisplayName)s èt de gespreksnoame gewyzigd noa %(roomName)s."
+        },
+        "m.room.tombstone": "%(senderDisplayName)s èt da gesprek hier geactualiseerd.",
+        "m.room.join_rules": {
+            "public": "%(senderDisplayName)s èt ’t gesprek toegankelik gemakt voor iedereen da de verwyzienge kent.",
+            "invite": "%(senderDisplayName)s èt ’t gesprek alleene moa ip uutnodigienge toegankelik gemakt.",
+            "unknown": "%(senderDisplayName)s èt de toegangsregel veranderd noa ‘%(rule)s’"
+        },
+        "m.room.guest_access": {
+            "can_join": "%(senderDisplayName)s èt gastn toegeloatn van ’t gesprek te betreedn.",
+            "forbidden": "%(senderDisplayName)s èt gastn den toegank tout ’t gesprek ountzeid.",
+            "unknown": "%(senderDisplayName)s èt de toegangsregel vo gastn ip ‘%(rule)s’ ingesteld"
+        },
+        "m.image": "%(senderDisplayName)s èt e fotootje gestuurd.",
+        "m.room.canonical_alias": {
+            "set": "%(senderName)s èt %(address)s als hoofdadresse vo dit gesprek ingesteld.",
+            "removed": "%(senderName)s èt ’t hoofdadresse vo dit gesprek verwyderd."
+        }
     }
 }
