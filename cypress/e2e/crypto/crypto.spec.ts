@@ -285,53 +285,76 @@ describe("Cryptography", function () {
         verify.call(this);
     });
 
-    it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
-        skipIfRustCrypto();
-        cy.bootstrapCrossSigning(aliceCredentials);
+    describe("event shields", () => {
+        it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
+            skipIfRustCrypto();
+            cy.bootstrapCrossSigning(aliceCredentials);
 
-        // bob has a second, not cross-signed, device
-        cy.loginBot(this.homeserver, this.bob.getUserId(), this.bob.__cypress_password, {}).as("bobSecondDevice");
+            // bob has a second, not cross-signed, device
+            cy.loginBot(this.homeserver, this.bob.getUserId(), this.bob.__cypress_password, {}).as("bobSecondDevice");
 
-        autoJoin(this.bob);
+            autoJoin(this.bob);
 
-        // first create the room, so that we can open the verification panel
-        cy.createRoom({ name: "TestRoom", invite: [this.bob.getUserId()] })
-            .as("testRoomId")
-            .then((roomId) => {
-                cy.log(`Created test room ${roomId}`);
-                cy.visit(`/#/room/${roomId}`);
+            // first create the room, so that we can open the verification panel
+            cy.createRoom({ name: "TestRoom", invite: [this.bob.getUserId()] })
+                .as("testRoomId")
+                .then((roomId) => {
+                    cy.log(`Created test room ${roomId}`);
+                    cy.visit(`/#/room/${roomId}`);
 
-                // enable encryption
-                cy.getClient().then((cli) => {
-                    cli.sendStateEvent(roomId, "m.room.encryption", { algorithm: "m.megolm.v1.aes-sha2" });
+                    // enable encryption
+                    cy.getClient().then((cli) => {
+                        cli.sendStateEvent(roomId, "m.room.encryption", { algorithm: "m.megolm.v1.aes-sha2" });
+                    });
+
+                    // wait for Bob to join the room, otherwise our attempt to open his user details may race
+                    // with his join.
+                    cy.findByText("Bob joined the room").should("exist");
                 });
 
-                // wait for Bob to join the room, otherwise our attempt to open his user details may race
-                // with his join.
-                cy.findByText("Bob joined the room").should("exist");
-            });
+            verify.call(this);
 
-        verify.call(this);
+            cy.get<string>("@testRoomId").then((roomId) => {
+                // bob sends a valid event
+                cy.wrap(this.bob.sendTextMessage(roomId, "Hoo!")).as("testEvent");
 
-        cy.get<string>("@testRoomId").then((roomId) => {
-            // bob sends a valid event
-            cy.wrap(this.bob.sendTextMessage(roomId, "Hoo!")).as("testEvent");
+                // the message should appear, decrypted, with no warning
+                cy.get(".mx_EventTile_last .mx_EventTile_body")
+                    .within(() => {
+                        cy.findByText("Hoo!");
+                    })
+                    .closest(".mx_EventTile")
+                    .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
 
-            // the message should appear, decrypted, with no warning
-            cy.get(".mx_EventTile_last .mx_EventTile_body")
-                .within(() => {
-                    cy.findByText("Hoo!");
-                })
-                .closest(".mx_EventTile")
-                .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
+                // bob sends an edit to the first message with his unverified device
+                cy.get<MatrixClient>("@bobSecondDevice").then((bobSecondDevice) => {
+                    cy.get<ISendEventResponse>("@testEvent").then((testEvent) => {
+                        bobSecondDevice.sendMessage(roomId, {
+                            "m.new_content": {
+                                msgtype: "m.text",
+                                body: "Haa!",
+                            },
+                            "m.relates_to": {
+                                rel_type: "m.replace",
+                                event_id: testEvent.event_id,
+                            },
+                        });
+                    });
+                });
 
-            // bob sends an edit to the first message with his unverified device
-            cy.get<MatrixClient>("@bobSecondDevice").then((bobSecondDevice) => {
+                // the edit should have a warning
+                cy.contains(".mx_EventTile_body", "Haa!")
+                    .closest(".mx_EventTile")
+                    .within(() => {
+                        cy.get(".mx_EventTile_e2eIcon_warning").should("exist");
+                    });
+
+                // a second edit from the verified device should be ok
                 cy.get<ISendEventResponse>("@testEvent").then((testEvent) => {
-                    bobSecondDevice.sendMessage(roomId, {
+                    this.bob.sendMessage(roomId, {
                         "m.new_content": {
                             msgtype: "m.text",
-                            body: "Haa!",
+                            body: "Hee!",
                         },
                         "m.relates_to": {
                             rel_type: "m.replace",
@@ -339,35 +362,14 @@ describe("Cryptography", function () {
                         },
                     });
                 });
+
+                cy.get(".mx_EventTile_last .mx_EventTile_body")
+                    .within(() => {
+                        cy.findByText("Hee!");
+                    })
+                    .closest(".mx_EventTile")
+                    .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
             });
-
-            // the edit should have a warning
-            cy.contains(".mx_EventTile_body", "Haa!")
-                .closest(".mx_EventTile")
-                .within(() => {
-                    cy.get(".mx_EventTile_e2eIcon_warning").should("exist");
-                });
-
-            // a second edit from the verified device should be ok
-            cy.get<ISendEventResponse>("@testEvent").then((testEvent) => {
-                this.bob.sendMessage(roomId, {
-                    "m.new_content": {
-                        msgtype: "m.text",
-                        body: "Hee!",
-                    },
-                    "m.relates_to": {
-                        rel_type: "m.replace",
-                        event_id: testEvent.event_id,
-                    },
-                });
-            });
-
-            cy.get(".mx_EventTile_last .mx_EventTile_body")
-                .within(() => {
-                    cy.findByText("Hee!");
-                })
-                .closest(".mx_EventTile")
-                .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
         });
     });
 });
