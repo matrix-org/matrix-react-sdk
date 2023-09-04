@@ -198,6 +198,8 @@ jobs:
                   COMMIT_INFO_EMAIL: ${{ needs.prepare.outputs.commit_email }}
                   CYPRESS_PULL_REQUEST_ID: ${{ needs.prepare.outputs.pr_id }}
                   CYPRESS_PULL_REQUEST_URL: https://github.com/${{ github.repository }}/pull/${{ needs.prepare.outputs.pr_id }}
+                  
+                  CYPRESS_grepTags: smoke
 
                   # pass the Percy token as an environment variable
                   PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}

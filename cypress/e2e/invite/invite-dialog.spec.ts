@@ -17,7 +17,7 @@ limitations under the License.
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
-describe("Invite dialog", function () {
+describe("Invite dialog", { tags: ["smoke"] }, function () {
     let homeserver: HomeserverInstance;
     let bot: MatrixClient;
     const botName = "BotAlice";

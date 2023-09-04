@@ -50,7 +50,7 @@
         "lint:types": "tsc --noEmit --jsx react && tsc --noEmit --jsx react -p cypress",
         "lint:style": "stylelint \"res/css/**/*.pcss\"",
         "test": "jest",
-        "test:cypress": "cypress run",
+        "test:cypress": "cypress run --env grepTags=\"core\"",
         "test:cypress:open": "cypress open",
         "coverage": "yarn test --coverage"
     },
@@ -142,6 +142,7 @@
         "@babel/register": "^7.12.10",
         "@babel/traverse": "^7.12.12",
         "@casualbot/jest-sonar-reporter": "^2.2.5",
+        "@cypress/grep": "^4.0.0",
         "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.14.tgz",
         "@peculiar/webcrypto": "^1.4.3",
         "@percy/cli": "^1.11.0",

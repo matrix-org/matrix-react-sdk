@@ -25,7 +25,7 @@ function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
     return cy.get(".mx_CreateRoomDialog");
 }
 
-describe("Create Room", () => {
+describe("Create Room", { tags: ["smoke"] }, () => {
     let homeserver: HomeserverInstance;
 
     beforeEach(() => {

@@ -17,6 +17,8 @@ limitations under the License.
 /// <reference types="cypress" />
 import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
 
+const registerCypressGrep = require('@cypress/grep/src/plugin')
+
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
 import { synapseDocker } from "./synapsedocker";
@@ -32,6 +34,7 @@ import { mailhogDocker } from "./mailhog";
  * @type {Cypress.PluginConfig}
  */
 export default function (on: PluginEvents, config: PluginConfigOptions) {
+    registerCypressGrep(config);
     docker(on, config);
     synapseDocker(on, config);
     dendriteDocker(on, config);
