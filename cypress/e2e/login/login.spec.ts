@@ -19,7 +19,7 @@ limitations under the License.
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { doTokenRegistration } from "./utils";
 
-describe("Login", { tags: ["smoke"]}, () => {
+describe("Login", { tags: ["smoke"] }, () => {
     let homeserver: HomeserverInstance;
 
     afterEach(() => {

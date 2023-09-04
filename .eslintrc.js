@@ -265,6 +265,8 @@ module.exports = {
                 "jest/valid-expect": "off",
                 "jest/valid-expect-in-promise": "off",
                 "jest/no-done-callback": "off",
+                // covered by types, cypress plugins add extra options arguments
+                "jest/valid-describe-callback": "off",
             },
         },
     ],

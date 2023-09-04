@@ -16,8 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
-
-const registerCypressGrep = require('@cypress/grep/src/plugin')
+import registerCypressGrep from "@cypress/grep/src/plugin";
 
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;

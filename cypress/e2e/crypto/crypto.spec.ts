@@ -127,7 +127,7 @@ const verify = function (this: CryptoTestContext) {
     });
 };
 
-describe("Cryptography", { tags: ["smoke"]},  function () {
+describe("Cryptography", { tags: ["smoke"] }, function () {
     let aliceCredentials: UserCredentials;
 
     beforeEach(function () {

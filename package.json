@@ -50,7 +50,7 @@
         "lint:types": "tsc --noEmit --jsx react && tsc --noEmit --jsx react -p cypress",
         "lint:style": "stylelint \"res/css/**/*.pcss\"",
         "test": "jest",
-        "test:cypress": "cypress run --env grepTags=\"core\"",
+        "test:cypress": "cypress run --env",
         "test:cypress:open": "cypress open",
         "coverage": "yarn test --coverage"
     },

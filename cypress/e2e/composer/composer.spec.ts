@@ -40,7 +40,7 @@ describe("Composer", () => {
             cy.createRoom({ name: "Composing Room" }).then((roomId) => cy.viewRoomById(roomId));
         });
 
-        it("sends a message when you click send or press Enter", { tags: ["smoke"]}, () => {
+        it("sends a message when you click send or press Enter", { tags: ["smoke"] }, () => {
             // Type a message
             cy.findByRole("textbox", { name: "Send a message…" }).type("my message 0");
             // It has not been sent yet
