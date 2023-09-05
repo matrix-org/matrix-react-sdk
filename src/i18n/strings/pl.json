@@ -185,7 +185,6 @@
     "You seem to be uploading files, are you sure you want to quit?": "Wygląda na to, że jesteś w trakcie przesyłania plików; jesteś pewien, że chcesz wyjść?",
     "This server does not support authentication with a phone number.": "Ten serwer nie wspiera autentykacji za pomocą numeru telefonu.",
     "Connectivity to the server has been lost.": "Połączenie z serwerem zostało utracone.",
-    "Online": "Dostępny",
     "Add an Integration": "Dodaj integrację",
     "Token incorrect": "Niepoprawny token",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Nie będziesz mógł cofnąć tej zmiany, ponieważ nadajesz użytkownikowi uprawnienia administratorskie równe Twoim.",
@@ -218,7 +217,6 @@
     "Error decrypting image": "Błąd deszyfrowania obrazu",
     "Error decrypting video": "Błąd deszyfrowania wideo",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Próbowano załadować konkretny punkt na osi czasu w tym pokoju, ale nie można go znaleźć.",
-    "Idle": "Bezczynny",
     "Check for update": "Sprawdź aktualizacje",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s zmienił awatar pokoju na <img/>",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s usunął awatar pokoju.",
@@ -241,11 +239,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Nie będziesz mógł cofnąć tej zmiany, ponieważ degradujesz swoje uprawnienia. Jeśli jesteś ostatnim użytkownikiem uprzywilejowanym w tym pokoju, nie będziesz mógł ich odzyskać.",
     "Send an encrypted reply…": "Wyślij zaszyfrowaną odpowiedź…",
     "Send an encrypted message…": "Wyślij zaszyfrowaną wiadomość…",
-    "Online for %(duration)s": "Online przez %(duration)s",
-    "Idle for %(duration)s": "Bezczynny przez %(duration)s",
-    "Offline for %(duration)s": "Offline przez %(duration)s",
-    "Unknown for %(duration)s": "Nieznany przez %(duration)s",
-    "Unknown": "Nieznany",
     "Unnamed room": "Pokój bez nazwy",
     "Sunday": "Niedziela",
     "Failed to add tag %(tagName)s to room": "Nie można dodać tagu %(tagName)s do pokoju",
@@ -483,12 +476,6 @@
     "This is similar to a commonly used password": "Jest to podobne do powszechnie stosowanego hasła",
     "That doesn't match.": "To się nie zgadza.",
     "Go to Settings": "Przejdź do ustawień",
-    "%(displayName)s is typing …": "%(displayName)s pisze…",
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s i %(lastPerson)s piszą…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s i %(count)s innych piszą…",
-        "one": "%(names)s i jedna osoba pisze…"
-    },
     "Unrecognised address": "Nierozpoznany adres",
     "Short keyboard patterns are easy to guess": "Krótkie wzory klawiszowe są łatwe do odgadnięcia",
     "I don't want my encrypted messages": "Nie chcę moich zaszyfrowanych wiadomości",
@@ -2405,7 +2392,6 @@
     "Read receipts": "Czytaj potwierdzenia",
     "%(members)s and %(last)s": "%(members)s i %(last)s",
     "%(members)s and more": "%(members)s i więcej",
-    "Busy": "Zajęty",
     "View message": "Wyświetl wiadomość",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Nie udało się odwołać zaproszenia. Serwer może posiadać tymczasowy problem lub nie masz wystarczających uprawnień, aby odwołać zaproszenie.",
     "Revoke permissions": "Odwołaj uprawnienia",
@@ -2916,7 +2902,6 @@
     "Share entire screen": "Udostępnij cały ekran",
     "Application window": "Okno aplikacji",
     "Share content": "Udostępnij zawartość",
-    "Backspace": "Backspace",
     "What location type do you want to share?": "Jaki typ lokalizacji chcesz udostępnić?",
     "Drop a Pin": "Upuść przypinkę",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Zaktualizujesz ten pokój z wersji <oldVersion /> do <newVersion />.",
@@ -3066,7 +3051,6 @@
     "This homeserver would like to make sure you are not a robot.": "Serwer domowy prosi o potwierdzenie, że nie jesteś robotem.",
     "Enter email address": "Wprowadź adres e-mail",
     "Country Dropdown": "Rozwijana lista krajów",
-    "Away": "Z dala od urządzenia",
     "Stop and close": "Zatrzymaj i zamknij",
     "An error occurred while stopping your live location, please try again": "Wystąpił błąd podczas zatrzymywania Twojej lokalizacji na żywo, spróbuj ponownie",
     "An error occurred whilst sharing your live location, please try again": "Wystąpił błąd podczas udostępniania Twojej lokalizacji na żywo, spróbuj ponownie",
@@ -3587,7 +3571,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[liczba]"
+        "number": "[liczba]",
+        "backspace": "Backspace"
     },
     "credits": {
         "default_cover_photo": "Autorem <photo>domyślnego zdjęcia okładkowego</photo> jest <author>Jesús Roncero</author> na licencji <terms>CC-BY-SA 4.0</terms>.",
@@ -3986,7 +3971,15 @@
         "self_redaction": "Wiadomość usunięta",
         "redaction": "Wiadomość usunięta przez %(name)s",
         "m.poll.start": "%(senderName)s utworzył ankietę - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s zakończył ankietę"
+        "m.poll.end": "%(senderName)s zakończył ankietę",
+        "typing_indicator": {
+            "one_user": "%(displayName)s pisze…",
+            "two_users": "%(names)s i %(lastPerson)s piszą…",
+            "more_users": {
+                "other": "%(names)s i %(count)s innych piszą…",
+                "one": "%(names)s i jedna osoba pisze…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Wysyła podaną wiadomość jako spoiler",
@@ -4023,5 +4016,18 @@
         "whois": "Pokazuje informacje na temat użytkownika",
         "rageshake": "Wyślij raport błędu z logami",
         "msg": "Wysyła wiadomość do wybranego użytkownika"
-    }
+    },
+    "presence": {
+        "busy": "Zajęty",
+        "online_for": "Online przez %(duration)s",
+        "idle_for": "Bezczynny przez %(duration)s",
+        "offline_for": "Offline przez %(duration)s",
+        "unknown_for": "Nieznany przez %(duration)s",
+        "online": "Dostępny",
+        "idle": "Bezczynny",
+        "unknown": "Nieznany",
+        "offline": "Niedostępny",
+        "away": "Z dala od urządzenia"
+    },
+    "Unknown": "Nieznany"
 }

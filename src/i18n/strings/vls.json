@@ -76,12 +76,6 @@
     "Reason": "Reedn",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s van %(fromPowerLevel)s noa %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s èt ’t machtsniveau van %(powerLevelDiffText)s gewyzigd.",
-    "%(displayName)s is typing …": "%(displayName)s es an ’t typn…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s en %(count)s anderen zyn an ’t typn…",
-        "one": "%(names)s en nog etwien zyn an ’t typn…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s en %(lastPerson)s zyn an ’t typn…",
     "No homeserver URL provided": "Geen thuusserver-URL ingegeevn",
     "Unexpected error resolving homeserver configuration": "Ounverwachte foute by ’t controleern van de thuusserverconfiguroasje",
     "This homeserver has hit its Monthly Active User limit.": "Dezen thuusserver èt z’n limiet vo moandeliks actieve gebruukers bereikt.",
@@ -363,13 +357,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)su",
     "%(duration)sd": "%(duration)sd",
-    "Online for %(duration)s": "Online vo %(duration)s",
-    "Idle for %(duration)s": "Afwezig vo %(duration)s",
-    "Offline for %(duration)s": "Offline vo %(duration)s",
-    "Unknown for %(duration)s": "Ounbekend vo %(duration)s",
-    "Online": "Online",
-    "Idle": "Afwezig",
-    "Unknown": "Ounbekend",
     "Replying": "An ’t beantwoordn",
     "Unnamed room": "Noamloos gesprek",
     "(~%(count)s results)": {
@@ -1045,6 +1032,14 @@
             "modified": "%(widgetName)s-widget angepast gewist deur %(senderName)s",
             "added": "%(widgetName)s-widget toegevoegd gewist deur %(senderName)s",
             "removed": "%(widgetName)s-widget verwyderd gewist deur %(senderName)s"
+        },
+        "typing_indicator": {
+            "one_user": "%(displayName)s es an ’t typn…",
+            "two_users": "%(names)s en %(lastPerson)s zyn an ’t typn…",
+            "more_users": {
+                "other": "%(names)s en %(count)s anderen zyn an ’t typn…",
+                "one": "%(names)s en nog etwien zyn an ’t typn…"
+            }
         }
     },
     "slash_command": {
@@ -1065,5 +1060,16 @@
         "rainbow": "Verstuurt ’t gegeevn bericht in regenboogkleurn",
         "rainbowme": "Verstuurt de gegeevn emoticon in regenboogkleurn",
         "help": "Toogt e lyste van beschikboare ipdrachtn, met hunder gebruukn en beschryviengn"
-    }
+    },
+    "presence": {
+        "online_for": "Online vo %(duration)s",
+        "idle_for": "Afwezig vo %(duration)s",
+        "offline_for": "Offline vo %(duration)s",
+        "unknown_for": "Ounbekend vo %(duration)s",
+        "online": "Online",
+        "idle": "Afwezig",
+        "unknown": "Ounbekend",
+        "offline": "Offline"
+    },
+    "Unknown": "Ounbekend"
 }

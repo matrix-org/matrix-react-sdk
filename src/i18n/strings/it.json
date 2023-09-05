@@ -47,7 +47,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Rooms": "Stanze",
     "Unnamed room": "Stanza senza nome",
-    "Online": "Online",
     "Call Failed": "Chiamata fallita",
     "Upload Failed": "Invio fallito",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
@@ -126,12 +125,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)so",
     "%(duration)sd": "%(duration)sg",
-    "Online for %(duration)s": "Online per %(duration)s",
-    "Idle for %(duration)s": "Inattivo per %(duration)s",
-    "Offline for %(duration)s": "Offline per %(duration)s",
-    "Unknown for %(duration)s": "Sconosciuto per %(duration)s",
-    "Idle": "Inattivo",
-    "Unknown": "Sconosciuto",
     "(~%(count)s results)": {
         "other": "(~%(count)s risultati)",
         "one": "(~%(count)s risultato)"
@@ -527,12 +520,6 @@
     "Invite anyway and never warn me again": "Invitali lo stesso e non avvisarmi più",
     "Invite anyway": "Invita comunque",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Il file '%(fileName)s' supera la dimensione massima di invio su questo homeserver",
-    "%(displayName)s is typing …": "%(displayName)s sta scrivendo …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s e altri %(count)s stanno scrivendo …",
-        "one": "%(names)s ed un altro stanno scrivendo …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s e %(lastPerson)s stanno scrivendo …",
     "The user must be unbanned before they can be invited.": "L'utente non deve essere bandito per essere invitato.",
     "The other party cancelled the verification.": "L'altra parte ha annullato la verifica.",
     "Verified!": "Verificato!",
@@ -1390,7 +1377,6 @@
     "Confirm Security Phrase": "Conferma frase di sicurezza",
     "Save your Security Key": "Salva la tua chiave di sicurezza",
     "This room is public": "Questa stanza è pubblica",
-    "Away": "Assente",
     "Show rooms with unread messages first": "Mostra prima le stanze con messaggi non letti",
     "Show previews of messages": "Mostra anteprime dei messaggi",
     "Edited at %(date)s": "Modificato il %(date)s",
@@ -2514,7 +2500,6 @@
     "This address had invalid server or is already in use": "Questo indirizzo aveva un server non valido o è già in uso",
     "Missing room name or separator e.g. (my-room:domain.org)": "Nome o separatore della stanza mancante, es. (mia-stanza:dominio.org)",
     "Missing domain separator e.g. (:domain.org)": "Separatore del dominio mancante, es. (:dominio.org)",
-    "Backspace": "Backspace",
     "toggle event": "commuta evento",
     "Dial": "Componi",
     "Your new device is now verified. Other users will see it as trusted.": "Il tuo nuovo dispositivo è ora verificato. Gli altri utenti lo vedranno come fidato.",
@@ -2690,7 +2675,6 @@
     "Shared their location: ": "Ha condiviso la sua posizione: ",
     "Unable to load map": "Impossibile caricare la mappa",
     "Can't create a thread from an event with an existing relation": "Impossibile creare una conversazione da un evento con una relazione esistente",
-    "Busy": "Occupato",
     "Toggle Link": "Attiva/disattiva collegamento",
     "Toggle Code Block": "Attiva/disattiva blocco di codice",
     "You are sharing your live location": "Stai condividendo la tua posizione in tempo reale",
@@ -3610,7 +3594,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[numero]"
+        "number": "[numero]",
+        "backspace": "Backspace"
     },
     "credits": {
         "default_cover_photo": "La <photo>foto di copertina predefinita</photo> è © <author>Jesús Roncero</author> utilizzata secondo i termini <terms>CC-BY-SA 4.0</terms>.",
@@ -4009,7 +3994,15 @@
         "self_redaction": "Messaggio eliminato",
         "redaction": "Messaggio eliminato da %(name)s",
         "m.poll.start": "%(senderName)s ha iniziato un sondaggio - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s ha terminato un sondaggio"
+        "m.poll.end": "%(senderName)s ha terminato un sondaggio",
+        "typing_indicator": {
+            "one_user": "%(displayName)s sta scrivendo …",
+            "two_users": "%(names)s e %(lastPerson)s stanno scrivendo …",
+            "more_users": {
+                "other": "%(names)s e altri %(count)s stanno scrivendo …",
+                "one": "%(names)s ed un altro stanno scrivendo …"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Invia il messaggio come spoiler",
@@ -4046,5 +4039,18 @@
         "whois": "Mostra le informazioni di un utente",
         "rageshake": "Invia una segnalazione di errore con i registri",
         "msg": "Invia un messaggio all'utente specificato"
-    }
+    },
+    "presence": {
+        "busy": "Occupato",
+        "online_for": "Online per %(duration)s",
+        "idle_for": "Inattivo per %(duration)s",
+        "offline_for": "Offline per %(duration)s",
+        "unknown_for": "Sconosciuto per %(duration)s",
+        "online": "Online",
+        "idle": "Inattivo",
+        "unknown": "Sconosciuto",
+        "offline": "Offline",
+        "away": "Assente"
+    },
+    "Unknown": "Sconosciuto"
 }

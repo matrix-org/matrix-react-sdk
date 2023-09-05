@@ -26,7 +26,6 @@
     "Search…": "Paieška…",
     "Unnamed room": "Kambarys be pavadinimo",
     "Saturday": "Šeštadienis",
-    "Online": "Prisijungęs",
     "Monday": "Pirmadienis",
     "Collecting logs": "Renkami žurnalai",
     "Rooms": "Kambariai",
@@ -111,7 +110,6 @@
     "Send an encrypted message…": "Siųsti šifruotą žinutę…",
     "Server error": "Serverio klaida",
     "Command error": "Komandos klaida",
-    "Unknown": "Nežinoma",
     "(~%(count)s results)": {
         "other": "(~%(count)s rezultatų(-ai))",
         "one": "(~%(count)s rezultatas)"
@@ -205,10 +203,6 @@
     "Change Password": "Keisti Slaptažodį",
     "Authentication": "Autentifikavimas",
     "Hangup": "Padėti ragelį",
-    "Online for %(duration)s": "Prisijungęs %(duration)s",
-    "Idle for %(duration)s": "Neveiklus %(duration)s",
-    "Offline for %(duration)s": "Atsijungęs %(duration)s",
-    "Idle": "Neveiklus",
     "Forget room": "Pamiršti kambarį",
     "Share room": "Bendrinti kambarį",
     "Usage": "Naudojimas",
@@ -291,7 +285,6 @@
     "Restricted": "Apribotas",
     "Moderator": "Moderatorius",
     "Historical": "Istoriniai",
-    "Unknown for %(duration)s": "Nežinoma jau %(duration)s",
     "Unable to load! Check your network connectivity and try again.": "Nepavyko įkelti! Patikrinkite savo tinklo ryšį ir bandykite dar kartą.",
     "Unknown server error": "Nežinoma serverio klaida",
     "Avoid sequences": "Venkite sekų",
@@ -371,12 +364,6 @@
     "Forces the current outbound group session in an encrypted room to be discarded": "Priverčia išmesti esamą užsibaigiantį grupės seansą užšifruotame kambaryje",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s galios lygį iš %(fromPowerLevel)s į %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s pakeitė %(powerLevelDiffText)s.",
-    "%(displayName)s is typing …": "%(displayName)s rašo …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s ir %(count)s kiti(-ų) rašo …",
-        "one": "%(names)s ir dar vienas rašo …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s ir %(lastPerson)s rašo …",
     "Cannot reach homeserver": "Serveris nepasiekiamas",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Įsitikinkite, kad jūsų interneto ryšys yra stabilus, arba susisiekite su serverio administratoriumi",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Paprašykite savo %(brand)s administratoriaus patikrinti ar <a>jūsų konfigūracijoje</a> nėra neteisingų arba pasikartojančių įrašų.",
@@ -2019,7 +2006,6 @@
     },
     "%(members)s and %(last)s": "%(members)s ir %(last)s",
     "%(members)s and more": "%(members)s ir daugiau",
-    "Busy": "Užsiėmęs",
     "View message": "Žiūrėti žinutę",
     "Message didn't send. Click for info.": "Žinutė nebuvo išsiųsta. Spustelėkite norėdami gauti informacijos.",
     "End-to-end encryption isn't enabled": "Visapusis šifravimas nėra įjungtas",
@@ -2553,7 +2539,15 @@
         "self_redaction": "Žinutė ištrinta",
         "redaction": "Žinutė, ištrinta %(name)s",
         "m.poll.start": "%(senderName)s pradėjo apklausą - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s užbaigė apklausą"
+        "m.poll.end": "%(senderName)s užbaigė apklausą",
+        "typing_indicator": {
+            "one_user": "%(displayName)s rašo …",
+            "two_users": "%(names)s ir %(lastPerson)s rašo …",
+            "more_users": {
+                "other": "%(names)s ir %(count)s kiti(-ų) rašo …",
+                "one": "%(names)s ir dar vienas rašo …"
+            }
+        }
     },
     "slash_command": {
         "shrug": "Prideda ¯\\_(ツ)_/¯ prie paprasto teksto žinutės",
@@ -2581,5 +2575,17 @@
         "whois": "Parodo informaciją apie vartotoją",
         "rageshake": "Siųsti pranešimą apie klaidą kartu su žurnalu",
         "msg": "Siunčia žinutę nurodytam vartotojui"
-    }
+    },
+    "presence": {
+        "busy": "Užsiėmęs",
+        "online_for": "Prisijungęs %(duration)s",
+        "idle_for": "Neveiklus %(duration)s",
+        "offline_for": "Atsijungęs %(duration)s",
+        "unknown_for": "Nežinoma jau %(duration)s",
+        "online": "Prisijungęs",
+        "idle": "Neveiklus",
+        "unknown": "Nežinoma",
+        "offline": "Atsijungęs"
+    },
+    "Unknown": "Nežinoma"
 }

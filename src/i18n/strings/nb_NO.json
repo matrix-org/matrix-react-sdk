@@ -109,12 +109,6 @@
     "Reason": "Årsak",
     "Add Email Address": "Legg til E-postadresse",
     "Add Phone Number": "Legg til telefonnummer",
-    "%(displayName)s is typing …": "%(displayName)s skriver …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s og %(count)s andre skriver …",
-        "one": "%(names)s og én annen bruker skriver …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s og %(lastPerson)s skriver …",
     "This is a very common password": "Dette er et veldig vanlig passord",
     "Dog": "Hund",
     "Cat": "Katt",
@@ -180,9 +174,6 @@
     "Send an encrypted message…": "Send en kryptert beskjed …",
     "Send a message…": "Send en melding …",
     "Italics": "Kursiv",
-    "Online": "Tilkoblet",
-    "Idle": "Rolig",
-    "Unknown": "Ukjent",
     "Direct Messages": "Direktemeldinger",
     "Rooms": "Rom",
     "Sign Up": "Registrer deg",
@@ -727,7 +718,6 @@
     "eg: @bot:* or example.org": "f.eks.: @bot:* eller example.org",
     "To link to this room, please add an address.": "For å lenke til dette rommet, vennligst legg til en adresse.",
     "Remove %(phone)s?": "Vil du fjerne %(phone)s?",
-    "Online for %(duration)s": "På nett i %(duration)s",
     "Sort by": "Sorter etter",
     "Activity": "Aktivitet",
     "A-Z": "A-Å",
@@ -1027,10 +1017,8 @@
     "not ready": "ikke klar",
     "ready": "klar",
     "Algorithm:": "Algoritme:",
-    "Away": "Borte",
     "Show Widgets": "Vis moduler",
     "Hide Widgets": "Skjul moduler",
-    "Unknown for %(duration)s": "Ukjent i %(duration)s",
     "Update %(brand)s": "Oppdater %(brand)s",
     "You are currently ignoring:": "Du ignorerer for øyeblikket:",
     "Unknown caller": "Ukjent oppringer",
@@ -1617,7 +1605,15 @@
             "removed": "%(widgetName)s-modulen ble fjernet av %(senderName)s"
         },
         "self_redaction": "Meldingen ble slettet",
-        "redaction": "Meldingen ble slettet av %(name)s"
+        "redaction": "Meldingen ble slettet av %(name)s",
+        "typing_indicator": {
+            "one_user": "%(displayName)s skriver …",
+            "two_users": "%(names)s og %(lastPerson)s skriver …",
+            "more_users": {
+                "other": "%(names)s og %(count)s andre skriver …",
+                "one": "%(names)s og én annen bruker skriver …"
+            }
+        }
     },
     "slash_command": {
         "shrug": "Føyer til ¯\\_(ツ)_/¯ på en råtekstmelding",
@@ -1639,5 +1635,15 @@
         "rainbowme": "Sender gitte emote i regnbuens farger",
         "help": "Viser liste over kommandoer med bruks eksempler og beskrivelser",
         "whois": "Viser informasjon om en bruker"
-    }
+    },
+    "presence": {
+        "online_for": "På nett i %(duration)s",
+        "unknown_for": "Ukjent i %(duration)s",
+        "online": "Tilkoblet",
+        "idle": "Rolig",
+        "unknown": "Ukjent",
+        "offline": "Frakoblet",
+        "away": "Borte"
+    },
+    "Unknown": "Ukjent"
 }

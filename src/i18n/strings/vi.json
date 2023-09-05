@@ -75,12 +75,6 @@
     "Reason": "Lý do",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s đổi từ %(fromPowerLevel)s thành %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s đã đổi mức quyền của %(powerLevelDiffText)s.",
-    "%(displayName)s is typing …": "%(displayName)s đang gõ …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s và %(count)s người khác đang gõ …",
-        "one": "%(names)s và một người khác đang gõ …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s và %(lastPerson)s đang gõ …",
     "Cannot reach homeserver": "Không thể kết nối tới máy chủ",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Đảm bảo bạn có kết nối Internet ổn định, hoặc liên hệ quản trị viên để được hỗ trợ",
     "Your %(brand)s is misconfigured": "Hệ thống %(brand)s của bạn bị thiết lập sai",
@@ -402,7 +396,6 @@
     "Country Dropdown": "Quốc gia thả xuống",
     "This homeserver would like to make sure you are not a robot.": "Người bảo vệ gia đình này muốn đảm bảo rằng bạn không phải là người máy.",
     "powered by Matrix": "cung cấp bởi Matrix",
-    "Away": "Vắng mặt",
     "This room is public": "Phòng này là công cộng",
     "Avatar": "Avatar",
     "Join the beta": "Tham gia phiên bản beta",
@@ -1218,13 +1211,6 @@
     "Recently visited rooms": "Các phòng đã ghé thăm gần đây",
     "Room %(name)s": "Phòng %(name)s",
     "Replying": "Đang trả lời",
-    "Unknown": "Không xác định",
-    "Idle": "Nhàn rỗi",
-    "Online": "Trực tuyến",
-    "Unknown for %(duration)s": "Không xác định trong %(duration)s",
-    "Offline for %(duration)s": "Offline trong %(duration)s",
-    "Idle for %(duration)s": "Không hoạt động trong %(duration)s",
-    "Online for %(duration)s": "Online trong %(duration)s",
     "%(duration)sd": "%(duration)sd",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sm": "%(duration)sm",
@@ -2516,7 +2502,6 @@
     "Missing room name or separator e.g. (my-room:domain.org)": "Thiếu tên phòng hoặc dấu cách. Ví dụ: (my-room:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Thiếu dấu tách tên miền. Ví dụ: (:domain.org)",
     "Including you, %(commaSeparatedMembers)s": "Bao gồm bạn, %(commaSeparatedMembers)s",
-    "Backspace": "Phím lùi",
     "toggle event": "chuyển đổi sự kiện",
     "Final result based on %(count)s votes": {
         "one": "Kết quả cuối cùng dựa trên %(count)s phiếu bầu",
@@ -2618,7 +2603,6 @@
     "%(user1)s and %(user2)s": "%(user1)s và %(user2)s",
     "Database unexpectedly closed": "Cơ sở dữ liệu đột nhiên bị đóng",
     "Identity server not set": "Máy chủ định danh chưa được đặt",
-    "Busy": "Bận",
     "Sign out of this session": "Đăng xuất phiên",
     "Push notifications": "Thông báo đẩy",
     "Session details": "Thông tin phiên",
@@ -3353,7 +3337,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[con số]"
+        "number": "[con số]",
+        "backspace": "Phím lùi"
     },
     "credits": {
         "default_cover_photo": "Các <photo>ảnh bìa mặc định</photo> Là © <author>Chúa Jesus Roncero</author> Được sử dụng theo các điều khoản của <terms>CC-BY-SA 4.0</terms>."
@@ -3707,7 +3692,15 @@
         "self_redaction": "Tin nhắn đã xóa",
         "redaction": "Tin nhắn đã bị %(name)s xóa",
         "m.poll.start": "%(senderName)s vừa bắt đầu một cuộc bình chọn - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s vừa kết thúc một cuộc bình chọn"
+        "m.poll.end": "%(senderName)s vừa kết thúc một cuộc bình chọn",
+        "typing_indicator": {
+            "one_user": "%(displayName)s đang gõ …",
+            "two_users": "%(names)s và %(lastPerson)s đang gõ …",
+            "more_users": {
+                "other": "%(names)s và %(count)s người khác đang gõ …",
+                "one": "%(names)s và một người khác đang gõ …"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Đánh dấu tin nhắn chỉ định thành một tin nhắn ẩn",
@@ -3744,5 +3737,18 @@
         "whois": "Hiển thị thông tin về người dùng",
         "rageshake": "Gửi báo cáo lỗi kèm theo nhật ký",
         "msg": "Gửi tin nhắn cho người dùng nhất định"
-    }
+    },
+    "presence": {
+        "busy": "Bận",
+        "online_for": "Online trong %(duration)s",
+        "idle_for": "Không hoạt động trong %(duration)s",
+        "offline_for": "Offline trong %(duration)s",
+        "unknown_for": "Không xác định trong %(duration)s",
+        "online": "Trực tuyến",
+        "idle": "Nhàn rỗi",
+        "unknown": "Không xác định",
+        "offline": "Ngoại tuyến",
+        "away": "Vắng mặt"
+    },
+    "Unknown": "Không xác định"
 }

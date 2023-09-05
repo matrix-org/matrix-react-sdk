@@ -19,8 +19,6 @@
     "Failed to verify email address: make sure you clicked the link in the email": "Huts egin du e-mail helbidearen egiaztaketak, egin klik e-mailean zetorren estekan",
     "Jump to first unread message.": "Jauzi irakurri gabeko lehen mezura.",
     "Warning!": "Abisua!",
-    "Online": "Konektatuta",
-    "Idle": "Inaktibo",
     "Unban": "Debekua kendu",
     "Connectivity to the server has been lost.": "Zerbitzariarekin konexioa galdu da.",
     "You do not have permission to post to this room": "Ez duzu gela honetara mezuak bidaltzeko baimenik",
@@ -247,10 +245,6 @@
     "%(duration)sm": "%(duration)s m",
     "%(duration)sh": "%(duration)s h",
     "%(duration)sd": "%(duration)s e",
-    "Online for %(duration)s": "Konektatua %(duration)s",
-    "Offline for %(duration)s": "Deskonektatuta %(duration)s",
-    "Unknown for %(duration)s": "Ezezaguna %(duration)s",
-    "Unknown": "Ezezaguna",
     "Unnamed room": "Izen gabeko gela",
     "Members only (since the point in time of selecting this option)": "Kideek besterik ez (aukera hau hautatzen den unetik)",
     "Members only (since they were invited)": "Kideek besterik ez (gonbidatu zaienetik)",
@@ -300,7 +294,6 @@
     "And %(count)s more...": {
         "other": "Eta %(count)s gehiago…"
     },
-    "Idle for %(duration)s": "Inaktibo %(duration)s",
     "Delete Widget": "Ezabatu trepeta",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Trepeta ezabatzean gelako kide guztientzat kentzen da. Ziur trepeta ezabatu nahi duzula?",
     "%(nameList)s %(transitionList)s": "%(nameList)s%(transitionList)s",
@@ -526,12 +519,6 @@
     "Invite anyway and never warn me again": "Gonbidatu edonola ere eta ez abisatu inoiz gehiago",
     "Invite anyway": "Gonbidatu hala ere",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "'%(fileName)s' fitxategiak igoerarako hasiera-zerbitzari honek duen tamaina muga gainditzen du",
-    "%(displayName)s is typing …": "%(displayName)s idazten ari da …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s eta beste %(count)s idatzen ari dira …",
-        "one": "%(names)s eta beste bat idazten ari dira …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s eta %(lastPerson)s idazten ari dira …",
     "The other party cancelled the verification.": "Beste parteak egiaztaketa ezeztatu du.",
     "Verified!": "Egiaztatuta!",
     "You've successfully verified this user.": "Ongi egiaztatu duzu erabiltzaile hau.",
@@ -1362,7 +1349,6 @@
     "Notification options": "Jakinarazpen ezarpenak",
     "Forget Room": "Ahaztu gela",
     "This room is public": "Gela hau publikoa da",
-    "Away": "Kanpoan",
     "Click to view edits": "Klik egin edizioak ikusteko",
     "The server is offline.": "Zerbitzaria lineaz kanpo dago.",
     "The server has denied your request.": "Zerbitzariak zure eskariari uko egin dio.",
@@ -1658,7 +1644,15 @@
             "removed": "%(widgetName)s trepeta kendu du %(senderName)s erabiltzaileak"
         },
         "self_redaction": "Mezu ezabatuta",
-        "redaction": "Mezua ezabatu du %(name)s erabiltzaileak"
+        "redaction": "Mezua ezabatu du %(name)s erabiltzaileak",
+        "typing_indicator": {
+            "one_user": "%(displayName)s idazten ari da …",
+            "two_users": "%(names)s eta %(lastPerson)s idazten ari dira …",
+            "more_users": {
+                "other": "%(names)s eta beste %(count)s idatzen ari dira …",
+                "one": "%(names)s eta beste bat idazten ari dira …"
+            }
+        }
     },
     "slash_command": {
         "shrug": "¯\\_(ツ)_/¯ jartzen du testu soileko mezu baten aurrean",
@@ -1685,5 +1679,17 @@
         "whois": "Erabiltzaileari buruzko informazioa erakusten du",
         "rageshake": "Bidali akats txostena egunkariekin",
         "msg": "Erabiltzaileari mezua bidaltzen dio"
-    }
+    },
+    "presence": {
+        "online_for": "Konektatua %(duration)s",
+        "idle_for": "Inaktibo %(duration)s",
+        "offline_for": "Deskonektatuta %(duration)s",
+        "unknown_for": "Ezezaguna %(duration)s",
+        "online": "Konektatuta",
+        "idle": "Inaktibo",
+        "unknown": "Ezezaguna",
+        "offline": "Deskonektatuta",
+        "away": "Kanpoan"
+    },
+    "Unknown": "Ezezaguna"
 }

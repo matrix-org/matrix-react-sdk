@@ -123,7 +123,6 @@
     "If this isn't what you want, please use a different tool to ignore users.": "Kui tulemus pole see mida soovisid, siis pruugi muud vahendit kasutajate eiramiseks.",
     "Share Link to User": "Jaga viidet kasutaja kohta",
     "Admin Tools": "Haldustoimingud",
-    "Online": "Võrgus",
     "Reject & Ignore user": "Hülga ja eira kasutaja",
     "%(count)s unread messages including mentions.": {
         "one": "1 lugemata mainimine.",
@@ -205,12 +204,6 @@
     "%(duration)sm": "%(duration)s minut(it)",
     "%(duration)sh": "%(duration)s tund(i)",
     "%(duration)sd": "%(duration)s päev(a)",
-    "Online for %(duration)s": "Võrgus %(duration)s",
-    "Idle for %(duration)s": "Jõude %(duration)s",
-    "Offline for %(duration)s": "Võrgust väljas %(duration)s",
-    "Unknown for %(duration)s": "Teadmata olek viimased %(duration)s",
-    "Idle": "Jõude",
-    "Unknown": "Teadmata olek",
     "Replying": "Vastan",
     "Room %(name)s": "Jututuba %(name)s",
     "Unnamed room": "Nimeta jututuba",
@@ -773,12 +766,6 @@
     "Verify your other session using one of the options below.": "Verifitseeri oma teine sessioon kasutades üht alljärgnevatest võimalustest.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) logis sisse uude sessiooni ilma seda verifitseerimata:",
     "Not Trusted": "Ei ole usaldusväärne",
-    "%(displayName)s is typing …": "%(displayName)s kirjutab midagi…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s ja %(count)s muud kasutajat kirjutavad midagi…",
-        "one": "%(names)s ja üks teine kasutaja kirjutavad midagi…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s ja %(lastPerson)s kirjutavad midagi…",
     "Cannot reach homeserver": "Koduserver ei ole hetkel leitav",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Palun kontrolli, kas sul on toimiv internetiühendus ning kui on, siis küsi abi koduserveri haldajalt",
     "Your %(brand)s is misconfigured": "Sinu %(brand)s'i seadistused on paigast ära",
@@ -1312,7 +1299,6 @@
     "Notification options": "Teavituste eelistused",
     "Room options": "Jututoa eelistused",
     "This room is public": "See jututuba on avalik",
-    "Away": "Eemal",
     "Room avatar": "Jututoa tunnuspilt ehk avatar",
     "Publish this room to the public in %(domain)s's room directory?": "Kas avaldame selle jututoa %(domain)s jututubade loendis?",
     "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.": "Kui keegi lisab oma sõnumisse URL'i, siis võidakse näidata selle URL'i eelvaadet, mis annab lisateavet tema kohta, nagu näiteks pealkiri, kirjeldus ja kuidas ta välja näeb.",
@@ -2515,7 +2501,6 @@
     "This address had invalid server or is already in use": "Selle aadressiga seotud server on kas kirjas vigaselt või on juba kasutusel",
     "Missing room name or separator e.g. (my-room:domain.org)": "Jututoa nimi või eraldaja on puudu (näiteks jututuba:domeen.ee)",
     "Missing domain separator e.g. (:domain.org)": "Domeeni eraldaja on puudu (näiteks :domeen.ee)",
-    "Backspace": "Tagasisammuklahv",
     "Dial": "Helista",
     "Back to thread": "Tagasi jutulõnga manu",
     "Room members": "Jututoa liikmed",
@@ -2689,7 +2674,6 @@
     "This homeserver is not configured to display maps.": "See koduserver pole seadistatud kuvama kaarte.",
     "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "See koduserver kas pole korrektselt seadistatud kuvama kaarte või seadistatud kaardiserver ei tööta.",
     "Can't create a thread from an event with an existing relation": "Jutulõnga ei saa luua sõnumist, mis juba on jutulõnga osa",
-    "Busy": "Hõivatud",
     "Toggle Code Block": "Lülita koodiblokk sisse/välja",
     "Toggle Link": "Lülita link sisse/välja",
     "You are sharing your live location": "Sa jagad oma asukohta reaalajas",
@@ -3605,7 +3589,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[number]"
+        "number": "[number]",
+        "backspace": "Tagasisammuklahv"
     },
     "credits": {
         "default_cover_photo": "<photo>Vaikimisi kasutatava kaanepildi</photo> autoriõiguste omanik on <author>Jesús Roncero</author> ja seda fotot kasutame vastavalt <terms>CC-BY-SA 4.0</terms> litsentsi tingimustele.",
@@ -4004,7 +3989,15 @@
         "self_redaction": "Sõnum on kustutatud",
         "redaction": "%(name)s kustutas sõnumi",
         "m.poll.start": "%(senderName)s algatas küsitluse - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s lõpetas küsitluse"
+        "m.poll.end": "%(senderName)s lõpetas küsitluse",
+        "typing_indicator": {
+            "one_user": "%(displayName)s kirjutab midagi…",
+            "two_users": "%(names)s ja %(lastPerson)s kirjutavad midagi…",
+            "more_users": {
+                "other": "%(names)s ja %(count)s muud kasutajat kirjutavad midagi…",
+                "one": "%(names)s ja üks teine kasutaja kirjutavad midagi…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Saadab selle sõnumi rõõmurikkujana",
@@ -4041,5 +4034,18 @@
         "whois": "Näitab teavet kasutaja kohta",
         "rageshake": "Saada veakirjeldus koos logikirjetega",
         "msg": "Saadab sõnumi näidatud kasutajale"
-    }
+    },
+    "presence": {
+        "busy": "Hõivatud",
+        "online_for": "Võrgus %(duration)s",
+        "idle_for": "Jõude %(duration)s",
+        "offline_for": "Võrgust väljas %(duration)s",
+        "unknown_for": "Teadmata olek viimased %(duration)s",
+        "online": "Võrgus",
+        "idle": "Jõude",
+        "unknown": "Teadmata olek",
+        "offline": "Võrgust väljas",
+        "away": "Eemal"
+    },
+    "Unknown": "Teadmata olek"
 }

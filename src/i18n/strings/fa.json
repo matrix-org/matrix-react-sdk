@@ -533,12 +533,6 @@
     "Change which room you're viewing": "اتاق‌هایی را که مشاهده می‌کنید تغییر دهید",
     "Send stickers into your active room": "در اتاق‌های فعال خود استیکر ارسال کنید",
     "Send stickers into this room": "در این اتاق استیکر ارسال کنید",
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s و %(lastPerson)s در حال نوشتن…",
-    "%(names)s and %(count)s others are typing …": {
-        "one": "%(names)s و یک نفر دیگر در حال نوشتن…",
-        "other": "%(names)s و %(count)s نفر دیگر در حال نوشتن…"
-    },
-    "%(displayName)s is typing …": "%(displayName)s در حال نوشتن…",
     "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s یک قاعده تحریم را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای به‌روزرسانی کرد که با %(newGlob)s تطابق داشته باشد",
     "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s یک قاعده تحریم سرورها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
     "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s یک قاعده تحریم اتاق‌ها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
@@ -1086,13 +1080,6 @@
     "Recently visited rooms": "اتاق‌هایی که به تازگی بازدید کرده‌اید",
     "Room %(name)s": "اتاق %(name)s",
     "Replying": "پاسخ دادن",
-    "Unknown": "ناشناخته",
-    "Idle": "بلااستفاده",
-    "Online": "آنلاین",
-    "Unknown for %(duration)s": "ناشناخته به مدت %(duration)s",
-    "Offline for %(duration)s": "آفلاین به مدت %(duration)s",
-    "Idle for %(duration)s": "بلااستفاده برای مدت %(duration)s",
-    "Online for %(duration)s": "آنلاین برای مدت %(duration)s",
     "%(duration)sd": "%(duration)s روز",
     "%(duration)sh": "%(duration)s ساعت",
     "%(duration)sm": "%(duration)s دقیقه",
@@ -1986,7 +1973,6 @@
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "اگر کلید امنیتی خود را فراموش کرده‌اید ، می توانید <button>تنظیمات مجددا تنظیمات پشتیبان‌گیری را انجام دهید</button>",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "این فایل برای بارگذاری <b>بسیار بزرگ است</b>. محدودیت اندازه‌ی فایل برابر %(limit)s است اما حجم این فایل %(sizeOfThisFile)s.",
     "Ask this user to verify their session, or manually verify it below.": "از این کاربر بخواهید نشست خود را تأیید کرده و یا آن را به صورت دستی تأیید کنید.",
-    "Away": "بعدا",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) وارد یک نشست جدید شد بدون اینکه آن را تائید کند:",
     "This homeserver would like to make sure you are not a robot.": "این سرور می خواهد مطمئن شود که شما یک ربات نیستید.",
     "Confirm your identity by entering your account password below.": "با وارد کردن رمز ورود حساب خود در زیر ، هویت خود را تأیید کنید.",
@@ -2654,7 +2640,15 @@
         "self_redaction": "پیغام پاک شد",
         "redaction": "پیام توسط %(name)s حذف شد",
         "m.poll.start": "%(senderName)s یک نظر سنجی را شروع کرد - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s به نظر سنجی پایان داد"
+        "m.poll.end": "%(senderName)s به نظر سنجی پایان داد",
+        "typing_indicator": {
+            "one_user": "%(displayName)s در حال نوشتن…",
+            "two_users": "%(names)s و %(lastPerson)s در حال نوشتن…",
+            "more_users": {
+                "one": "%(names)s و یک نفر دیگر در حال نوشتن…",
+                "other": "%(names)s و %(count)s نفر دیگر در حال نوشتن…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "پیام داده شده را به عنوان اسپویلر ارسال می کند",
@@ -2689,5 +2683,17 @@
         "whois": "اطلاعات مربوط به کاربر را نمایش می دهد",
         "rageshake": "گزارش یک اشکال به همراه سیاهه‌های مربوط",
         "msg": "برای کاربر داده شده پیامی ارسال می کند"
-    }
+    },
+    "presence": {
+        "online_for": "آنلاین برای مدت %(duration)s",
+        "idle_for": "بلااستفاده برای مدت %(duration)s",
+        "offline_for": "آفلاین به مدت %(duration)s",
+        "unknown_for": "ناشناخته به مدت %(duration)s",
+        "online": "آنلاین",
+        "idle": "بلااستفاده",
+        "unknown": "ناشناخته",
+        "offline": "آفلاین",
+        "away": "بعدا"
+    },
+    "Unknown": "ناشناخته"
 }

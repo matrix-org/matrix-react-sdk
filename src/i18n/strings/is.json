@@ -76,9 +76,6 @@
     "You do not have permission to post to this room": "Þú hefur ekki heimild til að senda skilaboð á þessa spjallrás",
     "Server error": "Villa á þjóni",
     "Command error": "Skipanavilla",
-    "Online": "Nettengt",
-    "Idle": "Iðjulaust",
-    "Unknown": "Óþekkt",
     "Unnamed room": "Nafnlaus spjallrás",
     "Join Room": "Taka þátt í spjallrás",
     "Forget room": "Gleyma spjallrás",
@@ -694,7 +691,6 @@
     "Later": "Seinna",
     "That's fine": "Það er í góðu",
     "Unknown App": "Óþekkt forrit",
-    "%(displayName)s is typing …": "%(displayName)s er að skrifa…",
     "Light high contrast": "Ljóst með mikil birtuskil",
     "Use an identity server": "Nota auðkennisþjón",
     "Effects": "Brellur",
@@ -765,7 +761,6 @@
     "Enter username": "Settu inn notandanafn",
     "Enter password": "Settu inn lykilorð",
     "Enter email address": "Skrifaðu netfang",
-    "Away": "Fjarverandi",
     "This room is public": "Þessi spjallrás er opinber",
     "Avatar": "Auðkennismynd",
     "Join the beta": "Taka þátt í Beta-prófunum",
@@ -829,7 +824,6 @@
     "Information": "Upplýsingar",
     "Rotate Right": "Snúa til hægri",
     "Rotate Left": "Snúa til vinstri",
-    "Backspace": "Baklykill (backspace)",
     "Application window": "Forritsgluggi",
     "Categories": "Flokkar",
     "Share location": "Deila staðsetningu",
@@ -996,11 +990,6 @@
     "Are you sure you want to cancel entering passphrase?": "Viltu örugglega hætta við að setja inn lykilfrasa?",
     "Cancel entering passphrase?": "Hætta við að setja inn lykilfrasa?",
     "Connectivity to the server has been lost": "Tenging við vefþjón hefur rofnað",
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s og %(lastPerson)s eru að skrifa…… …",
-    "%(names)s and %(count)s others are typing …": {
-        "one": "%(names)s og einn til viðbótar eru að skrifa……",
-        "other": "%(names)s og %(count)s til viðbótar eru að skrifa……"
-    },
     "You are no longer ignoring %(userId)s": "Þú ert ekki lengur að hunsa %(userId)s",
     "Unignored user": "Ekki-hunsaður notandi",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en tókst ekki að finna þetta.",
@@ -1966,7 +1955,6 @@
     "Do you want to chat with %(user)s?": "Viltu spjalla við %(user)s?",
     "Add space": "Bæta við svæði",
     "Add existing room": "Bæta við fyrirliggjandi spjallrás",
-    "Busy": "Upptekinn",
     "Decide who can join %(roomName)s.": "Veldu hverjir geta tekið þátt í %(roomName)s.",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Aftengjast frá auðkennisþjóninum <current /> og tengjast í staðinn við <new />?",
     "Checking server": "Athuga með þjón",
@@ -2122,9 +2110,6 @@
     "Open thread": "Opna spjallþráð",
     "Invited by %(sender)s": "Boðið af %(sender)s",
     "Join the discussion": "Taktu þátt í umræðunni",
-    "Offline for %(duration)s": "Ekki á netinu í %(duration)s",
-    "Idle for %(duration)s": "Aðgerðalaust í %(duration)s",
-    "Online for %(duration)s": "Á netinu í %(duration)s",
     "Missing media permissions, click the button below to request.": "Vantar heimildir fyrir margmiðlunarefni, smelltu á hnappinn hér fyrir neðan til að biðja um þær.",
     "Not a valid identity server (status code %(code)s)": "Ekki gildur auðkennisþjónn (stöðukóði %(code)s)",
     "Message search initialisation failed": "Frumstilling leitar í skilaboðum mistókst",
@@ -2143,7 +2128,6 @@
     "You do not have permissions to add spaces to this space": "Þú hefur ekki heimild til að bæta svæðum í þetta svæði",
     "You do not have permissions to add rooms to this space": "Þú hefur ekki heimild til að bæta spjallrásum í þetta svæði",
     "You do not have permissions to create new rooms in this space": "Þú hefur ekki heimild til að búa til nýjar spjallrásir í þessu svæði",
-    "Unknown for %(duration)s": "Óþekkt í %(duration)s",
     "<a>Add a topic</a> to help people know what it is about.": "<a>Bættu við umfjöllunarefni</a> svo fólk viti að um hvað málin snúist.",
     "Unable to verify this device": "Tókst ekki að sannreyna þetta tæki",
     "Scroll to most recent messages": "Skruna að nýjustu skilaboðunum",
@@ -3050,7 +3034,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[tala]"
+        "number": "[tala]",
+        "backspace": "Baklykill (backspace)"
     },
     "composer": {
         "format_bold": "Feitletrað",
@@ -3395,7 +3380,15 @@
         "self_redaction": "Skilaboðum eytt",
         "redaction": "Skilaboðum eytt af %(name)s",
         "m.poll.start": "%(senderName)s hefur sett í gang könnun - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s hefur lokið könnun"
+        "m.poll.end": "%(senderName)s hefur lokið könnun",
+        "typing_indicator": {
+            "one_user": "%(displayName)s er að skrifa…",
+            "two_users": "%(names)s og %(lastPerson)s eru að skrifa…… …",
+            "more_users": {
+                "one": "%(names)s og einn til viðbótar eru að skrifa……",
+                "other": "%(names)s og %(count)s til viðbótar eru að skrifa……"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Sendir skilaboðin sem stríðni",
@@ -3430,5 +3423,18 @@
         "whois": "Birtir upplýsingar um notanda",
         "rageshake": "Senda villuskýrslu með atvikaskrám",
         "msg": "Sendir skilaboð til viðkomandi notanda"
-    }
+    },
+    "presence": {
+        "busy": "Upptekinn",
+        "online_for": "Á netinu í %(duration)s",
+        "idle_for": "Aðgerðalaust í %(duration)s",
+        "offline_for": "Ekki á netinu í %(duration)s",
+        "unknown_for": "Óþekkt í %(duration)s",
+        "online": "Nettengt",
+        "idle": "Iðjulaust",
+        "unknown": "Óþekkt",
+        "offline": "Ónettengt",
+        "away": "Fjarverandi"
+    },
+    "Unknown": "Óþekkt"
 }

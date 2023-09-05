@@ -209,8 +209,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je wordt zo dadelijk naar een derdepartijwebsite gebracht zodat je de account kunt legitimeren voor gebruik met %(integrationsUrl)s. Wil je doorgaan?",
     "URL Previews": "URL-voorvertoningen",
     "Drop file here to upload": "Versleep het bestand naar hier om het te uploaden",
-    "Online": "Online",
-    "Idle": "Afwezig",
     "Check for update": "Controleren op updates",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s heeft de kamerafbeelding aangepast naar <img/>",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s heeft de kamerafbeelding verwijderd.",
@@ -253,11 +251,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)su",
     "%(duration)sd": "%(duration)sd",
-    "Online for %(duration)s": "Online voor %(duration)s",
-    "Idle for %(duration)s": "Afwezig voor %(duration)s",
-    "Offline for %(duration)s": "Offline voor %(duration)s",
-    "Unknown for %(duration)s": "Onbekend voor %(duration)s",
-    "Unknown": "Onbekend",
     "Replying": "Aan het beantwoorden",
     "Unnamed room": "Naamloze kamer",
     "Banned by %(displayName)s": "Verbannen door %(displayName)s",
@@ -443,12 +436,6 @@
     "This homeserver has exceeded one of its resource limits.": "Deze homeserver heeft één van zijn systeembron-limieten overschreden.",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Het bestand ‘%(fileName)s’ is groter dan de uploadlimiet van de homeserver",
     "Unable to load! Check your network connectivity and try again.": "Laden mislukt! Controleer je netwerktoegang en probeer het nogmaals.",
-    "%(displayName)s is typing …": "%(displayName)s is aan het typen…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s en %(count)s anderen zijn aan het typen…",
-        "one": "%(names)s en nog iemand zijn aan het typen…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s en %(lastPerson)s zijn aan het typen…",
     "Unrecognised address": "Adres niet herkend",
     "You do not have permission to invite people to this room.": "Je bent niet bevoegd anderen in deze kamer uit te nodigen.",
     "The user must be unbanned before they can be invited.": "De persoon kan niet uitgenodigd worden totdat zijn ban is verwijderd.",
@@ -1787,7 +1774,6 @@
     "Enter phone number": "Telefoonnummer invoeren",
     "Enter email address": "E-mailadres invoeren",
     "Something went wrong in confirming your identity. Cancel and try again.": "Er is iets misgegaan bij het bevestigen van jouw identiteit. Annuleer en probeer het opnieuw.",
-    "Away": "Afwezig",
     "Move right": "Ga naar rechts",
     "Move left": "Ga naar links",
     "Revoke permissions": "Machtigingen intrekken",
@@ -2521,7 +2507,6 @@
     "This address had invalid server or is already in use": "Dit adres heeft een ongeldige server of is al in gebruik",
     "Missing room name or separator e.g. (my-room:domain.org)": "Ontbrekende kamernaam of scheidingsteken, bijv. (mijn-kamer:voorbeeld.nl)",
     "Missing domain separator e.g. (:domain.org)": "Ontbrekend domeinscheidingsteken, bijv. (:voorbeeld.nl)",
-    "Backspace": "Backspace",
     "toggle event": "wissel gebeurtenis",
     "You cancelled verification on your other device.": "Je hebt de verificatie geannuleerd op het andere apparaat.",
     "Almost there! Is your other device showing the same shield?": "Je bent er bijna! Toont het andere apparaat hetzelfde schild?",
@@ -2720,7 +2705,6 @@
     },
     "New video room": "Nieuwe video kamer",
     "New room": "Nieuwe kamer",
-    "Busy": "Bezet",
     "Remove messages sent by me": "Door mij verzonden berichten verwijderen",
     "View older version of %(spaceName)s.": "Bekijk oudere versie van %(spaceName)s.",
     "Upgrade this space to the recommended room version": "Upgrade deze ruimte naar de aanbevolen kamerversie",
@@ -3267,7 +3251,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[number]"
+        "number": "[number]",
+        "backspace": "Backspace"
     },
     "composer": {
         "format_bold": "Vet",
@@ -3611,7 +3596,15 @@
         "self_redaction": "Bericht verwijderd",
         "redaction": "Bericht verwijderd door %(name)s",
         "m.poll.start": "%(senderName)s is een poll gestart - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s heeft een poll beëindigd"
+        "m.poll.end": "%(senderName)s heeft een poll beëindigd",
+        "typing_indicator": {
+            "one_user": "%(displayName)s is aan het typen…",
+            "two_users": "%(names)s en %(lastPerson)s zijn aan het typen…",
+            "more_users": {
+                "other": "%(names)s en %(count)s anderen zijn aan het typen…",
+                "one": "%(names)s en nog iemand zijn aan het typen…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Verstuurt het bericht als een spoiler",
@@ -3646,5 +3639,18 @@
         "whois": "Geeft informatie weer over een persoon",
         "rageshake": "Stuur een bugrapport met logs",
         "msg": "Zendt die persoon een bericht"
-    }
+    },
+    "presence": {
+        "busy": "Bezet",
+        "online_for": "Online voor %(duration)s",
+        "idle_for": "Afwezig voor %(duration)s",
+        "offline_for": "Offline voor %(duration)s",
+        "unknown_for": "Onbekend voor %(duration)s",
+        "online": "Online",
+        "idle": "Afwezig",
+        "unknown": "Onbekend",
+        "offline": "Offline",
+        "away": "Afwezig"
+    },
+    "Unknown": "Onbekend"
 }

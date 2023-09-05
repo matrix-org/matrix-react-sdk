@@ -27,7 +27,6 @@
     "Dec": "דצמבר",
     "PM": "PM",
     "AM": "AM",
-    "Online": "מקוון",
     "Rooms": "חדרים",
     "Operation failed": "פעולה נכשלה",
     "powered by Matrix": "מופעל ע\"י Matrix",
@@ -505,12 +504,6 @@
     "Send stickers into this room": "שלחו מדבקות לחדר זה",
     "Remain on your screen while running": "השארו במסך זה כאשר אתם פעילים",
     "Remain on your screen when viewing another room, when running": "השארו במסך הראשי כאשר אתם עברים בין חדרים בכל קהילה",
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s ו%(lastPerson)s כותבים…",
-    "%(names)s and %(count)s others are typing …": {
-        "one": "%(names)s ועוד משהו כותבים…",
-        "other": "%(names)s ו%(count)s אחרים כותבים…"
-    },
-    "%(displayName)s is typing …": "%(displayName)s כותב…",
     "Not Trusted": "לא אמין",
     "Ask this user to verify their session, or manually verify it below.": "בקש ממשתמש זה לאמת את ההתחברות שלו, או לאמת אותה באופן ידני למטה.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s %(userId)s נכנס דרך התחברות חדשה מבלי לאמת אותה:",
@@ -1128,12 +1121,6 @@
     "No recently visited rooms": "אין חדרים שבקרתם בהם לאחרונה",
     "Room %(name)s": "חדר %(name)s",
     "Replying": "משיבים",
-    "Unknown": "לא ידוע",
-    "Idle": "לא פעיל",
-    "Unknown for %(duration)s": "זמן לא ידוע %(duration)s",
-    "Offline for %(duration)s": "לא מחובר %(duration)s",
-    "Idle for %(duration)s": "לא פעיל %(duration)s",
-    "Online for %(duration)s": "מחובר %(duration)s",
     "%(duration)sd": "%(duration)s (ימים)",
     "%(duration)sh": "%(duration)s (שעות)",
     "%(duration)sm": "%(duration)s (דקות)",
@@ -1512,7 +1499,6 @@
     "Confirm your identity by entering your account password below.": "אשר את זהותך על ידי הזנת סיסמת החשבון שלך למטה.",
     "Country Dropdown": "נפתח במדינה",
     "This homeserver would like to make sure you are not a robot.": "שרת בית זה רוצה לוודא שאתה לא רובוט.",
-    "Away": "מרוחק",
     "This room is public": "חדר זה ציבורי",
     "Move right": "הזז ימינה",
     "Move left": "הזז שמאלה",
@@ -2228,7 +2214,6 @@
     "Create a new space": "הגדרת מרחב עבודה חדש",
     "Want to add a new space instead?": "רוצים להוסיף מרחב עבודה חדש במקום?",
     "Add existing space": "הוסף מרחב עבודה קיים",
-    "Backspace": "מקש חזרה לאחור",
     "Ban from space": "חסום ממרחב העבודה",
     "Unban from space": "הסר חסימה ממרחב העבודה",
     "Remove from space": "הסר ממרחב העבודה",
@@ -2550,7 +2535,8 @@
         "end": "מקש סוף",
         "alt": "ALT",
         "control": "CTRL",
-        "shift": "הזזה"
+        "shift": "הזזה",
+        "backspace": "מקש חזרה לאחור"
     },
     "composer": {
         "format_bold": "מודגש",
@@ -2796,7 +2782,15 @@
         "self_redaction": "הודעה נמחקה",
         "redaction": "הודעה נמחקה על ידיד%(name)s",
         "m.poll.start": "%(senderName)s התחיל סקר - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)sסיים סקר"
+        "m.poll.end": "%(senderName)sסיים סקר",
+        "typing_indicator": {
+            "one_user": "%(displayName)s כותב…",
+            "two_users": "%(names)s ו%(lastPerson)s כותבים…",
+            "more_users": {
+                "one": "%(names)s ועוד משהו כותבים…",
+                "other": "%(names)s ו%(count)s אחרים כותבים…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "שולח הודעה ומסמן אותה כספוילר",
@@ -2831,5 +2825,17 @@
         "whois": "מציג מידע אודות משתמש",
         "rageshake": "שולח דוח תקלה עם לוג",
         "msg": "שליחת הודעת למשתמש מסויים"
-    }
+    },
+    "presence": {
+        "online_for": "מחובר %(duration)s",
+        "idle_for": "לא פעיל %(duration)s",
+        "offline_for": "לא מחובר %(duration)s",
+        "unknown_for": "זמן לא ידוע %(duration)s",
+        "online": "מקוון",
+        "idle": "לא פעיל",
+        "unknown": "לא ידוע",
+        "offline": "לא מחובר",
+        "away": "מרוחק"
+    },
+    "Unknown": "לא ידוע"
 }

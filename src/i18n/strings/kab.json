@@ -82,8 +82,6 @@
     "Verification code": "Tangalt n usenqed",
     "Email Address": "Tansa n yimayl",
     "Phone Number": "Uṭṭun n tiliɣri",
-    "Idle": "Arurmid",
-    "Unknown": "Arussin",
     "Sign Up": "Jerred",
     "Sort by": "Semyizwer s",
     "Activity": "Armud",
@@ -232,7 +230,6 @@
     "Restricted": "Yesεa tilas",
     "Set up": "Sbadu",
     "Pencil": "Akeryun",
-    "Online": "Srid",
     "Verify session": "Asenqed n tɣimit",
     "Message edits": "Tiẓrigin n yizen",
     "Security Key": "Tasarut n tɣellist",
@@ -264,12 +261,6 @@
         "one": "%(senderName)s yerna tansa-nniḍen %(addresses)s i texxamt-a."
     },
     "Not Trusted": "Ur yettwattkal ara",
-    "%(displayName)s is typing …": "%(displayName)s yettaru-d …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s d %(count)s wiyaḍ ttarun-d …",
-        "one": "%(names)s d wayeḍ-nniḍen yettaru-d …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s d %(lastPerson)s ttarun-d …",
     "%(items)s and %(count)s others": {
         "other": "%(items)s d %(count)s wiyaḍ",
         "one": "%(items)s d wayeḍ-nniḍen"
@@ -492,9 +483,6 @@
     "Send an encrypted message…": "Azen izen yettuwgelhen…",
     "Send a message…": "Azen izen…",
     "Italics": "Uknan",
-    "Online for %(duration)s": "Srid azal n %(duration)s",
-    "Idle for %(duration)s": "D arurmid azal n %(duration)s",
-    "Offline for %(duration)s": "Beṛṛa n tuqqna  azal n %(duration)s",
     "Replying": "Tiririt",
     "(~%(count)s results)": {
         "one": "(~%(count)s igmaḍ)",
@@ -1033,7 +1021,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "Unknown for %(duration)s": "D arussin azal n %(duration)s",
     "Room %(name)s": "Taxxamt %(name)s",
     "No recently visited rooms": "Ulac taxxamt yemmeẓren melmi kan",
     "Unnamed room": "Taxxamt war isem",
@@ -1147,7 +1134,6 @@
     "Successfully restored %(sessionCount)s keys": "Tiririt n tsura n %(sessionCount)s yedda akken iwata",
     "Are you sure you want to reject the invitation?": "S tidet tebɣiḍ ad tesfesxeḍ tinubga?",
     "Resend %(unsentCount)s reaction(s)": "Ales tuzna n tsedmirt (tsedmirin) %(unsentCount)s",
-    "Away": "Akin",
     "This homeserver would like to make sure you are not a robot.": "Aqeddac-a aqejdan yesra ad iẓer ma mačči d aṛubut i telliḍ.",
     "Country Dropdown": "Tabdart n udrurem n tmura",
     "Confirm your identity by entering your account password below.": "Sentem timagit-ik·im s usekcem n wawal uffir n umiḍan-ik·im ddaw.",
@@ -2031,7 +2017,15 @@
             "removed": "%(widgetName)s awiǧit yettwakkes sɣur %(senderName)s"
         },
         "self_redaction": "Izen yettwakksen",
-        "redaction": "Izen yettwakkes sɣur %(name)s"
+        "redaction": "Izen yettwakkes sɣur %(name)s",
+        "typing_indicator": {
+            "one_user": "%(displayName)s yettaru-d …",
+            "two_users": "%(names)s d %(lastPerson)s ttarun-d …",
+            "more_users": {
+                "other": "%(names)s d %(count)s wiyaḍ ttarun-d …",
+                "one": "%(names)s d wayeḍ-nniḍen yettaru-d …"
+            }
+        }
     },
     "slash_command": {
         "shrug": "Yerna ¯\\_(ツ)_/¯ ɣer yizen n uḍris arewway",
@@ -2061,5 +2055,17 @@
         "whois": "Yeskan talɣut ɣef useqdac",
         "rageshake": "Azen aneqqis n wabug s yiɣƔisen",
         "msg": "Yuzen iznan i useqdac i d-yettunefken"
-    }
+    },
+    "presence": {
+        "online_for": "Srid azal n %(duration)s",
+        "idle_for": "D arurmid azal n %(duration)s",
+        "offline_for": "Beṛṛa n tuqqna  azal n %(duration)s",
+        "unknown_for": "D arussin azal n %(duration)s",
+        "online": "Srid",
+        "idle": "Arurmid",
+        "unknown": "Arussin",
+        "offline": "Beṛṛa n tuqqna",
+        "away": "Akin"
+    },
+    "Unknown": "Arussin"
 }

@@ -127,13 +127,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "Online for %(duration)s": "En línia durant %(duration)s",
-    "Idle for %(duration)s": "Inactiu durant %(duration)s",
-    "Offline for %(duration)s": "Fora de línia durant %(duration)s",
-    "Unknown for %(duration)s": "Desconegut durant %(duration)s",
-    "Online": "En línia",
-    "Idle": "Inactiu",
-    "Unknown": "Desconegut",
     "Replying": "S'està contestant",
     "Unnamed room": "Sala sense nom",
     "(~%(count)s results)": {
@@ -379,12 +372,6 @@
     "Deops user with given id": "Degrada l'usuari amb l'id donat",
     "Displays action": "Mostra l'acció",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "El fitxer %(fileName)s supera la mida màxima permesa per a pujades d'aquest servidor",
-    "%(displayName)s is typing …": "%(displayName)s està escrivint…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s i %(count)s més estan escrivint…",
-        "one": "%(names)s i una altra persona estan escrivint…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s i %(lastPerson)s estan escrivint…",
     "You do not have permission to invite people to this room.": "No teniu permís per convidar gent a aquesta sala.",
     "Use a few words, avoid common phrases": "Feu servir unes quantes paraules, eviteu frases comunes",
     "No need for symbols, digits, or uppercase letters": "No calen símbols, dígits o majúscules",
@@ -675,6 +662,14 @@
             "modified": "%(senderName)s ha modificat el giny %(widgetName)s",
             "added": "%(senderName)s ha afegit el giny %(widgetName)s",
             "removed": "%(senderName)s ha eliminat el giny %(widgetName)s"
+        },
+        "typing_indicator": {
+            "one_user": "%(displayName)s està escrivint…",
+            "two_users": "%(names)s i %(lastPerson)s estan escrivint…",
+            "more_users": {
+                "other": "%(names)s i %(count)s més estan escrivint…",
+                "one": "%(names)s i una altra persona estan escrivint…"
+            }
         }
     },
     "slash_command": {
@@ -696,5 +691,16 @@
         "ignore": "Ignora un usuari, amagant-te els seus missatges",
         "unignore": "Deixa d'ignorar un usuari, i mostra els seus missatges a partir d'ara",
         "devtools": "Obre el diàleg d'Eines del desenvolupador"
-    }
+    },
+    "presence": {
+        "online_for": "En línia durant %(duration)s",
+        "idle_for": "Inactiu durant %(duration)s",
+        "offline_for": "Fora de línia durant %(duration)s",
+        "unknown_for": "Desconegut durant %(duration)s",
+        "online": "En línia",
+        "idle": "Inactiu",
+        "unknown": "Desconegut",
+        "offline": "Fora de línia"
+    },
+    "Unknown": "Desconegut"
 }

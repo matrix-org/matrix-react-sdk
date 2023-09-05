@@ -1346,12 +1346,6 @@
     "Send stickers into this room": "ສົ່ງສະຕິກເກີເຂົ້າມາໃນຫ້ອງນີ້",
     "Remain on your screen while running": "ຢູ່ໃນຫນ້າຈໍຂອງທ່ານໃນຂະນະທີ່ກຳລັງດຳເນີນການ",
     "Remain on your screen when viewing another room, when running": "ຢູ່ຫນ້າຈໍຂອງທ່ານໃນເວລາເບິ່ງຫ້ອງອື່ນ, ໃນຄະນະທີ່ກຳລັງດຳເນີນການ",
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s ແລະ %(lastPerson)s ກຳລັງພິມ…",
-    "%(names)s and %(count)s others are typing …": {
-        "one": "%(names)s ແລະ ອີກຄົນນຶ່ງກຳລັງພິມ…",
-        "other": "%(names)s and %(count)sຄົນອື່ນກຳລັງພິມ…"
-    },
-    "%(displayName)s is typing …": "%(displayName)s ກຳລັງພິມ…",
     "Light high contrast": "ແສງສະຫວ່າງຄວາມຄົມຊັດສູງ",
     "Send emotes as you in this room": "ສົ່ງ emotes ໃນຖານະທີ່ທ່ານຢູ່ໃນຫ້ອງນີ້",
     "See text messages posted to your active room": "ເບິ່ງຂໍ້ຄວາມທີ່ໂພສໃສ່ຫ້ອງຂອງທ່ານ",
@@ -1485,7 +1479,6 @@
     "Country Dropdown": "ເລືອກປະເທດຜ່ານເມນູແບບເລື່ອນລົງ",
     "This homeserver would like to make sure you are not a robot.": "homeserver ນີ້ຕ້ອງການໃຫ້ແນ່ໃຈວ່າທ່ານບໍ່ແມ່ນຫຸ່ນຍົນ.",
     "powered by Matrix": "ຂັບເຄື່ອນໂດຍ Matrix",
-    "Away": "ຫ່າງອອກໄປ",
     "This room is public": "ນີ້ແມ່ນຫ້ອງສາທາລະນະ",
     "Avatar": "ຮູບແທນຕົວ",
     "An error occurred while stopping your live location, please try again": "ເກີດຄວາມຜິດພາດໃນລະຫວ່າງການຢຸດສະຖານທີ່ປັດຈຸບັນຂອງທ່ານ, ກະລຸນາລອງໃໝ່ອີກຄັ້ງ",
@@ -1791,7 +1784,6 @@
     },
     "Something went wrong!": "ມີບາງຢ່າງຜິດພາດ!",
     "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "ກະລຸນາ <newIssueLink>ສ້າງບັນຫາໃໝ່</newIssueLink> ໃນ GitHub ເພື່ອໃຫ້ພວກເຮົາສາມາດກວດສອບຂໍ້ຜິດພາດນີ້ໄດ້.",
-    "Backspace": "ປຸ່ມກົດລຶບ",
     "Share content": "ແບ່ງປັນເນື້ອໃນ",
     "Application window": "ປ່ອງຢ້ຽມຄໍາຮ້ອງສະຫມັກ",
     "Share entire screen": "ແບ່ງປັນຫນ້າຈໍທັງໝົດ",
@@ -1958,14 +1950,6 @@
         "one": "ເຫັນໂດຍ %(count)s ຄົນ",
         "other": "ເຫັນໂດຍ %(count)s ຄົນ"
     },
-    "Unknown": "ບໍ່ຮູ້ຈັກ",
-    "Idle": "ບໍ່ເຮັດວຽກ",
-    "Online": "ອອນລາຍ",
-    "Unknown for %(duration)s": "ບໍ່ຮູ້ຈັກສໍາລັບ %(duration)s",
-    "Offline for %(duration)s": "ອອບໄລນ໌ສໍາລັບ %(duration)s",
-    "Idle for %(duration)s": "ບໍໄດ້ໃຊ້ງານສໍາລັບ %(duration)s",
-    "Online for %(duration)s": "ອອນລາຍ%(duration)s",
-    "Busy": "ບໍ່ຫວ່າງ",
     "View message": "ເບິ່ງຂໍ້ຄວາມ",
     "Message didn't send. Click for info.": "ບໍ່ໄດ້ສົ່ງຂໍ້ຄວາມ. ກົດສຳລັບຂໍ້ມູນ.",
     "End-to-end encryption isn't enabled": "ບໍ່ໄດ້ເປີດໃຊ້ການເຂົ້າລະຫັດແບບຕົ້ນທາງຮອດປາຍທາງ",
@@ -3027,7 +3011,8 @@
         "alt": "ປູ່ມ Alt",
         "control": "ປຸ່ມ Ctrl",
         "shift": "ປຸ່ມShift",
-        "number": "[ຕົວເລກ]"
+        "number": "[ຕົວເລກ]",
+        "backspace": "ປຸ່ມກົດລຶບ"
     },
     "composer": {
         "format_bold": "ຕົວໜາ",
@@ -3330,7 +3315,15 @@
         "self_redaction": "ຂໍ້ຄວາມຖືກລຶບແລ້ວ",
         "redaction": "ຂໍ້ຄວາມຖືກລຶບໂດຍ %(name)s",
         "m.poll.start": "%(senderName)s ໄດ້ເລີ່ມສຳຫຼວດ - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)sໄດ້ສິ້ນສຸດການສໍາຫຼວດ"
+        "m.poll.end": "%(senderName)sໄດ້ສິ້ນສຸດການສໍາຫຼວດ",
+        "typing_indicator": {
+            "one_user": "%(displayName)s ກຳລັງພິມ…",
+            "two_users": "%(names)s ແລະ %(lastPerson)s ກຳລັງພິມ…",
+            "more_users": {
+                "one": "%(names)s ແລະ ອີກຄົນນຶ່ງກຳລັງພິມ…",
+                "other": "%(names)s and %(count)sຄົນອື່ນກຳລັງພິມ…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",
@@ -3365,5 +3358,18 @@
         "whois": "ສະແດງຂໍ້ມູນກ່ຽວກັບຜູ້ໃຊ້",
         "rageshake": "ສົ່ງບົດລາຍງານຂໍ້ຜິດພາດພ້ອມດ້ວຍການບັນທຶກເຫດການ",
         "msg": "ສົ່ງຂໍ້ຄວາມໄປຫາຜູ້ໃຊ້ທີ່ກຳນົດໄວ້"
-    }
+    },
+    "presence": {
+        "busy": "ບໍ່ຫວ່າງ",
+        "online_for": "ອອນລາຍ%(duration)s",
+        "idle_for": "ບໍໄດ້ໃຊ້ງານສໍາລັບ %(duration)s",
+        "offline_for": "ອອບໄລນ໌ສໍາລັບ %(duration)s",
+        "unknown_for": "ບໍ່ຮູ້ຈັກສໍາລັບ %(duration)s",
+        "online": "ອອນລາຍ",
+        "idle": "ບໍ່ເຮັດວຽກ",
+        "unknown": "ບໍ່ຮູ້ຈັກ",
+        "offline": "ອອບໄລນ໌",
+        "away": "ຫ່າງອອກໄປ"
+    },
+    "Unknown": "ບໍ່ຮູ້ຈັກ"
 }

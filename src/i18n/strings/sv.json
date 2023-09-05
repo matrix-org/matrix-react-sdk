@@ -121,7 +121,6 @@
     "This email address is already in use": "Den här e-postadressen används redan",
     "This email address was not found": "Den här e-postadressen finns inte",
     "The email address linked to your account must be entered.": "E-postadressen som är kopplad till ditt konto måste anges.",
-    "Online": "Online",
     "Unnamed room": "Namnlöst rum",
     "This phone number is already in use": "Detta telefonnummer används redan",
     "Call Failed": "Samtal misslyckades",
@@ -212,10 +211,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "Online for %(duration)s": "Online i %(duration)s",
-    "Idle for %(duration)s": "Inaktiv i %(duration)s",
-    "Offline for %(duration)s": "Offline i %(duration)s",
-    "Idle": "Inaktiv",
     "(~%(count)s results)": {
         "other": "(~%(count)s resultat)",
         "one": "(~%(count)s resultat)"
@@ -323,8 +318,6 @@
     "Verified key": "Verifierade nyckeln",
     "Jump to read receipt": "Hoppa till läskvitto",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Denna process låter dig exportera nycklarna för meddelanden som du har fått i krypterade rum till en lokal fil. Du kommer sedan att kunna importera filen i en annan Matrix-klient i framtiden, så att den klienten också kan avkryptera meddelandena.",
-    "Unknown for %(duration)s": "Okänt i %(duration)s",
-    "Unknown": "Okänt",
     "Can't leave Server Notices room": "Kan inte lämna serveraviseringsrummet",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Detta rum används för viktiga meddelanden från hemservern, så du kan inte lämna det.",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Data från en äldre version av %(brand)s has upptäckts. Detta ska ha orsakat att totalsträckskryptering inte fungerat i den äldre versionen. Krypterade meddelanden som nyligen har skickats medans den äldre versionen användes kanske inte kan avkrypteras i denna version. Detta kan även orsaka att meddelanden skickade med denna version inte fungerar. Om du upplever problem, logga ut och in igen. För att behålla meddelandehistoriken, exportera dina nycklar och importera dem igen.",
@@ -463,12 +456,6 @@
     "Updating %(brand)s": "Uppdaterar %(brand)s",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Filen '%(fileName)s' överstiger denna hemserverns storleksgräns för uppladdningar",
     "Unable to load! Check your network connectivity and try again.": "Kan inte ladda! Kolla din nätverksuppkoppling och försök igen.",
-    "%(displayName)s is typing …": "%(displayName)s skriver …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s och %(count)s andra skriver …",
-        "one": "%(names)s och en till skriver …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s och %(lastPerson)s skriver …",
     "Unrecognised address": "Okänd adress",
     "You do not have permission to invite people to this room.": "Du har inte behörighet att bjuda in användare till det här rummet.",
     "Unknown server error": "Okänt serverfel",
@@ -1311,7 +1298,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varning</b>: Du bör endast sätta upp nyckelsäkerhetskopiering från en betrodd dator.",
     "Resend %(unsentCount)s reaction(s)": "Skicka %(unsentCount)s reaktion(er) igen",
     "This room is public": "Det här rummet är offentligt",
-    "Away": "Borta",
     "Country Dropdown": "Land-dropdown",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Saknar publik nyckel för captcha i hemserverns konfiguration. Vänligen rapportera detta till din hemservers administratör.",
     "Please review and accept all of the homeserver's policies": "Vänligen granska och acceptera alla hemserverns policyer",
@@ -2523,7 +2509,6 @@
         "other": "togs bort %(count)s gånger"
     },
     "Including you, %(commaSeparatedMembers)s": "Inklusive dig, %(commaSeparatedMembers)s",
-    "Backspace": "Backsteg",
     "Unknown error fetching location. Please try again later.": "Ökänt fel när plats hämtades. Pröva igen senare.",
     "Timed out trying to fetch your location. Please try again later.": "Tidsgränsen överskreds vid försök att hämta din plats. Pröva igen senare.",
     "Failed to fetch your location. Please try again later.": "Misslyckades att hämta din plats. Pröva igen senare.",
@@ -2680,7 +2665,6 @@
     },
     "New video room": "Nytt videorum",
     "New room": "Nytt rum",
-    "Busy": "Upptagen",
     "View older version of %(spaceName)s.": "Visa tidigare version av %(spaceName)s.",
     "Upgrade this space to the recommended room version": "Uppgradera det här utrymmet till den rekommenderade rumsversionen",
     "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Utrymmen är ett nytt sätt att gruppera rum och personer. Vad för slags utrymme vill du skapa? Du kan ändra detta senare.",
@@ -3551,7 +3535,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[nummer]"
+        "number": "[nummer]",
+        "backspace": "Backsteg"
     },
     "credits": {
         "default_cover_photo": "Det <photo>förvalda omslagsfotot</photo> är © <author>Jesús Roncero</author> och används under villkoren i <terms>CC-BY-SA 4.0</terms>.",
@@ -3945,7 +3930,15 @@
         "self_redaction": "Meddelande raderat",
         "redaction": "Meddelande raderat av %(name)s",
         "m.poll.start": "%(senderName)s har startat en omröstning - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s har avslutat en omröstning"
+        "m.poll.end": "%(senderName)s har avslutat en omröstning",
+        "typing_indicator": {
+            "one_user": "%(displayName)s skriver …",
+            "two_users": "%(names)s och %(lastPerson)s skriver …",
+            "more_users": {
+                "other": "%(names)s och %(count)s andra skriver …",
+                "one": "%(names)s och en till skriver …"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Skickar det angivna meddelandet som en spoiler",
@@ -3981,5 +3974,18 @@
         "whois": "Visar information om en användare",
         "rageshake": "Skicka en buggrapport med loggar",
         "msg": "Skickar ett meddelande till den valda användaren"
-    }
+    },
+    "presence": {
+        "busy": "Upptagen",
+        "online_for": "Online i %(duration)s",
+        "idle_for": "Inaktiv i %(duration)s",
+        "offline_for": "Offline i %(duration)s",
+        "unknown_for": "Okänt i %(duration)s",
+        "online": "Online",
+        "idle": "Inaktiv",
+        "unknown": "Okänt",
+        "offline": "Offline",
+        "away": "Borta"
+    },
+    "Unknown": "Okänt"
 }

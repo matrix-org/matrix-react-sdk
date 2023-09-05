@@ -199,8 +199,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?",
     "URL Previews": "URL Previews",
     "Drop file here to upload": "Drop file here to upload",
-    "Online": "Online",
-    "Idle": "Idle",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s changed the room avatar to <img/>",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s removed the room avatar.",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s changed the avatar for %(roomName)s",
@@ -286,10 +284,6 @@
     "Unable to load! Check your network connectivity and try again.": "Unable to load! Check your network connectivity and try again.",
     "Please supply a https:// or http:// widget URL": "Please supply an https:// or http:// widget URL",
     "You cannot modify widgets in this room.": "You cannot modify widgets in this room.",
-    "%(displayName)s is typing …": "%(displayName)s is typing …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s and %(count)s others are typing …"
-    },
     "Your %(brand)s is misconfigured": "Your %(brand)s is misconfigured",
     "Call failed due to misconfigured server": "Call failed due to misconfigured server",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.",
@@ -469,6 +463,12 @@
             "modified": "%(widgetName)s widget modified by %(senderName)s",
             "added": "%(widgetName)s widget added by %(senderName)s",
             "removed": "%(widgetName)s widget removed by %(senderName)s"
+        },
+        "typing_indicator": {
+            "one_user": "%(displayName)s is typing …",
+            "more_users": {
+                "other": "%(names)s and %(count)s others are typing …"
+            }
         }
     },
     "slash_command": {
@@ -492,5 +492,10 @@
         "addwidget": "Adds a custom widget by URL to the room",
         "rainbow": "Sends the given message colored as a rainbow",
         "rainbowme": "Sends the given emote colored as a rainbow"
+    },
+    "presence": {
+        "online": "Online",
+        "idle": "Idle",
+        "offline": "Offline"
     }
 }

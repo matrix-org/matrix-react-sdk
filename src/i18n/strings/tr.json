@@ -209,8 +209,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Hesabınızı %(integrationsUrl)s ile kullanmak üzere doğrulayabilmeniz için üçüncü taraf bir siteye götürülmek üzeresiniz. Devam etmek istiyor musunuz ?",
     "URL Previews": "URL önizlemeleri",
     "Drop file here to upload": "Yüklemek için dosyaları buraya bırakın",
-    "Online": "Çevrimiçi",
-    "Idle": "Boş",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s odanın avatarını <img/> olarak çevirdi",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s odanın avatarını kaldırdı.",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s %(roomName)s için avatarı değiştirdi",
@@ -271,12 +269,6 @@
     "Error upgrading room": "Oda güncellenirken hata",
     "Use an identity server": "Bir kimlik sunucusu kullan",
     "Define the power level of a user": "Bir kullanıcının güç düzeyini tanımla",
-    "%(displayName)s is typing …": "%(displayName)s yazıyor…",
-    "%(names)s and %(count)s others are typing …": {
-        "one": "%(names)s ve bir diğeri yazıyor…",
-        "other": "%(names)s ve diğer %(count)s kişi yazıyor…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s ve %(lastPerson)s yazıyor…",
     "Cannot reach homeserver": "Ana sunucuya erişilemiyor",
     "Your %(brand)s is misconfigured": "%(brand)s hatalı ayarlanmış",
     "Cannot reach identity server": "Kimlik sunucu erişilemiyor",
@@ -621,10 +613,6 @@
     "%(duration)sm": "%(duration)sdk",
     "%(duration)sh": "%(duration)ssa",
     "%(duration)sd": "%(duration)sgün",
-    "Online for %(duration)s": "%(duration)s süresince çevrimiçi",
-    "Offline for %(duration)s": "%(duration)s süresince çevrimdışı",
-    "Unknown for %(duration)s": "%(duration)s süresince bilinmiyor",
-    "Unknown": "Bilinmeyen",
     "Replying": "Cevap yazıyor",
     "Room %(name)s": "Oda %(name)s",
     "Share room": "Oda paylaş",
@@ -714,7 +702,6 @@
     "You can only join it with a working invite.": "Sadece çalışan bir davet ile katılınabilir.",
     "Try to join anyway": "Katılmak için yinede deneyin",
     "This room has been replaced and is no longer active.": "Bu oda değiştirildi ve artık aktif değil.",
-    "Idle for %(duration)s": "%(duration)s süresince boşta",
     "You were banned from %(roomName)s by %(memberName)s": "%(memberName)s tarafından %(roomName)s odası size yasaklandı",
     "Something went wrong with your invite to %(roomName)s": "%(roomName)s odasına davet işleminizde birşeyler yanlış gitti",
     "This invite to %(roomName)s was sent to %(email)s": "%(roomName)s odası daveti %(email)s adresine gönderildi",
@@ -1526,7 +1513,6 @@
     "User Autocomplete": "Kullanıcı Otomatik Tamamlama",
     "Room Autocomplete": "Otomatik Oda Tamamlama",
     "Notification Autocomplete": "Otomatik Bildirim Tamamlama",
-    "Away": "Uzakta",
     "Quick Reactions": "Hızlı Tepkiler",
     "Widgets": "Widgetlar",
     "Notification options": "Bildirim ayarları",
@@ -2057,7 +2043,15 @@
             "removed": "%(widgetName)s görsel bileşeni %(senderName)s tarafından silindi"
         },
         "self_redaction": "Mesaj silindi",
-        "redaction": "Mesaj %(name)s tarafından silindi"
+        "redaction": "Mesaj %(name)s tarafından silindi",
+        "typing_indicator": {
+            "one_user": "%(displayName)s yazıyor…",
+            "two_users": "%(names)s ve %(lastPerson)s yazıyor…",
+            "more_users": {
+                "one": "%(names)s ve bir diğeri yazıyor…",
+                "other": "%(names)s ve diğer %(count)s kişi yazıyor…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Mesajı sürprizbozan olarak gönder",
@@ -2088,5 +2082,17 @@
         "whois": "Bir kullanıcı hakkındaki bilgileri görüntüler",
         "rageshake": "Günlükler (log) ile hata raporu gönderin",
         "msg": "Belirtilen kullanıcıya ileti gönderir"
-    }
+    },
+    "presence": {
+        "online_for": "%(duration)s süresince çevrimiçi",
+        "idle_for": "%(duration)s süresince boşta",
+        "offline_for": "%(duration)s süresince çevrimdışı",
+        "unknown_for": "%(duration)s süresince bilinmiyor",
+        "online": "Çevrimiçi",
+        "idle": "Boş",
+        "unknown": "Bilinmeyen",
+        "offline": "Çevrimdışı",
+        "away": "Uzakta"
+    },
+    "Unknown": "Bilinmeyen"
 }

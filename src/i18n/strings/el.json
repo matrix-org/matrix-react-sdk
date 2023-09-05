@@ -153,8 +153,6 @@
     "Add an Integration": "Προσθήκη ενσωμάτωσης",
     "URL Previews": "Προεπισκόπηση συνδέσμων",
     "Drop file here to upload": "Αποθέστε εδώ για αποστολή",
-    "Online": "Σε σύνδεση",
-    "Idle": "Αδρανής",
     "%(senderDisplayName)s removed the room avatar.": "Ο %(senderDisplayName)s διέγραψε την προσωπική εικόνα του δωματίου.",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "Ο %(senderDisplayName)s άλλαξε την προσωπική εικόνα του %(roomName)s",
     "Something went wrong!": "Κάτι πήγε στραβά!",
@@ -272,9 +270,6 @@
     "%(duration)sm": "%(duration)sλ",
     "%(duration)sh": "%(duration)sω",
     "%(duration)sd": "%(duration)sμ",
-    "Online for %(duration)s": "Σε σύνδεση για %(duration)s",
-    "Idle for %(duration)s": "Αδρανής για %(duration)s",
-    "Offline for %(duration)s": "Εκτός σύνδεσης για %(duration)s",
     "Room Notification": "Ειδοποίηση Δωματίου",
     "Notify the whole room": "Ειδοποιήστε όλο το δωμάτιο",
     "Add Email Address": "Προσθήκη Διεύθυνσης Ηλ. Ταχυδρομείου",
@@ -321,12 +316,6 @@
         "one": "%(items)s και ένα ακόμα",
         "other": "%(items)s και %(count)s άλλα"
     },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s και %(lastPerson)s πληκτρολογούν …",
-    "%(names)s and %(count)s others are typing …": {
-        "one": "%(names)s και ένας ακόμα πληκτρολογούν …",
-        "other": "%(names)s και %(count)s άλλοι πληκτρολογούν …"
-    },
-    "%(displayName)s is typing …": "%(displayName)s πληκτρολογεί …",
     "Ask this user to verify their session, or manually verify it below.": "Ζητήστε από αυτόν τον χρήστη να επιβεβαιώσει την συνεδρία του, ή επιβεβαιώστε την χειροκίνητα παρακάτω.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "Ο %(name)s (%(userId)s) συνδέθηκε σε μία νέα συνεδρία χωρίς να την επιβεβαιώσει:",
     "Verify your other session using one of the options below.": "Επιβεβαιώστε την άλλη σας συνεδρία χρησιμοποιώντας μία από τις παρακάτω επιλογές.",
@@ -1307,7 +1296,6 @@
         "other": "Αφαίρεση %(count)s μηνυμάτων",
         "one": "Αφαίρεση 1 μηνύματος"
     },
-    "Backspace": "Backspace",
     "Share content": "Κοινή χρήση περιεχομένου",
     "Application window": "Παράθυρο εφαρμογής",
     "Share entire screen": "Κοινή χρήση ολόκληρης της οθόνης",
@@ -1339,7 +1327,6 @@
     "Recently visited rooms": "Δωμάτια που επισκεφτήκατε πρόσφατα",
     "Room %(name)s": "Δωμάτιο %(name)s",
     "Recently viewed": "Προβλήθηκε πρόσφατα",
-    "Busy": "Απασχολημένος",
     "View message": "Προβολή μηνύματος",
     "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "Τα προσωπικά σας μηνύματα είναι συνήθως κρυπτογραφημένα, αλλά αυτό το δωμάτιο δεν είναι. Συνήθως αυτό οφείλεται σε μια μη υποστηριζόμενη συσκευή ή μέθοδο που χρησιμοποιείται, όπως προσκλήσεις μέσω email.",
     "%(displayName)s created this room.": "%(displayName)s δημιούργησε αυτό το δωμάτιο.",
@@ -1527,8 +1514,6 @@
     "Show Widgets": "Εμφάνιση μικροεφαρμογών",
     "Hide Widgets": "Απόκρυψη μικροεφαρμογών",
     "Replying": "Απαντώντας",
-    "Unknown": "Άγνωστο",
-    "Unknown for %(duration)s": "Άγνωστο για %(duration)s",
     "This is the start of <roomName/>.": "Αυτή είναι η αρχή του <roomName/>.",
     "Topic: %(topic)s (<a>edit</a>)": "Θέμα: %(topic)s (<a>επεξεργασία</a>)",
     "A connection error occurred while trying to contact the server.": "Παρουσιάστηκε σφάλμα σύνδεσης κατά την προσπάθεια επικοινωνίας με τον διακομιστή.",
@@ -2675,7 +2660,6 @@
     "Joining": "Συνδέετε",
     "You're all caught up": "Είστε πλήρως ενημερωμένοι",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Έχουν εντοπιστεί δεδομένα από μια παλαιότερη έκδοση του %(brand)s. Αυτό θα έχει προκαλέσει δυσλειτουργία της κρυπτογράφησης από άκρο σε άκρο στην παλαιότερη έκδοση. Τα κρυπτογραφημένα μηνύματα από άκρο σε άκρο που ανταλλάχθηκαν πρόσφατα κατά τη χρήση της παλαιότερης έκδοσης ενδέχεται να μην μπορούν να αποκρυπτογραφηθούν σε αυτήν την έκδοση. Αυτό μπορεί επίσης να προκαλέσει την αποτυχία των μηνυμάτων που ανταλλάσσονται με αυτήν την έκδοση. Εάν αντιμετωπίζετε προβλήματα, αποσυνδεθείτε και συνδεθείτε ξανά. Για να διατηρήσετε το ιστορικό μηνυμάτων, εξάγετε και εισαγάγετε ξανά τα κλειδιά σας.",
-    "Away": "Απομακρυσμένος",
     "Avatar": "Avatar",
     "See room timeline (devtools)": "Εμφάνιση χρονοδιαγράμματος δωματίου (develtools)",
     "Forget": "Ξεχάστε",
@@ -3010,7 +2994,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[αριθμός]"
+        "number": "[αριθμός]",
+        "backspace": "Backspace"
     },
     "composer": {
         "format_bold": "Έντονα",
@@ -3313,7 +3298,15 @@
         "self_redaction": "Το μήνυμα διαγράφηκε",
         "redaction": "Το μήνυμα διαγράφηκε από %(name)s",
         "m.poll.start": "%(senderName)s ξεκίνησε μια δημοσκόπηση - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s τερμάτισε μία δημοσκόπηση"
+        "m.poll.end": "%(senderName)s τερμάτισε μία δημοσκόπηση",
+        "typing_indicator": {
+            "one_user": "%(displayName)s πληκτρολογεί …",
+            "two_users": "%(names)s και %(lastPerson)s πληκτρολογούν …",
+            "more_users": {
+                "one": "%(names)s και ένας ακόμα πληκτρολογούν …",
+                "other": "%(names)s και %(count)s άλλοι πληκτρολογούν …"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Στέλνει το δοθέν μήνυμα ως spoiler",
@@ -3348,5 +3341,18 @@
         "whois": "Εμφανίζει πληροφορίες για έναν χρήστη",
         "rageshake": "Στέλνει μία αναφορά σφάλματος με logs",
         "msg": "Στέλνει ένα μήνυμα στον δοσμένο χρήστη"
-    }
+    },
+    "presence": {
+        "busy": "Απασχολημένος",
+        "online_for": "Σε σύνδεση για %(duration)s",
+        "idle_for": "Αδρανής για %(duration)s",
+        "offline_for": "Εκτός σύνδεσης για %(duration)s",
+        "unknown_for": "Άγνωστο για %(duration)s",
+        "online": "Σε σύνδεση",
+        "idle": "Αδρανής",
+        "unknown": "Άγνωστο",
+        "offline": "Εκτός σύνδεσης",
+        "away": "Απομακρυσμένος"
+    },
+    "Unknown": "Άγνωστο"
 }

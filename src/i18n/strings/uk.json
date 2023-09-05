@@ -341,12 +341,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) починає новий сеанс без його звірення:",
     "Ask this user to verify their session, or manually verify it below.": "Попросіть цього користувача звірити сеанс, або звірте його власноруч унизу.",
     "Not Trusted": "Не довірений",
-    "%(displayName)s is typing …": "%(displayName)s пише…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s та ще %(count)s учасників пишуть…",
-        "one": "%(names)s та ще один учасник пишуть…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s та %(lastPerson)s пишуть…",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Попросіть адміністратора %(brand)s перевірити <a>конфігураційний файл</a> на наявність неправильних або повторюваних записів.",
     "Cannot reach identity server": "Не вдається зв'язатися із сервером ідентифікаціїї",
     "No homeserver URL provided": "URL адресу домашнього сервера не вказано",
@@ -1636,13 +1630,6 @@
     },
     "Recently visited rooms": "Недавно відвідані кімнати",
     "Room %(name)s": "Кімната %(name)s",
-    "Unknown": "Невідомо",
-    "Idle": "Неактивний",
-    "Online": "У мережі",
-    "Unknown for %(duration)s": "Невідомо %(duration)s",
-    "Offline for %(duration)s": "Не в мережі %(duration)s",
-    "Idle for %(duration)s": "Не активний %(duration)s",
-    "Online for %(duration)s": "У мережі %(duration)s",
     "%(duration)sd": "%(duration)s дн",
     "%(duration)sh": "%(duration)s год",
     "%(duration)sm": "%(duration)s хв",
@@ -2415,7 +2402,6 @@
     "Integrations are disabled": "Інтеграції вимкнені",
     "Integrations not allowed": "Інтеграції не дозволені",
     "This homeserver would like to make sure you are not a robot.": "Домашній сервер бажає впевнитися, що ви не робот.",
-    "Away": "Не на зв'язку",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Видалення віджету вилучить його в усіх користувачів кімнати. Точно видалити цей віджет?",
     "Take a picture": "Зробити знімок",
     "Unable to start audio streaming.": "Не вдалося почати аудіотрансляцію.",
@@ -2512,7 +2498,6 @@
     "Great, that'll help people know it's you": "Чудово, це допоможе людям дізнатися, що це ви",
     "Open in OpenStreetMap": "Відкрити в OpenStreetMap",
     "toggle event": "перемкнути подію",
-    "Backspace": "Backspace",
     "This address had invalid server or is already in use": "Ця адреса містить хибний сервер чи вже використовується",
     "Missing room name or separator e.g. (my-room:domain.org)": "Бракує назви кімнати чи розділювача (my-room:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Бракує розділювача домену (:domain.org)",
@@ -2690,7 +2675,6 @@
     "Shared their location: ": "Повідомляє своє місцеперебування: ",
     "Unable to load map": "Неможливо завантажити карту",
     "Can't create a thread from an event with an existing relation": "Неможливо створити гілку з події з наявним відношенням",
-    "Busy": "Зайнятий",
     "Toggle Link": "Перемкнути посилання",
     "Toggle Code Block": "Перемкнути блок коду",
     "You are sharing your live location": "Ви ділитеся місцеперебуванням",
@@ -3605,7 +3589,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[цифра]"
+        "number": "[цифра]",
+        "backspace": "Backspace"
     },
     "credits": {
         "default_cover_photo": "<photo>Типова світлина обкладинки</photo> від © <author>Jesús Roncero</author> використовується на умовах <terms>CC-BY-SA 4.0</terms>.",
@@ -4004,7 +3989,15 @@
         "self_redaction": "Повідомлення видалено",
         "redaction": "Повідомлення видалено %(name)s",
         "m.poll.start": "%(senderName)s починає опитування - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s завершує опитування"
+        "m.poll.end": "%(senderName)s завершує опитування",
+        "typing_indicator": {
+            "one_user": "%(displayName)s пише…",
+            "two_users": "%(names)s та %(lastPerson)s пишуть…",
+            "more_users": {
+                "other": "%(names)s та ще %(count)s учасників пишуть…",
+                "one": "%(names)s та ще один учасник пишуть…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Надсилає вказане повідомлення згорненим",
@@ -4041,5 +4034,18 @@
         "whois": "Показує відомості про користувача",
         "rageshake": "Надіслати звіт про ваду разом з журналами",
         "msg": "Надсилає повідомлення вказаному користувачеві"
-    }
+    },
+    "presence": {
+        "busy": "Зайнятий",
+        "online_for": "У мережі %(duration)s",
+        "idle_for": "Не активний %(duration)s",
+        "offline_for": "Не в мережі %(duration)s",
+        "unknown_for": "Невідомо %(duration)s",
+        "online": "У мережі",
+        "idle": "Неактивний",
+        "unknown": "Невідомо",
+        "offline": "Не в мережі",
+        "away": "Не на зв'язку"
+    },
+    "Unknown": "Невідомо"
 }

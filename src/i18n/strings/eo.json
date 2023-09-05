@@ -114,13 +114,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)st",
-    "Online for %(duration)s": "Enreta jam je %(duration)s",
-    "Idle for %(duration)s": "Senfara jam je %(duration)s",
-    "Offline for %(duration)s": "Eksterreta jam je %(duration)s",
-    "Unknown for %(duration)s": "Nekonata jam je %(duration)s",
-    "Online": "Enreta",
-    "Idle": "Senfara",
-    "Unknown": "Nekonata",
     "Unnamed room": "Sennoma ĉambro",
     "(~%(count)s results)": {
         "other": "(~%(count)s rezultoj)",
@@ -563,12 +556,6 @@
     "The file '%(fileName)s' failed to upload.": "Malsukcesis alŝuti dosieron « %(fileName)s ».",
     "The server does not support the room version specified.": "La servilo ne subtenas la donitan ĉambran version.",
     "Please supply a https:// or http:// widget URL": "Bonvolu doni URL-on de fenestraĵo kun https:// aŭ http://",
-    "%(displayName)s is typing …": "%(displayName)s tajpas…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s kaj %(count)s aliaj tajpas…",
-        "one": "%(names)s kaj unu alia tajpas…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s kaj %(lastPerson)s tajpas…",
     "Unrecognised address": "Nerekonita adreso",
     "The user must be unbanned before they can be invited.": "Necesas malforbari ĉi tiun uzanton antaŭ ol ĝin inviti.",
     "The user's homeserver does not support the version of the room.": "Hejmservilo de ĉi tiu uzanto ne subtenas la version de la ĉambro.",
@@ -1391,7 +1378,6 @@
     "Show rooms with unread messages first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",
     "Show previews of messages": "Montri antaŭrigardojn al mesaĝoj",
     "This room is public": "Ĉi tiu ĉambro estas publika",
-    "Away": "For",
     "Edited at %(date)s": "Redaktita je %(date)s",
     "Click to view edits": "Klaku por vidi redaktojn",
     "Are you sure you want to cancel entering passphrase?": "Ĉu vi certe volas nuligi enigon de pasfrazo?",
@@ -2983,7 +2969,15 @@
         "self_redaction": "Mesaĝo foriĝis",
         "redaction": "Mesaĝon forigis %(name)s",
         "m.poll.start": "%(senderName)s komencis balotenketon - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s finis balotenketon"
+        "m.poll.end": "%(senderName)s finis balotenketon",
+        "typing_indicator": {
+            "one_user": "%(displayName)s tajpas…",
+            "two_users": "%(names)s kaj %(lastPerson)s tajpas…",
+            "more_users": {
+                "other": "%(names)s kaj %(count)s aliaj tajpas…",
+                "one": "%(names)s kaj unu alia tajpas…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Sendas la donitan mesaĝon kiel malkaŝon de intrigo",
@@ -3018,5 +3012,17 @@
         "whois": "Montras informojn pri uzanto",
         "rageshake": "Sendi erarraporton kun protokolo",
         "msg": "Sendas mesaĝon al la uzanto"
-    }
+    },
+    "presence": {
+        "online_for": "Enreta jam je %(duration)s",
+        "idle_for": "Senfara jam je %(duration)s",
+        "offline_for": "Eksterreta jam je %(duration)s",
+        "unknown_for": "Nekonata jam je %(duration)s",
+        "online": "Enreta",
+        "idle": "Senfara",
+        "unknown": "Nekonata",
+        "offline": "Eksterreta",
+        "away": "For"
+    },
+    "Unknown": "Nekonata"
 }

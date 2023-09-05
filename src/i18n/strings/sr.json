@@ -114,13 +114,6 @@
     "%(duration)sm": "%(duration)sм",
     "%(duration)sh": "%(duration)sч",
     "%(duration)sd": "%(duration)sд",
-    "Online for %(duration)s": "На мрежи %(duration)s",
-    "Idle for %(duration)s": "У мировању %(duration)s",
-    "Offline for %(duration)s": "Ван мреже %(duration)s",
-    "Unknown for %(duration)s": "Непознато већ %(duration)s",
-    "Online": "На мрежи",
-    "Idle": "У мировању",
-    "Unknown": "Непознато",
     "Replying": "Одговара",
     "Unnamed room": "Неименована соба",
     "(~%(count)s results)": {
@@ -1042,12 +1035,6 @@
     "Send stickers into this room": "Пошаљите налепнице у ову собу",
     "Remain on your screen when viewing another room, when running": "Останите на екрану док гледате другу собу, током рада",
     "Remain on your screen while running": "Останите на екрану током рада",
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s и %(lastPerson)s куцају…",
-    "%(names)s and %(count)s others are typing …": {
-        "one": "%(names)s и још један корисник куца…",
-        "other": "%(names)s и %(count)s корисници куцају…"
-    },
-    "%(displayName)s is typing …": "%(displayName)s куца …",
     "Couldn't load page": "Учитавање странице није успело",
     "Sign in with SSO": "Пријавите се помоћу SSO",
     "Use email to optionally be discoverable by existing contacts.": "Користите е-пошту да бисте је по жељи могли открити постојећи контакти.",
@@ -1074,7 +1061,6 @@
     "Confirm your identity by entering your account password below.": "Потврдите свој идентитет уносом лозинке за налог испод.",
     "Country Dropdown": "Падајући списак земаља",
     "This homeserver would like to make sure you are not a robot.": "Овај кућни сервер жели да се увери да нисте робот.",
-    "Away": "Неприсутан",
     "Go to Home View": "Идите на почетни приказ",
     "End": "",
     "Deactivate account": "Деактивирај налог",
@@ -1358,6 +1344,14 @@
             "modified": "%(senderName)s је променио виџет %(widgetName)s",
             "added": "%(senderName)s је додао виџет %(widgetName)s",
             "removed": "%(senderName)s је уклонио виџет %(widgetName)s"
+        },
+        "typing_indicator": {
+            "one_user": "%(displayName)s куца …",
+            "two_users": "%(names)s и %(lastPerson)s куцају…",
+            "more_users": {
+                "one": "%(names)s и још један корисник куца…",
+                "other": "%(names)s и %(count)s корисници куцају…"
+            }
         }
     },
     "slash_command": {
@@ -1388,5 +1382,17 @@
         "whois": "Приказује податке о кориснику",
         "rageshake": "Пошаљи извештај о грешци са записницима",
         "msg": "Шаље поруку наведеном кориснику"
-    }
+    },
+    "presence": {
+        "online_for": "На мрежи %(duration)s",
+        "idle_for": "У мировању %(duration)s",
+        "offline_for": "Ван мреже %(duration)s",
+        "unknown_for": "Непознато већ %(duration)s",
+        "online": "На мрежи",
+        "idle": "У мировању",
+        "unknown": "Непознато",
+        "offline": "Ван мреже",
+        "away": "Неприсутан"
+    },
+    "Unknown": "Непознато"
 }

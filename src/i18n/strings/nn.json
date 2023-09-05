@@ -131,13 +131,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)st",
     "%(duration)sd": "%(duration)sd",
-    "Online for %(duration)s": "tilkopla i %(duration)s",
-    "Idle for %(duration)s": "Fråverande i %(duration)s",
-    "Offline for %(duration)s": "Fråkopla i %(duration)s",
-    "Unknown for %(duration)s": "Ukjend i %(duration)s",
-    "Online": "Tilkopla",
-    "Idle": "Fråverande",
-    "Unknown": "Ukjend",
     "Replying": "Svarar",
     "Unnamed room": "Rom utan namn",
     "(~%(count)s results)": {
@@ -655,12 +648,6 @@
     "Select room from the room list": "Vel rom frå romkatalogen",
     "Collapse room list section": "Minimer romkatalog-seksjonen",
     "Expand room list section": "Utvid romkatalog-seksjonen",
-    "%(displayName)s is typing …": "%(displayName)s skriv…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s og %(count)s andre skriv…",
-        "one": "%(names)s og ein annan skriv…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s og %(lastPerson)s skriv…",
     "Manually verify all remote sessions": "Manuelt verifiser alle eksterne økter",
     "My Ban List": "Mi blokkeringsliste",
     "Enable desktop notifications for this session": "Aktiver skrivebordsvarslingar for denne øka",
@@ -1119,7 +1106,15 @@
             "removed": "%(widgetName)s widget fjerna av %(senderName)s"
         },
         "m.poll.start": "%(senderName)s har starta ei røysting - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s har avslutta ei røysting"
+        "m.poll.end": "%(senderName)s har avslutta ei røysting",
+        "typing_indicator": {
+            "one_user": "%(displayName)s skriv…",
+            "two_users": "%(names)s og %(lastPerson)s skriv…",
+            "more_users": {
+                "other": "%(names)s og %(count)s andre skriv…",
+                "one": "%(names)s og ein annan skriv…"
+            }
+        }
     },
     "slash_command": {
         "shrug": "Sett inn ¯\\_(ツ)_/¯ i ein rein-tekst melding",
@@ -1146,5 +1141,16 @@
         "whois": "Viser informasjon om ein brukar",
         "rageshake": "Send ein feilrapport med loggar",
         "msg": "Send ein melding til den spesifiserte brukaren"
-    }
+    },
+    "presence": {
+        "online_for": "tilkopla i %(duration)s",
+        "idle_for": "Fråverande i %(duration)s",
+        "offline_for": "Fråkopla i %(duration)s",
+        "unknown_for": "Ukjend i %(duration)s",
+        "online": "Tilkopla",
+        "idle": "Fråverande",
+        "unknown": "Ukjend",
+        "offline": "Fråkopla"
+    },
+    "Unknown": "Ukjend"
 }

@@ -16,7 +16,6 @@
     "Are you sure?": "よろしいですか？",
     "Operation failed": "操作に失敗しました",
     "powered by Matrix": "powered by Matrix",
-    "Online": "オンライン",
     "unknown error code": "不明なエラーコード",
     "Failed to forget room %(errCode)s": "ルームの履歴を消去するのに失敗しました %(errCode)s",
     "Rooms": "ルーム",
@@ -180,12 +179,6 @@
     "%(duration)sm": "%(duration)s分",
     "%(duration)sh": "%(duration)s時",
     "%(duration)sd": "%(duration)s日",
-    "Online for %(duration)s": "オンライン時間 %(duration)s",
-    "Idle for %(duration)s": "アイドル時間 %(duration)s",
-    "Offline for %(duration)s": "オフライン時間 %(duration)s",
-    "Unknown for %(duration)s": "不明な時間 %(duration)s",
-    "Idle": "待機中",
-    "Unknown": "不明",
     "Replying": "以下に返信",
     "(~%(count)s results)": {
         "other": "（〜%(count)s件）",
@@ -503,12 +496,6 @@
     "You cannot modify widgets in this room.": "このルームのウィジェットを変更できません。",
     "Only continue if you trust the owner of the server.": "サーバーの所有者を信頼する場合のみ続行してください。",
     "Use an identity server to invite by email. Manage in Settings.": "IDサーバーを使用し、メールで招待。設定画面で管理。",
-    "%(displayName)s is typing …": "%(displayName)sが入力しています…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)sと他%(count)s人が入力しています…",
-        "one": "%(names)sともう1人が入力しています…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)sと%(lastPerson)sが入力しています…",
     "Cannot reach homeserver": "ホームサーバーに接続できません",
     "Your %(brand)s is misconfigured": "あなたの%(brand)sは正しく設定されていません",
     "Cannot reach identity server": "IDサーバーに接続できません",
@@ -2061,7 +2048,6 @@
         "other": "あと%(count)s個のファイルをアップロード"
     },
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "アップロードしようとしているファイルのサイズが<b>大きすぎます</b>。最大のサイズは%(limit)sですが、ファイルのサイズは%(sizeOfThisFile)sです。",
-    "Away": "離席中",
     "Categories": "カテゴリー",
     "Themes": "テーマ",
     "Developer": "開発者",
@@ -2272,7 +2258,6 @@
     "Moderation": "モデレート",
     "Space selection": "スペースの選択",
     "Looks good!": "問題ありません！",
-    "Backspace": "バックスペース",
     "Emoji Autocomplete": "絵文字の自動補完",
     "Notification Autocomplete": "通知の自動補完",
     "Cancel All": "全てキャンセル",
@@ -2813,7 +2798,6 @@
     "You do not have permission to start voice calls": "音声通話を開始する権限がありません",
     "You do not have permission to start video calls": "ビデオ通話を開始する権限がありません",
     "Video call (%(brand)s)": "ビデオ通話（%(brand)s）",
-    "Busy": "取り込み中",
     "Filter devices": "端末を絞り込む",
     "Sorry — this call is currently full": "すみません ― この通話は現在満員です",
     "Enable hardware acceleration": "ハードウェアアクセラレーションを有効にする",
@@ -3433,7 +3417,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "［番号］"
+        "number": "［番号］",
+        "backspace": "バックスペース"
     },
     "composer": {
         "format_bold": "太字",
@@ -3806,7 +3791,15 @@
         "self_redaction": "メッセージが削除されました",
         "redaction": "%(name)sによってメッセージが削除されました",
         "m.poll.start": "%(senderName)sがアンケートを開始しました - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)sがアンケートを終了しました"
+        "m.poll.end": "%(senderName)sがアンケートを終了しました",
+        "typing_indicator": {
+            "one_user": "%(displayName)sが入力しています…",
+            "two_users": "%(names)sと%(lastPerson)sが入力しています…",
+            "more_users": {
+                "other": "%(names)sと他%(count)s人が入力しています…",
+                "one": "%(names)sともう1人が入力しています…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "選択したメッセージをネタバレとして送信",
@@ -3841,5 +3834,18 @@
         "whois": "ユーザーの情報を表示",
         "rageshake": "ログ付きのバグレポートを送信",
         "msg": "指定したユーザーにメッセージを送信"
-    }
+    },
+    "presence": {
+        "busy": "取り込み中",
+        "online_for": "オンライン時間 %(duration)s",
+        "idle_for": "アイドル時間 %(duration)s",
+        "offline_for": "オフライン時間 %(duration)s",
+        "unknown_for": "不明な時間 %(duration)s",
+        "online": "オンライン",
+        "idle": "待機中",
+        "unknown": "不明",
+        "offline": "オフライン",
+        "away": "離席中"
+    },
+    "Unknown": "不明"
 }

@@ -204,8 +204,6 @@
     "Add an Integration": "Integráció hozzáadása",
     "URL Previews": "URL előnézet",
     "Drop file here to upload": "Feltöltéshez húzz ide egy fájlt",
-    "Online": "Online",
-    "Idle": "Várakozik",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s megváltoztatta a szoba profilképét: <img/>",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s törölte a szoba profilképét.",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s megváltoztatta %(roomName)s szoba profilképét",
@@ -237,7 +235,6 @@
     "Unignored user": "Figyelembe vett felhasználó",
     "Ignored user": "Figyelmen kívül hagyott felhasználó",
     "Banned by %(displayName)s": "Kitiltotta: %(displayName)s",
-    "Unknown": "Ismeretlen",
     "Jump to read receipt": "Olvasási visszaigazolásra ugrás",
     "Unnamed room": "Névtelen szoba",
     "And %(count)s more...": {
@@ -347,10 +344,6 @@
     "%(duration)sm": "%(duration)s p",
     "%(duration)sh": "%(duration)s ó",
     "%(duration)sd": "%(duration)s nap",
-    "Online for %(duration)s": "%(duration)s óta elérhető",
-    "Idle for %(duration)s": "%(duration)s óta tétlen",
-    "Offline for %(duration)s": "%(duration)s óta elérhetetlen",
-    "Unknown for %(duration)s": "%(duration)s óta az állapota ismeretlen",
     "collapse": "becsukás",
     "expand": "kinyitás",
     "Call Failed": "Sikertelen hívás",
@@ -526,12 +519,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Az alábbi Matrix ID-koz nem sikerül megtalálni a profilokat - így is meghívod őket?",
     "Invite anyway and never warn me again": "Mindenképpen meghív és ne figyelmeztess többet",
     "Invite anyway": "Meghívás mindenképp",
-    "%(displayName)s is typing …": "%(displayName)s gépel…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s és még %(count)s felhasználó gépel…",
-        "one": "%(names)s és még valaki gépel…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s és %(lastPerson)s gépelnek…",
     "The other party cancelled the verification.": "A másik fél megszakította az ellenőrzést.",
     "Verified!": "Ellenőrizve!",
     "You've successfully verified this user.": "Sikeresen ellenőrizte ezt a felhasználót.",
@@ -1387,7 +1374,6 @@
     "Favourited": "Kedvencnek jelölt",
     "Forget Room": "Szoba elfelejtése",
     "This room is public": "Ez egy nyilvános szoba",
-    "Away": "Távol",
     "Are you sure you want to cancel entering passphrase?": "Biztos, hogy megszakítja a jelmondat bevitelét?",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "A(z) %(brand)s nem képes helyileg biztonságosan elmenteni a titkosított üzeneteket, ha webböngészőben fut. Használja az <desktopLink>asztali %(brand)s</desktopLink> alkalmazást, hogy az üzenetekben való kereséskor a titkosított üzenetek is megjelenjenek.",
     "Set the name of a font installed on your system & %(brand)s will attempt to use it.": "Adja meg a rendszer által használt betűkészlet nevét, és az %(brand)s megpróbálja azt használni.",
@@ -2521,7 +2507,6 @@
     "This address had invalid server or is already in use": "Ez a cím érvénytelen szervert tartalmaz vagy már használatban van",
     "Missing room name or separator e.g. (my-room:domain.org)": "Szoba név vagy elválasztó hiányzik, pl.: (szobam:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Domain elválasztás hiányzik, pl.: (:domain.org)",
-    "Backspace": "Visszatörlés",
     "toggle event": "esemény be/ki",
     "Expand map": "Térkép szétnyitása",
     "You cancelled verification on your other device.": "Az ellenőrzést megszakította a másik eszközön.",
@@ -2690,7 +2675,6 @@
     "Collapse quotes": "Idézetek összecsukása",
     "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "A terek a szobák és emberek csoportosításának új módja. Milyen teret szeretne létrehozni? Később megváltoztathatja.",
     "Can't create a thread from an event with an existing relation": "Nem lehet üzenetszálat indítani olyan eseményről ami már rendelkezik kapcsolattal",
-    "Busy": "Foglalt",
     "Toggle Link": "Hivatkozás be/ki",
     "Toggle Code Block": "Kódblokk be/ki",
     "You are sharing your live location": "Ön folyamatosan megosztja az aktuális földrajzi pozícióját",
@@ -3522,7 +3506,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[szám]"
+        "number": "[szám]",
+        "backspace": "Visszatörlés"
     },
     "credits": {
         "default_cover_photo": "Az <photo>alapértelmezett borítóképre</photo> a következő vonatkozik: © <author>Jesús Roncero</author>, a <terms>CC BY-SA 4.0</terms> licenc feltételei szerint használva.",
@@ -3910,7 +3895,15 @@
         "self_redaction": "Üzenet törölve",
         "redaction": "%(name)s törölte ezt az üzenetet",
         "m.poll.start": "%(senderName)s szavazást indított - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s lezárta a szavazást"
+        "m.poll.end": "%(senderName)s lezárta a szavazást",
+        "typing_indicator": {
+            "one_user": "%(displayName)s gépel…",
+            "two_users": "%(names)s és %(lastPerson)s gépelnek…",
+            "more_users": {
+                "other": "%(names)s és még %(count)s felhasználó gépel…",
+                "one": "%(names)s és még valaki gépel…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "A megadott üzenet elküldése kitakarva",
@@ -3945,5 +3938,18 @@
         "whois": "Információt jelenít meg a felhasználóról",
         "rageshake": "Hibajelentés beküldése naplóval",
         "msg": "Üzenet küldése a megadott felhasználónak"
-    }
+    },
+    "presence": {
+        "busy": "Foglalt",
+        "online_for": "%(duration)s óta elérhető",
+        "idle_for": "%(duration)s óta tétlen",
+        "offline_for": "%(duration)s óta elérhetetlen",
+        "unknown_for": "%(duration)s óta az állapota ismeretlen",
+        "online": "Online",
+        "idle": "Várakozik",
+        "unknown": "Ismeretlen",
+        "offline": "Nem érhető el",
+        "away": "Távol"
+    },
+    "Unknown": "Ismeretlen"
 }

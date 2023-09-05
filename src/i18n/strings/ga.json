@@ -250,7 +250,6 @@
     "ready": "réidh",
     "Algorithm:": "Algartam:",
     "Information": "Eolas",
-    "Away": "Imithe",
     "Favourited": "Roghnaithe",
     "A-Z": "A-Z",
     "Activity": "Gníomhaíocht",
@@ -323,9 +322,6 @@
     "Historical": "Stairiúil",
     "Rooms": "Seomraí",
     "Replying": "Ag freagairt",
-    "Unknown": "Anaithnid",
-    "Idle": "Díomhaoin",
-    "Online": "Ar Líne",
     "%(duration)sd": "%(duration)sl",
     "%(duration)sh": "%(duration)su",
     "%(duration)sm": "%(duration)sn",
@@ -762,5 +758,13 @@
     "slash_command": {
         "nick": "Athraíonn sé d'ainm taispeána",
         "ban": "Toirmisc úsáideoir leis an ID áirithe"
-    }
+    },
+    "presence": {
+        "online": "Ar Líne",
+        "idle": "Díomhaoin",
+        "unknown": "Anaithnid",
+        "offline": "As líne",
+        "away": "Imithe"
+    },
+    "Unknown": "Anaithnid"
 }

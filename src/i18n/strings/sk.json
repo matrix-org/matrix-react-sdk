@@ -100,9 +100,6 @@
     "Server error": "Chyba servera",
     "Server unavailable, overloaded, or something else went wrong.": "Server je nedostupný, preťažený, alebo sa pokazilo niečo iné.",
     "Command error": "Chyba príkazu",
-    "Online": "Pripojený",
-    "Idle": "Nečinný",
-    "Unknown": "Neznámy",
     "Unnamed room": "Nepomenovaná miestnosť",
     "(~%(count)s results)": {
         "other": "(~%(count)s výsledkov)",
@@ -348,10 +345,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "Online for %(duration)s": "Prítomný %(duration)s",
-    "Idle for %(duration)s": "Nečinný %(duration)s",
-    "Offline for %(duration)s": "Nedostupný %(duration)s",
-    "Unknown for %(duration)s": "Neznámy %(duration)s",
     "collapse": "zbaliť",
     "expand": "rozbaliť",
     "Old cryptography data detected": "Nájdené zastaralé kryptografické údaje",
@@ -525,12 +518,6 @@
     "Set up Secure Messages": "Nastavenie zabezpečených správ",
     "Go to Settings": "Otvoriť nastavenia",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Veľkosť súboru „%(fileName)s“ prekračuje limit veľkosti súboru nahrávania na tento domovský server",
-    "%(displayName)s is typing …": "%(displayName)s píše …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s a %(count)s ďalší píšu …",
-        "one": "%(names)s a jeden ďalší píše …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s a %(lastPerson)s píšu …",
     "The user must be unbanned before they can be invited.": "Tomuto používateľovi musíte pred odoslaním pozvania povoliť vstup.",
     "The other party cancelled the verification.": "Proti strana zrušila overovanie.",
     "Verified!": "Overený!",
@@ -1466,7 +1453,6 @@
     "Avatar": "Obrázok",
     "Suggested": "Navrhované",
     "Comment": "Komentár",
-    "Away": "Preč",
     "A-Z": "A-Z",
     "Calls": "Hovory",
     "Navigation": "Navigácia",
@@ -2511,7 +2497,6 @@
     "Failed to end poll": "Nepodarilo sa ukončiť anketu",
     "Sorry, the poll did not end. Please try again.": "Ospravedlňujeme sa, ale anketa sa neskončila. Skúste to prosím znova.",
     "Dial": "Vytočiť číslo",
-    "Backspace": "Backspace",
     "Keep discussions organised with threads": "Udržujte diskusie organizované pomocou vlákien",
     "Shows all threads you've participated in": "Zobrazí všetky vlákna, v ktorých ste sa zúčastnili",
     "My threads": "Moje vlákna",
@@ -2673,7 +2658,6 @@
     "This homeserver is not configured to display maps.": "Tento domovský server nie je nastavený na zobrazovanie máp.",
     "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Tento domovský server nie je správne nastavený na zobrazovanie máp alebo nastavený mapový server môže byť nedostupný.",
     "Can't create a thread from an event with an existing relation": "Nie je možné vytvoriť vlákno z udalosti s existujúcim vzťahom",
-    "Busy": "Obsadený/zaneprázdnený",
     "Match system": "Zhoda so systémom",
     "The <b>%(capability)s</b> capability": "Schopnosť <b>%(capability)s</b>",
     "Host account on": "Hostiteľský účet na",
@@ -3605,7 +3589,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[číslo]"
+        "number": "[číslo]",
+        "backspace": "Backspace"
     },
     "credits": {
         "default_cover_photo": "<photo>Predvolená titulná fotografia</photo> je © <author>Jesús Roncero</author> používaná podľa podmienok <terms>CC-BY-SA 4.0</terms>.",
@@ -4004,7 +3989,15 @@
         "self_redaction": "Správa vymazaná",
         "redaction": "Správa vymazaná používateľom %(name)s",
         "m.poll.start": "%(senderName)s spustil anketu - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s ukončil anketu"
+        "m.poll.end": "%(senderName)s ukončil anketu",
+        "typing_indicator": {
+            "one_user": "%(displayName)s píše …",
+            "two_users": "%(names)s a %(lastPerson)s píšu …",
+            "more_users": {
+                "other": "%(names)s a %(count)s ďalší píšu …",
+                "one": "%(names)s a jeden ďalší píše …"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Odošle danú správu ako spojler",
@@ -4041,5 +4034,18 @@
         "whois": "Zobrazuje informácie o používateľovi",
         "rageshake": "Zaslať chybové hlásenie so záznamami",
         "msg": "Pošle správu danému používateľovi"
-    }
+    },
+    "presence": {
+        "busy": "Obsadený/zaneprázdnený",
+        "online_for": "Prítomný %(duration)s",
+        "idle_for": "Nečinný %(duration)s",
+        "offline_for": "Nedostupný %(duration)s",
+        "unknown_for": "Neznámy %(duration)s",
+        "online": "Pripojený",
+        "idle": "Nečinný",
+        "unknown": "Neznámy",
+        "offline": "Nedostupný",
+        "away": "Preč"
+    },
+    "Unknown": "Neznámy"
 }

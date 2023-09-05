@@ -189,8 +189,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Вы будете перенаправлены на внешний сайт, чтобы войти в свою учётную запись для использования с %(integrationsUrl)s. Продолжить?",
     "URL Previews": "Предпросмотр содержимого ссылок",
     "Drop file here to upload": "Перетащите файл сюда для отправки",
-    "Online": "Онлайн",
-    "Idle": "Неактивен",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s изменил(а) аватар комнаты на <img/>",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s удалил(а) аватар комнаты.",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s изменил(а) аватар комнаты %(roomName)s",
@@ -238,7 +236,6 @@
     "Ignored user": "Пользователь добавлен в список игнорирования",
     "Banned by %(displayName)s": "Заблокирован(а) %(displayName)s",
     "Jump to read receipt": "Перейти к последнему прочтённому",
-    "Unknown": "Неизвестно",
     "Unnamed room": "Комната без названия",
     "And %(count)s more...": {
         "other": "Еще %(count)s…"
@@ -347,10 +344,6 @@
     "%(duration)sm": "%(duration)s мин",
     "%(duration)sh": "%(duration)s ч",
     "%(duration)sd": "%(duration)s дн",
-    "Online for %(duration)s": "В сети %(duration)s",
-    "Offline for %(duration)s": "Не в сети %(duration)s",
-    "Idle for %(duration)s": "Неактивен %(duration)s",
-    "Unknown for %(duration)s": "Неизвестно %(duration)s",
     "Call Failed": "Звонок не удался",
     "Send": "Отправить",
     "collapse": "свернуть",
@@ -446,12 +439,6 @@
     "Please <a>contact your service administrator</a> to continue using this service.": "Пожалуйста, <a>обратитесь к вашему администратору</a>, чтобы продолжить использовать этот сервис.",
     "Unable to load! Check your network connectivity and try again.": "Не удалось загрузить! Проверьте подключение к сети и попробуйте снова.",
     "Forces the current outbound group session in an encrypted room to be discarded": "Принудительно отбрасывает текущий групповой сеанс для отправки сообщений в зашифрованную комнату",
-    "%(displayName)s is typing …": "%(displayName)s печатает…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s и %(count)s других печатают…",
-        "one": "%(names)s и ещё кто-то печатают…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s и %(lastPerson)s печатают…",
     "This homeserver has hit its Monthly Active User limit.": "Сервер достиг ежемесячного ограничения активных пользователей.",
     "This homeserver has exceeded one of its resource limits.": "Превышен один из лимитов на ресурсы сервера.",
     "Unrecognised address": "Нераспознанный адрес",
@@ -1265,7 +1252,6 @@
     "Appearance Settings only affect this %(brand)s session.": "Настройки внешнего вида работают только в этом сеансе %(brand)s.",
     "Forget Room": "Забыть комнату",
     "This room is public": "Это публичная комната",
-    "Away": "Отошёл(ла)",
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Введите <code>/help</code> для списка доступных команд. Хотите отправить это сообщение как есть?",
     "Error creating address": "Ошибка при создании адреса",
     "You don't have permission to delete the address.": "У вас нет прав для удаления этого адреса.",
@@ -2461,7 +2447,6 @@
         "other": "удалены %(count)s раз(а)"
     },
     "Including you, %(commaSeparatedMembers)s": "Включая вас, %(commaSeparatedMembers)s",
-    "Backspace": "Очистить",
     "Unknown error fetching location. Please try again later.": "Неизвестная ошибка при получении местоположения. Пожалуйста, повторите попытку позже.",
     "Timed out trying to fetch your location. Please try again later.": "Попытка определить ваше местоположение завершилась. Пожалуйста, повторите попытку позже.",
     "Failed to fetch your location. Please try again later.": "Не удалось определить ваше местоположение. Пожалуйста, повторите попытку позже.",
@@ -2728,7 +2713,6 @@
     "Read receipts": "Отчёты о прочтении",
     "%(members)s and %(last)s": "%(members)s и %(last)s",
     "%(members)s and more": "%(members)s и многие другие",
-    "Busy": "Занят(а)",
     "View older version of %(spaceName)s.": "Посмотреть предыдущую версию %(spaceName)s.",
     "Deactivating your account is a permanent action — be careful!": "Деактивация вашей учётной записи является необратимым действием — будьте осторожны!",
     "Your password was successfully changed.": "Ваш пароль успешно изменён.",
@@ -3335,7 +3319,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[количество]"
+        "number": "[количество]",
+        "backspace": "Очистить"
     },
     "composer": {
         "format_bold": "Жирный",
@@ -3693,7 +3678,15 @@
         "self_redaction": "Сообщение удалено",
         "redaction": "Сообщение удалено %(name)s",
         "m.poll.start": "%(senderName)s начал(а) опрос — %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s завершил(а) опрос"
+        "m.poll.end": "%(senderName)s завершил(а) опрос",
+        "typing_indicator": {
+            "one_user": "%(displayName)s печатает…",
+            "two_users": "%(names)s и %(lastPerson)s печатают…",
+            "more_users": {
+                "other": "%(names)s и %(count)s других печатают…",
+                "one": "%(names)s и ещё кто-то печатают…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Отправить данное сообщение под спойлером",
@@ -3728,5 +3721,18 @@
         "whois": "Показать информацию о пользователе",
         "rageshake": "Отправить отчёт об ошибке с логами",
         "msg": "Отправить сообщение данному пользователю"
-    }
+    },
+    "presence": {
+        "busy": "Занят(а)",
+        "online_for": "В сети %(duration)s",
+        "idle_for": "Неактивен %(duration)s",
+        "offline_for": "Не в сети %(duration)s",
+        "unknown_for": "Неизвестно %(duration)s",
+        "online": "Онлайн",
+        "idle": "Неактивен",
+        "unknown": "Неизвестно",
+        "offline": "Не в сети",
+        "away": "Отошёл(ла)"
+    },
+    "Unknown": "Неизвестно"
 }

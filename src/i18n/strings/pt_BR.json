@@ -174,8 +174,6 @@
     "Add an Integration": "Adicionar uma integração",
     "URL Previews": "Pré-visualização de links",
     "Drop file here to upload": "Arraste um arquivo aqui para enviar",
-    "Online": "Conectada/o",
-    "Idle": "Ocioso",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este processo faz com que você possa importar as chaves de criptografia que tinha previamente exportado de outro cliente Matrix. Você poderá então descriptografar todas as mensagens que o outro cliente pôde criptografar.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será redirecionado para um site de terceiros para poder autenticar a sua conta, tendo em vista usar o serviço %(integrationsUrl)s. Deseja prosseguir?",
     "Incorrect username and/or password.": "Nome de usuário e/ou senha incorreto.",
@@ -245,11 +243,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "Online for %(duration)s": "Online há %(duration)s",
-    "Idle for %(duration)s": "Inativo há %(duration)s",
-    "Offline for %(duration)s": "Offline há %(duration)s",
-    "Unknown for %(duration)s": "Status desconhecido há %(duration)s",
-    "Unknown": "Desconhecido",
     "Replying": "Em resposta a",
     "Unnamed room": "Sala sem nome",
     "Banned by %(displayName)s": "Banido por %(displayName)s",
@@ -526,12 +519,6 @@
     "Invite anyway and never warn me again": "Convide mesmo assim e nunca mais me avise",
     "Invite anyway": "Convide mesmo assim",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "O arquivo '%(fileName)s' excede o limite de tamanho deste homeserver para uploads",
-    "%(displayName)s is typing …": "%(displayName)s está digitando…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s e %(count)s outras pessoas estão digitando…",
-        "one": "%(names)s e outra pessoa estão digitando…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s e %(lastPerson)s estão digitando…",
     "The other party cancelled the verification.": "Seu contato cancelou a confirmação.",
     "Verified!": "Confirmado!",
     "You've successfully verified this user.": "Você confirmou este usuário com sucesso.",
@@ -980,7 +967,6 @@
     },
     "Unread messages.": "Mensagens não lidas.",
     "This room is public": "Esta sala é pública",
-    "Away": "Ausente",
     "This room has already been upgraded.": "Esta sala já foi atualizada.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Esta sala está executando a versão <roomVersion />, que este servidor marcou como <i>instável</i>.",
     "Local address": "Endereço local",
@@ -2925,7 +2911,15 @@
         "self_redaction": "Mensagem apagada",
         "redaction": "Mensagem apagada por %(name)s",
         "m.poll.start": "%(senderName)s começou uma enquete - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s encerrou uma enquete"
+        "m.poll.end": "%(senderName)s encerrou uma enquete",
+        "typing_indicator": {
+            "one_user": "%(displayName)s está digitando…",
+            "two_users": "%(names)s e %(lastPerson)s estão digitando…",
+            "more_users": {
+                "other": "%(names)s e %(count)s outras pessoas estão digitando…",
+                "one": "%(names)s e outra pessoa estão digitando…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Envia esta mensagem como spoiler",
@@ -2960,5 +2954,17 @@
         "whois": "Exibe informação sobre um usuário",
         "rageshake": "Envia um relatório de erro",
         "msg": "Envia uma mensagem para determinada pessoa"
-    }
+    },
+    "presence": {
+        "online_for": "Online há %(duration)s",
+        "idle_for": "Inativo há %(duration)s",
+        "offline_for": "Offline há %(duration)s",
+        "unknown_for": "Status desconhecido há %(duration)s",
+        "online": "Conectada/o",
+        "idle": "Ocioso",
+        "unknown": "Desconhecido",
+        "offline": "Offline",
+        "away": "Ausente"
+    },
+    "Unknown": "Desconhecido"
 }

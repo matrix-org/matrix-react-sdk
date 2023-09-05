@@ -113,13 +113,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "Online for %(duration)s": "En liña desde %(duration)s",
-    "Idle for %(duration)s": "En pausa desde %(duration)s",
-    "Offline for %(duration)s": "Desconectado desde %(duration)s",
-    "Unknown for %(duration)s": "Descoñecido desde %(duration)s",
-    "Online": "En liña",
-    "Idle": "En pausa",
-    "Unknown": "Descoñecido",
     "Replying": "Respondendo",
     "Unnamed room": "Sala sen nome",
     "(~%(count)s results)": {
@@ -551,12 +544,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) conectouse a unha nova sesión sen verificala:",
     "Ask this user to verify their session, or manually verify it below.": "Pídelle a usuaria que verifique a súa sesión, ou verificaa manualmente aquí.",
     "Not Trusted": "Non confiable",
-    "%(displayName)s is typing …": "%(displayName)s está escribindo…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s e outras %(count)s están escribindo…",
-        "one": "%(names)s e outra están escribindo…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s e %(lastPerson)s están escribindo…",
     "Cannot reach homeserver": "Non se acadou o servidor",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Asegúrate de que tes boa conexión a internet, ou contacta coa administración do servidor",
     "Your %(brand)s is misconfigured": "O teu %(brand)s está mal configurado",
@@ -1390,7 +1377,6 @@
     "Forget Room": "Esquecer sala",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Se a outra versión de %(brand)s aínda está aberta noutra lapela, péchaa xa que usar %(brand)s no mesmo servidor con carga preguiceira activada e desactivada ao mesmo tempo causará problemas.",
     "This room is public": "Esta é unha sala pública",
-    "Away": "Fóra",
     "Show rooms with unread messages first": "Mostrar primeiro as salas con mensaxes sen ler",
     "Show previews of messages": "Mostrar vista previa das mensaxes",
     "Edited at %(date)s": "Editado o %(date)s",
@@ -2583,7 +2569,6 @@
         "one": "foi eliminado",
         "other": "foron eliminados %(count)s veces"
     },
-    "Backspace": "Retroceso",
     "Unknown error fetching location. Please try again later.": "Erro descoñecido ao obter a localización, inténtao máis tarde.",
     "Timed out trying to fetch your location. Please try again later.": "Caducou o intento de obter a localización, inténtao máis tarde.",
     "Failed to fetch your location. Please try again later.": "Non se obtivo a localización, inténtao máis tarde.",
@@ -2704,7 +2689,6 @@
         "one": "Eliminando agora mensaxes de %(count)s sala",
         "other": "Eliminando agora mensaxes de %(count)s salas"
     },
-    "Busy": "Ocupado",
     "Command error: Unable to handle slash command.": "Erro no comando: non se puido xestionar o comando con barra.",
     "Next recently visited room or space": "Seguinte sala ou espazo visitados recentemente",
     "Previous recently visited room or space": "Anterior sala ou espazo visitados recentemente",
@@ -3181,7 +3165,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Maiús",
-        "number": "[número]"
+        "number": "[número]",
+        "backspace": "Retroceso"
     },
     "composer": {
         "format_bold": "Resaltado",
@@ -3528,7 +3513,15 @@
         "self_redaction": "Mensaxe eliminada",
         "redaction": "Mensaxe eliminada por %(name)s",
         "m.poll.start": "%(senderName)s publicou unha enquisa - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s finalizou a enquisa"
+        "m.poll.end": "%(senderName)s finalizou a enquisa",
+        "typing_indicator": {
+            "one_user": "%(displayName)s está escribindo…",
+            "two_users": "%(names)s e %(lastPerson)s están escribindo…",
+            "more_users": {
+                "other": "%(names)s e outras %(count)s están escribindo…",
+                "one": "%(names)s e outra están escribindo…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Envía a mensaxe dada como un spoiler",
@@ -3563,5 +3556,18 @@
         "whois": "Mostra información acerca da usuaria",
         "rageshake": "Envía un informe de fallos con rexistros",
         "msg": "Envía unha mensaxe a usuaria"
-    }
+    },
+    "presence": {
+        "busy": "Ocupado",
+        "online_for": "En liña desde %(duration)s",
+        "idle_for": "En pausa desde %(duration)s",
+        "offline_for": "Desconectado desde %(duration)s",
+        "unknown_for": "Descoñecido desde %(duration)s",
+        "online": "En liña",
+        "idle": "En pausa",
+        "unknown": "Descoñecido",
+        "offline": "Sen conexión",
+        "away": "Fóra"
+    },
+    "Unknown": "Descoñecido"
 }

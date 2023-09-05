@@ -170,20 +170,7 @@
     "%(duration)sm": "%(duration)s मिनट",
     "%(duration)sh": "%(duration)s घंटा",
     "%(duration)sd": "%(duration)s दिन",
-    "Online for %(duration)s": "%(duration)s के लिए ऑनलाइन",
-    "Idle for %(duration)s": "%(duration)s के लिए निष्क्रिय",
-    "Offline for %(duration)s": "%(duration)s के लिए ऑफ़लाइन",
-    "Unknown for %(duration)s": "%(duration)s के लिए अज्ञात",
-    "Online": "ऑनलाइन",
-    "Idle": "निष्क्रिय",
-    "Unknown": "अज्ञात",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "फ़ाइल '%(fileName)s' अपलोड के लिए इस होमस्वर के आकार की सीमा से अधिक है",
-    "%(displayName)s is typing …": "%(displayName)s टाइप कर रहा है …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s और %(count)s अन्य टाइप कर रहे हैं …",
-        "one": "%(names)s और एक अन्य टाइप कर रहा है …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s और %(lastPerson)s टाइप कर रहे हैं …",
     "Unrecognised address": "अपरिचित पता",
     "Straight rows of keys are easy to guess": "कुंजी की सीधी पंक्तियों का अनुमान लगाना आसान है",
     "Short keyboard patterns are easy to guess": "लघु कीबोर्ड पैटर्न का अनुमान लगाना आसान है",
@@ -653,6 +640,14 @@
             "modified": "%(widgetName)s विजेट %(senderName)s द्वारा संशोधित",
             "added": "%(widgetName)s विजेट %(senderName)s द्वारा जोड़ा गया",
             "removed": "%(widgetName)s विजेट %(senderName)s द्वारा हटा दिया गया"
+        },
+        "typing_indicator": {
+            "one_user": "%(displayName)s टाइप कर रहा है …",
+            "two_users": "%(names)s और %(lastPerson)s टाइप कर रहे हैं …",
+            "more_users": {
+                "other": "%(names)s और %(count)s अन्य टाइप कर रहे हैं …",
+                "one": "%(names)s और एक अन्य टाइप कर रहा है …"
+            }
         }
     },
     "slash_command": {
@@ -669,5 +664,16 @@
         "unignore": "उपयोगकर्ता को अनदेखा करना बंद करें और एक संदेश प्रदर्शित करें",
         "devtools": "डेवलपर टूल्स संवाद खोलता है",
         "addwidget": "रूम में URL द्वारा एक कस्टम विजेट जोड़ता है"
-    }
+    },
+    "presence": {
+        "online_for": "%(duration)s के लिए ऑनलाइन",
+        "idle_for": "%(duration)s के लिए निष्क्रिय",
+        "offline_for": "%(duration)s के लिए ऑफ़लाइन",
+        "unknown_for": "%(duration)s के लिए अज्ञात",
+        "online": "ऑनलाइन",
+        "idle": "निष्क्रिय",
+        "unknown": "अज्ञात",
+        "offline": "ऑफलाइन"
+    },
+    "Unknown": "अज्ञात"
 }

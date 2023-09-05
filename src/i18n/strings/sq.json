@@ -80,7 +80,6 @@
     "Preparing to send logs": "Po përgatitet për dërgim regjistrash",
     "Unnamed room": "Dhomë e paemërtuar",
     "Saturday": "E shtunë",
-    "Online": "Në linjë",
     "Monday": "E hënë",
     "Collecting logs": "Po grumbullohen regjistra",
     "Failed to forget room %(errCode)s": "S’u arrit të harrohej dhoma %(errCode)s",
@@ -141,11 +140,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "Online for %(duration)s": "Në linjë për %(duration)s",
-    "Idle for %(duration)s": "I plogësht për %(duration)s",
-    "Offline for %(duration)s": "Jo në linjë për %(duration)s",
-    "Idle": "I plogësht",
-    "Unknown": "I panjohur",
     "Join Room": "Hyni në dhomë",
     "Upload avatar": "Ngarkoni avatar",
     "Forget room": "Harroje dhomën",
@@ -437,7 +431,6 @@
     "Your browser does not support the required cryptography extensions": "Shfletuesi juaj nuk mbulon zgjerimet kriptografike të domosdoshme",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "S’do të jeni në gjendje ta zhbëni këtë, ngaqë po zhgradoni veten, nëse jeni përdoruesi i fundit i privilegjuar te dhoma do të jetë e pamundur të rifitoni privilegjet.",
     "Jump to read receipt": "Hidhuni te leximi i faturës",
-    "Unknown for %(duration)s": "I panjohur për %(duration)s",
     "This room is not accessible by remote Matrix servers": "Kjo dhomë nuk është e përdorshme nga shërbyes Matrix të largët",
     "Stickerpack": "Paketë ngjitësish",
     "You have <a>enabled</a> URL previews by default.": "E keni <a>aktivizuar</a>, si parazgjedhje, paraparjen e URL-ve.",
@@ -523,12 +516,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "S’arrihet të gjenden profile për ID-të Matrix të treguara më poshtë - do të donit të ftohet, sido qoftë?",
     "Invite anyway and never warn me again": "Ftoji sido që të jetë dhe mos më sinjalizo më kurrë",
     "Invite anyway": "Ftoji sido qoftë",
-    "%(displayName)s is typing …": "%(displayName)s po shtyp …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s dhe %(count)s të tjerë po shtypin …",
-        "one": "%(names)s dhe një tjetër po shtypin …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s dhe %(lastPerson)s të tjerë po shtypin …",
     "The other party cancelled the verification.": "Pala tjetër e anuloi verifikimin.",
     "Verified!": "U verifikua!",
     "You've successfully verified this user.": "E verifikuat me sukses këtë përdorues.",
@@ -1391,7 +1378,6 @@
     "Notification options": "Mundësi njoftimesh",
     "Forget Room": "Harroje Dhomën",
     "This room is public": "Kjo dhomë është publike",
-    "Away": "I larguar",
     "Edited at %(date)s": "Përpunuar më %(date)s",
     "Click to view edits": "Klikoni që të shihni përpunime",
     "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
@@ -2700,7 +2686,6 @@
     },
     "Shared a location: ": "Dha një vendndodhje: ",
     "Shared their location: ": "Dha vendndodhjen e vet: ",
-    "Busy": "I zënë",
     "Command error: Unable to handle slash command.": "Gabim urdhri: S’arrihet të trajtohet urdhër i dhënë me / .",
     "Next recently visited room or space": "Dhoma ose hapësira pasuese vizituar së fundi",
     "Previous recently visited room or space": "Dhoma ose hapësira e mëparshme vizituar së fundi",
@@ -2803,7 +2788,6 @@
     "Remove server “%(roomServer)s”": "Hiqe shërbyesin “%(roomServer)s”",
     "Click to read topic": "Që të lexoni subjketin, klikojeni",
     "Edit topic": "Përpunoni subjektin",
-    "Backspace": "Tasti Backspace",
     "Un-maximise": "Çmaksimizoje",
     "View live location": "Shihni vendndodhje aty për aty",
     "Ban from room": "Dëboje nga dhomë",
@@ -3514,7 +3498,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[numër]"
+        "number": "[numër]",
+        "backspace": "Tasti Backspace"
     },
     "credits": {
         "default_cover_photo": "<photo>Fotoja kopertinë parazgjedhje</photo> © <author>Jesús Roncero</author> përdoret sipas kushteve të <terms>CC-BY-SA 4.0</terms>.",
@@ -3899,7 +3884,15 @@
         "self_redaction": "Mesazhi u fshi",
         "redaction": "Mesazh i fshirë nga %(name)s",
         "m.poll.start": "%(senderName)s nisi një anketim - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s e përfundoi anketimin"
+        "m.poll.end": "%(senderName)s e përfundoi anketimin",
+        "typing_indicator": {
+            "one_user": "%(displayName)s po shtyp …",
+            "two_users": "%(names)s dhe %(lastPerson)s të tjerë po shtypin …",
+            "more_users": {
+                "other": "%(names)s dhe %(count)s të tjerë po shtypin …",
+                "one": "%(names)s dhe një tjetër po shtypin …"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "E dërgon mesazhin e dhënë si <em>spoiler</em>",
@@ -3934,5 +3927,18 @@
         "whois": "Shfaq të dhëna rreth një përdoruesi",
         "rageshake": "Dërgoni një njoftim të metash me regjistra",
         "msg": "I dërgon një mesazh përdoruesit të dhënë"
-    }
+    },
+    "presence": {
+        "busy": "I zënë",
+        "online_for": "Në linjë për %(duration)s",
+        "idle_for": "I plogësht për %(duration)s",
+        "offline_for": "Jo në linjë për %(duration)s",
+        "unknown_for": "I panjohur për %(duration)s",
+        "online": "Në linjë",
+        "idle": "I plogësht",
+        "unknown": "I panjohur",
+        "offline": "Jo në linjë",
+        "away": "I larguar"
+    },
+    "Unknown": "I panjohur"
 }

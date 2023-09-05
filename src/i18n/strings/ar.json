@@ -159,12 +159,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s%(userId)s تم تسجيل الدخول لجلسة جديدة من غير التحقق منها:",
     "Ask this user to verify their session, or manually verify it below.": "اطلب من هذا المستخدم التحقُّق من جلسته أو تحقَّق منها يدويًّا أدناه.",
     "Not Trusted": "غير موثوقة",
-    "%(displayName)s is typing …": "%(displayName)s يكتب…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s و %(count)s آخرون يكتبون…",
-        "one": "%(names)s وآخر يكتبون…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s و %(lastPerson)s يكتبون…",
     "Cannot reach homeserver": "لا يمكن الوصول إلى السيرفر",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "تأكد من أنك تملك اتصال بالانترنت مستقر أو تواصل مع مدير السيرفر",
     "Your %(brand)s is misconfigured": "%(brand)s لديك غير مهيأ",
@@ -381,13 +375,6 @@
     "No recently visited rooms": "لا توجد غرف تمت زيارتها مؤخرًا",
     "Room %(name)s": "الغرفة %(name)s",
     "Replying": "الرد",
-    "Unknown": "غير معروف",
-    "Idle": "جامد",
-    "Online": "متصل",
-    "Unknown for %(duration)s": "غير معروف منذ %(duration)s",
-    "Offline for %(duration)s": "منفصل منذ %(duration)s",
-    "Idle for %(duration)s": "جامد منذ %(duration)s",
-    "Online for %(duration)s": "متصل منذ %(duration)s",
     "%(duration)sd": "%(duration)sي",
     "%(duration)sh": "%(duration)sس",
     "%(duration)sm": "%(duration)sد",
@@ -1361,7 +1348,15 @@
             "removed": "الودجت %(widgetName)s حذفت بواسطة %(senderName)s"
         },
         "self_redaction": "حُذفت الرسالة",
-        "redaction": "حذف الرسالة %(name)s"
+        "redaction": "حذف الرسالة %(name)s",
+        "typing_indicator": {
+            "one_user": "%(displayName)s يكتب…",
+            "two_users": "%(names)s و %(lastPerson)s يكتبون…",
+            "more_users": {
+                "other": "%(names)s و %(count)s آخرون يكتبون…",
+                "one": "%(names)s وآخر يكتبون…"
+            }
+        }
     },
     "slash_command": {
         "shrug": "ادخل احد الرموز ¯\\_(ツ)_/¯ قبل نص الرسالة",
@@ -1389,5 +1384,16 @@
         "whois": "يعرض معلومات عن المستخدم",
         "rageshake": "إرسال تقرير خطأ يحتوي على سجلات الاحداث",
         "msg": "يرسل رسالة الى المستخدم المعطى"
-    }
+    },
+    "presence": {
+        "online_for": "متصل منذ %(duration)s",
+        "idle_for": "جامد منذ %(duration)s",
+        "offline_for": "منفصل منذ %(duration)s",
+        "unknown_for": "غير معروف منذ %(duration)s",
+        "online": "متصل",
+        "idle": "جامد",
+        "unknown": "غير معروف",
+        "offline": "منفصل"
+    },
+    "Unknown": "غير معروف"
 }

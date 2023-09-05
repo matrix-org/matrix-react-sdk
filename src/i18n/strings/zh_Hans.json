@@ -127,8 +127,6 @@
     "Token incorrect": "令牌错误",
     "URL Previews": "URL预览",
     "Drop file here to upload": "把文件拖到这里以上传",
-    "Online": "在线",
-    "Idle": "空闲",
     "Delete widget": "删除挂件",
     "Define the power level of a user": "定义一名用户的权力级别",
     "Failed to change power level": "权力级别修改失败",
@@ -220,7 +218,6 @@
     "Enable URL previews by default for participants in this room": "对此房间的所有参与者默认启用URL预览",
     "Unignore": "取消忽略",
     "Jump to read receipt": "跳到阅读回执",
-    "Unknown": "未知的",
     "Unnamed room": "未命名的房间",
     "A text message has been sent to %(msisdn)s": "一封短信已发送到 %(msisdn)s",
     "Delete Widget": "删除挂件",
@@ -286,10 +283,6 @@
     "%(duration)sm": "%(duration)s 分钟",
     "%(duration)sh": "%(duration)s 小时",
     "%(duration)sd": "%(duration)s 天",
-    "Online for %(duration)s": "已上线 %(duration)s",
-    "Idle for %(duration)s": "已闲置 %(duration)s",
-    "Offline for %(duration)s": "已离线 %(duration)s",
-    "Unknown for %(duration)s": "未知状态已持续 %(duration)s",
     "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
     "%(severalUsers)sjoined %(count)s times": {
         "other": "%(severalUsers)s 已加入 %(count)s 次",
@@ -481,12 +474,6 @@
     "All-uppercase is almost as easy to guess as all-lowercase": "全大写的密码通常比全小写的更容易猜测",
     "Reversed words aren't much harder to guess": "把单词倒过来不会比原来的难猜很多",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "文件“%(fileName)s”超过了此家服务器的上传大小限制",
-    "%(displayName)s is typing …": "%(displayName)s 正在输入…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s 与其他 %(count)s 位正在输入…",
-        "one": "%(names)s 与另一位正在输入…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s和%(lastPerson)s正在输入……",
     "Unrecognised address": "无法识别地址",
     "Predictable substitutions like '@' instead of 'a' don't help very much": "可预见的替换如将 '@' 替换为 'a' 并不会有太大效果",
     "Use a few words, avoid common phrases": "用一些字符，避免常用短语",
@@ -1029,7 +1016,6 @@
     },
     "Unread messages.": "未读消息。",
     "This room is public": "此房间为公共的",
-    "Away": "离开",
     "This room has already been upgraded.": "此房间已经被升级。",
     "Unknown Command": "未知命令",
     "Unrecognised command: %(commandText)s": "未识别的命令：%(commandText)s",
@@ -2606,7 +2592,6 @@
     },
     "%(members)s and %(last)s": "%(members)s和%(last)s",
     "%(members)s and more": "%(members)s和更多",
-    "Busy": "忙",
     "Send your first message to invite <displayName/> to chat": "发送你的第一条消息邀请<displayName/>来聊天",
     "Poll": "投票",
     "Voice Message": "语音消息",
@@ -2721,7 +2706,6 @@
     "This address had invalid server or is already in use": "此地址的服务器无效或已被使用",
     "Missing room name or separator e.g. (my-room:domain.org)": "缺少房间名称或分隔符，例子（my-room:domain.org）",
     "Missing domain separator e.g. (:domain.org)": "缺少域分隔符，例子（:domain.org）",
-    "Backspace": "Backspace",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "请注意：这是使用临时实现的实验室功能。这意味着你无法删除你的位置历史，并且甚至在你停止与此房间分享实时位置后，高级用户将仍能查看你的位置历史。",
     "Live location sharing": "实时位置分享",
     "toggle event": "切换事件",
@@ -3253,7 +3237,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[number]"
+        "number": "[number]",
+        "backspace": "Backspace"
     },
     "composer": {
         "format_bold": "粗体",
@@ -3595,7 +3580,15 @@
         "self_redaction": "消息已删除",
         "redaction": "消息被 %(name)s 删除",
         "m.poll.start": "%(senderName)s 发起了投票：%(pollQuestion)s",
-        "m.poll.end": "%(senderName)s 结束了投票"
+        "m.poll.end": "%(senderName)s 结束了投票",
+        "typing_indicator": {
+            "one_user": "%(displayName)s 正在输入…",
+            "two_users": "%(names)s和%(lastPerson)s正在输入……",
+            "more_users": {
+                "other": "%(names)s 与其他 %(count)s 位正在输入…",
+                "one": "%(names)s 与另一位正在输入…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "此消息包含剧透",
@@ -3630,5 +3623,18 @@
         "whois": "显示关于用户的信息",
         "rageshake": "发送带日志的错误报告",
         "msg": "向指定用户发消息"
-    }
+    },
+    "presence": {
+        "busy": "忙",
+        "online_for": "已上线 %(duration)s",
+        "idle_for": "已闲置 %(duration)s",
+        "offline_for": "已离线 %(duration)s",
+        "unknown_for": "未知状态已持续 %(duration)s",
+        "online": "在线",
+        "idle": "空闲",
+        "unknown": "未知的",
+        "offline": "离线",
+        "away": "离开"
+    },
+    "Unknown": "未知的"
 }

@@ -171,11 +171,9 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Dieser Prozess erlaubt es dir, die Schlüssel für die in verschlüsselten Räumen empfangenen Nachrichten in eine lokale Datei zu exportieren. In Zukunft wird es möglich sein, diese Datei in eine andere Matrix-Anwendung zu importieren, sodass diese die Nachrichten ebenfalls entschlüsseln kann.",
     "Add an Integration": "Eine Integration hinzufügen",
     "URL Previews": "URL-Vorschau",
-    "Online": "Online",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Dieser Prozess erlaubt es dir, die zuvor von einer anderen Matrix-Anwendung exportierten Verschlüsselungs-Schlüssel zu importieren. Danach kannst du alle Nachrichten entschlüsseln, die auch bereits auf der anderen Anwendung entschlüsselt werden konnten.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
     "Drop file here to upload": "Datei hier loslassen zum hochladen",
-    "Idle": "Abwesend",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Um dein Konto für die Verwendung von %(integrationsUrl)s zu authentifizieren, wirst du jetzt auf die Website eines Drittanbieters weitergeleitet. Möchtest du fortfahren?",
     "Jump to first unread message.": "Zur ersten ungelesenen Nachricht springen.",
     "Invited": "Eingeladen",
@@ -237,7 +235,6 @@
     "Unignored user": "Benutzer nicht mehr blockiert",
     "Ignored user": "Benutzer blockiert",
     "Banned by %(displayName)s": "Verbannt von %(displayName)s",
-    "Unknown": "Unbekannt",
     "Jump to read receipt": "Zur Lesebestätigung springen",
     "Unnamed room": "Unbenannter Raum",
     "And %(count)s more...": {
@@ -347,10 +344,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sT",
-    "Online for %(duration)s": "Online seit %(duration)s",
-    "Idle for %(duration)s": "Abwesend seit %(duration)s",
-    "Offline for %(duration)s": "Offline seit %(duration)s",
-    "Unknown for %(duration)s": "Unbekannt seit %(duration)s",
     "Call Failed": "Anruf fehlgeschlagen",
     "Send": "Senden",
     "collapse": "Verbergen",
@@ -526,12 +519,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Profile für die nachfolgenden Matrix-IDs wurden nicht gefunden – willst du sie dennoch einladen?",
     "Invite anyway and never warn me again": "Trotzdem einladen und mich nicht mehr warnen",
     "Invite anyway": "Dennoch einladen",
-    "%(displayName)s is typing …": "%(displayName)s tippt …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s und %(count)s andere tippen …",
-        "one": "%(names)s und eine weitere Person tippen …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s und %(lastPerson)s tippen …",
     "The other party cancelled the verification.": "Die Gegenstelle hat die Überprüfung abgebrochen.",
     "Verified!": "Verifiziert!",
     "You've successfully verified this user.": "Du hast diesen Benutzer erfolgreich verifiziert.",
@@ -1380,7 +1367,6 @@
     "Forget Room": "Raum vergessen",
     "Favourited": "Favorisiert",
     "This room is public": "Dieser Raum ist öffentlich",
-    "Away": "Abwesend",
     "Edited at %(date)s": "Geändert am %(date)s",
     "Click to view edits": "Klicke, um Änderungen anzuzeigen",
     "%(brand)s encountered an error during upload of:": "%(brand)s hat einen Fehler festgestellt beim hochladen von:",
@@ -2529,7 +2515,6 @@
     "Command failed: Unable to find room (%(roomId)s": "Befehl fehlgeschlagen: Raum kann nicht gefunden werden (%(roomId)s",
     "Unrecognised room address: %(roomAlias)s": "Nicht erkannte Raumadresse: %(roomAlias)s",
     "Command error: Unable to find rendering type (%(renderingType)s)": "Befehlsfehler: Rendering-Typ kann nicht gefunden werden (%(renderingType)s)",
-    "Backspace": "Löschtaste",
     "Unknown error fetching location. Please try again later.": "Beim Abruf deines Standortes ist ein unbekannter Fehler aufgetreten. Bitte versuche es später erneut.",
     "Failed to fetch your location. Please try again later.": "Standort konnte nicht abgerufen werden. Bitte versuche es später erneut.",
     "Could not fetch location": "Standort konnte nicht abgerufen werden",
@@ -2690,7 +2675,6 @@
     "%(brand)s could not send your location. Please try again later.": "%(brand)s konnte deinen Standort nicht senden. Bitte versuche es später erneut.",
     "We couldn't send your location": "Wir konnten deinen Standort nicht senden",
     "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Dein Home-Server unterstützt das Anzeigen von Karten nicht oder der Kartenanbieter ist nicht erreichbar.",
-    "Busy": "Beschäftigt",
     "Toggle Link": "Linkfomatierung umschalten",
     "Toggle Code Block": "Quelltextblock umschalten",
     "You are sharing your live location": "Du teilst deinen Echtzeit-Standort",
@@ -3610,7 +3594,8 @@
         "alt": "Alt",
         "control": "Strg",
         "shift": "Umschalt",
-        "number": "[Nummer]"
+        "number": "[Nummer]",
+        "backspace": "Löschtaste"
     },
     "credits": {
         "default_cover_photo": "Das <photo>Standard-Titelbild</photo> ist © <author>Jesús Roncero</author> und wird unter den Bedingungen von <terms>CC-BY-SA 4.0</terms> verwendet.",
@@ -4009,7 +3994,15 @@
         "self_redaction": "Nachricht gelöscht",
         "redaction": "Nachricht von %(name)s gelöscht",
         "m.poll.start": "%(senderName)s hat eine Umfrage begonnen – %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s hat eine Abstimmung beendet"
+        "m.poll.end": "%(senderName)s hat eine Abstimmung beendet",
+        "typing_indicator": {
+            "one_user": "%(displayName)s tippt …",
+            "two_users": "%(names)s und %(lastPerson)s tippen …",
+            "more_users": {
+                "other": "%(names)s und %(count)s andere tippen …",
+                "one": "%(names)s und eine weitere Person tippen …"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Die gegebene Nachricht als Spoiler senden",
@@ -4046,5 +4039,18 @@
         "whois": "Zeigt Informationen über Benutzer",
         "rageshake": "Einen Fehlerbericht mit der Protokolldatei senden",
         "msg": "Sendet diesem Benutzer eine Nachricht"
-    }
+    },
+    "presence": {
+        "busy": "Beschäftigt",
+        "online_for": "Online seit %(duration)s",
+        "idle_for": "Abwesend seit %(duration)s",
+        "offline_for": "Offline seit %(duration)s",
+        "unknown_for": "Unbekannt seit %(duration)s",
+        "online": "Online",
+        "idle": "Abwesend",
+        "unknown": "Unbekannt",
+        "offline": "Offline",
+        "away": "Abwesend"
+    },
+    "Unknown": "Unbekannt"
 }

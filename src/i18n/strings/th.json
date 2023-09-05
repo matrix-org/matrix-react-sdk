@@ -383,8 +383,6 @@
     "General failure": "ข้อผิดพลาดทั่วไป",
     "General": "ทั่วไป",
     "collapse": "ยุบ",
-    "Idle": "ว่าง",
-    "Online": "ออนไลน์",
     "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "ที่อยู่อีเมลของคุณไม่ได้เชื่อมโยงกับ Matrix ID บนโฮมเซิร์ฟเวอร์นี้",
     "common": {
         "encryption_enabled": "เปิดใช้งานการเข้ารหัส",
@@ -509,5 +507,10 @@
         "nick": "เปลี่ยนชื่อเล่นที่แสดงของคุณ",
         "invite": "เชิญผู้ใช้ พร้อม id ของห้องปัจจุบัน",
         "ban": "ผู้ใช้และ id ที่ถูกแบน"
+    },
+    "presence": {
+        "online": "ออนไลน์",
+        "idle": "ว่าง",
+        "offline": "ออฟไลน์"
     }
 }

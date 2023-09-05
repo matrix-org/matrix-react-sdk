@@ -205,12 +205,6 @@
     "Verify your other session using one of the options below.": ".i ko cuxna da le di'e cei'i le ka tadji lo nu do co'a lacri",
     "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
     "Not Trusted": "na se lacri",
-    "%(displayName)s is typing …": ".i la'o zoi. %(displayName)s .zoi ca'o ciska",
-    "%(names)s and %(count)s others are typing …": {
-        "other": ".i la'o zoi. %(names)s .zoi je %(count)s na du ca'o ciska",
-        "one": ".i la'o zoi. %(names)s .zoi je pa na du ca'o ciska"
-    },
-    "%(names)s and %(lastPerson)s are typing …": ".i la'o zoi. %(names)s .zoi je la'o zoi. %(lastPerson)s .zoi ca'o ciska",
     "Cannot reach homeserver": ".i ca ku na da ka'e zilbe'i le samtcise'u",
     "Match system theme": "nu mapti le jvinu be le vanbi",
     "Never send encrypted messages to unverified sessions in this room from this session": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u le cei'i",
@@ -425,6 +419,14 @@
             "modified": ".i la'o ly. %(senderName)s .ly. gafygau la'o ny. %(widgetName)s .ny. noi uidje",
             "added": ".i la'o ly. %(senderName)s .ly. jmina la'o ny. %(widgetName)s .ny. noi uidje",
             "removed": ".i la'o ly. %(senderName)s .ly. vimcu la'o ny. %(widgetName)s .ny. noi uidje"
+        },
+        "typing_indicator": {
+            "one_user": ".i la'o zoi. %(displayName)s .zoi ca'o ciska",
+            "two_users": ".i la'o zoi. %(names)s .zoi je la'o zoi. %(lastPerson)s .zoi ca'o ciska",
+            "more_users": {
+                "other": ".i la'o zoi. %(names)s .zoi je %(count)s na du ca'o ciska",
+                "one": ".i la'o zoi. %(names)s .zoi je pa na du ca'o ciska"
+            }
         }
     },
     "slash_command": {

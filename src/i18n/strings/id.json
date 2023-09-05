@@ -503,7 +503,6 @@
         "one": "%(severalUsers)sbergabung",
         "other": "%(severalUsers)sbergabung %(count)s kali"
     },
-    "Unknown": "Tidak Dikenal",
     "%(duration)sd": "%(duration)sh",
     "%(duration)sh": "%(duration)sj",
     "%(duration)sm": "%(duration)sm",
@@ -513,14 +512,11 @@
     "Users": "Pengguna",
     "Phone": "Ponsel",
     "Historical": "Riwayat",
-    "Idle": "Idle",
-    "Online": "Daring",
     "Anyone": "Siapa Saja",
     "Unban": "Hilangkan Cekalan",
     "Home": "Beranda",
     "Removing…": "Menghilangkan…",
     "Suggested": "Disarankan",
-    "Away": "Idle",
     "Resume": "Lanjutkan",
     "Comment": "Komentar",
     "Information": "Informasi",
@@ -813,12 +809,6 @@
     "Send stickers into this room": "Kirim stiker ke ruangan ini",
     "Remain on your screen while running": "Tetap di layar Anda saat berjalan",
     "Remain on your screen when viewing another room, when running": "Tetap di layar Anda saat melihat ruangan yang lain, saat berjalan",
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s dan %(lastPerson)s sedang mengetik …",
-    "%(names)s and %(count)s others are typing …": {
-        "one": "%(names)s dan satu lainnya sedang mengetik …",
-        "other": "%(names)s dan %(count)s lainnya sedang mengetik …"
-    },
-    "%(displayName)s is typing …": "%(displayName)s sedang mengetik …",
     "Light high contrast": "Kontras tinggi terang",
     "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s memperbarui sebuah peraturan pencekalan yang sebelumnya berisi %(oldGlob)s ke %(newGlob)s untuk %(reason)s",
     "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s mengubah sebuah peraturan pencekalan server yang sebelumnya berisi %(oldGlob)s ke %(newGlob)s untuk %(reason)s",
@@ -1425,10 +1415,6 @@
     "No recently visited rooms": "Tidak ada ruangan yang baru saja dilihat",
     "Recently visited rooms": "Ruangan yang baru saja dilihat",
     "Room %(name)s": "Ruangan %(name)s",
-    "Unknown for %(duration)s": "Tidak diketahui untuk %(duration)s",
-    "Offline for %(duration)s": "Luring selama %(duration)s",
-    "Idle for %(duration)s": "Idle untuk %(duration)s",
-    "Online for %(duration)s": "Daring selama %(duration)s",
     "View message": "Tampilkan pesan",
     "Message didn't send. Click for info.": "Pesan tidak terkirim. Klik untuk informasi.",
     "End-to-end encryption isn't enabled": "Enkripsi ujung ke ujung tidak diaktifkan",
@@ -2512,7 +2498,6 @@
     "Failed to load list of rooms.": "Gagal untuk memuat daftar ruangan.",
     "Open in OpenStreetMap": "Buka di OpenStreetMap",
     "toggle event": "alih peristiwa",
-    "Backspace": "Backspace",
     "Dial": "Dial",
     "Missing room name or separator e.g. (my-room:domain.org)": "Kurang nama ruangan atau pemisah mis. (ruangan-saya:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Kurang pemisah domain mis. (:domain.org)",
@@ -2690,7 +2675,6 @@
     "Shared their location: ": "Membagikan lokasinya: ",
     "Unable to load map": "Tidak dapat memuat peta",
     "Can't create a thread from an event with an existing relation": "Tidak dapat membuat utasan dari sebuah peristiwa dengan relasi yang sudah ada",
-    "Busy": "Sibuk",
     "Toggle Link": "Alih Tautan",
     "Toggle Code Block": "Alih Blok Kode",
     "You are sharing your live location": "Anda membagikan lokasi langsung Anda",
@@ -3610,7 +3594,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[nomor]"
+        "number": "[nomor]",
+        "backspace": "Backspace"
     },
     "credits": {
         "default_cover_photo": "<photo>Foto kover bawaan</photo> © <author>Jesús Roncero</author> digunakan di bawah ketentuan <terms>CC-BY-SA 4.0</terms>.",
@@ -4009,7 +3994,15 @@
         "self_redaction": "Pesan dihapus",
         "redaction": "Pesan dihapus oleh %(name)s",
         "m.poll.start": "%(senderName)s telah memulai sebuah pungutan suara — %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s telah mengakhiri sebuah poll"
+        "m.poll.end": "%(senderName)s telah mengakhiri sebuah poll",
+        "typing_indicator": {
+            "one_user": "%(displayName)s sedang mengetik …",
+            "two_users": "%(names)s dan %(lastPerson)s sedang mengetik …",
+            "more_users": {
+                "one": "%(names)s dan satu lainnya sedang mengetik …",
+                "other": "%(names)s dan %(count)s lainnya sedang mengetik …"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Mengirim pesan sebagai spoiler",
@@ -4046,5 +4039,18 @@
         "whois": "Menampilkan informasi tentang sebuah pengguna",
         "rageshake": "Kirim laporan kutu dengan catatan",
         "msg": "Mengirim sebuah pesan ke pengguna yang dicantumkan"
-    }
+    },
+    "presence": {
+        "busy": "Sibuk",
+        "online_for": "Daring selama %(duration)s",
+        "idle_for": "Idle untuk %(duration)s",
+        "offline_for": "Luring selama %(duration)s",
+        "unknown_for": "Tidak diketahui untuk %(duration)s",
+        "online": "Daring",
+        "idle": "Idle",
+        "unknown": "Tidak Dikenal",
+        "offline": "Luring",
+        "away": "Idle"
+    },
+    "Unknown": "Tidak Dikenal"
 }

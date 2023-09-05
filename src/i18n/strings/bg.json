@@ -26,7 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(day)s %(monthName)s %(fullYear)s, %(weekDayName)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "Online": "Онлайн",
     "Failed to remove tag %(tagName)s from room": "Неуспешно премахване на %(tagName)s етикет от стаята",
     "unknown error code": "неизвестен код за грешка",
     "Failed to forget room %(errCode)s": "Неуспешно забравяне на стаята %(errCode)s",
@@ -123,12 +122,6 @@
     "%(duration)sm": "%(duration)sмин",
     "%(duration)sh": "%(duration)sч",
     "%(duration)sd": "%(duration)sд",
-    "Online for %(duration)s": "Онлайн от %(duration)s",
-    "Idle for %(duration)s": "Неактивен от %(duration)s",
-    "Offline for %(duration)s": "Офлайн от %(duration)s",
-    "Unknown for %(duration)s": "Неизвестен от %(duration)s",
-    "Idle": "Неактивен",
-    "Unknown": "Неизвестен",
     "Replying": "Отговаря",
     "(~%(count)s results)": {
         "other": "(~%(count)s резултати)",
@@ -526,12 +519,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Не бяга открити профили за изброените по-долу Matrix идентификатори. Желаете ли да ги поканите въпреки това?",
     "Invite anyway and never warn me again": "Покани въпреки това и не питай отново",
     "Invite anyway": "Покани въпреки това",
-    "%(displayName)s is typing …": "%(displayName)s пише …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s и %(count)s други пишат …",
-        "one": "%(names)s и още един пишат …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s и %(lastPerson)s пишат …",
     "The other party cancelled the verification.": "Другата страна прекрати потвърждението.",
     "Verified!": "Потвърдено!",
     "You've successfully verified this user.": "Успешно потвърдихте този потребител.",
@@ -1491,7 +1478,6 @@
     "Great, that'll help people know it's you": "Чудесно, това ще позволи на хората да знаят, че сте вие",
     "Attach files from chat or just drag and drop them anywhere in a room.": "Прикачете файлове от чата или ги издърпайте и пуснете в стаята.",
     "No files visible in this room": "Няма видими файлове в тази стая",
-    "Away": "Отсъства",
     "Search (must be enabled)": "Търсене (трябва да е включено)",
     "Go to Home View": "Отиване на начален изглед",
     "%(creator)s created this DM.": "%(creator)s създаде този директен чат.",
@@ -2147,7 +2133,15 @@
             "removed": "Приспособлението %(widgetName)s беше премахнато от %(senderName)s"
         },
         "self_redaction": "Съобщението беше изтрито",
-        "redaction": "Съобщението беше изтрито от %(name)s"
+        "redaction": "Съобщението беше изтрито от %(name)s",
+        "typing_indicator": {
+            "one_user": "%(displayName)s пише …",
+            "two_users": "%(names)s и %(lastPerson)s пишат …",
+            "more_users": {
+                "other": "%(names)s и %(count)s други пишат …",
+                "one": "%(names)s и още един пишат …"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Изпраща даденото съобщение като спойлер",
@@ -2178,5 +2172,17 @@
         "whois": "Показва информация за потребителя",
         "rageshake": "Изпратете доклад за грешка с логове",
         "msg": "Изпраща съобщение до дадения потребител"
-    }
+    },
+    "presence": {
+        "online_for": "Онлайн от %(duration)s",
+        "idle_for": "Неактивен от %(duration)s",
+        "offline_for": "Офлайн от %(duration)s",
+        "unknown_for": "Неизвестен от %(duration)s",
+        "online": "Онлайн",
+        "idle": "Неактивен",
+        "unknown": "Неизвестен",
+        "offline": "Офлайн",
+        "away": "Отсъства"
+    },
+    "Unknown": "Неизвестен"
 }

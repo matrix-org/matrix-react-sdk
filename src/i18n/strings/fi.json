@@ -259,13 +259,6 @@
     "%(duration)sm": "%(duration)s m",
     "%(duration)sh": "%(duration)s h",
     "%(duration)sd": "%(duration)s pv",
-    "Online for %(duration)s": "Paikalla %(duration)s",
-    "Idle for %(duration)s": "Toimettomana %(duration)s",
-    "Offline for %(duration)s": "Poissa verkosta %(duration)s",
-    "Unknown for %(duration)s": "Tuntematon tila viimeiset %(duration)s",
-    "Online": "Paikalla",
-    "Idle": "Toimeton",
-    "Unknown": "Tuntematon",
     "URL previews are enabled by default for participants in this room.": "URL-esikatselut on päällä oletusarvoisesti tämän huoneen jäsenillä.",
     "URL previews are disabled by default for participants in this room.": "URL-esikatselut ovat oletuksena pois päältä tämän huoneen jäsenillä.",
     "Token incorrect": "Väärä tunniste",
@@ -545,12 +538,6 @@
     "Permission Required": "Lisäoikeuksia tarvitaan",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Tiedoston '%(fileName)s' koko ylittää tämän kotipalvelimen lähetettyjen tiedostojen ylärajan",
     "Unable to load! Check your network connectivity and try again.": "Lataaminen epäonnistui! Tarkista verkkoyhteytesi ja yritä uudelleen.",
-    "%(displayName)s is typing …": "%(displayName)s kirjoittaa…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s ja %(count)s muuta kirjoittavat…",
-        "one": "%(names)s ja yksi muu kirjoittavat…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s ja %(lastPerson)s kirjoittavat…",
     "This homeserver has hit its Monthly Active User limit.": "Tämän kotipalvelimen kuukausittaisten aktiivisten käyttäjien raja on täynnä.",
     "This homeserver has exceeded one of its resource limits.": "Tämä kotipalvelin on ylittänyt yhden rajoistaan.",
     "Unrecognised address": "Osoitetta ei tunnistettu",
@@ -1373,7 +1360,6 @@
     "Enable desktop notifications": "Ota työpöytäilmoitukset käyttöön",
     "Takes the call in the current room off hold": "Ottaa nykyisen huoneen puhelun pois pidosta",
     "Places the call in the current room on hold": "Asettaa nykyisen huoneen puhelun pitoon",
-    "Away": "Poissa",
     "Enter email address": "Syötä sähköpostiosoite",
     "Enter phone number": "Syötä puhelinnumero",
     "Now, let's help you get started": "Autetaanpa sinut alkuun",
@@ -2382,7 +2368,6 @@
         "one": "%(severalUsers)svaihtoivat huoneen <a>kiinnitettyjä viestejä</a>",
         "other": "%(severalUsers)svaihtoivat huoneen <a>kiinnitettyjä viestejä</a> %(count)s kertaa"
     },
-    "Backspace": "Askelpalautin",
     "We couldn't send your location": "Emme voineet lähettää sijaintiasi",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s ei saanut lupaa noutaa sijaintiasi. Salli sijainnin käyttäminen selaimen asetuksista.",
     "Unable to load map": "Kartan lataaminen ei onnistu",
@@ -2397,7 +2382,6 @@
         "one": "Poistetaan parhaillaan viestejä yhdessä huoneessa",
         "other": "Poistetaan parhaillaan viestejä %(count)s huoneesta"
     },
-    "Busy": "Varattu",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Tämän salatun viestin aitoutta ei voida taata tällä laitteella.",
     "Developer tools": "Kehittäjätyökalut",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Varmista, että alla olevat emojit näkyvät molemmilla laitteilla samassa järjestyksessä:",
@@ -3258,7 +3242,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Vaihto",
-        "number": "[numero]"
+        "number": "[numero]",
+        "backspace": "Askelpalautin"
     },
     "credits": {
         "default_cover_photo": "<photo>Oletuskansikuva</photo> © <author>Jesús Roncero</author>, käytössä <terms>CC-BY-SA 4.0</terms>:n ehtojen mukaisesti.",
@@ -3605,7 +3590,15 @@
         "self_redaction": "Viesti poistettu",
         "redaction": "%(name)s poisti viestin",
         "m.poll.start": "%(senderName)s on aloittanut kyselyn - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s on lopettanut kyselyn"
+        "m.poll.end": "%(senderName)s on lopettanut kyselyn",
+        "typing_indicator": {
+            "one_user": "%(displayName)s kirjoittaa…",
+            "two_users": "%(names)s ja %(lastPerson)s kirjoittavat…",
+            "more_users": {
+                "other": "%(names)s ja %(count)s muuta kirjoittavat…",
+                "one": "%(names)s ja yksi muu kirjoittavat…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",
@@ -3640,5 +3633,18 @@
         "whois": "Näyttää tietoa käyttäjästä",
         "rageshake": "Lähetä virheilmoitus lokien kera",
         "msg": "Lähettää viestin annetulle käyttäjälle"
-    }
+    },
+    "presence": {
+        "busy": "Varattu",
+        "online_for": "Paikalla %(duration)s",
+        "idle_for": "Toimettomana %(duration)s",
+        "offline_for": "Poissa verkosta %(duration)s",
+        "unknown_for": "Tuntematon tila viimeiset %(duration)s",
+        "online": "Paikalla",
+        "idle": "Toimeton",
+        "unknown": "Tuntematon",
+        "offline": "Poissa verkosta",
+        "away": "Poissa"
+    },
+    "Unknown": "Tuntematon"
 }

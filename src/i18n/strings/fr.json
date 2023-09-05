@@ -175,8 +175,6 @@
     "Add an Integration": "Ajouter une intégration",
     "URL Previews": "Aperçus des liens",
     "Drop file here to upload": "Glisser le fichier ici pour l’envoyer",
-    "Online": "En ligne",
-    "Idle": "Inactif",
     "Jump to first unread message.": "Aller au premier message non lu.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vous êtes sur le point d’accéder à un site tiers afin de pouvoir vous identifier pour utiliser %(integrationsUrl)s. Voulez-vous continuer ?",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s a changé l’avatar du salon en <img/>",
@@ -236,7 +234,6 @@
     "You are no longer ignoring %(userId)s": "Vous n’ignorez plus %(userId)s",
     "Unignore": "Ne plus ignorer",
     "Admin Tools": "Outils d’administration",
-    "Unknown": "Inconnu",
     "Unnamed room": "Salon sans nom",
     "Banned by %(displayName)s": "Banni par %(displayName)s",
     "Jump to read receipt": "Aller à l’accusé de lecture",
@@ -347,10 +344,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sj",
-    "Online for %(duration)s": "En ligne depuis %(duration)s",
-    "Idle for %(duration)s": "Inactif depuis %(duration)s",
-    "Offline for %(duration)s": "Hors ligne depuis %(duration)s",
-    "Unknown for %(duration)s": "Inconnu depuis %(duration)s",
     "expand": "développer",
     "collapse": "réduire",
     "Call Failed": "L’appel a échoué",
@@ -526,12 +519,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même les inviter ?",
     "Invite anyway and never warn me again": "Inviter quand même et ne plus me prévenir",
     "Invite anyway": "Inviter quand même",
-    "%(displayName)s is typing …": "%(displayName)s est en train d'écrire…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s et %(count)s autres sont en train d’écrire…",
-        "one": "%(names)s et un autre sont en train d’écrire…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s et %(lastPerson)s sont en train d’écrire…",
     "The other party cancelled the verification.": "L’autre personne a annulé la vérification.",
     "Verified!": "Vérifié !",
     "You've successfully verified this user.": "Vous avez vérifié cet utilisateur avec succès.",
@@ -1448,7 +1435,6 @@
     "Set up Secure Backup": "Configurer la sauvegarde sécurisée",
     "Attach files from chat or just drag and drop them anywhere in a room.": "Envoyez des fichiers depuis la discussion ou glissez et déposez-les n’importe où dans le salon.",
     "No files visible in this room": "Aucun fichier visible dans ce salon",
-    "Away": "Absent",
     "Move right": "Aller à droite",
     "Move left": "Aller à gauche",
     "Revoke permissions": "Révoquer les permissions",
@@ -2521,7 +2507,6 @@
     "This address had invalid server or is already in use": "Cette adresse a un serveur invalide ou est déjà utilisée",
     "Missing room name or separator e.g. (my-room:domain.org)": "Nom de salon ou séparateur manquant, par exemple (mon-salon:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Séparateur de domaine manquant, par exemple (:domain.org)",
-    "Backspace": "Retour arrière",
     "toggle event": "Afficher/masquer l’évènement",
     "Expand map": "Étendre la carte",
     "You cancelled verification on your other device.": "Vous avez annulé la vérification dans votre autre appareil.",
@@ -2689,7 +2674,6 @@
     "Expand quotes": "Étendre les citations",
     "Collapse quotes": "Réduire les citations",
     "Can't create a thread from an event with an existing relation": "Impossible de créer un fil de discussion à partir d’un événement avec une relation existante",
-    "Busy": "Occupé",
     "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Les espaces sont une nouvelle manière de regrouper les salons et les personnes. Quel type d’espace voulez-vous créer ? Vous pouvez changer ceci plus tard.",
     "Next recently visited room or space": "Prochain salon ou espace récemment visité",
     "Previous recently visited room or space": "Salon ou espace précédemment visité",
@@ -3605,7 +3589,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Maj",
-        "number": "[numéro]"
+        "number": "[numéro]",
+        "backspace": "Retour arrière"
     },
     "credits": {
         "default_cover_photo": "La <photo>photo d’illustration par défaut</photo> est © <author>Jesús Roncero</author> utilisée selon les termes <terms>CC-BY-SA 4.0</terms>.",
@@ -4004,7 +3989,15 @@
         "self_redaction": "Message supprimé",
         "redaction": "Message supprimé par %(name)s",
         "m.poll.start": "%(senderName)s a démarré un sondage – %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s a terminé un sondage"
+        "m.poll.end": "%(senderName)s a terminé un sondage",
+        "typing_indicator": {
+            "one_user": "%(displayName)s est en train d'écrire…",
+            "two_users": "%(names)s et %(lastPerson)s sont en train d’écrire…",
+            "more_users": {
+                "other": "%(names)s et %(count)s autres sont en train d’écrire…",
+                "one": "%(names)s et un autre sont en train d’écrire…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Envoie le message flouté",
@@ -4041,5 +4034,18 @@
         "whois": "Affiche des informations à propos de l’utilisateur",
         "rageshake": "Envoyer un rapport d’anomalie avec les journaux",
         "msg": "Envoie un message à l’utilisateur fourni"
-    }
+    },
+    "presence": {
+        "busy": "Occupé",
+        "online_for": "En ligne depuis %(duration)s",
+        "idle_for": "Inactif depuis %(duration)s",
+        "offline_for": "Hors ligne depuis %(duration)s",
+        "unknown_for": "Inconnu depuis %(duration)s",
+        "online": "En ligne",
+        "idle": "Inactif",
+        "unknown": "Inconnu",
+        "offline": "Hors ligne",
+        "away": "Absent"
+    },
+    "Unknown": "Inconnu"
 }

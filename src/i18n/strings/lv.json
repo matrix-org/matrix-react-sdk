@@ -209,8 +209,6 @@
     "Add an Integration": "Pievienot integrāciju",
     "URL Previews": "URL priekšskatījumi",
     "Drop file here to upload": "Ievelc šeit failu augšupielādei",
-    "Online": "Tiešsaistē",
-    "Idle": "Dīkstāvē",
     "Check for update": "Pārbaudīt atjauninājumus",
     "Something went wrong!": "Kaut kas nogāja greizi!",
     "Your browser does not support the required cryptography extensions": "Jūsu pārlūks neatbalsta vajadzīgos kriptogrāfijas paplašinājumus",
@@ -250,11 +248,6 @@
     "%(duration)sm": "%(duration)smin",
     "%(duration)sh": "%(duration)s stundas",
     "%(duration)sd": "%(duration)s dienas",
-    "Online for %(duration)s": "Tiešsaistē %(duration)s",
-    "Idle for %(duration)s": "Dīkstāvē (neaktīvs) %(duration)s",
-    "Offline for %(duration)s": "Bezsaistē %(duration)s",
-    "Unknown for %(duration)s": "Neskaidrā statusā %(duration)s",
-    "Unknown": "Neskaidrs statuss",
     "Replying": "Atbildot uz",
     "Failed to remove tag %(tagName)s from room": "Neizdevās istabai noņemt birku %(tagName)s",
     "Failed to add tag %(tagName)s to room": "Neizdevās istabai pievienot birku %(tagName)s",
@@ -417,13 +410,7 @@
     },
     "Encrypted by an unverified session": "Šifrēts ar neverificētu sesiju",
     "Verify your other session using one of the options below.": "Verificējiet citas jūsu sesijas, izmantojot kādu no iespējām zemāk.",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s un %(count)s citi raksta…",
-        "one": "%(names)s un vēl viens raksta…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s un %(lastPerson)s raksta…",
     "Philippines": "Filipīnas",
-    "%(displayName)s is typing …": "%(displayName)s raksta…",
     "Got It": "Sapratu",
     "Waiting for %(displayName)s to accept…": "Gaida, kamēr %(displayName)s akceptēs…",
     "Waiting for answer": "Tiek gaidīta atbilde",
@@ -1856,7 +1843,15 @@
         "self_redaction": "Ziņa ir dzēsta",
         "redaction": "%(name)s izdzēsa ziņu",
         "m.poll.start": "%(senderName)s uzsāka aptauju- %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s pārtrauca aptauju"
+        "m.poll.end": "%(senderName)s pārtrauca aptauju",
+        "typing_indicator": {
+            "one_user": "%(displayName)s raksta…",
+            "two_users": "%(names)s un %(lastPerson)s raksta…",
+            "more_users": {
+                "other": "%(names)s un %(count)s citi raksta…",
+                "one": "%(names)s un vēl viens raksta…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "Nosūta norādīto ziņu kā spoileri",
@@ -1887,5 +1882,16 @@
         "whois": "Parāda lietotāja informāciju",
         "rageshake": "Nosūtīt kļūdas ziņojumu ar žurnāliem/logiem",
         "msg": "Nosūtīt ziņu dotajam lietotājam"
-    }
+    },
+    "presence": {
+        "online_for": "Tiešsaistē %(duration)s",
+        "idle_for": "Dīkstāvē (neaktīvs) %(duration)s",
+        "offline_for": "Bezsaistē %(duration)s",
+        "unknown_for": "Neskaidrā statusā %(duration)s",
+        "online": "Tiešsaistē",
+        "idle": "Dīkstāvē",
+        "unknown": "Neskaidrs statuss",
+        "offline": "Bezsaistē"
+    },
+    "Unknown": "Neskaidrs statuss"
 }

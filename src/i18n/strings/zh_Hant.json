@@ -69,8 +69,6 @@
     "Sun": "週日",
     "Mon": "週一",
     "Tue": "週二",
-    "Online": "線上",
-    "Idle": "閒置",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s 將聊天室大頭照更改為 <img/>",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s 移除了聊天室的大頭照。",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s 將聊天室的大頭照改為 %(roomName)s",
@@ -249,11 +247,6 @@
     "%(duration)sm": "%(duration)s 分鐘",
     "%(duration)sh": "%(duration)s 小時",
     "%(duration)sd": "%(duration)s 天",
-    "Online for %(duration)s": "已上線 %(duration)s",
-    "Idle for %(duration)s": "已閒置 %(duration)s",
-    "Offline for %(duration)s": "已離線 %(duration)s",
-    "Unknown for %(duration)s": "未知 %(duration)s",
-    "Unknown": "未知",
     "Replying": "正在回覆",
     "Unnamed room": "未命名的聊天室",
     "Banned by %(displayName)s": "被 %(displayName)s 封鎖",
@@ -524,12 +517,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "找不到下列 Matrix ID 的簡介，您無論如何都想邀請他們嗎？",
     "Invite anyway and never warn me again": "無論如何都要邀請，而且不要再警告我",
     "Invite anyway": "無論如何都要邀請",
-    "%(displayName)s is typing …": "%(displayName)s 正在打字…",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s 與其他 %(count)s 個人正在打字…",
-        "one": "%(names)s 與另一個人正在打字…"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s 與 %(lastPerson)s 正在打字…",
     "The other party cancelled the verification.": "另一方取消了驗證。",
     "Verified!": "已驗證！",
     "You've successfully verified this user.": "您已經成功驗證此使用者。",
@@ -1392,7 +1379,6 @@
     "Favourited": "已加入我的最愛",
     "Forget Room": "忘記聊天室",
     "This room is public": "此聊天室為公開聊天室",
-    "Away": "離開",
     "Edited at %(date)s": "編輯於 %(date)s",
     "Click to view edits": "點擊以檢視編輯",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "如果其他版本的 %(brand)s 仍在其他分頁中開啟，請關閉它，因為在同一主機上使用同時啟用與停用惰性載入的 %(brand)s 可能會造成問題。",
@@ -2515,7 +2501,6 @@
     "This address had invalid server or is already in use": "此位址的伺服器無效或已被使用",
     "Missing room name or separator e.g. (my-room:domain.org)": "缺少聊天室名稱或分隔符號，例如 (my-room:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "缺少網域名分隔符號，例如 (:domain.org)",
-    "Backspace": "後端空間",
     "Dial": "撥號",
     "Back to thread": "回到討論串",
     "Room members": "聊天室成員",
@@ -2690,7 +2675,6 @@
     "Shared their location: ": "已分享了他們的位置： ",
     "Unable to load map": "無法載入地圖",
     "Can't create a thread from an event with an existing relation": "無法從討論串既有的關係建立活動",
-    "Busy": "忙碌",
     "Toggle Link": "切換連結",
     "Toggle Code Block": "切換程式碼區塊",
     "You are sharing your live location": "您正在分享您的即時位置",
@@ -3605,7 +3589,8 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[number]"
+        "number": "[number]",
+        "backspace": "後端空間"
     },
     "credits": {
         "default_cover_photo": "<photo>預設封面照片</photo>作者為 © <author>Jesús Roncero</author>，以 <terms>CC-BY-SA 4.0</terms> 授權使用。",
@@ -4004,7 +3989,15 @@
         "self_redaction": "訊息已刪除",
         "redaction": "訊息已被 %(name)s 刪除",
         "m.poll.start": "%(senderName)s 啟動了投票 - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s 結束了投票"
+        "m.poll.end": "%(senderName)s 結束了投票",
+        "typing_indicator": {
+            "one_user": "%(displayName)s 正在打字…",
+            "two_users": "%(names)s 與 %(lastPerson)s 正在打字…",
+            "more_users": {
+                "other": "%(names)s 與其他 %(count)s 個人正在打字…",
+                "one": "%(names)s 與另一個人正在打字…"
+            }
+        }
     },
     "slash_command": {
         "spoiler": "將指定訊息以劇透傳送",
@@ -4041,5 +4034,18 @@
         "whois": "顯示關於使用者的資訊",
         "rageshake": "傳送有紀錄檔的錯誤回報",
         "msg": "傳送訊息給指定的使用者"
-    }
+    },
+    "presence": {
+        "busy": "忙碌",
+        "online_for": "已上線 %(duration)s",
+        "idle_for": "已閒置 %(duration)s",
+        "offline_for": "已離線 %(duration)s",
+        "unknown_for": "未知 %(duration)s",
+        "online": "線上",
+        "idle": "閒置",
+        "unknown": "未知",
+        "offline": "離線",
+        "away": "離開"
+    },
+    "Unknown": "未知"
 }

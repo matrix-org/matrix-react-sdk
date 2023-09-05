@@ -165,7 +165,6 @@
         "unverified": "Unverified",
         "emoji": "Emoji",
         "sticker": "Sticker",
-        "offline": "Offline",
         "loading": "Loading…",
         "appearance": "Appearance",
         "about": "About",
@@ -195,6 +194,7 @@
         "beta": "Beta",
         "password": "Password",
         "username": "Username",
+        "offline": "Offline",
         "random": "Random",
         "support": "Support",
         "room_name": "Room name",
@@ -503,7 +503,15 @@
         "self_redaction": "Message deleted",
         "redaction": "Message deleted by %(name)s",
         "m.poll.start": "%(senderName)s has started a poll - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s has ended a poll"
+        "m.poll.end": "%(senderName)s has ended a poll",
+        "typing_indicator": {
+            "one_user": "%(displayName)s is typing …",
+            "more_users": {
+                "other": "%(names)s and %(count)s others are typing …",
+                "one": "%(names)s and one other is typing …"
+            },
+            "two_users": "%(names)s and %(lastPerson)s are typing …"
+        }
     },
     "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
         "other": "%(senderName)s added the alternative addresses %(addresses)s for this room.",
@@ -533,12 +541,6 @@
     "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
     "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
     "Light high contrast": "Light high contrast",
-    "%(displayName)s is typing …": "%(displayName)s is typing …",
-    "%(names)s and %(count)s others are typing …": {
-        "other": "%(names)s and %(count)s others are typing …",
-        "one": "%(names)s and one other is typing …"
-    },
-    "%(names)s and %(lastPerson)s are typing …": "%(names)s and %(lastPerson)s are typing …",
     "Remain on your screen when viewing another room, when running": "Remain on your screen when viewing another room, when running",
     "Remain on your screen while running": "Remain on your screen while running",
     "Send stickers into this room": "Send stickers into this room",
@@ -1885,14 +1887,18 @@
     "End-to-end encryption isn't enabled": "End-to-end encryption isn't enabled",
     "Message didn't send. Click for info.": "Message didn't send. Click for info.",
     "View message": "View message",
-    "Busy": "Busy",
-    "Online for %(duration)s": "Online for %(duration)s",
-    "Idle for %(duration)s": "Idle for %(duration)s",
-    "Offline for %(duration)s": "Offline for %(duration)s",
-    "Unknown for %(duration)s": "Unknown for %(duration)s",
-    "Online": "Online",
-    "Idle": "Idle",
-    "Unknown": "Unknown",
+    "presence": {
+        "busy": "Busy",
+        "online_for": "Online for %(duration)s",
+        "idle_for": "Idle for %(duration)s",
+        "offline_for": "Offline for %(duration)s",
+        "unknown_for": "Unknown for %(duration)s",
+        "online": "Online",
+        "idle": "Idle",
+        "offline": "Offline",
+        "unknown": "Unknown",
+        "away": "Away"
+    },
     "%(members)s and more": "%(members)s and more",
     "%(members)s and %(last)s": "%(members)s and %(last)s",
     "Seen by %(count)s people": {
@@ -2414,7 +2420,20 @@
     "Share entire screen": "Share entire screen",
     "Application window": "Application window",
     "Share content": "Share content",
-    "Backspace": "Backspace",
+    "keyboard": {
+        "backspace": "Backspace",
+        "page_up": "Page Up",
+        "page_down": "Page Down",
+        "escape": "Esc",
+        "enter": "Enter",
+        "space": "Space",
+        "home": "Home",
+        "end": "End",
+        "alt": "Alt",
+        "control": "Ctrl",
+        "shift": "Shift",
+        "number": "[number]"
+    },
     "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.",
     "Something went wrong!": "Something went wrong!",
     "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
@@ -3266,7 +3285,6 @@
     "Stop and close": "Stop and close",
     "Avatar": "Avatar",
     "This room is public": "This room is public",
-    "Away": "Away",
     "powered by Matrix": "powered by Matrix",
     "This homeserver would like to make sure you are not a robot.": "This homeserver would like to make sure you are not a robot.",
     "Country Dropdown": "Country Dropdown",
@@ -3394,6 +3412,7 @@
     "You seem to be uploading files, are you sure you want to quit?": "You seem to be uploading files, are you sure you want to quit?",
     "You seem to be in a call, are you sure you want to quit?": "You seem to be in a call, are you sure you want to quit?",
     "Failed to reject invite": "Failed to reject invite",
+    "Unknown": "Unknown",
     "You have %(count)s unread notifications in a prior version of this room.": {
         "other": "You have %(count)s unread notifications in a prior version of this room.",
         "one": "You have %(count)s unread notification in a prior version of this room."
@@ -3632,19 +3651,6 @@
     "Failed to set direct message tag": "Failed to set direct message tag",
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
     "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
-    "keyboard": {
-        "page_up": "Page Up",
-        "page_down": "Page Down",
-        "escape": "Esc",
-        "enter": "Enter",
-        "space": "Space",
-        "home": "Home",
-        "end": "End",
-        "alt": "Alt",
-        "control": "Ctrl",
-        "shift": "Shift",
-        "number": "[number]"
-    },
     "Calls": "Calls",
     "Room List": "Room List",
     "Navigation": "Navigation",
