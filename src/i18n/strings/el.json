@@ -163,11 +163,6 @@
     "Failed to unban": "Δεν ήταν δυνατή η άρση του αποκλεισμού",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s από %(fromPowerLevel)s σε %(toPowerLevel)s",
     "Invalid file%(extra)s": "Μη έγκυρο αρχείο %(extra)s",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "Ο %(senderName)s έκανε το μελλοντικό ιστορικό του δωματίου δημόσιο όλα τα μέλη, από τη στιγμή που προσκλήθηκαν.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "Ο %(senderName)s έκανε το μελλοντικό ιστορικό του δωματίου δημόσιο όλα τα μέλη, από τη στιγμή που συνδέθηκαν.",
-    "%(senderName)s made future room history visible to all room members.": "Ο %(senderName)s έκανε το μελλοντικό ιστορικό του δωματίου δημόσιο όλα τα μέλη.",
-    "%(senderName)s made future room history visible to anyone.": "Ο %(senderName)s έκανε το μελλοντικό ιστορικό του δωματίου δημόσιο οποιοσδήποτε.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "Ο %(senderName)s έκανε το μελλοντικό ιστορικό του δωματίου δημόσιο άγνωστο (%(visibility)s).",
     "Missing user_id in request": "Λείπει το user_id στο αίτημα",
     "not specified": "μη καθορισμένο",
     "No display name": "Χωρίς όνομα",
@@ -200,7 +195,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Δεν είναι δυνατή η σύνδεση στον κεντρικό διακομιστή - παρακαλούμε ελέγξτε τη συνδεσιμότητα, βεβαιωθείτε ότι το <a>πιστοποιητικό SSL</a> του διακομιστή είναι έμπιστο και ότι κάποιο πρόσθετο περιηγητή δεν αποτρέπει τα αιτήματα.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Δεν είναι δυνατή η σύνδεση στον κεντρικό διακομιστή μέσω HTTP όταν μια διεύθυνση HTTPS βρίσκεται στην μπάρα του περιηγητή. Είτε χρησιμοποιήστε HTTPS ή <a>ενεργοποιήστε τα μη ασφαλή σενάρια εντολών</a>.",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "Ο %(senderName)s άλλαξε το επίπεδο δύναμης του %(powerLevelDiffText)s.",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "Ο %(senderName)s έστειλε μια πρόσκληση στον %(targetDisplayName)s για να συνδεθεί στο δωμάτιο.",
     "The email address linked to your account must be entered.": "Πρέπει να εισηχθεί η διεύθυνση ηλ. αλληλογραφίας που είναι συνδεδεμένη με τον λογαριασμό σας.",
     "This room is not accessible by remote Matrix servers": "Αυτό το δωμάτιο δεν είναι προσβάσιμο από απομακρυσμένους διακομιστές Matrix",
     "You have <a>disabled</a> URL previews by default.": "Έχετε <a>απενεργοποιημένη</a> από προεπιλογή την προεπισκόπηση συνδέσμων.",
@@ -271,10 +265,6 @@
     "You do not have permission to do that in this room.": "Δεν έχετε την άδεια να το κάνετε αυτό σε αυτό το δωμάτιο.",
     "You are now ignoring %(userId)s": "Τώρα αγνοείτε τον/την %(userId)s",
     "You are no longer ignoring %(userId)s": "Δεν αγνοείτε πια τον/την %(userId)s",
-    "%(senderName)s changed the pinned messages for the room.": "Ο/Η %(senderName)s άλλαξε τα καρφιτσωμένα μηνύματα του δωματίου.",
-    "%(widgetName)s widget modified by %(senderName)s": "Έγινε αλλαγή στη μικροεφαρμογή %(widgetName)s από τον/την %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "Προστέθηκε η μικροεφαρμογή %(widgetName)s από τον/την %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "Η μικροεφαρμογή %(widgetName)s αφαιρέθηκε από τον/την %(senderName)s",
     "Enable URL previews for this room (only affects you)": "Ενεργοποίηση προεπισκόπισης URL για αυτό το δωμάτιο (επηρεάζει μόνο εσάς)",
     "Send an encrypted reply…": "Αποστολή κρυπτογραφημένης απάντησης…",
     "Send an encrypted message…": "Αποστολή κρυπτογραφημένου μηνύματος…",
@@ -342,7 +332,6 @@
     "Verify your other session using one of the options below.": "Επιβεβαιώστε την άλλη σας συνεδρία χρησιμοποιώντας μία από τις παρακάτω επιλογές.",
     "You signed in to a new session without verifying it:": "Συνδεθήκατε σε μια νέα συνεδρία χωρίς να την επιβεβαιώσετε:",
     "%(senderName)s removed the rule banning users matching %(glob)s": "Ο %(senderName)s αφαίρεσε τον κανόνα που αποκλείει τους χρήστες που ταιριάζουν με %(glob)s",
-    "%(senderName)s changed the alternative addresses for this room.": "Ο %(senderName)s άλλαξε την εναλλακτική διεύθυνση για αυτό το δωμάτιο.",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
         "one": "Ο %(senderName)s αφαίρεσε την εναλλακτική διεύθυνση %(addresses)s για αυτό το δωμάτιο.",
         "other": "Ο %(senderName)s αφαίρεσε τις εναλλακτικές διευθύνσεις %(addresses)s για αυτό το δωμάτιο."
@@ -677,15 +666,9 @@
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Επιβεβαιώστε την προσθήκη αυτής της διεύθυνσης ηλ. ταχυδρομείου με την χρήση Single Sign On για να επικυρώσετε την ταυτότητα σας.",
     "Use Single Sign On to continue": "Χρήση Single Sign On για συνέχεια",
     "Unignored user": "Χρήστης από κατάργηση παράβλεψης",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "Ο %(senderName)s ανακάλεσε την πρόσκληση στον %(targetDisplayName)s για να συνδεθεί στο δωμάτιο.",
-    "%(senderName)s changed the addresses for this room.": "Ο %(senderName)s άλλαξε τις διευθύνσεις για αυτό το δωμάτιο.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "Ο %(senderName)s άλλαξε την κύρια και εναλλακτική διεύθυνση για αυτό το δωμάτιο.",
-    "Message deleted by %(name)s": "Το μήνυμα διαγράφηκε από %(name)s",
-    "Message deleted": "Το μήνυμα διαγράφηκε",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Το κλειδί υπογραφής που παρείχατε ταιριάζει με το κλειδί που λάβατε από την συνεδρία %(userId)s's %(deviceId)s. Η συνεδρία σημειώνεται ως επιβεβαιωμένη.",
     "Define the power level of a user": "Καθορίζει το επίπεδο δύναμης ενός χρήστη",
     "Joins room with given address": "Σύνδεση στο δωμάτιο με την δοθείσα διεύθυνση",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "Ο/Η %(senderName)s άλλαξε τα <a>καρφιτσωμένα μηνύματα</a> του δωματίου.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s kai %(space2Name)s",
     "Unrecognised room address: %(roomAlias)s": "Μη αναγνωρισμένη διεύθυνση δωματίου: %(roomAlias)s",
     "%(spaceName)s and %(count)s others": {
@@ -905,9 +888,6 @@
     "See when the topic changes in this room": "Δείτε πότε αλλάζει το θέμα σε αυτό το δωμάτιο",
     "Change which room, message, or user you're viewing": "Αλλάξτε το δωμάτιο, το μήνυμα ή τον χρήστη που βλέπετε",
     "Change which room you're viewing": "Αλλάξτε το δωμάτιο που βλέπετε",
-    "%(senderName)s has ended a poll": "%(senderName)s τερμάτισε μία δημοσκόπηση",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s ξεκίνησε μια δημοσκόπηση - %(pollQuestion)s",
-    "%(senderName)s has shared their location": "%(senderName)s μοιράστηκαν την τοποθεσία τους",
     "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ενημέρωσε έναν κανόνα απαγόρευσης που αντιστοιχούσε %(oldGlob)s σε αντιστοίχιση %(newGlob)s για %(reason)s",
     "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s άλλαξε έναν κανόνα που απαγόρευε την αντιστοίχιση διακομιστών %(oldGlob)s σε αντιστοίχιση %(newGlob)s για %(reason)s",
     "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s άλλαξε έναν κανόνα που απαγόρευε την αντιστοίχιση δωματίων %(oldGlob)s σε αντιστοίχιση %(newGlob)s για %(reason)s",
@@ -924,11 +904,6 @@
     "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s αφαίρεσε μια απαγόρευση αντιστοίχισης κανόνων %(glob)s",
     "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s αφαίρεσε τον κανόνα που απαγορεύει την αντιστοίχιση διακομιστών %(glob)s",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s αφαίρεσε τον κανόνα που απαγορεύει την αντιστοίχιση δωματίων %(glob)s",
-    "%(senderName)s has updated the room layout": "%(senderName)s έχει ενημερώσει τη διάταξη του δωματίου",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s ξεκαρφίτσωσε ένα μήνυμα από αυτό το δωμάτιο. Δείτε όλα τα καρφιτσωμένα μηνύματα.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s ξεκαρφίτσωσε <a>ένα μήνυμα</a> από αυτό το δωμάτιο. Δείτε όλα τα <b>καρφιτσωμένα μηνύματα</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s καρφίτσωσε ένα μήνυμα σε αυτό το δωμάτιο. Δείτε όλα τα καρφιτσωμένα μηνύματα.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s καρφίτσωσε <a>ένα μήνυμα</a> σε αυτό το δωμάτιο. Δείτε όλα τα <b>καρφιτσωμένα μηνύματα</b>.",
     "Switches to this room's virtual room, if it has one": "Μεταβαίνει στο εικονικό δωμάτιο αυτού του δωματίου, εάν υπάρχει",
     "Forces the current outbound group session in an encrypted room to be discarded": "Επιβάλλει την τρέχουσα εξερχόμενη ομαδική συνεδρία σε κρυπτογραφημένο δωμάτιο για απόρριψη",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Η ΕΠΑΛΗΘΕΥΣΗ ΚΛΕΙΔΙΟΥ ΑΠΕΤΥΧΕ! Το κλειδί σύνδεσης για %(userId)s και συνεδρίας %(deviceId)s είναι \"%(fprint)s\" που δεν ταιριάζει με το παρεχόμενο κλειδί\"%(fingerprint)s\". Αυτό μπορεί να σημαίνει ότι υπάρχει υποκλοπή στις επικοινωνίες σας!",
@@ -3304,8 +3279,41 @@
         },
         "m.room.canonical_alias": {
             "set": "Ο %(senderName)s έθεσε την κύρια διεύθυνση αυτού του δωματίου σε %(address)s.",
-            "removed": "Ο %(senderName)s αφαίρεσε την κύρια διεύθυνση για αυτό το δωμάτιο."
-        }
+            "removed": "Ο %(senderName)s αφαίρεσε την κύρια διεύθυνση για αυτό το δωμάτιο.",
+            "changed_alternative": "Ο %(senderName)s άλλαξε την εναλλακτική διεύθυνση για αυτό το δωμάτιο.",
+            "changed_main_and_alternative": "Ο %(senderName)s άλλαξε την κύρια και εναλλακτική διεύθυνση για αυτό το δωμάτιο.",
+            "changed": "Ο %(senderName)s άλλαξε τις διευθύνσεις για αυτό το δωμάτιο."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "Ο %(senderName)s ανακάλεσε την πρόσκληση στον %(targetDisplayName)s για να συνδεθεί στο δωμάτιο.",
+            "sent": "Ο %(senderName)s έστειλε μια πρόσκληση στον %(targetDisplayName)s για να συνδεθεί στο δωμάτιο."
+        },
+        "m.room.history_visibility": {
+            "invited": "Ο %(senderName)s έκανε το μελλοντικό ιστορικό του δωματίου δημόσιο όλα τα μέλη, από τη στιγμή που προσκλήθηκαν.",
+            "joined": "Ο %(senderName)s έκανε το μελλοντικό ιστορικό του δωματίου δημόσιο όλα τα μέλη, από τη στιγμή που συνδέθηκαν.",
+            "shared": "Ο %(senderName)s έκανε το μελλοντικό ιστορικό του δωματίου δημόσιο όλα τα μέλη.",
+            "world_readable": "Ο %(senderName)s έκανε το μελλοντικό ιστορικό του δωματίου δημόσιο οποιοσδήποτε.",
+            "unknown": "Ο %(senderName)s έκανε το μελλοντικό ιστορικό του δωματίου δημόσιο άγνωστο (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s καρφίτσωσε <a>ένα μήνυμα</a> σε αυτό το δωμάτιο. Δείτε όλα τα <b>καρφιτσωμένα μηνύματα</b>.",
+            "pinned": "%(senderName)s καρφίτσωσε ένα μήνυμα σε αυτό το δωμάτιο. Δείτε όλα τα καρφιτσωμένα μηνύματα.",
+            "unpinned_link": "%(senderName)s ξεκαρφίτσωσε <a>ένα μήνυμα</a> από αυτό το δωμάτιο. Δείτε όλα τα <b>καρφιτσωμένα μηνύματα</b>.",
+            "unpinned": "%(senderName)s ξεκαρφίτσωσε ένα μήνυμα από αυτό το δωμάτιο. Δείτε όλα τα καρφιτσωμένα μηνύματα.",
+            "changed_link": "Ο/Η %(senderName)s άλλαξε τα <a>καρφιτσωμένα μηνύματα</a> του δωματίου.",
+            "changed": "Ο/Η %(senderName)s άλλαξε τα καρφιτσωμένα μηνύματα του δωματίου."
+        },
+        "m.widget": {
+            "modified": "Έγινε αλλαγή στη μικροεφαρμογή %(widgetName)s από τον/την %(senderName)s",
+            "added": "Προστέθηκε η μικροεφαρμογή %(widgetName)s από τον/την %(senderName)s",
+            "removed": "Η μικροεφαρμογή %(widgetName)s αφαιρέθηκε από τον/την %(senderName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s έχει ενημερώσει τη διάταξη του δωματίου",
+        "m.location": "%(senderName)s μοιράστηκαν την τοποθεσία τους",
+        "self_redaction": "Το μήνυμα διαγράφηκε",
+        "redaction": "Το μήνυμα διαγράφηκε από %(name)s",
+        "m.poll.start": "%(senderName)s ξεκίνησε μια δημοσκόπηση - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s τερμάτισε μία δημοσκόπηση"
     },
     "slash_command": {
         "spoiler": "Στέλνει το δοθέν μήνυμα ως spoiler",

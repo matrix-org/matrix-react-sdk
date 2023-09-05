@@ -276,19 +276,6 @@
         "other": "%(senderName)s eemaldas täiendavad aadressid %(addresses)s sellelt jututoalt.",
         "one": "%(senderName)s eemaldas täiendava aadressi %(addresses)s sellelt jututoalt."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s muutis selle jututoa täiendavat aadressi.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s muutis selle jututoa põhiaadressi ja täiendavat aadressi.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s muutis selle jututoa aadresse.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s võttis %(targetDisplayName)s'lt tagasi jututoaga liitumise kutse.",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s saatis %(targetDisplayName)s'le kutse jututoaga liitumiseks.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s määras, et jututoa tulevane ajalugu on nähtav kõikidele selle liikmetele nende kutsumise hetkest.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s määras, et jututoa tulevane ajalugu on nähtav kõikidele selle liikmetele nende liitumise hetkest.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s määras, et jututoa tulevane ajalugu on nähtav kõikidele selle liikmetele.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s seadistas, et jututoa tulevane ajalugu on kõigile nähtav.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s seadistas, et jututoa tulevase ajaloo nähtavuse olek on (%(visibility)s).",
-    "%(widgetName)s widget modified by %(senderName)s": "%(senderName)s muutis vidinat %(widgetName)s",
-    "%(widgetName)s widget added by %(senderName)s": "%(senderName)s lisas vidina %(widgetName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s eemaldas vidina %(widgetName)s",
     "Muted Users": "Summutatud kasutajad",
     "This room is end-to-end encrypted": "See jututuba on läbivalt krüptitud",
     "Everyone in this room is verified": "Kõik kasutajad siin nututoas on verifitseeritud",
@@ -1028,7 +1015,6 @@
     },
     "Ignored user": "Eiratud kasutaja",
     "You are now ignoring %(userId)s": "Sa praegu eirad kasutajat %(userId)s",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s muutis selle jututoa klammerdatud sõnumeid.",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s eemaldas kasutajate ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s eemaldas jututubade ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
     "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s eemaldas serverite ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
@@ -1148,8 +1134,6 @@
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Sa oled edukalt verifitseerinud seadme %(deviceName)s (%(deviceId)s)!",
     "You've successfully verified %(displayName)s!": "Sa oled edukalt verifitseerinud kasutaja %(displayName)s!",
     "Start verification again from the notification.": "Alusta verifitseerimist uuesti teavitusest.",
-    "Message deleted": "Sõnum on kustutatud",
-    "Message deleted by %(name)s": "%(name)s kustutas sõnumi",
     "Message deleted on %(date)s": "Sõnum on kustutatud %(date)s",
     "Add an Integration": "Lisa lõiming",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Sind juhatatakse kolmanda osapoole veebisaiti, kus sa saad autentida oma kontoga %(integrationsUrl)s kasutamiseks. Kas sa soovid jätkata?",
@@ -2099,7 +2083,6 @@
     "You don't have permission to do this": "Sul puuduvad selleks toiminguks õigused",
     "Error - Mixed content": "Viga - erinev sisu",
     "Error loading Widget": "Viga vidina laadimisel",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s muutis selle jututoa <a>klammerdatud sõnumeid</a>.",
     "Some invites couldn't be sent": "Mõnede kutsete saatmine ei õnnestunud",
     "Visibility": "Nähtavus",
     "This may be useful for public spaces.": "Seda saad kasutada näiteks avalike kogukonnakeskuste puhul.",
@@ -2290,10 +2273,6 @@
     "Surround selected text when typing special characters": "Erimärkide sisestamisel märgista valitud tekst",
     "The above, but in any room you are joined or invited to as well": "Ülaltoodu, aga samuti igas jututoas, millega oled liitunud või kuhu oled kutsutud",
     "The above, but in <Room /> as well": "Ülaltoodu, aga samuti <Room /> jututoas",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s eemaldas siin jututoas klammerduse ühelt sõnumilt. Vaata kõiki klammerdatud sõnumeid.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s eemaldas siin jututoas klammerduse <a>ühelt sõnumilt</a>. Vaata kõiki <b>klammerdatud sõnumeid</b>.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s klammerdas siin jututoas <a>ühe sõnumi</a>. Vaata kõiki <b>klammerdatud sõnumeid</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s klammerdas siin jututoas ühe sõnumi. Vaata kõiki klammerdatud sõnumeid.",
     "Some encryption parameters have been changed.": "Mõned krüptimise parameetrid on muutunud.",
     "Role in <RoomName/>": "Roll jututoas <RoomName/>",
     "Reply to encrypted thread…": "Vasta krüptitud jutulõngas…",
@@ -2452,7 +2431,6 @@
     "Sends the given message with rainfall": "Lisab sellele sõnumile vihmasaju",
     "Large": "Suur",
     "Image size in the timeline": "Ajajoone piltide suurus",
-    "%(senderName)s has updated the room layout": "%(senderName)s on uuendanud jututoa välimust",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja veel %(count)s kogukond",
         "other": "%(spaceName)s ja muud %(count)s kogukonda"
@@ -2595,9 +2573,6 @@
     "Message pending moderation": "Sõnum on modereerimise ootel",
     "Message pending moderation: %(reason)s": "Sõnum on modereerimise ootel: %(reason)s",
     "Keyboard": "Klaviatuur",
-    "%(senderName)s has ended a poll": "%(senderName)s lõpetas küsitluse",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s algatas küsitluse - %(pollQuestion)s",
-    "%(senderName)s has shared their location": "%(senderName)s jagas oma asukohta",
     "You can't see earlier messages": "Sa ei saa näha varasemaid sõnumeid",
     "Encrypted messages before this point are unavailable.": "Enne seda ajahetke saadetud krüptitud sõnumid pole saadaval.",
     "You don't have permission to view messages from before you joined.": "Sul pole õigusi vaadata enne liitumist saadetud sõnumeid.",
@@ -3995,8 +3970,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s muutis selle jututoa põhiaadressiks %(address)s.",
-            "removed": "%(senderName)s eemaldas põhiaadressi sellest jututoast."
-        }
+            "removed": "%(senderName)s eemaldas põhiaadressi sellest jututoast.",
+            "changed_alternative": "%(senderName)s muutis selle jututoa täiendavat aadressi.",
+            "changed_main_and_alternative": "%(senderName)s muutis selle jututoa põhiaadressi ja täiendavat aadressi.",
+            "changed": "%(senderName)s muutis selle jututoa aadresse."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s võttis %(targetDisplayName)s'lt tagasi jututoaga liitumise kutse.",
+            "sent": "%(senderName)s saatis %(targetDisplayName)s'le kutse jututoaga liitumiseks."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s määras, et jututoa tulevane ajalugu on nähtav kõikidele selle liikmetele nende kutsumise hetkest.",
+            "joined": "%(senderName)s määras, et jututoa tulevane ajalugu on nähtav kõikidele selle liikmetele nende liitumise hetkest.",
+            "shared": "%(senderName)s määras, et jututoa tulevane ajalugu on nähtav kõikidele selle liikmetele.",
+            "world_readable": "%(senderName)s seadistas, et jututoa tulevane ajalugu on kõigile nähtav.",
+            "unknown": "%(senderName)s seadistas, et jututoa tulevase ajaloo nähtavuse olek on (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s klammerdas siin jututoas <a>ühe sõnumi</a>. Vaata kõiki <b>klammerdatud sõnumeid</b>.",
+            "pinned": "%(senderName)s klammerdas siin jututoas ühe sõnumi. Vaata kõiki klammerdatud sõnumeid.",
+            "unpinned_link": "%(senderName)s eemaldas siin jututoas klammerduse <a>ühelt sõnumilt</a>. Vaata kõiki <b>klammerdatud sõnumeid</b>.",
+            "unpinned": "%(senderName)s eemaldas siin jututoas klammerduse ühelt sõnumilt. Vaata kõiki klammerdatud sõnumeid.",
+            "changed_link": "%(senderName)s muutis selle jututoa <a>klammerdatud sõnumeid</a>.",
+            "changed": "%(senderName)s muutis selle jututoa klammerdatud sõnumeid."
+        },
+        "m.widget": {
+            "modified": "%(senderName)s muutis vidinat %(widgetName)s",
+            "added": "%(senderName)s lisas vidina %(widgetName)s",
+            "removed": "%(senderName)s eemaldas vidina %(widgetName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s on uuendanud jututoa välimust",
+        "m.location": "%(senderName)s jagas oma asukohta",
+        "self_redaction": "Sõnum on kustutatud",
+        "redaction": "%(name)s kustutas sõnumi",
+        "m.poll.start": "%(senderName)s algatas küsitluse - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s lõpetas küsitluse"
     },
     "slash_command": {
         "spoiler": "Saadab selle sõnumi rõõmurikkujana",

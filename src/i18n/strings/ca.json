@@ -71,18 +71,8 @@
     "You are no longer ignoring %(userId)s": "Ja no estàs ignorant l'usuari %(userId)s",
     "Verified key": "Claus verificades",
     "Reason": "Raó",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s ha convidat a %(targetDisplayName)s a entrar a la sala.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a tots els seus membres, a partir de que hi són convidats.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a tots els seus membres des de que s'hi uneixen.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a tots els seus membres.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a tothom.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a desconegut (%(visibility)s).",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s de %(fromPowerLevel)s a %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s ha canviat el nivell d'autoritat de %(powerLevelDiffText)s.",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s ha canviat els missatges fixats de la sala.",
-    "%(widgetName)s widget modified by %(senderName)s": "%(senderName)s ha modificat el giny %(widgetName)s",
-    "%(widgetName)s widget added by %(senderName)s": "%(senderName)s ha afegit el giny %(widgetName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s ha eliminat el giny %(widgetName)s",
     "Failure to create room": "No s'ha pogut crear la sala",
     "Server may be unavailable, overloaded, or you hit a bug.": "És possible que el servidor no estigui disponible, sobrecarregat o que hagi topat amb un error.",
     "Send": "Envia",
@@ -667,6 +657,24 @@
         "m.room.canonical_alias": {
             "set": "%(senderName)s ha canviat l'adreça principal d'aquesta sala a %(address)s.",
             "removed": "%(senderName)s ha retirat l'adreça principal d'aquesta sala."
+        },
+        "m.room.third_party_invite": {
+            "sent": "%(senderName)s ha convidat a %(targetDisplayName)s a entrar a la sala."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a tots els seus membres, a partir de que hi són convidats.",
+            "joined": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a tots els seus membres des de que s'hi uneixen.",
+            "shared": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a tots els seus membres.",
+            "world_readable": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a tothom.",
+            "unknown": "%(senderName)s ha establert la visibilitat de l'historial futur de la sala a desconegut (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "changed": "%(senderName)s ha canviat els missatges fixats de la sala."
+        },
+        "m.widget": {
+            "modified": "%(senderName)s ha modificat el giny %(widgetName)s",
+            "added": "%(senderName)s ha afegit el giny %(widgetName)s",
+            "removed": "%(senderName)s ha eliminat el giny %(widgetName)s"
         }
     },
     "slash_command": {

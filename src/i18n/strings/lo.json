@@ -1267,28 +1267,8 @@
     "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s ໄດ້ລຶບກົດລະບຽບການຫ້າມເຊີບເວີຄູ່ກັນ%(glob)s",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s ໄດ້ລຶບກົດລະບຽບການຫ້າມຫ້ອງທີ່ກົງກັບ %(glob)s",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s ໄດ້ລຶບກົດລະບຽບການຫ້າມຜູ້ໃຊ້ທີ່ກົງກັນ %(glob)s",
-    "%(senderName)s has updated the room layout": "%(senderName)s ໄດ້ອັບເດດຮູບແບບຫ້ອງແລ້ວ",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s ຖືກລຶບອອກໂດຍ %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s ວິດ widget ເພີ່ມໂດຍ %(senderName)s",
-    "%(widgetName)s widget modified by %(senderName)s": "ວິດເຈັດ %(widgetName)s ດັດແກ້ໂດຍ %(senderName)s",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s ໄດ້ປ່ຽນຂໍ້ຄວາມທີ່ປັກໝຸດໄວ້ສຳລັບຫ້ອງ.",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s ໄດ້ປ່ຽນ <a>ຂໍ້ຄວາມທີ່ປັກໝຸດໄວ້</a> ສຳລັບຫ້ອງ.",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s ຖອນປັກໝຸດຂໍ້ຄວາມຈາກຫ້ອງນີ້. ເບິ່ງຂໍ້ຄວາມທີ່ປັກໝຸດທັງໝົດ.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s ຖອນປັກໝຸດ <a>ຂໍ້ຄວາມ</a> ຈາກຫ້ອງນີ້. ເບິ່ງ <b>ຂໍ້ຄວາມທີ່ປັກໝຸດໄວ້</b> ທັງໝົດ.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s ປັກໝຸດຂໍ້ຄວາມໃສ່ຫ້ອງນີ້. ເບິ່ງຂໍ້ຄວາມທີ່ປັກໝຸດທັງໝົດ.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s ປັກໝຸດ <a>ຂໍ້ຄວາມ</a> ໃສ່ຫ້ອງນີ້. ເບິ່ງ <b>ຂໍ້ຄວາມທີ່ປັກໝຸດໄວ້</b> ທັງໝົດ.",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s ຈາກ %(fromPowerLevel)s ຫາ %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s ໄດ້ປ່ຽນລະດັບພະລັງງານຂອງ %(powerLevelDiffText)s.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s ເຮັດໃຫ້ຄົນອຶ່ນສາມາດເຫັນປະຫວັດຫ້ອງໃນອະນາຄົດໄດ້ (%(visibility)s).",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s ເຮັດໃຫ້ທຸກຄົນສາມາດເຫັນປະຫວັດຫ້ອງໄດ້ໃນອະນາຄົດ.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s ເຮັດໃຫ້ສະມາຊິກຫ້ອງທັງໝົດເຫັນປະຫວັດຫ້ອງໃນອະນາຄົດ.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s ເຮັດໃຫ້ປະຫວັດຫ້ອງໃນອະນາຄົດສາມາດເຫັນໄດ້ໂດຍສະມາຊິກຫ້ອງທັງໝົດ, ຈາກຈຸດທີ່ເຂົາເຈົ້າເຂົ້າຮ່ວມ.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s ເຮັດໃຫ້ປະຫວັດຫ້ອງໃນອະນາຄົດສາມາດເຫັນໄດ້ໂດຍສະມາຊິກຫ້ອງທັງໝົດ, ຈາກຈຸດທີ່ເຂົາເຈົ້າໄດ້ຖືກເຊີນ.",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s ສົ່ງຄຳເຊີນໄປຫາ %(targetDisplayName)s ເພື່ອເຂົ້າຮ່ວມຫ້ອງ.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s ໄດ້ຖອນຄຳເຊີນສຳລັບ %(targetDisplayName)s ເພື່ອເຂົ້າຮ່ວມຫ້ອງ.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s ໄດ້ປ່ຽນທີ່ຢູ່ຂອງຫ້ອງນີ້.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s ໄດ້ປ່ຽນທີ່ຢູ່ຫລັກ ແລະ ທາງເລືອກສຳລັບຫ້ອງນີ້.",
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s ໄດ້ປ່ຽນທີ່ຢູ່ທາງເລືອກສຳລັບຫ້ອງນີ້.",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
         "one": "%(senderName)s ໄດ້ລຶບທີ່ຢູ່ສຳຮອງ%(addresses)s ສໍາລັບຫ້ອງນີ້.",
         "other": "%(senderName)s ໄດ້ລຶບທີ່ຢູ່ສຳຮອງ %(addresses)s ຂອງຫ້ອງນີ້ອອກ."
@@ -1373,11 +1353,6 @@
     },
     "%(displayName)s is typing …": "%(displayName)s ກຳລັງພິມ…",
     "Light high contrast": "ແສງສະຫວ່າງຄວາມຄົມຊັດສູງ",
-    "%(senderName)s has ended a poll": "%(senderName)sໄດ້ສິ້ນສຸດການສໍາຫຼວດ",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s ໄດ້ເລີ່ມສຳຫຼວດ - %(pollQuestion)s",
-    "Message deleted by %(name)s": "ຂໍ້ຄວາມຖືກລຶບໂດຍ %(name)s",
-    "Message deleted": "ຂໍ້ຄວາມຖືກລຶບແລ້ວ",
-    "%(senderName)s has shared their location": "%(senderName)s ໄດ້ແບ່ງປັນສະຖານທີ່ຂອງພວກເຂົາ",
     "Send emotes as you in this room": "ສົ່ງ emotes ໃນຖານະທີ່ທ່ານຢູ່ໃນຫ້ອງນີ້",
     "See text messages posted to your active room": "ເບິ່ງຂໍ້ຄວາມທີ່ໂພສໃສ່ຫ້ອງຂອງທ່ານ",
     "See text messages posted to this room": "ເບິ່ງຂໍ້ຄວາມທີ່ໂພສໃສ່ຫ້ອງນີ້",
@@ -3321,8 +3296,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s ກຳນົດທີ່ຢູ່ຂອງຫ້ອງນີ້ເປັນ %(address)s.",
-            "removed": "%(senderName)s ໄດ້ລຶບທີ່ຢູ່ຂອງຫ້ອງນີ້ອອກ."
-        }
+            "removed": "%(senderName)s ໄດ້ລຶບທີ່ຢູ່ຂອງຫ້ອງນີ້ອອກ.",
+            "changed_alternative": "%(senderName)s ໄດ້ປ່ຽນທີ່ຢູ່ທາງເລືອກສຳລັບຫ້ອງນີ້.",
+            "changed_main_and_alternative": "%(senderName)s ໄດ້ປ່ຽນທີ່ຢູ່ຫລັກ ແລະ ທາງເລືອກສຳລັບຫ້ອງນີ້.",
+            "changed": "%(senderName)s ໄດ້ປ່ຽນທີ່ຢູ່ຂອງຫ້ອງນີ້."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s ໄດ້ຖອນຄຳເຊີນສຳລັບ %(targetDisplayName)s ເພື່ອເຂົ້າຮ່ວມຫ້ອງ.",
+            "sent": "%(senderName)s ສົ່ງຄຳເຊີນໄປຫາ %(targetDisplayName)s ເພື່ອເຂົ້າຮ່ວມຫ້ອງ."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s ເຮັດໃຫ້ປະຫວັດຫ້ອງໃນອະນາຄົດສາມາດເຫັນໄດ້ໂດຍສະມາຊິກຫ້ອງທັງໝົດ, ຈາກຈຸດທີ່ເຂົາເຈົ້າໄດ້ຖືກເຊີນ.",
+            "joined": "%(senderName)s ເຮັດໃຫ້ປະຫວັດຫ້ອງໃນອະນາຄົດສາມາດເຫັນໄດ້ໂດຍສະມາຊິກຫ້ອງທັງໝົດ, ຈາກຈຸດທີ່ເຂົາເຈົ້າເຂົ້າຮ່ວມ.",
+            "shared": "%(senderName)s ເຮັດໃຫ້ສະມາຊິກຫ້ອງທັງໝົດເຫັນປະຫວັດຫ້ອງໃນອະນາຄົດ.",
+            "world_readable": "%(senderName)s ເຮັດໃຫ້ທຸກຄົນສາມາດເຫັນປະຫວັດຫ້ອງໄດ້ໃນອະນາຄົດ.",
+            "unknown": "%(senderName)s ເຮັດໃຫ້ຄົນອຶ່ນສາມາດເຫັນປະຫວັດຫ້ອງໃນອະນາຄົດໄດ້ (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s ປັກໝຸດ <a>ຂໍ້ຄວາມ</a> ໃສ່ຫ້ອງນີ້. ເບິ່ງ <b>ຂໍ້ຄວາມທີ່ປັກໝຸດໄວ້</b> ທັງໝົດ.",
+            "pinned": "%(senderName)s ປັກໝຸດຂໍ້ຄວາມໃສ່ຫ້ອງນີ້. ເບິ່ງຂໍ້ຄວາມທີ່ປັກໝຸດທັງໝົດ.",
+            "unpinned_link": "%(senderName)s ຖອນປັກໝຸດ <a>ຂໍ້ຄວາມ</a> ຈາກຫ້ອງນີ້. ເບິ່ງ <b>ຂໍ້ຄວາມທີ່ປັກໝຸດໄວ້</b> ທັງໝົດ.",
+            "unpinned": "%(senderName)s ຖອນປັກໝຸດຂໍ້ຄວາມຈາກຫ້ອງນີ້. ເບິ່ງຂໍ້ຄວາມທີ່ປັກໝຸດທັງໝົດ.",
+            "changed_link": "%(senderName)s ໄດ້ປ່ຽນ <a>ຂໍ້ຄວາມທີ່ປັກໝຸດໄວ້</a> ສຳລັບຫ້ອງ.",
+            "changed": "%(senderName)s ໄດ້ປ່ຽນຂໍ້ຄວາມທີ່ປັກໝຸດໄວ້ສຳລັບຫ້ອງ."
+        },
+        "m.widget": {
+            "modified": "ວິດເຈັດ %(widgetName)s ດັດແກ້ໂດຍ %(senderName)s",
+            "added": "%(widgetName)s ວິດ widget ເພີ່ມໂດຍ %(senderName)s",
+            "removed": "%(widgetName)s ຖືກລຶບອອກໂດຍ %(senderName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s ໄດ້ອັບເດດຮູບແບບຫ້ອງແລ້ວ",
+        "m.location": "%(senderName)s ໄດ້ແບ່ງປັນສະຖານທີ່ຂອງພວກເຂົາ",
+        "self_redaction": "ຂໍ້ຄວາມຖືກລຶບແລ້ວ",
+        "redaction": "ຂໍ້ຄວາມຖືກລຶບໂດຍ %(name)s",
+        "m.poll.start": "%(senderName)s ໄດ້ເລີ່ມສຳຫຼວດ - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)sໄດ້ສິ້ນສຸດການສໍາຫຼວດ"
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",

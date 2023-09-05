@@ -56,18 +56,8 @@
     "You are no longer ignoring %(userId)s": "Od teraz viac neignorujete používateľa %(userId)s",
     "Verified key": "Kľúč overený",
     "Reason": "Dôvod",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s pozval %(targetDisplayName)s vstúpiť do miestnosti.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s sprístupnil budúcu históriu miestnosti pre všetkých členov, od kedy boli pozvaní.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s sprístupnil budúcu históriu miestnosti pre všetkých členov, od kedy vstúpili.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s sprístupnil budúcu históriu miestnosti pre všetkých členov.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s sprístupnil budúcu históriu miestnosti pre každého.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s sprístupnil budúcu históriu miestnosti neznámym (%(visibility)s).",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s z %(fromPowerLevel)s na %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s zmenil úroveň oprávnenia pre %(powerLevelDiffText)s.",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s zmenil pripnuté správy pre túto miestnosť.",
-    "%(widgetName)s widget modified by %(senderName)s": "%(senderName)s zmenil widget %(widgetName)s",
-    "%(widgetName)s widget added by %(senderName)s": "%(senderName)s pridal widget %(widgetName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s odstránil widget %(widgetName)s",
     "Failure to create room": "Nepodarilo sa vytvoriť miestnosť",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server môže byť nedostupný, preťažený, alebo ste narazili na chybu.",
     "Your browser does not support the required cryptography extensions": "Váš prehliadač nepodporuje požadované kryptografické rozšírenia",
@@ -709,7 +699,6 @@
     "Actions": "Akcie",
     "Please supply a https:// or http:// widget URL": "Zadajte https:// alebo http:// URL adresu widgetu",
     "You cannot modify widgets in this room.": "Nemôžete meniť widgety v tejto miestnosti.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s odvolal pozvanie vstúpiť do miestnosti pre %(targetDisplayName)s.",
     "Cannot reach homeserver": "Nie je možné pripojiť sa k domovskému serveru",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Uistite sa, že máte stabilné pripojenie na internet, alebo kontaktujte správcu servera",
     "Your %(brand)s is misconfigured": "Váš %(brand)s nie je nastavený správne",
@@ -827,9 +816,6 @@
         "other": "%(senderName)s odstránil/a alternatívne adresy %(addresses)s pre túto miestnosť.",
         "one": "%(senderName)s odstránil/a alternatívnu adresu %(addresses)s pre túto miestnosť."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s zmenil/a alternatívne adresy pre túto miestnosť.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s zmenil/a hlavnú a alternatívne adresy pre túto miestnosť.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s zmenil/a adresy pre túto miestnosť.",
     "You signed in to a new session without verifying it:": "Prihlásili ste sa do novej relácie bez jej overenia:",
     "Verify your other session using one of the options below.": "Overte svoje ostatné relácie pomocou jednej z nižšie uvedených možností.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) sa prihlásil do novej relácie bez jej overenia:",
@@ -1349,7 +1335,6 @@
         "other": "%(count)s neprečítaných správ.",
         "one": "1 neprečítaná správa."
     },
-    "Message deleted": "Správa vymazaná",
     "Create a new space": "Vytvoriť nový priestor",
     "Create a space": "Vytvoriť priestor",
     "Edit devices": "Upraviť zariadenia",
@@ -2149,7 +2134,6 @@
     "Use your preferred Matrix homeserver if you have one, or host your own.": "Použite preferovaný domovský server Matrixu, ak ho máte, alebo si vytvorte vlastný.",
     "Other homeserver": "Iný domovský server",
     "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org je najväčší verejný domovský server na svete, takže je vhodným miestom pre mnohých.",
-    "Message deleted by %(name)s": "Správa vymazaná používateľom %(name)s",
     "Converts the DM to a room": "Premení priamu správu na miestnosť",
     "Converts the room to a DM": "Premení miestnosť na priamu správu",
     "%(spaceName)s and %(count)s others": {
@@ -2229,7 +2213,6 @@
     },
     "Show all threads": "Zobraziť všetky vlákna",
     "Manage rooms in this space": "Spravovať miestnosti v tomto priestore",
-    "%(senderName)s has updated the room layout": "%(senderName)s aktualizoval usporiadanie miestnosti",
     "Recently viewed": "Nedávno zobrazené",
     "Link to room": "Odkaz na miestnosť",
     "Spaces you're in": "Priestory, v ktorých sa nachádzate",
@@ -2259,9 +2242,6 @@
     "Failed to fetch your location. Please try again later.": "Nepodarilo sa načítať vašu polohu. Skúste to prosím neskôr.",
     "Timed out trying to fetch your location. Please try again later.": "Pri pokuse o načítanie vašej polohy došlo k vypršaniu času. Skúste to prosím neskôr.",
     "Message pending moderation": "Správa čaká na moderovanie",
-    "%(senderName)s has shared their location": "%(senderName)s zdieľal svoju polohu",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s spustil anketu - %(pollQuestion)s",
-    "%(senderName)s has ended a poll": "%(senderName)s ukončil anketu",
     "You don't have permission to view messages from before you were invited.": "Nemáte povolenie na zobrazenie správ z obdobia pred vaším pozvaním.",
     "You don't have permission to view messages from before you joined.": "Nemáte oprávnenie na zobrazenie správ z obdobia pred vaším vstupom.",
     "Encrypted messages before this point are unavailable.": "Šifrované správy pred týmto bodom nie sú k dispozícii.",
@@ -2481,11 +2461,6 @@
     "Location": "Poloha",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Nastavte adresy pre tento priestor, aby ho používatelia mohli nájsť prostredníctvom vášho domovského servera (%(localDomain)s)",
     "Manage pinned events": "Spravovať pripnuté udalosti",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s zmenil <a>pripnuté správy</a> pre túto miestnosť.",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s odopol správu v tejto miestnosti. Pozrite si všetky pripnuté správy.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s odopol <a>správu</a> v tejto miestnosti. Pozrite si všetky <b>pripnuté správy</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s pripol správu v tejto miestnosti. Pozrite si všetky pripnuté správy.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s pripol <a>správu</a> v tejto miestnosti. Pozrite si všetky <b>pripnuté správy</b>.",
     "You do not have permissions to add spaces to this space": "Nemáte oprávnenia na pridávanie priestorov do tohto priestoru",
     "Feedback sent! Thanks, we appreciate it!": "Spätná väzba odoslaná! Ďakujeme, vážime si to!",
     "Use <arrows/> to scroll": "Na posúvanie použite <arrows/>",
@@ -3995,8 +3970,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s nastavil hlavnú adresu tejto miestnosti %(address)s.",
-            "removed": "%(senderName)s odstránil hlavnú adresu tejto miestnosti."
-        }
+            "removed": "%(senderName)s odstránil hlavnú adresu tejto miestnosti.",
+            "changed_alternative": "%(senderName)s zmenil/a alternatívne adresy pre túto miestnosť.",
+            "changed_main_and_alternative": "%(senderName)s zmenil/a hlavnú a alternatívne adresy pre túto miestnosť.",
+            "changed": "%(senderName)s zmenil/a adresy pre túto miestnosť."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s odvolal pozvanie vstúpiť do miestnosti pre %(targetDisplayName)s.",
+            "sent": "%(senderName)s pozval %(targetDisplayName)s vstúpiť do miestnosti."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s sprístupnil budúcu históriu miestnosti pre všetkých členov, od kedy boli pozvaní.",
+            "joined": "%(senderName)s sprístupnil budúcu históriu miestnosti pre všetkých členov, od kedy vstúpili.",
+            "shared": "%(senderName)s sprístupnil budúcu históriu miestnosti pre všetkých členov.",
+            "world_readable": "%(senderName)s sprístupnil budúcu históriu miestnosti pre každého.",
+            "unknown": "%(senderName)s sprístupnil budúcu históriu miestnosti neznámym (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s pripol <a>správu</a> v tejto miestnosti. Pozrite si všetky <b>pripnuté správy</b>.",
+            "pinned": "%(senderName)s pripol správu v tejto miestnosti. Pozrite si všetky pripnuté správy.",
+            "unpinned_link": "%(senderName)s odopol <a>správu</a> v tejto miestnosti. Pozrite si všetky <b>pripnuté správy</b>.",
+            "unpinned": "%(senderName)s odopol správu v tejto miestnosti. Pozrite si všetky pripnuté správy.",
+            "changed_link": "%(senderName)s zmenil <a>pripnuté správy</a> pre túto miestnosť.",
+            "changed": "%(senderName)s zmenil pripnuté správy pre túto miestnosť."
+        },
+        "m.widget": {
+            "modified": "%(senderName)s zmenil widget %(widgetName)s",
+            "added": "%(senderName)s pridal widget %(widgetName)s",
+            "removed": "%(senderName)s odstránil widget %(widgetName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s aktualizoval usporiadanie miestnosti",
+        "m.location": "%(senderName)s zdieľal svoju polohu",
+        "self_redaction": "Správa vymazaná",
+        "redaction": "Správa vymazaná používateľom %(name)s",
+        "m.poll.start": "%(senderName)s spustil anketu - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s ukončil anketu"
     },
     "slash_command": {
         "spoiler": "Odošle danú správu ako spojler",

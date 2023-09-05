@@ -73,19 +73,8 @@
     "Displays action": "Hiển thị hành động",
     "Forces the current outbound group session in an encrypted room to be discarded": "Buộc nhóm phiên hướng ra hiện tại trong một căn phòng được mã hóa phải bị loại bỏ",
     "Reason": "Lý do",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s đã thu hồi lời mời %(targetDisplayName)s tham gia phòng.",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s đã mời %(targetDisplayName)s tham gia phòng.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s đã đặt lịch sử phòng chat xem được bởi thành viên, tính từ lúc thành viên được mời.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s đã đặt lịch sử phòng chat xem được bởi thành viên, tính từ lúc thành viên tham gia phòng.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s đã đặt nội dung mới của phòng chat xem được bởi thành viên.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s đã đặt nội dung mới của phòng chat xem được bởi bất kỳ ai.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s đã đặt lịch sử phòng chat xem được đối với đối tượng (%(visibility)s).",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s đổi từ %(fromPowerLevel)s thành %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s đã đổi mức quyền của %(powerLevelDiffText)s.",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s đã đổi tin được treo trong phòng.",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s được sửa tên bởi %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s widget được thêm vào bởi %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s widget được gỡ bởi %(senderName)s",
     "%(displayName)s is typing …": "%(displayName)s đang gõ …",
     "%(names)s and %(count)s others are typing …": {
         "other": "%(names)s và %(count)s người khác đang gõ …",
@@ -1896,14 +1885,6 @@
     "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s đã xóa quy tắc cấm các máy chủ khớp với %(glob)s",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s đã xóa quy tắc cấm các phòng khớp với %(glob)s",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s đã xóa quy tắc cấm người dùng khớp với %(glob)s",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s đã thay đổi <a>pinned messages</a> cho phòng.",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s đã bỏ ghim một tin nhắn trong phòng này. Xem tất cả tin nhắn được ghim.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s đã bỏ ghim <a>một tin nhắn</a> trong phòng này. Xem tất cả <b>tin nhắn được ghim</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s đã ghim một tin nhắn trong phòng này. Xem tất cả tin nhắn được ghim.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s đã ghim <a>một tin nhắn</a> trong phòng này. Xem tất cả <b>tin nhắn được ghim</b>.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s đã thay đổi địa chỉ cho phòng này.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s đã thay đổi địa chỉ chính và địa chỉ thay thế cho phòng này.",
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s đã thay đổi các địa chỉ thay thế cho phòng này.",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
         "one": "%(senderName)s đã bỏ địa chỉ thay thế %(addresses)s cho phòng này.",
         "other": "%(senderName)s đã bỏ các địa chỉ thay thế %(addresses)s cho phòng này."
@@ -1912,8 +1893,6 @@
         "one": "%(senderName)s đã thêm địa chỉ thay thế %(addresses)s cho phòng này.",
         "other": "%(senderName)s đã thêm các địa chỉ thay thế %(addresses)s cho phòng này."
     },
-    "Message deleted by %(name)s": "Tin nhắn đã bị %(name)s xóa",
-    "Message deleted": "Tin nhắn đã xóa",
     "All keys backed up": "Tất cả các khóa được sao lưu",
     "Connect this session to Key Backup": "Kết nối phiên này với Khóa Sao lưu",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Kết nối phiên này với máy chủ sao lưu khóa trước khi đăng xuất để tránh mất bất kỳ khóa nào có thể chỉ có trong phiên này.",
@@ -2498,7 +2477,6 @@
     "Help improve %(analyticsOwner)s": "Giúp cải thiện %(analyticsOwner)s",
     "That's fine": "Không sao cả",
     "Light high contrast": "Độ tương phản ánh sáng cao",
-    "%(senderName)s has updated the room layout": "%(senderName)s đã cập nhật bố trí của phòng",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Khóa đăng nhập bạn cung cấp khớp với khóa đăng nhập bạn nhận từ thiết bị %(deviceId)s của %(userId)s. Thiết bị được đánh dấu là đã được xác minh.",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Sử dụng máy chủ định danh để mời qua thư điện tử. Bấm Tiếp tục để sử dụng máy chủ định danh mặc định (%(defaultIdentityServerName)s) hoặc quản lý trong Cài đặt.",
     "%(spaceName)s and %(count)s others": {
@@ -2601,9 +2579,6 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "Remove, ban, or invite people to your active room, and make you leave": "Xóa, cấm, hoặc mời mọi người vào phòng đang hoạt động của bạn, và bạn rời khỏi đó",
     "Remove, ban, or invite people to this room, and make you leave": "Xóa, cấm, hoặc mời mọi người vào phòng này, và bạn rời khỏi đó",
-    "%(senderName)s has ended a poll": "%(senderName)s vừa kết thúc một cuộc bình chọn",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s vừa bắt đầu một cuộc bình chọn - %(pollQuestion)s",
-    "%(senderName)s has shared their location": "%(senderName)s đã chia sẻ vị trí của họ",
     "No active call in this room": "Không có cuộc gọi đang hoạt động trong phòng này",
     "Unable to find Matrix ID for phone number": "Không thể tìm thấy Matrix ID của số điện thoại",
     "No virtual room for this room": "Không có phòng ảo của phòng này",
@@ -3698,8 +3673,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s thiết lập địa chỉ chính cho phòng thành %(address)s.",
-            "removed": "%(senderName)s đã loại địa chỉ chính của phòng."
-        }
+            "removed": "%(senderName)s đã loại địa chỉ chính của phòng.",
+            "changed_alternative": "%(senderName)s đã thay đổi các địa chỉ thay thế cho phòng này.",
+            "changed_main_and_alternative": "%(senderName)s đã thay đổi địa chỉ chính và địa chỉ thay thế cho phòng này.",
+            "changed": "%(senderName)s đã thay đổi địa chỉ cho phòng này."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s đã thu hồi lời mời %(targetDisplayName)s tham gia phòng.",
+            "sent": "%(senderName)s đã mời %(targetDisplayName)s tham gia phòng."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s đã đặt lịch sử phòng chat xem được bởi thành viên, tính từ lúc thành viên được mời.",
+            "joined": "%(senderName)s đã đặt lịch sử phòng chat xem được bởi thành viên, tính từ lúc thành viên tham gia phòng.",
+            "shared": "%(senderName)s đã đặt nội dung mới của phòng chat xem được bởi thành viên.",
+            "world_readable": "%(senderName)s đã đặt nội dung mới của phòng chat xem được bởi bất kỳ ai.",
+            "unknown": "%(senderName)s đã đặt lịch sử phòng chat xem được đối với đối tượng (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s đã ghim <a>một tin nhắn</a> trong phòng này. Xem tất cả <b>tin nhắn được ghim</b>.",
+            "pinned": "%(senderName)s đã ghim một tin nhắn trong phòng này. Xem tất cả tin nhắn được ghim.",
+            "unpinned_link": "%(senderName)s đã bỏ ghim <a>một tin nhắn</a> trong phòng này. Xem tất cả <b>tin nhắn được ghim</b>.",
+            "unpinned": "%(senderName)s đã bỏ ghim một tin nhắn trong phòng này. Xem tất cả tin nhắn được ghim.",
+            "changed_link": "%(senderName)s đã thay đổi <a>pinned messages</a> cho phòng.",
+            "changed": "%(senderName)s đã đổi tin được treo trong phòng."
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s được sửa tên bởi %(senderName)s",
+            "added": "%(widgetName)s widget được thêm vào bởi %(senderName)s",
+            "removed": "%(widgetName)s widget được gỡ bởi %(senderName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s đã cập nhật bố trí của phòng",
+        "m.location": "%(senderName)s đã chia sẻ vị trí của họ",
+        "self_redaction": "Tin nhắn đã xóa",
+        "redaction": "Tin nhắn đã bị %(name)s xóa",
+        "m.poll.start": "%(senderName)s vừa bắt đầu một cuộc bình chọn - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s vừa kết thúc một cuộc bình chọn"
     },
     "slash_command": {
         "spoiler": "Đánh dấu tin nhắn chỉ định thành một tin nhắn ẩn",

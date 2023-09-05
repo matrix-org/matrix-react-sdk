@@ -71,11 +71,6 @@
     "Join Room": "Pievienoties istabai",
     "Jump to first unread message.": "Pāriet uz pirmo neizlasīto ziņu.",
     "Low priority": "Zema prioritāte",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s padarīja istabas ziņu turpmāko vēsturi redzamu visiem istabas dalībniekiem no brīža, kad tie tika uzaicināti.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s padarīja istabas ziņu turpmāko vēsturi redzamu visiem istabas dalībniekiem ar brīdi, kad tie pievienojās.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s padarīja istabas ziņu turpmāko vēsturi redzamu visiem istabas dalībniekiem.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s padarīja istabas ziņu turpmāko vēsturi redzamu ikvienam.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s padarīja istabas ziņu turpmāko vēsturi redzamu nepazīstamajiem (%(visibility)s).",
     "Missing room_id in request": "Iztrūkstošs room_id pieprasījumā",
     "Missing user_id in request": "Iztrūkstošs user_id pieprasījumā",
     "Moderator": "Moderators",
@@ -105,7 +100,6 @@
     "Room %(roomId)s not visible": "Istaba %(roomId)s nav redzama",
     "%(roomName)s does not exist.": "%(roomName)s neeksistē.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s šobrīd nav pieejama.",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s nosūtīja uzaicinājumu %(targetDisplayName)s pievienoties istabai.",
     "Uploading %(filename)s": "Tiek augšupielādēts %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Tiek augšupielādēts %(filename)s un %(count)s citi",
@@ -235,8 +229,6 @@
     "Unable to create widget.": "Neizdevās izveidot widžetu.",
     "You are not in this room.": "Tu neatrodies šajā istabā.",
     "You do not have permission to do that in this room.": "Tev nav atļaujas šai darbībai šajā istabā.",
-    "%(widgetName)s widget added by %(senderName)s": "%(senderName)s pievienoja %(widgetName)s vidžetu",
-    "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s dzēsa vidžetu %(widgetName)s",
     "Send": "Sūtīt",
     "Unnamed room": "Nenosaukta istaba",
     "Call Failed": "Zvans neizdevās",
@@ -246,8 +238,6 @@
     "You are now ignoring %(userId)s": "Tagad Tu ignorē %(userId)s",
     "Unignored user": "Atignorēts lietotājs",
     "You are no longer ignoring %(userId)s": "Tu vairāk neignorē %(userId)s",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s nomainīja šajā istabā piespraustās ziņas.",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s vidžets, kuru mainīja %(senderName)s",
     "Mirror local video feed": "Rādīt spoguļskatā kameras video",
     "Enable URL previews for this room (only affects you)": "Iespējot URL priekšskatījumus šajā istabā (ietekmē tikai jūs pašu)",
     "Enable URL previews by default for participants in this room": "Iespējot URL priekšskatījumus pēc noklusējuma visiem šīs istabas dalībniekiem",
@@ -475,8 +465,6 @@
     "Switch to light mode": "Pārslēgt gaišo režīmu",
     "Favourited": "Izlasē",
     "Message deleted on %(date)s": "Ziņa dzēsta %(date)s",
-    "Message deleted by %(name)s": "%(name)s izdzēsa ziņu",
-    "Message deleted": "Ziņa ir dzēsta",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Saziņa ar šo lietotāju ir nodrošināta ar pilnīgu šifrēšanu un nav nolasāma trešajām pusēm.",
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reaģēja ar %(shortName)s</reactedWith>",
@@ -549,8 +537,6 @@
     "Add a photo, so people can easily spot your room.": "Pievienojiet foto, lai padarītu istabu vieglāk pamanāmu citiem cilvēkiem.",
     "<a>Add a topic</a> to help people know what it is about.": "<a>Pievienot tematu</a>, lai dotu cilvēkiem priekšstatu.",
     "You do not have permission to invite people to this room.": "Jums nav atļaujas uzaicināt cilvēkus šajā istabā.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s atsauca uzaicinājumu %(targetDisplayName)s pievienoties istabai.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s nomainīja istabas adreses.",
     "Afghanistan": "Afganistāna",
     "United States": "Amerikas Savienotās Valstis",
     "United Kingdom": "Lielbritānija",
@@ -563,7 +549,6 @@
     "Manually verify all remote sessions": "Manuāli verificēt visas pārējās sesijas",
     "Never send encrypted messages to unverified sessions from this session": "Nesūtīt šifrētas ziņas no šīs sesijas neverificētām sesijām",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Notikusi kļūda, mēģinot atjaunināt istabas alternatīvās adreses. Iespējams, tas ir liegts servera iestatījumos vai arī notikusi kāda pagaidu kļūme.",
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s nomainīja šīs istabas alternatīvās adreses.",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
         "one": "%(senderName)s dzēsa šīs istabas alternatīvo adresi %(addresses)s.",
         "other": "%(senderName)s dzēsa šīs istabas alternatīvās adreses %(addresses)s."
@@ -608,7 +593,6 @@
     "Change topic": "Nomainīt tematu",
     "Change room avatar": "Mainīt istabas avataru",
     "Change main address for the room": "Mainīt istabas galveno adresi",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s nomainīja istabas galveno un alternatīvo adresi.",
     "Change history visibility": "Mainīt vēstures redzamību",
     "Change permissions": "Mainīt atļaujas",
     "Notify everyone": "Apziņot visus",
@@ -1036,7 +1020,6 @@
     "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s aizstāja noteikumu, kas liedza pieeju serveriem, kas atbilst pazīmei %(oldGlob)s, ar atbilstošu pazīmei %(newGlob)s dēļ %(reason)s",
     "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s izmainīja noteikumu, kurš liedz pieeju istabām, kas atbilst %(oldGlob)s pazīmei pret %(newGlob)s dēļ %(reason)s",
     "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s aizstāja noteikumu, kurš liedza pieeju lietotājiem %(oldGlob)s ar jaunu noteikumu, kurš aizliedz %(newGlob)s dēļ %(reason)s",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s nomainīja <a>piespraustās ziņas</a> šai istabai.",
     "Converts the DM to a room": "Pārveido DM par istabu",
     "Converts the room to a DM": "Pārveido istabu par DM",
     "Places the call in the current room on hold": "Iepauzē sazvanu šajā istabā",
@@ -1395,10 +1378,6 @@
     "Font size": "Šrifta izmērs",
     "Call ended": "Zvans beidzās",
     "Dates are often easy to guess": "Datumi bieži vien ir viegli uzminami",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s noņēma piespraustu ziņu šajā istabā. Skatīt visas piespraustās ziņas.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s noņēma piespraustu <a>ziņu</a> šajā istabā. Skatīt visas <b>piespraustās ziņas</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s piesprauda ziņu šajā istabā. Skatīt visas piespraustās ziņas.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s piesprauda <a>ziņu</a> šajā istabā. Skatīt visas <b>piespraustās ziņas</b>.",
     "Final result based on %(count)s votes": {
         "one": "Gala rezultāts pamatojoties uz %(count)s balss",
         "other": "Gala rezultāts pamatojoties uz %(count)s balsīm"
@@ -1425,10 +1404,8 @@
     "Results will be visible when the poll is ended": "Rezultāti būs redzami, kad aptauja būs pabeigta",
     "Sorry, the poll did not end. Please try again.": "Atvainojiet, aptauja netika pārtraukta. Lūdzu, mēģiniet vēlreiz.",
     "The poll has ended. No votes were cast.": "Aptauja ir beigusies. Balsis netika nodotas.",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s uzsāka aptauju- %(pollQuestion)s",
     "The poll has ended. Top answer: %(topAnswer)s": "Aptauja ir beigusies. Populārākā atbilde: %(topAnswer)s",
     "What is your poll question or topic?": "Kāds ir jūsu aptaujas jautājums vai tēma?",
-    "%(senderName)s has ended a poll": "%(senderName)s pārtrauca aptauju",
     "Failed to end poll": "Neizdevās pārtraukt aptauju",
     "Failed to post poll": "Neizdevās publicēt aptauju",
     "Show polls button": "Rādīt aptauju pogu",
@@ -1463,7 +1440,6 @@
     "You don't have permission to share locations": "Jums nav atļaujas kopīgot atrašanās vietu",
     "You are sharing your live location": "Jūs kopīgojat savu reāllaika atrašanās vietu",
     "We couldn't send your location": "Mēs nevarējām nosūtīt jūsu atrašanās vietu",
-    "%(senderName)s has shared their location": "%(senderName)s ir dalījies ar savu atrašanās vietu",
     "Enable live location sharing": "Iespējot reāllaika atrašanās vietas kopīgošanu",
     "Could not fetch location": "Neizdevās iegūt atrašanās vietas datus",
     "Location not available": "Atrašanās vieta nav pieejama",
@@ -1847,8 +1823,40 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s iestatīja istabas galveno adresi kā %(address)s.",
-            "removed": "%(senderName)s dzēsa galveno adresi šai istabai."
-        }
+            "removed": "%(senderName)s dzēsa galveno adresi šai istabai.",
+            "changed_alternative": "%(senderName)s nomainīja šīs istabas alternatīvās adreses.",
+            "changed_main_and_alternative": "%(senderName)s nomainīja istabas galveno un alternatīvo adresi.",
+            "changed": "%(senderName)s nomainīja istabas adreses."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s atsauca uzaicinājumu %(targetDisplayName)s pievienoties istabai.",
+            "sent": "%(senderName)s nosūtīja uzaicinājumu %(targetDisplayName)s pievienoties istabai."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s padarīja istabas ziņu turpmāko vēsturi redzamu visiem istabas dalībniekiem no brīža, kad tie tika uzaicināti.",
+            "joined": "%(senderName)s padarīja istabas ziņu turpmāko vēsturi redzamu visiem istabas dalībniekiem ar brīdi, kad tie pievienojās.",
+            "shared": "%(senderName)s padarīja istabas ziņu turpmāko vēsturi redzamu visiem istabas dalībniekiem.",
+            "world_readable": "%(senderName)s padarīja istabas ziņu turpmāko vēsturi redzamu ikvienam.",
+            "unknown": "%(senderName)s padarīja istabas ziņu turpmāko vēsturi redzamu nepazīstamajiem (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s piesprauda <a>ziņu</a> šajā istabā. Skatīt visas <b>piespraustās ziņas</b>.",
+            "pinned": "%(senderName)s piesprauda ziņu šajā istabā. Skatīt visas piespraustās ziņas.",
+            "unpinned_link": "%(senderName)s noņēma piespraustu <a>ziņu</a> šajā istabā. Skatīt visas <b>piespraustās ziņas</b>.",
+            "unpinned": "%(senderName)s noņēma piespraustu ziņu šajā istabā. Skatīt visas piespraustās ziņas.",
+            "changed_link": "%(senderName)s nomainīja <a>piespraustās ziņas</a> šai istabai.",
+            "changed": "%(senderName)s nomainīja šajā istabā piespraustās ziņas."
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s vidžets, kuru mainīja %(senderName)s",
+            "added": "%(senderName)s pievienoja %(widgetName)s vidžetu",
+            "removed": "%(senderName)s dzēsa vidžetu %(widgetName)s"
+        },
+        "m.location": "%(senderName)s ir dalījies ar savu atrašanās vietu",
+        "self_redaction": "Ziņa ir dzēsta",
+        "redaction": "%(name)s izdzēsa ziņu",
+        "m.poll.start": "%(senderName)s uzsāka aptauju- %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s pārtrauca aptauju"
     },
     "slash_command": {
         "spoiler": "Nosūta norādīto ziņu kā spoileri",

@@ -74,19 +74,8 @@
     "Displays action": "Toogt actie",
     "Forces the current outbound group session in an encrypted room to be discarded": "Forceert de huudige uutwoartsche groepssessie in e versleuterd gesprek vo verworpn te wordn",
     "Reason": "Reedn",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s èt d’uutnodigienge vo %(targetDisplayName)s vo toe te treedn tout ’t gesprek ingetrokkn.",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s èt %(targetDisplayName)s in ’t gesprek uutgenodigd.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s èt de toekomstige gespreksgeschiedenisse zichtboar gemakt voor alle gespreksleedn, vanaf de moment dan ze uutgenodigd gewist zyn.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s èt de toekomstige gespreksgeschiedenisse zichtboar gemakt voor alle gespreksleedn, vanaf de moment dan ze toegetreedn zyn.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s èt de toekomstige gespreksgeschiedenisse zichtboar gemakt voor alle gespreksleedn.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s èt de toekomstige gespreksgeschiedenisse zichtboar gemakt voor iedereen.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s èt de toekomstige gespreksgeschiedenisse zichtboar gemakt voor ounbekend (%(visibility)s).",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s van %(fromPowerLevel)s noa %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s èt ’t machtsniveau van %(powerLevelDiffText)s gewyzigd.",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s èt de vastgeprikte boodschappn vo ’t gesprek gewyzigd.",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s-widget angepast gewist deur %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s-widget toegevoegd gewist deur %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s-widget verwyderd gewist deur %(senderName)s",
     "%(displayName)s is typing …": "%(displayName)s es an ’t typn…",
     "%(names)s and %(count)s others are typing …": {
         "other": "%(names)s en %(count)s anderen zyn an ’t typn…",
@@ -1037,6 +1026,25 @@
         "m.room.canonical_alias": {
             "set": "%(senderName)s èt %(address)s als hoofdadresse vo dit gesprek ingesteld.",
             "removed": "%(senderName)s èt ’t hoofdadresse vo dit gesprek verwyderd."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s èt d’uutnodigienge vo %(targetDisplayName)s vo toe te treedn tout ’t gesprek ingetrokkn.",
+            "sent": "%(senderName)s èt %(targetDisplayName)s in ’t gesprek uutgenodigd."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s èt de toekomstige gespreksgeschiedenisse zichtboar gemakt voor alle gespreksleedn, vanaf de moment dan ze uutgenodigd gewist zyn.",
+            "joined": "%(senderName)s èt de toekomstige gespreksgeschiedenisse zichtboar gemakt voor alle gespreksleedn, vanaf de moment dan ze toegetreedn zyn.",
+            "shared": "%(senderName)s èt de toekomstige gespreksgeschiedenisse zichtboar gemakt voor alle gespreksleedn.",
+            "world_readable": "%(senderName)s èt de toekomstige gespreksgeschiedenisse zichtboar gemakt voor iedereen.",
+            "unknown": "%(senderName)s èt de toekomstige gespreksgeschiedenisse zichtboar gemakt voor ounbekend (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "changed": "%(senderName)s èt de vastgeprikte boodschappn vo ’t gesprek gewyzigd."
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s-widget angepast gewist deur %(senderName)s",
+            "added": "%(widgetName)s-widget toegevoegd gewist deur %(senderName)s",
+            "removed": "%(widgetName)s-widget verwyderd gewist deur %(senderName)s"
         }
     },
     "slash_command": {

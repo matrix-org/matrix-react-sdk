@@ -40,7 +40,6 @@
     "Room %(roomId)s not visible": "房间%(roomId)s不可见",
     "Rooms": "房间",
     "Search failed": "搜索失败",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s 向 %(targetDisplayName)s 发了加入房间的邀请。",
     "Server error": "服务器错误",
     "Server may be unavailable, overloaded, or search timed out :(": "服务器可能不可用、超载，或者搜索超时 :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "当前服务器可能处于不可用或过载状态，或者你遇到了一个 bug。",
@@ -154,11 +153,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "请检查你的电子邮箱并点击里面包含的链接。完成时请点击继续。",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s更改了%(powerLevelDiffText)s的权力级别。",
     "Deops user with given id": "按照 ID 取消特定用户的管理员权限",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s使未来的房间历史对所有房间成员从他们被邀请开始可见。",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s使未来的房间历史对所有房间成员从他们加入开始可见。",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s使未来的房间历史对所有房间成员可见。",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s使未来的房间历史对任何人可见。",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s使未来的房间历史对未知（%(visibility)s）可见。",
     "AM": "上午",
     "PM": "下午",
     "Profile": "个人资料",
@@ -216,15 +210,11 @@
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s 修改了 %(roomName)s 的头像",
     "Authentication check failed: incorrect password?": "身份验证失败：密码错误？",
     "This will allow you to reset your password and receive notifications.": "这将允许你重置你的密码和接收通知。",
-    "%(widgetName)s widget added by %(senderName)s": "%(senderName)s 添加了 %(widgetName)s 挂件",
-    "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s 移除了 %(widgetName)s 挂件",
-    "%(widgetName)s widget modified by %(senderName)s": "%(senderName)s 修改了 %(widgetName)s 挂件",
     "Call Failed": "呼叫失败",
     "Ignored user": "已忽略的用户",
     "You are now ignoring %(userId)s": "你忽略了 %(userId)s",
     "Unignored user": "未忽略的用户",
     "You are no longer ignoring %(userId)s": "你不再忽视 %(userId)s",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s 更改了房间的置顶消息。",
     "Send": "发送",
     "Enable URL previews for this room (only affects you)": "对此房间启用URL预览（仅影响你）",
     "Enable URL previews by default for participants in this room": "对此房间的所有参与者默认启用URL预览",
@@ -703,7 +693,6 @@
     "Power level": "权力级别",
     "Please supply a https:// or http:// widget URL": "请提供一个 https:// 或 http:// 挂件URL",
     "You cannot modify widgets in this room.": "你无法修改此房间的插件。",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s 撤销了对 %(targetDisplayName)s 加入房间的邀请。",
     "Upgrade this room to the recommended room version": "升级此房间至推荐版本",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "此房间运行的房间版本是 <roomVersion /> ，此版本已被家服务器标记为 <i>不稳定</i> 。",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "升级此房间将会关闭房间的当前实例并创建一个具有相同名称的升级版房间。",
@@ -765,9 +754,6 @@
         "other": "%(senderName)s 为此房间移除了备用地址 %(addresses)s。",
         "one": "%(senderName)s 为此房间移除了备用地址 %(addresses)s。"
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s 更改了此房间的备用地址。",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s 更改了此房间的主要地址与备用地址。",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s 更改了此房间的地址。",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s 移除了禁止匹配 %(glob)s 的用户的规则",
     "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s 移除了禁止匹配 %(glob)s 的服务器的规则",
     "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s 移除了禁止匹配 %(glob)s 的规则",
@@ -1133,8 +1119,6 @@
     "%(name)s wants to verify": "%(name)s 想要验证",
     "You sent a verification request": "你发送了一个验证请求",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>回应了 %(shortName)s</reactedWith>",
-    "Message deleted": "消息已删除",
-    "Message deleted by %(name)s": "消息被 %(name)s 删除",
     "Message deleted on %(date)s": "消息于 %(date)s 被删除",
     "Edited at %(date)s": "编辑于 %(date)s",
     "Click to view edits": "点击查看编辑历史",
@@ -2149,7 +2133,6 @@
     "e.g. my-space": "例如：my-space",
     "Silence call": "通话静音",
     "Sound on": "开启声音",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s 已更改此房间的<a>固定消息</a>。",
     "Some invites couldn't be sent": "部分邀请无法发送",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "我们已向其他人发送邀请，但无法邀请以下人员至<RoomName/>",
     "Integration manager": "集成管理器",
@@ -2292,10 +2275,6 @@
     "Cross-signing is ready but keys are not backed up.": "交叉签名已就绪，但尚未备份密钥。",
     "The above, but in <Room /> as well": "以上，但也包括 <Room />",
     "The above, but in any room you are joined or invited to as well": "以上，但也包括你加入或被邀请的任何房间中",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s从此房间中取消固定了一条消息。查看所有固定消息。",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s 从此房间中取消固定了<a>一条消息</a>。查看所有<b>固定消息</b>。",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s将一条消息固定到此房间。查看所有固定消息。",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s 将<a>一条消息</a>固定到此房间。查看所有<b>固定消息</b>。",
     "Some encryption parameters have been changed.": "一些加密参数已更改。",
     "Role in <RoomName/>": "<RoomName/> 中的角色",
     "Send a sticker": "发送贴纸",
@@ -2452,7 +2431,6 @@
     "Unpin this widget to view it in this panel": "取消固定此小部件以在此面板中查看",
     "Large": "大",
     "Image size in the timeline": "时间线中的图像大小",
-    "%(senderName)s has updated the room layout": "%(senderName)s 更新了房间布局",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s 和其他 %(count)s 个空间",
         "other": "%(spaceName)s 和其他 %(count)s 个空间"
@@ -2573,9 +2551,6 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 与 %(space2Name)s",
     "Remove, ban, or invite people to your active room, and make you leave": "移除、封禁或邀请他人加入你的活跃房间，方可离开",
     "Remove, ban, or invite people to this room, and make you leave": "移除、封禁或邀请他人加入此房间，方可离开",
-    "%(senderName)s has ended a poll": "%(senderName)s 结束了投票",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s 发起了投票：%(pollQuestion)s",
-    "%(senderName)s has shared their location": "%(senderName)s 分享了他们的位置",
     "No active call in this room": "此房间未有活跃中的通话",
     "Unable to find Matrix ID for phone number": "未能找到与此手机号码关联的 Matrix ID",
     "No virtual room for this room": "此房间未有虚拟房间",
@@ -3586,8 +3561,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s 将此房间的主要地址设为了 %(address)s。",
-            "removed": "%(senderName)s 移除了此房间的主要地址。"
-        }
+            "removed": "%(senderName)s 移除了此房间的主要地址。",
+            "changed_alternative": "%(senderName)s 更改了此房间的备用地址。",
+            "changed_main_and_alternative": "%(senderName)s 更改了此房间的主要地址与备用地址。",
+            "changed": "%(senderName)s 更改了此房间的地址。"
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s 撤销了对 %(targetDisplayName)s 加入房间的邀请。",
+            "sent": "%(senderName)s 向 %(targetDisplayName)s 发了加入房间的邀请。"
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s使未来的房间历史对所有房间成员从他们被邀请开始可见。",
+            "joined": "%(senderName)s使未来的房间历史对所有房间成员从他们加入开始可见。",
+            "shared": "%(senderName)s使未来的房间历史对所有房间成员可见。",
+            "world_readable": "%(senderName)s使未来的房间历史对任何人可见。",
+            "unknown": "%(senderName)s使未来的房间历史对未知（%(visibility)s）可见。"
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s 将<a>一条消息</a>固定到此房间。查看所有<b>固定消息</b>。",
+            "pinned": "%(senderName)s将一条消息固定到此房间。查看所有固定消息。",
+            "unpinned_link": "%(senderName)s 从此房间中取消固定了<a>一条消息</a>。查看所有<b>固定消息</b>。",
+            "unpinned": "%(senderName)s从此房间中取消固定了一条消息。查看所有固定消息。",
+            "changed_link": "%(senderName)s 已更改此房间的<a>固定消息</a>。",
+            "changed": "%(senderName)s 更改了房间的置顶消息。"
+        },
+        "m.widget": {
+            "modified": "%(senderName)s 修改了 %(widgetName)s 挂件",
+            "added": "%(senderName)s 添加了 %(widgetName)s 挂件",
+            "removed": "%(senderName)s 移除了 %(widgetName)s 挂件"
+        },
+        "io.element.widgets.layout": "%(senderName)s 更新了房间布局",
+        "m.location": "%(senderName)s 分享了他们的位置",
+        "self_redaction": "消息已删除",
+        "redaction": "消息被 %(name)s 删除",
+        "m.poll.start": "%(senderName)s 发起了投票：%(pollQuestion)s",
+        "m.poll.end": "%(senderName)s 结束了投票"
     },
     "slash_command": {
         "spoiler": "此消息包含剧透",

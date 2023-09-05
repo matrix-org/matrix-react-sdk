@@ -64,18 +64,8 @@
     "Verified key": "Godkjend nøkkel",
     "Displays action": "Visar handlingar",
     "Reason": "Grunnlag",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s inviterte %(targetDisplayName)s til å bli med i rommet.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s gjorde slik at den framtidige romhistoria er tilgjengeleg for alle rommedlemmar frå då dei vart invitert.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s gjorde slik at framtidig romhistorie er tilgjengeleg for alle rommedlemmar frå då dei kom inn.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s gjorde framtidig romhistorie tilgjengeleg for alle rommedlemmar.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s gjorde den framtidige romhistoria tilgjengelg for kven som helst.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s gjorde den framtidige romhistoria tilgjengeleg til ukjende (%(visibility)s).",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s frå %(fromPowerLevel)s til %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s endra tilgangsnivået til %(powerLevelDiffText)s.",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s endra dei festa meldingane i rommet.",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s-widget endra av %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s-widget lagt til av %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s widget fjerna av %(senderName)s",
     "Failure to create room": "Klarte ikkje å laga rommet",
     "Server may be unavailable, overloaded, or you hit a bug.": "Tenaren er kanskje utilgjengeleg, overlasta elles så traff du ein bug.",
     "Send": "Send",
@@ -532,7 +522,6 @@
     "Session already verified!": "Sesjon er tidligare verifisert!",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ÅTVARING: NØKKELVERIFIKASJON FEILA! Signeringsnøkkel for %(userId)s og økt %(deviceId)s er \"%(fprint)s\" stemmer ikkje med innsendt nøkkel \"%(fingerprint)s\". Dette kan vere teikn på at kommunikasjonen er avlytta!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Innsendt signeringsnøkkel er lik nøkkelen du mottok frå %(userId)s med økt %(deviceId)s. Sesjonen no er verifisert.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s trekte tilbake invitasjonen for at %(targetDisplayName)s kan bli medlem i rommet.",
     "Sign In or Create Account": "Logg inn eller opprett konto",
     "Create Account": "Opprett konto",
     "You do not have permission to invite people to this room.": "Du har ikkje lov til å invitera andre til dette rommet.",
@@ -724,9 +713,6 @@
         "other": "%(senderName)s tok vekk dei alternative adressene %(addresses)s for dette rommet.",
         "one": "%(senderName)s tok vekk den alternative adressa %(addresses)s for dette rommet."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s endre den alternative adressa for dette rommet.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s endra hovud- og alternativ-adressene for dette rommet.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s endre adressene for dette rommet.",
     "Later": "Seinare",
     "Never send encrypted messages to unverified sessions from this session": "Aldri send krypterte meldingar til ikkje-verifiserte sesjonar frå denne sesjonen",
     "Never send encrypted messages to unverified sessions in this room from this session": "Aldri send krypterte meldingar i dette rommet til ikkje-verifiserte sesjonar frå denne sesjonen",
@@ -829,8 +815,6 @@
     "Can't edit poll": "Røystinga kan ikkje endrast",
     "Poll": "Røysting",
     "You do not have permission to start polls in this room.": "Du har ikkje lov til å starte nye røystingar i dette rommet.",
-    "%(senderName)s has ended a poll": "%(senderName)s har avslutta ei røysting",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s har starta ei røysting - %(pollQuestion)s",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Er du sikker på at du vil avslutta denne røystinga ? Dette vil gjelde for alle, og dei endelege resultata vil bli presentert.",
     "New keyword": "Nytt nøkkelord",
     "Keyword": "Nøkkelord",
@@ -1110,8 +1094,32 @@
         "m.image": "%(senderDisplayName)s sende eit bilete.",
         "m.room.canonical_alias": {
             "set": "%(senderName)s satte standardadressa for dette rommet til %(address)s.",
-            "removed": "%(senderName)s fjerna standardadressa for dette rommet."
-        }
+            "removed": "%(senderName)s fjerna standardadressa for dette rommet.",
+            "changed_alternative": "%(senderName)s endre den alternative adressa for dette rommet.",
+            "changed_main_and_alternative": "%(senderName)s endra hovud- og alternativ-adressene for dette rommet.",
+            "changed": "%(senderName)s endre adressene for dette rommet."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s trekte tilbake invitasjonen for at %(targetDisplayName)s kan bli medlem i rommet.",
+            "sent": "%(senderName)s inviterte %(targetDisplayName)s til å bli med i rommet."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s gjorde slik at den framtidige romhistoria er tilgjengeleg for alle rommedlemmar frå då dei vart invitert.",
+            "joined": "%(senderName)s gjorde slik at framtidig romhistorie er tilgjengeleg for alle rommedlemmar frå då dei kom inn.",
+            "shared": "%(senderName)s gjorde framtidig romhistorie tilgjengeleg for alle rommedlemmar.",
+            "world_readable": "%(senderName)s gjorde den framtidige romhistoria tilgjengelg for kven som helst.",
+            "unknown": "%(senderName)s gjorde den framtidige romhistoria tilgjengeleg til ukjende (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "changed": "%(senderName)s endra dei festa meldingane i rommet."
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s-widget endra av %(senderName)s",
+            "added": "%(widgetName)s-widget lagt til av %(senderName)s",
+            "removed": "%(widgetName)s widget fjerna av %(senderName)s"
+        },
+        "m.poll.start": "%(senderName)s har starta ei røysting - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s har avslutta ei røysting"
     },
     "slash_command": {
         "shrug": "Sett inn ¯\\_(ツ)_/¯ i ein rein-tekst melding",

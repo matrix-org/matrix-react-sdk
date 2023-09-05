@@ -104,10 +104,6 @@
     "AM": "AM",
     "Verified key": "Kyç i verifikuar",
     "Reason": "Arsye",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s e bëri historikun e ardhshëm të dhomës të dukshëm për krejt anëtarët e dhomës, prej çastit kur janë ftuar.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s e bëri historikun e ardhshëm të dhomës të dukshëm për krejt anëtarët e dhomës, prej çastit kur morën pjesë.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s e bëri historikun e ardhshëm të dhomës të dukshëm për krejt anëtarët e dhomës.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s e bëri historikun e ardhshëm të dhomës të dukshëm për këdo.",
     "Incorrect verification code": "Kod verifikimi i pasaktë",
     "Phone": "Telefon",
     "No display name": "S’ka emër shfaqjeje",
@@ -326,9 +322,6 @@
     "Define the power level of a user": "Përcaktoni shkallë pushteti të një përdoruesi",
     "Deops user with given id": "I heq cilësinë e operatorit përdoruesit me ID-në e dhënë",
     "You are no longer ignoring %(userId)s": "Nuk e shpërfillni më %(userId)s",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s dërgoi një ftesë për %(targetDisplayName)s që të marrë pjesë në dhomë.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s e kaloi historikun e ardhshëm të dhomës të dukshëm për të panjohurit (%(visibility)s).",
-    "%(widgetName)s widget removed by %(senderName)s": "Widget-i %(widgetName)s u hoq nga %(senderName)s",
     "Authentication check failed: incorrect password?": "Dështoi kontrolli i mirëfilltësimit: fjalëkalim i pasaktë?",
     "%(roomName)s is not accessible at this time.": "Te %(roomName)s s’hyhet dot tani.",
     "Error decrypting attachment": "Gabim në shfshehtëzim bashkëngjitjeje",
@@ -364,8 +357,6 @@
         "other": "Për %(severalUsers)s u hodhën poshtë ftesat e tyre %(count)s herë"
     },
     "You seem to be uploading files, are you sure you want to quit?": "Duket se jeni duke ngarkuar kartela, jeni i sigurt se doni të dilet?",
-    "%(widgetName)s widget modified by %(senderName)s": "Widget-i %(widgetName)s u modifikua nga %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "Widget-i %(widgetName)s u shtua nga %(senderName)s",
     "Add some now": "Shtohen ca tani",
     "Click here to see older messages.": "Klikoni këtu për të parë mesazhe më të vjetër.",
     "Clear cache and resync": "Spastro fshehtinën dhe rinjëkohëso",
@@ -410,7 +401,6 @@
     "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s nga %(fromPowerLevel)s në %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s ndryshoi shkallën e pushtetit të %(powerLevelDiffText)s.",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s ndryshoi mesazhin e fiksuar për këtë dhomë.",
     "Enable URL previews for this room (only affects you)": "Aktivizo paraparje URL-sh për këtë dhomë (prek vetëm ju)",
     "Enable URL previews by default for participants in this room": "Aktivizo, si parazgjedhje, paraparje URL-sh për pjesëmarrësit në këtë dhomë",
     "A text message has been sent to %(msisdn)s": "Te %(msisdn)s u dërgua një mesazh tekst",
@@ -702,7 +692,6 @@
     "Power level": "Shkallë pushteti",
     "The file '%(fileName)s' failed to upload.": "Dështoi ngarkimi i kartelës '%(fileName)s'.",
     "You cannot modify widgets in this room.": "S’mund të ndryshoni widget-e në këtë dhomë.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s shfuqizoi ftesën për %(targetDisplayName)s që të marrë pjesë në dhomë.",
     "No homeserver URL provided": "S’u dha URL shërbyesi Home",
     "Upgrade this room to the recommended room version": "Përmirësojeni këtë dhomë me versionin e rekomanduar të dhomës",
     "View older messages in %(roomName)s.": "Shihni mesazhe më të vjetër në %(roomName)s.",
@@ -1198,9 +1187,6 @@
         "other": "%(senderName)s hoqi adresat alternative %(addresses)s për këtë dhomë.",
         "one": "%(senderName)s hoqi adresën alternative %(addresses)s për këtë dhomë."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s ndryshoi adresat alternative për këtë dhomë.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s ndryshoi adresat kryesore dhe alternative për këtë dhomë.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s ndryshoi adresat për këtë dhomë.",
     "Invalid theme schema.": "Skemë e pavlefshme teme.",
     "Error downloading theme information.": "Gabim në shkarkim të dhënash teme.",
     "Theme added!": "Tema u shtua!",
@@ -1312,8 +1298,6 @@
     "Currently indexing: %(currentRoom)s": "Indeksim aktual: %(currentRoom)s",
     "Opens chat with the given user": "Hap fjalosje me përdoruesin e dhënë",
     "You've successfully verified your device!": "E verifikuat me sukses pajisjen tuaj!",
-    "Message deleted": "Mesazhi u fshi",
-    "Message deleted by %(name)s": "Mesazh i fshirë nga %(name)s",
     "QR Code": "Kod QR",
     "To continue, use Single Sign On to prove your identity.": "Që të vazhdohet, përdorni Hyrje Njëshe, që të provoni identitetin tuaj.",
     "Confirm to continue": "Ripohojeni që të vazhdohet",
@@ -2141,7 +2125,6 @@
     "Address": "Adresë",
     "e.g. my-space": "p.sh., hapësira-ime",
     "Silence call": "Heshtoje thirrjen",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s ndryshoi <a>mesazhin e fiksuar</a> për këtë dhomë.",
     "Some invites couldn't be sent": "S’u dërguan dot disa nga ftesat",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "I dërguam të tjerat, por personat më poshtë s’u ftuan dot te <RoomName/>",
     "Unnamed audio": "Audio pa emër",
@@ -2287,10 +2270,6 @@
     "To avoid these issues, create a <a>new public room</a> for the conversation you plan to have.": "Për të shmangur këto probleme, krijoni për bisedën që keni në plan një <a>dhomë të re publike</a>.",
     "The above, but in <Room /> as well": "Atë më sipër, por edhe te <Room />",
     "The above, but in any room you are joined or invited to as well": "Atë më sipër, por edhe në çfarëdo dhome ku keni hyrë ose jeni ftuar",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s hoqi fiksimin e një mesazhi nga kjo dhomë. Shihni krejt mesazhet e fiksuar.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s hoqi fiksimin e <a>një mesazhi</a> nga kjo dhomë. Shihni krejt <b>mesazhet e fiksuar</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s fiksoi një mesazh te kjo dhomë. Shihni krejt mesazhet e fiksuar.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s fiksoi <a>një mesazh</a> te kjo dhomë. Shini krejt <b>mesazhet e fiksuar</b>.",
     "Some encryption parameters have been changed.": "Janë ndryshuar disa parametra fshehtëzimi.",
     "Role in <RoomName/>": "Rol në <RoomName/>",
     "Send a sticker": "Dërgoni një ngjitës",
@@ -2452,7 +2431,6 @@
     "Unpin this widget to view it in this panel": "Hiqjani fiksimin këtij widget-i, që ta shihni te ky panel",
     "Large": "E madhe",
     "Image size in the timeline": "Madhësi figure në rrjedhën kohore",
-    "%(senderName)s has updated the room layout": "%(senderName)s ka përditësuar skemën e dhomës",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s dhe %(count)s tjetër",
         "other": "%(spaceName)s dhe %(count)s të tjerë"
@@ -2591,9 +2569,6 @@
     "Message pending moderation: %(reason)s": "Mesazh në pritje të moderimit: %(reason)s",
     "Keyboard": "Tastierë",
     "Space home": "Shtëpia e hapësirës",
-    "%(senderName)s has ended a poll": "%(senderName)s e përfundoi anketimin",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s nisi një anketim - %(pollQuestion)s",
-    "%(senderName)s has shared their location": "%(senderName)s dha vendndodhjen e vet",
     "You don't have permission to view messages from before you joined.": "S’keni leje të shihni mesazhe nga koha para se të merrnit pjesë.",
     "You don't have permission to view messages from before you were invited.": "S’keni leje të shihni mesazhe nga koha para se t’ju ftonin.",
     "Internal room ID": "ID e brendshme dhome",
@@ -3890,8 +3865,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s caktoi %(address)s si adresë kryesore për këtë dhomë.",
-            "removed": "%(senderName)s hoqi adresën kryesore për këtë dhomë."
-        }
+            "removed": "%(senderName)s hoqi adresën kryesore për këtë dhomë.",
+            "changed_alternative": "%(senderName)s ndryshoi adresat alternative për këtë dhomë.",
+            "changed_main_and_alternative": "%(senderName)s ndryshoi adresat kryesore dhe alternative për këtë dhomë.",
+            "changed": "%(senderName)s ndryshoi adresat për këtë dhomë."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s shfuqizoi ftesën për %(targetDisplayName)s që të marrë pjesë në dhomë.",
+            "sent": "%(senderName)s dërgoi një ftesë për %(targetDisplayName)s që të marrë pjesë në dhomë."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s e bëri historikun e ardhshëm të dhomës të dukshëm për krejt anëtarët e dhomës, prej çastit kur janë ftuar.",
+            "joined": "%(senderName)s e bëri historikun e ardhshëm të dhomës të dukshëm për krejt anëtarët e dhomës, prej çastit kur morën pjesë.",
+            "shared": "%(senderName)s e bëri historikun e ardhshëm të dhomës të dukshëm për krejt anëtarët e dhomës.",
+            "world_readable": "%(senderName)s e bëri historikun e ardhshëm të dhomës të dukshëm për këdo.",
+            "unknown": "%(senderName)s e kaloi historikun e ardhshëm të dhomës të dukshëm për të panjohurit (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s fiksoi <a>një mesazh</a> te kjo dhomë. Shini krejt <b>mesazhet e fiksuar</b>.",
+            "pinned": "%(senderName)s fiksoi një mesazh te kjo dhomë. Shihni krejt mesazhet e fiksuar.",
+            "unpinned_link": "%(senderName)s hoqi fiksimin e <a>një mesazhi</a> nga kjo dhomë. Shihni krejt <b>mesazhet e fiksuar</b>.",
+            "unpinned": "%(senderName)s hoqi fiksimin e një mesazhi nga kjo dhomë. Shihni krejt mesazhet e fiksuar.",
+            "changed_link": "%(senderName)s ndryshoi <a>mesazhin e fiksuar</a> për këtë dhomë.",
+            "changed": "%(senderName)s ndryshoi mesazhin e fiksuar për këtë dhomë."
+        },
+        "m.widget": {
+            "modified": "Widget-i %(widgetName)s u modifikua nga %(senderName)s",
+            "added": "Widget-i %(widgetName)s u shtua nga %(senderName)s",
+            "removed": "Widget-i %(widgetName)s u hoq nga %(senderName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s ka përditësuar skemën e dhomës",
+        "m.location": "%(senderName)s dha vendndodhjen e vet",
+        "self_redaction": "Mesazhi u fshi",
+        "redaction": "Mesazh i fshirë nga %(name)s",
+        "m.poll.start": "%(senderName)s nisi një anketim - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s e përfundoi anketimin"
     },
     "slash_command": {
         "spoiler": "E dërgon mesazhin e dhënë si <em>spoiler</em>",

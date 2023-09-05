@@ -73,11 +73,6 @@
     "Join Room": "Odaya Katıl",
     "Jump to first unread message.": "İlk okunmamış iletiye atla.",
     "Low priority": "Düşük öncelikli",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s gelecekte oda geçmişini görünür yaptı Tüm oda üyeleri , davet edildiği noktadan.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s gelecekte oda geçmişini görünür yaptı Tüm oda üyeleri , katıldıkları noktalardan.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s gelecekte oda geçmişini görünür yaptı Tüm oda üyeleri.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s gelecekte oda geçmişini görünür yaptı herhangi biri.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s gelecekte oda geçmişini görünür yaptı bilinmeyen (%(visibility)s).",
     "Missing room_id in request": "İstekte eksik room_id",
     "Missing user_id in request": "İstekte user_id eksik",
     "Moderator": "Moderatör",
@@ -108,7 +103,6 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s şu anda erişilebilir değil.",
     "Rooms": "Odalar",
     "Search failed": "Arama başarısız",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s %(targetDisplayName)s' a odaya katılması için bir davet gönderdi.",
     "Server error": "Sunucu Hatası",
     "Server may be unavailable, overloaded, or search timed out :(": "Sunucu kullanılamıyor , aşırı yüklenmiş veya arama zaman aşımına uğramış olabilir :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Sunucu kullanılamıyor , aşırı yüklenmiş , veya bir hatayla karşılaşmış olabilirsiniz.",
@@ -438,10 +432,6 @@
     "Unable to create widget.": "Görsel bileşen oluşturulamıyor.",
     "Use an identity server to invite by email. Manage in Settings.": "E-posta ile davet etmek için bir kimlik sunucusu kullan. Ayarlardan Yönet.",
     "You cannot modify widgets in this room.": "Bu odadaki görsel bileşenleri değiştiremezsiniz.",
-    "%(senderName)s changed the pinned messages for the room.": "Oda için sabitlenmiş mesajları %(senderName)s değiştirdi.",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s görsel bileşeni %(senderName)s tarafından düzenlendi",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s görsel bileşeni %(senderName)s tarafından eklendi",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s görsel bileşeni %(senderName)s tarafından silindi",
     "This homeserver has exceeded one of its resource limits.": "Bu anasunucu kaynak limitlerinden birini aştı.",
     "%(items)s and %(count)s others": {
         "other": "%(items)s ve diğer %(count)s",
@@ -980,9 +970,6 @@
     "Your keys are being backed up (the first backup could take a few minutes).": "Anahtarlarınız yedekleniyor (ilk yedek bir kaç dakika sürebilir).",
     "Set up": "Ayarla",
     "Cancel entering passphrase?": "Parola girişini iptal et?",
-    "%(senderName)s changed the alternative addresses for this room.": "Bu oda için alternatif adresler %(senderName)s tarafından değiştirildi.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "Bu oda için ana ve alternatif adresler %(senderName)s tarafından değiştirildi.",
-    "%(senderName)s changed the addresses for this room.": "Bu oda adresleri %(senderName)s tarafından değiştirildi.",
     "Upgrade public room": "Açık odayı güncelle",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Bu odayı <oldVersion /> versiyonundan <newVersion /> versiyonuna güncelleyeceksiniz.",
     "We encountered an error trying to restore your previous session.": "Önceki oturumunuzu geri yüklerken bir hatayla karşılaştık.",
@@ -1025,7 +1012,6 @@
         "other": "%(senderName)s bu oda için alternatif adresleri %(addresses)s sildi.",
         "one": "%(senderName)s bu oda için alternatif adresi %(addresses)s sildi."
     },
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s, %(targetDisplayName)s'nin odaya katılması için daveti iptal etti.",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s %(glob)s ile eşleşen kullanıcıları banlama kuralını kaldırdı",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s %(glob)s ile eşleşen odaları banlama kuralını kaldırdı",
     "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s %(glob)s ile eşleşen sunucuları banlama kuralını kaldırdı",
@@ -1362,8 +1348,6 @@
     "Edited at %(date)s": "%(date)s tarihinde düzenlendi",
     "This room is a continuation of another conversation.": "Bu oda başka bir görüşmenin devamıdır.",
     "Message deleted on %(date)s": "Mesaj %(date)s tarihinde silindi",
-    "Message deleted by %(name)s": "Mesaj %(name)s tarafından silindi",
-    "Message deleted": "Mesaj silindi",
     "%(name)s declined": "%(name)s reddetti",
     "You declined": "Reddettiniz",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Bu kullanıcıyı yok saydınız, bu yüzden mesajları gizlidir. <a>Yine de göster.</a>",
@@ -1670,7 +1654,6 @@
     "Use app": "Uygulamayı kullan",
     "Use app for a better experience": "Daha iyi bir deneyim için uygulamayı kullanın",
     "Remain on your screen while running": "Uygulama çalışırken lütfen başka uygulamaya geçmeyin",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s odadaki <a>ileti sabitlemelerini</a> değiştirdi.",
     "Some invites couldn't be sent": "Bazı davetler gönderilemiyor",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Başkalarına davetler iletilmekle beraber, aşağıdakiler <RoomName/> odasına davet edilemedi",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Tarayıcınıza bağlandığınız ana sunucuyu anımsamasını söyledik ama ne yazık ki tarayıcınız bunu unutmuş. Lütfen giriş sayfasına gidip tekrar deneyin.",
@@ -1715,8 +1698,6 @@
     "Unable to transfer call": "Arama Karşıdaki kişiye aktarılamıyor",
     "This homeserver has been blocked by its administrator.": "Bu sunucu yöneticisi tarafından bloke edildi.",
     "See when people join, leave, or are invited to this room": "İnsanların bu odaya ne zaman katıldığını, ayrıldığını veya davet edildiğini görün",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s Bu odadan bir mesajın sabitlemesini kaldırdı. Bütün sabitlenmiş mesajları görün.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s bu odaya bir mesaj sabitledi, Bütün sabitlenmiş mesajları görün.",
     "Failed to transfer call": "Arama aktarılırken hata oluştu",
     "For best security, sign out from any session that you don't recognize or use anymore.": "En iyi güvenlik için, tanımadığın ya da artık kullanmadığın oturumlardan çıkış yap.",
     "Security recommendations": "Güvenlik önerileri",
@@ -2048,8 +2029,35 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s bu odanın ana adresini %(address)s olarak ayarladı.",
-            "removed": "Bu oda için ana adresi silen %(senderName)s."
-        }
+            "removed": "Bu oda için ana adresi silen %(senderName)s.",
+            "changed_alternative": "Bu oda için alternatif adresler %(senderName)s tarafından değiştirildi.",
+            "changed_main_and_alternative": "Bu oda için ana ve alternatif adresler %(senderName)s tarafından değiştirildi.",
+            "changed": "Bu oda adresleri %(senderName)s tarafından değiştirildi."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s, %(targetDisplayName)s'nin odaya katılması için daveti iptal etti.",
+            "sent": "%(senderName)s %(targetDisplayName)s' a odaya katılması için bir davet gönderdi."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s gelecekte oda geçmişini görünür yaptı Tüm oda üyeleri , davet edildiği noktadan.",
+            "joined": "%(senderName)s gelecekte oda geçmişini görünür yaptı Tüm oda üyeleri , katıldıkları noktalardan.",
+            "shared": "%(senderName)s gelecekte oda geçmişini görünür yaptı Tüm oda üyeleri.",
+            "world_readable": "%(senderName)s gelecekte oda geçmişini görünür yaptı herhangi biri.",
+            "unknown": "%(senderName)s gelecekte oda geçmişini görünür yaptı bilinmeyen (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned": "%(senderName)s bu odaya bir mesaj sabitledi, Bütün sabitlenmiş mesajları görün.",
+            "unpinned": "%(senderName)s Bu odadan bir mesajın sabitlemesini kaldırdı. Bütün sabitlenmiş mesajları görün.",
+            "changed_link": "%(senderName)s odadaki <a>ileti sabitlemelerini</a> değiştirdi.",
+            "changed": "Oda için sabitlenmiş mesajları %(senderName)s değiştirdi."
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s görsel bileşeni %(senderName)s tarafından düzenlendi",
+            "added": "%(widgetName)s görsel bileşeni %(senderName)s tarafından eklendi",
+            "removed": "%(widgetName)s görsel bileşeni %(senderName)s tarafından silindi"
+        },
+        "self_redaction": "Mesaj silindi",
+        "redaction": "Mesaj %(name)s tarafından silindi"
     },
     "slash_command": {
         "spoiler": "Mesajı sürprizbozan olarak gönder",

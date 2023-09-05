@@ -67,18 +67,8 @@
     "Displays action": "कार्रवाई प्रदर्शित करता है",
     "Forces the current outbound group session in an encrypted room to be discarded": "एक एन्क्रिप्टेड रूम में मौजूदा आउटबाउंड समूह सत्र को त्यागने के लिए मजबूर करता है",
     "Reason": "कारण",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s रूम में शामिल होने के लिए %(targetDisplayName)s को निमंत्रण भेजा।",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s ने भविष्य के रूम का इतिहास सभी रूम के सदस्यों के लिए प्रकाशित कर दिया जिस बिंदु से उन्हें आमंत्रित किया गया था।",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s ने भविष्य के रूम का इतिहास सभी रूम के सदस्यों के लिए दृश्यमान किया, जिस बिंदु में वे शामिल हुए थे।",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s ने भविष्य के रूम का इतिहास सभी रूम के सदस्यों के लिए दृश्यमान बना दिया।",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s ने भविष्य के रूम का इतिहास हर किसी के लिए दृश्यमान बना दिया।",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s ने भविष्य के रूम का इतिहास अज्ञात (%(visibility)s) के लिए दृश्यमान बनाया।",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s का %(fromPowerLevel)s से %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s ने %(powerLevelDiffText)s के पावर स्तर को बदल दिया।",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s ने रूम के लिए पिन किए गए संदेश को बदल दिया।",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s विजेट %(senderName)s द्वारा संशोधित",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s विजेट %(senderName)s द्वारा जोड़ा गया",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s विजेट %(senderName)s द्वारा हटा दिया गया",
     "Failure to create room": "रूम बनाने में विफलता",
     "Server may be unavailable, overloaded, or you hit a bug.": "सर्वर अनुपलब्ध, अधिभारित हो सकता है, या अपने एक सॉफ्टवेयर गर्बरी को पाया।",
     "Send": "भेजें",
@@ -330,7 +320,6 @@
     "The file '%(fileName)s' failed to upload.": "फ़ाइल '%(fileName)s' अपलोड करने में विफल रही।",
     "Please supply a https:// or http:// widget URL": "कृपया एक https:// या http:// विजेट URL की आपूर्ति करें",
     "You cannot modify widgets in this room.": "आप इस रूम में विजेट्स को संशोधित नहीं कर सकते।",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s ने कमरे में शामिल होने के लिए %(targetDisplayName)s के निमंत्रण को रद्द कर दिया।",
     "The user must be unbanned before they can be invited.": "उपयोगकर्ता को आमंत्रित करने से पहले उन्हें प्रतिबंधित किया जाना चाहिए।",
     "Explore rooms": "रूम का अन्वेषण करें",
     "Create Account": "खाता बनाएं",
@@ -645,6 +634,25 @@
         "m.room.canonical_alias": {
             "set": "%(senderName)s ने इस कमरे के लिए मुख्य पता %(address)s पर सेट किया।",
             "removed": "%(senderName)s ने इस कमरे के लिए मुख्य पता हटा दिया।"
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s ने कमरे में शामिल होने के लिए %(targetDisplayName)s के निमंत्रण को रद्द कर दिया।",
+            "sent": "%(senderName)s रूम में शामिल होने के लिए %(targetDisplayName)s को निमंत्रण भेजा।"
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s ने भविष्य के रूम का इतिहास सभी रूम के सदस्यों के लिए प्रकाशित कर दिया जिस बिंदु से उन्हें आमंत्रित किया गया था।",
+            "joined": "%(senderName)s ने भविष्य के रूम का इतिहास सभी रूम के सदस्यों के लिए दृश्यमान किया, जिस बिंदु में वे शामिल हुए थे।",
+            "shared": "%(senderName)s ने भविष्य के रूम का इतिहास सभी रूम के सदस्यों के लिए दृश्यमान बना दिया।",
+            "world_readable": "%(senderName)s ने भविष्य के रूम का इतिहास हर किसी के लिए दृश्यमान बना दिया।",
+            "unknown": "%(senderName)s ने भविष्य के रूम का इतिहास अज्ञात (%(visibility)s) के लिए दृश्यमान बनाया।"
+        },
+        "m.room.pinned_events": {
+            "changed": "%(senderName)s ने रूम के लिए पिन किए गए संदेश को बदल दिया।"
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s विजेट %(senderName)s द्वारा संशोधित",
+            "added": "%(widgetName)s विजेट %(senderName)s द्वारा जोड़ा गया",
+            "removed": "%(widgetName)s विजेट %(senderName)s द्वारा हटा दिया गया"
         }
     },
     "slash_command": {

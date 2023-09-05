@@ -70,18 +70,8 @@
     "You are no longer ignoring %(userId)s": "Вече не игнорирате %(userId)s",
     "Verified key": "Потвърден ключ",
     "Reason": "Причина",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s изпрати покана на %(targetDisplayName)s да се присъедини към стаята.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s направи бъдещата история на стаята видима за всички членове, от момента на поканването им в нея.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s направи бъдещата история на стаята видима за всички членове, от момента на присъединяването им в нея.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s направи бъдещата история на стаята видима за всички членове в нея.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s направи бъдещата история на стаята видима за всеки.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s направи бъдещата история на стаята видима по непознат начин (%(visibility)s).",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s от %(fromPowerLevel)s на %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s смени нивото на достъп на %(powerLevelDiffText)s.",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s смени закачените съобщения за стаята.",
-    "%(widgetName)s widget modified by %(senderName)s": "Приспособлението %(widgetName)s беше променено от %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "Приспособлението %(widgetName)s беше добавено от %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "Приспособлението %(widgetName)s беше премахнато от %(senderName)s",
     "Failure to create room": "Неуспешно създаване на стая",
     "Server may be unavailable, overloaded, or you hit a bug.": "Сървърът може би е претоварен, недостъпен или се натъкнахте на проблем.",
     "Your browser does not support the required cryptography extensions": "Вашият браузър не поддържа необходимите разширения за шифроване",
@@ -706,7 +696,6 @@
     "The file '%(fileName)s' failed to upload.": "Файлът '%(fileName)s' не можа да бъде качен.",
     "Please supply a https:// or http:// widget URL": "Моля, укажете https:// или http:// адрес на приспособление",
     "You cannot modify widgets in this room.": "Не можете да модифицирате приспособления в тази стая.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s премахна покана към %(targetDisplayName)s за присъединяване в стаята.",
     "Upgrade this room to the recommended room version": "Обнови тази стая до препоръчаната версия на стаята",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Тази стая използва версия на стая <roomVersion />, която сървърът счита за <i>нестабилна</i>.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Обновяването на тази стая ще изключи текущата стая и ще създаде обновена стая със същото име.",
@@ -1098,9 +1087,6 @@
         "other": "%(senderName)s премахна алтернативните адреси %(addresses)s от стаята.",
         "one": "%(senderName)s премахна алтернативният адрес %(addresses)s от стаята."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s промени алтернативните адреси на стаята.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s промени основният и алтернативните адреси на стаята.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s промени адресите на стаята.",
     "Not Trusted": "Недоверено",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) влезе в нова сесия без да я потвърди:",
     "Ask this user to verify their session, or manually verify it below.": "Поискайте от този потребител да потвърди сесията си, или я потвърдете ръчно по-долу.",
@@ -1258,8 +1244,6 @@
     "Custom font size can only be between %(min)s pt and %(max)s pt": "Собствения размер на шрифта може да бъде единствено между %(min)s pt и %(max)s pt",
     "Use between %(min)s pt and %(max)s pt": "Изберете между %(min)s pt и %(max)s pt",
     "You've successfully verified your device!": "Успешно потвърдихте устройството си!",
-    "Message deleted": "Съобщението беше изтрито",
-    "Message deleted by %(name)s": "Съобщението беше изтрито от %(name)s",
     "QR Code": "QR код",
     "To continue, use Single Sign On to prove your identity.": "За да продължите, използвайте Single Sign On за да потвърдите самоличността си.",
     "Confirm to continue": "Потвърдете за да продължите",
@@ -2138,8 +2122,32 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s настрой основния адрес на тази стая на %(address)s.",
-            "removed": "%(senderName)s премахна основния адрес на тази стая."
-        }
+            "removed": "%(senderName)s премахна основния адрес на тази стая.",
+            "changed_alternative": "%(senderName)s промени алтернативните адреси на стаята.",
+            "changed_main_and_alternative": "%(senderName)s промени основният и алтернативните адреси на стаята.",
+            "changed": "%(senderName)s промени адресите на стаята."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s премахна покана към %(targetDisplayName)s за присъединяване в стаята.",
+            "sent": "%(senderName)s изпрати покана на %(targetDisplayName)s да се присъедини към стаята."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s направи бъдещата история на стаята видима за всички членове, от момента на поканването им в нея.",
+            "joined": "%(senderName)s направи бъдещата история на стаята видима за всички членове, от момента на присъединяването им в нея.",
+            "shared": "%(senderName)s направи бъдещата история на стаята видима за всички членове в нея.",
+            "world_readable": "%(senderName)s направи бъдещата история на стаята видима за всеки.",
+            "unknown": "%(senderName)s направи бъдещата история на стаята видима по непознат начин (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "changed": "%(senderName)s смени закачените съобщения за стаята."
+        },
+        "m.widget": {
+            "modified": "Приспособлението %(widgetName)s беше променено от %(senderName)s",
+            "added": "Приспособлението %(widgetName)s беше добавено от %(senderName)s",
+            "removed": "Приспособлението %(widgetName)s беше премахнато от %(senderName)s"
+        },
+        "self_redaction": "Съобщението беше изтрито",
+        "redaction": "Съобщението беше изтрито от %(name)s"
     },
     "slash_command": {
         "spoiler": "Изпраща даденото съобщение като спойлер",

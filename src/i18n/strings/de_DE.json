@@ -93,17 +93,11 @@
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s hat das Berechtigungslevel von %(powerLevelDiffText)s geändert.",
     "Failed to send request.": "Übertragung der Anfrage fehlgeschlagen.",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s von %(fromPowerLevel)s zu %(toPowerLevel)s",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s hat den Verlauf für alle Raummitglieder ab ihrer Einladung sichtbar gemacht.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s hat den Verlauf für alle Raummitglieder ab ihrem Betreten sichtbar gemacht.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s hat den zukünftigen Verlauf für alle Raummitglieder sichtbar gemacht.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s hat den zukünftigen Verlauf für alle sichtbar gemacht.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s hat den zukünftigen Verlauf für Unbekannte sichtbar gemacht (%(visibility)s).",
     "Missing room_id in request": "user_id fehlt in der Anfrage",
     "Missing user_id in request": "user_id fehlt in der Anfrage",
     "Power level must be positive integer.": "Berechtigungslevel muss eine positive ganze Zahl sein.",
     "Reason": "Grund",
     "Room %(roomId)s not visible": "Raum %(roomId)s ist nicht sichtbar",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s hat %(targetDisplayName)s in diesen Raum eingeladen.",
     "This room is not recognised.": "Dieser Raum wurde nicht erkannt.",
     "Usage": "Verwendung",
     "You need to be able to invite users to do that.": "Du musst die Berechtigung \"Benutzer einladen\" haben, um diese Aktion ausführen zu können.",
@@ -235,9 +229,6 @@
     "You do not have permission to do that in this room.": "Du hast dafür keine Berechtigung.",
     "AM": "a. m.",
     "PM": "p. m.",
-    "%(widgetName)s widget added by %(senderName)s": "%(senderName)s hat das Widget %(widgetName)s hinzugefügt",
-    "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s hat das Widget %(widgetName)s entfernt",
-    "%(widgetName)s widget modified by %(senderName)s": "Das Widget „%(widgetName)s“ wurde von %(senderName)s bearbeitet",
     "Copied!": "Kopiert!",
     "Failed to copy": "Kopieren fehlgeschlagen",
     "You are now ignoring %(userId)s": "%(userId)s ist jetzt blockiert",
@@ -247,7 +238,6 @@
     "Ignored user": "Benutzer blockiert",
     "Banned by %(displayName)s": "Verbannt von %(displayName)s",
     "Unknown": "Unbekannt",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s hat die angehefteten Nachrichten für diesen Raum geändert.",
     "Jump to read receipt": "Zur Lesebestätigung springen",
     "Unnamed room": "Unbenannter Raum",
     "And %(count)s more...": {
@@ -708,7 +698,6 @@
     "The server does not support the room version specified.": "Der Server unterstützt die angegebene Raumversion nicht.",
     "The file '%(fileName)s' failed to upload.": "Die Datei „%(fileName)s“ konnte nicht hochgeladen werden.",
     "Please supply a https:// or http:// widget URL": "Bitte gib eine mit https:// oder http:// beginnende Widget-URL an",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s hat die Einladung für %(targetDisplayName)s zurückgezogen.",
     "Cannot reach homeserver": "Heim-Server nicht erreichbar",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Stelle sicher, dass du eine stabile Internetverbindung hast oder wende dich an deine Server-Administration",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Wende dich an deinen %(brand)s-Admin um <a>deine Konfiguration</a> auf ungültige oder doppelte Einträge zu überprüfen.",
@@ -904,13 +893,10 @@
         "one": "%(senderName)s hat die alternative Adresse %(addresses)s für diesen Raum hinzugefügt.",
         "other": "%(senderName)s hat die alternative Adresse %(addresses)s für diesen Raum hinzugefügt."
     },
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s hat die Adresse für diesen Raum geändert.",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
         "other": "%(senderName)s hat die alternativen Adressen %(addresses)s für diesen Raum entfernt.",
         "one": "%(senderName)s hat die alternative Adresse %(addresses)s für diesen Raum entfernt."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s hat die alternative Adresse für diesen Raum geändert.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s hat die Haupt- und Alternativadressen für diesen Raum geändert.",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s entfernte die Ausschlussregel für Benutzer, die %(glob)s entsprechen",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s entfernte die Ausschlussregel für Räume, die %(glob)s entsprechen",
     "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s entfernte die Ausschlussregel für Server, die %(glob)s entsprechen",
@@ -1125,8 +1111,6 @@
     "You cancelled": "Du brachst ab",
     "You sent a verification request": "Du hast eine Verifizierungsanfrage gesendet",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>hat mit %(shortName)s reagiert</reactedWith>",
-    "Message deleted": "Nachricht gelöscht",
-    "Message deleted by %(name)s": "Nachricht von %(name)s gelöscht",
     "Edited at %(date)s. Click to view edits.": "Am %(date)s geändert. Klicke, um Änderungen anzuzeigen.",
     "Can't load this message": "Diese Nachricht kann nicht geladen werden",
     "Submit logs": "Protokolldateien senden",
@@ -2145,7 +2129,6 @@
     "Address": "Adresse",
     "e.g. my-space": "z. B. mein-space",
     "Sound on": "Ton an",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s hat die <a>angehefteten Nachrichten</a> geändert.",
     "Some invites couldn't be sent": "Einige Einladungen konnten nicht versendet werden",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Die anderen wurden gesendet, aber die folgenden Leute konnten leider nicht in <RoomName/> eingeladen werden",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisierung der Suche fehlgeschlagen, für weitere Informationen öffne <a>deine Einstellungen</a>",
@@ -2294,10 +2277,6 @@
     "Change space name": "Name des Space ändern",
     "Change space avatar": "Space-Icon ändern",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Finden und betreten ist Mitgliedern von <spaceName/> erlaubt. Du kannst auch weitere Spaces wählen.",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s hat eine Nachricht losgelöst. Alle angepinnten Nachrichten anzeigen.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s hat <a>eine Nachricht</a> losgeheftet. Alle <b>angehefteten Nachrichten anzeigen</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s hat eine Nachricht angeheftet. Alle angehefteten Nachrichten anzeigen.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s hat <a>eine Nachricht</a> angeheftet. <b>Alle angehefteten Nachrichten anzeigen</b>.",
     "To join a space you'll need an invite.": "Um einen Space zu betreten, brauchst du eine Einladung.",
     "You are about to leave <spaceName/>.": "Du bist dabei, <spaceName/> zu verlassen.",
     "Leave some rooms": "Zu verlassende Räume auswählen",
@@ -2431,7 +2410,6 @@
     "Image size in the timeline": "Bildgröße im Verlauf",
     "sends rainfall": "sendet mit Regeneffekt",
     "Sends the given message with rainfall": "Nachricht mit Regeneffekt senden",
-    "%(senderName)s has updated the room layout": "%(senderName)s hat das Raumlayout geändert",
     "Show all your rooms in Home, even if they're in a space.": "Alle Räume auf der Startseite anzeigen, auch wenn sie Teil eines Space sind.",
     "Home is useful for getting an overview of everything.": "Die Startseite bietet dir einen Überblick über deine Unterhaltungen.",
     "Get notifications as set up in your <a>settings</a>": "Du erhältst Benachrichtigungen, wie du sie in den <a>Einstellungen</a> konfiguriert hast",
@@ -2551,9 +2529,6 @@
     "Command failed: Unable to find room (%(roomId)s": "Befehl fehlgeschlagen: Raum kann nicht gefunden werden (%(roomId)s",
     "Unrecognised room address: %(roomAlias)s": "Nicht erkannte Raumadresse: %(roomAlias)s",
     "Command error: Unable to find rendering type (%(renderingType)s)": "Befehlsfehler: Rendering-Typ kann nicht gefunden werden (%(renderingType)s)",
-    "%(senderName)s has shared their location": "%(senderName)s hat seine Position geteilt",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s hat eine Umfrage begonnen – %(pollQuestion)s",
-    "%(senderName)s has ended a poll": "%(senderName)s hat eine Abstimmung beendet",
     "Backspace": "Löschtaste",
     "Unknown error fetching location. Please try again later.": "Beim Abruf deines Standortes ist ein unbekannter Fehler aufgetreten. Bitte versuche es später erneut.",
     "Failed to fetch your location. Please try again later.": "Standort konnte nicht abgerufen werden. Bitte versuche es später erneut.",
@@ -4000,8 +3975,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s hat als Hauptadresse des Raums %(address)s festgelegt.",
-            "removed": "%(senderName)s hat die Hauptadresse von diesem Raum entfernt."
-        }
+            "removed": "%(senderName)s hat die Hauptadresse von diesem Raum entfernt.",
+            "changed_alternative": "%(senderName)s hat die alternative Adresse für diesen Raum geändert.",
+            "changed_main_and_alternative": "%(senderName)s hat die Haupt- und Alternativadressen für diesen Raum geändert.",
+            "changed": "%(senderName)s hat die Adresse für diesen Raum geändert."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s hat die Einladung für %(targetDisplayName)s zurückgezogen.",
+            "sent": "%(senderName)s hat %(targetDisplayName)s in diesen Raum eingeladen."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s hat den Verlauf für alle Raummitglieder ab ihrer Einladung sichtbar gemacht.",
+            "joined": "%(senderName)s hat den Verlauf für alle Raummitglieder ab ihrem Betreten sichtbar gemacht.",
+            "shared": "%(senderName)s hat den zukünftigen Verlauf für alle Raummitglieder sichtbar gemacht.",
+            "world_readable": "%(senderName)s hat den zukünftigen Verlauf für alle sichtbar gemacht.",
+            "unknown": "%(senderName)s hat den zukünftigen Verlauf für Unbekannte sichtbar gemacht (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s hat <a>eine Nachricht</a> angeheftet. <b>Alle angehefteten Nachrichten anzeigen</b>.",
+            "pinned": "%(senderName)s hat eine Nachricht angeheftet. Alle angehefteten Nachrichten anzeigen.",
+            "unpinned_link": "%(senderName)s hat <a>eine Nachricht</a> losgeheftet. Alle <b>angehefteten Nachrichten anzeigen</b>.",
+            "unpinned": "%(senderName)s hat eine Nachricht losgelöst. Alle angepinnten Nachrichten anzeigen.",
+            "changed_link": "%(senderName)s hat die <a>angehefteten Nachrichten</a> geändert.",
+            "changed": "%(senderName)s hat die angehefteten Nachrichten für diesen Raum geändert."
+        },
+        "m.widget": {
+            "modified": "Das Widget „%(widgetName)s“ wurde von %(senderName)s bearbeitet",
+            "added": "%(senderName)s hat das Widget %(widgetName)s hinzugefügt",
+            "removed": "%(senderName)s hat das Widget %(widgetName)s entfernt"
+        },
+        "io.element.widgets.layout": "%(senderName)s hat das Raumlayout geändert",
+        "m.location": "%(senderName)s hat seine Position geteilt",
+        "self_redaction": "Nachricht gelöscht",
+        "redaction": "Nachricht von %(name)s gelöscht",
+        "m.poll.start": "%(senderName)s hat eine Umfrage begonnen – %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s hat eine Abstimmung beendet"
     },
     "slash_command": {
         "spoiler": "Die gegebene Nachricht als Spoiler senden",

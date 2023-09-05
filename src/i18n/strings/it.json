@@ -76,17 +76,7 @@
     "You are no longer ignoring %(userId)s": "Non stai più ignorando %(userId)s",
     "Verified key": "Chiave verificata",
     "Reason": "Motivo",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s ha mandato un invito a %(targetDisplayName)s per unirsi alla stanza.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s ha reso visibile la futura cronologia della stanza a tutti i membri della stanza, dal momento del loro invito.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s ha reso visibile la futura cronologia della stanza a tutti i membri della stanza, dal momento in cui sono entrati.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s ha reso visibile la futura cronologia della stanza a tutti i membri della stanza.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s ha reso visibile la futura cronologia della stanza a tutti.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s ha reso visibile la futura cronologia della stanza a sconosciuti (%(visibility)s).",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s da %(fromPowerLevel)s a %(toPowerLevel)s",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s ha cambiato i messaggi ancorati della stanza.",
-    "%(widgetName)s widget modified by %(senderName)s": "Widget %(widgetName)s modificato da %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "Widget %(widgetName)s aggiunto da %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "Widget %(widgetName)s rimosso da %(senderName)s",
     "Failure to create room": "Creazione della stanza fallita",
     "Server may be unavailable, overloaded, or you hit a bug.": "Il server potrebbe essere non disponibile, sovraccarico o hai trovato un errore.",
     "Send": "Invia",
@@ -705,7 +695,6 @@
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se non hai rimosso il metodo di ripristino, è possibile che un aggressore stia cercando di accedere al tuo account. Cambia la password del tuo account e imposta immediatamente un nuovo metodo di recupero nelle impostazioni.",
     "Please supply a https:// or http:// widget URL": "Fornisci un URL https:// o http:// per il widget",
     "You cannot modify widgets in this room.": "Non puoi modificare i widget in questa stanza.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s ha revocato l'invito a %(targetDisplayName)s di unirsi alla stanza.",
     "Upgrade this room to the recommended room version": "Aggiorna questa stanza alla versione consigliata",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "La versione di questa stanza è <roomVersion />, che questo homeserver ha segnalato come <i>non stabile</i>.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Aggiornare questa stanza spegnerà l'istanza attuale della stanza e ne creerà una aggiornata con lo stesso nome.",
@@ -1202,9 +1191,6 @@
         "other": "%(senderName)s ha rimosso gli indirizzi alternativi %(addresses)s per questa stanza.",
         "one": "%(senderName)s ha rimosso l'indirizzo alternativo %(addresses)s per questa stanza."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s ha cambiato gli indirizzi alternativi per questa stanza.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s ha cambiato gli indirizzi principali ed alternativi per questa stanza.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s ha cambiato gli indirizzi per questa stanza.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Si è verificato un errore aggiornando gli indirizzi alternativi della stanza. Potrebbe non essere consentito dal server o essere un errore temporaneo.",
     "Invalid theme schema.": "Schema del tema non valido.",
     "Error downloading theme information.": "Errore scaricando informazioni sul tema.",
@@ -1312,8 +1298,6 @@
     "Successfully restored %(sessionCount)s keys": "Ripristinate %(sessionCount)s chiavi correttamente",
     "You signed in to a new session without verifying it:": "Hai fatto l'accesso ad una nuova sessione senza verificarla:",
     "Verify your other session using one of the options below.": "Verifica la tua altra sessione usando una delle opzioni sotto.",
-    "Message deleted": "Messaggio eliminato",
-    "Message deleted by %(name)s": "Messaggio eliminato da %(name)s",
     "Opens chat with the given user": "Apre una chat con l'utente specificato",
     "You've successfully verified your device!": "Hai verificato correttamente il tuo dispositivo!",
     "To continue, use Single Sign On to prove your identity.": "Per continuare, usa Single Sign On per provare la tua identità.",
@@ -2124,7 +2108,6 @@
     "e.g. my-space": "es. mio-spazio",
     "Silence call": "Silenzia la chiamata",
     "Sound on": "Audio attivo",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s ha cambiato i <a>messaggi ancorati</a> della stanza.",
     "Collapse reply thread": "Riduci conversazione di risposta",
     "Some invites couldn't be sent": "Alcuni inviti non sono stati spediti",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Abbiamo inviato gli altri, ma non è stato possibile invitare le seguenti persone in <RoomName/>",
@@ -2291,10 +2274,6 @@
     "Are you sure you want to add encryption to this public room?": "Vuoi veramente aggiungere la crittografia a questa stanza pubblica?",
     "The above, but in any room you are joined or invited to as well": "Quanto sopra, ma anche in qualsiasi stanza tu sia entrato/a o invitato/a",
     "The above, but in <Room /> as well": "Quanto sopra, ma anche in <Room />",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s ha tolto un messaggio ancorato da questa stanza. Vedi tutti i messaggi ancorati.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s ha tolto un <a>messaggio ancorato</a> da questa stanza. Vedi tutti i <b>messaggi ancorati</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s ha ancorato un messaggio a questa stanza. Vedi tutti i messaggi ancorati.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s ha ancorato <a>un messaggio</a> a questa stanza. Vedi tutti i <b>messaggi ancorati</b>.",
     "Some encryption parameters have been changed.": "Alcuni parametri di crittografia sono stati modificati.",
     "Role in <RoomName/>": "Ruolo in <RoomName/>",
     "Send a sticker": "Invia uno sticker",
@@ -2452,7 +2431,6 @@
     "Sends the given message with rainfall": "Invia il messaggio in questione con pioggia",
     "Large": "Grande",
     "Image size in the timeline": "Dimensione immagine nella linea temporale",
-    "%(senderName)s has updated the room layout": "%(senderName)s ha aggiornato la disposizione della stanza",
     "Based on %(count)s votes": {
         "one": "Basato su %(count)s voto",
         "other": "Basato su %(count)s voti"
@@ -2595,9 +2573,6 @@
     "Message pending moderation": "Messaggio in attesa di moderazione",
     "Message pending moderation: %(reason)s": "Messaggio in attesa di moderazione: %(reason)s",
     "Space home": "Pagina iniziale dello spazio",
-    "%(senderName)s has ended a poll": "%(senderName)s ha terminato un sondaggio",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s ha iniziato un sondaggio - %(pollQuestion)s",
-    "%(senderName)s has shared their location": "%(senderName)s ha condiviso la sua posizione",
     "You can't see earlier messages": "Non puoi vedere i messaggi precedenti",
     "Encrypted messages before this point are unavailable.": "I messaggi cifrati prima di questo punto non sono disponibili.",
     "You don't have permission to view messages from before you joined.": "Non hai l'autorizzazione per vedere i messaggi precedenti alla tua entrata.",
@@ -4000,8 +3975,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s ha messo %(address)s come indirizzo principale per questa stanza.",
-            "removed": "%(senderName)s ha rimosso l'indirizzo principale di questa stanza."
-        }
+            "removed": "%(senderName)s ha rimosso l'indirizzo principale di questa stanza.",
+            "changed_alternative": "%(senderName)s ha cambiato gli indirizzi alternativi per questa stanza.",
+            "changed_main_and_alternative": "%(senderName)s ha cambiato gli indirizzi principali ed alternativi per questa stanza.",
+            "changed": "%(senderName)s ha cambiato gli indirizzi per questa stanza."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s ha revocato l'invito a %(targetDisplayName)s di unirsi alla stanza.",
+            "sent": "%(senderName)s ha mandato un invito a %(targetDisplayName)s per unirsi alla stanza."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s ha reso visibile la futura cronologia della stanza a tutti i membri della stanza, dal momento del loro invito.",
+            "joined": "%(senderName)s ha reso visibile la futura cronologia della stanza a tutti i membri della stanza, dal momento in cui sono entrati.",
+            "shared": "%(senderName)s ha reso visibile la futura cronologia della stanza a tutti i membri della stanza.",
+            "world_readable": "%(senderName)s ha reso visibile la futura cronologia della stanza a tutti.",
+            "unknown": "%(senderName)s ha reso visibile la futura cronologia della stanza a sconosciuti (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s ha ancorato <a>un messaggio</a> a questa stanza. Vedi tutti i <b>messaggi ancorati</b>.",
+            "pinned": "%(senderName)s ha ancorato un messaggio a questa stanza. Vedi tutti i messaggi ancorati.",
+            "unpinned_link": "%(senderName)s ha tolto un <a>messaggio ancorato</a> da questa stanza. Vedi tutti i <b>messaggi ancorati</b>.",
+            "unpinned": "%(senderName)s ha tolto un messaggio ancorato da questa stanza. Vedi tutti i messaggi ancorati.",
+            "changed_link": "%(senderName)s ha cambiato i <a>messaggi ancorati</a> della stanza.",
+            "changed": "%(senderName)s ha cambiato i messaggi ancorati della stanza."
+        },
+        "m.widget": {
+            "modified": "Widget %(widgetName)s modificato da %(senderName)s",
+            "added": "Widget %(widgetName)s aggiunto da %(senderName)s",
+            "removed": "Widget %(widgetName)s rimosso da %(senderName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s ha aggiornato la disposizione della stanza",
+        "m.location": "%(senderName)s ha condiviso la sua posizione",
+        "self_redaction": "Messaggio eliminato",
+        "redaction": "Messaggio eliminato da %(name)s",
+        "m.poll.start": "%(senderName)s ha iniziato un sondaggio - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s ha terminato un sondaggio"
     },
     "slash_command": {
         "spoiler": "Invia il messaggio come spoiler",

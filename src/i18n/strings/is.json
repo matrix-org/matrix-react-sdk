@@ -268,12 +268,9 @@
     "Send text messages as you in this room": "Senda textaskilaboð sem þú á þessa spjallrás",
     "Send messages as you in your active room": "Senda skilaboð sem þú á virku spjallrásina þína",
     "Send messages as you in this room": "Senda skilaboð sem þú í þessari spjallrás",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s breytti föstum skilaboðum fyrir spjallrásina.",
     "No need for symbols, digits, or uppercase letters": "Engin þörf á táknum, tölustöfum, eða hástöfum",
     "Use a few words, avoid common phrases": "Notaðu nokkur orð. Forðastu algengar setningar",
     "Unknown server error": "Óþekkt villa á þjóni",
-    "Message deleted by %(name)s": "Skilaboðum eytt af %(name)s",
-    "Message deleted": "Skilaboðum eytt",
     "Room list": "Spjallrásalisti",
     "Subscribed lists": "Skráðir listar",
     "eg: @bot:* or example.org": "t.d.: @vélmenni:* eða dæmi.is",
@@ -996,7 +993,6 @@
     "Send stickers to this room as you": "Senda límmerki sem þú á þessa spjallrás",
     "Send stickers into your active room": "Senda límmerki á virku spjallrásina þína",
     "Send stickers into this room": "Senda límmerki á þessa spjallrás",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s breytti <a>föstum skilaboðum</a> fyrir spjallrásina.",
     "Are you sure you want to cancel entering passphrase?": "Viltu örugglega hætta við að setja inn lykilfrasa?",
     "Cancel entering passphrase?": "Hætta við að setja inn lykilfrasa?",
     "Connectivity to the server has been lost": "Tenging við vefþjón hefur rofnað",
@@ -1005,9 +1001,6 @@
         "one": "%(names)s og einn til viðbótar eru að skrifa……",
         "other": "%(names)s og %(count)s til viðbótar eru að skrifa……"
     },
-    "%(senderName)s has ended a poll": "%(senderName)s hefur lokið könnun",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s hefur sett í gang könnun - %(pollQuestion)s",
-    "%(senderName)s has shared their location": "%(senderName)s hefur deilt staðsetningu sinni",
     "You are no longer ignoring %(userId)s": "Þú ert ekki lengur að hunsa %(userId)s",
     "Unignored user": "Ekki-hunsaður notandi",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en tókst ekki að finna þetta.",
@@ -1824,9 +1817,6 @@
     "There was an error loading your notification settings.": "Það kom upp villa við að hlaða inn stillingum fyrir tilkynningar.",
     "New keyword": "Nýtt stikkorð",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s breytti völdum %(powerLevelDiffText)s.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s breytti vistföngunum fyrir þessa spjallrás.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s breytti aðal- og varavistföngunum fyrir þessa spjallrás.",
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s breytti varavistfanginu fyrir þessa spjallrás.",
     "This event could not be displayed": "Ekki tókst að birta þennan atburð",
     "Edit message": "Breyta skilaboðum",
     "Everyone in this room is verified": "Allir á þessari spjallrás eru staðfestir",
@@ -2331,13 +2321,6 @@
     "See when the topic changes in your active room": "Sjá þegar umfjöllunarefni virku spjallrásarinnar þinnar breytist",
     "See when the topic changes in this room": "Sjá þegar umfjöllunarefni þessarar spjallrásar breytist",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s úr %(fromPowerLevel)s í %(toPowerLevel)s",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s gerði ferilskrá spjallrásar héðan í frá sýnilega fyrir óþekkta (%(visibility)s).",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s gerði ferilskrá spjallrásar héðan í frá sýnilega fyrir alla.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s gerði ferilskrá spjallrásar héðan í frá sýnilega fyrir alla meðlimi spjallrásarinnar.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s gerði ferilskrá spjallrásar héðan í frá sýnilega fyrir alla meðlimi spjallrásarinnar síðan þeir skráðu sig.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s gerði ferilskrá spjallrásar héðan í frá sýnilega fyrir alla meðlimi spjallrásarinnar síðan þeim var boðið.",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s sendi boð til %(targetDisplayName)s um þátttöku í spjallrásinni.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s afturkallaði boð til %(targetDisplayName)s um þátttöku í spjallrásinni.",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
         "one": "%(senderName)s fjarlægði varavistfangið %(addresses)s af þessari spjallrás.",
         "other": "%(senderName)s fjarlægði varavistföngin %(addresses)s af þessari spjallrás."
@@ -2433,7 +2416,6 @@
     "To link to this room, please add an address.": "Til að tengja við þessa spjallrás skaltu bæta við vistfangi.",
     "Send stickers to your active room as you": "Senda límmerki sem þú á virku spjallrásina þína",
     "Failed to invite users to %(roomName)s": "Mistókst að bjóða notendum í %(roomName)s",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s losaði <a>skilaboð</a> af þessari spjallrás. Skoða öll <b>fest skilaboð</b>.",
     "See <b>%(eventType)s</b> events posted to your active room": "Sjá <b>%(eventType)s</b> atburði sem birtast í virku spjallrásina þinni",
     "Send <b>%(eventType)s</b> events as you in your active room": "Senda <b>%(eventType)s</b> atburði sem þú á virku spjallrásina þína",
     "See <b>%(eventType)s</b> events posted to this room": "Sjá <b>%(eventType)s</b> atburði sem birtast í þessari spjallrás",
@@ -2457,13 +2439,6 @@
     "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s fjarlægði regluna sem bannar netþjóna sem samsvara %(glob)s",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s fjarlægði regluna sem bannar spjallrásir sem samsvara %(glob)s",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s fjarlægði regluna sem bannar notendur sem samsvara %(glob)s",
-    "%(senderName)s has updated the room layout": "%(senderName)s hefur uppfært framsetningu spjallrásarinnar",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s viðmótshluti var fjarlægður af %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s viðmótshluta var bætt við af %(senderName)s",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s viðmótshluta var breytt af %(senderName)s",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s losaði skilaboð af þessari spjallrás. Skoðaðu öll fest skilaboð.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s festi skilaboð í þessari spjallrás. Skoðaðu öll fest skilaboð.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s festi <a>skilaboð</a> í þessari spjallrás. Skoða öll <b>fest skilaboð</b>.",
     "Consult first": "Ráðfæra fyrst",
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Þú ert áfram að <b>deila persónulegum gögnum</b> á auðkenningarþjóninum <idserver />.",
     "contact the administrators of identity server <idserver />": "að hafa samband við stjórnendur auðkennisþjónsins <idserver />",
@@ -3386,8 +3361,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s stillti aðalvistfang spjallrásarinnar sem %(address)s.",
-            "removed": "%(senderName)s fjarlægði aðalvistfang spjallrásarinnar."
-        }
+            "removed": "%(senderName)s fjarlægði aðalvistfang spjallrásarinnar.",
+            "changed_alternative": "%(senderName)s breytti varavistfanginu fyrir þessa spjallrás.",
+            "changed_main_and_alternative": "%(senderName)s breytti aðal- og varavistföngunum fyrir þessa spjallrás.",
+            "changed": "%(senderName)s breytti vistföngunum fyrir þessa spjallrás."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s afturkallaði boð til %(targetDisplayName)s um þátttöku í spjallrásinni.",
+            "sent": "%(senderName)s sendi boð til %(targetDisplayName)s um þátttöku í spjallrásinni."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s gerði ferilskrá spjallrásar héðan í frá sýnilega fyrir alla meðlimi spjallrásarinnar síðan þeim var boðið.",
+            "joined": "%(senderName)s gerði ferilskrá spjallrásar héðan í frá sýnilega fyrir alla meðlimi spjallrásarinnar síðan þeir skráðu sig.",
+            "shared": "%(senderName)s gerði ferilskrá spjallrásar héðan í frá sýnilega fyrir alla meðlimi spjallrásarinnar.",
+            "world_readable": "%(senderName)s gerði ferilskrá spjallrásar héðan í frá sýnilega fyrir alla.",
+            "unknown": "%(senderName)s gerði ferilskrá spjallrásar héðan í frá sýnilega fyrir óþekkta (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s festi <a>skilaboð</a> í þessari spjallrás. Skoða öll <b>fest skilaboð</b>.",
+            "pinned": "%(senderName)s festi skilaboð í þessari spjallrás. Skoðaðu öll fest skilaboð.",
+            "unpinned_link": "%(senderName)s losaði <a>skilaboð</a> af þessari spjallrás. Skoða öll <b>fest skilaboð</b>.",
+            "unpinned": "%(senderName)s losaði skilaboð af þessari spjallrás. Skoðaðu öll fest skilaboð.",
+            "changed_link": "%(senderName)s breytti <a>föstum skilaboðum</a> fyrir spjallrásina.",
+            "changed": "%(senderName)s breytti föstum skilaboðum fyrir spjallrásina."
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s viðmótshluta var breytt af %(senderName)s",
+            "added": "%(widgetName)s viðmótshluta var bætt við af %(senderName)s",
+            "removed": "%(widgetName)s viðmótshluti var fjarlægður af %(senderName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s hefur uppfært framsetningu spjallrásarinnar",
+        "m.location": "%(senderName)s hefur deilt staðsetningu sinni",
+        "self_redaction": "Skilaboðum eytt",
+        "redaction": "Skilaboðum eytt af %(name)s",
+        "m.poll.start": "%(senderName)s hefur sett í gang könnun - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s hefur lokið könnun"
     },
     "slash_command": {
         "spoiler": "Sendir skilaboðin sem stríðni",

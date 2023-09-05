@@ -48,11 +48,6 @@
     "Deops user with given id": "Verilmiş ID-lə istifadəçidən operatorun səlahiyyətlərini çıxardır",
     "Displays action": "Hərəkətlərin nümayişi",
     "Reason": "Səbəb",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s dəvət edilmiş iştirakçılar üçün danışıqların tarixini açdı.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s girmiş iştirakçılar üçün danışıqların tarixini açdı.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s iştirakçılar üçün danışıqların tarixini açdı.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s hamı üçün danışıqların tarixini açdı.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s naməlum rejimdə otağın tarixini açdı (%(visibility)s).",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s üçün  %(fromPowerLevel)s-dan %(toPowerLevel)s-lə",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s hüquqların səviyyələrini dəyişdirdi %(powerLevelDiffText)s.",
     "Incorrect verification code": "Təsdiq etmənin səhv kodu",
@@ -256,6 +251,13 @@
             "can_join": "%(senderDisplayName)s qonaq otağa qoşulmasına icazə verdi.",
             "forbidden": "%(senderDisplayName)s qonaqların otağa daxil olmasının qarşısını aldı.",
             "unknown": "%(senderDisplayName)s %(rule)s-a qonaq girişi dəyişdirildi."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s dəvət edilmiş iştirakçılar üçün danışıqların tarixini açdı.",
+            "joined": "%(senderName)s girmiş iştirakçılar üçün danışıqların tarixini açdı.",
+            "shared": "%(senderName)s iştirakçılar üçün danışıqların tarixini açdı.",
+            "world_readable": "%(senderName)s hamı üçün danışıqların tarixini açdı.",
+            "unknown": "%(senderName)s naməlum rejimdə otağın tarixini açdı (%(visibility)s)."
         }
     },
     "slash_command": {

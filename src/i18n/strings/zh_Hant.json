@@ -54,7 +54,6 @@
     "Room %(roomId)s not visible": "聊天室 %(roomId)s 已隱藏",
     "Rooms": "聊天室",
     "Search failed": "無法搜尋",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s 向 %(targetDisplayName)s 傳送了加入聊天室的邀請。",
     "Server error": "伺服器錯誤",
     "Server may be unavailable, overloaded, or search timed out :(": "伺服器可能無法使用、超載，或搜尋時間過長 :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "伺服器可能無法使用、超載，或者您遇到了一個錯誤。",
@@ -108,11 +107,6 @@
     "Invited": "已邀請",
     "Sign in with": "登入使用",
     "Low priority": "低優先度",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s 將未來的聊天室紀錄顯示給所有成員，從他們被邀請開始。",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s 將未來的聊天室紀錄顯示給所有成員，從他們加入開始。",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s 將未來的聊天室紀錄顯示給所有成員。",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s 將未來的聊天室紀錄顯示給任何人。",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s 將未來的聊天室紀錄顯示給未知（%(visibility)s）。",
     "Missing room_id in request": "請求中缺少 room_id",
     "Missing user_id in request": "請求中缺少 user_id",
     "Moderator": "版主",
@@ -234,9 +228,6 @@
     "Unable to create widget.": "無法建立小工具。",
     "You are not in this room.": "您不在這個聊天室內。",
     "You do not have permission to do that in this room.": "您沒有在這個聊天室做這件事的權限。",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s 小工具是由 %(senderName)s 所新增",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s 小工具是由 %(senderName)s 所移除",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s 小工具已被 %(senderName)s 修改",
     "Copied!": "已複製！",
     "Failed to copy": "無法複製",
     "Call Failed": "無法通話",
@@ -245,7 +236,6 @@
     "You are now ignoring %(userId)s": "您在忽略 %(userId)s",
     "Unignored user": "未忽略的使用者",
     "You are no longer ignoring %(userId)s": "您不再忽略 %(userId)s",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s 變更了聊天室的釘選訊息。",
     "Send": "傳送",
     "Mirror local video feed": "翻轉鏡射本機視訊畫面",
     "Enable URL previews for this room (only affects you)": "對此聊天室啟用網址預覽（僅影響您）",
@@ -703,7 +693,6 @@
     "Power level": "權限等級",
     "Please supply a https:// or http:// widget URL": "請提供 https:// 或 http:// 開頭的小工具網址",
     "You cannot modify widgets in this room.": "您無法在此聊天室中修改小工具。",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s 撤銷了對 %(targetDisplayName)s 加入此聊天室的邀請。",
     "Upgrade this room to the recommended room version": "升級此聊天室到建議的聊天室版本",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "此聊天室正在執行聊天室版本 <roomVersion />，此家伺服器已標記為<i>不穩定</i>。",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "升級此聊天室將會關閉聊天室目前的執行個體，並建立一個同名的升級版。",
@@ -1200,10 +1189,7 @@
         "other": "%(senderName)s 為此聊天室移除了替代位置 %(addresses)s。",
         "one": "%(senderName)s 為此聊天室移除了替代位置 %(addresses)s。"
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s 為此聊天室變更了替代位址。",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s 為此聊天室變更了主要及替代位址。",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "更新聊天室的替代位址時發生錯誤。伺服器可能不允許這麼做，或是遇到暫時性的錯誤。",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s 變更了此聊天室的位址。",
     "Invalid theme schema.": "無效的佈景主題架構。",
     "Error downloading theme information.": "下載佈景主題資訊時發生錯誤。",
     "Theme added!": "已新增佈景主題！",
@@ -1310,8 +1296,6 @@
     "Successfully restored %(sessionCount)s keys": "成功復原 %(sessionCount)s 金鑰",
     "You signed in to a new session without verifying it:": "您已登入新的工作階段但未驗證：",
     "Verify your other session using one of the options below.": "使用下方的其中一個選項來驗證您其他工作階段。",
-    "Message deleted": "訊息已刪除",
-    "Message deleted by %(name)s": "訊息已被 %(name)s 刪除",
     "Opens chat with the given user": "開啟與指定使用者的聊天",
     "You've successfully verified your device!": "您已成功驗證您的裝置！",
     "To continue, use Single Sign On to prove your identity.": "要繼續，使用單一登入系統來證明您的身分。",
@@ -2149,7 +2133,6 @@
     "e.g. my-space": "例如：my-space",
     "Silence call": "通話靜音",
     "Sound on": "開啟聲音",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s 變更了聊天室的<a>釘選訊息</a>。",
     "Some invites couldn't be sent": "部份邀請無法傳送",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "我們已將邀請傳送給其他人，但以下的人無法邀請加入 <RoomName/>",
     "Unnamed audio": "未命名的音訊",
@@ -2292,10 +2275,6 @@
     "Cross-signing is ready but keys are not backed up.": "已準備好交叉簽署但金鑰未備份。",
     "The above, but in <Room /> as well": "以上，但也在 <Room /> 中",
     "The above, but in any room you are joined or invited to as well": "以上，但在任何您已加入或被邀請的聊天室中",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s 從此聊天室取消釘選訊息。檢視所有釘選的訊息。",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s 從此聊天室取消釘選<a>訊息</a>。檢視所有<b>釘選的訊息</b>。",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s 釘選了訊息到此聊天室。檢視所有已釘選的訊息。",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s 釘選了<a>訊息</a>到此聊天室。檢視所有<b>釘選的訊息</b>。",
     "Some encryption parameters have been changed.": "部份加密參數已變更。",
     "Role in <RoomName/>": "<RoomName/> 中的角色",
     "Send a sticker": "傳送貼圖",
@@ -2452,7 +2431,6 @@
     "Sends the given message with rainfall": "與降雨一同傳送指定的訊息",
     "Large": "大",
     "Image size in the timeline": "時間軸中的圖片大小",
-    "%(senderName)s has updated the room layout": "%(senderName)s 已更新聊天室佈局",
     "Based on %(count)s votes": {
         "one": "總票數 %(count)s 票",
         "other": "總票數 %(count)s 票"
@@ -2595,9 +2573,6 @@
     "Message pending moderation: %(reason)s": "待審核的訊息：%(reason)s",
     "Keyboard": "鍵盤",
     "Space home": "聊天空間首頁",
-    "%(senderName)s has ended a poll": "%(senderName)s 結束了投票",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s 啟動了投票 - %(pollQuestion)s",
-    "%(senderName)s has shared their location": "%(senderName)s 已分享了他們的位置",
     "Previous autocomplete suggestion": "上一個自動完成建議",
     "Next autocomplete suggestion": "下一個自動完成建議",
     "Previous room or DM": "上一個聊天室或私人訊息",
@@ -3995,8 +3970,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s 將此聊天室的主要位址設定為 %(address)s。",
-            "removed": "%(senderName)s 移除了此聊天室的主要位址。"
-        }
+            "removed": "%(senderName)s 移除了此聊天室的主要位址。",
+            "changed_alternative": "%(senderName)s 為此聊天室變更了替代位址。",
+            "changed_main_and_alternative": "%(senderName)s 為此聊天室變更了主要及替代位址。",
+            "changed": "%(senderName)s 變更了此聊天室的位址。"
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s 撤銷了對 %(targetDisplayName)s 加入此聊天室的邀請。",
+            "sent": "%(senderName)s 向 %(targetDisplayName)s 傳送了加入聊天室的邀請。"
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s 將未來的聊天室紀錄顯示給所有成員，從他們被邀請開始。",
+            "joined": "%(senderName)s 將未來的聊天室紀錄顯示給所有成員，從他們加入開始。",
+            "shared": "%(senderName)s 將未來的聊天室紀錄顯示給所有成員。",
+            "world_readable": "%(senderName)s 將未來的聊天室紀錄顯示給任何人。",
+            "unknown": "%(senderName)s 將未來的聊天室紀錄顯示給未知（%(visibility)s）。"
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s 釘選了<a>訊息</a>到此聊天室。檢視所有<b>釘選的訊息</b>。",
+            "pinned": "%(senderName)s 釘選了訊息到此聊天室。檢視所有已釘選的訊息。",
+            "unpinned_link": "%(senderName)s 從此聊天室取消釘選<a>訊息</a>。檢視所有<b>釘選的訊息</b>。",
+            "unpinned": "%(senderName)s 從此聊天室取消釘選訊息。檢視所有釘選的訊息。",
+            "changed_link": "%(senderName)s 變更了聊天室的<a>釘選訊息</a>。",
+            "changed": "%(senderName)s 變更了聊天室的釘選訊息。"
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s 小工具已被 %(senderName)s 修改",
+            "added": "%(widgetName)s 小工具是由 %(senderName)s 所新增",
+            "removed": "%(widgetName)s 小工具是由 %(senderName)s 所移除"
+        },
+        "io.element.widgets.layout": "%(senderName)s 已更新聊天室佈局",
+        "m.location": "%(senderName)s 已分享了他們的位置",
+        "self_redaction": "訊息已刪除",
+        "redaction": "訊息已被 %(name)s 刪除",
+        "m.poll.start": "%(senderName)s 啟動了投票 - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s 結束了投票"
     },
     "slash_command": {
         "spoiler": "將指定訊息以劇透傳送",

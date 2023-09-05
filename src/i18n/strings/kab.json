@@ -100,7 +100,6 @@
     "Today": "Ass-a",
     "Yesterday": "Iḍelli",
     "Error decrypting attachment": "Tuccḍa deg uwgelhen n tceqquft yeddan",
-    "Message deleted": "Izen yettwakksen",
     "Copied!": "Yettwanɣel!",
     "edited": "yettwaẓreg",
     "Food & Drink": "Učči d tissit",
@@ -264,8 +263,6 @@
         "other": "%(senderName)s yerna tansiwin-nniḍen %(addresses)s ɣer texxamt-a.",
         "one": "%(senderName)s yerna tansa-nniḍen %(addresses)s i texxamt-a."
     },
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s awiǧit yettwarna sɣur %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s awiǧit yettwakkes sɣur %(senderName)s",
     "Not Trusted": "Ur yettwattkal ara",
     "%(displayName)s is typing …": "%(displayName)s yettaru-d …",
     "%(names)s and %(count)s others are typing …": {
@@ -389,13 +386,7 @@
         "other": "%(senderName)s yekkes tansa-nni-nniḍen %(addresses)s i texxamt-a.",
         "one": "%(senderName)s yekkes tansa-nni tayeḍ %(addresses)s i texxamt-a."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s ibeddel tansa-nni tayeḍ n texxamt-a.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s ibeddel tansa tagejdant d tansa-nni tayeḍ i texxamt-a.",
     "Deops user with given id": "Aseqdac Deops s usulay i d-yettunefken",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s ibeddel tansiwin n texxamt-a.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s yerra amazray n texxamt i d-iteddun yettban i yal amdan.",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s ibeddel iznan yerzin n texxamt.",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s awiǧit yettwabeddel sɣur %(senderName)s",
     "Cannot reach homeserver": "Anekcum ɣer uqeddac agejdan d awezɣi",
     "Cannot reach identity server": "Anekcum ɣer uqeddac n tmagit d awezɣi",
     "No homeserver URL provided": "Ulac URL n uqeddac agejdan i d-yettunefken",
@@ -569,7 +560,6 @@
     "%(name)s declined": "%(name)s yettwagi",
     "%(name)s cancelled": "%(name)s yettwasefsex",
     "%(name)s wants to verify": "%(name)s yebɣa ad isenqed",
-    "Message deleted by %(name)s": "Izen yettwakkes sɣur %(name)s",
     "Message deleted on %(date)s": "Izen yettwakkes deg %(date)s",
     "Add an Integration": "Rnu asidef",
     "Can't load this message": "Yegguma ad d-yali yizen-a",
@@ -659,7 +649,6 @@
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Seqdec aqeddac n timagit i uncad s yimayl. Sit, tkemmleḍ aseqdec n uqeddac n timagit amezwer (%(defaultIdentityServerName)s) neɣ sefrek deg yiɣewwaren.",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ƔUR-K·M: tASARUT N USENQED UR TEDDI ARA! Tasarut n uzmul n %(userId)s akked tɣimit %(deviceId)s d \"%(fprint)s\" ur imṣada ara d tsarut i d-yettunefken \"%(fingerprint)s\". Ayagi yezmer ad d-yini tiywalin-ik·im ttusweḥlent!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Tasarut n uzmul i d-tefkiḍ temṣada d tsarut n uzmul i d-tremseḍ seg tɣimit %(userId)s's %(deviceId)s. Tiɣimit tettucreḍ tettwasenqed.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s yeḥwi tinubga i %(targetDisplayName)s i uttekkki deg texxamt.",
     "Unicorn": "Azara",
     "Penguin": "Awarfus",
     "Octopus": "Azayz",
@@ -842,11 +831,6 @@
     "This room is public": "Taxxamt-a d tazayezt",
     "Terms and Conditions": "Tiwtilin d tfadiwin",
     "Review terms and conditions": "Senqed tiwtilin d tfadiwin",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s yuzen tinubga i %(targetDisplayName)s i wakken ad d-yernu ɣer texxamt.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s yerra amazray n texxamt tamaynut yettban i meṛṛa iɛeggalen n texxamt, segmi ara d-ttwanecden.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s yerra amazray n texxamt tamaynut yettban i meṛṛa iɛeggalen n texxamt, segmi ara d-rnun.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s yerra amazray n texxamt tamaynut yettban i meṛṛa iɛeggalen n texxamt.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s yerra amazray n texxamt tamaynut yettban i wid ur nettwassen ara (%(visibility)s).",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s seg %(fromPowerLevel)s ɣer %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s yettwabeddel uswir afellay n %(powerLevelDiffText)s.",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s yekkes alugen i yugin iseqdacen yemṣadan d %(glob)s",
@@ -2022,8 +2006,32 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s yesbadu tansa tagejdant i texxamt-a s %(address)s.",
-            "removed": "%(senderName)s yekkes tansa tagejdant n texxamt-a."
-        }
+            "removed": "%(senderName)s yekkes tansa tagejdant n texxamt-a.",
+            "changed_alternative": "%(senderName)s ibeddel tansa-nni tayeḍ n texxamt-a.",
+            "changed_main_and_alternative": "%(senderName)s ibeddel tansa tagejdant d tansa-nni tayeḍ i texxamt-a.",
+            "changed": "%(senderName)s ibeddel tansiwin n texxamt-a."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s yeḥwi tinubga i %(targetDisplayName)s i uttekkki deg texxamt.",
+            "sent": "%(senderName)s yuzen tinubga i %(targetDisplayName)s i wakken ad d-yernu ɣer texxamt."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s yerra amazray n texxamt tamaynut yettban i meṛṛa iɛeggalen n texxamt, segmi ara d-ttwanecden.",
+            "joined": "%(senderName)s yerra amazray n texxamt tamaynut yettban i meṛṛa iɛeggalen n texxamt, segmi ara d-rnun.",
+            "shared": "%(senderName)s yerra amazray n texxamt tamaynut yettban i meṛṛa iɛeggalen n texxamt.",
+            "world_readable": "%(senderName)s yerra amazray n texxamt i d-iteddun yettban i yal amdan.",
+            "unknown": "%(senderName)s yerra amazray n texxamt tamaynut yettban i wid ur nettwassen ara (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "changed": "%(senderName)s ibeddel iznan yerzin n texxamt."
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s awiǧit yettwabeddel sɣur %(senderName)s",
+            "added": "%(widgetName)s awiǧit yettwarna sɣur %(senderName)s",
+            "removed": "%(widgetName)s awiǧit yettwakkes sɣur %(senderName)s"
+        },
+        "self_redaction": "Izen yettwakksen",
+        "redaction": "Izen yettwakkes sɣur %(name)s"
     },
     "slash_command": {
         "shrug": "Yerna ¯\\_(ツ)_/¯ ɣer yizen n uḍris arewway",

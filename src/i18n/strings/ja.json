@@ -120,18 +120,8 @@
     "Displays action": "アクションを表示",
     "Forces the current outbound group session in an encrypted room to be discarded": "暗号化されたルーム内の現在のアウトバウンドグループセッションを強制的に破棄",
     "Reason": "理由",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)sが%(targetDisplayName)sをこのルームに招待しました。",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)sが、今後のルームの履歴を「メンバーのみ（招待された時点以降）」閲覧可能に設定しました。",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)sが、今後のルームの履歴を「メンバーのみ（参加した時点以降）」閲覧可能に設定しました。",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)sが、今後のルームの履歴を「メンバーのみ」閲覧可能に設定しました。",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)sが、今後のルームの履歴を「誰でも」閲覧可能に設定しました。",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)sが、今後のルームの履歴を「不明（%(visibility)s）」に閲覧可能に設定しました。",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)sの権限レベルを%(fromPowerLevel)sから%(toPowerLevel)sに変更しました。",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)sが%(powerLevelDiffText)s",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)sが、ルームの固定メッセージを変更しました。",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)sウィジェットは%(senderName)sによって変更されました",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)sウィジェットが%(senderName)sによって追加されました",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)sウィジェットが%(senderName)sによって削除されました",
     "Failure to create room": "ルームの作成に失敗",
     "Server may be unavailable, overloaded, or you hit a bug.": "サーバーが使用できないか、オーバーロードしているか、または不具合が発生した可能性があります。",
     "This homeserver has hit its Monthly Active User limit.": "このホームサーバーは月間アクティブユーザー数の上限に達しました 。",
@@ -711,8 +701,6 @@
     "More options": "他のオプション",
     "Manually verify all remote sessions": "全てのリモートセッションを手動で認証",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "クロス署名された端末を信頼せず、ユーザーが使用する各セッションを個別に認証し、信頼済に設定。",
-    "Message deleted": "メッセージが削除されました",
-    "Message deleted by %(name)s": "%(name)sによってメッセージが削除されました",
     "Show less": "詳細を非表示",
     "Show more": "さらに表示",
     "This backup is trusted because it has been restored on this session": "このバックアップは、このセッションで復元されたため信頼されています",
@@ -1174,10 +1162,6 @@
     "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)sが%(glob)sにマッチするサーバーをブロックするルールを削除しました",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)sが%(glob)sにマッチするルームをブロックするルールを削除しました",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)sが%(glob)sにマッチするユーザーをブロックするルールを削除しました",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)sが%(targetDisplayName)sへのルームの招待を取り消しました。",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)sがこのルームのアドレスを変更しました。",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)sがこのルームのメインアドレスと代替アドレスを変更しました。",
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)sがこのルームの代替アドレスを変更しました。",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
         "one": "%(senderName)sがこのルームの代替アドレス %(addresses)s を削除しました。",
         "other": "%(senderName)sがこのルームの代替アドレス %(addresses)s を削除しました。"
@@ -1942,8 +1926,6 @@
     "Wrong Security Key": "正しくないセキュリティーキー",
     "a key signature": "鍵の署名",
     "Cross-signing is ready but keys are not backed up.": "クロス署名は準備できましたが、鍵はバックアップされていません。",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)sがメッセージをこのルームに固定しました。全ての固定メッセージを表示。",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)sが<a>メッセージ</a>をこのルームに固定しました。全ての<b>固定メッセージ</b>を表示。",
     "Someone already has that username. Try another or if it is you, sign in below.": "そのユーザー名は既に使用されています。別のユーザー名を試すか、あなたのユーザー名なら、以下でサインインしてください。",
     "Sign in with SSO": "シングルサインオンでサインイン",
     "Use email or phone to optionally be discoverable by existing contacts.": "後ほど、このメールアドレスまたは電話番号で連絡先に見つけてもらうことができるようになります。",
@@ -2136,10 +2118,6 @@
     "The server is offline.": "サーバーはオフラインです。",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "匿名のデータを共有すると、問題の特定に役立ちます。個人情報の収集や、第三者とのデータ共有はありません。<LearnMoreLink>詳細を確認</LearnMoreLink>",
     "New Recovery Method": "新しい復元方法",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)sがこのルームの<a>固定メッセージ</a>を変更しました。",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)sがメッセージの固定を解除しました。全ての固定メッセージを表示。",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)sが<a>このメッセージ</a>の固定を解除しました。全ての<b>固定メッセージ</b>を表示。",
-    "%(senderName)s has updated the room layout": "%(senderName)sがルームのレイアウトを更新しました",
     "No answer": "応答がありません",
     "Almost there! Is your other device showing the same shield?": "あと少しです！ あなたの他の端末は同じ盾マークを表示していますか？",
     "Delete all": "全て削除",
@@ -2176,10 +2154,8 @@
     "Are you sure you want to make this encrypted room public?": "この暗号化されたルームを公開してよろしいですか？",
     "Unknown failure": "不明なエラー",
     "Unrecognised room address: %(roomAlias)s": "ルームのアドレスが認識できません：%(roomAlias)s",
-    "%(senderName)s has shared their location": "%(senderName)sが位置情報を共有しました",
     "Incorrect Security Phrase": "セキュリティーフレーズが正しくありません",
     "Messaging": "メッセージ",
-    "%(senderName)s has ended a poll": "%(senderName)sがアンケートを終了しました",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "権限がある場合は、メッセージのメニューを開いて<b>固定</b>を選択すると、ここにメッセージが表示されます。",
     "The export was cancelled successfully": "エクスポートをキャンセルしました",
     "Invite your teammates": "チームの仲間を招待しましょう",
@@ -2400,7 +2376,6 @@
     },
     "Waiting for you to verify on your other device…": "他の端末での認証を待機しています…",
     "Light high contrast": "ライト（高コントラスト）",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)sがアンケートを開始しました - %(pollQuestion)s",
     "Failed to fetch your location. Please try again later.": "位置情報の取得に失敗しました。後でもう一度やり直してください。",
     "Timed out trying to fetch your location. Please try again later.": "位置情報を取得する際にタイムアウトしました。後でもう一度やり直してください。",
     "Unknown error fetching location. Please try again later.": "位置情報を取得する際に不明なエラーが発生しました。後でもう一度やり直してください。",
@@ -3797,8 +3772,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)sがこのルームのメインアドレスを%(address)sに設定しました。",
-            "removed": "%(senderName)sがこのルームのメインアドレスを削除しました。"
-        }
+            "removed": "%(senderName)sがこのルームのメインアドレスを削除しました。",
+            "changed_alternative": "%(senderName)sがこのルームの代替アドレスを変更しました。",
+            "changed_main_and_alternative": "%(senderName)sがこのルームのメインアドレスと代替アドレスを変更しました。",
+            "changed": "%(senderName)sがこのルームのアドレスを変更しました。"
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)sが%(targetDisplayName)sへのルームの招待を取り消しました。",
+            "sent": "%(senderName)sが%(targetDisplayName)sをこのルームに招待しました。"
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)sが、今後のルームの履歴を「メンバーのみ（招待された時点以降）」閲覧可能に設定しました。",
+            "joined": "%(senderName)sが、今後のルームの履歴を「メンバーのみ（参加した時点以降）」閲覧可能に設定しました。",
+            "shared": "%(senderName)sが、今後のルームの履歴を「メンバーのみ」閲覧可能に設定しました。",
+            "world_readable": "%(senderName)sが、今後のルームの履歴を「誰でも」閲覧可能に設定しました。",
+            "unknown": "%(senderName)sが、今後のルームの履歴を「不明（%(visibility)s）」に閲覧可能に設定しました。"
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)sが<a>メッセージ</a>をこのルームに固定しました。全ての<b>固定メッセージ</b>を表示。",
+            "pinned": "%(senderName)sがメッセージをこのルームに固定しました。全ての固定メッセージを表示。",
+            "unpinned_link": "%(senderName)sが<a>このメッセージ</a>の固定を解除しました。全ての<b>固定メッセージ</b>を表示。",
+            "unpinned": "%(senderName)sがメッセージの固定を解除しました。全ての固定メッセージを表示。",
+            "changed_link": "%(senderName)sがこのルームの<a>固定メッセージ</a>を変更しました。",
+            "changed": "%(senderName)sが、ルームの固定メッセージを変更しました。"
+        },
+        "m.widget": {
+            "modified": "%(widgetName)sウィジェットは%(senderName)sによって変更されました",
+            "added": "%(widgetName)sウィジェットが%(senderName)sによって追加されました",
+            "removed": "%(widgetName)sウィジェットが%(senderName)sによって削除されました"
+        },
+        "io.element.widgets.layout": "%(senderName)sがルームのレイアウトを更新しました",
+        "m.location": "%(senderName)sが位置情報を共有しました",
+        "self_redaction": "メッセージが削除されました",
+        "redaction": "%(name)sによってメッセージが削除されました",
+        "m.poll.start": "%(senderName)sがアンケートを開始しました - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)sがアンケートを終了しました"
     },
     "slash_command": {
         "spoiler": "選択したメッセージをネタバレとして送信",

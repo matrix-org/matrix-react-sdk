@@ -73,10 +73,6 @@
     "Join Room": "Gå med i rum",
     "Jump to first unread message.": "Hoppa till första olästa meddelandet.",
     "Low priority": "Låg prioritet",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s gjorde framtida rumshistorik synligt för alla rumsmedlemmar från att de bjöds in.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s gjorde framtida rumshistorik synligt för alla rumsmedlemmar fr.o.m. att de gick med som medlem.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s gjorde framtida rumshistorik synligt för alla rumsmedlemmar.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s gjorde framtida rumshistorik synligt för alla.",
     "Missing room_id in request": "room_id saknas i förfrågan",
     "Missing user_id in request": "user_id saknas i förfrågan",
     "Moderator": "Moderator",
@@ -107,7 +103,6 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s är inte tillgängligt för tillfället.",
     "Rooms": "Rum",
     "Search failed": "Sökning misslyckades",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s bjöd in %(targetDisplayName)s att gå med i rummet.",
     "Server error": "Serverfel",
     "Server may be unavailable, overloaded, or search timed out :(": "Servern kan vara otillgänglig eller överbelastad, eller så tog sökningen för lång tid :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Servern kan vara otillgänglig eller överbelastad, eller så stötte du på en bugg.",
@@ -206,9 +201,6 @@
     "You are now ignoring %(userId)s": "Du ignorerar nu %(userId)s",
     "Unignored user": "Avignorerad användare",
     "You are no longer ignoring %(userId)s": "Du ignorerar inte längre %(userId)s",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s-widget har ändrats av %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s-widget har lagts till av %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s-widget har tagits bort av %(senderName)s",
     "Your browser does not support the required cryptography extensions": "Din webbläsare stödjer inte nödvändiga kryptografitillägg",
     "Unignore": "Avignorera",
     "Voice call": "Röstsamtal",
@@ -329,7 +321,6 @@
     "This room is not recognised.": "Detta rum känns inte igen.",
     "Usage": "Användande",
     "Verified key": "Verifierade nyckeln",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s satte framtida rumshistorik till okänd synlighet (%(visibility)s).",
     "Jump to read receipt": "Hoppa till läskvitto",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Denna process låter dig exportera nycklarna för meddelanden som du har fått i krypterade rum till en lokal fil. Du kommer sedan att kunna importera filen i en annan Matrix-klient i framtiden, så att den klienten också kan avkryptera meddelandena.",
     "Unknown for %(duration)s": "Okänt i %(duration)s",
@@ -426,7 +417,6 @@
     "Passphrases must match": "Lösenfraser måste matcha",
     "Passphrase must not be empty": "Lösenfrasen får inte vara tom",
     "Confirm passphrase": "Bekräfta lösenfrasen",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s ändrade fästa meddelanden för rummet.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Denna process möjliggör import av krypteringsnycklar som tidigare exporterats från en annan Matrix-klient. Du kommer då kunna avkryptera alla meddelanden som den andra klienten kunde avkryptera.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Den exporterade filen kommer vara skyddad med en lösenfras. Du måste ange lösenfrasen här, för att avkryptera filen.",
     "Share Link to User": "Dela länk till användare",
@@ -637,7 +627,6 @@
     "Invite anyway": "Bjud in ändå",
     "Please supply a https:// or http:// widget URL": "Ange en widget-URL med https:// eller http://",
     "You cannot modify widgets in this room.": "Du kan inte ändra widgets i detta rum.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s återkallade inbjudan för %(targetDisplayName)s att gå med i rummet.",
     "The other party cancelled the verification.": "Den andra parten avbröt verifieringen.",
     "Verified!": "Verifierad!",
     "You've successfully verified this user.": "Du har verifierat den här användaren.",
@@ -933,9 +922,6 @@
         "other": "%(senderName)s tog bort de alternativa adresserna %(addresses)s från det här rummet.",
         "one": "%(senderName)s tog bort den alternativa adressen %(addresses)s från det här rummet."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s ändrade de alternativa adresserna för det här rummet.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s ändrade huvudadressen och de alternativa adresserna för det här rummet.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s ändrade adresserna för det här rummet.",
     "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s tog bort en bannregel som matchar %(glob)s",
     "%(senderName)s updated an invalid ban rule": "%(senderName)s uppdaterade en ogiltig bannregel",
     "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s uppdaterade regeln som bannar användare som matchar %(glob)s på grund av %(reason)s",
@@ -1219,8 +1205,6 @@
     "The encryption used by this room isn't supported.": "Krypteringen som används i det här rummet stöds inte.",
     "You declined": "Du avslog",
     "%(name)s declined": "%(name)s avslog",
-    "Message deleted": "Meddelande raderat",
-    "Message deleted by %(name)s": "Meddelande raderat av %(name)s",
     "Message deleted on %(date)s": "Meddelande raderat vid %(date)s",
     "Edited at %(date)s": "Redigerat vid %(date)s",
     "Click to view edits": "Klicka för att visa redigeringar",
@@ -2102,7 +2086,6 @@
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Om du har behörighet, öppna menyn på ett meddelande och välj <b>Fäst</b> för att fösta dem här.",
     "Nothing pinned, yet": "Inget fäst än",
     "End-to-end encryption isn't enabled": "Totalsträckskryptering är inte aktiverat",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s ändrade <a>fästa meddelanden</a> för rummet.",
     "Some invites couldn't be sent": "Vissa inbjudningar kunde inte skickas",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Vi skickade de andra, men personerna nedan kunde inte bjudas in till <RoomName/>",
     "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Vad användaren skriver är fel.\nDetta kommer att anmälas till rumsmoderatorerna.",
@@ -2292,10 +2275,6 @@
     "Cross-signing is ready but keys are not backed up.": "Korssignering är klart, men nycklarna är inte säkerhetskopierade än.",
     "The above, but in <Room /> as well": "Det ovanstående, men i <Room /> också",
     "The above, but in any room you are joined or invited to as well": "Det ovanstående, men i vilket som helst rum du är med i eller inbjuden till också",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s avfäste ett meddelande i det här rummet. Se alla fästa meddelanden.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s avfäste <a>ett meddelande</a> i det här rummet. Se alla <b>fästa meddelanden</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s fäste ett meddelande i det här rummet. Se alla fästa meddelanden.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s fäste <a>ett meddelande</a> i det här rummet. Se alla <b>fästa meddelanden</b>.",
     "Some encryption parameters have been changed.": "Vissa krypteringsparametrar har ändrats.",
     "Role in <RoomName/>": "Roll i <RoomName/>",
     "Send a sticker": "Skicka en dekal",
@@ -2427,7 +2406,6 @@
     "Someone already has that username, please try another.": "Någon annan har redan det användarnamnet, vänligen pröva ett annat.",
     "Someone already has that username. Try another or if it is you, sign in below.": "Någon annan har redan det användarnamnet. Pröva ett annat, eller om det är ditt, logga in nedan.",
     "Own your conversations.": "Äg dina konversationer.",
-    "%(senderName)s has updated the room layout": "%(senderName)s har uppdaterat rummets arrangemang",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s och %(count)s till",
         "other": "%(spaceName)s och %(count)s till"
@@ -2457,9 +2435,6 @@
     "Show tray icon and minimise window to it on close": "Visa ikon i systembrickan och minimera programmet till den när fönstret stängs",
     "Large": "Stor",
     "Image size in the timeline": "Bildstorlek i tidslinjen",
-    "%(senderName)s has ended a poll": "%(senderName)s har avslutat en omröstning",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s har startat en omröstning - %(pollQuestion)s",
-    "%(senderName)s has shared their location": "%(senderName)s har delat sin plats",
     "No active call in this room": "Inget aktivt samtal i det här rummet",
     "Unable to find Matrix ID for phone number": "Kunde inte hitta Matrix-ID för telefonnumret",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Okänt (användare, session)-par: (%(userId)s, %(deviceId)s)",
@@ -3936,8 +3911,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s satte huvudadressen för detta rum till %(address)s.",
-            "removed": "%(senderName)s tog bort huvudadressen för detta rum."
-        }
+            "removed": "%(senderName)s tog bort huvudadressen för detta rum.",
+            "changed_alternative": "%(senderName)s ändrade de alternativa adresserna för det här rummet.",
+            "changed_main_and_alternative": "%(senderName)s ändrade huvudadressen och de alternativa adresserna för det här rummet.",
+            "changed": "%(senderName)s ändrade adresserna för det här rummet."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s återkallade inbjudan för %(targetDisplayName)s att gå med i rummet.",
+            "sent": "%(senderName)s bjöd in %(targetDisplayName)s att gå med i rummet."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s gjorde framtida rumshistorik synligt för alla rumsmedlemmar från att de bjöds in.",
+            "joined": "%(senderName)s gjorde framtida rumshistorik synligt för alla rumsmedlemmar fr.o.m. att de gick med som medlem.",
+            "shared": "%(senderName)s gjorde framtida rumshistorik synligt för alla rumsmedlemmar.",
+            "world_readable": "%(senderName)s gjorde framtida rumshistorik synligt för alla.",
+            "unknown": "%(senderName)s satte framtida rumshistorik till okänd synlighet (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s fäste <a>ett meddelande</a> i det här rummet. Se alla <b>fästa meddelanden</b>.",
+            "pinned": "%(senderName)s fäste ett meddelande i det här rummet. Se alla fästa meddelanden.",
+            "unpinned_link": "%(senderName)s avfäste <a>ett meddelande</a> i det här rummet. Se alla <b>fästa meddelanden</b>.",
+            "unpinned": "%(senderName)s avfäste ett meddelande i det här rummet. Se alla fästa meddelanden.",
+            "changed_link": "%(senderName)s ändrade <a>fästa meddelanden</a> för rummet.",
+            "changed": "%(senderName)s ändrade fästa meddelanden för rummet."
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s-widget har ändrats av %(senderName)s",
+            "added": "%(widgetName)s-widget har lagts till av %(senderName)s",
+            "removed": "%(widgetName)s-widget har tagits bort av %(senderName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s har uppdaterat rummets arrangemang",
+        "m.location": "%(senderName)s har delat sin plats",
+        "self_redaction": "Meddelande raderat",
+        "redaction": "Meddelande raderat av %(name)s",
+        "m.poll.start": "%(senderName)s har startat en omröstning - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s har avslutat en omröstning"
     },
     "slash_command": {
         "spoiler": "Skickar det angivna meddelandet som en spoiler",

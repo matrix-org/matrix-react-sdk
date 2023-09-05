@@ -786,8 +786,6 @@
     "Spaces": "Space",
     "Connecting": "Menghubungkan",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s menghapus peraturan pencekalan pengguna yang berisi %(glob)s",
-    "Message deleted by %(name)s": "Pesan dihapus oleh %(name)s",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s membuat semua riwayat ruangan di masa mendatang dapat dilihat oleh orang yang tidak dikenal (%(visibility)s).",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
         "one": "%(senderName)s menghapus alamat alternatif %(addresses)s untuk ruangan ini.",
         "other": "%(senderName)s menghapus alamat alternatif %(addresses)s untuk ruangan ini."
@@ -838,30 +836,11 @@
     "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s menghapus sebuah peraturan pencekalan yang berisi %(glob)s",
     "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s menghapus peraturan pencekalan server yang berisi %(glob)s",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s menghapus peraturan pencekalan ruangan yang berisi %(glob)s",
-    "%(widgetName)s widget removed by %(senderName)s": "Widget %(widgetName)s dihapus oleh %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "Widget %(widgetName)s ditambahkan oleh %(senderName)s",
-    "%(widgetName)s widget modified by %(senderName)s": "Widget %(widgetName)s diubah oleh %(senderName)s",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s mengubah pesan-pesan yang disematkan di ruangan ini.",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s mengubah <a>pesan-pesan yang disematkan</a> di ruangan ini.",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s melepaskan pin pesan di ruangan ini. Lihat semua pesan yang dipasangi pin.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s melepaskan pin <a>pesan</a> di ruangan ini. Lihat semua <b>pesan yang dipasangi pin</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s menyematkan sebuah pesan di ruangan ini. Lihat semua pesan yang dipasangi pin.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s menyematkan <a>sebuah pesan</a> di ruangan ini. Lihat semua <b>pesan yang dipasangi pin</b>.",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s dari %(fromPowerLevel)s ke %(toPowerLevel)s",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s membuat semua riwayat ruangan di masa mendatang dapat dilihat oleh siapa saja.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s membuat semua riwayat ruangan di masa mendatang dapat dilihat oleh semua anggota ruangan, sejak mereka diundang.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s membuat semua riwayat ruangan di masa mendatang dapat dilihat oleh semua anggota ruangan, sejak mereka bergabung.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s membuat semua riwayat ruangan di masa mendatang dapat dilihat oleh semua anggota ruangan.",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s mengirim sebuah undangan ke %(targetDisplayName)s untuk bergabung dengan ruangan ini.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s menghapus undangan untuk %(targetDisplayName)s untuk bergabung dengan ruangan ini.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s mengubah alamat-alamatnya untuk ruangan ini.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s mengubah alamat utama dan alamat alternatif untuk ruangan ini.",
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s mengubah alamat alternatifnya untuk ruangan ini.",
     "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
         "other": "%(senderName)s menambahkan alamat alternatif %(addresses)s untuk ruangan ini.",
         "one": "%(senderName)s menambahkan alamat alternatif %(addresses)s untuk ruangan ini."
     },
-    "Message deleted": "Pesan dihapus",
     "Error upgrading room": "Gagal meningkatkan ruangan",
     "Short keyboard patterns are easy to guess": "Pola keyboard yang pendek mudah ditebak",
     "Straight rows of keys are easy to guess": "Deretan tombol keyboard yang lurus mudah ditebak",
@@ -1583,7 +1562,6 @@
     "Get notified for every message": "Dapatkan notifikasi untuk setiap pesan",
     "Large": "Besar",
     "Image size in the timeline": "Ukuran gambar di lini masa",
-    "%(senderName)s has updated the room layout": "%(senderName)s telah memperbarui tata letak ruangan",
     "Quick Reactions": "Reaksi Cepat",
     "Travel & Places": "Aktivitas & Tempat",
     "Food & Drink": "Makanan & Minuman",
@@ -2594,10 +2572,7 @@
     "Open this settings tab": "Buka tab pengaturan ini",
     "Message pending moderation": "Pesan akan dimoderasikan",
     "Keyboard": "Keyboard",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s telah memulai sebuah pungutan suara — %(pollQuestion)s",
     "Space home": "Beranda space",
-    "%(senderName)s has ended a poll": "%(senderName)s telah mengakhiri sebuah poll",
-    "%(senderName)s has shared their location": "%(senderName)s telah membagikan lokasinya",
     "You can't see earlier messages": "Anda tidak dapat melihat pesan-pesan awal",
     "Encrypted messages before this point are unavailable.": "Pesan-pesan terenkripsi sebelum titik ini tidak tersedia.",
     "You don't have permission to view messages from before you joined.": "Anda tidak memiliki izin untuk melihat pesan-pesan sebelum Anda bergabung.",
@@ -4000,8 +3975,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s mengatur alamat utama untuk ruangan ini ke %(address)s.",
-            "removed": "%(senderName)s menghapus alamat utamanya untuk ruangan ini."
-        }
+            "removed": "%(senderName)s menghapus alamat utamanya untuk ruangan ini.",
+            "changed_alternative": "%(senderName)s mengubah alamat alternatifnya untuk ruangan ini.",
+            "changed_main_and_alternative": "%(senderName)s mengubah alamat utama dan alamat alternatif untuk ruangan ini.",
+            "changed": "%(senderName)s mengubah alamat-alamatnya untuk ruangan ini."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s menghapus undangan untuk %(targetDisplayName)s untuk bergabung dengan ruangan ini.",
+            "sent": "%(senderName)s mengirim sebuah undangan ke %(targetDisplayName)s untuk bergabung dengan ruangan ini."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s membuat semua riwayat ruangan di masa mendatang dapat dilihat oleh semua anggota ruangan, sejak mereka diundang.",
+            "joined": "%(senderName)s membuat semua riwayat ruangan di masa mendatang dapat dilihat oleh semua anggota ruangan, sejak mereka bergabung.",
+            "shared": "%(senderName)s membuat semua riwayat ruangan di masa mendatang dapat dilihat oleh semua anggota ruangan.",
+            "world_readable": "%(senderName)s membuat semua riwayat ruangan di masa mendatang dapat dilihat oleh siapa saja.",
+            "unknown": "%(senderName)s membuat semua riwayat ruangan di masa mendatang dapat dilihat oleh orang yang tidak dikenal (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s menyematkan <a>sebuah pesan</a> di ruangan ini. Lihat semua <b>pesan yang dipasangi pin</b>.",
+            "pinned": "%(senderName)s menyematkan sebuah pesan di ruangan ini. Lihat semua pesan yang dipasangi pin.",
+            "unpinned_link": "%(senderName)s melepaskan pin <a>pesan</a> di ruangan ini. Lihat semua <b>pesan yang dipasangi pin</b>.",
+            "unpinned": "%(senderName)s melepaskan pin pesan di ruangan ini. Lihat semua pesan yang dipasangi pin.",
+            "changed_link": "%(senderName)s mengubah <a>pesan-pesan yang disematkan</a> di ruangan ini.",
+            "changed": "%(senderName)s mengubah pesan-pesan yang disematkan di ruangan ini."
+        },
+        "m.widget": {
+            "modified": "Widget %(widgetName)s diubah oleh %(senderName)s",
+            "added": "Widget %(widgetName)s ditambahkan oleh %(senderName)s",
+            "removed": "Widget %(widgetName)s dihapus oleh %(senderName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s telah memperbarui tata letak ruangan",
+        "m.location": "%(senderName)s telah membagikan lokasinya",
+        "self_redaction": "Pesan dihapus",
+        "redaction": "Pesan dihapus oleh %(name)s",
+        "m.poll.start": "%(senderName)s telah memulai sebuah pungutan suara — %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s telah mengakhiri sebuah poll"
     },
     "slash_command": {
         "spoiler": "Mengirim pesan sebagai spoiler",

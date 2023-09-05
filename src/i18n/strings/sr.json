@@ -59,18 +59,8 @@
     "You are no longer ignoring %(userId)s": "Више не занемарујете корисника %(userId)s",
     "Verified key": "Проверени кључ",
     "Reason": "Разлог",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s је послао позивницу за приступ соби ка %(targetDisplayName)s.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s је учинио будући историјат собе видљивим свим члановима собе, од тренутка позивања у собу.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s је учинио будући историјат собе видљивим свим члановима собе, од тренутка приступања соби.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s је учинио будући историјат собе видљивим свим члановима собе.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s је учинио будући историјат собе видљивим свима.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s је учинио будући историјат собе непознатим (%(visibility)s).",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s са %(fromPowerLevel)s на %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s промени ниво снаге за %(powerLevelDiffText)s.",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s је променио закачене поруке у соби.",
-    "%(widgetName)s widget modified by %(senderName)s": "%(senderName)s је променио виџет %(widgetName)s",
-    "%(widgetName)s widget added by %(senderName)s": "%(senderName)s је додао виџет %(widgetName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s је уклонио виџет %(widgetName)s",
     "Failure to create room": "Неуспех при прављењу собе",
     "Server may be unavailable, overloaded, or you hit a bug.": "Сервер је можда недоступан, преоптерећен или сте нашли грешку.",
     "Send": "Пошаљи",
@@ -883,10 +873,6 @@
     "Error changing power level": "Грешка при промени нивоа снаге",
     "Power level": "Ниво снаге",
     "Explore rooms": "Истражи собе",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s је повукао позивницу за приступ соби кориснику %(targetDisplayName)s.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s је изменио адресе за ову собу.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s је изменио главну и алтернативне адресе за ову собу.",
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s је изменио алтернативне адресе за ову собу.",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
         "other": "%(senderName)s је уклонио алтернативне адресе %(addresses)s за ову собу.",
         "one": "%(senderName)s је уклонио алтернативну адресу %(addresses)s за ову собу."
@@ -1349,7 +1335,29 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s је постави главну адресу собе на %(address)s.",
-            "removed": "%(senderName)s је уклони главну адресу за ову собу."
+            "removed": "%(senderName)s је уклони главну адресу за ову собу.",
+            "changed_alternative": "%(senderName)s је изменио алтернативне адресе за ову собу.",
+            "changed_main_and_alternative": "%(senderName)s је изменио главну и алтернативне адресе за ову собу.",
+            "changed": "%(senderName)s је изменио адресе за ову собу."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s је повукао позивницу за приступ соби кориснику %(targetDisplayName)s.",
+            "sent": "%(senderName)s је послао позивницу за приступ соби ка %(targetDisplayName)s."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s је учинио будући историјат собе видљивим свим члановима собе, од тренутка позивања у собу.",
+            "joined": "%(senderName)s је учинио будући историјат собе видљивим свим члановима собе, од тренутка приступања соби.",
+            "shared": "%(senderName)s је учинио будући историјат собе видљивим свим члановима собе.",
+            "world_readable": "%(senderName)s је учинио будући историјат собе видљивим свима.",
+            "unknown": "%(senderName)s је учинио будући историјат собе непознатим (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "changed": "%(senderName)s је променио закачене поруке у соби."
+        },
+        "m.widget": {
+            "modified": "%(senderName)s је променио виџет %(widgetName)s",
+            "added": "%(senderName)s је додао виџет %(widgetName)s",
+            "removed": "%(senderName)s је уклонио виџет %(widgetName)s"
         }
     },
     "slash_command": {

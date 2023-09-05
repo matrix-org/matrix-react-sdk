@@ -95,11 +95,6 @@
     "Invalid file%(extra)s": "Fitxategi %(extra)s baliogabea",
     "Invited": "Gonbidatuta",
     "Sign in with": "Hasi saioa hau erabilita:",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s erabiltzaileak etorkizuneko gelaren historiala ikusgai jarri du gelako kide guztientzat, gonbidapena egiten zaienetik.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s erabiltzaileak etorkizuneko gelaren historiala ikusgai jarri du gelako kide guztientzat, elkartzen direnetik.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s erabiltzaileak etorkizuneko gelaren historiala ikusgai jarri du gelako kide guztientzat.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s erabiltzaileak etorkizuneko gelaren historiala ikusgai jarri du edonorentzat.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s erabiltzaileak etorkizuneko gelaren historiala ikusgai jarri du ezezagunentzat (%(visibility)s).",
     "Missing room_id in request": "Gelaren ID-a falta da eskaeran",
     "Missing user_id in request": "Erabiltzailearen ID-a falta da eskaeran",
     "New passwords don't match": "Pasahitz berriak ez datoz bat",
@@ -125,7 +120,6 @@
     "%(roomName)s does not exist.": "Ez dago %(roomName)s izeneko gela.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s ez dago eskuragarri orain.",
     "Search failed": "Bilaketak huts egin du",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s erabiltzaileak gelara elkartzeko gonbidapen bat bidali dio %(targetDisplayName)s erbiltzaileari.",
     "Server error": "Zerbitzari-errorea",
     "Server may be unavailable, overloaded, or search timed out :(": "Zerbitzaria eskuraezin edo gainezka egon daiteke, edo bilaketaren denbora muga gainditu da :(",
     "Server unavailable, overloaded, or something else went wrong.": "Zerbitzaria eskuraezin edo gainezka egon daiteke edo zerbaitek huts egin du.",
@@ -235,9 +229,6 @@
     "Unable to create widget.": "Ezin izan da trepeta sortu.",
     "You are not in this room.": "Ez zaude gela honetan.",
     "You do not have permission to do that in this room.": "Ez duzu gela honetan hori egiteko baimenik.",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s trepeta gehitu du %(senderName)s erabiltzaileak",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s trepeta kendu du %(senderName)s erabiltzaileak",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s trepeta aldatu du %(senderName)s erabiltzaileak",
     "Copied!": "Kopiatuta!",
     "Failed to copy": "Kopiak huts egin du",
     "Unignore": "Ez ezikusi",
@@ -248,7 +239,6 @@
     "Banned by %(displayName)s": "%(displayName)s erabiltzaileak debekatuta",
     "Call Failed": "Deiak huts egin du",
     "Restricted": "Mugatua",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s erabiltzaileak gelan finkatutako mezuak aldatu ditu.",
     "Send": "Bidali",
     "Mirror local video feed": "Bikoiztu tokiko bideo jarioa",
     "Enable URL previews for this room (only affects you)": "Gaitu URLen aurrebista gela honetan (zuretzat bakarrik aldatuko duzu)",
@@ -703,7 +693,6 @@
     "Room Settings - %(roomName)s": "Gelaren ezarpenak - %(roomName)s",
     "Could not load user profile": "Ezin izan da erabiltzaile-profila kargatu",
     "You cannot modify widgets in this room.": "Ezin dituzu gela honetako trepetak aldatu.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s erabiltzaileak %(targetDisplayName)s gelara elkartzeko gonbidapena errefusatu du.",
     "Upgrade this room to the recommended room version": "Bertsio-berritu gela hau aholkatutako bertsiora",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Gela hau bertsio-berritzeak gelaren oraingo instantzia itzaliko du eta izen bereko beste gela berri bat sortuko du.",
     "Failed to revoke invite": "Gonbidapena indargabetzeak huts egin du",
@@ -1198,9 +1187,6 @@
         "other": "%(senderName)s erabiltzaileak %(addresses)s helbideak kendu dizkio gela honi.",
         "one": "%(senderName)s erabiltzaileak %(addresses)s ordezko helbideak kendu dizkio gela honi."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s erabiltzaileak gela honen ordezko helbideak aldatu ditu.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s erabiltzaileak gela honen helbide nagusia eta ordezko helbideak aldatu ditu.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s erabiltzaileak gela honen helbideak aldatu ditu.",
     "Invalid theme schema.": "Baliogabeko azal eskema.",
     "Error downloading theme information.": "Errorea azalaren informazioa deskargatzean.",
     "Theme added!": "Azala gehituta!",
@@ -1311,8 +1297,6 @@
     "Custom font size can only be between %(min)s pt and %(max)s pt": "Letra tamaina pertsonalizatua %(min)s pt eta %(max)s pt bitartean egon behar du",
     "Use between %(min)s pt and %(max)s pt": "Erabili %(min)s pt eta %(max)s pt bitarteko  balioa",
     "You've successfully verified your device!": "Ongi egiaztatu duzu zure gailua!",
-    "Message deleted": "Mezu ezabatuta",
-    "Message deleted by %(name)s": "Mezua ezabatu du %(name)s erabiltzaileak",
     "QR Code": "QR kodea",
     "To continue, use Single Sign On to prove your identity.": "Jarraitzeko, erabili Single Sign On zure identitatea frogatzeko.",
     "Confirm to continue": "Berretsi jarraitzeko",
@@ -1649,8 +1633,32 @@
         "m.image": "%(senderDisplayName)s erabiltzaileak irudi bat bidali du.",
         "m.room.canonical_alias": {
             "set": "%(senderName)s erabiltzileak %(address)s ezarri du gela honetako helbide nagusi gisa.",
-            "removed": "%(senderName)s erabiltzaileak gela honen helbide nagusia kendu du."
-        }
+            "removed": "%(senderName)s erabiltzaileak gela honen helbide nagusia kendu du.",
+            "changed_alternative": "%(senderName)s erabiltzaileak gela honen ordezko helbideak aldatu ditu.",
+            "changed_main_and_alternative": "%(senderName)s erabiltzaileak gela honen helbide nagusia eta ordezko helbideak aldatu ditu.",
+            "changed": "%(senderName)s erabiltzaileak gela honen helbideak aldatu ditu."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s erabiltzaileak %(targetDisplayName)s gelara elkartzeko gonbidapena errefusatu du.",
+            "sent": "%(senderName)s erabiltzaileak gelara elkartzeko gonbidapen bat bidali dio %(targetDisplayName)s erbiltzaileari."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s erabiltzaileak etorkizuneko gelaren historiala ikusgai jarri du gelako kide guztientzat, gonbidapena egiten zaienetik.",
+            "joined": "%(senderName)s erabiltzaileak etorkizuneko gelaren historiala ikusgai jarri du gelako kide guztientzat, elkartzen direnetik.",
+            "shared": "%(senderName)s erabiltzaileak etorkizuneko gelaren historiala ikusgai jarri du gelako kide guztientzat.",
+            "world_readable": "%(senderName)s erabiltzaileak etorkizuneko gelaren historiala ikusgai jarri du edonorentzat.",
+            "unknown": "%(senderName)s erabiltzaileak etorkizuneko gelaren historiala ikusgai jarri du ezezagunentzat (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "changed": "%(senderName)s erabiltzaileak gelan finkatutako mezuak aldatu ditu."
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s trepeta aldatu du %(senderName)s erabiltzaileak",
+            "added": "%(widgetName)s trepeta gehitu du %(senderName)s erabiltzaileak",
+            "removed": "%(widgetName)s trepeta kendu du %(senderName)s erabiltzaileak"
+        },
+        "self_redaction": "Mezu ezabatuta",
+        "redaction": "Mezua ezabatu du %(name)s erabiltzaileak"
     },
     "slash_command": {
         "shrug": "¯\\_(ツ)_/¯ jartzen du testu soileko mezu baten aurrean",

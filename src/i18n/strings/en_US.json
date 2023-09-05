@@ -78,11 +78,6 @@
     "Ignored user": "Ignored user",
     "Publish this room to the public in %(domain)s's room directory?": "Publish this room to the public in %(domain)s's room directory?",
     "Low priority": "Low priority",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s made future room history visible to all room members, from the point they are invited.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s made future room history visible to all room members, from the point they joined.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s made future room history visible to all room members.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s made future room history visible to anyone.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s made future room history visible to unknown (%(visibility)s).",
     "Missing room_id in request": "Missing room_id in request",
     "Missing user_id in request": "Missing user_id in request",
     "Moderator": "Moderator",
@@ -110,7 +105,6 @@
     "Room %(roomId)s not visible": "Room %(roomId)s not visible",
     "Rooms": "Rooms",
     "Search failed": "Search failed",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.",
     "Server error": "Server error",
     "Server may be unavailable, overloaded, or search timed out :(": "Server may be unavailable, overloaded, or search timed out :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server may be unavailable, overloaded, or you hit a bug.",
@@ -241,9 +235,6 @@
     "Unable to create widget.": "Unable to create widget.",
     "You are not in this room.": "You are not in this room.",
     "You do not have permission to do that in this room.": "You do not have permission to do that in this room.",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s widget added by %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s widget removed by %(senderName)s",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s changed the pinned messages for the room.",
     "Sunday": "Sunday",
     "Notification targets": "Notification targets",
     "Today": "Today",
@@ -295,8 +286,6 @@
     "Unable to load! Check your network connectivity and try again.": "Unable to load! Check your network connectivity and try again.",
     "Please supply a https:// or http:// widget URL": "Please supply an https:// or http:// widget URL",
     "You cannot modify widgets in this room.": "You cannot modify widgets in this room.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s widget modified by %(senderName)s",
     "%(displayName)s is typing …": "%(displayName)s is typing …",
     "%(names)s and %(count)s others are typing …": {
         "other": "%(names)s and %(count)s others are typing …"
@@ -461,6 +450,25 @@
         "m.room.canonical_alias": {
             "set": "%(senderName)s set the main address for this room to %(address)s.",
             "removed": "%(senderName)s removed the main address for this room."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.",
+            "sent": "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s made future room history visible to all room members, from the point they are invited.",
+            "joined": "%(senderName)s made future room history visible to all room members, from the point they joined.",
+            "shared": "%(senderName)s made future room history visible to all room members.",
+            "world_readable": "%(senderName)s made future room history visible to anyone.",
+            "unknown": "%(senderName)s made future room history visible to unknown (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "changed": "%(senderName)s changed the pinned messages for the room."
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s widget modified by %(senderName)s",
+            "added": "%(widgetName)s widget added by %(senderName)s",
+            "removed": "%(widgetName)s widget removed by %(senderName)s"
         }
     },
     "slash_command": {

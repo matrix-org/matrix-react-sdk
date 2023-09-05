@@ -114,11 +114,6 @@
     "Join Room": "Kamer toetreden",
     "Jump to first unread message.": "Spring naar het eerste ongelezen bericht.",
     "Low priority": "Lage prioriteit",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s heeft de toekomstige kamergeschiedenis zichtbaar gemaakt voor alle leden, vanaf het moment dat ze uitgenodigd zijn.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s heeft de toekomstige kamergeschiedenis zichtbaar gemaakt voor alle leden, vanaf het moment dat ze toegetreden zijn.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s heeft de toekomstige kamergeschiedenis zichtbaar gemaakt voor alle leden.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s heeft de toekomstige kamergeschiedenis zichtbaar gemaakt voor iedereen.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s heeft de toekomstige kamergeschiedenis zichtbaar gemaakt voor onbekend (%(visibility)s).",
     "Missing room_id in request": "room_id ontbreekt in verzoek",
     "Missing user_id in request": "user_id ontbreekt in verzoek",
     "New passwords don't match": "Nieuwe wachtwoorden komen niet overeen",
@@ -134,7 +129,6 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s is op dit moment niet toegankelijk.",
     "Rooms": "Kamers",
     "Search failed": "Zoeken mislukt",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s heeft %(targetDisplayName)s in deze kamer uitgenodigd.",
     "Server error": "Serverfout",
     "Server may be unavailable, overloaded, or search timed out :(": "De server is misschien onbereikbaar of overbelast, of het zoeken duurde te lang :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "De server is misschien onbereikbaar of overbelast, of je bent een bug tegengekomen.",
@@ -235,9 +229,6 @@
     "Unable to create widget.": "Kan widget niet aanmaken.",
     "You are not in this room.": "Je maakt geen deel uit van deze kamer.",
     "You do not have permission to do that in this room.": "Je hebt geen rechten om dat in deze kamer te doen.",
-    "%(widgetName)s widget added by %(senderName)s": "%(widgetName)s-widget toegevoegd door %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(widgetName)s-widget verwijderd door %(senderName)s",
-    "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s-widget aangepast door %(senderName)s",
     "Copied!": "Gekopieerd!",
     "Failed to copy": "Kopiëren mislukt",
     "Call Failed": "Oproep mislukt",
@@ -248,7 +239,6 @@
     "You are now ignoring %(userId)s": "Je negeert nu %(userId)s",
     "Unignored user": "Niet-genegeerde persoon",
     "You are no longer ignoring %(userId)s": "Je negeert %(userId)s niet meer",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s heeft de vastgeprikte boodschappen voor de kamer gewijzigd.",
     "Send": "Versturen",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
     "Enable URL previews for this room (only affects you)": "URL-voorvertoning in dit kamer inschakelen (geldt alleen voor jou)",
@@ -705,7 +695,6 @@
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Als je de herstelmethode niet hebt verwijderd, is het mogelijk dat er een aanvaller toegang tot jouw account probeert te verkrijgen. Wijzig onmiddellijk je wachtwoord en stel bij instellingen een nieuwe herstelmethode in.",
     "Please supply a https:// or http:// widget URL": "Voer een https://- of http://-widget-URL in",
     "You cannot modify widgets in this room.": "Je kan de widgets in deze kamer niet aanpassen.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s heeft de uitnodiging aan %(targetDisplayName)s toe te treden tot deze kamer ingetrokken.",
     "Upgrade this room to the recommended room version": "Upgrade deze kamer naar de aanbevolen kamerversie",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Deze kamer draait op kamerversie <roomVersion />, die door deze homeserver als <i>onstabiel</i> is gemarkeerd.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Upgraden zal de huidige versie van deze kamer sluiten, en onder dezelfde naam een geüpgraded versie starten.",
@@ -1213,9 +1202,6 @@
         "other": "%(senderName)s heeft de nevenadressen %(addresses)s voor deze kamer geschrapt.",
         "one": "%(senderName)s heeft het nevenadres %(addresses)s voor deze kamer geschrapt."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s heeft de nevenadressen voor deze kamer gewijzigd.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s heeft hoofd- en nevenadressen voor deze kamer gewijzigd.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s heeft de adressen voor deze kamer gewijzigd.",
     "You signed in to a new session without verifying it:": "Je hebt je bij een nog niet geverifieerde sessie aangemeld:",
     "Verify your other session using one of the options below.": "Verifieer je andere sessie op een van onderstaande wijzen.",
     "Opens chat with the given user": "Start een chat met die persoon",
@@ -1611,8 +1597,6 @@
     "Click to view edits": "Klik om bewerkingen te zien",
     "Edited at %(date)s": "Bewerkt op %(date)s",
     "Message deleted on %(date)s": "Bericht verwijderd op %(date)s",
-    "Message deleted by %(name)s": "Bericht verwijderd door %(name)s",
-    "Message deleted": "Bericht verwijderd",
     "Join the conference at the top of this room": "Deelnemen aan de vergadering bovenaan deze kamer",
     "Ignored attempt to disable encryption": "Poging om versleuteling uit te schakelen genegeerd",
     "Start verification again from the notification.": "Verificatie opnieuw beginnen vanuit de melding.",
@@ -2149,7 +2133,6 @@
     "e.g. my-space": "v.b. mijn-Space",
     "Silence call": "Oproep dempen",
     "Sound on": "Geluid aan",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s heeft de <a>vastgeprikte berichten</a> voor de kamer gewijzigd.",
     "Some invites couldn't be sent": "Sommige uitnodigingen konden niet verstuurd worden",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "De anderen zijn verstuurd, maar de volgende personen konden niet worden uitgenodigd voor <RoomName/>",
     "Unnamed audio": "Naamloze audio",
@@ -2292,10 +2275,6 @@
     "Cross-signing is ready but keys are not backed up.": "Kruiselings ondertekenen is klaar, maar de sleutels zijn nog niet geback-upt.",
     "The above, but in <Room /> as well": "Het bovenstaande, maar ook in <Room />",
     "The above, but in any room you are joined or invited to as well": "Het bovenstaande, maar in elke kamer waar je aan deelneemt en voor uitgenodigd bent",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s maakte een vastgeprikt bericht los van deze kamer. Bekijk alle vastgeprikte berichten.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s maakte <a>een vastgeprikt bericht</a> los van deze kamer. Bekijk alle <b>vastgeprikte berichten</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s prikte een bericht vast aan deze kamer. Bekijk alle vastgeprikte berichten.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s prikte <a>een bericht</a> aan deze kamer. Bekijk alle <b>vastgeprikte berichten</b>.",
     "Some encryption parameters have been changed.": "Enkele versleutingsparameters zijn gewijzigd.",
     "Role in <RoomName/>": "Rol in <RoomName/>",
     "Send a sticker": "Verstuur een sticker",
@@ -2455,7 +2434,6 @@
     "Image size in the timeline": "Afbeeldingformaat in de tijdlijn",
     "Sends the given message with rainfall": "Stuurt het bericht met neerslag",
     "sends rainfall": "stuurt neerslag",
-    "%(senderName)s has updated the room layout": "%(senderName)s heeft de kamerindeling bijgewerkt",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s en %(count)s andere",
         "other": "%(spaceName)s en %(count)s andere"
@@ -2599,9 +2577,6 @@
     "Automatically send debug logs on decryption errors": "Automatisch foutopsporingslogboeken versturen bij decoderingsfouten",
     "Remove, ban, or invite people to your active room, and make you leave": "Verwijder, verbied of nodig mensen uit voor je actieve kamer en zorg ervoor dat je weggaat",
     "Remove, ban, or invite people to this room, and make you leave": "Verwijder, verbied of nodig mensen uit voor deze kamer en zorg ervoor dat je weggaat",
-    "%(senderName)s has ended a poll": "%(senderName)s heeft een poll beëindigd",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s is een poll gestart - %(pollQuestion)s",
-    "%(senderName)s has shared their location": "%(senderName)s heeft zijn locatie gedeeld",
     "Previous autocomplete suggestion": "Vorige suggestie voor automatisch aanvullen",
     "Next autocomplete suggestion": "Volgende suggestie voor automatisch aanvullen",
     "Previous room or DM": "Vorige kamer of DM",
@@ -3602,8 +3577,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s heeft %(address)s als hoofdadres voor deze kamer ingesteld.",
-            "removed": "%(senderName)s heeft het hoofdadres voor deze kamer verwijderd."
-        }
+            "removed": "%(senderName)s heeft het hoofdadres voor deze kamer verwijderd.",
+            "changed_alternative": "%(senderName)s heeft de nevenadressen voor deze kamer gewijzigd.",
+            "changed_main_and_alternative": "%(senderName)s heeft hoofd- en nevenadressen voor deze kamer gewijzigd.",
+            "changed": "%(senderName)s heeft de adressen voor deze kamer gewijzigd."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s heeft de uitnodiging aan %(targetDisplayName)s toe te treden tot deze kamer ingetrokken.",
+            "sent": "%(senderName)s heeft %(targetDisplayName)s in deze kamer uitgenodigd."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s heeft de toekomstige kamergeschiedenis zichtbaar gemaakt voor alle leden, vanaf het moment dat ze uitgenodigd zijn.",
+            "joined": "%(senderName)s heeft de toekomstige kamergeschiedenis zichtbaar gemaakt voor alle leden, vanaf het moment dat ze toegetreden zijn.",
+            "shared": "%(senderName)s heeft de toekomstige kamergeschiedenis zichtbaar gemaakt voor alle leden.",
+            "world_readable": "%(senderName)s heeft de toekomstige kamergeschiedenis zichtbaar gemaakt voor iedereen.",
+            "unknown": "%(senderName)s heeft de toekomstige kamergeschiedenis zichtbaar gemaakt voor onbekend (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s prikte <a>een bericht</a> aan deze kamer. Bekijk alle <b>vastgeprikte berichten</b>.",
+            "pinned": "%(senderName)s prikte een bericht vast aan deze kamer. Bekijk alle vastgeprikte berichten.",
+            "unpinned_link": "%(senderName)s maakte <a>een vastgeprikt bericht</a> los van deze kamer. Bekijk alle <b>vastgeprikte berichten</b>.",
+            "unpinned": "%(senderName)s maakte een vastgeprikt bericht los van deze kamer. Bekijk alle vastgeprikte berichten.",
+            "changed_link": "%(senderName)s heeft de <a>vastgeprikte berichten</a> voor de kamer gewijzigd.",
+            "changed": "%(senderName)s heeft de vastgeprikte boodschappen voor de kamer gewijzigd."
+        },
+        "m.widget": {
+            "modified": "%(widgetName)s-widget aangepast door %(senderName)s",
+            "added": "%(widgetName)s-widget toegevoegd door %(senderName)s",
+            "removed": "%(widgetName)s-widget verwijderd door %(senderName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s heeft de kamerindeling bijgewerkt",
+        "m.location": "%(senderName)s heeft zijn locatie gedeeld",
+        "self_redaction": "Bericht verwijderd",
+        "redaction": "Bericht verwijderd door %(name)s",
+        "m.poll.start": "%(senderName)s is een poll gestart - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s heeft een poll beëindigd"
     },
     "slash_command": {
         "spoiler": "Verstuurt het bericht als een spoiler",

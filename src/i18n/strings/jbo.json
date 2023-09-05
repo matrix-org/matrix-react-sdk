@@ -70,16 +70,6 @@
     "Displays action": ".i mrilu lo nu do gasnu",
     "Forces the current outbound group session in an encrypted room to be discarded": ".i macnu vimcu lo ca barkla termifckiku gunma lo kumfa pe'a poi mifra",
     "Reason": "krinu",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": ".i la'o zoi. %(senderName)s .zoi friti le ka ziljmina le se zilbe'i kei la'o zoi. %(targetDisplayName)s .zoi",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": ".i ro da poi pagbu le se zilbe'i zo'u gau la'o zoi. %(senderName)s .zoi da ka'e tcidu ro notci poi ba lo nu da te friti ba zilbe'i",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": ".i ro da poi pagbu le se zilbe'i zo'u gau la'o zoi. %(senderName)s .zoi da ka'e tcidu ro notci poi ba lo nu da ziljmina ba zilbe'i",
-    "%(senderName)s made future room history visible to all room members.": ".i gau la'o zoi. %(senderName)s .zoi ro pagbu be le se zilbe'i cu ka'e tcidu ro notci poi ba zilbe'i",
-    "%(senderName)s made future room history visible to anyone.": ".i gau la'o zoi. %(senderName)s .zoi ro da ka'e tcidu ro notci poi ba zilbe'i",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": ".i la'o ly. %(senderName)s .ly. gasnu lo nu zo'e ka'e viska lo notci to cuxna zoi ny. %(visibility)s .ny. toi",
-    "%(senderName)s changed the pinned messages for the room.": ".i la'o ly. %(senderName)s .ly. gafygau lo vitno notci pe le kumfa pe'a",
-    "%(widgetName)s widget modified by %(senderName)s": ".i la'o ly. %(senderName)s .ly. gafygau la'o ny. %(widgetName)s .ny. noi uidje",
-    "%(widgetName)s widget added by %(senderName)s": ".i la'o ly. %(senderName)s .ly. jmina la'o ny. %(widgetName)s .ny. noi uidje",
-    "%(widgetName)s widget removed by %(senderName)s": ".i la'o ly. %(senderName)s .ly. vimcu la'o ny. %(widgetName)s .ny. noi uidje",
     "This homeserver has hit its Monthly Active User limit.": ".i le samtcise'u cu bancu lo masti jimte be ri bei lo ni ca'o pilno",
     "This homeserver has exceeded one of its resource limits.": ".i le samtcise'u cu bancu pa lo jimte be ri",
     "Your browser does not support the required cryptography extensions": ".i le kibrbrauzero na ka'e pilno le mifra ciste poi jai sarcu",
@@ -122,10 +112,6 @@
         "other": ".i gau la'o zoi. %(senderName)s .zoi zoi zoi. %(addresses)s .zoi poi na ralju co'u judri le se zilbe'i",
         "one": ".i gau la'o zoi. %(senderName)s .zoi zoi zoi. %(addresses)s .zoi poi na ralju co'u judri le se zilbe'i"
     },
-    "%(senderName)s changed the alternative addresses for this room.": ".i gau la'o zoi. %(senderName)s .zoi pa na ralju cu basti da le ka judri le se zilbe'i",
-    "%(senderName)s changed the main and alternative addresses for this room.": ".i gau la'o zoi. %(senderName)s .zoi pa ralju je pa na ralju cu basti da le ka judri le se zilbe'i",
-    "%(senderName)s changed the addresses for this room.": ".i gau la'o zoi. %(senderName)s .zoi da basti de le ka judri le se zilbe'i",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": ".i la'o zoi. %(senderName)s .zoi co'u friti le ka ziljmina le se zilbe'i kei la'o zoi. %(targetDisplayName)s .zoi",
     "You signed in to a new session without verifying it:": ".i fe le di'e se samtcise'u pu co'a jaspu vau je za'o na lacri",
     "They match": "du",
     "They don't match": "na du",
@@ -416,7 +402,29 @@
         "m.image": ".i pa pixra cu zilbe'i fi la'o zoi. %(senderDisplayName)s .zoi",
         "m.room.canonical_alias": {
             "set": ".i gau la'o zoi. %(senderName)s .zoi zoi zoi. %(address)s .zoi co'a ralju le'i judri be le ve zilbe'i",
-            "removed": ".i gau la'o zoi. %(senderName)s .zoi da co'u ralju le'i judri be le ve zilbe'i"
+            "removed": ".i gau la'o zoi. %(senderName)s .zoi da co'u ralju le'i judri be le ve zilbe'i",
+            "changed_alternative": ".i gau la'o zoi. %(senderName)s .zoi pa na ralju cu basti da le ka judri le se zilbe'i",
+            "changed_main_and_alternative": ".i gau la'o zoi. %(senderName)s .zoi pa ralju je pa na ralju cu basti da le ka judri le se zilbe'i",
+            "changed": ".i gau la'o zoi. %(senderName)s .zoi da basti de le ka judri le se zilbe'i"
+        },
+        "m.room.third_party_invite": {
+            "revoked": ".i la'o zoi. %(senderName)s .zoi co'u friti le ka ziljmina le se zilbe'i kei la'o zoi. %(targetDisplayName)s .zoi",
+            "sent": ".i la'o zoi. %(senderName)s .zoi friti le ka ziljmina le se zilbe'i kei la'o zoi. %(targetDisplayName)s .zoi"
+        },
+        "m.room.history_visibility": {
+            "invited": ".i ro da poi pagbu le se zilbe'i zo'u gau la'o zoi. %(senderName)s .zoi da ka'e tcidu ro notci poi ba lo nu da te friti ba zilbe'i",
+            "joined": ".i ro da poi pagbu le se zilbe'i zo'u gau la'o zoi. %(senderName)s .zoi da ka'e tcidu ro notci poi ba lo nu da ziljmina ba zilbe'i",
+            "shared": ".i gau la'o zoi. %(senderName)s .zoi ro pagbu be le se zilbe'i cu ka'e tcidu ro notci poi ba zilbe'i",
+            "world_readable": ".i gau la'o zoi. %(senderName)s .zoi ro da ka'e tcidu ro notci poi ba zilbe'i",
+            "unknown": ".i la'o ly. %(senderName)s .ly. gasnu lo nu zo'e ka'e viska lo notci to cuxna zoi ny. %(visibility)s .ny. toi"
+        },
+        "m.room.pinned_events": {
+            "changed": ".i la'o ly. %(senderName)s .ly. gafygau lo vitno notci pe le kumfa pe'a"
+        },
+        "m.widget": {
+            "modified": ".i la'o ly. %(senderName)s .ly. gafygau la'o ny. %(widgetName)s .ny. noi uidje",
+            "added": ".i la'o ly. %(senderName)s .ly. jmina la'o ny. %(widgetName)s .ny. noi uidje",
+            "removed": ".i la'o ly. %(senderName)s .ly. vimcu la'o ny. %(widgetName)s .ny. noi uidje"
         }
     },
     "slash_command": {

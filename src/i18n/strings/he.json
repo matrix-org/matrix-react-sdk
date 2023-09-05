@@ -533,22 +533,8 @@
     "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s הסיר את הכלל החוסם שרתים התואמים ל%(glob)s",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s הסיר את הכלל שחוסם חדרים התואמים ל%(glob)s",
     "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s הסיר את הכלל שחוסם משתמשים התואמים ל %(glob)s",
-    "%(widgetName)s widget removed by %(senderName)s": "היישומון %(widgetName)s הוסר על ידי %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "היישומון %(widgetName)s התווסף על ידי %(senderName)s",
-    "%(widgetName)s widget modified by %(senderName)s": "היישומון %(widgetName)s שונה על ידי %(senderName)s",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s שינה את ההודעה הנעוצה של החדר.",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s שינה את רמת ההרשאה של %(powerLevelDiffText)s.",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s מ%(fromPowerLevel)s ל%(toPowerLevel)s",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s הגדיר את הסטוריית החדר פתוחה עבור (%(visibility)s) לא ידועים.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s הגדיר את הסטוריית החדר פתוחה עבור כולם.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s הגדיר את הסטוריית החדר כפתוחה לכל משתמשי החדר.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s הגדיר/ה את תצוגת ההיסטוריה של החדר כפתוחה עבור כל משתמשי החדר, מהרגע שבו הם הצטרפו.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s הגדיר את תצוגת ההסטוריה של החדר כפתוחה עבור כל משתמשי החדר, מהרגע שבו הם הוזמנו.",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s שלח הזמנה ל%(targetDisplayName)s להצטרף אל החדר.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s דחה את ההזמנה של %(targetDisplayName)s להצטרף אל החדר.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s שינה את הכתובות של חדר זה.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s שינה את הכתובת הראשית והמשנית של חדר זה.",
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s שניה את הכתובת המשנית של חדר זה.",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
         "one": "%(senderName)s הסיר את הכתובת המשנית %(addresses)s עבור חדר זה.",
         "other": "%(senderName)s הסיר את הכתובת המשנית %(addresses)s עבור חדר זה."
@@ -964,7 +950,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "השתמשו ב <a> אפליקציית שולחן העבודה </a> לחיפוש הודעות מוצפנות",
     "Use the <a>Desktop app</a> to see all encrypted files": "השתמשו ב <a> אפליקציית שולחן העבודה </a> כדי לראות את כל הקבצים המוצפנים",
     "Popout widget": "יישומון קופץ",
-    "Message deleted": "הודעה נמחקה",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith> הגיבו עם %(shortName)s</reactedWith>",
     "Error decrypting video": "שגיאה בפענוח וידאו",
     "You sent a verification request": "שלחתם בקשה לקוד אימות",
@@ -1297,7 +1282,6 @@
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s הסיר את האווטאר של החדר.",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s שינה את האווטר עבור חדר %(roomName)s",
     "Message deleted on %(date)s": "הודעה נמחקה בתאריך %(date)s",
-    "Message deleted by %(name)s": "הודעה נמחקה על ידיד%(name)s",
     "Change history visibility": "שנה תצוגת הסטוריה",
     "Change main address for the room": "שנה את הכתובת הראשית של החדר",
     "Change room name": "שנה את שם החדר",
@@ -2025,7 +2009,6 @@
     "Silence call": "השתקת שיחה",
     "You previously consented to share anonymous usage data with us. We're updating how that works.": "הסכמתם בעבר לשתף איתנו מידע אנונימי לגבי השימוש שלכם. אנחנו מעדכנים איך זה מתבצע.",
     "This homeserver has been blocked by its administrator.": "שרת זה נחסם על ידי מנהלו.",
-    "%(senderName)s has shared their location": "%(senderName)s שיתף/ה מיקום",
     "The user you called is busy.": "המשתמש עסוק כרגע.",
     "User Busy": "המשתמש עסוק",
     "Great! This Security Phrase looks strong enough.": "מצוין! ביטוי אבטחה זה נראה מספיק חזק.",
@@ -2058,8 +2041,6 @@
     "Can't edit poll": "לא ניתן לערוךסקר",
     "Poll": "סקר",
     "You do not have permission to start polls in this room.": "אין לכם הרשאה להתחיל סקר בחדר זה.",
-    "%(senderName)s has ended a poll": "%(senderName)sסיים סקר",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s התחיל סקר - %(pollQuestion)s",
     "Preserve system messages": "שמור את הודעות המערכת",
     "Next autocomplete suggestion": "הצעת השלמה אוטומטית הבאה",
     "Previous room or DM": "חדר קודם או התכתבות ישירה",
@@ -2376,10 +2357,6 @@
     "Give one or multiple users in this room more privileges": "הענק למשתמש או מספר משתמשים בחדר זה הרשאות נוספות",
     "Add privileged users": "הוספת משתמשים מורשים",
     "To publish an address, it needs to be set as a local address first.": "כדי לפרסם כתובת, יש להגדיר אותה ככתובת מקומית תחילה.",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s ביטל/ה נעיצה של הודעה בחדר זה. צפה בכל ההודעות הנעוצות.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s ביטל/ה נעיצה של <a>הודעה</a> בחדר זה. צפה בכל <b>ההודעות הנעוצות</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s נעצ/ה הודעה בחדר זה. צפה בכל ההודעות הנעוצות.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s נעצ/ה <a>הודעה</a> בחדר זה. צפה בכל<b>ההודעות הנעוצות</b>.",
     "Pinned messages": "הודעות נעוצות",
     "Pinned": "הודעות נעוצות",
     "Nothing pinned, yet": "אין הודעות נעוצות, לבינתיים",
@@ -2787,8 +2764,39 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s הגדיר את הכתובת הראשית עבור חדר זה ל- %(address)s.",
-            "removed": "%(senderName)s הסיר את הכתובת הראשית עבור חדר זה."
-        }
+            "removed": "%(senderName)s הסיר את הכתובת הראשית עבור חדר זה.",
+            "changed_alternative": "%(senderName)s שניה את הכתובת המשנית של חדר זה.",
+            "changed_main_and_alternative": "%(senderName)s שינה את הכתובת הראשית והמשנית של חדר זה.",
+            "changed": "%(senderName)s שינה את הכתובות של חדר זה."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s דחה את ההזמנה של %(targetDisplayName)s להצטרף אל החדר.",
+            "sent": "%(senderName)s שלח הזמנה ל%(targetDisplayName)s להצטרף אל החדר."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s הגדיר את תצוגת ההסטוריה של החדר כפתוחה עבור כל משתמשי החדר, מהרגע שבו הם הוזמנו.",
+            "joined": "%(senderName)s הגדיר/ה את תצוגת ההיסטוריה של החדר כפתוחה עבור כל משתמשי החדר, מהרגע שבו הם הצטרפו.",
+            "shared": "%(senderName)s הגדיר את הסטוריית החדר כפתוחה לכל משתמשי החדר.",
+            "world_readable": "%(senderName)s הגדיר את הסטוריית החדר פתוחה עבור כולם.",
+            "unknown": "%(senderName)s הגדיר את הסטוריית החדר פתוחה עבור (%(visibility)s) לא ידועים."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s נעצ/ה <a>הודעה</a> בחדר זה. צפה בכל<b>ההודעות הנעוצות</b>.",
+            "pinned": "%(senderName)s נעצ/ה הודעה בחדר זה. צפה בכל ההודעות הנעוצות.",
+            "unpinned_link": "%(senderName)s ביטל/ה נעיצה של <a>הודעה</a> בחדר זה. צפה בכל <b>ההודעות הנעוצות</b>.",
+            "unpinned": "%(senderName)s ביטל/ה נעיצה של הודעה בחדר זה. צפה בכל ההודעות הנעוצות.",
+            "changed": "%(senderName)s שינה את ההודעה הנעוצה של החדר."
+        },
+        "m.widget": {
+            "modified": "היישומון %(widgetName)s שונה על ידי %(senderName)s",
+            "added": "היישומון %(widgetName)s התווסף על ידי %(senderName)s",
+            "removed": "היישומון %(widgetName)s הוסר על ידי %(senderName)s"
+        },
+        "m.location": "%(senderName)s שיתף/ה מיקום",
+        "self_redaction": "הודעה נמחקה",
+        "redaction": "הודעה נמחקה על ידיד%(name)s",
+        "m.poll.start": "%(senderName)s התחיל סקר - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)sסיים סקר"
     },
     "slash_command": {
         "spoiler": "שולח הודעה ומסמן אותה כספוילר",

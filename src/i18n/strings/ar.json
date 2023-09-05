@@ -137,22 +137,8 @@
         "other": "قام %(senderName)s بإزالة العناوين البديلة %(addresses)s لهذه الغرفة.",
         "one": "قام %(senderName)s بإزالة العنوان البديل %(addresses)s لهذه الغرفة."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "قام %(senderName)s بتعديل العناوين البديلة لهذه الغرفة.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "قام %(senderName)s بتعديل العناوين الرئيسية و البديلة لهذه الغرفة.",
-    "%(senderName)s changed the addresses for this room.": "قام %(senderName)s بتعديل عناوين هذه الغرفة.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "قام %(senderName)s بسحب الدعوة الى %(targetDisplayName)s بالانضمام الى الغرفة.",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "أرسل %(senderName)s دعوة الى %(targetDisplayName)s للانضمام الى الغرفة.",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "قام %(senderName)s بتعديل رؤية المحادثات السابقة ممكنة لكل الاعضاء من تاريخ دعوتهم بالانضمام.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "قام %(senderName)s بتعديل رؤية المحادثات السابقة ممكنة لكل الاعضاء من لحظة انضمامهم.",
-    "%(senderName)s made future room history visible to all room members.": "قام %(senderName)s بتعديل رؤية المحادثات السابقة ممكنة لكل الاعضاء.",
-    "%(senderName)s made future room history visible to anyone.": "قام %(senderName)s بتعديل رؤية المحادثات السابقة ممكنة لأي شخص.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "قام %(senderName)s بجعل المحادثات السابقة مرئية لمجهول (%(visibility)s).",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s من %(fromPowerLevel)s الى %(toPowerLevel)s",
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "غير %(senderName)s مستوى الطاقة الخاصة ب %(powerLevelDiffText)s.",
-    "%(senderName)s changed the pinned messages for the room.": "عدل %(senderName)s الرسائل المثبتة للغرفة.",
-    "%(widgetName)s widget modified by %(senderName)s": "الودجت %(widgetName)s تعدلت بواسطة %(senderName)s",
-    "%(widgetName)s widget added by %(senderName)s": "الودجت %(widgetName)s اضيفت بواسطة %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "الودجت %(widgetName)s حذفت بواسطة %(senderName)s",
     "You cannot place a call with yourself.": "لا يمكنك الاتصال بنفسك.",
     "%(senderName)s removed the rule banning users matching %(glob)s": "أزال %(senderName)s القاعدة الناصَّة على منع المستخدمين المطابقين %(glob)s",
     "%(senderName)s removed the rule banning rooms matching %(glob)s": "أزال %(senderName)s القاعدة الناصَّة على منع الغرف المطابقة %(glob)s",
@@ -237,8 +223,6 @@
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s حذف صورة الغرفة.",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s غير صورة الغرفة %(roomName)s",
     "Message deleted on %(date)s": "حذفت الرسالة في %(date)s",
-    "Message deleted by %(name)s": "حذف الرسالة %(name)s",
-    "Message deleted": "حُذفت الرسالة",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>تفاعلو ب%(shortName)s</reactedWith>",
     "Error decrypting video": "تعذر فك تشفير الفيديو",
     "You sent a verification request": "أنت أرسلت طلب تحقق",
@@ -1352,8 +1336,32 @@
         },
         "m.room.canonical_alias": {
             "set": "قام %(senderName)s بتعديل العنوان الرئيسي لهذه الغرفة الى %(address)s.",
-            "removed": "قام %(senderName)s بإزالة العنوان الرئيسي لهذه الغرفة."
-        }
+            "removed": "قام %(senderName)s بإزالة العنوان الرئيسي لهذه الغرفة.",
+            "changed_alternative": "قام %(senderName)s بتعديل العناوين البديلة لهذه الغرفة.",
+            "changed_main_and_alternative": "قام %(senderName)s بتعديل العناوين الرئيسية و البديلة لهذه الغرفة.",
+            "changed": "قام %(senderName)s بتعديل عناوين هذه الغرفة."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "قام %(senderName)s بسحب الدعوة الى %(targetDisplayName)s بالانضمام الى الغرفة.",
+            "sent": "أرسل %(senderName)s دعوة الى %(targetDisplayName)s للانضمام الى الغرفة."
+        },
+        "m.room.history_visibility": {
+            "invited": "قام %(senderName)s بتعديل رؤية المحادثات السابقة ممكنة لكل الاعضاء من تاريخ دعوتهم بالانضمام.",
+            "joined": "قام %(senderName)s بتعديل رؤية المحادثات السابقة ممكنة لكل الاعضاء من لحظة انضمامهم.",
+            "shared": "قام %(senderName)s بتعديل رؤية المحادثات السابقة ممكنة لكل الاعضاء.",
+            "world_readable": "قام %(senderName)s بتعديل رؤية المحادثات السابقة ممكنة لأي شخص.",
+            "unknown": "قام %(senderName)s بجعل المحادثات السابقة مرئية لمجهول (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "changed": "عدل %(senderName)s الرسائل المثبتة للغرفة."
+        },
+        "m.widget": {
+            "modified": "الودجت %(widgetName)s تعدلت بواسطة %(senderName)s",
+            "added": "الودجت %(widgetName)s اضيفت بواسطة %(senderName)s",
+            "removed": "الودجت %(widgetName)s حذفت بواسطة %(senderName)s"
+        },
+        "self_redaction": "حُذفت الرسالة",
+        "redaction": "حذف الرسالة %(name)s"
     },
     "slash_command": {
         "shrug": "ادخل احد الرموز ¯\\_(ツ)_/¯ قبل نص الرسالة",

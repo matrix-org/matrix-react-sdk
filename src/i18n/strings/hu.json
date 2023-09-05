@@ -77,11 +77,6 @@
     "Join Room": "Belépés a szobába",
     "Jump to first unread message.": "Ugrás az első olvasatlan üzenetre.",
     "Low priority": "Alacsony prioritás",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s láthatóvá tette a szoba új üzeneteit minden szobatagnak, a meghívásuk idejétől kezdve.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s láthatóvá tette a szoba új üzeneteit minden szobatagnak, a csatlakozásuk idejétől kezdve.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s láthatóvá tette a szoba új üzeneteit minden szobatagnak.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s mindenki számára láthatóvá tette a szoba új üzeneteit.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s elérhetővé tette a szoba új üzeneteit az ismeretlenek (%(visibility)s) számára is.",
     "Missing room_id in request": "A kérésből hiányzik a szobaazonosító",
     "Missing user_id in request": "A kérésből hiányzik a szobaazonosító",
     "Moderator": "Moderátor",
@@ -110,7 +105,6 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s jelenleg nem érhető el.",
     "Rooms": "Szobák",
     "Search failed": "Keresés sikertelen",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s meghívót küldött %(targetDisplayName)s számára, hogy lépjen be a szobába.",
     "Server error": "Kiszolgálóhiba",
     "Server may be unavailable, overloaded, or search timed out :(": "A kiszolgáló elérhetetlen, túlterhelt vagy a keresés túllépte az időkorlátot :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "A kiszolgáló elérhetetlen, túlterhelt vagy hibára futott.",
@@ -235,9 +229,6 @@
     "You are not in this room.": "Nem tagja ennek a szobának.",
     "You do not have permission to do that in this room.": "Nincs jogosultsága ezt tenni ebben a szobában.",
     "Publish this room to the public in %(domain)s's room directory?": "Publikálod a szobát a(z) %(domain)s szoba listájába?",
-    "%(widgetName)s widget added by %(senderName)s": "%(senderName)s hozzáadta a %(widgetName)s kisalkalmazást",
-    "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s eltávolította a %(widgetName)s kisalkalmazást",
-    "%(widgetName)s widget modified by %(senderName)s": "%(senderName)s módosította a(z) %(widgetName)s kisalkalmazást",
     "Copied!": "Másolva!",
     "Failed to copy": "Sikertelen másolás",
     "Unignore": "Mellőzés feloldása",
@@ -248,7 +239,6 @@
     "Banned by %(displayName)s": "Kitiltotta: %(displayName)s",
     "Unknown": "Ismeretlen",
     "Jump to read receipt": "Olvasási visszaigazolásra ugrás",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s megváltoztatta a szoba kitűzött üzeneteit.",
     "Unnamed room": "Névtelen szoba",
     "And %(count)s more...": {
         "other": "És még %(count)s..."
@@ -705,7 +695,6 @@
     "Power level": "Hozzáférési szint",
     "Please supply a https:// or http:// widget URL": "Adja meg a kisalkalmazás https:// vagy http:// webcímét",
     "You cannot modify widgets in this room.": "Nem módosíthatja a kisalkalmazásokat ebben a szobában.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s visszavonta %(targetDisplayName)s a szobába való belépéséhez szükséges meghívóját.",
     "Upgrade this room to the recommended room version": "A szoba fejlesztése a javasolt szobaverzióra",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "A szoba verziója: <roomVersion />, amelyet a Matrix-kiszolgáló <i>instabilnak</i> tekint.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "A szoba fejlesztése bezárja ezt a szobát és új, frissített verzióval ugyanezen a néven létrehoz egy újat.",
@@ -1201,9 +1190,6 @@
         "other": "%(senderName)s eltávolította az alternatív címeket a szobáról: %(addresses)s.",
         "one": "%(senderName)s eltávolította az alternatív címet a szobáról: %(addresses)s."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s megváltoztatta a szoba alternatív címeit.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s megváltoztatta a szoba elsődleges és alternatív címeit.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s megváltoztatta a szoba címeit.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "A szoba címének megváltoztatásakor hiba történt. Lehet, hogy a szerver nem engedélyezi vagy átmeneti hiba történt.",
     "Invalid theme schema.": "Érvénytelen témaséma.",
     "Error downloading theme information.": "Hiba a témainformációk letöltése során.",
@@ -1313,8 +1299,6 @@
     "Verify your other session using one of the options below.": "Ellenőrizze a másik munkamenetét a lenti lehetőségek egyikével.",
     "Opens chat with the given user": "Megnyitja a beszélgetést a megadott felhasználóval",
     "You've successfully verified your device!": "Sikeresen ellenőrizted az eszközödet!",
-    "Message deleted": "Üzenet törölve",
-    "Message deleted by %(name)s": "%(name)s törölte ezt az üzenetet",
     "QR Code": "QR kód",
     "To continue, use Single Sign On to prove your identity.": "A folytatáshoz, használja az egyszeri bejelentkezést, hogy megerősítse a személyazonosságát.",
     "Confirm to continue": "Erősítsd meg a továbblépéshez",
@@ -2102,7 +2086,6 @@
     "Pinned messages": "Kitűzött üzenetek",
     "Nothing pinned, yet": "Még semmi sincs kitűzve",
     "End-to-end encryption isn't enabled": "Végpontok közötti titkosítás nincs engedélyezve",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s megváltoztatta a szoba <a>kitűzött üzeneteit</a>.",
     "Some invites couldn't be sent": "Néhány meghívót nem sikerült elküldeni",
     "Please pick a nature and describe what makes this message abusive.": "Válassza ki az üzenet természetét, vagy írja le, hogy miért elítélendő.",
     "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Ez a szoba illegális vagy mérgező tartalmat közvetít, vagy a moderátorok képtelenek ezeket megfelelően moderálni.\nEz jelezve lesz a(z) %(homeserver)s rendszergazdái felé. Az rendszergazdák NEM tudják olvasni a szoba titkosított tartalmát.",
@@ -2292,10 +2275,6 @@
     "To avoid these issues, create a <a>new encrypted room</a> for the conversation you plan to have.": "Az ehhez hasonló problémák elkerüléséhez készítsen <a>új titkosított szobát</a> a tervezett beszélgetésekhez.",
     "The above, but in <Room /> as well": "A fentiek, de ebben a szobában is: <Room />",
     "The above, but in any room you are joined or invited to as well": "A fentiek, de minden szobában, amelybe belépett vagy meghívták",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s levett egy kitűzött üzenetet ebben a szobában. Minden kitűzött üzenet megjelenítése.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s levett egy kitűzött <a>üzenetet</a> ebben a szobában. Minden <b>kitűzött üzenet</b> megjelenítése.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s kitűzött egy üzenetet ebben a szobában. Minden kitűzött üzenet megjelenítése.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s kitűzött <a>egy üzenetet</a> ebben a szobában. Minden <b>kitűzött üzenet</b> megjelenítése.",
     "Some encryption parameters have been changed.": "Néhány titkosítási paraméter megváltozott.",
     "Role in <RoomName/>": "Szerep itt: <RoomName/>",
     "Send a sticker": "Matrica küldése",
@@ -2450,7 +2429,6 @@
     "Get notified for every message": "Értesítés fogadása az összes üzenetről",
     "Get notifications as set up in your <a>settings</a>": "Értesítések fogadása a <a>beállításokban</a> megadottak szerint",
     "Rooms outside of a space": "Téren kívüli szobák",
-    "%(senderName)s has updated the room layout": "%(senderName)s frissítette a szoba kinézetét",
     "Large": "Nagy",
     "Image size in the timeline": "Képméret az idővonalon",
     "Based on %(count)s votes": {
@@ -2595,9 +2573,6 @@
     "Automatically send debug logs on decryption errors": "Hibakeresési naplók automatikus küldése titkosítás-visszafejtési hiba esetén",
     "Remove, ban, or invite people to your active room, and make you leave": "Eltávolítani, kitiltani vagy meghívni embereket az aktív szobába és, hogy ön elhagyja a szobát",
     "Remove, ban, or invite people to this room, and make you leave": "Eltávolítani, kitiltani vagy meghívni embereket ebbe a szobába és, hogy ön elhagyja a szobát",
-    "%(senderName)s has ended a poll": "%(senderName)s lezárta a szavazást",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s szavazást indított - %(pollQuestion)s",
-    "%(senderName)s has shared their location": "%(senderName)s megosztotta a földrajzi helyzetét",
     "You can't see earlier messages": "Nem tekintheted meg a régebbi üzeneteket",
     "Encrypted messages before this point are unavailable.": "A régebbi titkosított üzenetek elérhetetlenek.",
     "You don't have permission to view messages from before you joined.": "A belépés előtti üzenetek megtekintése nincs engedélyezve számodra.",
@@ -3901,8 +3876,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s erre állította az elsődleges szobacímet: %(address)s.",
-            "removed": "%(senderName)s törölte a szoba elsődleges címét."
-        }
+            "removed": "%(senderName)s törölte a szoba elsődleges címét.",
+            "changed_alternative": "%(senderName)s megváltoztatta a szoba alternatív címeit.",
+            "changed_main_and_alternative": "%(senderName)s megváltoztatta a szoba elsődleges és alternatív címeit.",
+            "changed": "%(senderName)s megváltoztatta a szoba címeit."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s visszavonta %(targetDisplayName)s a szobába való belépéséhez szükséges meghívóját.",
+            "sent": "%(senderName)s meghívót küldött %(targetDisplayName)s számára, hogy lépjen be a szobába."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s láthatóvá tette a szoba új üzeneteit minden szobatagnak, a meghívásuk idejétől kezdve.",
+            "joined": "%(senderName)s láthatóvá tette a szoba új üzeneteit minden szobatagnak, a csatlakozásuk idejétől kezdve.",
+            "shared": "%(senderName)s láthatóvá tette a szoba új üzeneteit minden szobatagnak.",
+            "world_readable": "%(senderName)s mindenki számára láthatóvá tette a szoba új üzeneteit.",
+            "unknown": "%(senderName)s elérhetővé tette a szoba új üzeneteit az ismeretlenek (%(visibility)s) számára is."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s kitűzött <a>egy üzenetet</a> ebben a szobában. Minden <b>kitűzött üzenet</b> megjelenítése.",
+            "pinned": "%(senderName)s kitűzött egy üzenetet ebben a szobában. Minden kitűzött üzenet megjelenítése.",
+            "unpinned_link": "%(senderName)s levett egy kitűzött <a>üzenetet</a> ebben a szobában. Minden <b>kitűzött üzenet</b> megjelenítése.",
+            "unpinned": "%(senderName)s levett egy kitűzött üzenetet ebben a szobában. Minden kitűzött üzenet megjelenítése.",
+            "changed_link": "%(senderName)s megváltoztatta a szoba <a>kitűzött üzeneteit</a>.",
+            "changed": "%(senderName)s megváltoztatta a szoba kitűzött üzeneteit."
+        },
+        "m.widget": {
+            "modified": "%(senderName)s módosította a(z) %(widgetName)s kisalkalmazást",
+            "added": "%(senderName)s hozzáadta a %(widgetName)s kisalkalmazást",
+            "removed": "%(senderName)s eltávolította a %(widgetName)s kisalkalmazást"
+        },
+        "io.element.widgets.layout": "%(senderName)s frissítette a szoba kinézetét",
+        "m.location": "%(senderName)s megosztotta a földrajzi helyzetét",
+        "self_redaction": "Üzenet törölve",
+        "redaction": "%(name)s törölte ezt az üzenetet",
+        "m.poll.start": "%(senderName)s szavazást indított - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s lezárta a szavazást"
     },
     "slash_command": {
         "spoiler": "A megadott üzenet elküldése kitakarva",

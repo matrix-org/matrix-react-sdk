@@ -80,9 +80,6 @@
         "other": "a %(count)s další...",
         "one": "a někdo další..."
     },
-    "%(widgetName)s widget modified by %(senderName)s": "%(senderName)s upravil(a) widget %(widgetName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "%(senderName)s odstranil(a) widget %(widgetName)s",
-    "%(widgetName)s widget added by %(senderName)s": "%(senderName)s přidal(a) widget %(widgetName)s",
     "Failed to verify email address: make sure you clicked the link in the email": "E-mailovou adresu se nepodařilo ověřit. Přesvědčte se, že jste klepli na odkaz v e-mailové zprávě",
     "Import E2E room keys": "Importovat šifrovací klíče místností",
     "Incorrect username and/or password.": "Nesprávné uživatelské jméno nebo heslo.",
@@ -114,7 +111,6 @@
     "Room %(roomId)s not visible": "Místnost %(roomId)s není viditelná",
     "%(roomName)s does not exist.": "%(roomName)s neexistuje.",
     "%(roomName)s is not accessible at this time.": "Místnost %(roomName)s není v tuto chvíli dostupná.",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s pozval(a) uživatele %(targetDisplayName)s ke vstupu do místnosti.",
     "Server error": "Chyba serveru",
     "Server may be unavailable, overloaded, or search timed out :(": "Server může být nedostupný, přetížený nebo vyhledávání vypršelo :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server může být nedostupný, přetížený nebo jste narazili na chybu.",
@@ -172,11 +168,6 @@
     "New Password": "Nové heslo",
     "Unignore": "Odignorovat",
     "Admin Tools": "Nástroje pro správce",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s nastavil(a) viditelnost budoucích zpráv v této místnosti pro všechny její členy, a to od chvíle jejich pozvání.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s nastavil(a) viditelnost budoucích zpráv v této místnosti pro všechny její členy od chvíle jejich vstupu.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s nastavil(a) viditelnost budoucích zpráv v této místnosti pro všechny její členy.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s nastavil(a) viditelnost budoucích zpráv pro kohokoliv.",
-    "%(senderName)s changed the pinned messages for the room.": "%(senderName)s změnil(a) připíchnuté zprávy této místnosti.",
     "Authentication check failed: incorrect password?": "Kontrola ověření selhala: špatné heslo?",
     "You need to be able to invite users to do that.": "Pro tuto akci musíte mít právo zvát uživatele.",
     "Delete Widget": "Smazat widget",
@@ -224,7 +215,6 @@
     "Restricted": "Omezené",
     "Missing room_id in request": "V zadání chybí room_id",
     "Missing user_id in request": "V zadání chybí user_id",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s nastavil viditelnost budoucí zpráv v místnosti neznámým (%(visibility)s).",
     "Not a valid %(brand)s keyfile": "Neplatný soubor s klíčem %(brand)s",
     "Mirror local video feed": "Zrcadlit lokání video",
     "Enable URL previews for this room (only affects you)": "Povolit náhledy URL adres pro tuto místnost (ovlivňuje pouze vás)",
@@ -702,7 +692,6 @@
     "The server does not support the room version specified.": "Server nepodporuje určenou verzi místnosti.",
     "Please supply a https:// or http:// widget URL": "Zadejte webovou adresu widgetu (začínající na https:// nebo http://)",
     "You cannot modify widgets in this room.": "V této místnosti nemůžete manipulovat s widgety.",
-    "%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.": "%(senderName)s zrušil(a) pozvání do této místnosti pro uživatele %(targetDisplayName)s.",
     "No homeserver URL provided": "Nebyla zadána URL adresa domovského server",
     "Unexpected error resolving homeserver configuration": "Chyba při zjišťování konfigurace domovského serveru",
     "The user's homeserver does not support the version of the room.": "Uživatelův domovský server nepodporuje verzi této místnosti.",
@@ -1198,9 +1187,6 @@
         "other": "%(senderName)s odebral(a) této místnosti alternativní adresy %(addresses)s.",
         "one": "%(senderName)s odebral(a) této místnosti alternativní adresu %(addresses)s."
     },
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s změnil(a) alternativní adresy této místnosti.",
-    "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s změnil(a) hlavní a alternativní adresy této místnosti.",
-    "%(senderName)s changed the addresses for this room.": "%(senderName)s změnil(a) adresy této místnosti.",
     "Manually verify all remote sessions": "Ručně ověřit všechny relace",
     "cached locally": "uložen lokálně",
     "not found locally": "nenalezen lolálně",
@@ -1245,8 +1231,6 @@
     "Verification timed out.": "Ověření vypršelo.",
     "%(displayName)s cancelled verification.": "%(displayName)s zrušil(a) proces ověření.",
     "You cancelled verification.": "Zrušili jste proces ověření.",
-    "Message deleted": "Zpráva smazána",
-    "Message deleted by %(name)s": "Zpráva smazána uživatelem %(name)s",
     "Can't load this message": "Tuto zprávu nelze načíst",
     "Submit logs": "Odeslat záznamy o chybě",
     "Looks good": "To vypadá dobře",
@@ -2147,7 +2131,6 @@
     "e.g. my-space": "např. můj-prostor",
     "Silence call": "Ztlumit zvonění",
     "Sound on": "Zvuk zapnutý",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)s změnil(a) <a>připnuté zprávy</a> v místnosti.",
     "Some invites couldn't be sent": "Některé pozvánky nebylo možné odeslat",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Poslali jsme ostatním, ale níže uvedení lidé nemohli být pozváni do <RoomName/>",
     "Visibility": "Viditelnost",
@@ -2292,10 +2275,6 @@
     "Cross-signing is ready but keys are not backed up.": "Křížové podepisování je připraveno, ale klíče nejsou zálohovány.",
     "The above, but in <Room /> as well": "Výše uvedené, ale také v <Room />",
     "The above, but in any room you are joined or invited to as well": "Výše uvedené, ale také v jakékoli místnosti, ke které jste připojeni nebo do které jste pozváni",
-    "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s odepnul(a) zprávu z této místnosti. Zobrazit všechny připnuté zprávy.",
-    "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)s odepnul(a) <a>zprávu</a> z této místnosti. Zobrazit všechny <b>připnuté zprávy</b>.",
-    "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s připnul(a) zprávu k této místnosti. Zobrazit všechny připnuté zprávy.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s připnul(a) <a>zprávu</a> k této místnosti. Zobrazit všechny <b>připnuté zprávy</b>.",
     "Some encryption parameters have been changed.": "Byly změněny některé parametry šifrování.",
     "Role in <RoomName/>": "Role v <RoomName/>",
     "Send a sticker": "Odeslat nálepku",
@@ -2452,7 +2431,6 @@
     "Unpin this widget to view it in this panel": "Odepnout tento widget a zobrazit ho na tomto panelu",
     "Large": "Velký",
     "Image size in the timeline": "Velikost obrázku na časové ose",
-    "%(senderName)s has updated the room layout": "%(senderName)s aktualizoval rozvržení místnosti",
     "Based on %(count)s votes": {
         "one": "Na základě %(count)s hlasu",
         "other": "Na základě %(count)s hlasů"
@@ -2595,9 +2573,6 @@
     "Message pending moderation": "Zpráva čeká na moderaci",
     "Message pending moderation: %(reason)s": "Zpráva čeká na moderaci: %(reason)s",
     "Space home": "Domov prostoru",
-    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)s zahájil(a) hlasování - %(pollQuestion)s",
-    "%(senderName)s has ended a poll": "%(senderName)s ukončil(a) hlasování",
-    "%(senderName)s has shared their location": "%(senderName)s sdílí svou polohu",
     "You can't see earlier messages": "Dřívější zprávy nelze zobrazit",
     "Encrypted messages before this point are unavailable.": "Šifrované zprávy před tímto bodem nejsou k dispozici.",
     "You don't have permission to view messages from before you joined.": "Nemáte oprávnění zobrazovat zprávy z doby, než jste se připojili.",
@@ -4000,8 +3975,41 @@
         },
         "m.room.canonical_alias": {
             "set": "%(senderName)s nastavil(a) hlavní adresu této místnosti na %(address)s.",
-            "removed": "%(senderName)s zrušil hlavní adresu této místnosti."
-        }
+            "removed": "%(senderName)s zrušil hlavní adresu této místnosti.",
+            "changed_alternative": "%(senderName)s změnil(a) alternativní adresy této místnosti.",
+            "changed_main_and_alternative": "%(senderName)s změnil(a) hlavní a alternativní adresy této místnosti.",
+            "changed": "%(senderName)s změnil(a) adresy této místnosti."
+        },
+        "m.room.third_party_invite": {
+            "revoked": "%(senderName)s zrušil(a) pozvání do této místnosti pro uživatele %(targetDisplayName)s.",
+            "sent": "%(senderName)s pozval(a) uživatele %(targetDisplayName)s ke vstupu do místnosti."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s nastavil(a) viditelnost budoucích zpráv v této místnosti pro všechny její členy, a to od chvíle jejich pozvání.",
+            "joined": "%(senderName)s nastavil(a) viditelnost budoucích zpráv v této místnosti pro všechny její členy od chvíle jejich vstupu.",
+            "shared": "%(senderName)s nastavil(a) viditelnost budoucích zpráv v této místnosti pro všechny její členy.",
+            "world_readable": "%(senderName)s nastavil(a) viditelnost budoucích zpráv pro kohokoliv.",
+            "unknown": "%(senderName)s nastavil viditelnost budoucí zpráv v místnosti neznámým (%(visibility)s)."
+        },
+        "m.room.pinned_events": {
+            "pinned_link": "%(senderName)s připnul(a) <a>zprávu</a> k této místnosti. Zobrazit všechny <b>připnuté zprávy</b>.",
+            "pinned": "%(senderName)s připnul(a) zprávu k této místnosti. Zobrazit všechny připnuté zprávy.",
+            "unpinned_link": "%(senderName)s odepnul(a) <a>zprávu</a> z této místnosti. Zobrazit všechny <b>připnuté zprávy</b>.",
+            "unpinned": "%(senderName)s odepnul(a) zprávu z této místnosti. Zobrazit všechny připnuté zprávy.",
+            "changed_link": "%(senderName)s změnil(a) <a>připnuté zprávy</a> v místnosti.",
+            "changed": "%(senderName)s změnil(a) připíchnuté zprávy této místnosti."
+        },
+        "m.widget": {
+            "modified": "%(senderName)s upravil(a) widget %(widgetName)s",
+            "added": "%(senderName)s přidal(a) widget %(widgetName)s",
+            "removed": "%(senderName)s odstranil(a) widget %(widgetName)s"
+        },
+        "io.element.widgets.layout": "%(senderName)s aktualizoval rozvržení místnosti",
+        "m.location": "%(senderName)s sdílí svou polohu",
+        "self_redaction": "Zpráva smazána",
+        "redaction": "Zpráva smazána uživatelem %(name)s",
+        "m.poll.start": "%(senderName)s zahájil(a) hlasování - %(pollQuestion)s",
+        "m.poll.end": "%(senderName)s ukončil(a) hlasování"
     },
     "slash_command": {
         "spoiler": "Odešle danou zprávu jako spoiler",

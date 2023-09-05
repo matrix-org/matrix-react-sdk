@@ -86,11 +86,6 @@
     "Failed to verify email address: make sure you clicked the link in the email": "Não foi possível verificar o endereço de email: verifique se você realmente clicou no link que está no seu email",
     "Failure to create room": "Não foi possível criar a sala",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s de %(fromPowerLevel)s para %(toPowerLevel)s",
-    "%(senderName)s made future room history visible to all room members, from the point they are invited.": "%(senderName)s deixou o histórico futuro da sala visível para todos os membros da sala, a partir de quando foram convidados.",
-    "%(senderName)s made future room history visible to all room members, from the point they joined.": "%(senderName)s deixou o histórico futuro da sala visível para todos os membros da sala, a partir de quando entraram.",
-    "%(senderName)s made future room history visible to all room members.": "%(senderName)s deixou o histórico futuro da sala visível para todas as pessoas da sala.",
-    "%(senderName)s made future room history visible to anyone.": "%(senderName)s deixou o histórico futuro da sala visível para qualquer pessoa.",
-    "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s deixou o histórico futuro da sala visível para desconhecido (%(visibility)s).",
     "Missing room_id in request": "Faltou o id da sala na requisição",
     "Missing user_id in request": "Faltou o id de usuário na requisição",
     "Power level must be positive integer.": "O nível de permissões tem que ser um número inteiro e positivo.",
@@ -98,7 +93,6 @@
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s não tem permissões para enviar notificações a você - por favor, verifique as configurações do seu navegador",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s não tem permissões para enviar notificações a você - por favor, tente novamente",
     "Room %(roomId)s not visible": "A sala %(roomId)s não está visível",
-    "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)s enviou um convite para %(targetDisplayName)s entrar na sala.",
     "This email address is already in use": "Este endereço de email já está sendo usado",
     "This email address was not found": "Este endereço de email não foi encontrado",
     "This room is not recognised.": "Esta sala não é reconhecida.",
@@ -237,9 +231,6 @@
     "Authentication check failed: incorrect password?": "Erro de autenticação: palavra-passe incorreta?",
     "Do you want to set an email address?": "Deseja definir um endereço de e-mail?",
     "This will allow you to reset your password and receive notifications.": "Isto irá permitir-lhe redefinir a sua palavra-passe e receber notificações.",
-    "%(widgetName)s widget added by %(senderName)s": "Widget %(widgetName)s adicionado por %(senderName)s",
-    "%(widgetName)s widget removed by %(senderName)s": "Widget %(widgetName)s removido por %(senderName)s",
-    "%(widgetName)s widget modified by %(senderName)s": "Widget %(widgetName)s modificado por %(senderName)s",
     "Ignored user": "Utilizador ignorado",
     "Unknown": "Desconhecido",
     "Unignore": "Deixar de ignorar",
@@ -780,7 +771,22 @@
             "remove": "%(senderDisplayName)s apagou o nome da sala.",
             "set": "%(senderDisplayName)s alterou o nome da sala para %(roomName)s."
         },
-        "m.image": "%(senderDisplayName)s enviou uma imagem."
+        "m.image": "%(senderDisplayName)s enviou uma imagem.",
+        "m.room.third_party_invite": {
+            "sent": "%(senderName)s enviou um convite para %(targetDisplayName)s entrar na sala."
+        },
+        "m.room.history_visibility": {
+            "invited": "%(senderName)s deixou o histórico futuro da sala visível para todos os membros da sala, a partir de quando foram convidados.",
+            "joined": "%(senderName)s deixou o histórico futuro da sala visível para todos os membros da sala, a partir de quando entraram.",
+            "shared": "%(senderName)s deixou o histórico futuro da sala visível para todas as pessoas da sala.",
+            "world_readable": "%(senderName)s deixou o histórico futuro da sala visível para qualquer pessoa.",
+            "unknown": "%(senderName)s deixou o histórico futuro da sala visível para desconhecido (%(visibility)s)."
+        },
+        "m.widget": {
+            "modified": "Widget %(widgetName)s modificado por %(senderName)s",
+            "added": "Widget %(widgetName)s adicionado por %(senderName)s",
+            "removed": "Widget %(widgetName)s removido por %(senderName)s"
+        }
     },
     "slash_command": {
         "spoiler": "Envia a mensagem como um spoiler",
