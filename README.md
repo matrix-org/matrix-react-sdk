@@ -248,5 +248,6 @@ yarn run test:cypress --browser=chrome
 If you launch the interactive UI you can choose the browser you want to use. To
 match the CI setup, choose Chrome.
 
-You will need to have Chrome or Chromium installed on your system for this to
-work.
+You will need to have Chrome or Chromium installed on your system to run the
+tests inside those browsers, whereas the default is to use Electron, which is
+included within the Cypress dependency.
