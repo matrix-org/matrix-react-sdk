@@ -60,17 +60,12 @@
     "Missing user_id in request": ".i na pa judri be pa pilno cu pagbu le ve cpedu",
     "Usage": "tadji lo nu pilno",
     "Changes your display nickname": "",
-    "Invites user with given id to current room": ".i vi'ecpe lo pilno poi se judri ti ku le kumfa pe'a",
-    "Bans user with given id": ".i rinka lo nu lo pilno poi se judri ti cu vitno cliva",
-    "Ignores a user, hiding their messages from you": ".i rinka lo nu no'e jundi lo pilno gi'e mipri lo notci be fi py. do",
     "Ignored user": ".i mo'u co'a na jundi tu'a le pilno",
     "You are now ignoring %(userId)s": ".i ca na jundi tu'a la'o zoi. %(userId)s .zoi",
-    "Stops ignoring a user, showing their messages going forward": ".i sisti lo nu no'e jundi lo pilno gi'e mipri lo notci be fi py. do",
     "Unignored user": ".i mo'u co'a jundi tu'a le pilno",
     "You are no longer ignoring %(userId)s": ".i ca jundi tu'a la'o zoi. %(userId)s .zoi",
     "Define the power level of a user": ".i ninga'igau lo ni lo pilno cu vlipa",
     "Deops user with given id": ".i xruti lo ni lo pilno poi se judri ti cu vlipa",
-    "Opens the Developer Tools dialog": ".i samymo'i lo favgau se pilno uidje",
     "Verified key": "ckiku vau je se lacri",
     "Displays action": ".i mrilu lo nu do gasnu",
     "Forces the current outbound group session in an encrypted room to be discarded": ".i macnu vimcu lo ca barkla termifckiku gunma lo kumfa pe'a poi mifra",
@@ -117,7 +112,6 @@
     "Advanced": "macnu",
     "Other": "drata",
     "Command error": ".i da nabmi fi lo nu minde",
-    "This room has no topic.": ".i na da skicu lerpoi le ve zilbe'i",
     "Could not find user in room": ".i le pilno na pagbu le se zilbe'i",
     "Session already verified!": ".i xa'o lacri le se samtcise'u",
     "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
@@ -424,5 +418,13 @@
             "set": ".i gau la'o zoi. %(senderName)s .zoi zoi zoi. %(address)s .zoi co'a ralju le'i judri be le ve zilbe'i",
             "removed": ".i gau la'o zoi. %(senderName)s .zoi da co'u ralju le'i judri be le ve zilbe'i"
         }
+    },
+    "slash_command": {
+        "topic_none": ".i na da skicu lerpoi le ve zilbe'i",
+        "invite": ".i vi'ecpe lo pilno poi se judri ti ku le kumfa pe'a",
+        "ban": ".i rinka lo nu lo pilno poi se judri ti cu vitno cliva",
+        "ignore": ".i rinka lo nu no'e jundi lo pilno gi'e mipri lo notci be fi py. do",
+        "unignore": ".i sisti lo nu no'e jundi lo pilno gi'e mipri lo notci be fi py. do",
+        "devtools": ".i samymo'i lo favgau se pilno uidje"
     }
 }

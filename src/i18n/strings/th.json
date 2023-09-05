@@ -33,8 +33,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "คุณแน่ใจหรือว่าต้องการจะออกจากห้อง '%(roomName)s'?",
     "Are you sure you want to reject the invitation?": "คุณแน่ใจหรือว่าต้องการจะปฏิเสธคำเชิญ?",
     "Banned users": "ผู้ใช้ที่ถูกแบน",
-    "Bans user with given id": "ผู้ใช้และ id ที่ถูกแบน",
-    "Changes your display nickname": "เปลี่ยนชื่อเล่นที่แสดงของคุณ",
     "Command error": "คำสั่งผิดพลาด",
     "Commands": "คำสั่ง",
     "Confirm password": "ยืนยันรหัสผ่าน",
@@ -63,7 +61,6 @@
     "Invalid Email Address": "ที่อยู่อีเมลไม่ถูกต้อง",
     "Invalid file%(extra)s": "ไฟล์ %(extra)s ไม่ถูกต้อง",
     "Invited": "เชิญแล้ว",
-    "Invites user with given id to current room": "เชิญผู้ใช้ พร้อม id ของห้องปัจจุบัน",
     "Sign in with": "เข้าสู่ระบบด้วย",
     "Join Room": "เข้าร่วมห้อง",
     "Jump to first unread message.": "ข้ามไปยังข้อความแรกที่ยังไม่ได้อ่าน",
@@ -505,5 +502,10 @@
             "set": "%(senderDisplayName)s เปลี่ยนชื่อห้องไปเป็น %(roomName)s"
         },
         "m.image": "%(senderDisplayName)s ได้ส่งรูป"
+    },
+    "slash_command": {
+        "nick": "เปลี่ยนชื่อเล่นที่แสดงของคุณ",
+        "invite": "เชิญผู้ใช้ พร้อม id ของห้องปัจจุบัน",
+        "ban": "ผู้ใช้และ id ที่ถูกแบน"
     }
 }
