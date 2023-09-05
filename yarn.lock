@@ -7499,10 +7499,10 @@ matrix-mock-request@^2.5.0:
   dependencies:
     expect "^28.1.0"
 
-matrix-web-i18n@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/matrix-web-i18n/-/matrix-web-i18n-3.0.0.tgz#23fe255ab9c7c19a4276608ce2219ca837e2ad58"
-  integrity sha512-82UqBV53VJhLZcb4/9oMQpAAWav2Vk+DtUyTzdTl5ZkQ/eLeeICm7xy4p2/aK1jeN7ppN82yBs2gxx7t7eX67A==
+matrix-web-i18n@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/matrix-web-i18n/-/matrix-web-i18n-3.1.1.tgz#da851748515b20ca15fa986817bbce2e242b3dd6"
+  integrity sha512-BOeOTedtONIqVQUlyHFXpxXkrETWdCoJdToyA+edMU+yGjKOW7bekAd9uAEfkV9jErP5eXw3cHYsKZPpa8ifWg==
   dependencies:
     "@babel/parser" "^7.18.5"
     "@babel/traverse" "^7.18.5"
