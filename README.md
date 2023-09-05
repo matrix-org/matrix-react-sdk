@@ -209,45 +209,5 @@ Now the yarn commands should work as normal.
 
 ### End-to-End tests
 
-Make sure you've got your Element development server running:
-
-```bash
-# Check out element-web from git first!
-cd ../element-web
-yarn start
-```
-
-Then in this project:
-
-```bash
-yarn run test:cypress
-```
-
-Or to choose which tests to run interactively, and see them run in the browser,
-try:
-
-```bash
-yarn run test:cypress:open
-```
-
-See
-[`docs/cypress.md`](https://github.com/matrix-org/matrix-react-sdk/blob/develop/docs/cypress.md)
-for more information.
-
-Note: in some rare cases, tests behave differently between different browsers.
-The CI tests for this project use the Chrome browser, so if you see CI failures
-for the Cypress tests, but those tests work OK on your local machine, try
-running them in Chrome or Chromium like this:
-
-```bash
-yarn run test:cypress --browser=chrome
-```
-
-(Use `--browser=chromium` if you'd prefer to use Chromium.)
-
-If you launch the interactive UI you can choose the browser you want to use. To
-match the CI setup, choose Chrome.
-
-You will need to have Chrome or Chromium installed on your system to run the
-tests inside those browsers, whereas the default is to use Electron, which is
-included within the Cypress dependency.
+We use Cypress and Element Web for end-to-end tests. See
+[`docs/cypress.md`](docs/cypress.md) for more information.
