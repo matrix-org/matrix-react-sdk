@@ -1897,12 +1897,13 @@
   integrity sha512-DCb7Q83PCQK0uav5vB3KNV/hJPlxAhT/ddar+VHz2kC39hMLKGzWYVhprpLYVcavaE/6OX+Q/xFkAoV/3QtUHQ==
 
 "@matrix-org/matrix-wysiwyg@^2.4.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-2.4.1.tgz#e1325a42366a1c891b2ba90c88e597b39187b2cb"
-  integrity sha512-RyUijZXVKenE9s3LczDUhWFeOfIyLcsOrAyHqYxnizXX5nxMkHxTgLeoTvaIJ+1dOhI+H2SS9G4VcN6odZ0aNg==
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-2.8.0.tgz#180fe79b1499fc40c482c4a4c06c82ac00636d79"
+  integrity sha512-bEk3hh26HFXKs7Ft5oU89pHUR6ZJR5PKnaWgYuNtTnin9nXIp9RsivXTkq+YBG8+pFkOQ9LL8vIrDju2CMU78Q==
 
 "@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.14.tgz":
   version "3.2.14"
+  uid acd96c00a881d0f462e1f97a56c73742c8dbc984
   resolved "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.14.tgz#acd96c00a881d0f462e1f97a56c73742c8dbc984"
 
 "@matrix-org/react-sdk-module-api@^2.1.0":
