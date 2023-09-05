@@ -1,7 +1,5 @@
 {
     "Account": "Conta",
-    "Admin": "Administrador",
-    "Advanced": "Avançado",
     "New passwords don't match": "As novas palavras-passe não coincidem",
     "A new password must be entered.": "Deve ser introduzida uma nova palavra-passe.",
     "Are you sure you want to reject the invitation?": "Você tem certeza que deseja rejeitar este convite?",
@@ -22,7 +20,6 @@
     "Filter room members": "Filtrar integrantes da sala",
     "Forget room": "Esquecer sala",
     "For security, this session has been signed out. Please sign in again.": "Por questões de segurança, esta sessão foi encerrada. Por gentileza conecte-se novamente.",
-    "Hangup": "Desligar",
     "Historical": "Histórico",
     "Import E2E room keys": "Importar chave de criptografia ponta-a-ponta (E2E) da sala",
     "Invalid Email Address": "Endereço de email inválido",
@@ -56,8 +53,6 @@
     "Upload avatar": "Enviar icone de perfil de usuário",
     "Users": "Usuários",
     "Verification Pending": "Verificação pendente",
-    "Video call": "Chamada de vídeo",
-    "Voice call": "Chamada de voz",
     "Who can read history?": "Quem pode ler o histórico da sala?",
     "You do not have permission to post to this room": "Você não tem permissão de postar nesta sala",
     "Sun": "Dom",
@@ -99,7 +94,6 @@
     "This phone number is already in use": "Este número de telefone já está sendo usado",
     "Unable to enable Notifications": "Não foi possível ativar as notificações",
     "Upload Failed": "O envio falhou",
-    "Usage": "Uso",
     "You cannot place a call with yourself.": "Você não pode iniciar uma chamada.",
     "You need to be able to invite users to do that.": "Para fazer isso, você tem que ter permissão para convidar outras pessoas.",
     "You need to be logged in.": "Você tem que estar logado.",
@@ -250,13 +244,11 @@
     "Filter results": "Filtrar resultados",
     "No update available.": "Nenhuma atualização disponível.",
     "Noisy": "Barulhento",
-    "Collecting app version information": "A recolher informação da versão da app",
     "Tuesday": "Terça-feira",
     "Search…": "Pesquisar…",
     "Unnamed room": "Sala sem nome",
     "Saturday": "Sábado",
     "Monday": "Segunda-feira",
-    "Collecting logs": "A recolher logs",
     "Invite to this room": "Convidar para esta sala",
     "Send": "Enviar",
     "All messages": "Todas as mensagens",
@@ -464,7 +456,6 @@
     "Already have an account? <a>Sign in here</a>": "Já tem uma conta? <a>Entre aqui</a>",
     "Use an email address to recover your account": "Usar um endereço de email para recuperar a sua conta",
     "Malta": "Malta",
-    "Other": "Outros",
     "Lebanon": "Líbano",
     "Marshall Islands": "Ilhas Marshall",
     "Martinique": "Martinica",
@@ -509,7 +500,6 @@
     "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Ninguém poderá reutilizar o seu nome de utilizador (MXID), incluindo o próprio: este nome de utilizador permanecerá indisponível",
     "Your platform and username will be noted to help us use your feedback as much as we can.": "A sua plataforma e o seu nome de utilizador serão anotados para nos ajudar a utilizar o seu feedback da melhor forma possível.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Comece uma conversa com alguém a partir do nome, endereço de email ou nome de utilizador (por exemplo: <userId/>).",
-    "Effects": "Ações",
     "Zambia": "Zâmbia",
     "Missing roomId.": "Falta ID de Sala.",
     "Sign In or Create Account": "Iniciar Sessão ou Criar Conta",
@@ -630,8 +620,6 @@
     "Honduras": "Honduras",
     "Heard & McDonald Islands": "Ilhas Heard e McDonald",
     "Haiti": "Haiti",
-    "Actions": "Ações",
-    "Messages": "Mensagens",
     "Are you sure you want to cancel entering passphrase?": "Tem a certeza que quer cancelar a introdução da frase-passe?",
     "Cancel entering passphrase?": "Cancelar a introdução da frase-passe?",
     "Madagascar": "Madagáscar",
@@ -724,7 +712,9 @@
     },
     "bug_reporting": {
         "description": "Os registos de depuração contêm dados de utilização da aplicação, incluindo o seu nome de utilizador, os IDs ou pseudónimos das salas que visitou, os últimos elementos da IU com que interagiu e os nomes de utilizador de outros utilizadores. No entanto não contêm mensagens.",
-        "send_logs": "Enviar relatórios de erro"
+        "send_logs": "Enviar relatórios de erro",
+        "collecting_information": "A recolher informação da versão da app",
+        "collecting_logs": "A recolher logs"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
@@ -760,7 +750,9 @@
         "state_key": "Chave de estado",
         "event_sent": "Evento enviado!",
         "event_content": "Conteúdo do evento",
-        "developer_tools": "Ferramentas de desenvolvedor"
+        "developer_tools": "Ferramentas de desenvolvedor",
+        "category_room": "Sala",
+        "category_other": "Outros"
     },
     "timeline": {
         "m.room.topic": "%(senderDisplayName)s mudou o tópico para \"%(topic)s\".",
@@ -795,7 +787,14 @@
         "invite": "Convidar usuários com um dado identificador para esta sala",
         "ban": "Banir usuários com o identificador informado",
         "ignore": "Ignora um utilizador, deixando de mostrar as mensagens dele",
-        "unignore": "Deixa de ignorar um utilizador, mostrando as suas mensagens daqui para a frente"
+        "unignore": "Deixa de ignorar um utilizador, mostrando as suas mensagens daqui para a frente",
+        "usage": "Uso",
+        "category_messages": "Mensagens",
+        "category_actions": "Ações",
+        "category_admin": "Administrador",
+        "category_advanced": "Avançado",
+        "category_effects": "Ações",
+        "category_other": "Outros"
     },
     "presence": {
         "online": "Online",
@@ -803,5 +802,13 @@
         "unknown": "Desconhecido",
         "offline": "Offline"
     },
-    "Unknown": "Desconhecido"
+    "Unknown": "Desconhecido",
+    "voip": {
+        "hangup": "Desligar",
+        "voice_call": "Chamada de voz",
+        "video_call": "Chamada de vídeo"
+    },
+    "Messages": "Mensagens",
+    "Other": "Outros",
+    "Advanced": "Avançado"
 }

@@ -1,7 +1,6 @@
 {
     "Account": "บัญชี",
     "No Microphones detected": "ไม่พบไมโครโฟน",
-    "Advanced": "ขึ้นสูง",
     "Change Password": "เปลี่ยนรหัสผ่าน",
     "Default": "ค่าเริ่มต้น",
     "Default Device": "อุปกรณ์เริ่มต้น",
@@ -17,7 +16,6 @@
     "unknown error code": "รหัสข้อผิดพลาดที่ไม่รู้จัก",
     "Favourite": "รายการโปรด",
     "Failed to forget room %(errCode)s": "การลืมห้องล้มเหลว %(errCode)s",
-    "Admin": "ผู้ดูแล",
     "No Webcams detected": "ไม่พบกล้องเว็บแคม",
     "No media permissions": "ไม่มีสิทธิ์เข้าถึงสื่อ",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "คุณอาจต้องให้สิทธิ์ %(brand)s เข้าถึงไมค์โครโฟนไมค์โครโฟน/กล้องเว็บแคม ด้วยตัวเอง",
@@ -54,7 +52,6 @@
     "Filter room members": "กรองสมาชิกห้อง",
     "Forget room": "ลืมห้อง",
     "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s จาก %(fromPowerLevel)s ไปเป็น %(toPowerLevel)s",
-    "Hangup": "วางสาย",
     "Historical": "ประวัติแชทเก่า",
     "Incorrect username and/or password.": "ชื่อผู้ใช้และ/หรือรหัสผ่านไม่ถูกต้อง",
     "Incorrect verification code": "รหัสยืนยันไม่ถูกต้อง",
@@ -106,7 +103,6 @@
         "other": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์"
     },
     "Upload Failed": "การอัปโหลดล้มเหลว",
-    "Usage": "การใช้งาน",
     "Warning!": "คำเตือน!",
     "Who can read history?": "ใครสามารถอ่านประวัติแชทได้?",
     "You have <a>disabled</a> URL previews by default.": "ค่าเริ่มต้นของคุณ<a>ปิดใช้งาน</a>ตัวอย่าง URL เอาไว้",
@@ -177,13 +173,11 @@
     "Source URL": "URL ต้นฉบับ",
     "No update available.": "ไม่มีอัปเดตที่ใหม่กว่า",
     "Noisy": "เสียงดัง",
-    "Collecting app version information": "กำลังรวบรวมข้อมูลเวอร์ชันแอป",
     "Tuesday": "วันอังคาร",
     "Search…": "ค้นหา…",
     "Unnamed room": "ห้องที่ไม่มีชื่อ",
     "Saturday": "วันเสาร์",
     "Monday": "วันจันทร์",
-    "Collecting logs": "กำลังรวบรวมล็อก",
     "All Rooms": "ทุกห้อง",
     "Wednesday": "วันพุธ",
     "All messages": "ทุกข้อความ",
@@ -376,7 +370,6 @@
     "Admin Tools": "เครื่องมือผู้ดูแลระบบ",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "ไม่สามารถยกเลิกคำเชิญได้ เซิร์ฟเวอร์อาจประสบปัญหาชั่วคราวหรือคุณไม่มีสิทธิ์เพียงพอที่จะยกเลิกคำเชิญ",
     "Failed to revoke invite": "ยกเลิกคำเชิญไม่สำเร็จ",
-    "Stickerpack": "ชุดสติ๊กเกอร์",
     "Add some now": "เพิ่มบางส่วนในขณะนี้",
     "You don't currently have any stickerpacks enabled": "ขณะนี้คุณไม่ได้เปิดใช้งานชุดสติกเกอร์ใดๆ",
     "Failed to connect to integration manager": "ไม่สามารถเชื่อมต่อกับตัวจัดการการรวม",
@@ -411,7 +404,8 @@
         "application": "แอปพลิเคชัน",
         "version": "รุ่น",
         "device": "อุปกรณ์",
-        "unnamed_room": "ห้องที่ยังไม่ได้ตั้งชื่อ"
+        "unnamed_room": "ห้องที่ยังไม่ได้ตั้งชื่อ",
+        "stickerpack": "ชุดสติ๊กเกอร์"
     },
     "action": {
         "continue": "ดำเนินการต่อ",
@@ -472,7 +466,9 @@
         "admin": "ผู้ดูแล"
     },
     "bug_reporting": {
-        "send_logs": "ส่งล็อก"
+        "send_logs": "ส่งล็อก",
+        "collecting_information": "กำลังรวบรวมข้อมูลเวอร์ชันแอป",
+        "collecting_logs": "กำลังรวบรวมล็อก"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss ที่ผ่านมา",
@@ -506,11 +502,21 @@
     "slash_command": {
         "nick": "เปลี่ยนชื่อเล่นที่แสดงของคุณ",
         "invite": "เชิญผู้ใช้ พร้อม id ของห้องปัจจุบัน",
-        "ban": "ผู้ใช้และ id ที่ถูกแบน"
+        "ban": "ผู้ใช้และ id ที่ถูกแบน",
+        "usage": "การใช้งาน",
+        "category_admin": "ผู้ดูแล",
+        "category_advanced": "ขึ้นสูง"
     },
     "presence": {
         "online": "ออนไลน์",
         "idle": "ว่าง",
         "offline": "ออฟไลน์"
-    }
+    },
+    "voip": {
+        "hangup": "วางสาย"
+    },
+    "devtools": {
+        "category_room": "ห้อง"
+    },
+    "Advanced": "ขึ้นสูง"
 }

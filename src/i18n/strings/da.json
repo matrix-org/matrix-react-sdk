@@ -12,8 +12,6 @@
     "Commands": "Kommandoer",
     "Warning!": "Advarsel!",
     "Account": "Konto",
-    "Admin": "Administrator",
-    "Advanced": "Avanceret",
     "Are you sure you want to reject the invitation?": "Er du sikker på du vil afvise invitationen?",
     "Banned users": "Bortviste brugere",
     "Cryptography": "Kryptografi",
@@ -77,7 +75,6 @@
     "Missing room_id in request": "Mangler room_id i forespørgsel",
     "Room %(roomId)s not visible": "rum %(roomId)s ikke synligt",
     "Missing user_id in request": "Manglende user_id i forespørgsel",
-    "Usage": "Brug",
     "Ignored user": "Ignoreret bruger",
     "You are now ignoring %(userId)s": "Du ignorerer nu %(userId)s",
     "Unignored user": "Holdt op med at ignorere bruger",
@@ -100,12 +97,10 @@
     "Filter results": "Filtrér resultater",
     "No update available.": "Ingen opdatering tilgængelig.",
     "Noisy": "Støjende",
-    "Collecting app version information": "Indsamler app versionsoplysninger",
     "Search…": "Søg…",
     "Tuesday": "Tirsdag",
     "Saturday": "Lørdag",
     "Monday": "Mandag",
-    "Collecting logs": "Indsamler logfiler",
     "Invite to this room": "Inviter til dette rum",
     "Send": "Send",
     "All messages": "Alle beskeder",
@@ -136,9 +131,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
     "Unable to load! Check your network connectivity and try again.": "Kunne ikke hente! Tjek din netværksforbindelse og prøv igen.",
     "Missing roomId.": "roomId mangler.",
-    "Messages": "Beskeder",
-    "Actions": "Handlinger",
-    "Other": "Andre",
     "Use an identity server": "Brug en identitetsserver",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Brug en identitetsserver for at invitere pr. mail. Tryk på Fortsæt for at bruge den almindelige identitetsserver (%(defaultIdentityServerName)s) eller indtast en anden under Indstillinger.",
     "Use an identity server to invite by email. Manage in Settings.": "Brug en identitetsserver for at invitere pr. mail. Administrer dette under Indstillinger.",
@@ -266,13 +258,6 @@
     "Enter password": "Indtast adgangskode",
     "Add a new server": "Tilføj en ny server",
     "Change notification settings": "Skift notifikations indstillinger",
-    "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
-    "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
-    "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
-    "%(senderName)s is calling": "%(senderName)s ringer",
-    "Waiting for answer": "Venter på svar",
-    "%(senderName)s started a call": "%(senderName)s startede et opkald",
-    "You started a call": "Du startede et opkald",
     "Verified!": "Bekræftet!",
     "Profile picture": "Profil billede",
     "Categories": "Kategorier",
@@ -352,7 +337,6 @@
     "User Busy": "Bruger optaget",
     "Command error: Unable to find rendering type (%(renderingType)s)": "Kommandofejl: Kan ikke finde renderingstype (%(renderingType)s)",
     "Command error: Unable to handle slash command.": "Kommandofejl: Kan ikke håndtere skråstregskommando.",
-    "Effects": "Effekter",
     "Are you sure you want to cancel entering passphrase?": "Er du sikker på, at du vil annullere indtastning af adgangssætning?",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s og %(count)s andre",
@@ -650,7 +634,9 @@
     },
     "bug_reporting": {
         "submit_debug_logs": "Indsend debug-logfiler",
-        "send_logs": "Send logs"
+        "send_logs": "Send logs",
+        "collecting_information": "Indsamler app versionsoplysninger",
+        "collecting_logs": "Indsamler logfiler"
     },
     "time": {
         "date_at_time": "%(date)s om %(time)s"
@@ -673,7 +659,8 @@
         "event_sent": "Begivenhed sendt!",
         "event_content": "Begivenhedsindhold",
         "toolbox": "Værktøjer",
-        "developer_tools": "Udviklingsværktøjer"
+        "developer_tools": "Udviklingsværktøjer",
+        "category_other": "Andre"
     },
     "timeline": {
         "m.call.invite": {
@@ -760,9 +747,30 @@
         "rainbow": "Sender beskeden med regnbuefarver",
         "rainbowme": "Sender emoji'en med regnbuefarver",
         "help": "Viser en liste over kommandoer med beskrivelser",
-        "whois": "Viser information om en bruger"
+        "whois": "Viser information om en bruger",
+        "usage": "Brug",
+        "category_messages": "Beskeder",
+        "category_actions": "Handlinger",
+        "category_admin": "Administrator",
+        "category_advanced": "Avanceret",
+        "category_effects": "Effekter",
+        "category_other": "Andre"
     },
     "presence": {
         "online": "Online"
-    }
+    },
+    "event_preview": {
+        "m.call.invite": {
+            "you": "Du startede et opkald",
+            "user": "%(senderName)s startede et opkald",
+            "dm_send": "Venter på svar",
+            "dm_receive": "%(senderName)s ringer"
+        },
+        "m.emote": "* %(senderName)s %(emote)s",
+        "m.text": "%(senderName)s: %(message)s",
+        "m.sticker": "%(senderName)s: %(stickerName)s"
+    },
+    "Messages": "Beskeder",
+    "Other": "Andre",
+    "Advanced": "Avanceret"
 }

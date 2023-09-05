@@ -70,7 +70,6 @@
     "Default": "Standard",
     "Restricted": "Begrenset",
     "Moderator": "Moderator",
-    "Admin": "Admin",
     "Operation failed": "Operasjon mislyktes",
     "Failed to invite": "Klarte ikke invitere",
     "You need to be logged in.": "Du må være logget inn.",
@@ -85,16 +84,11 @@
     "Missing room_id in request": "Manglende room_id i forespørselen",
     "Room %(roomId)s not visible": "Rom %(roomId)s er ikke synlig",
     "Missing user_id in request": "Manglende user_id i forespørselen",
-    "Usage": "Bruk",
     "Chat with %(brand)s Bot": "Chat med %(brand)s Bot",
     "Call failed due to misconfigured server": "Oppringingen feilet på grunn av feil-konfigurert tjener",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Vennligst be administratoren av din hjemmetjener (<code>%(homeserverDomain)s</code>) til å konfigurere en TURN tjener slik at samtaler vil fungere best mulig.",
     "The file '%(fileName)s' failed to upload.": "Filen '%(fileName)s' kunne ikke lastes opp.",
     "The server does not support the room version specified.": "Tjeneren støtter ikke rom versjonen som ble spesifisert.",
-    "Messages": "Meldinger",
-    "Actions": "Handlinger",
-    "Advanced": "Avansert",
-    "Other": "Andre",
     "Ignored user": "Ignorert(e) bruker",
     "You are now ignoring %(userId)s": "%(userId)s er nå ignorert",
     "Unignored user": "Uignorert bruker",
@@ -325,8 +319,6 @@
     "Unencrypted": "Ukryptert",
     "Deactivate user?": "Vil du deaktivere brukeren?",
     "Deactivate user": "Deaktiver brukeren",
-    "Voice call": "Stemmesamtale",
-    "Video call": "Videosamtale",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)st",
@@ -345,7 +337,6 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s er ikke tilgjengelig for øyeblikket.",
     "This Room": "Dette rommet",
     "Server error": "Serverfeil",
-    "Stickerpack": "Klistremerkepakke",
     "Main address": "Hovedadresse",
     "not specified": "ikke spesifisert",
     "Local address": "Lokal adresse",
@@ -612,7 +603,6 @@
     "Homeserver feature support:": "Hjemmetjener-funksjonsstøtte:",
     "Read Marker lifetime (ms)": "Lesemarkørens visningstid (ms)",
     "Read Marker off-screen lifetime (ms)": "Lesemarkørens visningstid utenfor skjermen (ms)",
-    "Cross-signing": "Kryssignering",
     "URL previews are enabled by default for participants in this room.": "URL-forhåndsvisninger er skrudd på som standard for deltakerene i dette rommet.",
     "URL previews are disabled by default for participants in this room.": "URL-forhåndsvisninger er skrudd av som standard for deltakerene i dette rommet.",
     "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.": "I krypterte rom som denne, er URL-forhåndsvisninger skrudd av som standard for å sikre at hjemmetjeneren din (der forhåndsvisningene blir generert) ikke kan samle inn informasjon om lenkene som du ser i dette rommet.",
@@ -655,9 +645,7 @@
         "one": "og én annen …"
     },
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (styrkenivå %(powerLevelNumber)s)",
-    "Hangup": "Legg på røret",
     "The conversation continues here.": "Samtalen fortsetter her.",
-    "System Alerts": "Systemvarsler",
     "Reason: %(reason)s": "Årsak: %(reason)s",
     "You were banned from %(roomName)s by %(memberName)s": "Du ble bannlyst fra %(roomName)s av %(memberName)s",
     "Do you want to chat with %(user)s?": "Vil du prate med %(user)s?",
@@ -1021,14 +1009,10 @@
     "Hide Widgets": "Skjul moduler",
     "Update %(brand)s": "Oppdater %(brand)s",
     "You are currently ignoring:": "Du ignorerer for øyeblikket:",
-    "Unknown caller": "Ukjent oppringer",
     "Dial pad": "Nummerpanel",
-    "%(name)s on hold": "%(name)s står på vent",
     "sends confetti": "sender konfetti",
     "System font name": "Systemskrifttypenavn",
     "Use a system font": "Bruk en systemskrifttype",
-    "Waiting for answer": "Venter på svar",
-    "Call in progress": "Anrop pågår",
     "Channel: <channelLink/>": "Kanal: <channelLink/>",
     "Enable desktop notifications": "Aktiver skrivebordsvarsler",
     "Don't miss a reply": "Ikke gå glipp av noen svar",
@@ -1043,7 +1027,6 @@
     "No need for symbols, digits, or uppercase letters": "Ikke nødvendig med symboler, sifre eller bokstaver",
     "See images posted to this room": "Se bilder som er lagt ut i dette rommet",
     "Change the topic of this room": "Endre dette rommets tema",
-    "Effects": "Effekter",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
     "Zambia": "Zambia",
@@ -1266,12 +1249,7 @@
     "Delete avatar": "Slett profilbilde",
     "Corn": "Mais",
     "Cloud": "Sky",
-    "Mute the microphone": "Demp mikrofonen",
-    "Unmute the microphone": "Opphev demping av mikrofonen",
-    "Dialpad": "Nummerpanel",
     "More": "Mer",
-    "Stop the camera": "Stopp kameraet",
-    "Start the camera": "Start kameraet",
     "Connecting": "Kobler til",
     "Change the name of this room": "Endre rommets navn",
     "St. Pierre & Miquelon": "Saint-Pierre og Miquelon",
@@ -1346,7 +1324,10 @@
         "matrix": "Matrix",
         "trusted": "Betrodd",
         "not_trusted": "Ikke betrodd",
-        "unnamed_room": "Navnløst rom"
+        "unnamed_room": "Navnløst rom",
+        "stickerpack": "Klistremerkepakke",
+        "system_alerts": "Systemvarsler",
+        "cross_signing": "Kryssignering"
     },
     "action": {
         "continue": "Fortsett",
@@ -1534,7 +1515,9 @@
         "value": "Verdi",
         "active_widgets": "Aktive moduler",
         "toolbox": "Verktøykasse",
-        "developer_tools": "Utviklerverktøy"
+        "developer_tools": "Utviklerverktøy",
+        "category_room": "Rom",
+        "category_other": "Andre"
     },
     "export_chat": {
         "html": "HTML",
@@ -1634,7 +1617,14 @@
         "rainbow": "Sender gitte melding i regnbuens farger",
         "rainbowme": "Sender gitte emote i regnbuens farger",
         "help": "Viser liste over kommandoer med bruks eksempler og beskrivelser",
-        "whois": "Viser informasjon om en bruker"
+        "whois": "Viser informasjon om en bruker",
+        "usage": "Bruk",
+        "category_messages": "Meldinger",
+        "category_actions": "Handlinger",
+        "category_admin": "Admin",
+        "category_advanced": "Avansert",
+        "category_effects": "Effekter",
+        "category_other": "Andre"
     },
     "presence": {
         "online_for": "På nett i %(duration)s",
@@ -1645,5 +1635,28 @@
         "offline": "Frakoblet",
         "away": "Borte"
     },
-    "Unknown": "Ukjent"
+    "Unknown": "Ukjent",
+    "event_preview": {
+        "m.call.answer": {
+            "dm": "Anrop pågår"
+        },
+        "m.call.invite": {
+            "dm_send": "Venter på svar"
+        }
+    },
+    "voip": {
+        "disable_microphone": "Demp mikrofonen",
+        "enable_microphone": "Opphev demping av mikrofonen",
+        "disable_camera": "Stopp kameraet",
+        "enable_camera": "Start kameraet",
+        "dialpad": "Nummerpanel",
+        "hangup": "Legg på røret",
+        "on_hold": "%(name)s står på vent",
+        "voice_call": "Stemmesamtale",
+        "video_call": "Videosamtale",
+        "unknown_caller": "Ukjent oppringer"
+    },
+    "Messages": "Meldinger",
+    "Other": "Andre",
+    "Advanced": "Avansert"
 }

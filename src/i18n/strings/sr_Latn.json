@@ -37,7 +37,6 @@
     "Default": "Podrazumevano",
     "Restricted": "Ograničeno",
     "Moderator": "Moderator",
-    "Admin": "Administrator",
     "Operation failed": "Operacija nije uspela",
     "Failed to invite": "Slanje pozivnice nije uspelo",
     "You need to be logged in.": "Morate biti prijavljeni",
@@ -81,7 +80,6 @@
     "This account has been deactivated.": "Ovaj nalog je dekativiran.",
     "Open this settings tab": "Otvori podešavanja",
     "Start a group chat": "Pokreni grupni razgovor",
-    "Stop the camera": "Zaustavi kameru",
     "User is already in the room": "Korisnik je već u sobi",
     "common": {
         "error": "Greška",
@@ -108,5 +106,11 @@
     },
     "settings": {
         "use_control_enter_send_message": "Koristi Ctrl + Enter za slanje poruke"
+    },
+    "slash_command": {
+        "category_admin": "Administrator"
+    },
+    "voip": {
+        "disable_camera": "Zaustavi kameru"
     }
 }

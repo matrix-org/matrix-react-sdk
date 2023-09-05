@@ -2,8 +2,6 @@
     "All messages": "அனைத்து செய்திகள்",
     "All Rooms": "அனைத்து அறைகள்",
     "Changelog": "மாற்றப்பதிவு",
-    "Collecting app version information": "செயலியின் பதிப்பு தகவல்கள் சேகரிக்கப்படுகிறது",
-    "Collecting logs": "பதிவுகள் சேகரிக்கப்படுகிறது",
     "Failed to add tag %(tagName)s to room": "%(tagName)s எனும் குறிச்சொல்லை அறையில் சேர்ப்பதில் தோல்வி",
     "Failed to forget room %(errCode)s": "அறையை மறப்பதில் தோல்வி %(errCode)s",
     "Favourite": "விருப்பமான",
@@ -140,7 +138,9 @@
         "register": "பதிவு செய்"
     },
     "bug_reporting": {
-        "send_logs": "பதிவுகளை அனுப்பு"
+        "send_logs": "பதிவுகளை அனுப்பு",
+        "collecting_information": "செயலியின் பதிப்பு தகவல்கள் சேகரிக்கப்படுகிறது",
+        "collecting_logs": "பதிவுகள் சேகரிக்கப்படுகிறது"
     },
     "devtools": {
         "event_type": "நிகழ்வு வகை",

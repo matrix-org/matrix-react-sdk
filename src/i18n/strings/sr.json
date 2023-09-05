@@ -36,7 +36,6 @@
     "Default": "Подразумевано",
     "Restricted": "Ограничено",
     "Moderator": "Модератор",
-    "Admin": "Админ",
     "Operation failed": "Радња није успела",
     "Failed to invite": "Нисам успео да пошаљем позивницу",
     "You need to be logged in.": "Морате бити пријављени.",
@@ -52,7 +51,6 @@
     "Missing user_id in request": "Недостаје user_id у захтеву",
     "Call Failed": "Позив неуспешан",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "Usage": "Коришћење",
     "Ignored user": "Занемарени корисник",
     "You are now ignoring %(userId)s": "Сада занемарујете корисника %(userId)s",
     "Unignored user": "Незанемарени корисник",
@@ -101,9 +99,6 @@
     "Invited": "Позван",
     "Filter room members": "Филтрирај чланове собе",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (снага %(powerLevelNumber)s)",
-    "Hangup": "Спусти слушалицу",
-    "Voice call": "Гласовни позив",
-    "Video call": "Видео позив",
     "Send an encrypted reply…": "Пошаљи шифровани одговор…",
     "Send an encrypted message…": "Пошаљи шифровану поруку…",
     "You do not have permission to post to this room": "Немате овлашћење за писање у овој соби",
@@ -144,7 +139,6 @@
     "Members only (since they were invited)": "Само чланови (од тренутка позивања)",
     "Members only (since they joined)": "Само чланови (од приступања)",
     "Permissions": "Овлашћења",
-    "Advanced": "Напредно",
     "Jump to first unread message.": "Скочи на прву непрочитану поруку.",
     "not specified": "није наведено",
     "This room has no local addresses": "Ова соба нема локалних адреса",
@@ -373,12 +367,10 @@
     "Filter results": "Филтрирај резултате",
     "No update available.": "Нема нових ажурирања.",
     "Noisy": "Бучно",
-    "Collecting app version information": "Прикупљам податке о издању апликације",
     "Search…": "Претрага…",
     "Tuesday": "Уторак",
     "Saturday": "Субота",
     "Monday": "Понедељак",
-    "Collecting logs": "Прикупљам записнике",
     "All Rooms": "Све собе",
     "Wednesday": "Среда",
     "All messages": "Све поруке",
@@ -395,7 +387,6 @@
     "Popout widget": "Виџет за искакање",
     "Missing roomId.": "Недостаје roomId.",
     "You don't currently have any stickerpacks enabled": "Тренутно немате омогућено било које паковање са налепницама",
-    "Stickerpack": "Паковање са налепницама",
     "Preparing to send logs": "Припремам се за слање записника",
     "Logs sent": "Записници су послати",
     "Failed to send logs: ": "Нисам успео да пошаљем записнике: ",
@@ -544,10 +535,6 @@
     "Send a Direct Message": "Пошаљи директну поруку",
     "Switch theme": "Промени тему",
     "Error upgrading room": "Грешка при надоградњи собе",
-    "Other": "Остало",
-    "Effects": "Ефекти",
-    "Actions": "Радње",
-    "Messages": "Поруке",
     "Setting up keys": "Постављам кључеве",
     "Are you sure you want to cancel entering passphrase?": "Заиста желите да откажете унос фразе?",
     "Cancel entering passphrase?": "Отказати унос фразе?",
@@ -1167,7 +1154,8 @@
         "matrix": "Матрикс",
         "trusted": "поуздан",
         "not_trusted": "није поуздан",
-        "unnamed_room": "Неименована соба"
+        "unnamed_room": "Неименована соба",
+        "stickerpack": "Паковање са налепницама"
     },
     "action": {
         "continue": "Настави",
@@ -1249,7 +1237,9 @@
     },
     "bug_reporting": {
         "submit_debug_logs": "Пошаљи записнике за поправљање грешака",
-        "send_logs": "Пошаљи записнике"
+        "send_logs": "Пошаљи записнике",
+        "collecting_information": "Прикупљам податке о издању апликације",
+        "collecting_logs": "Прикупљам записнике"
     },
     "time": {
         "few_seconds_ago": "пре неколико секунди",
@@ -1287,7 +1277,9 @@
         "event_content": "Садржај догађаја",
         "caution_colon": "Опрез:",
         "toolbox": "Алатница",
-        "developer_tools": "Програмерске алатке"
+        "developer_tools": "Програмерске алатке",
+        "category_room": "Соба",
+        "category_other": "Остало"
     },
     "timeline": {
         "m.call.invite": {
@@ -1381,7 +1373,14 @@
         "help": "Приказује списак команди са употребом и описом",
         "whois": "Приказује податке о кориснику",
         "rageshake": "Пошаљи извештај о грешци са записницима",
-        "msg": "Шаље поруку наведеном кориснику"
+        "msg": "Шаље поруку наведеном кориснику",
+        "usage": "Коришћење",
+        "category_messages": "Поруке",
+        "category_actions": "Радње",
+        "category_admin": "Админ",
+        "category_advanced": "Напредно",
+        "category_effects": "Ефекти",
+        "category_other": "Остало"
     },
     "presence": {
         "online_for": "На мрежи %(duration)s",
@@ -1394,5 +1393,13 @@
         "offline": "Ван мреже",
         "away": "Неприсутан"
     },
-    "Unknown": "Непознато"
+    "Unknown": "Непознато",
+    "voip": {
+        "hangup": "Спусти слушалицу",
+        "voice_call": "Гласовни позив",
+        "video_call": "Видео позив"
+    },
+    "Messages": "Поруке",
+    "Other": "Остало",
+    "Advanced": "Напредно"
 }

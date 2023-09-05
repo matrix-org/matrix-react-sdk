@@ -40,7 +40,6 @@
     "Default": "डिफ़ॉल्ट",
     "Restricted": "वर्जित",
     "Moderator": "मध्यस्थ",
-    "Admin": "व्यवस्थापक",
     "Operation failed": "कार्रवाई विफल",
     "Failed to invite": "आमंत्रित करने में विफल",
     "You need to be logged in.": "आपको लॉग इन करने की जरूरत है।",
@@ -56,7 +55,6 @@
     "Missing room_id in request": "अनुरोध में रूम_आईडी गुम है",
     "Room %(roomId)s not visible": "%(roomId)s रूम दिखाई नहीं दे रहा है",
     "Missing user_id in request": "अनुरोध में user_id गुम है",
-    "Usage": "प्रयोग",
     "Ignored user": "अनदेखा उपयोगकर्ता",
     "You are now ignoring %(userId)s": "आप %(userId)s को अनदेखा कर रहे हैं",
     "Unignored user": "अनदेखा बंद किया गया उपयोगकर्ता",
@@ -82,8 +80,6 @@
     "Enable URL previews for this room (only affects you)": "इस रूम के लिए यूआरएल पूर्वावलोकन सक्षम करें (केवल आपको प्रभावित करता है)",
     "Enable URL previews by default for participants in this room": "इस रूम में प्रतिभागियों के लिए डिफ़ॉल्ट रूप से यूआरएल पूर्वावलोकन सक्षम करें",
     "Enable widget screenshots on supported widgets": "समर्थित विजेट्स पर विजेट स्क्रीनशॉट सक्षम करें",
-    "Collecting app version information": "ऐप संस्करण जानकारी एकत्रित कर रहा हैं",
-    "Collecting logs": "लॉग एकत्रित कर रहा हैं",
     "Waiting for response from server": "सर्वर से प्रतिक्रिया की प्रतीक्षा कर रहा है",
     "Incorrect verification code": "गलत सत्यापन कोड",
     "Phone": "फ़ोन",
@@ -155,9 +151,6 @@
     "Invited": "आमंत्रित",
     "Filter room members": "रूम के सदस्यों को फ़िल्टर करें",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (शक्ति %(powerLevelNumber)s)",
-    "Hangup": "फोन रख देना",
-    "Voice call": "आवाज कॉल",
-    "Video call": "वीडियो कॉल",
     "Send an encrypted reply…": "एक एन्क्रिप्टेड उत्तर भेजें …",
     "Send an encrypted message…": "एक एन्क्रिप्टेड संदेश भेजें …",
     "This room has been replaced and is no longer active.": "इस रूम को बदल दिया गया है और अब सक्रिय नहीं है।",
@@ -255,7 +248,6 @@
     "Restore from Backup": "बैकअप से बहाल करना",
     "Back up your keys before signing out to avoid losing them.": "उन्हें खोने से बचने के लिए साइन आउट करने से पहले अपनी कुंजियों का बैकअप लें।",
     "All keys backed up": "सभी कुंजियाँ वापस आ गईं",
-    "Advanced": "उन्नत",
     "Start using Key Backup": "कुंजी बैकअप का उपयोग करना शुरू करें",
     "Unable to verify phone number.": "फ़ोन नंबर सत्यापित करने में असमर्थ।",
     "Verification code": "पुष्टि संख्या",
@@ -564,7 +556,9 @@
     },
     "bug_reporting": {
         "submit_debug_logs": "डिबग लॉग जमा करें",
-        "title": "बग रिपोर्टिंग"
+        "title": "बग रिपोर्टिंग",
+        "collecting_information": "ऐप संस्करण जानकारी एकत्रित कर रहा हैं",
+        "collecting_logs": "लॉग एकत्रित कर रहा हैं"
     },
     "time": {
         "date_at_time": "%(date)s %(time)s पर",
@@ -663,7 +657,10 @@
         "ignore": "उपयोगकर्ता को अनदेखा करें और स्वयं से संदेश छुपाएं",
         "unignore": "उपयोगकर्ता को अनदेखा करना बंद करें और एक संदेश प्रदर्शित करें",
         "devtools": "डेवलपर टूल्स संवाद खोलता है",
-        "addwidget": "रूम में URL द्वारा एक कस्टम विजेट जोड़ता है"
+        "addwidget": "रूम में URL द्वारा एक कस्टम विजेट जोड़ता है",
+        "usage": "प्रयोग",
+        "category_admin": "व्यवस्थापक",
+        "category_advanced": "उन्नत"
     },
     "presence": {
         "online_for": "%(duration)s के लिए ऑनलाइन",
@@ -675,5 +672,11 @@
         "unknown": "अज्ञात",
         "offline": "ऑफलाइन"
     },
-    "Unknown": "अज्ञात"
+    "Unknown": "अज्ञात",
+    "voip": {
+        "hangup": "फोन रख देना",
+        "voice_call": "आवाज कॉल",
+        "video_call": "वीडियो कॉल"
+    },
+    "Advanced": "उन्नत"
 }

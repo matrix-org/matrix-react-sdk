@@ -2,7 +2,6 @@
     "Account": "Compte",
     "No Microphones detected": "No s'ha detectat cap micròfon",
     "No Webcams detected": "No s'ha detectat cap càmera web",
-    "Advanced": "Avançat",
     "Create new room": "Crea una sala nova",
     "Failed to forget room %(errCode)s": "No s'ha pogut oblidar la sala %(errCode)s",
     "Favourite": "Favorit",
@@ -51,7 +50,6 @@
     "Default": "Predeterminat",
     "Restricted": "Restringit",
     "Moderator": "Moderador",
-    "Admin": "Administrador",
     "Failed to invite": "No s'ha pogut convidar",
     "You need to be logged in.": "Has d'haver iniciat sessió.",
     "You need to be able to invite users to do that.": "Per fer això, necessites poder convidar a usuaris.",
@@ -64,7 +62,6 @@
     "Missing room_id in request": "Falta el room_id a la sol·licitud",
     "Room %(roomId)s not visible": "Sala %(roomId)s no visible",
     "Missing user_id in request": "Falta l'user_id a la sol·licitud",
-    "Usage": "Ús",
     "Ignored user": "Usuari ignorat",
     "You are now ignoring %(userId)s": "Estàs ignorant l'usuari %(userId)s",
     "Unignored user": "Usuari no ignorat",
@@ -113,9 +110,6 @@
     "Invited": "Convidat",
     "Filter room members": "Filtra els membres de la sala",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (autoritat %(powerLevelNumber)s)",
-    "Hangup": "Penja",
-    "Voice call": "Trucada de veu",
-    "Video call": "Trucada de vídeo",
     "Send an encrypted reply…": "Envia una resposta xifrada…",
     "Send an encrypted message…": "Envia un missatge xifrat…",
     "You do not have permission to post to this room": "No tens permís per enviar res en aquesta sala",
@@ -342,13 +336,11 @@
     "Filter results": "Resultats del filtre",
     "No update available.": "No hi ha cap actualització disponible.",
     "Noisy": "Sorollós",
-    "Collecting app version information": "S'està recollint la informació de la versió de l'aplicació",
     "Search…": "Cerca…",
     "Tuesday": "Dimarts",
     "Preparing to send logs": "Preparant l'enviament de logs",
     "Saturday": "Dissabte",
     "Monday": "Dilluns",
-    "Collecting logs": "S'estan recopilant els registres",
     "All Rooms": "Totes les sales",
     "Wednesday": "Dimecres",
     "All messages": "Tots els missatges",
@@ -441,9 +433,6 @@
     "Joins room with given address": "S'uneix a la sala amb l'adreça indicada",
     "Use an identity server": "Utilitza un servidor d'identitat",
     "Double check that your server supports the room version chosen and try again.": "Comprova que el teu servidor és compatible amb la versió de sala que has triat i torna-ho a intentar.",
-    "Other": "Altres",
-    "Actions": "Accions",
-    "Messages": "Missatges",
     "Setting up keys": "Configurant claus",
     "Are you sure you want to cancel entering passphrase?": "Estàs segur que vols cancel·lar la introducció de la frase secreta?",
     "Cancel entering passphrase?": "Vols cancel·lar la introducció de la frase secreta?",
@@ -593,7 +582,9 @@
     },
     "bug_reporting": {
         "submit_debug_logs": "Enviar logs de depuració",
-        "send_logs": "Envia els registres"
+        "send_logs": "Envia els registres",
+        "collecting_information": "S'està recollint la informació de la versió de l'aplicació",
+        "collecting_logs": "S'estan recopilant els registres"
     },
     "settings": {
         "use_12_hour_format": "Mostra les marques de temps en format de 12 hores (p.e. 2:30pm)",
@@ -621,7 +612,9 @@
         "event_sent": "Esdeveniment enviat!",
         "event_content": "Contingut de l'esdeveniment",
         "toolbox": "Caixa d'eines",
-        "developer_tools": "Eines de desenvolupador"
+        "developer_tools": "Eines de desenvolupador",
+        "category_room": "Sala",
+        "category_other": "Altres"
     },
     "timeline": {
         "m.room.topic": "%(senderDisplayName)s ha canviat el tema a \"%(topic)s\".",
@@ -690,7 +683,13 @@
         "unban": "Desbandeja l'usuari amb l'ID indicat",
         "ignore": "Ignora un usuari, amagant-te els seus missatges",
         "unignore": "Deixa d'ignorar un usuari, i mostra els seus missatges a partir d'ara",
-        "devtools": "Obre el diàleg d'Eines del desenvolupador"
+        "devtools": "Obre el diàleg d'Eines del desenvolupador",
+        "usage": "Ús",
+        "category_messages": "Missatges",
+        "category_actions": "Accions",
+        "category_admin": "Administrador",
+        "category_advanced": "Avançat",
+        "category_other": "Altres"
     },
     "presence": {
         "online_for": "En línia durant %(duration)s",
@@ -702,5 +701,13 @@
         "unknown": "Desconegut",
         "offline": "Fora de línia"
     },
-    "Unknown": "Desconegut"
+    "Unknown": "Desconegut",
+    "voip": {
+        "hangup": "Penja",
+        "voice_call": "Trucada de veu",
+        "video_call": "Trucada de vídeo"
+    },
+    "Messages": "Missatges",
+    "Other": "Altres",
+    "Advanced": "Avançat"
 }

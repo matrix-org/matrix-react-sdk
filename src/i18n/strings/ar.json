@@ -10,9 +10,7 @@
     "All Rooms": "كل الغُرف",
     "All messages": "كل الرسائل",
     "What's New": "آخِر المُستجدّات",
-    "Collecting logs": "تجميع السجلات",
     "No update available.": "لا يوجد هناك أي تحديث.",
-    "Collecting app version information": "تجميع المعلومات حول نسخة التطبيق",
     "Changelog": "سِجل التغييرات",
     "Waiting for response from server": "في انتظار الرد مِن الخادوم",
     "Thank you!": "شكرًا !",
@@ -82,7 +80,6 @@
     "Default": "المبدئي",
     "Restricted": "مقيد",
     "Moderator": "مشرف",
-    "Admin": "مدير",
     "Failed to invite": "فشلت الدعوة",
     "Operation failed": "فشلت العملية",
     "You need to be logged in.": "عليك الولوج.",
@@ -97,12 +94,7 @@
     "Missing room_id in request": "رقم الغرفة مفقود في الطلب",
     "Room %(roomId)s not visible": "الغرفة %(roomId)s غير مرئية",
     "Missing user_id in request": "رقم المستخدم مفقود في الطلب",
-    "Messages": "الرسائل",
-    "Actions": "الإجراءات",
-    "Advanced": "متقدم",
-    "Other": "أخرى",
     "Command error": "خطأ في الأمر",
-    "Usage": "الاستخدام",
     "Error upgrading room": "خطأ في ترقية الغرفة",
     "Double check that your server supports the room version chosen and try again.": "تحقق مرة أخرى من أن سيرفرك يدعم إصدار الغرفة المختار وحاول مرة أخرى.",
     "Use an identity server": "خادوم التعريف",
@@ -287,7 +279,6 @@
     "Admin Tools": "أدوات المدير",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "تعذر إبطال الدعوة. قد يواجه الخادم مشكلة مؤقتة أو ليس لديك صلاحيات كافية لإلغاء الدعوة.",
     "Failed to revoke invite": "تعذر إبطال الدعوة",
-    "Stickerpack": "حزمة الملصقات",
     "Add some now": "أضف البعض الآن",
     "You don't currently have any stickerpacks enabled": "ليس لديك حاليًا أي حزم ملصقات ممكّنة",
     "Failed to connect to integration manager": "تعذر الاتصال بمدير التكامل",
@@ -358,7 +349,6 @@
     "Sign Up": "سجل",
     "Join the conversation with an account": "انضم للمحادثة بحساب",
     "Historical": "تاريخي",
-    "System Alerts": "تنبيهات النظام",
     "Low priority": "أولوية منخفضة",
     "Explore public rooms": "استكشف الغرف العامة",
     "Add room": "أضف غرفة",
@@ -396,9 +386,6 @@
     "Send an encrypted message…": "أرسل رسالة مشفرة …",
     "Send a reply…": "أرسل جواباً …",
     "Send an encrypted reply…": "أرسل جواباً مشفراً …",
-    "Hangup": "إنهاء المكالمة",
-    "Video call": "مكالمة مرئية",
-    "Voice call": "مكالمة صوتية",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (قوة %(powerLevelNumber)s)",
     "Filter room members": "تصفية أعضاء الغرفة",
     "Invited": "مدعو",
@@ -656,11 +643,8 @@
     "You've successfully verified this user.": "لقد نجحت في التحقق من هذا المستخدم.",
     "Verified!": "تم التحقق!",
     "The other party cancelled the verification.": "ألغى الطرف الآخر التحقق.",
-    "Unknown caller": "متصل غير معروف",
     "This is your list of users/servers you have blocked - don't leave the room!": "هذه قائمتك للمستخدمين / الخوادم التي حظرت - لا تغادر الغرفة!",
     "My Ban List": "قائمة الحظر",
-    "Downloading logs": "تحميل السجلات",
-    "Uploading logs": "رفع السجلات",
     "IRC display name width": "عرض الاسم الظاهر لIRC",
     "Manually verify all remote sessions": "تحقق يدويًا من جميع الاتصالات البعيدة",
     "How fast should messages be downloaded.": "ما مدى سرعة تنزيل الرسائل.",
@@ -678,16 +662,6 @@
     "Use custom size": "استخدام حجم مخصص",
     "Font size": "حجم الخط",
     "Change notification settings": "تغيير إعدادات الإشعار",
-    "%(senderName)s is calling": "%(senderName)s يتصل",
-    "Waiting for answer": "بانتظار الرد",
-    "%(senderName)s started a call": "%(senderName)s بدأ مكالمة",
-    "You started a call": "لقد بدأت مكالمة",
-    "Call ended": "انتهت المكالمة",
-    "%(senderName)s ended the call": "%(senderName)s أنهى المكالمة",
-    "You ended the call": "لقد أنهيتَ المكالمة",
-    "Call in progress": "مكالمتك تحت الإجراء",
-    "%(senderName)s joined the call": "%(senderName)s انضم للمكالمة",
-    "You joined the call": "لقد انضممت إلى المكالمة",
     "Please contact your homeserver administrator.": "يُرجى تواصلك مع مدير خادمك.",
     "New version of %(brand)s is available": "يتوفر إصدار جديد من %(brand)s",
     "Update %(brand)s": "حدّث: %(brand)s",
@@ -793,9 +767,7 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "قد تحتاج إلى السماح يدويًا ل%(brand)s s بالوصول إلى الميكروفون / كاميرا الويب",
     "No media permissions": "لا إذن للوسائط",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "قام مسؤول الخادم بتعطيل التشفير من طرف إلى طرف أصلاً في الغرف الخاصة والرسائل الخاصّة.",
-    "Cross-signing": "التوقيع المتبادل",
     "Message search": "بحث الرسائل",
-    "Secure Backup": "تأمين النسخ الاحتياطي",
     "Reject all %(invitedRooms)s invites": "رفض كل الدعوات (%(invitedRooms)s)",
     "Accept all %(invitedRooms)s invites": "قبول كل الدعوات (%(invitedRooms)s)",
     "Bulk options": "خيارات مجمعة",
@@ -1152,7 +1124,11 @@
         "encrypted": "التشفير",
         "trusted": "موثوق",
         "not_trusted": "غير موثوق",
-        "unnamed_room": "غرفة بدون اسم"
+        "unnamed_room": "غرفة بدون اسم",
+        "stickerpack": "حزمة الملصقات",
+        "system_alerts": "تنبيهات النظام",
+        "secure_backup": "تأمين النسخ الاحتياطي",
+        "cross_signing": "التوقيع المتبادل"
     },
     "action": {
         "continue": "واصِل",
@@ -1236,7 +1212,11 @@
         "matrix_security_issue": "للإبلاغ عن مشكلة أمنية متعلقة بMatrix ، يرجى قراءة <a>سياسة الإفصاح الأمني</a> في Matrix.org.",
         "submit_debug_logs": "إرسال سجلات تصحيح الأخطاء",
         "title": "الإبلاغ عن مشاكل في البرنامج",
-        "send_logs": "إرسال السِجلات"
+        "send_logs": "إرسال السِجلات",
+        "collecting_information": "تجميع المعلومات حول نسخة التطبيق",
+        "collecting_logs": "تجميع السجلات",
+        "uploading_logs": "رفع السجلات",
+        "downloading_logs": "تحميل السجلات"
     },
     "time": {
         "date_at_time": "%(date)s في %(time)s"
@@ -1275,7 +1255,8 @@
     "devtools": {
         "state_key": "مفتاح الحالة",
         "toolbox": "علبة الأدوات",
-        "developer_tools": "أدوات التطوير"
+        "developer_tools": "أدوات التطوير",
+        "category_other": "أخرى"
     },
     "timeline": {
         "m.call.invite": {
@@ -1356,6 +1337,9 @@
                 "other": "%(names)s و %(count)s آخرون يكتبون…",
                 "one": "%(names)s وآخر يكتبون…"
             }
+        },
+        "m.call.hangup": {
+            "dm": "انتهت المكالمة"
         }
     },
     "slash_command": {
@@ -1383,7 +1367,13 @@
         "help": "يعرض قائمة الأوامر مع الوصف وطرق الاستخدام",
         "whois": "يعرض معلومات عن المستخدم",
         "rageshake": "إرسال تقرير خطأ يحتوي على سجلات الاحداث",
-        "msg": "يرسل رسالة الى المستخدم المعطى"
+        "msg": "يرسل رسالة الى المستخدم المعطى",
+        "usage": "الاستخدام",
+        "category_messages": "الرسائل",
+        "category_actions": "الإجراءات",
+        "category_admin": "مدير",
+        "category_advanced": "متقدم",
+        "category_other": "أخرى"
     },
     "presence": {
         "online_for": "متصل منذ %(duration)s",
@@ -1395,5 +1385,31 @@
         "unknown": "غير معروف",
         "offline": "منفصل"
     },
-    "Unknown": "غير معروف"
+    "Unknown": "غير معروف",
+    "event_preview": {
+        "m.call.answer": {
+            "you": "لقد انضممت إلى المكالمة",
+            "user": "%(senderName)s انضم للمكالمة",
+            "dm": "مكالمتك تحت الإجراء"
+        },
+        "m.call.hangup": {
+            "you": "لقد أنهيتَ المكالمة",
+            "user": "%(senderName)s أنهى المكالمة"
+        },
+        "m.call.invite": {
+            "you": "لقد بدأت مكالمة",
+            "user": "%(senderName)s بدأ مكالمة",
+            "dm_send": "بانتظار الرد",
+            "dm_receive": "%(senderName)s يتصل"
+        }
+    },
+    "voip": {
+        "hangup": "إنهاء المكالمة",
+        "voice_call": "مكالمة صوتية",
+        "video_call": "مكالمة مرئية",
+        "unknown_caller": "متصل غير معروف"
+    },
+    "Messages": "الرسائل",
+    "Other": "أخرى",
+    "Advanced": "متقدم"
 }

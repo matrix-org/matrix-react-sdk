@@ -37,7 +37,6 @@
     "Default": "Opphavleg innstilling",
     "Restricted": "Avgrensa",
     "Moderator": "Moderator",
-    "Admin": "Administrator",
     "Operation failed": "Handling mislukkast",
     "Failed to invite": "Fekk ikkje til å invitera",
     "You need to be logged in.": "Du må vera logga inn.",
@@ -52,7 +51,6 @@
     "Missing room_id in request": "Manglande room_Id i førespurnad",
     "Room %(roomId)s not visible": "Rommet %(roomId)s er ikkje synleg",
     "Missing user_id in request": "Manglande user_id i førespurnad",
-    "Usage": "Bruk",
     "Ignored user": "Oversedd brukar",
     "You are now ignoring %(userId)s": "Du overser no %(userId)s",
     "Unignored user": "Avoversedd brukar",
@@ -77,8 +75,6 @@
     "Enable URL previews for this room (only affects you)": "Skru URL-førehandsvisingar på for dette rommet (påverkar deg åleine)",
     "Enable URL previews by default for participants in this room": "Skru URL-førehandsvisingar på som utgangspunkt for deltakarar i dette rommet",
     "Enable widget screenshots on supported widgets": "Skru widget-skjermbilete på for støtta widgetar",
-    "Collecting app version information": "Samlar versjonsinfo for programmet",
-    "Collecting logs": "Samlar loggar",
     "Waiting for response from server": "Ventar på svar frå tenaren",
     "Incorrect verification code": "Urett stadfestingskode",
     "Phone": "Telefon",
@@ -118,9 +114,6 @@
     },
     "Invited": "Invitert",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (tilgangsnivå %(powerLevelNumber)s)",
-    "Hangup": "Legg på",
-    "Voice call": "Talesamtale",
-    "Video call": "Videosamtale",
     "Send an encrypted reply…": "Send eit kryptert svar…",
     "Send an encrypted message…": "Send ei kryptert melding…",
     "You do not have permission to post to this room": "Du har ikkje lov til å senda meldingar i dette rommet",
@@ -143,7 +136,6 @@
     "Share room": "Del rom",
     "Rooms": "Rom",
     "Low priority": "Låg prioritet",
-    "System Alerts": "Systemvarsel",
     "Historical": "Historiske",
     "%(roomName)s does not exist.": "%(roomName)s eksisterar ikkje.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s er ikkje tilgjengeleg no.",
@@ -163,12 +155,10 @@
     "Members only (since they were invited)": "Berre medlemmar (frå då dei vart inviterte inn)",
     "Members only (since they joined)": "Berre medlemmar (frå då dei kom inn)",
     "Permissions": "Tillatelsar",
-    "Advanced": "Avansert",
     "Search…": "Søk…",
     "This Room": "Dette rommet",
     "All Rooms": "Alle rom",
     "You don't currently have any stickerpacks enabled": "Du har for tida ikkje skrudd nokre klistremerkepakkar på",
-    "Stickerpack": "Klistremerkepakke",
     "Jump to first unread message.": "Hopp til den fyrste uleste meldinga.",
     "This room has no local addresses": "Dette rommet har ingen lokale adresser",
     "You have <a>enabled</a> URL previews by default.": "Du har <a>skrudd URL-førehandsvisingar på</a> i utgangspunktet.",
@@ -493,9 +483,6 @@
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Spør administratoren for din heimetenar<code>%(homeserverDomain)s</code> om å setje opp ein \"TURN-server\" slik at talesamtalar fungerer på rett måte.",
     "The file '%(fileName)s' failed to upload.": "Fila '%(fileName)s' vart ikkje lasta opp.",
     "The server does not support the room version specified.": "Tenaren støttar ikkje den spesifikke versjonen av rommet.",
-    "Messages": "Meldingar",
-    "Actions": "Handlingar",
-    "Other": "Anna",
     "Use an identity server": "Bruk ein identitetstenar",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Bruk ein identitetstenar for å invitera via e-post. Klikk for å fortsetja å bruka standard identitetstenar (%(defaultIdentityServerName)s) eller styre dette i innstillingane.",
     "Use an identity server to invite by email. Manage in Settings.": "Bruk ein identitetstenar for å invitera via e-post. Styr dette i Innstillingane.",
@@ -907,7 +894,9 @@
         "someone": "Nokon",
         "encrypted": "Kryptert",
         "matrix": "Matrix",
-        "unnamed_room": "Rom utan namn"
+        "unnamed_room": "Rom utan namn",
+        "stickerpack": "Klistremerkepakke",
+        "system_alerts": "Systemvarsel"
     },
     "action": {
         "continue": "Fortset",
@@ -990,7 +979,9 @@
         "submit_debug_logs": "Send inn feil-logg",
         "title": "Feilrapportering",
         "additional_context": "Om du har meir info rundt korleis problemet oppstod, som kva du prøvde å gjere på det tidspunktet, brukar-IDar m.m ,inkluder gjerne den informasjonen her.",
-        "send_logs": "Send loggar inn"
+        "send_logs": "Send loggar inn",
+        "collecting_information": "Samlar versjonsinfo for programmet",
+        "collecting_logs": "Samlar loggar"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)st %(minutes)sm %(seconds)ss att",
@@ -1048,7 +1039,9 @@
         "event_sent": "Hending send!",
         "event_content": "Hendingsinnhald",
         "toolbox": "Verktøykasse",
-        "developer_tools": "Utviklarverktøy"
+        "developer_tools": "Utviklarverktøy",
+        "category_room": "Rom",
+        "category_other": "Anna"
     },
     "create_room": {
         "title_private_room": "Lag eit privat rom"
@@ -1140,7 +1133,13 @@
         "help": "Viser ei liste over kommandoar med bruksområde og skildringar",
         "whois": "Viser informasjon om ein brukar",
         "rageshake": "Send ein feilrapport med loggar",
-        "msg": "Send ein melding til den spesifiserte brukaren"
+        "msg": "Send ein melding til den spesifiserte brukaren",
+        "usage": "Bruk",
+        "category_messages": "Meldingar",
+        "category_actions": "Handlingar",
+        "category_admin": "Administrator",
+        "category_advanced": "Avansert",
+        "category_other": "Anna"
     },
     "presence": {
         "online_for": "tilkopla i %(duration)s",
@@ -1152,5 +1151,13 @@
         "unknown": "Ukjend",
         "offline": "Fråkopla"
     },
-    "Unknown": "Ukjend"
+    "Unknown": "Ukjend",
+    "voip": {
+        "hangup": "Legg på",
+        "voice_call": "Talesamtale",
+        "video_call": "Videosamtale"
+    },
+    "Messages": "Meldingar",
+    "Other": "Anna",
+    "Advanced": "Avansert"
 }
