@@ -10,13 +10,6 @@
     "Send a reply…": "Enviar una responsa…",
     "Send an encrypted message…": "Enviar un messatge chifrat…",
     "Send a message…": "Enviar un messatge…",
-    "Online for %(duration)s": "En linha dempuèi %(duration)s",
-    "Idle for %(duration)s": "Inactiu dempuèi %(duration)s",
-    "Offline for %(duration)s": "Fòra linha dempuèi %(duration)s",
-    "Unknown for %(duration)s": "Desconegut dempuèi %(duration)s",
-    "Online": "En linha",
-    "Idle": "Inactiu",
-    "Unknown": "Desconegut",
     "Unnamed room": "Sala sens nom",
     "Share room": "Partejar la sala",
     "Rooms": "Salas",
@@ -161,8 +154,6 @@
     "Changelog": "Istoric dels cambiaments (Changelog)",
     "Removing…": "Supression en cors…",
     "Send": "Mandar",
-    "Toolbox": "Bóstia d'aisinas",
-    "Developer Tools": "Aisinas de desvolopament",
     "An error has occurred.": "Una error s'es producha.",
     "Session name": "Nom de session",
     "Email address": "Adreça de corrièl",
@@ -172,7 +163,6 @@
     "Document": "Document",
     "Upload files": "Mandar de fichièrs",
     "Home": "Dorsièr personal",
-    "Away": "Absent",
     "Enter password": "Sasissètz lo senhal",
     "Email": "Corrièl",
     "Phone": "Telefòn",
@@ -316,5 +306,21 @@
         "moderator": "Moderator",
         "admin": "Admin",
         "mod": "Moderador"
-    }
+    },
+    "devtools": {
+        "toolbox": "Bóstia d'aisinas",
+        "developer_tools": "Aisinas de desvolopament"
+    },
+    "presence": {
+        "online_for": "En linha dempuèi %(duration)s",
+        "idle_for": "Inactiu dempuèi %(duration)s",
+        "offline_for": "Fòra linha dempuèi %(duration)s",
+        "unknown_for": "Desconegut dempuèi %(duration)s",
+        "online": "En linha",
+        "idle": "Inactiu",
+        "unknown": "Desconegut",
+        "offline": "Fòra linha",
+        "away": "Absent"
+    },
+    "Unknown": "Desconegut"
 }
