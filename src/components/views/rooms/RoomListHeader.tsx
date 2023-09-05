@@ -185,7 +185,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
         if (shouldShowSpaceInvite(activeSpace)) {
             inviteOption = (
                 <IconizedContextMenuOption
-                    label={_t("Invite")}
+                    label={_t("action|invite")}
                     iconClassName="mx_RoomListHeader_iconInvite"
                     onClick={(e) => {
                         e.preventDefault();
@@ -428,7 +428,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
                     onClick={openPlusMenu}
                     isExpanded={plusMenuDisplayed}
                     className="mx_RoomListHeader_plusButton"
-                    title={_t("Add")}
+                    title={_t("action|add")}
                 />
             )}
 

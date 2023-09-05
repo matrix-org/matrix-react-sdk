@@ -119,7 +119,7 @@ const Tile: React.FC<ITileProps> = ({
         room.name ||
         room.canonical_alias ||
         room.aliases?.[0] ||
-        (room.room_type === RoomType.Space ? _t("Unnamed Space") : _t("Unnamed Room"));
+        (room.room_type === RoomType.Space ? _t("common|unnamed_space") : _t("common|unnamed_room"));
 
     const [showChildren, toggleShowChildren] = useStateToggle(true);
     const [onFocus, isActive, ref] = useRovingTabIndex();
@@ -163,13 +163,13 @@ const Tile: React.FC<ITileProps> = ({
                 onFocus={onFocus}
                 tabIndex={isActive ? 0 : -1}
             >
-                {_t("View")}
+                {_t("action|view")}
             </AccessibleButton>
         );
     } else {
         button = (
             <AccessibleButton onClick={onJoinClick} kind="primary" onFocus={onFocus} tabIndex={isActive ? 0 : -1}>
-                {_t("Join")}
+                {_t("action|join")}
             </AccessibleButton>
         );
     }
@@ -194,15 +194,14 @@ const Tile: React.FC<ITileProps> = ({
 
     let avatar: ReactElement;
     if (joinedRoom) {
-        avatar = <RoomAvatar room={joinedRoom} width={20} height={20} />;
+        avatar = <RoomAvatar room={joinedRoom} size="20px" />;
     } else {
         avatar = (
             <BaseAvatar
                 name={name}
                 idName={room.room_id}
                 url={room.avatar_url ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(20) : null}
-                width={20}
-                height={20}
+                size="20px"
             />
         );
     }
@@ -716,7 +715,7 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
                 kind="danger_outline"
                 disabled={disabled}
             >
-                {removing ? _t("Removing…") : _t("Remove")}
+                {removing ? _t("Removing…") : _t("action|remove")}
             </Button>
             <Button
                 {...props}
@@ -898,7 +897,7 @@ const SpaceHierarchy: React.FC<IProps> = ({ space, initialText = "", showRoom, a
                                 className="mx_SpaceHierarchy_list"
                                 onKeyDown={onKeyDownHandler}
                                 role="tree"
-                                aria-label={_t("Space")}
+                                aria-label={_t("common|space")}
                             >
                                 {results}
                             </ul>

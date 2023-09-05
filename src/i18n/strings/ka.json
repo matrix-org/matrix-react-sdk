@@ -2,16 +2,12 @@
     "Dismiss read marker and jump to bottom": "გააუქმეთ წაკითხული მარკერი და გადადით ქვემოთ",
     "Explore rooms": "ოთახების დათავლიერება",
     "Create Account": "ანგარიშის შექმნა",
-    "Sign In": "შესვლა",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "ფაილი '%(fileName)s' აჭარბებს ამ ჰომსერვერის ზომის ლიმიტს ატვირთვისთვის",
     "The file '%(fileName)s' failed to upload.": "ფაილი '%(fileName)s' ვერ აიტვირთა.",
-    "Attachment": "Მიმაგრებული ფაილი",
-    "Dismiss": "დახურვა",
     "This email address is already in use": "ელ. ფოსტის ეს მისამართი დაკავებულია",
     "Use Single Sign On to continue": "გასაგრძელებლად გამოიყენე ერთჯერადი ავტორიზაცია",
     "Confirm adding email": "დაადასტურე ელ.ფოსტის დამატება",
     "Click the button below to confirm adding this email address.": "ელ. ფოსტის ამ მისამართის დამატება დაადასტურე ღილაკზე დაჭერით.",
-    "Confirm": "დადასტურება",
     "Add Email Address": "ელ. ფოსტის მისამართის დამატება",
     "Failed to verify email address: make sure you clicked the link in the email": "ელ. ფოსტის მისამართის ვერიფიკაცია ვერ მოხერხდა: დარწმუნდი, რომ დააჭირე ბმულს ელ. ფოსტის წერილში",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "ამ ტელეფონის ნომრის დასადასტურებლად გამოიყენე ერთჯერადი ავტორიზაცია, საკუთარი იდენტობის დასადასტურებლად.",
@@ -20,7 +16,6 @@
     "This phone number is already in use": "ტელეფონის ეს ნომერი დაკავებულია",
     "Identity server not set": "იდენთიფიკაციის სერვერი არ არის განსაზღვრული",
     "No identity access token found": "იდენთიფიკაციის წვდომის ტოკენი ვერ მოიძებნა",
-    "%(seconds)ss left": "%(seconds)sწმ დარჩა",
     "The server does not support the room version specified.": "სერვერი არ მუშაობს ოთახის მითითებულ ვერსიაზე.",
     "Sun": "მზე",
     "Dec": "დეკ",
@@ -38,7 +33,6 @@
     "Click the button below to confirm adding this phone number.": "დააჭირეთ ღილაკს მობილურის ნომრის დასადასტურებლად.",
     "Server may be unavailable, overloaded, or you hit a bug.": "სერვერი შეიძლება იყოს მიუწვდომელი, გადატვირთული, ან შეიძლება ეს ბაგია.",
     "Jan": "იან",
-    "%(minutes)sm %(seconds)ss left": "%(minutes)sწთ %(seconds)sწმ დარჩა",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "ეს მოქმედება საჭიროებს პირადობის სერვერთან კავშირს ელ.ფოსტის ან მობილურის ნომრის დასადასტურებლად, მაგრამ სერვერს არ გააჩნია მომსახურების პირობები.",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "შეუძლებელია მომხმარებლის ელ.ფოსტით დამატება პირადობის სერვერის გარეშე. თქვენ შეგიძლიათ დაუკავშირდეთ ერთ-ერთს \"პარამეტრებში\".",
     "Identity server has no terms of service": "პირადობის სერვერს არ აქვს მომსახურების პირობები",
@@ -52,9 +46,19 @@
     "Unable to load! Check your network connectivity and try again.": "ვერ იტვირთება! შეამოწმეთ თქვენი ინტერნეტ-კავშირი და სცადეთ ისევ.",
     "Add Phone Number": "მობილურის ნომრის დამატება",
     "Confirm adding phone number": "დაადასტურეთ მობილურის ნომრის დამატება",
-    "%(hours)sh %(minutes)sm %(seconds)ss left": "%(hours)sს %(minutes)sწთ %(seconds)sწმ დარჩა",
     "Feb": "თებ",
     "common": {
-        "error": "შეცდომა"
+        "error": "შეცდომა",
+        "attachment": "Მიმაგრებული ფაილი"
+    },
+    "action": {
+        "confirm": "დადასტურება",
+        "dismiss": "დახურვა",
+        "sign_in": "შესვლა"
+    },
+    "time": {
+        "hours_minutes_seconds_left": "%(hours)sს %(minutes)sწთ %(seconds)sწმ დარჩა",
+        "minutes_seconds_left": "%(minutes)sწთ %(seconds)sწმ დარჩა",
+        "seconds_left": "%(seconds)sწმ დარჩა"
     }
 }

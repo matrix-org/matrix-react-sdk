@@ -160,7 +160,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
                         )}
                     </SettingsSubsectionText>
                     <AccessibleButton kind="primary" onClick={this.onManage}>
-                        {_t("Manage")}
+                        {_t("action|manage")}
                     </AccessibleButton>
                 </>
             );
@@ -172,7 +172,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
                     </SettingsSubsectionText>
                     <div>
                         <AccessibleButton kind="primary" disabled={this.state.enabling} onClick={this.onEnable}>
-                            {_t("Enable")}
+                            {_t("action|enable")}
                         </AccessibleButton>
                         {this.state.enabling ? <InlineSpinner /> : <div />}
                     </div>
@@ -240,7 +240,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
                                 </code>
                                 <p>
                                     <AccessibleButton key="delete" kind="danger" onClick={this.confirmEventStoreReset}>
-                                        {_t("Reset")}
+                                        {_t("action|reset")}
                                     </AccessibleButton>
                                 </p>
                             </details>

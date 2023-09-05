@@ -157,17 +157,17 @@ export default class ViewSource extends React.Component<IProps, IState> {
             ? this.canSendStateEvent(mxEvent)
             : canEditContent(MatrixClientPeg.safeGet(), this.props.mxEvent);
         return (
-            <BaseDialog className="mx_ViewSource" onFinished={this.props.onFinished} title={_t("View Source")}>
+            <BaseDialog className="mx_ViewSource" onFinished={this.props.onFinished} title={_t("action|view_source")}>
                 <div className="mx_ViewSource_header">
                     <CopyableText getTextToCopy={() => roomId} border={false}>
-                        {_t("Room ID: %(roomId)s", { roomId })}
+                        {_t("devtools|room_id", { roomId })}
                     </CopyableText>
                     <CopyableText getTextToCopy={() => eventId} border={false}>
-                        {_t("Event ID: %(eventId)s", { eventId })}
+                        {_t("devtools|event_id", { eventId })}
                     </CopyableText>
                     {mxEvent.threadRootId && (
                         <CopyableText getTextToCopy={() => mxEvent.threadRootId!} border={false}>
-                            {_t("Thread root ID: %(threadRootId)s", {
+                            {_t("devtools|thread_root_id", {
                                 threadRootId: mxEvent.threadRootId,
                             })}
                         </CopyableText>
@@ -176,7 +176,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
                 {isEditing ? this.editSourceContent() : this.viewSourceContent()}
                 {!isEditing && canEdit && (
                     <div className="mx_Dialog_buttons">
-                        <button onClick={() => this.onEdit()}>{_t("Edit")}</button>
+                        <button onClick={() => this.onEdit()}>{_t("action|edit")}</button>
                     </div>
                 )}
             </BaseDialog>

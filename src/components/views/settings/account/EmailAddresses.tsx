@@ -16,9 +16,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { ThreepidMedium, MatrixError } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
@@ -107,14 +106,14 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
                         kind="danger_sm"
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
-                        {_t("Remove")}
+                        {_t("action|remove")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.onDontRemove}
                         kind="link_sm"
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
-                        {_t("Cancel")}
+                        {_t("action|cancel")}
                     </AccessibleButton>
                 </div>
             );
@@ -126,7 +125,7 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
                     {this.props.email.address}
                 </span>
                 <AccessibleButton onClick={this.onRemove} kind="danger_sm" disabled={this.props.disabled}>
-                    {_t("Remove")}
+                    {_t("action|remove")}
                 </AccessibleButton>
             </div>
         );
@@ -268,7 +267,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
 
         let addButton = (
             <AccessibleButton onClick={this.onAddClick} kind="primary" disabled={this.props.disabled}>
-                {_t("Add")}
+                {_t("action|add")}
             </AccessibleButton>
         );
         if (this.state.verifying) {
@@ -284,7 +283,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
                         kind="primary"
                         disabled={this.state.continueDisabled}
                     >
-                        {_t("Continue")}
+                        {_t("action|continue")}
                     </AccessibleButton>
                 </div>
             );

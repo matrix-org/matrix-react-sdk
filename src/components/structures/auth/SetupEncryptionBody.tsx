@@ -244,7 +244,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                     {message}
                     <div className="mx_CompleteSecurity_actionRow">
                         <AccessibleButton kind="primary" onClick={this.onDoneClick}>
-                            {_t("Done")}
+                            {_t("action|done")}
                         </AccessibleButton>
                     </div>
                 </div>
@@ -262,7 +262,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                             {_t("I'll verify later")}
                         </AccessibleButton>
                         <AccessibleButton kind="primary" onClick={this.onSkipBackClick}>
-                            {_t("Go Back")}
+                            {_t("action|go_back")}
                         </AccessibleButton>
                     </div>
                 </div>
@@ -286,7 +286,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                             {_t("Proceed with reset")}
                         </AccessibleButton>
                         <AccessibleButton kind="primary" onClick={this.onResetBackClick}>
-                            {_t("Go Back")}
+                            {_t("action|go_back")}
                         </AccessibleButton>
                     </div>
                 </div>

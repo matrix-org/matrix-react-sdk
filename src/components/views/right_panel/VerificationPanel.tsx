@@ -123,7 +123,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                             onClick={this.startSAS}
                             kind="primary"
                         >
-                            {_t("Start")}
+                            {_t("action|start")}
                         </AccessibleButton>
                     </div>
                 );
@@ -254,14 +254,14 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                             disabled={this.state.reciprocateButtonClicked}
                             onClick={this.onReciprocateNoClick}
                         >
-                            {_t("No")}
+                            {_t("action|no")}
                         </AccessibleButton>
                         <AccessibleButton
                             kind="primary"
                             disabled={this.state.reciprocateButtonClicked}
                             onClick={this.onReciprocateYesClick}
                         >
-                            {_t("Yes")}
+                            {_t("action|yes")}
                         </AccessibleButton>
                     </div>
                 </React.Fragment>
@@ -319,7 +319,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 <E2EIcon isUser={true} status={E2EState.Verified} size={128} hideTooltip={true} />
                 {text ? <p>{text}</p> : null}
                 <AccessibleButton kind="primary" className="mx_UserInfo_wideButton" onClick={this.props.onClose}>
-                    {_t("Got it")}
+                    {_t("action|got_it")}
                 </AccessibleButton>
             </div>
         );
@@ -357,7 +357,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 <p>{text}</p>
 
                 <AccessibleButton kind="primary" className="mx_UserInfo_wideButton" onClick={this.props.onClose}>
-                    {_t("Got it")}
+                    {_t("action|got_it")}
                 </AccessibleButton>
             </div>
         );

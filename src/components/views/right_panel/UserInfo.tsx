@@ -68,7 +68,6 @@ import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
 import { mediaFromMxc } from "../../../customisations/Media";
-import UIStore from "../../../stores/UIStore";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import ConfirmSpaceUserActionDialog from "../dialogs/ConfirmSpaceUserActionDialog";
 import { bulkSpaceBehaviour } from "../../../utils/space";
@@ -83,6 +82,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../utils/direct-messages";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { asyncSome } from "../../../utils/arrays";
+import UIStore from "../../../stores/UIStore";
 
 export interface IDevice extends Device {
     ambiguous?: boolean;
@@ -206,7 +206,7 @@ export function DeviceItem({ userId, device }: { userId: string; device: IDevice
     }
 
     let trustedLabel: string | undefined;
-    if (userTrust.isVerified()) trustedLabel = isVerified ? _t("Trusted") : _t("Not trusted");
+    if (userTrust.isVerified()) trustedLabel = isVerified ? _t("common|trusted") : _t("common|not_trusted");
 
     if (isVerified === undefined) {
         // we're still deciding if the device is verified
@@ -387,7 +387,7 @@ export const UserOptionsSection: React.FC<{
                     )}
                 </div>
             ),
-            button: _t("Ignore"),
+            button: _t("action|ignore"),
         });
         const [confirmed] = await finished;
 
@@ -407,7 +407,7 @@ export const UserOptionsSection: React.FC<{
                 kind="link"
                 className={classNames("mx_UserInfo_field", { mx_UserInfo_destructive: !isIgnored })}
             >
-                {isIgnored ? _t("Unignore") : _t("Ignore")}
+                {isIgnored ? _t("Unignore") : _t("action|ignore")}
             </AccessibleButton>
         );
 
@@ -443,7 +443,7 @@ export const UserOptionsSection: React.FC<{
 
             insertPillButton = (
                 <AccessibleButton kind="link" onClick={onInsertPillButton} className="mx_UserInfo_field">
-                    {_t("Mention")}
+                    {_t("action|mention")}
                 </AccessibleButton>
             );
         }
@@ -486,7 +486,7 @@ export const UserOptionsSection: React.FC<{
 
             inviteUserButton = (
                 <AccessibleButton kind="link" onClick={onInviteUserButton} className="mx_UserInfo_field">
-                    {_t("Invite")}
+                    {_t("action|invite")}
                 </AccessibleButton>
             );
         }
@@ -502,7 +502,7 @@ export const UserOptionsSection: React.FC<{
 
     return (
         <div className="mx_UserInfo_container">
-            <h3>{_t("Options")}</h3>
+            <h3>{_t("common|options")}</h3>
             <div>
                 {directMessageButton}
                 {readReceiptButton}
@@ -1186,7 +1186,7 @@ export const PowerLevelEditor: React.FC<{
                             {_t("Are you sure?")}
                         </div>
                     ),
-                    button: _t("Continue"),
+                    button: _t("action|continue"),
                 });
 
                 const [confirmed] = await finished;
@@ -1483,7 +1483,7 @@ const BasicUserInfo: React.FC<{
                             }
                         }}
                     >
-                        {_t("Verify")}
+                        {_t("action|verify")}
                     </AccessibleButton>
                 </div>
             );
@@ -1579,8 +1579,7 @@ export const UserInfoHeader: React.FC<{
                     <MemberAvatar
                         key={member.userId} // to instantly blank the avatar when UserInfo changes members
                         member={member as RoomMember}
-                        width={2 * 0.3 * UIStore.instance.windowHeight} // 2x@30vh
-                        height={2 * 0.3 * UIStore.instance.windowHeight} // 2x@30vh
+                        size={UIStore.instance.windowHeight * 0.3 + "px"}
                         resizeMethod="scale"
                         fallbackUserId={member.userId}
                         onClick={onMemberAvatarClick}
@@ -1716,7 +1715,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     if (phase === RightPanelPhases.EncryptionPanel) {
         const verificationRequest = (props as React.ComponentProps<typeof EncryptionPanel>).verificationRequest;
         if (verificationRequest && verificationRequest.pending) {
-            closeLabel = _t("Cancel");
+            closeLabel = _t("action|cancel");
         }
     }
 
@@ -1724,7 +1723,7 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
     if (room?.isSpaceRoom()) {
         scopeHeader = (
             <div data-testid="space-header" className="mx_RightPanel_scopeHeader">
-                <RoomAvatar room={room} height={32} width={32} />
+                <RoomAvatar room={room} size="32px" />
                 <RoomName room={room} />
             </div>
         );

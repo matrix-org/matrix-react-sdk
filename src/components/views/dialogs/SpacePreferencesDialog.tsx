@@ -75,7 +75,7 @@ const SpacePreferencesDialog: React.FC<IProps> = ({ space, initialTabId, onFinis
     const tabs: NonEmptyArray<Tab<SpacePreferenceTab>> = [
         new Tab(
             SpacePreferenceTab.Appearance,
-            _td("Appearance"),
+            _td("common|appearance"),
             "mx_SpacePreferencesDialog_appearanceIcon",
             <SpacePreferencesAppearanceTab space={space} />,
         ),
@@ -86,7 +86,7 @@ const SpacePreferencesDialog: React.FC<IProps> = ({ space, initialTabId, onFinis
             className="mx_SpacePreferencesDialog"
             hasCancel
             onFinished={onFinished}
-            title={_t("Preferences")}
+            title={_t("common|preferences")}
             fixedWidth={false}
         >
             <h4>

@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, UserFriendlyError } from "../../../../languageHandler";
@@ -102,14 +102,14 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
                         kind="danger_sm"
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
-                        {_t("Remove")}
+                        {_t("action|remove")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.onDontRemove}
                         kind="link_sm"
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
-                        {_t("Cancel")}
+                        {_t("action|cancel")}
                     </AccessibleButton>
                 </div>
             );
@@ -121,7 +121,7 @@ export class ExistingPhoneNumber extends React.Component<IExistingPhoneNumberPro
                     +{this.props.msisdn.address}
                 </span>
                 <AccessibleButton onClick={this.onRemove} kind="danger_sm" disabled={this.props.disabled}>
-                    {_t("Remove")}
+                    {_t("action|remove")}
                 </AccessibleButton>
             </div>
         );
@@ -271,7 +271,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
 
         let addVerifySection = (
             <AccessibleButton onClick={this.onAddClick} kind="primary" disabled={this.props.disabled}>
-                {_t("Add")}
+                {_t("action|add")}
             </AccessibleButton>
         );
         if (this.state.verifying) {
@@ -304,7 +304,7 @@ export default class PhoneNumbers extends React.Component<IProps, IState> {
                                 this.state.newPhoneNumberCode.length === 0
                             }
                         >
-                            {_t("Continue")}
+                            {_t("action|continue")}
                         </AccessibleButton>
                     </form>
                 </div>
