@@ -128,7 +128,6 @@
     "Confirm passphrase": "Şifrəni təsdiqləyin",
     "This email address is already in use": "Bu e-mail ünvanı istifadə olunur",
     "This phone number is already in use": "Bu telefon nömrəsi artıq istifadə olunur",
-    "Call Failed": "Uğursuz zəng",
     "Permission Required": "İzn tələb olunur",
     "You do not have permission to start a conference call in this room": "Bu otaqda konfrans başlamaq üçün icazə yoxdur",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server, istifadə edilə bilməz, yüklənmiş ola bilər və ya bir səhv vurursunuz.",
@@ -284,7 +283,8 @@
     "voip": {
         "hangup": "Bitirmək",
         "voice_call": "Səs çağırış",
-        "video_call": "Video çağırış"
+        "video_call": "Video çağırış",
+        "call_failed": "Uğursuz zəng"
     },
     "Messages": "Mesajlar",
     "devtools": {

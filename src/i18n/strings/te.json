@@ -93,7 +93,6 @@
     "This email address is already in use": "ఈ ఇమెయిల్ అడ్రస్ ఇప్పటికే వాడుకం లో ఉంది",
     "This phone number is already in use": "ఈ ఫోన్ నంబర్ ఇప్పటికే వాడుకం లో ఉంది",
     "Failed to verify email address: make sure you clicked the link in the email": "ఇమెయిల్ అడ్రస్ ని నిరూపించలేక పోయాము. ఈమెయిల్ లో వచ్చిన లింక్ ని నొక్కారా",
-    "Call Failed": "కాల్ విఫలమయింది",
     "Confirm adding email": "ఈమెయిల్ చేర్చుటకు ధ్రువీకరించు",
     "Single Sign On": "సింగిల్ సైన్ ఆన్",
     "common": {
@@ -149,5 +148,8 @@
         "category_admin": "అడ్మిన్",
         "category_advanced": "ఆధునిక"
     },
-    "Advanced": "ఆధునిక"
+    "Advanced": "ఆధునిక",
+    "voip": {
+        "call_failed": "కాల్ విఫలమయింది"
+    }
 }

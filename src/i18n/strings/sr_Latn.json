@@ -49,7 +49,6 @@
     "The call could not be established": "Poziv ne može biti uspostavljen",
     "The user you called is busy.": "Korisnik kojeg ste zvali je zauzet.",
     "User Busy": "Korisnik zauzet",
-    "Call Failed": "Poziv nije uspio",
     "Only continue if you trust the owner of the server.": "Produžite samo pod uslovom da vjerujete vlasniku servera.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ova akcija zahtijeva pristup zadanom serveru za provjeru identiteta <server /> radi provjere adrese e-pošte ili telefonskog broja, no server nema nikakve uslove za pružanje usluge.",
     "Identity server has no terms of service": "Server identiteta nema uslove pružanja usluge",
@@ -111,6 +110,7 @@
         "category_admin": "Administrator"
     },
     "voip": {
-        "disable_camera": "Zaustavi kameru"
+        "disable_camera": "Zaustavi kameru",
+        "call_failed": "Poziv nije uspio"
     }
 }

@@ -2,7 +2,6 @@
     "This email address is already in use": "Dat e-mailadresse hier es al in gebruuk",
     "This phone number is already in use": "Dezen telefongnumero es al in gebruuk",
     "Failed to verify email address: make sure you clicked the link in the email": "Kostege ’t e-mailadresse nie verifieern: zorgt dervoor da je de koppelienge in den e-mail èt angeklikt",
-    "Call Failed": "Iproep mislukt",
     "You cannot place a call with yourself.": "J’en ku jezelve nie belln.",
     "Permission Required": "Toestemmienge vereist",
     "You do not have permission to start a conference call in this room": "J’en èt geen toestemmienge voor in da groepsgesprek hier e vergoaderiengsgesprek te begunn",
@@ -283,22 +282,9 @@
     "Room Addresses": "Gespreksadressn",
     "Publish this room to the public in %(domain)s's room directory?": "Dit gesprek openboar moakn in de gesprekscataloog van %(domain)s?",
     "URL Previews": "URL-voorvertoniengn",
-    "Change room avatar": "Gespreksavatar wyzign",
-    "Change room name": "Gespreksnoame wyzign",
-    "Change main address for the room": "Hoofdadresse vo ’t gesprek wyzign",
-    "Change history visibility": "Zichtboarheid van de geschiedenisse wyzign",
-    "Change permissions": "Toestemmiengn wyzign",
-    "Change topic": "Ounderwerp wyzign",
-    "Modify widgets": "Widgets anpassn",
     "Failed to unban": "Ountbann mislukt",
     "Unban": "Ountbann",
     "Banned by %(displayName)s": "Verbann deur %(displayName)s",
-    "Default role": "Standoardrolle",
-    "Send messages": "Berichtn verstuurn",
-    "Invite users": "Gebruukers uutnodign",
-    "Change settings": "Instelliengn wyzign",
-    "Ban users": "Gebruukers verbann",
-    "Notify everyone": "Iedereen meldn",
     "No users have specific privileges in this room": "Geen gebruukers èn specifieke privileges in dit gesprek",
     "Privileged Users": "Bevoorrechte gebruukers",
     "Muted Users": "Gedempte gebruukers",
@@ -337,8 +323,6 @@
     "Invited": "Uutgenodigd",
     "Filter room members": "Gespreksleedn filtern",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (macht %(powerLevelNumber)s)",
-    "Send an encrypted reply…": "Verstuurt e versleuterd antwoord…",
-    "Send an encrypted message…": "Verstuurt e versleuterd bericht…",
     "The conversation continues here.": "’t Gesprek goat hier verder.",
     "This room has been replaced and is no longer active.": "Dit gesprek is vervangn gewist en is nie langer actief.",
     "You do not have permission to post to this room": "J’èt geen toestemmienge voor in dit gesprek te postn",
@@ -928,7 +912,9 @@
         "home": "Thuus"
     },
     "composer": {
-        "format_inline_code": "Code"
+        "format_inline_code": "Code",
+        "placeholder_reply_encrypted": "Verstuurt e versleuterd antwoord…",
+        "placeholder_encrypted": "Verstuurt e versleuterd bericht…"
     },
     "Code": "Code",
     "power_level": {
@@ -1074,9 +1060,27 @@
     "voip": {
         "hangup": "Iphangn",
         "voice_call": "Sproakiproep",
-        "video_call": "Video-iproep"
+        "video_call": "Video-iproep",
+        "call_failed": "Iproep mislukt"
     },
     "Messages": "Berichtn",
     "Other": "Overige",
-    "Advanced": "Geavanceerd"
+    "Advanced": "Geavanceerd",
+    "room_settings": {
+        "permissions": {
+            "m.room.avatar": "Gespreksavatar wyzign",
+            "m.room.name": "Gespreksnoame wyzign",
+            "m.room.canonical_alias": "Hoofdadresse vo ’t gesprek wyzign",
+            "m.room.history_visibility": "Zichtboarheid van de geschiedenisse wyzign",
+            "m.room.power_levels": "Toestemmiengn wyzign",
+            "m.room.topic": "Ounderwerp wyzign",
+            "m.widget": "Widgets anpassn",
+            "users_default": "Standoardrolle",
+            "events_default": "Berichtn verstuurn",
+            "invite": "Gebruukers uutnodign",
+            "state_default": "Instelliengn wyzign",
+            "ban": "Gebruukers verbann",
+            "notifications.room": "Iedereen meldn"
+        }
+    }
 }

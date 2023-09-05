@@ -14,7 +14,6 @@
     "This email address is already in use": "Aquesta adreça de correu electrònic ja està en ús",
     "This phone number is already in use": "Aquest número de telèfon ja està en ús",
     "Failed to verify email address: make sure you clicked the link in the email": "No s'ha pogut verificar l'adreça de correu electrònic: assegura't de fer clic a l'enllaç del correu electrònic",
-    "Call Failed": "No s'ha pogut realitzar la trucada",
     "You cannot place a call with yourself.": "No pots trucar-te a tu mateix.",
     "Warning!": "Avís!",
     "Upload Failed": "No s'ha pogut pujar",
@@ -110,8 +109,6 @@
     "Invited": "Convidat",
     "Filter room members": "Filtra els membres de la sala",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (autoritat %(powerLevelNumber)s)",
-    "Send an encrypted reply…": "Envia una resposta xifrada…",
-    "Send an encrypted message…": "Envia un missatge xifrat…",
     "You do not have permission to post to this room": "No tens permís per enviar res en aquesta sala",
     "Server error": "Error de servidor",
     "Mirror local video feed": "Remet el flux de vídeo local",
@@ -467,7 +464,6 @@
     "Change notification settings": "Canvia la configuració de notificacions",
     "⚠ These settings are meant for advanced users.": "⚠ Aquesta configuració està pensada per usuaris avançats.",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Per rebre invitacions directament a %(brand)s, enllaça aquest correu electrònic amb el teu compte a Configuració.",
-    "Change settings": "Canvia la configuració",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Per rebre invitacions directament a %(brand)s, utilitza un servidor d'identitat a Configuració.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Per rebre invitacions directament a %(brand)s, comparteix aquest correu electrònic a Configuració.",
     "Go to Settings": "Ves a Configuració",
@@ -489,8 +485,6 @@
     "Confirm adding phone number": "Confirma l'addició del número de telèfon",
     "Add Email Address": "Afegeix una adreça de correu electrònic",
     "Click the button below to confirm adding this email address.": "Fes clic al botó de sota per confirmar l'addició d'aquesta adreça de correu electrònic.",
-    "Unable to access webcam / microphone": "No s'ha pogut accedir a la càmera web / micròfon",
-    "Unable to access microphone": "No s'ha pogut accedir al micròfon",
     "Explore rooms": "Explora sales",
     "%(oneUser)smade no changes %(count)s times": {
         "one": "%(oneUser)sno ha fet canvis",
@@ -705,9 +699,21 @@
     "voip": {
         "hangup": "Penja",
         "voice_call": "Trucada de veu",
-        "video_call": "Trucada de vídeo"
+        "video_call": "Trucada de vídeo",
+        "call_failed": "No s'ha pogut realitzar la trucada",
+        "unable_to_access_microphone": "No s'ha pogut accedir al micròfon",
+        "unable_to_access_media": "No s'ha pogut accedir a la càmera web / micròfon"
     },
     "Messages": "Missatges",
     "Other": "Altres",
-    "Advanced": "Avançat"
+    "Advanced": "Avançat",
+    "composer": {
+        "placeholder_reply_encrypted": "Envia una resposta xifrada…",
+        "placeholder_encrypted": "Envia un missatge xifrat…"
+    },
+    "room_settings": {
+        "permissions": {
+            "state_default": "Canvia la configuració"
+        }
+    }
 }

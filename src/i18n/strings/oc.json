@@ -4,10 +4,6 @@
     "Admin Tools": "Aisinas d’administrator",
     "Invite to this room": "Convidar a aquesta sala",
     "Invited": "Convidat",
-    "Send an encrypted reply…": "Enviar una responsa chifrada …",
-    "Send a reply…": "Enviar una responsa…",
-    "Send an encrypted message…": "Enviar un messatge chifrat…",
-    "Send a message…": "Enviar un messatge…",
     "Unnamed room": "Sala sens nom",
     "Share room": "Partejar la sala",
     "Rooms": "Salas",
@@ -289,7 +285,11 @@
     },
     "composer": {
         "format_bold": "Gras",
-        "format_strikethrough": "Raiat"
+        "format_strikethrough": "Raiat",
+        "placeholder_reply_encrypted": "Enviar una responsa chifrada …",
+        "placeholder_reply": "Enviar una responsa…",
+        "placeholder_encrypted": "Enviar un messatge chifrat…",
+        "placeholder": "Enviar un messatge…"
     },
     "Bold": "Gras",
     "power_level": {

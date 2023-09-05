@@ -2,7 +2,6 @@
     "This email address is already in use": ".i xa'o pilno fa da le samymri judri",
     "This phone number is already in use": ".i xa'o pilno fa da le fonxa judri",
     "Failed to verify email address: make sure you clicked the link in the email": ".i da nabmi fi lo nu facki le du'u do ponse le te samymri .i ko birti le du'u do samcu'a le judrysni pe le se samymri",
-    "Call Failed": ".i da nabmi fi lo nu co'a fonjo'e",
     "You cannot place a call with yourself.": ".i do na ka'e fonjo'e do",
     "Permission Required": ".i lo nu curmi cu sarcu",
     "You do not have permission to start a conference call in this room": ".i na curmi lo nu le du'u co'a girzu fonjo'e cu zilbe'i do fo le ca se cuxna",
@@ -163,10 +162,6 @@
     "Trumpet": "tabra",
     "Bell": "janbe",
     "Headphones": "selsnapra",
-    "Send an encrypted reply…": "nu pa mifra be pa jai te spuda cu zilbe'i",
-    "Send a reply…": "nu pa jai te spuda cu zilbe'i",
-    "Send an encrypted message…": "nu pa mifra be pa notci cu zilbe'i",
-    "Send a message…": "nu pa notci cu zilbe'i",
     "Rooms": "ve zilbe'i",
     "Show %(count)s more": {
         "other": "nu viska %(count)s na du",
@@ -215,10 +210,6 @@
     "Never send encrypted messages to unverified sessions from this session": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u",
     "Later": "nu ca na co'e",
     "Other users may not trust it": ".i la'a na pa na du be do cu lacri",
-    "Change room avatar": "nu basti fi le ka pixra sinxa le ve zilbe'i",
-    "Change room name": "nu basti fi le ka cmene le ve zilbe'i",
-    "Change main address for the room": "nu basti fi le ka ralju lu'i ro judri be le ve zilbe'i",
-    "Change topic": "nu basti fi le ka skicu lerpoi",
     "Sign Up": "nu co'a na'o jaspu",
     "<userName/> wants to chat": ".i la'o zoi. <userName/> .zoi kaidji le ka tavla do",
     "<userName/> invited you": ".i la'o zoi. <userName/> .zoi friti le ka ziljmina kei do",
@@ -239,7 +230,6 @@
     "This room is end-to-end encrypted": ".i ro zilbe'i be fo le cei'i cu mifra",
     "Everyone in this room is verified": ".i do lacri ro pagbu be le se zilbe'i",
     "The file '%(fileName)s' failed to upload.": ".i da nabmi fi lo nu kibdu'a la'o zoi. %(fileName)s .zoi",
-    "Invite users": "nu friti le ka ziljmina kei pa pilno",
     "Invite to this room": "nu friti le ka ziljmina le se zilbe'i",
     "Revoke invite": "nu zukte le ka na ckaji le se friti",
     "collapse": "nu tcila be na ku viska",
@@ -448,12 +438,28 @@
     },
     "voip": {
         "voice_call": "nu snavi fonjo'e",
-        "video_call": "nu vidvi fonjo'e"
+        "video_call": "nu vidvi fonjo'e",
+        "call_failed": ".i da nabmi fi lo nu co'a fonjo'e"
     },
     "Messages": "notci",
     "devtools": {
         "category_other": "drata"
     },
     "Other": "drata",
-    "Advanced": "macnu"
+    "Advanced": "macnu",
+    "composer": {
+        "placeholder_reply_encrypted": "nu pa mifra be pa jai te spuda cu zilbe'i",
+        "placeholder_reply": "nu pa jai te spuda cu zilbe'i",
+        "placeholder_encrypted": "nu pa mifra be pa notci cu zilbe'i",
+        "placeholder": "nu pa notci cu zilbe'i"
+    },
+    "room_settings": {
+        "permissions": {
+            "m.room.avatar": "nu basti fi le ka pixra sinxa le ve zilbe'i",
+            "m.room.name": "nu basti fi le ka cmene le ve zilbe'i",
+            "m.room.canonical_alias": "nu basti fi le ka ralju lu'i ro judri be le ve zilbe'i",
+            "m.room.topic": "nu basti fi le ka skicu lerpoi",
+            "invite": "nu friti le ka ziljmina kei pa pilno"
+        }
+    }
 }
