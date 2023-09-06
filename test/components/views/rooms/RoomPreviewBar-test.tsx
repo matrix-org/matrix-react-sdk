@@ -52,19 +52,20 @@ const makeMockRoomMember = ({
     membership?: "invite" | "ban" | "leave";
     content?: Partial<IContent>;
     memberContent?: Partial<IContent>;
-    oldMembership?: "Join" | "knock";
+    oldMembership?: "join" | "knock";
 }) =>
     ({
         userId,
         rawDisplayName: `${userId} name`,
         isKicked: jest.fn().mockReturnValue(!!isKicked),
         getContent: jest.fn().mockReturnValue(content || {}),
+        getPrevContent: jest.fn().mockReturnValue(content || {}),
         membership,
         events: {
             member: {
                 getSender: jest.fn().mockReturnValue("@kicker:test.com"),
                 getContent: jest.fn().mockReturnValue({ reason: "test reason", ...memberContent }),
-                event: { unsigned: { prev_content: { membership: oldMembership } } },
+                getPrevContent: jest.fn().mockReturnValue({ membership: oldMembership, ...memberContent }),
             },
         },
     } as unknown as RoomMember);

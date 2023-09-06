@@ -189,7 +189,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         const myMember = this.getMyMember();
 
         if (myMember) {
-            const previousMembership = myMember.events.member?.event?.unsigned?.prev_content?.membership;
+            const previousMembership = myMember.events.member?.getPrevContent().membership;
             if (myMember.isKicked()) {
                 if (previousMembership === "knock") {
                     return MessageCase.RequestDenied;
@@ -406,7 +406,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 title = _t("You have been denied access");
 
                 subTitle = _t(
-                    "As you have been denied access, please wait for an invitation from a room admin or moderator.",
+                    "As you have been denied access, you cannot rejoin unless you are invited by the admin or moderator of the group.",
                 );
 
                 if (isSpace) {
