@@ -79,7 +79,7 @@ describe("Login", () => {
 
             cy.findByRole("textbox", { name: "Username" }).type(username);
             cy.findByPlaceholderText("Password").type(password);
-            cy.findByRole("button", { name: "Sign in" }).click();
+            cy.findByRole("button", { name: "Sign In" }).click();
 
             cy.url().should("contain", "/#/home", { timeout: 30000 });
         });

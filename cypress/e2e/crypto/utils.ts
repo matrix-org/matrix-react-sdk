@@ -115,7 +115,7 @@ export function logIntoElement(homeserverUrl: string, username: string, password
 
     cy.findByRole("textbox", { name: "Username" }).type(username);
     cy.findByPlaceholderText("Password").type(password);
-    cy.findByRole("button", { name: "Sign in" }).click();
+    cy.findByRole("button", { name: "Sign In" }).click();
 
     // if a securityKey was given, verify the new device
     if (securityKey !== undefined) {
