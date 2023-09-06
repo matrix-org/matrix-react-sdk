@@ -270,50 +270,6 @@
     "expand": "genişlet",
     "Rotate Left": "Sola Döndür",
     "Rotate Right": "Sağa Döndür",
-    "%(nameList)s %(transitionList)s": "%(nameList)s%(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)s %(count)s kez katıldı",
-        "one": "%(severalUsers)s katıldı"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)s %(count)s kez katıldı",
-        "one": "%(oneUser)s katıldı"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "one": "%(severalUsers)s kullanıcı ayrıldı",
-        "other": "%(severalUsers)s, %(count)s kez ayrıldı"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "one": "%(oneUser)s ayrıldı",
-        "other": "%(oneUser)s %(count)s kez ayrıldı"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "one": "%(severalUsers)s katıldı ve ayrıldı",
-        "other": "%(severalUsers)s %(count)s kez katılıp ve ayrıldı"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "one": "%(oneUser)s katıldı ve ayrıldı",
-        "other": "%(oneUser)s %(count)s kez katıldı ve ayrıldı"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "one": "%(oneUser)s ayrıldı ve yeniden katıldı"
-    },
-    "were invited %(count)s times": {
-        "other": "%(count)s kez davet edildi",
-        "one": "davet edildi"
-    },
-    "was invited %(count)s times": {
-        "other": "%(count)s kez davet edildi",
-        "one": "davet edildi"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "one": "%(severalUsers)s isimlerini değiştrtiler",
-        "other": "%(severalUsers)s kullanıcıları isimlerini %(count)s kez değiştirdiler"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "one": "%(oneUser)s ismini değiştirdi",
-        "other": "%(oneUser)s ismini %(count)s kez değiştirdi"
-    },
     "Power level": "Güç düzeyi",
     "e.g. my-room": "örn. odam",
     "Some characters not allowed": "Bazı karakterlere izin verilmiyor",
@@ -720,53 +676,11 @@
     "Unable to revoke sharing for email address": "E-posta adresi paylaşımı kaldırılamadı",
     "Unable to revoke sharing for phone number": "Telefon numarası paylaşımı kaldırılamıyor",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Çağrıların sağlıklı bir şekide yapılabilmesi için lütfen anasunucunuzun (<code>%(homeserverDomain)s</code>) yöneticisinden bir TURN sunucusu yapılandırmasını isteyin.",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "one": "%(severalUsers)s değişiklik yapmadı",
-        "other": "%(severalUsers)s %(count)s kez hiç bir değişiklik yapmadı"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)s %(count)s kez değişiklik yapmadı",
-        "one": "%(oneUser)s değişiklik yapmadı"
-    },
     "And %(count)s more...": {
         "other": "ve %(count)s kez daha..."
     },
     "Popout widget": "Görsel bileşeni göster",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Lütfen GitHub’da <newIssueLink>Yeni bir talep</newIssueLink> oluşturun ki bu hatayı inceleyebilelim.",
     "Language Dropdown": "Dil Listesi",
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "one": "%(severalUsers)s ayrıldı ve yeniden katıldı"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "other": "%(severalUsers)s %(count)s kez davetlerini reddetti",
-        "one": "%(severalUsers)s davetlerini reddetti"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "one": "%(oneUser)s davetlerini reddetti"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "one": "%(severalUsers)s davetlerini geri çekti"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "%(oneUser)s davetini %(count)s kez geri çekti",
-        "one": "%(oneUser)s davetini geri çekti"
-    },
-    "were banned %(count)s times": {
-        "other": "%(count)s kez yasaklandı",
-        "one": "yasaklandı"
-    },
-    "was banned %(count)s times": {
-        "other": "%(count)s kez yasaklandı",
-        "one": "yasaklandı"
-    },
-    "were unbanned %(count)s times": {
-        "other": "%(count)s kez yasak kaldırıldı",
-        "one": "yasak kaldırıldı"
-    },
-    "was unbanned %(count)s times": {
-        "other": "%(count)s kez yasak kaldırıldı",
-        "one": "yasak kaldırıldı"
-    },
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posta ile davet etmek için bir kimlik sunucusu kullan. <default> Varsayılanı kullan (%(defaultIdentityServerName)s</default> ya da <settings>Ayarlar</settings> kullanarak yönetin.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "E-posta ile davet için bir kimlik sunucu kullan. <settings>Ayarlar</settings> dan yönet.",
     "The following users may not exist": "Belirtilen kullanıcılar mevcut olmayabilir",
@@ -1584,9 +1498,7 @@
     "Click to copy": "Kopyalamak için tıklayın",
     "You can change these anytime.": "Bunları istediğiniz zaman değiştirebilirsiniz.",
     "Change which room, message, or user you're viewing": "Görüntülediğiniz odayı, mesajı veya kullanıcıyı değiştirin",
-    "Integration manager": "Bütünleştirme Yöneticisi",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Botları, görsel bileşenleri ve çıkartma paketlerini yönetmek için bir entegrasyon yöneticisi kullanın.",
-    "Identity server": "Kimlik sunucusu",
     "Identity server (%(server)s)": "(%(server)s) Kimlik Sunucusu",
     "Could not connect to identity server": "Kimlik Sunucusuna bağlanılamadı",
     "Not a valid identity server (status code %(code)s)": "Geçerli bir Kimlik Sunucu değil ( durum kodu %(code)s )",
@@ -1683,7 +1595,9 @@
         "stickerpack": "Çıkartma paketi",
         "system_alerts": "Sistem Uyarıları",
         "secure_backup": "Güvenli yedekleme",
-        "cross_signing": "Çapraz-imzalama"
+        "cross_signing": "Çapraz-imzalama",
+        "identity_server": "Kimlik sunucusu",
+        "integration_manager": "Bütünleştirme Yöneticisi"
     },
     "action": {
         "continue": "Devam Et",
@@ -1818,7 +1732,8 @@
         "collecting_information": "Uygulama sürümü bilgileri toplanıyor",
         "collecting_logs": "Kayıtlar toplanıyor",
         "uploading_logs": "Günlükler yükleniyor",
-        "downloading_logs": "Günlükler indiriliyor"
+        "downloading_logs": "Günlükler indiriliyor",
+        "create_new_issue": "Lütfen GitHub’da <newIssueLink>Yeni bir talep</newIssueLink> oluşturun ki bu hatayı inceleyebilelim."
     },
     "time": {
         "seconds_left": "%(seconds)s saniye kaldı",
@@ -1982,6 +1897,93 @@
         },
         "m.call.hangup": {
             "dm": "Çağrı sonlandı"
+        },
+        "summary": {
+            "format": "%(nameList)s%(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)s %(count)s kez katıldı",
+                "one": "%(severalUsers)s katıldı"
+            },
+            "joined": {
+                "other": "%(oneUser)s %(count)s kez katıldı",
+                "one": "%(oneUser)s katıldı"
+            },
+            "left_multiple": {
+                "one": "%(severalUsers)s kullanıcı ayrıldı",
+                "other": "%(severalUsers)s, %(count)s kez ayrıldı"
+            },
+            "left": {
+                "one": "%(oneUser)s ayrıldı",
+                "other": "%(oneUser)s %(count)s kez ayrıldı"
+            },
+            "joined_and_left_multiple": {
+                "one": "%(severalUsers)s katıldı ve ayrıldı",
+                "other": "%(severalUsers)s %(count)s kez katılıp ve ayrıldı"
+            },
+            "joined_and_left": {
+                "one": "%(oneUser)s katıldı ve ayrıldı",
+                "other": "%(oneUser)s %(count)s kez katıldı ve ayrıldı"
+            },
+            "rejoined_multiple": {
+                "one": "%(severalUsers)s ayrıldı ve yeniden katıldı"
+            },
+            "rejoined": {
+                "one": "%(oneUser)s ayrıldı ve yeniden katıldı"
+            },
+            "rejected_invite_multiple": {
+                "other": "%(severalUsers)s %(count)s kez davetlerini reddetti",
+                "one": "%(severalUsers)s davetlerini reddetti"
+            },
+            "rejected_invite": {
+                "one": "%(oneUser)s davetlerini reddetti"
+            },
+            "invite_withdrawn_multiple": {
+                "one": "%(severalUsers)s davetlerini geri çekti"
+            },
+            "invite_withdrawn": {
+                "other": "%(oneUser)s davetini %(count)s kez geri çekti",
+                "one": "%(oneUser)s davetini geri çekti"
+            },
+            "invited_multiple": {
+                "other": "%(count)s kez davet edildi",
+                "one": "davet edildi"
+            },
+            "invited": {
+                "other": "%(count)s kez davet edildi",
+                "one": "davet edildi"
+            },
+            "banned_multiple": {
+                "other": "%(count)s kez yasaklandı",
+                "one": "yasaklandı"
+            },
+            "banned": {
+                "other": "%(count)s kez yasaklandı",
+                "one": "yasaklandı"
+            },
+            "unbanned_multiple": {
+                "other": "%(count)s kez yasak kaldırıldı",
+                "one": "yasak kaldırıldı"
+            },
+            "unbanned": {
+                "other": "%(count)s kez yasak kaldırıldı",
+                "one": "yasak kaldırıldı"
+            },
+            "changed_name_multiple": {
+                "one": "%(severalUsers)s isimlerini değiştrtiler",
+                "other": "%(severalUsers)s kullanıcıları isimlerini %(count)s kez değiştirdiler"
+            },
+            "changed_name": {
+                "one": "%(oneUser)s ismini değiştirdi",
+                "other": "%(oneUser)s ismini %(count)s kez değiştirdi"
+            },
+            "no_change_multiple": {
+                "one": "%(severalUsers)s değişiklik yapmadı",
+                "other": "%(severalUsers)s %(count)s kez hiç bir değişiklik yapmadı"
+            },
+            "no_change": {
+                "other": "%(oneUser)s %(count)s kez değişiklik yapmadı",
+                "one": "%(oneUser)s değişiklik yapmadı"
+            }
         }
     },
     "slash_command": {

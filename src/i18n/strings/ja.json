@@ -236,87 +236,6 @@
     "Delete widget": "ウィジェットを削除",
     "Popout widget": "ウィジェットをポップアウト",
     "Home": "ホーム",
-    "%(nameList)s %(transitionList)s": "%(nameList)s%(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)sが%(count)s回参加しました",
-        "one": "%(severalUsers)sが参加しました"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)sが%(count)s回参加しました",
-        "one": "%(oneUser)sが参加しました"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)sが%(count)s回退出しました",
-        "one": "%(severalUsers)sが退出しました"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)sが%(count)s回退出しました",
-        "one": "%(oneUser)sが退出しました"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "other": "%(severalUsers)sが%(count)s回参加し、退出しました",
-        "one": "%(severalUsers)sが参加して退出しました"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "other": "%(oneUser)sが%(count)s回参加し退出しました",
-        "one": "%(oneUser)sが参加し退出しました"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "other": "%(severalUsers)sが%(count)s回退出し再参加しました",
-        "one": "%(severalUsers)sが退出し再参加しました"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "other": "%(oneUser)sが%(count)s回退出し再参加しました",
-        "one": "%(oneUser)sが退出し再参加しました"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "other": "%(severalUsers)sが%(count)s回招待を拒否しました",
-        "one": "%(severalUsers)sが招待を拒否しました"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "other": "%(oneUser)sが%(count)s回招待を拒否しました",
-        "one": "%(oneUser)sが招待を拒否しました"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "one": "%(severalUsers)sが招待を取り消しました",
-        "other": "%(severalUsers)sが%(count)s回招待を取り消しました"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "%(oneUser)sが%(count)s回招待を取り消しました",
-        "one": "%(oneUser)sが招待を取り消しました"
-    },
-    "were invited %(count)s times": {
-        "other": "が%(count)s回招待されました",
-        "one": "が招待されました"
-    },
-    "was invited %(count)s times": {
-        "other": "が%(count)s回招待されました",
-        "one": "が招待されました"
-    },
-    "were banned %(count)s times": {
-        "other": "が%(count)s回ブロックされました",
-        "one": "がブロックされました"
-    },
-    "was banned %(count)s times": {
-        "other": "が%(count)s回ブロックされました",
-        "one": "がブロックされました"
-    },
-    "were unbanned %(count)s times": {
-        "other": "が%(count)s回ブロック解除されました",
-        "one": "がブロック解除されました"
-    },
-    "was unbanned %(count)s times": {
-        "other": "が%(count)s回ブロック解除されました",
-        "one": "がブロック解除されました"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "other": "%(severalUsers)sが%(count)s回名前を変更しました",
-        "one": "%(severalUsers)sが名前を変更しました"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "other": "%(oneUser)sが%(count)s回名前を変更しました",
-        "one": "%(oneUser)sが名前を変更しました"
-    },
     "%(items)s and %(count)s others": {
         "other": "%(items)sと他%(count)s人",
         "one": "%(items)sともう1人"
@@ -1543,11 +1462,9 @@
     "Pick rooms or conversations to add. This is just a space for you, no one will be informed. You can add more later.": "ルームや会話を追加できます。これはあなた専用のスペースで、他の人からは見えません。後から追加することもできます。",
     "You can change these anytime.": "ここで入力した情報はいつでも編集できます。",
     "Add some details to help people recognise it.": "説明を入力してください。",
-    "Integration manager": "インテグレーションマネージャー",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "インテグレーションマネージャーは設定データを受け取り、ユーザーの代わりにウィジェットの変更や、ルームへの招待の送信、権限レベルの設定を行うことができます。",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "インテグレーションマネージャーを使用すると、ボット、ウィジェット、ステッカーパックを管理できます。",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "インテグレーションマネージャー<b>（%(serverName)s）</b> を使用すると、ボット、ウィジェット、ステッカーパックを管理できます。",
-    "Identity server": "IDサーバー",
     "Identity server (%(server)s)": "IDサーバー（%(server)s）",
     "Could not connect to identity server": "IDサーバーに接続できませんでした",
     "Not a valid identity server (status code %(code)s)": "有効なIDサーバーではありません（ステータスコード %(code)s）",
@@ -1734,7 +1651,6 @@
     "Large": "大",
     "Image size in the timeline": "タイムライン上での画像のサイズ",
     "Enable email notifications for %(email)s": "%(email)sへの電子メール通知を有効にする",
-    "Message bubbles": "吹き出し",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "スペースを更新しています…",
         "other": "スペースを更新しています…（計%(count)s個のうち%(progress)s個）"
@@ -1745,7 +1661,6 @@
     },
     "Loading new room": "新しいルームを読み込んでいます",
     "Upgrading room": "ルームをアップグレードしています",
-    "IRC (Experimental)": "IRC（実験的）",
     "Use high contrast": "高コントラストを使用",
     "Developer mode": "開発者モード",
     "Address": "アドレス",
@@ -1872,14 +1787,6 @@
     "Be found by phone or email": "自分を電話番号か電子メールで見つけられるようにする",
     "Find others by phone or email": "知人を電話番号か電子メールで探す",
     "You were removed from %(roomName)s by %(memberName)s": "%(memberName)sにより%(roomName)sから追放されました",
-    "was removed %(count)s times": {
-        "one": "が追放されました",
-        "other": "が%(count)s回追放されました"
-    },
-    "were removed %(count)s times": {
-        "one": "が追放されました",
-        "other": "が%(count)s回追放されました"
-    },
     "Original event source": "元のイベントのソースコード",
     "Invite by email": "電子メールで招待",
     "Start a conversation with someone using their name or username (like <userId/>).": "名前かユーザー名（<userId/>の形式）で検索して、チャットを開始しましょう。",
@@ -1900,14 +1807,6 @@
     "Invite anyway and never warn me again": "招待し、再び警告しない",
     "Recovery Method Removed": "復元方法を削除しました",
     "Failed to remove some rooms. Try again later": "いくつかのルームの削除に失敗しました。後でもう一度やり直してください",
-    "%(oneUser)sremoved a message %(count)s times": {
-        "one": "%(oneUser)sがメッセージを削除しました",
-        "other": "%(oneUser)sが%(count)s件のメッセージを削除しました"
-    },
-    "%(severalUsers)sremoved a message %(count)s times": {
-        "one": "%(severalUsers)sがメッセージを削除しました",
-        "other": "%(severalUsers)sが%(count)s件のメッセージを削除しました"
-    },
     "Remove from room": "ルームから追放",
     "Failed to remove user": "ユーザーの追放に失敗しました",
     "Success!": "成功しました！",
@@ -1915,10 +1814,6 @@
     "Information": "情報",
     "Search for spaces": "スペースを検索",
     "Share location": "位置情報を共有",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)sが%(count)s回変更を加えませんでした",
-        "one": "%(severalUsers)sは変更を加えませんでした"
-    },
     "Feedback sent! Thanks, we appreciate it!": "フィードバックを送信しました！ありがとうございました！",
     "This is a beta feature": "この機能はベータ版です",
     "Can't edit poll": "アンケートは編集できません",
@@ -1949,18 +1844,6 @@
     "View all %(count)s members": {
         "one": "1人のメンバーを表示",
         "other": "全%(count)s人のメンバーを表示"
-    },
-    "%(oneUser)schanged the server ACLs %(count)s times": {
-        "one": "%(oneUser)sがサーバーのアクセス制御リストを変更しました",
-        "other": "%(oneUser)sがサーバーのアクセス制御リストを%(count)s回変更しました"
-    },
-    "%(severalUsers)schanged the server ACLs %(count)s times": {
-        "one": "%(severalUsers)sがサーバーのアクセス制御リストを変更しました",
-        "other": "%(severalUsers)sがサーバーのアクセス制御リストを%(count)s回変更しました"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "one": "%(oneUser)sは変更を加えませんでした",
-        "other": "%(oneUser)sが%(count)s回変更を加えませんでした"
     },
     "Results will be visible when the poll is ended": "アンケートが終了するまで結果は表示できません",
     "Open thread": "スレッドを開く",
@@ -2213,14 +2096,6 @@
         "other": "合計%(count)s票に基づく最終結果"
     },
     "Sorry, you can't edit a poll after votes have been cast.": "投票があったアンケートは編集できません。",
-    "%(oneUser)ssent %(count)s hidden messages": {
-        "one": "%(oneUser)sが1件の非表示のメッセージを送信しました",
-        "other": "%(oneUser)sが%(count)s件の非表示のメッセージを送信しました"
-    },
-    "%(severalUsers)ssent %(count)s hidden messages": {
-        "one": "%(severalUsers)sが1件の非表示のメッセージを送信しました",
-        "other": "%(severalUsers)sが%(count)s件の非表示のメッセージを送信しました"
-    },
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "アンケートを終了してよろしいですか？投票を締め切り、最終結果を表示します。",
     "Sends the given message with a space themed effect": "メッセージを宇宙のテーマのエフェクトと共に送信",
     "sends rainfall": "雨を送信",
@@ -2331,7 +2206,6 @@
     "Move left": "左に移動",
     "Rotate Right": "右に回転",
     "Rotate Left": "左に回転",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "不具合を調査できるように、GitHubで<newIssueLink>新しいIssueを作成</newIssueLink>してください。",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "既存のスレッドに返信するか、メッセージの「%(replyInThread)s」機能を使用すると新しいスレッドを開始できます。",
     "Other searches": "その他の検索",
     "To search messages, look for this icon at the top of a room <icon/>": "メッセージを検索する場合は、ルームの上に表示されるアイコン<icon/>をクリックしてください。",
@@ -2400,14 +2274,6 @@
     "They won't be able to access whatever you're not an admin of.": "あなたが管理者でない場所にアクセスすることができなくなります。",
     "Failed to update the join rules": "参加のルールの更新に失敗しました",
     "Surround selected text when typing special characters": "特殊な文字の入力中に、選択した文章を囲む",
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "other": "%(severalUsers)sがこのルームの<a>固定メッセージ</a>を%(count)s回変更しました",
-        "one": "%(severalUsers)sがこのルームの<a>固定メッセージ</a>を変更しました"
-    },
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "other": "%(oneUser)sがこのルームの<a>固定メッセージ</a>を%(count)s回変更しました",
-        "one": "%(oneUser)sがこのルームの<a>固定メッセージ</a>を変更しました"
-    },
     "They'll still be able to access whatever you're not an admin of.": "あなたが管理者ではないスペースやルームには、引き続きアクセスできます。",
     "Restore your key backup to upgrade your encryption": "鍵のバックアップを復元し、暗号化をアップグレードしてください",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "セキュリティーフレーズと、セキュアメッセージの鍵が削除されました。",
@@ -3131,7 +2997,9 @@
         "stickerpack": "ステッカーパック",
         "system_alerts": "システムアラート",
         "secure_backup": "セキュアバックアップ",
-        "cross_signing": "クロス署名"
+        "cross_signing": "クロス署名",
+        "identity_server": "IDサーバー",
+        "integration_manager": "インテグレーションマネージャー"
     },
     "action": {
         "continue": "続行",
@@ -3329,7 +3197,8 @@
         "collecting_information": "アプリのバージョン情報を収集",
         "collecting_logs": "ログを収集しています",
         "uploading_logs": "ログをアップロードしています",
-        "downloading_logs": "ログをダウンロードしています"
+        "downloading_logs": "ログをダウンロードしています",
+        "create_new_issue": "不具合を調査できるように、GitHubで<newIssueLink>新しいIssueを作成</newIssueLink>してください。"
     },
     "time": {
         "hours_minutes_seconds_left": "残り%(hours)s時間%(minutes)s分%(seconds)s秒",
@@ -3442,6 +3311,10 @@
             "rule_suppress_notices": "ボットによるメッセージ",
             "rule_tombstone": "ルームがアップグレードされたとき",
             "rule_encrypted_room_one_to_one": "1対1のチャットでの暗号化されたメッセージ"
+        },
+        "appearance": {
+            "layout_irc": "IRC（実験的）",
+            "layout_bubbles": "吹き出し"
         }
     },
     "devtools": {
@@ -3679,6 +3552,137 @@
         },
         "m.call.hangup": {
             "dm": "通話が終了しました"
+        },
+        "summary": {
+            "format": "%(nameList)s%(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)sが%(count)s回参加しました",
+                "one": "%(severalUsers)sが参加しました"
+            },
+            "joined": {
+                "other": "%(oneUser)sが%(count)s回参加しました",
+                "one": "%(oneUser)sが参加しました"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)sが%(count)s回退出しました",
+                "one": "%(severalUsers)sが退出しました"
+            },
+            "left": {
+                "other": "%(oneUser)sが%(count)s回退出しました",
+                "one": "%(oneUser)sが退出しました"
+            },
+            "joined_and_left_multiple": {
+                "other": "%(severalUsers)sが%(count)s回参加し、退出しました",
+                "one": "%(severalUsers)sが参加して退出しました"
+            },
+            "joined_and_left": {
+                "other": "%(oneUser)sが%(count)s回参加し退出しました",
+                "one": "%(oneUser)sが参加し退出しました"
+            },
+            "rejoined_multiple": {
+                "other": "%(severalUsers)sが%(count)s回退出し再参加しました",
+                "one": "%(severalUsers)sが退出し再参加しました"
+            },
+            "rejoined": {
+                "other": "%(oneUser)sが%(count)s回退出し再参加しました",
+                "one": "%(oneUser)sが退出し再参加しました"
+            },
+            "rejected_invite_multiple": {
+                "other": "%(severalUsers)sが%(count)s回招待を拒否しました",
+                "one": "%(severalUsers)sが招待を拒否しました"
+            },
+            "rejected_invite": {
+                "other": "%(oneUser)sが%(count)s回招待を拒否しました",
+                "one": "%(oneUser)sが招待を拒否しました"
+            },
+            "invite_withdrawn_multiple": {
+                "one": "%(severalUsers)sが招待を取り消しました",
+                "other": "%(severalUsers)sが%(count)s回招待を取り消しました"
+            },
+            "invite_withdrawn": {
+                "other": "%(oneUser)sが%(count)s回招待を取り消しました",
+                "one": "%(oneUser)sが招待を取り消しました"
+            },
+            "invited_multiple": {
+                "other": "が%(count)s回招待されました",
+                "one": "が招待されました"
+            },
+            "invited": {
+                "other": "が%(count)s回招待されました",
+                "one": "が招待されました"
+            },
+            "banned_multiple": {
+                "other": "が%(count)s回ブロックされました",
+                "one": "がブロックされました"
+            },
+            "banned": {
+                "other": "が%(count)s回ブロックされました",
+                "one": "がブロックされました"
+            },
+            "unbanned_multiple": {
+                "other": "が%(count)s回ブロック解除されました",
+                "one": "がブロック解除されました"
+            },
+            "unbanned": {
+                "other": "が%(count)s回ブロック解除されました",
+                "one": "がブロック解除されました"
+            },
+            "kicked_multiple": {
+                "one": "が追放されました",
+                "other": "が%(count)s回追放されました"
+            },
+            "kicked": {
+                "one": "が追放されました",
+                "other": "が%(count)s回追放されました"
+            },
+            "changed_name_multiple": {
+                "other": "%(severalUsers)sが%(count)s回名前を変更しました",
+                "one": "%(severalUsers)sが名前を変更しました"
+            },
+            "changed_name": {
+                "other": "%(oneUser)sが%(count)s回名前を変更しました",
+                "one": "%(oneUser)sが名前を変更しました"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)sが%(count)s回変更を加えませんでした",
+                "one": "%(severalUsers)sは変更を加えませんでした"
+            },
+            "no_change": {
+                "one": "%(oneUser)sは変更を加えませんでした",
+                "other": "%(oneUser)sが%(count)s回変更を加えませんでした"
+            },
+            "server_acls_multiple": {
+                "one": "%(severalUsers)sがサーバーのアクセス制御リストを変更しました",
+                "other": "%(severalUsers)sがサーバーのアクセス制御リストを%(count)s回変更しました"
+            },
+            "server_acls": {
+                "one": "%(oneUser)sがサーバーのアクセス制御リストを変更しました",
+                "other": "%(oneUser)sがサーバーのアクセス制御リストを%(count)s回変更しました"
+            },
+            "pinned_events_multiple": {
+                "other": "%(severalUsers)sがこのルームの<a>固定メッセージ</a>を%(count)s回変更しました",
+                "one": "%(severalUsers)sがこのルームの<a>固定メッセージ</a>を変更しました"
+            },
+            "pinned_events": {
+                "other": "%(oneUser)sがこのルームの<a>固定メッセージ</a>を%(count)s回変更しました",
+                "one": "%(oneUser)sがこのルームの<a>固定メッセージ</a>を変更しました"
+            },
+            "redacted_multiple": {
+                "one": "%(severalUsers)sがメッセージを削除しました",
+                "other": "%(severalUsers)sが%(count)s件のメッセージを削除しました"
+            },
+            "redacted": {
+                "one": "%(oneUser)sがメッセージを削除しました",
+                "other": "%(oneUser)sが%(count)s件のメッセージを削除しました"
+            },
+            "hidden_event_multiple": {
+                "one": "%(severalUsers)sが1件の非表示のメッセージを送信しました",
+                "other": "%(severalUsers)sが%(count)s件の非表示のメッセージを送信しました"
+            },
+            "hidden_event": {
+                "one": "%(oneUser)sが1件の非表示のメッセージを送信しました",
+                "other": "%(oneUser)sが%(count)s件の非表示のメッセージを送信しました"
+            }
         }
     },
     "slash_command": {

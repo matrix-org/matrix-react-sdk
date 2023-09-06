@@ -207,31 +207,6 @@
     },
     "Upload avatar": "Ladda upp avatar",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (behörighet %(powerLevelNumber)s)",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)sgick med %(count)s gånger",
-        "one": "%(severalUsers)sgick med"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)sgick med %(count)s gånger",
-        "one": "%(oneUser)sgick med"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)slämnade %(count)s gånger",
-        "one": "%(severalUsers)slämnade"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)slämnade %(count)s gånger",
-        "one": "%(oneUser)slämnade"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "other": "%(severalUsers)sgick med och lämnade %(count)s gånger",
-        "one": "%(severalUsers)sgick med och lämnade"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "other": "%(oneUser)sgick med och lämnade %(count)s gånger",
-        "one": "%(oneUser)sgick med och lämnade"
-    },
     "And %(count)s more...": {
         "other": "Och %(count)s till…"
     },
@@ -311,55 +286,7 @@
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Detta rum används för viktiga meddelanden från hemservern, så du kan inte lämna det.",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Data från en äldre version av %(brand)s has upptäckts. Detta ska ha orsakat att totalsträckskryptering inte fungerat i den äldre versionen. Krypterade meddelanden som nyligen har skickats medans den äldre versionen användes kanske inte kan avkrypteras i denna version. Detta kan även orsaka att meddelanden skickade med denna version inte fungerar. Om du upplever problem, logga ut och in igen. För att behålla meddelandehistoriken, exportera dina nycklar och importera dem igen.",
     "Confirm Removal": "Bekräfta borttagning",
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "other": "%(severalUsers)slämnade och gick med igen %(count)s gånger",
-        "one": "%(severalUsers)slämnade och gick med igen"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "other": "%(oneUser)slämnade och gick med igen %(count)s gånger",
-        "one": "%(oneUser)slämnade och gick med igen"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "other": "%(severalUsers)savböjde sina inbjudningar %(count)s gånger",
-        "one": "%(severalUsers)savböjde sina inbjudningar"
-    },
     "Reject all %(invitedRooms)s invites": "Avböj alla %(invitedRooms)s inbjudningar",
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "other": "%(oneUser)savböjde sin inbjudan %(count)s gånger",
-        "one": "%(oneUser)savböjde sin inbjudan"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "other": "%(severalUsers)sfick sina inbjudningar tillbakadragna %(count)s gånger",
-        "one": "%(severalUsers)sfick sina inbjudningar tillbakadragna"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "%(oneUser)sfick sin inbjudan tillbakadragen %(count)s gånger",
-        "one": "%(oneUser)sfick sin inbjudan tillbakadragen"
-    },
-    "were invited %(count)s times": {
-        "other": "blev inbjudna %(count)s gånger",
-        "one": "blev inbjudna"
-    },
-    "was invited %(count)s times": {
-        "other": "blev inbjuden %(count)s gånger",
-        "one": "blev inbjuden"
-    },
-    "were banned %(count)s times": {
-        "other": "blev bannade %(count)s gånger",
-        "one": "blev bannade"
-    },
-    "was banned %(count)s times": {
-        "other": "blev bannad %(count)s gånger",
-        "one": "blev bannad"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "other": "%(severalUsers)sbytte namn %(count)s gånger",
-        "one": "%(severalUsers)sbytte namn"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "other": "%(oneUser)sbytte namn %(count)s gånger",
-        "one": "%(oneUser)sbytte namn"
-    },
     "%(items)s and %(count)s others": {
         "other": "%(items)s och %(count)s till",
         "one": "%(items)s och en till"
@@ -386,14 +313,6 @@
     "Add an Integration": "Lägg till integration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Du kommer att skickas till en tredjepartswebbplats så att du kan autentisera ditt konto för användning med %(integrationsUrl)s. Vill du fortsätta?",
     "Popout widget": "Poppa ut widget",
-    "were unbanned %(count)s times": {
-        "other": "blev avbannade %(count)s gånger",
-        "one": "blev avbannade"
-    },
-    "was unbanned %(count)s times": {
-        "other": "blev avbannad %(count)s gånger",
-        "one": "blev avbannad"
-    },
     "Send analytics data": "Skicka statistik",
     "Passphrases must match": "Lösenfraser måste matcha",
     "Passphrase must not be empty": "Lösenfrasen får inte vara tom",
@@ -767,18 +686,9 @@
     "Widget added by": "Widget tillagd av",
     "This widget may use cookies.": "Denna widget kan använda kakor.",
     "More options": "Fler alternativ",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Vänligen <newIssueLink>skapa ett nytt ärende</newIssueLink> på GitHub så att vi kan undersöka denna bugg.",
     "Rotate Left": "Rotera vänster",
     "Rotate Right": "Rotera höger",
     "Language Dropdown": "Språkmeny",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)sgjorde inga ändringar %(count)s gånger",
-        "one": "%(severalUsers)sgjorde inga ändringar"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)sgjorde inga ändringar %(count)s gånger",
-        "one": "%(oneUser)sgjorde inga ändringar"
-    },
     "e.g. my-room": "t.ex. mitt-rum",
     "Some characters not allowed": "Vissa tecken är inte tillåtna",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Använd en identitetsserver för att bjuda in via e-post. <default>Använd förval (%(defaultIdentityServerName)s)</default> eller hantera i <settings>inställningarna</settings>.",
@@ -1986,13 +1896,11 @@
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Vi skickade de andra, men personerna nedan kunde inte bjudas in till <RoomName/>",
     "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Vad användaren skriver är fel.\nDetta kommer att anmälas till rumsmoderatorerna.",
     "Report": "Rapportera",
-    "Integration manager": "Integrationshanterare",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Att använda denna widget kan dela data <helpIcon /> med %(widgetDomain)s och din integrationshanterare.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integrationshanterare får konfigurationsdata och kan ändra widgetar, skicka rumsinbjudningar och ställa in behörighetsnivåer å dina vägnar.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Använd en integrationshanterare för att hantera bottar, widgets och dekalpaket.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Använd en integrationshanterare <b>(%(serverName)s)</b> för att hantera bottar, widgets och dekalpaket.",
-    "Identity server": "Identitetsserver",
     "Identity server (%(server)s)": "Identitetsserver (%(server)s)",
     "Could not connect to identity server": "Kunde inte ansluta till identitetsservern",
     "Not a valid identity server (status code %(code)s)": "Inte en giltig identitetsserver (statuskod %(code)s)",
@@ -2025,7 +1933,6 @@
     "An error occurred whilst saving your notification preferences.": "Ett fel inträffade när dina aviseringsinställningar sparades.",
     "Error saving notification preferences": "Fel vid sparning av aviseringsinställningar",
     "Messages containing keywords": "Meddelanden som innehåller nyckelord",
-    "Message bubbles": "Meddelandebubblor",
     "Recommended for public spaces.": "Rekommenderas för offentliga utrymmen.",
     "Allow people to preview your space before they join.": "Låt personer förhandsgranska ditt utrymme innan de går med.",
     "Preview Space": "Förhandsgranska utrymme",
@@ -2078,14 +1985,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Publicerade adresser kan användas av vem som helst på vilken server som helst för att gå med i ditt rum.",
     "Published addresses can be used by anyone on any server to join your space.": "Publicerade adresser kan användas av vem som helst på vilken server som helst för att gå med i ditt utrymme.",
     "Please provide an address": "Ange en adress, tack",
-    "%(oneUser)schanged the server ACLs %(count)s times": {
-        "one": "%(oneUser)sändrade server-ACL:erna",
-        "other": "%(oneUser)sändrade server-ACL:erna %(count)s gånger"
-    },
-    "%(severalUsers)schanged the server ACLs %(count)s times": {
-        "one": "%(severalUsers)sändrade server-ACL:erna",
-        "other": "%(severalUsers)sändrade server-ACL:erna %(count)s gånger"
-    },
     "Share content": "Dela innehåll",
     "Application window": "Programfönster",
     "Share entire screen": "Dela hela skärmen",
@@ -2316,7 +2215,6 @@
     "Command error: Unable to handle slash command.": "Kommandofel: Kunde inte hantera snedstreckskommando.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Utrymmen är sätt att gruppera rum och personer. Utöver utrymmena du är med i så kan du använda några färdiggjorda också.",
     "Keyboard": "Tangentbord",
-    "IRC (Experimental)": "IRC (Experimentellt)",
     "Waiting for you to verify on your other device…": "Väntar på att du ska verifiera på din andra enhet…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Väntar på att du ska verifiera på din andra enhet, %(deviceName)s (%(deviceId)s)…",
     "Verify this device by confirming the following number appears on its screen.": "Verifiera den här enheten genom att bekräfta att det följande numret visas på dess skärm.",
@@ -2379,14 +2277,6 @@
     "You don't have permission to view messages from before you were invited.": "Du är inte behörig att se meddelanden från innan du bjöds in.",
     "Sorry, the poll you tried to create was not posted.": "Tyvärr så lades omröstningen du försökte skapa inte upp.",
     "Failed to post poll": "Misslyckades att lägga upp omröstning",
-    "was removed %(count)s times": {
-        "one": "togs bort",
-        "other": "togs bort %(count)s gånger"
-    },
-    "were removed %(count)s times": {
-        "one": "togs bort",
-        "other": "togs bort %(count)s gånger"
-    },
     "Including you, %(commaSeparatedMembers)s": "Inklusive dig, %(commaSeparatedMembers)s",
     "Unknown error fetching location. Please try again later.": "Ökänt fel när plats hämtades. Pröva igen senare.",
     "Timed out trying to fetch your location. Please try again later.": "Tidsgränsen överskreds vid försök att hämta din plats. Pröva igen senare.",
@@ -2484,22 +2374,6 @@
     "Spaces you're in": "Utrymmen du är med i",
     "Feedback sent! Thanks, we appreciate it!": "Återkoppling skickad! Tack, vi uppskattar det!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s och %(space2Name)s",
-    "%(oneUser)ssent %(count)s hidden messages": {
-        "one": "%(oneUser)sskickade ett dolt meddelande",
-        "other": "%(oneUser)sskickade %(count)s dolda meddelanden"
-    },
-    "%(severalUsers)ssent %(count)s hidden messages": {
-        "one": "%(severalUsers)sskickade ett dolt meddelande",
-        "other": "%(severalUsers)sskickade %(count)s dolda meddelanden"
-    },
-    "%(oneUser)sremoved a message %(count)s times": {
-        "one": "%(oneUser)stog bort ett meddelande",
-        "other": "%(oneUser)stog bort %(count)s meddelanden"
-    },
-    "%(severalUsers)sremoved a message %(count)s times": {
-        "one": "%(severalUsers)stog bort ett meddelande",
-        "other": "%(severalUsers)stog bort %(count)s meddelanden"
-    },
     "Automatically send debug logs when key backup is not functioning": "Skicka automatiskt felsökningsloggar när nyckelsäkerhetskopiering inte funkar",
     "Join %(roomAddress)s": "Gå med i %(roomAddress)s",
     "Edit poll": "Redigera omröstning",
@@ -2616,14 +2490,6 @@
     },
     "%(featureName)s Beta feedback": "%(featureName)s Betaåterkoppling",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Du kan använda egna serverinställningar för att logga in på andra Matrix-servrar genom att ange en URL för en annan hemserver. Då kan du använda %(brand)s med ett existerande Matrix-konto på en annan hemserver.",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(oneUser)s ändrade de <a>fästa meddelandena</a> för rummet",
-        "other": "%(oneUser)s ändrade de <a>fästa meddelandena</a> för rummet %(count)s gånger"
-    },
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(severalUsers)s ändrade de <a>fästa meddelandena</a> för rummet",
-        "other": "%(severalUsers)s ändrade <a>fästa meddelanden</a> för rummet %(count)s gånger"
-    },
     "What location type do you want to share?": "Vilken typ av positionsdelning vill du använda?",
     "Drop a Pin": "Sätt en nål",
     "My live location": "Min realtidsposition",
@@ -3238,7 +3104,9 @@
         "stickerpack": "Dekalpaket",
         "system_alerts": "Systemvarningar",
         "secure_backup": "Säker säkerhetskopiering",
-        "cross_signing": "Korssignering"
+        "cross_signing": "Korssignering",
+        "identity_server": "Identitetsserver",
+        "integration_manager": "Integrationshanterare"
     },
     "action": {
         "continue": "Fortsätt",
@@ -3450,7 +3318,8 @@
         "collecting_information": "Samlar in appversionsinformation",
         "collecting_logs": "Samlar in loggar",
         "uploading_logs": "Laddar upp loggar",
-        "downloading_logs": "Laddar ner loggar"
+        "downloading_logs": "Laddar ner loggar",
+        "create_new_issue": "Vänligen <newIssueLink>skapa ett nytt ärende</newIssueLink> på GitHub så att vi kan undersöka denna bugg."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)st %(minutes)sm %(seconds)ss kvar",
@@ -3567,6 +3436,10 @@
             "rule_suppress_notices": "Meddelanden från bottar",
             "rule_tombstone": "När rum uppgraderas",
             "rule_encrypted_room_one_to_one": "Krypterade meddelanden i en-till-en-chattar"
+        },
+        "appearance": {
+            "layout_irc": "IRC (Experimentellt)",
+            "layout_bubbles": "Meddelandebubblor"
         }
     },
     "devtools": {
@@ -3816,6 +3689,137 @@
         },
         "m.call.hangup": {
             "dm": "Samtalet avslutades"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)sgick med %(count)s gånger",
+                "one": "%(severalUsers)sgick med"
+            },
+            "joined": {
+                "other": "%(oneUser)sgick med %(count)s gånger",
+                "one": "%(oneUser)sgick med"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)slämnade %(count)s gånger",
+                "one": "%(severalUsers)slämnade"
+            },
+            "left": {
+                "other": "%(oneUser)slämnade %(count)s gånger",
+                "one": "%(oneUser)slämnade"
+            },
+            "joined_and_left_multiple": {
+                "other": "%(severalUsers)sgick med och lämnade %(count)s gånger",
+                "one": "%(severalUsers)sgick med och lämnade"
+            },
+            "joined_and_left": {
+                "other": "%(oneUser)sgick med och lämnade %(count)s gånger",
+                "one": "%(oneUser)sgick med och lämnade"
+            },
+            "rejoined_multiple": {
+                "other": "%(severalUsers)slämnade och gick med igen %(count)s gånger",
+                "one": "%(severalUsers)slämnade och gick med igen"
+            },
+            "rejoined": {
+                "other": "%(oneUser)slämnade och gick med igen %(count)s gånger",
+                "one": "%(oneUser)slämnade och gick med igen"
+            },
+            "rejected_invite_multiple": {
+                "other": "%(severalUsers)savböjde sina inbjudningar %(count)s gånger",
+                "one": "%(severalUsers)savböjde sina inbjudningar"
+            },
+            "rejected_invite": {
+                "other": "%(oneUser)savböjde sin inbjudan %(count)s gånger",
+                "one": "%(oneUser)savböjde sin inbjudan"
+            },
+            "invite_withdrawn_multiple": {
+                "other": "%(severalUsers)sfick sina inbjudningar tillbakadragna %(count)s gånger",
+                "one": "%(severalUsers)sfick sina inbjudningar tillbakadragna"
+            },
+            "invite_withdrawn": {
+                "other": "%(oneUser)sfick sin inbjudan tillbakadragen %(count)s gånger",
+                "one": "%(oneUser)sfick sin inbjudan tillbakadragen"
+            },
+            "invited_multiple": {
+                "other": "blev inbjudna %(count)s gånger",
+                "one": "blev inbjudna"
+            },
+            "invited": {
+                "other": "blev inbjuden %(count)s gånger",
+                "one": "blev inbjuden"
+            },
+            "banned_multiple": {
+                "other": "blev bannade %(count)s gånger",
+                "one": "blev bannade"
+            },
+            "banned": {
+                "other": "blev bannad %(count)s gånger",
+                "one": "blev bannad"
+            },
+            "unbanned_multiple": {
+                "other": "blev avbannade %(count)s gånger",
+                "one": "blev avbannade"
+            },
+            "unbanned": {
+                "other": "blev avbannad %(count)s gånger",
+                "one": "blev avbannad"
+            },
+            "kicked_multiple": {
+                "one": "togs bort",
+                "other": "togs bort %(count)s gånger"
+            },
+            "kicked": {
+                "one": "togs bort",
+                "other": "togs bort %(count)s gånger"
+            },
+            "changed_name_multiple": {
+                "other": "%(severalUsers)sbytte namn %(count)s gånger",
+                "one": "%(severalUsers)sbytte namn"
+            },
+            "changed_name": {
+                "other": "%(oneUser)sbytte namn %(count)s gånger",
+                "one": "%(oneUser)sbytte namn"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)sgjorde inga ändringar %(count)s gånger",
+                "one": "%(severalUsers)sgjorde inga ändringar"
+            },
+            "no_change": {
+                "other": "%(oneUser)sgjorde inga ändringar %(count)s gånger",
+                "one": "%(oneUser)sgjorde inga ändringar"
+            },
+            "server_acls_multiple": {
+                "one": "%(severalUsers)sändrade server-ACL:erna",
+                "other": "%(severalUsers)sändrade server-ACL:erna %(count)s gånger"
+            },
+            "server_acls": {
+                "one": "%(oneUser)sändrade server-ACL:erna",
+                "other": "%(oneUser)sändrade server-ACL:erna %(count)s gånger"
+            },
+            "pinned_events_multiple": {
+                "one": "%(severalUsers)s ändrade de <a>fästa meddelandena</a> för rummet",
+                "other": "%(severalUsers)s ändrade <a>fästa meddelanden</a> för rummet %(count)s gånger"
+            },
+            "pinned_events": {
+                "one": "%(oneUser)s ändrade de <a>fästa meddelandena</a> för rummet",
+                "other": "%(oneUser)s ändrade de <a>fästa meddelandena</a> för rummet %(count)s gånger"
+            },
+            "redacted_multiple": {
+                "one": "%(severalUsers)stog bort ett meddelande",
+                "other": "%(severalUsers)stog bort %(count)s meddelanden"
+            },
+            "redacted": {
+                "one": "%(oneUser)stog bort ett meddelande",
+                "other": "%(oneUser)stog bort %(count)s meddelanden"
+            },
+            "hidden_event_multiple": {
+                "one": "%(severalUsers)sskickade ett dolt meddelande",
+                "other": "%(severalUsers)sskickade %(count)s dolda meddelanden"
+            },
+            "hidden_event": {
+                "one": "%(oneUser)sskickade ett dolt meddelande",
+                "other": "%(oneUser)sskickade %(count)s dolda meddelanden"
+            }
         }
     },
     "slash_command": {

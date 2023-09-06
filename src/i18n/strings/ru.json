@@ -241,71 +241,6 @@
     "Members only (since they were invited)": "Только участники (с момента их приглашения)",
     "Members only (since they joined)": "Только участники (с момента их входа)",
     "A text message has been sent to %(msisdn)s": "Текстовое сообщение отправлено на %(msisdn)s",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)s присоединились %(count)s раз(а)",
-        "one": "%(severalUsers)s присоединились"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)s присоединился(лась) %(count)s раз(а)",
-        "one": "%(oneUser)s присоединился(лась)"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)s покинули %(count)s раз(а)",
-        "one": "%(severalUsers)s покинули"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)s покинул(а) %(count)s раз(а)",
-        "one": "%(oneUser)s покинул(а)"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "other": "%(severalUsers)s присоединились и покинули %(count)s раз(а)",
-        "one": "%(severalUsers)s присоединились и покинули"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "other": "%(oneUser)s присоединился(лась) и покинул(а) %(count)s раз(а)",
-        "one": "%(oneUser)s присоединился(лась) и покинул(а)"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "other": "%(severalUsers)s покинули и снова присоединились %(count)s раз(а)",
-        "one": "%(severalUsers)s покинули и снова присоединились"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "other": "%(oneUser)s покинул(а) и снова присоединился(лась) %(count)s раз(а)",
-        "one": "%(oneUser)s покинул(а) и снова присоединился(лась)"
-    },
-    "were invited %(count)s times": {
-        "other": "приглашены %(count)s раз(а)",
-        "one": "приглашены"
-    },
-    "was invited %(count)s times": {
-        "other": "приглашен(а) %(count)s раз(а)",
-        "one": "приглашен(а)"
-    },
-    "were banned %(count)s times": {
-        "other": "заблокированы %(count)s раз(а)",
-        "one": "заблокированы"
-    },
-    "was banned %(count)s times": {
-        "other": "заблокирован(а) %(count)s раз(а)",
-        "one": "заблокирован(а)"
-    },
-    "were unbanned %(count)s times": {
-        "other": "разблокированы %(count)s раз(а)",
-        "one": "разблокированы"
-    },
-    "was unbanned %(count)s times": {
-        "other": "разблокирован(а) %(count)s раз(а)",
-        "one": "разблокирован(а)"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "other": "%(severalUsers)sизменили имя %(count)s раз(а)",
-        "one": "%(severalUsers)sизменили имя"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "other": "%(oneUser)sизменил(а) имя %(count)s раз(а)",
-        "one": "%(oneUser)sизменил(а) имя"
-    },
     "%(items)s and %(count)s others": {
         "other": "%(items)s и ещё %(count)s участника(-ов)",
         "one": "%(items)s и ещё кто-то"
@@ -315,24 +250,8 @@
     "Enable URL previews for this room (only affects you)": "Включить предпросмотр ссылок в этой комнате (влияет только на вас)",
     "Enable URL previews by default for participants in this room": "Включить предпросмотр ссылок для участников этой комнаты по умолчанию",
     "Restricted": "Ограниченный пользователь",
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "other": "%(severalUsers)s отклонили приглашения %(count)s раз(а)",
-        "one": "%(severalUsers)sотклонили приглашения"
-    },
     "URL previews are enabled by default for participants in this room.": "Предпросмотр ссылок по умолчанию включен для участников этой комнаты.",
     "URL previews are disabled by default for participants in this room.": "Предпросмотр ссылок по умолчанию выключен для участников этой комнаты.",
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "other": "%(oneUser)sотклонил(а) приглашение %(count)s раз(а)",
-        "one": "%(oneUser)sотклонил(а) приглашение"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "other": "%(severalUsers)sотозвали приглашения %(count)s раз(а)",
-        "one": "%(severalUsers)sотозвали приглашения"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "%(oneUser)sотклонил(а) приглашение %(count)s раз(а)",
-        "one": "%(oneUser)sотозвал(а) приглашение"
-    },
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Обратите внимание, что вы заходите на сервер %(hs)s, а не на matrix.org.",
     "%(duration)ss": "%(duration)s сек",
     "%(duration)sm": "%(duration)s мин",
@@ -744,14 +663,6 @@
     "<a>Log in</a> to your new account.": "<a>Войти</a> в новую учётную запись.",
     "Registration Successful": "Регистрация успешно завершена",
     "Edited at %(date)s. Click to view edits.": "Изменено %(date)s. Нажмите для посмотра истории изменений.",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)sничего не изменили %(count)s раз(а)",
-        "one": "%(severalUsers)sне внёс изменений"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)sничего не изменил(а) %(count)s раз(а)",
-        "one": "%(oneUser)sне внёс изменений"
-    },
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Пожалуйста, расскажите нам что пошло не так, либо, ещё лучше, создайте отчёт в GitHub с описанием проблемы.",
     "Removing…": "Удаление…",
     "Clear all data": "Очистить все данные",
@@ -874,7 +785,6 @@
     "Failed to deactivate user": "Не удалось деактивировать пользователя",
     "This client does not support end-to-end encryption.": "Этот клиент не поддерживает сквозное шифрование.",
     "Messages in this room are not end-to-end encrypted.": "Сообщения в этой комнате не защищены сквозным шифрованием.",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Пожалуйста, <newIssueLink> создайте новую проблему/вопрос </newIssueLink> на GitHub, чтобы мы могли расследовать эту ошибку.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. <default>Используйте значение по умолчанию (%(defaultIdentityServerName)s)</default> или управляйте в <settings>Настройках</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. Управление в <settings>Настройки</settings>.",
     "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Отчет о данном сообщении отправит свой уникальный 'event ID' администратору вашего домашнего сервера. Если сообщения в этой комнате зашифрованы, администратор вашего домашнего сервера не сможет прочитать текст сообщения или просмотреть какие-либо файлы или изображения.",
@@ -1894,13 +1804,11 @@
     "%(deviceId)s from %(ip)s": "%(deviceId)s с %(ip)s",
     "The user you called is busy.": "Вызываемый пользователь занят.",
     "User Busy": "Пользователь занят",
-    "Integration manager": "Менеджер интеграции",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не позволяет вам использовать для этого Менеджер Интеграции. Пожалуйста, свяжитесь с администратором.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Используя этот виджет, вы можете делиться данными <helpIcon /> с %(widgetDomain)s и вашим Менеджером Интеграции.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Менеджеры по интеграции получают данные конфигурации и могут изменять виджеты, отправлять приглашения в комнаты и устанавливать уровни доступа от вашего имени.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Используйте менеджер интеграций для управления ботами, виджетами и наклейками.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Используйте менеджер интеграций <b>%(serverName)s</b> для управления ботами, виджетами и наклейками.",
-    "Identity server": "Идентификационный сервер",
     "Identity server (%(server)s)": "Идентификационный сервер (%(server)s)",
     "Could not connect to identity server": "Не удалось подключиться к серверу идентификации",
     "Not a valid identity server (status code %(code)s)": "Недействительный идентификационный сервер (код состояния %(code)s)",
@@ -2019,14 +1927,6 @@
     "Add existing space": "Добавить существующее пространство",
     "You are not allowed to view this server's rooms list": "Вам не разрешено просматривать список комнат этого сервера",
     "Please provide an address": "Пожалуйста, укажите адрес",
-    "%(oneUser)schanged the server ACLs %(count)s times": {
-        "one": "%(oneUser)sизменил(а) разрешения сервера",
-        "other": "%(oneUser)sизменил(а) разрешения сервера %(count)s раз(а)"
-    },
-    "%(severalUsers)schanged the server ACLs %(count)s times": {
-        "one": "%(severalUsers)sизменили разрешения сервера",
-        "other": "%(severalUsers)sизменили разрешения сервера %(count)s раз(а)"
-    },
     "%(count)s people you know have already joined": {
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
@@ -2102,7 +2002,6 @@
     "Displaying time": "Отображение времени",
     "Keyboard shortcuts": "Горячие клавиши",
     "Your access token gives full access to your account. Do not share it with anyone.": "Ваш токен доступа даёт полный доступ к вашей учётной записи. Не передавайте его никому.",
-    "Message bubbles": "Пузыри сообщений",
     "There was an error loading your notification settings.": "Произошла ошибка при загрузке настроек уведомлений.",
     "Mentions & keywords": "Упоминания и ключевые слова",
     "Global": "Глобально",
@@ -2325,14 +2224,6 @@
     "Sorry, the poll you tried to create was not posted.": "Не удалось отправить опрос, который вы пытались создать.",
     "Failed to post poll": "Не удалось отправить опрос",
     "Create Poll": "Создать опрос",
-    "was removed %(count)s times": {
-        "one": "был удалён",
-        "other": "удалено %(count)s раз(а)"
-    },
-    "were removed %(count)s times": {
-        "one": "были удалены",
-        "other": "удалены %(count)s раз(а)"
-    },
     "Including you, %(commaSeparatedMembers)s": "Включая вас, %(commaSeparatedMembers)s",
     "Unknown error fetching location. Please try again later.": "Неизвестная ошибка при получении местоположения. Пожалуйста, повторите попытку позже.",
     "Timed out trying to fetch your location. Please try again later.": "Попытка определить ваше местоположение завершилась. Пожалуйста, повторите попытку позже.",
@@ -2424,7 +2315,6 @@
     "Show tray icon and minimise window to it on close": "Показывать значок в трее и сворачивать в него окно при закрытии",
     "Keyboard": "Горячие клавиши",
     "Use high contrast": "Высокая контрастность",
-    "IRC (Experimental)": "IRC (Экспериментально)",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Эта комната находится в некоторых пространствах, администратором которых вы не являетесь. В этих пространствах старая комната будет по-прежнему отображаться, но людям будет предложено присоединиться к новой.",
     "Large": "Большой",
     "Image size in the timeline": "Размер изображения в ленте сообщений",
@@ -2495,30 +2385,6 @@
     "Open poll": "Открытый опрос",
     "Poll type": "Тип опроса",
     "Edit poll": "Редактировать опрос",
-    "%(oneUser)ssent %(count)s hidden messages": {
-        "one": "%(oneUser)sотправил(а) скрытое сообщение",
-        "other": "%(oneUser)sотправил(а) %(count)s скрытых сообщения(-й)"
-    },
-    "%(severalUsers)ssent %(count)s hidden messages": {
-        "one": "%(severalUsers)sотправили скрытое сообщение",
-        "other": "%(severalUsers)sотправили %(count)s скрытых сообщения(-й)"
-    },
-    "%(oneUser)sremoved a message %(count)s times": {
-        "one": "%(oneUser)s удалил(а) сообщение",
-        "other": "%(oneUser)sудалил(а) %(count)s сообщения(-й)"
-    },
-    "%(severalUsers)sremoved a message %(count)s times": {
-        "one": "%(severalUsers)sудалили сообщение",
-        "other": "%(severalUsers)sудалили %(count)s сообщения(-й)"
-    },
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(oneUser)sизменил(а) <a>закреплённые сообщения</a> комнаты",
-        "other": "%(oneUser)sизменил(а) <a>закреплённые сообщения</a> комнаты %(count)s раз(а)"
-    },
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(severalUsers)s изменили <a>закреплённые сообщения</a> комнаты",
-        "other": "%(severalUsers)s изменили <a>закреплённые сообщения</a> комнаты %(count)s раз(а)"
-    },
     "What location type do you want to share?": "Каким типом местоположения вы хотите поделиться?",
     "Drop a Pin": "Маркер на карте",
     "My live location": "Моё местоположение в реальном времени",
@@ -3039,7 +2905,9 @@
         "stickerpack": "Наклейки",
         "system_alerts": "Системные оповещения",
         "secure_backup": "Безопасное резервное копирование",
-        "cross_signing": "Кросс-подпись"
+        "cross_signing": "Кросс-подпись",
+        "identity_server": "Идентификационный сервер",
+        "integration_manager": "Менеджер интеграции"
     },
     "action": {
         "continue": "Продолжить",
@@ -3232,7 +3100,8 @@
         "collecting_information": "Сбор информации о версии приложения",
         "collecting_logs": "Сбор журналов",
         "uploading_logs": "Загрузка журналов",
-        "downloading_logs": "Скачивание журналов"
+        "downloading_logs": "Скачивание журналов",
+        "create_new_issue": "Пожалуйста, <newIssueLink> создайте новую проблему/вопрос </newIssueLink> на GitHub, чтобы мы могли расследовать эту ошибку."
     },
     "time": {
         "hours_minutes_seconds_left": "Осталось %(hours)sч %(minutes)sм %(seconds)sс",
@@ -3344,6 +3213,10 @@
             "rule_suppress_notices": "Сообщения от ботов",
             "rule_tombstone": "При обновлении комнат",
             "rule_encrypted_room_one_to_one": "Зашифрованные сообщения в персональных чатах"
+        },
+        "appearance": {
+            "layout_irc": "IRC (Экспериментально)",
+            "layout_bubbles": "Пузыри сообщений"
         }
     },
     "devtools": {
@@ -3567,6 +3440,137 @@
         },
         "m.call.hangup": {
             "dm": "Звонок завершён"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)s присоединились %(count)s раз(а)",
+                "one": "%(severalUsers)s присоединились"
+            },
+            "joined": {
+                "other": "%(oneUser)s присоединился(лась) %(count)s раз(а)",
+                "one": "%(oneUser)s присоединился(лась)"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)s покинули %(count)s раз(а)",
+                "one": "%(severalUsers)s покинули"
+            },
+            "left": {
+                "other": "%(oneUser)s покинул(а) %(count)s раз(а)",
+                "one": "%(oneUser)s покинул(а)"
+            },
+            "joined_and_left_multiple": {
+                "other": "%(severalUsers)s присоединились и покинули %(count)s раз(а)",
+                "one": "%(severalUsers)s присоединились и покинули"
+            },
+            "joined_and_left": {
+                "other": "%(oneUser)s присоединился(лась) и покинул(а) %(count)s раз(а)",
+                "one": "%(oneUser)s присоединился(лась) и покинул(а)"
+            },
+            "rejoined_multiple": {
+                "other": "%(severalUsers)s покинули и снова присоединились %(count)s раз(а)",
+                "one": "%(severalUsers)s покинули и снова присоединились"
+            },
+            "rejoined": {
+                "other": "%(oneUser)s покинул(а) и снова присоединился(лась) %(count)s раз(а)",
+                "one": "%(oneUser)s покинул(а) и снова присоединился(лась)"
+            },
+            "rejected_invite_multiple": {
+                "other": "%(severalUsers)s отклонили приглашения %(count)s раз(а)",
+                "one": "%(severalUsers)sотклонили приглашения"
+            },
+            "rejected_invite": {
+                "other": "%(oneUser)sотклонил(а) приглашение %(count)s раз(а)",
+                "one": "%(oneUser)sотклонил(а) приглашение"
+            },
+            "invite_withdrawn_multiple": {
+                "other": "%(severalUsers)sотозвали приглашения %(count)s раз(а)",
+                "one": "%(severalUsers)sотозвали приглашения"
+            },
+            "invite_withdrawn": {
+                "other": "%(oneUser)sотклонил(а) приглашение %(count)s раз(а)",
+                "one": "%(oneUser)sотозвал(а) приглашение"
+            },
+            "invited_multiple": {
+                "other": "приглашены %(count)s раз(а)",
+                "one": "приглашены"
+            },
+            "invited": {
+                "other": "приглашен(а) %(count)s раз(а)",
+                "one": "приглашен(а)"
+            },
+            "banned_multiple": {
+                "other": "заблокированы %(count)s раз(а)",
+                "one": "заблокированы"
+            },
+            "banned": {
+                "other": "заблокирован(а) %(count)s раз(а)",
+                "one": "заблокирован(а)"
+            },
+            "unbanned_multiple": {
+                "other": "разблокированы %(count)s раз(а)",
+                "one": "разблокированы"
+            },
+            "unbanned": {
+                "other": "разблокирован(а) %(count)s раз(а)",
+                "one": "разблокирован(а)"
+            },
+            "kicked_multiple": {
+                "one": "были удалены",
+                "other": "удалены %(count)s раз(а)"
+            },
+            "kicked": {
+                "one": "был удалён",
+                "other": "удалено %(count)s раз(а)"
+            },
+            "changed_name_multiple": {
+                "other": "%(severalUsers)sизменили имя %(count)s раз(а)",
+                "one": "%(severalUsers)sизменили имя"
+            },
+            "changed_name": {
+                "other": "%(oneUser)sизменил(а) имя %(count)s раз(а)",
+                "one": "%(oneUser)sизменил(а) имя"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)sничего не изменили %(count)s раз(а)",
+                "one": "%(severalUsers)sне внёс изменений"
+            },
+            "no_change": {
+                "other": "%(oneUser)sничего не изменил(а) %(count)s раз(а)",
+                "one": "%(oneUser)sне внёс изменений"
+            },
+            "server_acls_multiple": {
+                "one": "%(severalUsers)sизменили разрешения сервера",
+                "other": "%(severalUsers)sизменили разрешения сервера %(count)s раз(а)"
+            },
+            "server_acls": {
+                "one": "%(oneUser)sизменил(а) разрешения сервера",
+                "other": "%(oneUser)sизменил(а) разрешения сервера %(count)s раз(а)"
+            },
+            "pinned_events_multiple": {
+                "one": "%(severalUsers)s изменили <a>закреплённые сообщения</a> комнаты",
+                "other": "%(severalUsers)s изменили <a>закреплённые сообщения</a> комнаты %(count)s раз(а)"
+            },
+            "pinned_events": {
+                "one": "%(oneUser)sизменил(а) <a>закреплённые сообщения</a> комнаты",
+                "other": "%(oneUser)sизменил(а) <a>закреплённые сообщения</a> комнаты %(count)s раз(а)"
+            },
+            "redacted_multiple": {
+                "one": "%(severalUsers)sудалили сообщение",
+                "other": "%(severalUsers)sудалили %(count)s сообщения(-й)"
+            },
+            "redacted": {
+                "one": "%(oneUser)s удалил(а) сообщение",
+                "other": "%(oneUser)sудалил(а) %(count)s сообщения(-й)"
+            },
+            "hidden_event_multiple": {
+                "one": "%(severalUsers)sотправили скрытое сообщение",
+                "other": "%(severalUsers)sотправили %(count)s скрытых сообщения(-й)"
+            },
+            "hidden_event": {
+                "one": "%(oneUser)sотправил(а) скрытое сообщение",
+                "other": "%(oneUser)sотправил(а) %(count)s скрытых сообщения(-й)"
+            }
         }
     },
     "slash_command": {

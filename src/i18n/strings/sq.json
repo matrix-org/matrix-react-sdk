@@ -152,30 +152,6 @@
     "Something went wrong!": "Diçka shkoi ters!",
     "Create new room": "Krijoni dhomë të re",
     "Home": "Kreu",
-    "were invited %(count)s times": {
-        "one": "janë ftuar",
-        "other": "janë ftuar %(count)s herë"
-    },
-    "was invited %(count)s times": {
-        "other": "është ftuar %(count)s herë",
-        "one": "është ftuar"
-    },
-    "were banned %(count)s times": {
-        "one": "janë dëbuar",
-        "other": "janë dëbuar %(count)s herë"
-    },
-    "was banned %(count)s times": {
-        "other": "është dëbuar %(count)s herë",
-        "one": "është dëbuar"
-    },
-    "were unbanned %(count)s times": {
-        "one": "u është hequr dëbimi",
-        "other": "janë dëbuar %(count)s herë"
-    },
-    "was unbanned %(count)s times": {
-        "other": "i është hequr dëbimi %(count)s herë",
-        "one": "i është hequr dëbimi"
-    },
     "%(items)s and %(count)s others": {
         "other": "%(items)s dhe %(count)s të tjerë",
         "one": "%(items)s dhe një tjetër"
@@ -271,30 +247,6 @@
     "Error decrypting video": "Gabim në shfshehtëzim videoje",
     "Delete Widget": "Fshije Widget-in",
     "Delete widget": "Fshije widget-in",
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "one": "%(severalUsers)shynë dhe dolën",
-        "other": "%(severalUsers)shynë dhe dolën %(count)s herë"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "one": "%(oneUser)shyri dhe doli",
-        "other": "%(oneUser)shyri dhe doli %(count)s herë"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "one": "%(severalUsers)shodhën poshtë ftesat e tyre",
-        "other": "%(severalUsers)shodhën poshtë ftesat e tyre %(count)s herë"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "one": "%(oneUser)shodhi poshtë ftesën e tyre",
-        "other": "%(oneUser)shodhi poshtë ftesën e vet %(count)s herë"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "one": "%(severalUsers)sndryshuan emrat e tyre",
-        "other": "%(severalUsers)sndryshuan emrat e tyre %(count)s herë"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "one": "%(oneUser)sndryshoi emrin e vet",
-        "other": "%(oneUser)sndryshoi emrin e vet %(count)s herë"
-    },
     "And %(count)s more...": {
         "other": "Dhe %(count)s të tjerë…"
     },
@@ -311,34 +263,6 @@
     "Invalid file%(extra)s": "Kartelë e pavlefshme%(extra)s",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s ndryshoi avatarin në %(roomName)s",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s hoqi avatarin e dhomës.",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)shynë %(count)s herë",
-        "one": "Hynë %(severalUsers)s"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)shyri %(count)s herë",
-        "one": "%(oneUser)shyri"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)sdolën %(count)s herë",
-        "one": "Dolën %(severalUsers)s"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)sdoli %(count)s herë",
-        "one": "%(oneUser)sdoli"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "one": "%(severalUsers)sdolën dhe rihynë",
-        "other": "%(severalUsers)sdolën dhe rihynë %(count)s herë"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "one": "%(oneUser)sdoli dhe rihyri",
-        "other": "%(oneUser)sdoli dhe rihyri %(count)s herë"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "one": "U tërhoqën mbrapsht ftesat për %(severalUsers)s",
-        "other": "Për %(severalUsers)s u hodhën poshtë ftesat e tyre %(count)s herë"
-    },
     "You seem to be uploading files, are you sure you want to quit?": "Duket se jeni duke ngarkuar kartela, jeni i sigurt se doni të dilet?",
     "Add some now": "Shtohen ca tani",
     "Click here to see older messages.": "Klikoni këtu për të parë mesazhe më të vjetër.",
@@ -374,10 +298,6 @@
     "You don't currently have any stickerpacks enabled": "Hëpërhë, s’keni të aktivizuar ndonjë pako ngjitësesh",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s ndryshoi avatarin e dhomës në <img/>",
     "This room is a continuation of another conversation.": "Kjo dhomë është një vazhdim i një bisede tjetër.",
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "Për %(oneUser)s përdorues ftesa u tërhoq mbrapsht %(count)s herë",
-        "one": "U tërhoq mbrapsht ftesa për %(oneUser)s"
-    },
     "Upgrade this room to version %(version)s": "Përmirësojeni këtë dhomë me versionin %(version)s",
     "Share Room": "Ndani Dhomë Me të Tjerë",
     "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
@@ -387,7 +307,6 @@
     "Enable URL previews by default for participants in this room": "Aktivizo, si parazgjedhje, paraparje URL-sh për pjesëmarrësit në këtë dhomë",
     "A text message has been sent to %(msisdn)s": "Te %(msisdn)s u dërgua një mesazh tekst",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Fshirja e një widget-i e heq atë për krejt përdoruesit në këtë dhomë. Jeni i sigurt se doni të fshihet ky widget?",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Përpara se të parashtroni regjistra, duhet <a>të krijoni një çështje në GitHub issue</a> që të përshkruani problemin tuaj.",
     "Create a new room with the same name, description and avatar": "Krijoni një dhomë të re me po atë emër, përshkrim dhe avatar",
     "Can't leave Server Notices room": "Dhoma Njoftime Shërbyesi, s’braktiset dot",
@@ -746,14 +665,6 @@
     "Edited at %(date)s. Click to view edits.": "Përpunuar më %(date)s. Klikoni që të shihni përpunimet.",
     "Message edits": "Përpunime mesazhi",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Përmirësimi i kësaj dhome lyp mbylljen e instancës së tanishme të dhomës dhe krijimin e një dhome të re në vend të saj. Për t’u dhënë anëtarëve të dhomës më të mirën, do të:",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)s s’bënë ndryshime gjatë %(count)s herësh",
-        "one": "%(severalUsers)s s’bënë ndryshime"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)ss’bënë ndryshime gjatë %(count)s herësh",
-        "one": "%(oneUser)ss’bëri ndryshime"
-    },
     "Resend %(unsentCount)s reaction(s)": "Ridërgo %(unsentCount)s reagim(e)",
     "Your homeserver doesn't seem to support this feature.": "Shërbyesi juaj Home nuk duket se e mbulon këtë veçori.",
     "You're signed out": "Keni bërë dalje",
@@ -874,7 +785,6 @@
         "one": "1 mesazh i palexuar."
     },
     "Show image": "Shfaq figurë",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Ju lutemi, <newIssueLink>krijoni një çështje të re</newIssueLink> në GitHub, që të mund ta hetojmë këtë të metë.",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Mungon kyç publik captcha-je te formësimi i shërbyesit Home. Ju lutemi, njoftojani këtë përgjegjësit të shërbyesit tuaj Home.",
     "%(creator)s created and configured the room.": "%(creator)s krijoi dhe formësoi dhomën.",
     "Command Autocomplete": "Vetëplotësim Urdhrash",
@@ -1991,14 +1901,6 @@
     "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Ky përdorues shfaq sjellje të paligjshme, bie fjala, duke zbuluar identitet personash ose duke kërcënuar me dhunë.\nKjo do t’u njoftohet përgjegjësve të dhomës, të cilët mund ta përshkallëzojnë punën drejt autoriteteve ligjore.",
     "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Ajo ç’shkruan ky përdorues është gabim.\nKjo do t’u njoftohet përgjegjësve të dhomës.",
     "Please provide an address": "Ju lutemi, jepni një adresë",
-    "%(oneUser)schanged the server ACLs %(count)s times": {
-        "one": "%(oneUser)sndryshoi ACL-ra shërbyesi",
-        "other": "%(oneUser)sndryshoi ACL-ra shërbyesi %(count)s herë"
-    },
-    "%(severalUsers)schanged the server ACLs %(count)s times": {
-        "one": "%(severalUsers)sndryshuan ACL-ra shërbyesi",
-        "other": "%(severalUsers)sndryshuan ACL-ra shërbyesi %(count)s herë"
-    },
     "Message search initialisation failed, check <a>your settings</a> for more information": "Dështoi gatitja e kërkimit në mesazhe, për më tepër hollësi, shihni <a>rregullimet tuaja</a>",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Caktoni adresa për këtë hapësirë, që kështu përdoruesit të gjejnë këtë dhomë përmes shërbyesit tuaj Home (%(localDomain)s)",
     "To publish an address, it needs to be set as a local address first.": "Që të bëni publike një adresë, lypset të ujdiset së pari si një adresë vendore.",
@@ -2031,13 +1933,11 @@
     "Images, GIFs and videos": "Figura, GIF-e dhe video",
     "Code blocks": "Blloqe kodi",
     "Keyboard shortcuts": "Shkurtore tastiere",
-    "Integration manager": "Përgjegjës integrimesh",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-i juaj nuk ju lejon të përdorni një përgjegjës integrimesh për të bërë këtë. Ju lutemi, lidhuni me përgjegjësin.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Përdorimi i këtij widget-i mund të sjellë ndarje të dhënash <helpIcon /> me %(widgetDomain)s & përgjegjësin tuaj të integrimeve.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Përgjegjësit e integrimeve marrin të dhëna formësimi, dhe mund të ndryshojnë widget-e, të dërgojnë ftesa dhome, dhe të caktojnë shkallë pushteti në emër tuajin.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Përdorni një përgjegjës integrimesh që të administroni robotë, widget-e dhe paketa ngjitësish.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Përdorni një përgjegjës integrimesh <b>(%(serverName)s)</b> që të administroni robotë, widget-e dhe paketa ngjitësish.",
-    "Identity server": "Shërbyes identitetesh",
     "Identity server (%(server)s)": "Shërbyes identitetesh (%(server)s)",
     "Could not connect to identity server": "S’u lidh dot te shërbyes identitetesh",
     "Not a valid identity server (status code %(code)s)": "Shërbyes identitetesh i pavlefshëm (kod gjendjeje %(code)s)",
@@ -2057,7 +1957,6 @@
     "Error saving notification preferences": "Gabim në ruajtje parapëlqimesh për njoftimet",
     "Messages containing keywords": "Mesazhe që përmbajnë fjalëkyçe",
     "Transfer Failed": "Shpërngulja Dështoi",
-    "Message bubbles": "Flluska mesazhesh",
     "The call is in an unknown state!": "Thirrja gjendet në një gjendje të panjohur!",
     "Call back": "Thirreni ju",
     "No answer": "S’ka përgjigje",
@@ -2410,14 +2309,6 @@
     "Failed to fetch your location. Please try again later.": "S’u arrit të sillet vendndodhja juaj. Ju lutemi, riprovoni më vonë.",
     "Could not fetch location": "S’u pru dot vendndodhja",
     "Automatically send debug logs on decryption errors": "Dërgo automatikisht regjistra diagnostikimi, gjatë gabimesh shfshehtëzimi",
-    "was removed %(count)s times": {
-        "one": "u hoq",
-        "other": "u hoq %(count)s herë"
-    },
-    "were removed %(count)s times": {
-        "one": "u hoq",
-        "other": "u hoq %(count)s herë"
-    },
     "Remove from room": "Hiqeni prej dhome",
     "Failed to remove user": "S’u arrit të hiqej përdoruesi",
     "Remove them from specific things I'm able to": "Hiqi prej gjërash të caktuara ku mundem ta bëj këtë",
@@ -2457,7 +2348,6 @@
     "Group all your people in one place.": "Gruponi krejt personat tuaj në një vend.",
     "Group all your favourite rooms and people in one place.": "Gruponi në një vend krejt dhomat tuaja të parapëlqyera dhe personat e parapëlqyer.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Hapësirat janë mënyra për të grupuar dhoma dhe njerëz. Tok me hapësirat ku gjendeni, mundeni të përdorni edhe disa të krijuara paraprakisht.",
-    "IRC (Experimental)": "IRC (Eksperimentale)",
     "Unable to check if username has been taken. Try again later.": "S’arrihet të kontrollohet nëse emri i përdoruesit është zënë. Riprovoni më vonë.",
     "Toggle hidden event visibility": "Ndryshoni dukshmëri akti të fshehur",
     "Redo edit": "Ribëje përpunimin",
@@ -2482,22 +2372,6 @@
     "Use <arrows/> to scroll": "Përdorni <arrows/> për rrëshqitje",
     "Feedback sent! Thanks, we appreciate it!": "Përshtypjet u dërguan! Faleminderit, e çmojmë aktin tuaj!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dhe %(space2Name)s",
-    "%(oneUser)ssent %(count)s hidden messages": {
-        "one": "%(oneUser)sdërgoi një mesazh të fshehur",
-        "other": "%(oneUser)s dërgoi %(count)s mesazhe të fshehur"
-    },
-    "%(severalUsers)ssent %(count)s hidden messages": {
-        "one": "%(severalUsers)s dërguan një mesazh të fshehur",
-        "other": "%(severalUsers)s dërgoi %(count)s mesazhe të fshehur"
-    },
-    "%(oneUser)sremoved a message %(count)s times": {
-        "one": "%(oneUser)s hoqi një mesazh",
-        "other": "%(oneUser)s hoqi %(count)s mesazhe"
-    },
-    "%(severalUsers)sremoved a message %(count)s times": {
-        "one": "%(severalUsers)s hoqi një mesazh",
-        "other": "%(severalUsers)s hoqi %(count)s mesazhe"
-    },
     "Automatically send debug logs when key backup is not functioning": "Dërgo automatikisht regjistra diagnostikimi, kur kopjeruajtja e kyçeve nuk funksionon",
     "Edit poll": "Përpunoni pyetësor",
     "Sorry, you can't edit a poll after votes have been cast.": "Na ndjeni, s’mund të përpunoni një pyetësor pasi të jenë hedhur votat.",
@@ -2523,14 +2397,6 @@
     "We couldn't send your location": "S’e dërguam dot vendndodhjen tuaj",
     "Match system": "Përputhe me sistemin",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Përgjigjuni te një rrjedhë në zhvillim e sipër, ose përdorni “%(replyInThread)s”, kur kalohet kursori sipër një mesazhi për të filluar një të re.",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(oneUser)sndryshoi <a>mesazhet e fiksuar</a> për dhomën",
-        "other": "%(oneUser)sndryshoi <a>mesazhet e fiksuar</a> për dhomën %(count)s herë"
-    },
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën",
-        "other": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën %(count)s herë"
-    },
     "My live location": "Vendndodhja ime drejtpërsëdrejti",
     "Show polls button": "Shfaq buton pyetësorësh",
     "Expand quotes": "Zgjeroji thonjëzat",
@@ -3210,7 +3076,9 @@
         "stickerpack": "Paketë ngjitësish",
         "system_alerts": "Sinjalizime Sistemi",
         "secure_backup": "Kopjeruajtje e Sigurt",
-        "cross_signing": "<em>Cross-signing</em>"
+        "cross_signing": "<em>Cross-signing</em>",
+        "identity_server": "Shërbyes identitetesh",
+        "integration_manager": "Përgjegjës integrimesh"
     },
     "action": {
         "continue": "Vazhdo",
@@ -3414,7 +3282,8 @@
         "collecting_information": "Po grumbullohen të dhëna versioni aplikacioni",
         "collecting_logs": "Po grumbullohen regjistra",
         "uploading_logs": "Po ngarkohen regjistra",
-        "downloading_logs": "Po shkarkohen regjistra"
+        "downloading_logs": "Po shkarkohen regjistra",
+        "create_new_issue": "Ju lutemi, <newIssueLink>krijoni një çështje të re</newIssueLink> në GitHub, që të mund ta hetojmë këtë të metë."
     },
     "time": {
         "hours_minutes_seconds_left": "Edhe %(hours)sh %(minutes)sm %(seconds)ss",
@@ -3529,6 +3398,10 @@
             "rule_suppress_notices": "Mesazhe të dërguar nga boti",
             "rule_tombstone": "Kur përmirësohen dhomat",
             "rule_encrypted_room_one_to_one": "Mesazhe të fshehtëzuar në fjalosje tek-për-tek"
+        },
+        "appearance": {
+            "layout_irc": "IRC (Eksperimentale)",
+            "layout_bubbles": "Flluska mesazhesh"
         }
     },
     "devtools": {
@@ -3771,6 +3644,137 @@
         },
         "m.call.hangup": {
             "dm": "Thirrja përfundoi"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)shynë %(count)s herë",
+                "one": "Hynë %(severalUsers)s"
+            },
+            "joined": {
+                "other": "%(oneUser)shyri %(count)s herë",
+                "one": "%(oneUser)shyri"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)sdolën %(count)s herë",
+                "one": "Dolën %(severalUsers)s"
+            },
+            "left": {
+                "other": "%(oneUser)sdoli %(count)s herë",
+                "one": "%(oneUser)sdoli"
+            },
+            "joined_and_left_multiple": {
+                "one": "%(severalUsers)shynë dhe dolën",
+                "other": "%(severalUsers)shynë dhe dolën %(count)s herë"
+            },
+            "joined_and_left": {
+                "one": "%(oneUser)shyri dhe doli",
+                "other": "%(oneUser)shyri dhe doli %(count)s herë"
+            },
+            "rejoined_multiple": {
+                "one": "%(severalUsers)sdolën dhe rihynë",
+                "other": "%(severalUsers)sdolën dhe rihynë %(count)s herë"
+            },
+            "rejoined": {
+                "one": "%(oneUser)sdoli dhe rihyri",
+                "other": "%(oneUser)sdoli dhe rihyri %(count)s herë"
+            },
+            "rejected_invite_multiple": {
+                "one": "%(severalUsers)shodhën poshtë ftesat e tyre",
+                "other": "%(severalUsers)shodhën poshtë ftesat e tyre %(count)s herë"
+            },
+            "rejected_invite": {
+                "one": "%(oneUser)shodhi poshtë ftesën e tyre",
+                "other": "%(oneUser)shodhi poshtë ftesën e vet %(count)s herë"
+            },
+            "invite_withdrawn_multiple": {
+                "one": "U tërhoqën mbrapsht ftesat për %(severalUsers)s",
+                "other": "Për %(severalUsers)s u hodhën poshtë ftesat e tyre %(count)s herë"
+            },
+            "invite_withdrawn": {
+                "other": "Për %(oneUser)s përdorues ftesa u tërhoq mbrapsht %(count)s herë",
+                "one": "U tërhoq mbrapsht ftesa për %(oneUser)s"
+            },
+            "invited_multiple": {
+                "one": "janë ftuar",
+                "other": "janë ftuar %(count)s herë"
+            },
+            "invited": {
+                "other": "është ftuar %(count)s herë",
+                "one": "është ftuar"
+            },
+            "banned_multiple": {
+                "one": "janë dëbuar",
+                "other": "janë dëbuar %(count)s herë"
+            },
+            "banned": {
+                "other": "është dëbuar %(count)s herë",
+                "one": "është dëbuar"
+            },
+            "unbanned_multiple": {
+                "one": "u është hequr dëbimi",
+                "other": "janë dëbuar %(count)s herë"
+            },
+            "unbanned": {
+                "other": "i është hequr dëbimi %(count)s herë",
+                "one": "i është hequr dëbimi"
+            },
+            "kicked_multiple": {
+                "one": "u hoq",
+                "other": "u hoq %(count)s herë"
+            },
+            "kicked": {
+                "one": "u hoq",
+                "other": "u hoq %(count)s herë"
+            },
+            "changed_name_multiple": {
+                "one": "%(severalUsers)sndryshuan emrat e tyre",
+                "other": "%(severalUsers)sndryshuan emrat e tyre %(count)s herë"
+            },
+            "changed_name": {
+                "one": "%(oneUser)sndryshoi emrin e vet",
+                "other": "%(oneUser)sndryshoi emrin e vet %(count)s herë"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)s s’bënë ndryshime gjatë %(count)s herësh",
+                "one": "%(severalUsers)s s’bënë ndryshime"
+            },
+            "no_change": {
+                "other": "%(oneUser)ss’bënë ndryshime gjatë %(count)s herësh",
+                "one": "%(oneUser)ss’bëri ndryshime"
+            },
+            "server_acls_multiple": {
+                "one": "%(severalUsers)sndryshuan ACL-ra shërbyesi",
+                "other": "%(severalUsers)sndryshuan ACL-ra shërbyesi %(count)s herë"
+            },
+            "server_acls": {
+                "one": "%(oneUser)sndryshoi ACL-ra shërbyesi",
+                "other": "%(oneUser)sndryshoi ACL-ra shërbyesi %(count)s herë"
+            },
+            "pinned_events_multiple": {
+                "one": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën",
+                "other": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën %(count)s herë"
+            },
+            "pinned_events": {
+                "one": "%(oneUser)sndryshoi <a>mesazhet e fiksuar</a> për dhomën",
+                "other": "%(oneUser)sndryshoi <a>mesazhet e fiksuar</a> për dhomën %(count)s herë"
+            },
+            "redacted_multiple": {
+                "one": "%(severalUsers)s hoqi një mesazh",
+                "other": "%(severalUsers)s hoqi %(count)s mesazhe"
+            },
+            "redacted": {
+                "one": "%(oneUser)s hoqi një mesazh",
+                "other": "%(oneUser)s hoqi %(count)s mesazhe"
+            },
+            "hidden_event_multiple": {
+                "one": "%(severalUsers)s dërguan një mesazh të fshehur",
+                "other": "%(severalUsers)s dërgoi %(count)s mesazhe të fshehur"
+            },
+            "hidden_event": {
+                "one": "%(oneUser)sdërgoi një mesazh të fshehur",
+                "other": "%(oneUser)s dërgoi %(count)s mesazhe të fshehur"
+            }
         }
     },
     "slash_command": {

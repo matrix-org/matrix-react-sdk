@@ -175,87 +175,6 @@
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "L'eliminazione di un widget lo rimuove per tutti gli utenti della stanza. Sei sicuro di eliminare il widget?",
     "Delete widget": "Elimina widget",
     "Home": "Pagina iniziale",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)ssono entrati %(count)s volte",
-        "one": "%(severalUsers)ssono entrati"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)s è entrato/a %(count)s volte",
-        "one": "%(oneUser)s è entrato/a"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)ssono usciti %(count)s volte",
-        "one": "%(severalUsers)ssono usciti"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)s è uscito/a %(count)s volte",
-        "one": "%(oneUser)s è uscito/a"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "other": "%(severalUsers)ssono entrati e usciti %(count)s volte",
-        "one": "%(severalUsers)ssono entrati e usciti"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "other": "%(oneUser)s è entrato/a e uscito/a %(count)s volte",
-        "one": "%(oneUser)s è entrato/a e uscito/a"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "other": "%(severalUsers)ssono usciti e rientrati %(count)s volte",
-        "one": "%(severalUsers)ssono usciti e rientrati"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "other": "%(oneUser)s è uscito/a e rientrato/a %(count)s volte",
-        "one": "%(oneUser)s è uscito/a e rientrato/a"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "other": "%(severalUsers)shanno rifiutato i loro inviti %(count)s volte",
-        "one": "%(severalUsers)shanno rifiutato i loro inviti"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "other": "%(oneUser)sha rifiutato il suo invito %(count)s volte",
-        "one": "%(oneUser)sha rifiutato il suo invito"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "other": "%(severalUsers)shanno visto revocato il loro invito %(count)s volte",
-        "one": "%(severalUsers)shanno visto revocato il loro invito"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "%(oneUser)sha visto revocato il suo invito %(count)s volte",
-        "one": "%(oneUser)sha visto revocato il suo invito"
-    },
-    "were invited %(count)s times": {
-        "other": "sono stati invitati %(count)s volte",
-        "one": "sono stati invitati"
-    },
-    "was invited %(count)s times": {
-        "other": "è stato/a invitato/a %(count)s volte",
-        "one": "è stato/a invitato/a"
-    },
-    "were banned %(count)s times": {
-        "other": "sono stati banditi %(count)s volte",
-        "one": "sono stati banditi"
-    },
-    "was banned %(count)s times": {
-        "other": "è stato bandito %(count)s volte",
-        "one": "è stato bandito"
-    },
-    "were unbanned %(count)s times": {
-        "other": "sono stati riammessi %(count)s volte",
-        "one": "sono stati riammessi"
-    },
-    "was unbanned %(count)s times": {
-        "other": "è stato riammesso %(count)s volte",
-        "one": "è stato riammesso"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "other": "%(severalUsers)shanno modificato il loro nome %(count)s volte",
-        "one": "%(severalUsers)shanno modificato il loro nome"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "other": "%(oneUser)sha modificato il suo nome %(count)s volte",
-        "one": "%(oneUser)sha modificato il suo nome"
-    },
     "%(items)s and %(count)s others": {
         "other": "%(items)s e altri %(count)s",
         "one": "%(items)s e un altro"
@@ -749,14 +668,6 @@
     "Edited at %(date)s. Click to view edits.": "Modificato alle %(date)s. Clicca per vedere le modifiche.",
     "Message edits": "Modifiche del messaggio",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Per aggiornare questa stanza devi chiudere l'istanza attuale e creare una nuova stanza al suo posto. Per offrire la migliore esperienza possibile ai membri della stanza:",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)snon hanno fatto modifiche %(count)s volte",
-        "one": "%(severalUsers)snon hanno fatto modifiche"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)snon ha fatto modifiche %(count)s volte",
-        "one": "%(oneUser)snon ha fatto modifiche"
-    },
     "Resend %(unsentCount)s reaction(s)": "Reinvia %(unsentCount)s reazione/i",
     "Your homeserver doesn't seem to support this feature.": "Il tuo homeserver non sembra supportare questa funzione.",
     "You're signed out": "Sei disconnesso",
@@ -862,7 +773,6 @@
         "one": "1 messaggio non letto."
     },
     "Show image": "Mostra immagine",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "<newIssueLink>Segnala un nuovo problema</newIssueLink> su GitHub in modo che possiamo indagare su questo errore.",
     "To continue you need to accept the terms of this service.": "Per continuare devi accettare le condizioni di servizio.",
     "Document": "Documento",
     "Emoji Autocomplete": "Autocompletamento emoji",
@@ -2011,14 +1921,6 @@
     "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Questo utente sta facendo spam nella stanza con pubblicità, collegamenti ad annunci o a propagande.\nVerrà segnalato ai moderatori della stanza.",
     "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Questo utente sta mostrando un comportamento illegale, ad esempio facendo doxing o minacciando violenza.\nVerrà segnalato ai moderatori della stanza che potrebbero portarlo in ambito legale.",
     "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Questo utente sta scrivendo cose sbagliate.\nVerrà segnalato ai moderatori della stanza.",
-    "%(oneUser)schanged the server ACLs %(count)s times": {
-        "one": "%(oneUser)sha cambiato le ACL del server",
-        "other": "%(oneUser)sha cambiato le ACL del server %(count)s volte"
-    },
-    "%(severalUsers)schanged the server ACLs %(count)s times": {
-        "one": "%(severalUsers)shanno cambiato le ACL del server",
-        "other": "%(severalUsers)shanno cambiato le ACL del server %(count)s volte"
-    },
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inizializzazione ricerca messaggi fallita, controlla <a>le impostazioni</a> per maggiori informazioni",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Imposta gli indirizzi per questo spazio affinché gli utenti lo trovino attraverso il tuo homeserver (%(localDomain)s)",
     "To publish an address, it needs to be set as a local address first.": "Per pubblicare un indirizzo, deve prima essere impostato come indirizzo locale.",
@@ -2029,13 +1931,11 @@
     "Failed to update the history visibility of this space": "Aggiornamento visibilità cronologia dello spazio fallito",
     "Failed to update the guest access of this space": "Aggiornamento accesso ospiti dello spazio fallito",
     "Failed to update the visibility of this space": "Aggiornamento visibilità dello spazio fallito",
-    "Integration manager": "Gestore di integrazioni",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Il tuo %(brand)s non ti permette di usare il gestore di integrazioni per questa azione. Contatta un amministratore.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Usando questo widget i dati possono essere condivisi <helpIcon /> con %(widgetDomain)s e il tuo gestore di integrazioni.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "I gestori di integrazione ricevono dati di configurazione e possono modificare widget, inviare inviti alla stanza, assegnare permessi a tuo nome.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Usa un gestore di integrazioni per gestire bot, widget e pacchetti di adesivi.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Usa un gestore di integrazioni <b>(%(serverName)s)</b> per gestire bot, widget e pacchetti di adesivi.",
-    "Identity server": "Server di identità",
     "Identity server (%(server)s)": "Server di identità (%(server)s)",
     "Could not connect to identity server": "Impossibile connettersi al server di identità",
     "Not a valid identity server (status code %(code)s)": "Non è un server di identità valido (codice di stato %(code)s)",
@@ -2108,7 +2008,6 @@
     "Only invited people can join.": "Solo le persone invitate possono entrare.",
     "Private (invite only)": "Privato (solo a invito)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Questo aggiornamento permetterà ai membri di spazi selezionati di accedere alla stanza senza invito.",
-    "Message bubbles": "Messaggi",
     "Add space": "Aggiungi spazio",
     "Leave %(spaceName)s": "Esci da %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Sei l'unico amministratore di alcune delle stanze o spazi che vuoi abbandonare. Se esci li lascerai senza amministratori.",
@@ -2413,14 +2312,6 @@
     "From a thread": "Da una conversazione",
     "Automatically send debug logs on decryption errors": "Invia automaticamente log di debug per errori di decifrazione",
     "Open this settings tab": "Apri questa scheda di impostazioni",
-    "was removed %(count)s times": {
-        "one": "è stato rimosso",
-        "other": "è stato rimosso %(count)s volte"
-    },
-    "were removed %(count)s times": {
-        "one": "sono stati rimossi",
-        "other": "sono stati rimossi %(count)s volte"
-    },
     "Remove from room": "Rimuovi dalla stanza",
     "Failed to remove user": "Rimozione utente fallita",
     "Remove them from specific things I'm able to": "Rimuovilo da cose specifiche dove posso farlo",
@@ -2460,7 +2351,6 @@
     "Group all your favourite rooms and people in one place.": "Raggruppa tutte le tue stanze e persone preferite in un unico posto.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Gli spazi sono modi per raggruppare stanze e persone. Oltre agli spazi in cui sei, puoi usarne anche altri di preimpostati.",
     "Unable to check if username has been taken. Try again later.": "Impossibile controllare se il nome utente è già in uso. Riprova più tardi.",
-    "IRC (Experimental)": "IRC (Sperimentale)",
     "Toggle hidden event visibility": "Cambia visibilità evento nascosto",
     "Redo edit": "Ripeti modifica",
     "Force complete": "Forza completamento",
@@ -2484,22 +2374,6 @@
     "Use <arrows/> to scroll": "Usa <arrows/> per scorrere",
     "Feedback sent! Thanks, we appreciate it!": "Opinione inviata! Grazie, lo apprezziamo!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "%(oneUser)ssent %(count)s hidden messages": {
-        "one": "%(oneUser)sha inviato un messaggio nascosto",
-        "other": "%(oneUser)sha inviato %(count)s messaggi nascosti"
-    },
-    "%(severalUsers)ssent %(count)s hidden messages": {
-        "one": "%(severalUsers)shanno inviato un messaggio nascosto",
-        "other": "%(severalUsers)shanno inviato %(count)s messaggi nascosti"
-    },
-    "%(oneUser)sremoved a message %(count)s times": {
-        "one": "%(oneUser)sha rimosso un messaggio",
-        "other": "%(oneUser)sha rimosso %(count)s messaggi"
-    },
-    "%(severalUsers)sremoved a message %(count)s times": {
-        "one": "%(severalUsers)shanno rimosso un messaggio",
-        "other": "%(severalUsers)shanno rimosso %(count)s messaggi"
-    },
     "Automatically send debug logs when key backup is not functioning": "Invia automaticamente log di debug quando il backup delle chiavi non funziona",
     "Join %(roomAddress)s": "Entra in %(roomAddress)s",
     "Edit poll": "Modifica sondaggio",
@@ -2527,14 +2401,6 @@
     "%(brand)s could not send your location. Please try again later.": "%(brand)s non ha potuto inviare la tua posizione. Riprova più tardi.",
     "We couldn't send your location": "Non siamo riusciti ad inviare la tua posizione",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Rispondi ad una conversazione in corso o usa \"%(replyInThread)s\" passando sopra ad un messaggio per iniziarne una nuova.",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(oneUser)shanno cambiato i <a>messaggi ancorati</a> della stanza",
-        "other": "%(oneUser)sha cambiato i <a>messaggi ancorati</a> della stanza %(count)s volte"
-    },
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(severalUsers)shanno cambiato i <a>messaggi ancorati</a> della stanza",
-        "other": "%(severalUsers)shanno cambiato i <a>messaggi ancorati</a> della stanza %(count)s volte"
-    },
     "Show polls button": "Mostra pulsante sondaggi",
     "We'll create rooms for each of them.": "Creeremo stanze per ognuno di essi.",
     "Click to drop a pin": "Clicca per lasciare una puntina",
@@ -3172,14 +3038,6 @@
     "Enter keywords here, or use for spelling variations or nicknames": "Inserisci le parole chiave qui, o usa per variazioni ortografiche o nomi utente",
     "Quick Actions": "Azioni rapide",
     "Your profile picture URL": "L'URL della tua immagine del profilo",
-    "%(severalUsers)schanged their profile picture %(count)s times": {
-        "other": "%(severalUsers)shanno cambiato la loro immagine del profilo %(count)s volte",
-        "one": "%(severalUsers)shanno cambiato la propria immagine del profilo"
-    },
-    "%(oneUser)schanged their profile picture %(count)s times": {
-        "other": "%(oneUser)sha cambiato la sua immagine del profilo %(count)s volte",
-        "one": "%(oneUser)sha cambiato la propria immagine del profilo"
-    },
     "Views room with given address": "Visualizza la stanza con l'indirizzo dato",
     "Ask to join": "Chiedi di entrare",
     "Select which emails you want to send summaries to. Manage your emails in <button>General</button>.": "Seleziona a quali email vuoi inviare i riepiloghi. Gestisci le email in <button>Generale</button>.",
@@ -3295,7 +3153,9 @@
         "stickerpack": "Pacchetto adesivi",
         "system_alerts": "Avvisi di sistema",
         "secure_backup": "Backup Sicuro",
-        "cross_signing": "Firma incrociata"
+        "cross_signing": "Firma incrociata",
+        "identity_server": "Server di identità",
+        "integration_manager": "Gestore di integrazioni"
     },
     "action": {
         "continue": "Continua",
@@ -3509,7 +3369,8 @@
         "collecting_information": "Raccolta di informazioni sulla versione dell'applicazione",
         "collecting_logs": "Sto recuperando i log",
         "uploading_logs": "Invio dei log",
-        "downloading_logs": "Scaricamento dei log"
+        "downloading_logs": "Scaricamento dei log",
+        "create_new_issue": "<newIssueLink>Segnala un nuovo problema</newIssueLink> su GitHub in modo che possiamo indagare su questo errore."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)so %(minutes)sm %(seconds)ss rimasti",
@@ -3626,6 +3487,10 @@
             "rule_suppress_notices": "Messaggi inviati dai bot",
             "rule_tombstone": "Quando le stanze vengono aggiornate",
             "rule_encrypted_room_one_to_one": "Messaggi cifrati in chat uno-ad-uno"
+        },
+        "appearance": {
+            "layout_irc": "IRC (Sperimentale)",
+            "layout_bubbles": "Messaggi"
         }
     },
     "devtools": {
@@ -3880,6 +3745,145 @@
         },
         "m.call.hangup": {
             "dm": "Chiamata terminata"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)ssono entrati %(count)s volte",
+                "one": "%(severalUsers)ssono entrati"
+            },
+            "joined": {
+                "other": "%(oneUser)s è entrato/a %(count)s volte",
+                "one": "%(oneUser)s è entrato/a"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)ssono usciti %(count)s volte",
+                "one": "%(severalUsers)ssono usciti"
+            },
+            "left": {
+                "other": "%(oneUser)s è uscito/a %(count)s volte",
+                "one": "%(oneUser)s è uscito/a"
+            },
+            "joined_and_left_multiple": {
+                "other": "%(severalUsers)ssono entrati e usciti %(count)s volte",
+                "one": "%(severalUsers)ssono entrati e usciti"
+            },
+            "joined_and_left": {
+                "other": "%(oneUser)s è entrato/a e uscito/a %(count)s volte",
+                "one": "%(oneUser)s è entrato/a e uscito/a"
+            },
+            "rejoined_multiple": {
+                "other": "%(severalUsers)ssono usciti e rientrati %(count)s volte",
+                "one": "%(severalUsers)ssono usciti e rientrati"
+            },
+            "rejoined": {
+                "other": "%(oneUser)s è uscito/a e rientrato/a %(count)s volte",
+                "one": "%(oneUser)s è uscito/a e rientrato/a"
+            },
+            "rejected_invite_multiple": {
+                "other": "%(severalUsers)shanno rifiutato i loro inviti %(count)s volte",
+                "one": "%(severalUsers)shanno rifiutato i loro inviti"
+            },
+            "rejected_invite": {
+                "other": "%(oneUser)sha rifiutato il suo invito %(count)s volte",
+                "one": "%(oneUser)sha rifiutato il suo invito"
+            },
+            "invite_withdrawn_multiple": {
+                "other": "%(severalUsers)shanno visto revocato il loro invito %(count)s volte",
+                "one": "%(severalUsers)shanno visto revocato il loro invito"
+            },
+            "invite_withdrawn": {
+                "other": "%(oneUser)sha visto revocato il suo invito %(count)s volte",
+                "one": "%(oneUser)sha visto revocato il suo invito"
+            },
+            "invited_multiple": {
+                "other": "sono stati invitati %(count)s volte",
+                "one": "sono stati invitati"
+            },
+            "invited": {
+                "other": "è stato/a invitato/a %(count)s volte",
+                "one": "è stato/a invitato/a"
+            },
+            "banned_multiple": {
+                "other": "sono stati banditi %(count)s volte",
+                "one": "sono stati banditi"
+            },
+            "banned": {
+                "other": "è stato bandito %(count)s volte",
+                "one": "è stato bandito"
+            },
+            "unbanned_multiple": {
+                "other": "sono stati riammessi %(count)s volte",
+                "one": "sono stati riammessi"
+            },
+            "unbanned": {
+                "other": "è stato riammesso %(count)s volte",
+                "one": "è stato riammesso"
+            },
+            "kicked_multiple": {
+                "one": "sono stati rimossi",
+                "other": "sono stati rimossi %(count)s volte"
+            },
+            "kicked": {
+                "one": "è stato rimosso",
+                "other": "è stato rimosso %(count)s volte"
+            },
+            "changed_name_multiple": {
+                "other": "%(severalUsers)shanno modificato il loro nome %(count)s volte",
+                "one": "%(severalUsers)shanno modificato il loro nome"
+            },
+            "changed_name": {
+                "other": "%(oneUser)sha modificato il suo nome %(count)s volte",
+                "one": "%(oneUser)sha modificato il suo nome"
+            },
+            "changed_avatar_multiple": {
+                "other": "%(severalUsers)shanno cambiato la loro immagine del profilo %(count)s volte",
+                "one": "%(severalUsers)shanno cambiato la propria immagine del profilo"
+            },
+            "changed_avatar": {
+                "other": "%(oneUser)sha cambiato la sua immagine del profilo %(count)s volte",
+                "one": "%(oneUser)sha cambiato la propria immagine del profilo"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)snon hanno fatto modifiche %(count)s volte",
+                "one": "%(severalUsers)snon hanno fatto modifiche"
+            },
+            "no_change": {
+                "other": "%(oneUser)snon ha fatto modifiche %(count)s volte",
+                "one": "%(oneUser)snon ha fatto modifiche"
+            },
+            "server_acls_multiple": {
+                "one": "%(severalUsers)shanno cambiato le ACL del server",
+                "other": "%(severalUsers)shanno cambiato le ACL del server %(count)s volte"
+            },
+            "server_acls": {
+                "one": "%(oneUser)sha cambiato le ACL del server",
+                "other": "%(oneUser)sha cambiato le ACL del server %(count)s volte"
+            },
+            "pinned_events_multiple": {
+                "one": "%(severalUsers)shanno cambiato i <a>messaggi ancorati</a> della stanza",
+                "other": "%(severalUsers)shanno cambiato i <a>messaggi ancorati</a> della stanza %(count)s volte"
+            },
+            "pinned_events": {
+                "one": "%(oneUser)shanno cambiato i <a>messaggi ancorati</a> della stanza",
+                "other": "%(oneUser)sha cambiato i <a>messaggi ancorati</a> della stanza %(count)s volte"
+            },
+            "redacted_multiple": {
+                "one": "%(severalUsers)shanno rimosso un messaggio",
+                "other": "%(severalUsers)shanno rimosso %(count)s messaggi"
+            },
+            "redacted": {
+                "one": "%(oneUser)sha rimosso un messaggio",
+                "other": "%(oneUser)sha rimosso %(count)s messaggi"
+            },
+            "hidden_event_multiple": {
+                "one": "%(severalUsers)shanno inviato un messaggio nascosto",
+                "other": "%(severalUsers)shanno inviato %(count)s messaggi nascosti"
+            },
+            "hidden_event": {
+                "one": "%(oneUser)sha inviato un messaggio nascosto",
+                "other": "%(oneUser)sha inviato %(count)s messaggi nascosti"
+            }
         }
     },
     "slash_command": {

@@ -515,7 +515,6 @@
     "Your theme": "Asentel-inek·inem",
     "Room ID": "Asulay n texxamt",
     "Widget ID": "Asulay n yiwiǧit",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
     "Power level": "Sagen aswir",
     "Custom level": "Sagen aswir",
     "<a>In reply to</a> <pill>": "<a>Deg tririt i</a> <pill>",
@@ -662,99 +661,10 @@
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Tukksan n uwiǧit, ad t-tekkes akk i yiseqdacen n texxamt-nni. D tidet tebɣiḍ ad tekkseḍ awiǧit-a?",
     "Delete widget": "Kkes awiǧit",
     "Popout widget": "Awiǧit attalan",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Ttxil-k·m <newIssueLink>rnu ugur amaynut</newIssueLink> deg GitHub akken ad nessiweḍ ad nezrew abug-a.",
     "expand": "snefli",
     "Rotate Left": "Zzi ɣer uzelmaḍ",
     "Rotate Right": "Zzi ɣer uyeffus",
     "Language Dropdown": "Tabdart n udrurem n tutlayin",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)srnan-d %(count)s tikkal",
-        "one": "%(severalUsers)srnan-d"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)syerna-d %(count)s tikkal",
-        "one": "%(oneUser)syerna-d"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)sffɣen %(count)s tikkal",
-        "one": "%(severalUsers)s ffɣen"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)s yeffeɣ %(count)s tikkal",
-        "one": "%(oneUser)s yeffeɣ"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "other": "%(severalUsers)srnan-d syen ffɣen %(count)s tikkal",
-        "one": "%(severalUsers)srnan-d syen ffɣen"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "other": "%(oneUser)syerna-d syen yeffeɣ %(count)s tikkal",
-        "one": "%(oneUser)syerna-d syen yeffeɣ"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "other": "%(severalUsers)sffɣen syen uɣalen-d %(count)s tikkal",
-        "one": "%(severalUsers)sffɣen syen uɣalen-d"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "other": "%(oneUser)syeffeɣ-d syen yuɣal-d %(count)s tikkal",
-        "one": "%(oneUser)syeffeɣ-d syen yuɣal-d"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "other": "%(severalUsers)sugin tinubgiwin-nsen %(count)s tikkal",
-        "one": "%(severalUsers)sugin tinubgiwin-nsen"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "other": "%(oneUser)syugi tinubga-ines %(count)s tikkal",
-        "one": "%(oneUser)syugi tinubga-ines"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "other": "%(severalUsers)sunfen i tinubgiwin-nsen yettwagin %(count)s tikkal",
-        "one": "%(severalUsers)sunfen i tinubgiwin-nsen yettwagin"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "%(oneUser)syunef i tinubga-ines yettwagin %(count)s tikkal",
-        "one": "%(oneUser)syunef i tinubga-ines yettwagin"
-    },
-    "were invited %(count)s times": {
-        "other": "ttwanecden-d %(count)s tikkal",
-        "one": "ttwanecden-d"
-    },
-    "was invited %(count)s times": {
-        "other": "yettwanced-d %(count)s tikkal",
-        "one": "yettwanced-d"
-    },
-    "were banned %(count)s times": {
-        "other": "ttwazeglen %(count)s tikkal",
-        "one": "ttwazeglen"
-    },
-    "was banned %(count)s times": {
-        "other": "yettwazgel %(count)s tikkal",
-        "one": "yettwazgel"
-    },
-    "were unbanned %(count)s times": {
-        "other": "ur ttwazeglen ara %(count)s tikkal",
-        "one": "ur ttwazeglen ara"
-    },
-    "was unbanned %(count)s times": {
-        "other": "ur yettwazgel ara %(count)s tikkal",
-        "one": "ur yettwazgel ara"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "other": "%(severalUsers)sbeddlen ismawen-nsen %(count)s tikkal",
-        "one": "%(severalUsers)sbeddlen ismawen-nsen"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "other": "%(oneUser)sibeddel isem-is %(count)s tikkal",
-        "one": "%(oneUser)sibeddel isem-is"
-    },
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)sur gin ara isnifal %(count)s tikkal",
-        "one": "%(severalUsers)sur gin ara isnifal"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)sur ye gi ara isnifal %(count)s tikkal",
-        "one": "%(oneUser)sur ye gi ara isnifal"
-    },
     "QR Code": "Tangalt QR",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "YEgguma ad d-tali tedyant iɣef d-ttunefk tririt, ahat d tilin ur telli ara neɣ ur tesɛiḍ ara tisirag ad tt-twaliḍ.",
     "Room address": "Tansa n texxamt",
@@ -1631,13 +1541,11 @@
     "See images posted to your active room": "Wali tignatin i d-yeffɣen deg texxamt-a iremden",
     "Takes the call in the current room off hold": "Uɣal ɣer usiwel ara iteddun deg -texxamt-a",
     "Places the call in the current room on hold": "Seḥbes asiwel deg texxamt-a i kra n wakud",
-    "Integration manager": "Amsefrak n umsidef",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-ik·im ur ak·am yefki ara tisirag i useqdec n umsefrak n umsidef i wakken ad tgeḍ aya. Ttxil-k·m nermes anedbal.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Aseqdec n uwiǧit-a yezmer ad yebḍu isefka <helpIcon/> d %(widgetDomain)s & amsefrak-inek·inem n umsidef.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Imsefrak n yimsidaf remmsen-d isefka n uswel, syen ad uɣalen zemren ad beddlen iwiǧiten, ad aznen tinubgiwin ɣer texxamin, ad yesbadu daɣen tazmert n yiswiren s yiswiren deg ubdil-ik·im.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Seqdec amsefrak n umsidef i usefrek n yibuten, n yiwiǧiten d tɣawsiwin n usenteḍ.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Seqdec amsefrak n umsidef <b>(%(serverName)s)</b> i usefrek n yibuten, n yiwiǧiten d tɣawsiwin n usenteḍ.",
-    "Identity server": "Aqeddac n timagit",
     "Identity server (%(server)s)": "Aqeddac n timagit (%(server)s)",
     "Could not connect to identity server": "Ur izmir ara ad yeqqen ɣer uqeddac n timagit",
     "Not a valid identity server (status code %(code)s)": "Aqeddac n timagit mačči d ameɣtu (status code %(code)s)",
@@ -1695,7 +1603,9 @@
         "stickerpack": "Akemmus n yimyintaḍ",
         "system_alerts": "Ilɣa n unagraw",
         "secure_backup": "Aklas aɣellsan",
-        "cross_signing": "Azmul anmidag"
+        "cross_signing": "Azmul anmidag",
+        "identity_server": "Aqeddac n timagit",
+        "integration_manager": "Amsefrak n umsidef"
     },
     "action": {
         "continue": "Kemmel",
@@ -1829,7 +1739,8 @@
         "collecting_information": "Alqaḍ n telɣa n lqem n usnas",
         "collecting_logs": "Alqaḍ n yiɣmisen",
         "uploading_logs": "Asali n yiɣmisen",
-        "downloading_logs": "Asader n yiɣmisen"
+        "downloading_logs": "Asader n yiɣmisen",
+        "create_new_issue": "Ttxil-k·m <newIssueLink>rnu ugur amaynut</newIssueLink> deg GitHub akken ad nessiweḍ ad nezrew abug-a."
     },
     "time": {
         "few_seconds_ago": "kra n tesinin seg yimir-nni",
@@ -1963,6 +1874,97 @@
         },
         "m.call.hangup": {
             "dm": "Asiwel yekfa"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)srnan-d %(count)s tikkal",
+                "one": "%(severalUsers)srnan-d"
+            },
+            "joined": {
+                "other": "%(oneUser)syerna-d %(count)s tikkal",
+                "one": "%(oneUser)syerna-d"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)sffɣen %(count)s tikkal",
+                "one": "%(severalUsers)s ffɣen"
+            },
+            "left": {
+                "other": "%(oneUser)s yeffeɣ %(count)s tikkal",
+                "one": "%(oneUser)s yeffeɣ"
+            },
+            "joined_and_left_multiple": {
+                "other": "%(severalUsers)srnan-d syen ffɣen %(count)s tikkal",
+                "one": "%(severalUsers)srnan-d syen ffɣen"
+            },
+            "joined_and_left": {
+                "other": "%(oneUser)syerna-d syen yeffeɣ %(count)s tikkal",
+                "one": "%(oneUser)syerna-d syen yeffeɣ"
+            },
+            "rejoined_multiple": {
+                "other": "%(severalUsers)sffɣen syen uɣalen-d %(count)s tikkal",
+                "one": "%(severalUsers)sffɣen syen uɣalen-d"
+            },
+            "rejoined": {
+                "other": "%(oneUser)syeffeɣ-d syen yuɣal-d %(count)s tikkal",
+                "one": "%(oneUser)syeffeɣ-d syen yuɣal-d"
+            },
+            "rejected_invite_multiple": {
+                "other": "%(severalUsers)sugin tinubgiwin-nsen %(count)s tikkal",
+                "one": "%(severalUsers)sugin tinubgiwin-nsen"
+            },
+            "rejected_invite": {
+                "other": "%(oneUser)syugi tinubga-ines %(count)s tikkal",
+                "one": "%(oneUser)syugi tinubga-ines"
+            },
+            "invite_withdrawn_multiple": {
+                "other": "%(severalUsers)sunfen i tinubgiwin-nsen yettwagin %(count)s tikkal",
+                "one": "%(severalUsers)sunfen i tinubgiwin-nsen yettwagin"
+            },
+            "invite_withdrawn": {
+                "other": "%(oneUser)syunef i tinubga-ines yettwagin %(count)s tikkal",
+                "one": "%(oneUser)syunef i tinubga-ines yettwagin"
+            },
+            "invited_multiple": {
+                "other": "ttwanecden-d %(count)s tikkal",
+                "one": "ttwanecden-d"
+            },
+            "invited": {
+                "other": "yettwanced-d %(count)s tikkal",
+                "one": "yettwanced-d"
+            },
+            "banned_multiple": {
+                "other": "ttwazeglen %(count)s tikkal",
+                "one": "ttwazeglen"
+            },
+            "banned": {
+                "other": "yettwazgel %(count)s tikkal",
+                "one": "yettwazgel"
+            },
+            "unbanned_multiple": {
+                "other": "ur ttwazeglen ara %(count)s tikkal",
+                "one": "ur ttwazeglen ara"
+            },
+            "unbanned": {
+                "other": "ur yettwazgel ara %(count)s tikkal",
+                "one": "ur yettwazgel ara"
+            },
+            "changed_name_multiple": {
+                "other": "%(severalUsers)sbeddlen ismawen-nsen %(count)s tikkal",
+                "one": "%(severalUsers)sbeddlen ismawen-nsen"
+            },
+            "changed_name": {
+                "other": "%(oneUser)sibeddel isem-is %(count)s tikkal",
+                "one": "%(oneUser)sibeddel isem-is"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)sur gin ara isnifal %(count)s tikkal",
+                "one": "%(severalUsers)sur gin ara isnifal"
+            },
+            "no_change": {
+                "other": "%(oneUser)sur ye gi ara isnifal %(count)s tikkal",
+                "one": "%(oneUser)sur ye gi ara isnifal"
+            }
         }
     },
     "slash_command": {

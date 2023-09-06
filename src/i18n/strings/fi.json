@@ -228,11 +228,6 @@
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s vaihtoi huoneen kuvaksi <img/>",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Sinut ohjataan kolmannen osapuolen sivustolle, jotta voit autentikoida tilisi käyttääksesi palvelua %(integrationsUrl)s. Haluatko jatkaa?",
     "A text message has been sent to %(msisdn)s": "Tekstiviesti lähetetty numeroon %(msisdn)s",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
-    "were unbanned %(count)s times": {
-        "other": "vapautettiin porttikiellosta %(count)s kertaa",
-        "one": "vapautettiin porttikiellosta"
-    },
     "And %(count)s more...": {
         "other": "Ja %(count)s muuta..."
     },
@@ -256,85 +251,9 @@
     "URL previews are disabled by default for participants in this room.": "URL-esikatselut ovat oletuksena pois päältä tämän huoneen jäsenillä.",
     "Token incorrect": "Väärä tunniste",
     "Delete Widget": "Poista sovelma",
-    "%(severalUsers)sjoined %(count)s times": {
-        "one": "%(severalUsers)s liittyivät",
-        "other": "%(severalUsers)s liittyivät %(count)s kertaa"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)s liittyi %(count)s kertaa",
-        "one": "%(oneUser)s liittyi"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)s poistuivat %(count)s kertaa",
-        "one": "%(severalUsers)s poistuivat"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)s poistui %(count)s kertaa",
-        "one": "%(oneUser)s poistui"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "other": "%(severalUsers)s liittyivät ja poistuivat %(count)s kertaa",
-        "one": "%(severalUsers)s liittyivät ja poistuivat"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "other": "%(oneUser)s liittyi ja poistui %(count)s kertaa",
-        "one": "%(oneUser)s liittyi ja poistui"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "other": "%(severalUsers)s poistuivat ja liittyivät uudelleen %(count)s kertaa",
-        "one": "%(severalUsers)s poistuivat ja liittyivät uudelleen"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "other": "%(oneUser)s poistui ja liittyi uudelleen %(count)s kertaa",
-        "one": "%(oneUser)s poistui ja liittyi uudelleen"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "other": "%(severalUsers)s hylkäsivät kutsunsa %(count)s kertaa",
-        "one": "%(severalUsers)s hylkäsivät kutsunsa"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "other": "%(oneUser)s hylkäsi kutsun %(count)s kertaa",
-        "one": "%(oneUser)s hylkäsi kutsun"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "other": "Käyttäjien %(severalUsers)s kutsut peruttiin %(count)s kertaa",
-        "one": "Käyttäjien %(severalUsers)s kutsut peruttiin"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "Käyttäjän %(oneUser)s kutsu peruttiin %(count)s kertaa",
-        "one": "Käyttäjän %(oneUser)s kutsu peruttiin"
-    },
-    "were invited %(count)s times": {
-        "other": "kutsuttiin %(count)s kertaa",
-        "one": "kutsuttiin"
-    },
-    "was invited %(count)s times": {
-        "other": "kutsuttiin %(count)s kertaa",
-        "one": "kutsuttiin"
-    },
-    "were banned %(count)s times": {
-        "other": "saivat porttikiellon %(count)s kertaa",
-        "one": "saivat porttikiellon"
-    },
-    "was banned %(count)s times": {
-        "other": "sai porttikiellon %(count)s kertaa",
-        "one": "sai porttikiellon"
-    },
-    "was unbanned %(count)s times": {
-        "other": "porttikielto poistettiin %(count)s kertaa",
-        "one": "porttikielto poistettiin"
-    },
     "expand": "laajenna",
     "collapse": "supista",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Sovelman poistaminen poistaa sen kaikilta huoneen käyttäjiltä. Haluatko varmasti poistaa tämän sovelman?",
-    "%(severalUsers)schanged their name %(count)s times": {
-        "other": "%(severalUsers)s vaihtoivat nimensä %(count)s kertaa",
-        "one": "%(severalUsers)s vaihtoivat nimensä"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "other": "%(oneUser)s vaihtoi nimensä %(count)s kertaa",
-        "one": "%(oneUser)s vaihtoi nimensä"
-    },
     "%(items)s and %(count)s others": {
         "other": "%(items)s ja %(count)s muuta",
         "one": "%(items)s ja yksi muu"
@@ -745,14 +664,6 @@
     "Message edits": "Viestin muokkaukset",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Tämän huoneen päivittäminen edellyttää huoneen nykyisen instanssin sulkemista ja uuden huoneen luomista sen tilalle. Jotta tämä kävisi huoneen jäsenten kannalta mahdollisimman sujuvasti, teemme seuraavaa:",
     "Upload all": "Lähetä kaikki palvelimelle",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)s eivät tehneet muutoksia %(count)s kertaa",
-        "one": "%(severalUsers)s eivät tehneet muutoksia"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)s ei tehnyt muutoksia %(count)s kertaa",
-        "one": "%(oneUser)s ei tehnyt muutoksia"
-    },
     "Your homeserver doesn't seem to support this feature.": "Kotipalvelimesi ei näytä tukevan tätä ominaisuutta.",
     "Resend %(unsentCount)s reaction(s)": "Lähetä %(unsentCount)s reaktio(ta) uudelleen",
     "You're signed out": "Sinut on kirjattu ulos",
@@ -846,7 +757,6 @@
         "one": "Yksi lukematon viesti."
     },
     "Show image": "Näytä kuva",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "<newIssueLink>Luo uusi issue</newIssueLink> GitHubissa, jotta voimme tutkia tätä ongelmaa.",
     "Close dialog": "Sulje dialogi",
     "To continue you need to accept the terms of this service.": "Sinun täytyy hyväksyä palvelun käyttöehdot jatkaaksesi.",
     "Add Email Address": "Lisää sähköpostiosoite",
@@ -1789,13 +1699,11 @@
     "Connecting": "Yhdistetään",
     "unknown person": "tuntematon henkilö",
     "%(deviceId)s from %(ip)s": "%(deviceId)s osoitteesta %(ip)s",
-    "Integration manager": "Integraatiohallinta",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Tämän sovelman käyttäminen saattaa jakaa tietoa <helpIcon /> osoitteille %(widgetDomain)s ja käyttämällesi integraatioiden lähteelle.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integraatioiden lähteet vastaanottavat asetusdataa ja voivat muokata sovelmia, lähettää kutsuja huoneeseen ja asettaa oikeustasoja puolestasi.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Käytä integraatioiden lähdettä bottien, sovelmien ja tarrapakettien hallintaan.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Käytä integraatioiden lähdettä <b>(%(serverName)s)</b> bottien, sovelmien ja tarrapakettien hallintaan.",
-    "Identity server": "Identiteettipalvelin",
     "Identity server (%(server)s)": "Identiteettipalvelin (%(server)s)",
     "Could not connect to identity server": "Identiteettipalvelimeen ei saatu yhteyttä",
     "Not a valid identity server (status code %(code)s)": "Identiteettipalvelin ei ole kelvollinen (tilakoodi %(code)s)",
@@ -1857,7 +1765,6 @@
     "Invite to this space": "Kutsu tähän avaruuteen",
     "Are you sure you want to make this encrypted room public?": "Haluatko varmasti tehdä tästä salatusta huoneesta julkisen?",
     "Unknown failure": "Tuntematon virhe",
-    "Message bubbles": "Viestikuplat",
     "Space members": "Avaruuden jäsenet",
     "& %(count)s more": {
         "one": "& %(count)s lisää",
@@ -2154,7 +2061,6 @@
     "Get notified for every message": "Vastaanota ilmoitus joka viestistä",
     "Show tray icon and minimise window to it on close": "Näytä ilmaisinalueen kuvake ja pienennä ikkuna siihen suljettaessa",
     "Keyboard": "Näppäimistö",
-    "IRC (Experimental)": "IRC (kokeellinen)",
     "Large": "Suuri",
     "Access": "Pääsy",
     "sends rainfall": "lähettää vesisadetta",
@@ -2178,22 +2084,6 @@
     "Edit poll": "Muokkaa kyselyä",
     "Create Poll": "Luo kysely",
     "Create poll": "Luo kysely",
-    "%(oneUser)sremoved a message %(count)s times": {
-        "one": "%(oneUser)spoisti viestin",
-        "other": "%(oneUser)spoistivat %(count)s viestiä"
-    },
-    "%(severalUsers)sremoved a message %(count)s times": {
-        "one": "%(severalUsers)spoistivat viestin",
-        "other": "%(severalUsers)spoistivat %(count)s viestiä"
-    },
-    "was removed %(count)s times": {
-        "one": "poistettiin",
-        "other": "poistettiin %(count)s kertaa"
-    },
-    "were removed %(count)s times": {
-        "one": "poistettiin",
-        "other": "poistettiin %(count)s kertaa"
-    },
     "My current location": "Tämänhetkinen sijaintini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei voinut lähettää sijaintiasi. Yritä myöhemmin uudelleen.",
     "Unknown error fetching location. Please try again later.": "Tuntematon virhe sijaintia noudettaessa. Yritä myöhemmin uudelleen.",
@@ -2232,22 +2122,6 @@
     "Missing room name or separator e.g. (my-room:domain.org)": "Puuttuva huoneen nimi tai erotin, esim. (oma-huone:verkkotunnus.org)",
     "Sorry, the poll you tried to create was not posted.": "Kyselyä, jota yritit luoda, ei valitettavasti julkaistu.",
     "Failed to post poll": "Kyselyn julkaiseminen epäonnistui",
-    "%(oneUser)ssent %(count)s hidden messages": {
-        "one": "%(oneUser)slähetti piilotetun viestin",
-        "other": "%(oneUser)slähetti %(count)s piilotettua viestiä"
-    },
-    "%(severalUsers)ssent %(count)s hidden messages": {
-        "one": "%(severalUsers)slähettivät piilotetun viestin",
-        "other": "%(severalUsers)slähettivät %(count)s piilotettua viestiä"
-    },
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(oneUser)svaihtoi huoneen <a>kiinnitettyjä viestejä</a>",
-        "other": "%(oneUser)svaihtoi huoneen <a>kiinnitettyjä viestejä</a> %(count)s kertaa"
-    },
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(severalUsers)svaihtoivat huoneen <a>kiinnitettyjä viestejä</a>",
-        "other": "%(severalUsers)svaihtoivat huoneen <a>kiinnitettyjä viestejä</a> %(count)s kertaa"
-    },
     "We couldn't send your location": "Emme voineet lähettää sijaintiasi",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s ei saanut lupaa noutaa sijaintiasi. Salli sijainnin käyttäminen selaimen asetuksista.",
     "Unable to load map": "Kartan lataaminen ei onnistu",
@@ -2966,7 +2840,9 @@
         "stickerpack": "Tarrapaketti",
         "system_alerts": "Järjestelmähälytykset",
         "secure_backup": "Turvallinen varmuuskopio",
-        "cross_signing": "Ristiinvarmennus"
+        "cross_signing": "Ristiinvarmennus",
+        "identity_server": "Identiteettipalvelin",
+        "integration_manager": "Integraatiohallinta"
     },
     "action": {
         "continue": "Jatka",
@@ -3160,7 +3036,8 @@
         "collecting_information": "Haetaan sovelluksen versiotietoja",
         "collecting_logs": "Haetaan lokeja",
         "uploading_logs": "Lähetetään lokeja",
-        "downloading_logs": "Ladataan lokeja"
+        "downloading_logs": "Ladataan lokeja",
+        "create_new_issue": "<newIssueLink>Luo uusi issue</newIssueLink> GitHubissa, jotta voimme tutkia tätä ongelmaa."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)s h %(minutes)s m %(seconds)s s jäljellä",
@@ -3273,6 +3150,10 @@
             "rule_suppress_notices": "Bottien lähettämät viestit",
             "rule_tombstone": "Kun huoneet päivitetään",
             "rule_encrypted_room_one_to_one": "Salatut viestit kahdenkeskisissä keskusteluissa"
+        },
+        "appearance": {
+            "layout_irc": "IRC (kokeellinen)",
+            "layout_bubbles": "Viestikuplat"
         }
     },
     "devtools": {
@@ -3482,6 +3363,129 @@
         },
         "m.call.hangup": {
             "dm": "Puhelu päättyi"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "one": "%(severalUsers)s liittyivät",
+                "other": "%(severalUsers)s liittyivät %(count)s kertaa"
+            },
+            "joined": {
+                "other": "%(oneUser)s liittyi %(count)s kertaa",
+                "one": "%(oneUser)s liittyi"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)s poistuivat %(count)s kertaa",
+                "one": "%(severalUsers)s poistuivat"
+            },
+            "left": {
+                "other": "%(oneUser)s poistui %(count)s kertaa",
+                "one": "%(oneUser)s poistui"
+            },
+            "joined_and_left_multiple": {
+                "other": "%(severalUsers)s liittyivät ja poistuivat %(count)s kertaa",
+                "one": "%(severalUsers)s liittyivät ja poistuivat"
+            },
+            "joined_and_left": {
+                "other": "%(oneUser)s liittyi ja poistui %(count)s kertaa",
+                "one": "%(oneUser)s liittyi ja poistui"
+            },
+            "rejoined_multiple": {
+                "other": "%(severalUsers)s poistuivat ja liittyivät uudelleen %(count)s kertaa",
+                "one": "%(severalUsers)s poistuivat ja liittyivät uudelleen"
+            },
+            "rejoined": {
+                "other": "%(oneUser)s poistui ja liittyi uudelleen %(count)s kertaa",
+                "one": "%(oneUser)s poistui ja liittyi uudelleen"
+            },
+            "rejected_invite_multiple": {
+                "other": "%(severalUsers)s hylkäsivät kutsunsa %(count)s kertaa",
+                "one": "%(severalUsers)s hylkäsivät kutsunsa"
+            },
+            "rejected_invite": {
+                "other": "%(oneUser)s hylkäsi kutsun %(count)s kertaa",
+                "one": "%(oneUser)s hylkäsi kutsun"
+            },
+            "invite_withdrawn_multiple": {
+                "other": "Käyttäjien %(severalUsers)s kutsut peruttiin %(count)s kertaa",
+                "one": "Käyttäjien %(severalUsers)s kutsut peruttiin"
+            },
+            "invite_withdrawn": {
+                "other": "Käyttäjän %(oneUser)s kutsu peruttiin %(count)s kertaa",
+                "one": "Käyttäjän %(oneUser)s kutsu peruttiin"
+            },
+            "invited_multiple": {
+                "other": "kutsuttiin %(count)s kertaa",
+                "one": "kutsuttiin"
+            },
+            "invited": {
+                "other": "kutsuttiin %(count)s kertaa",
+                "one": "kutsuttiin"
+            },
+            "banned_multiple": {
+                "other": "saivat porttikiellon %(count)s kertaa",
+                "one": "saivat porttikiellon"
+            },
+            "banned": {
+                "other": "sai porttikiellon %(count)s kertaa",
+                "one": "sai porttikiellon"
+            },
+            "unbanned_multiple": {
+                "other": "vapautettiin porttikiellosta %(count)s kertaa",
+                "one": "vapautettiin porttikiellosta"
+            },
+            "unbanned": {
+                "other": "porttikielto poistettiin %(count)s kertaa",
+                "one": "porttikielto poistettiin"
+            },
+            "kicked_multiple": {
+                "one": "poistettiin",
+                "other": "poistettiin %(count)s kertaa"
+            },
+            "kicked": {
+                "one": "poistettiin",
+                "other": "poistettiin %(count)s kertaa"
+            },
+            "changed_name_multiple": {
+                "other": "%(severalUsers)s vaihtoivat nimensä %(count)s kertaa",
+                "one": "%(severalUsers)s vaihtoivat nimensä"
+            },
+            "changed_name": {
+                "other": "%(oneUser)s vaihtoi nimensä %(count)s kertaa",
+                "one": "%(oneUser)s vaihtoi nimensä"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)s eivät tehneet muutoksia %(count)s kertaa",
+                "one": "%(severalUsers)s eivät tehneet muutoksia"
+            },
+            "no_change": {
+                "other": "%(oneUser)s ei tehnyt muutoksia %(count)s kertaa",
+                "one": "%(oneUser)s ei tehnyt muutoksia"
+            },
+            "pinned_events_multiple": {
+                "one": "%(severalUsers)svaihtoivat huoneen <a>kiinnitettyjä viestejä</a>",
+                "other": "%(severalUsers)svaihtoivat huoneen <a>kiinnitettyjä viestejä</a> %(count)s kertaa"
+            },
+            "pinned_events": {
+                "one": "%(oneUser)svaihtoi huoneen <a>kiinnitettyjä viestejä</a>",
+                "other": "%(oneUser)svaihtoi huoneen <a>kiinnitettyjä viestejä</a> %(count)s kertaa"
+            },
+            "redacted_multiple": {
+                "one": "%(severalUsers)spoistivat viestin",
+                "other": "%(severalUsers)spoistivat %(count)s viestiä"
+            },
+            "redacted": {
+                "one": "%(oneUser)spoisti viestin",
+                "other": "%(oneUser)spoistivat %(count)s viestiä"
+            },
+            "hidden_event_multiple": {
+                "one": "%(severalUsers)slähettivät piilotetun viestin",
+                "other": "%(severalUsers)slähettivät %(count)s piilotettua viestiä"
+            },
+            "hidden_event": {
+                "one": "%(oneUser)slähetti piilotetun viestin",
+                "other": "%(oneUser)slähetti %(count)s piilotettua viestiä"
+            }
         }
     },
     "slash_command": {

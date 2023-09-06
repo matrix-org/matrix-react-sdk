@@ -173,87 +173,6 @@
     "Delete widget": "Изтрий приспособлението",
     "Create new room": "Създай нова стая",
     "Home": "Начална страница",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)sсе присъединиха %(count)s пъти",
-        "one": "%(severalUsers)sсе присъединиха"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)sсе присъедини %(count)s пъти",
-        "one": "%(oneUser)sсе присъедини"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)sнапуснаха %(count)s пъти",
-        "one": "%(severalUsers)sнапуснаха"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)sнапусна %(count)s пъти",
-        "one": "%(oneUser)sнапусна"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "other": "%(severalUsers)sсе присъединиха и напуснаха %(count)s пъти",
-        "one": "%(severalUsers)sсе присъединиха и напуснаха"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "other": "%(oneUser)sсе присъедини и напусна %(count)s пъти",
-        "one": "%(oneUser)sсе присъедини и напусна"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "other": "%(severalUsers)sнапуснаха и се присъединиха отново %(count)s пъти",
-        "one": "%(severalUsers)sнапуснаха и се присъединиха отново"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "other": "%(oneUser)sнапусна и се присъедини отново %(count)s пъти",
-        "one": "%(oneUser)sнапусна и се присъедини отново"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "other": "%(severalUsers)sотхвърлиха своите покани %(count)s пъти",
-        "one": "%(severalUsers)sотхвърлиха своите покани"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "other": "%(oneUser)sотхвърли своята покана %(count)s пъти",
-        "one": "%(oneUser)sотхвърли своята покана"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "other": "%(severalUsers)sоттеглиха своите покани %(count)s пъти",
-        "one": "%(severalUsers)sоттеглиха своите покани"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "%(oneUser)sоттегли своята покана %(count)s пъти",
-        "one": "%(oneUser)sоттегли своята покана"
-    },
-    "were invited %(count)s times": {
-        "other": "бяха поканени %(count)s пъти",
-        "one": "бяха поканени"
-    },
-    "was invited %(count)s times": {
-        "other": "беше поканен %(count)s пъти",
-        "one": "беше поканен"
-    },
-    "were banned %(count)s times": {
-        "other": "бяха блокирани %(count)s пъти",
-        "one": "бяха блокирани"
-    },
-    "was banned %(count)s times": {
-        "other": "беше блокиран %(count)s пъти",
-        "one": "беше блокиран"
-    },
-    "were unbanned %(count)s times": {
-        "other": "бяха отблокирани %(count)s пъти",
-        "one": "бяха отблокирани"
-    },
-    "was unbanned %(count)s times": {
-        "other": "беше отблокиран %(count)s пъти",
-        "one": "беше отблокиран"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "other": "%(severalUsers)sсмениха своето име %(count)s пъти",
-        "one": "%(severalUsers)sсмениха своето име"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "other": "%(oneUser)sсмени своето име %(count)s пъти",
-        "one": "%(oneUser)sсмени своето име"
-    },
     "%(items)s and %(count)s others": {
         "other": "%(items)s и %(count)s други",
         "one": "%(items)s и още един"
@@ -749,14 +668,6 @@
     "Edited at %(date)s. Click to view edits.": "Редактирано на %(date)s. Кликнете за да видите редакциите.",
     "Message edits": "Редакции на съобщение",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Обновяването на тази стая изисква затварянето на текущата и създаване на нова на нейно място. За да е най-удобно за членовете на стаята, ще:",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)sне направиха промени %(count)s пъти",
-        "one": "%(severalUsers)sне направиха промени"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)sне направи промени %(count)s пъти",
-        "one": "%(oneUser)sне направи промени"
-    },
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Моля, кажете ни какво се обърка, или още по-добре - създайте проблем в GitHub обясняващ ситуацията.",
     "Removing…": "Премахване…",
     "Clear all data": "Изчисти всички данни",
@@ -881,7 +792,6 @@
     "Message Actions": "Действия със съобщението",
     "Show image": "Покажи снимката",
     "Cancel search": "Отмени търсенето",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Моля, <newIssueLink>отворете нов проблем</newIssueLink> в GitHub за да проучим проблема.",
     "To continue you need to accept the terms of this service.": "За да продължите, трябва да приемете условията за ползване.",
     "Document": "Документ",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Липсва публичния ключ за catcha в конфигурацията на сървъра. Съобщете това на администратора на сървъра.",
@@ -1710,13 +1620,11 @@
     "Invite to %(spaceName)s": "Покани в %(spaceName)s",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Помолихме браузъра да запомни кой Home сървър използвате за влизане, но за съжаление браузърът ви го е забравил. Отидете на страницата за влизане и опитайте отново.",
     "Too Many Calls": "Твърде много повиквания",
-    "Integration manager": "Мениджър на интеграции",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Вашият %(brand)s не позволява да използвате мениджъра на интеграции за да направите това. Свържете се с администратор.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Използването на това приспособление може да сподели данни <helpIcon /> с %(widgetDomain)s и с мениджъра на интеграции.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Мениджърът на интеграции получава конфигурационни данни, може да модифицира приспособления, да изпраща покани за стаи и да настройва нива на достъп от ваше име.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Използвай мениджър на интеграции за управление на ботове, приспособления и стикери.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Използвай мениджър на интеграции <b>%(serverName)s</b> за управление на ботове, приспособления и стикери.",
-    "Identity server": "Сървър за самоличност",
     "Identity server (%(server)s)": "Сървър за самоличност (%(server)s)",
     "Could not connect to identity server": "Неуспешна връзка със сървъра за самоличност",
     "Not a valid identity server (status code %(code)s)": "Невалиден сървър за самоличност (статус код %(code)s)",
@@ -1801,7 +1709,9 @@
         "stickerpack": "Пакет със стикери",
         "system_alerts": "Системни уведомления",
         "secure_backup": "Защитено резервно копие",
-        "cross_signing": "Кръстосано-подписване"
+        "cross_signing": "Кръстосано-подписване",
+        "identity_server": "Сървър за самоличност",
+        "integration_manager": "Мениджър на интеграции"
     },
     "action": {
         "continue": "Продължи",
@@ -1935,7 +1845,8 @@
         "collecting_information": "Събиране на информация за версията на приложението",
         "collecting_logs": "Събиране на логове",
         "uploading_logs": "Качване на логове",
-        "downloading_logs": "Изтегляне на логове"
+        "downloading_logs": "Изтегляне на логове",
+        "create_new_issue": "Моля, <newIssueLink>отворете нов проблем</newIssueLink> в GitHub за да проучим проблема."
     },
     "time": {
         "date_at_time": "%(date)s в %(time)s",
@@ -2074,6 +1985,97 @@
         },
         "m.call.hangup": {
             "dm": "Разговора приключи"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)sсе присъединиха %(count)s пъти",
+                "one": "%(severalUsers)sсе присъединиха"
+            },
+            "joined": {
+                "other": "%(oneUser)sсе присъедини %(count)s пъти",
+                "one": "%(oneUser)sсе присъедини"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)sнапуснаха %(count)s пъти",
+                "one": "%(severalUsers)sнапуснаха"
+            },
+            "left": {
+                "other": "%(oneUser)sнапусна %(count)s пъти",
+                "one": "%(oneUser)sнапусна"
+            },
+            "joined_and_left_multiple": {
+                "other": "%(severalUsers)sсе присъединиха и напуснаха %(count)s пъти",
+                "one": "%(severalUsers)sсе присъединиха и напуснаха"
+            },
+            "joined_and_left": {
+                "other": "%(oneUser)sсе присъедини и напусна %(count)s пъти",
+                "one": "%(oneUser)sсе присъедини и напусна"
+            },
+            "rejoined_multiple": {
+                "other": "%(severalUsers)sнапуснаха и се присъединиха отново %(count)s пъти",
+                "one": "%(severalUsers)sнапуснаха и се присъединиха отново"
+            },
+            "rejoined": {
+                "other": "%(oneUser)sнапусна и се присъедини отново %(count)s пъти",
+                "one": "%(oneUser)sнапусна и се присъедини отново"
+            },
+            "rejected_invite_multiple": {
+                "other": "%(severalUsers)sотхвърлиха своите покани %(count)s пъти",
+                "one": "%(severalUsers)sотхвърлиха своите покани"
+            },
+            "rejected_invite": {
+                "other": "%(oneUser)sотхвърли своята покана %(count)s пъти",
+                "one": "%(oneUser)sотхвърли своята покана"
+            },
+            "invite_withdrawn_multiple": {
+                "other": "%(severalUsers)sоттеглиха своите покани %(count)s пъти",
+                "one": "%(severalUsers)sоттеглиха своите покани"
+            },
+            "invite_withdrawn": {
+                "other": "%(oneUser)sоттегли своята покана %(count)s пъти",
+                "one": "%(oneUser)sоттегли своята покана"
+            },
+            "invited_multiple": {
+                "other": "бяха поканени %(count)s пъти",
+                "one": "бяха поканени"
+            },
+            "invited": {
+                "other": "беше поканен %(count)s пъти",
+                "one": "беше поканен"
+            },
+            "banned_multiple": {
+                "other": "бяха блокирани %(count)s пъти",
+                "one": "бяха блокирани"
+            },
+            "banned": {
+                "other": "беше блокиран %(count)s пъти",
+                "one": "беше блокиран"
+            },
+            "unbanned_multiple": {
+                "other": "бяха отблокирани %(count)s пъти",
+                "one": "бяха отблокирани"
+            },
+            "unbanned": {
+                "other": "беше отблокиран %(count)s пъти",
+                "one": "беше отблокиран"
+            },
+            "changed_name_multiple": {
+                "other": "%(severalUsers)sсмениха своето име %(count)s пъти",
+                "one": "%(severalUsers)sсмениха своето име"
+            },
+            "changed_name": {
+                "other": "%(oneUser)sсмени своето име %(count)s пъти",
+                "one": "%(oneUser)sсмени своето име"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)sне направиха промени %(count)s пъти",
+                "one": "%(severalUsers)sне направиха промени"
+            },
+            "no_change": {
+                "other": "%(oneUser)sне направи промени %(count)s пъти",
+                "one": "%(oneUser)sне направи промени"
+            }
         }
     },
     "slash_command": {

@@ -281,7 +281,6 @@
     "A text message has been sent to %(msisdn)s": "Wysłano wiadomość tekstową do %(msisdn)s",
     "Delete Widget": "Usuń widżet",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Usunięcie widżetu usuwa go dla wszystkich użytkowników w tym pokoju. Czy na pewno chcesz usunąć ten widżet?",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
     "collapse": "Zwiń",
     "expand": "Rozwiń",
     "<a>In reply to</a> <pill>": "<a>W odpowiedzi do</a> <pill>",
@@ -319,18 +318,6 @@
     "Room Notification": "Powiadomienia pokoju",
     "Demote yourself?": "Zdegradować siebie?",
     "Demote": "Degraduj",
-    "%(severalUsers)sjoined %(count)s times": {
-        "one": "%(severalUsers)sdołączyło",
-        "other": "%(severalUsers)s dołączyło %(count)s razy"
-    },
-    "was invited %(count)s times": {
-        "other": "został zaproszony %(count)s razy",
-        "one": "został zaproszony"
-    },
-    "was banned %(count)s times": {
-        "one": "został zbanowany",
-        "other": "został zbanowany %(count)s razy"
-    },
     "Permission Required": "Wymagane Uprawnienia",
     "You do not have permission to start a conference call in this room": "Nie posiadasz uprawnień do rozpoczęcia rozmowy grupowej w tym pokoju",
     "Unignored user": "Nieignorowany użytkownik",
@@ -347,18 +334,6 @@
     "You don't currently have any stickerpacks enabled": "Nie masz obecnie włączonych żadnych pakietów naklejek",
     "This room is a continuation of another conversation.": "Ten pokój jest kontynuacją innej rozmowy.",
     "Click here to see older messages.": "Kliknij tutaj, aby zobaczyć starsze wiadomości.",
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)s dołączył %(count)s razy",
-        "one": "%(oneUser)s dołączył"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "one": "%(severalUsers)s wyszło",
-        "other": "%(severalUsers)swyszło %(count)s razy"
-    },
-    "were invited %(count)s times": {
-        "one": "zostało zaproszonych",
-        "other": "zostało zaproszonych %(count)s razy"
-    },
     "Updating %(brand)s": "Aktualizowanie %(brand)s",
     "Please <a>contact your service administrator</a> to continue using this service.": "Proszę, <a>skontaktuj się z administratorem</a> aby korzystać dalej z funkcji.",
     "Only room administrators will see this warning": "Tylko administratorzy pokojów widzą to ostrzeżenie",
@@ -390,60 +365,12 @@
     "Common names and surnames are easy to guess": "Popularne imiona i nazwiska są łatwe do odgadnięcia",
     "You do not have permission to invite people to this room.": "Nie masz uprawnień do zapraszania ludzi do tego pokoju.",
     "Unknown server error": "Nieznany błąd serwera",
-    "%(oneUser)sleft %(count)s times": {
-        "one": "%(oneUser)s wyszedł",
-        "other": "%(oneUser)sopuścił %(count)s razy"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "other": "%(oneUser)s dołączył i wyszedł %(count)s razy",
-        "one": "%(oneUser)s dołączył i wyszedł"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "one": "%(severalUsers)s dołączyło i wyszło",
-        "other": "%(severalUsers)s dołączyło i wyszło %(count)s razy"
-    },
-    "were banned %(count)s times": {
-        "one": "zostało zbanowanych",
-        "other": "zostało zbanowanych %(count)s razy"
-    },
     "%(items)s and %(count)s others": {
         "other": "%(items)s i %(count)s innych",
         "one": "%(items)s i jedna inna osoba"
     },
-    "%(oneUser)schanged their name %(count)s times": {
-        "one": "%(oneUser)szmienił swoją nazwę",
-        "other": "%(oneUser)szmienił swoją nazwę %(count)s razy"
-    },
     "Add some now": "Dodaj teraz kilka",
     "Please review and accept all of the homeserver's policies": "Przeczytaj i zaakceptuj wszystkie zasady dotyczące serwera domowego",
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "other": "%(severalUsers)swyszło i dołączyło ponownie %(count)s razy",
-        "one": "%(severalUsers)swyszło i dołączyło ponownie"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "other": "%(oneUser)s wyszedł i dołączył ponownie %(count)s razy",
-        "one": "%(oneUser)s wyszedł i dołączył ponownie"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "other": "%(oneUser)sodrzucił ich zaproszenie %(count)s razy",
-        "one": "%(oneUser)sodrzucił ich zaproszenie"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "one": "%(severalUsers)sodrzuciło ich zaproszenia",
-        "other": "%(severalUsers)sodrzuciło ich zaproszenia %(count)s razy"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "%(oneUser)swycofał zaproszenie %(count)s razy",
-        "one": "%(oneUser)swycofał zaproszenie"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "other": "%(severalUsers)swycofało zaproszenie %(count)s razy",
-        "one": "%(severalUsers)swycofało zaproszenie"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "other": "%(severalUsers)szmieniło ich nazwę %(count)s razy",
-        "one": "%(severalUsers)szmieniło ich nazwę"
-    },
     "Continue With Encryption Disabled": "Kontynuuj Z Wyłączonym Szyfrowaniem",
     "Capitalization doesn't help very much": "Kapitalizacja nie pomaga bardzo",
     "This is a top-10 common password": "To jest 10 najpopularniejszych haseł",
@@ -451,14 +378,6 @@
     "Unable to create key backup": "Nie można utworzyć kopii zapasowej klucza",
     "No backup found!": "Nie znaleziono kopii zapasowej!",
     "Create a new room with the same name, description and avatar": "Utwórz nowy pokój o tej samej nazwie, opisie i awatarze",
-    "was unbanned %(count)s times": {
-        "one": "został odbanowany",
-        "other": "został odbanowany %(count)s razy"
-    },
-    "were unbanned %(count)s times": {
-        "one": "zostali odbanowani",
-        "other": "zostali odbanowani %(count)s razy"
-    },
     "Please review and accept the policies of this homeserver:": "Przeczytaj i zaakceptuj zasady tego serwera domowego:",
     "This is similar to a commonly used password": "Jest to podobne do powszechnie stosowanego hasła",
     "That doesn't match.": "To się nie zgadza.",
@@ -681,14 +600,6 @@
     "Unread messages.": "Nieprzeczytane wiadomości.",
     "%(creator)s created and configured the room.": "%(creator)s stworzył i skonfigurował pokój.",
     "Missing media permissions, click the button below to request.": "Brakuje uprawnień do mediów, kliknij przycisk poniżej, aby o nie zapytać.",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)snie wykonało zmian %(count)s razy",
-        "one": "%(severalUsers)snie wykonało zmian"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)snie wykonał zmian %(count)s razy",
-        "one": "%(oneUser)snie wykonał zmian"
-    },
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Nie zdołano wczytać zdarzenia, na które odpowiedziano, może ono nie istnieć lub nie masz uprawnienia, by je zobaczyć.",
     "e.g. my-room": "np. mój-pokój",
     "Some characters not allowed": "Niektóre znaki niedozwolone",
@@ -1428,11 +1339,9 @@
     "Search for rooms or people": "Szukaj pokojów i ludzi",
     "Some suggestions may be hidden for privacy.": "Niektóre propozycje mogą być ukryte z uwagi na prywatność.",
     "Or send invite link": "Lub wyślij link z zaproszeniem",
-    "Integration manager": "Menedżer integracji",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Zarządcy integracji otrzymują dane konfiguracji, mogą modyfikować widżety, wysyłać zaproszenia do pokojów i ustawiać poziom uprawnień w Twoim imieniu.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Użyj zarządcy integracji aby zarządzać botami, widżetami i pakietami naklejek.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Użyj zarządcy Integracji <b>%(serverName)s</b> aby zarządzać botami, widżetami i pakietami naklejek.",
-    "Identity server": "Serwer tożsamości",
     "Identity server (%(server)s)": "Serwer tożsamości (%(server)s)",
     "Could not connect to identity server": "Nie można połączyć z serwerem tożsamości",
     "Not a valid identity server (status code %(code)s)": "Nieprawidłowy serwer tożsamości (kod statusu %(code)s)",
@@ -1559,8 +1468,6 @@
     "An error occurred whilst saving your notification preferences.": "Wystąpił błąd podczas zapisywania twoich ustawień powiadomień.",
     "Error saving notification preferences": "Błąd zapisywania ustawień powiadomień",
     "Messages containing keywords": "Wiadomości zawierające słowa kluczowe",
-    "Message bubbles": "Dymki wiadomości",
-    "IRC (Experimental)": "IRC (eksperymentalny)",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Aktualizowanie przestrzeni...",
         "other": "Aktualizowanie przestrzeni... (%(progress)s z %(count)s)"
@@ -2699,47 +2606,6 @@
     "Language Dropdown": "Rozwiń języki",
     "Message in %(room)s": "Wiadomość w %(room)s",
     "Image view": "Widok obrazu",
-    "%(oneUser)ssent %(count)s hidden messages": {
-        "one": "%(oneUser)swysłał ukrytą wiadomość",
-        "other": "%(oneUser)swysłał %(count)s ukrytych wiadomości"
-    },
-    "%(severalUsers)ssent %(count)s hidden messages": {
-        "other": "%(severalUsers)swysłało %(count)s ukrytych wiadomości",
-        "one": "%(severalUsers)swysłało ukrytą wiadomość"
-    },
-    "%(oneUser)sremoved a message %(count)s times": {
-        "one": "%(oneUser)susunął wiadomość",
-        "other": "%(oneUser)susunął %(count)s wiadomości"
-    },
-    "%(severalUsers)sremoved a message %(count)s times": {
-        "one": "%(severalUsers)susunęło wiadomość",
-        "other": "%(severalUsers)susunęło %(count)s wiadomości"
-    },
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(oneUser)szmienił <a>przypięte wiadomości</a> pokoju",
-        "other": "%(oneUser)szmienił <a>przypięte wiadomości</a> pokoju %(count)s razy"
-    },
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(severalUsers)szmieniło <a>przypięte wiadomości</a> pokoju",
-        "other": "%(severalUsers)szmieniło <a>przypięte wiadomości</a> pokoju %(count)s razy"
-    },
-    "%(oneUser)schanged the server ACLs %(count)s times": {
-        "one": "%(oneUser)szmienił ACL serwera",
-        "other": "%(oneUser)szmienił ACL serwera %(count)s razy"
-    },
-    "%(severalUsers)schanged the server ACLs %(count)s times": {
-        "one": "%(severalUsers)szmieniło ACL serwera",
-        "other": "%(severalUsers)szmieniło ACL serwera %(count)s razy"
-    },
-    "was removed %(count)s times": {
-        "one": "zostało usunięte",
-        "other": "zostało usunięte %(count)s raz"
-    },
-    "were removed %(count)s times": {
-        "one": "zostało usuniętych",
-        "other": "zostało usuniętych %(count)s razy"
-    },
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "<newIssueLink>Utwórz nowe zgłoszenie</newIssueLink> na GitHubie, abyśmy mogli zbadać ten błąd.",
     "Popout widget": "Wyskakujący widżet",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Korzystanie z tego widżetu może współdzielić dane <helpIcon /> z %(widgetDomain)s i Twoim menedżerem integracji.",
     "Feedback sent! Thanks, we appreciate it!": "Wysłano opinię! Dziękujemy, doceniamy to!",
@@ -3171,13 +3037,7 @@
     "Great! This passphrase looks strong enough": "Świetnie! To hasło wygląda na wystarczająco silne",
     "New room activity, upgrades and status messages occur": "Pojawiła się nowa aktywność pokoju, aktualizacje i status wiadomości",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Wiadomości tutaj są szyfrowane end-to-end. Aby zweryfikować profil %(displayName)s - kliknij na zdjęcie profilowe.",
-    "%(severalUsers)schanged their profile picture %(count)s times": {
-        "other": "%(severalUsers)szmieniło swoje zdjęcie profilowe %(count)s razy"
-    },
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Wiadomości w tym pokoju są szyfrowane end-to-end. Możesz zweryfikować osoby, które dołączą klikając na ich zdjęcie profilowe.",
-    "%(oneUser)schanged their profile picture %(count)s times": {
-        "other": "%(oneUser)szmienił swoje zdjęcie profilowe %(count)s razy"
-    },
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Eksportowany plik zezwoli każdemu, kto go odczyta na szyfrowanie i rozszyfrowanie wiadomości, które widzisz. By usprawnić proces, wprowadź hasło poniżej, które posłuży do szyfrowania eksportowanych danych. Importowanie danych będzie możliwe wyłącznie za pomocą tego hasła.",
     "Applied by default to all rooms on all devices.": "Zastosowano domyślnie do wszystkich pokoi na każdym urządzeniu.",
     "Show a badge <badge/> when keywords are used in a room.": "Wyświetl plakietkę <badge/>, gdy słowa kluczowe są używane w pokoju.",
@@ -3273,7 +3133,9 @@
         "stickerpack": "Pakiet naklejek",
         "system_alerts": "Alerty systemowe",
         "secure_backup": "Bezpieczna kopia zapasowa",
-        "cross_signing": "Weryfikacja krzyżowa"
+        "cross_signing": "Weryfikacja krzyżowa",
+        "identity_server": "Serwer tożsamości",
+        "integration_manager": "Menedżer integracji"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -3486,7 +3348,8 @@
         "collecting_information": "Zbieranie informacji o wersji aplikacji",
         "collecting_logs": "Zbieranie dzienników",
         "uploading_logs": "Wysyłanie logów",
-        "downloading_logs": "Pobieranie logów"
+        "downloading_logs": "Pobieranie logów",
+        "create_new_issue": "<newIssueLink>Utwórz nowe zgłoszenie</newIssueLink> na GitHubie, abyśmy mogli zbadać ten błąd."
     },
     "time": {
         "hours_minutes_seconds_left": "pozostało %(hours)s godz. %(minutes)s min. %(seconds)ss",
@@ -3603,6 +3466,10 @@
             "rule_suppress_notices": "Wiadomości wysłane przez bota",
             "rule_tombstone": "Kiedy pokoje są uaktualniane",
             "rule_encrypted_room_one_to_one": "Zaszyfrowane wiadomości w rozmowach jeden-do-jednego"
+        },
+        "appearance": {
+            "layout_irc": "IRC (eksperymentalny)",
+            "layout_bubbles": "Dymki wiadomości"
         }
     },
     "devtools": {
@@ -3857,6 +3724,143 @@
         },
         "m.call.hangup": {
             "dm": "Połączenie zakończone"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "one": "%(severalUsers)sdołączyło",
+                "other": "%(severalUsers)s dołączyło %(count)s razy"
+            },
+            "joined": {
+                "other": "%(oneUser)s dołączył %(count)s razy",
+                "one": "%(oneUser)s dołączył"
+            },
+            "left_multiple": {
+                "one": "%(severalUsers)s wyszło",
+                "other": "%(severalUsers)swyszło %(count)s razy"
+            },
+            "left": {
+                "one": "%(oneUser)s wyszedł",
+                "other": "%(oneUser)sopuścił %(count)s razy"
+            },
+            "joined_and_left_multiple": {
+                "one": "%(severalUsers)s dołączyło i wyszło",
+                "other": "%(severalUsers)s dołączyło i wyszło %(count)s razy"
+            },
+            "joined_and_left": {
+                "other": "%(oneUser)s dołączył i wyszedł %(count)s razy",
+                "one": "%(oneUser)s dołączył i wyszedł"
+            },
+            "rejoined_multiple": {
+                "other": "%(severalUsers)swyszło i dołączyło ponownie %(count)s razy",
+                "one": "%(severalUsers)swyszło i dołączyło ponownie"
+            },
+            "rejoined": {
+                "other": "%(oneUser)s wyszedł i dołączył ponownie %(count)s razy",
+                "one": "%(oneUser)s wyszedł i dołączył ponownie"
+            },
+            "rejected_invite_multiple": {
+                "one": "%(severalUsers)sodrzuciło ich zaproszenia",
+                "other": "%(severalUsers)sodrzuciło ich zaproszenia %(count)s razy"
+            },
+            "rejected_invite": {
+                "other": "%(oneUser)sodrzucił ich zaproszenie %(count)s razy",
+                "one": "%(oneUser)sodrzucił ich zaproszenie"
+            },
+            "invite_withdrawn_multiple": {
+                "other": "%(severalUsers)swycofało zaproszenie %(count)s razy",
+                "one": "%(severalUsers)swycofało zaproszenie"
+            },
+            "invite_withdrawn": {
+                "other": "%(oneUser)swycofał zaproszenie %(count)s razy",
+                "one": "%(oneUser)swycofał zaproszenie"
+            },
+            "invited_multiple": {
+                "one": "zostało zaproszonych",
+                "other": "zostało zaproszonych %(count)s razy"
+            },
+            "invited": {
+                "other": "został zaproszony %(count)s razy",
+                "one": "został zaproszony"
+            },
+            "banned_multiple": {
+                "one": "zostało zbanowanych",
+                "other": "zostało zbanowanych %(count)s razy"
+            },
+            "banned": {
+                "one": "został zbanowany",
+                "other": "został zbanowany %(count)s razy"
+            },
+            "unbanned_multiple": {
+                "one": "zostali odbanowani",
+                "other": "zostali odbanowani %(count)s razy"
+            },
+            "unbanned": {
+                "one": "został odbanowany",
+                "other": "został odbanowany %(count)s razy"
+            },
+            "kicked_multiple": {
+                "one": "zostało usuniętych",
+                "other": "zostało usuniętych %(count)s razy"
+            },
+            "kicked": {
+                "one": "zostało usunięte",
+                "other": "zostało usunięte %(count)s raz"
+            },
+            "changed_name_multiple": {
+                "other": "%(severalUsers)szmieniło ich nazwę %(count)s razy",
+                "one": "%(severalUsers)szmieniło ich nazwę"
+            },
+            "changed_name": {
+                "one": "%(oneUser)szmienił swoją nazwę",
+                "other": "%(oneUser)szmienił swoją nazwę %(count)s razy"
+            },
+            "changed_avatar_multiple": {
+                "other": "%(severalUsers)szmieniło swoje zdjęcie profilowe %(count)s razy"
+            },
+            "changed_avatar": {
+                "other": "%(oneUser)szmienił swoje zdjęcie profilowe %(count)s razy"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)snie wykonało zmian %(count)s razy",
+                "one": "%(severalUsers)snie wykonało zmian"
+            },
+            "no_change": {
+                "other": "%(oneUser)snie wykonał zmian %(count)s razy",
+                "one": "%(oneUser)snie wykonał zmian"
+            },
+            "server_acls_multiple": {
+                "one": "%(severalUsers)szmieniło ACL serwera",
+                "other": "%(severalUsers)szmieniło ACL serwera %(count)s razy"
+            },
+            "server_acls": {
+                "one": "%(oneUser)szmienił ACL serwera",
+                "other": "%(oneUser)szmienił ACL serwera %(count)s razy"
+            },
+            "pinned_events_multiple": {
+                "one": "%(severalUsers)szmieniło <a>przypięte wiadomości</a> pokoju",
+                "other": "%(severalUsers)szmieniło <a>przypięte wiadomości</a> pokoju %(count)s razy"
+            },
+            "pinned_events": {
+                "one": "%(oneUser)szmienił <a>przypięte wiadomości</a> pokoju",
+                "other": "%(oneUser)szmienił <a>przypięte wiadomości</a> pokoju %(count)s razy"
+            },
+            "redacted_multiple": {
+                "one": "%(severalUsers)susunęło wiadomość",
+                "other": "%(severalUsers)susunęło %(count)s wiadomości"
+            },
+            "redacted": {
+                "one": "%(oneUser)susunął wiadomość",
+                "other": "%(oneUser)susunął %(count)s wiadomości"
+            },
+            "hidden_event_multiple": {
+                "other": "%(severalUsers)swysłało %(count)s ukrytych wiadomości",
+                "one": "%(severalUsers)swysłało ukrytą wiadomość"
+            },
+            "hidden_event": {
+                "one": "%(oneUser)swysłał ukrytą wiadomość",
+                "other": "%(oneUser)swysłał %(count)s ukrytych wiadomości"
+            }
         }
     },
     "slash_command": {

@@ -163,7 +163,6 @@
     "Rotate Left": "أدر لليسار",
     "expand": "توسيع",
     "collapse": "تضييق",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "الرجاء <newIssueLink> إنشاء إشكال جديد</newIssueLink> على GitHub حتى نتمكن من التحقيق في هذا الخطأ.",
     "This version of %(brand)s does not support searching encrypted messages": "لا يدعم هذا الإصدار من %(brand)s البحث في الرسائل المشفرة",
     "This version of %(brand)s does not support viewing some encrypted files": "لا يدعم هذا الإصدار من %(brand)s s عرض بعض الملفات المشفرة",
     "Use the <a>Desktop app</a> to search encrypted messages": "استخدم <a> تطبيق سطح المكتب </a> للبحث في الرسائل المشفرة",
@@ -912,7 +911,6 @@
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "يتلقى مديرو التكامل بيانات الضبط، ويمكنهم تعديل عناصر واجهة المستخدم، وإرسال دعوات الغرف، وتعيين مستويات القوة نيابة عنك.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "استخدم مدير التكامل لإدارة البوتات وعناصر الواجهة وحزم الملصقات.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "استخدم مدير التكامل <b>(%(serverName)s)</b> لإدارة البوتات وعناصر الواجهة وحزم الملصقات.",
-    "Identity server": "خادوم الهوية",
     "Identity server (%(server)s)": "خادوم الهوية (%(server)s)",
     "Could not connect to identity server": "تعذر الاتصال بخادوم الهوية",
     "Not a valid identity server (status code %(code)s)": "ليس خادوم هوية صالح (رمز الحالة %(code)s)",
@@ -1076,7 +1074,8 @@
         "stickerpack": "حزمة الملصقات",
         "system_alerts": "تنبيهات النظام",
         "secure_backup": "تأمين النسخ الاحتياطي",
-        "cross_signing": "التوقيع المتبادل"
+        "cross_signing": "التوقيع المتبادل",
+        "identity_server": "خادوم الهوية"
     },
     "action": {
         "continue": "واصِل",
@@ -1168,7 +1167,8 @@
         "collecting_information": "تجميع المعلومات حول نسخة التطبيق",
         "collecting_logs": "تجميع السجلات",
         "uploading_logs": "رفع السجلات",
-        "downloading_logs": "تحميل السجلات"
+        "downloading_logs": "تحميل السجلات",
+        "create_new_issue": "الرجاء <newIssueLink> إنشاء إشكال جديد</newIssueLink> على GitHub حتى نتمكن من التحقيق في هذا الخطأ."
     },
     "time": {
         "date_at_time": "%(date)s في %(time)s"
