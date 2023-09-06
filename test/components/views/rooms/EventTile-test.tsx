@@ -27,9 +27,7 @@ import {
     Room,
     TweakName,
 } from "matrix-js-sdk/src/matrix";
-import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
-import { IEncryptedEventInfo } from "matrix-js-sdk/src/crypto/api";
+import { EventEncryptionInfo, EventShieldColour, EventShieldReason } from "matrix-js-sdk/src/crypto-api";
 
 import EventTile, { EventTileProps } from "../../../../src/components/views/rooms/EventTile";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
@@ -200,34 +198,15 @@ describe("EventTile", () => {
         });
     });
     describe("Event verification", () => {
-        // data for our stubbed getEventEncryptionInfo: a map from event id to result
-        const eventToEncryptionInfoMap = new Map<string, IEncryptedEventInfo>();
-
-        const TRUSTED_DEVICE = DeviceInfo.fromStorage({}, "TRUSTED_DEVICE");
-        const UNTRUSTED_DEVICE = DeviceInfo.fromStorage({}, "UNTRUSTED_DEVICE");
+        // data for our stubbed getEncryptionInfoForEvent: a map from event id to result
+        const eventToEncryptionInfoMap = new Map<string, EventEncryptionInfo>();
 
         beforeEach(() => {
             eventToEncryptionInfoMap.clear();
 
-            // a mocked version of getEventEncryptionInfo which will pick its result from `eventToEncryptionInfoMap`
-            client.getEventEncryptionInfo = (event) => eventToEncryptionInfoMap.get(event.getId()!)!;
-
-            // a mocked version of checkUserTrust which always says the user is trusted (we do our testing via
-            // unverified devices).
-            const trustedUserTrustLevel = new UserTrustLevel(true, true, true);
-            client.checkUserTrust = (_userId) => trustedUserTrustLevel;
-
-            // a version of checkDeviceTrust which says that TRUSTED_DEVICE is trusted, and others are not.
-            const trustedDeviceTrustLevel = DeviceTrustLevel.fromUserTrustLevel(trustedUserTrustLevel, true, false);
-            const untrustedDeviceTrustLevel = DeviceTrustLevel.fromUserTrustLevel(trustedUserTrustLevel, false, false);
             const mockCrypto = {
-                getDeviceVerificationStatus: async (userId: string, deviceId: string) => {
-                    if (deviceId === TRUSTED_DEVICE.deviceId) {
-                        return trustedDeviceTrustLevel;
-                    } else {
-                        return untrustedDeviceTrustLevel;
-                    }
-                },
+                // a mocked version of getEncryptionInfoForEvent which will pick its result from `eventToEncryptionInfoMap`
+                getEncryptionInfoForEvent: async (event: MatrixEvent) => eventToEncryptionInfoMap.get(event.getId()!)!,
             } as unknown as CryptoApi;
             client.getCrypto = () => mockCrypto;
         });
@@ -240,9 +219,9 @@ describe("EventTile", () => {
                 room: room.roomId,
             });
             eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                authenticated: true,
-                sender: UNTRUSTED_DEVICE,
-            } as IEncryptedEventInfo);
+                shieldColour: EventShieldColour.RED,
+                shieldReason: EventShieldReason.UNSIGNED_DEVICE,
+            } as EventEncryptionInfo);
 
             const { container } = getComponent();
             await act(flushPromises);
@@ -265,9 +244,9 @@ describe("EventTile", () => {
                 room: room.roomId,
             });
             eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                authenticated: true,
-                sender: TRUSTED_DEVICE,
-            } as IEncryptedEventInfo);
+                shieldColour: EventShieldColour.NONE,
+                shieldReason: null,
+            } as EventEncryptionInfo);
 
             const { container } = getComponent();
             await act(flushPromises);
@@ -288,12 +267,13 @@ describe("EventTile", () => {
                 room: room.roomId,
             });
             eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                authenticated: true,
-                sender: TRUSTED_DEVICE,
-            } as IEncryptedEventInfo);
+                shieldColour: EventShieldColour.NONE,
+                shieldReason: null,
+            } as EventEncryptionInfo);
 
             const roomContext = getRoomContext(room, {});
             const { container, rerender } = render(<WrappedEventTile roomContext={roomContext} />);
+
             await act(flushPromises);
 
             const eventTiles = container.getElementsByClassName("mx_EventTile");
@@ -310,9 +290,9 @@ describe("EventTile", () => {
                 room: room.roomId,
             });
             eventToEncryptionInfoMap.set(replacementEvent.getId()!, {
-                authenticated: true,
-                sender: UNTRUSTED_DEVICE,
-            } as IEncryptedEventInfo);
+                shieldColour: EventShieldColour.RED,
+                shieldReason: EventShieldReason.UNSIGNED_DEVICE,
+            } as EventEncryptionInfo);
 
             await act(async () => {
                 mxEvent.makeReplaced(replacementEvent);
@@ -337,10 +317,11 @@ describe("EventTile", () => {
                 user: "@alice:example.org",
                 room: room.roomId,
             });
+
             eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                authenticated: true,
-                sender: TRUSTED_DEVICE,
-            } as IEncryptedEventInfo);
+                shieldColour: EventShieldColour.NONE,
+                shieldReason: null,
+            } as EventEncryptionInfo);
 
             const roomContext = getRoomContext(room, {});
             const { container, rerender } = render(<WrappedEventTile roomContext={roomContext} />);
