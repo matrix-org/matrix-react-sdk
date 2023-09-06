@@ -245,7 +245,6 @@
     "Activity": "Gníomhaíocht",
     "Feedback": "Aiseolas",
     "Ok": "Togha",
-    "Categories": "Catagóire",
     "Autocomplete": "Uathiomlánaigh",
     "Calls": "Glaonna",
     "Navigation": "Nascleanúint",
@@ -257,10 +256,6 @@
     "Lock": "Glasáil",
     "Unencrypted": "Gan chriptiú",
     "None": "Níl aon cheann",
-    "Flags": "Bratacha",
-    "Symbols": "Siombailí",
-    "Objects": "Rudaí",
-    "Activities": "Gníomhaíochtaí",
     "Document": "Cáipéis",
     "Italics": "Iodálach",
     "Discovery": "Aimsiú",
@@ -400,7 +395,6 @@
     "Lion": "Leon",
     "Cat": "Cat",
     "Dog": "Madra",
-    "Verified!": "Deimhnithe!",
     "Reason": "Cúis",
     "Moderator": "Modhnóir",
     "Restricted": "Teoranta",
@@ -789,5 +783,17 @@
             "ban": "Toirmisc úsáideoirí",
             "notifications.room": "Tabhair fógraí do gach duine"
         }
+    },
+    "encryption": {
+        "verification": {
+            "complete_title": "Deimhnithe!"
+        }
+    },
+    "emoji": {
+        "category_activities": "Gníomhaíochtaí",
+        "category_objects": "Rudaí",
+        "category_symbols": "Siombailí",
+        "category_flags": "Bratacha",
+        "categories": "Catagóire"
     }
 }

@@ -125,9 +125,6 @@
     "Enable widget screenshots on supported widgets": "Widget-schermafdrukkn inschoakeln ip oundersteunde widgets",
     "Show hidden events in timeline": "Verborgn gebeurtenissn ip de tydslyn weregeevn",
     "Waiting for response from server": "Wachtn ip antwoord van de server",
-    "The other party cancelled the verification.": "De tegenparty èt de verificoasje geannuleerd.",
-    "Verified!": "Geverifieerd!",
-    "You've successfully verified this user.": "J’èt deze gebruuker geverifieerd.",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Beveiligde berichtn me deze gebruuker zyn eind-tout-eind-versleuterd en kunn nie door derdn wordn geleezn.",
     "Got It": "’k Snappen ’t",
     "Verify this user by confirming the following emoji appear on their screen.": "Verifieert deze gebruuker deur te bevestign da zyn/heur scherm de volgende emoji toogt.",
@@ -1081,6 +1078,13 @@
             "state_default": "Instelliengn wyzign",
             "ban": "Gebruukers verbann",
             "notifications.room": "Iedereen meldn"
+        }
+    },
+    "encryption": {
+        "verification": {
+            "other_party_cancelled": "De tegenparty èt de verificoasje geannuleerd.",
+            "complete_title": "Geverifieerd!",
+            "complete_description": "J’èt deze gebruuker geverifieerd."
         }
     }
 }

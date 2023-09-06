@@ -473,8 +473,6 @@
     "Encryption not enabled": "Шифровање није омогућено",
     "The encryption used by this room isn't supported.": "Начин шифровања унутар ове собе није подржан.",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>реаговали са %(shortName)s</reactedWith>",
-    "Smileys & People": "Смешци и особе",
-    "Quick Reactions": "Брзе реакције",
     "Widgets do not use message encryption.": "Виџети не користе шифровање порука.",
     "Enable end-to-end encryption": "Омогући шифровање с краја на крај",
     "Report Content to Your Homeserver Administrator": "Пријави садржај администратору вашег домаћег сервера",
@@ -518,7 +516,6 @@
     "Send as message": "Пошаљи у облику поруке",
     "Failed to revoke invite": "Неуспех при отказивању позивнице",
     "Revoke invite": "Откажи позивницу",
-    "Categories": "Категорије",
     "Your theme": "Ваша тема",
     "Looks good": "Изгледа добро",
     "Show advanced": "Прикажи напредно",
@@ -909,9 +906,6 @@
     "Lion": "лав",
     "Cat": "мачка",
     "Dog": "Пас",
-    "To be secure, do this in person or use a trusted way to communicate.": "Да будете сигурни, ово обавите лично или путем поузданог начина комуникације.",
-    "They don't match": "Не поклапају се",
-    "They match": "Поклапају се",
     "Cancelling…": "Отказујем…",
     "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s је локално сигурно кешира шифроване поруке да би се појавиле у резултатима претраге:",
     "You may want to try a different search or check for typos.": "Можда ћете желети да испробате другачију претрагу или да проверите да ли имате правописне грешке.",
@@ -1405,5 +1399,17 @@
             "m.room.encryption": "Омогући шифровање собе",
             "state_default": "Промени подешавања"
         }
+    },
+    "encryption": {
+        "verification": {
+            "sas_no_match": "Не поклапају се",
+            "sas_match": "Поклапају се",
+            "in_person": "Да будете сигурни, ово обавите лично или путем поузданог начина комуникације."
+        }
+    },
+    "emoji": {
+        "category_smileys_people": "Смешци и особе",
+        "categories": "Категорије",
+        "quick_reactions": "Брзе реакције"
     }
 }

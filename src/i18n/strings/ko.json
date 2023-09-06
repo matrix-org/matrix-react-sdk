@@ -540,9 +540,6 @@
     "Straight rows of keys are easy to guess": "키의 한 줄은 추측하기 쉽습니다",
     "Short keyboard patterns are easy to guess": "짧은 키보드 패턴은 추측하기 쉽습니다",
     "Show hidden events in timeline": "타임라인에서 숨겨진 이벤트 보이기",
-    "The other party cancelled the verification.": "상대방이 확인을 취소했습니다.",
-    "Verified!": "인증되었습니다!",
-    "You've successfully verified this user.": "성공적으로 이 사용자를 인증했습니다.",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "이 사용자 간의 보안 메시지는 종단간 암호화되며 제 3자가 읽을 수 없습니다.",
     "Got It": "알겠습니다",
     "Verify this user by confirming the following emoji appear on their screen.": "다음 이모지가 상대방의 화면에 나타나는 것을 확인하는 것으로 이 사용자를 인증합니다.",
@@ -885,16 +882,6 @@
     "contact the administrators of identity server <idserver />": "ID 서버 <idserver />의 관리자와 연락하세요",
     "wait and try again later": "기다리고 나중에 다시 시도하세요",
     "Command Autocomplete": "명령어 자동 완성",
-    "Quick Reactions": "빠른 리액션",
-    "Frequently Used": "자주 사용함",
-    "Smileys & People": "표정 & 사람",
-    "Animals & Nature": "동물 & 자연",
-    "Food & Drink": "음식 & 음료",
-    "Activities": "활동",
-    "Travel & Places": "여행 & 장소",
-    "Objects": "물건",
-    "Symbols": "기호",
-    "Flags": "깃발",
     "Cancel search": "검색 취소",
     "Failed to deactivate user": "사용자 비활성화에 실패함",
     "This client does not support end-to-end encryption.": "이 클라이언트는 종단간 암호화를 지원하지 않습니다.",
@@ -1463,5 +1450,24 @@
             "ban": "사용자 출입 금지",
             "notifications.room": "모두에게 알림"
         }
+    },
+    "encryption": {
+        "verification": {
+            "other_party_cancelled": "상대방이 확인을 취소했습니다.",
+            "complete_title": "인증되었습니다!",
+            "complete_description": "성공적으로 이 사용자를 인증했습니다."
+        }
+    },
+    "emoji": {
+        "category_frequently_used": "자주 사용함",
+        "category_smileys_people": "표정 & 사람",
+        "category_animals_nature": "동물 & 자연",
+        "category_food_drink": "음식 & 음료",
+        "category_activities": "활동",
+        "category_travel_places": "여행 & 장소",
+        "category_objects": "물건",
+        "category_symbols": "기호",
+        "category_flags": "깃발",
+        "quick_reactions": "빠른 리액션"
     }
 }

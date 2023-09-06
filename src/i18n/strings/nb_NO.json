@@ -172,16 +172,6 @@
     "Download %(text)s": "Last ned %(text)s",
     "Copied!": "Kopiert!",
     "What's New": "Hva er nytt",
-    "Frequently Used": "Ofte brukte",
-    "Smileys & People": "Smilefjes og folk",
-    "Animals & Nature": "Dyreliv og natur",
-    "Food & Drink": "Mat og drikke",
-    "Activities": "Aktiviteter",
-    "Travel & Places": "Reise og steder",
-    "Objects": "Objekter",
-    "Symbols": "Symboler",
-    "Flags": "Flagg",
-    "Quick Reactions": "Hurtigreaksjoner",
     "Cancel search": "Avbryt søket",
     "More options": "Flere alternativer",
     "collapse": "skjul",
@@ -222,9 +212,7 @@
     "Send analytics data": "Send analytiske data",
     "Show hidden events in timeline": "Vis skjulte hendelser i tidslinjen",
     "My Ban List": "Min bannlysningsliste",
-    "Verified!": "Verifisert!",
     "Got It": "Skjønner",
-    "Scan this unique code": "Skann denne unike koden",
     "Lion": "Løve",
     "Pig": "Gris",
     "Rabbit": "Kanin",
@@ -527,8 +515,6 @@
     "Avoid sequences": "Unngå sekvenser",
     "Avoid recent years": "Unngå nylige år",
     "Cancelling…": "Avbryter …",
-    "They match": "De samsvarer",
-    "They don't match": "De samsvarer ikke",
     "in memory": "i minnet",
     "Delete Backup": "Slett sikkerhetskopien",
     "Restore from Backup": "Gjenopprett fra sikkerhetskopi",
@@ -678,7 +664,6 @@
     "Ok": "OK",
     "Encryption upgrade available": "Krypteringsoppdatering tilgjengelig",
     "Font size": "Skriftstørrelse",
-    "You've successfully verified this user.": "Du har vellykket verifisert denne brukeren.",
     "Santa": "Julenisse",
     "wait and try again later": "vent og prøv igjen senere",
     "Size must be a number": "Størrelsen må være et nummer",
@@ -704,7 +689,6 @@
     "Click here to see older messages.": "Klikk for å se eldre meldinger.",
     "Add an Integration": "Legg til en integrering",
     "Can't load this message": "Klarte ikke å laste inn denne meldingen",
-    "Categories": "Kategorier",
     "Popout widget": "Utsprettsmodul",
     "QR Code": "QR-kode",
     "Room address": "Rommets adresse",
@@ -1662,5 +1646,27 @@
             "ban": "Bannlys brukere",
             "notifications.room": "Varsle alle"
         }
+    },
+    "encryption": {
+        "verification": {
+            "sas_no_match": "De samsvarer ikke",
+            "sas_match": "De samsvarer",
+            "complete_title": "Verifisert!",
+            "complete_description": "Du har vellykket verifisert denne brukeren.",
+            "qr_prompt": "Skann denne unike koden"
+        }
+    },
+    "emoji": {
+        "category_frequently_used": "Ofte brukte",
+        "category_smileys_people": "Smilefjes og folk",
+        "category_animals_nature": "Dyreliv og natur",
+        "category_food_drink": "Mat og drikke",
+        "category_activities": "Aktiviteter",
+        "category_travel_places": "Reise og steder",
+        "category_objects": "Objekter",
+        "category_symbols": "Symboler",
+        "category_flags": "Flagg",
+        "categories": "Kategorier",
+        "quick_reactions": "Hurtigreaksjoner"
     }
 }
