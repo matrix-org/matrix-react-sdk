@@ -15,17 +15,17 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { render, waitFor, screen, act, fireEvent } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import {
-    EventType,
     CryptoApi,
-    TweakName,
-    NotificationCountType,
-    Room,
-    MatrixEvent,
+    EventType,
     MatrixClient,
+    MatrixEvent,
+    NotificationCountType,
     PendingEventOrdering,
+    Room,
+    TweakName,
 } from "matrix-js-sdk/src/matrix";
 import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
@@ -40,6 +40,7 @@ import { mkThread } from "../../../test-utils/threads";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import dis from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
+import { IRoomState } from "../../../../src/components/structures/RoomView";
 
 describe("EventTile", () => {
     const ROOM_ID = "!roomId:example.org";
@@ -49,12 +50,22 @@ describe("EventTile", () => {
 
     // let changeEvent: (event: MatrixEvent) => void;
 
-    function TestEventTile(props: Partial<EventTileProps>) {
-        // const [event] = useState(mxEvent);
-        // Give a way for a test to update the event prop.
-        // changeEvent = setEvent;
-
-        return <EventTile mxEvent={mxEvent} {...props} />;
+    /** wrap the EventTile up in context providers, and with basic properties, as it would be by MessagePanel normally. */
+    function WrappedEventTile(props: {
+        roomContext: IRoomState;
+        eventTilePropertyOverrides?: Partial<EventTileProps>;
+    }) {
+        return (
+            <MatrixClientContext.Provider value={client}>
+                <RoomContext.Provider value={props.roomContext}>
+                    <EventTile
+                        mxEvent={mxEvent}
+                        replacingEventId={mxEvent.replacingEventId()}
+                        {...(props.eventTilePropertyOverrides ?? {})}
+                    />
+                </RoomContext.Provider>
+            </MatrixClientContext.Provider>
+        );
     }
 
     function getComponent(
@@ -64,14 +75,7 @@ describe("EventTile", () => {
         const context = getRoomContext(room, {
             timelineRenderingType: renderingType,
         });
-        return render(
-            <MatrixClientContext.Provider value={client}>
-                <RoomContext.Provider value={context}>
-                    <TestEventTile {...overrides} />
-                </RoomContext.Provider>
-                ,
-            </MatrixClientContext.Provider>,
-        );
+        return render(<WrappedEventTile roomContext={context} eventTilePropertyOverrides={overrides} />);
     }
 
     beforeEach(() => {
@@ -288,7 +292,8 @@ describe("EventTile", () => {
                 sender: TRUSTED_DEVICE,
             } as IEncryptedEventInfo);
 
-            const { container } = getComponent();
+            const roomContext = getRoomContext(room, {});
+            const { container, rerender } = render(<WrappedEventTile roomContext={roomContext} />);
             await act(flushPromises);
 
             const eventTiles = container.getElementsByClassName("mx_EventTile");
@@ -311,7 +316,8 @@ describe("EventTile", () => {
 
             await act(async () => {
                 mxEvent.makeReplaced(replacementEvent);
-                flushPromises();
+                rerender(<WrappedEventTile roomContext={roomContext} />);
+                await flushPromises;
             });
 
             // check it was updated
@@ -336,7 +342,8 @@ describe("EventTile", () => {
                 sender: TRUSTED_DEVICE,
             } as IEncryptedEventInfo);
 
-            const { container } = getComponent();
+            const roomContext = getRoomContext(room, {});
+            const { container, rerender } = render(<WrappedEventTile roomContext={roomContext} />);
             await act(flushPromises);
 
             const eventTiles = container.getElementsByClassName("mx_EventTile");
@@ -355,7 +362,8 @@ describe("EventTile", () => {
 
             await act(async () => {
                 mxEvent.makeReplaced(replacementEvent);
-                await flushPromises();
+                rerender(<WrappedEventTile roomContext={roomContext} />);
+                await flushPromises;
             });
 
             // check it was updated
