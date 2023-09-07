@@ -28,7 +28,6 @@
     "Off": "Av",
     "Failed to remove tag %(tagName)s from room": "Kunne ikke fjerne tagg %(tagName)s fra rommet",
     "Saturday": "Lørdag",
-    "Call Failed": "Oppringning mislyktes",
     "You cannot place a call with yourself.": "Du kan ikke ringe deg selv.",
     "Permission Required": "Tillatelse kreves",
     "You do not have permission to start a conference call in this room": "Du har ikke tillatelse til å starte en konferansesamtale i dette rommet",
@@ -70,7 +69,6 @@
     "Default": "Standard",
     "Restricted": "Begrenset",
     "Moderator": "Moderator",
-    "Admin": "Admin",
     "Operation failed": "Operasjon mislyktes",
     "Failed to invite": "Klarte ikke invitere",
     "You need to be logged in.": "Du må være logget inn.",
@@ -85,16 +83,11 @@
     "Missing room_id in request": "Manglende room_id i forespørselen",
     "Room %(roomId)s not visible": "Rom %(roomId)s er ikke synlig",
     "Missing user_id in request": "Manglende user_id i forespørselen",
-    "Usage": "Bruk",
     "Chat with %(brand)s Bot": "Chat med %(brand)s Bot",
     "Call failed due to misconfigured server": "Oppringingen feilet på grunn av feil-konfigurert tjener",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Vennligst be administratoren av din hjemmetjener (<code>%(homeserverDomain)s</code>) til å konfigurere en TURN tjener slik at samtaler vil fungere best mulig.",
     "The file '%(fileName)s' failed to upload.": "Filen '%(fileName)s' kunne ikke lastes opp.",
     "The server does not support the room version specified.": "Tjeneren støtter ikke rom versjonen som ble spesifisert.",
-    "Messages": "Meldinger",
-    "Actions": "Handlinger",
-    "Advanced": "Avansert",
-    "Other": "Andre",
     "Ignored user": "Ignorert(e) bruker",
     "You are now ignoring %(userId)s": "%(userId)s er nå ignorert",
     "Unignored user": "Uignorert bruker",
@@ -170,9 +163,6 @@
     "Are you sure?": "Er du sikker?",
     "Admin Tools": "Adminverktøy",
     "Invited": "Invitert",
-    "Send an encrypted reply…": "Send et kryptert svar …",
-    "Send an encrypted message…": "Send en kryptert beskjed …",
-    "Send a message…": "Send en melding …",
     "Italics": "Kursiv",
     "Direct Messages": "Direktemeldinger",
     "Rooms": "Rom",
@@ -182,16 +172,6 @@
     "Download %(text)s": "Last ned %(text)s",
     "Copied!": "Kopiert!",
     "What's New": "Hva er nytt",
-    "Frequently Used": "Ofte brukte",
-    "Smileys & People": "Smilefjes og folk",
-    "Animals & Nature": "Dyreliv og natur",
-    "Food & Drink": "Mat og drikke",
-    "Activities": "Aktiviteter",
-    "Travel & Places": "Reise og steder",
-    "Objects": "Objekter",
-    "Symbols": "Symboler",
-    "Flags": "Flagg",
-    "Quick Reactions": "Hurtigreaksjoner",
     "Cancel search": "Avbryt søket",
     "More options": "Flere alternativer",
     "collapse": "skjul",
@@ -232,9 +212,7 @@
     "Send analytics data": "Send analytiske data",
     "Show hidden events in timeline": "Vis skjulte hendelser i tidslinjen",
     "My Ban List": "Min bannlysningsliste",
-    "Verified!": "Verifisert!",
     "Got It": "Skjønner",
-    "Scan this unique code": "Skann denne unike koden",
     "Lion": "Løve",
     "Pig": "Gris",
     "Rabbit": "Kanin",
@@ -309,15 +287,7 @@
     "Sounds": "Lyder",
     "Notification sound": "Varslingslyd",
     "Set a new custom sound": "Velg en ny selvvalgt lyd",
-    "Change permissions": "Endre tillatelser",
-    "Change topic": "Endre samtaletema",
-    "Upgrade the room": "Oppgrader rommet",
-    "Modify widgets": "Endre på moduler",
     "Banned by %(displayName)s": "Bannlyst av %(displayName)s",
-    "Send messages": "Send meldinger",
-    "Invite users": "Inviter brukere",
-    "Change settings": "Endre innstillinger",
-    "Ban users": "Bannlys brukere",
     "Roles & Permissions": "Roller og tillatelser",
     "Enable encryption?": "Vil du skru på kryptering?",
     "Drop file here to upload": "Slipp ned en fil her for å laste opp",
@@ -325,8 +295,6 @@
     "Unencrypted": "Ukryptert",
     "Deactivate user?": "Vil du deaktivere brukeren?",
     "Deactivate user": "Deaktiver brukeren",
-    "Voice call": "Stemmesamtale",
-    "Video call": "Videosamtale",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)st",
@@ -345,7 +313,6 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s er ikke tilgjengelig for øyeblikket.",
     "This Room": "Dette rommet",
     "Server error": "Serverfeil",
-    "Stickerpack": "Klistremerkepakke",
     "Main address": "Hovedadresse",
     "not specified": "ikke spesifisert",
     "Local address": "Lokal adresse",
@@ -368,22 +335,6 @@
     "Delete widget": "Slett modul",
     "Rotate Left": "Roter til venstre",
     "Rotate Right": "Roter til høyre",
-    "were invited %(count)s times": {
-        "one": "ble invitert",
-        "other": "ble invitert %(count)s ganger"
-    },
-    "was invited %(count)s times": {
-        "one": "ble invitert",
-        "other": "ble invitert %(count)s ganger"
-    },
-    "were banned %(count)s times": {
-        "one": "ble bannlyst",
-        "other": "ble bannlyst %(count)s ganger"
-    },
-    "was banned %(count)s times": {
-        "one": "ble bannlyst",
-        "other": "ble bannlyst %(count)s ganger"
-    },
     "Power level": "Styrkenivå",
     "e.g. my-room": "f.eks. mitt-rom",
     "Enter a server name": "Skriv inn et tjenernavn",
@@ -448,12 +399,6 @@
     "Clear cache and reload": "Tøm mellomlageret og last inn siden på nytt",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Import E2E room keys": "Importer E2E-romnøkler",
-    "Change room avatar": "Endre rommets avatar",
-    "Change room name": "Endre rommets navn",
-    "Change main address for the room": "Endre hovedadressen til rommet",
-    "Change history visibility": "Endre historikkens synlighet",
-    "Enable room encryption": "Skru på kryptering av rommet",
-    "Default role": "Forvalgt rolle",
     "Privileged Users": "Priviligerte brukere",
     "Send %(eventType)s events": "Send %(eventType)s-hendelser",
     "Select the roles required to change various parts of the room": "Velg rollene som kreves for å endre på diverse deler av rommet",
@@ -466,7 +411,6 @@
     "Scroll to most recent messages": "Hopp bort til de nyeste meldingene",
     "Share Link to User": "Del en lenke til brukeren",
     "Filter room members": "Filtrer rommets medlemmer",
-    "Send a reply…": "Send et svar …",
     "Replying": "Svarer på",
     "Room %(name)s": "Rom %(name)s",
     "Start chatting": "Begynn å chatte",
@@ -495,30 +439,6 @@
     "Widget added by": "Modulen ble lagt til av",
     "Create new room": "Opprett et nytt rom",
     "Language Dropdown": "Språk-nedfallsmeny",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)s ble med %(count)s ganger",
-        "one": "%(severalUsers)s ble med"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)s ble med %(count)s ganger",
-        "one": "%(oneUser)s ble med"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)s forlot rommet %(count)s ganger",
-        "one": "%(severalUsers)s forlot rommet"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)s forlot rommet %(count)s ganger",
-        "one": "%(oneUser)s forlot rommet"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "one": "%(severalUsers)s endret navnene sine"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "one": "%(oneUser)s endret navnet sitt",
-        "other": "%(oneUser)sendret navnet sitt %(count)s ganger"
-    },
     "Custom level": "Tilpasset nivå",
     "And %(count)s more...": {
         "other": "Og %(count)s til..."
@@ -555,8 +475,6 @@
     "Avoid sequences": "Unngå sekvenser",
     "Avoid recent years": "Unngå nylige år",
     "Cancelling…": "Avbryter …",
-    "They match": "De samsvarer",
-    "They don't match": "De samsvarer ikke",
     "in memory": "i minnet",
     "Delete Backup": "Slett sikkerhetskopien",
     "Restore from Backup": "Gjenopprett fra sikkerhetskopi",
@@ -588,14 +506,6 @@
     "%(name)s wants to verify": "%(name)s ønsker å verifisere",
     "Failed to copy": "Mislyktes i å kopiere",
     "Submit logs": "Send inn loggføringer",
-    "were unbanned %(count)s times": {
-        "other": "fikk bannlysningene sine opphevet %(count)s ganger",
-        "one": "fikk bannlysningene sine opphevet"
-    },
-    "was unbanned %(count)s times": {
-        "other": "fikk bannlysningen sin opphevet %(count)s ganger",
-        "one": "fikk bannlysningen sin opphevet"
-    },
     "Clear all data": "Tøm alle data",
     "Verify session": "Verifiser økten",
     "Upload completed": "Opplasting fullført",
@@ -612,7 +522,6 @@
     "Homeserver feature support:": "Hjemmetjener-funksjonsstøtte:",
     "Read Marker lifetime (ms)": "Lesemarkørens visningstid (ms)",
     "Read Marker off-screen lifetime (ms)": "Lesemarkørens visningstid utenfor skjermen (ms)",
-    "Cross-signing": "Kryssignering",
     "URL previews are enabled by default for participants in this room.": "URL-forhåndsvisninger er skrudd på som standard for deltakerene i dette rommet.",
     "URL previews are disabled by default for participants in this room.": "URL-forhåndsvisninger er skrudd av som standard for deltakerene i dette rommet.",
     "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.": "I krypterte rom som denne, er URL-forhåndsvisninger skrudd av som standard for å sikre at hjemmetjeneren din (der forhåndsvisningene blir generert) ikke kan samle inn informasjon om lenkene som du ser i dette rommet.",
@@ -643,7 +552,6 @@
     "You have not ignored anyone.": "Du har ikke ignorert noen.",
     "You are not subscribed to any lists": "Du er ikke abonnert på noen lister",
     "Uploaded sound": "Lastet opp lyd",
-    "Notify everyone": "Varsle alle",
     "Muted Users": "Dempede brukere",
     "Incorrect verification code": "Ugyldig verifiseringskode",
     "Unable to add email address": "Klarte ikke å legge til E-postadressen",
@@ -655,9 +563,7 @@
         "one": "og én annen …"
     },
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (styrkenivå %(powerLevelNumber)s)",
-    "Hangup": "Legg på røret",
     "The conversation continues here.": "Samtalen fortsetter her.",
-    "System Alerts": "Systemvarsler",
     "Reason: %(reason)s": "Årsak: %(reason)s",
     "You were banned from %(roomName)s by %(memberName)s": "Du ble bannlyst fra %(roomName)s av %(memberName)s",
     "Do you want to chat with %(user)s?": "Vil du prate med %(user)s?",
@@ -710,7 +616,6 @@
     "Ok": "OK",
     "Encryption upgrade available": "Krypteringsoppdatering tilgjengelig",
     "Font size": "Skriftstørrelse",
-    "You've successfully verified this user.": "Du har vellykket verifisert denne brukeren.",
     "Santa": "Julenisse",
     "wait and try again later": "vent og prøv igjen senere",
     "Size must be a number": "Størrelsen må være et nummer",
@@ -736,7 +641,6 @@
     "Click here to see older messages.": "Klikk for å se eldre meldinger.",
     "Add an Integration": "Legg til en integrering",
     "Can't load this message": "Klarte ikke å laste inn denne meldingen",
-    "Categories": "Kategorier",
     "Popout widget": "Utsprettsmodul",
     "QR Code": "QR-kode",
     "Room address": "Rommets adresse",
@@ -834,8 +738,6 @@
     "United States": "USA",
     "%(name)s is requesting verification": "%(name)s ber om verifisering",
     "We couldn't log you in": "Vi kunne ikke logge deg inn",
-    "You're already in a call with this person.": "Du er allerede i en samtale med denne personen.",
-    "Already in call": "Allerede i en samtale",
     "Burundi": "Burundi",
     "Burkina Faso": "Burkina Faso",
     "Bulgaria": "Bulgaria",
@@ -871,8 +773,6 @@
     "Only continue if you trust the owner of the server.": "Fortsett kun om du stoler på eieren av serveren.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Denne handlingen krever tilgang til standard identitetsserver <server /> for å kunne validere en epostaddresse eller telefonnummer, men serveren har ikke bruksvilkår.",
     "Too Many Calls": "For mange samtaler",
-    "Call failed because webcam or microphone could not be accessed. Check that:": "Samtalen mislyktes fordi du fikk ikke tilgang til webkamera eller mikrofon. Sørg for at:",
-    "Unable to access webcam / microphone": "Ingen tilgang til webkamera / mikrofon",
     "The call was answered on another device.": "Samtalen ble besvart på en annen enhet.",
     "The call could not be established": "Samtalen kunne ikke etableres",
     "Click the button below to confirm adding this phone number.": "Klikk knappen nedenfor for å bekrefte dette telefonnummeret.",
@@ -883,7 +783,6 @@
     "Edit devices": "Rediger enheter",
     "Add existing room": "Legg til et eksisterende rom",
     "Invite to this space": "Inviter til dette området",
-    "Send message": "Send melding",
     "Invite to %(roomName)s": "Inviter til %(roomName)s",
     "Resume": "Fortsett",
     "Avatar": "Profilbilde",
@@ -964,27 +863,6 @@
     "Continue with %(provider)s": "Fortsett med %(provider)s",
     "This address is already in use": "Denne adressen er allerede i bruk",
     "<a>In reply to</a> <pill>": "<a>Som svar på</a> <pill>",
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "one": "%(oneUser)sfikk sin invitasjon trukket tilbake"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "one": "%(severalUsers)sfikk sine invitasjoner trukket tilbake"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "one": "%(oneUser)savslo invitasjonen sin"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "one": "%(oneUser)sforlot og ble med igjen"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "one": "%(severalUsers)sforlot og ble med igjen"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "one": "%(oneUser)sble med og forlot igjen"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "one": "%(severalUsers)sble med og forlot igjen"
-    },
     "Information": "Informasjon",
     "%(name)s cancelled verifying": "%(name)s avbrøt verifiseringen",
     "You cancelled verifying %(name)s": "Du avbrøt verifiseringen av %(name)s",
@@ -1021,14 +899,10 @@
     "Hide Widgets": "Skjul moduler",
     "Update %(brand)s": "Oppdater %(brand)s",
     "You are currently ignoring:": "Du ignorerer for øyeblikket:",
-    "Unknown caller": "Ukjent oppringer",
     "Dial pad": "Nummerpanel",
-    "%(name)s on hold": "%(name)s står på vent",
     "sends confetti": "sender konfetti",
     "System font name": "Systemskrifttypenavn",
     "Use a system font": "Bruk en systemskrifttype",
-    "Waiting for answer": "Venter på svar",
-    "Call in progress": "Anrop pågår",
     "Channel: <channelLink/>": "Kanal: <channelLink/>",
     "Enable desktop notifications": "Aktiver skrivebordsvarsler",
     "Don't miss a reply": "Ikke gå glipp av noen svar",
@@ -1043,7 +917,6 @@
     "No need for symbols, digits, or uppercase letters": "Ikke nødvendig med symboler, sifre eller bokstaver",
     "See images posted to this room": "Se bilder som er lagt ut i dette rommet",
     "Change the topic of this room": "Endre dette rommets tema",
-    "Effects": "Effekter",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
     "Zambia": "Zambia",
@@ -1239,11 +1112,9 @@
     "Cook Islands": "Cook-øyene",
     "All keys backed up": "Alle nøkler er sikkerhetskopiert",
     "Secret storage:": "Hemmelig lagring:",
-    "Integration manager": "Integreringsbehandler",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integreringsbehandlere mottar oppsettsdata, og kan endre på moduler, sende rominvitasjoner, og bestemme styrkenivåer på dine vegne.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Bruk en integreringsbehandler til å behandle botter, moduler, og klistremerkepakker.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Bruk en integreringsbehandler <b>(%(serverName)s)</b> til å behandle botter, moduler, og klistremerkepakker.",
-    "Identity server": "Identitetstjener",
     "Identity server (%(server)s)": "Identitetstjener (%(server)s)",
     "Could not connect to identity server": "Kunne ikke koble til identitetsserveren",
     "Show:": "Vis:",
@@ -1266,12 +1137,7 @@
     "Delete avatar": "Slett profilbilde",
     "Corn": "Mais",
     "Cloud": "Sky",
-    "Mute the microphone": "Demp mikrofonen",
-    "Unmute the microphone": "Opphev demping av mikrofonen",
-    "Dialpad": "Nummerpanel",
     "More": "Mer",
-    "Stop the camera": "Stopp kameraet",
-    "Start the camera": "Start kameraet",
     "Connecting": "Kobler til",
     "Change the name of this room": "Endre rommets navn",
     "St. Pierre & Miquelon": "Saint-Pierre og Miquelon",
@@ -1279,11 +1145,6 @@
     "St. Barthélemy": "Saint Barthélemy",
     "You cannot place calls without a connection to the server.": "Du kan ikke ringe uten tilkobling til serveren.",
     "Connectivity to the server has been lost": "Mistet forbindelsen til serveren",
-    "You cannot place calls in this browser.": "Du kan ikke ringe i denne nettleseren.",
-    "Calls are unsupported": "Samtaler støttes ikke",
-    "No other application is using the webcam": "Ingen andre applikasjoner bruker webkameraet",
-    "A microphone and webcam are plugged in and set up correctly": "En mikrofon og webkamera er koblet til og satt opp riktig",
-    "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "Samtalen mislyktes fordi mikrofonen ikke var tilgjengelig. Sjekk at en mikrofon er koblet til og satt opp riktig.",
     "common": {
         "about": "Om",
         "analytics": "Statistikk",
@@ -1346,7 +1207,12 @@
         "matrix": "Matrix",
         "trusted": "Betrodd",
         "not_trusted": "Ikke betrodd",
-        "unnamed_room": "Navnløst rom"
+        "unnamed_room": "Navnløst rom",
+        "stickerpack": "Klistremerkepakke",
+        "system_alerts": "Systemvarsler",
+        "cross_signing": "Kryssignering",
+        "identity_server": "Identitetstjener",
+        "integration_manager": "Integreringsbehandler"
     },
     "action": {
         "continue": "Fortsett",
@@ -1456,7 +1322,12 @@
         "format_bold": "Fet",
         "format_strikethrough": "Gjennomstreking",
         "format_inline_code": "Kode",
-        "format_code_block": "Kodefelt"
+        "format_code_block": "Kodefelt",
+        "send_button_title": "Send melding",
+        "placeholder_reply_encrypted": "Send et kryptert svar …",
+        "placeholder_reply": "Send et svar …",
+        "placeholder_encrypted": "Send en kryptert beskjed …",
+        "placeholder": "Send en melding …"
     },
     "Bold": "Fet",
     "Code": "Kode",
@@ -1534,7 +1405,9 @@
         "value": "Verdi",
         "active_widgets": "Aktive moduler",
         "toolbox": "Verktøykasse",
-        "developer_tools": "Utviklerverktøy"
+        "developer_tools": "Utviklerverktøy",
+        "category_room": "Rom",
+        "category_other": "Andre"
     },
     "export_chat": {
         "html": "HTML",
@@ -1613,6 +1486,77 @@
                 "other": "%(names)s og %(count)s andre skriver …",
                 "one": "%(names)s og én annen bruker skriver …"
             }
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)s ble med %(count)s ganger",
+                "one": "%(severalUsers)s ble med"
+            },
+            "joined": {
+                "other": "%(oneUser)s ble med %(count)s ganger",
+                "one": "%(oneUser)s ble med"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)s forlot rommet %(count)s ganger",
+                "one": "%(severalUsers)s forlot rommet"
+            },
+            "left": {
+                "other": "%(oneUser)s forlot rommet %(count)s ganger",
+                "one": "%(oneUser)s forlot rommet"
+            },
+            "joined_and_left_multiple": {
+                "one": "%(severalUsers)sble med og forlot igjen"
+            },
+            "joined_and_left": {
+                "one": "%(oneUser)sble med og forlot igjen"
+            },
+            "rejoined_multiple": {
+                "one": "%(severalUsers)sforlot og ble med igjen"
+            },
+            "rejoined": {
+                "one": "%(oneUser)sforlot og ble med igjen"
+            },
+            "rejected_invite": {
+                "one": "%(oneUser)savslo invitasjonen sin"
+            },
+            "invite_withdrawn_multiple": {
+                "one": "%(severalUsers)sfikk sine invitasjoner trukket tilbake"
+            },
+            "invite_withdrawn": {
+                "one": "%(oneUser)sfikk sin invitasjon trukket tilbake"
+            },
+            "invited_multiple": {
+                "one": "ble invitert",
+                "other": "ble invitert %(count)s ganger"
+            },
+            "invited": {
+                "one": "ble invitert",
+                "other": "ble invitert %(count)s ganger"
+            },
+            "banned_multiple": {
+                "one": "ble bannlyst",
+                "other": "ble bannlyst %(count)s ganger"
+            },
+            "banned": {
+                "one": "ble bannlyst",
+                "other": "ble bannlyst %(count)s ganger"
+            },
+            "unbanned_multiple": {
+                "other": "fikk bannlysningene sine opphevet %(count)s ganger",
+                "one": "fikk bannlysningene sine opphevet"
+            },
+            "unbanned": {
+                "other": "fikk bannlysningen sin opphevet %(count)s ganger",
+                "one": "fikk bannlysningen sin opphevet"
+            },
+            "changed_name_multiple": {
+                "one": "%(severalUsers)s endret navnene sine"
+            },
+            "changed_name": {
+                "one": "%(oneUser)s endret navnet sitt",
+                "other": "%(oneUser)sendret navnet sitt %(count)s ganger"
+            }
         }
     },
     "slash_command": {
@@ -1634,7 +1578,14 @@
         "rainbow": "Sender gitte melding i regnbuens farger",
         "rainbowme": "Sender gitte emote i regnbuens farger",
         "help": "Viser liste over kommandoer med bruks eksempler og beskrivelser",
-        "whois": "Viser informasjon om en bruker"
+        "whois": "Viser informasjon om en bruker",
+        "usage": "Bruk",
+        "category_messages": "Meldinger",
+        "category_actions": "Handlinger",
+        "category_admin": "Admin",
+        "category_advanced": "Avansert",
+        "category_effects": "Effekter",
+        "category_other": "Andre"
     },
     "presence": {
         "online_for": "På nett i %(duration)s",
@@ -1645,5 +1596,79 @@
         "offline": "Frakoblet",
         "away": "Borte"
     },
-    "Unknown": "Ukjent"
+    "Unknown": "Ukjent",
+    "event_preview": {
+        "m.call.answer": {
+            "dm": "Anrop pågår"
+        },
+        "m.call.invite": {
+            "dm_send": "Venter på svar"
+        }
+    },
+    "voip": {
+        "disable_microphone": "Demp mikrofonen",
+        "enable_microphone": "Opphev demping av mikrofonen",
+        "disable_camera": "Stopp kameraet",
+        "enable_camera": "Start kameraet",
+        "dialpad": "Nummerpanel",
+        "hangup": "Legg på røret",
+        "on_hold": "%(name)s står på vent",
+        "voice_call": "Stemmesamtale",
+        "video_call": "Videosamtale",
+        "unknown_caller": "Ukjent oppringer",
+        "call_failed": "Oppringning mislyktes",
+        "call_failed_microphone": "Samtalen mislyktes fordi mikrofonen ikke var tilgjengelig. Sjekk at en mikrofon er koblet til og satt opp riktig.",
+        "unable_to_access_media": "Ingen tilgang til webkamera / mikrofon",
+        "call_failed_media": "Samtalen mislyktes fordi du fikk ikke tilgang til webkamera eller mikrofon. Sørg for at:",
+        "call_failed_media_connected": "En mikrofon og webkamera er koblet til og satt opp riktig",
+        "call_failed_media_applications": "Ingen andre applikasjoner bruker webkameraet",
+        "already_in_call": "Allerede i en samtale",
+        "already_in_call_person": "Du er allerede i en samtale med denne personen.",
+        "unsupported": "Samtaler støttes ikke",
+        "unsupported_browser": "Du kan ikke ringe i denne nettleseren."
+    },
+    "Messages": "Meldinger",
+    "Other": "Andre",
+    "Advanced": "Avansert",
+    "room_settings": {
+        "permissions": {
+            "m.room.avatar": "Endre rommets avatar",
+            "m.room.name": "Endre rommets navn",
+            "m.room.canonical_alias": "Endre hovedadressen til rommet",
+            "m.room.history_visibility": "Endre historikkens synlighet",
+            "m.room.power_levels": "Endre tillatelser",
+            "m.room.topic": "Endre samtaletema",
+            "m.room.tombstone": "Oppgrader rommet",
+            "m.room.encryption": "Skru på kryptering av rommet",
+            "m.widget": "Endre på moduler",
+            "users_default": "Forvalgt rolle",
+            "events_default": "Send meldinger",
+            "invite": "Inviter brukere",
+            "state_default": "Endre innstillinger",
+            "ban": "Bannlys brukere",
+            "notifications.room": "Varsle alle"
+        }
+    },
+    "encryption": {
+        "verification": {
+            "sas_no_match": "De samsvarer ikke",
+            "sas_match": "De samsvarer",
+            "complete_title": "Verifisert!",
+            "complete_description": "Du har vellykket verifisert denne brukeren.",
+            "qr_prompt": "Skann denne unike koden"
+        }
+    },
+    "emoji": {
+        "category_frequently_used": "Ofte brukte",
+        "category_smileys_people": "Smilefjes og folk",
+        "category_animals_nature": "Dyreliv og natur",
+        "category_food_drink": "Mat og drikke",
+        "category_activities": "Aktiviteter",
+        "category_travel_places": "Reise og steder",
+        "category_objects": "Objekter",
+        "category_symbols": "Symboler",
+        "category_flags": "Flagg",
+        "categories": "Kategorier",
+        "quick_reactions": "Hurtigreaksjoner"
+    }
 }
