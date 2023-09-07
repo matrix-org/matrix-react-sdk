@@ -326,7 +326,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                     {_t("People cannot join unless access is granted.")}
                     <LabelledCheckbox
                         className="mx_JoinRuleSettings_labelledCheckbox"
-                        disabled={!!preferredKnockVersion || joinRule !== JoinRule.Knock}
+                        disabled={joinRule !== JoinRule.Knock}
                         label={
                             room.isSpaceRoom()
                                 ? _t("Make this space visible in the public room directory.")
