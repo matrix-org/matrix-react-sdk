@@ -120,7 +120,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                 [SSOAuthEntry.PHASE_POSTAUTH]: {
                     title: _t("Confirm encryption setup"),
                     body: _t("Click the button below to confirm setting up encryption."),
-                    continueText: _t("Confirm"),
+                    continueText: _t("action|confirm"),
                     continueKind: "primary",
                 },
             };
@@ -176,7 +176,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                     <p>{_t("Unable to set up keys")}</p>
                     <div className="mx_Dialog_buttons">
                         <DialogButtons
-                            primaryButton={_t("Retry")}
+                            primaryButton={_t("action|retry")}
                             onPrimaryButtonClick={this.bootstrapCrossSigning}
                             onCancel={this.onCancel}
                         />

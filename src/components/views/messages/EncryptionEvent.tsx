@@ -53,23 +53,21 @@ const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp
         } else if (dmPartner) {
             const displayName = room?.getMember(dmPartner)?.rawDisplayName || dmPartner;
             subtitle = _t(
-                "Messages here are end-to-end encrypted. " +
-                    "Verify %(displayName)s in their profile - tap on their profile picture.",
+                "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.",
                 { displayName },
             );
         } else if (room && isLocalRoom(room)) {
             subtitle = _t("Messages in this chat will be end-to-end encrypted.");
         } else {
             subtitle = _t(
-                "Messages in this room are end-to-end encrypted. " +
-                    "When people join, you can verify them in their profile, just tap on their profile picture.",
+                "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.",
             );
         }
 
         return (
             <EventTileBubble
                 className="mx_cryptoEvent mx_cryptoEvent_icon"
-                title={_t("Encryption enabled")}
+                title={_t("common|encryption_enabled")}
                 subtitle={subtitle}
                 timestamp={timestamp}
             />
@@ -80,7 +78,7 @@ const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp
         return (
             <EventTileBubble
                 className="mx_cryptoEvent mx_cryptoEvent_icon"
-                title={_t("Encryption enabled")}
+                title={_t("common|encryption_enabled")}
                 subtitle={_t("Ignored attempt to disable encryption")}
                 timestamp={timestamp}
             />

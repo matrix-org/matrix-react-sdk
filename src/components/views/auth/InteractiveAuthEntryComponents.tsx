@@ -153,7 +153,7 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
                     type="submit"
                     className="mx_Dialog_primary"
                     disabled={!this.state.password}
-                    value={_t("Continue")}
+                    value={_t("action|continue")}
                 />
             );
         }
@@ -175,7 +175,7 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
                         className={passwordBoxClass}
                         type="password"
                         name="passwordField"
-                        label={_t("Password")}
+                        label={_t("common|password")}
                         autoFocus={true}
                         value={this.state.password}
                         onChange={this.onPasswordFieldChange}
@@ -220,8 +220,7 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
         let sitePublicKey: string | undefined;
         if (!this.props.stageParams || !this.props.stageParams.public_key) {
             errorText = _t(
-                "Missing captcha public key in homeserver configuration. Please report " +
-                    "this to your homeserver administrator.",
+                "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.",
             );
         } else {
             sitePublicKey = this.props.stageParams.public_key;
@@ -397,7 +396,7 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
                     onClick={this.trySubmit}
                     disabled={!allChecked}
                 >
-                    {_t("Accept")}
+                    {_t("action|accept")}
                 </AccessibleButton>
             );
         }
@@ -509,7 +508,7 @@ export class EmailIdentityAuthEntry extends React.Component<
                                     a: (text: string) => (
                                         <AccessibleTooltipButton
                                             kind="link_inline"
-                                            title={this.state.requested ? _t("Resent!") : _t("Resend")}
+                                            title={this.state.requested ? _t("Resent!") : _t("action|resend")}
                                             alignment={Alignment.Right}
                                             onHideTooltip={
                                                 this.state.requested
@@ -685,7 +684,7 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
                             <br />
                             <input
                                 type="submit"
-                                value={_t("Submit")}
+                                value={_t("action|submit")}
                                 className={submitClasses}
                                 disabled={!enableSubmit}
                             />
@@ -746,7 +745,7 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
         } else {
             submitButtonOrSpinner = (
                 <AccessibleButton onClick={this.onSubmit} kind="primary" disabled={!this.state.registrationToken}>
-                    {_t("Continue")}
+                    {_t("action|continue")}
                 </AccessibleButton>
             );
         }
@@ -869,7 +868,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
                 onClick={this.props.onCancel ?? null}
                 kind={this.props.continueKind ? this.props.continueKind + "_outline" : "primary_outline"}
             >
-                {_t("Cancel")}
+                {_t("action|cancel")}
             </AccessibleButton>
         );
         if (this.state.phase === SSOAuthEntry.PHASE_PREAUTH) {
@@ -881,7 +880,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
         } else {
             continueButton = (
                 <AccessibleButton onClick={this.onConfirmClick} kind={this.props.continueKind || "primary"}>
-                    {this.props.continueText || _t("Confirm")}
+                    {this.props.continueText || _t("action|confirm")}
                 </AccessibleButton>
             );
         }

@@ -141,9 +141,7 @@ export default class IdentityAuthClient {
                     <div>
                         <p>
                             {_t(
-                                "This action requires accessing the default identity server " +
-                                    "<server /> to validate an email address or phone number, " +
-                                    "but the server does not have any terms of service.",
+                                "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.",
                                 {},
                                 {
                                     server: () => <b>{abbreviateUrl(identityServerUrl)}</b>,
@@ -153,7 +151,7 @@ export default class IdentityAuthClient {
                         <p>{_t("Only continue if you trust the owner of the server.")}</p>
                     </div>
                 ),
-                button: _t("Trust"),
+                button: _t("action|trust"),
             });
             const [confirmed] = await finished;
             if (confirmed) {

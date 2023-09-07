@@ -63,25 +63,19 @@ const RoomFacePile: FC<IProps> = ({ room, onlyKnownUsers = true, numShown = DEFA
         .reverse()
         .join(", ");
 
-    const tooltip = (
-        <div>
-            <div className="mx_Tooltip_title">
-                {props.onClick ? _t("View all %(count)s members", { count }) : _t("%(count)s members", { count })}
-            </div>
-            <div className="mx_Tooltip_sub">
-                {isJoined
-                    ? _t("Including you, %(commaSeparatedMembers)s", { commaSeparatedMembers })
-                    : _t("Including %(commaSeparatedMembers)s", { commaSeparatedMembers })}
-            </div>
-        </div>
-    );
-
     return (
         <FacePile
             members={shownMembers}
-            faceSize={28}
+            size="28px"
             overflow={members.length > numShown}
-            tooltip={tooltip}
+            tooltipLabel={
+                props.onClick ? _t("View all %(count)s members", { count }) : _t("%(count)s members", { count })
+            }
+            tooltipShortcut={
+                isJoined
+                    ? _t("Including you, %(commaSeparatedMembers)s", { commaSeparatedMembers })
+                    : _t("Including %(commaSeparatedMembers)s", { commaSeparatedMembers })
+            }
             {...props}
         >
             {onlyKnownUsers && (

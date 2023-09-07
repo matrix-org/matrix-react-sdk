@@ -16,54 +16,66 @@ limitations under the License.
 
 import React, { FC, HTMLAttributes, ReactNode } from "react";
 import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { AvatarStack, Tooltip } from "@vector-im/compound-web";
 
 import MemberAvatar from "../avatars/MemberAvatar";
-import TooltipTarget from "./TooltipTarget";
-import TextWithTooltip from "./TextWithTooltip";
 
 interface IProps extends HTMLAttributes<HTMLSpanElement> {
     members: RoomMember[];
-    faceSize: number;
+    size: string;
     overflow: boolean;
-    tooltip?: ReactNode;
+    tooltipLabel?: string;
+    tooltipShortcut?: string;
     children?: ReactNode;
+    viewUserOnClick?: boolean;
 }
 
-const FacePile: FC<IProps> = ({ members, faceSize, overflow, tooltip, children, ...props }) => {
+const FacePile: FC<IProps> = ({
+    members,
+    size,
+    overflow,
+    tooltipLabel,
+    tooltipShortcut,
+    children,
+    viewUserOnClick = true,
+    ...props
+}) => {
     const faces = members.map(
-        tooltip
-            ? (m) => <MemberAvatar key={m.userId} member={m} width={faceSize} height={faceSize} hideTitle />
+        tooltipLabel
+            ? (m) => <MemberAvatar key={m.userId} member={m} size={size} hideTitle />
             : (m) => (
-                  <TooltipTarget key={m.userId} label={m.name}>
+                  <Tooltip key={m.userId} label={m.name} shortcut={tooltipShortcut}>
                       <MemberAvatar
                           member={m}
-                          width={faceSize}
-                          height={faceSize}
-                          viewUserOnClick={!props.onClick}
+                          size={size}
+                          viewUserOnClick={!props.onClick && viewUserOnClick}
                           hideTitle
                       />
-                  </TooltipTarget>
+                  </Tooltip>
               ),
     );
 
     const pileContents = (
         <>
-            {overflow ? <span className="mx_FacePile_more" /> : null}
+            {/* XXX: The margin-left is a workaround for Compound's styling excluding this element and being overly specific */}
+            {overflow ? <span className="mx_FacePile_more" style={{ marginLeft: `calc(${size} * -0.2)` }} /> : null}
             {faces}
         </>
     );
 
-    return (
-        <div {...props} className="mx_FacePile">
-            {tooltip ? (
-                <TextWithTooltip class="mx_FacePile_faces" tooltip={tooltip}>
-                    {pileContents}
-                </TextWithTooltip>
-            ) : (
-                <div className="mx_FacePile_faces">{pileContents}</div>
-            )}
+    const content = (
+        <div className="mx_FacePile">
+            <AvatarStack>{pileContents}</AvatarStack>
             {children}
         </div>
+    );
+
+    return tooltipLabel ? (
+        <Tooltip label={tooltipLabel} shortcut={tooltipShortcut}>
+            {content}
+        </Tooltip>
+    ) : (
+        content
     );
 };
 

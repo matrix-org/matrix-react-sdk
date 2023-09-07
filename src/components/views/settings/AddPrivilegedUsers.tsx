@@ -54,7 +54,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
         // `RoomPowerLevels` event should exist, but technically it is not guaranteed.
         if (powerLevelEvent === null) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error"),
+                title: _t("common|error"),
                 description: _t("Failed to change power level"),
             });
 
@@ -67,7 +67,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
             setPowerLevel(defaultUserLevel);
         } catch (error) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error"),
+                title: _t("common|error"),
                 description: _t("Failed to change power level"),
             });
         } finally {
@@ -98,7 +98,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
                     onClick={null}
                     data-testid="add-privileged-users-submit-button"
                 >
-                    {_t("Apply")}
+                    {_t("action|apply")}
                 </AccessibleButton>
             </SettingsFieldset>
         </form>

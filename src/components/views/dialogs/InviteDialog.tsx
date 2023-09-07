@@ -126,7 +126,7 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
     };
 
     public render(): React.ReactNode {
-        const avatarSize = 20;
+        const avatarSize = "20px";
         const avatar = <SearchResultAvatar user={this.props.member} size={avatarSize} />;
 
         let closeButton;
@@ -135,7 +135,7 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
                 <AccessibleButton className="mx_InviteDialog_userTile_remove" onClick={this.onRemove}>
                     <img
                         src={require("../../../../res/img/icon-pill-remove.svg").default}
-                        alt={_t("Remove")}
+                        alt={_t("action|remove")}
                         width={8}
                         height={8}
                     />
@@ -233,20 +233,21 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
             timestamp = <span className="mx_InviteDialog_tile--room_time">{humanTs}</span>;
         }
 
-        const avatarSize = 36;
+        const avatarSize = "36px";
         const avatar = (this.props.member as ThreepidMember).isEmail ? (
             <EmailPillAvatarIcon width={avatarSize} height={avatarSize} />
         ) : (
             <BaseAvatar
                 url={
                     this.props.member.getMxcAvatarUrl()
-                        ? mediaFromMxc(this.props.member.getMxcAvatarUrl()!).getSquareThumbnailHttp(avatarSize)
+                        ? mediaFromMxc(this.props.member.getMxcAvatarUrl()!).getSquareThumbnailHttp(
+                              parseInt(avatarSize, 10),
+                          )
                         : null
                 }
                 name={this.props.member.name}
                 idName={this.props.member.userId}
-                width={avatarSize}
-                height={avatarSize}
+                size={avatarSize}
             />
         );
 
@@ -944,7 +945,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s",
                     { csvNames: failed.join(", ") },
                 ),
-                button: _t("OK"),
+                button: _t("action|ok"),
             });
         }
 
@@ -990,10 +991,10 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         let showNum = kind === "recents" ? this.state.numRecentsShown : this.state.numSuggestionsShown;
         const showMoreFn = kind === "recents" ? this.showMoreRecents.bind(this) : this.showMoreSuggestions.bind(this);
         const lastActive = (m: Result): number | undefined => (kind === "recents" ? m.lastActive : undefined);
-        let sectionName = kind === "recents" ? _t("Recent Conversations") : _t("Suggestions");
+        let sectionName = kind === "recents" ? _t("Recent Conversations") : _t("common|suggestions");
 
         if (this.props.kind === InviteKind.Invite) {
-            sectionName = kind === "recents" ? _t("Recently Direct Messaged") : _t("Suggestions");
+            sectionName = kind === "recents" ? _t("Recently Direct Messaged") : _t("common|suggestions");
         }
 
         // Mix in the server results if we have any, but only if we're searching. We track the additional
@@ -1038,7 +1039,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 return (
                     <div className="mx_InviteDialog_section">
                         <h3>{sectionName}</h3>
-                        <p>{_t("No results")}</p>
+                        <p>{_t("common|no_results")}</p>
                     </div>
                 );
             }
@@ -1107,7 +1108,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     this.state.busy || (this.props.kind == InviteKind.CallTransfer && this.state.targets.length > 0)
                 }
                 autoComplete="off"
-                placeholder={hasPlaceholder ? _t("Search") : undefined}
+                placeholder={hasPlaceholder ? _t("action|search") : undefined}
                 data-testid="invite-dialog-input"
             />
         );
@@ -1133,9 +1134,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             return (
                 <div className="mx_InviteDialog_identityServer">
                     {_t(
-                        "Use an identity server to invite by email. " +
-                            "<default>Use the default (%(defaultIdentityServerName)s)</default> " +
-                            "or manage in <settings>Settings</settings>.",
+                        "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.",
                         {
                             defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
                         },
@@ -1158,7 +1157,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             return (
                 <div className="mx_InviteDialog_identityServer">
                     {_t(
-                        "Use an identity server to invite by email. " + "Manage in <settings>Settings</settings>.",
+                        "Use an identity server to invite by email. Manage in <settings>Settings</settings>.",
                         {},
                         {
                             settings: (sub) => (
@@ -1314,7 +1313,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 );
             }
 
-            buttonText = _t("Go");
+            buttonText = _t("action|go");
             goButtonFn = this.checkProfileAndStartDm;
             extraSection = (
                 <div className="mx_InviteDialog_section_hidden_suggestions_disclaimer">
@@ -1339,33 +1338,31 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             const isSpace = room?.isSpaceRoom();
             title = isSpace
                 ? _t("Invite to %(spaceName)s", {
-                      spaceName: room?.name || _t("Unnamed Space"),
+                      spaceName: room?.name || _t("common|unnamed_space"),
                   })
                 : _t("Invite to %(roomName)s", {
-                      roomName: room?.name || _t("Unnamed Room"),
+                      roomName: room?.name || _t("common|unnamed_room"),
                   });
 
             let helpTextUntranslated;
             if (isSpace) {
                 if (identityServersEnabled) {
                     helpTextUntranslated = _td(
-                        "Invite someone using their name, email address, username " +
-                            "(like <userId/>) or <a>share this space</a>.",
+                        "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.",
                     );
                 } else {
                     helpTextUntranslated = _td(
-                        "Invite someone using their name, username " + "(like <userId/>) or <a>share this space</a>.",
+                        "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.",
                     );
                 }
             } else {
                 if (identityServersEnabled) {
                     helpTextUntranslated = _td(
-                        "Invite someone using their name, email address, username " +
-                            "(like <userId/>) or <a>share this room</a>.",
+                        "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.",
                     );
                 } else {
                     helpTextUntranslated = _td(
-                        "Invite someone using their name, username " + "(like <userId/>) or <a>share this room</a>.",
+                        "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.",
                     );
                 }
             }
@@ -1392,7 +1389,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 },
             );
 
-            buttonText = _t("Invite");
+            buttonText = _t("action|invite");
             goButtonFn = this.inviteUsers;
 
             if (cli.isRoomEncrypted(this.props.roomId)) {
@@ -1423,7 +1420,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                         onClick={this.onCancel}
                         className="mx_InviteDialog_transferConsultConnect_pushRight"
                     >
-                        {_t("Cancel")}
+                        {_t("action|cancel")}
                     </AccessibleButton>
                     <AccessibleButton
                         kind="primary"

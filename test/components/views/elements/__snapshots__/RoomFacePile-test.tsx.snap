@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RoomFacePile /> renders 1`] = `
+<DocumentFragment>
+  <div
+    class="mx_FacePile"
+    data-state="closed"
+  >
+    <div
+      class="_stacked-avatars_2lhia_116"
+    >
+      <span
+        class="_avatar_2lhia_17 mx_BaseAvatar _avatar-imageless_2lhia_56"
+        data-color="8"
+        data-testid="avatar-img"
+        data-type="round"
+        role="presentation"
+        style="--cpd-avatar-size: 28px;"
+      >
+        b
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;

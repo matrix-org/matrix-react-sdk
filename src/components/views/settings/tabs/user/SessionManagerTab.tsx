@@ -44,7 +44,7 @@ import { OidcLogoutDialog } from "../../../dialogs/oidc/OidcLogoutDialog";
 
 const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
-        title: _t("Sign out"),
+        title: _t("action|sign_out"),
         description: (
             <div>
                 <p>
@@ -54,8 +54,8 @@ const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> 
                 </p>
             </div>
         ),
-        cancelButton: _t("Cancel"),
-        button: _t("Sign out"),
+        cancelButton: _t("action|cancel"),
+        button: _t("action|sign_out"),
     });
     const [confirmed] = await finished;
 
@@ -303,8 +303,7 @@ const SessionManagerTab: React.FC = () => {
                             />
                         }
                         description={_t(
-                            `For best security, verify your sessions and sign out ` +
-                                `from any session that you don't recognize or use anymore.`,
+                            "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.",
                         )}
                         data-testid="other-sessions-section"
                         stretchContent

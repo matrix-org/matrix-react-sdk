@@ -58,6 +58,7 @@ interface IProps {
     room: Room;
     permalinkCreator: RoomPermalinkCreator;
     onClose(): void;
+    onSearchClick?: () => void;
 }
 
 interface IAppsSectionProps {
@@ -150,7 +151,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
     if (cannotPin) {
         pinTitle = _t("You can only pin up to %(count)s widgets", { count: MAX_PINNED });
     } else {
-        pinTitle = isPinned ? _t("Unpin") : _t("Pin");
+        pinTitle = isPinned ? _t("action|unpin") : _t("action|pin");
     }
 
     const isMaximised = WidgetLayoutStore.instance.isInContainer(room, app, Container.Center);
@@ -162,7 +163,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
               WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center);
           };
 
-    const maximiseTitle = isMaximised ? _t("Close") : _t("Maximise");
+    const maximiseTitle = isMaximised ? _t("action|close") : _t("action|maximise");
 
     let openTitle = "";
     if (isPinned) {
@@ -186,7 +187,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
                 forceHide={!(isPinned || isMaximised)}
                 disabled={isPinned || isMaximised}
             >
-                <WidgetAvatar app={app} />
+                <WidgetAvatar app={app} size="20px" />
                 <span>{name}</span>
                 {subtitle}
             </AccessibleTooltipButton>
@@ -196,7 +197,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
                     className="mx_RoomSummaryCard_app_options"
                     isExpanded={menuDisplayed}
                     onClick={openMenu}
-                    title={_t("Options")}
+                    title={_t("common|options")}
                 />
             )}
 
@@ -272,7 +273,7 @@ const onRoomSettingsClick = (ev: ButtonEvent): void => {
     PosthogTrackers.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
 };
 
-const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) => {
+const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchClick }) => {
     const cli = useContext(MatrixClientContext);
 
     const onShareRoomClick = (): void => {
@@ -307,9 +308,9 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
     const header = (
         <React.Fragment>
             <div className="mx_RoomSummaryCard_avatar" role="presentation">
-                <RoomAvatar room={room} height={54} width={54} viewAvatarOnClick />
+                <RoomAvatar room={room} size="54px" viewAvatarOnClick />
                 <TextWithTooltip
-                    tooltip={isRoomEncrypted ? _t("Encrypted") : _t("Not encrypted")}
+                    tooltip={isRoomEncrypted ? _t("common|encrypted") : _t("Not encrypted")}
                     class={classNames("mx_RoomSummaryCard_e2ee", {
                         mx_RoomSummaryCard_e2ee_normal: isRoomEncrypted,
                         mx_RoomSummaryCard_e2ee_warning: isRoomEncrypted && e2eStatus === E2EStatus.Warning,
@@ -337,11 +338,21 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
 
     return (
         <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
-            <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
+            <Group title={_t("common|about")} className="mx_RoomSummaryCard_aboutGroup">
                 <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
-                    {_t("People")}
+                    {_t("common|people")}
                     <span className="mx_BaseCard_Button_sublabel">{memberCount}</span>
                 </Button>
+                {SettingsStore.getValue("feature_new_room_decoration_ui") && (
+                    <Button
+                        className="mx_RoomSummaryCard_icon_search"
+                        onClick={() => {
+                            onSearchClick?.();
+                        }}
+                    >
+                        {_t("Search")}
+                    </Button>
+                )}
                 {!isVideoRoom && (
                     <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
                         {_t("Files")}

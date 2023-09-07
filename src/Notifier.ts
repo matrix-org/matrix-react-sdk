@@ -27,9 +27,9 @@ import {
     SyncState,
     SyncStateData,
     IRoomTimelineData,
+    M_LOCATION,
 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { PermissionChanged as PermissionChangedEvent } from "@matrix-org/analytics-events/types/typescript/PermissionChanged";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -299,8 +299,7 @@ class NotifierClass {
                     const description =
                         result === "denied"
                             ? _t(
-                                  "%(brand)s does not have permission to send you notifications - " +
-                                      "please check your browser settings",
+                                  "%(brand)s does not have permission to send you notifications - please check your browser settings",
                                   { brand },
                               )
                             : _t("%(brand)s was not given permission to send notifications - please try again", {

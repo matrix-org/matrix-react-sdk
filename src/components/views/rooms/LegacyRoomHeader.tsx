@@ -36,6 +36,7 @@ import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
+import { RoomKnocksBar } from "./RoomKnocksBar";
 import { SearchScope } from "./SearchBar";
 import { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import RoomContextMenu from "../context_menus/RoomContextMenu";
@@ -111,8 +112,8 @@ const VoiceCallButton: FC<VoiceCallButtonProps> = ({ room, busy, setBusy, behavi
         <AccessibleTooltipButton
             className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_voiceCallButton"
             onClick={onClick}
-            title={_t("Voice call")}
-            tooltip={tooltip ?? _t("Voice call")}
+            title={_t("voip|voice_call")}
+            tooltip={tooltip ?? _t("voip|voice_call")}
             alignment={Alignment.Bottom}
             disabled={disabled || busy}
         />
@@ -227,8 +228,8 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
                 inputRef={buttonRef}
                 className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_videoCallButton"
                 onClick={onClick}
-                title={_t("Video call")}
-                tooltip={tooltip ?? _t("Video call")}
+                title={_t("voip|video_call")}
+                tooltip={tooltip ?? _t("voip|video_call")}
                 alignment={Alignment.Bottom}
                 disabled={disabled || busy}
             />
@@ -479,6 +480,7 @@ export interface IProps {
 interface IState {
     contextMenuPosition?: DOMRect;
     rightPanelOpen: boolean;
+    featureAskToJoin: boolean;
 }
 
 /**
@@ -495,6 +497,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
     private readonly client = this.props.room.client;
+    private readonly featureAskToJoinWatcher: string;
 
     public constructor(props: IProps, context: IState) {
         super(props, context);
@@ -502,7 +505,15 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         notiStore.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.state = {
             rightPanelOpen: RightPanelStore.instance.isOpen,
+            featureAskToJoin: SettingsStore.getValue("feature_ask_to_join"),
         };
+        this.featureAskToJoinWatcher = SettingsStore.watchSetting(
+            "feature_ask_to_join",
+            null,
+            (_settingName, _roomId, _atLevel, _newValAtLevel, featureAskToJoin) => {
+                this.setState({ featureAskToJoin });
+            },
+        );
     }
 
     public componentDidMount(): void {
@@ -515,6 +526,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         const notiStore = RoomNotificationStateStore.instance.getRoomState(this.props.room);
         notiStore.removeListener(NotificationStateEvents.Update, this.onNotificationUpdate);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
+        SettingsStore.unwatchSetting(this.featureAskToJoinWatcher);
     }
 
     private onRightPanelStoreUpdate = (): void => {
@@ -606,7 +618,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                 <AccessibleTooltipButton
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_searchButton"
                     onClick={this.props.onSearchClick}
-                    title={_t("Search")}
+                    title={_t("action|search")}
                     alignment={Alignment.Bottom}
                     key="search"
                 />,
@@ -618,7 +630,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                 <AccessibleTooltipButton
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_inviteButton"
                     onClick={this.props.onInviteClick}
-                    title={_t("Invite")}
+                    title={_t("action|invite")}
                     alignment={Alignment.Bottom}
                     key="invite"
                 />,
@@ -729,7 +741,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             roomAvatar = (
                 <DecoratedRoomAvatar
                     room={this.props.room}
-                    avatarSize={24}
+                    size="24px"
                     oobData={this.props.oobData}
                     viewAvatarOnClick={true}
                 />
@@ -820,6 +832,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                 </div>
                 {!isVideoRoom && <RoomCallBanner roomId={this.props.room.roomId} />}
                 <RoomLiveShareWarning roomId={this.props.room.roomId} />
+                {this.state.featureAskToJoin && <RoomKnocksBar room={this.props.room} />}
             </header>
         );
     }

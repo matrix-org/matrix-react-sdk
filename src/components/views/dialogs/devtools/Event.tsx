@@ -18,7 +18,7 @@ limitations under the License.
 import React, { ChangeEvent, ReactNode, useContext, useMemo, useRef, useState } from "react";
 import { IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-import { _t, _td } from "../../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../../languageHandler";
 import Field from "../../elements/Field";
 import BaseTool, { DevtoolsContext, IDevtoolsProps } from "./BaseTool";
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
@@ -37,19 +37,19 @@ interface IEventEditorProps extends Pick<IDevtoolsProps, "onBack"> {
 
 interface IFieldDef {
     id: string;
-    label: string; // _td
+    label: TranslationKey;
     default?: string;
 }
 
 export const eventTypeField = (defaultValue?: string): IFieldDef => ({
     id: "eventType",
-    label: _td("Event Type"),
+    label: _td("devtools|event_type"),
     default: defaultValue,
 });
 
 export const stateKeyField = (defaultValue?: string): IFieldDef => ({
     id: "stateKey",
-    label: _td("State Key"),
+    label: _td("devtools|state_key"),
     default: defaultValue,
 });
 
@@ -69,7 +69,7 @@ const validateEventContent = withValidation<any, Error | undefined>({
                 if (!value) return true;
                 return !error;
             },
-            invalid: (error) => _t("Doesn't look like valid JSON.") + " " + error,
+            invalid: (error) => _t("devtools|invalid_json") + " " + error,
         },
     ],
 });
@@ -111,9 +111,9 @@ export const EventEditor: React.FC<IEventEditorProps> = ({ fieldDefs, defaultCon
             const json = JSON.parse(content);
             await onSend(fieldData, json);
         } catch (e) {
-            return _t("Failed to send event!") + (e instanceof Error ? ` (${e.message})` : "");
+            return _t("devtools|failed_to_send") + (e instanceof Error ? ` (${e.message})` : "");
         }
-        return _t("Event sent!");
+        return _t("devtools|event_sent");
     };
 
     return (
@@ -122,7 +122,7 @@ export const EventEditor: React.FC<IEventEditorProps> = ({ fieldDefs, defaultCon
 
             <Field
                 id="evContent"
-                label={_t("Event Content")}
+                label={_t("devtools|event_content")}
                 type="text"
                 className="mx_DevTools_textarea"
                 autoComplete="off"
@@ -161,7 +161,7 @@ export const EventViewer: React.FC<IViewerProps> = ({ mxEvent, onBack, Editor, e
     };
 
     return (
-        <BaseTool onBack={onBack} actionLabel={_t("Edit")} onAction={onAction} extraButton={extraButton}>
+        <BaseTool onBack={onBack} actionLabel={_t("action|edit")} onAction={onAction} extraButton={extraButton}>
             <SyntaxHighlight language="json">{stringify(mxEvent.event)}</SyntaxHighlight>
         </BaseTool>
     );
