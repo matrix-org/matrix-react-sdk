@@ -1668,16 +1668,10 @@
     "Reason (optional)": "理由（選擇性）",
     "Invalid URL": "無效網址",
     "Unable to validate homeserver": "無法驗證家伺服器",
-    "sends confetti": "傳送彩帶",
-    "Sends the given message with confetti": "使用彩帶傳送訊息",
     "Hold": "保留",
     "Resume": "繼續",
     "You've reached the maximum number of simultaneous calls.": "您已達到同時通話的最大數量。",
     "Too Many Calls": "太多通話",
-    "sends fireworks": "傳送煙火",
-    "Sends the given message with fireworks": "與煙火一同傳送指定訊息",
-    "sends snowfall": "傳送雪球",
-    "Sends the given message with snowfall": "與雪球一同傳送指定訊息",
     "You have no visible notifications.": "您沒有可見的通知。",
     "Transfer": "轉接",
     "Failed to transfer call": "無法轉接通話",
@@ -1871,8 +1865,6 @@
     "Add reaction": "新增反應",
     "Space Autocomplete": "空間自動完成",
     "Go to my space": "到我的聊天空間",
-    "sends space invaders": "傳送太空侵略者",
-    "Sends the given message with a space themed effect": "與太空主題效果一起傳送指定的訊息",
     "See when people join, leave, or are invited to your active room": "檢視人們何時加入、離開或被邀請至您的活躍聊天室",
     "See when people join, leave, or are invited to this room": "檢視人們何時加入、離開或被邀請加入此聊天室",
     "Currently joining %(count)s rooms": {
@@ -2202,8 +2194,6 @@
     "Get notifications as set up in your <a>settings</a>": "依照您在<a>設定</a>中設定的方式接收通知",
     "Close this widget to view it in this panel": "關閉此小工具以在此面板中檢視",
     "Unpin this widget to view it in this panel": "取消釘選這個小工具以在此面板中檢視",
-    "sends rainfall": "傳送降雨",
-    "Sends the given message with rainfall": "與降雨一同傳送指定的訊息",
     "Large": "大",
     "Image size in the timeline": "時間軸中的圖片大小",
     "Based on %(count)s votes": {
@@ -2477,8 +2467,6 @@
     },
     "New video room": "新視訊聊天室",
     "New room": "新聊天室",
-    "sends hearts": "傳送愛心",
-    "Sends the given message with hearts": "與愛心一同傳送指定的訊息",
     "Live location ended": "即時位置已結束",
     "View live location": "檢視即時位置",
     "Confirm signing out these devices": {
@@ -4089,5 +4077,19 @@
         "bullet_1": "我們<Bold>不會</Bold>記錄或分析任何帳號資料",
         "bullet_2": "我們<Bold>不會</Bold>與第三方分享這些資訊",
         "disable_prompt": "您可以隨時在設定中關閉此功能"
+    },
+    "chat_effects": {
+        "confetti_description": "使用彩帶傳送訊息",
+        "confetti_message": "傳送彩帶",
+        "fireworks_description": "與煙火一同傳送指定訊息",
+        "fireworks_message": "傳送煙火",
+        "rainfall_description": "與降雨一同傳送指定的訊息",
+        "rainfall_message": "傳送降雨",
+        "snowfall_description": "與雪球一同傳送指定訊息",
+        "snowfall_message": "傳送雪球",
+        "spaceinvaders_description": "與太空主題效果一起傳送指定的訊息",
+        "spaceinvaders_message": "傳送太空侵略者",
+        "hearts_description": "與愛心一同傳送指定的訊息",
+        "hearts_message": "傳送愛心"
     }
 }

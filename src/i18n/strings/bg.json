@@ -1605,12 +1605,6 @@
     "Your private space": "Вашето лично пространство",
     "You can change these anytime.": "Можете да ги промените по всяко време.",
     "unknown person": "",
-    "sends snowfall": "изпраща снеговалеж",
-    "Sends the given message with snowfall": "Изпраща даденото съобщение със снеговалеж",
-    "Sends the given message with fireworks": "Изпраща даденото съобщение с фойерверки",
-    "sends fireworks": "изпраща фойерверки",
-    "sends confetti": "изпраща конфети",
-    "Sends the given message with confetti": "Изпраща даденото съобщение с конфети",
     "Spaces": "Пространства",
     "%(deviceId)s from %(ip)s": "%(deviceId)s от %(ip)s",
     "Use app for a better experience": "Използвайте приложението за по-добра работа",
@@ -2219,5 +2213,13 @@
         "category_flags": "Знамена",
         "categories": "Категории",
         "quick_reactions": "Бързи реакции"
+    },
+    "chat_effects": {
+        "confetti_description": "Изпраща даденото съобщение с конфети",
+        "confetti_message": "изпраща конфети",
+        "fireworks_description": "Изпраща даденото съобщение с фойерверки",
+        "fireworks_message": "изпраща фойерверки",
+        "snowfall_description": "Изпраща даденото съобщение със снеговалеж",
+        "snowfall_message": "изпраща снеговалеж"
     }
 }

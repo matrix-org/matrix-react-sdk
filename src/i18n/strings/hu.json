@@ -1607,10 +1607,6 @@
     "Continuing without email": "Folytatás e-mail-cím nélkül",
     "Reason (optional)": "Ok (opcionális)",
     "Continue with %(provider)s": "Folytatás ezzel a szolgáltatóval: %(provider)s",
-    "sends fireworks": "tűzijátékot küld",
-    "Sends the given message with fireworks": "Tűzijátékkal küldi el az üzenetet",
-    "sends confetti": "konfettit küld",
-    "Sends the given message with confetti": "Konfettivel küldi el az üzenetet",
     "See <b>%(msgtype)s</b> messages posted to your active room": "Az aktív szobájába küldött <b>%(msgtype)s</b> üzenetek megjelenítése",
     "See <b>%(msgtype)s</b> messages posted to this room": "Az ebbe a szobába küldött <b>%(msgtype)s</b> üzenetek megjelenítése",
     "See general files posted to your active room": "Az aktív szobádba küldött fájlok megjelenítése",
@@ -1674,8 +1670,6 @@
         "one": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között, ehhez %(size)s helyet használ %(rooms)s szoba üzeneteihez.",
         "other": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között, ehhez %(size)s helyet használ %(rooms)s szoba üzeneteihez."
     },
-    "sends snowfall": "hóesést küld",
-    "Sends the given message with snowfall": "Hóeséssel küldi el az üzenetet",
     "See emotes posted to your active room": "Az aktív szobájába küldött emodzsik megjelenítése",
     "See emotes posted to this room": "Ebbe a szobába küldött emodzsik megjelenítése",
     "You have no visible notifications.": "Nincsenek látható értesítések.",
@@ -1871,8 +1865,6 @@
     "Go to my space": "Irány a teréhez",
     "Search names and descriptions": "Nevek és leírások keresése",
     "You may contact me if you have any follow up questions": "Ha további kérdés merülne fel, kapcsolatba léphetnek velem",
-    "sends space invaders": "space invaders küldése",
-    "Sends the given message with a space themed effect": "Világűrös effekttel küldi el az üzenetet",
     "See when people join, leave, or are invited to your active room": "Emberek belépésének, távozásának vagy meghívásának a megjelenítése az aktív szobájában",
     "See when people join, leave, or are invited to this room": "Emberek belépésének, távozásának vagy meghívásának a megjelenítése ebben a szobában",
     "Currently joining %(count)s rooms": {
@@ -2187,8 +2179,6 @@
     "Spaces to show": "Megjelenítendő terek",
     "Sidebar": "Oldalsáv",
     "Other rooms": "További szobák",
-    "sends rainfall": "esőt küld",
-    "Sends the given message with rainfall": "Esővel küldi el az üzenetet",
     "Show all your rooms in Home, even if they're in a space.": "Minden szoba megjelenítése a Kezdőlapon, akkor is ha egy tér része.",
     "Home is useful for getting an overview of everything.": "A Kezdőlap áttekintést adhat mindenről.",
     "Show all threads": "Minden üzenetszál megjelenítése",
@@ -2496,8 +2486,6 @@
         "one": "Megerősítés ebből az eszközből való kijelentkezéshez",
         "other": "Megerősítés ezekből az eszközökből való kijelentkezéshez"
     },
-    "sends hearts": "szívecskéket küld",
-    "Sends the given message with hearts": "Szívecskékkel küldi el az üzenetet",
     "Failed to join": "Csatlakozás sikertelen",
     "The person who invited you has already left, or their server is offline.": "Aki meghívta a szobába már távozott, vagy a kiszolgálója nem érhető el.",
     "The person who invited you has already left.": "A személy, aki meghívta, már távozott.",
@@ -3993,5 +3981,19 @@
         "bullet_1": "<Bold>Nem</Bold> mentünk vagy analizálunk semmilyen felhasználói adatot",
         "bullet_2": "<Bold>Nem</Bold> osztunk meg információt harmadik féllel",
         "disable_prompt": "Ezt bármikor kikapcsolhatja a beállításokban"
+    },
+    "chat_effects": {
+        "confetti_description": "Konfettivel küldi el az üzenetet",
+        "confetti_message": "konfettit küld",
+        "fireworks_description": "Tűzijátékkal küldi el az üzenetet",
+        "fireworks_message": "tűzijátékot küld",
+        "rainfall_description": "Esővel küldi el az üzenetet",
+        "rainfall_message": "esőt küld",
+        "snowfall_description": "Hóeséssel küldi el az üzenetet",
+        "snowfall_message": "hóesést küld",
+        "spaceinvaders_description": "Világűrös effekttel küldi el az üzenetet",
+        "spaceinvaders_message": "space invaders küldése",
+        "hearts_description": "Szívecskékkel küldi el az üzenetet",
+        "hearts_message": "szívecskéket küld"
     }
 }

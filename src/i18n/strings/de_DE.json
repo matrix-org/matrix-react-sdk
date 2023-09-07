@@ -1670,15 +1670,9 @@
     "Resume": "Fortsetzen",
     "Invalid URL": "Ungültiger Link",
     "Unable to validate homeserver": "Überprüfung des Heim-Servers nicht möglich",
-    "sends fireworks": "sendet Feuerwerk",
-    "Sends the given message with fireworks": "Sendet die Nachricht mit Feuerwerk",
-    "sends confetti": "sendet Konfetti",
-    "Sends the given message with confetti": "Sendet die Nachricht mit Konfetti",
     "You've reached the maximum number of simultaneous calls.": "Du hast die maximale Anzahl gleichzeitig möglicher Anrufe erreicht.",
     "Too Many Calls": "Zu viele Anrufe",
     "You have no visible notifications.": "Du hast keine sichtbaren Benachrichtigungen.",
-    "sends snowfall": "sendet Schneeflocken",
-    "Sends the given message with snowfall": "Sendet die Nachricht mit Schneeflocken",
     "Transfer": "Übertragen",
     "Failed to transfer call": "Anruf-Übertragung fehlgeschlagen",
     "A call can only be transferred to a single user.": "Ein Anruf kann nur auf einen einzelnen Nutzer übertragen werden.",
@@ -1869,8 +1863,6 @@
     "To leave the beta, visit your settings.": "Du kannst die Beta in den Einstellungen deaktivieren.",
     "Your platform and username will be noted to help us use your feedback as much as we can.": "Deine Systeminformationen und dein Benutzername werden mitgeschickt, damit wir deine Rückmeldung bestmöglich nachvollziehen können.",
     "Your access token gives full access to your account. Do not share it with anyone.": "Dein Zugriffstoken gibt vollen Zugriff auf dein Konto. Teile ihn niemals mit anderen.",
-    "sends space invaders": "sendet Space Invaders",
-    "Sends the given message with a space themed effect": "Sendet die Nachricht mit Raumschiffen",
     "Space Autocomplete": "Spaces automatisch vervollständigen",
     "Currently joining %(count)s rooms": {
         "one": "Betrete %(count)s Raum",
@@ -2184,8 +2176,6 @@
     "Show tray icon and minimise window to it on close": "Fenster beim Schließen in die Symbolleiste minimieren",
     "Large": "Groß",
     "Image size in the timeline": "Bildgröße im Verlauf",
-    "sends rainfall": "sendet mit Regeneffekt",
-    "Sends the given message with rainfall": "Nachricht mit Regeneffekt senden",
     "Show all your rooms in Home, even if they're in a space.": "Alle Räume auf der Startseite anzeigen, auch wenn sie Teil eines Space sind.",
     "Home is useful for getting an overview of everything.": "Die Startseite bietet dir einen Überblick über deine Unterhaltungen.",
     "Get notifications as set up in your <a>settings</a>": "Du erhältst Benachrichtigungen, wie du sie in den <a>Einstellungen</a> konfiguriert hast",
@@ -2488,8 +2478,6 @@
         "other": "Abmelden dieser Geräte bestätigen"
     },
     "Developer tools": "Entwicklungswerkzeuge",
-    "sends hearts": "Sendet Herzen",
-    "Sends the given message with hearts": "Sendet die Nachricht mit Herzen",
     "View List": "Liste Anzeigen",
     "View list": "Liste anzeigen",
     "Cameras": "Kameras",
@@ -4094,5 +4082,19 @@
         "bullet_1": "Wir erfassen und analysieren <Bold>keine</Bold> Kontodaten",
         "bullet_2": "Wir teilen <Bold>keine</Bold> Informationen mit Dritten",
         "disable_prompt": "Du kannst dies jederzeit in den Einstellungen deaktivieren"
+    },
+    "chat_effects": {
+        "confetti_description": "Sendet die Nachricht mit Konfetti",
+        "confetti_message": "sendet Konfetti",
+        "fireworks_description": "Sendet die Nachricht mit Feuerwerk",
+        "fireworks_message": "sendet Feuerwerk",
+        "rainfall_description": "Nachricht mit Regeneffekt senden",
+        "rainfall_message": "sendet mit Regeneffekt",
+        "snowfall_description": "Sendet die Nachricht mit Schneeflocken",
+        "snowfall_message": "sendet Schneeflocken",
+        "spaceinvaders_description": "Sendet die Nachricht mit Raumschiffen",
+        "spaceinvaders_message": "sendet Space Invaders",
+        "hearts_description": "Sendet die Nachricht mit Herzen",
+        "hearts_message": "Sendet Herzen"
     }
 }

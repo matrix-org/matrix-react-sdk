@@ -1320,12 +1320,6 @@
     "Dial pad": "ダイヤルパッド",
     "There was an error looking up the phone number": "電話番号を検索する際にエラーが発生しました",
     "Unable to look up phone number": "電話番号が見つかりません",
-    "sends snowfall": "降雪を送る",
-    "Sends the given message with snowfall": "メッセージを降雪と共に送信",
-    "sends fireworks": "花火を送る",
-    "Sends the given message with fireworks": "メッセージを花火と共に送信",
-    "sends confetti": "紙吹雪を送る",
-    "Sends the given message with confetti": "メッセージを紙吹雪と共に送信",
     "This is your list of users/servers you have blocked - don't leave the room!": "あなたがブロックしたユーザーとサーバーのリストです。このルームから退出しないでください！",
     "My Ban List": "マイブロックリスト",
     "IRC display name width": "IRCの表示名の幅",
@@ -1559,7 +1553,6 @@
     },
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "匿名のデータを共有すると、問題の特定に役立ちます。個人データの収集や、第三者とのデータ共有はありません。",
     "Hide sidebar": "サイドバーを表示しない",
-    "sends space invaders": "スペースインベーダーを送る",
     "Failed to transfer call": "通話の転送に失敗しました",
     "Command error: Unable to handle slash command.": "コマンドエラー：スラッシュコマンドは使えません。",
     "%(spaceName)s and %(count)s others": {
@@ -2097,9 +2090,6 @@
     },
     "Sorry, you can't edit a poll after votes have been cast.": "投票があったアンケートは編集できません。",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "アンケートを終了してよろしいですか？投票を締め切り、最終結果を表示します。",
-    "Sends the given message with a space themed effect": "メッセージを宇宙のテーマのエフェクトと共に送信",
-    "sends rainfall": "雨を送信",
-    "Sends the given message with rainfall": "メッセージを雨と共に送信",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "不明な（ユーザー、セッション）ペア：（%(userId)s、%(deviceId)s）",
     "Missing session data": "セッションのデータがありません",
     "Sorry, the poll you tried to create was not posted.": "アンケートを作成できませんでした。",
@@ -2349,7 +2339,6 @@
     "Ban them from specific things I'm able to": "自分に可能な範囲で、特定のものからブロック",
     "Ban them from everything I'm able to": "自分に可能な範囲で、全てのものからブロック",
     "Live location error": "位置情報（ライブ）のエラー",
-    "sends hearts": "ハートを送信",
     "Confirm signing out these devices": {
         "other": "端末からのサインアウトを承認",
         "one": "端末からのサインアウトを承認"
@@ -2657,7 +2646,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s（%(matrixId)s）",
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "このセッションでは、暗号化が有効になっているルームに参加することができません。",
-    "Sends the given message with hearts": "メッセージをハートと共に送信",
     "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.": "あなたのホームサーバーがアシストサーバーを提供していない場合にのみ適用。IPアドレスが通話中に共有されます。",
     "Requires compatible homeserver.": "対応するホームサーバーが必要。",
     "Low bandwidth mode": "低速モード",
@@ -3887,5 +3875,19 @@
         "bullet_1": "私たちは、アカウントのいかなるデータも記録したり分析したりすることは<Bold>ありません</Bold>",
         "bullet_2": "私たちは、情報を第三者と共有することは<Bold>ありません</Bold>",
         "disable_prompt": "これはいつでも設定から無効にできます"
+    },
+    "chat_effects": {
+        "confetti_description": "メッセージを紙吹雪と共に送信",
+        "confetti_message": "紙吹雪を送る",
+        "fireworks_description": "メッセージを花火と共に送信",
+        "fireworks_message": "花火を送る",
+        "rainfall_description": "メッセージを雨と共に送信",
+        "rainfall_message": "雨を送信",
+        "snowfall_description": "メッセージを降雪と共に送信",
+        "snowfall_message": "降雪を送る",
+        "spaceinvaders_description": "メッセージを宇宙のテーマのエフェクトと共に送信",
+        "spaceinvaders_message": "スペースインベーダーを送る",
+        "hearts_description": "メッセージをハートと共に送信",
+        "hearts_message": "ハートを送信"
     }
 }

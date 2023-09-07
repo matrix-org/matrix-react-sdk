@@ -1682,12 +1682,6 @@
     "Only the two of you are in this conversation, unless either of you invites anyone to join.": "Nur vi du partoprenas ĉi tiun interparolon, se neniu el vi invitos aliulon.",
     "There was an error looking up the phone number": "Eraris trovado de la telefonnumero",
     "Unable to look up phone number": "Ne povas trovi telefonnumeron",
-    "sends snowfall": "sendas neĝadon",
-    "Sends the given message with snowfall": "Sendas la mesaĝon kun neĝado",
-    "sends fireworks": "sendas artfajraĵon",
-    "Sends the given message with fireworks": "Sendas la mesaĝon kun artfajraĵo",
-    "sends confetti": "sendas konfetojn",
-    "Sends the given message with confetti": "Sendas la mesaĝon kun konfetoj",
     "Use app": "Uzu aplikaĵon",
     "Use app for a better experience": "Uzu aplikaĵon por pli bona sperto",
     "Don't miss a reply": "Ne preterpasu respondon",
@@ -1837,14 +1831,12 @@
     "You have no ignored users.": "Vi malatentas neniujn uzantojn.",
     "Please enter a name for the space": "Bonvolu enigi nomon por la aro",
     "Connecting": "Konektante",
-    "Sends the given message with a space themed effect": "Sendas mesaĝon kun la efekto de kosmo",
     "See when people join, leave, or are invited to your active room": "Vidu kiam oni aliĝas, foriras, aŭ invitiĝas al via aktiva ĉambro",
     "See when people join, leave, or are invited to this room": "Vidu kiam oni aliĝas, foriras, aŭ invitiĝas al la ĉambro",
     "This homeserver has been blocked by its administrator.": "Tiu ĉi hejmservilo estas blokita de sia administranto.",
     "Modal Widget": "Reĝima fenestraĵo",
     "Consult first": "Unue konsulti",
     "Message search initialisation failed": "Malsukcesis komenci serĉadon de mesaĝoj",
-    "sends space invaders": "sendas imiton de ludo « Space Invaders »",
     "Enter your Security Phrase a second time to confirm it.": "Enigu vian Sekurecan frazon duafoje por ĝin konfirmi.",
     "Space Autocomplete": "Memaga finfaro de aro",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Kontrolu vian identecon por aliri ĉifritajn mesaĝojn kaj pruvi vian identecon al aliuloj.",
@@ -3064,5 +3056,15 @@
     },
     "analytics": {
         "consent_migration": "Vi antaŭe konsentis kunhavigi anonimajn uzdatumojn kun ni. Ni ĝisdatigas kiel tio funkcias."
+    },
+    "chat_effects": {
+        "confetti_description": "Sendas la mesaĝon kun konfetoj",
+        "confetti_message": "sendas konfetojn",
+        "fireworks_description": "Sendas la mesaĝon kun artfajraĵo",
+        "fireworks_message": "sendas artfajraĵon",
+        "snowfall_description": "Sendas la mesaĝon kun neĝado",
+        "snowfall_message": "sendas neĝadon",
+        "spaceinvaders_description": "Sendas mesaĝon kun la efekto de kosmo",
+        "spaceinvaders_message": "sendas imiton de ludo « Space Invaders »"
     }
 }

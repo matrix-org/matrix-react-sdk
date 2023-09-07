@@ -1128,8 +1128,6 @@
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "نکته: پیام خود را با <code>//</code> شروع کنید تا با یک اسلش شروع شود.",
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "برای لیست کردن دستورات موجود می توانید از <code>/help</code> استفاده کنید. آیا قصد داشتید این پیام را به عنوان متم ارسال کنید؟",
     "Read Marker off-screen lifetime (ms)": "خواندن نشانگر طول عمر خارج از صفحه نمایش (میلی ثانیه)",
-    "sends space invaders": "ارسال مهاجمان فضایی",
-    "Sends the given message with a space themed effect": "پیام داده شده را به صورت مضمون فضای کاری ارسال می کند",
     "If disabled, messages from encrypted rooms won't appear in search results.": "اگر غیر فعال شود، پیام‌های اتاق‌های رمزشده در نتایج جستجوها نمایش داده نمی‌شوند.",
     "Currently indexing: %(currentRoom)s": "هم‌اکنون ایندکس می‌شوند: %(currentRoom)s",
     "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s پیام‌های رمزشده را به صورت امن و محلی ذخیره کرده تا در نتایج جستجو نمایش دهد:",
@@ -1424,12 +1422,6 @@
     "Unable to look up phone number": "امکان یافتن شماره تلفن میسر نیست",
     "Connecting": "در حال اتصال",
     "unknown person": "فرد ناشناس",
-    "sends confetti": "انیمیشن بارش کاغذ شادی را ارسال کن",
-    "sends snowfall": "انیمیشن بارش برف را ارسال کن",
-    "Sends the given message with snowfall": "این پیام را با انیمیشن بارش برف ارسال کن",
-    "sends fireworks": "انیمیشن آتش‌بازی را ارسال کن",
-    "Sends the given message with fireworks": "این پیام را با انیمیشن آتش‌بازی ارسال کن",
-    "Sends the given message with confetti": "این پیام را با انیمیشن بارش کاغد شادی ارسال کن",
     "This is your list of users/servers you have blocked - don't leave the room!": "این لیست کاربران/اتاق‌هایی است که شما آن‌ها را بلاک کرده‌اید - اتاق را ترک نکنید!",
     "My Ban List": "لیست تحریم‌های من",
     "IRC display name width": "عرض نمایش نام‌های IRC",
@@ -2737,5 +2729,15 @@
         "enable_prompt": "بهتر کردن راهنمای کاربری %(analyticsOwner)s",
         "consent_migration": "شما به ارسال گزارش چگونگی استفاده از سرویس رضایت داده بودید. ما نحوه استفاده از این اطلاعات را بروز میکنیم.",
         "learn_more": "اطلاعات خود را به صورت ناشناس با ما به اشتراک بگذارید تا متوجه مشکلات موجود شویم. بدون استفاده شخصی توسط خود و یا شرکا<LearnMoreLink>یادگیری بیشتر</LearnMoreLink>"
+    },
+    "chat_effects": {
+        "confetti_description": "این پیام را با انیمیشن بارش کاغد شادی ارسال کن",
+        "confetti_message": "انیمیشن بارش کاغذ شادی را ارسال کن",
+        "fireworks_description": "این پیام را با انیمیشن آتش‌بازی ارسال کن",
+        "fireworks_message": "انیمیشن آتش‌بازی را ارسال کن",
+        "snowfall_description": "این پیام را با انیمیشن بارش برف ارسال کن",
+        "snowfall_message": "انیمیشن بارش برف را ارسال کن",
+        "spaceinvaders_description": "پیام داده شده را به صورت مضمون فضای کاری ارسال می کند",
+        "spaceinvaders_message": "ارسال مهاجمان فضایی"
     }
 }

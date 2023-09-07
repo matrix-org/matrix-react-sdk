@@ -946,14 +946,7 @@
     "We couldn't log you in": "Нам не вдалося виконати вхід",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Ви не можете надсилати жодних повідомлень, поки не переглянете та не погодитесь з <consentLink>нашими умовами та положеннями</consentLink>.",
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Ви можете скористатися <code>/help</code> для перегляду доступних команд. Ви мали намір надіслати це як повідомлення?",
-    "sends confetti": "надсилає конфеті",
-    "sends fireworks": "надсилає феєрверк",
-    "sends space invaders": "надсилає тему про космічних загарбників",
-    "Sends the given message with a space themed effect": "Надсилає це повідомлення з космічними ефектами",
     "unknown person": "невідома особа",
-    "Sends the given message with snowfall": "Надсилає це повідомлення зі снігопадом",
-    "Sends the given message with fireworks": "Надсилає це повідомлення з феєрверком",
-    "Sends the given message with confetti": "Надсилає це повідомлення з конфеті",
     "Send text messages as you in this room": "Надсилати текстові повідомлення у цю кімнату від вашого імені",
     "Send messages as you in your active room": "Надіслати повідомлення у свою активну кімнату від свого імені",
     "Send messages as you in this room": "Надіслати повідомлення у цю кімнату від свого імені",
@@ -1399,7 +1392,6 @@
     "More": "Більше",
     "Show sidebar": "Показати бічну панель",
     "Hide sidebar": "Сховати бічну панель",
-    "sends snowfall": "надсилає снігопад",
     "Success!": "Успішно!",
     "Clear personal data": "Очистити особисті дані",
     "You're signed out": "Ви вийшли",
@@ -2055,8 +2047,6 @@
     "Import E2E room keys": "Імпортувати ключі кімнат наскрізного шифрування",
     "<not supported>": "<не підтримується>",
     "Unable to find a supported verification method.": "Не вдалося знайти підтримуваний спосіб звірки.",
-    "sends rainfall": "надсилає дощ",
-    "Sends the given message with rainfall": "Надсилає це повідомлення з дощем",
     "Other rooms": "Інші кімнати",
     "That's fine": "Гаразд",
     "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Можете ввійти, але деякі можливості будуть недоступні, поки сервер ідентифікації не відновить роботу. Якщо часто бачите це застереження, перевірте свої параметри чи зв'яжіться з адміністратором сервера.",
@@ -2477,8 +2467,6 @@
     "New room": "Нова кімната",
     "Threads help keep your conversations on-topic and easy to track.": "Гілки допомагають підтримувати розмови за темою та за ними легко стежити.",
     "%(featureName)s Beta feedback": "%(featureName)s — відгук про бетаверсію",
-    "sends hearts": "надсилає сердечка",
-    "Sends the given message with hearts": "Надсилає це повідомлення з сердечками",
     "Confirm signing out these devices": {
         "one": "Підтвердьте вихід із цього пристрою",
         "other": "Підтвердьте вихід із цих пристроїв"
@@ -4089,5 +4077,19 @@
         "bullet_1": "Ми <Bold>не</Bold> зберігаємо й <Bold>не</Bold> аналізуємо жодних даних облікового запису",
         "bullet_2": "Ми <Bold>не</Bold> передаємо даних стороннім особам",
         "disable_prompt": "Можна вимкнути це коли завгодно в налаштуваннях"
+    },
+    "chat_effects": {
+        "confetti_description": "Надсилає це повідомлення з конфеті",
+        "confetti_message": "надсилає конфеті",
+        "fireworks_description": "Надсилає це повідомлення з феєрверком",
+        "fireworks_message": "надсилає феєрверк",
+        "rainfall_description": "Надсилає це повідомлення з дощем",
+        "rainfall_message": "надсилає дощ",
+        "snowfall_description": "Надсилає це повідомлення зі снігопадом",
+        "snowfall_message": "надсилає снігопад",
+        "spaceinvaders_description": "Надсилає це повідомлення з космічними ефектами",
+        "spaceinvaders_message": "надсилає тему про космічних загарбників",
+        "hearts_description": "Надсилає це повідомлення з сердечками",
+        "hearts_message": "надсилає сердечка"
     }
 }

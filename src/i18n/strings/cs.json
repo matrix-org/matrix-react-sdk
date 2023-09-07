@@ -1652,10 +1652,6 @@
     "Send <b>%(msgtype)s</b> messages as you in your active room": "Poslat zprávy <b>%(msgtype)s</b> jako vy ve vašá aktivní místnosti",
     "See <b>%(msgtype)s</b> messages posted to this room": "Prohlédnout zprávy <b>%(msgtype)s</b> zveřejněné v této místnosti",
     "See <b>%(msgtype)s</b> messages posted to your active room": "Prohlédnout zprávy <b>%(msgtype)s</b> zveřejněné ve vaší aktivní místnosti",
-    "Sends the given message with confetti": "Pošle zprávu s konfetami",
-    "sends confetti": "pošle konfety",
-    "Sends the given message with fireworks": "Pošle zprávu s ohňostrojem",
-    "sends fireworks": "pošle ohňostroj",
     "The <b>%(capability)s</b> capability": "Schopnost <b>%(capability)s</b>",
     "See <b>%(eventType)s</b> events posted to your active room": "Zobrazit události <b>%(eventType)s</b> odeslané do vaší aktivní místnosti",
     "Send <b>%(eventType)s</b> events as you in your active room": "Poslat události <b>%(eventType)s</b> jako vy ve vaší aktivní místnosti",
@@ -1675,8 +1671,6 @@
     "See when the name changes in this room": "Podívejte se, kdy se změní název v této místnosti",
     "See when the topic changes in your active room": "Podívejte se, kdy se změní téma ve vaší aktivní místnosti",
     "See when the topic changes in this room": "Podívejte se, kdy se změní téma v této místnosti",
-    "sends snowfall": "pošle sněžení",
-    "Sends the given message with snowfall": "Pošle zprávu se sněžením",
     "You have no visible notifications.": "Nejsou dostupná žádná oznámení.",
     "Transfer": "Přepojit",
     "Failed to transfer call": "Hovor se nepodařilo přepojit",
@@ -1870,8 +1864,6 @@
     "Add reaction": "Přidat reakci",
     "Space Autocomplete": "Automatické dokončení prostoru",
     "Go to my space": "Přejít do mého prostoru",
-    "sends space invaders": "pošle space invaders",
-    "Sends the given message with a space themed effect": "Odešle zadanou zprávu s efektem vesmíru",
     "See when people join, leave, or are invited to your active room": "Zjistěte, kdy se lidé připojí, odejdou nebo jsou pozváni do vaší aktivní místnosti",
     "See when people join, leave, or are invited to this room": "Zjistěte, kdy se lidé připojí, odejdou nebo jsou pozváni do této místnosti",
     "Currently joining %(count)s rooms": {
@@ -2200,8 +2192,6 @@
     "@mentions & keywords": "@zmínky a klíčová slova",
     "Get notified for every message": "Dostávat oznámení o každé zprávě",
     "Get notifications as set up in your <a>settings</a>": "Dostávat oznámení podle <a>nastavení</a>",
-    "sends rainfall": "pošle dešťové srážky",
-    "Sends the given message with rainfall": "Pošle zprávu s dešťovými srážkami",
     "Close this widget to view it in this panel": "Zavřít tento widget a zobrazit ho na tomto panelu",
     "Unpin this widget to view it in this panel": "Odepnout tento widget a zobrazit ho na tomto panelu",
     "Large": "Velký",
@@ -2477,8 +2467,6 @@
     "New room": "Nová místnost",
     "%(featureName)s Beta feedback": "Zpětná vazba beta funkce %(featureName)s",
     "Threads help keep your conversations on-topic and easy to track.": "Vlákna pomáhají udržovat konverzace k tématu a snadno je sledovat.",
-    "sends hearts": "posílá srdíčka",
-    "Sends the given message with hearts": "Odešle danou zprávu se srdíčky",
     "Confirm signing out these devices": {
         "one": "Potvrďte odhlášení z tohoto zařízení",
         "other": "Potvrďte odhlášení z těchto zařízení"
@@ -4094,5 +4082,19 @@
         "bullet_1": "<Bold>Nezaznamenáváme ani neprofilujeme</Bold> žádné údaje o účtu",
         "bullet_2": "<Bold>Nesdílíme</Bold> informace s třetími stranami",
         "disable_prompt": "Tuto funkci můžete kdykoli vypnout v nastavení"
+    },
+    "chat_effects": {
+        "confetti_description": "Pošle zprávu s konfetami",
+        "confetti_message": "pošle konfety",
+        "fireworks_description": "Pošle zprávu s ohňostrojem",
+        "fireworks_message": "pošle ohňostroj",
+        "rainfall_description": "Pošle zprávu s dešťovými srážkami",
+        "rainfall_message": "pošle dešťové srážky",
+        "snowfall_description": "Pošle zprávu se sněžením",
+        "snowfall_message": "pošle sněžení",
+        "spaceinvaders_description": "Odešle zadanou zprávu s efektem vesmíru",
+        "spaceinvaders_message": "pošle space invaders",
+        "hearts_description": "Odešle danou zprávu se srdíčky",
+        "hearts_message": "posílá srdíčka"
     }
 }

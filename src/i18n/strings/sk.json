@@ -2250,12 +2250,6 @@
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Váš server neodpovedá na niektoré vaše požiadavky. Nižšie sú uvedené niektoré z najpravdepodobnejších dôvodov.",
     "Spam or propaganda": "Spam alebo propaganda",
     "Unable to validate homeserver": "Nie je možné overiť domovský server",
-    "Sends the given message with confetti": "Odošle danú správu s konfetami",
-    "sends confetti": "pošle konfety",
-    "Sends the given message with fireworks": "Odošle danú správu s ohňostrojom",
-    "sends fireworks": "pošle ohňostroj",
-    "Sends the given message with snowfall": "Odošle danú správu so snežením",
-    "sends snowfall": "pošle sneženie",
     "Your server does not support showing space hierarchies.": "Váš server nepodporuje zobrazovanie hierarchií priestoru.",
     "Failed to remove some rooms. Try again later": "Nepodarilo sa odstrániť niektoré miestnosti. Skúste to neskôr",
     "Mark as not suggested": "Označiť ako neodporúčaný",
@@ -2327,8 +2321,6 @@
         "other": "Potvrďte odhlásenie týchto zariadení pomocou jednotného prihlásenia (SSO) na preukázanie svojej totožnosti.",
         "one": "Potvrďte odhlásenie tohto zariadenia pomocou jednotného prihlásenia (SSO) na preukázanie svojej totožnosti."
     },
-    "sends rainfall": "odošle dážď",
-    "Sends the given message with rainfall": "Odošle danú správu s dažďom",
     "Automatically send debug logs when key backup is not functioning": "Automaticky odosielať záznamy o ladení, ak zálohovanie kľúčov nefunguje",
     "See <b>%(msgtype)s</b> messages posted to your active room": "Zobraziť <b>%(msgtype)s</b> správy zverejnené vo vašej aktívnej miestnosti",
     "See <b>%(msgtype)s</b> messages posted to this room": "Zobraziť <b>%(msgtype)s</b> správy zverejnené v tejto miestnosti",
@@ -2408,8 +2400,6 @@
     "Resend %(unsentCount)s reaction(s)": "Opätovné odoslanie %(unsentCount)s reakcií",
     "Consult first": "Najprv konzultovať",
     "Disinvite from %(roomName)s": "Zrušenie pozvania z %(roomName)s",
-    "sends space invaders": "odošle vesmírnych útočníkov",
-    "Sends the given message with a space themed effect": "Odošle zadanú správu s efektom vesmíru",
     "Don't miss a reply": "Nezmeškajte odpoveď",
     "The above, but in <Room /> as well": "Vyššie uvedené, ale aj v <Room />",
     "The above, but in any room you are joined or invited to as well": "Vyššie uvedené, ale tiež v akejkoľvek miestnosti do ktorej ste sa pripojili alebo do ktorej ste boli prizvaný",
@@ -2477,8 +2467,6 @@
     "New room": "Nová miestnosť",
     "Threads help keep your conversations on-topic and easy to track.": "Vlákna pomáhajú udržiavať konverzácie v téme a uľahčujú ich sledovanie.",
     "%(featureName)s Beta feedback": "%(featureName)s Beta spätná väzba",
-    "sends hearts": "pošle srdiečka",
-    "Sends the given message with hearts": "Odošle danú správu so srdiečkami",
     "Confirm signing out these devices": {
         "one": "Potvrďte odhlásenie z tohto zariadenia",
         "other": "Potvrdiť odhlásenie týchto zariadení"
@@ -4089,5 +4077,19 @@
         "bullet_1": "<Bold>Nezaznamenávame ani neprofilujeme</Bold> žiadne údaje o účte",
         "bullet_2": "<Bold>Nezdieľame</Bold> informácie s tretími stranami",
         "disable_prompt": "Túto funkciu môžete kedykoľvek vypnúť v nastaveniach"
+    },
+    "chat_effects": {
+        "confetti_description": "Odošle danú správu s konfetami",
+        "confetti_message": "pošle konfety",
+        "fireworks_description": "Odošle danú správu s ohňostrojom",
+        "fireworks_message": "pošle ohňostroj",
+        "rainfall_description": "Odošle danú správu s dažďom",
+        "rainfall_message": "odošle dážď",
+        "snowfall_description": "Odošle danú správu so snežením",
+        "snowfall_message": "pošle sneženie",
+        "spaceinvaders_description": "Odošle zadanú správu s efektom vesmíru",
+        "spaceinvaders_message": "odošle vesmírnych útočníkov",
+        "hearts_description": "Odošle danú správu so srdiečkami",
+        "hearts_message": "pošle srdiečka"
     }
 }

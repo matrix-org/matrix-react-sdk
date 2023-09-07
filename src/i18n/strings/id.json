@@ -1019,14 +1019,6 @@
     "Show sidebar": "Tampilkan sisi bilah",
     "Hide sidebar": "Sembunyikan sisi bilah",
     "unknown person": "pengguna tidak dikenal",
-    "sends space invaders": "mengirim penjajah luar angkasa",
-    "Sends the given message with a space themed effect": "Kirim pesan dengan efek luar angkasa",
-    "sends snowfall": "mengirim salju",
-    "Sends the given message with snowfall": "Kirim pesan dengan salju",
-    "sends fireworks": "mengirim kembang api",
-    "Sends the given message with fireworks": "Kirim pesan dengan kembang api",
-    "sends confetti": "mengirim konfeti",
-    "Sends the given message with confetti": "Kirim pesan dengan konfeti",
     "This is your list of users/servers you have blocked - don't leave the room!": "Ini adalah daftar pengguna/server Anda telah blokir — jangan tinggalkan ruangan ini!",
     "My Ban List": "Daftar Cekalan Saya",
     "Automatically send debug logs on any error": "Kirim catatan pengawakutu secara otomatis saat ada kesalahan",
@@ -1102,8 +1094,6 @@
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "periksa plugin browser Anda untuk apa saja yang mungkin memblokir server identitasnya (seperti Privacy Badger)",
     "You should:": "Anda seharusnya:",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Anda seharusnya <b>menghapus data personal Anda</b> dari server identitas <idserver /> sebelum memutuskan hubungan. Sayangnya, server identitas <idserver /> saat ini sedang luring atau tidak dapat dicapai.",
-    "sends rainfall": "mengirim hujan",
-    "Sends the given message with rainfall": "Kirim pesan dengan hujan",
     "Show all your rooms in Home, even if they're in a space.": "Tampilkan semua ruangan di Beranda, walaupun mereka berada di sebuah space.",
     "Home is useful for getting an overview of everything.": "Beranda berguna untuk mendapatkan ikhtisar tentang semuanya.",
     "Spaces to show": "Space yang ditampilkan",
@@ -2477,8 +2467,6 @@
     "New room": "Ruangan baru",
     "Threads help keep your conversations on-topic and easy to track.": "Utasan membantu membuat obrolan sesuai topik dan mudah untuk dilacak.",
     "%(featureName)s Beta feedback": "Masukan %(featureName)s Beta",
-    "sends hearts": "mengirim hati",
-    "Sends the given message with hearts": "Kirim pesan dengan hati",
     "Confirm signing out these devices": {
         "one": "Konfirmasi mengeluarkan perangkat ini",
         "other": "Konfirmasi mengeluarkan perangkat ini"
@@ -4094,5 +4082,19 @@
         "bullet_1": "Kami <Bold>tidak</Bold> merekam atau memprofil data akun apa pun",
         "bullet_2": "Kami <Bold>tidak</Bold> membagikan informasi ini dengan pihak ketiga",
         "disable_prompt": "Anda dapat mematikannya kapan saja di pengaturan"
+    },
+    "chat_effects": {
+        "confetti_description": "Kirim pesan dengan konfeti",
+        "confetti_message": "mengirim konfeti",
+        "fireworks_description": "Kirim pesan dengan kembang api",
+        "fireworks_message": "mengirim kembang api",
+        "rainfall_description": "Kirim pesan dengan hujan",
+        "rainfall_message": "mengirim hujan",
+        "snowfall_description": "Kirim pesan dengan salju",
+        "snowfall_message": "mengirim salju",
+        "spaceinvaders_description": "Kirim pesan dengan efek luar angkasa",
+        "spaceinvaders_message": "mengirim penjajah luar angkasa",
+        "hearts_description": "Kirim pesan dengan hati",
+        "hearts_message": "mengirim hati"
     }
 }

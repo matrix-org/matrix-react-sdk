@@ -1630,18 +1630,6 @@
         "one": "%(count)s osoba dołączyła",
         "other": "%(count)s osób dołączyło"
     },
-    "sends hearts": "wysyła serduszka",
-    "Sends the given message with hearts": "Wysyła podaną wiadomość z serduszkami",
-    "sends space invaders": "wysyła kosmicznych najeźdźców",
-    "Sends the given message with a space themed effect": "Wysyła podaną wiadomość z efektem kosmicznym",
-    "sends snowfall": "wysyła śnieg",
-    "Sends the given message with snowfall": "Wysyła podaną wiadomość ze śniegiem",
-    "sends rainfall": "wysyła deszcz",
-    "Sends the given message with rainfall": "Wysyła podaną wiadomość z deszczem",
-    "sends fireworks": "wysyła fajerwerki",
-    "Sends the given message with fireworks": "Wysyła podaną wiadomość z fajerwerkami",
-    "sends confetti": "wysyła konfetti",
-    "Sends the given message with confetti": "Wysyła podaną wiadomość z konfetti",
     "Download %(brand)s": "Pobierz %(brand)s",
     "Enable hardware acceleration": "Włącz przyspieszenie sprzętowe",
     "Show tray icon and minimise window to it on close": "Pokaż ikonę w zasobniku systemowym i zminimalizuj okno do niej zamiast zamknięcia",
@@ -4071,5 +4059,19 @@
         "bullet_1": "<Bold>Nie zapisujemy</Bold> żadnych danych, ani nie profilujemy twojego konta",
         "bullet_2": "<Bold>Nie udostępniamy</Bold> żadnych informacji podmiotom zewnętrznym",
         "disable_prompt": "Możesz to wyłączyć kiedy zechcesz w ustawieniach"
+    },
+    "chat_effects": {
+        "confetti_description": "Wysyła podaną wiadomość z konfetti",
+        "confetti_message": "wysyła konfetti",
+        "fireworks_description": "Wysyła podaną wiadomość z fajerwerkami",
+        "fireworks_message": "wysyła fajerwerki",
+        "rainfall_description": "Wysyła podaną wiadomość z deszczem",
+        "rainfall_message": "wysyła deszcz",
+        "snowfall_description": "Wysyła podaną wiadomość ze śniegiem",
+        "snowfall_message": "wysyła śnieg",
+        "spaceinvaders_description": "Wysyła podaną wiadomość z efektem kosmicznym",
+        "spaceinvaders_message": "wysyła kosmicznych najeźdźców",
+        "hearts_description": "Wysyła podaną wiadomość z serduszkami",
+        "hearts_message": "wysyła serduszka"
     }
 }

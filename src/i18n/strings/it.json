@@ -1648,8 +1648,6 @@
     "Reason (optional)": "Motivo (facoltativo)",
     "Continue with %(provider)s": "Continua con %(provider)s",
     "Server Options": "Opzioni server",
-    "sends confetti": "invia coriandoli",
-    "Sends the given message with confetti": "Invia il messaggio in questione con coriandoli",
     "See <b>%(msgtype)s</b> messages posted to your active room": "Vedi messaggi <b>%(msgtype)s</b> inviati alla tua stanza attiva",
     "See <b>%(msgtype)s</b> messages posted to this room": "Vedi messaggi <b>%(msgtype)s</b> inviati a questa stanza",
     "Send <b>%(msgtype)s</b> messages as you in your active room": "Invia messaggi <b>%(msgtype)s</b> a tuo nome nella tua stanza attiva",
@@ -1674,10 +1672,6 @@
     "Resume": "Riprendi",
     "You've reached the maximum number of simultaneous calls.": "Hai raggiungo il numero massimo di chiamate simultanee.",
     "Too Many Calls": "Troppe chiamate",
-    "sends snowfall": "invia nevicata",
-    "Sends the given message with snowfall": "Invia il messaggio con una nevicata",
-    "sends fireworks": "invia fuochi d'artificio",
-    "Sends the given message with fireworks": "Invia il messaggio con fuochi d'artificio",
     "You have no visible notifications.": "Non hai notifiche visibili.",
     "Transfer": "Trasferisci",
     "Failed to transfer call": "Trasferimento chiamata fallito",
@@ -1871,8 +1865,6 @@
     "Message search initialisation failed": "Inizializzazione ricerca messaggi fallita",
     "Space Autocomplete": "Autocompletamento spazio",
     "Go to my space": "Vai nel mio spazio",
-    "sends space invaders": "invia space invaders",
-    "Sends the given message with a space themed effect": "Invia il messaggio con un effetto a tema spaziale",
     "See when people join, leave, or are invited to this room": "Vedere quando le persone entrano, escono o sono invitate in questa stanza",
     "See when people join, leave, or are invited to your active room": "Vedere quando le persone entrano, escono o sono invitate nella tua stanza attiva",
     "Currently joining %(count)s rooms": {
@@ -2202,8 +2194,6 @@
     "Get notifications as set up in your <a>settings</a>": "Ricevi notifiche come configurato nelle tue <a>impostazioni</a>",
     "Close this widget to view it in this panel": "Chiudi questo widget per vederlo in questo pannello",
     "Unpin this widget to view it in this panel": "Sblocca questo widget per vederlo in questo pannello",
-    "sends rainfall": "invia pioggia",
-    "Sends the given message with rainfall": "Invia il messaggio in questione con pioggia",
     "Large": "Grande",
     "Image size in the timeline": "Dimensione immagine nella linea temporale",
     "Based on %(count)s votes": {
@@ -2498,8 +2488,6 @@
         "one": "Conferma la disconnessione da questo dispositivo",
         "other": "Conferma la disconnessione da questi dispositivi"
     },
-    "sends hearts": "invia cuori",
-    "Sends the given message with hearts": "Invia il messaggio con cuori",
     "Updated %(humanizedUpdateTime)s": "Aggiornato %(humanizedUpdateTime)s",
     "Hide my messages from new joiners": "Nascondi i miei messaggi ai nuovi membri",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "I tuoi vecchi messaggi saranno ancora visibili alle persone che li hanno ricevuti, proprio come le email che hai inviato in passato. Vuoi nascondere i tuoi messaggi inviati alle persone che entreranno nelle stanze in futuro?",
@@ -4094,5 +4082,19 @@
         "bullet_1": "<Bold>Non</Bold> registriamo o profiliamo alcun dato dell'account",
         "bullet_2": "<Bold>Non</Bold> condividiamo informazioni con terze parti",
         "disable_prompt": "Puoi disattivarlo in qualsiasi momento nelle impostazioni"
+    },
+    "chat_effects": {
+        "confetti_description": "Invia il messaggio in questione con coriandoli",
+        "confetti_message": "invia coriandoli",
+        "fireworks_description": "Invia il messaggio con fuochi d'artificio",
+        "fireworks_message": "invia fuochi d'artificio",
+        "rainfall_description": "Invia il messaggio in questione con pioggia",
+        "rainfall_message": "invia pioggia",
+        "snowfall_description": "Invia il messaggio con una nevicata",
+        "snowfall_message": "invia nevicata",
+        "spaceinvaders_description": "Invia il messaggio con un effetto a tema spaziale",
+        "spaceinvaders_message": "invia space invaders",
+        "hearts_description": "Invia il messaggio con cuori",
+        "hearts_message": "invia cuori"
     }
 }

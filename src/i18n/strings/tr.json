@@ -1211,16 +1211,10 @@
     "See when the topic changes in this room": "Bu odada konu başlığı değişince değişiklikleri görün",
     "See when the topic changes in your active room": "Bu odada konu başlığı değişince değişiklikleri görün",
     "Remain on your screen when viewing another room, when running": "a",
-    "sends snowfall": "Kartopu gönderir",
-    "Sends the given message with snowfall": "Mesajı kartopu ile gönderir",
-    "sends fireworks": "Havai fişek gönderir",
-    "Sends the given message with fireworks": "Mesajı havai fişeklerle gönderir",
-    "sends confetti": "Konfeti gönderir",
     "Send stickers to this room as you": "Widget bu odaya sizin adınıza çıkartma göndersin",
     "Send stickers to your active room as you": "Widget aktif odanıza sizin adınıza çıkartma göndersin",
     "Send messages as you in this room": "Bu Araç sizin adınıza mesaj gönderir",
     "Answered Elsewhere": "Arama başka bir yerde yanıtlandı",
-    "Sends the given message with confetti": "Mesajı konfeti ile gönderir",
     "IRC display name width": "IRC görünen ad genişliği",
     "Manually verify all remote sessions": "Bütün uzaktan oturumları el ile onayla",
     "How fast should messages be downloaded.": "Mesajlar ne kadar hızlı indirilmeli.",
@@ -2128,5 +2122,13 @@
         "category_flags": "Bayraklar",
         "categories": "Kategoriler",
         "quick_reactions": "Hızlı Tepkiler"
+    },
+    "chat_effects": {
+        "confetti_description": "Mesajı konfeti ile gönderir",
+        "confetti_message": "Konfeti gönderir",
+        "fireworks_description": "Mesajı havai fişeklerle gönderir",
+        "fireworks_message": "Havai fişek gönderir",
+        "snowfall_description": "Mesajı kartopu ile gönderir",
+        "snowfall_message": "Kartopu gönderir"
     }
 }

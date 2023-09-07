@@ -900,7 +900,6 @@
     "Update %(brand)s": "Oppdater %(brand)s",
     "You are currently ignoring:": "Du ignorerer for øyeblikket:",
     "Dial pad": "Nummerpanel",
-    "sends confetti": "sender konfetti",
     "System font name": "Systemskrifttypenavn",
     "Use a system font": "Bruk en systemskrifttype",
     "Channel: <channelLink/>": "Kanal: <channelLink/>",
@@ -1675,5 +1674,8 @@
         "category_flags": "Flagg",
         "categories": "Kategorier",
         "quick_reactions": "Hurtigreaksjoner"
+    },
+    "chat_effects": {
+        "confetti_message": "sender konfetti"
     }
 }

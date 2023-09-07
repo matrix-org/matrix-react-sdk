@@ -1668,16 +1668,10 @@
     "Reason (optional)": "Põhjus (kui soovid lisada)",
     "Invalid URL": "Vigane aadress",
     "Unable to validate homeserver": "Koduserveri õigsust ei õnnestunud kontrollida",
-    "sends confetti": "saatis serpentiine",
-    "Sends the given message with confetti": "Lisab sellele sõnumile serpentiine",
     "Hold": "Pane ootele",
     "Resume": "Jätka",
     "You've reached the maximum number of simultaneous calls.": "Oled jõudnud suurima lubatud samaaegsete kõnede arvuni.",
     "Too Many Calls": "Liiga palju kõnesid",
-    "sends fireworks": "saadab ilutulestiku",
-    "Sends the given message with fireworks": "Lisab sellele sõnumile ilutulestiku",
-    "sends snowfall": "saadab lumesaju",
-    "Sends the given message with snowfall": "Saadab antud sõnumi koos lumesajuga",
     "You have no visible notifications.": "Sul pole nähtavaid teavitusi.",
     "Transfer": "Suuna kõne edasi",
     "Failed to transfer call": "Kõne edasisuunamine ei õnnestunud",
@@ -1869,8 +1863,6 @@
     "Your platform and username will be noted to help us use your feedback as much as we can.": "Lisame sinu kommentaaridele ka kasutajanime ja operatsioonisüsteemi.",
     "Add reaction": "Lisa reaktsioon",
     "Message search initialisation failed": "Sõnumite otsingu alustamine ei õnnestunud",
-    "sends space invaders": "korraldab ühe pisikese tulnukate vallutusretke",
-    "Sends the given message with a space themed effect": "Saadab antud sõnumi kosmoseteemalise efektiga",
     "Go to my space": "Palun vaata minu kogukonnakeskust",
     "User Busy": "Kasutaja on hõivatud",
     "The user you called is busy.": "Kasutaja, kellele sa helistasid, on hõivatud.",
@@ -2202,8 +2194,6 @@
     "Get notifications as set up in your <a>settings</a>": "Soovin teavitusi sellisena, nagu ma neid olen <a>seadistanud</a>",
     "Close this widget to view it in this panel": "Sellel paneelil kuvamiseks sulge see vidin",
     "Unpin this widget to view it in this panel": "Sellel paneelil kuvamiseks eemalda vidin lemmikutest",
-    "sends rainfall": "saadab vihmasaju",
-    "Sends the given message with rainfall": "Lisab sellele sõnumile vihmasaju",
     "Large": "Suur",
     "Image size in the timeline": "Ajajoone piltide suurus",
     "%(spaceName)s and %(count)s others": {
@@ -2477,8 +2467,6 @@
     "New room": "Uus jututuba",
     "Threads help keep your conversations on-topic and easy to track.": "Jutulõngad aitavad hoida vestlused teemakohastena ning mugavalt loetavatena.",
     "%(featureName)s Beta feedback": "%(featureName)s beetaversiooni tagasiside",
-    "sends hearts": "saadame südameid",
-    "Sends the given message with hearts": "Lisab sellele sõnumile südamed",
     "Live location ended": "Reaalajas asukoha jagamine on lõppenud",
     "View live location": "Vaata asukohta reaalajas",
     "Confirm signing out these devices": {
@@ -4089,5 +4077,19 @@
         "bullet_1": "Meie <Bold>ei</Bold> salvesta ega profileeri sinu kasutajakonto andmeid",
         "bullet_2": "Meie <Bold>ei</Bold> jaga teavet kolmandate osapooltega",
         "disable_prompt": "Seadistustest saad alati määrata, et see funktsionaalsus pole kasutusel"
+    },
+    "chat_effects": {
+        "confetti_description": "Lisab sellele sõnumile serpentiine",
+        "confetti_message": "saatis serpentiine",
+        "fireworks_description": "Lisab sellele sõnumile ilutulestiku",
+        "fireworks_message": "saadab ilutulestiku",
+        "rainfall_description": "Lisab sellele sõnumile vihmasaju",
+        "rainfall_message": "saadab vihmasaju",
+        "snowfall_description": "Saadab antud sõnumi koos lumesajuga",
+        "snowfall_message": "saadab lumesaju",
+        "spaceinvaders_description": "Saadab antud sõnumi kosmoseteemalise efektiga",
+        "spaceinvaders_message": "korraldab ühe pisikese tulnukate vallutusretke",
+        "hearts_description": "Lisab sellele sõnumile südamed",
+        "hearts_message": "saadame südameid"
     }
 }

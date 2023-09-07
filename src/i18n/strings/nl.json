@@ -1381,9 +1381,6 @@
     "Channel: <channelLink/>": "Kanaal: <channelLink/>",
     "There was an error looking up the phone number": "Bij het zoeken naar het telefoonnummer is een fout opgetreden",
     "Unable to look up phone number": "Kan telefoonnummer niet opzoeken",
-    "sends snowfall": "stuurt sneeuwval",
-    "sends confetti": "stuurt confetti",
-    "sends fireworks": "stuurt vuurwerk",
     "Use custom size": "Aangepaste lettergrootte gebruiken",
     "Font size": "Lettergrootte",
     "Change notification settings": "Meldingsinstellingen wijzigen",
@@ -1711,9 +1708,6 @@
     "Cross-signing is ready for use.": "Kruiselings ondertekenen is klaar voor gebruik.",
     "Your server isn't responding to some <a>requests</a>.": "Je server reageert niet op sommige <a>verzoeken</a>.",
     "Dial pad": "Kiestoetsen",
-    "Sends the given message with snowfall": "Stuurt het bericht met sneeuwval",
-    "Sends the given message with fireworks": "Stuurt het bericht met vuurwerk",
-    "Sends the given message with confetti": "Stuurt het bericht met confetti",
     "IRC display name width": "Breedte IRC-weergavenaam",
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Als je nu annuleert, kan je versleutelde berichten en gegevens verliezen als je geen toegang meer hebt tot je login.",
     "To continue, use Single Sign On to prove your identity.": "Om verder te gaan, gebruik je eenmalige aanmelding om je identiteit te bewijzen.",
@@ -1870,8 +1864,6 @@
     "Add reaction": "Reactie toevoegen",
     "Space Autocomplete": "Space autocomplete",
     "Go to my space": "Ga naar mijn Space",
-    "sends space invaders": "stuurt space invaders",
-    "Sends the given message with a space themed effect": "Stuurt het bericht met space invaders",
     "See when people join, leave, or are invited to your active room": "Zie wanneer personen deelnemen, vertrekken of worden uitgenodigd in je actieve kamer",
     "See when people join, leave, or are invited to this room": "Zie wanneer personen deelnemen, vertrekken of worden uitgenodigd voor deze kamer",
     "Currently joining %(count)s rooms": {
@@ -2207,8 +2199,6 @@
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Deze kamer is in spaces waar je geen beheerder van bent. In deze spaces zal de oude kamer nog worden getoond, maar leden zullen een melding krijgen om deel te nemen aan de nieuwe kamer.",
     "Large": "Groot",
     "Image size in the timeline": "Afbeeldingformaat in de tijdlijn",
-    "Sends the given message with rainfall": "Stuurt het bericht met neerslag",
-    "sends rainfall": "stuurt neerslag",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s en %(count)s andere",
         "other": "%(spaceName)s en %(count)s andere"
@@ -2450,8 +2440,6 @@
     "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Spaces zijn een nieuwe manier om kamers en mensen te groeperen. Wat voor ruimte wil je aanmaken? Je kan dit later wijzigen.",
     "Match system": "Match systeem",
     "Developer tools": "Ontwikkelaarstools",
-    "sends hearts": "stuurt hartjes",
-    "Sends the given message with hearts": "Stuurt het bericht met hartjes",
     "Show polls button": "Toon polls-knop",
     "Failed to join": "Kan niet deelnemen",
     "The person who invited you has already left, or their server is offline.": "De persoon die je heeft uitgenodigd is al vertrokken, of zijn server is offline.",
@@ -3692,5 +3680,19 @@
         "bullet_1": "We verwerken of bewaren <Bold>geen</Bold> accountgegevens",
         "bullet_2": "We delen <Bold>geen</Bold> informatie met derde partijen",
         "disable_prompt": "Je kan dit elk moment uitzetten in instellingen"
+    },
+    "chat_effects": {
+        "confetti_description": "Stuurt het bericht met confetti",
+        "confetti_message": "stuurt confetti",
+        "fireworks_description": "Stuurt het bericht met vuurwerk",
+        "fireworks_message": "stuurt vuurwerk",
+        "rainfall_description": "Stuurt het bericht met neerslag",
+        "rainfall_message": "stuurt neerslag",
+        "snowfall_description": "Stuurt het bericht met sneeuwval",
+        "snowfall_message": "stuurt sneeuwval",
+        "spaceinvaders_description": "Stuurt het bericht met space invaders",
+        "spaceinvaders_message": "stuurt space invaders",
+        "hearts_description": "Stuurt het bericht met hartjes",
+        "hearts_message": "stuurt hartjes"
     }
 }

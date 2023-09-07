@@ -1668,16 +1668,10 @@
     "Reason (optional)": "Razón (optativa)",
     "Invalid URL": "URL non válido",
     "Unable to validate homeserver": "Non se puido validar o servidor de inicio",
-    "sends confetti": "envía confetti",
-    "Sends the given message with confetti": "Envía a mensaxe con confetti",
     "Hold": "Colgar",
     "Resume": "Retomar",
     "You've reached the maximum number of simultaneous calls.": "Acadaches o número máximo de chamadas simultáneas.",
     "Too Many Calls": "Demasiadas chamadas",
-    "sends fireworks": "envía fogos de artificio",
-    "Sends the given message with fireworks": "Envia a mensaxe dada con fogos de artificio",
-    "sends snowfall": "envía neve",
-    "Sends the given message with snowfall": "Engade neve caendo á mensaxe",
     "You have no visible notifications.": "Non tes notificacións visibles.",
     "Transfer": "Transferir",
     "Failed to transfer call": "Fallou a transferencia da chamada",
@@ -1871,8 +1865,6 @@
     "Message search initialisation failed": "Fallou a inicialización da busca de mensaxes",
     "Space Autocomplete": "Autocompletado do espazo",
     "Go to my space": "Ir ao meu espazo",
-    "sends space invaders": "enviar invasores espaciais",
-    "Sends the given message with a space themed effect": "Envía a mensaxe cun efecto de decorado espacial",
     "See when people join, leave, or are invited to your active room": "Mira cando alguén se une, sae ou é convidada á túa sala activa",
     "See when people join, leave, or are invited to this room": "Mira cando se une alguén, sae ou é convidada a esta sala",
     "Currently joining %(count)s rooms": {
@@ -2184,8 +2176,6 @@
         "other": "Confirma a desconexión destos dispositivos usando Single Sign On para probar a túa identidade."
     },
     "Other rooms": "Outras salas",
-    "sends rainfall": "envía chuvia",
-    "Sends the given message with rainfall": "Envía a mensaxe dada incluíndo chuvia",
     "Automatically send debug logs on any error": "Enviar automáticamente rexistros de depuración para calquera fallo",
     "Use a more compact 'Modern' layout": "Usar unha disposición 'Moderna' máis compacta",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Garda a túa Chave de Seguridade nun lugar seguro, como un xestor de contrasinais ou caixa forte, xa que vai protexer os teus datos cifrados.",
@@ -2477,8 +2467,6 @@
     "Sorry, your homeserver is too old to participate here.": "Lamentámolo, o teu servidor de inicio é demasiado antigo para poder participar.",
     "There was an error joining.": "Houbo un erro ao unirte.",
     "The user's homeserver does not support the version of the space.": "O servidor de inicio da usuaria non soporta a versión do Espazo.",
-    "sends hearts": "envía corazóns",
-    "Sends the given message with hearts": "Engádelle moitos corazóns á mensaxe",
     "Confirm signing out these devices": {
         "one": "Confirma a desconexión deste dispositivo",
         "other": "Confirma a desconexión destos dispositivos"
@@ -3609,5 +3597,19 @@
         "bullet_1": "<Bold>Non</Bold> rexistramos o teu perfil nin datos da conta",
         "bullet_2": "<Bold>Non</Bold> compartimos a información con terceiras partes",
         "disable_prompt": "Podes desactivar esto cando queiras non axustes"
+    },
+    "chat_effects": {
+        "confetti_description": "Envía a mensaxe con confetti",
+        "confetti_message": "envía confetti",
+        "fireworks_description": "Envia a mensaxe dada con fogos de artificio",
+        "fireworks_message": "envía fogos de artificio",
+        "rainfall_description": "Envía a mensaxe dada incluíndo chuvia",
+        "rainfall_message": "envía chuvia",
+        "snowfall_description": "Engade neve caendo á mensaxe",
+        "snowfall_message": "envía neve",
+        "spaceinvaders_description": "Envía a mensaxe cun efecto de decorado espacial",
+        "spaceinvaders_message": "enviar invasores espaciais",
+        "hearts_description": "Engádelle moitos corazóns á mensaxe",
+        "hearts_message": "envía corazóns"
     }
 }

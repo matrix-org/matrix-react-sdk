@@ -1552,12 +1552,6 @@
     "Failed to save your profile": "No se ha podido guardar tu perfil",
     "not found in storage": "no se ha encontrado en la memoria",
     "Dial pad": "Teclado numérico",
-    "sends snowfall": "envía copos de nieve",
-    "Sends the given message with snowfall": "Envía el mensaje con copos de nieve",
-    "sends fireworks": "envía fuegos artificiales",
-    "Sends the given message with fireworks": "Envía el mensaje con fuegos artificiales",
-    "sends confetti": "envía confeti",
-    "Sends the given message with confetti": "Envía el mensaje con confeti",
     "New version of %(brand)s is available": "Hay una nueva versión de %(brand)s disponible",
     "Safeguard against losing access to encrypted messages & data": "Evita perder acceso a datos y mensajes cifrados",
     "Use app": "Usar la aplicación",
@@ -1870,8 +1864,6 @@
     "Add reaction": "Reaccionar",
     "Space Autocomplete": "Autocompletar espacios",
     "Go to my space": "Ir a mi espacio",
-    "sends space invaders": "enviar space invaders",
-    "Sends the given message with a space themed effect": "Envía un mensaje con efectos espaciales",
     "See when people join, leave, or are invited to your active room": "Ver cuando alguien se una, salga o se le invite a tu sala activa",
     "See when people join, leave, or are invited to this room": "Ver cuando alguien se une, sale o se le invita a la sala",
     "Currently joining %(count)s rooms": {
@@ -2191,8 +2183,6 @@
     "Forget": "Olvidar",
     "Large": "Grande",
     "Image size in the timeline": "Tamaño de las imágenes en la línea de tiempo",
-    "Sends the given message with rainfall": "Envía el mensaje junto a un efecto de lluvia",
-    "sends rainfall": "envía un efecto de lluvia",
     "%(count)s votes": {
         "one": "%(count)s voto",
         "other": "%(count)s votos"
@@ -2483,8 +2473,6 @@
         "other": "Confirma el cierre de sesión en estos dispositivos",
         "one": "Confirmar cerrar sesión de este dispositivo"
     },
-    "Sends the given message with hearts": "Envía corazones junto al mensaje",
-    "sends hearts": "envía corazones",
     "Failed to join": "No ha sido posible unirse",
     "You do not have permission to invite people to this space.": "No tienes permiso para invitar gente a este espacio.",
     "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Consejo:</b> Usa «%(replyInThread)s» mientras pasas el ratón sobre un mensaje.",
@@ -3895,5 +3883,19 @@
         "bullet_1": "<Bold>No</Bold> guardamos ningún dato sobre tu cuenta o perfil",
         "bullet_2": "<Bold>No</Bold> compartimos información con terceros",
         "disable_prompt": "Puedes desactivar esto cuando quieras en tus ajustes"
+    },
+    "chat_effects": {
+        "confetti_description": "Envía el mensaje con confeti",
+        "confetti_message": "envía confeti",
+        "fireworks_description": "Envía el mensaje con fuegos artificiales",
+        "fireworks_message": "envía fuegos artificiales",
+        "rainfall_description": "Envía el mensaje junto a un efecto de lluvia",
+        "rainfall_message": "envía un efecto de lluvia",
+        "snowfall_description": "Envía el mensaje con copos de nieve",
+        "snowfall_message": "envía copos de nieve",
+        "spaceinvaders_description": "Envía un mensaje con efectos espaciales",
+        "spaceinvaders_message": "enviar space invaders",
+        "hearts_description": "Envía corazones junto al mensaje",
+        "hearts_message": "envía corazones"
     }
 }

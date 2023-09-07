@@ -1578,12 +1578,6 @@
     "Navigation": "Navigointi",
     "Remain on your screen when viewing another room, when running": "Pysy ruudulla katsellessasi huonetta, kun se on käynnissä",
     "Remain on your screen while running": "Pysy ruudulla käynnissä olon ajan",
-    "sends snowfall": "lähetä lumisadetta",
-    "Sends the given message with snowfall": "Lähettää viestin lumisateen kera",
-    "Sends the given message with fireworks": "Lähettää viestin ilotulitteiden kera",
-    "sends confetti": "lähettää konfettia",
-    "Sends the given message with confetti": "Lähettää viestin konfettien kera",
-    "sends fireworks": "lähetä ilotulitus",
     "Please verify the room ID or address and try again.": "Tarkista huonetunnus ja yritä uudelleen.",
     "Are you sure you want to deactivate your account? This is irreversible.": "Haluatko varmasti poistaa tilisi pysyvästi?",
     "Data on this screen is shared with %(widgetDomain)s": "Tällä näytöllä olevaa tietoa jaetaan verkkotunnuksen %(widgetDomain)s kanssa",
@@ -1983,7 +1977,6 @@
     "Failed to update the visibility of this space": "Avaruuden näkyvyyden muuttaminen epäonnistui",
     "Failed to update the history visibility of this space": "Historian näkyvyysasetusten muuttaminen epäonnistui",
     "Failed to update the guest access of this space": "Vieraiden pääsyasetusten muuttaminen epäonnistui",
-    "Sends the given message with a space themed effect": "Lähetä annettu viesti avaruusteemaisella tehosteella",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja %(count)s muu",
         "other": "%(spaceName)s ja %(count)s muuta"
@@ -2063,8 +2056,6 @@
     "Keyboard": "Näppäimistö",
     "Large": "Suuri",
     "Access": "Pääsy",
-    "sends rainfall": "lähettää vesisadetta",
-    "Sends the given message with rainfall": "Lähettää viestin vesisateen kera",
     "Room members": "Huoneen jäsenet",
     "Back to chat": "Takaisin keskusteluun",
     "That's fine": "Sopii",
@@ -2233,8 +2224,6 @@
         "one": "%(count)s ihminen liittyi",
         "other": "%(count)s ihmistä liittyi"
     },
-    "sends hearts": "lähettää sydämiä",
-    "Sends the given message with hearts": "Lähettää viestin sydämien kera",
     "Developer": "Kehittäjä",
     "Connection lost": "Yhteys menetettiin",
     "Sorry, your homeserver is too old to participate here.": "Kotipalvelimesi on liian vanha osallistumaan tänne.",
@@ -3686,5 +3675,18 @@
         "bullet_1": "<Bold>Emme</Bold> tallenna tai profiloi tilin tietoja",
         "bullet_2": "<Bold>Emme</Bold> jaa tietoja kolmansille tahoille",
         "disable_prompt": "Tämän voi poistaa käytöstä koska tahansa asetuksista"
+    },
+    "chat_effects": {
+        "confetti_description": "Lähettää viestin konfettien kera",
+        "confetti_message": "lähettää konfettia",
+        "fireworks_description": "Lähettää viestin ilotulitteiden kera",
+        "fireworks_message": "lähetä ilotulitus",
+        "rainfall_description": "Lähettää viestin vesisateen kera",
+        "rainfall_message": "lähettää vesisadetta",
+        "snowfall_description": "Lähettää viestin lumisateen kera",
+        "snowfall_message": "lähetä lumisadetta",
+        "spaceinvaders_description": "Lähetä annettu viesti avaruusteemaisella tehosteella",
+        "hearts_description": "Lähettää viestin sydämien kera",
+        "hearts_message": "lähettää sydämiä"
     }
 }
