@@ -2407,7 +2407,18 @@
         "state_counters": "Renderizar contadores simples no cabeçalho da sala",
         "custom_themes": "Permite adicionar temas personalizados",
         "dehydration": "Envio de mensagens criptografadas offline, usando dispositivos específicos",
-        "bridge_state": "Exibir informações sobre integrações nas configurações das salas"
+        "bridge_state": "Exibir informações sobre integrações nas configurações das salas",
+        "group_messaging": "Mensagens",
+        "group_profile": "Perfil",
+        "group_spaces": "Espaços",
+        "group_widgets": "Widgets",
+        "group_rooms": "Salas",
+        "group_voip": "Voz e vídeo",
+        "group_moderation": "Moderação",
+        "group_themes": "Temas",
+        "group_encryption": "Criptografia",
+        "group_experimental": "Experimental",
+        "group_developer": "Desenvolvedor"
     },
     "keyboard": {
         "home": "Home",

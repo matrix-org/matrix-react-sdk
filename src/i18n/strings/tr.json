@@ -1686,7 +1686,12 @@
         "pinning": "Mesaj Sabitleme",
         "state_counters": "Oda başlığında basit sayaçları görüntüle",
         "custom_themes": "Özel tema eklemeyi destekle",
-        "bridge_state": "Oda ayarlarındaki köprülerin bilgilerini göster"
+        "bridge_state": "Oda ayarlarındaki köprülerin bilgilerini göster",
+        "group_profile": "Profil",
+        "group_widgets": "Widgetlar",
+        "group_rooms": "Odalar",
+        "group_voip": "Ses & Video",
+        "group_encryption": "Şifreleme"
     },
     "keyboard": {
         "home": "Ev",

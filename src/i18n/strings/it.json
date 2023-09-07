@@ -2430,7 +2430,6 @@
         "one": "Rimozione di messaggi in corso in %(count)s stanza",
         "other": "Rimozione di messaggi in corso in %(count)s stanze"
     },
-    "%(timeRemaining)s left": "%(timeRemaining)s rimasti",
     "Next recently visited room or space": "Successiva stanza o spazio visitati di recente",
     "Previous recently visited room or space": "Precedente stanza o spazio visitati di recente",
     "Unsent": "Non inviato",
@@ -3303,7 +3302,18 @@
         "sliding_sync_description": "In sviluppo attivo, non può essere disattivato.",
         "under_active_development": "In sviluppo attivo.",
         "location_share_live_description": "Implementazione temporanea: le posizioni persistono nella cronologia della stanza.",
-        "dynamic_room_predecessors_description": "Attiva MSC3946 (per supportare archivi della stanza arrivati in ritardo)"
+        "dynamic_room_predecessors_description": "Attiva MSC3946 (per supportare archivi della stanza arrivati in ritardo)",
+        "group_messaging": "Messaggi",
+        "group_profile": "Profilo",
+        "group_spaces": "Spazi",
+        "group_widgets": "Widget",
+        "group_rooms": "Stanze",
+        "group_voip": "Voce e video",
+        "group_moderation": "Moderazione",
+        "group_themes": "Temi",
+        "group_encryption": "Crittografia",
+        "group_experimental": "Sperimentale",
+        "group_developer": "Sviluppatore"
     },
     "keyboard": {
         "home": "Pagina iniziale",
@@ -3399,7 +3409,8 @@
         "few_seconds_ago": "pochi secondi fa",
         "about_minute_ago": "circa un minuto fa",
         "about_hour_ago": "circa un'ora fa",
-        "about_day_ago": "circa un giorno fa"
+        "about_day_ago": "circa un giorno fa",
+        "left": "%(timeRemaining)s rimasti"
     },
     "onboarding": {
         "personal_messaging_title": "Messaggi sicuri per amici e famiglia",

@@ -2430,7 +2430,6 @@
         "other": "V súčasnosti sa odstraňujú správy v %(count)s miestnostiach"
     },
     "Share for %(duration)s": "Zdieľať na %(duration)s",
-    "%(timeRemaining)s left": "zostáva %(timeRemaining)s",
     "Next recently visited room or space": "Ďalšia nedávno navštívená miestnosť alebo priestor",
     "Previous recently visited room or space": "Predchádzajúca nedávno navštívená miestnosť alebo priestor",
     "Unsent": "Neodoslané",
@@ -3298,7 +3297,18 @@
         "sliding_sync_description": "V štádiu aktívneho vývoja, nie je možné to vypnúť.",
         "under_active_development": "V štádiu aktívneho vývoja.",
         "location_share_live_description": "Dočasná implementácia. Polohy ostávajú v histórii miestnosti.",
-        "dynamic_room_predecessors_description": "Zapnúť MSC3946 (na podporu neskorých archívov miestností)"
+        "dynamic_room_predecessors_description": "Zapnúť MSC3946 (na podporu neskorých archívov miestností)",
+        "group_messaging": "Posielanie správ",
+        "group_profile": "Profil",
+        "group_spaces": "Priestory",
+        "group_widgets": "Widgety",
+        "group_rooms": "Miestnosti",
+        "group_voip": "Zvuk a video",
+        "group_moderation": "Moderovanie",
+        "group_themes": "Vzhľad",
+        "group_encryption": "Šifrovanie",
+        "group_experimental": "Experimentálne",
+        "group_developer": "Vývojárske"
     },
     "keyboard": {
         "home": "Domov",
@@ -3394,7 +3404,8 @@
         "few_seconds_ago": "pred pár sekundami",
         "about_minute_ago": "približne pred minútou",
         "about_hour_ago": "približne pred hodinou",
-        "about_day_ago": "asi pred jedným dňom"
+        "about_day_ago": "asi pred jedným dňom",
+        "left": "zostáva %(timeRemaining)s"
     },
     "onboarding": {
         "personal_messaging_title": "Zabezpečené zasielanie správ pre priateľov a rodinu",

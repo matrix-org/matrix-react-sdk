@@ -814,7 +814,11 @@
     },
     "labs": {
         "pinning": "Bericht vastprikkn",
-        "state_counters": "Eenvoudige tellers boovnan ’t gesprek toogn"
+        "state_counters": "Eenvoudige tellers boovnan ’t gesprek toogn",
+        "group_profile": "Profiel",
+        "group_rooms": "Gesprekkn",
+        "group_voip": "Sproak & video",
+        "group_encryption": "Versleuterienge"
     },
     "keyboard": {
         "home": "Thuus"

@@ -301,7 +301,8 @@
         "submit": "nu zilbe'i"
     },
     "labs": {
-        "pinning": "lo du'u xu kau kakne lo nu mrilu lo vitno notci"
+        "pinning": "lo du'u xu kau kakne lo nu mrilu lo vitno notci",
+        "group_rooms": "ve zilbe'i"
     },
     "power_level": {
         "default": "zmiselcu'a",

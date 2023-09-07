@@ -2430,7 +2430,6 @@
     "Command error: Unable to handle slash command.": "Gabim urdhri: S’arrihet të trajtohet urdhër i dhënë me / .",
     "Next recently visited room or space": "Dhoma ose hapësira pasuese vizituar së fundi",
     "Previous recently visited room or space": "Dhoma ose hapësira e mëparshme vizituar së fundi",
-    "%(timeRemaining)s left": "Edhe %(timeRemaining)s",
     "Unsent": "Të padërguar",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Që të bëni hyrjen te shërbyes të tjerë Matrix, duke specifikuar një URL të një shërbyesi Home tjetër, mund të përdorni mundësitë vetjake për shërbyesin. Kjo ju lejon të përdorni %(brand)s në një tjetër shërbyes Home me një llogari Matrix ekzistuese.",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s iu mohua leja për të sjellë vendndodhjen tuaj. Ju lutemi, lejoni përdorim vendndodhjeje, te rregullimet e shfletuesit tuaj.",
@@ -3216,7 +3215,18 @@
         "jump_to_date_msc_support": "Lyp që shërbyesi juaj të mbulojë MSC3030",
         "sliding_sync_description": "Nën zhvillim aktiv, s’mund të çaktivizohet.",
         "under_active_development": "Nën zhvillim aktiv.",
-        "location_share_live_description": "Sendërtim i përkohshëm. Vendndodhjet mbeten te historiku i dhomës."
+        "location_share_live_description": "Sendërtim i përkohshëm. Vendndodhjet mbeten te historiku i dhomës.",
+        "group_messaging": "Shkëmbim mesazhes",
+        "group_profile": "Profil",
+        "group_spaces": "Hapësira",
+        "group_widgets": "Widget-e",
+        "group_rooms": "Dhoma",
+        "group_voip": "Zë & Video",
+        "group_moderation": "Moderim",
+        "group_themes": "Tema",
+        "group_encryption": "Fshehtëzim",
+        "group_experimental": "Eksperimentale",
+        "group_developer": "Zhvillues"
     },
     "keyboard": {
         "home": "Kreu",
@@ -3312,7 +3322,8 @@
         "few_seconds_ago": "pak sekonda më parë",
         "about_minute_ago": "rreth një minutë më parë",
         "about_hour_ago": "rreth një orë më parë",
-        "about_day_ago": "rreth një ditë më parë"
+        "about_day_ago": "rreth një ditë më parë",
+        "left": "Edhe %(timeRemaining)s"
     },
     "onboarding": {
         "personal_messaging_title": "Shkëmbim i sigurt mesazhesh për shokë dhe familje",

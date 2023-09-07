@@ -291,5 +291,8 @@
         "category_other": "Digər"
     },
     "Other": "Digər",
-    "Advanced": "Təfərrüatlar"
+    "Advanced": "Təfərrüatlar",
+    "labs": {
+        "group_profile": "Profil"
+    }
 }

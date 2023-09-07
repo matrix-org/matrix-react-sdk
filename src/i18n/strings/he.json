@@ -2304,7 +2304,17 @@
         "custom_themes": "מיכה להוספת תבניות מותאמות אישית",
         "dehydration": "שליחת הודעות מוצפנות במצב אופליין עם שימוש במכשיר מיובש",
         "bridge_state": "הצג מידע אודות גשרים בהגדרות של החדרים",
-        "jump_to_date": "קיפצו לתאריך (מוסיף /jumptodate וקפוץ לכותרות תאריך)"
+        "jump_to_date": "קיפצו לתאריך (מוסיף /jumptodate וקפוץ לכותרות תאריך)",
+        "group_messaging": "הודעות",
+        "group_profile": "פרופיל",
+        "group_spaces": "מרחבי עבודה",
+        "group_widgets": "ישומונים",
+        "group_rooms": "חדרים",
+        "group_voip": "שמע ווידאו",
+        "group_moderation": "מְתִינוּת",
+        "group_encryption": "הצפנה",
+        "group_experimental": "נִסיוֹנִי",
+        "group_developer": "מפתח"
     },
     "keyboard": {
         "home": "הבית",

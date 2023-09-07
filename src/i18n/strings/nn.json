@@ -840,7 +840,11 @@
     },
     "labs": {
         "pinning": "Meldingsfesting",
-        "bridge_state": "Vis info om bruer under rominnstillingar"
+        "bridge_state": "Vis info om bruer under rominnstillingar",
+        "group_profile": "Brukar",
+        "group_rooms": "Rom",
+        "group_voip": "Tale og video",
+        "group_encryption": "Kryptografi"
     },
     "keyboard": {
         "home": "Heim"

@@ -2470,7 +2470,6 @@
     "We'll create rooms for each of them.": "Vi kommer skapa rum för var och en av dem.",
     "An error occurred while stopping your live location, please try again": "Ett fel inträffade medans din platsdelning avslutades, försök igen",
     "Live location enabled": "Realtidsposition aktiverad",
-    "%(timeRemaining)s left": "%(timeRemaining)s kvar",
     "You are sharing your live location": "Du delar din position i realtid",
     "Close sidebar": "Stäng sidopanel",
     "View List": "Se lista",
@@ -3252,7 +3251,18 @@
         "sliding_sync_description": "Under aktiv utveckling, kan inte inaktiveras.",
         "under_active_development": "Under aktiv utveckling.",
         "location_share_live_description": "Temporär implementation. Platser stannar kvar i rumshistoriken.",
-        "dynamic_room_predecessors_description": "Aktivera MSC3946 (för att stöda sen-ankomna rumsarkiv)"
+        "dynamic_room_predecessors_description": "Aktivera MSC3946 (för att stöda sen-ankomna rumsarkiv)",
+        "group_messaging": "Meddelanden",
+        "group_profile": "Profil",
+        "group_spaces": "Utrymmen",
+        "group_widgets": "Widgets",
+        "group_rooms": "Rum",
+        "group_voip": "Röst & video",
+        "group_moderation": "Moderering",
+        "group_themes": "Teman",
+        "group_encryption": "Kryptering",
+        "group_experimental": "Experimentellt",
+        "group_developer": "Utvecklare"
     },
     "keyboard": {
         "home": "Hem",
@@ -3348,7 +3358,8 @@
         "few_seconds_ago": "några sekunder sedan",
         "about_minute_ago": "cirka en minut sedan",
         "about_hour_ago": "cirka en timme sedan",
-        "about_day_ago": "cirka en dag sedan"
+        "about_day_ago": "cirka en dag sedan",
+        "left": "%(timeRemaining)s kvar"
     },
     "onboarding": {
         "personal_messaging_title": "Säkra meddelanden för vänner och familj",

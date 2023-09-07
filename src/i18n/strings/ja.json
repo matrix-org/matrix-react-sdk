@@ -2698,7 +2698,6 @@
     "Close call": "通話を終了",
     "Verified sessions": "認証済のセッション",
     "Search for": "検索",
-    "%(timeRemaining)s left": "残り%(timeRemaining)s",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "探しているルームが見つからない場合、招待を要求するか新しいルームを作成してください。",
     "If you can't see who you're looking for, send them your invite link.": "探している相手が見つからなければ、招待リンクを送信してください。",
     "To continue, please enter your account password:": "続行するには、アカウントのパスワードを入力してください：",
@@ -3136,7 +3135,18 @@
         "sliding_sync_description": "開発中です。無効にできません。",
         "under_active_development": "開発中。",
         "location_share_live_description": "一時的な実装。位置情報がルームの履歴に残ります。",
-        "dynamic_room_predecessors_description": "MSC3946を有効にする（遅延ルームアーカイブのサポート）"
+        "dynamic_room_predecessors_description": "MSC3946を有効にする（遅延ルームアーカイブのサポート）",
+        "group_messaging": "メッセージ",
+        "group_profile": "プロフィール",
+        "group_spaces": "スペース",
+        "group_widgets": "ウィジェット",
+        "group_rooms": "ルーム",
+        "group_voip": "音声とビデオ",
+        "group_moderation": "モデレート",
+        "group_themes": "テーマ",
+        "group_encryption": "暗号化",
+        "group_experimental": "実験的",
+        "group_developer": "開発者"
     },
     "keyboard": {
         "home": "ホーム",
@@ -3227,7 +3237,8 @@
         "few_seconds_ago": "数秒前",
         "about_minute_ago": "約1分前",
         "about_hour_ago": "約1時間前",
-        "about_day_ago": "約1日前"
+        "about_day_ago": "約1日前",
+        "left": "残り%(timeRemaining)s"
     },
     "onboarding": {
         "personal_messaging_title": "友達や家族と安全なメッセージングを",

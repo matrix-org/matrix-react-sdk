@@ -506,5 +506,9 @@
     },
     "Messages": "Messages",
     "Other": "Other",
-    "Advanced": "Advanced"
+    "Advanced": "Advanced",
+    "labs": {
+        "group_profile": "Profile",
+        "group_rooms": "Rooms"
+    }
 }

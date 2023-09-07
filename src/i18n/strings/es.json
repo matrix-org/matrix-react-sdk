@@ -2432,7 +2432,6 @@
     },
     "Next recently visited room or space": "Siguiente sala o espacio visitado",
     "Previous recently visited room or space": "Anterior sala o espacio visitado",
-    "%(timeRemaining)s left": "Queda %(timeRemaining)s",
     "Unsent": "No enviado",
     "Developer tools": "Herramientas de desarrollo",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s en navegadores para móviles está en prueba. Para una mejor experiencia y para poder usar las últimas funcionalidades, usa nuestra aplicación nativa gratuita.",
@@ -3142,7 +3141,18 @@
         "jump_to_date_msc_support": "Requiere que tu servidor sea compatible con MSC3030",
         "sliding_sync_description": "En desarrollo, no se puede desactivar.",
         "under_active_development": "Funcionalidad en desarrollo.",
-        "location_share_live_description": "Implementación temporal. Las ubicaciones persisten en el historial de la sala."
+        "location_share_live_description": "Implementación temporal. Las ubicaciones persisten en el historial de la sala.",
+        "group_messaging": "Mensajería",
+        "group_profile": "Perfil",
+        "group_spaces": "Espacios",
+        "group_widgets": "Accesorios",
+        "group_rooms": "Salas",
+        "group_voip": "Voz y vídeo",
+        "group_moderation": "Moderación",
+        "group_themes": "Temas",
+        "group_encryption": "Cifrado",
+        "group_experimental": "Experimentos",
+        "group_developer": "Desarrollo"
     },
     "keyboard": {
         "home": "Inicio",
@@ -3236,7 +3246,8 @@
         "few_seconds_ago": "hace unos segundos",
         "about_minute_ago": "hace aproximadamente un minuto",
         "about_hour_ago": "hace aprox. una hora",
-        "about_day_ago": "hace aprox. un día"
+        "about_day_ago": "hace aprox. un día",
+        "left": "Queda %(timeRemaining)s"
     },
     "onboarding": {
         "personal_messaging_title": "Mensajería segura para amigos y familia",

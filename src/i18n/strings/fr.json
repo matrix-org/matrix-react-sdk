@@ -2419,7 +2419,6 @@
     "Previous recently visited room or space": "Salon ou espace précédemment visité",
     "Toggle Link": "Afficher/masquer le lien",
     "Toggle Code Block": "Afficher/masquer le bloc de code",
-    "%(timeRemaining)s left": "%(timeRemaining)s restant",
     "You are sharing your live location": "Vous partagez votre position en direct",
     "Unsent": "Non envoyé",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Décocher si vous voulez également retirer les messages systèmes de cet utilisateur (par exemple changement de statut ou de profil…)",
@@ -3298,7 +3297,18 @@
         "sliding_sync_description": "En cours de développement, ne peut être désactivé.",
         "under_active_development": "En cours de développement.",
         "location_share_live_description": "Implémentation temporaire. Les positions sont persistantes dans l’historique du salon.",
-        "dynamic_room_predecessors_description": "Active MSC3946 (pour prendre en charge les archives de salon après création)"
+        "dynamic_room_predecessors_description": "Active MSC3946 (pour prendre en charge les archives de salon après création)",
+        "group_messaging": "Messagerie",
+        "group_profile": "Profil",
+        "group_spaces": "Espaces",
+        "group_widgets": "Widgets",
+        "group_rooms": "Salons",
+        "group_voip": "Audio et vidéo",
+        "group_moderation": "Modération",
+        "group_themes": "Thèmes",
+        "group_encryption": "Chiffrement",
+        "group_experimental": "Expérimental",
+        "group_developer": "Développeur"
     },
     "keyboard": {
         "home": "Accueil",
@@ -3394,7 +3404,8 @@
         "few_seconds_ago": "il y a quelques secondes",
         "about_minute_ago": "il y a environ une minute",
         "about_hour_ago": "il y a environ une heure",
-        "about_day_ago": "il y a environ un jour"
+        "about_day_ago": "il y a environ un jour",
+        "left": "%(timeRemaining)s restant"
     },
     "onboarding": {
         "personal_messaging_title": "Messagerie sécurisée pour les amis et la famille",

@@ -2172,7 +2172,6 @@
     "Wait!": "Odota!",
     "Own your conversations.": "Omista keskustelusi.",
     "Unnamed audio": "Nimetön ääni",
-    "%(timeRemaining)s left": "%(timeRemaining)s jäljellä",
     "Click for more info": "Napsauta tästä saadaksesi lisätietoja",
     "This is a beta feature": "Tämä on beetaominaisuus",
     "Start audio stream": "Käynnistä äänen suoratoisto",
@@ -2973,7 +2972,18 @@
         "sliding_sync_description": "Työn alla, käytöstä poistaminen ei ole mahdollista.",
         "under_active_development": "Aktiivisen kehityksen kohteena.",
         "location_share_live_description": "Tilapäinen toteutus. Sijainnit säilyvät huoneen historiassa.",
-        "dynamic_room_predecessors_description": "Ota käyttöön MSC3946 (viiveellä saapuvien huonearkistojen tukemiseksi)"
+        "dynamic_room_predecessors_description": "Ota käyttöön MSC3946 (viiveellä saapuvien huonearkistojen tukemiseksi)",
+        "group_messaging": "Viestintä",
+        "group_profile": "Profiili",
+        "group_spaces": "Avaruudet",
+        "group_widgets": "Sovelmat",
+        "group_rooms": "Huoneet",
+        "group_voip": "Ääni ja video",
+        "group_moderation": "Moderointi",
+        "group_themes": "Teemat",
+        "group_encryption": "Salaus",
+        "group_experimental": "Kokeellinen",
+        "group_developer": "Kehittäjä"
     },
     "keyboard": {
         "home": "Etusivu",
@@ -3066,7 +3076,8 @@
         "few_seconds_ago": "muutama sekunti sitten",
         "about_minute_ago": "noin minuutti sitten",
         "about_hour_ago": "noin tunti sitten",
-        "about_day_ago": "noin päivä sitten"
+        "about_day_ago": "noin päivä sitten",
+        "left": "%(timeRemaining)s jäljellä"
     },
     "onboarding": {
         "personal_messaging_title": "Turvallista viestintää kavereiden ja perheen kanssa",

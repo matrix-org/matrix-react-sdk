@@ -2493,7 +2493,14 @@
         "video_rooms_always_on_voip_channels": "Videoĉambroj estas ĉiam ŝaltitaj VoIP-kanaloj enkonstruitaj en ĉambro en %(brand)s.",
         "video_rooms_faq1_question": "Kiel mi povas krei videoĉambron?",
         "video_rooms_faq1_answer": "Uzu la \"+\" butonon en la ĉambro sekcio de la maldekstra panelo.",
-        "currently_experimental": "Nuntempe eksperimenta."
+        "currently_experimental": "Nuntempe eksperimenta.",
+        "group_profile": "Profilo",
+        "group_spaces": "Aroj",
+        "group_widgets": "Fenestraĵoj",
+        "group_rooms": "Ĉambroj",
+        "group_voip": "Voĉo kaj vido",
+        "group_encryption": "Ĉifrado",
+        "group_developer": "Programisto"
     },
     "keyboard": {
         "home": "Hejmo",

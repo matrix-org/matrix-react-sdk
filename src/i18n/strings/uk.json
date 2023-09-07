@@ -2430,7 +2430,6 @@
         "other": "Триває видалення повідомлень у %(count)s кімнатах"
     },
     "Share for %(duration)s": "Поділитися на %(duration)s",
-    "%(timeRemaining)s left": "Іще %(timeRemaining)s",
     "Previous recently visited room or space": "Попередня недавно відвідана кімната або простір",
     "Next recently visited room or space": "Наступна недавно відвідана кімната або простір",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Використайте нетипові параметри сервера, щоб увійти в інший домашній сервер Matrix, вказавши його URL-адресу. Це дасть вам змогу використовувати %(brand)s з уже наявним у вас на іншому домашньому сервері обліковим записом Matrix.",
@@ -3298,7 +3297,18 @@
         "sliding_sync_description": "На стадії активної розробки, вимкнути не можна.",
         "under_active_development": "У стадії активної розробки.",
         "location_share_live_description": "Тимчасова реалізація. Місце перебування зберігається в історії кімнати.",
-        "dynamic_room_predecessors_description": "Увімкнути MSC3946 (для підтримки архівів пізніх кімнат)"
+        "dynamic_room_predecessors_description": "Увімкнути MSC3946 (для підтримки архівів пізніх кімнат)",
+        "group_messaging": "Спілкування",
+        "group_profile": "Профіль",
+        "group_spaces": "Простори",
+        "group_widgets": "Віджети",
+        "group_rooms": "Кімнати",
+        "group_voip": "Голос і відео",
+        "group_moderation": "Модерування",
+        "group_themes": "Теми",
+        "group_encryption": "Шифрування",
+        "group_experimental": "Експериментально",
+        "group_developer": "Розробка"
     },
     "keyboard": {
         "home": "Домівка",
@@ -3394,7 +3404,8 @@
         "few_seconds_ago": "Декілька секунд тому",
         "about_minute_ago": "близько хвилини тому",
         "about_hour_ago": "близько години тому",
-        "about_day_ago": "близько доби тому"
+        "about_day_ago": "близько доби тому",
+        "left": "Іще %(timeRemaining)s"
     },
     "onboarding": {
         "personal_messaging_title": "Безпечний обмін повідомленнями з друзями та родиною",

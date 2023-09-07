@@ -2485,7 +2485,6 @@
     "Check your email to continue": "Проверьте свою электронную почту, чтобы продолжить",
     "An error occurred while stopping your live location, please try again": "При остановки передачи информации о вашем местоположении произошла ошибка, попробуйте ещё раз",
     "An error occurred whilst sharing your live location, please try again": "При передаче информации о вашем местоположении произошла ошибка, попробуйте ещё раз",
-    "%(timeRemaining)s left": "Осталось %(timeRemaining)s",
     "You are sharing your live location": "Вы делитесь своим местоположением в реальном времени",
     "An error occurred whilst sharing your live location": "Произошла ошибка при передаче информации о вашем местоположении в реальном времени",
     "An error occurred while stopping your live location": "Произошла ошибка при остановке вашего местоположения в реальном времени",
@@ -3039,7 +3038,18 @@
         "jump_to_date_msc_support": "Требуется, чтобы ваш сервер поддерживал MSC3030",
         "sliding_sync_description": "В активной разработке, нельзя отключить.",
         "under_active_development": "В активной разработке.",
-        "location_share_live_description": "Временная реализация. Местоположения сохраняются в истории комнаты."
+        "location_share_live_description": "Временная реализация. Местоположения сохраняются в истории комнаты.",
+        "group_messaging": "Общение",
+        "group_profile": "Профиль",
+        "group_spaces": "Пространства",
+        "group_widgets": "Виджеты",
+        "group_rooms": "Комнаты",
+        "group_voip": "Голос и видео",
+        "group_moderation": "Модерация",
+        "group_themes": "Темы",
+        "group_encryption": "Шифрование",
+        "group_experimental": "Экспериментально",
+        "group_developer": "Разработка"
     },
     "keyboard": {
         "home": "Главная",
@@ -3130,7 +3140,8 @@
         "few_seconds_ago": "несколько секунд назад",
         "about_minute_ago": "около минуты назад",
         "about_hour_ago": "около часа назад",
-        "about_day_ago": "около суток назад"
+        "about_day_ago": "около суток назад",
+        "left": "Осталось %(timeRemaining)s"
     },
     "onboarding": {
         "personal_messaging_title": "Безопасный обмен сообщениями для друзей и семьи",

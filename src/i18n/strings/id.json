@@ -2430,7 +2430,6 @@
         "other": "Saat ini menghapus pesan-pesan di %(count)s ruangan"
     },
     "Share for %(duration)s": "Bagikan selama %(duration)s",
-    "%(timeRemaining)s left": "%(timeRemaining)sd lagi",
     "Next recently visited room or space": "Ruangan atau space berikut yang dikunjungi",
     "Previous recently visited room or space": "Ruangan atau space yang dikunjungi sebelumnya",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Anda dapat menggunakan opsi server khusus untuk masuk ke server Matrix lain dengan menentukan URL homeserver yang berbeda. Ini memungkinkan Anda untuk menggunakan %(brand)s dengan akun Matrix yang ada di homeserver yang berbeda.",
@@ -3303,7 +3302,18 @@
         "sliding_sync_description": "Dalam pengembangan aktif, tidak dapat dinonaktifkan.",
         "under_active_development": "Dalam pengembangan aktif.",
         "location_share_live_description": "Penerapan sementara. Lokasi tetap berada di riwayat ruangan.",
-        "dynamic_room_predecessors_description": "Aktifkan MSC3946 (untuk mendukung arsip ruangan yang datang terlambat)"
+        "dynamic_room_predecessors_description": "Aktifkan MSC3946 (untuk mendukung arsip ruangan yang datang terlambat)",
+        "group_messaging": "Perpesanan",
+        "group_profile": "Profil",
+        "group_spaces": "Space",
+        "group_widgets": "Widget",
+        "group_rooms": "Ruangan",
+        "group_voip": "Suara & Video",
+        "group_moderation": "Moderasi",
+        "group_themes": "Tema",
+        "group_encryption": "Enkripsi",
+        "group_experimental": "Eksperimental",
+        "group_developer": "Pengembang"
     },
     "keyboard": {
         "home": "Beranda",
@@ -3399,7 +3409,8 @@
         "few_seconds_ago": "beberapa detik yang lalu",
         "about_minute_ago": "1 menit yang lalu",
         "about_hour_ago": "1 jam yang lalu",
-        "about_day_ago": "1 hari yang lalu"
+        "about_day_ago": "1 hari yang lalu",
+        "left": "%(timeRemaining)sd lagi"
     },
     "onboarding": {
         "personal_messaging_title": "Perpesanan aman untuk teman dan keluarga",

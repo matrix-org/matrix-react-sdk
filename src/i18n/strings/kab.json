@@ -1693,7 +1693,12 @@
         "pinning": "Arezzi n yizen",
         "state_counters": "Err amsiḍen afessa ɣef uqerru n texxamt",
         "custom_themes": "Tallalt n tmerna n yisental udmawanen",
-        "bridge_state": "Sken-d tilɣa ɣef teqneṭrin deg yiɣewwaṛen n texxamt"
+        "bridge_state": "Sken-d tilɣa ɣef teqneṭrin deg yiɣewwaṛen n texxamt",
+        "group_profile": "Amaɣnu",
+        "group_widgets": "Iwiǧiten",
+        "group_rooms": "Timɣiwent",
+        "group_voip": "Ameslaw & Tavidyut",
+        "group_encryption": "Awgelhen"
     },
     "keyboard": {
         "home": "Agejdan",

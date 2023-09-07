@@ -518,5 +518,9 @@
     "devtools": {
         "category_room": "ห้อง"
     },
-    "Advanced": "ขึ้นสูง"
+    "Advanced": "ขึ้นสูง",
+    "labs": {
+        "group_profile": "โปรไฟล์",
+        "group_rooms": "ห้องสนทนา"
+    }
 }

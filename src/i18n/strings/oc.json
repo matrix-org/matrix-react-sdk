@@ -333,5 +333,10 @@
         "category_symbols": "Simbòls",
         "category_flags": "Marcadors",
         "categories": "Categorias"
+    },
+    "labs": {
+        "group_profile": "Perfil",
+        "group_rooms": "Salas",
+        "group_encryption": "Chiframent"
     }
 }

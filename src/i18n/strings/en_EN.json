@@ -240,7 +240,8 @@
         "in_about_hour": "about an hour from now",
         "in_n_hours": "%(num)s hours from now",
         "in_about_day": "about a day from now",
-        "in_n_days": "%(num)s days from now"
+        "in_n_days": "%(num)s days from now",
+        "left": "%(timeRemaining)s left"
     },
     "Identity server has no terms of service": "Identity server has no terms of service",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.",
@@ -1115,7 +1116,18 @@
         "hidebold": "Hide notification dot (only display counters badges)",
         "intentional_mentions": "Enable intentional mentions",
         "ask_to_join": "Enable ask to join",
-        "new_room_decoration_ui": "New room header & details interface"
+        "new_room_decoration_ui": "New room header & details interface",
+        "group_messaging": "Messaging",
+        "group_profile": "Profile",
+        "group_spaces": "Spaces",
+        "group_widgets": "Widgets",
+        "group_rooms": "Rooms",
+        "group_voip": "Voice & Video",
+        "group_moderation": "Moderation",
+        "group_themes": "Themes",
+        "group_encryption": "Encryption",
+        "group_experimental": "Experimental",
+        "group_developer": "Developer"
     },
     "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "Thank you for trying the beta, please go into as much detail as you can so we can improve it.",
     "Notification Settings": "Notification Settings",
@@ -3310,7 +3322,6 @@
     "An error occurred while stopping your live location": "An error occurred while stopping your live location",
     "An error occurred whilst sharing your live location": "An error occurred whilst sharing your live location",
     "You are sharing your live location": "You are sharing your live location",
-    "%(timeRemaining)s left": "%(timeRemaining)s left",
     "Live location enabled": "Live location enabled",
     "An error occurred whilst sharing your live location, please try again": "An error occurred whilst sharing your live location, please try again",
     "An error occurred while stopping your live location, please try again": "An error occurred while stopping your live location, please try again",

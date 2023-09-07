@@ -2432,7 +2432,6 @@
     "Command error: Unable to handle slash command.": "Erro no comando: non se puido xestionar o comando con barra.",
     "Next recently visited room or space": "Seguinte sala ou espazo visitados recentemente",
     "Previous recently visited room or space": "Anterior sala ou espazo visitados recentemente",
-    "%(timeRemaining)s left": "%(timeRemaining)s restante",
     "Unsent": "Sen enviar",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Podes usar as opcións personalizadas do servidor para acceder a outros servidores Matrix indicando o URL do servidor de inicio. Así podes usar %(brand)s cunha conta Matrix rexistrada nun servidor diferente.",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s non ten permiso para obter a túa localización. Concede acceso á localización nos axustes do navegador.",
@@ -2889,7 +2888,18 @@
         "video_rooms_faq1_answer": "Usa o botón \"+\" na sección da sala do panel esquerdo.",
         "video_rooms_faq2_question": "Podo usar chat de texto xunto á chamada de vídeo?",
         "video_rooms_faq2_answer": "Si, a cronoloxía de texto móstrase xunto co vídeo.",
-        "thank_you": "Grazas por probar a beta, entra en detalles canto queiras para así axudarnos a mellorala."
+        "thank_you": "Grazas por probar a beta, entra en detalles canto queiras para así axudarnos a mellorala.",
+        "group_messaging": "Conversando",
+        "group_profile": "Perfil",
+        "group_spaces": "Espazos",
+        "group_widgets": "Widgets",
+        "group_rooms": "Salas",
+        "group_voip": "Voz e Vídeo",
+        "group_moderation": "Moderación",
+        "group_themes": "Decorados",
+        "group_encryption": "Cifrado",
+        "group_experimental": "Experimental",
+        "group_developer": "Desenvolvemento"
     },
     "keyboard": {
         "home": "Inicio",
@@ -2972,7 +2982,8 @@
         "few_seconds_ago": "fai uns segundos",
         "about_minute_ago": "fai un minuto",
         "about_hour_ago": "fai unha hora",
-        "about_day_ago": "onte"
+        "about_day_ago": "onte",
+        "left": "%(timeRemaining)s restante"
     },
     "onboarding": {
         "personal_messaging_title": "Mensaxería segura para amizades e familia",

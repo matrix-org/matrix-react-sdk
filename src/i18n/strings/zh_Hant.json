@@ -2430,7 +2430,6 @@
         "other": "目前正在移除 %(count)s 個聊天室中的訊息"
     },
     "Share for %(duration)s": "分享 %(duration)s",
-    "%(timeRemaining)s left": "剩下 %(timeRemaining)s",
     "Next recently visited room or space": "下一個最近造訪過的聊天室或聊天空間",
     "Previous recently visited room or space": "上一個最近造訪過的聊天室或群組空間",
     "Unsent": "未傳送",
@@ -3298,7 +3297,18 @@
         "sliding_sync_description": "正在積極開發中，無法停用。",
         "under_active_development": "正在積極開發中。",
         "location_share_live_description": "暫時的實作版本。位置資訊將保留在聊天室的聊天紀錄中。",
-        "dynamic_room_predecessors_description": "請啟用 MSC3946（為了支援遲到聊天室存檔）"
+        "dynamic_room_predecessors_description": "請啟用 MSC3946（為了支援遲到聊天室存檔）",
+        "group_messaging": "訊息傳遞",
+        "group_profile": "基本資料",
+        "group_spaces": "聊天空間",
+        "group_widgets": "小工具",
+        "group_rooms": "聊天室",
+        "group_voip": "語音與視訊",
+        "group_moderation": "審核",
+        "group_themes": "主題",
+        "group_encryption": "加密",
+        "group_experimental": "實驗性",
+        "group_developer": "開發者"
     },
     "keyboard": {
         "home": "首頁",
@@ -3394,7 +3404,8 @@
         "few_seconds_ago": "數秒前",
         "about_minute_ago": "大約一分鐘前",
         "about_hour_ago": "大約一小時前",
-        "about_day_ago": "大約一天前"
+        "about_day_ago": "大約一天前",
+        "left": "剩下 %(timeRemaining)s"
     },
     "onboarding": {
         "personal_messaging_title": "為朋友與家人提供的安全訊息",

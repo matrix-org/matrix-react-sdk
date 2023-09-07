@@ -1346,7 +1346,11 @@
         "pinning": "Mezuak finkatzea",
         "state_counters": "Jarri kontagailu sinpleak gelaren goiburuan",
         "custom_themes": "Azal pertsonalizatuak gehitzea onartzen du",
-        "bridge_state": "Erakutsi zubiei buruzko informazioa gelaren ezarpenetan"
+        "bridge_state": "Erakutsi zubiei buruzko informazioa gelaren ezarpenetan",
+        "group_profile": "Profila",
+        "group_rooms": "Gelak",
+        "group_voip": "Ahotsa eta bideoa",
+        "group_encryption": "Zifratzea"
     },
     "keyboard": {
         "home": "Hasiera",

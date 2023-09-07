@@ -2474,7 +2474,6 @@
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Reageer op een lopende thread of gebruik \"%(replyInThread)s\" wanneer je de muisaanwijzer op een bericht plaatst om een nieuwe te starten.",
     "We'll create rooms for each of them.": "We zullen kamers voor elk van hen maken.",
     "An error occurred while stopping your live location, please try again": "Er is een fout opgetreden bij het stoppen van je live locatie, probeer het opnieuw",
-    "%(timeRemaining)s left": "%(timeRemaining)s over",
     "You are sharing your live location": "Je deelt je live locatie",
     "Open user settings": "Open persooninstellingen",
     "Switch to space by number": "Overschakelen naar space op nummer",
@@ -2970,7 +2969,18 @@
         "video_rooms_faq1_answer": "Gebruik de knop \"+\" in het kamergedeelte van het linkerpaneel.",
         "video_rooms_faq2_question": "Kan ik tekstberichten gebruiken naast het videogesprek?",
         "video_rooms_faq2_answer": "Ja, de gesprekstijdslijn wordt naast de video weergegeven.",
-        "thank_you": "Bedankt voor het proberen van de bèta. Ga alsjeblieft zo gedetailleerd mogelijk in op de details zodat we deze kunnen verbeteren."
+        "thank_you": "Bedankt voor het proberen van de bèta. Ga alsjeblieft zo gedetailleerd mogelijk in op de details zodat we deze kunnen verbeteren.",
+        "group_messaging": "Messaging",
+        "group_profile": "Profiel",
+        "group_spaces": "Spaces",
+        "group_widgets": "Widgets",
+        "group_rooms": "Kamers",
+        "group_voip": "Spraak & video",
+        "group_moderation": "Moderatie",
+        "group_themes": "Thema's",
+        "group_encryption": "Versleuteling",
+        "group_experimental": "Experimenteel",
+        "group_developer": "Ontwikkelaar"
     },
     "keyboard": {
         "home": "Home",
@@ -3050,7 +3060,8 @@
         "few_seconds_ago": "enige tellen geleden",
         "about_minute_ago": "ongeveer een minuut geleden",
         "about_hour_ago": "ongeveer een uur geleden",
-        "about_day_ago": "ongeveer een dag geleden"
+        "about_day_ago": "ongeveer een dag geleden",
+        "left": "%(timeRemaining)s over"
     },
     "onboarding": {
         "personal_messaging_title": "Veilig berichten versturen voor vrienden en familie",

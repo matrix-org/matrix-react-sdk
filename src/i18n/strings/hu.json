@@ -2426,7 +2426,6 @@
     },
     "Next recently visited room or space": "Következő, nemrég meglátogatott szoba vagy tér",
     "Previous recently visited room or space": "Előző, nemrég meglátogatott szoba vagy tér",
-    "%(timeRemaining)s left": "Maradék idő: %(timeRemaining)s",
     "Unsent": "Elküldetlen",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Törölje a kijelölést ha a rendszer üzeneteket is törölni szeretné ettől a felhasználótól (pl. tagság változás, profil változás…)",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
@@ -3223,7 +3222,18 @@
         "sliding_sync_description": "Aktív fejlesztés alatt, nem kapcsolható ki.",
         "under_active_development": "Aktív fejlesztés alatt.",
         "location_share_live_description": "Átmeneti megvalósítás. A helyadatok megmaradnak a szoba naplójában.",
-        "dynamic_room_predecessors_description": "MSC3946 engedélyezése (a későn érkező szobaarchívumok támogatáshoz)"
+        "dynamic_room_predecessors_description": "MSC3946 engedélyezése (a későn érkező szobaarchívumok támogatáshoz)",
+        "group_messaging": "Üzenetküldés",
+        "group_profile": "Profil",
+        "group_spaces": "Terek",
+        "group_widgets": "Kisalkalmazások",
+        "group_rooms": "Szobák",
+        "group_voip": "Hang és videó",
+        "group_moderation": "Moderálás",
+        "group_themes": "Témák",
+        "group_encryption": "Titkosítás",
+        "group_experimental": "Kísérleti",
+        "group_developer": "Fejlesztői"
     },
     "keyboard": {
         "home": "Kezdőlap",
@@ -3319,7 +3329,8 @@
         "few_seconds_ago": "néhány másodperce",
         "about_minute_ago": "egy perce",
         "about_hour_ago": "egy órája",
-        "about_day_ago": "egy napja"
+        "about_day_ago": "egy napja",
+        "left": "Maradék idő: %(timeRemaining)s"
     },
     "onboarding": {
         "personal_messaging_title": "Biztonságos üzenetküldés barátokkal, családdal",

@@ -1304,7 +1304,12 @@
         "user_menu": "Brukermeny"
     },
     "labs": {
-        "pinning": "Meldingsklistring"
+        "pinning": "Meldingsklistring",
+        "group_profile": "Profil",
+        "group_widgets": "Komponenter",
+        "group_rooms": "Rom",
+        "group_voip": "Stemme og video",
+        "group_encryption": "Kryptering"
     },
     "keyboard": {
         "home": "Hjem",

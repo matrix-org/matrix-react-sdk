@@ -477,7 +477,8 @@
     },
     "labs": {
         "pinning": "Fixació de missatges",
-        "bridge_state": "Mostra informació d'enllaços a la configuració de sala"
+        "bridge_state": "Mostra informació d'enllaços a la configuració de sala",
+        "group_rooms": "Sales"
     },
     "keyboard": {
         "home": "Inici"

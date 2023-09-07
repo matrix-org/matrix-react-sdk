@@ -606,7 +606,9 @@
     },
     "labs": {
         "pinning": "Fastgørelse af beskeder",
-        "state_counters": "Vis simple tællere i rumhovedet"
+        "state_counters": "Vis simple tællere i rumhovedet",
+        "group_profile": "Profil",
+        "group_rooms": "Rum"
     },
     "power_level": {
         "default": "Standard",

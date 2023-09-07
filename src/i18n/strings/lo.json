@@ -1415,7 +1415,6 @@
     "This room is public": "ນີ້ແມ່ນຫ້ອງສາທາລະນະ",
     "Avatar": "ຮູບແທນຕົວ",
     "An error occurred while stopping your live location, please try again": "ເກີດຄວາມຜິດພາດໃນລະຫວ່າງການຢຸດສະຖານທີ່ປັດຈຸບັນຂອງທ່ານ, ກະລຸນາລອງໃໝ່ອີກຄັ້ງ",
-    "%(timeRemaining)s left": "ຍັງເຫຼືອ %(timeRemaining)s",
     "Live until %(expiryTime)s": "ຢູ່ຈົນກ່ວາ %(expiryTime)s",
     "Updated %(humanizedUpdateTime)s": "ອັບເດດ %(humanizedUpdateTime)s",
     "Space home": "ພຶ້ນທີ່ home",
@@ -2737,7 +2736,18 @@
         "dehydration": "ຂໍ້ຄວາມເຂົ້າລະຫັດແບບອອບໄລນ໌ໂດຍໃຊ້ອຸປະກອນອົບແຫ້ງ",
         "bridge_state": "ສະແດງຂໍ້ມູນກ່ຽວກັບການແກ້ໄຂການຕັ້ງຄ່າຫ້ອງ",
         "jump_to_date": "ໄປຫາວັນທີ (ເພີ່ມ /jumptodate ແລະໄປຫາຫົວຂໍ້ວັນທີ)",
-        "thank_you": "ຂອບໃຈສຳລັບການທົດລອງໃຊ້ເບຕ້າ, ກະລຸນາໃສ່ລາຍລະອຽດໃຫ້ຫຼາຍເທົ່າທີ່ທ່ານເຮັດໄດ້ ເພື່ອໃຫ້ພວກເຮົາສາມາດປັບປຸງມັນໄດ້."
+        "thank_you": "ຂອບໃຈສຳລັບການທົດລອງໃຊ້ເບຕ້າ, ກະລຸນາໃສ່ລາຍລະອຽດໃຫ້ຫຼາຍເທົ່າທີ່ທ່ານເຮັດໄດ້ ເພື່ອໃຫ້ພວກເຮົາສາມາດປັບປຸງມັນໄດ້.",
+        "group_messaging": "ການສົ່ງຂໍ້ຄວາມ",
+        "group_profile": "ໂປຣໄຟລ໌",
+        "group_spaces": "ພື້ນທີ່",
+        "group_widgets": "ວິດເຈັດ",
+        "group_rooms": "ຫ້ອງ",
+        "group_voip": "ສຽງ & ວິດີໂອ",
+        "group_moderation": "ປານກາງ",
+        "group_themes": "ຫົວຂໍ້",
+        "group_encryption": "ການເຂົ້າລະຫັດ",
+        "group_experimental": "ທົດລອງ",
+        "group_developer": "ນັກພັດທະນາ"
     },
     "keyboard": {
         "home": "ໜ້າຫຼັກ",
@@ -2815,7 +2825,8 @@
         "few_seconds_ago": "ສອງສາມວິນາທີກ່ອນຫນ້ານີ້",
         "about_minute_ago": "ປະມານໜຶ່ງວິນາທີກ່ອນຫນ້ານີ້",
         "about_hour_ago": "ປະມານຫນຶ່ງຊົ່ວໂມງກ່ອນຫນ້ານີ້",
-        "about_day_ago": "ປະມານຫນຶ່ງມື້ກ່ອນຫນ້ານີ້"
+        "about_day_ago": "ປະມານຫນຶ່ງມື້ກ່ອນຫນ້ານີ້",
+        "left": "ຍັງເຫຼືອ %(timeRemaining)s"
     },
     "settings": {
         "show_breadcrumbs": "ສະແດງທາງລັດໄປຫາຫ້ອງທີ່ເບິ່ງເມື່ອບໍ່ດົນມານີ້ຂ້າງເທິງລາຍການຫ້ອງ",

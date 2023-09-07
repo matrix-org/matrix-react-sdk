@@ -2272,7 +2272,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Δεν μπορείτε να στείλετε μηνύματα μέχρι να ελέγξετε και να συμφωνήσετε με τους <consentLink>όρους και τις προϋποθέσεις μας</consentLink>.",
     "%(creator)s created and configured the room.": "Ο/η %(creator)s δημιούργησε και διαμόρφωσε το δωμάτιο.",
     "%(creator)s created this DM.": "Ο/η %(creator)s δημιούργησε αυτό το απευθείας μήνυμα.",
-    "%(timeRemaining)s left": "%(timeRemaining)s απομένουν",
     "Failed to start livestream": "Η έναρξη της ζωντανής ροής απέτυχε",
     "Manage & explore rooms": "Διαχειριστείτε και εξερευνήστε δωμάτια",
     "Mentions only": "Αναφορές μόνο",
@@ -2720,7 +2719,18 @@
         "video_rooms_faq1_answer": "Χρησιμοποιήστε το κουμπί “+” στην ενότητα δωματίων του αριστερού πάνελ.",
         "video_rooms_faq2_question": "Μπορώ να χρησιμοποιήσω τη συνομιλία κειμένου παράλληλα με τη βιντεοκλήση;",
         "video_rooms_faq2_answer": "Ναι, το χρονοδιάγραμμα της συνομιλίας εμφανίζεται δίπλα στο βίντεο.",
-        "thank_you": "Σας ευχαριστούμε που δοκιμάσατε την έκδοση beta, παρακαλούμε να αναφέρετε όσο περισσότερες λεπτομέρειες μπορείτε για να τη βελτιώσουμε."
+        "thank_you": "Σας ευχαριστούμε που δοκιμάσατε την έκδοση beta, παρακαλούμε να αναφέρετε όσο περισσότερες λεπτομέρειες μπορείτε για να τη βελτιώσουμε.",
+        "group_messaging": "Μηνύματα",
+        "group_profile": "Προφίλ",
+        "group_spaces": "Χώροι",
+        "group_widgets": "Μικροεφαρμογές",
+        "group_rooms": "Δωμάτια",
+        "group_voip": "Φωνή & Βίντεο",
+        "group_moderation": "Συντονισμός",
+        "group_themes": "Θέματα",
+        "group_encryption": "Κρυπτογράφηση",
+        "group_experimental": "Πειραματικό",
+        "group_developer": "Προγραμματιστής"
     },
     "keyboard": {
         "home": "Αρχική",
@@ -2798,7 +2808,8 @@
         "few_seconds_ago": "λίγα δευτερόλεπτα πριν",
         "about_minute_ago": "σχεδόν ένα λεπτό πριν",
         "about_hour_ago": "σχεδόν μία ώρα πριν",
-        "about_day_ago": "σχεδόν μία μέρα πριν"
+        "about_day_ago": "σχεδόν μία μέρα πριν",
+        "left": "%(timeRemaining)s απομένουν"
     },
     "settings": {
         "show_breadcrumbs": "Εμφάνιση συντομεύσεων σε δωμάτια που προβλήθηκαν πρόσφατα πάνω από τη λίστα δωματίων",

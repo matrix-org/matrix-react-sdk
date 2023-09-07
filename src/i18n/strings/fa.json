@@ -2207,7 +2207,18 @@
         "dehydration": "ارسال پیام رمزشده به شکل آفلاین با استفاده از دستگاه‌های خاص",
         "bridge_state": "اطلاعات پل‌های ارتباطی را در تنظیمات اتاق نمایش بده",
         "voice_broadcast": "صدای جمعی",
-        "video_rooms_a_new_way_to_chat": "راهکار جدیدی برای گفتگوی صوتی و تصویری در%(brand)sوجود دارد."
+        "video_rooms_a_new_way_to_chat": "راهکار جدیدی برای گفتگوی صوتی و تصویری در%(brand)sوجود دارد.",
+        "group_messaging": "پیام رسانی",
+        "group_profile": "پروفایل",
+        "group_spaces": "محیط‌ها",
+        "group_widgets": "ابزارک ها",
+        "group_rooms": "اتاق‌ها",
+        "group_voip": "صدا و تصویر",
+        "group_moderation": "اعتدال",
+        "group_themes": "قالب ها",
+        "group_encryption": "رمزنگاری",
+        "group_experimental": "تجربی",
+        "group_developer": "توسعه دهنده"
     },
     "keyboard": {
         "home": "خانه",

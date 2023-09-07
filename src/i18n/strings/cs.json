@@ -2430,7 +2430,6 @@
         "other": "Momentálně se odstraňují zprávy v %(count)s místnostech"
     },
     "Share for %(duration)s": "Sdílet na %(duration)s",
-    "%(timeRemaining)s left": "%(timeRemaining)s zbývá",
     "Next recently visited room or space": "Další nedávno navštívená místnost nebo prostor",
     "Previous recently visited room or space": "Předchozí nedávno navštívená místnost nebo prostor",
     "Unsent": "Neodeslané",
@@ -3303,7 +3302,18 @@
         "sliding_sync_description": "V aktivním vývoji, nelze zakázat.",
         "under_active_development": "V aktivním vývoji.",
         "location_share_live_description": "Dočasná implementace. Polohy zůstanou v historii místností.",
-        "dynamic_room_predecessors_description": "Povolit MSC3946 (podpora pozdních archivů místností)"
+        "dynamic_room_predecessors_description": "Povolit MSC3946 (podpora pozdních archivů místností)",
+        "group_messaging": "Zprávy",
+        "group_profile": "Profil",
+        "group_spaces": "Prostory",
+        "group_widgets": "Widgety",
+        "group_rooms": "Místnosti",
+        "group_voip": "Zvuk a video",
+        "group_moderation": "Moderování",
+        "group_themes": "Motivy vzhledu",
+        "group_encryption": "Šifrování",
+        "group_experimental": "Experimentální",
+        "group_developer": "Pro vývojáře"
     },
     "keyboard": {
         "home": "Domov",
@@ -3399,7 +3409,8 @@
         "few_seconds_ago": "před pár vteřinami",
         "about_minute_ago": "před minutou",
         "about_hour_ago": "asi před hodinou",
-        "about_day_ago": "před jedním dnem"
+        "about_day_ago": "před jedním dnem",
+        "left": "%(timeRemaining)s zbývá"
     },
     "onboarding": {
         "personal_messaging_title": "Zabezpečené zasílání zpráv pro přátele a rodinu",

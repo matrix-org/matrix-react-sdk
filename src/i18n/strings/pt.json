@@ -810,5 +810,9 @@
     },
     "Messages": "Mensagens",
     "Other": "Outros",
-    "Advanced": "Avançado"
+    "Advanced": "Avançado",
+    "labs": {
+        "group_profile": "Perfil",
+        "group_rooms": "Salas"
+    }
 }

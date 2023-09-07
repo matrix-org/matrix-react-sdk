@@ -1113,7 +1113,12 @@
     },
     "labs": {
         "pinning": "Закачене поруке",
-        "bridge_state": "Прикажи податке о мостовима у подешавањима собе"
+        "bridge_state": "Прикажи податке о мостовима у подешавањима собе",
+        "group_profile": "Профил",
+        "group_widgets": "Виџети",
+        "group_rooms": "Собе",
+        "group_voip": "Глас и видео",
+        "group_encryption": "Шифровање"
     },
     "keyboard": {
         "home": "Почетна",

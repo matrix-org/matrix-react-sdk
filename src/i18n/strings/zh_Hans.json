@@ -2597,7 +2597,6 @@
     "An error occurred while stopping your live location, please try again": "停止你的实时位置时出错，请重试",
     "An error occurred whilst sharing your live location, please try again": "分享你的实时位置时出错，请重试",
     "Live location enabled": "实时位置已启用",
-    "%(timeRemaining)s left": "剩余%(timeRemaining)s",
     "You are sharing your live location": "你正在分享你的实时位置",
     "An error occurred whilst sharing your live location": "分享实时位置时出错",
     "An error occurred while stopping your live location": "停止实时位置时出错",
@@ -2957,7 +2956,18 @@
         "currently_experimental": "目前是实验性的。",
         "sliding_sync_description": "正在积极开发中，不能禁用。",
         "under_active_development": "积极开发中。",
-        "location_share_live_description": "临时的实现。位置在房间历史中持续保留。"
+        "location_share_live_description": "临时的实现。位置在房间历史中持续保留。",
+        "group_messaging": "消息传递",
+        "group_profile": "个人资料",
+        "group_spaces": "空间",
+        "group_widgets": "挂件",
+        "group_rooms": "房间",
+        "group_voip": "语音和视频",
+        "group_moderation": "审核",
+        "group_themes": "主题",
+        "group_encryption": "加密",
+        "group_experimental": "实验性",
+        "group_developer": "开发者"
     },
     "keyboard": {
         "home": "主页",
@@ -3040,7 +3050,8 @@
         "few_seconds_ago": "数秒前",
         "about_minute_ago": "约一分钟前",
         "about_hour_ago": "约一小时前",
-        "about_day_ago": "约一天前"
+        "about_day_ago": "约一天前",
+        "left": "剩余%(timeRemaining)s"
     },
     "onboarding": {
         "personal_messaging_title": "和朋友家人安全地收发消息",

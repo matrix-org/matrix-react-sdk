@@ -2429,7 +2429,6 @@
     "Preserve system messages": "Näita süsteemseid teateid",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Kui sa samuti soovid mitte kuvada selle kasutajaga seotud süsteemseid teateid (näiteks liikmelisuse muutused, profiili muutused, jne), siis eemalda see valik",
     "Share for %(duration)s": "Jaga nii kaua - %(duration)s",
-    "%(timeRemaining)s left": "jäänud %(timeRemaining)s",
     "Next recently visited room or space": "Järgmine viimati külastatud jututuba või kogukond",
     "Previous recently visited room or space": "Eelmine viimati külastatud jututuba või kogukond",
     "Unsent": "Saatmata",
@@ -3298,7 +3297,18 @@
         "sliding_sync_description": "Aktiivselt arendamisel ega ole võimalik välja lülitada.",
         "under_active_development": "Aktiivselt arendamisel.",
         "location_share_live_description": "Tegemist on ajutise ja esialgse lahendusega: asukohad on jututoa ajaloos näha.",
-        "dynamic_room_predecessors_description": "Võta kasutusele MSC3946 (jututoa ajaloo aeglane laadimine)"
+        "dynamic_room_predecessors_description": "Võta kasutusele MSC3946 (jututoa ajaloo aeglane laadimine)",
+        "group_messaging": "Sõnumisuhtlus",
+        "group_profile": "Profiil",
+        "group_spaces": "Kogukonnakeskused",
+        "group_widgets": "Vidinad",
+        "group_rooms": "Jututoad",
+        "group_voip": "Heli ja video",
+        "group_moderation": "Modereerimine",
+        "group_themes": "Teemad",
+        "group_encryption": "Krüptimine",
+        "group_experimental": "Katsed",
+        "group_developer": "Arendajad"
     },
     "keyboard": {
         "home": "Avaleht",
@@ -3394,7 +3404,8 @@
         "few_seconds_ago": "mõni sekund tagasi",
         "about_minute_ago": "umbes minut tagasi",
         "about_hour_ago": "umbes tund aega tagasi",
-        "about_day_ago": "umbes päev tagasi"
+        "about_day_ago": "umbes päev tagasi",
+        "left": "jäänud %(timeRemaining)s"
     },
     "onboarding": {
         "personal_messaging_title": "Turvaline suhtlus pere ja sõprade jaoks",

@@ -2057,7 +2057,18 @@
         "video_rooms_faq1_answer": "Kairiajame skydelyje esančioje kambarių skiltyje naudokite mygtuką “+”.",
         "video_rooms_faq2_question": "Ar galiu naudoti teksto pokalbius kartu su vaizdo skambučiu?",
         "video_rooms_faq2_answer": "Taip, pokalbių laiko juosta rodoma kartu su vaizdu.",
-        "thank_you": "Dėkojame, kad išbandėte beta versiją, ir prašome pateikti kuo daugiau informacijos, kad galėtume ją patobulinti."
+        "thank_you": "Dėkojame, kad išbandėte beta versiją, ir prašome pateikti kuo daugiau informacijos, kad galėtume ją patobulinti.",
+        "group_messaging": "Žinučių siuntimas",
+        "group_profile": "Profilis",
+        "group_spaces": "Erdvės",
+        "group_widgets": "Valdikliai",
+        "group_rooms": "Kambariai",
+        "group_voip": "Garsas ir Vaizdas",
+        "group_moderation": "Moderavimas",
+        "group_themes": "Temos",
+        "group_encryption": "Šifravimas",
+        "group_experimental": "Eksperimentinis",
+        "group_developer": "Kūrėjas"
     },
     "keyboard": {
         "home": "Pradžia",

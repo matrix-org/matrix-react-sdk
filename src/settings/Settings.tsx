@@ -99,18 +99,18 @@ export enum Features {
 }
 
 export const labGroupNames: Record<LabGroup, TranslationKey> = {
-    [LabGroup.Messaging]: _td("Messaging"),
-    [LabGroup.Profile]: _td("Profile"),
-    [LabGroup.Spaces]: _td("Spaces"),
-    [LabGroup.Widgets]: _td("Widgets"),
-    [LabGroup.Rooms]: _td("Rooms"),
-    [LabGroup.VoiceAndVideo]: _td("Voice & Video"),
-    [LabGroup.Moderation]: _td("Moderation"),
+    [LabGroup.Messaging]: _td("labs|group_messaging"),
+    [LabGroup.Profile]: _td("labs|group_profile"),
+    [LabGroup.Spaces]: _td("labs|group_spaces"),
+    [LabGroup.Widgets]: _td("labs|group_widgets"),
+    [LabGroup.Rooms]: _td("labs|group_rooms"),
+    [LabGroup.VoiceAndVideo]: _td("labs|group_voip"),
+    [LabGroup.Moderation]: _td("labs|group_moderation"),
     [LabGroup.Analytics]: _td("common|analytics"),
-    [LabGroup.Themes]: _td("Themes"),
-    [LabGroup.Encryption]: _td("Encryption"),
-    [LabGroup.Experimental]: _td("Experimental"),
-    [LabGroup.Developer]: _td("Developer"),
+    [LabGroup.Themes]: _td("labs|group_themes"),
+    [LabGroup.Encryption]: _td("labs|group_encryption"),
+    [LabGroup.Experimental]: _td("labs|group_experimental"),
+    [LabGroup.Developer]: _td("labs|group_developer"),
 };
 
 export type SettingValueType =

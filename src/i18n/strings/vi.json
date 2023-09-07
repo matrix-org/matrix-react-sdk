@@ -3059,7 +3059,18 @@
         "jump_to_date_msc_support": "Yêu cầu máy chủ của bạn hỗ trợ MSC3030",
         "sliding_sync_description": "Đang được phát triển tích cực, không thể vô hiệu.",
         "under_active_development": "Đang được phát triển tích cực.",
-        "location_share_live_description": "Mới làm tạm. Vị trí lưu lại trong lịch sử phòng."
+        "location_share_live_description": "Mới làm tạm. Vị trí lưu lại trong lịch sử phòng.",
+        "group_messaging": "Tin nhắn",
+        "group_profile": "Hồ sơ",
+        "group_spaces": "Không gian",
+        "group_widgets": "Vật dụng",
+        "group_rooms": "Phòng",
+        "group_voip": "Âm thanh & Hình ảnh",
+        "group_moderation": "Việc vận hành",
+        "group_themes": "Chủ đề",
+        "group_encryption": "Mã hóa",
+        "group_experimental": "Thử nghiệm",
+        "group_developer": "Nhà phát triển"
     },
     "keyboard": {
         "home": "Nhà",

@@ -2779,7 +2779,6 @@
     "An error occurred while stopping your live location, please try again": "Wystąpił błąd podczas zatrzymywania Twojej lokalizacji na żywo, spróbuj ponownie",
     "An error occurred whilst sharing your live location, please try again": "Wystąpił błąd podczas udostępniania Twojej lokalizacji na żywo, spróbuj ponownie",
     "Live location enabled": "Włączono lokalizację na żywo",
-    "%(timeRemaining)s left": "%(timeRemaining)s pozostało",
     "You are sharing your live location": "Udostępniasz swoją lokalizację na żywo",
     "An error occurred whilst sharing your live location": "Wystąpił błąd podczas udostępniania Twojej lokalizacji na żywo",
     "An error occurred while stopping your live location": "Wystąpił błąd podczas kończenia lokalizacji na żywo",
@@ -3282,7 +3281,18 @@
         "sliding_sync_description": "W trakcie aktywnego rozwoju, nie można wyłączyć.",
         "under_active_development": "W trakcie aktywnego rozwoju.",
         "location_share_live_description": "Implementacja tymczasowa. Lokalizacje są zapisywane w historii pokoju.",
-        "dynamic_room_predecessors_description": "Włącz MSC3946 (dla opóźnionych archiwów pokoju)"
+        "dynamic_room_predecessors_description": "Włącz MSC3946 (dla opóźnionych archiwów pokoju)",
+        "group_messaging": "Wiadomości",
+        "group_profile": "Profil",
+        "group_spaces": "Przestrzenie",
+        "group_widgets": "Widżety",
+        "group_rooms": "Pokoje",
+        "group_voip": "Głos i wideo",
+        "group_moderation": "Moderacja",
+        "group_themes": "Motywy",
+        "group_encryption": "Szyfrowanie",
+        "group_experimental": "Eksperymentalne",
+        "group_developer": "Developer"
     },
     "keyboard": {
         "home": "Strona główna",
@@ -3378,7 +3388,8 @@
         "few_seconds_ago": "kilka sekund temu",
         "about_minute_ago": "około minuty temu",
         "about_hour_ago": "około godziny temu",
-        "about_day_ago": "około dzień temu"
+        "about_day_ago": "około dzień temu",
+        "left": "%(timeRemaining)s pozostało"
     },
     "onboarding": {
         "personal_messaging_title": "Bezpieczna komunikacja dla znajomych i rodziny",

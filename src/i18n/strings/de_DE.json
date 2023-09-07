@@ -2429,7 +2429,6 @@
         "one": "Entferne Nachrichten in %(count)s Raum",
         "other": "Entferne Nachrichten in %(count)s Räumen"
     },
-    "%(timeRemaining)s left": "%(timeRemaining)s übrig",
     "Share for %(duration)s": "Geteilt für %(duration)s",
     "Failed to join": "Betreten fehlgeschlagen",
     "The person who invited you has already left, or their server is offline.": "Die dich einladende Person hat den Raum verlassen oder ihr Heim-Server ist außer Betrieb.",
@@ -3303,7 +3302,18 @@
         "sliding_sync_description": "In aktiver Entwicklung, kann nicht deaktiviert werden.",
         "under_active_development": "In aktiver Entwicklung.",
         "location_share_live_description": "Vorläufige Implementierung: Standorte verbleiben im Raumverlauf.",
-        "dynamic_room_predecessors_description": "MSC3946 aktivieren (zur Verknüpfung von Raumarchiven nach der Raumerstellung)"
+        "dynamic_room_predecessors_description": "MSC3946 aktivieren (zur Verknüpfung von Raumarchiven nach der Raumerstellung)",
+        "group_messaging": "Kommunikation",
+        "group_profile": "Profil",
+        "group_spaces": "Spaces",
+        "group_widgets": "Widgets",
+        "group_rooms": "Räume",
+        "group_voip": "Anrufe",
+        "group_moderation": "Moderation",
+        "group_themes": "Themen",
+        "group_encryption": "Verschlüsselung",
+        "group_experimental": "Experimentell",
+        "group_developer": "Entwickler"
     },
     "keyboard": {
         "home": "Startseite",
@@ -3399,7 +3409,8 @@
         "few_seconds_ago": "vor ein paar Sekunden",
         "about_minute_ago": "vor etwa einer Minute",
         "about_hour_ago": "vor etwa einer Stunde",
-        "about_day_ago": "vor etwa einem Tag"
+        "about_day_ago": "vor etwa einem Tag",
+        "left": "%(timeRemaining)s übrig"
     },
     "onboarding": {
         "personal_messaging_title": "Sichere Kommunikation für Freunde und Familie",

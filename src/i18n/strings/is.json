@@ -1809,7 +1809,6 @@
     "Great, that'll help people know it's you": "Frábært, það mun hjálpa fólki að vita að þetta sért þú",
     "Sign in with SSO": "Skrá inn með einfaldri innskráningu (SSO)",
     "Token incorrect": "Rangt teikn",
-    "%(timeRemaining)s left": "%(timeRemaining)s eftir",
     "You are sharing your live location": "Þú ert að deila staðsetninu þinni í rauntíma",
     "This is a beta feature": "Þetta er beta-prófunareiginleiki",
     "Revoke permissions": "Afturkalla heimildir",
@@ -2772,7 +2771,18 @@
         "report_to_moderators_description": "Í spjallrásum sem styðja eftirlit umsjónarmanna, mun 'Kæra'-hnappurinn gefa þér færi á að tilkynna misnotkun til umsjónarmanna spjallrása.",
         "currently_experimental": "Í augnablikinu á tilraunastigi.",
         "under_active_development": "Í virkri þróun.",
-        "location_share_live_description": "Bráðabirgðaútfærsla. Staðsetningar haldast í ferli spjallrása."
+        "location_share_live_description": "Bráðabirgðaútfærsla. Staðsetningar haldast í ferli spjallrása.",
+        "group_messaging": "Skilaboð",
+        "group_profile": "Notandasnið",
+        "group_spaces": "Svæði",
+        "group_widgets": "Viðmótshlutar",
+        "group_rooms": "Spjallrásir",
+        "group_voip": "Tal og myndmerki",
+        "group_moderation": "Umsjón",
+        "group_themes": "Þemu",
+        "group_encryption": "Dulritun",
+        "group_experimental": "Á tilraunastigi",
+        "group_developer": "Forritari"
     },
     "keyboard": {
         "home": "Forsíða",
@@ -2858,7 +2868,8 @@
         "few_seconds_ago": "fyrir örfáum sekúndum síðan",
         "about_minute_ago": "fyrir um það bil mínútu síðan",
         "about_hour_ago": "fyrir um klukkustund síðan",
-        "about_day_ago": "fyrir um degi síðan"
+        "about_day_ago": "fyrir um degi síðan",
+        "left": "%(timeRemaining)s eftir"
     },
     "onboarding": {
         "personal_messaging_title": "Örugg skilaboð fyrir vini og fjölskyldu",

@@ -1494,7 +1494,10 @@
     },
     "labs": {
         "pinning": "Ziņu piespraušana",
-        "video_rooms_faq1_question": "Kā izveidot video istabu?"
+        "video_rooms_faq1_question": "Kā izveidot video istabu?",
+        "group_profile": "Profils",
+        "group_rooms": "Istabas",
+        "group_encryption": "Šifrēšana"
     },
     "keyboard": {
         "home": "Mājup"

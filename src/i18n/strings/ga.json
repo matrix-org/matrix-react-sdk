@@ -653,7 +653,12 @@
         "submit": "Cuir isteach"
     },
     "labs": {
-        "pinning": "Ceangal teachtaireachta"
+        "pinning": "Ceangal teachtaireachta",
+        "group_profile": "Próifíl",
+        "group_spaces": "Spásanna",
+        "group_widgets": "Giuirléidí",
+        "group_rooms": "Seomraí",
+        "group_encryption": "Criptiúchán"
     },
     "keyboard": {
         "home": "Tús",

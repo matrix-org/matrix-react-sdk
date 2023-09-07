@@ -1139,7 +1139,12 @@
     },
     "labs": {
         "pinning": "메시지 고정",
-        "state_counters": "방 헤더에 간단한 카운터 표현"
+        "state_counters": "방 헤더에 간단한 카운터 표현",
+        "group_profile": "프로필",
+        "group_widgets": "위젯",
+        "group_rooms": "방",
+        "group_voip": "음성 & 영상",
+        "group_encryption": "암호화"
     },
     "keyboard": {
         "home": "홈"
