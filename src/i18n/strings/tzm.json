@@ -1,7 +1,4 @@
 {
-    "Other": "Yaḍn",
-    "Actions": "Tugawin",
-    "Messages": "Tuzinin",
     "Create Account": "senflul amiḍan",
     "Dec": "Duj",
     "Nov": "Nuw",
@@ -52,7 +49,6 @@
     "Phone": "Atilifun",
     "Email": "Imayl",
     "Send": "Azen",
-    "Flags": "Icenyalen",
     "edited": "infel",
     "Copied!": "inɣel!",
     "Home": "Asnubeg",
@@ -92,7 +88,6 @@
     "Dog": "Aydi",
     "Ok": "Wax",
     "Notifications": "Tineɣmisin",
-    "Usage": "Asemres",
     "Feb": "Bṛa",
     "Jan": "Yen",
     "common": {
@@ -148,5 +143,19 @@
     },
     "timeline": {
         "m.image": "yuzen %(senderDisplayName)s yat twelaft."
+    },
+    "slash_command": {
+        "usage": "Asemres",
+        "category_messages": "Tuzinin",
+        "category_actions": "Tugawin",
+        "category_other": "Yaḍn"
+    },
+    "Messages": "Tuzinin",
+    "devtools": {
+        "category_other": "Yaḍn"
+    },
+    "Other": "Yaḍn",
+    "emoji": {
+        "category_flags": "Icenyalen"
     }
 }

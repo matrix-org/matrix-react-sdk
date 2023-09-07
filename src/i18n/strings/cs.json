@@ -6,8 +6,6 @@
     "Low priority": "Nízká priorita",
     "Notifications": "Oznámení",
     "Rooms": "Místnosti",
-    "Video call": "Videohovor",
-    "Voice call": "Hlasový hovor",
     "Sun": "Ne",
     "Mon": "Po",
     "Tue": "Út",
@@ -35,11 +33,9 @@
     "Failed to forget room %(errCode)s": "Nepodařilo se zapomenout místnost %(errCode)s",
     "powered by Matrix": "používá protokol Matrix",
     "Account": "Účet",
-    "Admin": "Správce",
     "No Microphones detected": "Nerozpoznány žádné mikrofony",
     "No Webcams detected": "Nerozpoznány žádné webkamery",
     "Default Device": "Výchozí zařízení",
-    "Advanced": "Rozšířené",
     "Authentication": "Ověření",
     "A new password must be entered.": "Musíte zadat nové heslo.",
     "An error has occurred.": "Nastala chyba.",
@@ -148,7 +144,6 @@
         "other": "Nahrávání souboru %(filename)s a %(count)s dalších"
     },
     "Upload Failed": "Nahrávání selhalo",
-    "Usage": "Použití",
     "Users": "Uživatelé",
     "Verification Pending": "Čeká na ověření",
     "Verified key": "Ověřený klíč",
@@ -179,7 +174,6 @@
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Smazáním widgetu ho odstraníte všem uživatelům v této místnosti. Opravdu chcete tento widget smazat?",
     "Drop file here to upload": "Přetažením sem nahrajete",
     "Jump to read receipt": "Přejít na poslední potvrzení o přečtení",
-    "Hangup": "Zavěsit",
     "You seem to be uploading files, are you sure you want to quit?": "Zřejmě právě nahráváte soubory. Chcete přesto odejít?",
     "You seem to be in a call, are you sure you want to quit?": "Zřejmě máte probíhající hovor. Chcete přesto odejít?",
     "Unnamed room": "Nepojmenovaná místnost",
@@ -229,87 +223,6 @@
     "Please enter the code it contains:": "Prosím zadejte kód z této zprávy:",
     "Sign in with": "Přihlásit se pomocí",
     "Something went wrong!": "Něco se nepodařilo!",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)s%(count)s krát vstoupili",
-        "one": "%(severalUsers)svstoupili"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "one": "%(oneUser)svstoupil(a)",
-        "other": "%(oneUser)s %(count)s krát vstoupil(a)"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)s %(count)s krát opustili",
-        "one": "%(severalUsers)sopustili"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)s %(count)s krát opustil(a)",
-        "one": "%(oneUser)sopustil(a)"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "other": "%(severalUsers)s %(count)s krát vstoupili a opustili",
-        "one": "%(severalUsers)svstoupili a opustili"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "other": "%(oneUser)s %(count)s krát vstoupil(a) a opustil(a)",
-        "one": "%(oneUser)svstoupil(a) a opustil(a)"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "other": "%(severalUsers)s %(count)s krát opustili a znovu vstoupili",
-        "one": "%(severalUsers)sopustili a znovu vstoupili"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "other": "%(oneUser)s %(count)s krát opustil(a) a znovu vstoupil(a)",
-        "one": "%(oneUser)sopustil(a) a znovu vstoupil(a)"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "other": "%(severalUsers)s %(count)s krát odmítli pozvání",
-        "one": "%(severalUsers)sodmítli pozvání"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "other": "%(oneUser)s %(count)s krát odmítl pozvání",
-        "one": "%(oneUser)sodmítl pozvání"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "other": "%(severalUsers)směli %(count)s krát stažené pozvání",
-        "one": "%(severalUsers)smeli stažené pozvání"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "%(oneUser)směl %(count)s krát stažené pozvání",
-        "one": "%(oneUser)směl stažené pozvání"
-    },
-    "were invited %(count)s times": {
-        "other": "byli %(count)s krát pozváni",
-        "one": "byli pozváni"
-    },
-    "was invited %(count)s times": {
-        "other": "byl %(count)s krát pozván",
-        "one": "byl(a) pozván(a)"
-    },
-    "were banned %(count)s times": {
-        "other": "byli %(count)s krát vykázáni",
-        "one": "byl(a) vykázán(a)"
-    },
-    "was banned %(count)s times": {
-        "other": "byli %(count)s krát vykázáni",
-        "one": "byl(a) vykázán(a)"
-    },
-    "were unbanned %(count)s times": {
-        "other": "měli %(count)s krát zrušeno vykázání",
-        "one": "měli zrušeno vykázání"
-    },
-    "was unbanned %(count)s times": {
-        "other": "měl(a) %(count)s krát zrušeno vykázání",
-        "one": "má zrušeno vykázání"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "other": "%(severalUsers)s si %(count)s krát změnili jméno",
-        "one": "%(severalUsers)s si změnili jméno"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "other": "%(oneUser)s si %(count)s krát změnil(a) jméno",
-        "one": "%(oneUser)s si změnil(a) jméno"
-    },
     "%(items)s and %(count)s others": {
         "other": "%(items)s a %(count)s další",
         "one": "%(items)s a jeden další"
@@ -344,7 +257,6 @@
     "Room Notification": "Oznámení místnosti",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Tento proces vás provede importem šifrovacích klíčů, které jste si stáhli z jiného Matrix klienta. Po úspěšném naimportování budete v tomto klientovi moci dešifrovat všechny zprávy, které jste mohli dešifrovat v původním klientovi.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Stažený soubor je chráněn přístupovou frází. Soubor můžete naimportovat pouze pokud zadáte odpovídající přístupovou frázi.",
-    "Call Failed": "Hovor selhal",
     "Send": "Odeslat",
     "collapse": "sbalit",
     "expand": "rozbalit",
@@ -364,11 +276,9 @@
     "Failed to add tag %(tagName)s to room": "Nepodařilo se přidat štítek %(tagName)s k místnosti",
     "Filter results": "Filtrovat výsledky",
     "No update available.": "Není dostupná žádná aktualizace.",
-    "Collecting app version information": "Sbírání informací o verzi aplikace",
     "Tuesday": "Úterý",
     "Saturday": "Sobota",
     "Monday": "Pondělí",
-    "Collecting logs": "Sběr záznamů",
     "Invite to this room": "Pozvat do této místnosti",
     "All messages": "Všechny zprávy",
     "What's new?": "Co je nového?",
@@ -395,15 +305,11 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Tuto změnu nebudete moci vzít zpět, protože snižujete svoji vlastní hodnost, jste-li poslední privilegovaný uživatel v místnosti, bude nemožné vaši současnou hodnost získat zpět.",
     "Demote": "Degradovat",
     "Share Link to User": "Sdílet odkaz na uživatele",
-    "Send an encrypted reply…": "Odeslat šifrovanou odpověď…",
-    "Send an encrypted message…": "Odeslat šifrovanou zprávu…",
     "Replying": "Odpovídá",
     "Share room": "Sdílet místnost",
-    "System Alerts": "Systémová varování",
     "Muted Users": "Umlčení uživatelé",
     "Only room administrators will see this warning": "Toto upozornění uvidí jen správci místnosti",
     "You don't currently have any stickerpacks enabled": "Momentálně nemáte aktivní žádné balíčky s nálepkami",
-    "Stickerpack": "Balíček s nálepkami",
     "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.": "V šifrovaných místnostech, jako je tato, jsou URL náhledy ve výchozím nastavení vypnuté, aby bylo možné zajistit, že váš domovský server neshromažďuje informace o odkazech, které v této místnosti vidíte.",
     "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.": "Když někdo ve zprávě pošle URL adresu, může být zobrazen její náhled obsahující informace jako titulek, popis a obrázek z cílové stránky.",
     "This homeserver has hit its Monthly Active User limit.": "Tento domovský server dosáhl svého měsíčního limitu pro aktivní uživatele.",
@@ -529,9 +435,6 @@
     "Straight rows of keys are easy to guess": "Řádky na klávesnici je moc jednoduché uhodnout",
     "Short keyboard patterns are easy to guess": "Krátké sekvence kláves je moc jednoduché uhodnout",
     "Please contact your homeserver administrator.": "Kontaktujte prosím správce domovského serveru.",
-    "The other party cancelled the verification.": "Druhá strana ověření zrušila.",
-    "Verified!": "Ověřeno!",
-    "You've successfully verified this user.": "Uživatel úspěšně ověřen.",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Bezpečné zprávy s tímto uživatelem jsou koncově šifrované a nikdo další je nemůže číst.",
     "Got It": "OK",
     "Verify this user by confirming the following emoji appear on their screen.": "Ověřte uživatele zkontrolováním, že se mu na obrazovce objevily stejné emoji.",
@@ -646,7 +549,6 @@
     "Email (optional)": "E-mail (nepovinné)",
     "Phone (optional)": "Telefonní číslo (nepovinné)",
     "Join millions for free on the largest public server": "Přidejte k miliónům registrovaným na největším veřejném serveru",
-    "Other": "Další možnosti",
     "Couldn't load page": "Nepovedlo se načíst stránku",
     "Your password has been reset.": "Heslo bylo resetováno.",
     "Sign in with single sign-on": "Přihlásit se přes jednotné přihlašování",
@@ -655,18 +557,6 @@
     "The user must be unbanned before they can be invited.": "Aby mohl být uživatel pozván, musí být jeho vykázání zrušeno.",
     "Scissors": "Nůžky",
     "Accept all %(invitedRooms)s invites": "Přijmout pozvání do všech těchto místností: %(invitedRooms)s",
-    "Change room avatar": "Změnit avatar místnosti",
-    "Change room name": "Změnit název místnosti",
-    "Change main address for the room": "Změnit hlavní adresu místnosti",
-    "Change history visibility": "Změnit viditelnost historie",
-    "Change permissions": "Změnit oprávnění",
-    "Change topic": "Změnit téma",
-    "Modify widgets": "Spravovat widgety",
-    "Send messages": "Posílat zprávy",
-    "Invite users": "Zvát uživatele",
-    "Change settings": "Měnit nastavení",
-    "Ban users": "Vykázat uživatele",
-    "Notify everyone": "Oznámení pro celou místnost",
     "Enable encryption?": "Povolit šifrování?",
     "Once enabled, encryption for a room cannot be disabled. Messages sent in an encrypted room cannot be seen by the server, only by the participants of the room. Enabling encryption may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>": "Po zapnutí již nelze šifrování v této místnosti vypnout. Zprávy v šifrovaných místnostech mohou číst jen členové místnosti, server se k obsahu nedostane. Šifrování místností nepodporuje většina botů a propojení. <a>Více informací o šifrování.</a>",
     "Error updating main address": "Nepovedlo se změnit hlavní adresu",
@@ -685,7 +575,6 @@
     "Show hidden events in timeline": "Zobrazovat v časové ose skryté události",
     "Upgrade this room to the recommended room version": "Aktualizovat místnost na doporučenou verzi",
     "View older messages in %(roomName)s.": "Zobrazit starší zprávy v %(roomName)s.",
-    "Default role": "Výchozí role",
     "Send %(eventType)s events": "Poslat událost %(eventType)s",
     "Select the roles required to change various parts of the room": "Vyberte role potřebné k provedení různých změn v této místnosti",
     "Join the conversation with an account": "Připojte se ke konverzaci s účtem",
@@ -771,8 +660,6 @@
     "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Můžete se přihlásit, ale některé funkce nebudou dostupné dokud nezačne server identity fungovat. Pokud se vám toto varování zobrazuje i nadále, zkontrolujte svojí konfiguraci nebo kontaktujte správce serveru.",
     "Call failed due to misconfigured server": "Volání selhalo, protože je rozbitá konfigurace serveru",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Požádejte správce svého domovského serveru (<code>%(homeserverDomain)s</code>) jestli by nemohl nakonfigurovat TURN server, aby volání fungovala spolehlivě.",
-    "Messages": "Zprávy",
-    "Actions": "Akce",
     "Use an identity server": "Používat server identit",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "K pozvání e-mailem použijte server identit. Pokračováním použijete výchozí server identit (%(defaultIdentityServerName)s) nebo ho můžete změnit v Nastavení.",
     "Use an identity server to invite by email. Manage in Settings.": "Použít server identit na odeslání e-mailové pozvánky. Můžete spravovat v Nastavení.",
@@ -831,8 +718,6 @@
     "Clear cache and reload": "Smazat mezipaměť a načíst znovu",
     "Read Marker lifetime (ms)": "Platnost značky přečteno (ms)",
     "Read Marker off-screen lifetime (ms)": "Platnost značky přečteno mimo obrazovku (ms)",
-    "Upgrade the room": "Aktualizovat místnost",
-    "Enable room encryption": "Povolit v místnosti šifrování",
     "Error changing power level requirement": "Chyba změny požadavku na úroveň oprávnění",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Došlo k chybě při změně požadované úrovně oprávnění v místnosti. Ubezpečte se, že na to máte dostatečná práva, a zkuste to znovu.",
     "Error changing power level": "Chyba při změně úrovně oprávnění",
@@ -893,26 +778,7 @@
     "%(name)s wants to verify": "%(name)s chce ověřit",
     "You sent a verification request": "Poslali jste požadavek na ověření",
     "Edited at %(date)s. Click to view edits.": "Upraveno v %(date)s. Klinutím zobrazíte změny.",
-    "Frequently Used": "Často používané",
-    "Smileys & People": "Obličeje a lidé",
-    "Animals & Nature": "Zvířata a příroda",
-    "Food & Drink": "Jídlo a nápoje",
-    "Activities": "Aktivity",
-    "Travel & Places": "Cestování a místa",
-    "Objects": "Objekty",
-    "Symbols": "Symboly",
-    "Flags": "Vlajky",
-    "Quick Reactions": "Rychlé reakce",
     "Cancel search": "Zrušit hledání",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Vytvořte prosím <newIssueLink>novou issue</newIssueLink> na GitHubu abychom mohli chybu opravit.",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)s neudělali %(count)s krát žádnou změnu",
-        "one": "%(severalUsers)s neudělali žádnou změnu"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)s neudělal(a) %(count)s krát žádnou změnu",
-        "one": "%(oneUser)s neudělal(a) žádnou změnu"
-    },
     "e.g. my-room": "např. moje-mistnost",
     "Use bots, bridges, widgets and sticker packs": "Použít boty, propojení, widgety a balíky nálepek",
     "Terms of Service": "Podmínky použití",
@@ -1040,9 +906,6 @@
     "Enable message search in encrypted rooms": "Povolit vyhledávání v šifrovaných místnostech",
     "How fast should messages be downloaded.": "Jak rychle se mají zprávy stahovat.",
     "Waiting for %(displayName)s to verify…": "Čekám až nás %(displayName)s ověří…",
-    "They match": "Shodují se",
-    "They don't match": "Neshodují se",
-    "To be secure, do this in person or use a trusted way to communicate.": "Aby bylo ověření bezpečné, proveďte ho osobně nebo použijte důvěryhodný komunikační prostředek.",
     "Lock": "Zámek",
     "Other users may not trust it": "Ostatní uživatelé této relaci nemusí věřit",
     "Later": "Později",
@@ -1069,7 +932,6 @@
     "Session ID:": "ID relace:",
     "Session key:": "Klíč relace:",
     "Message search": "Vyhledávání ve zprávách",
-    "Cross-signing": "Křížové podepisování",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Tato místnost je propojena s následujícími platformami. <a>Více informací</a>",
     "Bridges": "Propojení",
     "This user has not verified all of their sessions.": "Tento uživatel zatím neověřil všechny své relace.",
@@ -1080,8 +942,6 @@
     "Everyone in this room is verified": "V této místnosti jsou všichni ověřeni",
     "Encrypted by an unverified session": "Šifrované neověřenou relací",
     "Encrypted by a deleted session": "Šifrované smazanou relací",
-    "Send a reply…": "Odpovědět…",
-    "Send a message…": "Odeslat zprávu…",
     "Direct Messages": "Přímé zprávy",
     "Reject & Ignore user": "Odmítnout a ignorovat uživatele",
     "Unknown Command": "Neznámý příkaz",
@@ -1136,9 +996,6 @@
     "Destroy cross-signing keys?": "Nenávratně smazat klíče pro křížové podepisování?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Smazání klíčů pro křížové podepisování je definitivní. Každý, kdo vás ověřil, teď uvidí bezpečnostní varování. Pokud jste zrovna neztratili všechna zařízení, ze kterých se můžete ověřit, tak to asi nechcete udělat.",
     "Clear cross-signing keys": "Smazat klíče pro křížové podepisování",
-    "Scan this unique code": "Naskenujte tento jedinečný kód",
-    "Compare unique emoji": "Porovnejte jedinečnou kombinaci emoji",
-    "Compare a unique set of emoji if you don't have a camera on either device": "Pokud na žádném zařízení nemáte kameru, porovnejte jedinečnou kombinaci emoji",
     "Not Trusted": "Nedůvěryhodné",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) se přihlásil(a) do nové relace bez ověření:",
     "Ask this user to verify their session, or manually verify it below.": "Požádejte tohoto uživatele, aby ověřil svou relaci, nebo jí níže můžete ověřit manuálně.",
@@ -1249,9 +1106,6 @@
     "Contact your <a>server admin</a>.": "Kontaktujte <a>administrátora serveru</a>.",
     "Ok": "Ok",
     "Are you sure you want to cancel entering passphrase?": "Chcete určitě zrušit zadávání přístupové fráze?",
-    "You joined the call": "Připojili jste se k hovoru",
-    "%(senderName)s joined the call": "%(senderName)s se připojil k hovoru",
-    "Call in progress": "Probíhá hovor",
     "Show rooms with unread messages first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",
     "Show previews of messages": "Zobrazovat náhledy zpráv",
     "Sort by": "Řadit dle",
@@ -1275,7 +1129,6 @@
     "Message deleted on %(date)s": "Zpráva byla odstraněna %(date)s",
     "Edited at %(date)s": "Upraveno %(date)s",
     "Click to view edits": "Klikněte pro zobrazení úprav",
-    "Categories": "Kategorie",
     "QR Code": "QR kód",
     "Room address": "Adresa místnosti",
     "This address is available to use": "Tato adresa je dostupná",
@@ -1294,21 +1147,10 @@
     "Signature upload failed": "Podpis se nepodařilo nahrát",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Je-li jiná verze programu %(brand)s stále otevřená na jiné kartě, tak ji prosím zavřete, neboť užívání programu %(brand)s stejným hostitelem se zpožděným nahráváním současně povoleným i zakázaným bude působit problémy.",
     "Unexpected server error trying to leave the room": "Neočekávaná chyba serveru při odcházení z místnosti",
-    "Call ended": "Hovor skončil",
-    "You started a call": "Začali jste hovor",
-    "%(senderName)s started a call": "%(senderName)s začal(a) hovor",
-    "Waiting for answer": "Čekání na odpověď",
-    "%(senderName)s is calling": "%(senderName)s volá",
-    "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
-    "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
-    "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
     "Change notification settings": "Upravit nastavení oznámení",
     "Use custom size": "Použít vlastní velikost",
     "Use a system font": "Používat systémové nastavení písma",
     "System font name": "Jméno systémového písma",
-    "Uploading logs": "Nahrávání záznamů",
-    "Downloading logs": "Stahování záznamů",
-    "Unknown caller": "Neznámý volající",
     "Your server isn't responding to some <a>requests</a>.": "Váš server neodpovídá na některé <a>požadavky</a>.",
     "Master private key:": "Hlavní soukromý klíč:",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s nemůže bezpečně ukládat šifrované zprávy lokálně v prohlížeči. Pro zobrazení šifrovaných zpráv ve výsledcích vyhledávání použijte <desktopLink>%(brand)s Desktop</desktopLink>.",
@@ -1354,13 +1196,6 @@
     "Afghanistan": "Afgánistán",
     "United States": "Spojené Státy",
     "United Kingdom": "Spojené Království",
-    "No other application is using the webcam": "Webkamera není blokována jinou aplikací",
-    "Permission is granted to use the webcam": "Aplikace má k webkameře povolen přístup",
-    "A microphone and webcam are plugged in and set up correctly": "Mikrofon a webkamera jsou zapojeny a správně nastaveny",
-    "Call failed because webcam or microphone could not be accessed. Check that:": "Hovor selhal, protože nešlo použít mikrofon nebo webkameru. Zkontrolujte, že:",
-    "Unable to access webcam / microphone": "Není možné použít webkameru nebo mikrofon",
-    "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "Hovor selhal, protože nešlo použít mikrofon. Zkontrolujte, že je mikrofon připojen a správně nastaven.",
-    "Unable to access microphone": "Není možné použít mikrofon",
     "The call was answered on another device.": "Hovor byl přijat na jiném zařízení.",
     "Answered Elsewhere": "Zodpovězeno jinde",
     "The call could not be established": "Hovor se nepovedlo navázat",
@@ -1388,7 +1223,6 @@
     "Send a Direct Message": "Poslat přímou zprávu",
     "Welcome to %(appName)s": "Vítá vás %(appName)s",
     "Navigation": "Navigace",
-    "Secure Backup": "Zabezpečená záloha",
     "Jump to oldest unread message": "Přejít na nejstarší nepřečtenou zprávu",
     "Upload a file": "Nahrát soubor",
     "You've reached the maximum number of simultaneous calls.": "Dosáhli jste maximálního počtu souběžných hovorů.",
@@ -1409,13 +1243,11 @@
     "Explore Public Rooms": "Prozkoumat veřejné místnosti",
     "Welcome %(name)s": "Vítejte %(name)s",
     "Now, let's help you get started": "Nyní vám pomůžeme začít",
-    "Effects": "Efekty",
     "Looks good!": "To vypadá dobře!",
     "Wrong file type": "Špatný typ souboru",
     "The server has denied your request.": "Server odmítl váš požadavek.",
     "The server is offline.": "Server je offline.",
     "not ready": "nepřipraveno",
-    "Remove messages sent by others": "Odstranit zprávy odeslané ostatními",
     "Decline All": "Odmítnout vše",
     "Use the <a>Desktop app</a> to search encrypted messages": "K prohledávání šifrovaných zpráv použijte <a>aplikaci pro stolní počítače</a>",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Pozvěte někoho pomocí jeho jména, e-mailové adresy, uživatelského jména (například <userId/>) nebo <a>sdílejte tuto místnost</a>.",
@@ -1614,7 +1446,6 @@
     "Confirm Security Phrase": "Potvrďte bezpečnostní frázi",
     "Click the button below to confirm setting up encryption.": "Kliknutím na tlačítko níže potvrďte nastavení šifrování.",
     "Confirm encryption setup": "Potvrďte nastavení šifrování",
-    "Return to call": "Návrat do hovoru",
     "Unable to set up keys": "Nepovedlo se nastavit klíče",
     "Save your Security Key": "Uložte svůj bezpečnostní klíč",
     "About homeservers": "O domovských serverech",
@@ -1760,8 +1591,6 @@
     "Video conference started by %(senderName)s": "Videokonferenci byla zahájena uživatelem %(senderName)s",
     "Video conference updated by %(senderName)s": "Videokonference byla aktualizována uživatelem %(senderName)s",
     "Video conference ended by %(senderName)s": "Videokonference byla ukončena uživatelem %(senderName)s",
-    "%(senderName)s ended the call": "%(senderName)s ukončil(a) hovor",
-    "You ended the call": "Ukončili jste hovor",
     "New version of %(brand)s is available": "K dispozici je nová verze %(brand)s",
     "Error leaving room": "Při opouštění místnosti došlo k chybě",
     "See messages posted to your active room": "Zobrazit zprávy odeslané do vaší aktivní místnosti",
@@ -1779,8 +1608,6 @@
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Váš server neodpovídá na některé vaše požadavky. Níže jsou některé z nejpravděpodobnějších důvodů.",
     "The operation could not be completed": "Operace nemohla být dokončena",
     "Failed to save your profile": "Váš profil se nepodařilo uložit",
-    "%(peerName)s held the call": "%(peerName)s podržel hovor",
-    "You held the call <a>Resume</a>": "Podrželi jste hovor <a>Pokračovat</a>",
     "You can only pin up to %(count)s widgets": {
         "other": "Můžete připnout až %(count)s widgetů"
     },
@@ -1848,8 +1675,6 @@
     "See when the name changes in this room": "Podívejte se, kdy se změní název v této místnosti",
     "See when the topic changes in your active room": "Podívejte se, kdy se změní téma ve vaší aktivní místnosti",
     "See when the topic changes in this room": "Podívejte se, kdy se změní téma v této místnosti",
-    "%(name)s on hold": "%(name)s podržen",
-    "You held the call <a>Switch</a>": "Podrželi jste hovor <a>Přepnout</a>",
     "sends snowfall": "pošle sněžení",
     "Sends the given message with snowfall": "Pošle zprávu se sněžením",
     "You have no visible notifications.": "Nejsou dostupná žádná oznámení.",
@@ -1929,7 +1754,6 @@
     "You do not have permissions to add rooms to this space": "Nemáte oprávnění k přidávání místností do tohoto prostoru",
     "Add existing room": "Přidat existující místnost",
     "You do not have permissions to create new rooms in this space": "Nemáte oprávnění k vytváření nových místností v tomto prostoru",
-    "Send message": "Poslat zprávu",
     "Invite to this space": "Pozvat do tohoto prostoru",
     "Your message was sent": "Zpráva byla odeslána",
     "Space options": "Nastavení prostoru",
@@ -1944,8 +1768,6 @@
     "Open space for anyone, best for communities": "Otevřený prostor pro kohokoli, nejlepší pro komunity",
     "Create a space": "Vytvořit prostor",
     "This homeserver has been blocked by its administrator.": "Tento domovský server byl zablokován jeho správcem.",
-    "You're already in a call with this person.": "S touto osobou již telefonujete.",
-    "Already in call": "Již máte hovor",
     "Original event source": "Původní zdroj události",
     "Decrypted event source": "Dešifrovaný zdroj události",
     "Save Changes": "Uložit změny",
@@ -1989,7 +1811,6 @@
     "Review to ensure your account is safe": "Zkontrolujte, zda je váš účet v bezpečí",
     "%(deviceId)s from %(ip)s": "%(deviceId)s z %(ip)s",
     "unknown person": "neznámá osoba",
-    "Consulting with %(transferTarget)s. <a>Transfer to %(transferee)s</a>": "Konzultace s %(transferTarget)s. <a>Převod na %(transferee)s</a>",
     "Invite to just this room": "Pozvat jen do této místnosti",
     "Add existing rooms": "Přidat stávající místnosti",
     "We couldn't create your DM.": "Nemohli jsme vytvořit vaši přímou zprávu.",
@@ -2008,7 +1829,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zapomněli nebo ztratili jste všechny metody obnovy? <a>Resetovat vše</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Pokud tak učiníte, nezapomeňte, že žádná z vašich zpráv nebude smazána, ale vyhledávání může být na několik okamžiků zpomaleno během opětovného vytvoření indexu",
     "View message": "Zobrazit zprávu",
-    "Change server ACLs": "Změnit seznamy přístupů serveru",
     "You can select all or individual messages to retry or delete": "Můžete vybrat všechny nebo jednotlivé zprávy, které chcete zkusit poslat znovu nebo odstranit",
     "Sending": "Odesílání",
     "Retry all": "Zkusit všechny znovu",
@@ -2089,14 +1909,6 @@
     "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Tento uživatel se chová nezákonně, například zveřejňuje osobní údaje o cizích lidech nebo vyhrožuje násilím.\nTato skutečnost bude nahlášena moderátorům místnosti, kteří to mohou předat právním orgánům.",
     "What this user is writing is wrong.\nThis will be reported to the room moderators.": "To, co tento uživatel píše, je špatné.\nTato skutečnost bude nahlášena moderátorům místnosti.",
     "Please provide an address": "Uveďte prosím adresu",
-    "%(oneUser)schanged the server ACLs %(count)s times": {
-        "one": "%(oneUser)szměnil(a) ACL serveru",
-        "other": "%(oneUser)szměnil(a) %(count)s krát ACL serveru"
-    },
-    "%(severalUsers)schanged the server ACLs %(count)s times": {
-        "one": "%(severalUsers)szměnili ACL serveru",
-        "other": "%(severalUsers)szměnili %(count)s krát ACL serveru"
-    },
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inicializace vyhledávání zpráv se nezdařila, zkontrolujte <a>svá nastavení</a>",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Nastavte adresy pro tento prostor, aby jej uživatelé mohli najít prostřednictvím domovského serveru (%(localDomain)s)",
     "To publish an address, it needs to be set as a local address first.": "Chcete-li adresu zveřejnit, je třeba ji nejprve nastavit jako místní adresu.",
@@ -2115,8 +1927,6 @@
     "Failed to update the guest access of this space": "Nepodařilo se aktualizovat přístup hosta do tohoto prostoru",
     "Failed to update the visibility of this space": "Nepodařilo se aktualizovat viditelnost tohoto prostoru",
     "e.g. my-space": "např. můj-prostor",
-    "Silence call": "Ztlumit zvonění",
-    "Sound on": "Zvuk zapnutý",
     "Some invites couldn't be sent": "Některé pozvánky nebylo možné odeslat",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Poslali jsme ostatním, ale níže uvedení lidé nemohli být pozváni do <RoomName/>",
     "Visibility": "Viditelnost",
@@ -2127,13 +1937,11 @@
     "Code blocks": "Bloky kódu",
     "Displaying time": "Zobrazování času",
     "Keyboard shortcuts": "Klávesové zkratky",
-    "Integration manager": "Správce integrací",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Váš %(brand)s neumožňuje použít správce integrací. Kontaktujte prosím správce.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Použití tohoto widgetu může sdílet data <helpIcon /> s %(widgetDomain)s a vaším správcem integrací.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Správci integrace přijímají konfigurační data a mohou vaším jménem upravovat widgety, odesílat pozvánky do místností a nastavovat úrovně oprávnění.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Použít správce integrací na správu botů, widgetů a nálepek.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Použít správce integrací <b>(%(serverName)s)</b> na správu botů, widgetů a nálepek.",
-    "Identity server": "Server identit",
     "Identity server (%(server)s)": "Server identit (%(server)s)",
     "Could not connect to identity server": "Nepodařilo se připojit k serveru identit",
     "Not a valid identity server (status code %(code)s)": "Toto není platný server identit (stavový kód %(code)s)",
@@ -2197,7 +2005,6 @@
     },
     "Upgrade required": "Vyžadována aktualizace",
     "Mentions & keywords": "Zmínky a klíčová slova",
-    "Message bubbles": "Bubliny zpráv",
     "New keyword": "Nové klíčové slovo",
     "Keyword": "Klíčové slovo",
     "Transfer Failed": "Přepojení se nezdařilo",
@@ -2205,10 +2012,6 @@
     "Share content": "Sdílet obsah",
     "Application window": "Okno aplikace",
     "Share entire screen": "Sdílet celou obrazovku",
-    "Your camera is still enabled": "Vaše kamera je stále zapnutá",
-    "Your camera is turned off": "Vaše kamera je vypnutá",
-    "%(sharerName)s is presenting": "%(sharerName)s prezentuje",
-    "You are presenting": "Prezentujete",
     "Anyone will be able to find and join this room.": "Kdokoliv může najít tuto místnost a připojit se k ní.",
     "Add existing space": "Přidat stávající prostor",
     "Add space": "Přidat prostor",
@@ -2236,16 +2039,9 @@
     "Surround selected text when typing special characters": "Ohraničit označený text při psaní speciálních znaků",
     "Stop recording": "Zastavit nahrávání",
     "Send voice message": "Odeslat hlasovou zprávu",
-    "Mute the microphone": "Ztlumit mikrofon",
-    "Unmute the microphone": "Zrušit ztlumení mikrofonu",
-    "Dialpad": "Číselník",
     "More": "Více",
     "Show sidebar": "Zobrazit postranní panel",
     "Hide sidebar": "Skrýt postranní panel",
-    "Start sharing your screen": "Začít sdílet obrazovku",
-    "Stop sharing your screen": "Ukončit sdílení obrazovky",
-    "Stop the camera": "Vypnout kameru",
-    "Start the camera": "Zapnout kameru",
     "Olm version:": "Verze Olm:",
     "Delete avatar": "Smazat avatar",
     "Unknown failure: %(reason)s": "Neznámá chyba: %(reason)s",
@@ -2264,15 +2060,9 @@
     "Some encryption parameters have been changed.": "Byly změněny některé parametry šifrování.",
     "Role in <RoomName/>": "Role v <RoomName/>",
     "Send a sticker": "Odeslat nálepku",
-    "Reply to encrypted thread…": "Odpovědět na zašifrované vlákno…",
-    "Reply to thread…": "Odpovědět na vlákno…",
     "Unknown failure": "Neznámá chyba",
     "Failed to update the join rules": "Nepodařilo se aktualizovat pravidla pro připojení",
     "Select the roles required to change various parts of the space": "Výbrat role potřebné ke změně různých částí prostoru",
-    "Change description": "Změnit popis",
-    "Change main address for the space": "Změnit hlavní adresu prostoru",
-    "Change space name": "Změnit název prostoru",
-    "Change space avatar": "Změnit avatar prostoru",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Kdokoli v <spaceName/> může prostor najít a připojit se. Můžete vybrat i další prostory.",
     "Message didn't send. Click for info.": "Zpráva se neodeslala. Klikněte pro informace.",
     "To join a space you'll need an invite.": "Pro připojení k prostoru potřebujete pozvánku.",
@@ -2402,7 +2192,6 @@
     "Keep discussions organised with threads": "Udržujte diskuse organizované pomocí vláken",
     "Show all your rooms in Home, even if they're in a space.": "Zobrazit všechny místnosti v Domovu, i když jsou v prostoru.",
     "Rooms outside of a space": "Místnosti mimo prostor",
-    "Manage rooms in this space": "Spravovat místnosti v tomto prostoru",
     "Mentions only": "Pouze zmínky",
     "Forget": "Zapomenout",
     "Files": "Soubory",
@@ -2457,21 +2246,11 @@
         "one": "%(count)s hlas. Hlasujte a podívejte se na výsledky"
     },
     "No votes cast": "Nikdo nehlasoval",
-    "You can turn this off anytime in settings": "Tuto funkci můžete kdykoli vypnout v nastavení",
-    "We <Bold>don't</Bold> share information with third parties": "<Bold>Nesdílíme</Bold> informace s třetími stranami",
-    "We <Bold>don't</Bold> record or profile any account data": "<Bold>Nezaznamenáváme ani neprofilujeme</Bold> žádné údaje o účtu",
-    "You can read all our terms <PrivacyPolicyUrl>here</PrivacyPolicyUrl>": "Všechny naše podmínky si můžete přečíst <PrivacyPolicyUrl>zde</PrivacyPolicyUrl>",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Sdílejte anonymní údaje, které nám pomohou identifikovat problémy. Nic osobního. Žádné třetí strany.",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "Sdílejte anonymní údaje, které nám pomohou identifikovat problémy. Nic osobního. Žádné třetí strany. <LearnMoreLink>Zjistěte více</LearnMoreLink>",
-    "You previously consented to share anonymous usage data with us. We're updating how that works.": "Dříve jste nám dali souhlas se sdílením anonymních údajů o používání. Aktualizujeme způsob, jakým to funguje.",
-    "Help improve %(analyticsOwner)s": "Pomozte zlepšit %(analyticsOwner)s",
     "That's fine": "To je v pořádku",
     "You cannot place calls without a connection to the server.": "Bez připojení k serveru nelze uskutečňovat hovory.",
     "Connectivity to the server has been lost": "Došlo ke ztrátě připojení k serveru",
-    "You cannot place calls in this browser.": "V tomto prohlížeči nelze uskutečňovat hovory.",
-    "Calls are unsupported": "Hovory nejsou podporovány",
     "Share location": "Sdílet polohu",
-    "Manage pinned events": "Správa připnutých událostí",
     "Toggle space panel": "Zobrazit/skrýt panel prostoru",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Chcete ukončit toto hlasování? Zobrazí se konečné výsledky hlasování a lidé nebudou moci dále hlasovat.",
     "End Poll": "Ukončit hlasování",
@@ -2501,7 +2280,6 @@
     "This address had invalid server or is already in use": "Tato adresa měla neplatný server nebo je již používána",
     "Missing domain separator e.g. (:domain.org)": "Chybí oddělovač domény, např. (:domain.org)",
     "Missing room name or separator e.g. (my-room:domain.org)": "Chybí název místnosti nebo oddělovač, např. (my-room:domain.org)",
-    "Dial": "Vytočit",
     "Back to thread": "Zpět do vlákna",
     "Room members": "Členové místnosti",
     "Back to chat": "Zpět do chatu",
@@ -2514,15 +2292,12 @@
     "Verify other device": "Ověřit jiné zařízení",
     "You cancelled verification on your other device.": "Ověřování na jiném zařízení jste zrušili.",
     "Almost there! Is your other device showing the same shield?": "Už to skoro je! Zobrazuje vaše druhé zařízení stejný štít?",
-    "Verify this device by completing one of the following:": "Ověřte toto zařízení dokončením jedné z následujících položek:",
-    "The device you are trying to verify doesn't support scanning a QR code or emoji verification, which is what %(brand)s supports. Try with a different client.": "Zařízení, které se snažíte ověřit, neumožňuje ověření QR kódem ani pomocí emotikonů, které %(brand)s podporuje. Zkuste použít jiného klienta.",
     "To proceed, please accept the verification request on your other device.": "Pro pokračování, přijměte žádost o ověření na svém dalším zařízení.",
     "Waiting for you to verify on your other device…": "Čekáme na ověření na jiném zařízení…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Čekáme na ověření na vašem dalším zařízení, %(deviceName)s (%(deviceId)s)…",
     "Verify this device by confirming the following number appears on its screen.": "Ověřte toto zařízení tak, že potvrdíte, že se na jeho obrazovce zobrazí následující číslo.",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Potvrďte, že se následující emotikony zobrazují na obou zařízeních ve stejném pořadí:",
     "Expand map": "Rozbalit mapu",
-    "Send reactions": "Odesílat reakce",
     "No active call in this room": "V této místnosti není žádný aktivní hovor",
     "Unable to find Matrix ID for phone number": "Nelze najít Matrix ID pro telefonní číslo",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Neznámý pár (uživatel, relace): (%(userId)s, %(deviceId)s)",
@@ -2536,21 +2311,12 @@
     "Failed to fetch your location. Please try again later.": "Nepodařilo se zjistit vaši polohu. Zkuste to prosím později.",
     "Could not fetch location": "Nepodařilo se zjistit polohu",
     "Automatically send debug logs on decryption errors": "Automaticky odesílat ladící protokoly při chybách dešifrování",
-    "was removed %(count)s times": {
-        "one": "byl(a) odebrán(a)",
-        "other": "byli odebráni %(count)s krát"
-    },
-    "were removed %(count)s times": {
-        "one": "byli odebráni",
-        "other": "byli odebráni %(count)s krát"
-    },
     "Remove from room": "Odebrat z místnosti",
     "Failed to remove user": "Nepodařilo se odebrat uživatele",
     "Remove them from specific things I'm able to": "Odebrat je z konkrétních míst, kam mohu",
     "Remove them from everything I'm able to": "Odebrat je ze všeho, kde mohu",
     "Remove from %(roomName)s": "Odebrat z %(roomName)s",
     "You were removed from %(roomName)s by %(memberName)s": "Byl(a) jsi odebrán(a) z %(roomName)s uživatelem %(memberName)s",
-    "Remove users": "Odebrat uživatele",
     "Remove, ban, or invite people to this room, and make you leave": "Odebrat, vykázat nebo pozvat lidi do této místnosti a donutit vás ji opustit",
     "Remove, ban, or invite people to your active room, and make you leave": "Odebrat, vykázat nebo pozvat lidi do vaší aktivní místnosti a donutit vás ji opustit",
     "Open this settings tab": "Otevřít tuto kartu nastavení",
@@ -2584,7 +2350,6 @@
     "Group all your people in one place.": "Seskupte všechny své kontakty na jednom místě.",
     "Group all your favourite rooms and people in one place.": "Seskupte všechny své oblíbené místnosti a osoby na jednom místě.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Prostory jsou způsob seskupování místností a osob. Vedle prostorů, ve kterých se nacházíte, můžete použít i některé předpřipravené.",
-    "IRC (Experimental)": "IRC (experimentální)",
     "Unable to check if username has been taken. Try again later.": "Nelze zkontrolovat, zda je uživatelské jméno obsazeno. Zkuste to později.",
     "Toggle hidden event visibility": "Přepnout viditelnost skryté události",
     "Undo edit": "Zrušit úpravy",
@@ -2609,22 +2374,6 @@
     "Use <arrows/> to scroll": "K pohybu použijte <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Zpětná vazba odeslána! Děkujeme, vážíme si toho!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
-    "%(oneUser)ssent %(count)s hidden messages": {
-        "one": "%(oneUser)sodeslal(a) skrytou zprávu",
-        "other": "%(oneUser)s odeslal(a) %(count)s skrytých zpráv"
-    },
-    "%(severalUsers)ssent %(count)s hidden messages": {
-        "one": "%(severalUsers)sodeslali skrytou zprávu",
-        "other": "%(severalUsers)sodeslali %(count)s skrytých zpráv"
-    },
-    "%(oneUser)sremoved a message %(count)s times": {
-        "other": "%(oneUser)ssmazal(a) %(count)s zpráv",
-        "one": "%(oneUser)ssmazal(a) zprávu"
-    },
-    "%(severalUsers)sremoved a message %(count)s times": {
-        "one": "%(severalUsers)ssmazali zprávu",
-        "other": "%(severalUsers)ssmazali %(count)s zpráv"
-    },
     "Automatically send debug logs when key backup is not functioning": "Automaticky odeslat ladící protokoly, když zálohování klíčů nefunguje",
     "Join %(roomAddress)s": "Vstoupit do %(roomAddress)s",
     "Edit poll": "Upravit hlasování",
@@ -2643,7 +2392,6 @@
     "Switch to space by number": "Přepnout do prostoru podle čísla",
     "Pinned": "Připnuto",
     "Open thread": "Otevřít vlákno",
-    "Remove messages sent by me": "Odstranit mnou odeslané zprávy",
     "Export Cancelled": "Export zrušen",
     "What location type do you want to share?": "Jaký typ polohy chcete sdílet?",
     "Drop a Pin": "Zvolená poloha",
@@ -2653,14 +2401,6 @@
     "We couldn't send your location": "Vaši polohu se nepodařilo odeslat",
     "Match system": "Podle systému",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Odpovědět na probíhající vlákno nebo použít \"%(replyInThread)s\", když najedete na zprávu a začnete novou.",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(oneUser)szměnil(a) <a>připnuté zprávy</a> místnosti",
-        "other": "%(oneUser)s%(count)s krát změnil(a) <a>připnuté zprávy</a> místnosti"
-    },
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(severalUsers)szměnili <a>připnuté zprávy</a> místnosti",
-        "other": "%(severalUsers)s%(count)s krát změnili <a>připnuté zprávy</a> v místnosti"
-    },
     "Show polls button": "Zobrazit tlačítko hlasování",
     "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Prostory představují nový způsob seskupování místností a osob. Jaký prostor chcete vytvořit? To můžete později změnit.",
     "Click": "Kliknutí",
@@ -2694,7 +2434,6 @@
     "Next recently visited room or space": "Další nedávno navštívená místnost nebo prostor",
     "Previous recently visited room or space": "Předchozí nedávno navštívená místnost nebo prostor",
     "Unsent": "Neodeslané",
-    "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Pomozte nám identifikovat problémy a zlepšit %(analyticsOwner)s sdílením anonymních údajů o používání. Abychom pochopili, jak lidé používají více zařízení, vygenerujeme náhodný identifikátor sdílený vašimi zařízeními.",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Můžete použít vlastní volbu serveru a přihlásit se k jiným Matrix serverům zadáním adresy URL domovského serveru. To vám umožní používat %(brand)s s existujícím Matrix účtem na jiném domovském serveru.",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "Aplikaci %(brand)s bylo odepřeno oprávnění ke zjištění vaší polohy. Povolte prosím přístup k poloze v nastavení prohlížeče.",
     "Developer tools": "Nástroje pro vývojáře",
@@ -2772,12 +2511,6 @@
     "You will not be able to reactivate your account": "Účet nebude možné znovu aktivovat",
     "Confirm that you would like to deactivate your account. If you proceed:": "Potvrďte, že chcete deaktivovat svůj účet. Pokud budete pokračovat:",
     "To continue, please enter your account password:": "Pro pokračování zadejte heslo k účtu:",
-    "Turn on camera": "Zapnout kameru",
-    "Turn off camera": "Vypnout kameru",
-    "Video devices": "Video zařízení",
-    "Unmute microphone": "Zrušit ztlumení mikrofonu",
-    "Mute microphone": "Ztlumit mikrofon",
-    "Audio devices": "Zvuková zařízení",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Byli jste odhlášeni ze všech zařízení a již nebudete dostávat push oznámení. Chcete-li oznámení znovu povolit, znovu se přihlaste na každém zařízení.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Pokud si chcete zachovat přístup k historii chatu v zašifrovaných místnostech, nastavte si zálohování klíčů nebo exportujte klíče zpráv z některého z dalších zařízení, než budete pokračovat.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Odhlášením zařízení odstraníte šifrovací klíče zpráv, které jsou v nich uloženy, a historie zašifrovaných chatů tak nebude čitelná.",
@@ -2939,7 +2672,6 @@
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s nebo %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s nebo %(recoveryFile)s",
     "%(qrCode)s or %(appLinks)s": "%(qrCode)s nebo %(appLinks)s",
-    "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s nebo %(emojiCompare)s",
     "Sliding Sync configuration": "Nastavení klouzavé synchronizace",
     "Proxy URL": "URL proxy serveru",
     "Proxy URL (optional)": "URL proxy serveru (volitelné)",
@@ -2951,7 +2683,6 @@
     "Sign out of this session": "Odhlásit se z této relace",
     "Rename session": "Přejmenovat relaci",
     "Voice broadcast": "Hlasové vysílání",
-    "Voice broadcasts": "Hlasová vysílání",
     "You do not have permission to start voice calls": "Nemáte oprávnění k zahájení hlasových hovorů",
     "There's no one here to call": "Není tu nikdo, komu zavolat",
     "You do not have permission to start video calls": "Nemáte oprávnění ke spuštění videohovorů",
@@ -2978,8 +2709,6 @@
     "Web session": "Relace na webu",
     "Mobile session": "Relace mobilního zařízení",
     "Desktop session": "Relace stolního počítače",
-    "Fill screen": "Vyplnit obrazovku",
-    "Video call started": "Videohovor byl zahájen",
     "Unknown room": "Neznámá místnost",
     "Operating system": "Operační systém",
     "Video call (%(brand)s)": "Videohovor (%(brand)s)",
@@ -2987,12 +2716,9 @@
     "You do not have sufficient permissions to change this.": "Ke změně nemáte dostatečná oprávnění.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s je koncově šifrovaný, ale v současné době je omezen na menší počet uživatelů.",
     "Enable %(brand)s as an additional calling option in this room": "Povolit %(brand)s jako další možnost volání v této místnosti",
-    "Join %(brand)s calls": "Připojit se k %(brand)s volání",
-    "Start %(brand)s calls": "Zahájit %(brand)s volání",
     "Sorry — this call is currently full": "Omlouváme se — tento hovor je v současné době plný",
     "resume voice broadcast": "obnovit hlasové vysílání",
     "pause voice broadcast": "pozastavit hlasové vysílání",
-    "Notifications silenced": "Oznámení ztlumena",
     "Yes, stop broadcast": "Ano, zastavit vysílání",
     "Stop live broadcasting?": "Ukončit živé vysílání?",
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Hlasové vysílání už nahrává někdo jiný. Počkejte, až jeho hlasové vysílání skončí, a spusťte nové.",
@@ -3265,8 +2991,6 @@
     "Image view": "Zobrazení obrázku",
     "Search all rooms": "Vyhledávat ve všech místnostech",
     "Search this room": "Vyhledávat v této místnosti",
-    "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s reagoval(a) %(reaction)s na %(message)s",
-    "You reacted %(reaction)s to %(message)s": "Reagovali jste %(reaction)s na %(message)s",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Bez serveru identit nelze uživatele pozvat e-mailem. K nějakému se můžete připojit v \"Nastavení\".",
     "Unable to create room with moderation bot": "Nelze vytvořit místnost s moderačním botem",
     "Failed to download source media, no source url was found": "Nepodařilo se stáhnout zdrojové médium, nebyla nalezena žádná zdrojová url adresa",
@@ -3307,15 +3031,7 @@
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>Aktualizace:</strong>Zjednodušili jsme Nastavení oznámení, aby bylo možné snadněji najít možnosti nastavení. Některá vlastní nastavení, která jste zvolili v minulosti, se zde nezobrazují, ale jsou stále aktivní. Pokud budete pokračovat, některá vaše nastavení se mohou změnit. <a>Zjistit více</a>",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Zprávy v této místnosti jsou koncově šifrovány. Když lidé vstoupí, můžete je ověřit v jejich profilu, stačí klepnout na jejich profilový obrázek.",
     "Your server requires encryption to be disabled.": "Váš server vyžaduje vypnuté šifrování.",
-    "%(severalUsers)schanged their profile picture %(count)s times": {
-        "other": "%(severalUsers)ssi %(count)skrát změnili svůj profilový obrázek",
-        "one": "%(severalUsers)szměnilo svůj profilový obrázek"
-    },
     "Receive an email summary of missed notifications": "Přijímat e-mailový souhrn zmeškaných oznámení",
-    "%(oneUser)schanged their profile picture %(count)s times": {
-        "other": "%(oneUser)szměnil(a) %(count)s krát svůj profilový obrázek",
-        "one": "%(oneUser)szměnil(a) svůj profilový obrázek"
-    },
     "Are you sure you wish to remove (delete) this event?": "Opravdu chcete tuto událost odstranit (smazat)?",
     "Anyone can request to join, but admins or moderators need to grant access. You can change this later.": "O vstup může požádat kdokoliv, ale administrátoři nebo moderátoři musí přístup povolit. To můžete později změnit.",
     "Upgrade room": "Aktualizovat místnost",
@@ -3433,7 +3149,13 @@
         "server": "Server",
         "capabilities": "Schopnosti",
         "unnamed_room": "Nepojmenovaná místnost",
-        "unnamed_space": "Nejmenovaný prostor"
+        "unnamed_space": "Nejmenovaný prostor",
+        "stickerpack": "Balíček s nálepkami",
+        "system_alerts": "Systémová varování",
+        "secure_backup": "Zabezpečená záloha",
+        "cross_signing": "Křížové podepisování",
+        "identity_server": "Server identit",
+        "integration_manager": "Správce integrací"
     },
     "action": {
         "continue": "Pokračovat",
@@ -3613,7 +3335,14 @@
         "format_decrease_indent": "Zmenšit odsazení",
         "format_inline_code": "Kód",
         "format_code_block": "Blok kódu",
-        "format_link": "Odkaz"
+        "format_link": "Odkaz",
+        "send_button_title": "Poslat zprávu",
+        "placeholder_thread_encrypted": "Odpovědět na zašifrované vlákno…",
+        "placeholder_thread": "Odpovědět na vlákno…",
+        "placeholder_reply_encrypted": "Odeslat šifrovanou odpověď…",
+        "placeholder_reply": "Odpovědět…",
+        "placeholder_encrypted": "Odeslat šifrovanou zprávu…",
+        "placeholder": "Odeslat zprávu…"
     },
     "Bold": "Tučně",
     "Link": "Odkaz",
@@ -3636,7 +3365,12 @@
         "send_logs": "Odeslat záznamy",
         "github_issue": "issue na GitHubu",
         "download_logs": "Stáhnout záznamy",
-        "before_submitting": "Pro odeslání záznamů je potřeba <a>vytvořit issue na GitHubu</a> s popisem problému."
+        "before_submitting": "Pro odeslání záznamů je potřeba <a>vytvořit issue na GitHubu</a> s popisem problému.",
+        "collecting_information": "Sbírání informací o verzi aplikace",
+        "collecting_logs": "Sběr záznamů",
+        "uploading_logs": "Nahrávání záznamů",
+        "downloading_logs": "Stahování záznamů",
+        "create_new_issue": "Vytvořte prosím <newIssueLink>novou issue</newIssueLink> na GitHubu abychom mohli chybu opravit."
     },
     "time": {
         "hours_minutes_seconds_left": "zbývá %(hours)sh %(minutes)sm %(seconds)ss",
@@ -3753,6 +3487,10 @@
             "rule_suppress_notices": "Zprávy poslané robotem",
             "rule_tombstone": "Při aktualizaci místnosti",
             "rule_encrypted_room_one_to_one": "Šifrované přímé zprávy"
+        },
+        "appearance": {
+            "layout_irc": "IRC (experimentální)",
+            "layout_bubbles": "Bubliny zpráv"
         }
     },
     "devtools": {
@@ -3844,7 +3582,9 @@
         "developer_tools": "Nástroje pro vývojáře",
         "room_id": "ID místnosti: %(roomId)s",
         "thread_root_id": "ID kořenového vlákna: %(threadRootId)s",
-        "event_id": "ID události: %(eventId)s"
+        "event_id": "ID události: %(eventId)s",
+        "category_room": "Místnost",
+        "category_other": "Další možnosti"
     },
     "export_chat": {
         "html": "HTML",
@@ -4002,6 +3742,148 @@
                 "other": "%(names)s a %(count)s dalších píše …",
                 "one": "%(names)s a jeden další píše …"
             }
+        },
+        "m.call.hangup": {
+            "dm": "Hovor skončil"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)s%(count)s krát vstoupili",
+                "one": "%(severalUsers)svstoupili"
+            },
+            "joined": {
+                "one": "%(oneUser)svstoupil(a)",
+                "other": "%(oneUser)s %(count)s krát vstoupil(a)"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)s %(count)s krát opustili",
+                "one": "%(severalUsers)sopustili"
+            },
+            "left": {
+                "other": "%(oneUser)s %(count)s krát opustil(a)",
+                "one": "%(oneUser)sopustil(a)"
+            },
+            "joined_and_left_multiple": {
+                "other": "%(severalUsers)s %(count)s krát vstoupili a opustili",
+                "one": "%(severalUsers)svstoupili a opustili"
+            },
+            "joined_and_left": {
+                "other": "%(oneUser)s %(count)s krát vstoupil(a) a opustil(a)",
+                "one": "%(oneUser)svstoupil(a) a opustil(a)"
+            },
+            "rejoined_multiple": {
+                "other": "%(severalUsers)s %(count)s krát opustili a znovu vstoupili",
+                "one": "%(severalUsers)sopustili a znovu vstoupili"
+            },
+            "rejoined": {
+                "other": "%(oneUser)s %(count)s krát opustil(a) a znovu vstoupil(a)",
+                "one": "%(oneUser)sopustil(a) a znovu vstoupil(a)"
+            },
+            "rejected_invite_multiple": {
+                "other": "%(severalUsers)s %(count)s krát odmítli pozvání",
+                "one": "%(severalUsers)sodmítli pozvání"
+            },
+            "rejected_invite": {
+                "other": "%(oneUser)s %(count)s krát odmítl pozvání",
+                "one": "%(oneUser)sodmítl pozvání"
+            },
+            "invite_withdrawn_multiple": {
+                "other": "%(severalUsers)směli %(count)s krát stažené pozvání",
+                "one": "%(severalUsers)smeli stažené pozvání"
+            },
+            "invite_withdrawn": {
+                "other": "%(oneUser)směl %(count)s krát stažené pozvání",
+                "one": "%(oneUser)směl stažené pozvání"
+            },
+            "invited_multiple": {
+                "other": "byli %(count)s krát pozváni",
+                "one": "byli pozváni"
+            },
+            "invited": {
+                "other": "byl %(count)s krát pozván",
+                "one": "byl(a) pozván(a)"
+            },
+            "banned_multiple": {
+                "other": "byli %(count)s krát vykázáni",
+                "one": "byl(a) vykázán(a)"
+            },
+            "banned": {
+                "other": "byli %(count)s krát vykázáni",
+                "one": "byl(a) vykázán(a)"
+            },
+            "unbanned_multiple": {
+                "other": "měli %(count)s krát zrušeno vykázání",
+                "one": "měli zrušeno vykázání"
+            },
+            "unbanned": {
+                "other": "měl(a) %(count)s krát zrušeno vykázání",
+                "one": "má zrušeno vykázání"
+            },
+            "kicked_multiple": {
+                "one": "byli odebráni",
+                "other": "byli odebráni %(count)s krát"
+            },
+            "kicked": {
+                "one": "byl(a) odebrán(a)",
+                "other": "byli odebráni %(count)s krát"
+            },
+            "changed_name_multiple": {
+                "other": "%(severalUsers)s si %(count)s krát změnili jméno",
+                "one": "%(severalUsers)s si změnili jméno"
+            },
+            "changed_name": {
+                "other": "%(oneUser)s si %(count)s krát změnil(a) jméno",
+                "one": "%(oneUser)s si změnil(a) jméno"
+            },
+            "changed_avatar_multiple": {
+                "other": "%(severalUsers)ssi %(count)skrát změnili svůj profilový obrázek",
+                "one": "%(severalUsers)szměnilo svůj profilový obrázek"
+            },
+            "changed_avatar": {
+                "other": "%(oneUser)szměnil(a) %(count)s krát svůj profilový obrázek",
+                "one": "%(oneUser)szměnil(a) svůj profilový obrázek"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)s neudělali %(count)s krát žádnou změnu",
+                "one": "%(severalUsers)s neudělali žádnou změnu"
+            },
+            "no_change": {
+                "other": "%(oneUser)s neudělal(a) %(count)s krát žádnou změnu",
+                "one": "%(oneUser)s neudělal(a) žádnou změnu"
+            },
+            "server_acls_multiple": {
+                "one": "%(severalUsers)szměnili ACL serveru",
+                "other": "%(severalUsers)szměnili %(count)s krát ACL serveru"
+            },
+            "server_acls": {
+                "one": "%(oneUser)szměnil(a) ACL serveru",
+                "other": "%(oneUser)szměnil(a) %(count)s krát ACL serveru"
+            },
+            "pinned_events_multiple": {
+                "one": "%(severalUsers)szměnili <a>připnuté zprávy</a> místnosti",
+                "other": "%(severalUsers)s%(count)s krát změnili <a>připnuté zprávy</a> v místnosti"
+            },
+            "pinned_events": {
+                "one": "%(oneUser)szměnil(a) <a>připnuté zprávy</a> místnosti",
+                "other": "%(oneUser)s%(count)s krát změnil(a) <a>připnuté zprávy</a> místnosti"
+            },
+            "redacted_multiple": {
+                "one": "%(severalUsers)ssmazali zprávu",
+                "other": "%(severalUsers)ssmazali %(count)s zpráv"
+            },
+            "redacted": {
+                "other": "%(oneUser)ssmazal(a) %(count)s zpráv",
+                "one": "%(oneUser)ssmazal(a) zprávu"
+            },
+            "hidden_event_multiple": {
+                "one": "%(severalUsers)sodeslali skrytou zprávu",
+                "other": "%(severalUsers)sodeslali %(count)s skrytých zpráv"
+            },
+            "hidden_event": {
+                "one": "%(oneUser)sodeslal(a) skrytou zprávu",
+                "other": "%(oneUser)s odeslal(a) %(count)s skrytých zpráv"
+            }
         }
     },
     "slash_command": {
@@ -4038,7 +3920,14 @@
         "help": "Zobrazuje seznam příkazu s popiskem",
         "whois": "Zobrazuje informace o uživateli",
         "rageshake": "Zaslat hlášení o chybě",
-        "msg": "Pošle zprávu danému uživateli"
+        "msg": "Pošle zprávu danému uživateli",
+        "usage": "Použití",
+        "category_messages": "Zprávy",
+        "category_actions": "Akce",
+        "category_admin": "Správce",
+        "category_advanced": "Rozšířené",
+        "category_effects": "Efekty",
+        "category_other": "Další možnosti"
     },
     "presence": {
         "busy": "Zaneprázdněný",
@@ -4052,5 +3941,147 @@
         "offline": "Offline",
         "away": "Pryč"
     },
-    "Unknown": "Neznámý"
+    "Unknown": "Neznámý",
+    "event_preview": {
+        "m.call.answer": {
+            "you": "Připojili jste se k hovoru",
+            "user": "%(senderName)s se připojil k hovoru",
+            "dm": "Probíhá hovor"
+        },
+        "m.call.hangup": {
+            "you": "Ukončili jste hovor",
+            "user": "%(senderName)s ukončil(a) hovor"
+        },
+        "m.call.invite": {
+            "you": "Začali jste hovor",
+            "user": "%(senderName)s začal(a) hovor",
+            "dm_send": "Čekání na odpověď",
+            "dm_receive": "%(senderName)s volá"
+        },
+        "m.emote": "* %(senderName)s %(emote)s",
+        "m.text": "%(senderName)s: %(message)s",
+        "m.reaction": {
+            "you": "Reagovali jste %(reaction)s na %(message)s",
+            "user": "%(sender)s reagoval(a) %(reaction)s na %(message)s"
+        },
+        "m.sticker": "%(senderName)s: %(stickerName)s"
+    },
+    "voip": {
+        "disable_microphone": "Ztlumit mikrofon",
+        "enable_microphone": "Zrušit ztlumení mikrofonu",
+        "disable_camera": "Vypnout kameru",
+        "enable_camera": "Zapnout kameru",
+        "audio_devices": "Zvuková zařízení",
+        "video_devices": "Video zařízení",
+        "dial": "Vytočit",
+        "you_are_presenting": "Prezentujete",
+        "user_is_presenting": "%(sharerName)s prezentuje",
+        "camera_disabled": "Vaše kamera je vypnutá",
+        "camera_enabled": "Vaše kamera je stále zapnutá",
+        "consulting": "Konzultace s %(transferTarget)s. <a>Převod na %(transferee)s</a>",
+        "call_held_switch": "Podrželi jste hovor <a>Přepnout</a>",
+        "call_held_resume": "Podrželi jste hovor <a>Pokračovat</a>",
+        "call_held": "%(peerName)s podržel hovor",
+        "dialpad": "Číselník",
+        "stop_screenshare": "Ukončit sdílení obrazovky",
+        "start_screenshare": "Začít sdílet obrazovku",
+        "hangup": "Zavěsit",
+        "maximise": "Vyplnit obrazovku",
+        "expand": "Návrat do hovoru",
+        "on_hold": "%(name)s podržen",
+        "voice_call": "Hlasový hovor",
+        "video_call": "Videohovor",
+        "video_call_started": "Videohovor byl zahájen",
+        "unsilence": "Zvuk zapnutý",
+        "silence": "Ztlumit zvonění",
+        "silenced": "Oznámení ztlumena",
+        "unknown_caller": "Neznámý volající",
+        "call_failed": "Hovor selhal",
+        "unable_to_access_microphone": "Není možné použít mikrofon",
+        "call_failed_microphone": "Hovor selhal, protože nešlo použít mikrofon. Zkontrolujte, že je mikrofon připojen a správně nastaven.",
+        "unable_to_access_media": "Není možné použít webkameru nebo mikrofon",
+        "call_failed_media": "Hovor selhal, protože nešlo použít mikrofon nebo webkameru. Zkontrolujte, že:",
+        "call_failed_media_connected": "Mikrofon a webkamera jsou zapojeny a správně nastaveny",
+        "call_failed_media_permissions": "Aplikace má k webkameře povolen přístup",
+        "call_failed_media_applications": "Webkamera není blokována jinou aplikací",
+        "already_in_call": "Již máte hovor",
+        "already_in_call_person": "S touto osobou již telefonujete.",
+        "unsupported": "Hovory nejsou podporovány",
+        "unsupported_browser": "V tomto prohlížeči nelze uskutečňovat hovory."
+    },
+    "Messages": "Zprávy",
+    "Other": "Další možnosti",
+    "Advanced": "Rozšířené",
+    "room_settings": {
+        "permissions": {
+            "m.room.avatar_space": "Změnit avatar prostoru",
+            "m.room.avatar": "Změnit avatar místnosti",
+            "m.room.name_space": "Změnit název prostoru",
+            "m.room.name": "Změnit název místnosti",
+            "m.room.canonical_alias_space": "Změnit hlavní adresu prostoru",
+            "m.room.canonical_alias": "Změnit hlavní adresu místnosti",
+            "m.space.child": "Spravovat místnosti v tomto prostoru",
+            "m.room.history_visibility": "Změnit viditelnost historie",
+            "m.room.power_levels": "Změnit oprávnění",
+            "m.room.topic_space": "Změnit popis",
+            "m.room.topic": "Změnit téma",
+            "m.room.tombstone": "Aktualizovat místnost",
+            "m.room.encryption": "Povolit v místnosti šifrování",
+            "m.room.server_acl": "Změnit seznamy přístupů serveru",
+            "m.reaction": "Odesílat reakce",
+            "m.room.redaction": "Odstranit mnou odeslané zprávy",
+            "m.widget": "Spravovat widgety",
+            "io.element.voice_broadcast_info": "Hlasová vysílání",
+            "m.room.pinned_events": "Správa připnutých událostí",
+            "m.call": "Zahájit %(brand)s volání",
+            "m.call.member": "Připojit se k %(brand)s volání",
+            "users_default": "Výchozí role",
+            "events_default": "Posílat zprávy",
+            "invite": "Zvát uživatele",
+            "state_default": "Měnit nastavení",
+            "kick": "Odebrat uživatele",
+            "ban": "Vykázat uživatele",
+            "redact": "Odstranit zprávy odeslané ostatními",
+            "notifications.room": "Oznámení pro celou místnost"
+        }
+    },
+    "encryption": {
+        "verification": {
+            "sas_no_match": "Neshodují se",
+            "sas_match": "Shodují se",
+            "in_person": "Aby bylo ověření bezpečné, proveďte ho osobně nebo použijte důvěryhodný komunikační prostředek.",
+            "other_party_cancelled": "Druhá strana ověření zrušila.",
+            "complete_title": "Ověřeno!",
+            "complete_description": "Uživatel úspěšně ověřen.",
+            "no_support_qr_emoji": "Zařízení, které se snažíte ověřit, neumožňuje ověření QR kódem ani pomocí emotikonů, které %(brand)s podporuje. Zkuste použít jiného klienta.",
+            "qr_prompt": "Naskenujte tento jedinečný kód",
+            "sas_prompt": "Porovnejte jedinečnou kombinaci emoji",
+            "sas_description": "Pokud na žádném zařízení nemáte kameru, porovnejte jedinečnou kombinaci emoji",
+            "qr_or_sas": "%(qrCode)s nebo %(emojiCompare)s",
+            "qr_or_sas_header": "Ověřte toto zařízení dokončením jedné z následujících položek:"
+        }
+    },
+    "emoji": {
+        "category_frequently_used": "Často používané",
+        "category_smileys_people": "Obličeje a lidé",
+        "category_animals_nature": "Zvířata a příroda",
+        "category_food_drink": "Jídlo a nápoje",
+        "category_activities": "Aktivity",
+        "category_travel_places": "Cestování a místa",
+        "category_objects": "Objekty",
+        "category_symbols": "Symboly",
+        "category_flags": "Vlajky",
+        "categories": "Kategorie",
+        "quick_reactions": "Rychlé reakce"
+    },
+    "analytics": {
+        "enable_prompt": "Pomozte zlepšit %(analyticsOwner)s",
+        "consent_migration": "Dříve jste nám dali souhlas se sdílením anonymních údajů o používání. Aktualizujeme způsob, jakým to funguje.",
+        "learn_more": "Sdílejte anonymní údaje, které nám pomohou identifikovat problémy. Nic osobního. Žádné třetí strany. <LearnMoreLink>Zjistěte více</LearnMoreLink>",
+        "privacy_policy": "Všechny naše podmínky si můžete přečíst <PrivacyPolicyUrl>zde</PrivacyPolicyUrl>",
+        "pseudonymous_usage_data": "Pomozte nám identifikovat problémy a zlepšit %(analyticsOwner)s sdílením anonymních údajů o používání. Abychom pochopili, jak lidé používají více zařízení, vygenerujeme náhodný identifikátor sdílený vašimi zařízeními.",
+        "bullet_1": "<Bold>Nezaznamenáváme ani neprofilujeme</Bold> žádné údaje o účtu",
+        "bullet_2": "<Bold>Nesdílíme</Bold> informace s třetími stranami",
+        "disable_prompt": "Tuto funkci můžete kdykoli vypnout v nastavení"
+    }
 }

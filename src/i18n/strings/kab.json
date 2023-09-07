@@ -24,13 +24,7 @@
     "Create Account": "Rnu amiḍan",
     "Default": "Amezwer",
     "Moderator": "Aseɣyad",
-    "Admin": "Anedbal",
     "You need to be logged in.": "Tesriḍ ad teqqneḍ.",
-    "Messages": "Iznan",
-    "Actions": "Tigawin",
-    "Advanced": "Talqayt",
-    "Other": "Nniḍen",
-    "Usage": "Aseqdec",
     "Thank you!": "Tanemmirt!",
     "Reason": "Taɣẓint",
     "Add another word or two. Uncommon words are better.": "Rnu awal-nniḍen neɣ sin. Awalen imexḍa ad lhun.",
@@ -75,7 +69,6 @@
     "Composer": "Imsuddes",
     "Sounds": "Imesla",
     "Browse": "Inig",
-    "Default role": "Tamlilt tamzwert",
     "Permissions": "Tisirag",
     "Anyone": "Yal yiwen",
     "Encryption": "Awgelhen",
@@ -100,11 +93,6 @@
     "Error decrypting attachment": "Tuccḍa deg uwgelhen n tceqquft yeddan",
     "Copied!": "Yettwanɣel!",
     "edited": "yettwaẓreg",
-    "Food & Drink": "Učči d tissit",
-    "Objects": "Tiɣawsiwin",
-    "Symbols": "Izamulen",
-    "Flags": "Anayen",
-    "Categories": "Taggayin",
     "More options": "Ugar n textiṛiyin",
     "collapse": "fneẓ",
     "Server name": "Isem n uqeddac",
@@ -177,7 +165,6 @@
     "Session key": "Tasarut n tɣimit",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ma ulac aɣilif, senqed imayl-ik/im syen sit ɣef useɣwen i yellan. Akken ara yemmed waya, sit ad tkemmleḍ.",
     "This will allow you to reset your password and receive notifications.": "Ayagi ad ak(akem)-yeǧǧ ad twennzeḍ awal-ik/im uffir yerna ad d-tremseḍ ilɣa.",
-    "Call Failed": "Ur iddi ara usiwel",
     "You cannot place a call with yourself.": "Ur tezmireḍ ara a temsawaleḍ d yiman-ik.",
     "The file '%(fileName)s' failed to upload.": "Yegguma ad d-yali '%(fileName)s' ufaylu.",
     "Upload Failed": "Asali ur yeddi ara",
@@ -269,17 +256,6 @@
     "Encryption upgrade available": "Yella uleqqem n uwgelhen",
     "Verify this session": "Asenqed n tɣimit",
     "Other users may not trust it": "Iseqdacen-nniḍen yezmer ur tettamnen ara",
-    "You joined the call": "Terniḍ ɣer usiwel",
-    "%(senderName)s joined the call": "%(senderName)s yerna ɣer usiwel",
-    "Call in progress": "Asiwel la iteddu",
-    "Call ended": "Asiwel yekfa",
-    "You started a call": "Tebdiḍ asiwel",
-    "%(senderName)s started a call": "%(senderName)s yebda asiwel",
-    "Waiting for answer": "Yettṛaǧu tiririt",
-    "%(senderName)s is calling": "%(senderName)s yessawal",
-    "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
-    "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
-    "Collecting logs": "Alqaḍ n yiɣmisen",
     "Waiting for response from server": "Aṛaǧu n tririt sɣur aqeddac",
     "Failed to set display name": "Asbadu n yisem yettwaskanen ur yeddi ara",
     "Cannot connect to integration manager": "Ur nessaweḍ ara ad neqqen ɣer umsefrak n useddu",
@@ -339,8 +315,6 @@
     "System font name": "Isem n tsefsit n unagraw",
     "Send analytics data": "Azen isefka n tesleḍt",
     "Cancelling…": "Asefsex…",
-    "They match": "Msaḍan",
-    "They don't match": "Ur msaḍan ara",
     "Dog": "Aqjun",
     "Horse": "Aεewdiw",
     "Pig": "Ilef",
@@ -390,7 +364,6 @@
     "This is a top-10 common password": "Wagi d awal uffir gar 10 yimezwura yettwassnen",
     "This is a top-100 common password": "Wagi d awal uffir gar 100 yimezwura yettwassnen",
     "This is a very common password": "Wagi d awal uffir yettwassnen",
-    "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
     "Change notification settings": "Snifel iɣewwaren n yilɣa",
     "Match system theme": "Asentel n unagraw yemṣadan",
     "Never send encrypted messages to unverified sessions from this session": "Ur ttazen ara akk iznan yettwawgelhen ɣer tɣimiyin ur nettusenqad ara seg tɣimit-a",
@@ -446,17 +419,8 @@
     "Room version": "Lqem n texxamt",
     "Room version:": "Lqem n texxamt:",
     "Notification sound": "Imesli i yilɣa",
-    "Change main address for the room": "Beddel tansa tagejdant n texxamt",
-    "Change permissions": "Beddel tisirag",
-    "Change topic": "Beddel asentel",
-    "Upgrade the room": "Leqqem taxxamt",
-    "Enable room encryption": "Rmed awgelhen n texxamt",
     "Failed to unban": "Sefsex aḍraq yugi ad yeddu",
     "Banned by %(displayName)s": "Yettwagi sɣur %(displayName)s",
-    "Send messages": "Azen iznan",
-    "Invite users": "Nced-d iseqdacen",
-    "Change settings": "Snifel iɣewwaren",
-    "Ban users": "Agi yiseqdacen",
     "Privileged Users": "Iseqdacen i yettwafernen",
     "Muted Users": "Iseqdacen i isusmen",
     "Banned users": "Iseqdacen i yettwagin",
@@ -476,12 +440,6 @@
     "Invite to this room": "Nced-d ɣer texxamt-a",
     "Filter room members": "Sizdeg iɛeggalen n texxamt",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (i iǧehden %(powerLevelNumber)s",
-    "Voice call": "Asiwel s taɣect",
-    "Video call": "Asiwel s tvidyut",
-    "Send an encrypted reply…": "Azen tiririt yettuwgelhen…",
-    "Send a reply…": "Azen tiririt…",
-    "Send an encrypted message…": "Azen izen yettuwgelhen…",
-    "Send a message…": "Azen izen…",
     "Italics": "Uknan",
     "Replying": "Tiririt",
     "(~%(count)s results)": {
@@ -552,16 +510,11 @@
     "Add an Integration": "Rnu asidef",
     "Can't load this message": "Yegguma ad d-yali yizen-a",
     "Submit logs": "Azen iɣmisen",
-    "Smileys & People": "Acmumeḥ & Imdanen",
-    "Animals & Nature": "Iɣersiwen & ugama",
-    "Activities": "Irmad",
-    "Travel & Places": "Inig & Imukan",
     "Cancel search": "Sefsex anadi",
     "Your user ID": "Asulay-ik·m n useqdac",
     "Your theme": "Asentel-inek·inem",
     "Room ID": "Asulay n texxamt",
     "Widget ID": "Asulay n yiwiǧit",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
     "Power level": "Sagen aswir",
     "Custom level": "Sagen aswir",
     "<a>In reply to</a> <pill>": "<a>Deg tririt i</a> <pill>",
@@ -664,7 +617,6 @@
     "Cross-signing public keys:": "Tisura n uzmul anmidag tizuyaz:",
     "in memory": "deg tkatut",
     "Cross-signing private keys:": "Tisura tusligin n uzmul anmidag:",
-    "System Alerts": "Ilɣa n unagraw",
     "Forget this room": "Ttu taxxamt-a",
     "Reject & Ignore user": "Agi & Zgel aseqdac",
     "%(roomName)s does not exist.": "%(roomName)s ulac-it.",
@@ -709,99 +661,10 @@
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Tukksan n uwiǧit, ad t-tekkes akk i yiseqdacen n texxamt-nni. D tidet tebɣiḍ ad tekkseḍ awiǧit-a?",
     "Delete widget": "Kkes awiǧit",
     "Popout widget": "Awiǧit attalan",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Ttxil-k·m <newIssueLink>rnu ugur amaynut</newIssueLink> deg GitHub akken ad nessiweḍ ad nezrew abug-a.",
     "expand": "snefli",
     "Rotate Left": "Zzi ɣer uzelmaḍ",
     "Rotate Right": "Zzi ɣer uyeffus",
     "Language Dropdown": "Tabdart n udrurem n tutlayin",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)srnan-d %(count)s tikkal",
-        "one": "%(severalUsers)srnan-d"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)syerna-d %(count)s tikkal",
-        "one": "%(oneUser)syerna-d"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)sffɣen %(count)s tikkal",
-        "one": "%(severalUsers)s ffɣen"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)s yeffeɣ %(count)s tikkal",
-        "one": "%(oneUser)s yeffeɣ"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "other": "%(severalUsers)srnan-d syen ffɣen %(count)s tikkal",
-        "one": "%(severalUsers)srnan-d syen ffɣen"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "other": "%(oneUser)syerna-d syen yeffeɣ %(count)s tikkal",
-        "one": "%(oneUser)syerna-d syen yeffeɣ"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "other": "%(severalUsers)sffɣen syen uɣalen-d %(count)s tikkal",
-        "one": "%(severalUsers)sffɣen syen uɣalen-d"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "other": "%(oneUser)syeffeɣ-d syen yuɣal-d %(count)s tikkal",
-        "one": "%(oneUser)syeffeɣ-d syen yuɣal-d"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "other": "%(severalUsers)sugin tinubgiwin-nsen %(count)s tikkal",
-        "one": "%(severalUsers)sugin tinubgiwin-nsen"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "other": "%(oneUser)syugi tinubga-ines %(count)s tikkal",
-        "one": "%(oneUser)syugi tinubga-ines"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "other": "%(severalUsers)sunfen i tinubgiwin-nsen yettwagin %(count)s tikkal",
-        "one": "%(severalUsers)sunfen i tinubgiwin-nsen yettwagin"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "%(oneUser)syunef i tinubga-ines yettwagin %(count)s tikkal",
-        "one": "%(oneUser)syunef i tinubga-ines yettwagin"
-    },
-    "were invited %(count)s times": {
-        "other": "ttwanecden-d %(count)s tikkal",
-        "one": "ttwanecden-d"
-    },
-    "was invited %(count)s times": {
-        "other": "yettwanced-d %(count)s tikkal",
-        "one": "yettwanced-d"
-    },
-    "were banned %(count)s times": {
-        "other": "ttwazeglen %(count)s tikkal",
-        "one": "ttwazeglen"
-    },
-    "was banned %(count)s times": {
-        "other": "yettwazgel %(count)s tikkal",
-        "one": "yettwazgel"
-    },
-    "were unbanned %(count)s times": {
-        "other": "ur ttwazeglen ara %(count)s tikkal",
-        "one": "ur ttwazeglen ara"
-    },
-    "was unbanned %(count)s times": {
-        "other": "ur yettwazgel ara %(count)s tikkal",
-        "one": "ur yettwazgel ara"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "other": "%(severalUsers)sbeddlen ismawen-nsen %(count)s tikkal",
-        "one": "%(severalUsers)sbeddlen ismawen-nsen"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "other": "%(oneUser)sibeddel isem-is %(count)s tikkal",
-        "one": "%(oneUser)sibeddel isem-is"
-    },
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)sur gin ara isnifal %(count)s tikkal",
-        "one": "%(severalUsers)sur gin ara isnifal"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)sur ye gi ara isnifal %(count)s tikkal",
-        "one": "%(oneUser)sur ye gi ara isnifal"
-    },
     "QR Code": "Tangalt QR",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "YEgguma ad d-tali tedyant iɣef d-ttunefk tririt, ahat d tilin ur telli ara neɣ ur tesɛiḍ ara tisirag ad tt-twaliḍ.",
     "Room address": "Tansa n texxamt",
@@ -855,9 +718,6 @@
     "Message downloading sleep time(ms)": "Akud n usgunfu n usali n yiznan (ms)",
     "Dismiss read marker and jump to bottom": "Zgel ticreḍt n tɣuri, tɛeddiḍ d akessar",
     "This is your list of users/servers you have blocked - don't leave the room!": "Tagi d tabdart-ik·im n yiseqdacen/yiqeddacen i tesweḥleḍ - ur teffeɣ ara seg texxamt!",
-    "Verified!": "Yettwasenqed!",
-    "Scan this unique code": "Ḍumm tangalt-a tasuft",
-    "Compare unique emoji": "Serwes gar yimujiten asufen",
     "in secret storage": "deg uklas uffir",
     "Master private key:": "Tasarut tusligt tagejdant:",
     "cached locally": "yettwaffer s wudem adigan",
@@ -956,7 +816,6 @@
     "Bulk options": "Tixtiṛiyin s ubleɣ",
     "Accept all %(invitedRooms)s invites": "Qbel akk tinubgiwin %(invitedRooms)s",
     "Reject all %(invitedRooms)s invites": "Agi akk tinubgiwin %(invitedRooms)s",
-    "Cross-signing": "Azmul anmidag",
     "Security & Privacy": "Taɣellist & tbaḍnit",
     "No media permissions": "Ulac tisirag n umidyat",
     "Missing media permissions, click the button below to request.": "Ulac tisirag n umidyat, sit ɣef tqeffalt ddaw i usentem.",
@@ -973,14 +832,9 @@
     "URL Previews": "Tiskanin n URL",
     "Uploaded sound": "Ameslaw i d-yulin",
     "Set a new custom sound": "Sbadu ameslaw udmawan amaynut",
-    "Change room avatar": "Beddel avaṭar n texxamt",
-    "Change room name": "Beddel isem n texxamt",
-    "Change history visibility": "Beddel amazray n texxamt",
-    "Modify widgets": "Snifel iwiǧiten",
     "Unban": "Asefsex n tigtin",
     "Error changing power level requirement": "Tuccḍa deg usnifel n tuttra n uswir afellay",
     "Error changing power level": "Tuccḍa deg usnifel n uswir afellay",
-    "Notify everyone": "Selɣu yal yiwen",
     "Send %(eventType)s events": "Azen tidyanin n %(eventType)s",
     "Roles & Permissions": "Timlellay & Tisirag",
     "To link to this room, please add an address.": "I ucuddu ɣer texxamt-a, ttxil-k·m rnu tansa.",
@@ -1013,7 +867,6 @@
     "Unencrypted": "Ur yettwawgelhen ara",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Asesteb n yizen-a awgelhen ur yettwaḍman ara deg yibenk-a.",
     "Invited": "Yettwancad",
-    "Hangup": "Ɛelleq",
     "The conversation continues here.": "Adiwenni yettkemmil dagi.",
     "This room has been replaced and is no longer active.": "Taxxamt-a ad tettusmelsi, dayen d tarurmidt.",
     "You do not have permission to post to this room": "Ur tesεiḍ ara tasiregt ad d-tsuffɣeḍ deg texxamt-a",
@@ -1102,12 +955,6 @@
     "Enable message search in encrypted rooms": "Rmed anadi n yiznan deg texxamin yettwawgelhen",
     "Manually verify all remote sessions": "Senqed s ufus akk tiɣimiyin tinmeggagin",
     "IRC display name width": "Tehri n yisem i d-yettwaseknen IRC",
-    "Collecting app version information": "Alqaḍ n telɣa n lqem n usnas",
-    "Uploading logs": "Asali n yiɣmisen",
-    "Downloading logs": "Asader n yiɣmisen",
-    "Unknown caller": "Asiwel arussin",
-    "The other party cancelled the verification.": "Wayeḍ issefsex asenqed.",
-    "You've successfully verified this user.": "Tesneqdeḍ aseqdac-a akken iwata.",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Iznan iɣellsanen akked useqdac-a ttwawgelhen seg yixef ɣer yixef yerna yiwen ur yezmir ad ten-iɣeṛ.",
     "Verify this user by confirming the following emoji appear on their screen.": "Senqed aseqdac-a s usentem dakken imujiten-a ttbanen-d ɣef ugdil-is.",
     "Verify this user by confirming the following number appears on their screen.": "Senqed aseqdac-a s usentem dakken amḍan-a ittban-d ɣef ugdil-is.",
@@ -1203,8 +1050,6 @@
     "Click to view edits": "Sit i wakken ad twaliḍ aseẓreg",
     "Edited at %(date)s. Click to view edits.": "Yettwaẓreg deg %(date)s. Sit i wakken ad twaliḍ iseẓrag.",
     "Something went wrong!": "Yella wayen ur nteddu ara akken iwata!",
-    "Frequently Used": "Yettuseqdac s waṭas",
-    "Quick Reactions": "Tisedmirin tiruradin",
     "Any of the following data may be shared:": "Yal yiwen seg yisefka i d-iteddun zemren ad ttwabḍun:",
     "Invite anyway and never warn me again": "Ɣas akken nced-d yerna ur iyi-id-ttɛeggin ara akk",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Ttxil-k·m ini-aɣ-d acu ur nteddu ara akken ilaq neɣ, akken i igerrez, rnu ugur deg Github ara ad d-igelmen ugur.",
@@ -1232,9 +1077,7 @@
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ma yella ur tesbaduḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ma yella ur tekkiseḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren.",
     "Mirror local video feed": "Asbani n usuddem n tvidyut tadigant",
-    "Compare a unique set of emoji if you don't have a camera on either device": "Serwes tagrumma n yimujiten asufen ma yella ur tesɛiḍ ara takamiṛat ɣef yiwen seg sin yibenkan",
     "Unable to find a supported verification method.": "D awezɣi ad d-naf tarrayt n usenqed yettusefraken.",
-    "To be secure, do this in person or use a trusted way to communicate.": "I wakken ad tḍemneḍ taɣellistik·im, eg ayagi s timmad-ik·im neɣ seqdec abrid n teywalt iɣef ara tettekleḍ.",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Ilaq-ak·am ahat ad tesirgeḍ s ufus %(brand)s i unekcum ɣer usawaḍ/webcam",
     "This room is not accessible by remote Matrix servers": "Anekcum er texxamt-a ulamek s yiqeddacen n Matrix inmeggagen",
     "No users have specific privileges in this room": "Ulac aqeddac yesan taseglut tuzzigtt deg texxamt-a",
@@ -1300,7 +1143,6 @@
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Aleqqem n texxamt-a ad tsens tummant tamirant n texxamt yerna ad ternu taxxamt yettuleqqmen s yisem-nni kan.",
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Tzemreḍ ad tesqedceḍ <code>tallalt</code> i wakken ad twaliḍ tabdart n tiludna yellan. Tbɣiḍ ad tceggɛeḍ ayagi d izen?",
     "You don't currently have any stickerpacks enabled": "Ulac ɣer-k·m akka tura ikemmusen n yimyintaḍ yettwaremden",
-    "Stickerpack": "Akemmus n yimyintaḍ",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Tigtin n tinubga d awezɣi. Aqeddac yettmagar-d ahat ugur akka tura neɣ ur tesɛiḍ tisirag i iwulmen i wakken ad tagiḍ tinubga-a.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Tellad-d tuccḍa deg uleqqem n tansa tagejdant n texxamt. Ur ittusireg ara ula sɣur aqeddac neɣ d tuccḍa kan meẓẓiyen i d-yeḍran.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Tella-d tuccḍa deg uleqqem n tansiwin-nniḍen n texxamt. Ur yettusireg ara waya sɣur aqeddac neɣ d tuccḍa kan meẓẓiyen i d-yeḍran.",
@@ -1418,7 +1260,6 @@
     "Backup key stored:": "Tasarut n uklas tettwaḥrez:",
     "ready": "yewjed",
     "not ready": "ur yewjid ara",
-    "Secure Backup": "Aklas aɣellsan",
     "Not encrypted": "Ur yettwawgelhen ara",
     "Room settings": "Iɣewwaṛen n texxamt",
     "Take a picture": "Ṭṭef tawlaft",
@@ -1427,7 +1268,6 @@
     "The operation could not be completed": "Tamahilt ur tezmir ara ad tettwasmed",
     "Backup key cached:": "Tasarut n ukles tettwaffer:",
     "Secret storage:": "Aklas uffir:",
-    "Remove messages sent by others": "Kkes iznan i uznen wiyaḍ",
     "Widgets": "Iwiǧiten",
     "Iraq": "ɛiṛaq",
     "Bosnia": "Busniya",
@@ -1501,7 +1341,6 @@
     "United Arab Emirates": "Tiglednuwin Taεrabin Yedduklen",
     "Micronesia": "Mikṛunizya",
     "Cameroon": "Kamirun",
-    "Return to call": "Uɣal ɣer usiwel",
     "Curaçao": "Kuṛačaw",
     "Thailand": "Tayland",
     "Croatia": "Karwaṣiya",
@@ -1566,7 +1405,6 @@
     "Zambia": "Ẓambya",
     "Tonga": "Tatungit",
     "Singapore": "Singapour",
-    "Effects": "Effets",
     "Djibouti": "Djibouti",
     "Montenegro": "Muntinigru",
     "Hungary": "Hungarya",
@@ -1587,7 +1425,6 @@
     "Aruba": "Aruba",
     "Japan": "Japun",
     "Fiji": "Fidji",
-    "Unable to access microphone": "Anekcum ɣer usawaḍ ulamek",
     "Nigeria": "Nijirya",
     "St. Barthélemy": "St. Barthélemy",
     "Guadeloupe": "Guadeloupe",
@@ -1691,11 +1528,6 @@
     "New Caledonia": "Kaliduni amaynut",
     "You've reached the maximum number of simultaneous calls.": "Tessawḍeḍ amḍan n yisawalen afellay yemseḍfaren.",
     "Too Many Calls": "Ddeqs n yisawalen",
-    "No other application is using the webcam": "Ulac asnas-nniḍen i iseqdacen takamiṛat",
-    "Permission is granted to use the webcam": "Tettynefk tsiregt i useqdec takamiṛat",
-    "A microphone and webcam are plugged in and set up correctly": "Asawaḍ d tkamiṛat qqnen yerna ttusewlen akken iwata",
-    "Call failed because webcam or microphone could not be accessed. Check that:": "Asiwel ur yeddi ara aku takamiṛat neɣ asawaḍ ulac anekum ɣur-s. Senqed aya:",
-    "Unable to access webcam / microphone": "Anekcum ɣer tkamiṛat / usawaḍ d awezɣi",
     "The call was answered on another device.": "Tiririt ɣef usiwel tella-d ɣef yibenk-nniḍen.",
     "Answered Elsewhere": "Yerra-d seg wadeg-nniḍen",
     "The call could not be established": "Asiwel ur yeqεid ara",
@@ -1709,14 +1541,11 @@
     "See images posted to your active room": "Wali tignatin i d-yeffɣen deg texxamt-a iremden",
     "Takes the call in the current room off hold": "Uɣal ɣer usiwel ara iteddun deg -texxamt-a",
     "Places the call in the current room on hold": "Seḥbes asiwel deg texxamt-a i kra n wakud",
-    "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "Tawuri tecceḍ acku asawaḍ ur yessaweḍ ara ad yekcem. Senqed ma yella usawaḍ yeqqnen yerna yettusbadu akken iwata.",
-    "Integration manager": "Amsefrak n umsidef",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-ik·im ur ak·am yefki ara tisirag i useqdec n umsefrak n umsidef i wakken ad tgeḍ aya. Ttxil-k·m nermes anedbal.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Aseqdec n uwiǧit-a yezmer ad yebḍu isefka <helpIcon/> d %(widgetDomain)s & amsefrak-inek·inem n umsidef.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Imsefrak n yimsidaf remmsen-d isefka n uswel, syen ad uɣalen zemren ad beddlen iwiǧiten, ad aznen tinubgiwin ɣer texxamin, ad yesbadu daɣen tazmert n yiswiren s yiswiren deg ubdil-ik·im.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Seqdec amsefrak n umsidef i usefrek n yibuten, n yiwiǧiten d tɣawsiwin n usenteḍ.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Seqdec amsefrak n umsidef <b>(%(serverName)s)</b> i usefrek n yibuten, n yiwiǧiten d tɣawsiwin n usenteḍ.",
-    "Identity server": "Aqeddac n timagit",
     "Identity server (%(server)s)": "Aqeddac n timagit (%(server)s)",
     "Could not connect to identity server": "Ur izmir ara ad yeqqen ɣer uqeddac n timagit",
     "Not a valid identity server (status code %(code)s)": "Aqeddac n timagit mačči d ameɣtu (status code %(code)s)",
@@ -1770,7 +1599,13 @@
         "matrix": "Matrix",
         "trusted": "Yettwattkal",
         "not_trusted": "Ur yettwattkal ara",
-        "unnamed_room": "Taxxamt war isem"
+        "unnamed_room": "Taxxamt war isem",
+        "stickerpack": "Akemmus n yimyintaḍ",
+        "system_alerts": "Ilɣa n unagraw",
+        "secure_backup": "Aklas aɣellsan",
+        "cross_signing": "Azmul anmidag",
+        "identity_server": "Aqeddac n timagit",
+        "integration_manager": "Amsefrak n umsidef"
     },
     "action": {
         "continue": "Kemmel",
@@ -1876,7 +1711,11 @@
         "format_bold": "Azuran",
         "format_strikethrough": "Derrer",
         "format_inline_code": "Tangalt",
-        "format_code_block": "Iḥder n tengalt"
+        "format_code_block": "Iḥder n tengalt",
+        "placeholder_reply_encrypted": "Azen tiririt yettuwgelhen…",
+        "placeholder_reply": "Azen tiririt…",
+        "placeholder_encrypted": "Azen izen yettuwgelhen…",
+        "placeholder": "Azen izen…"
     },
     "Bold": "Azuran",
     "Code": "Tangalt",
@@ -1896,7 +1735,12 @@
         "send_logs": "Azen iɣmisen",
         "github_issue": "Ugur Github",
         "download_logs": "Sider imisen",
-        "before_submitting": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem."
+        "before_submitting": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem.",
+        "collecting_information": "Alqaḍ n telɣa n lqem n usnas",
+        "collecting_logs": "Alqaḍ n yiɣmisen",
+        "uploading_logs": "Asali n yiɣmisen",
+        "downloading_logs": "Asader n yiɣmisen",
+        "create_new_issue": "Ttxil-k·m <newIssueLink>rnu ugur amaynut</newIssueLink> deg GitHub akken ad nessiweḍ ad nezrew abug-a."
     },
     "time": {
         "few_seconds_ago": "kra n tesinin seg yimir-nni",
@@ -1951,7 +1795,9 @@
         "event_sent": "Tadyant tettwazen!",
         "event_content": "Agbur n tedyant",
         "toolbox": "Tabewwaḍt n yifecka",
-        "developer_tools": "Ifecka n uneflay"
+        "developer_tools": "Ifecka n uneflay",
+        "category_room": "Taxxamt",
+        "category_other": "Nniḍen"
     },
     "create_room": {
         "title_public_room": "Rnu taxxamt tazayezt",
@@ -2025,6 +1871,100 @@
                 "other": "%(names)s d %(count)s wiyaḍ ttarun-d …",
                 "one": "%(names)s d wayeḍ-nniḍen yettaru-d …"
             }
+        },
+        "m.call.hangup": {
+            "dm": "Asiwel yekfa"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)srnan-d %(count)s tikkal",
+                "one": "%(severalUsers)srnan-d"
+            },
+            "joined": {
+                "other": "%(oneUser)syerna-d %(count)s tikkal",
+                "one": "%(oneUser)syerna-d"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)sffɣen %(count)s tikkal",
+                "one": "%(severalUsers)s ffɣen"
+            },
+            "left": {
+                "other": "%(oneUser)s yeffeɣ %(count)s tikkal",
+                "one": "%(oneUser)s yeffeɣ"
+            },
+            "joined_and_left_multiple": {
+                "other": "%(severalUsers)srnan-d syen ffɣen %(count)s tikkal",
+                "one": "%(severalUsers)srnan-d syen ffɣen"
+            },
+            "joined_and_left": {
+                "other": "%(oneUser)syerna-d syen yeffeɣ %(count)s tikkal",
+                "one": "%(oneUser)syerna-d syen yeffeɣ"
+            },
+            "rejoined_multiple": {
+                "other": "%(severalUsers)sffɣen syen uɣalen-d %(count)s tikkal",
+                "one": "%(severalUsers)sffɣen syen uɣalen-d"
+            },
+            "rejoined": {
+                "other": "%(oneUser)syeffeɣ-d syen yuɣal-d %(count)s tikkal",
+                "one": "%(oneUser)syeffeɣ-d syen yuɣal-d"
+            },
+            "rejected_invite_multiple": {
+                "other": "%(severalUsers)sugin tinubgiwin-nsen %(count)s tikkal",
+                "one": "%(severalUsers)sugin tinubgiwin-nsen"
+            },
+            "rejected_invite": {
+                "other": "%(oneUser)syugi tinubga-ines %(count)s tikkal",
+                "one": "%(oneUser)syugi tinubga-ines"
+            },
+            "invite_withdrawn_multiple": {
+                "other": "%(severalUsers)sunfen i tinubgiwin-nsen yettwagin %(count)s tikkal",
+                "one": "%(severalUsers)sunfen i tinubgiwin-nsen yettwagin"
+            },
+            "invite_withdrawn": {
+                "other": "%(oneUser)syunef i tinubga-ines yettwagin %(count)s tikkal",
+                "one": "%(oneUser)syunef i tinubga-ines yettwagin"
+            },
+            "invited_multiple": {
+                "other": "ttwanecden-d %(count)s tikkal",
+                "one": "ttwanecden-d"
+            },
+            "invited": {
+                "other": "yettwanced-d %(count)s tikkal",
+                "one": "yettwanced-d"
+            },
+            "banned_multiple": {
+                "other": "ttwazeglen %(count)s tikkal",
+                "one": "ttwazeglen"
+            },
+            "banned": {
+                "other": "yettwazgel %(count)s tikkal",
+                "one": "yettwazgel"
+            },
+            "unbanned_multiple": {
+                "other": "ur ttwazeglen ara %(count)s tikkal",
+                "one": "ur ttwazeglen ara"
+            },
+            "unbanned": {
+                "other": "ur yettwazgel ara %(count)s tikkal",
+                "one": "ur yettwazgel ara"
+            },
+            "changed_name_multiple": {
+                "other": "%(severalUsers)sbeddlen ismawen-nsen %(count)s tikkal",
+                "one": "%(severalUsers)sbeddlen ismawen-nsen"
+            },
+            "changed_name": {
+                "other": "%(oneUser)sibeddel isem-is %(count)s tikkal",
+                "one": "%(oneUser)sibeddel isem-is"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)sur gin ara isnifal %(count)s tikkal",
+                "one": "%(severalUsers)sur gin ara isnifal"
+            },
+            "no_change": {
+                "other": "%(oneUser)sur ye gi ara isnifal %(count)s tikkal",
+                "one": "%(oneUser)sur ye gi ara isnifal"
+            }
         }
     },
     "slash_command": {
@@ -2054,7 +1994,14 @@
         "help": "Yeskan tabdart n tiludna s usegdec d uglam",
         "whois": "Yeskan talɣut ɣef useqdac",
         "rageshake": "Azen aneqqis n wabug s yiɣƔisen",
-        "msg": "Yuzen iznan i useqdac i d-yettunefken"
+        "msg": "Yuzen iznan i useqdac i d-yettunefken",
+        "usage": "Aseqdec",
+        "category_messages": "Iznan",
+        "category_actions": "Tigawin",
+        "category_admin": "Anedbal",
+        "category_advanced": "Talqayt",
+        "category_effects": "Effets",
+        "category_other": "Nniḍen"
     },
     "presence": {
         "online_for": "Srid azal n %(duration)s",
@@ -2067,5 +2014,86 @@
         "offline": "Beṛṛa n tuqqna",
         "away": "Akin"
     },
-    "Unknown": "Arussin"
+    "Unknown": "Arussin",
+    "event_preview": {
+        "m.call.answer": {
+            "you": "Terniḍ ɣer usiwel",
+            "user": "%(senderName)s yerna ɣer usiwel",
+            "dm": "Asiwel la iteddu"
+        },
+        "m.call.hangup": {},
+        "m.call.invite": {
+            "you": "Tebdiḍ asiwel",
+            "user": "%(senderName)s yebda asiwel",
+            "dm_send": "Yettṛaǧu tiririt",
+            "dm_receive": "%(senderName)s yessawal"
+        },
+        "m.emote": "* %(senderName)s %(emote)s",
+        "m.text": "%(senderName)s: %(message)s",
+        "m.sticker": "%(senderName)s: %(stickerName)s"
+    },
+    "voip": {
+        "hangup": "Ɛelleq",
+        "expand": "Uɣal ɣer usiwel",
+        "voice_call": "Asiwel s taɣect",
+        "video_call": "Asiwel s tvidyut",
+        "unknown_caller": "Asiwel arussin",
+        "call_failed": "Ur iddi ara usiwel",
+        "unable_to_access_microphone": "Anekcum ɣer usawaḍ ulamek",
+        "call_failed_microphone": "Tawuri tecceḍ acku asawaḍ ur yessaweḍ ara ad yekcem. Senqed ma yella usawaḍ yeqqnen yerna yettusbadu akken iwata.",
+        "unable_to_access_media": "Anekcum ɣer tkamiṛat / usawaḍ d awezɣi",
+        "call_failed_media": "Asiwel ur yeddi ara aku takamiṛat neɣ asawaḍ ulac anekum ɣur-s. Senqed aya:",
+        "call_failed_media_connected": "Asawaḍ d tkamiṛat qqnen yerna ttusewlen akken iwata",
+        "call_failed_media_permissions": "Tettynefk tsiregt i useqdec takamiṛat",
+        "call_failed_media_applications": "Ulac asnas-nniḍen i iseqdacen takamiṛat"
+    },
+    "Messages": "Iznan",
+    "Other": "Nniḍen",
+    "Advanced": "Talqayt",
+    "room_settings": {
+        "permissions": {
+            "m.room.avatar": "Beddel avaṭar n texxamt",
+            "m.room.name": "Beddel isem n texxamt",
+            "m.room.canonical_alias": "Beddel tansa tagejdant n texxamt",
+            "m.room.history_visibility": "Beddel amazray n texxamt",
+            "m.room.power_levels": "Beddel tisirag",
+            "m.room.topic": "Beddel asentel",
+            "m.room.tombstone": "Leqqem taxxamt",
+            "m.room.encryption": "Rmed awgelhen n texxamt",
+            "m.widget": "Snifel iwiǧiten",
+            "users_default": "Tamlilt tamzwert",
+            "events_default": "Azen iznan",
+            "invite": "Nced-d iseqdacen",
+            "state_default": "Snifel iɣewwaren",
+            "ban": "Agi yiseqdacen",
+            "redact": "Kkes iznan i uznen wiyaḍ",
+            "notifications.room": "Selɣu yal yiwen"
+        }
+    },
+    "encryption": {
+        "verification": {
+            "sas_no_match": "Ur msaḍan ara",
+            "sas_match": "Msaḍan",
+            "in_person": "I wakken ad tḍemneḍ taɣellistik·im, eg ayagi s timmad-ik·im neɣ seqdec abrid n teywalt iɣef ara tettekleḍ.",
+            "other_party_cancelled": "Wayeḍ issefsex asenqed.",
+            "complete_title": "Yettwasenqed!",
+            "complete_description": "Tesneqdeḍ aseqdac-a akken iwata.",
+            "qr_prompt": "Ḍumm tangalt-a tasuft",
+            "sas_prompt": "Serwes gar yimujiten asufen",
+            "sas_description": "Serwes tagrumma n yimujiten asufen ma yella ur tesɛiḍ ara takamiṛat ɣef yiwen seg sin yibenkan"
+        }
+    },
+    "emoji": {
+        "category_frequently_used": "Yettuseqdac s waṭas",
+        "category_smileys_people": "Acmumeḥ & Imdanen",
+        "category_animals_nature": "Iɣersiwen & ugama",
+        "category_food_drink": "Učči d tissit",
+        "category_activities": "Irmad",
+        "category_travel_places": "Inig & Imukan",
+        "category_objects": "Tiɣawsiwin",
+        "category_symbols": "Izamulen",
+        "category_flags": "Anayen",
+        "categories": "Taggayin",
+        "quick_reactions": "Tisedmirin tiruradin"
+    }
 }

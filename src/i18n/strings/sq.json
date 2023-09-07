@@ -2,7 +2,6 @@
     "This email address is already in use": "Kjo adresë email është tashmë në përdorim",
     "This phone number is already in use": "Ky numër telefoni është tashmë në përdorim",
     "Failed to verify email address: make sure you clicked the link in the email": "S’u arrit të verifikohej adresë email: sigurohuni se keni klikuar lidhjen te email-i",
-    "Call Failed": "Thirrja Dështoi",
     "You cannot place a call with yourself.": "S’mund të bëni thirrje me vetveten.",
     "Warning!": "Sinjalizim!",
     "Upload Failed": "Ngarkimi Dështoi",
@@ -39,7 +38,6 @@
     "Default": "Parazgjedhje",
     "Restricted": "E kufizuar",
     "Moderator": "Moderator",
-    "Admin": "Përgjegjës",
     "Operation failed": "Veprimi dështoi",
     "Failed to invite": "S’u arrit të ftohej",
     "You need to be logged in.": "Lypset të jeni i futur në llogarinë tuaj.",
@@ -51,7 +49,6 @@
     "You are not in this room.": "S’gjendeni në këtë dhomë.",
     "You do not have permission to do that in this room.": "S’keni leje për ta bërë këtë në këtë dhomë.",
     "Room %(roomId)s not visible": "Dhoma %(roomId)s s’është e dukshme",
-    "Usage": "Përdorim",
     "Ignored user": "Përdorues i shpërfillur",
     "You are now ignoring %(userId)s": "Tani po e shpërfillni %(userId)s",
     "Unignored user": "U hoq shpërfillja për përdoruesin",
@@ -74,14 +71,12 @@
     "Filter results": "Filtroni përfundimet",
     "No update available.": "S’ka përditësim gati.",
     "Noisy": "I zhurmshëm",
-    "Collecting app version information": "Po grumbullohen të dhëna versioni aplikacioni",
     "Search…": "Kërkoni…",
     "Tuesday": "E martë",
     "Preparing to send logs": "Po përgatitet për dërgim regjistrash",
     "Unnamed room": "Dhomë e paemërtuar",
     "Saturday": "E shtunë",
     "Monday": "E hënë",
-    "Collecting logs": "Po grumbullohen regjistra",
     "Failed to forget room %(errCode)s": "S’u arrit të harrohej dhoma %(errCode)s",
     "Wednesday": "E mërkurë",
     "All messages": "Krejt mesazhet",
@@ -129,10 +124,6 @@
         "one": "dhe një tjetër…"
     },
     "Filter room members": "Filtroni anëtarë dhome",
-    "Voice call": "Thirrje audio",
-    "Video call": "Thirrje video",
-    "Send an encrypted reply…": "Dërgoni një përgjigje të fshehtëzuar…",
-    "Send an encrypted message…": "Dërgoni një mesazh të fshehtëzuar…",
     "You do not have permission to post to this room": "S’keni leje të postoni në këtë dhomë",
     "Server error": "Gabim shërbyesi",
     "Command error": "Gabim urdhri",
@@ -151,7 +142,6 @@
     "Who can read history?": "Kush mund të lexojë historikun?",
     "Anyone": "Cilido",
     "Permissions": "Leje",
-    "Advanced": "Të mëtejshme",
     "Decrypt %(text)s": "Shfshehtëzoje %(text)s",
     "Copied!": "U kopjua!",
     "Add an Integration": "Shtoni një Integrim",
@@ -162,30 +152,6 @@
     "Something went wrong!": "Diçka shkoi ters!",
     "Create new room": "Krijoni dhomë të re",
     "Home": "Kreu",
-    "were invited %(count)s times": {
-        "one": "janë ftuar",
-        "other": "janë ftuar %(count)s herë"
-    },
-    "was invited %(count)s times": {
-        "other": "është ftuar %(count)s herë",
-        "one": "është ftuar"
-    },
-    "were banned %(count)s times": {
-        "one": "janë dëbuar",
-        "other": "janë dëbuar %(count)s herë"
-    },
-    "was banned %(count)s times": {
-        "other": "është dëbuar %(count)s herë",
-        "one": "është dëbuar"
-    },
-    "were unbanned %(count)s times": {
-        "one": "u është hequr dëbimi",
-        "other": "janë dëbuar %(count)s herë"
-    },
-    "was unbanned %(count)s times": {
-        "other": "i është hequr dëbimi %(count)s herë",
-        "one": "i është hequr dëbimi"
-    },
     "%(items)s and %(count)s others": {
         "other": "%(items)s dhe %(count)s të tjerë",
         "one": "%(items)s dhe një tjetër"
@@ -252,7 +218,6 @@
     "Failed to mute user": "S’u arrit t’i hiqej zëri përdoruesit",
     "Failed to change power level": "S’u arrit të ndryshohej shkalla e pushtetit",
     "Invited": "I ftuar",
-    "Hangup": "Mbylle Thirrjen",
     "Replying": "Po përgjigjet",
     "Failed to unban": "S’u arrit t’i hiqej dëbimi",
     "Members only (since the point in time of selecting this option)": "Vetëm anëtarët (që nga çasti i përzgjedhjes së kësaj mundësie)",
@@ -282,30 +247,6 @@
     "Error decrypting video": "Gabim në shfshehtëzim videoje",
     "Delete Widget": "Fshije Widget-in",
     "Delete widget": "Fshije widget-in",
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "one": "%(severalUsers)shynë dhe dolën",
-        "other": "%(severalUsers)shynë dhe dolën %(count)s herë"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "one": "%(oneUser)shyri dhe doli",
-        "other": "%(oneUser)shyri dhe doli %(count)s herë"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "one": "%(severalUsers)shodhën poshtë ftesat e tyre",
-        "other": "%(severalUsers)shodhën poshtë ftesat e tyre %(count)s herë"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "one": "%(oneUser)shodhi poshtë ftesën e tyre",
-        "other": "%(oneUser)shodhi poshtë ftesën e vet %(count)s herë"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "one": "%(severalUsers)sndryshuan emrat e tyre",
-        "other": "%(severalUsers)sndryshuan emrat e tyre %(count)s herë"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "one": "%(oneUser)sndryshoi emrin e vet",
-        "other": "%(oneUser)sndryshoi emrin e vet %(count)s herë"
-    },
     "And %(count)s more...": {
         "other": "Dhe %(count)s të tjerë…"
     },
@@ -322,34 +263,6 @@
     "Invalid file%(extra)s": "Kartelë e pavlefshme%(extra)s",
     "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s ndryshoi avatarin në %(roomName)s",
     "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s hoqi avatarin e dhomës.",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)shynë %(count)s herë",
-        "one": "Hynë %(severalUsers)s"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)shyri %(count)s herë",
-        "one": "%(oneUser)shyri"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)sdolën %(count)s herë",
-        "one": "Dolën %(severalUsers)s"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)sdoli %(count)s herë",
-        "one": "%(oneUser)sdoli"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "one": "%(severalUsers)sdolën dhe rihynë",
-        "other": "%(severalUsers)sdolën dhe rihynë %(count)s herë"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "one": "%(oneUser)sdoli dhe rihyri",
-        "other": "%(oneUser)sdoli dhe rihyri %(count)s herë"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "one": "U tërhoqën mbrapsht ftesat për %(severalUsers)s",
-        "other": "Për %(severalUsers)s u hodhën poshtë ftesat e tyre %(count)s herë"
-    },
     "You seem to be uploading files, are you sure you want to quit?": "Duket se jeni duke ngarkuar kartela, jeni i sigurt se doni të dilet?",
     "Add some now": "Shtohen ca tani",
     "Click here to see older messages.": "Klikoni këtu për të parë mesazhe më të vjetër.",
@@ -362,7 +275,6 @@
     "Send analytics data": "Dërgo të dhëna analitike",
     "This event could not be displayed": "Ky akt s’u shfaq dot",
     "The conversation continues here.": "Biseda vazhdon këtu.",
-    "System Alerts": "Sinjalizime Sistemi",
     "Muted Users": "Përdorues të Heshtur",
     "Only room administrators will see this warning": "Këtë sinjalizim mund ta shohin vetëm përgjegjësit e dhomës",
     "Popout widget": "Widget flluskë",
@@ -386,10 +298,6 @@
     "You don't currently have any stickerpacks enabled": "Hëpërhë, s’keni të aktivizuar ndonjë pako ngjitësesh",
     "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s ndryshoi avatarin e dhomës në <img/>",
     "This room is a continuation of another conversation.": "Kjo dhomë është një vazhdim i një bisede tjetër.",
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "Për %(oneUser)s përdorues ftesa u tërhoq mbrapsht %(count)s herë",
-        "one": "U tërhoq mbrapsht ftesa për %(oneUser)s"
-    },
     "Upgrade this room to version %(version)s": "Përmirësojeni këtë dhomë me versionin %(version)s",
     "Share Room": "Ndani Dhomë Me të Tjerë",
     "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
@@ -399,7 +307,6 @@
     "Enable URL previews by default for participants in this room": "Aktivizo, si parazgjedhje, paraparje URL-sh për pjesëmarrësit në këtë dhomë",
     "A text message has been sent to %(msisdn)s": "Te %(msisdn)s u dërgua një mesazh tekst",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Fshirja e një widget-i e heq atë për krejt përdoruesit në këtë dhomë. Jeni i sigurt se doni të fshihet ky widget?",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Përpara se të parashtroni regjistra, duhet <a>të krijoni një çështje në GitHub issue</a> që të përshkruani problemin tuaj.",
     "Create a new room with the same name, description and avatar": "Krijoni një dhomë të re me po atë emër, përshkrim dhe avatar",
     "Can't leave Server Notices room": "Dhoma Njoftime Shërbyesi, s’braktiset dot",
@@ -432,7 +339,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "S’do të jeni në gjendje ta zhbëni këtë, ngaqë po zhgradoni veten, nëse jeni përdoruesi i fundit i privilegjuar te dhoma do të jetë e pamundur të rifitoni privilegjet.",
     "Jump to read receipt": "Hidhuni te leximi i faturës",
     "This room is not accessible by remote Matrix servers": "Kjo dhomë nuk është e përdorshme nga shërbyes Matrix të largët",
-    "Stickerpack": "Paketë ngjitësish",
     "You have <a>enabled</a> URL previews by default.": "E keni <a>aktivizuar</a>, si parazgjedhje, paraparjen e URL-ve.",
     "You have <a>disabled</a> URL previews by default.": "E keni <a>çaktivizuar</a>, si parazgjedhje, paraparjen e URL-ve.",
     "URL previews are enabled by default for participants in this room.": "Për pjesëmarrësit në këtë dhomë paraparja e URL-ve është e aktivizuar, si parazgjedhje.",
@@ -516,9 +422,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "S’arrihet të gjenden profile për ID-të Matrix të treguara më poshtë - do të donit të ftohet, sido qoftë?",
     "Invite anyway and never warn me again": "Ftoji sido që të jetë dhe mos më sinjalizo më kurrë",
     "Invite anyway": "Ftoji sido qoftë",
-    "The other party cancelled the verification.": "Pala tjetër e anuloi verifikimin.",
-    "Verified!": "U verifikua!",
-    "You've successfully verified this user.": "E verifikuat me sukses këtë përdorues.",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Mesazhet e sigurt me këtë përdorues fshehtëzohen skaj-më-skaj dhe të palexueshëm nga palë të treta.",
     "Got It": "E Mora Vesh",
     "Verify this user by confirming the following number appears on their screen.": "Verifikojeni këtë përdorues duke ripohuar shfaqjen e numrit vijues në skenën e tyre.",
@@ -566,7 +469,6 @@
     "Email (optional)": "Email (në daçi)",
     "Phone (optional)": "Telefoni (në daçi)",
     "Join millions for free on the largest public server": "Bashkojuni milionave, falas, në shërbyesin më të madh publik",
-    "Other": "Tjetër",
     "General failure": "Dështim i përgjithshëm",
     "Create account": "Krijoni llogari",
     "Recovery Method Removed": "U hoq Metodë Rimarrje",
@@ -659,19 +561,6 @@
     "Could not load user profile": "S’u ngarkua dot profili i përdoruesit",
     "The user must be unbanned before they can be invited.": "Para se të ftohen, përdoruesve u duhet hequr dëbimi.",
     "Accept all %(invitedRooms)s invites": "Prano krejt ftesat prej %(invitedRooms)s",
-    "Change room avatar": "Ndryshoni avatar dhome",
-    "Change room name": "Ndryshoni emër dhome",
-    "Change main address for the room": "Ndryshoni adresë kryesore për dhomën",
-    "Change history visibility": "Ndryshoni dukshmëri historiku",
-    "Change permissions": "Ndryshoni leje",
-    "Change topic": "Ndryshoni temë",
-    "Modify widgets": "Modifikoni widget-e",
-    "Default role": "Rol parazgjedhje",
-    "Send messages": "Dërgoni mesazhe",
-    "Invite users": "Ftoni përdorues",
-    "Change settings": "Ndryshoni rregullime",
-    "Ban users": "Dëboni përdorues",
-    "Notify everyone": "Njoftoni gjithkënd",
     "Send %(eventType)s events": "Dërgo akte %(eventType)s",
     "Select the roles required to change various parts of the room": "Përzgjidhni rolet e domosdoshme për të ndryshuar anë të ndryshme të dhomës",
     "Enable encryption?": "Të aktivizohet fshehtëzim?",
@@ -776,20 +665,10 @@
     "Edited at %(date)s. Click to view edits.": "Përpunuar më %(date)s. Klikoni që të shihni përpunimet.",
     "Message edits": "Përpunime mesazhi",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Përmirësimi i kësaj dhome lyp mbylljen e instancës së tanishme të dhomës dhe krijimin e një dhome të re në vend të saj. Për t’u dhënë anëtarëve të dhomës më të mirën, do të:",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)s s’bënë ndryshime gjatë %(count)s herësh",
-        "one": "%(severalUsers)s s’bënë ndryshime"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)ss’bënë ndryshime gjatë %(count)s herësh",
-        "one": "%(oneUser)ss’bëri ndryshime"
-    },
     "Resend %(unsentCount)s reaction(s)": "Ridërgo %(unsentCount)s reagim(e)",
     "Your homeserver doesn't seem to support this feature.": "Shërbyesi juaj Home nuk duket se e mbulon këtë veçori.",
     "You're signed out": "Keni bërë dalje",
     "Clear all data": "Spastro krejt të dhënat",
-    "Messages": "Mesazhe",
-    "Actions": "Veprime",
     "Deactivate account": "Çaktivizoje llogarinë",
     "Always show the window menu bar": "Shfaqe përherë shtyllën e menusë së dritares",
     "Unable to revoke sharing for email address": "S’arrihet të shfuqizohet ndarja për këtë adresë email",
@@ -839,10 +718,8 @@
     "Do not use an identity server": "Mos përdor shërbyes identitetesh",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Pajtohuni me Kushtet e Shërbimit të shërbyesit të identiteteve (%(serverName)s) që të lejoni veten të jetë e zbulueshme me anë adrese email ose numri telefoni.",
     "Discovery": "Zbulueshmëri",
-    "Upgrade the room": "Përmirësoni dhomën",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Përdorni një shërbyes identitetesh për të ftuar me email. <default>Përdorni parazgjedhjen (%(defaultIdentityServerName)s)</default> ose administrojeni që nga <settings>Rregullimet</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Përdorni një shërbyes identitetesh për të ftuar me email. Administrojeni që nga <settings>Rregullimet</settings>.",
-    "Enable room encryption": "Aktivizoni fshehtëzim dhome",
     "Use an identity server": "Përdor një shërbyes identiteti",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Përdor një shërbyes identiteti për ftesa me email. Klikoni që të vazhdohet të përdoret shërbyesi parazgjedhje i identiteteve (%(defaultIdentityServerName)s) ose administrojeni te Rregullimet.",
     "Use an identity server to invite by email. Manage in Settings.": "Përdorni një shërbyes identitetesh për ftesa me email. Administrojeni te Rregullimet.",
@@ -908,7 +785,6 @@
         "one": "1 mesazh i palexuar."
     },
     "Show image": "Shfaq figurë",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Ju lutemi, <newIssueLink>krijoni një çështje të re</newIssueLink> në GitHub, që të mund ta hetojmë këtë të metë.",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Mungon kyç publik captcha-je te formësimi i shërbyesit Home. Ju lutemi, njoftojani këtë përgjegjësit të shërbyesit tuaj Home.",
     "%(creator)s created and configured the room.": "%(creator)s krijoi dhe formësoi dhomën.",
     "Command Autocomplete": "Vetëplotësim Urdhrash",
@@ -933,16 +809,6 @@
     "%(name)s cancelled": "%(name)s anuloi",
     "%(name)s wants to verify": "%(name)s dëshiron të verifikojë",
     "You sent a verification request": "Dërguat një kërkesë verifikimi",
-    "Frequently Used": "Përdorur Shpesh",
-    "Smileys & People": "Emotikone & Persona",
-    "Animals & Nature": "Kafshë & Natyrë",
-    "Food & Drink": "Ushqim & Pije",
-    "Activities": "Veprimtari",
-    "Travel & Places": "Udhëtim & Vende",
-    "Objects": "Objekte",
-    "Symbols": "Simbole",
-    "Flags": "Flamuj",
-    "Quick Reactions": "Reagime të Shpejta",
     "Cancel search": "Anulo kërkimin",
     "Jump to first unread room.": "Hidhu te dhoma e parë e palexuar.",
     "Jump to first invite.": "Hidhu te ftesa e parë.",
@@ -1047,8 +913,6 @@
     "Cross-signing private keys:": "Kyçe privatë për <em>cross-signing</em>:",
     "This room is end-to-end encrypted": "Kjo dhomë është e fshehtëzuar skaj-më-skaj",
     "Everyone in this room is verified": "Gjithkush në këtë dhomë është verifikuar",
-    "Send a reply…": "Dërgoni një përgjigje…",
-    "Send a message…": "Dërgoni një mesazh…",
     "Reject & Ignore user": "Hidhe poshtë & Shpërfille përdoruesin",
     "Unknown Command": "Urdhër i Panjohur",
     "Unrecognised command: %(commandText)s": "Urdhër Jo i Pranuar: %(commandText)s",
@@ -1085,9 +949,6 @@
     "Never send encrypted messages to unverified sessions in this room from this session": "Mos dërgo kurrë prej këtij sesioni mesazhe të fshehtëzuar te sesione të paverifikuar në këtë dhomë",
     "How fast should messages be downloaded.": "Sa shpejt duhen shkarkuar mesazhet.",
     "Waiting for %(displayName)s to verify…": "Po pritet për %(displayName)s të verifikojë…",
-    "They match": "Përputhen",
-    "They don't match": "S’përputhen",
-    "To be secure, do this in person or use a trusted way to communicate.": "Për të qenë i sigurt, bëjeni këtë duke qenë vetë i pranishëm ose përdorni për të komunikuar një rrugë të besuar.",
     "This bridge was provisioned by <user />.": "Kjo urë është dhënë nga <user />.",
     "Show less": "Shfaq më pak",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Llogaria juaj ka një identitet <em>cross-signing</em> në depozitë të fshehtë, por s’është ende i besuar në këtë sesion.",
@@ -1145,9 +1006,6 @@
     "Destroy cross-signing keys?": "Të shkatërrohen kyçet <em>cross-signing</em>?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Fshirja e kyçeve <em>cross-signing</em> është e përhershme. Cilido që keni verifikuar me to, do të shohë një sinjalizim sigurie. Thuajse e sigurt që s’keni pse ta bëni një gjë të tillë, veç në paçi humbur çdo pajisje prej nga mund të bëni <em>cross-sign</em>.",
     "Clear cross-signing keys": "Spastro kyçe <em>cross-signing</em>",
-    "Scan this unique code": "Skanoni këtë kod unik",
-    "Compare unique emoji": "Krahasoni emoji unik",
-    "Compare a unique set of emoji if you don't have a camera on either device": "Krahasoni një grup unik emoji-sh, nëse s’keni kamera në njërën nga pajisjet",
     "Not Trusted": "Jo e Besuar",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) bëri hyrjen në një sesion të ri pa e verifikuar:",
     "Ask this user to verify their session, or manually verify it below.": "Kërkojini këtij përdoruesi të verifikojë sesionin e vet, ose ta verifikojë më poshtë dorazi.",
@@ -1272,7 +1130,6 @@
     "You signed in to a new session without verifying it:": "Bëtë hyrjen në një sesion të ri pa e verifikuar:",
     "Verify your other session using one of the options below.": "Verifikoni sesionit tuaj tjetër duke përdorur një nga mundësitë më poshtë.",
     "Lock": "Kyçje",
-    "Cross-signing": "<em>Cross-signing</em>",
     "Can't load this message": "S’ngarkohet dot ky mesazh",
     "Submit logs": "Parashtro regjistra",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Kujtesë: Shfletuesi juaj është i pambuluar, ndaj punimi juaj mund të jetë i paparashikueshëm.",
@@ -1312,7 +1169,6 @@
     "You don't have permission to delete the address.": "S’keni leje të fshini adresën.",
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "Pati një gabim në heqjen e asaj adrese. Mund të mos ekzistojë më, ose ndodhi një gabim i përkohshëm.",
     "Error removing address": "Gabim në heqje adrese",
-    "Categories": "Kategori",
     "Room address": "Adresë dhome",
     "This address is available to use": "Kjo adresë është e lirë për përdorim",
     "This address is already in use": "Kjo adresë është e përdorur tashmë",
@@ -1344,16 +1200,6 @@
     "Hey you. You're the best!": "Hej, ju. S’u ka kush shokun!",
     "Use a system font": "Përdor një palë shkronja sistemi",
     "System font name": "Emër shkronjash sistemi",
-    "You joined the call": "U bëtë pjesë e thirrjes",
-    "%(senderName)s joined the call": "%(senderName)s u bë pjesë e thirrjes",
-    "Call in progress": "Thirrje në ecuri e sipër",
-    "Call ended": "Thirrja përfundoi",
-    "You started a call": "Filluat një thirrje",
-    "%(senderName)s started a call": "%(senderName)s filluat një thirrje",
-    "Waiting for answer": "Po pritet për përgjigje",
-    "%(senderName)s is calling": "%(senderName)s po thërret",
-    "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
-    "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Mirëfilltësia e këtij mesazhi të fshehtëzuar s’mund të garantohet në këtë pajisje.",
     "Message deleted on %(date)s": "Mesazh i fshirë më %(date)s",
     "Wrong file type": "Lloj i gabuar kartele",
@@ -1370,7 +1216,6 @@
     "Confirm Security Phrase": "Ripohoni Frazë Sigurie",
     "Save your Security Key": "Ruani Kyçin tuaj të Sigurisë",
     "Are you sure you want to cancel entering passphrase?": "Jeni i sigurt se doni të anulohet dhënie frazëkalimi?",
-    "Unknown caller": "Thirrës i panjohur",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s s’mund të ruajë lokalisht në fshehtinë në mënyrë të siguruar mesazhe të fshehtëzuar, teksa xhirohet në një shfletues. Që mesazhet e fshehtëzuar të shfaqen te përfundime kërkimi, përdorni <desktopLink>%(brand)s Desktop</desktopLink>.",
     "Set the name of a font installed on your system & %(brand)s will attempt to use it.": "Caktoni emrin e një palë shkronjash të instaluara në sistemin tuaj & %(brand)s do të provojë t’i përdorë.",
     "Show rooms with unread messages first": "Së pari shfaq dhoma me mesazhe të palexuar",
@@ -1380,7 +1225,6 @@
     "This room is public": "Kjo dhomë është publike",
     "Edited at %(date)s": "Përpunuar më %(date)s",
     "Click to view edits": "Klikoni që të shihni përpunime",
-    "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
     "Change notification settings": "Ndryshoni rregullime njoftimesh",
     "Your server isn't responding to some <a>requests</a>.": "Shërbyesi juaj s’po u përgjigjet ca <a>kërkesave</a>.",
     "Server isn't responding": "Shërbyesi s’po përgjigjet",
@@ -1397,8 +1241,6 @@
     "No files visible in this room": "S’ka kartela të dukshme në këtë dhomë",
     "Attach files from chat or just drag and drop them anywhere in a room.": "Bashkëngjitni kartela prej fjalosjeje ose thjesht tërhiqini dhe lërini kudo qoftë brenda dhomës.",
     "Master private key:": "Kyç privat i përgjithshëm:",
-    "Uploading logs": "Po ngarkohen regjistra",
-    "Downloading logs": "Po shkarkohen regjistra",
     "Explore public rooms": "Eksploroni dhoma publike",
     "Preparing to download logs": "Po bëhet gati për shkarkim regjistrash",
     "Unexpected server error trying to leave the room": "Gabim i papritur shërbyesi në përpjekje për dalje nga dhoma",
@@ -1421,7 +1263,6 @@
     "Secret storage:": "Depozitë e fshehtë:",
     "ready": "gati",
     "not ready": "jo gati",
-    "Secure Backup": "Kopjeruajtje e Sigurt",
     "Widgets": "Widget-e",
     "Edit widgets, bridges & bots": "Përpunoni widget-e, ura & robotë",
     "Add widgets, bridges & bots": "Shtoni widget-e, ura & robotë",
@@ -1431,7 +1272,6 @@
     "Unable to set up keys": "S’arrihet të ujdisen kyçe",
     "Cross-signing is ready for use.": "“Cross-signing” është gati për përdorim.",
     "Cross-signing is not set up.": "“Cross-signing” s’është ujdisur.",
-    "Remove messages sent by others": "Hiqi mesazhet e dërguar nga të tjerët",
     "Ignored attempt to disable encryption": "U shpërfill përpjekje për të çaktivizuar fshehtëzimin",
     "Join the conference at the top of this room": "Merrni pjesë në konferencë, në krye të kësaj dhome",
     "Join the conference from the room information card on the right": "Merrni pjesë në konferencë që prej kartës së informacionit mbi dhomën, në të djathtë",
@@ -1469,8 +1309,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Ftoni dikë duke përdorur emrin e tij, adresën email, emrin e përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Nisni një bisedë me dikë duke përdorur emrin e tij, adresën email ose emrin e përdoruesit (bie fjala, <userId/>).",
     "Invite by email": "Ftojeni me email",
-    "%(senderName)s ended the call": "%(senderName)s e përfundoi thirrjen",
-    "You ended the call": "E përfunduat thirrjen",
     "New version of %(brand)s is available": "Ka gati një version të ri të %(brand)s",
     "Update %(brand)s": "Përditësoni %(brand)s",
     "Enable desktop notifications": "Aktivizoni njoftime desktopi",
@@ -1801,13 +1639,7 @@
     "Send images as you in your active room": "Dërgoni figura si ju në dhomën tuaj aktive",
     "New here? <a>Create an account</a>": "I sapoardhur? <a>Krijoni një llogari</a>",
     "Got an account? <a>Sign in</a>": "Keni një llogari? <a>Hyni</a>",
-    "Return to call": "Kthehu te thirrja",
     "Send images as you in this room": "Dërgoni figura si ju, në këtë dhomë",
-    "No other application is using the webcam": "Kamerën s’po e përdor aplikacion tjetër",
-    "Permission is granted to use the webcam": "Është dhënë leje për përdorimin e kamerës",
-    "A microphone and webcam are plugged in and set up correctly": "Një mikrofon dhe një kamerë janë futur dhe ujdisur si duhet",
-    "Unable to access webcam / microphone": "S’arrihet të përdoret kamerë / mikrofon",
-    "Unable to access microphone": "S’arrihet të përdoret mikrofoni",
     "Decide where your account is hosted": "Vendosni se ku të ruhet llogaria juaj",
     "Host account on": "Strehoni llogari në",
     "Already have an account? <a>Sign in here</a>": "Keni tashmë një llogari? <a>Bëni hyrjen këtu</a>",
@@ -1833,18 +1665,12 @@
     "Invalid URL": "URL e pavlefshme",
     "Unable to validate homeserver": "S’arrihet të vlerësohet shërbyesi Home",
     "Reason (optional)": "Arsye (opsionale)",
-    "%(peerName)s held the call": "%(peerName)s mbajti thirrjen",
-    "You held the call <a>Resume</a>": "E mbajtët thirrjen <a>Rimerreni</a>",
     "sends confetti": "dërgon bonbone",
     "Sends the given message with confetti": "E dërgon mesazhin e dhënë me bonbone",
-    "Effects": "Efekte",
     "You've reached the maximum number of simultaneous calls.": "Keni mbërritur në numrin maksimum të thirrjeve të njëkohshme.",
     "Too Many Calls": "Shumë Thirrje",
-    "Call failed because webcam or microphone could not be accessed. Check that:": "Thirrja dështoi, ngaqë s’u hy dot kamera ose mikrofoni. Kontrolloni që:",
-    "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "Thirrja dështoi, ngaqë s’u hy dot te mikrofoni. Kontrolloni që të jetë futur një mikrofon dhe të jetë ujdisur saktësisht.",
     "sends fireworks": "dërgon fishekzjarrë",
     "Sends the given message with fireworks": "E dërgon me fishekzjarrë mesazhin e dhënë",
-    "%(name)s on hold": "%(name)s e mbajtur",
     "sends snowfall": "dërgon rënie bore",
     "Sends the given message with snowfall": "E dërgon mesazhin e dhënë të stolisur me rënie bore",
     "You have no visible notifications.": "S’keni njoftime të dukshme.",
@@ -1884,7 +1710,6 @@
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Ky widget do të verifikojë ID-në tuaj të përdoruesit, por s’do të jetë në gjendje të kryejë veprime për ju:",
     "Allow this widget to verify your identity": "Lejojeni këtë widget të verifikojë identitetin tuaj",
     "Set my room layout for everyone": "Ujdise skemën e dhomës time për këdo",
-    "You held the call <a>Switch</a>": "Mbajtët të shtypur <a>Butonin</a> e thirrjeve",
     "Use app": "Përdorni aplikacionin",
     "Use app for a better experience": "Për një punim më të mirë, përdorni aplikacionin",
     "Converts the DM to a room": "E shndërron DM-në në një dhomë",
@@ -1928,7 +1753,6 @@
     "You do not have permissions to add rooms to this space": "S’keni leje të shtoni dhoma në këtë hapësirë",
     "Add existing room": "Shtoni dhomë ekzistuese",
     "You do not have permissions to create new rooms in this space": "S’keni leje të krijoni dhoma të reja në këtë hapësirë",
-    "Send message": "Dërgoje mesazhin",
     "Invite to this space": "Ftoni në këtë hapësirë",
     "Your message was sent": "Mesazhi juaj u dërgua",
     "Space options": "Mundësi Hapësire",
@@ -1943,8 +1767,6 @@
     "Open space for anyone, best for communities": "Hapësirë e hapët për këdo, më e mira për bashkësi",
     "Create a space": "Krijoni një hapësirë",
     "This homeserver has been blocked by its administrator.": "Ky shërbyes Home është bllokuar nga përgjegjësit e tij.",
-    "You're already in a call with this person.": "Gjendeni tashmë në thirrje me këtë person.",
-    "Already in call": "Tashmë në thirrje",
     "Make sure the right people have access. You can invite more later.": "Siguroni se kanë hyrje personat e duhur. Mund të shtoni të tjerë më vonë.",
     "A private space to organise your rooms": "Një hapësirë private për të sistemuar dhomat tuaja",
     "Just me": "Vetëm unë",
@@ -2001,8 +1823,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Harruat, ose humbët krejt metodat e rimarrjes? <a>Riujdisini të gjitha</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Nëse e bëni, ju lutemi, kini parasysh se s’do të fshihet asnjë nga mesazhet tuaj, por puna me kërkimin mund degradojë për pak çaste, ndërkohë që rikrijohet treguesi",
     "View message": "Shihni mesazh",
-    "Change server ACLs": "Ndryshoni ACL-ra shërbyesi",
-    "Consulting with %(transferTarget)s. <a>Transfer to %(transferee)s</a>": "Po kryhet këshillim me %(transferTarget)s. <a>Shpërngule te %(transferee)s</a>",
     "You can select all or individual messages to retry or delete": "Për riprovim ose fshirje mund të përzgjidhni krejt mesazhet, ose të tillë individualë",
     "Sending": "Po dërgohet",
     "Retry all": "Riprovoji krejt",
@@ -2064,7 +1884,6 @@
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Nëse keni leje, hapni menunë për çfarëdo mesazhi dhe përzgjidhni <b>Fiksoje</b>, për ta ngjitur këtu.",
     "Nothing pinned, yet": "Ende pa fiksuar gjë",
     "End-to-end encryption isn't enabled": "Fshehtëzimi skaj-më-skaj s’është i aktivizuar",
-    "Sound on": "Me zë",
     "Report": "Raportoje",
     "Collapse reply thread": "Tkurre rrjedhën e përgjigjeve",
     "Show preview": "Shfaq paraparje",
@@ -2082,14 +1901,6 @@
     "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Ky përdorues shfaq sjellje të paligjshme, bie fjala, duke zbuluar identitet personash ose duke kërcënuar me dhunë.\nKjo do t’u njoftohet përgjegjësve të dhomës, të cilët mund ta përshkallëzojnë punën drejt autoriteteve ligjore.",
     "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Ajo ç’shkruan ky përdorues është gabim.\nKjo do t’u njoftohet përgjegjësve të dhomës.",
     "Please provide an address": "Ju lutemi, jepni një adresë",
-    "%(oneUser)schanged the server ACLs %(count)s times": {
-        "one": "%(oneUser)sndryshoi ACL-ra shërbyesi",
-        "other": "%(oneUser)sndryshoi ACL-ra shërbyesi %(count)s herë"
-    },
-    "%(severalUsers)schanged the server ACLs %(count)s times": {
-        "one": "%(severalUsers)sndryshuan ACL-ra shërbyesi",
-        "other": "%(severalUsers)sndryshuan ACL-ra shërbyesi %(count)s herë"
-    },
     "Message search initialisation failed, check <a>your settings</a> for more information": "Dështoi gatitja e kërkimit në mesazhe, për më tepër hollësi, shihni <a>rregullimet tuaja</a>",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Caktoni adresa për këtë hapësirë, që kështu përdoruesit të gjejnë këtë dhomë përmes shërbyesit tuaj Home (%(localDomain)s)",
     "To publish an address, it needs to be set as a local address first.": "Që të bëni publike një adresë, lypset të ujdiset së pari si një adresë vendore.",
@@ -2110,7 +1921,6 @@
     "Failed to update the visibility of this space": "S’arrihet të përditësohet dukshmëria e kësaj hapësire",
     "Address": "Adresë",
     "e.g. my-space": "p.sh., hapësira-ime",
-    "Silence call": "Heshtoje thirrjen",
     "Some invites couldn't be sent": "S’u dërguan dot disa nga ftesat",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "I dërguam të tjerat, por personat më poshtë s’u ftuan dot te <RoomName/>",
     "Unnamed audio": "Audio pa emër",
@@ -2123,13 +1933,11 @@
     "Images, GIFs and videos": "Figura, GIF-e dhe video",
     "Code blocks": "Blloqe kodi",
     "Keyboard shortcuts": "Shkurtore tastiere",
-    "Integration manager": "Përgjegjës integrimesh",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-i juaj nuk ju lejon të përdorni një përgjegjës integrimesh për të bërë këtë. Ju lutemi, lidhuni me përgjegjësin.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Përdorimi i këtij widget-i mund të sjellë ndarje të dhënash <helpIcon /> me %(widgetDomain)s & përgjegjësin tuaj të integrimeve.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Përgjegjësit e integrimeve marrin të dhëna formësimi, dhe mund të ndryshojnë widget-e, të dërgojnë ftesa dhome, dhe të caktojnë shkallë pushteti në emër tuajin.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Përdorni një përgjegjës integrimesh që të administroni robotë, widget-e dhe paketa ngjitësish.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Përdorni një përgjegjës integrimesh <b>(%(serverName)s)</b> që të administroni robotë, widget-e dhe paketa ngjitësish.",
-    "Identity server": "Shërbyes identitetesh",
     "Identity server (%(server)s)": "Shërbyes identitetesh (%(server)s)",
     "Could not connect to identity server": "S’u lidh dot te shërbyes identitetesh",
     "Not a valid identity server (status code %(code)s)": "Shërbyes identitetesh i pavlefshëm (kod gjendjeje %(code)s)",
@@ -2149,7 +1957,6 @@
     "Error saving notification preferences": "Gabim në ruajtje parapëlqimesh për njoftimet",
     "Messages containing keywords": "Mesazhe që përmbajnë fjalëkyçe",
     "Transfer Failed": "Shpërngulja Dështoi",
-    "Message bubbles": "Flluska mesazhesh",
     "The call is in an unknown state!": "Thirrja gjendet në një gjendje të panjohur!",
     "Call back": "Thirreni ju",
     "No answer": "S’ka përgjigje",
@@ -2199,10 +2006,6 @@
     "Share content": "Ndani lëndë",
     "Application window": "Dritare aplikacioni",
     "Share entire screen": "Nda krejt ekranin",
-    "Your camera is still enabled": "Kamera juaj është ende e aktivizuar",
-    "Your camera is turned off": "Kamera juaj është e fikur",
-    "%(sharerName)s is presenting": "%(sharerName)s përfaqëson",
-    "You are presenting": "Përfaqësoni",
     "Add space": "Shtoni hapësirë",
     "Leave %(spaceName)s": "Braktise %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Jeni përgjegjësi i vetëm i disa dhomave apo hapësirave që dëshironi t’i braktisni. Braktisja e tyre do t’i lërë pa ndonjë përgjegjës.",
@@ -2229,15 +2032,9 @@
     "Stop recording": "Ndale regjistrimin",
     "Send voice message": "Dërgoni mesazh zanor",
     "Olm version:": "Version Olm:",
-    "Mute the microphone": "Heshto mikrofonin",
-    "Unmute the microphone": "Hiq heshtimin e mikrofonit",
     "More": "Më tepër",
     "Show sidebar": "Shfaqe anështyllën",
     "Hide sidebar": "Fshihe anështyllën",
-    "Start sharing your screen": "Nisni ndarjen e ekranit tuaj",
-    "Stop sharing your screen": "Reshtni dhënien e ekranit tuaj",
-    "Stop the camera": "Ndale kamerën",
-    "Start the camera": "Nise kamerën",
     "Surround selected text when typing special characters": "Rrethoje tekstin e përzgjedhur, kur shtypen shenja speciale",
     "Delete avatar": "Fshije avatarin",
     "Unknown failure: %(reason)s": "Dështim për arsye të panjohur: %(reason)s",
@@ -2259,16 +2056,10 @@
     "Some encryption parameters have been changed.": "Janë ndryshuar disa parametra fshehtëzimi.",
     "Role in <RoomName/>": "Rol në <RoomName/>",
     "Send a sticker": "Dërgoni një ngjitës",
-    "Reply to thread…": "Përgjigjuni te rrjedhë…",
-    "Reply to encrypted thread…": "Përgjigjuni te rrjedhë e fshehtëzuar…",
     "Unknown failure": "Dështim i panjohur",
     "Failed to update the join rules": "S’u arrit të përditësohen rregulla hyrjeje",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Cilido te <spaceName/> mund ta gjejë dhe hyjë në të. Mund të përzgjidhni gjithashtu hapësira të tjera.",
     "Select the roles required to change various parts of the space": "Përzgjidhni rolet e domosdoshëm për të ndryshuar pjesë të ndryshme të hapësirës",
-    "Change description": "Ndryshoni përshkrimin",
-    "Change main address for the space": "Ndryshoni adresë kryesore për hapësirën",
-    "Change space name": "Ndryshoni emër hapësire",
-    "Change space avatar": "Ndryshoni avatar hapësire",
     "Message didn't send. Click for info.": "Mesazhi s’u dërgua. Klikoni për hollësi.",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
     "%(reactors)s reacted with %(content)s": "%(reactors)s reagoi me %(content)s",
@@ -2391,7 +2182,6 @@
     "Show all threads": "Shfaqi krejt rrjedhat",
     "Keep discussions organised with threads": "Mbajini diskutimet të sistemuara në rrjedha",
     "Reply in thread": "Përgjigjuni te rrjedha",
-    "Manage rooms in this space": "Administroni dhoma në këtë hapësirë",
     "Rooms outside of a space": "Dhoma jashtë një hapësire",
     "Show all your rooms in Home, even if they're in a space.": "Shfaqni krejt dhomat tuaja te Kreu, edhe nëse gjenden në një hapësirë.",
     "Home is useful for getting an overview of everything.": "Kreu është i dobishëm për të pasur një përmbledhje të gjithçkaje.",
@@ -2410,7 +2200,6 @@
     "You most likely do not want to reset your event index store": "Gjasat janë të mos doni të riktheni te parazgjedhjet arkivin e indeksimit të akteve",
     "Reset event store?": "Të rikthehet te parazgjedhjet arkivi i akteve?",
     "Favourited": "U bë e parapëlqyer",
-    "Dialpad": "Butona numrash",
     "sends rainfall": "dërgon shi",
     "Sends the given message with rainfall": "Dërgoje mesazhin e dhënë me shi",
     "Close this widget to view it in this panel": "Mbylleni këtë widget, që ta shihni te ky panel",
@@ -2458,10 +2247,6 @@
     "Failed to end poll": "S’u arrit të përfundohej pyetësori",
     "The poll has ended. Top answer: %(topAnswer)s": "Pyetësori përfundoi. Përgjigja kryesuese: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Pyetësori përfundoi. S’pati vota.",
-    "You can turn this off anytime in settings": "Këtë mund të çaktivizoni në çfarëdo kohe që nga rregullimet",
-    "We <Bold>don't</Bold> share information with third parties": "<Bold>Nuk</Bold> u japin hollësi palëve të treta",
-    "We <Bold>don't</Bold> record or profile any account data": "<Bold>Nuk</Bold> regjistrojmë ose profilizojmë ndonjë të dhënë llogarie",
-    "You can read all our terms <PrivacyPolicyUrl>here</PrivacyPolicyUrl>": "<PrivacyPolicyUrl>Këtu</PrivacyPolicyUrl> mund të lexoni krejt kushtet tona",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s votë. Që të shihni përfundimet, votoni",
         "other": "%(count)s vota. Që të shihni përfundimet, votoni"
@@ -2472,17 +2257,11 @@
         "other": "Rezultati përfundimtar, bazua në %(count)s vota"
     },
     "Share location": "Jepe vendndodhjen",
-    "Manage pinned events": "Administroni veprimtari të fiksuara",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Ndani me ne të dhëna anonime, për të na ndihmuar të gjejmë problemet. Asgjë personale. Pa palë të treta.",
     "To view all keyboard shortcuts, <a>click here</a>.": "Që të shihni krejt shkurtoret e tastierës, <a>klikoni këtu</a>.",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "Ndani me ne të dhëna anonime, për të na ndihmuar të gjejmë problemet. Asgjë personale. Pa palë të treta. <LearnMoreLink>Mësoni Më Tepër\t</LearnMoreLink>",
-    "You previously consented to share anonymous usage data with us. We're updating how that works.": "Keni dhënë më parë pëlqimin të jepni për ne të dhëna anonime përdorimi. Po përditësojmë se si funksionon kjo punë.",
-    "Help improve %(analyticsOwner)s": "Ndihmonani të përmirësojmë %(analyticsOwner)s-in",
     "That's fine": "S’ka problem",
     "You cannot place calls without a connection to the server.": "S’mund të bëni thirrje pa një lidhje te shërbyesi.",
     "Connectivity to the server has been lost": "Humbi lidhja me shërbyesin",
-    "You cannot place calls in this browser.": "S’mund të bëni thirrje që nga ky shfletues.",
-    "Calls are unsupported": "Nuk mbulohen t\thirrje",
     "Recent searches": "Kërkime së fundi",
     "To search messages, look for this icon at the top of a room <icon/>": "Që të kërkoni te mesazhet, shihni për këtë ikonë në krye të një dhome <icon/>",
     "Other searches": "Kërkime të tjera",
@@ -2512,15 +2291,12 @@
     "Verify other device": "Verifikoni pajisje tjetër",
     "You cancelled verification on your other device.": "E anuluat verifikimin në pajisjen tuaj tjetër.",
     "Almost there! Is your other device showing the same shield?": "Thuajse mbaruam! A po shfaq pajisja juaj të njëjtën mburojë?",
-    "Verify this device by completing one of the following:": "Verifikoni këtë pajisje duke plotësuar një nga sa vijon:",
-    "The device you are trying to verify doesn't support scanning a QR code or emoji verification, which is what %(brand)s supports. Try with a different client.": "Pajisja që po provoni të verifikoni nuk mbulon skanim të një kodi QR, apo verifikim me emoji, çka janë ato që mbulohen prej %(brand)s. Provoni me një klient tjetër.",
     "To proceed, please accept the verification request on your other device.": "Që të vazhdoni më tej, ju lutemi, pranoni në pajisjen tuaj tjetër kërkesën për verifikim.",
     "Waiting for you to verify on your other device…": "Po pritet që ju të verifikoni në pajisjen tuaj tjetër…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Po pritet që ju të verifikoni në pajisjen tuaj tjetër, %(deviceName)s (%(deviceId)s)…",
     "Verify this device by confirming the following number appears on its screen.": "Verifikoni këtë pajisje duke ripohuar se numri vijues shfaqet në ekranin e saj.",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Ripohoni se emoji-t më poshtë shfaqen në të dyja pajisjet, sipas të njëjtës radhë:",
     "Expand map": "Zgjeroje hartën",
-    "Send reactions": "Dërgo reagime",
     "No active call in this room": "S’ka thirrje aktive në këtë dhomë",
     "Unable to find Matrix ID for phone number": "S’arrihet të gjendet ID Matrix ID për numrin e telefonit",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Çift (përdorues, sesion) i pavlefshëm: (%(userId)s, %(deviceId)s)",
@@ -2533,21 +2309,12 @@
     "Failed to fetch your location. Please try again later.": "S’u arrit të sillet vendndodhja juaj. Ju lutemi, riprovoni më vonë.",
     "Could not fetch location": "S’u pru dot vendndodhja",
     "Automatically send debug logs on decryption errors": "Dërgo automatikisht regjistra diagnostikimi, gjatë gabimesh shfshehtëzimi",
-    "was removed %(count)s times": {
-        "one": "u hoq",
-        "other": "u hoq %(count)s herë"
-    },
-    "were removed %(count)s times": {
-        "one": "u hoq",
-        "other": "u hoq %(count)s herë"
-    },
     "Remove from room": "Hiqeni prej dhome",
     "Failed to remove user": "S’u arrit të hiqej përdoruesi",
     "Remove them from specific things I'm able to": "Hiqi prej gjërash të caktuara ku mundem ta bëj këtë",
     "Remove them from everything I'm able to": "Hiqi prej gjithçkaje ku mundem ta bëj këtë",
     "Remove from %(roomName)s": "Hiqe nga %(roomName)s",
     "You were removed from %(roomName)s by %(memberName)s": "U hoqët %(roomName)s nga %(memberName)s",
-    "Remove users": "Hiqni përdorues",
     "Remove, ban, or invite people to your active room, and make you leave": "Hiqni, dëboni, ose ftoni persona te dhoma juaj aktive dhe bëni largimin tuaj",
     "Remove, ban, or invite people to this room, and make you leave": "Hiqni, dëboni, ose ftoni persona në këtë dhomë dhe bëni largimin tuaj",
     "Open this settings tab": "Hap këtë skedë rregullimesh",
@@ -2581,7 +2348,6 @@
     "Group all your people in one place.": "Gruponi krejt personat tuaj në një vend.",
     "Group all your favourite rooms and people in one place.": "Gruponi në një vend krejt dhomat tuaja të parapëlqyera dhe personat e parapëlqyer.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Hapësirat janë mënyra për të grupuar dhoma dhe njerëz. Tok me hapësirat ku gjendeni, mundeni të përdorni edhe disa të krijuara paraprakisht.",
-    "IRC (Experimental)": "IRC (Eksperimentale)",
     "Unable to check if username has been taken. Try again later.": "S’arrihet të kontrollohet nëse emri i përdoruesit është zënë. Riprovoni më vonë.",
     "Toggle hidden event visibility": "Ndryshoni dukshmëri akti të fshehur",
     "Redo edit": "Ribëje përpunimin",
@@ -2606,22 +2372,6 @@
     "Use <arrows/> to scroll": "Përdorni <arrows/> për rrëshqitje",
     "Feedback sent! Thanks, we appreciate it!": "Përshtypjet u dërguan! Faleminderit, e çmojmë aktin tuaj!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dhe %(space2Name)s",
-    "%(oneUser)ssent %(count)s hidden messages": {
-        "one": "%(oneUser)sdërgoi një mesazh të fshehur",
-        "other": "%(oneUser)s dërgoi %(count)s mesazhe të fshehur"
-    },
-    "%(severalUsers)ssent %(count)s hidden messages": {
-        "one": "%(severalUsers)s dërguan një mesazh të fshehur",
-        "other": "%(severalUsers)s dërgoi %(count)s mesazhe të fshehur"
-    },
-    "%(oneUser)sremoved a message %(count)s times": {
-        "one": "%(oneUser)s hoqi një mesazh",
-        "other": "%(oneUser)s hoqi %(count)s mesazhe"
-    },
-    "%(severalUsers)sremoved a message %(count)s times": {
-        "one": "%(severalUsers)s hoqi një mesazh",
-        "other": "%(severalUsers)s hoqi %(count)s mesazhe"
-    },
     "Automatically send debug logs when key backup is not functioning": "Dërgo automatikisht regjistra diagnostikimi, kur kopjeruajtja e kyçeve nuk funksionon",
     "Edit poll": "Përpunoni pyetësor",
     "Sorry, you can't edit a poll after votes have been cast.": "Na ndjeni, s’mund të përpunoni një pyetësor pasi të jenë hedhur votat.",
@@ -2638,7 +2388,6 @@
     "Search Dialog": "Dialog Kërkimi",
     "Pinned": "I fiksuar",
     "Open thread": "Hape rrjedhën",
-    "Remove messages sent by me": "Hiq mesazhe të dërguar nga unë",
     "No virtual room for this room": "S’ka dhomë virtuale për këtë dhomë",
     "Switches to this room's virtual room, if it has one": "Kalohet te dhoma virtuale e kësaj dhome, në pastë",
     "Export Cancelled": "Eksportimi u Anulua",
@@ -2648,14 +2397,6 @@
     "We couldn't send your location": "S’e dërguam dot vendndodhjen tuaj",
     "Match system": "Përputhe me sistemin",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Përgjigjuni te një rrjedhë në zhvillim e sipër, ose përdorni “%(replyInThread)s”, kur kalohet kursori sipër një mesazhi për të filluar një të re.",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(oneUser)sndryshoi <a>mesazhet e fiksuar</a> për dhomën",
-        "other": "%(oneUser)sndryshoi <a>mesazhet e fiksuar</a> për dhomën %(count)s herë"
-    },
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën",
-        "other": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën %(count)s herë"
-    },
     "My live location": "Vendndodhja ime drejtpërsëdrejti",
     "Show polls button": "Shfaq buton pyetësorësh",
     "Expand quotes": "Zgjeroji thonjëzat",
@@ -2691,7 +2432,6 @@
     "Previous recently visited room or space": "Dhoma ose hapësira e mëparshme vizituar së fundi",
     "%(timeRemaining)s left": "Edhe %(timeRemaining)s",
     "Unsent": "Të padërguar",
-    "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Ndihmonani të gjejmë probleme dhe të përmirësojmë %(analyticsOwner)s-in duke ndarë me ne të dhëna anonime përdorimi. Që të kuptohet se si përdorin njerëzit disa pajisje, do të prodhojmë një identifikues kuturu, që na jepet nga pajisjet tuaja.",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Që të bëni hyrjen te shërbyes të tjerë Matrix, duke specifikuar një URL të një shërbyesi Home tjetër, mund të përdorni mundësitë vetjake për shërbyesin. Kjo ju lejon të përdorni %(brand)s në një tjetër shërbyes Home me një llogari Matrix ekzistuese.",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s iu mohua leja për të sjellë vendndodhjen tuaj. Ju lutemi, lejoni përdorim vendndodhjeje, te rregullimet e shfletuesit tuaj.",
     "Developer tools": "Mjete zhvilluesi",
@@ -2816,12 +2556,6 @@
         "one": "Ripohoni daljen nga kjo pajisje",
         "other": "Ripohoni daljen nga këto pajisje"
     },
-    "Turn on camera": "Aktivizo kamerën",
-    "Turn off camera": "Çaktivizo kamerën",
-    "Video devices": "Pajisje video",
-    "Unmute microphone": "Çheshto mikrofonin",
-    "Mute microphone": "Heshtoje mikrofonin",
-    "Audio devices": "Pajisje audio",
     "%(count)s people joined": {
         "one": "Hyri %(count)s person",
         "other": "Hynë %(count)s vetë"
@@ -2882,9 +2616,7 @@
     "Filter devices": "Filtroni pajisje",
     "Toggle push notifications on this session.": "Aktivizo/çaktivizo njoftime push për këtë sesion.",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Nuk rekomandohet të shtohet fshehtëzim në dhoma publike.</b>Dhomat publike mund t’i gjejë dhe hyjë në to kushdo, pra cilido të mund të lexojë mesazhet në to. S’do të përfitoni asnjë nga të mirat e fshehtëzimit dhe s’do të jeni në gjendje ta çaktivizoni më vonë. Fshehtëzimi i mesazheve në një dhomë publike do të ngadalësojë marrjen dhe dërgimin e mesazheve.",
-    "Start %(brand)s calls": "Nisni thirrje %(brand)s",
     "Enable notifications for this device": "Aktivizo njoftime për këtë pajisje",
-    "Fill screen": "Mbushe ekranin",
     "Download %(brand)s": "Shkarko %(brand)s",
     "Toggle attribution": "Shfaq/fshih atribut",
     "Empty room (was %(oldName)s)": "Dhomë e zbrazët (qe %(oldName)s)",
@@ -2975,15 +2707,12 @@
     "Current session": "Sesioni i tanishëm",
     "Call type": "Lloj thirrjeje",
     "You do not have sufficient permissions to change this.": "S’keni leje të mjaftueshme që të ndryshoni këtë.",
-    "Voice broadcasts": "Transmetime zanore",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Për sigurinë më të mirë, verifikoni sesionet tuaja dhe dilni nga çfarëdo sesioni që s’e njihni, ose s’e përdorni më.",
     "Other sessions": "Sesione të tjerë",
     "Sessions": "Sesione",
     "Enable notifications for this account": "Aktivizo njoftime për këtë llogari",
     "Sorry — this call is currently full": "Na ndjeni — aktualisht kjo thirrje është plot",
     "Record the client name, version, and url to recognise sessions more easily in session manager": "Regjistro emrin, versionin dhe URL-në e klientit, për të dalluar më kollaj sesionet te përgjegjës sesionesh",
-    "Notifications silenced": "Njoftime të heshtuara",
-    "Video call started": "Nisi thirrje me video",
     "Unknown room": "Dhomë e panjohur",
     "Voice broadcast": "Transmetim zanor",
     "Live": "Drejtpërdrejt",
@@ -3014,12 +2743,10 @@
     "%(qrCode)s or %(appLinks)s": "%(qrCode)s ose %(appLinks)s",
     "You're in": "Kaq qe",
     "toggle event": "shfaqe/fshihe aktin",
-    "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s ose %(emojiCompare)s",
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Mund ta përdorni këtë pajisje për të hyrë në një pajisje të re me një kod QR. Do t’ju duhet të skanoni kodin QR të shfaqur në këtë pajisje, me pajisjen nga e cila është bërë dalja.",
     "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Shihni mundësinë e daljes nga sesione të vjetër (%(inactiveAgeDays)s ditë ose më të vjetër) që s’i përdorni më.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s është i fshehtëzuar skaj-më-skaj, por aktualisht është i kufizuar në numra më të vegjël përdoruesish.",
     "Enable %(brand)s as an additional calling option in this room": "Aktivizojeni %(brand)s si një mundësi shtesë thirrjesh në këtë dhomë",
-    "Join %(brand)s calls": "Merrni pjesë në thirrje %(brand)s",
     "Are you sure you want to sign out of %(count)s sessions?": {
         "one": "Jeni i sigurt se doni të dilet nga %(count)s session?",
         "other": "Jeni i sigurt se doni të dilet nga %(count)s sessione?"
@@ -3257,8 +2984,6 @@
     "WebGL is required to display maps, please enable it in your browser settings.": "WebGL është i domosdoshëm për shfaqje hartash, ju lutemi, aktivizojeni te rregullimet e shfletuesit tuaj.",
     "No identity access token found": "S’u gjet token hyrjeje identiteti",
     "Identity server not set": "Shërbyes identitetesh i paujdisur",
-    "%(sender)s reacted %(reaction)s to %(message)s": "%(sender)s reagoi me %(reaction)s ndaj %(message)s",
-    "You reacted %(reaction)s to %(message)s": "Reaguat me %(reaction)s ndaj %(message)s",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Pa një shërbyes identitetesh, s’mund të ftohet përdorues përmes email-i. Me një të tillë mund të lidheni që prej “Rregullimeve”.",
     "Unable to create room with moderation bot": "S’arrihet të krijohet dhomë me robot moderimi",
     "Failed to download source media, no source url was found": "S’u arrit të shkarkohet media burim, s’u gjet URL burimi",
@@ -3347,7 +3072,13 @@
         "server": "Shërbyes",
         "capabilities": "Aftësi",
         "unnamed_room": "Dhomë e Paemërtuar",
-        "unnamed_space": "Hapësirë e Paemërtuar"
+        "unnamed_space": "Hapësirë e Paemërtuar",
+        "stickerpack": "Paketë ngjitësish",
+        "system_alerts": "Sinjalizime Sistemi",
+        "secure_backup": "Kopjeruajtje e Sigurt",
+        "cross_signing": "<em>Cross-signing</em>",
+        "identity_server": "Shërbyes identitetesh",
+        "integration_manager": "Përgjegjës integrimesh"
     },
     "action": {
         "continue": "Vazhdo",
@@ -3517,7 +3248,14 @@
         "format_decrease_indent": "Zvogëlim shmangieje kryeradhe",
         "format_inline_code": "Kod",
         "format_code_block": "Bllok kodi",
-        "format_link": "Lidhje"
+        "format_link": "Lidhje",
+        "send_button_title": "Dërgoje mesazhin",
+        "placeholder_thread_encrypted": "Përgjigjuni te rrjedhë e fshehtëzuar…",
+        "placeholder_thread": "Përgjigjuni te rrjedhë…",
+        "placeholder_reply_encrypted": "Dërgoni një përgjigje të fshehtëzuar…",
+        "placeholder_reply": "Dërgoni një përgjigje…",
+        "placeholder_encrypted": "Dërgoni një mesazh të fshehtëzuar…",
+        "placeholder": "Dërgoni një mesazh…"
     },
     "Bold": "Të trasha",
     "Link": "Lidhje",
@@ -3540,7 +3278,12 @@
         "send_logs": "Dërgo regjistra",
         "github_issue": "Çështje në GitHub",
         "download_logs": "Shkarko regjistra",
-        "before_submitting": "Përpara se të parashtroni regjistra, duhet <a>të krijoni një çështje në GitHub issue</a> që të përshkruani problemin tuaj."
+        "before_submitting": "Përpara se të parashtroni regjistra, duhet <a>të krijoni një çështje në GitHub issue</a> që të përshkruani problemin tuaj.",
+        "collecting_information": "Po grumbullohen të dhëna versioni aplikacioni",
+        "collecting_logs": "Po grumbullohen regjistra",
+        "uploading_logs": "Po ngarkohen regjistra",
+        "downloading_logs": "Po shkarkohen regjistra",
+        "create_new_issue": "Ju lutemi, <newIssueLink>krijoni një çështje të re</newIssueLink> në GitHub, që të mund ta hetojmë këtë të metë."
     },
     "time": {
         "hours_minutes_seconds_left": "Edhe %(hours)sh %(minutes)sm %(seconds)ss",
@@ -3655,6 +3398,10 @@
             "rule_suppress_notices": "Mesazhe të dërguar nga boti",
             "rule_tombstone": "Kur përmirësohen dhomat",
             "rule_encrypted_room_one_to_one": "Mesazhe të fshehtëzuar në fjalosje tek-për-tek"
+        },
+        "appearance": {
+            "layout_irc": "IRC (Eksperimentale)",
+            "layout_bubbles": "Flluska mesazhesh"
         }
     },
     "devtools": {
@@ -3739,7 +3486,9 @@
         "toolbox": "Grup mjetesh",
         "developer_tools": "Mjete Zhvilluesi",
         "room_id": "ID Dhome: %(roomId)s",
-        "event_id": "ID Veprimtarie: %(eventId)s"
+        "event_id": "ID Veprimtarie: %(eventId)s",
+        "category_room": "Dhomë",
+        "category_other": "Tjetër"
     },
     "export_chat": {
         "html": "HTML",
@@ -3892,6 +3641,140 @@
                 "other": "%(names)s dhe %(count)s të tjerë po shtypin …",
                 "one": "%(names)s dhe një tjetër po shtypin …"
             }
+        },
+        "m.call.hangup": {
+            "dm": "Thirrja përfundoi"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)shynë %(count)s herë",
+                "one": "Hynë %(severalUsers)s"
+            },
+            "joined": {
+                "other": "%(oneUser)shyri %(count)s herë",
+                "one": "%(oneUser)shyri"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)sdolën %(count)s herë",
+                "one": "Dolën %(severalUsers)s"
+            },
+            "left": {
+                "other": "%(oneUser)sdoli %(count)s herë",
+                "one": "%(oneUser)sdoli"
+            },
+            "joined_and_left_multiple": {
+                "one": "%(severalUsers)shynë dhe dolën",
+                "other": "%(severalUsers)shynë dhe dolën %(count)s herë"
+            },
+            "joined_and_left": {
+                "one": "%(oneUser)shyri dhe doli",
+                "other": "%(oneUser)shyri dhe doli %(count)s herë"
+            },
+            "rejoined_multiple": {
+                "one": "%(severalUsers)sdolën dhe rihynë",
+                "other": "%(severalUsers)sdolën dhe rihynë %(count)s herë"
+            },
+            "rejoined": {
+                "one": "%(oneUser)sdoli dhe rihyri",
+                "other": "%(oneUser)sdoli dhe rihyri %(count)s herë"
+            },
+            "rejected_invite_multiple": {
+                "one": "%(severalUsers)shodhën poshtë ftesat e tyre",
+                "other": "%(severalUsers)shodhën poshtë ftesat e tyre %(count)s herë"
+            },
+            "rejected_invite": {
+                "one": "%(oneUser)shodhi poshtë ftesën e tyre",
+                "other": "%(oneUser)shodhi poshtë ftesën e vet %(count)s herë"
+            },
+            "invite_withdrawn_multiple": {
+                "one": "U tërhoqën mbrapsht ftesat për %(severalUsers)s",
+                "other": "Për %(severalUsers)s u hodhën poshtë ftesat e tyre %(count)s herë"
+            },
+            "invite_withdrawn": {
+                "other": "Për %(oneUser)s përdorues ftesa u tërhoq mbrapsht %(count)s herë",
+                "one": "U tërhoq mbrapsht ftesa për %(oneUser)s"
+            },
+            "invited_multiple": {
+                "one": "janë ftuar",
+                "other": "janë ftuar %(count)s herë"
+            },
+            "invited": {
+                "other": "është ftuar %(count)s herë",
+                "one": "është ftuar"
+            },
+            "banned_multiple": {
+                "one": "janë dëbuar",
+                "other": "janë dëbuar %(count)s herë"
+            },
+            "banned": {
+                "other": "është dëbuar %(count)s herë",
+                "one": "është dëbuar"
+            },
+            "unbanned_multiple": {
+                "one": "u është hequr dëbimi",
+                "other": "janë dëbuar %(count)s herë"
+            },
+            "unbanned": {
+                "other": "i është hequr dëbimi %(count)s herë",
+                "one": "i është hequr dëbimi"
+            },
+            "kicked_multiple": {
+                "one": "u hoq",
+                "other": "u hoq %(count)s herë"
+            },
+            "kicked": {
+                "one": "u hoq",
+                "other": "u hoq %(count)s herë"
+            },
+            "changed_name_multiple": {
+                "one": "%(severalUsers)sndryshuan emrat e tyre",
+                "other": "%(severalUsers)sndryshuan emrat e tyre %(count)s herë"
+            },
+            "changed_name": {
+                "one": "%(oneUser)sndryshoi emrin e vet",
+                "other": "%(oneUser)sndryshoi emrin e vet %(count)s herë"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)s s’bënë ndryshime gjatë %(count)s herësh",
+                "one": "%(severalUsers)s s’bënë ndryshime"
+            },
+            "no_change": {
+                "other": "%(oneUser)ss’bënë ndryshime gjatë %(count)s herësh",
+                "one": "%(oneUser)ss’bëri ndryshime"
+            },
+            "server_acls_multiple": {
+                "one": "%(severalUsers)sndryshuan ACL-ra shërbyesi",
+                "other": "%(severalUsers)sndryshuan ACL-ra shërbyesi %(count)s herë"
+            },
+            "server_acls": {
+                "one": "%(oneUser)sndryshoi ACL-ra shërbyesi",
+                "other": "%(oneUser)sndryshoi ACL-ra shërbyesi %(count)s herë"
+            },
+            "pinned_events_multiple": {
+                "one": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën",
+                "other": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën %(count)s herë"
+            },
+            "pinned_events": {
+                "one": "%(oneUser)sndryshoi <a>mesazhet e fiksuar</a> për dhomën",
+                "other": "%(oneUser)sndryshoi <a>mesazhet e fiksuar</a> për dhomën %(count)s herë"
+            },
+            "redacted_multiple": {
+                "one": "%(severalUsers)s hoqi një mesazh",
+                "other": "%(severalUsers)s hoqi %(count)s mesazhe"
+            },
+            "redacted": {
+                "one": "%(oneUser)s hoqi një mesazh",
+                "other": "%(oneUser)s hoqi %(count)s mesazhe"
+            },
+            "hidden_event_multiple": {
+                "one": "%(severalUsers)s dërguan një mesazh të fshehur",
+                "other": "%(severalUsers)s dërgoi %(count)s mesazhe të fshehur"
+            },
+            "hidden_event": {
+                "one": "%(oneUser)sdërgoi një mesazh të fshehur",
+                "other": "%(oneUser)s dërgoi %(count)s mesazhe të fshehur"
+            }
         }
     },
     "slash_command": {
@@ -3926,7 +3809,14 @@
         "help": "Shfaq listë urdhrash me shembuj përdorimesh dhe përshkrime",
         "whois": "Shfaq të dhëna rreth një përdoruesi",
         "rageshake": "Dërgoni një njoftim të metash me regjistra",
-        "msg": "I dërgon një mesazh përdoruesit të dhënë"
+        "msg": "I dërgon një mesazh përdoruesit të dhënë",
+        "usage": "Përdorim",
+        "category_messages": "Mesazhe",
+        "category_actions": "Veprime",
+        "category_admin": "Përgjegjës",
+        "category_advanced": "Të mëtejshme",
+        "category_effects": "Efekte",
+        "category_other": "Tjetër"
     },
     "presence": {
         "busy": "I zënë",
@@ -3940,5 +3830,146 @@
         "offline": "Jo në linjë",
         "away": "I larguar"
     },
-    "Unknown": "I panjohur"
+    "Unknown": "I panjohur",
+    "event_preview": {
+        "m.call.answer": {
+            "you": "U bëtë pjesë e thirrjes",
+            "user": "%(senderName)s u bë pjesë e thirrjes",
+            "dm": "Thirrje në ecuri e sipër"
+        },
+        "m.call.hangup": {
+            "you": "E përfunduat thirrjen",
+            "user": "%(senderName)s e përfundoi thirrjen"
+        },
+        "m.call.invite": {
+            "you": "Filluat një thirrje",
+            "user": "%(senderName)s filluat një thirrje",
+            "dm_send": "Po pritet për përgjigje",
+            "dm_receive": "%(senderName)s po thërret"
+        },
+        "m.emote": "* %(senderName)s %(emote)s",
+        "m.text": "%(senderName)s: %(message)s",
+        "m.reaction": {
+            "you": "Reaguat me %(reaction)s ndaj %(message)s",
+            "user": "%(sender)s reagoi me %(reaction)s ndaj %(message)s"
+        },
+        "m.sticker": "%(senderName)s: %(stickerName)s"
+    },
+    "voip": {
+        "disable_microphone": "Heshtoje mikrofonin",
+        "enable_microphone": "Çheshto mikrofonin",
+        "disable_camera": "Çaktivizo kamerën",
+        "enable_camera": "Aktivizo kamerën",
+        "audio_devices": "Pajisje audio",
+        "video_devices": "Pajisje video",
+        "you_are_presenting": "Përfaqësoni",
+        "user_is_presenting": "%(sharerName)s përfaqëson",
+        "camera_disabled": "Kamera juaj është e fikur",
+        "camera_enabled": "Kamera juaj është ende e aktivizuar",
+        "consulting": "Po kryhet këshillim me %(transferTarget)s. <a>Shpërngule te %(transferee)s</a>",
+        "call_held_switch": "Mbajtët të shtypur <a>Butonin</a> e thirrjeve",
+        "call_held_resume": "E mbajtët thirrjen <a>Rimerreni</a>",
+        "call_held": "%(peerName)s mbajti thirrjen",
+        "dialpad": "Butona numrash",
+        "stop_screenshare": "Reshtni dhënien e ekranit tuaj",
+        "start_screenshare": "Nisni ndarjen e ekranit tuaj",
+        "hangup": "Mbylle Thirrjen",
+        "maximise": "Mbushe ekranin",
+        "expand": "Kthehu te thirrja",
+        "on_hold": "%(name)s e mbajtur",
+        "voice_call": "Thirrje audio",
+        "video_call": "Thirrje video",
+        "video_call_started": "Nisi thirrje me video",
+        "unsilence": "Me zë",
+        "silence": "Heshtoje thirrjen",
+        "silenced": "Njoftime të heshtuara",
+        "unknown_caller": "Thirrës i panjohur",
+        "call_failed": "Thirrja Dështoi",
+        "unable_to_access_microphone": "S’arrihet të përdoret mikrofoni",
+        "call_failed_microphone": "Thirrja dështoi, ngaqë s’u hy dot te mikrofoni. Kontrolloni që të jetë futur një mikrofon dhe të jetë ujdisur saktësisht.",
+        "unable_to_access_media": "S’arrihet të përdoret kamerë / mikrofon",
+        "call_failed_media": "Thirrja dështoi, ngaqë s’u hy dot kamera ose mikrofoni. Kontrolloni që:",
+        "call_failed_media_connected": "Një mikrofon dhe një kamerë janë futur dhe ujdisur si duhet",
+        "call_failed_media_permissions": "Është dhënë leje për përdorimin e kamerës",
+        "call_failed_media_applications": "Kamerën s’po e përdor aplikacion tjetër",
+        "already_in_call": "Tashmë në thirrje",
+        "already_in_call_person": "Gjendeni tashmë në thirrje me këtë person.",
+        "unsupported": "Nuk mbulohen t\thirrje",
+        "unsupported_browser": "S’mund të bëni thirrje që nga ky shfletues."
+    },
+    "Messages": "Mesazhe",
+    "Other": "Tjetër",
+    "Advanced": "Të mëtejshme",
+    "room_settings": {
+        "permissions": {
+            "m.room.avatar_space": "Ndryshoni avatar hapësire",
+            "m.room.avatar": "Ndryshoni avatar dhome",
+            "m.room.name_space": "Ndryshoni emër hapësire",
+            "m.room.name": "Ndryshoni emër dhome",
+            "m.room.canonical_alias_space": "Ndryshoni adresë kryesore për hapësirën",
+            "m.room.canonical_alias": "Ndryshoni adresë kryesore për dhomën",
+            "m.space.child": "Administroni dhoma në këtë hapësirë",
+            "m.room.history_visibility": "Ndryshoni dukshmëri historiku",
+            "m.room.power_levels": "Ndryshoni leje",
+            "m.room.topic_space": "Ndryshoni përshkrimin",
+            "m.room.topic": "Ndryshoni temë",
+            "m.room.tombstone": "Përmirësoni dhomën",
+            "m.room.encryption": "Aktivizoni fshehtëzim dhome",
+            "m.room.server_acl": "Ndryshoni ACL-ra shërbyesi",
+            "m.reaction": "Dërgo reagime",
+            "m.room.redaction": "Hiq mesazhe të dërguar nga unë",
+            "m.widget": "Modifikoni widget-e",
+            "io.element.voice_broadcast_info": "Transmetime zanore",
+            "m.room.pinned_events": "Administroni veprimtari të fiksuara",
+            "m.call": "Nisni thirrje %(brand)s",
+            "m.call.member": "Merrni pjesë në thirrje %(brand)s",
+            "users_default": "Rol parazgjedhje",
+            "events_default": "Dërgoni mesazhe",
+            "invite": "Ftoni përdorues",
+            "state_default": "Ndryshoni rregullime",
+            "kick": "Hiqni përdorues",
+            "ban": "Dëboni përdorues",
+            "redact": "Hiqi mesazhet e dërguar nga të tjerët",
+            "notifications.room": "Njoftoni gjithkënd"
+        }
+    },
+    "encryption": {
+        "verification": {
+            "sas_no_match": "S’përputhen",
+            "sas_match": "Përputhen",
+            "in_person": "Për të qenë i sigurt, bëjeni këtë duke qenë vetë i pranishëm ose përdorni për të komunikuar një rrugë të besuar.",
+            "other_party_cancelled": "Pala tjetër e anuloi verifikimin.",
+            "complete_title": "U verifikua!",
+            "complete_description": "E verifikuat me sukses këtë përdorues.",
+            "no_support_qr_emoji": "Pajisja që po provoni të verifikoni nuk mbulon skanim të një kodi QR, apo verifikim me emoji, çka janë ato që mbulohen prej %(brand)s. Provoni me një klient tjetër.",
+            "qr_prompt": "Skanoni këtë kod unik",
+            "sas_prompt": "Krahasoni emoji unik",
+            "sas_description": "Krahasoni një grup unik emoji-sh, nëse s’keni kamera në njërën nga pajisjet",
+            "qr_or_sas": "%(qrCode)s ose %(emojiCompare)s",
+            "qr_or_sas_header": "Verifikoni këtë pajisje duke plotësuar një nga sa vijon:"
+        }
+    },
+    "emoji": {
+        "category_frequently_used": "Përdorur Shpesh",
+        "category_smileys_people": "Emotikone & Persona",
+        "category_animals_nature": "Kafshë & Natyrë",
+        "category_food_drink": "Ushqim & Pije",
+        "category_activities": "Veprimtari",
+        "category_travel_places": "Udhëtim & Vende",
+        "category_objects": "Objekte",
+        "category_symbols": "Simbole",
+        "category_flags": "Flamuj",
+        "categories": "Kategori",
+        "quick_reactions": "Reagime të Shpejta"
+    },
+    "analytics": {
+        "enable_prompt": "Ndihmonani të përmirësojmë %(analyticsOwner)s-in",
+        "consent_migration": "Keni dhënë më parë pëlqimin të jepni për ne të dhëna anonime përdorimi. Po përditësojmë se si funksionon kjo punë.",
+        "learn_more": "Ndani me ne të dhëna anonime, për të na ndihmuar të gjejmë problemet. Asgjë personale. Pa palë të treta. <LearnMoreLink>Mësoni Më Tepër\t</LearnMoreLink>",
+        "privacy_policy": "<PrivacyPolicyUrl>Këtu</PrivacyPolicyUrl> mund të lexoni krejt kushtet tona",
+        "pseudonymous_usage_data": "Ndihmonani të gjejmë probleme dhe të përmirësojmë %(analyticsOwner)s-in duke ndarë me ne të dhëna anonime përdorimi. Që të kuptohet se si përdorin njerëzit disa pajisje, do të prodhojmë një identifikues kuturu, që na jepet nga pajisjet tuaja.",
+        "bullet_1": "<Bold>Nuk</Bold> regjistrojmë ose profilizojmë ndonjë të dhënë llogarie",
+        "bullet_2": "<Bold>Nuk</Bold> u japin hollësi palëve të treta",
+        "disable_prompt": "Këtë mund të çaktivizoni në çfarëdo kohe që nga rregullimet"
+    }
 }

@@ -4,7 +4,6 @@
     "Failed to verify email address: make sure you clicked the link in the email": "Fallo na verificación do enderezo de correo: asegúrese de ter picado na ligazón do correo",
     "You cannot place a call with yourself.": "Non podes facer unha chamada a ti mesma.",
     "Warning!": "Aviso!",
-    "Call Failed": "Fallou a chamada",
     "Upload Failed": "Fallou o envío",
     "Sun": "Dom",
     "Mon": "Lun",
@@ -37,7 +36,6 @@
     "Default": "Por defecto",
     "Restricted": "Restrinxido",
     "Moderator": "Moderador",
-    "Admin": "Administrador",
     "Operation failed": "Fallou a operación",
     "Failed to invite": "Fallou o convite",
     "You need to be logged in.": "Tes que iniciar sesión.",
@@ -51,7 +49,6 @@
     "Missing room_id in request": "Falta o room_id na petición",
     "Room %(roomId)s not visible": "A sala %(roomId)s non é visible",
     "Missing user_id in request": "Falta o user_id na petición",
-    "Usage": "Uso",
     "Ignored user": "Usuaria ignorada",
     "You are now ignoring %(userId)s": "Agora está a ignorar %(userId)s",
     "Unignored user": "Usuarias non ignoradas",
@@ -100,11 +97,6 @@
     "Invited": "Convidada",
     "Filter room members": "Filtrar os participantes da conversa",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (permiso %(powerLevelNumber)s)",
-    "Hangup": "Quedada",
-    "Voice call": "Chamada de voz",
-    "Video call": "Chamada de vídeo",
-    "Send an encrypted reply…": "Enviar unha resposta cifrada…",
-    "Send an encrypted message…": "Enviar unha mensaxe cifrada…",
     "You do not have permission to post to this room": "Non ten permiso para comentar nesta sala",
     "Server error": "Fallo no servidor",
     "Server unavailable, overloaded, or something else went wrong.": "Servidor non dispoñible, sobrecargado, ou outra cousa puido fallar.",
@@ -144,7 +136,6 @@
     "Members only (since they were invited)": "Só participantes (desde que foron convidadas)",
     "Members only (since they joined)": "Só participantes (desde que se uniron)",
     "Permissions": "Permisos",
-    "Advanced": "Avanzado",
     "Jump to first unread message.": "Ir a primeira mensaxe non lida.",
     "not specified": "non indicado",
     "This room has no local addresses": "Esta sala non ten enderezos locais",
@@ -179,87 +170,6 @@
     "Delete widget": "Eliminar widget",
     "Create new room": "Crear unha nova sala",
     "Home": "Inicio",
-    "%(nameList)s %(transitionList)s": "%(nameList)s %(transitionList)s",
-    "%(severalUsers)sjoined %(count)s times": {
-        "other": "%(severalUsers)s uníronse %(count)s veces",
-        "one": "%(severalUsers)s uníronse"
-    },
-    "%(oneUser)sjoined %(count)s times": {
-        "other": "%(oneUser)s uniuse %(count)s veces",
-        "one": "%(oneUser)s uniuse"
-    },
-    "%(severalUsers)sleft %(count)s times": {
-        "other": "%(severalUsers)s saíron %(count)s veces",
-        "one": "%(severalUsers)s saíron"
-    },
-    "%(oneUser)sleft %(count)s times": {
-        "other": "%(oneUser)s saíu %(count)s veces",
-        "one": "%(oneUser)s saíu"
-    },
-    "%(severalUsers)sjoined and left %(count)s times": {
-        "other": "%(severalUsers)s uníronse e saíron %(count)s veces",
-        "one": "%(severalUsers)s uníronse e saíron"
-    },
-    "%(oneUser)sjoined and left %(count)s times": {
-        "other": "%(oneUser)s uníuse e saíu %(count)s veces",
-        "one": "%(oneUser)s uniuse e saíu"
-    },
-    "%(severalUsers)sleft and rejoined %(count)s times": {
-        "other": "%(severalUsers)s saíron e volveron %(count)s veces",
-        "one": "%(severalUsers)s saíron e votaron"
-    },
-    "%(oneUser)sleft and rejoined %(count)s times": {
-        "other": "%(oneUser)s saíu e volveu %(count)s veces",
-        "one": "%(oneUser)s saíu e volveu"
-    },
-    "%(severalUsers)srejected their invitations %(count)s times": {
-        "other": "%(severalUsers)s rexeitaron convites %(count)s veces",
-        "one": "%(severalUsers)s rexeitaron os seus convites"
-    },
-    "%(oneUser)srejected their invitation %(count)s times": {
-        "other": "%(oneUser)s rexeitou o seu convite %(count)s veces",
-        "one": "%(oneUser)s rexeitou o seu convite"
-    },
-    "%(severalUsers)shad their invitations withdrawn %(count)s times": {
-        "other": "retiróuselle o convite a %(severalUsers)s %(count)s veces",
-        "one": "retiróuselle o convite a %(severalUsers)s"
-    },
-    "%(oneUser)shad their invitation withdrawn %(count)s times": {
-        "other": "retiróuselle o convite a %(oneUser)s %(count)s veces",
-        "one": "retiróuselle o convite a %(oneUser)s"
-    },
-    "were invited %(count)s times": {
-        "other": "foron convidados %(count)s veces",
-        "one": "foron convidados"
-    },
-    "was invited %(count)s times": {
-        "other": "foi convidada %(count)s veces",
-        "one": "foi convidada"
-    },
-    "were banned %(count)s times": {
-        "other": "foron prohibidas %(count)s veces",
-        "one": "foron prohibidas"
-    },
-    "was banned %(count)s times": {
-        "other": "foi vetada %(count)s veces",
-        "one": "foi prohibida"
-    },
-    "were unbanned %(count)s times": {
-        "other": "retiróuselle a prohibición %(count)s veces",
-        "one": "retrouseille a prohibición"
-    },
-    "was unbanned %(count)s times": {
-        "other": "retirouselle o veto %(count)s veces",
-        "one": "retiróuselle a prohibición"
-    },
-    "%(severalUsers)schanged their name %(count)s times": {
-        "other": "%(severalUsers)s cambiaron o seu nome %(count)s veces",
-        "one": "%(severalUsers)s cambiaron o seu nome"
-    },
-    "%(oneUser)schanged their name %(count)s times": {
-        "other": "%(oneUser)s cambiou o seu nome %(count)s veces",
-        "one": "%(oneUser)s cambiou o seu nome"
-    },
     "%(items)s and %(count)s others": {
         "other": "%(items)s e %(count)s outras",
         "one": "%(items)s e outra máis"
@@ -359,7 +269,6 @@
     "Failed to remove tag %(tagName)s from room": "Fallo ao eliminar a etiqueta %(tagName)s da sala",
     "Failed to add tag %(tagName)s to room": "Fallo ao engadir a etiqueta %(tagName)s a sala",
     "Deops user with given id": "Degrada usuaria co id proporcionado",
-    "Stickerpack": "Iconas",
     "You don't currently have any stickerpacks enabled": "Non ten paquetes de iconas activados",
     "Sunday": "Domingo",
     "Notification targets": "Obxectivos das notificacións",
@@ -376,13 +285,11 @@
     "Source URL": "URL fonte",
     "Filter results": "Filtrar resultados",
     "No update available.": "Sen actualizacións.",
-    "Collecting app version information": "Obtendo información sobre a versión da app",
     "Tuesday": "Martes",
     "Search…": "Buscar…",
     "Preparing to send logs": "Preparándose para enviar informe",
     "Saturday": "Sábado",
     "Monday": "Luns",
-    "Collecting logs": "Obtendo rexistros",
     "All Rooms": "Todas as Salas",
     "Wednesday": "Mércores",
     "All messages": "Todas as mensaxes",
@@ -430,7 +337,6 @@
     "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.": "Cando alguén pon unha URL na mensaxe, esta previsualízarase para que así se coñezan xa cousas delas como o título, a descrición ou as imaxes que inclúe ese sitio web.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Non vas poder enviar mensaxes ata que revises e aceptes <consentLink>os nosos termos e condicións</consentLink>.",
     "Please contact your homeserver administrator.": "Por favor, contacte coa administración do seu servidor.",
-    "System Alerts": "Alertas do Sistema",
     "This homeserver has hit its Monthly Active User limit.": "Este servidor acadou o límite mensual de usuarias activas.",
     "This homeserver has exceeded one of its resource limits.": "Este servidor excedeu un dos seus límites de recursos.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "A súa mensaxe non foi enviada porque este servidor acadou o Límite Mensual de Usuaria Activa. Por favor <a>contacte coa administración do servizo</a> para continuar utilizando o servizo.",
@@ -476,9 +382,6 @@
     "%(name)s is requesting verification": "%(name)s está pedindo a verificación",
     "Use your account or create a new one to continue.": "Usa a túa conta ou crea unha nova para continuar.",
     "Create Account": "Crear conta",
-    "Messages": "Mensaxes",
-    "Actions": "Accións",
-    "Other": "Outro",
     "Error upgrading room": "Fallo ao actualizar a sala",
     "Double check that your server supports the room version chosen and try again.": "Comproba ben que o servidor soporta a versión da sala escollida e inténtao outra vez.",
     "Use an identity server": "Usar un servidor de identidade",
@@ -503,7 +406,6 @@
     "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Se precisas axuda usando %(brand)s, preme <a>aquí</a> ou inicia unha conversa co noso bot usando o botón inferior.",
     "Help & About": "Axuda & Acerca de",
     "Security & Privacy": "Seguridade & Privacidade",
-    "Change room name": "Cambiar nome da sala",
     "Roles & Permissions": "Roles & Permisos",
     "Room %(name)s": "Sala %(name)s",
     "Direct Messages": "Mensaxes Directas",
@@ -630,22 +532,13 @@
     "IRC display name width": "Ancho do nome mostrado de IRC",
     "My Ban List": "Listaxe de bloqueo",
     "This is your list of users/servers you have blocked - don't leave the room!": "Esta é a listaxe de usuarias/servidores que ti bloqueaches - non deixes a sala!",
-    "The other party cancelled the verification.": "A outra parte cancelou a verificación.",
-    "Verified!": "Verificada!",
-    "You've successfully verified this user.": "Verificaches esta usuaria.",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "As mensaxes seguras con esta usuaria están cifradas extremo-a-extremo e non son lexibles por terceiras.",
     "Got It": "Vale",
-    "Scan this unique code": "Escanea este código único",
-    "Compare unique emoji": "Compara os emoji",
-    "Compare a unique set of emoji if you don't have a camera on either device": "Compara o conxunto único de emoticonas se non tes cámara no outro dispositivo",
     "Verify this user by confirming the following emoji appear on their screen.": "Verifica a usuaria confirmando que as emoticonas aparecen na súa pantalla.",
     "Verify this user by confirming the following number appears on their screen.": "Verifica esta usuaria confirmando que o seguinte número aparece na súa pantalla.",
     "Unable to find a supported verification method.": "Non se atopa un método de verificación válido.",
     "Waiting for %(displayName)s to verify…": "Agardando por %(displayName)s para verificar…",
     "Cancelling…": "Cancelando…",
-    "They match": "Concordan",
-    "They don't match": "Non concordan",
-    "To be secure, do this in person or use a trusted way to communicate.": "Para estar seguro, fai esto en persoa ou utiliza un xeito seguro para comunicarte.",
     "Dog": "Can",
     "Cat": "Gato",
     "Lion": "León",
@@ -827,7 +720,6 @@
     "Bulk options": "Opcións agrupadas",
     "Accept all %(invitedRooms)s invites": "Aceptar os %(invitedRooms)s convites",
     "Message search": "Buscar mensaxe",
-    "Cross-signing": "Sinatura cruzada",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "A administración do servidor desactivou por defecto o cifrado extremo-a-extremo en salas privadas e Mensaxes Directas.",
     "Missing media permissions, click the button below to request.": "Falta permiso acceso multimedia, preme o botón para solicitalo.",
     "Request media permissions": "Solicitar permiso a multimedia",
@@ -844,24 +736,10 @@
     "Notification sound": "Ton de notificación",
     "Set a new custom sound": "Establecer novo ton personalizado",
     "Browse": "Buscar",
-    "Change room avatar": "Cambiar avatar da sala",
-    "Change main address for the room": "Cambiar enderezo principal da sala",
-    "Change history visibility": "Cambiar visibilidade do historial",
-    "Change permissions": "Cambiar permisos",
-    "Change topic": "Cambiar tema",
-    "Upgrade the room": "Actualizar a sala",
-    "Enable room encryption": "Activar cifrado da sala",
-    "Modify widgets": "Modificar widgets",
     "Error changing power level requirement": "Erro ao cambiar o requerimento de nivel de responsabilidade",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Algo fallou ao cambiar os requerimentos de nivel de responsabilidade na sala. Asegúrate de ter os permisos suficientes e volve a intentalo.",
     "Error changing power level": "Erro ao cambiar nivel de responsabilidade",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Algo fallou ao cambiar o nivel de responsabilidade da usuaria. Asegúrate de ter permiso suficiente e inténtao outra vez.",
-    "Default role": "Rol por omsión",
-    "Send messages": "Enviar mensaxes",
-    "Invite users": "Convidar usuarias",
-    "Change settings": "Cambiar axustes",
-    "Ban users": "Bloquear usuarias",
-    "Notify everyone": "Notificar a todas",
     "Send %(eventType)s events": "Enviar %(eventType)s eventos",
     "Select the roles required to change various parts of the room": "Escolle os roles requeridos para cambiar determinadas partes da sala",
     "Enable encryption?": "Activar cifrado?",
@@ -902,8 +780,6 @@
     "Encrypted by a deleted session": "Cifrada por unha sesión eliminada",
     "Scroll to most recent messages": "Ir ás mensaxes máis recentes",
     "Close preview": "Pechar vista previa",
-    "Send a reply…": "Responder…",
-    "Send a message…": "Enviar mensaxe…",
     "The conversation continues here.": "A conversa continúa aquí.",
     "This room has been replaced and is no longer active.": "Esta sala foi substituída e xa non está activa.",
     "Italics": "Cursiva",
@@ -1046,17 +922,6 @@
     "edited": "editada",
     "Can't load this message": "Non se cargou a mensaxe",
     "Submit logs": "Enviar rexistro",
-    "Frequently Used": "Utilizado con frecuencia",
-    "Smileys & People": "Sorrisos e Persoas",
-    "Animals & Nature": "Animais e Natureza",
-    "Food & Drink": "Comida e Bebida",
-    "Activities": "Actividades",
-    "Travel & Places": "Viaxes e Lugares",
-    "Objects": "Obxectos",
-    "Symbols": "Símbolos",
-    "Flags": "Bandeiras",
-    "Categories": "Categorías",
-    "Quick Reactions": "Reaccións rápidas",
     "Cancel search": "Cancelar busca",
     "Any of the following data may be shared:": "Calquera do seguinte podería ser compartido:",
     "Your display name": "Nome mostrado",
@@ -1069,18 +934,9 @@
     "Widget added by": "Widget engadido por",
     "This widget may use cookies.": "Este widget podería usar cookies.",
     "More options": "Máis opcións",
-    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "Por favor <newIssueLink>abre un novo informe</newIssueLink> en GitHub para poder investigar o problema.",
     "Rotate Left": "Rotar á esquerda",
     "Rotate Right": "Rotar á dereita",
     "Language Dropdown": "Selector de idioma",
-    "%(severalUsers)smade no changes %(count)s times": {
-        "other": "%(severalUsers)s non fixeron cambios %(count)s veces",
-        "one": "%(severalUsers)s non fixeron cambios"
-    },
-    "%(oneUser)smade no changes %(count)s times": {
-        "other": "%(oneUser)s non fixo cambios %(count)s veces",
-        "one": "%(oneUser)s non fixo cambios"
-    },
     "QR Code": "Código QR",
     "Room address": "Enderezo da sala",
     "e.g. my-room": "ex. a-miña-sala",
@@ -1344,16 +1200,6 @@
     "Activate selected button": "Activar o botón seleccionado",
     "Toggle right panel": "Activar panel dereito",
     "Cancel autocomplete": "Cancelar autocompletado",
-    "You joined the call": "Unícheste á chamada",
-    "%(senderName)s joined the call": "%(senderName)s uniuse á chamada",
-    "Call in progress": "Chamada en curso",
-    "Call ended": "Chamada rematada",
-    "You started a call": "Iniciaches unha chamada",
-    "%(senderName)s started a call": "%(senderName)s iniciou unha chamada",
-    "Waiting for answer": "Agardando resposta",
-    "%(senderName)s is calling": "%(senderName)s está chamando",
-    "%(senderName)s: %(message)s": "%(senderName)s: %(message)s",
-    "%(senderName)s: %(stickerName)s": "%(senderName)s: %(stickerName)s",
     "Message deleted on %(date)s": "Mensaxe eliminada o %(date)s",
     "Wrong file type": "Tipo de ficheiro erróneo",
     "Looks good!": "Pinta ben!",
@@ -1369,7 +1215,6 @@
     "Set a Security Phrase": "Establece a Frase de Seguridade",
     "Confirm Security Phrase": "Confirma a Frase de Seguridade",
     "Save your Security Key": "Garda a Chave de Seguridade",
-    "Unknown caller": "Descoñecido",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s non pode por na caché local de xeito as mensaxes cifradas cando usa un navegador web. Usa <desktopLink>%(brand)s Desktop</desktopLink> para que as mensaxes cifradas aparezan nos resultados.",
     "Set the name of a font installed on your system & %(brand)s will attempt to use it.": "Escolle unha das tipografías instaladas no teu sistema e %(brand)s intentará utilizalas.",
     "Notification options": "Opcións de notificación",
@@ -1382,7 +1227,6 @@
     "Edited at %(date)s": "Editado o %(date)s",
     "Click to view edits": "Preme para ver as edicións",
     "Are you sure you want to cancel entering passphrase?": "¿Estás seguro de que non queres escribir a frase de paso?",
-    "* %(senderName)s %(emote)s": "* %(senderName)s %(emote)s",
     "Change notification settings": "Cambiar os axustes das notificacións",
     "Your server isn't responding to some <a>requests</a>.": "O teu servidor non responde a algunhas <a>solicitudes</a>.",
     "You're all caught up.": "Xa estás ó día.",
@@ -1401,8 +1245,6 @@
     "Attach files from chat or just drag and drop them anywhere in a room.": "Anexa filecheiros desde a conversa ou arrastra e sóltaos onde queiras nunha sala.",
     "Master private key:": "Chave mestra principal:",
     "Explore public rooms": "Explorar salas públicas",
-    "Uploading logs": "Subindo o rexistro",
-    "Downloading logs": "Descargando o rexistro",
     "Preparing to download logs": "Preparándose para descargar rexistro",
     "Unexpected server error trying to leave the room": "Fallo non agardado no servidor ó intentar saír da sala",
     "Error leaving room": "Erro ó saír da sala",
@@ -1424,7 +1266,6 @@
     "Secret storage:": "Almacenaxe segreda:",
     "ready": "lista",
     "not ready": "non lista",
-    "Secure Backup": "Copia Segura",
     "Safeguard against losing access to encrypted messages & data": "Protéxete de perder o acceso a mensaxes e datos cifrados",
     "not found in storage": "non atopado no almacenaxe",
     "Start a conversation with someone using their name or username (like <userId/>).": "Inicia unha conversa con alguén usando o seu nome ou nome de usuaria (como <userId/>).",
@@ -1446,7 +1287,6 @@
     "Ignored attempt to disable encryption": "Intento ignorado de desactivar o cifrado",
     "Failed to save your profile": "Non se gardaron os cambios",
     "The operation could not be completed": "Non se puido realizar a acción",
-    "Remove messages sent by others": "Eliminar mensaxes enviadas por outras",
     "The call could not be established": "Non se puido establecer a chamada",
     "Move right": "Mover á dereita",
     "Move left": "Mover á esquerda",
@@ -1465,8 +1305,6 @@
     "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "PRO TIP: se inicias un novo informe, envía <debugLogsLink>rexistros de depuración</debugLogsLink> para axudarnos a investigar o problema.",
     "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Primeiro revisa <existingIssuesLink>a lista existente de fallo en Github</existingIssuesLink>. Non hai nada? <newIssueLink>Abre un novo</newIssueLink>.",
     "Comment": "Comentar",
-    "%(senderName)s ended the call": "%(senderName)s finalizou a chamada",
-    "You ended the call": "Finalizaches a chamada",
     "Now, let's help you get started": "Ímosche axudar neste comezo",
     "Welcome %(name)s": "Benvida %(name)s",
     "Add a photo so people know it's you.": "Engade unha foto así a xente recoñecerate.",
@@ -1805,14 +1643,8 @@
     "Remain on your screen when viewing another room, when running": "Permanecer na túa pantalla cando visualizas outra sala, ó executar",
     "Enter phone number": "Escribe número de teléfono",
     "Enter email address": "Escribe enderezo email",
-    "Return to call": "Volver á chamada",
     "New here? <a>Create an account</a>": "Acabas de coñecernos? <a>Crea unha conta</a>",
     "Got an account? <a>Sign in</a>": "Tes unha conta? <a>Conéctate</a>",
-    "No other application is using the webcam": "Outra aplicación non está usando a cámara",
-    "Permission is granted to use the webcam": "Tes permiso para acceder ó uso da cámara",
-    "A microphone and webcam are plugged in and set up correctly": "O micrófono e a cámara están conectados e correctamente configurados",
-    "Unable to access webcam / microphone": "Non se puido acceder a cámara / micrófono",
-    "Unable to access microphone": "Non se puido acceder ó micrófono",
     "Decide where your account is hosted": "Decide onde queres crear a túa conta",
     "Host account on": "Crea a conta en",
     "Already have an account? <a>Sign in here</a>": "Xa tes unha conta? <a>Conecta aquí</a>",
@@ -1838,19 +1670,12 @@
     "Unable to validate homeserver": "Non se puido validar o servidor de inicio",
     "sends confetti": "envía confetti",
     "Sends the given message with confetti": "Envía a mensaxe con confetti",
-    "Effects": "Efectos",
-    "Call failed because webcam or microphone could not be accessed. Check that:": "A chamada fallou porque non tiñas acceso á cámara ou ó micrófono. Comproba:",
-    "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.": "A chamada fallou porque non tiñas acceso ó micrófono. Comproba que o micrófono está conectado e correctamente configurado.",
     "Hold": "Colgar",
     "Resume": "Retomar",
-    "%(peerName)s held the call": "%(peerName)s finalizou a chamada",
-    "You held the call <a>Resume</a>": "Colgaches a chamada, <a>Retomar</a>",
     "You've reached the maximum number of simultaneous calls.": "Acadaches o número máximo de chamadas simultáneas.",
     "Too Many Calls": "Demasiadas chamadas",
     "sends fireworks": "envía fogos de artificio",
     "Sends the given message with fireworks": "Envia a mensaxe dada con fogos de artificio",
-    "%(name)s on hold": "%(name)s agardando",
-    "You held the call <a>Switch</a>": "Pausaches a chamada <a>Cambiar</a>",
     "sends snowfall": "envía neve",
     "Sends the given message with snowfall": "Engade neve caendo á mensaxe",
     "You have no visible notifications.": "Non tes notificacións visibles.",
@@ -1934,7 +1759,6 @@
     "You do not have permissions to add rooms to this space": "Non tes permiso para engadir salas a este espazo",
     "Add existing room": "Engadir sala existente",
     "You do not have permissions to create new rooms in this space": "Non tes permiso para crear novas salas neste espazo",
-    "Send message": "Enviar mensaxe",
     "Invite to this space": "Convidar a este espazo",
     "Your message was sent": "Enviouse a túa mensaxe",
     "Space options": "Opcións do Espazo",
@@ -1949,8 +1773,6 @@
     "Open space for anyone, best for communities": "Espazo aberto para calquera, mellor para comunidades",
     "Create a space": "Crear un espazo",
     "This homeserver has been blocked by its administrator.": "O servidor de inicio foi bloqueado pola súa administración.",
-    "You're already in a call with this person.": "Xa estás nunha conversa con esta persoa.",
-    "Already in call": "Xa estás nunha chamada",
     "Make sure the right people have access. You can invite more later.": "Asegúrate de que as persoas axeitadas teñen acceso. Podes convidar a outras máis tarde.",
     "A private space to organise your rooms": "Un espazo privado para organizar as túas salas",
     "Just me": "Só eu",
@@ -1989,7 +1811,6 @@
     "Verify your identity to access encrypted messages and prove your identity to others.": "Verifica a túa identidade para acceder a mensaxes cifradas e acreditar a túa identidade ante outras.",
     "%(deviceId)s from %(ip)s": "%(deviceId)s desde %(ip)s",
     "unknown person": "persoa descoñecida",
-    "Consulting with %(transferTarget)s. <a>Transfer to %(transferee)s</a>": "Consultando con %(transferTarget)s. <a>Transferir a %(transferee)s</a>",
     "Manage & explore rooms": "Xestionar e explorar salas",
     "%(count)s people you know have already joined": {
         "other": "%(count)s persoas que coñeces xa se uniron",
@@ -2009,7 +1830,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Perdidos ou esquecidos tódolos métodos de recuperación? <a>Restabléceos</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
     "View message": "Ver mensaxe",
-    "Change server ACLs": "Cambiar ACLs do servidor",
     "You can select all or individual messages to retry or delete": "Podes elexir todo ou mensaxes individuais para reintentar ou eliminar",
     "Sending": "Enviando",
     "Retry all": "Reintentar todo",
@@ -2072,13 +1892,11 @@
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Se tes permisos, abre o menú en calquera mensaxe e elixe <b>Fixar</b> para pegalos aquí.",
     "Nothing pinned, yet": "Nada fixado, por agora",
     "End-to-end encryption isn't enabled": "Non está activado o cifrado de extremo-a-extremo",
-    "Integration manager": "Xestor de Integracións",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "O teu %(brand)s non permite que uses o Xestor de Integracións, contacta coa administración.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Ao utilizar este widget poderías compartir datos <helpIcon /> con %(widgetDomain)s e o teu Xestor de integracións.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Os xestores de integracións reciben datos de configuración, e poden modificar os widgets, enviar convites das salas, e establecer roles no teu nome.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Usa un Xestor de Integracións para xestionar bots, widgets e paquetes de adhesivos.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Usa un Xestor de Integración <b>(%(serverName)s)</b> para xestionar bots, widgets e paquetes de adhesivos.",
-    "Identity server": "Servidor de identidade",
     "Identity server (%(server)s)": "Servidor de Identidade (%(server)s)",
     "Could not connect to identity server": "Non hai conexión co Servidor de Identidade",
     "Not a valid identity server (status code %(code)s)": "Servidor de Identidade non válido (código de estado %(code)s)",
@@ -2089,14 +1907,6 @@
     "What this user is writing is wrong.\nThis will be reported to the room moderators.": "O que escribe esta usuaria non é correcto.\nSerá denunciado á moderación da sala.",
     "User Directory": "Directorio de Usuarias",
     "Please provide an address": "Proporciona un enderezo",
-    "%(oneUser)schanged the server ACLs %(count)s times": {
-        "one": "%(oneUser)s cambiou ACLs do servidor",
-        "other": "%(oneUser)s cambiou o ACLs do servidor %(count)s veces"
-    },
-    "%(severalUsers)schanged the server ACLs %(count)s times": {
-        "one": "%(severalUsers)s cambiaron o ACLs do servidor",
-        "other": "%(severalUsers)s cambiaron ACLs do servidor %(count)s veces"
-    },
     "Message search initialisation failed, check <a>your settings</a> for more information": "Fallou a inicialización da busca de mensaxes, comproba <a>os axustes</a> para máis información",
     "Error processing audio message": "Erro ao procesar a mensaxe de audio",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Establecer enderezos para este espazo para que as usuarias poidan atopar o espazo no servidor (%(localDomain)s)",
@@ -2135,8 +1945,6 @@
     "Failed to update the visibility of this space": "Fallou a actualización da visibilidade do espazo",
     "Address": "Enderezo",
     "e.g. my-space": "ex. o-meu-espazo",
-    "Silence call": "Acalar chamada",
-    "Sound on": "Son activado",
     "Some invites couldn't be sent": "Non se puideron enviar algúns convites",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Convidamos as outras, pero as persoas de aquí embaixo non foron convidadas a <RoomName/>",
     "Transfer Failed": "Fallou a transferencia",
@@ -2163,7 +1971,6 @@
     "Their device couldn't start the camera or microphone": "O seu dispositivo non puido acender a cámara ou micrófono",
     "Connection failed": "Fallou a conexión",
     "Could not connect media": "Non se puido conectar o multimedia",
-    "Message bubbles": "Burbullas con mensaxes",
     "Error downloading audio": "Erro ao descargar o audio",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en conta que a actualización creará unha nova versión da sala</b>. Tódalas mensaxes actuais permanecerán nesta sala arquivada.",
     "Automatically invite members from this room to the new one": "Convidar automáticamente membros desta sala á nova sala",
@@ -2206,10 +2013,6 @@
     "Only invited people can join.": "Só se poden unir persoas con convite.",
     "Private (invite only)": "Privada (só con convite)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Esta actualización permitirá que os membros dos espazos seleccionados teñan acceso á sala sen precisar convite.",
-    "Your camera is still enabled": "A túa cámara aínda está acendida",
-    "Your camera is turned off": "A túa cámara está apagada",
-    "%(sharerName)s is presenting": "%(sharerName)s estase presentando",
-    "You are presenting": "Estaste a presentar",
     "Want to add an existing space instead?": "Queres engadir un espazo xa existente?",
     "Private space (invite only)": "Espazo privado (só convidadas)",
     "Space visibility": "Visibilidade do espazo",
@@ -2236,16 +2039,9 @@
     "Stop recording": "Deter a gravación",
     "Send voice message": "Enviar mensaxe de voz",
     "Olm version:": "Version olm:",
-    "Mute the microphone": "Apagar o micrófono",
-    "Unmute the microphone": "Reactivar o micrófono",
-    "Dialpad": "Teclado",
     "More": "Máis",
     "Show sidebar": "Mostrar a barra lateral",
     "Hide sidebar": "Agochar barra lateral",
-    "Start sharing your screen": "Comparte a túa pantalla",
-    "Stop sharing your screen": "Deixar de compartir a pantalla",
-    "Stop the camera": "Pechar a cámara",
-    "Start the camera": "Abrir a cámara",
     "Surround selected text when typing special characters": "Rodea o texto seleccionado ao escribir caracteres especiais",
     "Delete avatar": "Eliminar avatar",
     "Unknown failure: %(reason)s": "Fallo descoñecido: %(reason)s",
@@ -2264,15 +2060,9 @@
     "Some encryption parameters have been changed.": "Algún dos parámetros de cifrado foron cambiados.",
     "Role in <RoomName/>": "Rol en <RoomName/>",
     "Send a sticker": "Enviar un adhesivo",
-    "Reply to thread…": "Responder á conversa…",
-    "Reply to encrypted thread…": "Responder á conversa cifrada…",
     "Unknown failure": "Fallo descoñecido",
     "Failed to update the join rules": "Fallou a actualización das normas para unirse",
     "Select the roles required to change various parts of the space": "Elexir os roles requeridos para cambiar varias partes do espazo",
-    "Change description": "Cambiar a descrición",
-    "Change main address for the space": "Cambiar o enderezo principal do espazo",
-    "Change space name": "Cambiar o nome do espazo",
-    "Change space avatar": "Cambiar o avatar do espazo",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Calquera en <spaceName/> pode atopar e unirse. Tamén podes elexir outros espazos.",
     "Message didn't send. Click for info.": "Non se enviou a mensaxe. Click para info.",
     "To join a space you'll need an invite.": "Para unirte a un espazo precisas un convite.",
@@ -2364,7 +2154,6 @@
     "The homeserver the user you're verifying is connected to": "O servidor ao que está conectado a persoa que estás verificando",
     "You do not have permission to start polls in this room.": "Non tes permiso para publicar enquisas nesta sala.",
     "Reply in thread": "Responder nun fío",
-    "Manage rooms in this space": "Xestionar salas neste espazo",
     "You won't get any notifications": "Non recibirás ningunha notificación",
     "Get notifications as set up in your <a>settings</a>": "Ter notificacións tal como se indica nos <a>axustes</a>",
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Ter notificacións só cando te mencionan e con palabras chave que indiques nos <a>axustes</a>",
@@ -2451,27 +2240,17 @@
     "Invite to space": "Convidar ao espazo",
     "Start new chat": "Iniciar un novo chat",
     "Recently viewed": "Visto recentemente",
-    "You can turn this off anytime in settings": "Podes desactivar esto cando queiras non axustes",
-    "We <Bold>don't</Bold> share information with third parties": "<Bold>Non</Bold> compartimos a información con terceiras partes",
-    "We <Bold>don't</Bold> record or profile any account data": "<Bold>Non</Bold> rexistramos o teu perfil nin datos da conta",
-    "You can read all our terms <PrivacyPolicyUrl>here</PrivacyPolicyUrl>": "Podes ler os nosos termos <PrivacyPolicyUrl>aquí</PrivacyPolicyUrl>",
     "%(count)s votes cast. Vote to see the results": {
         "other": "%(count)s votos recollidos. Vota para ver os resultados",
         "one": "%(count)s voto recollido. Vota para ver os resultados"
     },
     "No votes cast": "Sen votos",
     "Share location": "Compartir localización",
-    "Manage pinned events": "Xestiona os eventos fixados",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Comparte datos anónimos para axudarnos a identificar os problemas. Nada persoal. Nen con terceiras partes.",
     "To view all keyboard shortcuts, <a>click here</a>.": "Para ver tódolos atallos de teclado, <a>preme aquí</a>.",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>": "Comparte datos anónimos para axudarnos a identificar os problemas. Nada persoal. Nin con terceiras partes. <LearnMoreLink>Coñece máis</LearnMoreLink>",
-    "You previously consented to share anonymous usage data with us. We're updating how that works.": "Consentiches con anterioridade compartir datos anónimos de uso con nós. Estamos actualizando o seu funcionamento.",
-    "Help improve %(analyticsOwner)s": "Axuda a mellorar %(analyticsOwner)s",
     "That's fine": "Iso está ben",
     "You cannot place calls without a connection to the server.": "Non podes facer chamadas se non tes conexión ao servidor.",
     "Connectivity to the server has been lost": "Perdeuse a conexión ao servidor",
-    "You cannot place calls in this browser.": "Non podes facer chamadas con este navegador.",
-    "Calls are unsupported": "Non hai soporte para chamadas",
     "Toggle space panel": "Activar panel do espazo",
     "Recent searches": "Buscas recentes",
     "To search messages, look for this icon at the top of a room <icon/>": "Para buscar mensaxes, busca esta icona arriba de todo na sala <icon/>",
@@ -2512,8 +2291,6 @@
     "The beginning of the room": "O inicio da sala",
     "You cancelled verification on your other device.": "Cancelaches a verificación no teu outro dispositivo.",
     "Almost there! Is your other device showing the same shield?": "Xa case está! Mostra o teu outro dispositivo o mesmo escudo?",
-    "Verify this device by completing one of the following:": "Verifica este dispositivo usando un dos seguintes métodos:",
-    "The device you are trying to verify doesn't support scanning a QR code or emoji verification, which is what %(brand)s supports. Try with a different client.": "Este dispositivo que intentas verificar non ten soporte para código QR nin verificación por emoji, que é o que %(brand)s soporta. Inténtao cun cliente diferente.",
     "Remove from room": "Eliminar da sala",
     "Failed to remove user": "Fallou a eliminación da usuaria",
     "Remove them from specific things I'm able to": "Eliminar de lugares concretos nos que podo facelo",
@@ -2529,20 +2306,16 @@
     "You don't have permission to view messages from before you joined.": "Non tes permiso para ver mensaxes anteriores a que te unises.",
     "You don't have permission to view messages from before you were invited.": "Non tes permiso para ver mensaxes anteriores a que te unises.",
     "From a thread": "Desde un fío",
-    "Remove users": "Eliminar usuarias",
-    "Send reactions": "Enviar reaccións",
     "Internal room ID": "ID interno da sala",
     "Group all your rooms that aren't part of a space in one place.": "Agrupa nun só lugar tódalas túas salas que non forman parte dun espazo.",
     "Group all your people in one place.": "Agrupa tódalas persoas nun só lugar.",
     "Group all your favourite rooms and people in one place.": "Agrupa tódalas túas salas favoritas e persoas nun só lugar.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Os Espazos son xeitos de agrupar salas e persoas. Xunto cos espazos nos que estás, tamén podes usar algún dos prestablecidos.",
     "Keyboard": "Teclado",
-    "IRC (Experimental)": "IRC (Experimental)",
     "Waiting for you to verify on your other device…": "Agardando a que verifiques no teu outro dispositivo…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Agardando a que verifiques o teu outro dispositivo, %(deviceName)s %(deviceId)s …",
     "Verify this device by confirming the following number appears on its screen.": "Verifica este dispositivo confirmando que o seguinte número aparece na pantalla.",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Confirma que os emoji inferiores se mostran nos dous dispositivos, na mesma orde:",
-    "Dial": "Marcar",
     "Automatically send debug logs on decryption errors": "Envía automáticamente rexistro de depuración se hai erros no cifrado",
     "Back to thread": "Volver ao fío",
     "Room members": "Membros da sala",
@@ -2561,14 +2334,6 @@
     "This address does not point at this room": "Este enderezo non dirixe a esta sala",
     "Missing room name or separator e.g. (my-room:domain.org)": "Falta o nome da sala ou separador ex. (sala:dominio.org)",
     "Missing domain separator e.g. (:domain.org)": "Falta o separador do cominio ex. (:dominio.org)",
-    "was removed %(count)s times": {
-        "one": "foi eliminado",
-        "other": "foi eliminado %(count)s veces"
-    },
-    "were removed %(count)s times": {
-        "one": "foi eliminado",
-        "other": "foron eliminados %(count)s veces"
-    },
     "Unknown error fetching location. Please try again later.": "Erro descoñecido ao obter a localización, inténtao máis tarde.",
     "Timed out trying to fetch your location. Please try again later.": "Caducou o intento de obter a localización, inténtao máis tarde.",
     "Failed to fetch your location. Please try again later.": "Non se obtivo a localización, inténtao máis tarde.",
@@ -2608,22 +2373,6 @@
     "Use <arrows/> to scroll": "Usa <arrows/> para desprazarte",
     "Feedback sent! Thanks, we appreciate it!": "Opinión enviada! Moitas grazas!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "%(oneUser)ssent %(count)s hidden messages": {
-        "one": "%(oneUser)s enviou unha mensaxe oculta",
-        "other": "%(oneUser)s enviou %(count)s mensaxes ocultas"
-    },
-    "%(severalUsers)ssent %(count)s hidden messages": {
-        "one": "%(severalUsers)s enviou unha mensaxe oculta",
-        "other": "%(severalUsers)s enviaron %(count)s mensaxes ocultas"
-    },
-    "%(oneUser)sremoved a message %(count)s times": {
-        "one": "%(oneUser)s eliminou unha mensaxe",
-        "other": "%(oneUser)s eliminou %(count)s mensaxes"
-    },
-    "%(severalUsers)sremoved a message %(count)s times": {
-        "one": "%(severalUsers)s eliminaron unha mensaxe",
-        "other": "%(severalUsers)s eliminaron %(count)s mensaxes"
-    },
     "Automatically send debug logs when key backup is not functioning": "Enviar automáticamente rexistros de depuración cando a chave da copia de apoio non funcione",
     "Join %(roomAddress)s": "Unirse a %(roomAddress)s",
     "Edit poll": "Editar enquisa",
@@ -2647,19 +2396,10 @@
     "We couldn't send your location": "Non puidemos enviar a túa localización",
     "Pinned": "Fixado",
     "Open thread": "Abrir fío",
-    "Remove messages sent by me": "Eliminar mensaxes que enviei",
     "Match system": "Seguir o sistema",
     "No virtual room for this room": "No hai sala virtual para esta sala",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Responde a unha conversa en curso ou usa \"%(replyInThread)s\" cando pasas por enriba dunha mensaxe co rato para iniciar unha nova.",
     "We'll create rooms for each of them.": "Imos crear salas para cada un deles.",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(oneUser)s cambiou as <a>mensaxes fixadas</a> da sala",
-        "other": "%(oneUser)s cambiou as <a>mensaxes fixadas</a> da sala %(count)s veces"
-    },
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times": {
-        "one": "%(severalUsers)s cambiaron as <a>mensaxes fixadas</a> da sala",
-        "other": "%(severalUsers)s cambiaron as <a>mensaxes fixadas</a> da sala %(count)s veces"
-    },
     "Click": "Premer",
     "Expand quotes": "Despregar as citas",
     "Collapse quotes": "Pregar as citas",
@@ -2694,7 +2434,6 @@
     "Previous recently visited room or space": "Anterior sala ou espazo visitados recentemente",
     "%(timeRemaining)s left": "%(timeRemaining)s restante",
     "Unsent": "Sen enviar",
-    "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Axúdanos a atopar problemas e mellorar %(analyticsOwner)s compartindo datos anónimos de uso. Para comprender de que xeito as persoas usan varios dispositivos imos crear un identificador aleatorio compartido polos teus dispositivos.",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Podes usar as opcións personalizadas do servidor para acceder a outros servidores Matrix indicando o URL do servidor de inicio. Así podes usar %(brand)s cunha conta Matrix rexistrada nun servidor diferente.",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s non ten permiso para obter a túa localización. Concede acceso á localización nos axustes do navegador.",
     "Developer tools": "Ferramentas desenvolvemento",
@@ -2772,12 +2511,6 @@
     "You will not be able to reactivate your account": "Non poderás reactivar a túa conta",
     "Confirm that you would like to deactivate your account. If you proceed:": "Confirma que desexas desactivar a túa conta. Se continúas:",
     "To continue, please enter your account password:": "Para continuar, escribe o contrasinal da túa conta:",
-    "Turn on camera": "Activar cámara",
-    "Turn off camera": "Apagar cámara",
-    "Video devices": "Dispositivos de vídeo",
-    "Unmute microphone": "Activar micrófono",
-    "Mute microphone": "Acalar micrófono",
-    "Audio devices": "Dispositivos de audio",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Pechaches a sesión en tódolos dispositivos e non recibirás notificacións push. Para reactivalas notificacións volve a acceder en cada dispositivo.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Se queres manter o acceso ao historial de conversas en salas cifradas, configura a Copia de Apoio das Chaves ou exporta as chaves das mensaxes desde un dos teus dispositivos antes de continuar.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Ao pechar sesión nos teus dispositivos eliminarás as chaves de cifrado de mensaxes gardadas neles, facendo ilexible o historial de conversas cifrado.",
@@ -2945,13 +2678,11 @@
     "Your server lacks native support": "O teu servidor non ten soporte nativo",
     "Your server has native support": "O teu servidor ten soporte nativo",
     "%(qrCode)s or %(appLinks)s": "%(qrCode)s ou %(appLinks)s",
-    "%(qrCode)s or %(emojiCompare)s": "%(qrCode)s ou %(emojiCompare)s",
     "Show shortcut to welcome checklist above the room list": "Mostrar atallo á lista de comprobacións de benvida sobre a lista de salas",
     "You need to be able to kick users to do that.": "Tes que poder expulsar usuarias para facer eso.",
     "Voice broadcast": "Emisión de voz",
     "Sign out of this session": "Pechar esta sesión",
     "Rename session": "Renomear sesión",
-    "Voice broadcasts": "Emisións de voz",
     "Failed to read events": "Fallou a lectura de eventos",
     "Failed to send event": "Fallo ao enviar o evento",
     "common": {
@@ -3031,7 +2762,13 @@
         "server": "Servidor",
         "capabilities": "Capacidades",
         "unnamed_room": "Sala sen nome",
-        "unnamed_space": "Espazo sen nome"
+        "unnamed_space": "Espazo sen nome",
+        "stickerpack": "Iconas",
+        "system_alerts": "Alertas do Sistema",
+        "secure_backup": "Copia Segura",
+        "cross_signing": "Sinatura cruzada",
+        "identity_server": "Servidor de identidade",
+        "integration_manager": "Xestor de Integracións"
     },
     "action": {
         "continue": "Continuar",
@@ -3172,7 +2909,14 @@
         "format_bold": "Resaltado",
         "format_strikethrough": "Sobrescrito",
         "format_inline_code": "Código",
-        "format_code_block": "Bloque de código"
+        "format_code_block": "Bloque de código",
+        "send_button_title": "Enviar mensaxe",
+        "placeholder_thread_encrypted": "Responder á conversa cifrada…",
+        "placeholder_thread": "Responder á conversa…",
+        "placeholder_reply_encrypted": "Enviar unha resposta cifrada…",
+        "placeholder_reply": "Responder…",
+        "placeholder_encrypted": "Enviar unha mensaxe cifrada…",
+        "placeholder": "Enviar mensaxe…"
     },
     "Bold": "Resaltado",
     "Code": "Código",
@@ -3194,7 +2938,12 @@
         "send_logs": "Enviar informes",
         "github_issue": "Informe en GitHub",
         "download_logs": "Descargar rexistro",
-        "before_submitting": "Antes de enviar os rexistros, deberías <a>abrir un informe en GitHub</a> para describir o problema."
+        "before_submitting": "Antes de enviar os rexistros, deberías <a>abrir un informe en GitHub</a> para describir o problema.",
+        "collecting_information": "Obtendo información sobre a versión da app",
+        "collecting_logs": "Obtendo rexistros",
+        "uploading_logs": "Subindo o rexistro",
+        "downloading_logs": "Descargando o rexistro",
+        "create_new_issue": "Por favor <newIssueLink>abre un novo informe</newIssueLink> en GitHub para poder investigar o problema."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
@@ -3307,6 +3056,10 @@
             "rule_suppress_notices": "Mensaxes enviadas por bot",
             "rule_tombstone": "Cando se actualizan as salas",
             "rule_encrypted_room_one_to_one": "Mensaxes cifradas en conversas 1:1"
+        },
+        "appearance": {
+            "layout_irc": "IRC (Experimental)",
+            "layout_bubbles": "Burbullas con mensaxes"
         }
     },
     "devtools": {
@@ -3372,7 +3125,9 @@
         "toolbox": "Ferramentas",
         "developer_tools": "Ferramentas para desenvolver",
         "room_id": "ID da sala: %(roomId)s",
-        "event_id": "ID do evento: %(eventId)s"
+        "event_id": "ID do evento: %(eventId)s",
+        "category_room": "Sala",
+        "category_other": "Outro"
     },
     "export_chat": {
         "html": "HTML",
@@ -3521,6 +3276,140 @@
                 "other": "%(names)s e outras %(count)s están escribindo…",
                 "one": "%(names)s e outra están escribindo…"
             }
+        },
+        "m.call.hangup": {
+            "dm": "Chamada rematada"
+        },
+        "summary": {
+            "format": "%(nameList)s %(transitionList)s",
+            "joined_multiple": {
+                "other": "%(severalUsers)s uníronse %(count)s veces",
+                "one": "%(severalUsers)s uníronse"
+            },
+            "joined": {
+                "other": "%(oneUser)s uniuse %(count)s veces",
+                "one": "%(oneUser)s uniuse"
+            },
+            "left_multiple": {
+                "other": "%(severalUsers)s saíron %(count)s veces",
+                "one": "%(severalUsers)s saíron"
+            },
+            "left": {
+                "other": "%(oneUser)s saíu %(count)s veces",
+                "one": "%(oneUser)s saíu"
+            },
+            "joined_and_left_multiple": {
+                "other": "%(severalUsers)s uníronse e saíron %(count)s veces",
+                "one": "%(severalUsers)s uníronse e saíron"
+            },
+            "joined_and_left": {
+                "other": "%(oneUser)s uníuse e saíu %(count)s veces",
+                "one": "%(oneUser)s uniuse e saíu"
+            },
+            "rejoined_multiple": {
+                "other": "%(severalUsers)s saíron e volveron %(count)s veces",
+                "one": "%(severalUsers)s saíron e votaron"
+            },
+            "rejoined": {
+                "other": "%(oneUser)s saíu e volveu %(count)s veces",
+                "one": "%(oneUser)s saíu e volveu"
+            },
+            "rejected_invite_multiple": {
+                "other": "%(severalUsers)s rexeitaron convites %(count)s veces",
+                "one": "%(severalUsers)s rexeitaron os seus convites"
+            },
+            "rejected_invite": {
+                "other": "%(oneUser)s rexeitou o seu convite %(count)s veces",
+                "one": "%(oneUser)s rexeitou o seu convite"
+            },
+            "invite_withdrawn_multiple": {
+                "other": "retiróuselle o convite a %(severalUsers)s %(count)s veces",
+                "one": "retiróuselle o convite a %(severalUsers)s"
+            },
+            "invite_withdrawn": {
+                "other": "retiróuselle o convite a %(oneUser)s %(count)s veces",
+                "one": "retiróuselle o convite a %(oneUser)s"
+            },
+            "invited_multiple": {
+                "other": "foron convidados %(count)s veces",
+                "one": "foron convidados"
+            },
+            "invited": {
+                "other": "foi convidada %(count)s veces",
+                "one": "foi convidada"
+            },
+            "banned_multiple": {
+                "other": "foron prohibidas %(count)s veces",
+                "one": "foron prohibidas"
+            },
+            "banned": {
+                "other": "foi vetada %(count)s veces",
+                "one": "foi prohibida"
+            },
+            "unbanned_multiple": {
+                "other": "retiróuselle a prohibición %(count)s veces",
+                "one": "retrouseille a prohibición"
+            },
+            "unbanned": {
+                "other": "retirouselle o veto %(count)s veces",
+                "one": "retiróuselle a prohibición"
+            },
+            "kicked_multiple": {
+                "one": "foi eliminado",
+                "other": "foron eliminados %(count)s veces"
+            },
+            "kicked": {
+                "one": "foi eliminado",
+                "other": "foi eliminado %(count)s veces"
+            },
+            "changed_name_multiple": {
+                "other": "%(severalUsers)s cambiaron o seu nome %(count)s veces",
+                "one": "%(severalUsers)s cambiaron o seu nome"
+            },
+            "changed_name": {
+                "other": "%(oneUser)s cambiou o seu nome %(count)s veces",
+                "one": "%(oneUser)s cambiou o seu nome"
+            },
+            "no_change_multiple": {
+                "other": "%(severalUsers)s non fixeron cambios %(count)s veces",
+                "one": "%(severalUsers)s non fixeron cambios"
+            },
+            "no_change": {
+                "other": "%(oneUser)s non fixo cambios %(count)s veces",
+                "one": "%(oneUser)s non fixo cambios"
+            },
+            "server_acls_multiple": {
+                "one": "%(severalUsers)s cambiaron o ACLs do servidor",
+                "other": "%(severalUsers)s cambiaron ACLs do servidor %(count)s veces"
+            },
+            "server_acls": {
+                "one": "%(oneUser)s cambiou ACLs do servidor",
+                "other": "%(oneUser)s cambiou o ACLs do servidor %(count)s veces"
+            },
+            "pinned_events_multiple": {
+                "one": "%(severalUsers)s cambiaron as <a>mensaxes fixadas</a> da sala",
+                "other": "%(severalUsers)s cambiaron as <a>mensaxes fixadas</a> da sala %(count)s veces"
+            },
+            "pinned_events": {
+                "one": "%(oneUser)s cambiou as <a>mensaxes fixadas</a> da sala",
+                "other": "%(oneUser)s cambiou as <a>mensaxes fixadas</a> da sala %(count)s veces"
+            },
+            "redacted_multiple": {
+                "one": "%(severalUsers)s eliminaron unha mensaxe",
+                "other": "%(severalUsers)s eliminaron %(count)s mensaxes"
+            },
+            "redacted": {
+                "one": "%(oneUser)s eliminou unha mensaxe",
+                "other": "%(oneUser)s eliminou %(count)s mensaxes"
+            },
+            "hidden_event_multiple": {
+                "one": "%(severalUsers)s enviou unha mensaxe oculta",
+                "other": "%(severalUsers)s enviaron %(count)s mensaxes ocultas"
+            },
+            "hidden_event": {
+                "one": "%(oneUser)s enviou unha mensaxe oculta",
+                "other": "%(oneUser)s enviou %(count)s mensaxes ocultas"
+            }
         }
     },
     "slash_command": {
@@ -3555,7 +3444,14 @@
         "help": "Mostra unha listaxe de comandos con usos e descricións",
         "whois": "Mostra información acerca da usuaria",
         "rageshake": "Envía un informe de fallos con rexistros",
-        "msg": "Envía unha mensaxe a usuaria"
+        "msg": "Envía unha mensaxe a usuaria",
+        "usage": "Uso",
+        "category_messages": "Mensaxes",
+        "category_actions": "Accións",
+        "category_admin": "Administrador",
+        "category_advanced": "Avanzado",
+        "category_effects": "Efectos",
+        "category_other": "Outro"
     },
     "presence": {
         "busy": "Ocupado",
@@ -3569,5 +3465,138 @@
         "offline": "Sen conexión",
         "away": "Fóra"
     },
-    "Unknown": "Descoñecido"
+    "Unknown": "Descoñecido",
+    "event_preview": {
+        "m.call.answer": {
+            "you": "Unícheste á chamada",
+            "user": "%(senderName)s uniuse á chamada",
+            "dm": "Chamada en curso"
+        },
+        "m.call.hangup": {
+            "you": "Finalizaches a chamada",
+            "user": "%(senderName)s finalizou a chamada"
+        },
+        "m.call.invite": {
+            "you": "Iniciaches unha chamada",
+            "user": "%(senderName)s iniciou unha chamada",
+            "dm_send": "Agardando resposta",
+            "dm_receive": "%(senderName)s está chamando"
+        },
+        "m.emote": "* %(senderName)s %(emote)s",
+        "m.text": "%(senderName)s: %(message)s",
+        "m.sticker": "%(senderName)s: %(stickerName)s"
+    },
+    "voip": {
+        "disable_microphone": "Acalar micrófono",
+        "enable_microphone": "Activar micrófono",
+        "disable_camera": "Apagar cámara",
+        "enable_camera": "Activar cámara",
+        "audio_devices": "Dispositivos de audio",
+        "video_devices": "Dispositivos de vídeo",
+        "dial": "Marcar",
+        "you_are_presenting": "Estaste a presentar",
+        "user_is_presenting": "%(sharerName)s estase presentando",
+        "camera_disabled": "A túa cámara está apagada",
+        "camera_enabled": "A túa cámara aínda está acendida",
+        "consulting": "Consultando con %(transferTarget)s. <a>Transferir a %(transferee)s</a>",
+        "call_held_switch": "Pausaches a chamada <a>Cambiar</a>",
+        "call_held_resume": "Colgaches a chamada, <a>Retomar</a>",
+        "call_held": "%(peerName)s finalizou a chamada",
+        "dialpad": "Teclado",
+        "stop_screenshare": "Deixar de compartir a pantalla",
+        "start_screenshare": "Comparte a túa pantalla",
+        "hangup": "Quedada",
+        "expand": "Volver á chamada",
+        "on_hold": "%(name)s agardando",
+        "voice_call": "Chamada de voz",
+        "video_call": "Chamada de vídeo",
+        "unsilence": "Son activado",
+        "silence": "Acalar chamada",
+        "unknown_caller": "Descoñecido",
+        "call_failed": "Fallou a chamada",
+        "unable_to_access_microphone": "Non se puido acceder ó micrófono",
+        "call_failed_microphone": "A chamada fallou porque non tiñas acceso ó micrófono. Comproba que o micrófono está conectado e correctamente configurado.",
+        "unable_to_access_media": "Non se puido acceder a cámara / micrófono",
+        "call_failed_media": "A chamada fallou porque non tiñas acceso á cámara ou ó micrófono. Comproba:",
+        "call_failed_media_connected": "O micrófono e a cámara están conectados e correctamente configurados",
+        "call_failed_media_permissions": "Tes permiso para acceder ó uso da cámara",
+        "call_failed_media_applications": "Outra aplicación non está usando a cámara",
+        "already_in_call": "Xa estás nunha chamada",
+        "already_in_call_person": "Xa estás nunha conversa con esta persoa.",
+        "unsupported": "Non hai soporte para chamadas",
+        "unsupported_browser": "Non podes facer chamadas con este navegador."
+    },
+    "Messages": "Mensaxes",
+    "Other": "Outro",
+    "Advanced": "Avanzado",
+    "room_settings": {
+        "permissions": {
+            "m.room.avatar_space": "Cambiar o avatar do espazo",
+            "m.room.avatar": "Cambiar avatar da sala",
+            "m.room.name_space": "Cambiar o nome do espazo",
+            "m.room.name": "Cambiar nome da sala",
+            "m.room.canonical_alias_space": "Cambiar o enderezo principal do espazo",
+            "m.room.canonical_alias": "Cambiar enderezo principal da sala",
+            "m.space.child": "Xestionar salas neste espazo",
+            "m.room.history_visibility": "Cambiar visibilidade do historial",
+            "m.room.power_levels": "Cambiar permisos",
+            "m.room.topic_space": "Cambiar a descrición",
+            "m.room.topic": "Cambiar tema",
+            "m.room.tombstone": "Actualizar a sala",
+            "m.room.encryption": "Activar cifrado da sala",
+            "m.room.server_acl": "Cambiar ACLs do servidor",
+            "m.reaction": "Enviar reaccións",
+            "m.room.redaction": "Eliminar mensaxes que enviei",
+            "m.widget": "Modificar widgets",
+            "io.element.voice_broadcast_info": "Emisións de voz",
+            "m.room.pinned_events": "Xestiona os eventos fixados",
+            "users_default": "Rol por omsión",
+            "events_default": "Enviar mensaxes",
+            "invite": "Convidar usuarias",
+            "state_default": "Cambiar axustes",
+            "kick": "Eliminar usuarias",
+            "ban": "Bloquear usuarias",
+            "redact": "Eliminar mensaxes enviadas por outras",
+            "notifications.room": "Notificar a todas"
+        }
+    },
+    "encryption": {
+        "verification": {
+            "sas_no_match": "Non concordan",
+            "sas_match": "Concordan",
+            "in_person": "Para estar seguro, fai esto en persoa ou utiliza un xeito seguro para comunicarte.",
+            "other_party_cancelled": "A outra parte cancelou a verificación.",
+            "complete_title": "Verificada!",
+            "complete_description": "Verificaches esta usuaria.",
+            "no_support_qr_emoji": "Este dispositivo que intentas verificar non ten soporte para código QR nin verificación por emoji, que é o que %(brand)s soporta. Inténtao cun cliente diferente.",
+            "qr_prompt": "Escanea este código único",
+            "sas_prompt": "Compara os emoji",
+            "sas_description": "Compara o conxunto único de emoticonas se non tes cámara no outro dispositivo",
+            "qr_or_sas": "%(qrCode)s ou %(emojiCompare)s",
+            "qr_or_sas_header": "Verifica este dispositivo usando un dos seguintes métodos:"
+        }
+    },
+    "emoji": {
+        "category_frequently_used": "Utilizado con frecuencia",
+        "category_smileys_people": "Sorrisos e Persoas",
+        "category_animals_nature": "Animais e Natureza",
+        "category_food_drink": "Comida e Bebida",
+        "category_activities": "Actividades",
+        "category_travel_places": "Viaxes e Lugares",
+        "category_objects": "Obxectos",
+        "category_symbols": "Símbolos",
+        "category_flags": "Bandeiras",
+        "categories": "Categorías",
+        "quick_reactions": "Reaccións rápidas"
+    },
+    "analytics": {
+        "enable_prompt": "Axuda a mellorar %(analyticsOwner)s",
+        "consent_migration": "Consentiches con anterioridade compartir datos anónimos de uso con nós. Estamos actualizando o seu funcionamento.",
+        "learn_more": "Comparte datos anónimos para axudarnos a identificar os problemas. Nada persoal. Nin con terceiras partes. <LearnMoreLink>Coñece máis</LearnMoreLink>",
+        "privacy_policy": "Podes ler os nosos termos <PrivacyPolicyUrl>aquí</PrivacyPolicyUrl>",
+        "pseudonymous_usage_data": "Axúdanos a atopar problemas e mellorar %(analyticsOwner)s compartindo datos anónimos de uso. Para comprender de que xeito as persoas usan varios dispositivos imos crear un identificador aleatorio compartido polos teus dispositivos.",
+        "bullet_1": "<Bold>Non</Bold> rexistramos o teu perfil nin datos da conta",
+        "bullet_2": "<Bold>Non</Bold> compartimos a información con terceiras partes",
+        "disable_prompt": "Podes desactivar esto cando queiras non axustes"
+    }
 }
