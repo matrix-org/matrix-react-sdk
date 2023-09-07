@@ -16,11 +16,11 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { MatrixClient, MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { MatrixClient, MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
+
 import { Action } from "../../../../src/dispatcher/actions";
 import dispatcher from "../../../../src/dispatcher/dispatcher";
-
 import EncryptionEvent from "../../../../src/components/views/messages/EncryptionEvent";
 import { createTestClient, mkMessage } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
