@@ -575,6 +575,9 @@
             "rule_suppress_notices": "रोबॉट द्वारा भेजे गए संदेश",
             "rule_encrypted_room_one_to_one": "एक एक के साथ चैट में एन्क्रिप्टेड संदेश",
             "show_message_desktop_notification": "डेस्कटॉप अधिसूचना में संदेश दिखाएं"
+        },
+        "appearance": {
+            "timeline_image_size_default": "डिफ़ॉल्ट"
         }
     },
     "timeline": {

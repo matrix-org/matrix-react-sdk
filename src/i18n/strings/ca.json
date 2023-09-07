@@ -335,7 +335,6 @@
     "Error removing ignored user/server": "Error eliminant usuari/servidor ignorat",
     "Error subscribing to list": "Error subscrivint-se a la llista",
     "Error adding ignored user/server": "Error afegint usuari/servidor ignorat",
-    "Error downloading theme information.": "Error baixant informació de tema.",
     "Unexpected server error trying to leave the room": "Error de servidor inesperat intentant sortir de la sala",
     "Error leaving room": "Error sortint de la sala",
     "Unexpected error resolving identity server configuration": "Error inesperat resolent la configuració del servidor d'identitat",
@@ -376,7 +375,6 @@
     "Confirm this user's session by comparing the following with their User Settings:": "Confirma aquesta sessió d'usuari comparant amb la seva configuració d'usuari, el següent:",
     "Confirm by comparing the following with the User Settings in your other session:": "Confirma comparant el següent amb la configuració d'usuari de la teva altra sessió:",
     "Room settings": "Configuració de sala",
-    "Appearance Settings only affect this %(brand)s session.": "La configuració d'aspecte només afecta aquesta sessió %(brand)s.",
     "Change notification settings": "Canvia la configuració de notificacions",
     "⚠ These settings are meant for advanced users.": "⚠ Aquesta configuració està pensada per usuaris avançats.",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Per rebre invitacions directament a %(brand)s, enllaça aquest correu electrònic amb el teu compte a Configuració.",
@@ -512,6 +510,11 @@
             "rule_call": "Invitació de trucada",
             "rule_suppress_notices": "Missatges enviats pel bot",
             "show_message_desktop_notification": "Mostra els missatges amb notificacions d'escriptori"
+        },
+        "appearance": {
+            "subheading": "La configuració d'aspecte només afecta aquesta sessió %(brand)s.",
+            "custom_theme_error_downloading": "Error baixant informació de tema.",
+            "timeline_image_size_default": "Predeterminat"
         }
     },
     "devtools": {

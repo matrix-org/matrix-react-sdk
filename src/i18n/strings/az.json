@@ -219,6 +219,9 @@
             "rule_invite_for_me": "Nə vaxt ki, məni otağa dəvət edirlər",
             "rule_call": "Dəvət zəngi",
             "rule_suppress_notices": "Botla göndərilmiş mesajlar"
+        },
+        "appearance": {
+            "timeline_image_size_default": "Varsayılan olaraq"
         }
     },
     "timeline": {

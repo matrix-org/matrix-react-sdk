@@ -589,11 +589,7 @@
     "Verify this session": "Confirmar esta sessão",
     "Other users may not trust it": "Outras(os) usuárias(os) podem não confiar nela",
     "New login. Was this you?": "Novo login. Foi você?",
-    "Font size": "Tamanho da fonte",
     "Use custom size": "Usar tamanho personalizado",
-    "Match system theme": "Se adaptar ao tema do sistema",
-    "Use a system font": "Usar uma fonte do sistema",
-    "System font name": "Nome da fonte do sistema",
     "Never send encrypted messages to unverified sessions from this session": "Nunca envie mensagens criptografadas a partir desta sessão para sessões não confirmadas",
     "Never send encrypted messages to unverified sessions in this room from this session": "Nunca envie mensagens criptografadas a partir desta sessão para sessões não confirmadas nessa sala",
     "Show hidden events in timeline": "Mostrar eventos ocultos nas conversas",
@@ -858,14 +854,6 @@
     "Size must be a number": "O tamanho deve ser um número",
     "Custom font size can only be between %(min)s pt and %(max)s pt": "O tamanho da fonte personalizada só pode estar entre %(min)s pt e %(max)s pt",
     "Use between %(min)s pt and %(max)s pt": "Use entre %(min)s pt e %(max)s pt",
-    "Invalid theme schema.": "Esquema inválido de tema.",
-    "Error downloading theme information.": "Erro ao baixar as informações do tema.",
-    "Theme added!": "Tema adicionado!",
-    "Custom theme URL": "Link do tema personalizado",
-    "Add theme": "Adicionar tema",
-    "Set the name of a font installed on your system & %(brand)s will attempt to use it.": "Defina o nome de uma fonte instalada no seu sistema e o %(brand)s tentará usá-la.",
-    "Customise your appearance": "Personalize sua aparência",
-    "Appearance Settings only affect this %(brand)s session.": "As configurações de aparência afetam apenas esta sessão do %(brand)s.",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Concorde com os Termos de Serviço do servidor de identidade (%(serverName)s), para que você possa ser descoberto por endereço de e-mail ou por número de celular.",
     "Discovery": "Contatos",
     "Deactivate account": "Desativar minha conta",
@@ -2019,7 +2007,6 @@
     "Displaying time": "Exibindo tempo",
     "To view all keyboard shortcuts, <a>click here</a>.": "Para ver todos os atalhos do teclado, <a>clique aqui</a>.",
     "Show tray icon and minimise window to it on close": "Mostrar o ícone da bandeja e minimizar a janela ao fechar",
-    "Use high contrast": "Usar alto contraste",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Atualizando espaço...",
         "other": "Atualizando espaços... (%(progress)s de %(count)s)"
@@ -2032,7 +2019,6 @@
     "Upgrading room": "Atualizando sala",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está em alguns espaços dos quais você não é administrador. Nesses espaços, a sala antiga ainda será exibida, mas as pessoas serão solicitadas a ingressar na nova.",
     "Large": "Grande",
-    "Image size in the timeline": "Tamanho da imagem na linha do tempo",
     "Deselect all": "Desmarcar todos",
     "Select all": "Selecionar tudo",
     "Sign out devices": {
@@ -2522,7 +2508,23 @@
         },
         "appearance": {
             "layout_irc": "IRC (experimental)",
-            "layout_bubbles": "Balões de mensagem"
+            "layout_bubbles": "Balões de mensagem",
+            "heading": "Personalize sua aparência",
+            "subheading": "As configurações de aparência afetam apenas esta sessão do %(brand)s.",
+            "match_system_theme": "Se adaptar ao tema do sistema",
+            "custom_font": "Usar uma fonte do sistema",
+            "custom_font_name": "Nome da fonte do sistema",
+            "custom_theme_invalid": "Esquema inválido de tema.",
+            "custom_theme_error_downloading": "Erro ao baixar as informações do tema.",
+            "custom_theme_success": "Tema adicionado!",
+            "custom_theme_url": "Link do tema personalizado",
+            "use_high_contrast": "Usar alto contraste",
+            "custom_theme_add_button": "Adicionar tema",
+            "font_size": "Tamanho da fonte",
+            "custom_font_description": "Defina o nome de uma fonte instalada no seu sistema e o %(brand)s tentará usá-la.",
+            "timeline_image_size": "Tamanho da imagem na linha do tempo",
+            "timeline_image_size_default": "Padrão",
+            "timeline_image_size_large": "Grande"
         }
     },
     "devtools": {

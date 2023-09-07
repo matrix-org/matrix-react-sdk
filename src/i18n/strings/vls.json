@@ -869,6 +869,9 @@
             "rule_tombstone": "Wanneer da gesprekkn ipgewoardeerd wordn",
             "rule_encrypted_room_one_to_one": "Versleuterde berichtn in twigesprekkn",
             "show_message_desktop_notification": "Bericht toogn in bureaubladmeldienge"
+        },
+        "appearance": {
+            "timeline_image_size_default": "Standoard"
         }
     },
     "devtools": {

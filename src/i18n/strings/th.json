@@ -473,6 +473,9 @@
             "rule_invite_for_me": "เมื่อฉันได้รับคำเชิญเข้าห้อง",
             "rule_call": "คำเชิญเข้าร่วมการโทร",
             "rule_suppress_notices": "ข้อความจากบอท"
+        },
+        "appearance": {
+            "timeline_image_size_default": "ค่าเริ่มต้น"
         }
     },
     "timeline": {

@@ -181,7 +181,6 @@
     "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
     "Not Trusted": "na se lacri",
     "Cannot reach homeserver": ".i ca ku na da ka'e zilbe'i le samtcise'u",
-    "Match system theme": "nu mapti le jvinu be le vanbi",
     "Never send encrypted messages to unverified sessions in this room from this session": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u le cei'i",
     "Got It": "je'e",
     "Waiting for %(displayName)s to verify…": ".i ca'o denpa lo nu la'o zoi. %(displayName)s .zoi mo'u co'a lacri",
@@ -189,8 +188,6 @@
     "Ok": "je'e",
     "Verify this session": "nu co'a lacri le se samtcise'u",
     "What's New": "notci le du'u cnino",
-    "Use a system font": "nu da pe le vanbi cu ci'artai",
-    "System font name": "cmene le ci'artai pe le vanbi",
     "Never send encrypted messages to unverified sessions from this session": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u",
     "Later": "nu ca na co'e",
     "Other users may not trust it": ".i la'a na pa na du be do cu lacri",
@@ -318,6 +315,12 @@
             "rule_call": "nu da co'a fonjo'e do",
             "rule_suppress_notices": "nu da zilbe'i fi pa sampre",
             "rule_encrypted_room_one_to_one": "nu pa mifra cu zilbe'i pa prenu"
+        },
+        "appearance": {
+            "match_system_theme": "nu mapti le jvinu be le vanbi",
+            "custom_font": "nu da pe le vanbi cu ci'artai",
+            "custom_font_name": "cmene le ci'artai pe le vanbi",
+            "timeline_image_size_default": "zmiselcu'a"
         }
     },
     "create_room": {

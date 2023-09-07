@@ -867,8 +867,6 @@
     "Could not connect to identity server": "ID 서버에 연결할 수 없음",
     "Not a valid identity server (status code %(code)s)": "올바르지 않은 ID 서버 (상태 코드 %(code)s)",
     "Identity server URL must be HTTPS": "ID 서버 URL은 HTTPS이어야 함",
-    "Appearance Settings only affect this %(brand)s session.": "모습 설정은 이 %(brand)s 세션에만 영향을 끼칩니다.",
-    "Customise your appearance": "모습 개인화하기",
     "Delete avatar": "아바타 삭제",
     "More options": "추가 옵션",
     "Pin to sidebar": "사이드바 고정",
@@ -1008,7 +1006,6 @@
     "Match system": "시스템 테마",
     "Spell check": "맞춤법 검사",
     "Unverified sessions": "검증되지 않은 세션들",
-    "Match system theme": "시스템 테마 사용",
     "Sessions": "세션목록",
     "Unverified session": "검증되지 않은 세션",
     "Favourited": "즐겨찾기 됨",
@@ -1210,6 +1207,12 @@
             "rule_tombstone": "방을 업그레이드했을 때",
             "rule_encrypted_room_one_to_one": "1:1 대화 암호화된 메시지",
             "show_message_desktop_notification": "컴퓨터 알림에서 내용 보이기"
+        },
+        "appearance": {
+            "heading": "모습 개인화하기",
+            "subheading": "모습 설정은 이 %(brand)s 세션에만 영향을 끼칩니다.",
+            "match_system_theme": "시스템 테마 사용",
+            "timeline_image_size_default": "기본"
         }
     },
     "devtools": {

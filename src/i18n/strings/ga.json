@@ -688,6 +688,9 @@
         "always_show_message_timestamps": "Taispeáin stampaí ama teachtaireachta i gcónaí",
         "notifications": {
             "rule_call": "Nuair a fhaighim cuireadh glaoigh"
+        },
+        "appearance": {
+            "timeline_image_size_default": "Réamhshocrú"
         }
     },
     "devtools": {

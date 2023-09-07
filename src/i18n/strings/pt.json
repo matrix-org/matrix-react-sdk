@@ -729,6 +729,9 @@
             "rule_invite_for_me": "Quando sou convidado para uma sala",
             "rule_call": "Convite para chamada",
             "rule_suppress_notices": "Mensagens enviadas por bots"
+        },
+        "appearance": {
+            "timeline_image_size_default": "Padrão"
         }
     },
     "devtools": {

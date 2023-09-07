@@ -467,7 +467,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         controller: new RustCryptoSdkController(),
     },
     "baseFontSize": {
-        displayName: _td("Font size"),
+        displayName: _td("settings|appearance|font_size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: "",
         controller: new FontSizeController(),
@@ -487,7 +487,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
      *
      */
     "baseFontSizeV2": {
-        displayName: _td("Font size"),
+        displayName: _td("settings|appearance|font_size"),
         supportedLevels: [SettingLevel.DEVICE],
         default: FontWatcher.DEFAULT_SIZE,
         controller: new FontSizeController(),
@@ -713,18 +713,18 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "use_system_theme": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: true,
-        displayName: _td("Match system theme"),
+        displayName: _td("settings|appearance|match_system_theme"),
     },
     "useSystemFont": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
-        displayName: _td("Use a system font"),
+        displayName: _td("settings|appearance|custom_font"),
         controller: new UseSystemFontController(),
     },
     "systemFont": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: "",
-        displayName: _td("System font name"),
+        displayName: _td("settings|appearance|custom_font_name"),
         controller: new SystemFontController(),
     },
     "webRtcAllowPeerToPeer": {
