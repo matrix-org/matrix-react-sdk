@@ -136,7 +136,7 @@ describe("EncryptionEvent", () => {
             screen.getByText("Encryption enabled");
 
             // Check that the link to the user's profile in the subtitle exists.
-            let linkToProfile = screen.getByText("their profile", { exact: false });
+            const linkToProfile = screen.getByText("their profile", { exact: false });
 
             // Check that the non-linkified text in the subtitle is correct.
             // Then check that the link to the profile is contained within the card subtitle.
