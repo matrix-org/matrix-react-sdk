@@ -122,7 +122,6 @@
     "A word by itself is easy to guess": "सिर्फ एक शब्द अनुमान लगाना आसान है",
     "Names and surnames by themselves are easy to guess": "खुद के नाम और उपनाम अनुमान लगाना आसान है",
     "Common names and surnames are easy to guess": "सामान्य नाम और उपनाम अनुमान लगाना आसान है",
-    "Show message in desktop notification": "डेस्कटॉप अधिसूचना में संदेश दिखाएं",
     "Off": "बंद",
     "On": "चालू",
     "Noisy": "शोरगुल",
@@ -574,7 +573,8 @@
             "rule_invite_for_me": "जब मुझे एक रूम में आमंत्रित किया जाता है",
             "rule_call": "कॉल आमंत्रण",
             "rule_suppress_notices": "रोबॉट द्वारा भेजे गए संदेश",
-            "rule_encrypted_room_one_to_one": "एक एक के साथ चैट में एन्क्रिप्टेड संदेश"
+            "rule_encrypted_room_one_to_one": "एक एक के साथ चैट में एन्क्रिप्टेड संदेश",
+            "show_message_desktop_notification": "डेस्कटॉप अधिसूचना में संदेश दिखाएं"
         }
     },
     "timeline": {

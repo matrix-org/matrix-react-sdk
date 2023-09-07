@@ -425,7 +425,6 @@
     "not stored": "depolanmadı",
     "All keys backed up": "Bütün yedekler yedeklendi",
     "Start using Key Backup": "Anahtar Yedekleme kullanmaya başla",
-    "Show message in desktop notification": "Masaüstü bildiriminde mesaj göster",
     "Display Name": "Ekran Adı",
     "Profile picture": "Profil resmi",
     "Checking server": "Sunucu kontrol ediliyor",
@@ -731,7 +730,6 @@
     "The integration manager is offline or it cannot reach your homeserver.": "Entegrasyon yöneticisi çevrim dışı veya anasunucunuza erişemiyor.",
     "Connect this session to Key Backup": "Anahtar Yedekleme için bu oturuma bağlanın",
     "This backup is trusted because it has been restored on this session": "Bu yedek güvenilir çünkü bu oturumda geri döndürüldü",
-    "Enable desktop notifications for this session": "Bu oturum için masaüstü bildirimlerini aç",
     "Session ID:": "Oturum ID:",
     "Session key:": "Oturum anahtarı:",
     "This user has not verified all of their sessions.": "Bu kullanıcı bütün oturumlarında doğrulanmamış.",
@@ -788,7 +786,6 @@
     "Your homeserver does not support cross-signing.": "Ana sunucunuz çapraz imzalamayı desteklemiyor.",
     "exists": "mevcut",
     "Your keys are <b>not being backed up from this session</b>.": "Anahtarlarınız <b>bu oturum tarafından yedeklenmiyor</b>.",
-    "Enable audible notifications for this session": "Bu oturum için sesli bildirimleri aktifleştir",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Bir metin mesajı gönderildi: +%(msisdn)s. Lütfen içerdiği doğrulama kodunu girin.",
     "You have verified this user. This user has verified all of their sessions.": "Bu kullanıcıyı doğruladınız. Bu kullanıcı tüm oturumlarını doğruladı.",
     "This room is end-to-end encrypted": "Bu oda uçtan uça şifreli",
@@ -1757,7 +1754,10 @@
             "rule_call": "Arama davetiyesi",
             "rule_suppress_notices": "Bot tarafından gönderilen mesajlar",
             "rule_tombstone": "Odalar güncellendiğinde",
-            "rule_encrypted_room_one_to_one": "Birebir sohbetlerdeki şifrelenmiş mesajlar"
+            "rule_encrypted_room_one_to_one": "Birebir sohbetlerdeki şifrelenmiş mesajlar",
+            "enable_desktop_notifications_session": "Bu oturum için masaüstü bildirimlerini aç",
+            "show_message_desktop_notification": "Masaüstü bildiriminde mesaj göster",
+            "enable_audible_notifications_session": "Bu oturum için sesli bildirimleri aktifleştir"
         }
     },
     "devtools": {

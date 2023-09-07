@@ -237,7 +237,6 @@
     "Invite to this room": "이 방에 초대",
     "You cannot delete this message. (%(code)s)": "이 메시지를 삭제할 수 없습니다. (%(code)s)",
     "Thursday": "목요일",
-    "Show message in desktop notification": "컴퓨터 알림에서 내용 보이기",
     "Yesterday": "어제",
     "Error encountered (%(errorDetail)s).": "오류가 일어났습니다 (%(errorDetail)s).",
     "Low Priority": "중요하지 않음",
@@ -1209,7 +1208,8 @@
             "rule_call": "전화 초대",
             "rule_suppress_notices": "봇에게 받은 메시지",
             "rule_tombstone": "방을 업그레이드했을 때",
-            "rule_encrypted_room_one_to_one": "1:1 대화 암호화된 메시지"
+            "rule_encrypted_room_one_to_one": "1:1 대화 암호화된 메시지",
+            "show_message_desktop_notification": "컴퓨터 알림에서 내용 보이기"
         }
     },
     "devtools": {

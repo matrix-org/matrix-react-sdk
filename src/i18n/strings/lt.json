@@ -37,7 +37,6 @@
     "Invite to this room": "Pakviesti į šį kambarį",
     "You cannot delete this message. (%(code)s)": "Jūs negalite trinti šios žinutės. (%(code)s)",
     "Thursday": "Ketvirtadienis",
-    "Show message in desktop notification": "Rodyti žinutę darbalaukio pranešime",
     "Yesterday": "Vakar",
     "Error encountered (%(errorDetail)s).": "Susidurta su klaida (%(errorDetail)s).",
     "Low Priority": "Žemo prioriteto",
@@ -630,8 +629,6 @@
     "Cross-signing public keys:": "Kryžminio pasirašymo vieši raktai:",
     "Cross-signing private keys:": "Kryžminio pasirašymo privatūs raktai:",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Individualiai patikrinkite kiekvieną vartotojo naudojamą seansą, kad pažymėtumėte jį kaip patikimą, nepasitikint kryžminiu pasirašymu patvirtintais įrenginiais.",
-    "Enable desktop notifications for this session": "Įjungti darbalaukio pranešimus šiam seansui",
-    "Enable audible notifications for this session": "Įjungti garsinius pranešimus šiam seansui",
     "wait and try again later": "palaukti ir bandyti vėliau dar kartą",
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Jei jūs nenorite naudoti <server /> serverio radimui ir tam, kad būtumėte randamas esamų, jums žinomų kontaktų, žemiau įveskite kitą tapatybės serverį.",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Tapatybės serverio naudojimas yra pasirinktinis. Jei jūs pasirinksite jo nenaudoti, jūs nebūsite randamas kitų vartotojų ir neturėsite galimybės pakviesti kitų nurodydamas el. paštą ar telefoną.",
@@ -1328,8 +1325,6 @@
     "Unable to share email address": "Nepavyko pasidalinti el. pašto adresu",
     "Verification code": "Patvirtinimo kodas",
     "Olm version:": "Olm versija:",
-    "Enable email notifications for %(email)s": "Įjungti el. pašto pranešimus %(email)s",
-    "Messages containing keywords": "Žinutės turinčios raktažodžių",
     "Mentions & keywords": "Paminėjimai & Raktažodžiai",
     "New keyword": "Naujas raktažodis",
     "Keyword": "Raktažodis",
@@ -1580,8 +1575,6 @@
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Pasidarykite šifravimo raktų ir paskyros duomenų atsarginę kopiją, jei prarastumėte prieigą prie sesijų. Jūsų raktai bus apsaugoti unikaliu saugumo raktu.",
     "There was an error loading your notification settings.": "Įkeliant pranešimų nustatymus įvyko klaida.",
     "Global": "Globalus",
-    "An error occurred whilst saving your notification preferences.": "Išsaugant pranešimų nuostatas įvyko klaida.",
-    "Error saving notification preferences": "Klaida išsaugant pranešimų nuostatas",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Atnaujinama erdvė...",
         "other": "Atnaujinamos erdvės... (%(progress)s iš %(count)s)"
@@ -2183,7 +2176,14 @@
             "rule_call": "Skambučio pakvietimas",
             "rule_suppress_notices": "Boto siųstos žinutės",
             "rule_tombstone": "Kai atnaujinami kambariai",
-            "rule_encrypted_room_one_to_one": "Šifruotos žinutės privačiuose pokalbiuose"
+            "rule_encrypted_room_one_to_one": "Šifruotos žinutės privačiuose pokalbiuose",
+            "messages_containing_keywords": "Žinutės turinčios raktažodžių",
+            "error_saving": "Klaida išsaugant pranešimų nuostatas",
+            "error_saving_detail": "Išsaugant pranešimų nuostatas įvyko klaida.",
+            "enable_email_notifications": "Įjungti el. pašto pranešimus %(email)s",
+            "enable_desktop_notifications_session": "Įjungti darbalaukio pranešimus šiam seansui",
+            "show_message_desktop_notification": "Rodyti žinutę darbalaukio pranešime",
+            "enable_audible_notifications_session": "Įjungti garsinius pranešimus šiam seansui"
         },
         "appearance": {
             "layout_irc": "IRC (eksperimentinis)",

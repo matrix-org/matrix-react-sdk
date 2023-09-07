@@ -1222,9 +1222,6 @@
     "Profile": "پروفایل",
     "The operation could not be completed": "امکان تکمیل عملیات وجود ندارد",
     "Failed to save your profile": "ذخیره‌ی تنظیمات شما موفقیت‌آمیز نبود",
-    "Enable audible notifications for this session": "فعال‌سازی اعلان‌های صدادار برای این نشست",
-    "Show message in desktop notification": "پیام‌ها را در اعلان دسکتاپ نشان بده",
-    "Enable desktop notifications for this session": "فعال‌سازی اعلان‌های دسکتاپ برای این نشست",
     "The integration manager is offline or it cannot reach your homeserver.": "مدیر یکپارچه‌سازی‌ یا آفلاین است و یا نمی‌تواند به سرور شما متصل شود.",
     "Cannot connect to integration manager": "امکان اتصال به مدیر یکپارچه‌سازی‌ها وجود ندارد",
     "Message search initialisation failed": "آغاز فرآیند جستجوی پیام‌ها با شکست همراه بود",
@@ -1920,8 +1917,6 @@
     "Mentions & keywords": "منشن ها و کلمات کلیدی",
     "New keyword": "کلمه کلیدی جدید",
     "Keyword": "کلمه کلیدی",
-    "Messages containing keywords": "پیام های حاوی کلمات کلیدی",
-    "Enable notifications for this account": "اعلان‌ها را برای این اکانت فعال کنید",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "مدیران ادغام داده‌های پیکربندی را دریافت می‌کنند و می‌توانند ویجت‌ها را تغییر دهند، دعوت‌نامه‌های اتاق ارسال کنند و سطوح قدرت را از طرف شما تنظیم کنند.",
     "Deactivating your account is a permanent action — be careful!": "غیرفعال سازی اکانت شما یک اقدام دائمی است - مراقب باشید!",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "عبارت امنیتی خود را وارد کنید و یا <button>کلید امنیتی خود را استفاده کنید</button>.",
@@ -2295,7 +2290,12 @@
             "rule_call": "دعوت به تماس",
             "rule_suppress_notices": "پیام‌های ارسال شده توسط ربات",
             "rule_tombstone": "زمانی که اتاق‌ها به‌روزرسانی می‌گردند",
-            "rule_encrypted_room_one_to_one": "پیام‌های رمزشده در گفتگو‌های خصوصی"
+            "rule_encrypted_room_one_to_one": "پیام‌های رمزشده در گفتگو‌های خصوصی",
+            "messages_containing_keywords": "پیام های حاوی کلمات کلیدی",
+            "enable_notifications_account": "اعلان‌ها را برای این اکانت فعال کنید",
+            "enable_desktop_notifications_session": "فعال‌سازی اعلان‌های دسکتاپ برای این نشست",
+            "show_message_desktop_notification": "پیام‌ها را در اعلان دسکتاپ نشان بده",
+            "enable_audible_notifications_session": "فعال‌سازی اعلان‌های صدادار برای این نشست"
         }
     },
     "devtools": {

@@ -467,9 +467,6 @@
     "Noisy": "مزعج",
     "On": "مشتغل",
     "Off": "مطفأ",
-    "Enable audible notifications for this session": "تمكين الإشعارات الصوتية لهذا الاتصال",
-    "Show message in desktop notification": "إظهار الرسالة في إشعارات سطح المكتب",
-    "Enable desktop notifications for this session": "تمكين إشعارات سطح المكتب لهذا الاتصال",
     "Notification targets": "أهداف الإشعار",
     "You've successfully verified your device!": "لقد نجحت في التحقق من جهازك!",
     "Verify all users in a room to ensure it's secure.": "تحقق من جميع المستخدمين في الغرفة للتأكد من أنها آمنة.",
@@ -1179,7 +1176,10 @@
             "rule_call": "دعوة لمحادثة",
             "rule_suppress_notices": "رسائل أرسلها آلي (Bot)",
             "rule_tombstone": "عند ترقية الغرف",
-            "rule_encrypted_room_one_to_one": "رسائل مشفرة في المحادثات المباشرة"
+            "rule_encrypted_room_one_to_one": "رسائل مشفرة في المحادثات المباشرة",
+            "enable_desktop_notifications_session": "تمكين إشعارات سطح المكتب لهذا الاتصال",
+            "show_message_desktop_notification": "إظهار الرسالة في إشعارات سطح المكتب",
+            "enable_audible_notifications_session": "تمكين الإشعارات الصوتية لهذا الاتصال"
         }
     },
     "devtools": {

@@ -370,8 +370,6 @@
     "Restore from Backup": "Tiririt seg uḥraz",
     "All keys backed up": "Akk tisura ttwaḥerzent",
     "Notification targets": "Isaḍasen n yilɣa",
-    "Enable desktop notifications for this session": "Sens ilɣa n tnirawt i tɣimit-a",
-    "Enable audible notifications for this session": "Sens ilɣa imsiwal i texxamt",
     "Profile picture": "Tugna n umaɣnu",
     "Checking server": "Asenqed n uqeddac",
     "Change identity server": "Snifel aqeddac n timagit",
@@ -981,7 +979,6 @@
     "Paperclip": "Tamessakt n lkaɣeḍ",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Tettḥeqqeḍ? Ad tesruḥeḍ iznan-ik•im yettwawgelhen ma tisura-k•m ur klisent ara akken ilaq.",
     "Cactus": "Akermus",
-    "Show message in desktop notification": "Sken-d iznan deg yilɣa n tnarit",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Ffeɣ seg tuqqna n uqeddac n timagit <current /> syen qqen ɣer <new /> deg wadeg-is?",
     "Terms of service not accepted or the identity server is invalid.": "Tiwtilin n uqeddac ur ttwaqbalent ara neɣ aqeddac n timagit d arameɣtu.",
     "The identity server you have chosen does not have any terms of service.": "Aqeddac n timagit i tferneḍ ulac akk ɣer-s tiwtilin n uqeddac.",
@@ -1764,7 +1761,10 @@
             "rule_call": "Ancad n tinnubga",
             "rule_suppress_notices": "Iznan yettwaznen s Bot",
             "rule_tombstone": "Mi ara ttwaleqqment texxamin",
-            "rule_encrypted_room_one_to_one": "Iznan yettwawgelhen deg yidiwenniyen usriden"
+            "rule_encrypted_room_one_to_one": "Iznan yettwawgelhen deg yidiwenniyen usriden",
+            "enable_desktop_notifications_session": "Sens ilɣa n tnirawt i tɣimit-a",
+            "show_message_desktop_notification": "Sken-d iznan deg yilɣa n tnarit",
+            "enable_audible_notifications_session": "Sens ilɣa imsiwal i texxamt"
         }
     },
     "devtools": {

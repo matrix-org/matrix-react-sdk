@@ -295,7 +295,6 @@
     "Invite to this room": "Uzaicināt uz šo istabu",
     "Thursday": "Ceturtdiena",
     "Logs sent": "Logfaili nosūtīti",
-    "Show message in desktop notification": "Parādīt ziņu darbvirsmas paziņojumos",
     "Yesterday": "Vakardien",
     "Error encountered (%(errorDetail)s).": "Gadījās kļūda (%(errorDetail)s).",
     "Low Priority": "Zema prioritāte",
@@ -440,8 +439,6 @@
     "IRC display name width": "IRC parādāmā vārda platums",
     "%(displayName)s cancelled verification.": "%(displayName)s atcēla verificēšanu.",
     "Your display name": "Jūsu parādāmais vārds",
-    "Enable audible notifications for this session": "Iespējot dzirdamus paziņojumus šai sesijai",
-    "Enable desktop notifications for this session": "Iespējot darbvirsmas paziņojumus šai sesijai",
     "Manage integrations": "Pārvaldīt integrācijas",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Pašlaik jūs izmantojat <server></server>, lai atklātu esošos kontaktus un jūs būtu atklājams citiem. Jūs varat mainīt identitātes serveri zemāk.",
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Pašlaik jūs neizmantojat nevienu identitātes serveri. Lai atklātu esošos kontaktus un jūs būtu atklājams citiem, pievienojiet kādu identitātes serveri zemāk.",
@@ -1162,7 +1159,6 @@
     "Mentions & keywords": "Pieminēšana un atslēgvārdi",
     "New keyword": "Jauns atslēgvārds",
     "Keyword": "Atslēgvārds",
-    "Messages containing keywords": "Ziņas, kas satur atslēgvārdus",
     "Anyone can find and join.": "Ikviens var atrast un pievienoties.",
     "Only invited people can join.": "Tikai uzaicināti cilvēki var pievienoties.",
     "Private (invite only)": "Privāta (tikai ar ielūgumiem)",
@@ -1552,7 +1548,11 @@
             "rule_invite_for_me": "Kad esmu uzaicināts/a istabā",
             "rule_call": "Uzaicinājuma zvans",
             "rule_suppress_notices": "Botu nosūtītās ziņas",
-            "rule_encrypted_room_one_to_one": "Šifrētas ziņas viens-pret-vienu čatos"
+            "rule_encrypted_room_one_to_one": "Šifrētas ziņas viens-pret-vienu čatos",
+            "messages_containing_keywords": "Ziņas, kas satur atslēgvārdus",
+            "enable_desktop_notifications_session": "Iespējot darbvirsmas paziņojumus šai sesijai",
+            "show_message_desktop_notification": "Parādīt ziņu darbvirsmas paziņojumos",
+            "enable_audible_notifications_session": "Iespējot dzirdamus paziņojumus šai sesijai"
         }
     },
     "devtools": {

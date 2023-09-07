@@ -655,13 +655,6 @@
     "There was an error loading your notification settings.": "Παρουσιάστηκε σφάλμα κατά τη φόρτωση των ρυθμίσεων ειδοποιήσεων σας.",
     "Mentions & keywords": "Αναφορές & λέξεις-κλειδιά",
     "New keyword": "Νέα λέξη-κλειδί",
-    "Enable audible notifications for this session": "Ενεργοποιήστε τις ηχητικές ειδοποιήσεις για αυτήν τη συνεδρία",
-    "Show message in desktop notification": "Εμφάνιση του μηνύματος στην ειδοποίηση στον υπολογιστή",
-    "Enable desktop notifications for this session": "Ενεργοποιήστε τις ειδοποιήσεις στον υπολογιστή για αυτήν τη συνεδρία",
-    "Enable email notifications for %(email)s": "Ενεργοποίηση ειδοποιήσεων email για %(email)s",
-    "An error occurred whilst saving your notification preferences.": "Παρουσιάστηκε σφάλμα κατά την αποθήκευση των προτιμήσεων ειδοποίησης.",
-    "Error saving notification preferences": "Σφάλμα κατά την αποθήκευση των προτιμήσεων ειδοποιήσεων",
-    "Messages containing keywords": "Μηνύματα που περιέχουν λέξεις-κλειδιά",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Ενημέρωση χώρου...",
         "other": "Ενημέρωση χώρων... (%(progress)s out of %(count)s)"
@@ -2820,7 +2813,14 @@
             "rule_call": "Πρόσκληση σε κλήση",
             "rule_suppress_notices": "Μηνύματα από bots",
             "rule_tombstone": "Όταν τα δωμάτια αναβαθμίζονται",
-            "rule_encrypted_room_one_to_one": "Κρυπτογραφημένα μηνύματα σε συνομιλίες ένας προς έναν"
+            "rule_encrypted_room_one_to_one": "Κρυπτογραφημένα μηνύματα σε συνομιλίες ένας προς έναν",
+            "messages_containing_keywords": "Μηνύματα που περιέχουν λέξεις-κλειδιά",
+            "error_saving": "Σφάλμα κατά την αποθήκευση των προτιμήσεων ειδοποιήσεων",
+            "error_saving_detail": "Παρουσιάστηκε σφάλμα κατά την αποθήκευση των προτιμήσεων ειδοποίησης.",
+            "enable_email_notifications": "Ενεργοποίηση ειδοποιήσεων email για %(email)s",
+            "enable_desktop_notifications_session": "Ενεργοποιήστε τις ειδοποιήσεις στον υπολογιστή για αυτήν τη συνεδρία",
+            "show_message_desktop_notification": "Εμφάνιση του μηνύματος στην ειδοποίηση στον υπολογιστή",
+            "enable_audible_notifications_session": "Ενεργοποιήστε τις ηχητικές ειδοποιήσεις για αυτήν τη συνεδρία"
         },
         "appearance": {
             "layout_irc": "IRC (Πειραματικό)",

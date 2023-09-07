@@ -237,9 +237,6 @@
     "Guitar": "Gitar",
     "Later": "Senere",
     "Accept <policyLink /> to continue:": "Aksepter <policyLink /> for å fortsette:",
-    "Enable desktop notifications for this session": "Skru på skrivebordsvarsler for denne økten",
-    "Show message in desktop notification": "Vis meldingen i skrivebordsvarselet",
-    "Enable audible notifications for this session": "Skru på hørbare varsler for denne økten",
     "Profile picture": "Profilbilde",
     "Checking server": "Sjekker tjeneren",
     "Change identity server": "Bytt ut identitetstjener",
@@ -1395,7 +1392,10 @@
             "rule_call": "Anropsinvitasjon",
             "rule_suppress_notices": "Meldinger sendt av bot",
             "rule_tombstone": "Når rom blir oppgradert",
-            "rule_encrypted_room_one_to_one": "Krypterte meldinger i samtaler under fire øyne"
+            "rule_encrypted_room_one_to_one": "Krypterte meldinger i samtaler under fire øyne",
+            "enable_desktop_notifications_session": "Skru på skrivebordsvarsler for denne økten",
+            "show_message_desktop_notification": "Vis meldingen i skrivebordsvarselet",
+            "enable_audible_notifications_session": "Skru på hørbare varsler for denne økten"
         }
     },
     "devtools": {

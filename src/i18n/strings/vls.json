@@ -219,7 +219,6 @@
     "Back up your keys before signing out to avoid losing them.": "Makt een back-up van je sleuters vooraleer da je jen afmeldt vo ze nie kwyt te speeln.",
     "Start using Key Backup": "Begint me de sleuterback-up te gebruukn",
     "Notification targets": "Meldiengsbestemmiengn",
-    "Show message in desktop notification": "Bericht toogn in bureaubladmeldienge",
     "Off": "Uut",
     "On": "An",
     "Noisy": "Lawoaierig",
@@ -868,7 +867,8 @@
             "rule_call": "Iproep-uutnodigienge",
             "rule_suppress_notices": "Berichtn verzoundn deur e robot",
             "rule_tombstone": "Wanneer da gesprekkn ipgewoardeerd wordn",
-            "rule_encrypted_room_one_to_one": "Versleuterde berichtn in twigesprekkn"
+            "rule_encrypted_room_one_to_one": "Versleuterde berichtn in twigesprekkn",
+            "show_message_desktop_notification": "Bericht toogn in bureaubladmeldienge"
         }
     },
     "devtools": {

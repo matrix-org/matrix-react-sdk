@@ -1276,12 +1276,6 @@
     "with an empty state key": "ດ້ວຍປຸ່ມລັດ empty",
     "See when anyone posts a sticker to your active room": "ເບິ່ງເວລາທີ່ຄົນໂພສສະຕິກເກີໃສ່ຫ້ອງຂອງທ່ານ",
     "Send stickers to your active room as you": "ສົ່ງສະຕິກເກີໄປຫາຫ້ອງຂອງທ່ານ",
-    "Show message in desktop notification": "ສະແດງຂໍ້ຄວາມໃນການແຈ້ງເຕືອນ desktop",
-    "Enable desktop notifications for this session": "ເປີດໃຊ້ການແຈ້ງເຕືອນເດັສທັອບສຳລັບລະບົບນີ້",
-    "Enable email notifications for %(email)s": "ເປີດໃຊ້ການແຈ້ງເຕືອນອີເມວສຳລັບ %(email)s",
-    "An error occurred whilst saving your notification preferences.": "ເກີດຄວາມຜິດພາດໃນຂະນະທີ່ບັນທຶກການຕັ້ງຄ່າການແຈ້ງເຕືອນຂອງທ່ານ.",
-    "Error saving notification preferences": "ເກີດຄວາມຜິດພາດໃນການບັນທຶກການຕັ້ງຄ່າການແຈ້ງເຕືອນ",
-    "Messages containing keywords": "ຂໍ້ຄວາມທີ່ມີຄໍາສໍາຄັນ",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "ກຳລັງປັບປຸງພື້ນທີ່..",
         "other": "ກຳລັງຍົກລະດັບພື້ນທີ່... (%(progress)s ຈາກທັງໝົດ %(count)s)"
@@ -2384,7 +2378,6 @@
     "To avoid these issues, create a <a>new encrypted room</a> for the conversation you plan to have.": "ເພື່ອຫຼີກລ້ຽງບັນຫາເຫຼົ່ານີ້, ສ້າງ <a>ຫ້ອງເຂົ້າລະຫັດໃຫມ່</a> ສໍາລັບການສົນທະນາທີ່ທ່ານວາງແຜນຈະມີ.",
     "Subscribing to a ban list will cause you to join it!": "ການສະໝັກບັນຊີລາຍການຫ້າມຈະເຮັດໃຫ້ທ່ານເຂົ້າຮ່ວມ!",
     "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "ເພີ່ມຜູ້ໃຊ້ ແລະເຊີບເວີທີ່ທ່ານບໍ່ສົນໃຈໃນທີ່ນີ້. ໃຊ້ເຄື່ອງໝາຍດາວເພື່ອໃຫ້ %(brand)s ກົງກັບຕົວອັກສອນໃດນຶ່ງ. ຕົວຢ່າງ, <code>@bot:*</code> ຈະບໍ່ສົນໃຈຜູ້ໃຊ້ທັງໝົດທີ່ມີຊື່ 'bot' ຢູ່ໃນເຊີບເວີໃດນຶ່ງ.",
-    "Enable audible notifications for this session": "ເປີດໃຊ້ການແຈ້ງເຕືອນທີ່ໄດ້ຍິນໄດ້ສໍາລັບລະບົບນີ້",
     "Homeserver feature support:": "ສະຫນັບສະຫນູນຄຸນນະສົມບັດ Homeserver:",
     "User signing private key:": "ຜູ້ໃຊ້ເຂົ້າສູ່ລະບົບລະຫັດສ່ວນຕົວ:",
     "Self signing private key:": "ລະຫັດສ່ວນຕົວທີ່ເຊັນດ້ວຍຕົນເອງ:",
@@ -2835,7 +2828,14 @@
             "rule_call": "ແຈ້ງເຊີນໂທ",
             "rule_suppress_notices": "ຂໍ້ຄວາມທີ່ສົ່ງໂດຍ bot",
             "rule_tombstone": "ເມື່ອມີການຍົກລະດັບຫ້ອງ",
-            "rule_encrypted_room_one_to_one": "ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໃນການສົນທະນາແບບຫນຶ່ງຕໍ່ຫນຶ່ງ"
+            "rule_encrypted_room_one_to_one": "ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໃນການສົນທະນາແບບຫນຶ່ງຕໍ່ຫນຶ່ງ",
+            "messages_containing_keywords": "ຂໍ້ຄວາມທີ່ມີຄໍາສໍາຄັນ",
+            "error_saving": "ເກີດຄວາມຜິດພາດໃນການບັນທຶກການຕັ້ງຄ່າການແຈ້ງເຕືອນ",
+            "error_saving_detail": "ເກີດຄວາມຜິດພາດໃນຂະນະທີ່ບັນທຶກການຕັ້ງຄ່າການແຈ້ງເຕືອນຂອງທ່ານ.",
+            "enable_email_notifications": "ເປີດໃຊ້ການແຈ້ງເຕືອນອີເມວສຳລັບ %(email)s",
+            "enable_desktop_notifications_session": "ເປີດໃຊ້ການແຈ້ງເຕືອນເດັສທັອບສຳລັບລະບົບນີ້",
+            "show_message_desktop_notification": "ສະແດງຂໍ້ຄວາມໃນການແຈ້ງເຕືອນ desktop",
+            "enable_audible_notifications_session": "ເປີດໃຊ້ການແຈ້ງເຕືອນທີ່ໄດ້ຍິນໄດ້ສໍາລັບລະບົບນີ້"
         },
         "appearance": {
             "layout_irc": "(ທົດລອງ)IRC",

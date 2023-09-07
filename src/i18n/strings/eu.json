@@ -296,7 +296,6 @@
     "Thursday": "Osteguna",
     "Search…": "Bilatu…",
     "Logs sent": "Egunkariak bidalita",
-    "Show message in desktop notification": "Erakutsi mezua mahaigaineko jakinarazpenean",
     "Yesterday": "Atzo",
     "Error encountered (%(errorDetail)s).": "Errorea aurkitu da (%(errorDetail)s).",
     "Low Priority": "Lehentasun baxua",
@@ -930,8 +929,6 @@
     "Connect this session to Key Backup": "Konektatu saio hau gakoen babes-kopiara",
     "This backup is trusted because it has been restored on this session": "Babes-kopia hau fidagarritzat jotzen da saio honetan berrekuratu delako",
     "Your keys are <b>not being backed up from this session</b>.": "<b>Ez da zure gakoen babes-kopia egiten saio honetatik</b>.",
-    "Enable desktop notifications for this session": "Gaitu mahaigaineko jakinarazpenak saio honentzat",
-    "Enable audible notifications for this session": "Gaitu jakinarazpen entzungarriak saio honentzat",
     "Session ID:": "Saioaren ID-a:",
     "Session key:": "Saioaren gakoa:",
     "Message search": "Mezuen bilaketa",
@@ -1413,7 +1410,10 @@
             "rule_call": "Dei gonbidapena",
             "rule_suppress_notices": "Botak bidalitako mezuak",
             "rule_tombstone": "Gelak eguneratzean",
-            "rule_encrypted_room_one_to_one": "Zifratutako mezuak bi pertsonen arteko txatetan"
+            "rule_encrypted_room_one_to_one": "Zifratutako mezuak bi pertsonen arteko txatetan",
+            "enable_desktop_notifications_session": "Gaitu mahaigaineko jakinarazpenak saio honentzat",
+            "show_message_desktop_notification": "Erakutsi mezua mahaigaineko jakinarazpenean",
+            "enable_audible_notifications_session": "Gaitu jakinarazpen entzungarriak saio honentzat"
         }
     },
     "devtools": {

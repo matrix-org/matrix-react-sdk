@@ -292,7 +292,6 @@
     "Invite to this room": "Позови у ову собу",
     "You cannot delete this message. (%(code)s)": "Не можете обрисати ову поруку. (%(code)s)",
     "Thursday": "Четвртак",
-    "Show message in desktop notification": "Прикажи поруку у стоном обавештењу",
     "Yesterday": "Јуче",
     "Error encountered (%(errorDetail)s).": "Догодила се грешка (%(errorDetail)s).",
     "Low Priority": "Најмања важност",
@@ -1144,7 +1143,8 @@
             "rule_message": "Поруке у групним ћаскањима",
             "rule_invite_for_me": "Када сам позван у собу",
             "rule_call": "Позивница за позив",
-            "rule_suppress_notices": "Поруке послате од бота"
+            "rule_suppress_notices": "Поруке послате од бота",
+            "show_message_desktop_notification": "Прикажи поруку у стоном обавештењу"
         }
     },
     "devtools": {

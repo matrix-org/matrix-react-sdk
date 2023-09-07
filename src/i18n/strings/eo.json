@@ -288,7 +288,6 @@
     "What's new?": "Kio novas?",
     "All Rooms": "Ĉiuj ĉambroj",
     "Thursday": "Ĵaŭdo",
-    "Show message in desktop notification": "Montradi mesaĝojn en labortablaj sciigoj",
     "Yesterday": "Hieraŭ",
     "Error encountered (%(errorDetail)s).": "Eraron renkonti (%(errorDetail)s).",
     "Low Priority": "Malalta prioritato",
@@ -901,8 +900,6 @@
     "not stored": "ne deponita",
     "This backup is trusted because it has been restored on this session": "Ĉi tiu savkopio estas fidata, ĉar ĝi estis rehavita en ĉi tiu salutaĵo",
     "Your keys are <b>not being backed up from this session</b>.": "Viaj ŝlosiloj <b>ne estas savkopiataj el ĉi tiu salutaĵo</b>.",
-    "Enable desktop notifications for this session": "Ŝalti labortablajn sciigojn por ĉi tiu salutaĵo",
-    "Enable audible notifications for this session": "Ŝalti aŭdeblajn sciigojn por ĉi tiu salutaĵo",
     "Manage integrations": "Administri kunigojn",
     "Error downloading theme information.": "Eraris elŝuto de informoj pri haŭto.",
     "Theme added!": "Haŭto aldoniĝis!",
@@ -1914,10 +1911,6 @@
     "Global": "Ĉie",
     "New keyword": "Nova ĉefvorto",
     "Keyword": "Ĉefvorto",
-    "Enable email notifications for %(email)s": "Ŝalti retpoŝtajn sciigojn por %(email)s",
-    "An error occurred whilst saving your notification preferences.": "Eraris konservado de viaj preferoj pri sciigoj.",
-    "Error saving notification preferences": "Eraris konservado de preferoj pri sciigoj",
-    "Messages containing keywords": "Mesaĝoj enhavantaj ĉefvortojn",
     "Recommended for public spaces.": "Rekomendita por publikaj aroj.",
     "Allow people to preview your space before they join.": "Povigi personojn antaŭrigardi vian aron antaŭ aliĝo.",
     "To publish an address, it needs to be set as a local address first.": "Por ke adreso publikiĝu, ĝi unue devas esti loka adreso.",
@@ -2088,7 +2081,6 @@
     },
     "%(user1)s and %(user2)s": "%(user1)s kaj %(user2)s",
     "Connectivity to the server has been lost": "Konektebleco al la servilo estas perdita",
-    "Enable notifications for this account": "Ŝalti sciigojn por ĉi tiu konto",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Ĝisdatigante aro...",
         "other": "Ĝisdatigante arojn... (%(progress)s el %(count)s)"
@@ -2585,7 +2577,15 @@
             "rule_call": "Invito al voko",
             "rule_suppress_notices": "Mesaĝoj senditaj per roboto",
             "rule_tombstone": "Kiam ĉambroj gradaltiĝas",
-            "rule_encrypted_room_one_to_one": "Ĉifritaj mesaĝoj en duopaj babiloj"
+            "rule_encrypted_room_one_to_one": "Ĉifritaj mesaĝoj en duopaj babiloj",
+            "messages_containing_keywords": "Mesaĝoj enhavantaj ĉefvortojn",
+            "error_saving": "Eraris konservado de preferoj pri sciigoj",
+            "error_saving_detail": "Eraris konservado de viaj preferoj pri sciigoj.",
+            "enable_notifications_account": "Ŝalti sciigojn por ĉi tiu konto",
+            "enable_email_notifications": "Ŝalti retpoŝtajn sciigojn por %(email)s",
+            "enable_desktop_notifications_session": "Ŝalti labortablajn sciigojn por ĉi tiu salutaĵo",
+            "show_message_desktop_notification": "Montradi mesaĝojn en labortablaj sciigoj",
+            "enable_audible_notifications_session": "Ŝalti aŭdeblajn sciigojn por ĉi tiu salutaĵo"
         },
         "appearance": {
             "layout_bubbles": "Mesaĝaj vezikoj"

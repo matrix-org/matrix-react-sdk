@@ -295,7 +295,6 @@
     "You cannot delete this message. (%(code)s)": "Това съобщение не може да бъде изтрито. (%(code)s)",
     "Thursday": "Четвъртък",
     "Logs sent": "Логовете са изпратени",
-    "Show message in desktop notification": "Показване на съдържание в известията на работния плот",
     "Yesterday": "Вчера",
     "Error encountered (%(errorDetail)s).": "Възникна грешка (%(errorDetail)s).",
     "Low Priority": "Нисък приоритет",
@@ -950,8 +949,6 @@
     "Connect this session to Key Backup": "Свържи тази сесия с резервно копие на ключовете",
     "This backup is trusted because it has been restored on this session": "Това резервно копие е доверено, защото е било възстановено в текущата сесия",
     "Your keys are <b>not being backed up from this session</b>.": "На ключовете ви <b>не се прави резервно копие от тази сесия</b>.",
-    "Enable desktop notifications for this session": "Включи уведомления на работния плот за тази сесия",
-    "Enable audible notifications for this session": "Включи звукови уведомления за тази сесия",
     "Invalid theme schema.": "Невалиден формат на темата.",
     "Error downloading theme information.": "Неуспешно изтегляне на информацията за темата.",
     "Theme added!": "Темата беше добавена!",
@@ -1873,7 +1870,10 @@
             "rule_call": "Покана за разговор",
             "rule_suppress_notices": "Съобщения изпратени от бот",
             "rule_tombstone": "Когато стаите се актуализират",
-            "rule_encrypted_room_one_to_one": "Шифровани съобщения в 1-на-1 чатове"
+            "rule_encrypted_room_one_to_one": "Шифровани съобщения в 1-на-1 чатове",
+            "enable_desktop_notifications_session": "Включи уведомления на работния плот за тази сесия",
+            "show_message_desktop_notification": "Показване на съдържание в известията на работния плот",
+            "enable_audible_notifications_session": "Включи звукови уведомления за тази сесия"
         }
     },
     "devtools": {
