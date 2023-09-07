@@ -114,6 +114,40 @@ describe("EncryptionEvent", () => {
         });
     });
 
+    describe("for an encrypted DM room", () => {
+        const otherUserId = "@alice:example.com";
+
+        beforeEach(() => {
+            event.event.content!.algorithm = algorithm;
+            mocked(client.isRoomEncrypted).mockReturnValue(true);
+
+            jest.spyOn(DMRoomMap, "shared").mockReturnValue({
+                getUserIdForRoomId: (_roomId: string) => otherUserId,
+            } as unknown as DMRoomMap);
+
+            const room = new Room(roomId, client, client.getUserId()!);
+            mocked(client.getRoom).mockReturnValue(room);
+        });
+
+        it("should show a link to the user's profile to verify them with", () => {
+            renderEncryptionEvent(client, event);
+
+            // Check that the expected title of the encrypted DM card exists and has the expected text.
+            screen.getByText("Encryption enabled");
+
+            // Check that the link to the user's profile in the subtitle exists.
+            let linkToProfile = screen.getByText("their profile", { exact: false });
+
+            // Check that the non-linkified text in the subtitle is correct.
+            // Then check that the link to the profile is contained within the card subtitle.
+            expect(
+                screen.getByText(`Messages here are end-to-end encrypted. Verify @alice:example.com in`, {
+                    exact: false,
+                }),
+            ).toContainElement(linkToProfile);
+        });
+    });
+
     describe("for an encrypted local room", () => {
         beforeEach(() => {
             event.event.content!.algorithm = algorithm;
