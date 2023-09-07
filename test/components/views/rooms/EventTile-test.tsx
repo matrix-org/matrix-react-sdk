@@ -20,6 +20,7 @@ import { mocked } from "jest-mock";
 import {
     CryptoApi,
     EventType,
+    IEventDecryptionResult,
     MatrixClient,
     MatrixEvent,
     NotificationCountType,
@@ -28,12 +29,21 @@ import {
     TweakName,
 } from "matrix-js-sdk/src/matrix";
 import { EventEncryptionInfo, EventShieldColour, EventShieldReason } from "matrix-js-sdk/src/crypto-api";
+import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
 
 import EventTile, { EventTileProps } from "../../../../src/components/views/rooms/EventTile";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import { flushPromises, getRoomContext, mkEncryptedEvent, mkEvent, mkMessage, stubClient } from "../../../test-utils";
+import {
+    filterConsole,
+    flushPromises,
+    getRoomContext,
+    mkEncryptedEvent,
+    mkEvent,
+    mkMessage,
+    stubClient,
+} from "../../../test-utils";
 import { mkThread } from "../../../test-utils/threads";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import dis from "../../../../src/dispatcher/dispatcher";
@@ -256,6 +266,67 @@ describe("EventTile", () => {
 
             // there should be no warning
             expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(0);
+        });
+
+        it.each([
+            [EventShieldReason.UNKNOWN, "Unknown error"],
+            [EventShieldReason.UNVERIFIED_IDENTITY, "unverified user"],
+            [EventShieldReason.UNSIGNED_DEVICE, "device not verified by its owner"],
+            [EventShieldReason.UNKNOWN_DEVICE, "unknown or deleted device"],
+            [EventShieldReason.AUTHENTICITY_NOT_GUARANTEED, "can't be guaranteed"],
+            [EventShieldReason.MISMATCHED_SENDER_KEY, "Encrypted by an unverified session"],
+        ])("shows the correct reason code for %i (%s)", async (reasonCode: EventShieldReason, expectedText: string) => {
+            mxEvent = await mkEncryptedEvent({
+                plainContent: { msgtype: "m.text", body: "msg1" },
+                plainType: "m.room.message",
+                user: "@alice:example.org",
+                room: room.roomId,
+            });
+            eventToEncryptionInfoMap.set(mxEvent.getId()!, {
+                shieldColour: EventShieldColour.GREY,
+                shieldReason: reasonCode,
+            } as EventEncryptionInfo);
+
+            const { container } = getComponent();
+            await act(flushPromises);
+
+            const e2eIcons = container.getElementsByClassName("mx_EventTile_e2eIcon");
+            expect(e2eIcons).toHaveLength(1);
+            expect(e2eIcons[0].classList).toContain("mx_EventTile_e2eIcon_normal");
+            expect(e2eIcons[0].getAttribute("aria-label")).toContain(expectedText);
+        });
+
+        describe("undecryptable event", () => {
+            filterConsole("Error decrypting event");
+
+            it("shows an undecryptable warning", async () => {
+                mxEvent = mkEvent({
+                    type: "m.room.encrypted",
+                    room: room.roomId,
+                    user: "@alice:example.org",
+                    event: true,
+                    content: {},
+                });
+
+                const mockCrypto = {
+                    decryptEvent: async (_ev): Promise<IEventDecryptionResult> => {
+                        throw new Error("can't decrypt");
+                    },
+                } as CryptoBackend;
+
+                await mxEvent.attemptDecryption(mockCrypto);
+
+                const { container } = getComponent();
+                await act(flushPromises);
+
+                const eventTiles = container.getElementsByClassName("mx_EventTile");
+                expect(eventTiles).toHaveLength(1);
+
+                expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(1);
+                expect(container.getElementsByClassName("mx_EventTile_e2eIcon")[0].classList).toContain(
+                    "mx_EventTile_e2eIcon_decryption_failure",
+                );
+            });
         });
 
         it("should update the warning when the event is edited", async () => {
