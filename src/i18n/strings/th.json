@@ -51,7 +51,6 @@
     "Failure to create room": "การสร้างห้องล้มเหลว",
     "Filter room members": "กรองสมาชิกห้อง",
     "Forget room": "ลืมห้อง",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s จาก %(fromPowerLevel)s ไปเป็น %(toPowerLevel)s",
     "Historical": "ประวัติแชทเก่า",
     "Incorrect username and/or password.": "ชื่อผู้ใช้และ/หรือรหัสผ่านไม่ถูกต้อง",
     "Incorrect verification code": "รหัสยืนยันไม่ถูกต้อง",
@@ -485,6 +484,9 @@
         "m.image": "%(senderDisplayName)s ได้ส่งรูป",
         "m.room.third_party_invite": {
             "sent": "%(senderName)s ได้ส่งคำเชิญให้ %(targetDisplayName)s เข้าร่วมห้อง"
+        },
+        "m.room.power_levels": {
+            "user_from_to": "%(userId)s จาก %(fromPowerLevel)s ไปเป็น %(toPowerLevel)s"
         }
     },
     "slash_command": {

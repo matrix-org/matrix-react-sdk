@@ -41,11 +41,9 @@
     "Warning!": "Внимание!",
     "Who can read history?": "Кто может читать историю?",
     "You do not have permission to post to this room": "Вы не можете писать в эту комнату",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s изменил(а) уровни прав %(powerLevelDiffText)s.",
     "Failed to send request.": "Не удалось отправить запрос.",
     "Failed to verify email address: make sure you clicked the link in the email": "Не удалось проверить email: убедитесь, что вы перешли по ссылке в письме",
     "Failure to create room": "Не удалось создать комнату",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "для %(userId)s с %(fromPowerLevel)s на %(toPowerLevel)s",
     "Missing room_id in request": "Отсутствует room_id в запросе",
     "Missing user_id in request": "Отсутствует user_id в запросе",
     "Connectivity to the server has been lost.": "Связь с сервером потеряна.",
@@ -833,8 +831,6 @@
     "Double check that your server supports the room version chosen and try again.": "Убедитесь, что ваш сервер поддерживает выбранную версию комнаты и попробуйте снова.",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ВНИМАНИЕ: ПРОВЕРКА КЛЮЧА НЕ ПРОШЛА! Ключом подписи для %(userId)s и сеанса %(deviceId)s является \"%(fprint)s\", что не соответствует указанному ключу \"%(fingerprint)s\". Это может означать, что ваши сообщения перехватываются!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Ключ подписи, который вы предоставили, соответствует ключу подписи, который вы получили от пользователя %(userId)s через сеанс %(deviceId)s. Сеанс отмечен как подтверждённый.",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s удалил(а) правило блокировки пользователей по шаблону %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s удалил правило блокировки комнат по шаблону %(glob)s",
     "Enable message search in encrypted rooms": "Включить поиск сообщений в зашифрованных комнатах",
     "How fast should messages be downloaded.": "Как быстро сообщения должны быть загружены.",
     "This is your list of users/servers you have blocked - don't leave the room!": "Это список пользователей/серверов, которые вы заблокировали — не покидайте комнату!",
@@ -850,29 +846,6 @@
     "Sign In or Create Account": "Войдите или создайте учётную запись",
     "Use your account or create a new one to continue.": "Воспользуйтесь своей учётной записью или создайте новую, чтобы продолжить.",
     "Create Account": "Создать учётную запись",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s добавил(а) альтернативные адреса %(addresses)s для этой комнаты.",
-        "one": "%(senderName)s добавил(а) альтернативные адреса %(addresses)s для этой комнаты."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s удалил(а) альтернативные адреса %(addresses)s для этой комнаты.",
-        "one": "%(senderName)s удалил(а) альтернативные адреса %(addresses)s для этой комнаты."
-    },
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s удалил(а) правило блокировки серверов по шаблону %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s удалил(а) правило блокировки по шаблону %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s обновил(а) неверное правило блокировки",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s обновил(а) правило блокировки пользователей по шаблону %(glob)s за %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s обновил(а) правило блокировки комнат по шаблону %(glob)s за %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s обновил(а) правило блокировки серверов по шаблону %(glob)s за %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s обновил(а) правило блокировки по шаблону %(glob)s за %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s создал(а) правило блокировки пользователей по шаблону %(glob)s за %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s создал(а) правило блокировки комнат по шаблону %(glob)s за %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s создал(а) правило блокировки серверов по шаблону %(glob)s за %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s создал(а) правило блокировки по шаблону %(glob)s за %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s изменил(а) правило блокировки пользователей по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s изменил(а) правило блокировки комнат по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s изменил(а) правило блокировки серверов по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s обновил(а) правило блокировки по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s",
     "Not Trusted": "Недоверенное",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) произвел(а) вход через новый сеанс без подтверждения:",
     "Ask this user to verify their session, or manually verify it below.": "Попросите этого пользователя подтвердить сеанс или подтвердите его вручную ниже.",
@@ -3397,7 +3370,15 @@
             "removed": "%(senderName)s удалил главный адрес комнаты.",
             "changed_alternative": "%(senderName)s изменил(а) альтернативные адреса для этой комнаты.",
             "changed_main_and_alternative": "%(senderName)s изменил(а) главный и альтернативные адреса для этой комнаты.",
-            "changed": "%(senderName)s изменил(а) адреса для этой комнаты."
+            "changed": "%(senderName)s изменил(а) адреса для этой комнаты.",
+            "alt_added": {
+                "other": "%(senderName)s добавил(а) альтернативные адреса %(addresses)s для этой комнаты.",
+                "one": "%(senderName)s добавил(а) альтернативные адреса %(addresses)s для этой комнаты."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s удалил(а) альтернативные адреса %(addresses)s для этой комнаты.",
+                "one": "%(senderName)s удалил(а) альтернативные адреса %(addresses)s для этой комнаты."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s отозвал/а приглашение %(targetDisplayName)s присоединиться к комнате.",
@@ -3570,6 +3551,29 @@
                 "one": "%(oneUser)sотправил(а) скрытое сообщение",
                 "other": "%(oneUser)sотправил(а) %(count)s скрытых сообщения(-й)"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s изменил(а) уровни прав %(powerLevelDiffText)s.",
+            "user_from_to": "для %(userId)s с %(fromPowerLevel)s на %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s удалил(а) правило блокировки пользователей по шаблону %(glob)s",
+            "removed_rule_rooms": "%(senderName)s удалил правило блокировки комнат по шаблону %(glob)s",
+            "removed_rule_servers": "%(senderName)s удалил(а) правило блокировки серверов по шаблону %(glob)s",
+            "removed_rule": "%(senderName)s удалил(а) правило блокировки по шаблону %(glob)s",
+            "updated_invalid_rule": "%(senderName)s обновил(а) неверное правило блокировки",
+            "updated_rule_users": "%(senderName)s обновил(а) правило блокировки пользователей по шаблону %(glob)s за %(reason)s",
+            "updated_rule_rooms": "%(senderName)s обновил(а) правило блокировки комнат по шаблону %(glob)s за %(reason)s",
+            "updated_rule_servers": "%(senderName)s обновил(а) правило блокировки серверов по шаблону %(glob)s за %(reason)s",
+            "updated_rule": "%(senderName)s обновил(а) правило блокировки по шаблону %(glob)s за %(reason)s",
+            "created_rule_users": "%(senderName)s создал(а) правило блокировки пользователей по шаблону %(glob)s за %(reason)s",
+            "created_rule_rooms": "%(senderName)s создал(а) правило блокировки комнат по шаблону %(glob)s за %(reason)s",
+            "created_rule_servers": "%(senderName)s создал(а) правило блокировки серверов по шаблону %(glob)s за %(reason)s",
+            "created_rule": "%(senderName)s создал(а) правило блокировки по шаблону %(glob)s за %(reason)s",
+            "changed_rule_users": "%(senderName)s изменил(а) правило блокировки пользователей по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s",
+            "changed_rule_rooms": "%(senderName)s изменил(а) правило блокировки комнат по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s",
+            "changed_rule_servers": "%(senderName)s изменил(а) правило блокировки серверов по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s",
+            "changed_rule_glob": "%(senderName)s обновил(а) правило блокировки по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s"
         }
     },
     "slash_command": {

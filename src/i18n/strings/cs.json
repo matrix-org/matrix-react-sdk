@@ -94,7 +94,6 @@
     "Passwords can't be empty": "Hesla nemohou být prázdná",
     "Permissions": "Oprávnění",
     "Phone": "Telefon",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s změnil(a) úroveň oprávnění o %(powerLevelDiffText)s.",
     "Define the power level of a user": "Stanovte úroveň oprávnění uživatele",
     "Failed to change power level": "Nepodařilo se změnit úroveň oprávnění",
     "Power level must be positive integer.": "Úroveň oprávnění musí být kladné celé číslo.",
@@ -126,7 +125,6 @@
     "Check for update": "Zkontrolovat aktualizace",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Nelze se připojit k domovskému serveru přes HTTP, pokud je v adresním řádku HTTPS. Buď použijte HTTPS, nebo <a>povolte nezabezpečené skripty</a>.",
     "Displays action": "Zobrazí akci",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s z %(fromPowerLevel)s na %(toPowerLevel)s",
     "This doesn't appear to be a valid email address": "Tato e-mailová adresa se zdá být neplatná",
     "This phone number is already in use": "Toto telefonní číslo je již používáno",
     "This room is not accessible by remote Matrix servers": "Tato místnost není přístupná vzdáleným Matrix serverům",
@@ -813,23 +811,6 @@
     "User Autocomplete": "Automatické doplňování uživatelů",
     "Error upgrading room": "Chyba při aktualizaci místnosti",
     "Double check that your server supports the room version chosen and try again.": "Zkontrolujte, že váš server opravdu podporuje zvolenou verzi místnosti.",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s odstranil(a) pravidlo blokující uživatele odpovídající %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s odstranil pravidlo blokující místnosti odpovídající %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s odstranil pravidlo blokující servery odpovídající %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s odstranil blokující pravidlo %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s aktualizoval neplatné pravidlo blokování",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s aktualizoval(a) pravidlo blokující uživatele odpovídající %(glob)s z důvodu %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s aktualizoval pravidlo blokující místnosti odpovídající %(glob)s z důvodu %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s aktualizoval pravidlo blokující servery odpovídající %(glob)s z důvodu %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s aktualizoval blokovací pravidlo odpovídající %(glob)s z důvodu %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s vytvořil(a) pravidlo blokující uživatele odpovídající %(glob)s z důvodu %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s vytvořil pravidlo blokující místnosti odpovídající %(glob)s z důvodu %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s vytvořil pravidlo blokující servery odpovídající %(glob)s z důvodu %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s vytvořil blokovací pravidlo odpovídající %(glob)s z důvodu %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s změnil(a) pravidlo blokující uživatele odpovídající %(oldGlob)s na uživatele odpovídající %(newGlob)s z důvodu %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s změnil(a) pravidlo blokující místnosti odpovídající %(oldGlob)s na místnosti odpovídající %(newGlob)s z důvodu %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s změnil(a) pravidlo blokující servery odpovídající %(oldGlob)s na servery odpovídající %(newGlob)s z důvodu %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s změnil(a) blokovací pravidlo odpovídající %(oldGlob)s na odpovídající %(newGlob)s z důvodu %(reason)s",
     "Match system theme": "Nastavit podle vzhledu systému",
     "My Ban List": "Můj seznam zablokovaných",
     "This is your list of users/servers you have blocked - don't leave the room!": "Toto je váš seznam blokovaných uživatelů/serverů - neopouštějte tuto místnost!",
@@ -1023,14 +1004,6 @@
     "Mark all as read": "Označit vše jako přečtené",
     "Not currently indexing messages for any room.": "Aktuálně neindexujeme žádné zprávy.",
     "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s z %(totalRooms)s",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s přidal(a) této místnosti alternativní adresy %(addresses)s.",
-        "one": "%(senderName)s přidal(a) této místnosti alternativní adresu %(addresses)s."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s odebral(a) této místnosti alternativní adresy %(addresses)s.",
-        "one": "%(senderName)s odebral(a) této místnosti alternativní adresu %(addresses)s."
-    },
     "Manually verify all remote sessions": "Ručně ověřit všechny relace",
     "cached locally": "uložen lokálně",
     "not found locally": "nenalezen lolálně",
@@ -3702,7 +3675,15 @@
             "removed": "%(senderName)s zrušil hlavní adresu této místnosti.",
             "changed_alternative": "%(senderName)s změnil(a) alternativní adresy této místnosti.",
             "changed_main_and_alternative": "%(senderName)s změnil(a) hlavní a alternativní adresy této místnosti.",
-            "changed": "%(senderName)s změnil(a) adresy této místnosti."
+            "changed": "%(senderName)s změnil(a) adresy této místnosti.",
+            "alt_added": {
+                "other": "%(senderName)s přidal(a) této místnosti alternativní adresy %(addresses)s.",
+                "one": "%(senderName)s přidal(a) této místnosti alternativní adresu %(addresses)s."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s odebral(a) této místnosti alternativní adresy %(addresses)s.",
+                "one": "%(senderName)s odebral(a) této místnosti alternativní adresu %(addresses)s."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s zrušil(a) pozvání do této místnosti pro uživatele %(targetDisplayName)s.",
@@ -3883,6 +3864,29 @@
                 "one": "%(oneUser)sodeslal(a) skrytou zprávu",
                 "other": "%(oneUser)s odeslal(a) %(count)s skrytých zpráv"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s změnil(a) úroveň oprávnění o %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s z %(fromPowerLevel)s na %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s odstranil(a) pravidlo blokující uživatele odpovídající %(glob)s",
+            "removed_rule_rooms": "%(senderName)s odstranil pravidlo blokující místnosti odpovídající %(glob)s",
+            "removed_rule_servers": "%(senderName)s odstranil pravidlo blokující servery odpovídající %(glob)s",
+            "removed_rule": "%(senderName)s odstranil blokující pravidlo %(glob)s",
+            "updated_invalid_rule": "%(senderName)s aktualizoval neplatné pravidlo blokování",
+            "updated_rule_users": "%(senderName)s aktualizoval(a) pravidlo blokující uživatele odpovídající %(glob)s z důvodu %(reason)s",
+            "updated_rule_rooms": "%(senderName)s aktualizoval pravidlo blokující místnosti odpovídající %(glob)s z důvodu %(reason)s",
+            "updated_rule_servers": "%(senderName)s aktualizoval pravidlo blokující servery odpovídající %(glob)s z důvodu %(reason)s",
+            "updated_rule": "%(senderName)s aktualizoval blokovací pravidlo odpovídající %(glob)s z důvodu %(reason)s",
+            "created_rule_users": "%(senderName)s vytvořil(a) pravidlo blokující uživatele odpovídající %(glob)s z důvodu %(reason)s",
+            "created_rule_rooms": "%(senderName)s vytvořil pravidlo blokující místnosti odpovídající %(glob)s z důvodu %(reason)s",
+            "created_rule_servers": "%(senderName)s vytvořil pravidlo blokující servery odpovídající %(glob)s z důvodu %(reason)s",
+            "created_rule": "%(senderName)s vytvořil blokovací pravidlo odpovídající %(glob)s z důvodu %(reason)s",
+            "changed_rule_users": "%(senderName)s změnil(a) pravidlo blokující uživatele odpovídající %(oldGlob)s na uživatele odpovídající %(newGlob)s z důvodu %(reason)s",
+            "changed_rule_rooms": "%(senderName)s změnil(a) pravidlo blokující místnosti odpovídající %(oldGlob)s na místnosti odpovídající %(newGlob)s z důvodu %(reason)s",
+            "changed_rule_servers": "%(senderName)s změnil(a) pravidlo blokující servery odpovídající %(oldGlob)s na servery odpovídající %(newGlob)s z důvodu %(reason)s",
+            "changed_rule_glob": "%(senderName)s změnil(a) blokovací pravidlo odpovídající %(oldGlob)s na odpovídající %(newGlob)s z důvodu %(reason)s"
         }
     },
     "slash_command": {

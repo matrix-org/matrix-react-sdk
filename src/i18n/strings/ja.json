@@ -115,8 +115,6 @@
     "Displays action": "アクションを表示",
     "Forces the current outbound group session in an encrypted room to be discarded": "暗号化されたルーム内の現在のアウトバウンドグループセッションを強制的に破棄",
     "Reason": "理由",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)sの権限レベルを%(fromPowerLevel)sから%(toPowerLevel)sに変更しました。",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)sが%(powerLevelDiffText)s",
     "Failure to create room": "ルームの作成に失敗",
     "Server may be unavailable, overloaded, or you hit a bug.": "サーバーが使用できないか、オーバーロードしているか、または不具合が発生した可能性があります。",
     "This homeserver has hit its Monthly Active User limit.": "このホームサーバーは月間アクティブユーザー数の上限に達しました 。",
@@ -1001,31 +999,6 @@
     "Remain on your screen when viewing another room, when running": "他のルームを表示している間も実行中は画面に留まる",
     "Ask this user to verify their session, or manually verify it below.": "このユーザーにセッションを認証するよう依頼するか、以下から手動で認証してください。",
     "Verify your other session using one of the options below.": "以下のどれか一つを使って他のセッションを認証します。",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)sが、%(oldGlob)sにマッチするブロック用ルールを、%(newGlob)sにマッチするブロック用ルールに更新しました（理由：%(reason)s）",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)sが、%(oldGlob)sにマッチするサーバーをブロックするルールを、%(newGlob)sにマッチするサーバーをブロックするルールに変更しました（理由：%(reason)s）",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)sが、%(oldGlob)sにマッチするルームをブロックするルールを、%(newGlob)sにマッチするルームをブロックするルールに変更しました（理由：%(reason)s）",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)sが、%(oldGlob)sにマッチするユーザーをブロックするルールを、%(newGlob)sにマッチするユーザーをブロックするルールに変更しました（理由：%(reason)s）",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)sが%(glob)sにマッチするブロック用ルールを作成しました（理由：%(reason)s）",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)sが%(glob)sにマッチするサーバーをブロックするルールを作成しました（理由：%(reason)s）",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)sが%(glob)sにマッチするルームをブロックするルールを作成しました（理由：%(reason)s）",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)sが%(glob)sにマッチするユーザーをブロックするルールを作成しました（理由：%(reason)s）",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)sが%(glob)sにマッチするブロック用ルールを更新しました（理由：%(reason)s）",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)sが%(glob)sにマッチするサーバーをブロックするルールを更新しました（理由：%(reason)s）",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)sが%(glob)sにマッチするルームをブロックするルールを更新しました（理由：%(reason)s）",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)sが%(glob)sにマッチするユーザーをブロックするルールを更新しました（理由：%(reason)s）",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)sが不正なブロックに関するルールを更新しました",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)sが%(glob)sにマッチするブロック用ルールを削除しました",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)sが%(glob)sにマッチするサーバーをブロックするルールを削除しました",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)sが%(glob)sにマッチするルームをブロックするルールを削除しました",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)sが%(glob)sにマッチするユーザーをブロックするルールを削除しました",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "one": "%(senderName)sがこのルームの代替アドレス %(addresses)s を削除しました。",
-        "other": "%(senderName)sがこのルームの代替アドレス %(addresses)s を削除しました。"
-    },
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "one": "%(senderName)sがこのルームの代替アドレス %(addresses)s を追加しました。",
-        "other": "%(senderName)sがこのルームの代替アドレス %(addresses)s を追加しました。"
-    },
     "Converts the DM to a room": "ダイレクトメッセージをルームに変換",
     "Converts the room to a DM": "ルームをダイレクトメッセージに変換",
     "Takes the call in the current room off hold": "現在のルームの通話を保留から外す",
@@ -3509,7 +3482,15 @@
             "removed": "%(senderName)sがこのルームのメインアドレスを削除しました。",
             "changed_alternative": "%(senderName)sがこのルームの代替アドレスを変更しました。",
             "changed_main_and_alternative": "%(senderName)sがこのルームのメインアドレスと代替アドレスを変更しました。",
-            "changed": "%(senderName)sがこのルームのアドレスを変更しました。"
+            "changed": "%(senderName)sがこのルームのアドレスを変更しました。",
+            "alt_added": {
+                "one": "%(senderName)sがこのルームの代替アドレス %(addresses)s を追加しました。",
+                "other": "%(senderName)sがこのルームの代替アドレス %(addresses)s を追加しました。"
+            },
+            "alt_removed": {
+                "one": "%(senderName)sがこのルームの代替アドレス %(addresses)s を削除しました。",
+                "other": "%(senderName)sがこのルームの代替アドレス %(addresses)s を削除しました。"
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)sが%(targetDisplayName)sへのルームの招待を取り消しました。",
@@ -3682,6 +3663,29 @@
                 "one": "%(oneUser)sが1件の非表示のメッセージを送信しました",
                 "other": "%(oneUser)sが%(count)s件の非表示のメッセージを送信しました"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)sが%(powerLevelDiffText)s",
+            "user_from_to": "%(userId)sの権限レベルを%(fromPowerLevel)sから%(toPowerLevel)sに変更しました。"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)sが%(glob)sにマッチするユーザーをブロックするルールを削除しました",
+            "removed_rule_rooms": "%(senderName)sが%(glob)sにマッチするルームをブロックするルールを削除しました",
+            "removed_rule_servers": "%(senderName)sが%(glob)sにマッチするサーバーをブロックするルールを削除しました",
+            "removed_rule": "%(senderName)sが%(glob)sにマッチするブロック用ルールを削除しました",
+            "updated_invalid_rule": "%(senderName)sが不正なブロックに関するルールを更新しました",
+            "updated_rule_users": "%(senderName)sが%(glob)sにマッチするユーザーをブロックするルールを更新しました（理由：%(reason)s）",
+            "updated_rule_rooms": "%(senderName)sが%(glob)sにマッチするルームをブロックするルールを更新しました（理由：%(reason)s）",
+            "updated_rule_servers": "%(senderName)sが%(glob)sにマッチするサーバーをブロックするルールを更新しました（理由：%(reason)s）",
+            "updated_rule": "%(senderName)sが%(glob)sにマッチするブロック用ルールを更新しました（理由：%(reason)s）",
+            "created_rule_users": "%(senderName)sが%(glob)sにマッチするユーザーをブロックするルールを作成しました（理由：%(reason)s）",
+            "created_rule_rooms": "%(senderName)sが%(glob)sにマッチするルームをブロックするルールを作成しました（理由：%(reason)s）",
+            "created_rule_servers": "%(senderName)sが%(glob)sにマッチするサーバーをブロックするルールを作成しました（理由：%(reason)s）",
+            "created_rule": "%(senderName)sが%(glob)sにマッチするブロック用ルールを作成しました（理由：%(reason)s）",
+            "changed_rule_users": "%(senderName)sが、%(oldGlob)sにマッチするユーザーをブロックするルールを、%(newGlob)sにマッチするユーザーをブロックするルールに変更しました（理由：%(reason)s）",
+            "changed_rule_rooms": "%(senderName)sが、%(oldGlob)sにマッチするルームをブロックするルールを、%(newGlob)sにマッチするルームをブロックするルールに変更しました（理由：%(reason)s）",
+            "changed_rule_servers": "%(senderName)sが、%(oldGlob)sにマッチするサーバーをブロックするルールを、%(newGlob)sにマッチするサーバーをブロックするルールに変更しました（理由：%(reason)s）",
+            "changed_rule_glob": "%(senderName)sが、%(oldGlob)sにマッチするブロック用ルールを、%(newGlob)sにマッチするブロック用ルールに更新しました（理由：%(reason)s）"
         }
     },
     "slash_command": {

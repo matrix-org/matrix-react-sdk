@@ -251,14 +251,6 @@
     "Recent Conversations": "Hiljutised vestlused",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Sinu sõnumit ei saadetud, kuna see koduserver on saavutanud igakuise aktiivsete kasutajate piiri. Teenuse kasutamiseks palun <a>võta ühendust serveri haldajaga</a>.",
     "Add room": "Lisa jututuba",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s lisas sellele jututoale täiendava aadressi %(addresses)s.",
-        "one": "%(senderName)s lisas sellele jututoale täiendava aadressi %(addresses)s."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s eemaldas täiendavad aadressid %(addresses)s sellelt jututoalt.",
-        "one": "%(senderName)s eemaldas täiendava aadressi %(addresses)s sellelt jututoalt."
-    },
     "Muted Users": "Summutatud kasutajad",
     "This room is end-to-end encrypted": "See jututuba on läbivalt krüptitud",
     "Everyone in this room is verified": "Kõik kasutajad siin nututoas on verifitseeritud",
@@ -889,23 +881,6 @@
     "Language Dropdown": "Keelevalik",
     "Ignored user": "Eiratud kasutaja",
     "You are now ignoring %(userId)s": "Sa praegu eirad kasutajat %(userId)s",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s eemaldas kasutajate ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s eemaldas jututubade ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s eemaldas serverite ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s eemaldas ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s uuendas vigast ligipääsukeelu reeglit",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s uuendas %(reason)s põhjusel kasutajate ligipääsukeelu reeglit, mis vastas tingimusele %(glob)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s uuendas %(reason)s põhjusel jututubade ligipääsukeelu reeglit, mis vastas tingimusele %(glob)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s uuendas %(reason)s põhjusel serverite ligipääsukeelu reeglit, mis vastas tingimusele %(glob)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s uuendas %(reason)s põhjusel ligipääsukeelu reeglit, mis vastas tingimusele %(glob)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s määras %(reason)s tõttu kasutajate ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s määras %(reason)s tõttu jututubade ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s määras %(reason)s tõttu serverite ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s määras %(reason)s tõttu ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s muutis %(reason)s tõttu kasutajate ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s muutis %(reason)s tõttu jututubade ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s muutis %(reason)s tõttu serverite ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s muutis %(reason)s tõttu ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s",
     "The user must be unbanned before they can be invited.": "Enne kutse saatmist peab kasutajalt olema eemaldatud ligipääsukeeld.",
     "Your homeserver has exceeded its user limit.": "Sinu koduserver on ületanud kasutajate arvu ülempiiri.",
     "Your homeserver has exceeded one of its resource limits.": "Sinu koduserver on ületanud ühe oma ressursipiirangutest.",
@@ -1112,8 +1087,6 @@
     "Error upgrading room": "Viga jututoa uuendamisel",
     "Double check that your server supports the room version chosen and try again.": "Kontrolli veel kord, kas sinu koduserver toetab seda jututoa versiooni ning proovi uuesti.",
     "Use an identity server": "Kasuta isikutuvastusserverit",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s õigused muutusid: %(fromPowerLevel)s -> %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s muutis %(powerLevelDiffText)s õigusi.",
     "Use a system font": "Kasuta süsteemset fonti",
     "System font name": "Süsteemse fondi nimi",
     "This is your list of users/servers you have blocked - don't leave the room!": "See on sinu serverite ja kasutajate ligipääsukeeldude loend. Palun ära lahku sellest jututoast!",
@@ -3697,7 +3670,15 @@
             "removed": "%(senderName)s eemaldas põhiaadressi sellest jututoast.",
             "changed_alternative": "%(senderName)s muutis selle jututoa täiendavat aadressi.",
             "changed_main_and_alternative": "%(senderName)s muutis selle jututoa põhiaadressi ja täiendavat aadressi.",
-            "changed": "%(senderName)s muutis selle jututoa aadresse."
+            "changed": "%(senderName)s muutis selle jututoa aadresse.",
+            "alt_added": {
+                "other": "%(senderName)s lisas sellele jututoale täiendava aadressi %(addresses)s.",
+                "one": "%(senderName)s lisas sellele jututoale täiendava aadressi %(addresses)s."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s eemaldas täiendavad aadressid %(addresses)s sellelt jututoalt.",
+                "one": "%(senderName)s eemaldas täiendava aadressi %(addresses)s sellelt jututoalt."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s võttis %(targetDisplayName)s'lt tagasi jututoaga liitumise kutse.",
@@ -3878,6 +3859,29 @@
                 "one": "%(oneUser)s saatis ühe peidetud sõnumi",
                 "other": "%(oneUser)s saatis %(count)s peidetud sõnumit"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s muutis %(powerLevelDiffText)s õigusi.",
+            "user_from_to": "%(userId)s õigused muutusid: %(fromPowerLevel)s -> %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s eemaldas kasutajate ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
+            "removed_rule_rooms": "%(senderName)s eemaldas jututubade ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
+            "removed_rule_servers": "%(senderName)s eemaldas serverite ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
+            "removed_rule": "%(senderName)s eemaldas ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
+            "updated_invalid_rule": "%(senderName)s uuendas vigast ligipääsukeelu reeglit",
+            "updated_rule_users": "%(senderName)s uuendas %(reason)s põhjusel kasutajate ligipääsukeelu reeglit, mis vastas tingimusele %(glob)s",
+            "updated_rule_rooms": "%(senderName)s uuendas %(reason)s põhjusel jututubade ligipääsukeelu reeglit, mis vastas tingimusele %(glob)s",
+            "updated_rule_servers": "%(senderName)s uuendas %(reason)s põhjusel serverite ligipääsukeelu reeglit, mis vastas tingimusele %(glob)s",
+            "updated_rule": "%(senderName)s uuendas %(reason)s põhjusel ligipääsukeelu reeglit, mis vastas tingimusele %(glob)s",
+            "created_rule_users": "%(senderName)s määras %(reason)s tõttu kasutajate ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
+            "created_rule_rooms": "%(senderName)s määras %(reason)s tõttu jututubade ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
+            "created_rule_servers": "%(senderName)s määras %(reason)s tõttu serverite ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
+            "created_rule": "%(senderName)s määras %(reason)s tõttu ligipääsukeelu reegli, mis vastas tingimusele %(glob)s",
+            "changed_rule_users": "%(senderName)s muutis %(reason)s tõttu kasutajate ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s",
+            "changed_rule_rooms": "%(senderName)s muutis %(reason)s tõttu jututubade ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s",
+            "changed_rule_servers": "%(senderName)s muutis %(reason)s tõttu serverite ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s",
+            "changed_rule_glob": "%(senderName)s muutis %(reason)s tõttu ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s"
         }
     },
     "slash_command": {

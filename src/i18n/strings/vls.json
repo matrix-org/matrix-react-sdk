@@ -71,8 +71,6 @@
     "Displays action": "Toogt actie",
     "Forces the current outbound group session in an encrypted room to be discarded": "Forceert de huudige uutwoartsche groepssessie in e versleuterd gesprek vo verworpn te wordn",
     "Reason": "Reedn",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s van %(fromPowerLevel)s noa %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s èt ’t machtsniveau van %(powerLevelDiffText)s gewyzigd.",
     "No homeserver URL provided": "Geen thuusserver-URL ingegeevn",
     "Unexpected error resolving homeserver configuration": "Ounverwachte foute by ’t controleern van de thuusserverconfiguroasje",
     "This homeserver has hit its Monthly Active User limit.": "Dezen thuusserver èt z’n limiet vo moandeliks actieve gebruukers bereikt.",
@@ -1022,6 +1020,10 @@
                 "other": "%(oneUser)s èt %(count)s kis nietent gewyzigd",
                 "one": "%(oneUser)s è nietent gewyzigd"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s èt ’t machtsniveau van %(powerLevelDiffText)s gewyzigd.",
+            "user_from_to": "%(userId)s van %(fromPowerLevel)s noa %(toPowerLevel)s"
         }
     },
     "slash_command": {

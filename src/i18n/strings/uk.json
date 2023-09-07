@@ -29,7 +29,6 @@
     "Banned users": "Заблоковані користувачі",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Не вдалося під'єднатися до домашнього сервера — перевірте з'єднання, переконайтесь, що ваш <a>SSL-сертифікат домашнього сервера</a> довірений і що розширення браузера не блокує запити.",
     "Change Password": "Змінити пароль",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s змінює рівень повноважень %(powerLevelDiffText)s.",
     "Email": "Е-пошта",
     "Email address": "Адреса е-пошти",
     "Rooms": "Кімнати",
@@ -137,7 +136,6 @@
     "Displays action": "Показ дій",
     "Reason": "Причина",
     "Default": "Типовий",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s з %(fromPowerLevel)s до %(toPowerLevel)s",
     "Failure to create room": "Не вдалося створити кімнату",
     "Server may be unavailable, overloaded, or you hit a bug.": "Сервер може бути недоступний, перевантажений, або ж ви натрапили на ваду.",
     "This homeserver has hit its Monthly Active User limit.": "Цей домашній сервер досягнув свого ліміту щомісячних активних користувачів.",
@@ -306,26 +304,6 @@
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "УВАГА: НЕ ВДАЛОСЯ ЗВІРИТИ КЛЮЧ! Ключем для %(userId)s та сеансу %(deviceId)s є «%(fprint)s», що не збігається з наданим ключем «%(fingerprint)s». Це може означати, що ваші повідомлення перехоплюють!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Наданий вами ключ підпису збігається з ключем підпису, що ви отримали від сеансу %(deviceId)s %(userId)s. Сеанс позначено звіреним.",
     "Opens chat with the given user": "Відкриває бесіду з вказаним користувачем",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s додає альтернативні адреси %(addresses)s для цієї кімнати.",
-        "one": "%(senderName)s додає альтернативні адреси %(addresses)s для цієї кімнати."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s вилучає альтернативні адреси %(addresses)s для цієї кімнати.",
-        "one": "%(senderName)s вилучає альтернативні адреси %(addresses)s для цієї кімнати."
-    },
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s вилучає правило заборони користувачів зі збігом з %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s вилучає правило блокування кімнат зі збігом з %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s вилучає правило блокування серверів зі збігом з %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s вилучає правило блокування зі збігом з %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s оновлює хибне правило блокування",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s оновлює правило блокування користувачів зі збігом з %(glob)s через %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s оновлює правило блокування кімнат зі збігом з %(glob)s через %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s оновлює правило блокування серверів зі збігом з %(glob)s через %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s оновлює правило блокування зі збігом з %(glob)s через %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s створює правило блокування користувачів зі збігом з %(glob)s через %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s створює правило блокування кімнат зі збігом з %(glob)s через %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s створює правило блокування серверів зі збігом з %(glob)s через %(reason)s",
     "You signed in to a new session without verifying it:": "Ви увійшли в новий сеанс, не звіривши його:",
     "Verify your other session using one of the options below.": "Звірте інший сеанс за допомогою одного з варіантів знизу.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) починає новий сеанс без його звірення:",
@@ -618,11 +596,6 @@
     "Verify by comparing unique emoji.": "Звірити порівнянням унікальних емодзі.",
     "Verify by emoji": "Звірити за допомогою емодзі",
     "Emoji Autocomplete": "Самодоповнення емодзі",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s створює правило блокування зі збігом з %(glob)s через %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s змінює правило блокування користувачів зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s змінює правило блокування кімнат зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s змінює правило блокування серверів зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s змінює правило блокування зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
     "The integration manager is offline or it cannot reach your homeserver.": "Менеджер інтеграцій не під'єднаний або не може зв'язатися з вашим домашнім сервером.",
     "Enable desktop notifications for this session": "Увімкнути стільничні сповіщення для цього сеансу",
     "Profile picture": "Зображення профілю",
@@ -3697,7 +3670,15 @@
             "removed": "%(senderName)s вилучає основу адресу цієї кімнати.",
             "changed_alternative": "%(senderName)s змінює альтернативні адреси для цієї кімнати.",
             "changed_main_and_alternative": "%(senderName)s змінює головні та альтернативні адреси для цієї кімнати.",
-            "changed": "%(senderName)s змінює адреси для цієї кімнати."
+            "changed": "%(senderName)s змінює адреси для цієї кімнати.",
+            "alt_added": {
+                "other": "%(senderName)s додає альтернативні адреси %(addresses)s для цієї кімнати.",
+                "one": "%(senderName)s додає альтернативні адреси %(addresses)s для цієї кімнати."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s вилучає альтернативні адреси %(addresses)s для цієї кімнати.",
+                "one": "%(senderName)s вилучає альтернативні адреси %(addresses)s для цієї кімнати."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s відкликає запрошення %(targetDisplayName)s приєднання до кімнати.",
@@ -3878,6 +3859,29 @@
                 "one": "%(oneUser)sнадсилає приховане повідомлення",
                 "other": "%(oneUser)sнадсилає %(count)s прихованих повідомлень"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s змінює рівень повноважень %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s з %(fromPowerLevel)s до %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s вилучає правило заборони користувачів зі збігом з %(glob)s",
+            "removed_rule_rooms": "%(senderName)s вилучає правило блокування кімнат зі збігом з %(glob)s",
+            "removed_rule_servers": "%(senderName)s вилучає правило блокування серверів зі збігом з %(glob)s",
+            "removed_rule": "%(senderName)s вилучає правило блокування зі збігом з %(glob)s",
+            "updated_invalid_rule": "%(senderName)s оновлює хибне правило блокування",
+            "updated_rule_users": "%(senderName)s оновлює правило блокування користувачів зі збігом з %(glob)s через %(reason)s",
+            "updated_rule_rooms": "%(senderName)s оновлює правило блокування кімнат зі збігом з %(glob)s через %(reason)s",
+            "updated_rule_servers": "%(senderName)s оновлює правило блокування серверів зі збігом з %(glob)s через %(reason)s",
+            "updated_rule": "%(senderName)s оновлює правило блокування зі збігом з %(glob)s через %(reason)s",
+            "created_rule_users": "%(senderName)s створює правило блокування користувачів зі збігом з %(glob)s через %(reason)s",
+            "created_rule_rooms": "%(senderName)s створює правило блокування кімнат зі збігом з %(glob)s через %(reason)s",
+            "created_rule_servers": "%(senderName)s створює правило блокування серверів зі збігом з %(glob)s через %(reason)s",
+            "created_rule": "%(senderName)s створює правило блокування зі збігом з %(glob)s через %(reason)s",
+            "changed_rule_users": "%(senderName)s змінює правило блокування користувачів зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
+            "changed_rule_rooms": "%(senderName)s змінює правило блокування кімнат зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
+            "changed_rule_servers": "%(senderName)s змінює правило блокування серверів зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
+            "changed_rule_glob": "%(senderName)s змінює правило блокування зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s"
         }
     },
     "slash_command": {

@@ -76,11 +76,9 @@
     "Dec": "Dez",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s às %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s às %(time)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s alterou o nível de permissão de %(powerLevelDiffText)s.",
     "Failed to send request.": "Não foi possível mandar requisição.",
     "Failed to verify email address: make sure you clicked the link in the email": "Falha ao confirmar o endereço de e-mail: certifique-se de clicar no link do e-mail",
     "Failure to create room": "Não foi possível criar a sala",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s de %(fromPowerLevel)s para %(toPowerLevel)s",
     "Missing room_id in request": "Faltou o id da sala na requisição",
     "Missing user_id in request": "Faltou o id de usuário na requisição",
     "Power level must be positive integer.": "O nível de permissão precisa ser um número inteiro e positivo.",
@@ -565,31 +563,6 @@
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ATENÇÃO: A CONFIRMAÇÃO DA CHAVE FALHOU! A chave de assinatura para %(userId)s e sessão %(deviceId)s é \"%(fprint)s\", o que não corresponde à chave fornecida \"%(fingerprint)s\". Isso pode significar que suas comunicações estejam sendo interceptadas por terceiros!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "A chave de assinatura que você forneceu corresponde à chave de assinatura que você recebeu da sessão %(deviceId)s do usuário %(userId)s. Esta sessão foi marcada como confirmada.",
     "Opens chat with the given user": "Abre um chat com determinada pessoa",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s adicionou os endereços alternativos %(addresses)s desta sala.",
-        "one": "%(senderName)s adicionou o endereço alternativo %(addresses)s desta sala."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s removeu os endereços alternativos %(addresses)s desta sala.",
-        "one": "%(senderName)s removeu o endereço alternativo %(addresses)s desta sala."
-    },
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s removeu a regra que bane usuários que correspondem a %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s removeu a regra que bane salas que correspondem a %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s removeu a regra que bane servidores que correspondem a %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s removeu uma regra de banimento correspondendo a %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s atualizou uma regra de banimento inválida",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s atualizou a regra de banimento de usuários correspondendo a %(glob)s devido à %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s atualizou a regra que bane salas que correspondem a %(glob)s devido à %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s atualizou a regra que bane servidores que correspondem a %(glob)s devido à %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s atualizou uma regra de banimento correspondendo a %(glob)s devido à %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s criou uma regra que bane usuários que correspondem a %(glob)s devido à %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s criou uma regra que bane salas que correspondem a %(glob)s devido à %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s criou uma regra que bane servidores que correspondem a %(glob)s devido à %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s criou uma regra de banimento correspondendo a %(glob)s devido à %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s alterou uma regra que bania usuários que correspondiam a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s alterou uma regra que bania salas que correspondiam a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s alterou uma regra que bania servidores que correspondiam a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s alterou uma regra que bania o que correspondia a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s",
     "You signed in to a new session without verifying it:": "Você entrou em uma nova sessão sem confirmá-la:",
     "Verify your other session using one of the options below.": "Confirme suas outras sessões usando uma das opções abaixo.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) entrou em uma nova sessão sem confirmá-la:",
@@ -2678,7 +2651,15 @@
             "removed": "%(senderName)s removeu o endereço principal desta sala.",
             "changed_alternative": "%(senderName)s alterou os endereços alternativos desta sala.",
             "changed_main_and_alternative": "%(senderName)s alterou os endereços principal e alternativos desta sala.",
-            "changed": "%(senderName)s alterou os endereços desta sala."
+            "changed": "%(senderName)s alterou os endereços desta sala.",
+            "alt_added": {
+                "other": "%(senderName)s adicionou os endereços alternativos %(addresses)s desta sala.",
+                "one": "%(senderName)s adicionou o endereço alternativo %(addresses)s desta sala."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s removeu os endereços alternativos %(addresses)s desta sala.",
+                "one": "%(senderName)s removeu o endereço alternativo %(addresses)s desta sala."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s cancelou o convite para %(targetDisplayName)s entrar na sala.",
@@ -2819,6 +2800,29 @@
                 "other": "%(oneUser)s não fez alterações %(count)s vezes",
                 "one": "%(oneUser)s não fez alterações"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s alterou o nível de permissão de %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s de %(fromPowerLevel)s para %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s removeu a regra que bane usuários que correspondem a %(glob)s",
+            "removed_rule_rooms": "%(senderName)s removeu a regra que bane salas que correspondem a %(glob)s",
+            "removed_rule_servers": "%(senderName)s removeu a regra que bane servidores que correspondem a %(glob)s",
+            "removed_rule": "%(senderName)s removeu uma regra de banimento correspondendo a %(glob)s",
+            "updated_invalid_rule": "%(senderName)s atualizou uma regra de banimento inválida",
+            "updated_rule_users": "%(senderName)s atualizou a regra de banimento de usuários correspondendo a %(glob)s devido à %(reason)s",
+            "updated_rule_rooms": "%(senderName)s atualizou a regra que bane salas que correspondem a %(glob)s devido à %(reason)s",
+            "updated_rule_servers": "%(senderName)s atualizou a regra que bane servidores que correspondem a %(glob)s devido à %(reason)s",
+            "updated_rule": "%(senderName)s atualizou uma regra de banimento correspondendo a %(glob)s devido à %(reason)s",
+            "created_rule_users": "%(senderName)s criou uma regra que bane usuários que correspondem a %(glob)s devido à %(reason)s",
+            "created_rule_rooms": "%(senderName)s criou uma regra que bane salas que correspondem a %(glob)s devido à %(reason)s",
+            "created_rule_servers": "%(senderName)s criou uma regra que bane servidores que correspondem a %(glob)s devido à %(reason)s",
+            "created_rule": "%(senderName)s criou uma regra de banimento correspondendo a %(glob)s devido à %(reason)s",
+            "changed_rule_users": "%(senderName)s alterou uma regra que bania usuários que correspondiam a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s",
+            "changed_rule_rooms": "%(senderName)s alterou uma regra que bania salas que correspondiam a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s",
+            "changed_rule_servers": "%(senderName)s alterou uma regra que bania servidores que correspondiam a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s",
+            "changed_rule_glob": "%(senderName)s alterou uma regra que bania o que correspondia a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s"
         }
     },
     "slash_command": {

@@ -57,8 +57,6 @@
     "You are no longer ignoring %(userId)s": "Vi nun reatentas uzanton %(userId)s",
     "Verified key": "Kontrolita ŝlosilo",
     "Reason": "Kialo",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s de %(fromPowerLevel)s al %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s ŝanĝis la povnivelon de %(powerLevelDiffText)s.",
     "Failure to create room": "Malsukcesis krei ĉambron",
     "Server may be unavailable, overloaded, or you hit a bug.": "Servilo povas esti neatingebla, troŝarĝita, aŭ vi renkontis cimon.",
     "Your browser does not support the required cryptography extensions": "Via foliumilo ne subtenas la bezonatajn ĉifrajn kromprogramojn",
@@ -879,31 +877,6 @@
     "Cancelling…": "Nuligante…",
     "Show less": "Montri malpli",
     "Show more": "Montri pli",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s aldonis la alternativajn adresojn %(addresses)s por ĉi tiu ĉambro.",
-        "one": "%(senderName)s aldonis alternativan adreson %(addresses)s por ĉi tiu ĉambro."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s forigis la alternativajn adresojn %(addresses)s por ĉi tiu ĉambro.",
-        "one": "%(senderName)s forigis alternativan adreson %(addresses)s por ĉi tiu ĉambro."
-    },
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s forigis la regulon forbarantan uzantojn, kiuj akordas kun %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s forigis la regulon forbarantan ĉambrojn, kiuj akordas kun %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s forigis la regulon forbarantan servilojn, kiuj akordas kun %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s forigis forbaran regulon, kiu akordas kun %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s ĝisdatigis nevalidan forbaran regulon",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s ĝisdatigis la regulon forbarantan uzantojn, kiuj akordas kun %(glob)s, pro %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s ĝisdatigis la regulon forbarantan ĉambrojn, kiuj akordas kun %(glob)s, pro %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s ĝisdatigis la regulon forbarantan servilojn, kiuj akordas kun %(glob)s, pro %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s ĝisdatigis forbaran regulon, kiu akordas kun %(glob)s, pro %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s kreis regulon forbarantan uzantojn, kiuj akordas kun %(glob)s, pro %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s kreis regulon forbarantan ĉambrojn, kiuj akordas kun %(glob)s, pro %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s kreis regulon forbarantan servilojn, kiuj akordas kun %(glob)s, pro %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s kreis forbaran regulon, kiu akordas kun %(glob)s, pro %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ŝanĝis regulon forbarintan uzantojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ŝanĝis regulon forbarintan ĉambrojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ŝanĝis regulon forbarintan servilojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ĝisdatigis forbaran regulon, kiu akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
     "Not Trusted": "Nefidata",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) salutis novan salutaĵon ne kontrolante ĝin:",
     "Ask this user to verify their session, or manually verify it below.": "Petu, ke ĉi tiu la uzanto kontrolu sian salutaĵon, aŭ kontrolu ĝin permane sube.",
@@ -2745,7 +2718,15 @@
             "removed": "%(senderName)s forigis la ĉefan adreson de la ĉambro.",
             "changed_alternative": "%(senderName)s ŝanĝis la alternativan adreson de ĉi tiu ĉambro.",
             "changed_main_and_alternative": "%(senderName)s ŝanĝis la ĉefan kaj alternativan adresojn de ĉi tiu ĉambro.",
-            "changed": "%(senderName)s ŝanĝis la adresojn de ĉi tiu ĉambro."
+            "changed": "%(senderName)s ŝanĝis la adresojn de ĉi tiu ĉambro.",
+            "alt_added": {
+                "other": "%(senderName)s aldonis la alternativajn adresojn %(addresses)s por ĉi tiu ĉambro.",
+                "one": "%(senderName)s aldonis alternativan adreson %(addresses)s por ĉi tiu ĉambro."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s forigis la alternativajn adresojn %(addresses)s por ĉi tiu ĉambro.",
+                "one": "%(senderName)s forigis alternativan adreson %(addresses)s por ĉi tiu ĉambro."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s nuligis inviton en la ĉambron por %(targetDisplayName)s.",
@@ -2886,6 +2867,29 @@
                 "one": "%(oneUser)s ŝanĝis la servilblokajn listojn",
                 "other": "%(oneUser)s ŝanĝis la servilblokajn listojn %(count)s-foje"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s ŝanĝis la povnivelon de %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s de %(fromPowerLevel)s al %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s forigis la regulon forbarantan uzantojn, kiuj akordas kun %(glob)s",
+            "removed_rule_rooms": "%(senderName)s forigis la regulon forbarantan ĉambrojn, kiuj akordas kun %(glob)s",
+            "removed_rule_servers": "%(senderName)s forigis la regulon forbarantan servilojn, kiuj akordas kun %(glob)s",
+            "removed_rule": "%(senderName)s forigis forbaran regulon, kiu akordas kun %(glob)s",
+            "updated_invalid_rule": "%(senderName)s ĝisdatigis nevalidan forbaran regulon",
+            "updated_rule_users": "%(senderName)s ĝisdatigis la regulon forbarantan uzantojn, kiuj akordas kun %(glob)s, pro %(reason)s",
+            "updated_rule_rooms": "%(senderName)s ĝisdatigis la regulon forbarantan ĉambrojn, kiuj akordas kun %(glob)s, pro %(reason)s",
+            "updated_rule_servers": "%(senderName)s ĝisdatigis la regulon forbarantan servilojn, kiuj akordas kun %(glob)s, pro %(reason)s",
+            "updated_rule": "%(senderName)s ĝisdatigis forbaran regulon, kiu akordas kun %(glob)s, pro %(reason)s",
+            "created_rule_users": "%(senderName)s kreis regulon forbarantan uzantojn, kiuj akordas kun %(glob)s, pro %(reason)s",
+            "created_rule_rooms": "%(senderName)s kreis regulon forbarantan ĉambrojn, kiuj akordas kun %(glob)s, pro %(reason)s",
+            "created_rule_servers": "%(senderName)s kreis regulon forbarantan servilojn, kiuj akordas kun %(glob)s, pro %(reason)s",
+            "created_rule": "%(senderName)s kreis forbaran regulon, kiu akordas kun %(glob)s, pro %(reason)s",
+            "changed_rule_users": "%(senderName)s ŝanĝis regulon forbarintan uzantojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
+            "changed_rule_rooms": "%(senderName)s ŝanĝis regulon forbarintan ĉambrojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
+            "changed_rule_servers": "%(senderName)s ŝanĝis regulon forbarintan servilojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
+            "changed_rule_glob": "%(senderName)s ĝisdatigis forbaran regulon, kiu akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s"
         }
     },
     "slash_command": {

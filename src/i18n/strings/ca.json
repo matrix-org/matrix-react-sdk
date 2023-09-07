@@ -67,8 +67,6 @@
     "You are no longer ignoring %(userId)s": "Ja no estàs ignorant l'usuari %(userId)s",
     "Verified key": "Claus verificades",
     "Reason": "Raó",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s de %(fromPowerLevel)s a %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s ha canviat el nivell d'autoritat de %(powerLevelDiffText)s.",
     "Failure to create room": "No s'ha pogut crear la sala",
     "Server may be unavailable, overloaded, or you hit a bug.": "És possible que el servidor no estigui disponible, sobrecarregat o que hagi topat amb un error.",
     "Send": "Envia",
@@ -660,6 +658,10 @@
                 "one": "%(oneUser)sno ha fet canvis",
                 "other": "%(oneUser)sno ha fet canvis %(count)s cops"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s ha canviat el nivell d'autoritat de %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s de %(fromPowerLevel)s a %(toPowerLevel)s"
         }
     },
     "slash_command": {

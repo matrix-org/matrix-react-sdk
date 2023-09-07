@@ -515,6 +515,14 @@
         "m.room.canonical_alias": {
             "set": "%(senderName)s set the main address for this room to %(address)s.",
             "removed": "%(senderName)s removed the main address for this room.",
+            "alt_added": {
+                "other": "%(senderName)s added the alternative addresses %(addresses)s for this room.",
+                "one": "%(senderName)s added alternative address %(addresses)s for this room."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s removed the alternative addresses %(addresses)s for this room.",
+                "one": "%(senderName)s removed alternative address %(addresses)s for this room."
+            },
             "changed_alternative": "%(senderName)s changed the alternative addresses for this room.",
             "changed_main_and_alternative": "%(senderName)s changed the main and alternative addresses for this room.",
             "changed": "%(senderName)s changed the addresses for this room."
@@ -530,6 +538,10 @@
             "world_readable": "%(senderName)s made future room history visible to anyone.",
             "unknown": "%(senderName)s made future room history visible to unknown (%(visibility)s)."
         },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s changed the power level of %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s"
+        },
         "m.room.pinned_events": {
             "pinned_link": "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.",
             "pinned": "%(senderName)s pinned a message to this room. See all pinned messages.",
@@ -544,6 +556,25 @@
             "removed": "%(widgetName)s widget removed by %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s has updated the room layout",
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s removed the rule banning users matching %(glob)s",
+            "removed_rule_rooms": "%(senderName)s removed the rule banning rooms matching %(glob)s",
+            "removed_rule_servers": "%(senderName)s removed the rule banning servers matching %(glob)s",
+            "removed_rule": "%(senderName)s removed a ban rule matching %(glob)s",
+            "updated_invalid_rule": "%(senderName)s updated an invalid ban rule",
+            "updated_rule_users": "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s",
+            "updated_rule_rooms": "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s",
+            "updated_rule_servers": "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s",
+            "updated_rule": "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s",
+            "created_rule_users": "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s",
+            "created_rule_rooms": "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s",
+            "created_rule_servers": "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s",
+            "created_rule": "%(senderName)s created a ban rule matching %(glob)s for %(reason)s",
+            "changed_rule_users": "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
+            "changed_rule_rooms": "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
+            "changed_rule_servers": "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
+            "changed_rule_glob": "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s"
+        },
         "m.location": "%(senderName)s has shared their location",
         "self_redaction": "Message deleted",
         "redaction": "Message deleted by %(name)s",
@@ -700,33 +731,6 @@
             }
         }
     },
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s added the alternative addresses %(addresses)s for this room.",
-        "one": "%(senderName)s added alternative address %(addresses)s for this room."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s removed the alternative addresses %(addresses)s for this room.",
-        "one": "%(senderName)s removed alternative address %(addresses)s for this room."
-    },
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s changed the power level of %(powerLevelDiffText)s.",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s removed the rule banning users matching %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s removed the rule banning rooms matching %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s removed the rule banning servers matching %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s removed a ban rule matching %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s updated an invalid ban rule",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s created a ban rule matching %(glob)s for %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
     "Light high contrast": "Light high contrast",
     "Remain on your screen when viewing another room, when running": "Remain on your screen when viewing another room, when running",
     "Remain on your screen while running": "Remain on your screen while running",

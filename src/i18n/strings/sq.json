@@ -301,8 +301,6 @@
     "Upgrade this room to version %(version)s": "Përmirësojeni këtë dhomë me versionin %(version)s",
     "Share Room": "Ndani Dhomë Me të Tjerë",
     "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s nga %(fromPowerLevel)s në %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s ndryshoi shkallën e pushtetit të %(powerLevelDiffText)s.",
     "Enable URL previews for this room (only affects you)": "Aktivizo paraparje URL-sh për këtë dhomë (prek vetëm ju)",
     "Enable URL previews by default for participants in this room": "Aktivizo, si parazgjedhje, paraparje URL-sh për pjesëmarrësit në këtë dhomë",
     "A text message has been sent to %(msisdn)s": "Te %(msisdn)s u dërgua një mesazh tekst",
@@ -878,23 +876,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Kjo zakonisht prek vetëm mënyrën se si përpunohet dhoma te shërbyesi. Nëse keni probleme me %(brand)s-in, ju lutemi, <a>njoftoni një të metë</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Do ta përmirësoni këtë dhomë nga <oldVersion /> në <newVersion />.",
     "Unable to set up secret storage": "S’u arrit të ujdiset depozitë e fshehtë",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s hoqi rregullin për dëbim përdoruesish që kanë përputhje me %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s hoqi rregullin që dëbon dhoma që kanë përputhje me %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s hoqi rregullin që dëbon shërbyes që kanë përputhje me %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s hoqi një rregull dëbimi mbi përputhje me %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s përditësoi një rregull të pavlefshëm dëbimesh",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s përditësoi rregullin mbi dëbim përdoruesish që kanë përputhje me %(glob)s për %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s përditësoi rregullin për dëbim dhomash që kanë përputhje me %(glob)s për %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s përditësoi rregullin për dëbim shërbyesish që kanë përputhje me %(glob)s për %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s përditësoi një rregull dëbimi rreth përputhjesh me %(glob)s për %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s krijoi një rregull mbi dëbim përdoruesish që kanë përputhje me %(glob)s për %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s krijoi një rregull mbi dëbim dhomash që kanë përputhje me %(glob)s për %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s krijoi një rregull mbi dëbim shërbyesish që kanë përputhje me %(glob)s për %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s krijoi një rregull dëbimi rreth përputhjesh me %(glob)s për %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ndryshoi një rregull që dëbonte përdorues me përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ndryshoi një rregull që dëbonte dhoma me përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ndryshoi një rregull që dëbonte shërbyes me përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s përditësoi një rregull dëbimesh mbi përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s",
     "not stored": "e padepozituar",
     "Close preview": "Mbylle paraparjen",
     "Hide verified sessions": "Fshih sesione të verifikuar",
@@ -1024,14 +1005,6 @@
     "Mark all as read": "Vëru të tërave shenjë si të lexuara",
     "Not currently indexing messages for any room.": "Pa indeksuar aktualisht mesazhe nga ndonjë dhomë.",
     "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s nga %(totalRooms)s",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s shtoi adresat alternative %(addresses)s për këtë dhomë.",
-        "one": "%(senderName)s shtoi adresën alternative %(addresses)s për këtë dhomë."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s hoqi adresat alternative %(addresses)s për këtë dhomë.",
-        "one": "%(senderName)s hoqi adresën alternative %(addresses)s për këtë dhomë."
-    },
     "Invalid theme schema.": "Skemë e pavlefshme teme.",
     "Error downloading theme information.": "Gabim në shkarkim të dhënash teme.",
     "Theme added!": "Tema u shtua!",
@@ -3601,7 +3574,15 @@
             "removed": "%(senderName)s hoqi adresën kryesore për këtë dhomë.",
             "changed_alternative": "%(senderName)s ndryshoi adresat alternative për këtë dhomë.",
             "changed_main_and_alternative": "%(senderName)s ndryshoi adresat kryesore dhe alternative për këtë dhomë.",
-            "changed": "%(senderName)s ndryshoi adresat për këtë dhomë."
+            "changed": "%(senderName)s ndryshoi adresat për këtë dhomë.",
+            "alt_added": {
+                "other": "%(senderName)s shtoi adresat alternative %(addresses)s për këtë dhomë.",
+                "one": "%(senderName)s shtoi adresën alternative %(addresses)s për këtë dhomë."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s hoqi adresat alternative %(addresses)s për këtë dhomë.",
+                "one": "%(senderName)s hoqi adresën alternative %(addresses)s për këtë dhomë."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s shfuqizoi ftesën për %(targetDisplayName)s që të marrë pjesë në dhomë.",
@@ -3774,6 +3755,29 @@
                 "one": "%(oneUser)sdërgoi një mesazh të fshehur",
                 "other": "%(oneUser)s dërgoi %(count)s mesazhe të fshehur"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s ndryshoi shkallën e pushtetit të %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s nga %(fromPowerLevel)s në %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s hoqi rregullin për dëbim përdoruesish që kanë përputhje me %(glob)s",
+            "removed_rule_rooms": "%(senderName)s hoqi rregullin që dëbon dhoma që kanë përputhje me %(glob)s",
+            "removed_rule_servers": "%(senderName)s hoqi rregullin që dëbon shërbyes që kanë përputhje me %(glob)s",
+            "removed_rule": "%(senderName)s hoqi një rregull dëbimi mbi përputhje me %(glob)s",
+            "updated_invalid_rule": "%(senderName)s përditësoi një rregull të pavlefshëm dëbimesh",
+            "updated_rule_users": "%(senderName)s përditësoi rregullin mbi dëbim përdoruesish që kanë përputhje me %(glob)s për %(reason)s",
+            "updated_rule_rooms": "%(senderName)s përditësoi rregullin për dëbim dhomash që kanë përputhje me %(glob)s për %(reason)s",
+            "updated_rule_servers": "%(senderName)s përditësoi rregullin për dëbim shërbyesish që kanë përputhje me %(glob)s për %(reason)s",
+            "updated_rule": "%(senderName)s përditësoi një rregull dëbimi rreth përputhjesh me %(glob)s për %(reason)s",
+            "created_rule_users": "%(senderName)s krijoi një rregull mbi dëbim përdoruesish që kanë përputhje me %(glob)s për %(reason)s",
+            "created_rule_rooms": "%(senderName)s krijoi një rregull mbi dëbim dhomash që kanë përputhje me %(glob)s për %(reason)s",
+            "created_rule_servers": "%(senderName)s krijoi një rregull mbi dëbim shërbyesish që kanë përputhje me %(glob)s për %(reason)s",
+            "created_rule": "%(senderName)s krijoi një rregull dëbimi rreth përputhjesh me %(glob)s për %(reason)s",
+            "changed_rule_users": "%(senderName)s ndryshoi një rregull që dëbonte përdorues me përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s",
+            "changed_rule_rooms": "%(senderName)s ndryshoi një rregull që dëbonte dhoma me përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s",
+            "changed_rule_servers": "%(senderName)s ndryshoi një rregull që dëbonte shërbyes me përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s",
+            "changed_rule_glob": "%(senderName)s përditësoi një rregull dëbimesh mbi përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s"
         }
     },
     "slash_command": {

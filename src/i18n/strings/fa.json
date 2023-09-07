@@ -450,16 +450,6 @@
     "Converts the room to a DM": "اتاق را به DM تبدیل می کند",
     "Takes the call in the current room off hold": "تماس را در اتاق فعلی خاموش نگه می دارد",
     "See when people join, leave, or are invited to this room": "ببینید که کی مردم در این اتاق عضو شده اند، ترک کرده اند یا به آن دعوت شده اند",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s سطح قدرت %(powerLevelDiffText)s تغییر داد.",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s از %(fromPowerLevel)s به %(toPowerLevel)s",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "one": "%(senderName)s آدرس جایگزین %(addresses)s این اتاق را حذف کرد.",
-        "other": "%(senderName)s آدرس های جایگزین %(addresses)s این اتاق را حذف کرد."
-    },
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "one": "%(senderName)s آدرس جایگزین %(addresses)s را برای این اتاق اضافه کرد.",
-        "other": "%(senderName)s آدرس های جایگزین %(addresses)s را برای این اتاق اضافه کرد."
-    },
     "Your %(brand)s is misconfigured": "%(brand)s‌ی شما به درستی پیکربندی نشده‌است",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "از اتصال اینترنت پایدار اطمینان حاصل‌کرده و سپس با مدیر سرور ارتباط بگیرید",
     "Cannot reach homeserver": "دسترسی به سرور میسر نیست",
@@ -513,23 +503,6 @@
     "Change which room you're viewing": "اتاق‌هایی را که مشاهده می‌کنید تغییر دهید",
     "Send stickers into your active room": "در اتاق‌های فعال خود استیکر ارسال کنید",
     "Send stickers into this room": "در این اتاق استیکر ارسال کنید",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s یک قاعده تحریم را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای به‌روزرسانی کرد که با %(newGlob)s تطابق داشته باشد",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s یک قاعده تحریم سرورها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s یک قاعده تحریم اتاق‌ها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s یک قاعده تحریم کاربران را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s یک قاعده تحریم را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s یک قاعده تحریم سرورها را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s یک قاعده تحریم اتاق‌ها را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s یک قاعده تحریم کاربران را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s یک قاعده تحریم را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s قاعده تحریم سرورها را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s قاعده تحریم اتاق‌ها را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s قاعده تحریم کاربران را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s یک قاعده‌ی تحریم نامعتبر را به‌روزرسانی کرد",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s قاعده تحریمی را که با %(glob)s تطابق داشت، حذف کرد",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s قاعده تحریم سرورها را که با %(glob)s تطابق داشت، حذف کرد",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s قاعده تحریم اتاق‌ها را که با %(glob)s تطابق داشت، حذف کرد",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s قاعده تحریم کاربران را که با %(glob)s تطابق داشت، حذف کرد",
     "The server has denied your request.": "سرور درخواست شما را رد کرده است.",
     "Use your Security Key to continue.": "برای ادامه از کلید امنیتی خود استفاده کنید.",
     "%(creator)s created and configured the room.": "%(creator)s اتاق را ایجاد و پیکربندی کرد.",
@@ -2441,7 +2414,15 @@
             "removed": "%(senderName)s آدرس اصلی این اتاق را حذف کرد.",
             "changed_alternative": "%(senderName)s آدرس های جایگزین این اتاق را تغییر داد.",
             "changed_main_and_alternative": "%(senderName)s آدرس اصلی و جایگزین این اتاق را تغییر داد.",
-            "changed": "%(senderName)s آدرس های این اتاق را تغییر داد."
+            "changed": "%(senderName)s آدرس های این اتاق را تغییر داد.",
+            "alt_added": {
+                "one": "%(senderName)s آدرس جایگزین %(addresses)s را برای این اتاق اضافه کرد.",
+                "other": "%(senderName)s آدرس های جایگزین %(addresses)s را برای این اتاق اضافه کرد."
+            },
+            "alt_removed": {
+                "one": "%(senderName)s آدرس جایگزین %(addresses)s این اتاق را حذف کرد.",
+                "other": "%(senderName)s آدرس های جایگزین %(addresses)s این اتاق را حذف کرد."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s دعوت نامه %(targetDisplayName)s را برای پیوستن به اتاق باطل کرد.",
@@ -2572,6 +2553,29 @@
                 "one": "%(oneUser)s هیچ تغییری ایجاد نکرد",
                 "other": "%(oneUser)s %(count)s مرتبه هیچ تغییری ایجاد نکرد"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s سطح قدرت %(powerLevelDiffText)s تغییر داد.",
+            "user_from_to": "%(userId)s از %(fromPowerLevel)s به %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s قاعده تحریم کاربران را که با %(glob)s تطابق داشت، حذف کرد",
+            "removed_rule_rooms": "%(senderName)s قاعده تحریم اتاق‌ها را که با %(glob)s تطابق داشت، حذف کرد",
+            "removed_rule_servers": "%(senderName)s قاعده تحریم سرورها را که با %(glob)s تطابق داشت، حذف کرد",
+            "removed_rule": "%(senderName)s قاعده تحریمی را که با %(glob)s تطابق داشت، حذف کرد",
+            "updated_invalid_rule": "%(senderName)s یک قاعده‌ی تحریم نامعتبر را به‌روزرسانی کرد",
+            "updated_rule_users": "%(senderName)s قاعده تحریم کاربران را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
+            "updated_rule_rooms": "%(senderName)s قاعده تحریم اتاق‌ها را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
+            "updated_rule_servers": "%(senderName)s قاعده تحریم سرورها را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
+            "updated_rule": "%(senderName)s یک قاعده تحریم را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
+            "created_rule_users": "%(senderName)s یک قاعده تحریم کاربران را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
+            "created_rule_rooms": "%(senderName)s یک قاعده تحریم اتاق‌ها را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
+            "created_rule_servers": "%(senderName)s یک قاعده تحریم سرورها را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
+            "created_rule": "%(senderName)s یک قاعده تحریم را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
+            "changed_rule_users": "%(senderName)s یک قاعده تحریم کاربران را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
+            "changed_rule_rooms": "%(senderName)s یک قاعده تحریم اتاق‌ها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
+            "changed_rule_servers": "%(senderName)s یک قاعده تحریم سرورها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
+            "changed_rule_glob": "%(senderName)s یک قاعده تحریم را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای به‌روزرسانی کرد که با %(newGlob)s تطابق داشته باشد"
         }
     },
     "slash_command": {

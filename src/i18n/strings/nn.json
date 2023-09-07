@@ -61,8 +61,6 @@
     "Verified key": "Godkjend nøkkel",
     "Displays action": "Visar handlingar",
     "Reason": "Grunnlag",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s frå %(fromPowerLevel)s til %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s endra tilgangsnivået til %(powerLevelDiffText)s.",
     "Failure to create room": "Klarte ikkje å laga rommet",
     "Server may be unavailable, overloaded, or you hit a bug.": "Tenaren er kanskje utilgjengeleg, overlasta elles så traff du ein bug.",
     "Send": "Send",
@@ -578,14 +576,6 @@
     "Could not find user in room": "Klarde ikkje å finna brukaren i rommet",
     "Please supply a widget URL or embed code": "Oppgje ein widget-URL eller innebygd kode",
     "Opens chat with the given user": "Opna ein samtale med den spesifiserte brukaren",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s la til dei alternative adressene %(addresses)s for dette rommet.",
-        "one": "%(senderName)s la til ei alternativ adresse %(addresses)s for dette rommet."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s tok vekk dei alternative adressene %(addresses)s for dette rommet.",
-        "one": "%(senderName)s tok vekk den alternative adressa %(addresses)s for dette rommet."
-    },
     "Later": "Seinare",
     "Never send encrypted messages to unverified sessions from this session": "Aldri send krypterte meldingar til ikkje-verifiserte sesjonar frå denne sesjonen",
     "Never send encrypted messages to unverified sessions in this room from this session": "Aldri send krypterte meldingar i dette rommet til ikkje-verifiserte sesjonar frå denne sesjonen",
@@ -975,7 +965,15 @@
             "removed": "%(senderName)s fjerna standardadressa for dette rommet.",
             "changed_alternative": "%(senderName)s endre den alternative adressa for dette rommet.",
             "changed_main_and_alternative": "%(senderName)s endra hovud- og alternativ-adressene for dette rommet.",
-            "changed": "%(senderName)s endre adressene for dette rommet."
+            "changed": "%(senderName)s endre adressene for dette rommet.",
+            "alt_added": {
+                "other": "%(senderName)s la til dei alternative adressene %(addresses)s for dette rommet.",
+                "one": "%(senderName)s la til ei alternativ adresse %(addresses)s for dette rommet."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s tok vekk dei alternative adressene %(addresses)s for dette rommet.",
+                "one": "%(senderName)s tok vekk den alternative adressa %(addresses)s for dette rommet."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s trekte tilbake invitasjonen for at %(targetDisplayName)s kan bli medlem i rommet.",
@@ -1088,6 +1086,10 @@
                 "other": "%(oneUser)s har endra namnet sitt %(count)s gonger",
                 "one": "%(oneUser)s endra namnet sitt"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s endra tilgangsnivået til %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s frå %(fromPowerLevel)s til %(toPowerLevel)s"
         }
     },
     "slash_command": {

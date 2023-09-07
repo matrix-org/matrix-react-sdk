@@ -51,13 +51,11 @@
     "Favourite": "Favoritmarkera",
     "Admin Tools": "Admin-verktyg",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Kan inte ansluta till hemservern - vänligen kolla din nätverksanslutning, se till att <a>hemserverns SSL-certifikat</a> är betrott, och att inget webbläsartillägg blockerar förfrågningar.",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s ändrade behörighetsnivå för %(powerLevelDiffText)s.",
     "Enter passphrase": "Ange lösenfras",
     "Failure to create room": "Misslyckades att skapa rummet",
     "Filter room members": "Filtrera rumsmedlemmar",
     "Forget room": "Glöm bort rum",
     "For security, this session has been signed out. Please sign in again.": "Av säkerhetsskäl har den här sessionen loggats ut. Vänligen logga in igen.",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s från %(fromPowerLevel)s till %(toPowerLevel)s",
     "Historical": "Historiska",
     "Home": "Hem",
     "Import E2E room keys": "Importera rumskrypteringsnycklar",
@@ -640,9 +638,6 @@
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Error upgrading room": "Fel vid uppgradering av rum",
     "Double check that your server supports the room version chosen and try again.": "Dubbelkolla att din server stöder den valda rumsversionen och försök igen.",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s tog bort regeln som bannar användare som matchar %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s tog bort regeln som bannar rum som matchar %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s tog bort regeln som bannar servrar som matchar %(glob)s",
     "Match system theme": "Matcha systemtema",
     "not found": "hittades inte",
     "Cannot connect to integration manager": "Kan inte ansluta till integrationshanteraren",
@@ -767,29 +762,7 @@
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "VARNING: NYCKELVERIFIERING MISSLYCKADES! Den signerade nyckeln för %(userId)s och sessionen %(deviceId)s är \"%(fprint)s\" vilket inte matchar den givna nyckeln \"%(fingerprint)s\". Detta kan betyda att kommunikationen är övervakad!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Signeringsnyckeln du gav matchar signeringsnyckeln du fick av %(userId)ss session %(deviceId)s. Sessionen markerades som verifierad.",
     "Opens chat with the given user": "Öppnar en chatt med den valda användaren",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s lade till de alternativa adresserna %(addresses)s till det här rummet.",
-        "one": "%(senderName)s lade till den alternativa adressen %(addresses)s till det här rummet."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s tog bort de alternativa adresserna %(addresses)s från det här rummet.",
-        "one": "%(senderName)s tog bort den alternativa adressen %(addresses)s från det här rummet."
-    },
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s tog bort en bannregel som matchar %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s uppdaterade en ogiltig bannregel",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s uppdaterade regeln som bannar användare som matchar %(glob)s på grund av %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s uppdaterade regeln som bannar rum som matchar %(glob)s på grund av %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s uppdaterade regeln som bannar servrar som matchar %(glob)s på grund av %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s uppdaterade en bannregel som matchar %(glob)s på grund av %(reason)s",
     "Use bots, bridges, widgets and sticker packs": "Använd bottar, bryggor, widgets och dekalpaket",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s skapade en regel som bannar användare som matchar %(glob)s på grund av %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s skapade en regel som bannar rum som matchar %(glob)s på grund av %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s skapade en regel som bannar servrar som matchar %(glob)s på grund av %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s skapade en bannregel som matchar %(glob)s på grund av %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ändrade en regel som bannade användare som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ändrade en regel som bannade rum som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ändrade en regel som bannade servrar som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s uppdaterade en bannregel som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
     "You signed in to a new session without verifying it:": "Du loggade in i en ny session utan att verifiera den:",
     "Verify your other session using one of the options below.": "Verifiera din andra session med ett av alternativen nedan.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) loggade in i en ny session utan att verifiera den:",
@@ -3646,7 +3619,15 @@
             "removed": "%(senderName)s tog bort huvudadressen för detta rum.",
             "changed_alternative": "%(senderName)s ändrade de alternativa adresserna för det här rummet.",
             "changed_main_and_alternative": "%(senderName)s ändrade huvudadressen och de alternativa adresserna för det här rummet.",
-            "changed": "%(senderName)s ändrade adresserna för det här rummet."
+            "changed": "%(senderName)s ändrade adresserna för det här rummet.",
+            "alt_added": {
+                "other": "%(senderName)s lade till de alternativa adresserna %(addresses)s till det här rummet.",
+                "one": "%(senderName)s lade till den alternativa adressen %(addresses)s till det här rummet."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s tog bort de alternativa adresserna %(addresses)s från det här rummet.",
+                "one": "%(senderName)s tog bort den alternativa adressen %(addresses)s från det här rummet."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s återkallade inbjudan för %(targetDisplayName)s att gå med i rummet.",
@@ -3819,6 +3800,29 @@
                 "one": "%(oneUser)sskickade ett dolt meddelande",
                 "other": "%(oneUser)sskickade %(count)s dolda meddelanden"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s ändrade behörighetsnivå för %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s från %(fromPowerLevel)s till %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s tog bort regeln som bannar användare som matchar %(glob)s",
+            "removed_rule_rooms": "%(senderName)s tog bort regeln som bannar rum som matchar %(glob)s",
+            "removed_rule_servers": "%(senderName)s tog bort regeln som bannar servrar som matchar %(glob)s",
+            "removed_rule": "%(senderName)s tog bort en bannregel som matchar %(glob)s",
+            "updated_invalid_rule": "%(senderName)s uppdaterade en ogiltig bannregel",
+            "updated_rule_users": "%(senderName)s uppdaterade regeln som bannar användare som matchar %(glob)s på grund av %(reason)s",
+            "updated_rule_rooms": "%(senderName)s uppdaterade regeln som bannar rum som matchar %(glob)s på grund av %(reason)s",
+            "updated_rule_servers": "%(senderName)s uppdaterade regeln som bannar servrar som matchar %(glob)s på grund av %(reason)s",
+            "updated_rule": "%(senderName)s uppdaterade en bannregel som matchar %(glob)s på grund av %(reason)s",
+            "created_rule_users": "%(senderName)s skapade en regel som bannar användare som matchar %(glob)s på grund av %(reason)s",
+            "created_rule_rooms": "%(senderName)s skapade en regel som bannar rum som matchar %(glob)s på grund av %(reason)s",
+            "created_rule_servers": "%(senderName)s skapade en regel som bannar servrar som matchar %(glob)s på grund av %(reason)s",
+            "created_rule": "%(senderName)s skapade en bannregel som matchar %(glob)s på grund av %(reason)s",
+            "changed_rule_users": "%(senderName)s ändrade en regel som bannade användare som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
+            "changed_rule_rooms": "%(senderName)s ändrade en regel som bannade rum som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
+            "changed_rule_servers": "%(senderName)s ändrade en regel som bannade servrar som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
+            "changed_rule_glob": "%(senderName)s uppdaterade en bannregel som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s"
         }
     },
     "slash_command": {

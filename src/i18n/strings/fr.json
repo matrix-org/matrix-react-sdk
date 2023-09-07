@@ -20,7 +20,6 @@
     "Banned users": "Utilisateurs bannis",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Impossible de se connecter au serveur d'accueil en HTTP si l’URL dans la barre de votre explorateur est en HTTPS. Utilisez HTTPS ou <a>activez la prise en charge des scripts non-vérifiés</a>.",
     "Change Password": "Changer le mot de passe",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s a changé le rang de %(powerLevelDiffText)s.",
     "Command error": "Erreur de commande",
     "Commands": "Commandes",
     "Confirm password": "Confirmer le mot de passe",
@@ -44,7 +43,6 @@
     "Filter room members": "Filtrer les membres du salon",
     "Forget room": "Oublier le salon",
     "For security, this session has been signed out. Please sign in again.": "Par mesure de sécurité, la session a expiré. Merci de vous authentifier à nouveau.",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s de %(fromPowerLevel)s à %(toPowerLevel)s",
     "Historical": "Historique",
     "Import E2E room keys": "Importer les clés de chiffrement de bout en bout",
     "Incorrect verification code": "Code de vérification incorrect",
@@ -875,23 +873,6 @@
     "Cross-signing public keys:": "Clés publiques de signature croisée :",
     "not found": "non trouvé",
     "Cross-signing private keys:": "Clés privées de signature croisée :",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s a supprimé la règle qui bannit les utilisateurs correspondant à %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s a supprimé la règle qui bannit les salons correspondant à %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s a supprimé la règle qui bannit les serveurs correspondant à %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s a supprimé une règle de bannissement correspondant à %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s a mis à jour une règle de bannissement non valide",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s a mis à jour la règle qui bannit les utilisateurs correspondant à %(glob)s pour %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s a supprimé la règle qui bannit les salons correspondant à %(glob)s pour %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s a supprimé la règle qui bannit les serveurs correspondant à %(glob)s pour %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s a mis à jour la règle de bannissement correspondant à %(glob)s pour %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s a créé une règle qui bannit les utilisateurs correspondant à %(glob)s pour %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s a créé une règle qui bannit les salons correspondant à %(glob)s pour %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s a créé une règle qui bannit les serveurs correspondant à %(glob)s pour %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s a créé une règle de bannissement correspondant à %(glob)s pour %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s a changé une règle qui bannit les utilisateurs correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s a changé une règle qui bannit les salons correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s a changé une règle qui bannit les serveurs correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s a mis à jour une règle de bannissement correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s",
     "in secret storage": "dans le coffre secret",
     "Secret storage public key:": "Clé publique du coffre secret :",
     "in account data": "dans les données du compte",
@@ -1026,14 +1007,6 @@
     "Mark all as read": "Tout marquer comme lu",
     "Not currently indexing messages for any room.": "N’indexe aucun message en ce moment.",
     "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s sur %(totalRooms)s",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s a ajouté les adresses alternatives %(addresses)s pour ce salon.",
-        "one": "%(senderName)s a ajouté l’adresse alternative %(addresses)s pour ce salon."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s a supprimé les adresses alternatives %(addresses)s pour ce salon.",
-        "one": "%(senderName)s a supprimé l’adresse alternative %(addresses)s pour ce salon."
-    },
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Une erreur est survenue lors de la mise à jour des adresses alternatives du salon. Ce n’est peut-être pas permis par le serveur ou une défaillance temporaire est survenue.",
     "Invalid theme schema.": "Schéma du thème invalide.",
     "Error downloading theme information.": "Une erreur s’est produite en téléchargeant les informations du thème.",
@@ -3697,7 +3670,15 @@
             "removed": "%(senderName)s a supprimé l’adresse principale de ce salon.",
             "changed_alternative": "%(senderName)s a modifié les adresses alternatives de ce salon.",
             "changed_main_and_alternative": "%(senderName)s a modifié l’adresse principale et les adresses alternatives pour ce salon.",
-            "changed": "%(senderName)s a changé les adresses de ce salon."
+            "changed": "%(senderName)s a changé les adresses de ce salon.",
+            "alt_added": {
+                "other": "%(senderName)s a ajouté les adresses alternatives %(addresses)s pour ce salon.",
+                "one": "%(senderName)s a ajouté l’adresse alternative %(addresses)s pour ce salon."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s a supprimé les adresses alternatives %(addresses)s pour ce salon.",
+                "one": "%(senderName)s a supprimé l’adresse alternative %(addresses)s pour ce salon."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s a révoqué l’invitation de %(targetDisplayName)s à rejoindre le salon.",
@@ -3878,6 +3859,29 @@
                 "one": "%(oneUser)s a envoyé un message caché",
                 "other": "%(oneUser)s ont envoyé %(count)s messages cachés"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s a changé le rang de %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s de %(fromPowerLevel)s à %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s a supprimé la règle qui bannit les utilisateurs correspondant à %(glob)s",
+            "removed_rule_rooms": "%(senderName)s a supprimé la règle qui bannit les salons correspondant à %(glob)s",
+            "removed_rule_servers": "%(senderName)s a supprimé la règle qui bannit les serveurs correspondant à %(glob)s",
+            "removed_rule": "%(senderName)s a supprimé une règle de bannissement correspondant à %(glob)s",
+            "updated_invalid_rule": "%(senderName)s a mis à jour une règle de bannissement non valide",
+            "updated_rule_users": "%(senderName)s a mis à jour la règle qui bannit les utilisateurs correspondant à %(glob)s pour %(reason)s",
+            "updated_rule_rooms": "%(senderName)s a supprimé la règle qui bannit les salons correspondant à %(glob)s pour %(reason)s",
+            "updated_rule_servers": "%(senderName)s a supprimé la règle qui bannit les serveurs correspondant à %(glob)s pour %(reason)s",
+            "updated_rule": "%(senderName)s a mis à jour la règle de bannissement correspondant à %(glob)s pour %(reason)s",
+            "created_rule_users": "%(senderName)s a créé une règle qui bannit les utilisateurs correspondant à %(glob)s pour %(reason)s",
+            "created_rule_rooms": "%(senderName)s a créé une règle qui bannit les salons correspondant à %(glob)s pour %(reason)s",
+            "created_rule_servers": "%(senderName)s a créé une règle qui bannit les serveurs correspondant à %(glob)s pour %(reason)s",
+            "created_rule": "%(senderName)s a créé une règle de bannissement correspondant à %(glob)s pour %(reason)s",
+            "changed_rule_users": "%(senderName)s a changé une règle qui bannit les utilisateurs correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s",
+            "changed_rule_rooms": "%(senderName)s a changé une règle qui bannit les salons correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s",
+            "changed_rule_servers": "%(senderName)s a changé une règle qui bannit les serveurs correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s",
+            "changed_rule_glob": "%(senderName)s a mis à jour une règle de bannissement correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s"
         }
     },
     "slash_command": {

@@ -70,8 +70,6 @@
     "Displays action": "Hiển thị hành động",
     "Forces the current outbound group session in an encrypted room to be discarded": "Buộc nhóm phiên hướng ra hiện tại trong một căn phòng được mã hóa phải bị loại bỏ",
     "Reason": "Lý do",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s đổi từ %(fromPowerLevel)s thành %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s đã đổi mức quyền của %(powerLevelDiffText)s.",
     "Cannot reach homeserver": "Không thể kết nối tới máy chủ",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Đảm bảo bạn có kết nối Internet ổn định, hoặc liên hệ quản trị viên để được hỗ trợ",
     "Your %(brand)s is misconfigured": "Hệ thống %(brand)s của bạn bị thiết lập sai",
@@ -1651,31 +1649,6 @@
     "Send stickers into this room": "Gửi sticker cảm xúc vào phòng này",
     "Remain on your screen while running": "Ở lại màn hình của bạn trong khi chạy",
     "Remain on your screen when viewing another room, when running": "Giữ màn hình của bạn khi đang xem phòng khác, khi đang chạy chương trình khác",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s đã cập nhật quy tắc cấm khớp %(oldGlob)s sang %(newGlob)s cho %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s đã thay đổi một quy tắc cấm các máy chủ khớp với %(oldGlob)s để khớp với %(newGlob)s vì %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s đã thay đổi quy tắc cấm các phòng khớp với %(oldGlob)s thành khớp với %(newGlob)s vì %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s đã thay đổi quy tắc cấm người dùng khớp %(oldGlob)s thành %(newGlob)s vì %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s đã tạo một quy tắc cấm phù hợp với %(glob)s cho %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s đã tạo quy tắc cấm các máy chủ khớp với %(glob)s cho %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s đã tạo một quy tắc cấm các phòng khớp với %(glob)s vì %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s đã tạo một quy tắc cấm những người dùng khớp với %(glob)s vì %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s đã cập nhật quy tắc cấm phù hợp với %(glob)s cho %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s đã cập nhật quy tắc cấm các máy chủ khớp với %(glob)s cho %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s đã cập nhật quy tắc cấm các phòng khớp với %(glob)s cho %(reason)s",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s đã cập nhật quy tắc cấm người dùng khớp với %(glob)s cho %(reason)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s đã cập nhật quy tắc cấm không hợp lệ",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s đã xóa quy tắc cấm khớp với %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s đã xóa quy tắc cấm các máy chủ khớp với %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s đã xóa quy tắc cấm các phòng khớp với %(glob)s",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s đã xóa quy tắc cấm người dùng khớp với %(glob)s",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "one": "%(senderName)s đã bỏ địa chỉ thay thế %(addresses)s cho phòng này.",
-        "other": "%(senderName)s đã bỏ các địa chỉ thay thế %(addresses)s cho phòng này."
-    },
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "one": "%(senderName)s đã thêm địa chỉ thay thế %(addresses)s cho phòng này.",
-        "other": "%(senderName)s đã thêm các địa chỉ thay thế %(addresses)s cho phòng này."
-    },
     "All keys backed up": "Tất cả các khóa được sao lưu",
     "Connect this session to Key Backup": "Kết nối phiên này với Khóa Sao lưu",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Kết nối phiên này với máy chủ sao lưu khóa trước khi đăng xuất để tránh mất bất kỳ khóa nào có thể chỉ có trong phiên này.",
@@ -3413,7 +3386,15 @@
             "removed": "%(senderName)s đã loại địa chỉ chính của phòng.",
             "changed_alternative": "%(senderName)s đã thay đổi các địa chỉ thay thế cho phòng này.",
             "changed_main_and_alternative": "%(senderName)s đã thay đổi địa chỉ chính và địa chỉ thay thế cho phòng này.",
-            "changed": "%(senderName)s đã thay đổi địa chỉ cho phòng này."
+            "changed": "%(senderName)s đã thay đổi địa chỉ cho phòng này.",
+            "alt_added": {
+                "one": "%(senderName)s đã thêm địa chỉ thay thế %(addresses)s cho phòng này.",
+                "other": "%(senderName)s đã thêm các địa chỉ thay thế %(addresses)s cho phòng này."
+            },
+            "alt_removed": {
+                "one": "%(senderName)s đã bỏ địa chỉ thay thế %(addresses)s cho phòng này.",
+                "other": "%(senderName)s đã bỏ các địa chỉ thay thế %(addresses)s cho phòng này."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s đã thu hồi lời mời %(targetDisplayName)s tham gia phòng.",
@@ -3582,6 +3563,29 @@
                 "other": "%(oneUser)sgửi %(count)s tin nhắn ẩn",
                 "one": "%(oneUser)sgửi một tin nhắn ẩn"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s đã đổi mức quyền của %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s đổi từ %(fromPowerLevel)s thành %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s đã xóa quy tắc cấm người dùng khớp với %(glob)s",
+            "removed_rule_rooms": "%(senderName)s đã xóa quy tắc cấm các phòng khớp với %(glob)s",
+            "removed_rule_servers": "%(senderName)s đã xóa quy tắc cấm các máy chủ khớp với %(glob)s",
+            "removed_rule": "%(senderName)s đã xóa quy tắc cấm khớp với %(glob)s",
+            "updated_invalid_rule": "%(senderName)s đã cập nhật quy tắc cấm không hợp lệ",
+            "updated_rule_users": "%(senderName)s đã cập nhật quy tắc cấm người dùng khớp với %(glob)s cho %(reason)s",
+            "updated_rule_rooms": "%(senderName)s đã cập nhật quy tắc cấm các phòng khớp với %(glob)s cho %(reason)s",
+            "updated_rule_servers": "%(senderName)s đã cập nhật quy tắc cấm các máy chủ khớp với %(glob)s cho %(reason)s",
+            "updated_rule": "%(senderName)s đã cập nhật quy tắc cấm phù hợp với %(glob)s cho %(reason)s",
+            "created_rule_users": "%(senderName)s đã tạo một quy tắc cấm những người dùng khớp với %(glob)s vì %(reason)s",
+            "created_rule_rooms": "%(senderName)s đã tạo một quy tắc cấm các phòng khớp với %(glob)s vì %(reason)s",
+            "created_rule_servers": "%(senderName)s đã tạo quy tắc cấm các máy chủ khớp với %(glob)s cho %(reason)s",
+            "created_rule": "%(senderName)s đã tạo một quy tắc cấm phù hợp với %(glob)s cho %(reason)s",
+            "changed_rule_users": "%(senderName)s đã thay đổi quy tắc cấm người dùng khớp %(oldGlob)s thành %(newGlob)s vì %(reason)s",
+            "changed_rule_rooms": "%(senderName)s đã thay đổi quy tắc cấm các phòng khớp với %(oldGlob)s thành khớp với %(newGlob)s vì %(reason)s",
+            "changed_rule_servers": "%(senderName)s đã thay đổi một quy tắc cấm các máy chủ khớp với %(oldGlob)s để khớp với %(newGlob)s vì %(reason)s",
+            "changed_rule_glob": "%(senderName)s đã cập nhật quy tắc cấm khớp %(oldGlob)s sang %(newGlob)s cho %(reason)s"
         }
     },
     "slash_command": {

@@ -240,8 +240,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s %(time)s",
     "Ignored user": "Sivuutettu käyttäjä",
     "Unignored user": "Sallittu käyttäjä",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s tasolta %(fromPowerLevel)s tasolle %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s muutti %(powerLevelDiffText)s:n oikeustasoa.",
     "Send": "Lähetä",
     "%(duration)ss": "%(duration)s s",
     "%(duration)sm": "%(duration)s m",
@@ -863,23 +861,6 @@
     "Invalid base_url for m.identity_server": "Epäkelpo base_url palvelimelle m.identity_server",
     "Error upgrading room": "Virhe päivitettäessä huonetta",
     "Double check that your server supports the room version chosen and try again.": "Tarkista, että palvelimesi tukee valittua huoneversiota ja yritä uudelleen.",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s poisti porttikiellon käyttäjiltä, jotka täsmäsivät sääntöön %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s poisti huoneita estävän säännön %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s poisti palvelimia estävän säännön %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s poisti estosäännön %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s muokkasi epäkelpoa estosääntöä",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s muokkasi käyttäjiä estävää sääntöä %(glob)s seuraavasta syystä: %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s muokkasi huoneita estävää sääntöä %(glob)s seuraavasta syystä: %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s muokkasi palvelimia estävää sääntöä %(glob)s seuraavasta syystä: %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s muokkasi estosääntöä %(glob)s seuraavasta syystä: %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s loi porttikiellonsäännön %(glob)s, syy: %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s loi huoneita estävän säännön %(glob)s, syy: %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s loi palvelimia estävän säännön %(glob)s, syy: %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s loi estosäännön %(glob)s, syy: %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s muutti sääntöä, joka esti käyttäjiä säännöllä %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s muutti sääntöä, joka esti huoneita säännöllä %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s muutti sääntöä, joka esti palvelimia säännöllä %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s muutti estosääntöä muodosta %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s",
     "Cross-signing public keys:": "Ristiinvarmennuksen julkiset avaimet:",
     "not found": "ei löydetty",
     "Cross-signing private keys:": "Ristiinvarmennuksen salaiset avaimet:",
@@ -964,14 +945,6 @@
     "Verifies a user, session, and pubkey tuple": "Varmentaa käyttäjän, istunnon ja julkiset avaimet",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "VAROITUS: AVAIMEN VARMENTAMINEN EPÄONNISTUI! Käyttäjän %(userId)s ja laitteen %(deviceId)s istunnon allekirjoitusavain on ”%(fprint)s”, mikä ei täsmää annettuun avaimeen ”%(fingerprint)s”. Tämä voi tarkoittaa, että viestintäänne siepataan!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Antamasi allekirjoitusavain täsmää käyttäjältä %(userId)s saamaasi istunnon %(deviceId)s allekirjoitusavaimeen. Istunto on varmennettu.",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s lisäsi vaihtoehtoiset osoitteet %(addresses)s tälle huoneelle.",
-        "one": "%(senderName)s lisäsi vaihtoehtoisen osoitteen %(addresses)s tälle huoneelle."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s poisti vaihtoehtoiset osoitteet %(addresses)s tältä huoneelta.",
-        "one": "%(senderName)s poisti vaihtoehtoisen osoitteitteen %(addresses)s tältä huoneelta."
-    },
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) kirjautui uudella istunnolla varmentamatta sitä:",
     "Enable message search in encrypted rooms": "Ota viestihaku salausta käyttävissä huoneissa käyttöön",
     "How fast should messages be downloaded.": "Kuinka nopeasti viestit pitäisi ladata.",
@@ -3321,7 +3294,15 @@
             "removed": "%(senderName)s poisti tämän huoneen pääosoitteen.",
             "changed_alternative": "%(senderName)s muutti tämän huoneen vaihtoehtoisia osoitteita.",
             "changed_main_and_alternative": "%(senderName)s muutti tämän huoneen pää- sekä vaihtoehtoisia osoitteita.",
-            "changed": "%(senderName)s muutti tämän huoneen osoitteita."
+            "changed": "%(senderName)s muutti tämän huoneen osoitteita.",
+            "alt_added": {
+                "other": "%(senderName)s lisäsi vaihtoehtoiset osoitteet %(addresses)s tälle huoneelle.",
+                "one": "%(senderName)s lisäsi vaihtoehtoisen osoitteen %(addresses)s tälle huoneelle."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s poisti vaihtoehtoiset osoitteet %(addresses)s tältä huoneelta.",
+                "one": "%(senderName)s poisti vaihtoehtoisen osoitteitteen %(addresses)s tältä huoneelta."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s kumosi henkilön %(targetDisplayName)s kutsun liittyä tähän huoneeseen.",
@@ -3486,6 +3467,29 @@
                 "one": "%(oneUser)slähetti piilotetun viestin",
                 "other": "%(oneUser)slähetti %(count)s piilotettua viestiä"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s muutti %(powerLevelDiffText)s:n oikeustasoa.",
+            "user_from_to": "%(userId)s tasolta %(fromPowerLevel)s tasolle %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s poisti porttikiellon käyttäjiltä, jotka täsmäsivät sääntöön %(glob)s",
+            "removed_rule_rooms": "%(senderName)s poisti huoneita estävän säännön %(glob)s",
+            "removed_rule_servers": "%(senderName)s poisti palvelimia estävän säännön %(glob)s",
+            "removed_rule": "%(senderName)s poisti estosäännön %(glob)s",
+            "updated_invalid_rule": "%(senderName)s muokkasi epäkelpoa estosääntöä",
+            "updated_rule_users": "%(senderName)s muokkasi käyttäjiä estävää sääntöä %(glob)s seuraavasta syystä: %(reason)s",
+            "updated_rule_rooms": "%(senderName)s muokkasi huoneita estävää sääntöä %(glob)s seuraavasta syystä: %(reason)s",
+            "updated_rule_servers": "%(senderName)s muokkasi palvelimia estävää sääntöä %(glob)s seuraavasta syystä: %(reason)s",
+            "updated_rule": "%(senderName)s muokkasi estosääntöä %(glob)s seuraavasta syystä: %(reason)s",
+            "created_rule_users": "%(senderName)s loi porttikiellonsäännön %(glob)s, syy: %(reason)s",
+            "created_rule_rooms": "%(senderName)s loi huoneita estävän säännön %(glob)s, syy: %(reason)s",
+            "created_rule_servers": "%(senderName)s loi palvelimia estävän säännön %(glob)s, syy: %(reason)s",
+            "created_rule": "%(senderName)s loi estosäännön %(glob)s, syy: %(reason)s",
+            "changed_rule_users": "%(senderName)s muutti sääntöä, joka esti käyttäjiä säännöllä %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s",
+            "changed_rule_rooms": "%(senderName)s muutti sääntöä, joka esti huoneita säännöllä %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s",
+            "changed_rule_servers": "%(senderName)s muutti sääntöä, joka esti palvelimia säännöllä %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s",
+            "changed_rule_glob": "%(senderName)s muutti estosääntöä muodosta %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s"
         }
     },
     "slash_command": {

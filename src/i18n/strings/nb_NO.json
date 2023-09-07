@@ -533,7 +533,6 @@
     "Use an identity server": "Bruk en identitetstjener",
     "Could not find user in room": "Klarte ikke å finne brukeren i rommet",
     "Session already verified!": "Økten er allerede verifisert!",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s gikk fra %(fromPowerLevel)s til %(toPowerLevel)s",
     "Your %(brand)s is misconfigured": "Ditt %(brand)s-oppsett er feiloppsatt",
     "Not a valid %(brand)s keyfile": "Ikke en gyldig %(brand)s-nøkkelfil",
     "Unrecognised address": "Adressen ble ikke gjenkjent",
@@ -1561,6 +1560,9 @@
                 "one": "%(oneUser)s endret navnet sitt",
                 "other": "%(oneUser)sendret navnet sitt %(count)s ganger"
             }
+        },
+        "m.room.power_levels": {
+            "user_from_to": "%(userId)s gikk fra %(fromPowerLevel)s til %(toPowerLevel)s"
         }
     },
     "slash_command": {

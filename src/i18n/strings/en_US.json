@@ -22,7 +22,6 @@
     "Banned users": "Banned users",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",
     "Change Password": "Change Password",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s changed the power level of %(powerLevelDiffText)s.",
     "Command error": "Command error",
     "Commands": "Commands",
     "Confirm password": "Confirm password",
@@ -57,7 +56,6 @@
     "Filter room members": "Filter room members",
     "Forget room": "Forget room",
     "For security, this session has been signed out. Please sign in again.": "For security, this session has been signed out. Please sign in again.",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s",
     "Historical": "Historical",
     "Import E2E room keys": "Import E2E room keys",
     "Incorrect username and/or password.": "Incorrect username and/or password.",
@@ -454,6 +452,10 @@
             "more_users": {
                 "other": "%(names)s and %(count)s others are typing …"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s changed the power level of %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s"
         }
     },
     "slash_command": {

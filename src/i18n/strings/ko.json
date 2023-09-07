@@ -34,7 +34,6 @@
     "Are you sure you want to reject the invitation?": "초대를 거절하시겠어요?",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "홈서버에 연결할 수 없음 - 연결 상태를 확인하거나, <a>홈서버의 SSL 인증서</a>가 믿을 수 있는지 확인하고, 브라우저 확장 기능이 요청을 막고 있는지 확인해주세요.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "주소 창에 HTTPS URL이 있을 때는 HTTP로 홈서버를 연결할 수 없습니다. HTTPS를 쓰거나 <a>안전하지 않은 스크립트를 허용</a>해주세요.",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s님이 %(powerLevelDiffText)s의 권한 등급을 바꿨습니다.",
     "Command error": "명령어 오류",
     "Commands": "명령어",
     "Cryptography": "암호화",
@@ -62,7 +61,6 @@
     "Filter room members": "방 구성원 필터",
     "Forget room": "방 지우기",
     "For security, this session has been signed out. Please sign in again.": "안전을 위해서 이 세션에서 로그아웃했습니다. 다시 로그인해주세요.",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s를 %(fromPowerLevel)s에서 %(toPowerLevel)s로",
     "Historical": "기록",
     "Home": "홈",
     "Import E2E room keys": "종단간 암호화 방 키 불러오기",
@@ -1382,6 +1380,10 @@
                 "other": "%(oneUser)s님이 %(count)s번 변경 사항을 되돌렸습니다",
                 "one": "%(oneUser)s님이 변경 사항을 되돌렸습니다"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s님이 %(powerLevelDiffText)s의 권한 등급을 바꿨습니다.",
+            "user_from_to": "%(userId)s를 %(fromPowerLevel)s에서 %(toPowerLevel)s로"
         }
     },
     "slash_command": {

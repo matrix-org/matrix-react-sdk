@@ -330,8 +330,6 @@
     "Please supply a https:// or http:// widget URL": "Pateikite https:// arba http:// valdiklio URL",
     "You cannot modify widgets in this room.": "Jūs negalite modifikuoti valdiklių šiame kambaryje.",
     "Forces the current outbound group session in an encrypted room to be discarded": "Priverčia išmesti esamą užsibaigiantį grupės seansą užšifruotame kambaryje",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s galios lygį iš %(fromPowerLevel)s į %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s pakeitė %(powerLevelDiffText)s.",
     "Cannot reach homeserver": "Serveris nepasiekiamas",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Įsitikinkite, kad jūsų interneto ryšys yra stabilus, arba susisiekite su serverio administratoriumi",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Paprašykite savo %(brand)s administratoriaus patikrinti ar <a>jūsų konfigūracijoje</a> nėra neteisingų arba pasikartojančių įrašų.",
@@ -834,14 +832,6 @@
     "Published Addresses": "Paskelbti Adresai",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Atnaujinant kambario alternatyvius adresus įvyko klaida. Gali būti, kad serveris to neleidžia arba įvyko laikina klaida.",
     "Room Addresses": "Kambario Adresai",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "one": "%(senderName)s pridėjo alternatyvų šio kambario adresą %(addresses)s.",
-        "other": "%(senderName)s pridėjo alternatyvius šio kambario adresus %(addresses)s."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "one": "%(senderName)s pašalino alternatyvų šio kambario adresą %(addresses)s.",
-        "other": "%(senderName)s pašalino alternatyvius šio kambario adresus %(addresses)s."
-    },
     "Room settings": "Kambario nustatymai",
     "Link to most recent message": "Nuoroda į naujausią žinutę",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Pakviesti ką nors naudojant jų vardą, vartotojo vardą (pvz.: <userId/>) arba <a>bendrinti šį kambarį</a>.",
@@ -892,11 +882,6 @@
     "The call was answered on another device.": "Į skambutį buvo atsiliepta kitame įrenginyje.",
     "Answered Elsewhere": "Atsiliepta Kitur",
     "The call could not be established": "Nepavyko pradėti skambučio",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s pašalino draudimo taisyklę, sutampančią su %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s pašalino taisyklę, draudžiančią serverius, sutampančius su %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s pašalino taisyklę, draudžiančią kambarius, sutampančius su %(glob)s",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s pašalino taisyklę, draudžiančią vartotojus, sutampančius su %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s atnaujino klaidingą draudimo taisyklę",
     "Opens chat with the given user": "Atidaro pokalbį su nurodytu vartotoju",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Jūsų pateiktas pasirašymo raktas sutampa su pasirašymo raktu, gautu iš vartotojo %(userId)s seanso %(deviceId)s. Seansas pažymėtas kaip patikrintas.",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ĮSPĖJIMAS: RAKTŲ PATIKRINIMAS NEPAVYKO! Pasirašymo raktas vartotojui %(userId)s ir seansui %(deviceId)s yra \"%(fprint)s\", kuris nesutampa su pateiktu raktu \"%(fingerprint)s\". Tai gali reikšti, kad jūsų komunikacijos yra perimamos!",
@@ -914,18 +899,6 @@
     "Unexpected server error trying to leave the room": "Netikėta serverio klaida bandant išeiti iš kambario",
     "Not Trusted": "Nepatikimas",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) prisijungė prie naujo seanso jo nepatvirtinę:",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s atnaujino draudimo taisyklę, kuri sutapo su %(oldGlob)s į sutampančią su %(newGlob)s dėl %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s pakeitė taisyklę, kuri draudė serverius, sutampančius su %(oldGlob)s į sutampančius su %(newGlob)s dėl %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s pakeitė taisyklę, kuri draudė kambarius, sutampančius su %(oldGlob)s į sutampančius su %(newGlob)s dėl %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s pakeitė taisyklę, kuri draudė vartotojus, sutampančius su %(oldGlob)s į sutampančius su %(newGlob)s dėl %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s sukūrė draudimo taisyklę, sutampančią su %(glob)s dėl %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s sukūrė taisyklę, draudžiančią serverius, sutampančius su %(glob)s dėl %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s sukūrė taisyklę, draudžiančią kambarius, sutampančius su %(glob)s dėl %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s sukūrė taisyklę, draudžiančią vartotojus, sutampančius su %(glob)s dėl %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s atnaujino draudimo taisyklę, sutampančią su %(glob)s dėl %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s atnaujino taisyklę, draudžiančią serverius, sutampančius su %(glob)s dėl %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s atnaujino taisyklę, draudžiančią kambarius, sutampančius su %(glob)s dėl %(reason)s",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s atnaujino taisyklę, draudžiančią vartotojus, sutampančius su %(glob)s dėl %(reason)s",
     "Failed to remove tag %(tagName)s from room": "Nepavyko pašalinti žymos %(tagName)s iš kambario",
     "Your browser likely removed this data when running low on disk space.": "Jūsų naršyklė greičiausiai pašalino šiuos duomenis pritrūkus vietos diske.",
     "Remove %(count)s messages": {
@@ -2310,7 +2283,15 @@
             "removed": "%(senderName)s pašalino pagrindinį šio kambario adresą.",
             "changed_alternative": "%(senderName)s pakeitė alternatyvius šio kambario adresus.",
             "changed_main_and_alternative": "%(senderName)s pakeitė pagrindinį ir alternatyvius šio kambario adresus.",
-            "changed": "%(senderName)s pakeitė šio kambario adresus."
+            "changed": "%(senderName)s pakeitė šio kambario adresus.",
+            "alt_added": {
+                "one": "%(senderName)s pridėjo alternatyvų šio kambario adresą %(addresses)s.",
+                "other": "%(senderName)s pridėjo alternatyvius šio kambario adresus %(addresses)s."
+            },
+            "alt_removed": {
+                "one": "%(senderName)s pašalino alternatyvų šio kambario adresą %(addresses)s.",
+                "other": "%(senderName)s pašalino alternatyvius šio kambario adresus %(addresses)s."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s atšaukė pakvietimą %(targetDisplayName)s prisijungti prie kambario.",
@@ -2443,6 +2424,29 @@
                 "other": "%(oneUser)s neatliko jokių pakeitimų %(count)s kartų(-us)",
                 "one": "%(oneUser)s neatliko jokių pakeitimų"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s pakeitė %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s galios lygį iš %(fromPowerLevel)s į %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s pašalino taisyklę, draudžiančią vartotojus, sutampančius su %(glob)s",
+            "removed_rule_rooms": "%(senderName)s pašalino taisyklę, draudžiančią kambarius, sutampančius su %(glob)s",
+            "removed_rule_servers": "%(senderName)s pašalino taisyklę, draudžiančią serverius, sutampančius su %(glob)s",
+            "removed_rule": "%(senderName)s pašalino draudimo taisyklę, sutampančią su %(glob)s",
+            "updated_invalid_rule": "%(senderName)s atnaujino klaidingą draudimo taisyklę",
+            "updated_rule_users": "%(senderName)s atnaujino taisyklę, draudžiančią vartotojus, sutampančius su %(glob)s dėl %(reason)s",
+            "updated_rule_rooms": "%(senderName)s atnaujino taisyklę, draudžiančią kambarius, sutampančius su %(glob)s dėl %(reason)s",
+            "updated_rule_servers": "%(senderName)s atnaujino taisyklę, draudžiančią serverius, sutampančius su %(glob)s dėl %(reason)s",
+            "updated_rule": "%(senderName)s atnaujino draudimo taisyklę, sutampančią su %(glob)s dėl %(reason)s",
+            "created_rule_users": "%(senderName)s sukūrė taisyklę, draudžiančią vartotojus, sutampančius su %(glob)s dėl %(reason)s",
+            "created_rule_rooms": "%(senderName)s sukūrė taisyklę, draudžiančią kambarius, sutampančius su %(glob)s dėl %(reason)s",
+            "created_rule_servers": "%(senderName)s sukūrė taisyklę, draudžiančią serverius, sutampančius su %(glob)s dėl %(reason)s",
+            "created_rule": "%(senderName)s sukūrė draudimo taisyklę, sutampančią su %(glob)s dėl %(reason)s",
+            "changed_rule_users": "%(senderName)s pakeitė taisyklę, kuri draudė vartotojus, sutampančius su %(oldGlob)s į sutampančius su %(newGlob)s dėl %(reason)s",
+            "changed_rule_rooms": "%(senderName)s pakeitė taisyklę, kuri draudė kambarius, sutampančius su %(oldGlob)s į sutampančius su %(newGlob)s dėl %(reason)s",
+            "changed_rule_servers": "%(senderName)s pakeitė taisyklę, kuri draudė serverius, sutampančius su %(oldGlob)s į sutampančius su %(newGlob)s dėl %(reason)s",
+            "changed_rule_glob": "%(senderName)s atnaujino draudimo taisyklę, kuri sutapo su %(oldGlob)s į sutampančią su %(newGlob)s dėl %(reason)s"
         }
     },
     "slash_command": {

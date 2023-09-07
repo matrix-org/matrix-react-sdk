@@ -120,31 +120,7 @@
     "Opens chat with the given user": "يفتح دردشة من المستخدم المعطى",
     "Displays action": "يعرض إجراءً",
     "Reason": "السبب",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "قام %(senderName)s بإضافة العناوين البديلة %(addresses)s لهذه الغرفة.",
-        "one": "قام %(senderName)s بإضافة العنوان البديل %(addresses)s لهذه الغرفة."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "قام %(senderName)s بإزالة العناوين البديلة %(addresses)s لهذه الغرفة.",
-        "one": "قام %(senderName)s بإزالة العنوان البديل %(addresses)s لهذه الغرفة."
-    },
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s من %(fromPowerLevel)s الى %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "غير %(senderName)s مستوى الطاقة الخاصة ب %(powerLevelDiffText)s.",
     "You cannot place a call with yourself.": "لا يمكنك الاتصال بنفسك.",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "أزال %(senderName)s القاعدة الناصَّة على منع المستخدمين المطابقين %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "أزال %(senderName)s القاعدة الناصَّة على منع الغرف المطابقة %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "أزال %(senderName)s القاعدة الناصَّة على منع الخوادم المطابقة %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "أزال %(senderName)s قاعدة المنع المطابقة %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "حدَّث %(senderName)s قاعدة منع غير صالحة",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "حدَّث %(senderName)s قاعدة منع المستخدمين المطابقين %(glob)s بسبب %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "حدَّث %(senderName)s قاعدة منع تطابق %(glob)s بسبب %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "أنشأ %(senderName)s قاعدة منع غرف تطابق %(glob)s بسبب %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s قاعدة حظر سيرفرات مظابقة منشأة %(glob)s من أجل %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s قاعدة حظر مطابق منشأة %(glob)s من أجل %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s قاعدة متغيرة التي تحظر المستخدمين المطابقين %(oldGlob)s من أجل تطابق %(newGlob)s من أجل %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s قاعدة متغيرة التي تحظر الغرف المطابقة %(oldGlob)s من أجل مطابقة %(newGlob)s من أجل %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s قاعدة متغيرة التي تحظر سيرفرات مطابقة %(oldGlob)s من أجل مطابقة %(newGlob)s من أجل %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s قاعدة حظر محدثة التي طابقت %(oldGlob)s لتطابق %(newGlob)s من أجل %(reason)s",
     "You signed in to a new session without verifying it:": "قمت بتسجيل الدخول لجلسة جديدة من غير التحقق منها:",
     "Verify your other session using one of the options below.": "أكِّد جلستك الأخرى باستخدام أحد الخيارات أدناه.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s%(userId)s تم تسجيل الدخول لجلسة جديدة من غير التحقق منها:",
@@ -843,9 +819,6 @@
     "Send stickers into this room": "أرسل ملصقات إلى هذه الغرفة",
     "Remain on your screen while running": "ابقَ على شاشتك أثناء إجراء",
     "Remain on your screen when viewing another room, when running": "ابقَ على شاشتك عند مشاهدة غرفة أخرى أثناء إجراء",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s حدَّث قاعدة حظر المستخدمين المطابقة %(glob)s بسبب %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s حدَّث قاعدة حظر الخوادم المطابقة %(glob)s بسبب %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s حدَّث قاعدة حظر الغرفة المطابقة %(glob)s بسبب %(reason)s",
     "Takes the call in the current room off hold": "يوقف المكالمة في الغرفة الحالية",
     "Places the call in the current room on hold": "يضع المكالمة في الغرفة الحالية قيد الانتظار",
     "Cuba": "كوبا",
@@ -1264,7 +1237,15 @@
             "removed": "قام %(senderName)s بإزالة العنوان الرئيسي لهذه الغرفة.",
             "changed_alternative": "قام %(senderName)s بتعديل العناوين البديلة لهذه الغرفة.",
             "changed_main_and_alternative": "قام %(senderName)s بتعديل العناوين الرئيسية و البديلة لهذه الغرفة.",
-            "changed": "قام %(senderName)s بتعديل عناوين هذه الغرفة."
+            "changed": "قام %(senderName)s بتعديل عناوين هذه الغرفة.",
+            "alt_added": {
+                "other": "قام %(senderName)s بإضافة العناوين البديلة %(addresses)s لهذه الغرفة.",
+                "one": "قام %(senderName)s بإضافة العنوان البديل %(addresses)s لهذه الغرفة."
+            },
+            "alt_removed": {
+                "other": "قام %(senderName)s بإزالة العناوين البديلة %(addresses)s لهذه الغرفة.",
+                "one": "قام %(senderName)s بإزالة العنوان البديل %(addresses)s لهذه الغرفة."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "قام %(senderName)s بسحب الدعوة الى %(targetDisplayName)s بالانضمام الى الغرفة.",
@@ -1297,6 +1278,29 @@
         },
         "m.call.hangup": {
             "dm": "انتهت المكالمة"
+        },
+        "m.room.power_levels": {
+            "changed": "غير %(senderName)s مستوى الطاقة الخاصة ب %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s من %(fromPowerLevel)s الى %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "أزال %(senderName)s القاعدة الناصَّة على منع المستخدمين المطابقين %(glob)s",
+            "removed_rule_rooms": "أزال %(senderName)s القاعدة الناصَّة على منع الغرف المطابقة %(glob)s",
+            "removed_rule_servers": "أزال %(senderName)s القاعدة الناصَّة على منع الخوادم المطابقة %(glob)s",
+            "removed_rule": "أزال %(senderName)s قاعدة المنع المطابقة %(glob)s",
+            "updated_invalid_rule": "حدَّث %(senderName)s قاعدة منع غير صالحة",
+            "updated_rule_users": "حدَّث %(senderName)s قاعدة منع المستخدمين المطابقين %(glob)s بسبب %(reason)s",
+            "updated_rule_rooms": "%(senderName)s حدَّث قاعدة حظر الغرفة المطابقة %(glob)s بسبب %(reason)s",
+            "updated_rule_servers": "%(senderName)s حدَّث قاعدة حظر الخوادم المطابقة %(glob)s بسبب %(reason)s",
+            "updated_rule": "حدَّث %(senderName)s قاعدة منع تطابق %(glob)s بسبب %(reason)s",
+            "created_rule_users": "%(senderName)s حدَّث قاعدة حظر المستخدمين المطابقة %(glob)s بسبب %(reason)s",
+            "created_rule_rooms": "أنشأ %(senderName)s قاعدة منع غرف تطابق %(glob)s بسبب %(reason)s",
+            "created_rule_servers": "%(senderName)s قاعدة حظر سيرفرات مظابقة منشأة %(glob)s من أجل %(reason)s",
+            "created_rule": "%(senderName)s قاعدة حظر مطابق منشأة %(glob)s من أجل %(reason)s",
+            "changed_rule_users": "%(senderName)s قاعدة متغيرة التي تحظر المستخدمين المطابقين %(oldGlob)s من أجل تطابق %(newGlob)s من أجل %(reason)s",
+            "changed_rule_rooms": "%(senderName)s قاعدة متغيرة التي تحظر الغرف المطابقة %(oldGlob)s من أجل مطابقة %(newGlob)s من أجل %(reason)s",
+            "changed_rule_servers": "%(senderName)s قاعدة متغيرة التي تحظر سيرفرات مطابقة %(oldGlob)s من أجل مطابقة %(newGlob)s من أجل %(reason)s",
+            "changed_rule_glob": "%(senderName)s قاعدة حظر محدثة التي طابقت %(oldGlob)s لتطابق %(newGlob)s من أجل %(reason)s"
         }
     },
     "slash_command": {

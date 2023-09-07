@@ -54,8 +54,6 @@
     "You are no longer ignoring %(userId)s": "Od teraz viac neignorujete používateľa %(userId)s",
     "Verified key": "Kľúč overený",
     "Reason": "Dôvod",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s z %(fromPowerLevel)s na %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s zmenil úroveň oprávnenia pre %(powerLevelDiffText)s.",
     "Failure to create room": "Nepodarilo sa vytvoriť miestnosť",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server môže byť nedostupný, preťažený, alebo ste narazili na chybu.",
     "Your browser does not support the required cryptography extensions": "Váš prehliadač nepodporuje požadované kryptografické rozšírenia",
@@ -599,23 +597,6 @@
     "Use an identity server": "Použiť server totožností",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Na pozvanie e-mailom použite server identity. Kliknite na tlačidlo Pokračovať, ak chcete použiť predvolený server identity (%(defaultIdentityServerName)s) alebo ho upravte v Nastaveniach.",
     "Use an identity server to invite by email. Manage in Settings.": "Server totožností sa použije na pozývanie používateľov zadaním emailovej adresy. Spravujte v nastaveniach.",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s odstránil pravidlo zákazu vstúpiť používateľom zhodujúcich sa s %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s odstránil pravidlo zákaz vstúpiť do miestností zhodujúcich sa s %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s odstránil pravidlo zakázať vstúpiť z domovského servera zhodnými s %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s odstránil pravidlo zákazu vstupu zhodné s %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s aktualizoval neplatné pravidlo zákazu vstúpiť",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s aktualizoval pravidlo zákazu vstúpiť používateľom zhodujúcim sa s %(glob)s, dôvod: %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s aktualizoval pravidlo zakázať vstúpiť do miestností shodujúcich sa s %(glob)s, dôvod: %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s aktualizoval pravidlo zakázať vstúpiť z domovských serverov zhodujúcich sa s %(glob)s, dôvod: %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s aktualizoval pravidlo zakázať vstúpiť zhodujúce sa s %(glob)s, dôvod: %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s vytvoril pravidlo zakázať vstúpiť používateľom zhodujúcim sa s %(glob)s, dôvod: %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s vytvoril pravidlo zakázať vstúpiť do miestností zhodujúcich sa s %(glob)s, dôvod: %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s vytvoril pravidlo zakázať vstúpiť z domovských serverov zhodujúcich sa s %(glob)s, dôvod: %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s vytvoril pravidlo zakázať vstúpiť zhodujúce sa s %(glob)s, dôvod: %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s zmenil pravidlo zakázať vstúpiť používateľom pôvodne zhodujúcich sa s %(oldGlob)s na používateľov zhodujúcich sa s %(newGlob)s, dôvod: %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s zmenil pravidlo zakázať vstúpiť do miestností pôvodne zhodujúcich sa s %(oldGlob)s na miestnosti zhodujúce sa s %(newGlob)s, dôvod: %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s zmenil pravidlo, ktoré zakazovalo servery zodpovedajúce %(oldGlob)s na zodpovedajúce %(newGlob)s z %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s aktualizoval pravidlo zakázať vstúpiť pôvodne sa zhodujúce s %(oldGlob)s na %(newGlob)s, dôvod: %(reason)s",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Match system theme": "Prispôsobiť sa vzhľadu systému",
     "My Ban List": "Môj zoznam zákazov",
@@ -682,14 +663,6 @@
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "VAROVANIE: OVERENIE KĽÚČOV ZLYHALO! Podpisový kľúč používateľa %(userId)s a relácia %(deviceId)s je \"%(fprint)s\" čo nezodpovedá zadanému kľúču \"%(fingerprint)s\". Môže to znamenať, že vaša komunikácia je odpočúvaná!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Zadaný podpisový kľúč sa zhoduje s podpisovým kľúčom, ktorý ste dostali z relácie používateľa %(userId)s %(deviceId)s. Relácia označená ako overená.",
     "Opens chat with the given user": "Otvorí konverzáciu s daným používateľom",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s pridal/a alternatívne adresy %(addresses)s pre túto miestnosť.",
-        "one": "%(senderName)s pridal/a alternatívnu adresu %(addresses)s pre túto miestnosť."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s odstránil/a alternatívne adresy %(addresses)s pre túto miestnosť.",
-        "one": "%(senderName)s odstránil/a alternatívnu adresu %(addresses)s pre túto miestnosť."
-    },
     "You signed in to a new session without verifying it:": "Prihlásili ste sa do novej relácie bez jej overenia:",
     "Verify your other session using one of the options below.": "Overte svoje ostatné relácie pomocou jednej z nižšie uvedených možností.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) sa prihlásil do novej relácie bez jej overenia:",
@@ -3697,7 +3670,15 @@
             "removed": "%(senderName)s odstránil hlavnú adresu tejto miestnosti.",
             "changed_alternative": "%(senderName)s zmenil/a alternatívne adresy pre túto miestnosť.",
             "changed_main_and_alternative": "%(senderName)s zmenil/a hlavnú a alternatívne adresy pre túto miestnosť.",
-            "changed": "%(senderName)s zmenil/a adresy pre túto miestnosť."
+            "changed": "%(senderName)s zmenil/a adresy pre túto miestnosť.",
+            "alt_added": {
+                "other": "%(senderName)s pridal/a alternatívne adresy %(addresses)s pre túto miestnosť.",
+                "one": "%(senderName)s pridal/a alternatívnu adresu %(addresses)s pre túto miestnosť."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s odstránil/a alternatívne adresy %(addresses)s pre túto miestnosť.",
+                "one": "%(senderName)s odstránil/a alternatívnu adresu %(addresses)s pre túto miestnosť."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s odvolal pozvanie vstúpiť do miestnosti pre %(targetDisplayName)s.",
@@ -3878,6 +3859,29 @@
                 "one": "%(oneUser)sposlal/a skrytú správu",
                 "other": "%(oneUser)sposlal %(count)s skrytých správ"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s zmenil úroveň oprávnenia pre %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s z %(fromPowerLevel)s na %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s odstránil pravidlo zákazu vstúpiť používateľom zhodujúcich sa s %(glob)s",
+            "removed_rule_rooms": "%(senderName)s odstránil pravidlo zákaz vstúpiť do miestností zhodujúcich sa s %(glob)s",
+            "removed_rule_servers": "%(senderName)s odstránil pravidlo zakázať vstúpiť z domovského servera zhodnými s %(glob)s",
+            "removed_rule": "%(senderName)s odstránil pravidlo zákazu vstupu zhodné s %(glob)s",
+            "updated_invalid_rule": "%(senderName)s aktualizoval neplatné pravidlo zákazu vstúpiť",
+            "updated_rule_users": "%(senderName)s aktualizoval pravidlo zákazu vstúpiť používateľom zhodujúcim sa s %(glob)s, dôvod: %(reason)s",
+            "updated_rule_rooms": "%(senderName)s aktualizoval pravidlo zakázať vstúpiť do miestností shodujúcich sa s %(glob)s, dôvod: %(reason)s",
+            "updated_rule_servers": "%(senderName)s aktualizoval pravidlo zakázať vstúpiť z domovských serverov zhodujúcich sa s %(glob)s, dôvod: %(reason)s",
+            "updated_rule": "%(senderName)s aktualizoval pravidlo zakázať vstúpiť zhodujúce sa s %(glob)s, dôvod: %(reason)s",
+            "created_rule_users": "%(senderName)s vytvoril pravidlo zakázať vstúpiť používateľom zhodujúcim sa s %(glob)s, dôvod: %(reason)s",
+            "created_rule_rooms": "%(senderName)s vytvoril pravidlo zakázať vstúpiť do miestností zhodujúcich sa s %(glob)s, dôvod: %(reason)s",
+            "created_rule_servers": "%(senderName)s vytvoril pravidlo zakázať vstúpiť z domovských serverov zhodujúcich sa s %(glob)s, dôvod: %(reason)s",
+            "created_rule": "%(senderName)s vytvoril pravidlo zakázať vstúpiť zhodujúce sa s %(glob)s, dôvod: %(reason)s",
+            "changed_rule_users": "%(senderName)s zmenil pravidlo zakázať vstúpiť používateľom pôvodne zhodujúcich sa s %(oldGlob)s na používateľov zhodujúcich sa s %(newGlob)s, dôvod: %(reason)s",
+            "changed_rule_rooms": "%(senderName)s zmenil pravidlo zakázať vstúpiť do miestností pôvodne zhodujúcich sa s %(oldGlob)s na miestnosti zhodujúce sa s %(newGlob)s, dôvod: %(reason)s",
+            "changed_rule_servers": "%(senderName)s zmenil pravidlo, ktoré zakazovalo servery zodpovedajúce %(oldGlob)s na zodpovedajúce %(newGlob)s z %(reason)s",
+            "changed_rule_glob": "%(senderName)s aktualizoval pravidlo zakázať vstúpiť pôvodne sa zhodujúce s %(oldGlob)s na %(newGlob)s, dôvod: %(reason)s"
         }
     },
     "slash_command": {

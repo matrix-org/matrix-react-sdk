@@ -71,7 +71,6 @@
     "You are no longer ignoring %(userId)s": "Non stai più ignorando %(userId)s",
     "Verified key": "Chiave verificata",
     "Reason": "Motivo",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s da %(fromPowerLevel)s a %(toPowerLevel)s",
     "Failure to create room": "Creazione della stanza fallita",
     "Server may be unavailable, overloaded, or you hit a bug.": "Il server potrebbe essere non disponibile, sovraccarico o hai trovato un errore.",
     "Send": "Invia",
@@ -126,7 +125,6 @@
     "Low priority": "Bassa priorità",
     "Historical": "Cronologia",
     "Power level must be positive integer.": "Il livello di poteri deve essere un intero positivo.",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s ha modificato il livello di poteri di %(powerLevelDiffText)s.",
     "Jump to read receipt": "Salta alla ricevuta di lettura",
     "%(roomName)s does not exist.": "%(roomName)s non esiste.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s non è al momento accessibile.",
@@ -871,23 +869,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aggiornare una stanza è un'azione avanzata ed è consigliabile quando una stanza non è stabile a causa di errori, funzioni mancanti o vulnerabilità di sicurezza.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Solitamente ciò influisce solo come la stanza viene elaborata sul server. Se stai riscontrando problemi con il tuo %(brand)s, <a>segnala un errore</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Aggiornerai questa stanza dalla <oldVersion /> alla <newVersion />.",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s ha rimosso la regola che bandisce utenti corrispondenti a %(glob)s",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s ha rimosso la regola che bandisce stanze corrispondenti a %(glob)s",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s ha rimosso la regola che bandisce server corrispondenti a %(glob)s",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s ha rimosso una regola di ban corrispondente a %(glob)s",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s ha aggiornato una regola di ban non valida",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s ha aggiornato la regola che bandisce utenti corrispondenti a %(glob)s perchè %(reason)s",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s ha aggiornato la regola che bandisce stanze corrispondenti a %(glob)s perchè %(reason)s",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s ha aggiornato la regola che bandisce server corrispondenti a %(glob)s perchè %(reason)s",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s ha aggiornato una regola di ban corrispondente a %(glob)s perchè %(reason)s",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s ha creato una regola che bandisce utenti corrispondenti a %(glob)s perchè %(reason)s",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s ha creato una regola che bandisce stanze corrispondenti a %(glob)s perchè %(reason)s",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s ha creato una regola che bandisce server corrispondenti a %(glob)s perchè %(reason)s",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s ha creato una regola di ban corrispondente a %(glob)s perchè %(reason)s",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ha modificato una regola che bandiva utenti corrispondenti a %(oldGlob)s per corrispondere a %(newGlob)s perchè %(reason)s",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ha modificato una regola che bandiva stanze corrispondenti a %(oldGlob)s per corrispondere a %(newGlob)s perchè %(reason)s",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ha modificato una regola che bandiva server corrispondenti a %(oldGlob)s per corrispondere a %(newGlob)s perchè %(reason)s",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s ha modificato una regola di ban che corrispondeva a %(oldGlob)s per corrispondere a %(newGlob)s perchè %(reason)s",
     "Cross-signing public keys:": "Chiavi pubbliche di firma incrociata:",
     "not found": "non trovato",
     "Cross-signing private keys:": "Chiavi private di firma incrociata:",
@@ -1027,14 +1008,6 @@
     "Accepting…": "Accettazione…",
     "Not currently indexing messages for any room.": "Attualmente non si stanno indicizzando i messaggi di alcuna stanza.",
     "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s di %(totalRooms)s",
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s ha aggiunto gli indirizzi alternativi %(addresses)s per questa stanza.",
-        "one": "%(senderName)s ha aggiunto l'indirizzo alternativo %(addresses)s per questa stanza."
-    },
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "other": "%(senderName)s ha rimosso gli indirizzi alternativi %(addresses)s per questa stanza.",
-        "one": "%(senderName)s ha rimosso l'indirizzo alternativo %(addresses)s per questa stanza."
-    },
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Si è verificato un errore aggiornando gli indirizzi alternativi della stanza. Potrebbe non essere consentito dal server o essere un errore temporaneo.",
     "Invalid theme schema.": "Schema del tema non valido.",
     "Error downloading theme information.": "Errore scaricando informazioni sul tema.",
@@ -3702,7 +3675,15 @@
             "removed": "%(senderName)s ha rimosso l'indirizzo principale di questa stanza.",
             "changed_alternative": "%(senderName)s ha cambiato gli indirizzi alternativi per questa stanza.",
             "changed_main_and_alternative": "%(senderName)s ha cambiato gli indirizzi principali ed alternativi per questa stanza.",
-            "changed": "%(senderName)s ha cambiato gli indirizzi per questa stanza."
+            "changed": "%(senderName)s ha cambiato gli indirizzi per questa stanza.",
+            "alt_added": {
+                "other": "%(senderName)s ha aggiunto gli indirizzi alternativi %(addresses)s per questa stanza.",
+                "one": "%(senderName)s ha aggiunto l'indirizzo alternativo %(addresses)s per questa stanza."
+            },
+            "alt_removed": {
+                "other": "%(senderName)s ha rimosso gli indirizzi alternativi %(addresses)s per questa stanza.",
+                "one": "%(senderName)s ha rimosso l'indirizzo alternativo %(addresses)s per questa stanza."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s ha revocato l'invito a %(targetDisplayName)s di unirsi alla stanza.",
@@ -3883,6 +3864,29 @@
                 "one": "%(oneUser)sha inviato un messaggio nascosto",
                 "other": "%(oneUser)sha inviato %(count)s messaggi nascosti"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s ha modificato il livello di poteri di %(powerLevelDiffText)s.",
+            "user_from_to": "%(userId)s da %(fromPowerLevel)s a %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s ha rimosso la regola che bandisce utenti corrispondenti a %(glob)s",
+            "removed_rule_rooms": "%(senderName)s ha rimosso la regola che bandisce stanze corrispondenti a %(glob)s",
+            "removed_rule_servers": "%(senderName)s ha rimosso la regola che bandisce server corrispondenti a %(glob)s",
+            "removed_rule": "%(senderName)s ha rimosso una regola di ban corrispondente a %(glob)s",
+            "updated_invalid_rule": "%(senderName)s ha aggiornato una regola di ban non valida",
+            "updated_rule_users": "%(senderName)s ha aggiornato la regola che bandisce utenti corrispondenti a %(glob)s perchè %(reason)s",
+            "updated_rule_rooms": "%(senderName)s ha aggiornato la regola che bandisce stanze corrispondenti a %(glob)s perchè %(reason)s",
+            "updated_rule_servers": "%(senderName)s ha aggiornato la regola che bandisce server corrispondenti a %(glob)s perchè %(reason)s",
+            "updated_rule": "%(senderName)s ha aggiornato una regola di ban corrispondente a %(glob)s perchè %(reason)s",
+            "created_rule_users": "%(senderName)s ha creato una regola che bandisce utenti corrispondenti a %(glob)s perchè %(reason)s",
+            "created_rule_rooms": "%(senderName)s ha creato una regola che bandisce stanze corrispondenti a %(glob)s perchè %(reason)s",
+            "created_rule_servers": "%(senderName)s ha creato una regola che bandisce server corrispondenti a %(glob)s perchè %(reason)s",
+            "created_rule": "%(senderName)s ha creato una regola di ban corrispondente a %(glob)s perchè %(reason)s",
+            "changed_rule_users": "%(senderName)s ha modificato una regola che bandiva utenti corrispondenti a %(oldGlob)s per corrispondere a %(newGlob)s perchè %(reason)s",
+            "changed_rule_rooms": "%(senderName)s ha modificato una regola che bandiva stanze corrispondenti a %(oldGlob)s per corrispondere a %(newGlob)s perchè %(reason)s",
+            "changed_rule_servers": "%(senderName)s ha modificato una regola che bandiva server corrispondenti a %(oldGlob)s per corrispondere a %(newGlob)s perchè %(reason)s",
+            "changed_rule_glob": "%(senderName)s ha modificato una regola di ban che corrispondeva a %(oldGlob)s per corrispondere a %(newGlob)s perchè %(reason)s"
         }
     },
     "slash_command": {

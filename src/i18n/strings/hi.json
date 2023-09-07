@@ -64,8 +64,6 @@
     "Displays action": "कार्रवाई प्रदर्शित करता है",
     "Forces the current outbound group session in an encrypted room to be discarded": "एक एन्क्रिप्टेड रूम में मौजूदा आउटबाउंड समूह सत्र को त्यागने के लिए मजबूर करता है",
     "Reason": "कारण",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s का %(fromPowerLevel)s से %(toPowerLevel)s",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s ने %(powerLevelDiffText)s के पावर स्तर को बदल दिया।",
     "Failure to create room": "रूम बनाने में विफलता",
     "Server may be unavailable, overloaded, or you hit a bug.": "सर्वर अनुपलब्ध, अधिभारित हो सकता है, या अपने एक सॉफ्टवेयर गर्बरी को पाया।",
     "Send": "भेजें",
@@ -627,6 +625,10 @@
                 "other": "%(names)s और %(count)s अन्य टाइप कर रहे हैं …",
                 "one": "%(names)s और एक अन्य टाइप कर रहा है …"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s ने %(powerLevelDiffText)s के पावर स्तर को बदल दिया।",
+            "user_from_to": "%(userId)s का %(fromPowerLevel)s से %(toPowerLevel)s"
         }
     },
     "slash_command": {
