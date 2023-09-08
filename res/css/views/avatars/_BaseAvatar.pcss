@@ -24,8 +24,8 @@ limitations under the License.
 }
 
 button.mx_BaseAvatar {
-    /* The user agent stylesheet overrides the font-size in this scenario
-       And that breaks the alignment, emojis, and all sorts of things
+    /* <button> is a form element and by default it uses the user agent (browser) styling.
+       We want it to inherit the font from its parent:
      */
-    font-size: inherit;
+    font-family: inherit;
 }
