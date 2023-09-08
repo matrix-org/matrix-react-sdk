@@ -1683,7 +1683,52 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
 
-            it.skip("Reading an unread thread after a redaction of the latest message makes it read", () => {});
+            // XXX: fails because the unread count is still 1 when it should be 0
+            it.skip("Reading an unread thread after a redaction of the latest message makes it read", () => {
+                // Given an unread thread where the latest message was redacted
+                goTo(room1);
+                receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
+                assertUnread(room2, 3);
+                receiveMessages(room2, [redactionOf("ThreadMsg2")]);
+                assertUnread(room2, 2);
+                goTo(room2);
+                assertUnreadThread("Root");
+
+                // When I read the thread
+                openThread("Root");
+                assertRead(room2);
+                closeThreadsPanel();
+                goTo(room1);
+
+                // Then the thread is read
+                assertRead(room2);
+                goTo(room2);
+                assertReadThread("Root");
+            });
+            // XXX: fails because the unread count is still 1 when it should be 0
+            it.skip("Reading an unread thread after a redaction of the latest message makes it read after restart", () => {
+                // Given a redacted message is not counted in the unread count
+                goTo(room1);
+                receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
+                assertUnread(room2, 3);
+                receiveMessages(room2, [redactionOf("ThreadMsg2")]);
+                assertUnread(room2, 2);
+                goTo(room2);
+                assertUnreadThread("Root");
+                openThread("Root");
+                assertRead(room2);
+                closeThreadsPanel();
+                goTo(room1);
+                assertRead(room2);
+                goTo(room2);
+                assertReadThread("Root");
+
+                // When I restart
+                saveAndReload();
+
+                // Then the room is still read
+                assertRead(room2);
+            });
             it.skip("Reading an unread thread after a redaction of an older message makes it read", () => {});
             it.skip("Marking an unread thread as read after a redaction makes it read", () => {});
             it.skip("Sending and redacting a message after marking the thread as read makes it unread", () => {});
