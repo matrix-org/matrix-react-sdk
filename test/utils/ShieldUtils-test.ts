@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
 
 import { shieldStatusForRoom } from "../../src/utils/ShieldUtils";
 import DMRoomMap from "../../src/utils/DMRoomMap";
@@ -30,10 +31,8 @@ function mkClient(selfTrust = false) {
             getUserDeviceInfo: async (userIds: string[]) => {
                 return new Map(userIds.map((u) => [u, new Map([["DEVICE", {}]])]));
             },
-        }),
-        checkUserTrust: (userId: string) => ({
-            isCrossSigningVerified: () => userId[1] == "T",
-            wasCrossSigningVerified: () => userId[1] == "T" || userId[1] == "W",
+            getUserVerificationStatus: async (userId: string): Promise<UserVerificationStatus> =>
+                new UserVerificationStatus(userId[1] == "T", userId[1] == "T" || userId[1] == "W", false),
         }),
     } as unknown as MatrixClient;
 }
