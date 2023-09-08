@@ -1751,15 +1751,109 @@ describe("Read receipts", () => {
                 goTo(room2);
                 assertReadThread("Root");
             });
-            it.skip("Marking an unread thread as read after a redaction makes it read", () => {});
-            it.skip("Sending and redacting a message after marking the thread as read makes it unread", () => {});
-            it.skip("?? Redacting a message after marking the thread as read makes it unread", () => {});
-            it.skip("Reacting to a redacted message leaves the thread read", () => {});
-            it.skip("Editing a redacted message leaves the thread read", () => {});
+            // XXX: fails because the room has an unread dot after I marked it as read
+            it.skip("Marking an unread thread as read after a redaction makes it read", () => {
+                // Given an unread thread where an older message was redacted
+                goTo(room1);
+                receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
+                assertUnread(room2, 3);
+                receiveMessages(room2, [redactionOf("ThreadMsg1")]);
+                assertUnread(room2, 2);
+
+                // When I mark the room as read
+                markAsRead(room2);
+                assertRead(room2);
+
+                // Then the thread is read
+                assertRead(room2);
+                goTo(room2);
+                assertReadThread("Root");
+            });
+            // XXX: fails because the room has an unread dot after I marked it as read
+            it.skip("Sending and redacting a message after marking the thread as read leaves it read", () => {
+                // Given a thread exists and is marked as read
+                goTo(room1);
+                receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
+                assertUnread(room2, 3);
+                markAsRead(room2);
+                assertRead(room2);
+
+                // When I send and redact a message
+                receiveMessages(room2, [threadedOff("Root", "Msg3")]);
+                assertUnread(room2, 1);
+                receiveMessages(room2, [redactionOf("Msg3")]);
+
+                // Then the room and thread are read
+                assertRead(room2);
+                goTo(room2);
+                assertReadThread("Root");
+            });
+            // XXX: fails because the room has an unread dot after I marked it as read
+            it.skip("Redacting a message after marking the thread as read leaves it read", () => {
+                // Given a thread exists and is marked as read
+                goTo(room1);
+                receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
+                assertUnread(room2, 3);
+                markAsRead(room2);
+                assertRead(room2);
+
+                // When I redact a message
+                receiveMessages(room2, [redactionOf("ThreadMsg1")]);
+
+                // Then the room and thread are read
+                assertRead(room2);
+                goTo(room2);
+                assertReadThread("Root");
+            });
+            // TODO: Doesn't work because the test setup can't (yet) find the ID of a redacted message
+            it.skip("Reacting to a redacted message leaves the thread read", () => {
+                // Given a message in a thread was redacted and everything is read
+                goTo(room1);
+                receiveMessages(room2, ["Root", threadedOff("Root", "Msg2"), threadedOff("Root", "Msg3")]);
+                receiveMessages(room2, [redactionOf("Msg2")]);
+                assertUnread(room2, 2);
+                goTo(room2);
+                assertUnread(room2, 1);
+                openThread("Root");
+                assertRead(room2);
+                goTo(room1);
+
+                // When we receive a reaction to the redacted event
+                // TODO: doesn't work yet because we need to be able to look up
+                // the ID of Msg2 even though it has now disappeared from the
+                // timeline.
+                receiveMessages(room2, [reactionTo(room2, "Msg2")]);
+
+                // Then the room is unread
+                assertStillRead(room2);
+            });
+            // TODO: Doesn't work because the test setup can't (yet) find the ID of a redacted message
+            it.skip("Editing a redacted message leaves the thread read", () => {
+                // Given a message in a thread was redacted and everything is read
+                goTo(room1);
+                receiveMessages(room2, ["Root", threadedOff("Root", "Msg2"), threadedOff("Root", "Msg3")]);
+                receiveMessages(room2, [redactionOf("Msg2")]);
+                assertUnread(room2, 2);
+                goTo(room2);
+                assertUnread(room2, 1);
+                openThread("Root");
+                assertRead(room2);
+                goTo(room1);
+
+                // When we receive an edit of the redacted message
+                // TODO: doesn't work yet because we need to be able to look up
+                // the ID of Msg2 even though it has now disappeared from the
+                // timeline.
+                receiveMessages(room2, [editOf("Msg2", "New Msg2")]);
+
+                // Then the room is unread
+                assertStillRead(room2);
+            });
 
             it.skip("?? Reading a reaction to a redacted message marks the thread as read", () => {});
             it.skip("?? Reading an edit of a redacted message marks the thread as read", () => {});
             it.skip("Reading a reply to a redacted message marks the thread as read", () => {});
+            it.skip("Reading a thread root when its only message has been redacted leaves the room read", () => {});
 
             it.skip("A thread with an unread redaction is still unread after restart", () => {});
             it("A thread with a read redaction is still read after restart", () => {
