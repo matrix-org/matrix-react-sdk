@@ -1696,7 +1696,37 @@ describe("Read receipts", () => {
             it.skip("Reading a reply to a redacted message marks the thread as read", () => {});
 
             it.skip("A thread with an unread redaction is still unread after restart", () => {});
-            it.skip("A thread with a read redaction is still read after restart", () => {});
+            it("A thread with a read redaction is still read after restart", () => {
+                // Given my receipt points at a redacted thread message
+                goTo(room1);
+                receiveMessages(room2, [
+                    "Root",
+                    threadedOff("Root", "ThreadMsg1"),
+                    threadedOff("Root", "ThreadMsg2"),
+                    "Root2",
+                    threadedOff("Root2", "Root2->A"),
+                ]);
+                assertUnread(room2, 5);
+                goTo(room2);
+                assertUnreadThread("Root");
+                openThread("Root");
+                assertUnreadLessThan(room2, 4);
+                openThread("Root2");
+                assertRead(room2);
+                closeThreadsPanel();
+                goTo(room1);
+                assertRead(room2);
+                receiveMessages(room2, [redactionOf("ThreadMsg2")]);
+                assertStillRead(room2);
+                goTo(room2);
+                assertReadThread("Root");
+
+                // When I restart
+                saveAndReload();
+
+                // Then the room is still read
+                assertRead(room2);
+            });
             it.skip("A thread with an unread reply to a redacted message is still unread after restart", () => {});
             it.skip("A thread with a read replt to a redacted message is still read after restart", () => {});
         });
