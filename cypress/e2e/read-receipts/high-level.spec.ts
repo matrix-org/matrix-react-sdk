@@ -137,6 +137,16 @@ describe("Read receipts", () => {
         cy.get(".mx_ThreadView_timelinePanelWrapper", { log: false }).should("have.length", 1);
     }
 
+    /**
+     * Close the threads panel. (Actually, close any right panel, but for these
+     * tests we only open the threads panel.)
+     */
+    function closeThreadsPanel() {
+        cy.log("Close threads panel");
+        cy.get(".mx_RightPanel").findByTitle("Close").click();
+        cy.get(".mx_RightPanel").should("not.exist");
+    }
+
     function sendMessageAsClient(cli: MatrixClient, room: string, messages: Message[]) {
         findRoomByName(room).then(async ({ roomId }) => {
             const room = cli.getRoom(roomId);
@@ -1618,9 +1628,37 @@ describe("Read receipts", () => {
         });
 
         describe("in threads", () => {
-            // One of the following two must be right:
-            it.skip("Redacting the threaded message pointed to by my receipt leaves the room read", () => {});
-            it.skip("Redacting a threaded message after it was read makes the room unread", () => {});
+            it("Redacting the threaded message pointed to by my receipt leaves the room read", () => {
+                // Given I have some threads
+                goTo(room1);
+                receiveMessages(room2, [
+                    "Root",
+                    threadedOff("Root", "ThreadMsg1"),
+                    threadedOff("Root", "ThreadMsg2"),
+                    "Root2",
+                    threadedOff("Root2", "Root2->A"),
+                ]);
+                assertUnread(room2, 5);
+
+                // And I have read them
+                goTo(room2);
+                assertUnreadThread("Root");
+                openThread("Root");
+                assertUnreadLessThan(room2, 4);
+                openThread("Root2");
+                assertRead(room2);
+                closeThreadsPanel();
+                goTo(room1);
+                assertRead(room2);
+
+                // When the latest message in a thread is redacted
+                receiveMessages(room2, [redactionOf("ThreadMsg2")]);
+
+                // Then the room and thread are still read
+                assertStillRead(room2);
+                goTo(room2);
+                assertReadThread("Root");
+            });
 
             it.skip("Reading an unread thread after a redaction of the latest message makes it read", () => {});
             it.skip("Reading an unread thread after a redaction of an older message makes it read", () => {});
