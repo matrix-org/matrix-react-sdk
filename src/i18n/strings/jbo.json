@@ -441,7 +441,6 @@
         "video_call": "nu vidvi fonjo'e",
         "call_failed": ".i da nabmi fi lo nu co'a fonjo'e"
     },
-    "Messages": "notci",
     "devtools": {
         "category_other": "drata"
     },
@@ -471,5 +470,8 @@
             "complete_title": ".i mo'u co'a lacri",
             "complete_description": ".i mo'u co'a lacri le pilno"
         }
+    },
+    "export_chat": {
+        "messages": "notci"
     }
 }

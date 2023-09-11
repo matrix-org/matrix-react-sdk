@@ -405,7 +405,6 @@
     "Invalid identity server discovery response": "Невалиден отговор по време на откриването на конфигурацията за сървъра за самоличност",
     "General failure": "Обща грешка",
     "Failed to perform homeserver discovery": "Неуспешно откриване на конфигурацията за сървъра",
-    "Sign in with single sign-on": "Влезте посредством single-sign-on",
     "That matches!": "Това съвпада!",
     "That doesn't match.": "Това не съвпада.",
     "Go back to set it again.": "Върнете се за да настройте нова.",
@@ -893,7 +892,6 @@
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Следните потребители не съществуват или са невалидни и не могат да бъдат поканени: %(csvNames)s",
     "Use Single Sign On to continue": "Използвайте Single Sign On за да продължите",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Потвърдете добавянето на този имейл адрес като потвърдите идентичността си чрез Single Sign On.",
-    "Single Sign On": "Single Sign On",
     "Confirm adding email": "Потвърдете добавянето на имейл",
     "Click the button below to confirm adding this email address.": "Кликнете бутона по-долу за да потвърдите добавянето на имейл адреса.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Потвърдете добавянето на този телефонен номер като докажете идентичността си чрез използване на Single Sign On.",
@@ -1051,7 +1049,6 @@
     "Custom font size can only be between %(min)s pt and %(max)s pt": "Собствения размер на шрифта може да бъде единствено между %(min)s pt и %(max)s pt",
     "Use between %(min)s pt and %(max)s pt": "Изберете между %(min)s pt и %(max)s pt",
     "You've successfully verified your device!": "Успешно потвърдихте устройството си!",
-    "QR Code": "QR код",
     "To continue, use Single Sign On to prove your identity.": "За да продължите, използвайте Single Sign On за да потвърдите самоличността си.",
     "Confirm to continue": "Потвърдете за да продължите",
     "Click the button below to confirm your identity.": "Кликнете бутона по-долу за да потвърдите самоличността си.",
@@ -1663,7 +1660,8 @@
         "secure_backup": "Защитено резервно копие",
         "cross_signing": "Кръстосано-подписване",
         "identity_server": "Сървър за самоличност",
-        "integration_manager": "Мениджър на интеграции"
+        "integration_manager": "Мениджър на интеграции",
+        "qr_code": "QR код"
     },
     "action": {
         "continue": "Продължи",
@@ -2172,7 +2170,6 @@
         "unsupported": "Обажданията не се поддържат",
         "unsupported_browser": "Не можете да провеждате обаждания в този браузър."
     },
-    "Messages": "Съобщения",
     "Other": "Други",
     "Advanced": "Разширени",
     "room_settings": {
@@ -2228,5 +2225,12 @@
         "fireworks_message": "изпраща фойерверки",
         "snowfall_description": "Изпраща даденото съобщение със снеговалеж",
         "snowfall_message": "изпраща снеговалеж"
+    },
+    "auth": {
+        "sign_in_with_sso": "Влезте посредством single-sign-on",
+        "sso": "Single Sign On"
+    },
+    "export_chat": {
+        "messages": "Съобщения"
     }
 }

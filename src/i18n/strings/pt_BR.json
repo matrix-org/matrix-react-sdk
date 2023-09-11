@@ -407,7 +407,6 @@
     "General failure": "Falha geral",
     "Please <a>contact your service administrator</a> to continue using this service.": "Por favor, <a>entre em contato com o seu administrador de serviços</a> para continuar usando este serviço.",
     "Failed to perform homeserver discovery": "Falha ao executar a descoberta do homeserver",
-    "Sign in with single sign-on": "Entre com o logon único",
     "That matches!": "Isto corresponde!",
     "That doesn't match.": "Isto não corresponde.",
     "Go back to set it again.": "Voltar para configurar novamente.",
@@ -528,7 +527,6 @@
     "Room Addresses": "Endereços da sala",
     "Use Single Sign On to continue": "Use \"Single Sign On\" para continuar",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirme a inclusão deste endereço de e-mail usando o Single Sign On para comprovar sua identidade.",
-    "Single Sign On": "Autenticação Única",
     "Confirm adding email": "Confirmar a inclusão de e-mail",
     "Click the button below to confirm adding this email address.": "Clique no botão abaixo para confirmar a adição deste endereço de e-mail.",
     "Add Email Address": "Adicionar endereço de e-mail",
@@ -749,7 +747,6 @@
     "Rotate Left": "Girar para a esquerda",
     "Rotate Right": "Girar para a direita",
     "Language Dropdown": "Menu suspenso de idiomas",
-    "QR Code": "Código QR",
     "Room address": "Endereço da sala",
     "e.g. my-room": "por exemplo: minha-sala",
     "Some characters not allowed": "Alguns caracteres não são permitidos",
@@ -1620,7 +1617,6 @@
     "Specify a homeserver": "Digite um servidor local",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso: se você não adicionar um e-mail e depois esquecer sua senha, poderá <b>perder permanentemente o acesso à sua conta</b>.",
     "Continuing without email": "Continuar sem e-mail",
-    "Continue with %(provider)s": "Continuar com %(provider)s",
     "Server Options": "Opções do servidor",
     "Reason (optional)": "Motivo (opcional)",
     "Invalid URL": "URL inválido",
@@ -1696,8 +1692,6 @@
     "Invite to %(spaceName)s": "Convidar para %(spaceName)s",
     "Create a new room": "Criar uma nova sala",
     "Spaces": "Espaços",
-    "You do not have permissions to add rooms to this space": "Você não tem permissão para adicionar salas neste espaço",
-    "You do not have permissions to create new rooms in this space": "Você não tem permissão para criar novas salas neste espaço",
     "Invite to this space": "Convidar para este espaço",
     "Your message was sent": "A sua mensagem foi enviada",
     "Space options": "Opções do espaço",
@@ -1874,13 +1868,7 @@
     "To avoid these issues, create a <a>new encrypted room</a> for the conversation you plan to have.": "Para evitar esses problemas, crie uma <a>nova sala criptografada</a> para a conversa que você planeja ter.",
     "Are you sure you want to add encryption to this public room?": "Tem certeza que deseja adicionar criptografia para esta sala pública?",
     "Select the roles required to change various parts of the space": "Selecionar os cargos necessários para alterar certas partes do espaço",
-    "Include Attachments": "Incluir Anexos",
-    "Size Limit": "Limite de Tamanho",
     "MB": "MB",
-    "Number of messages": "Número de mensagens",
-    "Number of messages can only be a number between %(min)s and %(max)s": "Número de mensagens pode ser apenas um número entre %(min)s e %(max)s",
-    "Size can only be a number between %(min)s MB and %(max)s MB": "O tamanho pode ser apenas um número entre %(min)s MB e %(max)s MB",
-    "Enter a number between %(min)s and %(max)s": "Insira um número entre %(min)s e %(max)s",
     "In reply to <a>this message</a>": "Em resposta a <a>esta mensagem</a>",
     "Export chat": "Exportar conversa",
     "Light high contrast": "Claro (alto contraste)",
@@ -1978,7 +1966,6 @@
     },
     "Join public room": "Entrar na sala pública",
     "Add people": "Adicionar pessoas",
-    "You do not have permissions to invite people to this space": "Você não tem permissão para convidar pessoas para este espaço",
     "Invite to space": "Convidar para o espaço",
     "Start new chat": "Comece um novo bate-papo",
     "Recently viewed": "Visualizado recentemente",
@@ -2047,7 +2034,6 @@
     "Unable to copy room link": "Não foi possível copiar o link da sala",
     "Copy room link": "Copiar link da sala",
     "Public rooms": "Salas públicas",
-    "%(qrCode)s or %(appLinks)s": "%(qrCode)s ou %(appLinks)s",
     "Add new server…": "Adicionar um novo servidor…",
     "%(count)s participants": {
         "other": "%(count)s participantes",
@@ -2250,7 +2236,8 @@
         "secure_backup": "Backup online",
         "cross_signing": "Autoverificação",
         "identity_server": "Servidor de identidade",
-        "integration_manager": "Gerenciador de integrações"
+        "integration_manager": "Gerenciador de integrações",
+        "qr_code": "Código QR"
     },
     "action": {
         "continue": "Continuar",
@@ -2452,7 +2439,8 @@
         "set_up_profile_description": "Certifique-se de que as pessoas saibam que é realmente você",
         "set_up_profile_action": "Seu perfil",
         "set_up_profile": "Configure seu perfil",
-        "find_people": "Encontrar pessoas"
+        "find_people": "Encontrar pessoas",
+        "qr_or_app_links": "%(qrCode)s ou %(appLinks)s"
     },
     "settings": {
         "show_breadcrumbs": "Mostrar atalhos para salas recentemente visualizadas acima da lista de salas",
@@ -2578,7 +2566,14 @@
         "export_info": "Este é o início da exportação da sala <roomName/>. Exportado por <exporterDetails/> às %(exportDate)s.",
         "topic": "Tópico: %(topic)s",
         "error_fetching_file": "Erro ao buscar arquivo",
-        "file_attached": "Arquivo Anexado"
+        "file_attached": "Arquivo Anexado",
+        "enter_number_between_min_max": "Insira um número entre %(min)s e %(max)s",
+        "size_limit_min_max": "O tamanho pode ser apenas um número entre %(min)s MB e %(max)s MB",
+        "num_messages_min_max": "Número de mensagens pode ser apenas um número entre %(min)s e %(max)s",
+        "num_messages": "Número de mensagens",
+        "messages": "Mensagens",
+        "size_limit": "Limite de Tamanho",
+        "include_attachments": "Incluir Anexos"
     },
     "create_room": {
         "title_video_room": "Criar uma sala de vídeo",
@@ -2940,7 +2935,6 @@
         "unsupported": "Chamadas não suportadas",
         "unsupported_browser": "Você não pode fazer chamadas neste navegador."
     },
-    "Messages": "Mensagens",
     "Other": "Outros",
     "Advanced": "Avançado",
     "room_settings": {
@@ -3014,5 +3008,15 @@
         "snowfall_message": "envia neve caindo",
         "spaceinvaders_description": "Envia a mensagem com um efeito com tema espacial",
         "spaceinvaders_message": "envia os invasores do espaço"
+    },
+    "spaces": {
+        "error_no_permission_invite": "Você não tem permissão para convidar pessoas para este espaço",
+        "error_no_permission_create_room": "Você não tem permissão para criar novas salas neste espaço",
+        "error_no_permission_add_room": "Você não tem permissão para adicionar salas neste espaço"
+    },
+    "auth": {
+        "continue_with_idp": "Continuar com %(provider)s",
+        "sign_in_with_sso": "Entre com o logon único",
+        "sso": "Autenticação Única"
     }
 }

@@ -133,7 +133,6 @@
     "Your %(brand)s is misconfigured": "%(brand)s inek(inem) ur ittusbadu ara",
     "Use Single Sign On to continue": "Seqdec anekcum asuf akken ad tkemmleḍ",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Sentem timerna n tansa-a n yimayl s useqdec n unekcum asuf i ubeggen n timagit-in(im).",
-    "Single Sign On": "Anekcum asuf",
     "Confirm adding email": "Sentem timerna n yimayl",
     "Click the button below to confirm adding this email address.": "Sit ɣef tqeffalt yellan ddaw i usentem n tmerna n tansa-a n yimayl.",
     "Add Email Address": "Rnu tansa n yimayl",
@@ -501,7 +500,6 @@
     "Custom level": "Sagen aswir",
     "<a>In reply to</a> <pill>": "<a>Deg tririt i</a> <pill>",
     "e.g. my-room": "e.g. taxxamt-inu",
-    "Sign in with single sign-on": "Qqen s unekcum asuf",
     "And %(count)s more...": {
         "other": "D %(count)s ugar..."
     },
@@ -647,7 +645,6 @@
     "Rotate Left": "Zzi ɣer uzelmaḍ",
     "Rotate Right": "Zzi ɣer uyeffus",
     "Language Dropdown": "Tabdart n udrurem n tutlayin",
-    "QR Code": "Tangalt QR",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "YEgguma ad d-tali tedyant iɣef d-ttunefk tririt, ahat d tilin ur telli ara neɣ ur tesɛiḍ ara tisirag ad tt-twaliḍ.",
     "Room address": "Tansa n texxamt",
     "Some characters not allowed": "Kra n yisekkilen ur ttusirgen ara",
@@ -1563,7 +1560,8 @@
         "secure_backup": "Aklas aɣellsan",
         "cross_signing": "Azmul anmidag",
         "identity_server": "Aqeddac n timagit",
-        "integration_manager": "Amsefrak n umsidef"
+        "integration_manager": "Amsefrak n umsidef",
+        "qr_code": "Tangalt QR"
     },
     "action": {
         "continue": "Kemmel",
@@ -2059,7 +2057,6 @@
         "call_failed_media_permissions": "Tettynefk tsiregt i useqdec takamiṛat",
         "call_failed_media_applications": "Ulac asnas-nniḍen i iseqdacen takamiṛat"
     },
-    "Messages": "Iznan",
     "Other": "Nniḍen",
     "Advanced": "Talqayt",
     "room_settings": {
@@ -2107,5 +2104,12 @@
         "category_flags": "Anayen",
         "categories": "Taggayin",
         "quick_reactions": "Tisedmirin tiruradin"
+    },
+    "auth": {
+        "sign_in_with_sso": "Qqen s unekcum asuf",
+        "sso": "Anekcum asuf"
+    },
+    "export_chat": {
+        "messages": "Iznan"
     }
 }

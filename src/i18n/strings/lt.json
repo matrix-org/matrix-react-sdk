@@ -515,7 +515,6 @@
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Atnaujinkite šį seansą, kad jam būtų leista patvirtinti kitus seansus, suteikiant jiems prieigą prie šifruotų žinučių ir juos pažymint kaip patikimus kitiems vartotojams.",
     "Use Single Sign On to continue": "Norėdami tęsti naudokite Vieną Prisijungimą",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Patvirtinkite šio el. pašto adreso pridėjimą naudodami Vieną Prisijungimą, kad įrodytumėte savo tapatybę.",
-    "Single Sign On": "Vienas Prisijungimas",
     "Confirm adding email": "Patvirtinkite el. pašto pridėjimą",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Patvirtinkite šio tel. nr. pridėjimą naudodami Vieną Prisijungimą, kad įrodytumėte savo tapatybę.",
     "Confirm adding phone number": "Patvirtinkite telefono numerio pridėjimą",
@@ -1591,7 +1590,6 @@
     "Use a more compact 'Modern' layout": "Naudoti kompaktiškesnį 'Modernų' išdėstymą",
     "Show polls button": "Rodyti apklausų mygtuką",
     "Explore public spaces in the new search dialog": "Tyrinėkite viešas erdves naujajame paieškos lange",
-    "Leave the beta": "Palikti beta versiją",
     "Reply in thread": "Atsakyti temoje",
     "Developer": "Kūrėjas",
     "Experimental": "Eksperimentinis",
@@ -1663,7 +1661,6 @@
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "Patarimas: norėdami žinutę pradėti pasviruoju brūkšniu, pradėkite ją su <code>//</code>.",
     "Unrecognised command: %(commandText)s": "Neatpažinta komanda: %(commandText)s",
     "Unknown Command": "Nežinoma komanda",
-    "Download %(brand)s": "Atsisiųsti %(brand)s",
     "Enable hardware acceleration": "Įjungti aparatinį spartinimą",
     "Show tray icon and minimise window to it on close": "Rodyti dėklo piktogramą ir uždarius langą jį sumažinti į ją",
     "Automatically send debug logs when key backup is not functioning": "Automatiškai siųsti derinimo žurnalus, kai neveikia atsarginė raktų kopija",
@@ -1694,18 +1691,14 @@
         "other": "Šiuo metu prisijungiama prie %(count)s kambarių"
     },
     "Join public room": "Prisijungti prie viešo kambario",
-    "You do not have permissions to add spaces to this space": "Neturite leidimų į šią erdvę pridėti erdvių",
     "Add space": "Pridėti erdvę",
     "Suggested Rooms": "Siūlomi kambariai",
     "Saved Items": "Išsaugoti daiktai",
     "Explore public rooms": "Tyrinėti viešuosius kambarius",
-    "You do not have permissions to add rooms to this space": "Neturite leidimų pridėti kambarių į šią erdvę",
     "Add existing room": "Pridėti esamą kambarį",
     "New video room": "Naujas vaizdo kambarys",
-    "You do not have permissions to create new rooms in this space": "Neturite leidimų kurti naujus kambarius šioje erdvėje",
     "New room": "Naujas kambarys",
     "Add people": "Pridėti žmonių",
-    "You do not have permissions to invite people to this space": "Neturite leidimų kviesti žmones į šią erdvę",
     "Invite to space": "Pakviesti į erdvę",
     "Start new chat": "Pradėti naują pokalbį",
     "%(count)s members": {
@@ -2008,7 +2001,8 @@
         "group_themes": "Temos",
         "group_encryption": "Šifravimas",
         "group_experimental": "Eksperimentinis",
-        "group_developer": "Kūrėjas"
+        "group_developer": "Kūrėjas",
+        "leave_beta": "Palikti beta versiją"
     },
     "keyboard": {
         "home": "Pradžia",
@@ -2113,7 +2107,8 @@
         "enable_notifications": "Įjungti pranešimus",
         "download_app_description": "Nepraleiskite nieko, jei su savimi pasiimsite %(brand)s",
         "download_app_action": "Atsisiųsti programėles",
-        "download_app": "Atsisiųsti %(brand)s"
+        "download_app": "Atsisiųsti %(brand)s",
+        "download_brand": "Atsisiųsti %(brand)s"
     },
     "settings": {
         "show_breadcrumbs": "Rodyti neseniai peržiūrėtų kambarių nuorodas virš kambarių sąrašo",
@@ -2221,7 +2216,8 @@
             "one": "Eksportavome %(count)s įvyki per %(seconds)s sekundes",
             "other": "Eksportavome %(count)s įvykius per %(seconds)s sekundes"
         },
-        "file_attached": "Failas pridėtas"
+        "file_attached": "Failas pridėtas",
+        "messages": "Žinutės"
     },
     "create_room": {
         "title_public_room": "Sukurti viešą kambarį",
@@ -2555,7 +2551,6 @@
         "unsupported": "Skambučiai nėra palaikomi",
         "unsupported_browser": "Jūs negalite skambinti šioje naršyklėje."
     },
-    "Messages": "Žinutės",
     "Other": "Kitas",
     "Advanced": "Išplėstiniai",
     "room_settings": {
@@ -2635,5 +2630,14 @@
         "spaceinvaders_message": "siunčia kosmoso įsibrovėlius",
         "hearts_description": "Siunčia pateiktą žinutę su širdelėmis",
         "hearts_message": "Siunčia širdeles"
+    },
+    "spaces": {
+        "error_no_permission_invite": "Neturite leidimų kviesti žmones į šią erdvę",
+        "error_no_permission_create_room": "Neturite leidimų kurti naujus kambarius šioje erdvėje",
+        "error_no_permission_add_room": "Neturite leidimų pridėti kambarių į šią erdvę",
+        "error_no_permission_add_space": "Neturite leidimų į šią erdvę pridėti erdvių"
+    },
+    "auth": {
+        "sso": "Vienas Prisijungimas"
     }
 }

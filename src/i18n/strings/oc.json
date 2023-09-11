@@ -21,7 +21,6 @@
     "All Rooms": "Totas les salas",
     "Search…": "Cercar…",
     "Server error": "Error servidor",
-    "Single Sign On": "Autentificacion unica",
     "Sun": "Dg",
     "Mon": "Dl",
     "Tue": "Dm",
@@ -319,7 +318,6 @@
         "voice_call": "Sonada vocala",
         "video_call": "Sonada vidèo"
     },
-    "Messages": "Messatges",
     "Other": "Autre",
     "Advanced": "Avançat",
     "emoji": {
@@ -343,5 +341,11 @@
             "font_size": "Talha de poliça",
             "timeline_image_size_default": "Predefinit"
         }
+    },
+    "auth": {
+        "sso": "Autentificacion unica"
+    },
+    "export_chat": {
+        "messages": "Messatges"
     }
 }

@@ -150,7 +150,6 @@
         "category_actions": "Tugawin",
         "category_other": "Yaḍn"
     },
-    "Messages": "Tuzinin",
     "devtools": {
         "category_other": "Yaḍn"
     },
@@ -160,5 +159,8 @@
     },
     "labs": {
         "group_profile": "Ifres"
+    },
+    "export_chat": {
+        "messages": "Tuzinin"
     }
 }

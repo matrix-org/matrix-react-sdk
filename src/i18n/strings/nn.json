@@ -361,7 +361,6 @@
     "Please <a>contact your service administrator</a> to continue using this service.": "<a>Kontakt din systemadministrator</a> for å vidare bruka tenesta.",
     "This account has been deactivated.": "Denne kontoen har blitt deaktivert.",
     "Failed to perform homeserver discovery": "Fekk ikkje til å utforska heimetenaren",
-    "Sign in with single sign-on": "Logg på med Single-Sign-On",
     "Create account": "Lag konto",
     "Registration has been disabled on this homeserver.": "Registrering er skrudd av for denne heimetenaren.",
     "Unable to query for supported registration methods.": "Klarte ikkje å spørre etter støtta registreringsmetodar.",
@@ -539,7 +538,6 @@
     "Failed to upgrade room": "Fekk ikkje til å oppgradere rom",
     "Use Single Sign On to continue": "Bruk Single-sign-on for å fortsette",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Stadfest at du legger til denne e-postadressa, ved å bruka Single-sign-on for å stadfeste identiteten din.",
-    "Single Sign On": "Single-sign-on",
     "Capitalization doesn't help very much": "Store bokstavar hjelp dessverre lite",
     "Predictable substitutions like '@' instead of 'a' don't help very much": "Forutsigbare teiknbytte som '@' istaden for 'a' hjelp dessverre lite",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Kontoen din har ein kryss-signert identitet det hemmelege lageret, økta di stolar ikkje på denne enno.",
@@ -1154,7 +1152,6 @@
         "unsupported": "Samtalar er ikkje støtta",
         "unsupported_browser": "Du kan ikkje samtala i nettlesaren."
     },
-    "Messages": "Meldingar",
     "Other": "Anna",
     "Advanced": "Avansert",
     "room_settings": {
@@ -1175,5 +1172,12 @@
             "ban": "Stenge ute brukarar",
             "notifications.room": "Varsle alle"
         }
+    },
+    "auth": {
+        "sign_in_with_sso": "Logg på med Single-Sign-On",
+        "sso": "Single-sign-on"
+    },
+    "export_chat": {
+        "messages": "Meldingar"
     }
 }

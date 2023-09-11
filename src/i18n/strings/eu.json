@@ -376,7 +376,6 @@
     "Unable to restore backup": "Ezin izan da babes-kopia berrezarri",
     "No backup found!": "Ez da babes-kopiarik aurkitu!",
     "Failed to decrypt %(failedCount)s sessions!": "Ezin izan dira %(failedCount)s saio deszifratu!",
-    "Sign in with single sign-on": "Hai saioa urrats batean",
     "Failed to perform homeserver discovery": "Huts egin du hasiera-zerbitzarien bilaketak",
     "Invalid homeserver discovery response": "Baliogabeko hasiera-zerbitzarien bilaketaren erantzuna",
     "Use a few words, avoid common phrases": "Erabili hitz gutxi batzuk, ekidin ohiko esaldiak",
@@ -1059,7 +1058,6 @@
     "Cancel replying to a message": "Utzi mezua erantzuteari",
     "Use Single Sign On to continue": "Erabili Single sign-on jarraitzeko",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Baieztatu e-mail hau gehitzea Single sign-on bidez zure identitatea frogatuz.",
-    "Single Sign On": "Single sign-on",
     "Confirm adding email": "Baieztatu e-maila gehitzea",
     "Click the button below to confirm adding this email address.": "Sakatu beheko botoia e-mail helbide hau gehitzea berresteko.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Baieztatu telefono zenbaki hau gehitzea Single sign-on bidez zure identitatea frogatuz.",
@@ -1104,7 +1102,6 @@
     "Custom font size can only be between %(min)s pt and %(max)s pt": "Letra tamaina pertsonalizatua %(min)s pt eta %(max)s pt bitartean egon behar du",
     "Use between %(min)s pt and %(max)s pt": "Erabili %(min)s pt eta %(max)s pt bitarteko  balioa",
     "You've successfully verified your device!": "Ongi egiaztatu duzu zure gailua!",
-    "QR Code": "QR kodea",
     "To continue, use Single Sign On to prove your identity.": "Jarraitzeko, erabili Single Sign On zure identitatea frogatzeko.",
     "Confirm to continue": "Berretsi jarraitzeko",
     "Click the button below to confirm your identity.": "Sakatu azpiko botoia zure identitatea frogatzeko.",
@@ -1224,7 +1221,8 @@
         "system_alerts": "Sistemaren alertak",
         "cross_signing": "Zeharkako sinadura",
         "identity_server": "Identitate zerbitzaria",
-        "integration_manager": "Integrazio-kudeatzailea"
+        "integration_manager": "Integrazio-kudeatzailea",
+        "qr_code": "QR kodea"
     },
     "action": {
         "continue": "Jarraitu",
@@ -1683,7 +1681,6 @@
         "unknown_caller": "Dei-egile ezezaguna",
         "call_failed": "Deiak huts egin du"
     },
-    "Messages": "Mezuak",
     "Other": "Beste bat",
     "Advanced": "Aurreratua",
     "room_settings": {
@@ -1730,5 +1727,12 @@
         "category_flags": "Banderak",
         "categories": "Kategoriak",
         "quick_reactions": "Erreakzio azkarrak"
+    },
+    "auth": {
+        "sign_in_with_sso": "Hai saioa urrats batean",
+        "sso": "Single sign-on"
+    },
+    "export_chat": {
+        "messages": "Mezuak"
     }
 }

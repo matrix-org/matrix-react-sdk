@@ -688,7 +688,6 @@
     "This account has been deactivated.": "이 계정은 비활성화되었습니다.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "지금 %(hs)s 서버로 로그인하고 있는데, matrix.org로 로그인해야 합니다.",
     "Failed to perform homeserver discovery": "홈서버 검색 수행에 실패함",
-    "Sign in with single sign-on": "통합 인증(SSO)으로 로그인",
     "Create account": "계정 만들기",
     "Registration has been disabled on this homeserver.": "이 홈서버는 등록이 비활성화되어 있습니다.",
     "Unable to query for supported registration methods.": "지원하는 등록 방식을 쿼리할 수 없습니다.",
@@ -928,7 +927,6 @@
     "All rooms": "모든 방 목록",
     "Create a new space": "새로운 스페이스 만들기",
     "Create a space": "스페이스 만들기",
-    "Export Chat": "대화 내보내기",
     "Export chat": "대화 내보내기",
     "Room settings": "방 설정",
     "Hide Widgets": "위젯 숨기기",
@@ -1441,7 +1439,6 @@
         "unable_to_access_media": "웹캠 / 마이크에 접근 불가",
         "already_in_call": "이미 전화중"
     },
-    "Messages": "메시지",
     "Other": "기타",
     "Advanced": "고급",
     "room_settings": {
@@ -1481,5 +1478,12 @@
         "category_symbols": "기호",
         "category_flags": "깃발",
         "quick_reactions": "빠른 리액션"
+    },
+    "auth": {
+        "sign_in_with_sso": "통합 인증(SSO)으로 로그인"
+    },
+    "export_chat": {
+        "title": "대화 내보내기",
+        "messages": "메시지"
     }
 }

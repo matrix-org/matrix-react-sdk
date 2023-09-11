@@ -7,7 +7,6 @@
     "Add Email Address": "ເພີ່ມອີເມວ",
     "Click the button below to confirm adding this email address.": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
     "Confirm adding email": "ຢືນຢັນການເພີ່ມອີເມວ",
-    "Single Sign On": "ເຂົ້າລະບົບແບບປະຕູດຽວ (SSO)",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "ຢືນຢັນການເພີ່ມອີເມວນີ້ໂດຍໃຊ້ ແບບປະຕູດຍວ (SSO)ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
     "Use Single Sign On to continue": "ໃຊ້ການເຂົ້າສູ່ລະບົບແບບປະຕູດຽວ (SSO) ເພື່ອສືບຕໍ່",
     "This phone number is already in use": "ເບີໂທນີ້ຖືກໃຊ້ແລ້ວ",
@@ -628,9 +627,6 @@
     "No live locations": "ບໍ່ມີສະຖານທີ່ປັດຈູບັນ",
     "Live location error": "ສະຖານທີ່ປັດຈຸບັນຜິດພາດ",
     "Live location ended": "ສະຖານທີ່ປັດຈຸບັນສິ້ນສຸດລົງແລ້ວ",
-    "Join the beta": "ເຂົ້າຮ່ວມເບຕ້າ",
-    "Click for more info": "ກົດສຳລັບຂໍ້ມູນເພີ່ມເຕີມ",
-    "This is a beta feature": "ນີ້ແມ່ນຄຸນສົມບັດເບຕ້າ",
     "Move right": "ຍ້າຍໄປທາງຂວາ",
     "Move left": "ຍ້າຍໄປທາງຊ້າຍ",
     "Revoke permissions": "ຖອນການອະນຸຍາດ",
@@ -670,8 +666,6 @@
     "Join millions for free on the largest public server": "ເຂົ້າຮ່ວມຫຼາຍລ້ານຄົນໄດ້ໂດຍບໍ່ເສຍຄ່າໃນເຊີບເວີສາທາລະນະທີ່ໃຫຍ່ທີ່ສຸດ",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "ທ່ານສາມາດໃຊ້ຕົວເລືອກເຊີບເວີແບບກຳນົດເອງເພື່ອເຂົ້າສູ່ລະບົບເຊີບເວີ Matrix ອື່ນໂດຍການລະບຸ URL ເຊີບເວີອື່ນ. ນີ້ແມ່ນອະນຸຍາດໃຫ້ທ່ານໃຊ້ %(brand)s ກັບບັນຊີ Matrix ທີ່ມີຢູ່ແລ້ວໃນ homeserver ອື່ນ.",
     "Server Options": "ຕົວເລືອກເຊີບເວີ",
-    "Sign in with single sign-on": "ເຂົ້າສູ່ລະບົບດ້ວຍການລົງຊື່ເຂົ້າໃຊ້ພຽງຄັ້ງດຽວ",
-    "Continue with %(provider)s": "ສືບຕໍ່ກັບ %(provider)s",
     "Your server": "ເຊີບເວີຂອງທ່ານ",
     "Can't find this server or its room list": "ບໍ່ສາມາດຊອກຫາເຊີບເວີນີ້ ຫຼື ລາຍຊື່ຫ້ອງຂອງມັນໄດ້",
     "You are not allowed to view this server's rooms list": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງລາຍຊື່ຫ້ອງຂອງເຊີບເວີນີ້",
@@ -735,7 +729,6 @@
     "In reply to <a>this message</a>": "ໃນການຕອບກັບ <a>ຂໍ້ຄວາມນີ້</a>",
     "<a>In reply to</a> <pill>": "<a>ຕອບກັບ</a> <pill>",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "ບໍ່ສາມາດໂຫຼດກິດຈະກຳທີ່ຕອບກັບມາໄດ້, ມັນບໍ່ຢູ່ ຫຼື ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງມັນ.",
-    "QR Code": "ລະຫັດ QR",
     "Custom level": "ລະດັບທີ່ກໍາຫນົດເອງ",
     "Power level": "ລະດັບພະລັງງານ",
     "Results are only revealed when you end the poll": "ຜົນໄດ້ຮັບຈະຖືກເປີດເຜີຍເມື່ອທ່ານສິ້ນສຸດແບບສຳຫຼວດເທົ່ານັ້ນ",
@@ -1596,7 +1589,6 @@
     "Your display name": "ສະແດງຊື່ຂອງທ່ານ",
     "Any of the following data may be shared:": "ຂໍ້ມູນຕໍ່ໄປນີ້ອາດຈະຖືກແບ່ງປັນ:",
     "Cancel search": "ຍົກເລີກການຄົ້ນຫາ",
-    "The export was cancelled successfully": "ຍົກເລີກການສົ່ງອອກສຳເລັດແລ້ວ",
     "MB": "ເມກາໄບ",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການສິ້ນສຸດການສຳຫຼວດນີ້? ນີ້ຈະສະແດງຜົນສຸດທ້າຍຂອງການລົງຄະແນນສຽງ ແລະ ຢຸດບໍ່ໃຫ້ປະຊາຊົນສາມາດລົງຄະແນນສຽງໄດ້.",
     "End Poll": "ສິ້ນສຸດການສຳຫຼວດ",
@@ -1646,20 +1638,6 @@
     "Please enter a name for the room": "ກະລຸນາໃສ່ຊື່ຫ້ອງ",
     "Clear all data": "ລຶບລ້າງຂໍ້ມູນທັງໝົດ",
     "Feedback sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
-    "Include Attachments": "ລວມເອົາໄຟລ໌ຄັດຕິດ",
-    "Size Limit": "ຂະໜາດຈຳກັດ",
-    "Format": "ຮູບແບບ",
-    "Select from the options below to export chats from your timeline": "ເລືອກ ຕົວເລືອກຂ້າງລຸ່ມນີ້ເພື່ອສົ່ງອອກການສົນທະນາຈາກທາມລາຍຂອງທ່ານ",
-    "Export Chat": "ສົ່ງອອກການສົນທະນາ",
-    "Exporting your data": "ກຳລັງສົ່ງອອກຂໍ້ມູນຂອງທ່ານ",
-    "Are you sure you want to stop exporting your data? If you do, you'll need to start over.": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການຢຸດການສົ່ງອອກຂໍ້ມູນຂອງທ່ານ? ຖ້າທ່ານດຳເນິນການ, ທ່ານຈະຕ້ອງເລີ່ມຕົ້ນໃໝ່.",
-    "Your export was successful. Find it in your Downloads folder.": "ການສົ່ງອອກຂອງທ່ານສຳເລັດແລ້ວ. ຊອກຫາຢູ່ໃນໂຟນເດີການດາວໂຫຼດຂອງທ່ານ.",
-    "Export Successful": "ສົ່ງອອກສຳເລັດ",
-    "Export Cancelled": "ຍົກເລີກການສົ່ງອອກ",
-    "Number of messages": "ຈໍານວນຂໍ້ຄວາມ",
-    "Number of messages can only be a number between %(min)s and %(max)s": "ຈໍານວນຂໍ້ຄວາມສາມາດເປັນຕົວເລກລະຫວ່າງ %(min)s ແລະ %(max)s ເທົ່ານັ້ນ",
-    "Size can only be a number between %(min)s MB and %(max)s MB": "ຂະໜາດສາມາດເປັນຕົວເລກລະຫວ່າງ %(min)s MB ແລະ %(max)s MB ເທົ່ານັ້ນ",
-    "Enter a number between %(min)s and %(max)s": "ໃສ່ຕົວເລກລະຫວ່າງ %(min)s ແລະ %(max)s",
     "An error has occurred.": "ໄດ້ເກີດຂໍ້ຜິດພາດ.",
     "Sorry, the poll did not end. Please try again.": "ຂໍອະໄພ,ບໍ່ສາມາດສິ້ນສຸດການສຳຫຼວດ. ກະລຸນາລອງອີກຄັ້ງ.",
     "Failed to end poll": "ບໍ່ສາມາດສີ່ນສູດການສຳຫຼວດ",
@@ -1688,7 +1666,6 @@
     "Use a more compact 'Modern' layout": "ໃຊ້ຮູບແບບ 'ທັນສະໄຫມ' ທີ່ກະທັດຮັດກວ່າ",
     "Show polls button": "ສະແດງປຸ່ມແບບສຳຫຼວດ",
     "Use custom size": "ໃຊ້ຂະຫນາດທີ່ກໍາຫນົດເອງ",
-    "Leave the beta": "ອອກຈາກເບຕ້າ",
     "Reply in thread": "ຕອບໃນກະທູ້",
     "Developer": "ນັກພັດທະນາ",
     "Experimental": "ທົດລອງ",
@@ -1948,10 +1925,8 @@
     "Low priority": "ບູລິມະສິດຕໍ່າ",
     "Add room": "ເພີ່ມຫ້ອງ",
     "Explore public rooms": "ສຳຫຼວດຫ້ອງສາທາລະນະ",
-    "You do not have permissions to add rooms to this space": "ທ່ານບໍ່ມີສິດໃນການເພີ່ມຫ້ອງໃສ່ພື້ນທີ່ນີ້",
     "Add existing room": "ເພີ່ມຫ້ອງທີ່ມີຢູ່",
     "New video room": "ຫ້ອງວິດີໂອໃຫມ່",
-    "You do not have permissions to create new rooms in this space": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ສ້າງຫ້ອງໃຫມ່ໃນພື້ນທີ່ນີ້",
     "New room": "ຫ້ອງໃຫມ່",
     "Explore rooms": "ການສຳຫຼວດຫ້ອງ",
     "Illegal Content": "ເນື້ອຫາທີ່ຜິດຕໍ່ກົດໝາຍ",
@@ -2071,7 +2046,6 @@
         "other": "ປະຈຸບັນກຳລັງເຂົ້າຮ່ວມ %(count)s ຫ້ອງ"
     },
     "Join public room": "ເຂົ້າຮ່ວມຫ້ອງສາທາລະນະ",
-    "You do not have permissions to add spaces to this space": "ທ່ານບໍ່ມີການອະນຸຍາດໃຫ້ເພີ່ມພື້ນທີ່ໃສ່ພື້ນທີ່ນີ້",
     "Add space": "ເພີ່ມພື້ນທີ່",
     "Don't leave any rooms": "ຢ່າອອກຈາກຫ້ອງ",
     "Would you like to leave the rooms in this space?": "ທ່ານຕ້ອງການອອກຈາກຫ້ອງໃນພື້ນທີ່ນີ້ບໍ?",
@@ -2390,7 +2364,6 @@
     "Invited": "ເຊີນ",
     "Start new chat": "ເລີ່ມການສົນທະນາໃໝ່",
     "Add people": "ເພີ່ມຄົນ",
-    "You do not have permissions to invite people to this space": "ທ່ານບໍ່ມີສິດທີ່ຈະເຊີນຄົນເຂົ້າມາໃນພື້ນທີ່ນີ້",
     "Invite to space": "ເຊີນໄປຍັງພື້ນທີ່",
     "a key signature": "ລາຍເຊັນຫຼັກ",
     "a device cross-signing signature": "ການ cross-signing ອຸປະກອນ",
@@ -2568,7 +2541,8 @@
         "secure_backup": "ການສໍາຮອງທີ່ປອດໄພ",
         "cross_signing": "ການເຂົ້າລະຫັດແບບໄຂ້ວ",
         "identity_server": "ຕົວເຊີບເວີ",
-        "integration_manager": "ຜູ້ຈັດການປະສົມປະສານ"
+        "integration_manager": "ຜູ້ຈັດການປະສົມປະສານ",
+        "qr_code": "ລະຫັດ QR"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -2687,7 +2661,11 @@
         "group_themes": "ຫົວຂໍ້",
         "group_encryption": "ການເຂົ້າລະຫັດ",
         "group_experimental": "ທົດລອງ",
-        "group_developer": "ນັກພັດທະນາ"
+        "group_developer": "ນັກພັດທະນາ",
+        "beta_feature": "ນີ້ແມ່ນຄຸນສົມບັດເບຕ້າ",
+        "click_for_info": "ກົດສຳລັບຂໍ້ມູນເພີ່ມເຕີມ",
+        "leave_beta": "ອອກຈາກເບຕ້າ",
+        "join_beta": "ເຂົ້າຮ່ວມເບຕ້າ"
     },
     "keyboard": {
         "home": "ໜ້າຫຼັກ",
@@ -2944,7 +2922,23 @@
         "export_info": "ນີ້ແມ່ນຈຸດເລີ່ມຕົ້ນຂອງການສົ່ງອອກຂອງ <roomName/>. ສົ່ງອອກໂດຍ <exporterDetails/> ທີ່ %(exportDate)s.",
         "topic": "ຫົວຂໍ້: %(topic)s",
         "error_fetching_file": "ເກີດຄວາມຜິດພາດໃນການດຶງໄຟລ໌",
-        "file_attached": "ແນບໄຟລ໌"
+        "file_attached": "ແນບໄຟລ໌",
+        "enter_number_between_min_max": "ໃສ່ຕົວເລກລະຫວ່າງ %(min)s ແລະ %(max)s",
+        "size_limit_min_max": "ຂະໜາດສາມາດເປັນຕົວເລກລະຫວ່າງ %(min)s MB ແລະ %(max)s MB ເທົ່ານັ້ນ",
+        "num_messages_min_max": "ຈໍານວນຂໍ້ຄວາມສາມາດເປັນຕົວເລກລະຫວ່າງ %(min)s ແລະ %(max)s ເທົ່ານັ້ນ",
+        "num_messages": "ຈໍານວນຂໍ້ຄວາມ",
+        "cancelled": "ຍົກເລີກການສົ່ງອອກ",
+        "cancelled_detail": "ຍົກເລີກການສົ່ງອອກສຳເລັດແລ້ວ",
+        "successful": "ສົ່ງອອກສຳເລັດ",
+        "successful_detail": "ການສົ່ງອອກຂອງທ່ານສຳເລັດແລ້ວ. ຊອກຫາຢູ່ໃນໂຟນເດີການດາວໂຫຼດຂອງທ່ານ.",
+        "confirm_stop": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການຢຸດການສົ່ງອອກຂໍ້ມູນຂອງທ່ານ? ຖ້າທ່ານດຳເນິນການ, ທ່ານຈະຕ້ອງເລີ່ມຕົ້ນໃໝ່.",
+        "exporting_your_data": "ກຳລັງສົ່ງອອກຂໍ້ມູນຂອງທ່ານ",
+        "title": "ສົ່ງອອກການສົນທະນາ",
+        "select_option": "ເລືອກ ຕົວເລືອກຂ້າງລຸ່ມນີ້ເພື່ອສົ່ງອອກການສົນທະນາຈາກທາມລາຍຂອງທ່ານ",
+        "format": "ຮູບແບບ",
+        "messages": "ຂໍ້ຄວາມ",
+        "size_limit": "ຂະໜາດຈຳກັດ",
+        "include_attachments": "ລວມເອົາໄຟລ໌ຄັດຕິດ"
     },
     "create_room": {
         "title_video_room": "ສ້າງຫ້ອງວິດີໂອ",
@@ -3335,7 +3329,6 @@
         "unsupported": "ບໍ່ຮອງຮັບການໂທ",
         "unsupported_browser": "ທ່ານບໍ່ສາມາດໂທອອກໃນບຣາວເຊີນີ້ໄດ້."
     },
-    "Messages": "ຂໍ້ຄວາມ",
     "Other": "ອື່ນໆ",
     "Advanced": "ຂັ້ນສູງ",
     "room_settings": {
@@ -3419,5 +3412,16 @@
         "spaceinvaders_message": "ສົ່ງຜູ້ຮຸກຮານພື້ນທີ່",
         "hearts_description": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດ ດ້ວຍຮູບຫົວໃຈ",
         "hearts_message": "ສົ່ງຮູບຫົວໃຈ"
+    },
+    "spaces": {
+        "error_no_permission_invite": "ທ່ານບໍ່ມີສິດທີ່ຈະເຊີນຄົນເຂົ້າມາໃນພື້ນທີ່ນີ້",
+        "error_no_permission_create_room": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ສ້າງຫ້ອງໃຫມ່ໃນພື້ນທີ່ນີ້",
+        "error_no_permission_add_room": "ທ່ານບໍ່ມີສິດໃນການເພີ່ມຫ້ອງໃສ່ພື້ນທີ່ນີ້",
+        "error_no_permission_add_space": "ທ່ານບໍ່ມີການອະນຸຍາດໃຫ້ເພີ່ມພື້ນທີ່ໃສ່ພື້ນທີ່ນີ້"
+    },
+    "auth": {
+        "continue_with_idp": "ສືບຕໍ່ກັບ %(provider)s",
+        "sign_in_with_sso": "ເຂົ້າສູ່ລະບົບດ້ວຍການລົງຊື່ເຂົ້າໃຊ້ພຽງຄັ້ງດຽວ",
+        "sso": "ເຂົ້າລະບົບແບບປະຕູດຽວ (SSO)"
     }
 }

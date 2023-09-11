@@ -666,7 +666,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "URL por hejmservilo ŝajne ne ligas al valida hejmservilo de Matrix",
     "Invalid identity server discovery response": "Nevalida eltrova respondo de identiga servilo",
     "Identity server URL does not appear to be a valid identity server": "URL por identiga servilo ŝajne ne ligas al valida identiga servilo",
-    "Sign in with single sign-on": "Saluti per ununura saluto",
     "Failed to re-authenticate due to a homeserver problem": "Malsukcesis reaŭtentikigi pro hejmservila problemo",
     "Failed to re-authenticate": "Malsukcesis reaŭtentikigi",
     "Enter your password to sign in and regain access to your account.": "Enigu vian pasvorton por saluti kaj rehavi aliron al via konto.",
@@ -1060,7 +1059,6 @@
     "Verify all users in a room to ensure it's secure.": "Kontrolu ĉiujn uzantojn en ĉambro por certigi, ke ĝi sekuras.",
     "Use Single Sign On to continue": "Daŭrigi per ununura saluto",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Konfirmi aldonon de ĉi tiu retpoŝtadreso, uzante ununuran saluton por pruvi vian identecon.",
-    "Single Sign On": "Ununura saluto",
     "Confirm adding email": "Konfirmi aldonon de retpoŝtadreso",
     "Click the button below to confirm adding this email address.": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu retpoŝtadreso.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Konfirmu aldonon de ĉi tiu telefonnumero per identiĝo per ununura saluto.",
@@ -1112,7 +1110,6 @@
     "Click the button below to confirm your identity.": "Klaku sube la butonon por konfirmi vian identecon.",
     "Confirm encryption setup": "Konfirmi agordon de ĉifrado",
     "Click the button below to confirm setting up encryption.": "Klaku sube la butonon por konfirmi agordon de ĉifrado.",
-    "QR Code": "Rapidresponda kodo",
     "Dismiss read marker and jump to bottom": "Forigi legomarkon kaj iri al fundo",
     "Jump to oldest unread message": "Iri al plej malnova nelegita mesaĝo",
     "Upload a file": "Alŝuti dosieron",
@@ -1564,7 +1561,6 @@
     "Too Many Calls": "Tro multaj vokoj",
     "Invite by email": "Inviti per retpoŝto",
     "Reason (optional)": "Kialo (malnepra)",
-    "Continue with %(provider)s": "Daŭrigi per %(provider)s",
     "Server Options": "Elektebloj de servilo",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
         "one": "Sekure kaŝmemori ĉifritajn mesaĝojn loke por ke ili aperu inter serĉrezultoj, uzante %(size)s por deponi mesaĝojn el %(rooms)s ĉambroj.",
@@ -1711,9 +1707,7 @@
     "Edit devices": "Redakti aparatojn",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Vi ne povos malfari ĉi tiun ŝanĝon, ĉar vi malrangaltigas vin mem; se vi estas la lasta altranga uzanto de la aro, vi ne plu povos rehavi viajn rajtojn.",
     "Empty room": "Malplena ĉambro",
-    "You do not have permissions to add rooms to this space": "Vi ne havas permeson aldoni ĉambrojn al ĉi tiu aro",
     "Add existing room": "Aldoni jaman ĉambron",
-    "You do not have permissions to create new rooms in this space": "Vi ne havas permeson krei novajn ĉambrojn en ĉi tiu aro",
     "Invite to this space": "Inviti al ĉi tiu aro",
     "Your message was sent": "Via mesaĝo sendiĝis",
     "Leave space": "Forlasi aron",
@@ -1815,8 +1809,6 @@
     "Verification requested": "Kontrolpeto",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Vi estas la nura persono tie ĉi. Se vi foriros, neniu alia plu povos aliĝi, inkluzive vin mem.",
     "Avatar": "Profilbildo",
-    "Join the beta": "Aliĝi al provado",
-    "Leave the beta": "Ĉesi provadon",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Se vi restarigos ĉion, vi rekomencos sen fidataj salutaĵoj, uzantoj, kaj eble ne povos vidi antaŭajn mesaĝojn.",
     "Only do this if you have no other device to complete verification with.": "Faru tion ĉi nur se vi ne havas alian aparaton, per kiu vi kontrolus ceterajn.",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Ĉu vi forgesis aŭ perdis ĉiujn manierojn de rehavo? <a>Restarigu ĉion</a>",
@@ -2154,8 +2146,6 @@
     "Location": "Loko",
     "Shared a location: ": "Kunhavis lokon: ",
     "Shared their location: ": "Kunhavis sian lokon: ",
-    "Reset password": "Restarigu vian pasvorton",
-    "Reset your password": "Restarigu vian pasvorton",
     "Confirm new password": "Konfirmu novan pasvorton",
     "Sign out of all devices": "Elsaluti en ĉiuj aparatoj",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Vi estis elsalutita el ĉiuj aparatoj kaj ne plu ricevos puŝajn sciigojn. Por reŝalti sciigojn, ensalutu denove sur ĉiu aparato.",
@@ -2218,9 +2208,6 @@
     "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Neaktivaj salutaĵoj estas salutaĵoj, kiujn vi ne uzis dum kelka tempo, sed ili daŭre ricevas ĉifrajn ŝlosilojn.",
     "Inactive sessions": "Neaktivaj salutaĵoj",
     "Unverified sessions": "Nekontrolitaj salutaĵoj",
-    "Include Attachments": "Inkluzivi Aldonaĵojn",
-    "Size Limit": "Grandeca Limo",
-    "Select from the options below to export chats from your timeline": "Elektu el la subaj elektoj por eksporti babilojn el via historio",
     "Public rooms": "Publikajn ĉambrojn",
     "Show details": "Montri detalojn",
     "Hide details": "Kaŝi detalojn",
@@ -2230,8 +2217,6 @@
     "IP address": "IP-adreso",
     "Browser": "Retumilo",
     "Add privileged users": "Aldoni rajtigitan uzanton",
-    "Number of messages": "Nombro da mesaĝoj",
-    "Number of messages can only be a number between %(min)s and %(max)s": "Nombro da mesaĝoj povas esti nur nombro inter %(min)s kaj %(max)s",
     "That's fine": "Tio estas bone",
     "Map feedback": "Sugestoj pri la mapo",
     "Developer": "Programisto",
@@ -2323,7 +2308,8 @@
         "secure_backup": "Sekura savkopiado",
         "cross_signing": "Delegaj subskriboj",
         "identity_server": "Identiga servilo",
-        "integration_manager": "Kunigilo"
+        "integration_manager": "Kunigilo",
+        "qr_code": "Rapidresponda kodo"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -2445,7 +2431,9 @@
         "group_rooms": "Ĉambroj",
         "group_voip": "Voĉo kaj vido",
         "group_encryption": "Ĉifrado",
-        "group_developer": "Programisto"
+        "group_developer": "Programisto",
+        "leave_beta": "Ĉesi provadon",
+        "join_beta": "Aliĝi al provado"
     },
     "keyboard": {
         "home": "Hejmo",
@@ -2647,7 +2635,13 @@
         "topic": "Temo: %(topic)s",
         "error_fetching_file": "Eraro alportante dosieron",
         "fetching_events": "Alportante okazojn…",
-        "creating_output": "Kreante eligon…"
+        "creating_output": "Kreante eligon…",
+        "num_messages_min_max": "Nombro da mesaĝoj povas esti nur nombro inter %(min)s kaj %(max)s",
+        "num_messages": "Nombro da mesaĝoj",
+        "select_option": "Elektu el la subaj elektoj por eksporti babilojn el via historio",
+        "messages": "Mesaĝoj",
+        "size_limit": "Grandeca Limo",
+        "include_attachments": "Inkluzivi Aldonaĵojn"
     },
     "create_room": {
         "title_public_room": "Krei publikan ĉambron",
@@ -3005,7 +2999,6 @@
         "unsupported": "Vokoj estas nesubtenataj",
         "unsupported_browser": "Vi ne povas telefoni per ĉi tiu retumilo."
     },
-    "Messages": "Mesaĝoj",
     "Other": "Alia",
     "Advanced": "Altnivela",
     "room_settings": {
@@ -3071,5 +3064,16 @@
         "snowfall_message": "sendas neĝadon",
         "spaceinvaders_description": "Sendas mesaĝon kun la efekto de kosmo",
         "spaceinvaders_message": "sendas imiton de ludo « Space Invaders »"
+    },
+    "spaces": {
+        "error_no_permission_create_room": "Vi ne havas permeson krei novajn ĉambrojn en ĉi tiu aro",
+        "error_no_permission_add_room": "Vi ne havas permeson aldoni ĉambrojn al ĉi tiu aro"
+    },
+    "auth": {
+        "continue_with_idp": "Daŭrigi per %(provider)s",
+        "sign_in_with_sso": "Saluti per ununura saluto",
+        "sso": "Ununura saluto",
+        "reset_password_action": "Restarigu vian pasvorton",
+        "reset_password_title": "Restarigu vian pasvorton"
     }
 }

@@ -41,7 +41,6 @@
     "This email address is already in use": "این آدرس ایمیل در حال حاضر در حال استفاده است",
     "This phone number is already in use": "این شماره تلفن در حال استفاده است",
     "Use Single Sign On to continue": "برای ادامه، از ورود یکپارچه استفاده کنید",
-    "Single Sign On": "ورود یکپارچه",
     "Confirm adding email": "تأیید افزودن رایانامه",
     "Add Email Address": "افزودن نشانی رایانامه",
     "Confirm adding phone number": "تأیید افزودن شماره تلفن",
@@ -737,9 +736,7 @@
     "And %(count)s more...": {
         "other": "و %(count)s مورد بیشتر ..."
     },
-    "Sign in with single sign-on": "با احراز هویت یکپارچه وارد شوید",
     "This server does not support authentication with a phone number.": "این سرور از قابلیت احراز با شماره تلفن پشتیبانی نمی کند.",
-    "Continue with %(provider)s": "با %(provider)s ادامه دهید",
     "Continue with %(ssoButtons)s": "با %(ssoButtons)s ادامه بده",
     "Join millions for free on the largest public server": "به بزرگترین سرور عمومی با میلیون ها نفر کاربر بپیوندید",
     "%(ssoButtons)s Or %(usernamePassword)s": "%(ssoButtons)s یا %(usernamePassword)s",
@@ -766,7 +763,6 @@
     "User Autocomplete": "تکمیل خودکار کاربر",
     "Enter a Security Phrase": "یک عبارت امنیتی وارد کنید",
     "Great! This Security Phrase looks strong enough.": "عالی! این عبارت امنیتی به اندازه کافی قوی به نظر می رسد.",
-    "QR Code": "کد QR",
     "Custom level": "سطح دلخواه",
     "Power level": "سطح قدرت",
     "That matches!": "مطابقت دارد!",
@@ -966,8 +962,6 @@
     "Historical": "تاریخی",
     "Low priority": "اولویت کم",
     "Explore public rooms": "کاوش در اتاق‌های عمومی",
-    "You do not have permissions to add rooms to this space": "شما اجازه افزودن اتاق به این فضای کاری را ندارید",
-    "You do not have permissions to create new rooms in this space": "شما اجازه ایجاد اتاق جدید در این فضای کاری را ندارید",
     "Add room": "افزودن اتاق",
     "Rooms": "اتاق‌ها",
     "Open dial pad": "باز کردن صفحه شماره‌گیری",
@@ -1591,8 +1585,6 @@
     "Something went wrong in confirming your identity. Cancel and try again.": "تائید هویت شما با مشکل مواجه شد. لطفا فرآیند را لغو کرده و مجددا اقدام نمائید.",
     "This room is public": "این اتاق عمومی است",
     "Avatar": "نمایه",
-    "Join the beta": "اضافه‌شدن به نسخه‌ی بتا",
-    "Leave the beta": "ترک نسخه‌ی بتا",
     "Move right": "به سمت راست ببر",
     "Move left": "به سمت چپ ببر",
     "Revoke permissions": "دسترسی‌ها را لغو کنید",
@@ -2055,7 +2047,8 @@
         "secure_backup": "پشتیبان‌گیری امن",
         "cross_signing": "امضاء متقابل",
         "identity_server": "کارساز هویت",
-        "integration_manager": "مدیر یکپارچگی"
+        "integration_manager": "مدیر یکپارچگی",
+        "qr_code": "کد QR"
     },
     "action": {
         "continue": "ادامه",
@@ -2166,7 +2159,9 @@
         "group_themes": "قالب ها",
         "group_encryption": "رمزنگاری",
         "group_experimental": "تجربی",
-        "group_developer": "توسعه دهنده"
+        "group_developer": "توسعه دهنده",
+        "leave_beta": "ترک نسخه‌ی بتا",
+        "join_beta": "اضافه‌شدن به نسخه‌ی بتا"
     },
     "keyboard": {
         "home": "خانه",
@@ -2345,7 +2340,8 @@
         "creator_summary": "%(creatorName)s این اتاق ساخته شده.",
         "topic": "عنوان: %(topic)s",
         "error_fetching_file": "خطا در واکشی فایل",
-        "file_attached": "فایل ضمیمه شد"
+        "file_attached": "فایل ضمیمه شد",
+        "messages": "پیام ها"
     },
     "create_room": {
         "title_public_room": "ساختن اتاق عمومی",
@@ -2682,7 +2678,6 @@
         "unsupported": "تماس ها پشتیبانی نمی شوند",
         "unsupported_browser": "شما نمیتوانید در این مرورگر تماس برقرار کنید."
     },
-    "Messages": "پیام ها",
     "Other": "دیگر",
     "Advanced": "پیشرفته",
     "room_settings": {
@@ -2746,5 +2741,14 @@
         "snowfall_message": "انیمیشن بارش برف را ارسال کن",
         "spaceinvaders_description": "پیام داده شده را به صورت مضمون فضای کاری ارسال می کند",
         "spaceinvaders_message": "ارسال مهاجمان فضایی"
+    },
+    "spaces": {
+        "error_no_permission_create_room": "شما اجازه ایجاد اتاق جدید در این فضای کاری را ندارید",
+        "error_no_permission_add_room": "شما اجازه افزودن اتاق به این فضای کاری را ندارید"
+    },
+    "auth": {
+        "continue_with_idp": "با %(provider)s ادامه دهید",
+        "sign_in_with_sso": "با احراز هویت یکپارچه وارد شوید",
+        "sso": "ورود یکپارچه"
     }
 }
