@@ -134,7 +134,6 @@
     "Anchor": "Anker",
     "Headphones": "Hodetelefoner",
     "Folder": "Mappe",
-    "Show less": "Vis mindre",
     "Current password": "Nåværende passord",
     "New Password": "Nytt passord",
     "Confirm password": "Bekreft passord",
@@ -408,11 +407,6 @@
     "Replying": "Svarer på",
     "Room %(name)s": "Rom %(name)s",
     "Start chatting": "Begynn å chatte",
-    "%(count)s unread messages.": {
-        "one": "1 ulest melding.",
-        "other": "%(count)s uleste meldinger."
-    },
-    "Unread messages.": "Uleste meldinger.",
     "Send as message": "Send som en melding",
     "You don't currently have any stickerpacks enabled": "Du har ikke skrudd på noen klistremerkepakker for øyeblikket",
     "Add some now": "Legg til noen nå",
@@ -475,10 +469,6 @@
     "Remove %(email)s?": "Vil du fjerne %(email)s?",
     "Invalid Email Address": "Ugyldig E-postadresse",
     "Try to join anyway": "Forsøk å bli med likevel",
-    "%(count)s unread messages including mentions.": {
-        "one": "1 ulest nevnelse.",
-        "other": "%(count)s uleste meldinger inkludert der du nevnes."
-    },
     "Command error": "Kommandofeil",
     "Room avatar": "Rommets avatar",
     "Start Verification": "Begynn verifisering",
@@ -614,9 +604,6 @@
     "eg: @bot:* or example.org": "f.eks.: @bot:* eller example.org",
     "To link to this room, please add an address.": "For å lenke til dette rommet, vennligst legg til en adresse.",
     "Remove %(phone)s?": "Vil du fjerne %(phone)s?",
-    "Sort by": "Sorter etter",
-    "Activity": "Aktivitet",
-    "A-Z": "A-Å",
     "Message preview": "Meldingsforhåndsvisning",
     "This room has no local addresses": "Dette rommet har ikke noen lokale adresser",
     "Remove recent messages by %(user)s": "Fjern nylige meldinger fra %(user)s",
@@ -675,11 +662,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "For å hjelpe oss med å forhindre dette i fremtiden, vennligst <a>send oss loggfiler</a>.",
     "Lock": "Lås",
     "Server or user ID to ignore": "Tjener- eller bruker-ID-en som skal ignoreres",
-    "Show %(count)s more": {
-        "other": "Vis %(count)s til",
-        "one": "Vis %(count)s til"
-    },
-    "Notification options": "Varselsinnstillinger",
     "Room options": "Rominnstillinger",
     "Your messages are not secure": "Dine meldinger er ikke sikre",
     "Edited at %(date)s": "Redigert den %(date)s",
@@ -860,7 +842,6 @@
     "Widgets": "Komponenter",
     "Favourited": "Favorittmerket",
     "Forget Room": "Glem rommet",
-    "Show previews of messages": "Vis forhåndsvisninger av meldinger",
     "Invalid URL": "Ugyldig URL",
     "Continuing without email": "Fortsetter uten E-post",
     "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
@@ -1284,7 +1265,16 @@
         "send_report": "Send inn rapport"
     },
     "a11y": {
-        "user_menu": "Brukermeny"
+        "user_menu": "Brukermeny",
+        "n_unread_messages_mentions": {
+            "one": "1 ulest nevnelse.",
+            "other": "%(count)s uleste meldinger inkludert der du nevnes."
+        },
+        "n_unread_messages": {
+            "one": "1 ulest melding.",
+            "other": "%(count)s uleste meldinger."
+        },
+        "unread_messages": "Uleste meldinger."
     },
     "labs": {
         "pinning": "Meldingsklistring",
@@ -1684,5 +1674,17 @@
     "auth": {
         "continue_with_idp": "Fortsett med %(provider)s",
         "sso": "Single Sign On"
+    },
+    "room_list": {
+        "show_previews": "Vis forhåndsvisninger av meldinger",
+        "sort_by": "Sorter etter",
+        "sort_by_activity": "Aktivitet",
+        "sort_by_alphabet": "A-Å",
+        "show_n_more": {
+            "other": "Vis %(count)s til",
+            "one": "Vis %(count)s til"
+        },
+        "show_less": "Vis mindre",
+        "notification_options": "Varselsinnstillinger"
     }
 }

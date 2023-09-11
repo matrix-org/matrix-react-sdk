@@ -748,9 +748,6 @@
     },
     "Remove recent messages": "Премахни скорошни съобщения",
     "Italics": "Наклонено",
-    "Please fill why you're reporting.": "Въведете защо докладвате.",
-    "Report Content to Your Homeserver Administrator": "Докладвай съдържание до администратора на сървъра",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Докладването на съобщението ще изпрати уникалният номер на събитието (event ID) до администратора на сървъра. Ако съобщенията в стаята са шифровани, администратора няма да може да прочете текста им или да види снимките или файловете.",
     "Explore rooms": "Открий стаи",
     "Verify the link in your inbox": "Потвърдете линка във вашата пощенска кутия",
     "Read Marker lifetime (ms)": "Живот на маркера за прочитане (мсек)",
@@ -773,15 +770,6 @@
     "Your email address hasn't been verified yet": "Имейл адресът ви все още не е потвърден",
     "Click the link in the email you received to verify and then click continue again.": "Кликнете на връзката получена по имейл за да потвърдите, а след това натиснете продължи отново.",
     "Room %(name)s": "Стая %(name)s",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s непрочетени съобщения, включително споменавания.",
-        "one": "1 непрочетено споменаване."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s непрочетени съобщения.",
-        "one": "1 непрочетено съобщение."
-    },
-    "Unread messages.": "Непрочетени съобщения.",
     "Failed to deactivate user": "Неуспешно деактивиране на потребител",
     "This client does not support end-to-end encryption.": "Този клиент не поддържа шифроване от край до край.",
     "Messages in this room are not end-to-end encrypted.": "Съобщенията в тази стая не са шифровани от край до край.",
@@ -926,7 +914,6 @@
     "Later": "По-късно",
     "Other users may not trust it": "Други потребители може да не се доверят",
     "This bridge was provisioned by <user />.": "Мостът е настроен от <user />.",
-    "Show less": "Покажи по-малко",
     "Your homeserver does not support cross-signing.": "Сървърът ви не поддържа кръстосано-подписване.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Профилът ви има самоличност за кръстосано подписване в секретно складиране, но все още не е доверено от тази сесия.",
     "well formed": "коректен",
@@ -1144,18 +1131,10 @@
     "Toggle right panel": "Превключване на десния панел",
     "Cancel autocomplete": "Отказване на подсказките",
     "No recently visited rooms": "Няма наскоро-посетени стаи",
-    "Sort by": "Подреди по",
-    "Activity": "Активност",
-    "A-Z": "Азбучен ред",
-    "Show %(count)s more": {
-        "other": "Покажи още %(count)s",
-        "one": "Покажи още %(count)s"
-    },
     "Use custom size": "Използвай собствен размер",
     "Hey you. You're the best!": "Хей, ти. Върхът си!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Автентичността на това шифровано съобщение не може да бъде гарантирана на това устройство.",
     "Message preview": "Преглед на съобщението",
-    "List options": "Опции на списъка",
     "Room options": "Настройки на стаята",
     "Safeguard against losing access to encrypted messages & data": "Защитете се срещу загуба на достъп до криптирани съобшения и информация",
     "Set up Secure Backup": "Конфигуриране на Защитен Архив",
@@ -1231,9 +1210,6 @@
     },
     "Favourited": "В любими",
     "Forget Room": "Забрави стаята",
-    "Notification options": "Настройки за уведомление",
-    "Show previews of messages": "Показвай преглед на съобщенията",
-    "Show rooms with unread messages first": "Показвай стаи с непрочетени съобщения първи",
     "Explore public rooms": "Прегледай публични стаи",
     "Show Widgets": "Покажи приспособленията",
     "Hide Widgets": "Скрий приспособленията",
@@ -1742,7 +1718,16 @@
         "send_report": "Изпрати доклад"
     },
     "a11y": {
-        "user_menu": "Потребителско меню"
+        "user_menu": "Потребителско меню",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s непрочетени съобщения, включително споменавания.",
+            "one": "1 непрочетено споменаване."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s непрочетени съобщения.",
+            "one": "1 непрочетено съобщение."
+        },
+        "unread_messages": "Непрочетени съобщения."
     },
     "labs": {
         "pinning": "Функция за закачане на съобщения",
@@ -2232,5 +2217,24 @@
     },
     "export_chat": {
         "messages": "Съобщения"
+    },
+    "room_list": {
+        "sort_unread_first": "Показвай стаи с непрочетени съобщения първи",
+        "show_previews": "Показвай преглед на съобщенията",
+        "sort_by": "Подреди по",
+        "sort_by_activity": "Активност",
+        "sort_by_alphabet": "Азбучен ред",
+        "sublist_options": "Опции на списъка",
+        "show_n_more": {
+            "other": "Покажи още %(count)s",
+            "one": "Покажи още %(count)s"
+        },
+        "show_less": "Покажи по-малко",
+        "notification_options": "Настройки за уведомление"
+    },
+    "report_content": {
+        "missing_reason": "Въведете защо докладвате.",
+        "report_content_to_homeserver": "Докладвай съдържание до администратора на сървъра",
+        "description": "Докладването на съобщението ще изпрати уникалният номер на събитието (event ID) до администратора на сървъра. Ако съобщенията в стаята са шифровани, администратора няма да може да прочете текста им или да види снимките или файловете."
     }
 }

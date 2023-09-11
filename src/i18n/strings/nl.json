@@ -751,19 +751,8 @@
     "Share this email in Settings to receive invites directly in %(brand)s.": "Deel in de instellingen dit e-mailadres om uitnodigingen direct in %(brand)s te ontvangen.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om uit te nodigen op e-mailadres. <default>Gebruik de standaardserver (%(defaultIdentityServerName)s)</default> of beheer de server in de <settings>Instellingen</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om anderen uit te nodigen via e-mail. Beheer de server in de <settings>Instellingen</settings>.",
-    "Please fill why you're reporting.": "Geef aan waarom je deze melding indient.",
-    "Report Content to Your Homeserver Administrator": "Inhoud melden aan de beheerder van jouw homeserver",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Dit bericht melden zal zijn unieke ‘gebeurtenis-ID’ versturen naar de beheerder van jouw homeserver. Als de berichten in deze kamer versleuteld zijn, zal de beheerder van jouw homeserver het bericht niet kunnen lezen, noch enige bestanden of afbeeldingen zien.",
     "Explore rooms": "Kamers ontdekken",
     "Clear cache and reload": "Cache wissen en herladen",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s ongelezen berichten, inclusief vermeldingen.",
-        "one": "1 ongelezen vermelding."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s ongelezen berichten.",
-        "one": "1 ongelezen bericht."
-    },
     "Show image": "Afbeelding tonen",
     "e.g. my-room": "bv. mijn-kamer",
     "Close dialog": "Dialoog sluiten",
@@ -807,7 +796,6 @@
     "Later": "Later",
     "This bridge was provisioned by <user />.": "Dank aan <user /> voor de brug.",
     "This bridge is managed by <user />.": "Brug onderhouden door <user />.",
-    "Show less": "Minder tonen",
     "Show more": "Meer tonen",
     "in memory": "in het geheugen",
     "not found": "niet gevonden",
@@ -888,7 +876,6 @@
     "<userName/> wants to chat": "<userName/> wil een chat met je beginnen",
     "Start chatting": "Gesprek beginnen",
     "Reject & Ignore user": "Weigeren en persoon negeren",
-    "Unread messages.": "Ongelezen berichten.",
     "Unknown Command": "Onbekende opdracht",
     "Unrecognised command: %(commandText)s": "Onbekende opdracht: %(commandText)s",
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "Tip: begin uw bericht met <code>//</code> om het te laten voorafgaan door een schuine streep.",
@@ -1052,10 +1039,6 @@
     "Video conference updated by %(senderName)s": "Videovergadering geüpdatet door %(senderName)s",
     "Video conference ended by %(senderName)s": "Videovergadering beëindigd door %(senderName)s",
     "Join the conference from the room information card on the right": "Neem deel aan de vergadering via de informatiekaart rechts",
-    "List options": "Lijstopties",
-    "A-Z": "A-Z",
-    "Activity": "Activiteit",
-    "Sort by": "Sorteer op",
     "You cancelled verification.": "Je hebt de verificatie geannuleerd.",
     "%(displayName)s cancelled verification.": "%(displayName)s heeft de verificatie geannuleerd.",
     "Verification timed out.": "Verificatie verlopen.",
@@ -1295,7 +1278,6 @@
     "We couldn't log you in": "We konden je niet inloggen",
     "Explore Public Rooms": "Publieke kamers ontdekken",
     "This room is public": "Deze kamer is publiek",
-    "Show previews of messages": "Voorvertoning van berichten inschakelen",
     "Explore public rooms": "Publieke kamers ontdekken",
     "Room options": "Kameropties",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Start een kamer met iemand door hun naam, e-mailadres of inlognaam (zoals <userId/>) te typen.",
@@ -1311,12 +1293,6 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Er is een fout opgetreden bij het bijwerken van de bijnaam van de kamer. Dit wordt mogelijk niet toegestaan door de server of er is een tijdelijk probleem opgetreden.",
     "Favourited": "Favoriet",
     "Forget Room": "Kamer vergeten",
-    "Notification options": "Meldingsinstellingen",
-    "Show %(count)s more": {
-        "one": "Toon %(count)s meer",
-        "other": "Toon %(count)s meer"
-    },
-    "Show rooms with unread messages first": "Kamers met ongelezen berichten als eerste tonen",
     "Show Widgets": "Widgets tonen",
     "Hide Widgets": "Widgets verbergen",
     "This is the start of <roomName/>.": "Dit is het begin van <roomName/>.",
@@ -1839,17 +1815,6 @@
     "Show preview": "Preview weergeven",
     "View source": "Bron bekijken",
     "Settings - %(spaceName)s": "Instellingen - %(spaceName)s",
-    "Report the entire room": "Rapporteer het hele kamer",
-    "Spam or propaganda": "Spam of propaganda",
-    "Illegal Content": "Illegale Inhoud",
-    "Toxic Behaviour": "Giftig Gedrag",
-    "Disagree": "Niet mee eens",
-    "Please pick a nature and describe what makes this message abusive.": "Kies een reden en beschrijf wat dit bericht kwetsend maakt.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Een andere reden. Beschrijf alstublieft het probleem.\nDit zal gerapporteerd worden aan de kamermoderators.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Deze kamer is gewijd aan illegale of giftige inhoud of de moderators falen om illegale of giftige inhoud te modereren.\nDit zal gerapporteerd worden aan de beheerders van %(homeserver)s. De beheerders zullen NIET in staat zijn om de versleutelde inhoud van deze kamer te lezen.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Deze persoon spamt de kamer met advertenties, links naar advertenties of propaganda.\nDit zal gerapporteerd worden aan de moderators van deze kamer.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Deze persoon vertoont illegaal gedrag, bijvoorbeeld door doxing van personen of te dreigen met geweld.\nDit zal gerapporteerd worden aan de moderators van deze kamer die dit kunnen doorzetten naar de gerechtelijke autoriteiten.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Wat deze persoon schrijft is verkeerd.\nDit zal worden gerapporteerd aan de kamermoderators.",
     "Please provide an address": "Geef een adres op",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Bericht zoeken initialisatie mislukt, controleer <a>je instellingen</a> voor meer informatie",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Stel adressen in voor deze Space zodat personen deze Space kunnen vinden via jouw homeserver (%(localDomain)s)",
@@ -2456,8 +2421,6 @@
     "An error occurred whilst sharing your live location, please try again": "Er is een fout opgetreden bij het delen van je live locatie, probeer het opnieuw",
     "An error occurred whilst sharing your live location": "Er is een fout opgetreden bij het delen van je live locatie",
     "View related event": "Bekijk gerelateerde gebeurtenis",
-    "Check if you want to hide all current and future messages from this user.": "Vink aan als je alle huidige en toekomstige berichten van deze persoon wilt verbergen.",
-    "Ignore user": "Negeer persoon",
     "Click to read topic": "Klik om het onderwerp te lezen",
     "Edit topic": "Bewerk onderwerp",
     "Joining…": "Deelnemen…",
@@ -2848,7 +2811,16 @@
         "clear": "Wis"
     },
     "a11y": {
-        "user_menu": "Persoonsmenu"
+        "user_menu": "Persoonsmenu",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s ongelezen berichten, inclusief vermeldingen.",
+            "one": "1 ongelezen vermelding."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s ongelezen berichten.",
+            "one": "1 ongelezen bericht."
+        },
+        "unread_messages": "Ongelezen berichten."
     },
     "labs": {
         "video_rooms": "Video kamers",
@@ -3704,5 +3676,37 @@
         "continue_with_idp": "Doorgaan met %(provider)s",
         "sign_in_with_sso": "Inloggen met eenmalig inloggen",
         "sso": "Eenmalige aanmelding"
+    },
+    "room_list": {
+        "sort_unread_first": "Kamers met ongelezen berichten als eerste tonen",
+        "show_previews": "Voorvertoning van berichten inschakelen",
+        "sort_by": "Sorteer op",
+        "sort_by_activity": "Activiteit",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Lijstopties",
+        "show_n_more": {
+            "one": "Toon %(count)s meer",
+            "other": "Toon %(count)s meer"
+        },
+        "show_less": "Minder tonen",
+        "notification_options": "Meldingsinstellingen"
+    },
+    "report_content": {
+        "missing_reason": "Geef aan waarom je deze melding indient.",
+        "ignore_user": "Negeer persoon",
+        "hide_messages_from_user": "Vink aan als je alle huidige en toekomstige berichten van deze persoon wilt verbergen.",
+        "nature_disagreement": "Wat deze persoon schrijft is verkeerd.\nDit zal worden gerapporteerd aan de kamermoderators.",
+        "nature_illegal": "Deze persoon vertoont illegaal gedrag, bijvoorbeeld door doxing van personen of te dreigen met geweld.\nDit zal gerapporteerd worden aan de moderators van deze kamer die dit kunnen doorzetten naar de gerechtelijke autoriteiten.",
+        "nature_spam": "Deze persoon spamt de kamer met advertenties, links naar advertenties of propaganda.\nDit zal gerapporteerd worden aan de moderators van deze kamer.",
+        "report_to_homeserver_encrypted": "Deze kamer is gewijd aan illegale of giftige inhoud of de moderators falen om illegale of giftige inhoud te modereren.\nDit zal gerapporteerd worden aan de beheerders van %(homeserver)s. De beheerders zullen NIET in staat zijn om de versleutelde inhoud van deze kamer te lezen.",
+        "nature_other": "Een andere reden. Beschrijf alstublieft het probleem.\nDit zal gerapporteerd worden aan de kamermoderators.",
+        "nature": "Kies een reden en beschrijf wat dit bericht kwetsend maakt.",
+        "disagree": "Niet mee eens",
+        "toxic_behaviour": "Giftig Gedrag",
+        "illegal_content": "Illegale Inhoud",
+        "spam_or_propaganda": "Spam of propaganda",
+        "report_entire_room": "Rapporteer het hele kamer",
+        "report_content_to_homeserver": "Inhoud melden aan de beheerder van jouw homeserver",
+        "description": "Dit bericht melden zal zijn unieke ‘gebeurtenis-ID’ versturen naar de beheerder van jouw homeserver. Als de berichten in deze kamer versleuteld zijn, zal de beheerder van jouw homeserver het bericht niet kunnen lezen, noch enige bestanden of afbeeldingen zien."
     }
 }

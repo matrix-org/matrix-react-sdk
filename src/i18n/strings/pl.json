@@ -586,15 +586,6 @@
     "Do you want to join %(roomName)s?": "Czy chcesz dołączyć do %(roomName)s?",
     "<userName/> invited you": "<userName/> zaprosił Cię",
     "You're previewing %(roomName)s. Want to join it?": "Przeglądasz %(roomName)s. Czy chcesz dołączyć do pokoju?",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s nieprzeczytanych wiadomości, wliczając wzmianki.",
-        "one": "1 nieprzeczytana wzmianka."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s nieprzeczytanych wiadomości.",
-        "one": "1 nieprzeczytana wiadomość."
-    },
-    "Unread messages.": "Nieprzeczytane wiadomości.",
     "%(creator)s created and configured the room.": "%(creator)s stworzył i skonfigurował pokój.",
     "Missing media permissions, click the button below to request.": "Brakuje uprawnień do mediów, kliknij przycisk poniżej, aby o nie zapytać.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Nie zdołano wczytać zdarzenia, na które odpowiedziano, może ono nie istnieć lub nie masz uprawnienia, by je zobaczyć.",
@@ -608,7 +599,6 @@
     "Direct Messages": "Wiadomości prywatne",
     "Create Account": "Utwórz konto",
     "Later": "Później",
-    "Show less": "Pokaż mniej",
     "Show more": "Pokaż więcej",
     "Ignored users": "Zignorowani użytkownicy",
     "⚠ These settings are meant for advanced users.": "⚠ Te ustawienia są przeznaczone dla zaawansowanych użytkowników.",
@@ -713,12 +703,6 @@
     "Use Single Sign On to continue": "Użyj pojedynczego logowania, aby kontynuować",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Potwierdź dodanie tego adresu e-mail przez użycie pojedynczego logowania, aby potwierdzić swoją tożsamość.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Potwierdź dodanie tego numeru telefonu przy użyciu pojedynczego logowania, aby potwierdzić swoją tożsamość.",
-    "Show rooms with unread messages first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",
-    "Show previews of messages": "Pokazuj podglądy wiadomości",
-    "Sort by": "Sortuj według",
-    "Activity": "Aktywności",
-    "A-Z": "A-Z",
-    "Notification options": "Opcje powiadomień",
     "Favourited": "Ulubiony",
     "This room is public": "Ten pokój jest publiczny",
     "Unknown Command": "Nieznane polecenie",
@@ -773,7 +757,6 @@
     "To continue you need to accept the terms of this service.": "Aby kontynuować, musisz zaakceptować zasady użytkowania.",
     "Add widgets, bridges & bots": "Dodaj widżety, mostki i boty",
     "Forget this room": "Zapomnij o tym pokoju",
-    "List options": "Ustawienia listy",
     "Explore public rooms": "Przeglądaj pokoje publiczne",
     "Changes to who can read history will only apply to future messages in this room. The visibility of existing history will be unchanged.": "Zmiany tego, kto może przeglądać historię wyszukiwania dotyczą tylko przyszłych wiadomości w pokoju. Widoczność wcześniejszej historii nie zmieni się.",
     "No other published addresses yet, add one below": "Brak innych opublikowanych adresów, dodaj jakiś poniżej",
@@ -781,16 +764,10 @@
     "Room settings": "Ustawienia pokoju",
     "Messages in this room are not end-to-end encrypted.": "Wiadomości w tym pokoju nie są szyfrowane end-to-end.",
     "<a>Add a topic</a> to help people know what it is about.": "<a>Dodaj temat</a>, aby poinformować ludzi czego dotyczy.",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Zgłoszenie tej wiadomości wyśle administratorowi serwera unikatowe „ID wydarzenia”. Jeżeli wiadomości w tym pokoju są szyfrowane, administrator serwera może nie być w stanie przeczytać treści wiadomości, lub zobaczyć plików bądź zdjęć.",
-    "Report Content to Your Homeserver Administrator": "Zgłoś zawartość do administratora swojego serwera",
     "You might enable this if the room will only be used for collaborating with internal teams on your homeserver. This cannot be changed later.": "Możesz ustawić tę opcję, jeżeli pokój będzie używany wyłącznie do współpracy wewnętrznych zespołów na Twoim serwerze. Nie będzie można zmienić tej opcji.",
     "Block anyone not part of %(serverName)s from ever joining this room.": "Zablokuj wszystkich niebędących użytkownikami %(serverName)s w tym pokoju.",
     "Start a conversation with someone using their name or username (like <userId/>).": "Rozpocznij konwersację z innymi korzystając z ich nazwy lub nazwy użytkownika (np. <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Rozpocznij konwersację z innymi korzystając z ich nazwy, adresu e-mail lub nazwy użytkownika (np. <userId/>).",
-    "Show %(count)s more": {
-        "one": "Pokaż %(count)s więcej",
-        "other": "Pokaż %(count)s więcej"
-    },
     "Room options": "Ustawienia pokoju",
     "Manually verify all remote sessions": "Ręcznie weryfikuj wszystkie zdalne sesje",
     "This version of %(brand)s does not support searching encrypted messages": "Ta wersja %(brand)s nie obsługuje wyszukiwania zabezpieczonych wiadomości",
@@ -1130,7 +1107,6 @@
     "Your display name": "Twoja nazwa wyświetlana",
     "View rules": "Zobacz zasady",
     "Error subscribing to list": "Błąd subskrybowania listy",
-    "Please fill why you're reporting.": "Wypełnij, dlaczego dokonujesz zgłoszenia.",
     "Jump to first unread room.": "Przejdź do pierwszego nieprzeczytanego pokoju.",
     "Jump to first invite.": "Przejdź do pierwszego zaproszenia.",
     "You verified %(name)s": "Zweryfikowałeś %(name)s",
@@ -1393,7 +1369,6 @@
     "Empty room": "Pusty pokój",
     "Hold": "Wstrzymaj",
     "ready": "gotowy",
-    "Disagree": "Nie zgadzam się",
     "Create a new room": "Utwórz nowy pokój",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "other": "Dodawanie pokojów... (%(progress)s z %(count)s)",
@@ -1403,11 +1378,6 @@
     "Switches to this room's virtual room, if it has one": "Przełącza do wirtualnego pokoju tego pokoju, jeśli taki istnieje",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s i %(space2Name)s",
     "There was a problem communicating with the homeserver, please try again later.": "Wystąpił problem podczas łączenia się z serwerem domowym, spróbuj ponownie później.",
-    "Report the entire room": "Zgłoś cały pokój",
-    "Spam or propaganda": "Spam lub propaganda",
-    "Illegal Content": "Nielegalna treść",
-    "Toxic Behaviour": "Toksyczne zachowanie",
-    "Please pick a nature and describe what makes this message abusive.": "Wybierz powód oraz opisz dlaczego ta wiadomość jest niestosowna.",
     "Stop recording": "Skończ nagrywanie",
     "We didn't find a microphone on your device. Please check your settings and try again.": "Nie udało się znaleźć żadnego mikrofonu w twoim urządzeniu. Sprawdź ustawienia i spróbuj ponownie.",
     "No microphone found": "Nie znaleziono mikrofonu",
@@ -2328,7 +2298,6 @@
     "Declining…": "Odrzucanie…",
     "%(name)s cancelled": "%(name)s anulował",
     "Report": "Zgłoś",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "To co pisze ten użytkownik jest złe.\nZostanie to zgłoszone moderatorom pokoju.",
     "Modal Widget": "Widżet modalny",
     "Your homeserver doesn't seem to support this feature.": "Wygląda na to, że Twój serwer domowy nie wspiera tej funkcji.",
     "If they don't match, the security of your communication may be compromised.": "Jeśli nie pasują, bezpieczeństwo twojego konta mogło zostać zdradzone.",
@@ -2543,15 +2512,6 @@
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Zakaż rozmawiania w starej wersji pokoju i opublikuj wiadomość, aby użytkownicy przenieśli się do nowego",
     "Update any local room aliases to point to the new room": "Zaktualizuj każdy alias pokoju, aby wskazywał na nowy pokój",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Ulepszenie tego pokoju wymaga zamknięcia bieżącej instancji pokoju i utworzenie nowego w jego miejsce. Aby zapewnić użytkownikom najlepsze możliwe doświadczenia:",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Inny powód. Proszę opisać problem.\nZostanie to zgłoszone do moderatorów pokoju.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Ten pokój został dedykowany do aktywności nielegalnych lub toksycznych, lub moderatorzy zawiedli w kontrolowaniu tego typu zawartości.\nZostanie to zgłoszone do administratorów %(homeserver)s.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Ten pokój został dedykowany do aktywności nielegalnych lub toksycznych, lub moderatorzy zawiedli w kontrolowaniu tego typu zawartości.\nZostanie to zgłoszone do administratorów %(homeserver)s. Administratorzy NIE będą w stanie przeczytać zawartości szyfrowanej w tym pokoju.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Ten użytkownik spamuje pokój, wysyłając wiadomości z reklamami, linkami do reklam lub propagandy.\nTo zdarzenie zostanie zgłoszone moderatorom.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Ten użytkownik wykazuje nielegalne zachowanie, na przykład wyłudza dane lub stosuje groźby karalne.\nTo zdarzenie zostanie zgłoszone moderatorom pokoju, którzy mogą przekazać te informacje organom prawnym.",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "Ten użytkownik wykazuje toksyczne zachowanie, na przykład obraża innych, udostępnia treści dla dorosłych lub łamie zasady panujące w pokoju.\nTo zdarzenie zostanie zgłoszone moderatorom pokoju.",
-    "Check if you want to hide all current and future messages from this user.": "Upewnij się, czy chcesz ukryć wszystkie bieżące i przyszłe wiadomości od tego użytkownika.",
-    "Ignore user": "Ignoruj użytkownika",
-    "Unable to create room with moderation bot": "Nie można utworzyć pokoju z botem moderatorem",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Mała uwaga, jeśli nie dodasz adresu e-mail i stracisz swoje hasło, możesz <b>permanentnie stracić dostęp do swojego konta</b>.",
     "Continuing without email": "Kontynuowanie bez adresu e-mail",
     "Data on this screen is shared with %(widgetDomain)s": "Dane na tym ekranie są współdzielone z %(widgetDomain)s",
@@ -3135,7 +3095,16 @@
         "clear": "Wyczyść"
     },
     "a11y": {
-        "user_menu": "Menu użytkownika"
+        "user_menu": "Menu użytkownika",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s nieprzeczytanych wiadomości, wliczając wzmianki.",
+            "one": "1 nieprzeczytana wzmianka."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s nieprzeczytanych wiadomości.",
+            "one": "1 nieprzeczytana wiadomość."
+        },
+        "unread_messages": "Nieprzeczytane wiadomości."
     },
     "labs": {
         "video_rooms": "Pokoje wideo",
@@ -4083,5 +4052,40 @@
         "sso": "Pojedyncze logowanie",
         "reset_password_action": "Resetuj hasło",
         "reset_password_title": "Resetuj swoje hasło"
+    },
+    "room_list": {
+        "sort_unread_first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",
+        "show_previews": "Pokazuj podglądy wiadomości",
+        "sort_by": "Sortuj według",
+        "sort_by_activity": "Aktywności",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Ustawienia listy",
+        "show_n_more": {
+            "one": "Pokaż %(count)s więcej",
+            "other": "Pokaż %(count)s więcej"
+        },
+        "show_less": "Pokaż mniej",
+        "notification_options": "Opcje powiadomień"
+    },
+    "report_content": {
+        "missing_reason": "Wypełnij, dlaczego dokonujesz zgłoszenia.",
+        "unable_create_room_moderation_bot": "Nie można utworzyć pokoju z botem moderatorem",
+        "ignore_user": "Ignoruj użytkownika",
+        "hide_messages_from_user": "Upewnij się, czy chcesz ukryć wszystkie bieżące i przyszłe wiadomości od tego użytkownika.",
+        "nature_disagreement": "To co pisze ten użytkownik jest złe.\nZostanie to zgłoszone moderatorom pokoju.",
+        "nature_toxic": "Ten użytkownik wykazuje toksyczne zachowanie, na przykład obraża innych, udostępnia treści dla dorosłych lub łamie zasady panujące w pokoju.\nTo zdarzenie zostanie zgłoszone moderatorom pokoju.",
+        "nature_illegal": "Ten użytkownik wykazuje nielegalne zachowanie, na przykład wyłudza dane lub stosuje groźby karalne.\nTo zdarzenie zostanie zgłoszone moderatorom pokoju, którzy mogą przekazać te informacje organom prawnym.",
+        "nature_spam": "Ten użytkownik spamuje pokój, wysyłając wiadomości z reklamami, linkami do reklam lub propagandy.\nTo zdarzenie zostanie zgłoszone moderatorom.",
+        "report_to_homeserver_encrypted": "Ten pokój został dedykowany do aktywności nielegalnych lub toksycznych, lub moderatorzy zawiedli w kontrolowaniu tego typu zawartości.\nZostanie to zgłoszone do administratorów %(homeserver)s. Administratorzy NIE będą w stanie przeczytać zawartości szyfrowanej w tym pokoju.",
+        "report_to_homeserver": "Ten pokój został dedykowany do aktywności nielegalnych lub toksycznych, lub moderatorzy zawiedli w kontrolowaniu tego typu zawartości.\nZostanie to zgłoszone do administratorów %(homeserver)s.",
+        "nature_other": "Inny powód. Proszę opisać problem.\nZostanie to zgłoszone do moderatorów pokoju.",
+        "nature": "Wybierz powód oraz opisz dlaczego ta wiadomość jest niestosowna.",
+        "disagree": "Nie zgadzam się",
+        "toxic_behaviour": "Toksyczne zachowanie",
+        "illegal_content": "Nielegalna treść",
+        "spam_or_propaganda": "Spam lub propaganda",
+        "report_entire_room": "Zgłoś cały pokój",
+        "report_content_to_homeserver": "Zgłoś zawartość do administratora swojego serwera",
+        "description": "Zgłoszenie tej wiadomości wyśle administratorowi serwera unikatowe „ID wydarzenia”. Jeżeli wiadomości w tym pokoju są szyfrowane, administrator serwera może nie być w stanie przeczytać treści wiadomości, lub zobaczyć plików bądź zdjęć."
     }
 }

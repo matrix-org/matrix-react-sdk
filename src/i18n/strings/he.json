@@ -552,7 +552,6 @@
     "New passwords don't match": "הססמאות החדשות לא תואמות",
     "No display name": "אין שם לתצוגה",
     "Show more": "הצג יותר",
-    "Show less": "הצג פחות",
     "This bridge is managed by <user />.": "הגשר הזה מנוהל על ידי משתמש <user />.",
     "This bridge was provisioned by <user />.": "הגשר הזה נוצר על ידי משתמש <user />.",
     "Accept <policyLink /> to continue:": "קבל <policyLink /> להמשך:",
@@ -910,15 +909,6 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "חדר זה מריץ את גרסת החדר <roomVersion/>, ששרת הבית הזה סימן כ- <i> לא יציב </i>.",
     "This room has already been upgraded.": "החדר הזה כבר שודרג.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "שדרוג חדר זה יסגור את המופע הנוכחי של החדר וייצור חדר משודרג עם אותו שם.",
-    "Unread messages.": "הודעות שלא נקראו.",
-    "%(count)s unread messages.": {
-        "one": "1 הודעה שלא נקראה.",
-        "other": "%(count)s הודעות שלא נקראו."
-    },
-    "%(count)s unread messages including mentions.": {
-        "one": "1 אזכור שלא נקרא.",
-        "other": "%(count)s הודעות שלא נקראו כולל אזכורים."
-    },
     "Room options": "אפשרויות חדר",
     "Sign Up": "הרשמה",
     "Join the conversation with an account": "הצטרף לשיחה עם חשבון",
@@ -1188,19 +1178,8 @@
     "Back up your keys before signing out to avoid losing them.": "גבה את המפתחות שלך לפני היציאה כדי להימנע מלאבד אותם.",
     "Favourited": "מועדפים",
     "Forget Room": "שכח חדר",
-    "Notification options": "אפשרויות התרעות",
-    "Show %(count)s more": {
-        "one": "הצג עוד %(count)s",
-        "other": "הצג עוד %(count)s"
-    },
     "Jump to first invite.": "קפצו להזמנה ראשונה.",
     "Jump to first unread room.": "קפצו לחדר הראשון שלא נקרא.",
-    "List options": "רשימת אפשרויות",
-    "A-Z": "א-ת",
-    "Activity": "פעילות",
-    "Sort by": "סדר לפי",
-    "Show previews of messages": "הצג תצוגה מקדימה של הודעות",
-    "Show rooms with unread messages first": "הצג תחילה חדרים עם הודעות שלא נקראו",
     "%(roomName)s is not accessible at this time.": "לא ניתן להכנס אל %(roomName)s בזמן הזה.",
     "%(roomName)s does not exist.": "%(roomName)s לא קיים.",
     "%(roomName)s can't be previewed. Do you want to join it?": "לא ניתן לצפות ב־%(roomName)s. האם תרצו להצטרף?",
@@ -1385,9 +1364,6 @@
     "The room upgrade could not be completed": "לא ניתן היה להשלים את שדרוג החדר",
     "Failed to upgrade room": "שדרוג החדר נכשל",
     "Room Settings - %(roomName)s": "הגדרות חדר - %(roomName)s",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "דיווח על הודעה זו ישלח את 'מזהה האירוע' הייחודי למנהל שרת הבית שלך. אם הודעות בחדר זה מוצפנות, מנהל שרת הבית שלך לא יוכל לקרוא את טקסט ההודעה או להציג קבצים או תמונות.",
-    "Report Content to Your Homeserver Administrator": "דווח על תוכן למנהל שרת הבית שלך",
-    "Please fill why you're reporting.": "אנא מלאו מדוע אתם מדווחים.",
     "Email (optional)": "דוא\"ל (לא חובה)",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "שים לב, אם לא תשייך כתובת דואר אלקטרוני ותשכח את הסיסמה שלך, אתה תאבד <b>לצמיתות</b> את הגישה לחשבונך.",
     "Continuing without email": "ממשיך ללא דוא\"ל",
@@ -2212,7 +2188,16 @@
         "send_report": "שלח דיווח"
     },
     "a11y": {
-        "user_menu": "תפריט משתמש"
+        "user_menu": "תפריט משתמש",
+        "n_unread_messages_mentions": {
+            "one": "1 אזכור שלא נקרא.",
+            "other": "%(count)s הודעות שלא נקראו כולל אזכורים."
+        },
+        "n_unread_messages": {
+            "one": "1 הודעה שלא נקראה.",
+            "other": "%(count)s הודעות שלא נקראו."
+        },
+        "unread_messages": "הודעות שלא נקראו."
     },
     "labs": {
         "latex_maths": "בצע מתמטיקה של LaTeX בהודעות",
@@ -2892,5 +2877,24 @@
         "continue_with_idp": "המשך עם %(provider)s",
         "sign_in_with_sso": "היכנס באמצעות כניסה יחידה",
         "sso": "כניסה חד שלבית"
+    },
+    "room_list": {
+        "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
+        "show_previews": "הצג תצוגה מקדימה של הודעות",
+        "sort_by": "סדר לפי",
+        "sort_by_activity": "פעילות",
+        "sort_by_alphabet": "א-ת",
+        "sublist_options": "רשימת אפשרויות",
+        "show_n_more": {
+            "one": "הצג עוד %(count)s",
+            "other": "הצג עוד %(count)s"
+        },
+        "show_less": "הצג פחות",
+        "notification_options": "אפשרויות התרעות"
+    },
+    "report_content": {
+        "missing_reason": "אנא מלאו מדוע אתם מדווחים.",
+        "report_content_to_homeserver": "דווח על תוכן למנהל שרת הבית שלך",
+        "description": "דיווח על הודעה זו ישלח את 'מזהה האירוע' הייחודי למנהל שרת הבית שלך. אם הודעות בחדר זה מוצפנות, מנהל שרת הבית שלך לא יוכל לקרוא את טקסט ההודעה או להציג קבצים או תמונות."
     }
 }

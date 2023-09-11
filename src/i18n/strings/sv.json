@@ -791,7 +791,6 @@
     "Your server isn't responding to some <a>requests</a>.": "Din server svarar inte på vissa <a>förfrågningar</a>.",
     "This bridge was provisioned by <user />.": "Den här bryggan tillhandahålls av <user />.",
     "This bridge is managed by <user />.": "Den här bryggan tillhandahålls av <user />.",
-    "Show less": "Visa mindre",
     "Your homeserver does not support cross-signing.": "Din hemserver stöder inte korssignering.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Ditt konto har en korssigneringsidentitet i hemlig lagring, men den är inte betrodd av den här sessionen än.",
     "well formed": "välformaterad",
@@ -902,31 +901,11 @@
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Använd en identitetsserver i inställningarna för att motta inbjudningar direkt i %(brand)s.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Dela denna e-postadress i inställningarna för att motta inbjudningar direkt i %(brand)s.",
     "Reject & Ignore user": "Avvisa och ignorera användare",
-    "Show rooms with unread messages first": "Visa rum med olästa meddelanden först",
-    "Show previews of messages": "Visa förhandsgranskningar av meddelanden",
-    "Sort by": "Sortera efter",
-    "Activity": "Aktivitet",
-    "A-Z": "A-Ö",
-    "List options": "Listalternativ",
     "Jump to first unread room.": "Hoppa till första olästa rum.",
     "Jump to first invite.": "Hoppa till första inbjudan.",
-    "Show %(count)s more": {
-        "other": "Visa %(count)s till",
-        "one": "Visa %(count)s till"
-    },
-    "Notification options": "Aviseringsinställningar",
     "Forget Room": "Glöm rum",
     "Favourited": "Favoritmarkerad",
     "Room options": "Rumsinställningar",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s olästa meddelanden inklusive omnämnanden.",
-        "one": "1 oläst omnämnande."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s olästa meddelanden.",
-        "one": "1 oläst meddelande."
-    },
-    "Unread messages.": "Olästa meddelanden.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Att uppgradera det här rummet kommer att stänga den nuvarande instansen av rummet och skapa ett uppgraderat rum med samma namn.",
     "This room has already been upgraded.": "Det här rummet har redan uppgraderats.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Det här rummet kör rumsversion <roomVersion />, vilket den här hemservern har markerat som <i>instabil</i>.",
@@ -1061,9 +1040,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Bekräfta genom att jämföra följande med användarinställningarna i din andra session:",
     "Confirm this user's session by comparing the following with their User Settings:": "Bekräfta den här användarens session genom att jämföra följande med deras användarinställningar:",
     "If they don't match, the security of your communication may be compromised.": "Om de inte matchar så kan din kommunikations säkerhet vara äventyrad.",
-    "Please fill why you're reporting.": "Vänligen fyll i varför du anmäler.",
-    "Report Content to Your Homeserver Administrator": "Rapportera innehåll till din hemserveradministratör",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Att rapportera det här meddelandet kommer att skicka dess unika 'händelse-ID' till administratören för din hemserver. Om meddelanden i det här rummet är krypterade kommer din hemserveradministratör inte att kunna läsa meddelandetexten eller se några filer eller bilder.",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Att uppgradera det här rummet kräver att den nuvarande instansen a rummet stängs och ett nytt rum skapas i dess plats. För att ge rumsmedlemmar den bästa möjliga upplevelsen kommer vi:",
     "You're all caught up.": "Du är ikapp.",
     "Server isn't responding": "Servern svarar inte",
@@ -1836,7 +1812,6 @@
     "End-to-end encryption isn't enabled": "Totalsträckskryptering är inte aktiverat",
     "Some invites couldn't be sent": "Vissa inbjudningar kunde inte skickas",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Vi skickade de andra, men personerna nedan kunde inte bjudas in till <RoomName/>",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Vad användaren skriver är fel.\nDetta kommer att anmälas till rumsmoderatorerna.",
     "Report": "Rapportera",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Att använda denna widget kan dela data <helpIcon /> med %(widgetDomain)s och din integrationshanterare.",
@@ -1944,16 +1919,6 @@
     "Settings - %(spaceName)s": "Inställningar - %(spaceName)s",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Observera att en uppgradering kommer att skapa en ny version av rummet</b>. Alla nuvarande meddelanden kommer att stanna i det arkiverade rummet.",
     "Automatically invite members from this room to the new one": "Bjud automatiskt in medlemmar från det här rummet till det nya",
-    "Report the entire room": "Rapportera hela rummet",
-    "Spam or propaganda": "Spam eller propaganda",
-    "Illegal Content": "Olagligt innehåll",
-    "Toxic Behaviour": "Stötande beteende",
-    "Disagree": "Håll inte med",
-    "Please pick a nature and describe what makes this message abusive.": "Välj en art och beskriv vad som gör detta meddelande kränkande.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Det här rummet är dedikerat till olagligt eller stötande innehåll, eller så modererar inte moderatorerna olagligt eller stötande innehåll ordentligt.\nDetta kommer att rapporteras till administratörerna för %(homeserver)s. Administratörerna kommer inte kunna läsa krypterat innehåll i rummet.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Annan orsak. Beskriv problemet tack.\nDetta kommer att rapporteras till rumsmoderatorerna.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Användaren spammar rummet med reklam eller länkar till reklam eller propaganda.\nDetta kommer att rapporteras till rumsmoderatorerna.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Användaren påvisar olagligt beteende, som att doxa folk eller hota med våld.\nDetta kommer att rapporteras till rumsmoderatorerna som kanske eskalerar detta till juridiska myndigheter.",
     "These are likely ones other room admins are a part of.": "Dessa är troligen såna andra rumsadmins är med i.",
     "Other spaces or rooms you might not know": "Andra utrymmen du kanske inte känner till",
     "Spaces you know that contain this room": "Utrymmen du känner till som innehåller det här rummet",
@@ -2463,8 +2428,6 @@
         "one": "%(count)s person gick med"
     },
     "View related event": "Visa relaterade händelser",
-    "Check if you want to hide all current and future messages from this user.": "Bocka i om du vill dölja alla nuvarande och framtida meddelanden från den här användaren.",
-    "Ignore user": "Ignorera användare",
     "Read receipts": "Läskvitton",
     "Failed to set direct message tag": "Misslyckades att sätta direktmeddelandetagg",
     "You were disconnected from the call. (Error: %(message)s)": "Du kopplades bort från samtalet. (Fel: %(message)s)",
@@ -2782,7 +2745,6 @@
     "Your personal ban list holds all the users/servers you personally don't want to see messages from. After ignoring your first user/server, a new room will show up in your room list named '%(myBanList)s' - stay in this room to keep the ban list in effect.": "Din personliga bannlista innehåller alla de användare och servrar du personligen inte vill se meddelanden ifrån. Efter att du ignorerar din första användare eller server så visas ett nytt rum i din rumslista med namnet '%(myBanList)s' - stanna i det här rummet för att bannlistan ska fortsätta gälla.",
     "WARNING: session already verified, but keys do NOT MATCH!": "VARNING: sessionen är redan verifierad, men nycklarna MATCHAR INTE!",
     "Unable to connect to Homeserver. Retrying…": "Kunde inte kontakta hemservern. Försöker igen …",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Det här rummet är dedikerat till olagligt eller stötande innehåll eller så har moderatorerna misslyckats med att moderera olagligt eller stötande innehåll.\nDet här kommer att rapporteras till %(homeserver)ss administratörer.",
     "Secure Backup successful": "Säkerhetskopiering lyckades",
     "Your keys are now being backed up from this device.": "Dina nycklar säkerhetskopieras nu från denna enhet.",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Ange en säkerhetsfras som bara du känner till, eftersom den används för att säkra din data. För att vara säker, bör du inte återanvända ditt kontolösenord.",
@@ -2797,7 +2759,6 @@
     "Loading live location…": "Laddar realtidsposition …",
     "Fetching keys from server…": "Hämtar nycklar från server …",
     "Checking…": "Kontrollerar …",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "Den här användaren uppvisar ett stötande beteende, till exempel genom att förolämpa andra användare eller dela vuxenmaterial i familjevänliga rum, eller på annat sätt bryter mot rummets regler.\nDetta kommer att rapporteras till rummets moderatorer.",
     "Waiting for partner to confirm…": "Väntar på att andra parten ska bekräfta …",
     "Adding…": "Lägger till …",
     "Write something…": "Skriv nånting …",
@@ -2869,7 +2830,6 @@
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Ett nätverksfel uppstod vid försök att hitta och hoppa till det angivna datumet. Din hemserver kanske är nere eller så var det vara ett tillfälligt problem med din internetuppkoppling. Var god försök igen. Om detta fortsätter, kontakta din hemserveradministratör.",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Vi kunde inte hitta en händelse från %(dateString)s eller senare. Pröva att välja ett tidigare datum.",
     "unavailable": "otillgänglig",
-    "Unable to create room with moderation bot": "Kunde inte skapa rum med modereringsbot",
     "Due to decryption errors, some votes may not be counted": "På grund av avkrypteringsfel kanske inte vissa röster räknas",
     "Message from %(user)s": "Meddelande från %(user)s",
     "Answered elsewhere": "Besvarat på annat håll",
@@ -3105,7 +3065,16 @@
         "clear": "Rensa"
     },
     "a11y": {
-        "user_menu": "Användarmeny"
+        "user_menu": "Användarmeny",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s olästa meddelanden inklusive omnämnanden.",
+            "one": "1 oläst omnämnande."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s olästa meddelanden.",
+            "one": "1 oläst meddelande."
+        },
+        "unread_messages": "Olästa meddelanden."
     },
     "labs": {
         "video_rooms": "Videorum",
@@ -4041,5 +4010,40 @@
         "sso": "Samlad inloggning",
         "reset_password_action": "Återställ lösenord",
         "reset_password_title": "Återställ ditt lösenord"
+    },
+    "room_list": {
+        "sort_unread_first": "Visa rum med olästa meddelanden först",
+        "show_previews": "Visa förhandsgranskningar av meddelanden",
+        "sort_by": "Sortera efter",
+        "sort_by_activity": "Aktivitet",
+        "sort_by_alphabet": "A-Ö",
+        "sublist_options": "Listalternativ",
+        "show_n_more": {
+            "other": "Visa %(count)s till",
+            "one": "Visa %(count)s till"
+        },
+        "show_less": "Visa mindre",
+        "notification_options": "Aviseringsinställningar"
+    },
+    "report_content": {
+        "missing_reason": "Vänligen fyll i varför du anmäler.",
+        "unable_create_room_moderation_bot": "Kunde inte skapa rum med modereringsbot",
+        "ignore_user": "Ignorera användare",
+        "hide_messages_from_user": "Bocka i om du vill dölja alla nuvarande och framtida meddelanden från den här användaren.",
+        "nature_disagreement": "Vad användaren skriver är fel.\nDetta kommer att anmälas till rumsmoderatorerna.",
+        "nature_toxic": "Den här användaren uppvisar ett stötande beteende, till exempel genom att förolämpa andra användare eller dela vuxenmaterial i familjevänliga rum, eller på annat sätt bryter mot rummets regler.\nDetta kommer att rapporteras till rummets moderatorer.",
+        "nature_illegal": "Användaren påvisar olagligt beteende, som att doxa folk eller hota med våld.\nDetta kommer att rapporteras till rumsmoderatorerna som kanske eskalerar detta till juridiska myndigheter.",
+        "nature_spam": "Användaren spammar rummet med reklam eller länkar till reklam eller propaganda.\nDetta kommer att rapporteras till rumsmoderatorerna.",
+        "report_to_homeserver_encrypted": "Det här rummet är dedikerat till olagligt eller stötande innehåll, eller så modererar inte moderatorerna olagligt eller stötande innehåll ordentligt.\nDetta kommer att rapporteras till administratörerna för %(homeserver)s. Administratörerna kommer inte kunna läsa krypterat innehåll i rummet.",
+        "report_to_homeserver": "Det här rummet är dedikerat till olagligt eller stötande innehåll eller så har moderatorerna misslyckats med att moderera olagligt eller stötande innehåll.\nDet här kommer att rapporteras till %(homeserver)ss administratörer.",
+        "nature_other": "Annan orsak. Beskriv problemet tack.\nDetta kommer att rapporteras till rumsmoderatorerna.",
+        "nature": "Välj en art och beskriv vad som gör detta meddelande kränkande.",
+        "disagree": "Håll inte med",
+        "toxic_behaviour": "Stötande beteende",
+        "illegal_content": "Olagligt innehåll",
+        "spam_or_propaganda": "Spam eller propaganda",
+        "report_entire_room": "Rapportera hela rummet",
+        "report_content_to_homeserver": "Rapportera innehåll till din hemserveradministratör",
+        "description": "Att rapportera det här meddelandet kommer att skicka dess unika 'händelse-ID' till administratören för din hemserver. Om meddelanden i det här rummet är krypterade kommer din hemserveradministratör inte att kunna läsa meddelandetexten eller se några filer eller bilder."
     }
 }

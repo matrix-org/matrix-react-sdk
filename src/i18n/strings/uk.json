@@ -470,7 +470,6 @@
     "Globe": "Глобус",
     "This bridge was provisioned by <user />.": "Цей міст було забезпечено <user />.",
     "This bridge is managed by <user />.": "Цей міст керується <user />.",
-    "Show less": "Згорнути",
     "Show more": "Розгорнути",
     "Santa": "Св. Миколай",
     "Gift": "Подарунок",
@@ -502,29 +501,12 @@
     "Unable to revoke sharing for email address": "Не вдалось відкликати оприлюднювання адреси е-пошти",
     "Unable to revoke sharing for phone number": "Не вдалось відкликати оприлюднювання телефонного номеру",
     "Filter room members": "Відфільтрувати учасників кімнати",
-    "Show rooms with unread messages first": "Спочатку показувати кімнати з непрочитаними повідомленнями",
-    "Show previews of messages": "Показувати попередній перегляд повідомлень",
-    "Sort by": "Упорядкувати за",
-    "Activity": "Активністю",
-    "A-Z": "А-Я",
-    "List options": "Параметри переліку",
-    "Notification options": "Параметри сповіщень",
     "Forget Room": "Забути кімнату",
     "Favourited": "В улюблених",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s непрочитаних повідомлень включно зі згадками.",
-        "one": "1 непрочитана згадка."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s непрочитаних повідомлень.",
-        "one": "1 непрочитане повідомлення."
-    },
-    "Unread messages.": "Непрочитані повідомлення.",
     "This room is public": "Ця кімната загальнодоступна",
     "Failed to revoke invite": "Не вдалось відкликати запрошення",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Не вдалось відкликати запрошення. Сервер може мати тимчасові збої або у вас немає достатніх дозволів щоб відкликати запрошення.",
     "Revoke invite": "Відкликати запрошення",
-    "Report Content to Your Homeserver Administrator": "Поскаржитися на вміст адміністратору вашого домашнього сервера",
     "Failed to upgrade room": "Не вдалось поліпшити кімнату",
     "The room upgrade could not be completed": "Поліпшення кімнати не може бути завершене",
     "Upgrade this room to version %(version)s": "Поліпшити цю кімнату до версії %(version)s",
@@ -581,7 +563,6 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Звірте цей пристрій щоб позначити його довіреним. Довіряння цьому пристрою додає вам та іншим користувачам спокою якщо ви користуєтесь наскрізно зашифрованими повідомленнями.",
     "I don't want my encrypted messages": "Мені не потрібні мої зашифровані повідомлення",
     "You'll lose access to your encrypted messages": "Ви втратите доступ до ваших зашифрованих повідомлень",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Зі скаргою на це повідомлення буде надіслано його унікальний «ID події» адміністраторові вашого домашнього сервера. Якщо повідомлення у цій кімнаті зашифровані, то адміністратор не зможе побачити ані тексту повідомлень, ані жодних файлів чи зображень.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Бракує деяких даних сеансу, включно з ключами зашифрованих повідомлень. Вийдіть та зайдіть знову щоб виправити цю проблему, відновлюючи ключі з дубля.",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Було виявлено дані зі старої версії %(brand)s. Це призведе до збоїння наскрізного шифрування у старій версії. Наскрізно зашифровані повідомлення, що обмінювані нещодавно, під час використання старої версії, можуть бути недешифровними у цій версії. Це може призвести до збоїв повідомлень, обмінюваних також і з цією версією. У разі виникнення проблем вийдіть з програми та зайдіть знову. Задля збереження історії повідомлень експортуйте та переімпортуйте ваші ключі.",
     "Show hidden events in timeline": "Показувати приховані події у часоряді",
@@ -592,10 +573,6 @@
     "Emoji Autocomplete": "Самодоповнення емодзі",
     "The integration manager is offline or it cannot reach your homeserver.": "Менеджер інтеграцій не під'єднаний або не може зв'язатися з вашим домашнім сервером.",
     "Profile picture": "Зображення профілю",
-    "Show %(count)s more": {
-        "other": "Показати ще %(count)s",
-        "one": "Показати ще %(count)s"
-    },
     "Failed to connect to integration manager": "Не вдалось з'єднатись з менеджером інтеграцій",
     "Show image": "Показати зображення",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ви ігноруєте цього користувача, тож його повідомлення приховано. <a>Все одно показати.</a>",
@@ -998,9 +975,6 @@
     "Original event source": "Оригінальний початковий код",
     "View source": "Переглянути код",
     "Report": "Поскаржитися",
-    "Report the entire room": "Поскаржитися на всю кімнату",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Те, що пише цей користувач, неправильно.\nПро це буде повідомлено модераторам кімнати.",
-    "Please fill why you're reporting.": "Будь ласка, вкажіть, чому ви скаржитеся.",
     "Share %(name)s": "Поділитися %(name)s",
     "Share User": "Поділитися користувачем",
     "Share content": "Поділитися вмістом",
@@ -1309,9 +1283,6 @@
     "Cancel All": "Скасувати все",
     "Settings - %(spaceName)s": "Налаштування — %(spaceName)s",
     "Send Logs": "Надіслати журнали",
-    "Spam or propaganda": "Спам чи пропаганда",
-    "Illegal Content": "Протиправний вміст",
-    "Toxic Behaviour": "Токсична поведінка",
     "Email (optional)": "Е-пошта (необов'язково)",
     "Search spaces": "Пошук просторів",
     "Select spaces": "Вибрати простори",
@@ -2031,11 +2002,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Зазвичай це впливає лише на деталі опрацювання кімнати сервером. Якщо проблема полягає саме в %(brand)s, просимо повідомити нас про ваду.",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Поліпшення кімнати — серйозна операція. Її зазвичай радять, коли кімната нестабільна через вади, брак функціоналу чи вразливості безпеки.",
     "Would you like to leave the rooms in this space?": "Бажаєте вийти з кімнат у цьому просторі?",
-    "Please pick a nature and describe what makes this message abusive.": "Оберіть природу й опишіть, що образливого в цьому повідомленні.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Будь-яка інша причина. Будь ласка, опишіть проблему.\nМодератори кімнати отримають вашу скаргу.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Кімната присвячена протиправному чи токсичному вмісту або модератори не модерують такий вміст.\nАдміністрація %(homeserver)s отримає скаргу на це. Адміністрація НЕ зможе прочитати зашифрований вміст цієї кімнати.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Користувач засмічує кімнату рекламою, посиланнями на рекламу чи пропагандою.\nМодератори кімнати отримають скаргу на це.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Користувач порушує закон, наприклад зливає особисті дані людей чи погрожує насиллям.\nМодератори кімнати отримають скаргу на це й зможуть передати її правоохоронцям.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Зауважте, якщо ви не додасте пошту й забудете пароль, то можете <b>назавжди втратити доступ до свого облікового запису</b>.",
     "Continuing without email": "Продовження без е-пошти",
     "Data on this screen is shared with %(widgetDomain)s": "Дані на цьому екрані надсилаються до %(widgetDomain)s",
@@ -2185,7 +2151,6 @@
     "Search for rooms or people": "Пошук кімнат або людей",
     "Failed to load list of rooms.": "Не вдалося отримати список кімнат.",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Це групує ваші бесіди з учасниками цього простору. Вимкніть, щоб сховати ці бесіди з вашого огляду %(spaceName)s.",
-    "Disagree": "Відхилити",
     "Jump to room search": "Перейти до пошуку кімнат",
     "Search (must be enabled)": "Пошук (повинен бути увімкненим)",
     "Message downloading sleep time(ms)": "Перерва між завантаженням повідомлень (у мс)",
@@ -2462,8 +2427,6 @@
         "one": "%(count)s осіб приєдналися",
         "other": "%(count)s людей приєдналися"
     },
-    "Check if you want to hide all current and future messages from this user.": "Виберіть, чи хочете ви сховати всі поточні та майбутні повідомлення від цього користувача.",
-    "Ignore user": "Нехтувати користувача",
     "View related event": "Переглянути пов'язані події",
     "Read receipts": "Звіти про прочитання",
     "Failed to set direct message tag": "Не вдалося встановити мітку особистого повідомлення",
@@ -2793,8 +2756,6 @@
     "Loading live location…": "Завантаження місця перебування наживо…",
     "Fetching keys from server…": "Отримання ключів із сервера…",
     "Checking…": "Перевірка…",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Кімната присвячена протиправному чи токсичному вмісту або модератори не модерують такий вміст.\n Адміністрація %(homeserver)s отримає скаргу на це.",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "Користувач поводиться токсично, наприклад ображає інших користувачів, поширює дорослий вміст у сімейній кімнаті чи ще якось порушує правила цієї кімнати.\nМодератори кімнати отримають скаргу на це.",
     "Waiting for partner to confirm…": "Очікування підтвердження партнером…",
     "Adding…": "Додавання…",
     "Write something…": "Напишіть щось…",
@@ -2889,7 +2850,6 @@
     "Error while changing password: %(error)s": "Помилка зміни пароля: %(error)s",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Неможливо запросити користувача електронною поштою без сервера ідентифікації. Ви можете під'єднатися до нього в розділі «Налаштування».",
     "Failed to download source media, no source url was found": "Не вдалося завантажити початковий медіафайл, не знайдено url джерела",
-    "Unable to create room with moderation bot": "Не вдалося створити кімнату за допомогою бота-модератора",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Після того, як запрошені користувачі приєднаються до %(brand)s, ви зможете спілкуватися в бесіді, а кімната буде наскрізно зашифрована",
     "Waiting for users to join %(brand)s": "Очікування приєднання користувача до %(brand)s",
     "You do not have permission to invite users": "У вас немає дозволу запрошувати користувачів",
@@ -3151,7 +3111,16 @@
         "clear": "Очистити"
     },
     "a11y": {
-        "user_menu": "Користувацьке меню"
+        "user_menu": "Користувацьке меню",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s непрочитаних повідомлень включно зі згадками.",
+            "one": "1 непрочитана згадка."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s непрочитаних повідомлень.",
+            "one": "1 непрочитане повідомлення."
+        },
+        "unread_messages": "Непрочитані повідомлення."
     },
     "labs": {
         "video_rooms": "Відеокімнати",
@@ -4101,5 +4070,40 @@
         "sso": "Єдиний вхід",
         "reset_password_action": "Скинути пароль",
         "reset_password_title": "Скиньте свій пароль"
+    },
+    "room_list": {
+        "sort_unread_first": "Спочатку показувати кімнати з непрочитаними повідомленнями",
+        "show_previews": "Показувати попередній перегляд повідомлень",
+        "sort_by": "Упорядкувати за",
+        "sort_by_activity": "Активністю",
+        "sort_by_alphabet": "А-Я",
+        "sublist_options": "Параметри переліку",
+        "show_n_more": {
+            "other": "Показати ще %(count)s",
+            "one": "Показати ще %(count)s"
+        },
+        "show_less": "Згорнути",
+        "notification_options": "Параметри сповіщень"
+    },
+    "report_content": {
+        "missing_reason": "Будь ласка, вкажіть, чому ви скаржитеся.",
+        "unable_create_room_moderation_bot": "Не вдалося створити кімнату за допомогою бота-модератора",
+        "ignore_user": "Нехтувати користувача",
+        "hide_messages_from_user": "Виберіть, чи хочете ви сховати всі поточні та майбутні повідомлення від цього користувача.",
+        "nature_disagreement": "Те, що пише цей користувач, неправильно.\nПро це буде повідомлено модераторам кімнати.",
+        "nature_toxic": "Користувач поводиться токсично, наприклад ображає інших користувачів, поширює дорослий вміст у сімейній кімнаті чи ще якось порушує правила цієї кімнати.\nМодератори кімнати отримають скаргу на це.",
+        "nature_illegal": "Користувач порушує закон, наприклад зливає особисті дані людей чи погрожує насиллям.\nМодератори кімнати отримають скаргу на це й зможуть передати її правоохоронцям.",
+        "nature_spam": "Користувач засмічує кімнату рекламою, посиланнями на рекламу чи пропагандою.\nМодератори кімнати отримають скаргу на це.",
+        "report_to_homeserver_encrypted": "Кімната присвячена протиправному чи токсичному вмісту або модератори не модерують такий вміст.\nАдміністрація %(homeserver)s отримає скаргу на це. Адміністрація НЕ зможе прочитати зашифрований вміст цієї кімнати.",
+        "report_to_homeserver": "Кімната присвячена протиправному чи токсичному вмісту або модератори не модерують такий вміст.\n Адміністрація %(homeserver)s отримає скаргу на це.",
+        "nature_other": "Будь-яка інша причина. Будь ласка, опишіть проблему.\nМодератори кімнати отримають вашу скаргу.",
+        "nature": "Оберіть природу й опишіть, що образливого в цьому повідомленні.",
+        "disagree": "Відхилити",
+        "toxic_behaviour": "Токсична поведінка",
+        "illegal_content": "Протиправний вміст",
+        "spam_or_propaganda": "Спам чи пропаганда",
+        "report_entire_room": "Поскаржитися на всю кімнату",
+        "report_content_to_homeserver": "Поскаржитися на вміст адміністратору вашого домашнього сервера",
+        "description": "Зі скаргою на це повідомлення буде надіслано його унікальний «ID події» адміністраторові вашого домашнього сервера. Якщо повідомлення у цій кімнаті зашифровані, то адміністратор не зможе побачити ані тексту повідомлень, ані жодних файлів чи зображень."
     }
 }

@@ -753,18 +753,12 @@
     "Deactivate user": "Деактивировать пользователя",
     "Remove recent messages": "Удалить последние сообщения",
     "Italics": "Курсив",
-    "%(count)s unread messages.": {
-        "other": "%(count)s непрочитанных сообщения(-й).",
-        "one": "1 непрочитанное сообщение."
-    },
     "Show image": "Показать изображение",
     "e.g. my-room": "например, моя-комната",
     "Close dialog": "Закрыть диалог",
     "Please enter a name for the room": "Пожалуйста, введите название комнаты",
     "Hide advanced": "Скрыть дополнительные настройки",
     "Show advanced": "Показать дополнительные настройки",
-    "Please fill why you're reporting.": "Пожалуйста, заполните, почему вы сообщаете.",
-    "Report Content to Your Homeserver Administrator": "Сообщите о содержании своему администратору домашнего сервера",
     "Command Help": "Помощь команды",
     "To continue you need to accept the terms of this service.": "Для продолжения Вам необходимо принять условия данного сервиса.",
     "Document": "Документ",
@@ -774,16 +768,11 @@
     "This invite to %(roomName)s was sent to %(email)s": "Это приглашение в %(roomName)s было отправлено на %(email)s",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Используйте сервер идентификации в Настройках для получения приглашений непосредственно в %(brand)s.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Введите адрес эл.почты в Настройках, чтобы получать приглашения прямо в %(brand)s.",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s непрочитанных сообщения(-й), включая упоминания.",
-        "one": "1 непрочитанное упоминание."
-    },
     "Failed to deactivate user": "Не удалось деактивировать пользователя",
     "This client does not support end-to-end encryption.": "Этот клиент не поддерживает сквозное шифрование.",
     "Messages in this room are not end-to-end encrypted.": "Сообщения в этой комнате не защищены сквозным шифрованием.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. <default>Используйте значение по умолчанию (%(defaultIdentityServerName)s)</default> или управляйте в <settings>Настройках</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. Управление в <settings>Настройки</settings>.",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Отчет о данном сообщении отправит свой уникальный 'event ID' администратору вашего домашнего сервера. Если сообщения в этой комнате зашифрованы, администратор вашего домашнего сервера не сможет прочитать текст сообщения или просмотреть какие-либо файлы или изображения.",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Отсутствует Капча открытого ключа в конфигурации домашнего сервера. Пожалуйста, сообщите об этом администратору вашего домашнего сервера.",
     "%(creator)s created and configured the room.": "%(creator)s создал(а) и настроил(а) комнату.",
     "Explore rooms": "Обзор комнат",
@@ -796,7 +785,6 @@
     "Room %(name)s": "Комната %(name)s",
     "Jump to first unread room.": "Перейти в первую непрочитанную комнату.",
     "Jump to first invite.": "Перейти к первому приглашению.",
-    "Unread messages.": "Непрочитанные сообщения.",
     "Message Actions": "Сообщение действий",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Это действие требует по умолчанию доступа к серверу идентификации <server/> для подтверждения адреса электронной почты или номера телефона, но у сервера нет никакого пользовательского соглашения.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -836,7 +824,6 @@
     "Later": "Позже",
     "This bridge was provisioned by <user />.": "Этот мост был подготовлен пользователем <user />.",
     "This bridge is managed by <user />.": "Этот мост управляется <user />.",
-    "Show less": "Показать меньше",
     "Show more": "Показать больше",
     "Sign In or Create Account": "Войдите или создайте учётную запись",
     "Use your account or create a new one to continue.": "Воспользуйтесь своей учётной записью или создайте новую, чтобы продолжить.",
@@ -1034,17 +1021,6 @@
     "Please verify the room ID or address and try again.": "Проверьте ID комнаты или адрес и попробуйте снова.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Администратор вашего сервера отключил сквозное шифрование по умолчанию в приватных комнатах и диалогах.",
     "Explore Public Rooms": "Просмотреть публичные комнаты",
-    "Show rooms with unread messages first": "Комнаты с непрочитанными сообщениями в начале",
-    "Show previews of messages": "Показывать последнее сообщение",
-    "Sort by": "Сортировать",
-    "Activity": "По активности",
-    "A-Z": "А-Я",
-    "List options": "Настройки списка",
-    "Show %(count)s more": {
-        "other": "Показать ещё %(count)s",
-        "one": "Показать ещё %(count)s"
-    },
-    "Notification options": "Настройки уведомлений",
     "Favourited": "В избранном",
     "Room options": "Настройки комнаты",
     "Welcome to %(appName)s": "Добро пожаловать в %(appName)s",
@@ -1802,17 +1778,6 @@
     "Reset event store?": "Сбросить хранилище событий?",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>При обновлении будет создана новая версия комнаты</b>. Все текущие сообщения останутся в этой архивной комнате.",
     "Automatically invite members from this room to the new one": "Автоматическое приглашение участников из этой комнаты в новую комнату",
-    "Report the entire room": "Сообщить обо всей комнате",
-    "Spam or propaganda": "Спам или пропаганда",
-    "Illegal Content": "Незаконный контент",
-    "Toxic Behaviour": "Токсичное поведение",
-    "Disagree": "Не согласен",
-    "Please pick a nature and describe what makes this message abusive.": "Пожалуйста, выберите характер и опишите, что делает это сообщение оскорбительным.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Любая другая причина. Пожалуйста, опишите проблему.\nОб этом будет сообщено модераторам комнаты.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Эта комната посвящена незаконному или токсичному контенту, или модераторы не справляются с модерацией незаконного или токсичного контента.\nОб этом будет сообщено администраторам %(homeserver)s. Администраторы НЕ смогут прочитать зашифрованное содержимое этой комнаты.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Этот пользователь спамит комнату рекламой, ссылками на рекламу или пропагандой.\nОб этом будет сообщено модераторам комнаты.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Этот пользователь демонстрирует незаконное поведение, например, домогается до людей или угрожает насилием.\nОб этом будет сообщено модераторам комнаты, которые могут передать дело в юридические органы.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "То, что пишет этот пользователь, неправильно.\nОб этом будет сообщено модераторам комнаты.",
     "These are likely ones other room admins are a part of.": "Это, скорее всего, те, в которых участвуют другие администраторы комнат.",
     "Other spaces or rooms you might not know": "Другие пространства или комнаты, которые вы могли не знать",
     "Spaces you know that contain this room": "Пространства, которые вы знаете, уже содержат эту комнату",
@@ -2428,8 +2393,6 @@
         "one": "%(count)s участник",
         "other": "%(count)s участников"
     },
-    "Check if you want to hide all current and future messages from this user.": "Выберите, хотите ли вы скрыть все текущие и будущие сообщения от этого пользователя.",
-    "Ignore user": "Игнорировать пользователя",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "При выходе эти ключи будут удалены с данного устройства и вы больше не сможете прочитать зашифрованные сообщения, если у вас нет ключей для них на других устройствах или резервной копии на сервере.",
     "Open room": "Открыть комнату",
     "Hide my messages from new joiners": "Скрыть мои сообщения от новых участников",
@@ -2908,7 +2871,16 @@
         "clear": "Очистить"
     },
     "a11y": {
-        "user_menu": "Меню пользователя"
+        "user_menu": "Меню пользователя",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s непрочитанных сообщения(-й), включая упоминания.",
+            "one": "1 непрочитанное упоминание."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s непрочитанных сообщения(-й).",
+            "one": "1 непрочитанное сообщение."
+        },
+        "unread_messages": "Непрочитанные сообщения."
     },
     "labs": {
         "video_rooms": "Видеокомнаты",
@@ -3788,5 +3760,37 @@
         "continue_with_idp": "Продолжить с %(provider)s",
         "sign_in_with_sso": "Войти в систему с помощью единой точки входа",
         "sso": "Единая точка входа"
+    },
+    "room_list": {
+        "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",
+        "show_previews": "Показывать последнее сообщение",
+        "sort_by": "Сортировать",
+        "sort_by_activity": "По активности",
+        "sort_by_alphabet": "А-Я",
+        "sublist_options": "Настройки списка",
+        "show_n_more": {
+            "other": "Показать ещё %(count)s",
+            "one": "Показать ещё %(count)s"
+        },
+        "show_less": "Показать меньше",
+        "notification_options": "Настройки уведомлений"
+    },
+    "report_content": {
+        "missing_reason": "Пожалуйста, заполните, почему вы сообщаете.",
+        "ignore_user": "Игнорировать пользователя",
+        "hide_messages_from_user": "Выберите, хотите ли вы скрыть все текущие и будущие сообщения от этого пользователя.",
+        "nature_disagreement": "То, что пишет этот пользователь, неправильно.\nОб этом будет сообщено модераторам комнаты.",
+        "nature_illegal": "Этот пользователь демонстрирует незаконное поведение, например, домогается до людей или угрожает насилием.\nОб этом будет сообщено модераторам комнаты, которые могут передать дело в юридические органы.",
+        "nature_spam": "Этот пользователь спамит комнату рекламой, ссылками на рекламу или пропагандой.\nОб этом будет сообщено модераторам комнаты.",
+        "report_to_homeserver_encrypted": "Эта комната посвящена незаконному или токсичному контенту, или модераторы не справляются с модерацией незаконного или токсичного контента.\nОб этом будет сообщено администраторам %(homeserver)s. Администраторы НЕ смогут прочитать зашифрованное содержимое этой комнаты.",
+        "nature_other": "Любая другая причина. Пожалуйста, опишите проблему.\nОб этом будет сообщено модераторам комнаты.",
+        "nature": "Пожалуйста, выберите характер и опишите, что делает это сообщение оскорбительным.",
+        "disagree": "Не согласен",
+        "toxic_behaviour": "Токсичное поведение",
+        "illegal_content": "Незаконный контент",
+        "spam_or_propaganda": "Спам или пропаганда",
+        "report_entire_room": "Сообщить обо всей комнате",
+        "report_content_to_homeserver": "Сообщите о содержании своему администратору домашнего сервера",
+        "description": "Отчет о данном сообщении отправит свой уникальный 'event ID' администратору вашего домашнего сервера. Если сообщения в этой комнате зашифрованы, администратор вашего домашнего сервера не сможет прочитать текст сообщения или просмотреть какие-либо файлы или изображения."
     }
 }

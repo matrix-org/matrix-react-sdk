@@ -694,9 +694,6 @@
     "Show advanced": "Zobrazit pokročilé možnosti",
     "Your homeserver doesn't seem to support this feature.": "Váš domovský server asi tuto funkci nepodporuje.",
     "Message edits": "Úpravy zpráv",
-    "Please fill why you're reporting.": "Vyplňte prosím co chcete nahlásit.",
-    "Report Content to Your Homeserver Administrator": "Nahlásit obsah správci vašeho domovského serveru",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Nahlášení této zprávy pošle její jedinečné 'event ID' správci vašeho domovského serveru. Pokud jsou zprávy šifrované, správce nebude mít možnost přečíst text zprávy ani se podívat na soubory nebo obrázky.",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Aktualizace této místnosti vyžaduje uzavření stávající místnosti a vytvoření nové místnosti, která ji nahradí. Pro usnadnění procesu pro členy místnosti, provedeme:",
     "Command Help": "Nápověda příkazu",
     "Find others by phone or email": "Najít ostatní pomocí e-mailu nebo telefonu",
@@ -750,15 +747,6 @@
     "This invite to %(roomName)s was sent to %(email)s": "Pozvánka do %(roomName)s byla odeslána na adresu %(email)s",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Používat server identit z nastavení k přijímání pozvánek přímo v %(brand)su.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Sdílet tento e-mail v nastavení, abyste mohli dostávat pozvánky přímo v %(brand)su.",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s nepřečtených zpráv a zmínek.",
-        "one": "Nepřečtená zmínka."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s nepřečtených zpráv.",
-        "one": "Nepřečtená zpráva."
-    },
-    "Unread messages.": "Nepřečtené zprávy.",
     "Failed to deactivate user": "Deaktivace uživatele se nezdařila",
     "This client does not support end-to-end encryption.": "Tento klient nepodporuje koncové šifrování.",
     "Messages in this room are not end-to-end encrypted.": "Zprávy nejsou koncově šifrované.",
@@ -889,7 +877,6 @@
     "Later": "Později",
     "This bridge was provisioned by <user />.": "Toto propojení poskytuje <user />.",
     "This bridge is managed by <user />.": "Toto propojení spravuje <user />.",
-    "Show less": "Zobrazit méně",
     "Show more": "Více",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Váš účet má v bezpečném úložišti identitu pro křížový podpis, ale v této relaci jí zatím nevěříte.",
     "Cross-signing public keys:": "Veřejné klíče pro křížový podpis:",
@@ -1067,17 +1054,6 @@
     "Contact your <a>server admin</a>.": "Kontaktujte <a>administrátora serveru</a>.",
     "Ok": "Ok",
     "Are you sure you want to cancel entering passphrase?": "Chcete určitě zrušit zadávání přístupové fráze?",
-    "Show rooms with unread messages first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",
-    "Show previews of messages": "Zobrazovat náhledy zpráv",
-    "Sort by": "Řadit dle",
-    "Activity": "Aktivity",
-    "A-Z": "A–Z",
-    "List options": "Možnosti seznamu",
-    "Show %(count)s more": {
-        "other": "Zobrazit %(count)s dalších",
-        "one": "Zobrazit %(count)s další"
-    },
-    "Notification options": "Možnosti oznámení",
     "Favourited": "Oblíbená",
     "Forget Room": "Zapomenout místnost",
     "Room options": "Možnosti místnosti",
@@ -1839,17 +1815,6 @@
     "Show preview": "Zobrazit náhled",
     "View source": "Zobrazit zdroj",
     "Settings - %(spaceName)s": "Nastavení - %(spaceName)s",
-    "Report the entire room": "Nahlásit celou místnost",
-    "Spam or propaganda": "Spam nebo propaganda",
-    "Illegal Content": "Nelegální obsah",
-    "Toxic Behaviour": "Nevhodné chování",
-    "Disagree": "Nesouhlasím",
-    "Please pick a nature and describe what makes this message abusive.": "Vyberte prosím charakter zprávy a popište, v čem je tato zpráva zneužitelná.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Jakýkoli jiný důvod. Popište problém.\nTento problém bude nahlášen moderátorům místnosti.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Tato místnost je věnována nelegálnímu a nevhodnému obsahu nebo moderátoři nedokáží nelegální a nevhodný obsah moderovat.\nTata skutečnost bude nahlášena správcům %(homeserver)s. Správci NEBUDOU moci číst zašifrovaný obsah této místnosti.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Tento uživatel spamuje místnost reklamami, odkazy na reklamy nebo propagandou.\nTato skutečnost bude nahlášena moderátorům místnosti.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Tento uživatel se chová nezákonně, například zveřejňuje osobní údaje o cizích lidech nebo vyhrožuje násilím.\nTato skutečnost bude nahlášena moderátorům místnosti, kteří to mohou předat právním orgánům.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "To, co tento uživatel píše, je špatné.\nTato skutečnost bude nahlášena moderátorům místnosti.",
     "Please provide an address": "Uveďte prosím adresu",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inicializace vyhledávání zpráv se nezdařila, zkontrolujte <a>svá nastavení</a>",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Nastavte adresy pro tento prostor, aby jej uživatelé mohli najít prostřednictvím domovského serveru (%(localDomain)s)",
@@ -2462,8 +2427,6 @@
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Pro vytvoření účtu, otevřete odkaz v e-mailu, který jsme právě zaslali na adresu %(emailAddress)s.",
     "Unread email icon": "Ikona nepřečteného e-mailu",
     "Check your email to continue": "Zkontrolujte svůj e-mail a pokračujte",
-    "Check if you want to hide all current and future messages from this user.": "Zaškrtněte, pokud chcete skrýt všechny aktuální a budoucí zprávy od tohoto uživatele.",
-    "Ignore user": "Ignorovat uživatele",
     "View related event": "Zobrazit související událost",
     "Read receipts": "Potvrzení o přečtení",
     "Failed to set direct message tag": "Nepodařilo se nastavit značku přímé zprávy",
@@ -2791,8 +2754,6 @@
     "Loading live location…": "Načítání polohy živě…",
     "Fetching keys from server…": "Načítání klíčů ze serveru…",
     "Checking…": "Kontrola…",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Tato místnost je věnována nelegálnímu a nevhodnému obsahu nebo moderátoři nedokáží nelegální a nevhodný obsah moderovat.\nTato skutečnost bude nahlášena správcům %(homeserver)s.",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "Tento uživatel se chová nevhodně, například uráží ostatní uživatele, sdílí obsah určený pouze pro dospělé v místnosti určené pro rodiny s dětmi nebo jinak porušuje pravidla této místnosti.\nTato skutečnost bude nahlášena moderátorům místnosti.",
     "Waiting for partner to confirm…": "Čekání na potvrzení partnerem…",
     "Joining room…": "Vstupování do místnosti…",
     "Joining space…": "Připojování k prostoru…",
@@ -2888,7 +2849,6 @@
     "Search all rooms": "Vyhledávat ve všech místnostech",
     "Search this room": "Vyhledávat v této místnosti",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Bez serveru identit nelze uživatele pozvat e-mailem. K nějakému se můžete připojit v \"Nastavení\".",
-    "Unable to create room with moderation bot": "Nelze vytvořit místnost s moderačním botem",
     "Failed to download source media, no source url was found": "Nepodařilo se stáhnout zdrojové médium, nebyla nalezena žádná zdrojová url adresa",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Jakmile se pozvaní uživatelé připojí k %(brand)s, budete moci chatovat a místnost bude koncově šifrovaná",
     "Waiting for users to join %(brand)s": "Čekání na připojení uživatelů k %(brand)s",
@@ -3156,7 +3116,16 @@
         "clear": "Smazat"
     },
     "a11y": {
-        "user_menu": "Uživatelská nabídka"
+        "user_menu": "Uživatelská nabídka",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s nepřečtených zpráv a zmínek.",
+            "one": "Nepřečtená zmínka."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s nepřečtených zpráv.",
+            "one": "Nepřečtená zpráva."
+        },
+        "unread_messages": "Nepřečtené zprávy."
     },
     "labs": {
         "video_rooms": "Video místnosti",
@@ -4106,5 +4075,40 @@
         "sso": "Jednotné přihlášení",
         "reset_password_action": "Obnovit heslo",
         "reset_password_title": "Obnovení vašeho hesla"
+    },
+    "room_list": {
+        "sort_unread_first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",
+        "show_previews": "Zobrazovat náhledy zpráv",
+        "sort_by": "Řadit dle",
+        "sort_by_activity": "Aktivity",
+        "sort_by_alphabet": "A–Z",
+        "sublist_options": "Možnosti seznamu",
+        "show_n_more": {
+            "other": "Zobrazit %(count)s dalších",
+            "one": "Zobrazit %(count)s další"
+        },
+        "show_less": "Zobrazit méně",
+        "notification_options": "Možnosti oznámení"
+    },
+    "report_content": {
+        "missing_reason": "Vyplňte prosím co chcete nahlásit.",
+        "unable_create_room_moderation_bot": "Nelze vytvořit místnost s moderačním botem",
+        "ignore_user": "Ignorovat uživatele",
+        "hide_messages_from_user": "Zaškrtněte, pokud chcete skrýt všechny aktuální a budoucí zprávy od tohoto uživatele.",
+        "nature_disagreement": "To, co tento uživatel píše, je špatné.\nTato skutečnost bude nahlášena moderátorům místnosti.",
+        "nature_toxic": "Tento uživatel se chová nevhodně, například uráží ostatní uživatele, sdílí obsah určený pouze pro dospělé v místnosti určené pro rodiny s dětmi nebo jinak porušuje pravidla této místnosti.\nTato skutečnost bude nahlášena moderátorům místnosti.",
+        "nature_illegal": "Tento uživatel se chová nezákonně, například zveřejňuje osobní údaje o cizích lidech nebo vyhrožuje násilím.\nTato skutečnost bude nahlášena moderátorům místnosti, kteří to mohou předat právním orgánům.",
+        "nature_spam": "Tento uživatel spamuje místnost reklamami, odkazy na reklamy nebo propagandou.\nTato skutečnost bude nahlášena moderátorům místnosti.",
+        "report_to_homeserver_encrypted": "Tato místnost je věnována nelegálnímu a nevhodnému obsahu nebo moderátoři nedokáží nelegální a nevhodný obsah moderovat.\nTata skutečnost bude nahlášena správcům %(homeserver)s. Správci NEBUDOU moci číst zašifrovaný obsah této místnosti.",
+        "report_to_homeserver": "Tato místnost je věnována nelegálnímu a nevhodnému obsahu nebo moderátoři nedokáží nelegální a nevhodný obsah moderovat.\nTato skutečnost bude nahlášena správcům %(homeserver)s.",
+        "nature_other": "Jakýkoli jiný důvod. Popište problém.\nTento problém bude nahlášen moderátorům místnosti.",
+        "nature": "Vyberte prosím charakter zprávy a popište, v čem je tato zpráva zneužitelná.",
+        "disagree": "Nesouhlasím",
+        "toxic_behaviour": "Nevhodné chování",
+        "illegal_content": "Nelegální obsah",
+        "spam_or_propaganda": "Spam nebo propaganda",
+        "report_entire_room": "Nahlásit celou místnost",
+        "report_content_to_homeserver": "Nahlásit obsah správci vašeho domovského serveru",
+        "description": "Nahlášení této zprávy pošle její jedinečné 'event ID' správci vašeho domovského serveru. Pokud jsou zprávy šifrované, správce nebude mít možnost přečíst text zprávy ani se podívat na soubory nebo obrázky."
     }
 }

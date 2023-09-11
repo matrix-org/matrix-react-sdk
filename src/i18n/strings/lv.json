@@ -336,13 +336,7 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Izmantojiet <a>lietotni</a>, lai veiktu šifrētu ziņu meklēšanu",
     "%(creator)s created this DM.": "%(creator)s uzsāka šo tiešo saraksti.",
     "None": "Neviena",
-    "Notification options": "Paziņojumu opcijas",
     "Room options": "Istabas opcijas",
-    "Show previews of messages": "Rādīt ziņu priekšskatījumus",
-    "Show rooms with unread messages first": "Rādīt istabas ar nelasītām ziņām augšpusē",
-    "Activity": "Aktivitātes",
-    "Sort by": "Kārtot pēc",
-    "List options": "Saraksta opcijas",
     "Send feedback": "Nosūtīt atsauksmi",
     "Feedback sent": "Atsauksme nosūtīta",
     "Feedback": "Atsauksmes",
@@ -470,12 +464,7 @@
     "Published Addresses": "Publiskotās adreses",
     "Other published addresses:": "Citas publiskotās adreses:",
     "This address is already in use": "Šī adrese jau tiek izmantota",
-    "Show less": "Rādīt mazāk",
     "Show more": "Rādīt vairāk",
-    "Show %(count)s more": {
-        "one": "Rādīt vēl %(count)s",
-        "other": "Rādīt vēl %(count)s"
-    },
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Notikusi kļūda, mēģinot atjaunināt istabas galveno adresi. Iespējams, tas ir liegts servera iestatījumos vai arī notikusi kāda pagaidu kļūme.",
     "Error updating main address": "Kļūda galvenās adreses atjaunināšanā",
     "This address is available to use": "Šī adrese ir pieejama",
@@ -667,15 +656,6 @@
     "Demote": "Pazemināt",
     "Demote yourself?": "Pazemināt sevi?",
     "Accepting…": "Akceptē…",
-    "%(count)s unread messages.": {
-        "one": "1 nelasīta ziņa.",
-        "other": "%(count)s nelasītas ziņas."
-    },
-    "%(count)s unread messages including mentions.": {
-        "one": "1 neslasīts pieminējums.",
-        "other": "%(count)s nelasītas ziņas, ieskaitot pieminēšanu."
-    },
-    "A-Z": "A-Ž",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s priekšskatījums nav pieejams. Vai vēlaties tai pievienoties?",
     "Empty room": "Tukša istaba",
     "Add existing room": "Pievienot eksistējošu istabu",
@@ -1096,7 +1076,6 @@
     "Unexpected error resolving identity server configuration": "Negaidīta kļūda identitātes servera konfigurācijā",
     "Unexpected error resolving homeserver configuration": "Negaidīta kļūme bāzes servera konfigurācijā",
     "Cancel All": "Atcelt visu",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Iesniedzot ziņojumu par konkrēto ziņu, tās unikālais notikuma ID tiks nosūtīts jūsu bāzes servera administratoram. Ja ziņas šajā istabā ir šifrētas, jūsu bāzes servera administrators nevarēs lasīt ziņas tekstu vai skatīt failus un attēlus.",
     "Sending": "Sūta",
     "Can't load this message": "Nevar ielādēt šo ziņu",
     "Send voice message": "Sūtīt balss ziņu",
@@ -1109,8 +1088,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Aizmirsāt vai pazaudējāt visas atkopšanās iespējas? <a>Atiestatiet visu</a>",
     "Link to most recent message": "Saite uz jaunāko ziņu",
     "Share Room": "Dalīties ar istabu",
-    "Report Content to Your Homeserver Administrator": "Ziņojums par saturu bāzes servera administratoram",
-    "Report the entire room": "Ziņot par visu istabu",
     "Leave all rooms": "Pamest visas istabas",
     "Invited people will be able to read old messages.": "Uzaicinātie cilvēki varēs lasīt vecās ziņas.",
     "Or send invite link": "Vai nosūtiet uzaicinājuma saiti",
@@ -1443,7 +1420,15 @@
         "clear": "Notīrīt"
     },
     "a11y": {
-        "user_menu": "Lietotāja izvēlne"
+        "user_menu": "Lietotāja izvēlne",
+        "n_unread_messages_mentions": {
+            "one": "1 neslasīts pieminējums.",
+            "other": "%(count)s nelasītas ziņas, ieskaitot pieminēšanu."
+        },
+        "n_unread_messages": {
+            "one": "1 nelasīta ziņa.",
+            "other": "%(count)s nelasītas ziņas."
+        }
     },
     "labs": {
         "pinning": "Ziņu piespraušana",
@@ -1936,5 +1921,24 @@
     "auth": {
         "continue_with_idp": "Turpināt ar %(provider)s",
         "sso": "Vienotā pieteikšanās"
+    },
+    "room_list": {
+        "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",
+        "show_previews": "Rādīt ziņu priekšskatījumus",
+        "sort_by": "Kārtot pēc",
+        "sort_by_activity": "Aktivitātes",
+        "sort_by_alphabet": "A-Ž",
+        "sublist_options": "Saraksta opcijas",
+        "show_n_more": {
+            "one": "Rādīt vēl %(count)s",
+            "other": "Rādīt vēl %(count)s"
+        },
+        "show_less": "Rādīt mazāk",
+        "notification_options": "Paziņojumu opcijas"
+    },
+    "report_content": {
+        "report_entire_room": "Ziņot par visu istabu",
+        "report_content_to_homeserver": "Ziņojums par saturu bāzes servera administratoram",
+        "description": "Iesniedzot ziņojumu par konkrēto ziņu, tās unikālais notikuma ID tiks nosūtīts jūsu bāzes servera administratoram. Ja ziņas šajā istabā ir šifrētas, jūsu bāzes servera administrators nevarēs lasīt ziņas tekstu vai skatīt failus un attēlus."
     }
 }

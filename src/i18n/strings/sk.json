@@ -707,7 +707,6 @@
     "This bridge was provisioned by <user />.": "Toto premostenie poskytuje <user />.",
     "Joins room with given address": "Pridať sa do miestnosti s danou adresou",
     "This bridge is managed by <user />.": "Toto premostenie spravuje <user />.",
-    "Show less": "Zobraziť menej",
     "Show more": "Zobraziť viac",
     "well formed": "správne vytvorené",
     "unexpected type": "neočakávaný typ",
@@ -804,7 +803,6 @@
     "Discovery options will appear once you have added an email above.": "Možnosti nastavenia verejného profilu sa objavia po pridaní e-mailovej adresy vyššie.",
     "Discovery options will appear once you have added a phone number above.": "Možnosti nastavenia verejného profilu sa objavia po pridaní telefónneho čísla vyššie.",
     "No recently visited rooms": "Žiadne nedávno navštívené miestnosti",
-    "Show rooms with unread messages first": "Najprv ukázať miestnosti s neprečítanými správami",
     "All rooms": "Všetky miestnosti",
     "Hide advanced": "Skryť pokročilé možnosti",
     "Show advanced": "Ukázať pokročilé možnosti",
@@ -1113,17 +1111,11 @@
     },
     "Spaces with access": "Priestory s prístupom",
     "Spaces": "Priestory",
-    "Notification options": "Možnosti oznámenia",
     "Enable desktop notifications": "Povoliť oznámenia na ploche",
-    "List options": "Možnosti zoznamu",
     "You sent a verification request": "Odoslali ste žiadosť o overenie",
     "Remove %(count)s messages": {
         "other": "Odstrániť %(count)s správ",
         "one": "Odstrániť 1 správu"
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s neprečítaných správ.",
-        "one": "1 neprečítaná správa."
     },
     "Create a new space": "Vytvoriť nový priestor",
     "Create a space": "Vytvoriť priestor",
@@ -1170,9 +1162,6 @@
     "Your public space": "Váš verejný priestor",
     "Share your public space": "Zdieľajte svoj verejný priestor",
     "Rooms and spaces": "Miestnosti a priestory",
-    "Show previews of messages": "Zobraziť náhľady správ",
-    "Activity": "Aktivity",
-    "Sort by": "Zoradiť podľa",
     "Your access token gives full access to your account. Do not share it with anyone.": "Váš prístupový token poskytuje úplný prístup k vášmu účtu. S nikým ho nezdieľajte.",
     "You have no ignored users.": "Nemáte žiadnych ignorovaných používateľov.",
     "Some suggestions may be hidden for privacy.": "Niektoré návrhy môžu byť skryté kvôli ochrane súkromia.",
@@ -1220,7 +1209,6 @@
     "Verification Request": "Žiadosť o overenie",
     "Widget ID": "ID widgetu",
     "Room ID": "ID miestnosti",
-    "Unread messages.": "Neprečítané správy.",
     "Room %(name)s": "Miestnosť %(name)s",
     "Show image": "Zobraziť obrázok",
     "Topic (optional)": "Téma (voliteľné)",
@@ -1253,7 +1241,6 @@
     "Avatar": "Obrázok",
     "Suggested": "Navrhované",
     "Comment": "Komentár",
-    "A-Z": "A-Z",
     "Calls": "Hovory",
     "Navigation": "Navigácia",
     "Accepting…": "Akceptovanie…",
@@ -1382,8 +1369,6 @@
     "Use the <a>Desktop app</a> to see all encrypted files": "Použite <a>desktopovú aplikáciu</a> na zobrazenie všetkých zašifrovaných súborov",
     "Files": "Súbory",
     "Report": "Nahlásiť",
-    "Report Content to Your Homeserver Administrator": "Nahlásenie obsahu správcovi domovského serveru",
-    "Report the entire room": "Nahlásiť celú miestnosť",
     "e.g. my-space": "napr. moj-priestor",
     "not ready": "nie je pripravené",
     "ready": "pripravené",
@@ -1419,10 +1404,6 @@
     "Edited at %(date)s": "Upravené %(date)s",
     "Confirm Security Phrase": "Potvrdiť bezpečnostnú frázu",
     "Upgrade your encryption": "Aktualizujte svoje šifrovanie",
-    "Show %(count)s more": {
-        "one": "Zobraziť %(count)s viac",
-        "other": "Zobraziť %(count)s viac"
-    },
     "Error removing address": "Chyba pri odstraňovaní adresy",
     "Error creating address": "Chyba pri vytváraní adresy",
     "Upload a file": "Nahrať súbor",
@@ -1444,10 +1425,6 @@
     "Your user ID": "Vaše ID používateľa",
     "Your display name": "Vaše zobrazované meno",
     "You verified %(name)s": "Overili ste používateľa %(name)s",
-    "%(count)s unread messages including mentions.": {
-        "one": "1 neprečítaná zmienka.",
-        "other": "%(count)s neprečítaných správ vrátane zmienok."
-    },
     "Terms of Service": "Podmienky poskytovania služby",
     "Clear all data": "Vymazať všetky údaje",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reagoval %(shortName)s</reactedWith>",
@@ -1483,7 +1460,6 @@
     "Search %(spaceName)s": "Hľadať %(spaceName)s",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Používanie tohto widgetu môže zdieľať údaje <helpIcon /> s %(widgetDomain)s.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Používanie tohto widgetu môže zdieľať údaje <helpIcon /> s %(widgetDomain)s a správcom integrácie.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Táto miestnosť je venovaná nelegálnemu alebo toxickému obsahu alebo moderátori nedokážu moderovať nelegálny alebo toxický obsah.\nToto bude nahlásené správcom %(homeserver)s. Správcovia NEBUDÚ môcť čítať zašifrovaný obsah tejto miestnosti.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Overte toto zariadenie a označte ho ako dôveryhodné. Dôveryhodnosť tohto zariadenia poskytuje vám a ostatným používateľom väčší pokoj pri používaní end-to-end šifrovaných správ.",
     "Use the <a>Desktop app</a> to search encrypted messages": "Použite <a>Desktop aplikáciu</a> na vyhľadávanie zašifrovaných správ",
     "Not encrypted": "Nie je zašifrované",
@@ -1576,7 +1552,6 @@
     "Are you sure you want to leave the space '%(spaceName)s'?": "Ste si istí, že chcete opustiť priestor '%(spaceName)s'?",
     "Approve widget permissions": "Schváliť oprávnenia widgetu",
     "Application window": "Okno aplikácie",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Akýkoľvek iný dôvod. Opíšte problém.\nTento problém bude nahlásený moderátorom miestnosti.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Ktokoľvek bude môcť nájsť tento priestor a pripojiť sa k nemu, nielen členovia <SpaceName/>.",
     "Any of the following data may be shared:": "Zdieľané môžu byť niektoré z nasledujúcich údajov:",
     "An unknown error occurred": "Vyskytla sa neznáma chyba",
@@ -1652,7 +1627,6 @@
     "Collapse room list section": "Zbaliť sekciu zoznamu miestností",
     "Dismiss read marker and jump to bottom": "Zrušiť značku čítania a prejsť na spodok",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Táto relácia zistila, že vaša bezpečnostná fráza a kľúč pre zabezpečené správy boli odstránené.",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Nahlásenie tejto správy odošle jej jedinečné \"ID udalosti\" správcovi vášho domovského servera. Ak sú správy v tejto miestnosti zašifrované, správca domovského servera nebude môcť prečítať text správy ani zobraziť žiadne súbory alebo obrázky.",
     "Original event source": "Pôvodný zdroj udalosti",
     "Decrypted event source": "Zdroj dešifrovanej udalosti",
     "Question or topic": "Otázka alebo téma",
@@ -1707,7 +1681,6 @@
     "Share content": "Zdieľať obsah",
     "Call back": "Zavolať späť",
     "Connection failed": "Pripojenie zlyhalo",
-    "Illegal Content": "Nelegálny obsah",
     "Pinned messages": "Pripnuté správy",
     "Use app": "Použiť aplikáciu",
     "Remember this": "Zapamätať si toto",
@@ -1726,7 +1699,6 @@
     "Country Dropdown": "Rozbaľovacie okno krajiny",
     "%(name)s accepted": "%(name)s prijal",
     "Forget": "Zabudnúť",
-    "Disagree": "Nesúhlasím",
     "Want to add a new room instead?": "Chcete namiesto toho pridať novú miestnosť?",
     "No microphone found": "Nenašiel sa žiadny mikrofón",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Nepodarilo sa nám získať prístup k vášmu mikrofónu. Skontrolujte prosím nastavenia prehliadača a skúste to znova.",
@@ -2120,8 +2092,6 @@
     "No active call in this room": "V tejto miestnosti nie je aktívny žiadny hovor",
     "Remove, ban, or invite people to your active room, and make you leave": "Odstráňte, zakážte alebo pozvite ľudí do svojej aktívnej miestnosti and make you leave",
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Ak to teraz zrušíte, môžete prísť o zašifrované správy a údaje, ak stratíte prístup k svojim prihlasovacím údajom.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "To, čo tento používateľ napísal, je nesprávne.\nBude to nahlásené moderátorom miestnosti.",
-    "Please fill why you're reporting.": "Vyplňte prosím, prečo podávate hlásenie.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Len upozorňujeme, že ak si nepridáte e-mail a zabudnete heslo, môžete <b>navždy stratiť prístup k svojmu účtu</b>.",
     "Data on this screen is shared with %(widgetDomain)s": "Údaje na tejto obrazovke sú zdieľané s %(widgetDomain)s",
     "If they don't match, the security of your communication may be compromised.": "Ak sa nezhodujú, môže byť ohrozená bezpečnosť vašej komunikácie.",
@@ -2176,7 +2146,6 @@
     "A browser extension is preventing the request.": "Požiadavke bráni rozšírenie prehliadača.",
     "The server (%(serverName)s) took too long to respond.": "Serveru (%(serverName)s) trvalo príliš dlho, kým odpovedal.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Váš server neodpovedá na niektoré vaše požiadavky. Nižšie sú uvedené niektoré z najpravdepodobnejších dôvodov.",
-    "Spam or propaganda": "Spam alebo propaganda",
     "Unable to validate homeserver": "Nie je možné overiť domovský server",
     "Your server does not support showing space hierarchies.": "Váš server nepodporuje zobrazovanie hierarchií priestoru.",
     "Failed to remove some rooms. Try again later": "Nepodarilo sa odstrániť niektoré miestnosti. Skúste to neskôr",
@@ -2205,10 +2174,6 @@
     "Ban from %(roomName)s": "Zakázať vstup do %(roomName)s",
     "Decide where your account is hosted": "Rozhodnite sa, kde bude váš účet hostovaný",
     "Select a room below first": "Najskôr vyberte miestnosť nižšie",
-    "Toxic Behaviour": "Nebezpečné správanie",
-    "Please pick a nature and describe what makes this message abusive.": "Prosím, vyberte charakter a popíšte, čo robí túto správu obťažujúcou.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Tento používateľ spamuje miestnosť reklamami, odkazmi na reklamy alebo propagandou.\nToto bude nahlásené moderátorom miestnosti.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Tento používateľ prejavuje protiprávne správanie, napríklad zverejňuje doxing (citlivé informácie o ľudoch) alebo sa vyhráža násilím.\nToto bude nahlásené moderátorom miestnosti, ktorí to môžu postúpiť právnym orgánom.",
     "Open user settings": "Otvoriť používateľské nastavenia",
     "Switch to space by number": "Prepnúť do priestoru podľa čísla",
     "Proceed with reset": "Pokračovať v obnovení",
@@ -2462,8 +2427,6 @@
         "one": "%(count)s človek sa pripojil",
         "other": "%(count)s ľudí sa pripojilo"
     },
-    "Check if you want to hide all current and future messages from this user.": "Označte, či chcete skryť všetky aktuálne a budúce správy od tohto používateľa.",
-    "Ignore user": "Ignorovať používateľa",
     "View related event": "Zobraziť súvisiacu udalosť",
     "Read receipts": "Potvrdenia o prečítaní",
     "Failed to set direct message tag": "Nepodarilo sa nastaviť značku priamej správy",
@@ -2789,8 +2752,6 @@
     "There are no active polls in this room": "V tejto miestnosti nie sú žiadne aktívne ankety",
     "Fetching keys from server…": "Získavanie kľúčov zo servera…",
     "Checking…": "Kontrolovanie…",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Táto miestnosť je venovaná nelegálnemu alebo nebezpečnému obsahu alebo moderátori nezvládajú moderovať nelegálny alebo nebezpečný obsah.\n Toto bude nahlásené správcom %(homeserver)s.",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "Tento používateľ prejavuje nepriateľské správanie, napríklad uráža ostatných používateľov alebo zdieľa obsah určený len pre dospelých v miestnosti určenej pre rodiny alebo inak porušuje pravidlá tejto miestnosti.\nToto bude nahlásené moderátorom miestnosti.",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Ak to chcete urobiť, povoľte v Nastaveniach položku \"%(manageIntegrations)s\".",
     "Waiting for partner to confirm…": "Čakanie na potvrdenie od partnera…",
     "Adding…": "Pridávanie…",
@@ -2888,7 +2849,6 @@
     "Unknown password change error (%(stringifiedError)s)": "Neznáma chyba pri zmene hesla (%(stringifiedError)s)",
     "Error while changing password: %(error)s": "Chyba pri zmene hesla: %(error)s",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Nie je možné pozvať používateľa e-mailom bez servera totožnosti. Môžete sa k nemu pripojiť v časti \"Nastavenia\".",
-    "Unable to create room with moderation bot": "Nie je možné vytvoriť miestnosť pomocou moderačného bota",
     "Failed to download source media, no source url was found": "Nepodarilo sa stiahnuť zdrojové médium, nebola nájdená žiadna zdrojová url adresa",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Keď sa pozvaní používatelia pripoja k aplikácii %(brand)s, budete môcť konverzovať a miestnosť bude end-to-end šifrovaná",
     "Waiting for users to join %(brand)s": "Čaká sa na používateľov, kým sa pripoja k aplikácii %(brand)s",
@@ -3151,7 +3111,16 @@
         "clear": "Vyčistiť"
     },
     "a11y": {
-        "user_menu": "Používateľské menu"
+        "user_menu": "Používateľské menu",
+        "n_unread_messages_mentions": {
+            "one": "1 neprečítaná zmienka.",
+            "other": "%(count)s neprečítaných správ vrátane zmienok."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s neprečítaných správ.",
+            "one": "1 neprečítaná správa."
+        },
+        "unread_messages": "Neprečítané správy."
     },
     "labs": {
         "video_rooms": "Video miestnosti",
@@ -4101,5 +4070,40 @@
         "sso": "Single Sign On",
         "reset_password_action": "Znovu nastaviť heslo",
         "reset_password_title": "Obnovte svoje heslo"
+    },
+    "room_list": {
+        "sort_unread_first": "Najprv ukázať miestnosti s neprečítanými správami",
+        "show_previews": "Zobraziť náhľady správ",
+        "sort_by": "Zoradiť podľa",
+        "sort_by_activity": "Aktivity",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Možnosti zoznamu",
+        "show_n_more": {
+            "one": "Zobraziť %(count)s viac",
+            "other": "Zobraziť %(count)s viac"
+        },
+        "show_less": "Zobraziť menej",
+        "notification_options": "Možnosti oznámenia"
+    },
+    "report_content": {
+        "missing_reason": "Vyplňte prosím, prečo podávate hlásenie.",
+        "unable_create_room_moderation_bot": "Nie je možné vytvoriť miestnosť pomocou moderačného bota",
+        "ignore_user": "Ignorovať používateľa",
+        "hide_messages_from_user": "Označte, či chcete skryť všetky aktuálne a budúce správy od tohto používateľa.",
+        "nature_disagreement": "To, čo tento používateľ napísal, je nesprávne.\nBude to nahlásené moderátorom miestnosti.",
+        "nature_toxic": "Tento používateľ prejavuje nepriateľské správanie, napríklad uráža ostatných používateľov alebo zdieľa obsah určený len pre dospelých v miestnosti určenej pre rodiny alebo inak porušuje pravidlá tejto miestnosti.\nToto bude nahlásené moderátorom miestnosti.",
+        "nature_illegal": "Tento používateľ prejavuje protiprávne správanie, napríklad zverejňuje doxing (citlivé informácie o ľudoch) alebo sa vyhráža násilím.\nToto bude nahlásené moderátorom miestnosti, ktorí to môžu postúpiť právnym orgánom.",
+        "nature_spam": "Tento používateľ spamuje miestnosť reklamami, odkazmi na reklamy alebo propagandou.\nToto bude nahlásené moderátorom miestnosti.",
+        "report_to_homeserver_encrypted": "Táto miestnosť je venovaná nelegálnemu alebo toxickému obsahu alebo moderátori nedokážu moderovať nelegálny alebo toxický obsah.\nToto bude nahlásené správcom %(homeserver)s. Správcovia NEBUDÚ môcť čítať zašifrovaný obsah tejto miestnosti.",
+        "report_to_homeserver": "Táto miestnosť je venovaná nelegálnemu alebo nebezpečnému obsahu alebo moderátori nezvládajú moderovať nelegálny alebo nebezpečný obsah.\n Toto bude nahlásené správcom %(homeserver)s.",
+        "nature_other": "Akýkoľvek iný dôvod. Opíšte problém.\nTento problém bude nahlásený moderátorom miestnosti.",
+        "nature": "Prosím, vyberte charakter a popíšte, čo robí túto správu obťažujúcou.",
+        "disagree": "Nesúhlasím",
+        "toxic_behaviour": "Nebezpečné správanie",
+        "illegal_content": "Nelegálny obsah",
+        "spam_or_propaganda": "Spam alebo propaganda",
+        "report_entire_room": "Nahlásiť celú miestnosť",
+        "report_content_to_homeserver": "Nahlásenie obsahu správcovi domovského serveru",
+        "description": "Nahlásenie tejto správy odošle jej jedinečné \"ID udalosti\" správcovi vášho domovského servera. Ak sú správy v tejto miestnosti zašifrované, správca domovského servera nebude môcť prečítať text správy ani zobraziť žiadne súbory alebo obrázky."
     }
 }

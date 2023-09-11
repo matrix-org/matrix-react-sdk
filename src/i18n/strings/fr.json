@@ -750,9 +750,6 @@
     "Remove recent messages": "Supprimer les messages récents",
     "Explore rooms": "Parcourir les salons",
     "Verify the link in your inbox": "Vérifiez le lien dans votre boîte de réception",
-    "Please fill why you're reporting.": "Dites-nous pourquoi vous envoyez un signalement.",
-    "Report Content to Your Homeserver Administrator": "Signaler le contenu à l’administrateur de votre serveur d’accueil",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Le signalement de ce message enverra son « event ID » unique à l’administrateur de votre serveur d’accueil. Si les messages dans ce salon sont chiffrés, l’administrateur ne pourra pas lire le texte du message ou voir les fichiers ou les images.",
     "Read Marker lifetime (ms)": "Durée de vie du repère de lecture (ms)",
     "Read Marker off-screen lifetime (ms)": "Durée de vie du repère de lecture en dehors de l’écran (ms)",
     "e.g. my-room": "par ex. mon-salon",
@@ -769,14 +766,6 @@
     "User Autocomplete": "Autocomplétion d’utilisateur",
     "Show image": "Afficher l’image",
     "Clear cache and reload": "Vider le cache et recharger",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s messages non lus y compris les mentions.",
-        "one": "1 mention non lue."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s messages non lus.",
-        "one": "1 message non lu."
-    },
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Clé public du captcha manquante dans la configuration du serveur d’accueil. Veuillez le signaler à l’administrateur de votre serveur d’accueil.",
     "Your email address hasn't been verified yet": "Votre adresse e-mail n’a pas encore été vérifiée",
     "Click the link in the email you received to verify and then click continue again.": "Cliquez sur le lien dans l’e-mail que vous avez reçu pour la vérifier et cliquez encore sur continuer.",
@@ -796,7 +785,6 @@
     "Jump to first unread room.": "Sauter au premier salon non lu.",
     "Jump to first invite.": "Sauter à la première invitation.",
     "Room %(name)s": "Salon %(name)s",
-    "Unread messages.": "Messages non lus.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Cette action nécessite l’accès au serveur d’identité par défaut <server /> afin de valider une adresse e-mail ou un numéro de téléphone, mais le serveur n’a aucune condition de service.",
     "Message Actions": "Actions de message",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -921,7 +909,6 @@
     "Indexed messages:": "Messages indexés :",
     "Waiting for %(displayName)s to verify…": "En attente de la vérification de %(displayName)s…",
     "This bridge was provisioned by <user />.": "Cette passerelle a été fournie par <user />.",
-    "Show less": "En voir moins",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ce salon transmet les messages vers les plateformes suivantes. <a>En savoir plus.</a>",
     "Bridges": "Passerelles",
     "Waiting for %(displayName)s to accept…": "En attente d’acceptation par %(displayName)s…",
@@ -1143,16 +1130,8 @@
     "All settings": "Tous les paramètres",
     "Feedback": "Commentaire",
     "No recently visited rooms": "Aucun salon visité récemment",
-    "Sort by": "Trier par",
     "Message preview": "Aperçu de message",
-    "List options": "Options de liste",
-    "Show %(count)s more": {
-        "other": "En afficher %(count)s de plus",
-        "one": "En afficher %(count)s de plus"
-    },
     "Room options": "Options du salon",
-    "Activity": "Activité",
-    "A-Z": "A-Z",
     "Looks good!": "Ça a l’air correct !",
     "Use custom size": "Utiliser une taille personnalisée",
     "Hey you. You're the best!": "Hé vous. Vous êtes le meilleur !",
@@ -1171,9 +1150,6 @@
     "Set a Security Phrase": "Définir une phrase de sécurité",
     "Confirm Security Phrase": "Confirmer la phrase de sécurité",
     "Save your Security Key": "Sauvegarder votre clé de sécurité",
-    "Show rooms with unread messages first": "Afficher les salons non lus en premier",
-    "Show previews of messages": "Afficher un aperçu des messages",
-    "Notification options": "Paramètres de notifications",
     "Favourited": "Favori",
     "Forget Room": "Oublier le salon",
     "This room is public": "Ce salon est public",
@@ -1834,21 +1810,11 @@
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Si vous avez les permissions, ouvrez le menu de n’importe quel message et sélectionnez <b>Épingler</b> pour les afficher ici.",
     "Nothing pinned, yet": "Rien d’épinglé, pour l’instant",
     "End-to-end encryption isn't enabled": "Le chiffrement de bout en bout n’est pas activé",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Toute autre raison. Veuillez décrire le problème.\nCeci sera signalé aux modérateurs du salon.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Cet utilisateur inonde le salon de publicités ou liens vers des publicités, ou vers de la propagande.\nCeci sera signalé aux modérateurs du salon.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Cet utilisateur fait preuve d’un comportement illicite, par exemple en publiant des informations personnelles d’autres ou en proférant des menaces.\nCeci sera signalé aux modérateurs du salon qui pourront l’escalader aux autorités.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Ce que cet utilisateur écrit est déplacé.\nCeci sera signalé aux modérateurs du salon.",
     "Report": "Signaler",
     "Collapse reply thread": "Masquer le fil de discussion",
     "Show preview": "Afficher l’aperçu",
     "View source": "Afficher la source",
     "Settings - %(spaceName)s": "Paramètres - %(spaceName)s",
-    "Report the entire room": "Signaler le salon entier",
-    "Spam or propaganda": "Publicité ou propagande",
-    "Illegal Content": "Contenu illicite",
-    "Toxic Behaviour": "Comportement toxique",
-    "Disagree": "Désaccord",
-    "Please pick a nature and describe what makes this message abusive.": "Veuillez choisir la nature du rapport et décrire ce qui rend ce message abusif.",
     "Please provide an address": "Veuillez fournir une adresse",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Échec de l’initialisation de la recherche de messages, vérifiez <a>vos paramètres</a> pour plus d’information",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Définissez les adresses de cet espace pour que les utilisateurs puissent le trouver avec votre serveur d’accueil (%(localDomain)s)",
@@ -1942,7 +1908,6 @@
     "Add space": "Ajouter un espace",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Veuillez notez que la mise-à-jour va créer une nouvelle version de ce salon</b>. Tous les messages actuels resteront dans ce salon archivé.",
     "Automatically invite members from this room to the new one": "Inviter automatiquement les membres de ce salon dans le nouveau",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Ce salon est utilisé pour du contenu toxique ou illégal, ou les modérateurs ont échoué à modérer le contenu toxique ou illégal.\nCela sera signalé aux administrateurs de %(homeserver)s. Les administrateurs ne pourront PAS lire le contenu chiffré ce salon.",
     "These are likely ones other room admins are a part of.": "Ces autres administrateurs du salon en font probablement partie.",
     "Other spaces or rooms you might not know": "Autres espaces ou salons que vous pourriez ne pas connaître",
     "Spaces you know that contain this room": "Les espaces connus qui contiennent ce salon",
@@ -2456,8 +2421,6 @@
     "An error occurred whilst sharing your live location, please try again": "Une erreur s’est produite pendant le partage de votre position, veuillez réessayer plus tard",
     "An error occurred whilst sharing your live location": "Une erreur s’est produite pendant le partage de votre position",
     "View related event": "Afficher les événements liés",
-    "Check if you want to hide all current and future messages from this user.": "Cocher pour masquer tous les messages présents et futurs de cet utilisateur.",
-    "Ignore user": "Ignorer l’utilisateur",
     "Click to read topic": "Cliquer pour lire le sujet",
     "Edit topic": "Modifier le sujet",
     "Joining…": "En train de rejoindre…",
@@ -2777,8 +2740,6 @@
     "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Attention : vos données personnelles (y compris les clés de chiffrement) seront stockées dans cette session. Effacez-les si vous n’utilisez plus cette session ou si vous voulez vous connecter à un autre compte.",
     "Scan QR code": "Scanner le QR code",
     "Select '%(scanQRCode)s'": "Sélectionnez « %(scanQRCode)s »",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Ce salon est utilisé pour du contenu toxique ou illégal, ou les modérateurs ont échoué à modérer le contenu toxique ou illégal.\n Cela sera signalé aux administrateurs de %(homeserver)s.",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "Cet utilisateur fait preuve d’un comportement toxique, par exemple en insultant les autres ou en partageant du contenu pour adultes dans un salon familial, ou en violant les règles de ce salon.\nCeci sera signalé aux modérateurs du salon.",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activez « %(manageIntegrations)s » dans les paramètres pour faire ça.",
     "<b>Warning</b>: upgrading a room will <i>not automatically migrate room members to the new version of the room.</i> We'll post a link to the new room in the old version of the room - room members will have to click this link to join the new room.": "<b>Attention</b> : la mise à niveau du salon <i>ne migrera pas automatiquement les membres du salon vers la nouvelle version du salon.</i> Nous enverrons un lien vers le nouveau salon dans l’ancienne version du salon. Les participants au salon devront cliquer sur ce lien pour rejoindre le nouveau salon.",
     "Your personal ban list holds all the users/servers you personally don't want to see messages from. After ignoring your first user/server, a new room will show up in your room list named '%(myBanList)s' - stay in this room to keep the ban list in effect.": "Votre liste de bannissement personnelle contient tous les utilisateurs/serveurs dont vous ne voulez pas voir les messages personnellement. Quand vous aurez ignoré votre premier utilisateur/serveur, un nouveau salon nommé « %(myBanList)s » apparaîtra dans la liste de vos salons − restez dans ce salon pour que la liste de bannissement soit effective.",
@@ -2888,7 +2849,6 @@
     "Unknown password change error (%(stringifiedError)s)": "Erreur inconnue du changement de mot de passe (%(stringifiedError)s)",
     "Error while changing password: %(error)s": "Erreur lors du changement de mot de passe : %(error)s",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Impossible d’inviter un utilisateur par e-mail sans un serveur d’identité. Vous pouvez vous connecter à un serveur dans les « Paramètres ».",
-    "Unable to create room with moderation bot": "Impossible de créer le salon avec un robot de modération",
     "Failed to download source media, no source url was found": "Impossible de télécharger la source du média, aucune URL source n’a été trouvée",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Une fois que les utilisateurs invités seront connectés sur %(brand)s, vous pourrez discuter et le salon sera chiffré de bout en bout",
     "Waiting for users to join %(brand)s": "En attente de connexion des utilisateurs à %(brand)s",
@@ -3151,7 +3111,16 @@
         "clear": "Effacer"
     },
     "a11y": {
-        "user_menu": "Menu utilisateur"
+        "user_menu": "Menu utilisateur",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s messages non lus y compris les mentions.",
+            "one": "1 mention non lue."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s messages non lus.",
+            "one": "1 message non lu."
+        },
+        "unread_messages": "Messages non lus."
     },
     "labs": {
         "video_rooms": "Salons vidéo",
@@ -4101,5 +4070,40 @@
         "sso": "Authentification unique",
         "reset_password_action": "Réinitialiser le mot de passe",
         "reset_password_title": "Réinitialise votre mot de passe"
+    },
+    "room_list": {
+        "sort_unread_first": "Afficher les salons non lus en premier",
+        "show_previews": "Afficher un aperçu des messages",
+        "sort_by": "Trier par",
+        "sort_by_activity": "Activité",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Options de liste",
+        "show_n_more": {
+            "other": "En afficher %(count)s de plus",
+            "one": "En afficher %(count)s de plus"
+        },
+        "show_less": "En voir moins",
+        "notification_options": "Paramètres de notifications"
+    },
+    "report_content": {
+        "missing_reason": "Dites-nous pourquoi vous envoyez un signalement.",
+        "unable_create_room_moderation_bot": "Impossible de créer le salon avec un robot de modération",
+        "ignore_user": "Ignorer l’utilisateur",
+        "hide_messages_from_user": "Cocher pour masquer tous les messages présents et futurs de cet utilisateur.",
+        "nature_disagreement": "Ce que cet utilisateur écrit est déplacé.\nCeci sera signalé aux modérateurs du salon.",
+        "nature_toxic": "Cet utilisateur fait preuve d’un comportement toxique, par exemple en insultant les autres ou en partageant du contenu pour adultes dans un salon familial, ou en violant les règles de ce salon.\nCeci sera signalé aux modérateurs du salon.",
+        "nature_illegal": "Cet utilisateur fait preuve d’un comportement illicite, par exemple en publiant des informations personnelles d’autres ou en proférant des menaces.\nCeci sera signalé aux modérateurs du salon qui pourront l’escalader aux autorités.",
+        "nature_spam": "Cet utilisateur inonde le salon de publicités ou liens vers des publicités, ou vers de la propagande.\nCeci sera signalé aux modérateurs du salon.",
+        "report_to_homeserver_encrypted": "Ce salon est utilisé pour du contenu toxique ou illégal, ou les modérateurs ont échoué à modérer le contenu toxique ou illégal.\nCela sera signalé aux administrateurs de %(homeserver)s. Les administrateurs ne pourront PAS lire le contenu chiffré ce salon.",
+        "report_to_homeserver": "Ce salon est utilisé pour du contenu toxique ou illégal, ou les modérateurs ont échoué à modérer le contenu toxique ou illégal.\n Cela sera signalé aux administrateurs de %(homeserver)s.",
+        "nature_other": "Toute autre raison. Veuillez décrire le problème.\nCeci sera signalé aux modérateurs du salon.",
+        "nature": "Veuillez choisir la nature du rapport et décrire ce qui rend ce message abusif.",
+        "disagree": "Désaccord",
+        "toxic_behaviour": "Comportement toxique",
+        "illegal_content": "Contenu illicite",
+        "spam_or_propaganda": "Publicité ou propagande",
+        "report_entire_room": "Signaler le salon entier",
+        "report_content_to_homeserver": "Signaler le contenu à l’administrateur de votre serveur d’accueil",
+        "description": "Le signalement de ce message enverra son « event ID » unique à l’administrateur de votre serveur d’accueil. Si les messages dans ce salon sont chiffrés, l’administrateur ne pourra pas lire le texte du message ou voir les fichiers ou les images."
     }
 }

@@ -369,8 +369,6 @@
     "Direct Messages": "Директне поруке",
     "Forget this room": "Заборави ову собу",
     "Start chatting": "Започни ћаскање",
-    "List options": "Прикажи опције",
-    "Notification options": "Опције обавештавања",
     "Forget Room": "Заборави собу",
     "Room options": "Опције собе",
     "Mark all as read": "Означи све као прочитано",
@@ -390,7 +388,6 @@
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>реаговали са %(shortName)s</reactedWith>",
     "Widgets do not use message encryption.": "Виџети не користе шифровање порука.",
     "Enable end-to-end encryption": "Омогући шифровање с краја на крај",
-    "Report Content to Your Homeserver Administrator": "Пријави садржај администратору вашег домаћег сервера",
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Terms of Service": "Услови коришћења",
     "To continue you need to accept the terms of this service.": "За наставак, морате прихватити услове коришћења ове услуге.",
@@ -414,11 +411,6 @@
     "Unable to revoke sharing for email address": "Не могу да опозовем дељење ове мејл адресе",
     "Unable to revoke sharing for phone number": "Не могу да опозовем дељење броја телефона",
     "No recently visited rooms": "Нема недавно посећених соба",
-    "Show rooms with unread messages first": "Прво прикажи собе са непрочитаним порукама",
-    "Show previews of messages": "Прикажи прегледе порука",
-    "Sort by": "Поређај по",
-    "Activity": "Активности",
-    "A-Z": "А-Ш",
     "Send as message": "Пошаљи у облику поруке",
     "Failed to revoke invite": "Неуспех при отказивању позивнице",
     "Revoke invite": "Откажи позивницу",
@@ -1429,5 +1421,17 @@
     },
     "export_chat": {
         "messages": "Поруке"
+    },
+    "room_list": {
+        "sort_unread_first": "Прво прикажи собе са непрочитаним порукама",
+        "show_previews": "Прикажи прегледе порука",
+        "sort_by": "Поређај по",
+        "sort_by_activity": "Активности",
+        "sort_by_alphabet": "А-Ш",
+        "sublist_options": "Прикажи опције",
+        "notification_options": "Опције обавештавања"
+    },
+    "report_content": {
+        "report_content_to_homeserver": "Пријави садржај администратору вашег домаћег сервера"
     }
 }

@@ -778,8 +778,6 @@
     "Verify session": "Sitzung verifizieren",
     "Session key": "Sitzungsschlüssel",
     "Recent Conversations": "Letzte Unterhaltungen",
-    "Report Content to Your Homeserver Administrator": "Inhalte an die Administration deines Heim-Servers melden",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Wenn du diese Nachricht meldest, wird die eindeutige Ereignis-ID an die Administration deines Heim-Servers übermittelt. Wenn die Nachrichten in diesem Raum verschlüsselt sind, wird deine Heim-Server-Administration nicht in der Lage sein, Nachrichten zu lesen oder Medien einzusehen.",
     "%(creator)s created and configured the room.": "%(creator)s hat den Raum erstellt und konfiguriert.",
     "Use Single Sign On to continue": "Einmalanmeldung zum Fortfahren nutzen",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Bestätige die neue E-Mail-Adresse mit Single-Sign-On, um deine Identität nachzuweisen.",
@@ -798,7 +796,6 @@
     "Cancelling…": "Abbrechen…",
     "This bridge was provisioned by <user />.": "Diese Brücke wurde von <user /> bereitgestellt.",
     "This bridge is managed by <user />.": "Diese Brücke wird von <user /> verwaltet.",
-    "Show less": "Weniger anzeigen",
     "Forgotten your password?": "Passwort vergessen?",
     "You're signed out": "Du wurdest abgemeldet",
     "Clear all data in this session?": "Alle Daten dieser Sitzung löschen?",
@@ -882,15 +879,6 @@
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Verknüpfe einen Identitäts-Server in den Einstellungen, um die Einladungen direkt in %(brand)s zu erhalten.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Teile diese E-Mail-Adresse in den Einstellungen, um Einladungen direkt in %(brand)s zu erhalten.",
     "%(roomName)s can't be previewed. Do you want to join it?": "Vorschau von %(roomName)s kann nicht angezeigt werden. Möchtest du den Raum betreten?",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s ungelesene Nachrichten einschließlich Erwähnungen.",
-        "one": "1 ungelesene Erwähnung."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s ungelesene Nachrichten.",
-        "one": "1 ungelesene Nachricht."
-    },
-    "Unread messages.": "Ungelesene Nachrichten.",
     "This room has already been upgraded.": "Dieser Raum wurde bereits aktualisiert.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Dieser Raum läuft mit der Raumversion <roomVersion />, welche dieser Heim-Server als <i>instabil</i> markiert hat.",
     "Unknown Command": "Unbekannter Befehl",
@@ -985,7 +973,6 @@
     "Toggle Italics": "Kursiv",
     "Toggle Quote": "Zitat umschalten",
     "New line": "Neue Zeile",
-    "Please fill why you're reporting.": "Bitte gib an, weshalb du einen Fehler meldest.",
     "Upgrade private room": "Privaten Raum aktualisieren",
     "Upgrade public room": "Öffentlichen Raum aktualisieren",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Dies beeinflusst meistens nur, wie der Raum auf dem Server verarbeitet wird. Solltest du Probleme mit %(brand)s haben, <a>melde bitte einen Programmfehler</a>.",
@@ -1143,16 +1130,8 @@
     "Feedback": "Rückmeldung",
     "Room ID or address of ban list": "Raum-ID oder Adresse der Verbotsliste",
     "No recently visited rooms": "Keine kürzlich besuchten Räume",
-    "Sort by": "Sortieren nach",
     "Message preview": "Nachrichtenvorschau",
-    "List options": "Optionen anzeigen",
-    "Show %(count)s more": {
-        "other": "%(count)s weitere anzeigen",
-        "one": "%(count)s weitere anzeigen"
-    },
     "Room options": "Raumoptionen",
-    "Activity": "Aktivität",
-    "A-Z": "A–Z",
     "Looks good!": "Sieht gut aus!",
     "Use custom size": "Andere Schriftgröße verwenden",
     "Hey you. You're the best!": "Hey du. Du bist großartig!",
@@ -1161,9 +1140,6 @@
     "Wrong file type": "Falscher Dateityp",
     "Are you sure you want to cancel entering passphrase?": "Bist du sicher, dass du die Eingabe der Passphrase abbrechen möchtest?",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "Das Durchsuchen von verschlüsselten Nachrichten wird aus Sicherheitsgründen nur von %(brand)s Desktop unterstützt. <desktopLink>Hier gehts zum Download</desktopLink>.",
-    "Show rooms with unread messages first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
-    "Show previews of messages": "Nachrichtenvorschau anzeigen",
-    "Notification options": "Benachrichtigungsoptionen",
     "Forget Room": "Raum vergessen",
     "Favourited": "Favorisiert",
     "This room is public": "Dieser Raum ist öffentlich",
@@ -1835,19 +1811,10 @@
     "See when people join, leave, or are invited to your active room": "Anzeigen, wenn Leute den aktuellen Raum betreten, verlassen oder in ihn eingeladen werden",
     "Error - Mixed content": "Fehler - Uneinheitlicher Inhalt",
     "View source": "Rohdaten anzeigen",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Die Person verbreitet Falschinformation.\nDies wird an die Raummoderation gemeldet.",
     "Report": "Melden",
     "Collapse reply thread": "Antworten verbergen",
     "Show preview": "Vorschau zeigen",
     "Settings - %(spaceName)s": "Einstellungen - %(spaceName)s",
-    "Report the entire room": "Den ganzen Raum melden",
-    "Spam or propaganda": "Spam oder Propaganda",
-    "Illegal Content": "Illegale Inhalte",
-    "Toxic Behaviour": "Toxisches Verhalten",
-    "Disagree": "Ablehnen",
-    "Please pick a nature and describe what makes this message abusive.": "Bitte wähle eine Kategorie aus und beschreibe, was die Nachricht missbräuchlich macht.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Anderer Grund. Bitte beschreibe das Problem.\nDies wird an die Raummoderation gemeldet.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Dieser Benutzer spammt den Raum mit Werbung, Links zu Werbung oder Propaganda.\nDies wird an die Raummoderation gemeldet.",
     "Please provide an address": "Bitte gib eine Adresse an",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Füge Adressen für diesen Space hinzu, damit andere Leute ihn über deinen Heim-Server (%(localDomain)s) finden können",
     "To publish an address, it needs to be set as a local address first.": "Damit du die Adresse veröffentlichen kannst, musst du sie zuerst als lokale Adresse hinzufügen.",
@@ -1871,8 +1838,6 @@
     "Some invites couldn't be sent": "Einige Einladungen konnten nicht versendet werden",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Die anderen wurden gesendet, aber die folgenden Leute konnten leider nicht in <RoomName/> eingeladen werden",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisierung der Suche fehlgeschlagen, für weitere Informationen öffne <a>deine Einstellungen</a>",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Der Raum beinhaltet illegale oder toxische Nachrichten und die Raummoderation verhindert es nicht.\nDies wird an die Betreiber von %(homeserver)s gemeldet werden. Diese können jedoch die verschlüsselten Nachrichten nicht lesen.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Diese Person verhält sich illegal, beispielsweise durch das Veröffentlichen persönlicher Daten oder Gewaltdrohungen.\nDies wird an die Raummoderation gemeldet, welche dies an die Behörden weitergeben kann.",
     "Unnamed audio": "Unbenannte Audiodatei",
     "Show %(count)s other previews": {
         "one": "%(count)s andere Vorschau zeigen",
@@ -2449,14 +2414,12 @@
     "Show: Matrix rooms": "Zeige: Matrix-Räume",
     "Open room": "Raum öffnen",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Wenn du dich abmeldest, werden die Schlüssel auf diesem Gerät gelöscht. Das bedeutet, dass du keine verschlüsselten Nachrichten mehr lesen kannst, wenn du die Schlüssel nicht auf einem anderen Gerät oder eine Sicherung auf dem Server hast.",
-    "Ignore user": "Nutzer ignorieren",
     "Show rooms": "Räume zeigen",
     "Search for": "Suche nach",
     "%(count)s Members": {
         "one": "%(count)s Mitglied",
         "other": "%(count)s Mitglieder"
     },
-    "Check if you want to hide all current and future messages from this user.": "Prüfe, ob du alle aktuellen und zukünftigen Nachrichten dieses Nutzers verstecken willst.",
     "Show spaces": "Spaces zeigen",
     "You cannot search for rooms that are neither a room nor a space": "Du kannst nicht nach Räumen suchen, die kein Raum oder Space sind",
     "Some results may be hidden for privacy": "Einige Vorschläge könnten aus Gründen der Privatsphäre ausgeblendet sein",
@@ -2789,8 +2752,6 @@
     "Loading live location…": "Lade Live-Standort …",
     "Fetching keys from server…": "Lade Schlüssel vom Server …",
     "Checking…": "Überprüfe …",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Der Raum beinhaltet illegale oder toxische Nachrichten und die Raummoderation verhindert es nicht.\nDies wird an die Betreiber von %(homeserver)s gemeldet werden.",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "Dieser Benutzer zeigt toxisches Verhalten, etwa durch Beleidigen anderer Personen, Teilen von Erwachseneninhalten in familienfreundlichen Räumen oder anderweitiges Missachten von Raumregeln.\nDies wird an die Raummoderatoren gemeldet.",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Aktiviere „%(manageIntegrations)s“ in den Einstellungen, um dies zu tun.",
     "Waiting for partner to confirm…": "Warte auf Bestätigung des Gesprächspartners …",
     "Adding…": "Füge hinzu …",
@@ -2888,7 +2849,6 @@
     "Unknown password change error (%(stringifiedError)s)": "Unbekannter Fehler während der Passwortänderung (%(stringifiedError)s)",
     "Error while changing password: %(error)s": "Fehler während der Passwortänderung: %(error)s",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Einladen per E-Mail-Adresse ist nicht ohne Identitäts-Server möglich. Du kannst einen unter „Einstellungen“ einrichten.",
-    "Unable to create room with moderation bot": "Erstellen eines Raumes mit Moderations-Bot nicht möglich",
     "Failed to download source media, no source url was found": "Herunterladen der Quellmedien fehlgeschlagen, da keine Quell-URL gefunden wurde",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Sobald eingeladene Benutzer %(brand)s beigetreten sind, werdet ihr euch unterhalten können und der Raum wird Ende-zu-Ende-verschlüsselt sein",
     "Waiting for users to join %(brand)s": "Warte darauf, dass Benutzer %(brand)s beitreten",
@@ -3156,7 +3116,16 @@
         "clear": "Löschen"
     },
     "a11y": {
-        "user_menu": "Benutzermenü"
+        "user_menu": "Benutzermenü",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s ungelesene Nachrichten einschließlich Erwähnungen.",
+            "one": "1 ungelesene Erwähnung."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s ungelesene Nachrichten.",
+            "one": "1 ungelesene Nachricht."
+        },
+        "unread_messages": "Ungelesene Nachrichten."
     },
     "labs": {
         "video_rooms": "Videoräume",
@@ -4106,5 +4075,40 @@
         "sso": "Single Sign-on",
         "reset_password_action": "Passwort zurücksetzen",
         "reset_password_title": "Setze dein Passwort zurück"
+    },
+    "room_list": {
+        "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
+        "show_previews": "Nachrichtenvorschau anzeigen",
+        "sort_by": "Sortieren nach",
+        "sort_by_activity": "Aktivität",
+        "sort_by_alphabet": "A–Z",
+        "sublist_options": "Optionen anzeigen",
+        "show_n_more": {
+            "other": "%(count)s weitere anzeigen",
+            "one": "%(count)s weitere anzeigen"
+        },
+        "show_less": "Weniger anzeigen",
+        "notification_options": "Benachrichtigungsoptionen"
+    },
+    "report_content": {
+        "missing_reason": "Bitte gib an, weshalb du einen Fehler meldest.",
+        "unable_create_room_moderation_bot": "Erstellen eines Raumes mit Moderations-Bot nicht möglich",
+        "ignore_user": "Nutzer ignorieren",
+        "hide_messages_from_user": "Prüfe, ob du alle aktuellen und zukünftigen Nachrichten dieses Nutzers verstecken willst.",
+        "nature_disagreement": "Die Person verbreitet Falschinformation.\nDies wird an die Raummoderation gemeldet.",
+        "nature_toxic": "Dieser Benutzer zeigt toxisches Verhalten, etwa durch Beleidigen anderer Personen, Teilen von Erwachseneninhalten in familienfreundlichen Räumen oder anderweitiges Missachten von Raumregeln.\nDies wird an die Raummoderatoren gemeldet.",
+        "nature_illegal": "Diese Person verhält sich illegal, beispielsweise durch das Veröffentlichen persönlicher Daten oder Gewaltdrohungen.\nDies wird an die Raummoderation gemeldet, welche dies an die Behörden weitergeben kann.",
+        "nature_spam": "Dieser Benutzer spammt den Raum mit Werbung, Links zu Werbung oder Propaganda.\nDies wird an die Raummoderation gemeldet.",
+        "report_to_homeserver_encrypted": "Der Raum beinhaltet illegale oder toxische Nachrichten und die Raummoderation verhindert es nicht.\nDies wird an die Betreiber von %(homeserver)s gemeldet werden. Diese können jedoch die verschlüsselten Nachrichten nicht lesen.",
+        "report_to_homeserver": "Der Raum beinhaltet illegale oder toxische Nachrichten und die Raummoderation verhindert es nicht.\nDies wird an die Betreiber von %(homeserver)s gemeldet werden.",
+        "nature_other": "Anderer Grund. Bitte beschreibe das Problem.\nDies wird an die Raummoderation gemeldet.",
+        "nature": "Bitte wähle eine Kategorie aus und beschreibe, was die Nachricht missbräuchlich macht.",
+        "disagree": "Ablehnen",
+        "toxic_behaviour": "Toxisches Verhalten",
+        "illegal_content": "Illegale Inhalte",
+        "spam_or_propaganda": "Spam oder Propaganda",
+        "report_entire_room": "Den ganzen Raum melden",
+        "report_content_to_homeserver": "Inhalte an die Administration deines Heim-Servers melden",
+        "description": "Wenn du diese Nachricht meldest, wird die eindeutige Ereignis-ID an die Administration deines Heim-Servers übermittelt. Wenn die Nachrichten in diesem Raum verschlüsselt sind, wird deine Heim-Server-Administration nicht in der Lage sein, Nachrichten zu lesen oder Medien einzusehen."
     }
 }

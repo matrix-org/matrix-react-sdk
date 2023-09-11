@@ -470,11 +470,6 @@
     "Reject & Ignore user": "Avslå og ignorer brukar",
     "You're previewing %(roomName)s. Want to join it?": "Du førehandsviser %(roomName)s. Ynskjer du å bli med ?",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s kan ikkje førehandsvisast. Ynskjer du å bli med ?",
-    "%(count)s unread messages.": {
-        "other": "%(count)s uleste meldingar.",
-        "one": "1 ulesen melding."
-    },
-    "Unread messages.": "Uleste meldingar.",
     "Unknown Command": "Ukjend kommando",
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Du kan bruka <code>/help</code> for å lista tilgjengelege kommandoar. Meinte du å senda dette som ein melding ?",
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "Hint: Start meldinga med <code>//</code> for å starte den med skråstrek.",
@@ -502,7 +497,6 @@
     "Voice & Video": "Tale og video",
     "Show hidden events in timeline": "Vis skjulte hendelsar i historikken",
     "This is your list of users/servers you have blocked - don't leave the room!": "Dette er di liste over brukarar/tenarar du har blokkert - ikkje forlat rommet!",
-    "Show less": "Vis mindre",
     "Show more": "Vis meir",
     "Display Name": "Visningsnamn",
     "Invalid theme schema.": "",
@@ -593,7 +587,6 @@
     "I don't want my encrypted messages": "Eg treng ikkje mine krypterte meldingar",
     "You'll lose access to your encrypted messages": "Du vil miste tilgangen til dine krypterte meldingar",
     "Join millions for free on the largest public server": "Kom ihop med millionar av andre på den største offentlege tenaren",
-    "Show rooms with unread messages first": "Vis rom med ulesne meldingar fyrst",
     "Always show the window menu bar": "Vis alltid menyfeltet i toppen av vindauget",
     "Feedback": "Tilbakemeldingar",
     "All settings": "Alle innstillingar",
@@ -606,10 +599,6 @@
     "Video conference started by %(senderName)s": "Videokonferanse starta av %(senderName)s",
     "Video conference updated by %(senderName)s": "Videokonferanse oppdatert av %(senderName)s",
     "Video conference ended by %(senderName)s": "Videokonferanse avslutta av %(senderName)s",
-    "Show previews of messages": "Vis førehandsvisningar for meldingar",
-    "Activity": "Aktivitet",
-    "Sort by": "Sorter etter",
-    "List options": "Sjå alternativ",
     "Explore Public Rooms": "Utforsk offentlege rom",
     "Explore public rooms": "Utforsk offentlege rom",
     "Email Address": "E-postadresse",
@@ -1179,5 +1168,20 @@
     },
     "export_chat": {
         "messages": "Meldingar"
+    },
+    "room_list": {
+        "sort_unread_first": "Vis rom med ulesne meldingar fyrst",
+        "show_previews": "Vis førehandsvisningar for meldingar",
+        "sort_by": "Sorter etter",
+        "sort_by_activity": "Aktivitet",
+        "sublist_options": "Sjå alternativ",
+        "show_less": "Vis mindre"
+    },
+    "a11y": {
+        "n_unread_messages": {
+            "other": "%(count)s uleste meldingar.",
+            "one": "1 ulesen melding."
+        },
+        "unread_messages": "Uleste meldingar."
     }
 }

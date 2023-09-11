@@ -757,9 +757,6 @@
     "Topic (optional)": "Temë (në daçi)",
     "Hide advanced": "Fshihi të mëtejshmet",
     "Show advanced": "Shfaqi të mëtejshmet",
-    "Please fill why you're reporting.": "Ju lutemi, plotësoni arsyen pse po raportoni.",
-    "Report Content to Your Homeserver Administrator": "Raportoni Lëndë te Përgjegjësi i Shërbyesit Tuaj Home",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Raportimi i këtij mesazhi do të shkaktojë dërgimin e 'ID-së së aktit' unike te përgjegjësi i shërbyesit tuaj Home. Nëse mesazhet në këtë dhomë fshehtëzohen, përgjegjësi i shërbyesit tuaj Home s’do të jetë në gjendje të lexojë tekstin e mesazhit apo të shohë çfarëdo kartelë apo figurë.",
     "To continue you need to accept the terms of this service.": "Që të vazhdohet, lypset të pranoni kushtet e këtij shërbimi.",
     "Document": "Dokument",
     "Add Email Address": "Shtoni Adresë Email",
@@ -772,14 +769,6 @@
     "Clear cache and reload": "Spastro fshehtinën dhe ringarko",
     "Your email address hasn't been verified yet": "Adresa juaj email s’është verifikuar ende",
     "Click the link in the email you received to verify and then click continue again.": "Për verifkim, klikoni lidhjen te email që morët dhe mandej vazhdoni sërish.",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s mesazhe të palexuar, përfshi përmendje.",
-        "one": "1 përmendje e palexuar."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s mesazhe të palexuar.",
-        "one": "1 mesazh i palexuar."
-    },
     "Show image": "Shfaq figurë",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Mungon kyç publik captcha-je te formësimi i shërbyesit Home. Ju lutemi, njoftojani këtë përgjegjësit të shërbyesit tuaj Home.",
     "%(creator)s created and configured the room.": "%(creator)s krijoi dhe formësoi dhomën.",
@@ -791,7 +780,6 @@
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ky veprim lyp hyrje te shërbyesi parazgjedhje i identiteteve <server /> për të vlerësuar një adresë email ose një numër telefoni, por shërbyesi nuk ka ndonjë kusht shërbimesh.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Room %(name)s": "Dhoma %(name)s",
-    "Unread messages.": "Mesazhe të palexuar.",
     "Failed to deactivate user": "S’u arrit të çaktivizohet përdorues",
     "This client does not support end-to-end encryption.": "Ky klient nuk mbulon fshehtëzim skaj-më-skaj.",
     "Messages in this room are not end-to-end encrypted.": "Mesazhet në këtë dhomë nuk janë të fshehtëzuara skaj-më-skaj.",
@@ -928,7 +916,6 @@
     "How fast should messages be downloaded.": "Sa shpejt duhen shkarkuar mesazhet.",
     "Waiting for %(displayName)s to verify…": "Po pritet për %(displayName)s të verifikojë…",
     "This bridge was provisioned by <user />.": "Kjo urë është dhënë nga <user />.",
-    "Show less": "Shfaq më pak",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Llogaria juaj ka një identitet <em>cross-signing</em> në depozitë të fshehtë, por s’është ende i besuar në këtë sesion.",
     "in memory": "në kujtesë",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Ky sesion <b>nuk po bën kopjeruajtje të kyçeve tuaja</b>, por keni një kopjeruajtje ekzistuese që mund ta përdorni për rimarrje dhe ta shtoni më tej.",
@@ -1143,16 +1130,8 @@
     "All settings": "Krejt rregullimet",
     "Feedback": "Mendime",
     "No recently visited rooms": "S’ka dhoma të vizituara së fundi",
-    "Sort by": "Renditi sipas",
     "Message preview": "Paraparje mesazhi",
-    "List options": "Mundësi liste",
-    "Show %(count)s more": {
-        "other": "Shfaq %(count)s të tjera",
-        "one": "Shfaq %(count)s tjetër"
-    },
     "Room options": "Mundësi dhome",
-    "Activity": "Veprimtari",
-    "A-Z": "A-Z",
     "Looks good!": "Mirë duket!",
     "Use custom size": "Përdor madhësi vetjake",
     "Hey you. You're the best!": "Hej, ju. S’u ka kush shokun!",
@@ -1173,9 +1152,6 @@
     "Save your Security Key": "Ruani Kyçin tuaj të Sigurisë",
     "Are you sure you want to cancel entering passphrase?": "Jeni i sigurt se doni të anulohet dhënie frazëkalimi?",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s s’mund të ruajë lokalisht në fshehtinë në mënyrë të siguruar mesazhe të fshehtëzuar, teksa xhirohet në një shfletues. Që mesazhet e fshehtëzuar të shfaqen te përfundime kërkimi, përdorni <desktopLink>%(brand)s Desktop</desktopLink>.",
-    "Show rooms with unread messages first": "Së pari shfaq dhoma me mesazhe të palexuar",
-    "Show previews of messages": "Shfaq paraparje mesazhesh",
-    "Notification options": "Mundësi njoftimesh",
     "Forget Room": "Harroje Dhomën",
     "This room is public": "Kjo dhomë është publike",
     "Edited at %(date)s": "Përpunuar më %(date)s",
@@ -1831,17 +1807,6 @@
     "Show preview": "Shfaq paraparje",
     "View source": "Shihni burimin",
     "Settings - %(spaceName)s": "Rregullime - %(spaceName)s",
-    "Report the entire room": "Raporto krejt dhomën",
-    "Spam or propaganda": "Mesazh i padëshiruar ose propagandë",
-    "Illegal Content": "Lëndë e Paligjshme",
-    "Toxic Behaviour": "Sjellje Toksike",
-    "Disagree": "S’pajtohem",
-    "Please pick a nature and describe what makes this message abusive.": "Ju lutemi, zgjidhni një karakterizim dhe përshkruani se ç’e bën këtë mesazh abuziv.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Çfarëdo arsye tjetër. Ju lutemi, përshkruani problemin.\nKjo do t’u raportohet moderatorëve të dhomës.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Kjo dhomë merret me lëndë të paligjshme ose toksike, ose moderatorët nuk moderojnë lëndë të paligjshme ose toksike.\nKjo do t’u njoftohet përgjegjësve të %(homeserver)s. Përgjegjësit NUK do të jenë në gjendje të lexojnë lëndë të fshehtëzuar të kësaj dhome.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Ky përdorues dërgon në dhomë reklama të padëshiruara, lidhje për te reklama të tilla ose te propagandë e padëshiruar.\nKjo do t’u njoftohet përgjegjësve të dhomës.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Ky përdorues shfaq sjellje të paligjshme, bie fjala, duke zbuluar identitet personash ose duke kërcënuar me dhunë.\nKjo do t’u njoftohet përgjegjësve të dhomës, të cilët mund ta përshkallëzojnë punën drejt autoriteteve ligjore.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Ajo ç’shkruan ky përdorues është gabim.\nKjo do t’u njoftohet përgjegjësve të dhomës.",
     "Please provide an address": "Ju lutemi, jepni një adresë",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Dështoi gatitja e kërkimit në mesazhe, për më tepër hollësi, shihni <a>rregullimet tuaja</a>",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Caktoni adresa për këtë hapësirë, që kështu përdoruesit të gjejnë këtë dhomë përmes shërbyesit tuaj Home (%(localDomain)s)",
@@ -2424,8 +2389,6 @@
         "one": "%(count)s Anëtar",
         "other": "%(count)s Anëtarë"
     },
-    "Check if you want to hide all current and future messages from this user.": "I vini shenjë, nëse doni të fshihen krejt mesazhet e tanishme dhe të ardhshme nga ky përdorues.",
-    "Ignore user": "Shpërfille përdoruesin",
     "Open room": "Dhomë e hapët",
     "Hide my messages from new joiners": "Fshihni mesazhet e mi për ata që vijnë rishtas",
     "You will leave all rooms and DMs that you are in": "Do të braktisni krejt dhomat dhe MD-të ku merrni pjesë",
@@ -2782,8 +2745,6 @@
     "There are no active polls in this room": "S’ka pyetësorë aktivë në këtë dhomë",
     "Fetching keys from server…": "Po sillen kyçet prej shërbyesi…",
     "Checking…": "Po kontrollohet…",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Kjo dhomë merret me lëndë të paligjshme ose toksike, ose moderatorët nuk moderojnë lëndë të paligjshme ose toksike.\nKjo do t’u njoftohet përgjegjësve të %(homeserver)s.",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "Ky përdorues po tregon sjellje toksike, bie fjala, duke fyer përdorues të tjerë ose duke dhënë lëndë vetëm për të rritur në një dhomë të menduar për familje, ose duke shkelur në mënyra të tjera rregullat e kësaj dhome.\nKjo do t’u njoftohet moderatorëve të dhomës.",
     "Waiting for partner to confirm…": "Po pritet ripohimi nga partneri…",
     "Adding…": "Po shtohet…",
     "Write something…": "Shkruani diçka…",
@@ -2881,7 +2842,6 @@
     "No identity access token found": "S’u gjet token hyrjeje identiteti",
     "Identity server not set": "Shërbyes identitetesh i paujdisur",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Pa një shërbyes identitetesh, s’mund të ftohet përdorues përmes email-i. Me një të tillë mund të lidheni që prej “Rregullimeve”.",
-    "Unable to create room with moderation bot": "S’arrihet të krijohet dhomë me robot moderimi",
     "Failed to download source media, no source url was found": "S’u arrit të shkarkohet media burim, s’u gjet URL burimi",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Pasi përdoruesit e ftuar të kenë ardhur në %(brand)s, do të jeni në gjendje të bisedoni dhe dhoma do të jetë e fshehtëzuar skaj-më-skaj",
     "Waiting for users to join %(brand)s": "Po pritet që përdorues të vijnë në %(brand)s",
@@ -3077,7 +3037,16 @@
         "clear": "Spastroje"
     },
     "a11y": {
-        "user_menu": "Menu përdoruesi"
+        "user_menu": "Menu përdoruesi",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s mesazhe të palexuar, përfshi përmendje.",
+            "one": "1 përmendje e palexuar."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s mesazhe të palexuar.",
+            "one": "1 mesazh i palexuar."
+        },
+        "unread_messages": "Mesazhe të palexuar."
     },
     "labs": {
         "video_rooms": "Dhoma me video",
@@ -3994,5 +3963,40 @@
         "sso": "Hyrje Njëshe",
         "reset_password_action": "Ricaktoni fjalëkalimin",
         "reset_password_title": "Ricaktoni fjalëkalimin tuaj"
+    },
+    "room_list": {
+        "sort_unread_first": "Së pari shfaq dhoma me mesazhe të palexuar",
+        "show_previews": "Shfaq paraparje mesazhesh",
+        "sort_by": "Renditi sipas",
+        "sort_by_activity": "Veprimtari",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Mundësi liste",
+        "show_n_more": {
+            "other": "Shfaq %(count)s të tjera",
+            "one": "Shfaq %(count)s tjetër"
+        },
+        "show_less": "Shfaq më pak",
+        "notification_options": "Mundësi njoftimesh"
+    },
+    "report_content": {
+        "missing_reason": "Ju lutemi, plotësoni arsyen pse po raportoni.",
+        "unable_create_room_moderation_bot": "S’arrihet të krijohet dhomë me robot moderimi",
+        "ignore_user": "Shpërfille përdoruesin",
+        "hide_messages_from_user": "I vini shenjë, nëse doni të fshihen krejt mesazhet e tanishme dhe të ardhshme nga ky përdorues.",
+        "nature_disagreement": "Ajo ç’shkruan ky përdorues është gabim.\nKjo do t’u njoftohet përgjegjësve të dhomës.",
+        "nature_toxic": "Ky përdorues po tregon sjellje toksike, bie fjala, duke fyer përdorues të tjerë ose duke dhënë lëndë vetëm për të rritur në një dhomë të menduar për familje, ose duke shkelur në mënyra të tjera rregullat e kësaj dhome.\nKjo do t’u njoftohet moderatorëve të dhomës.",
+        "nature_illegal": "Ky përdorues shfaq sjellje të paligjshme, bie fjala, duke zbuluar identitet personash ose duke kërcënuar me dhunë.\nKjo do t’u njoftohet përgjegjësve të dhomës, të cilët mund ta përshkallëzojnë punën drejt autoriteteve ligjore.",
+        "nature_spam": "Ky përdorues dërgon në dhomë reklama të padëshiruara, lidhje për te reklama të tilla ose te propagandë e padëshiruar.\nKjo do t’u njoftohet përgjegjësve të dhomës.",
+        "report_to_homeserver_encrypted": "Kjo dhomë merret me lëndë të paligjshme ose toksike, ose moderatorët nuk moderojnë lëndë të paligjshme ose toksike.\nKjo do t’u njoftohet përgjegjësve të %(homeserver)s. Përgjegjësit NUK do të jenë në gjendje të lexojnë lëndë të fshehtëzuar të kësaj dhome.",
+        "report_to_homeserver": "Kjo dhomë merret me lëndë të paligjshme ose toksike, ose moderatorët nuk moderojnë lëndë të paligjshme ose toksike.\nKjo do t’u njoftohet përgjegjësve të %(homeserver)s.",
+        "nature_other": "Çfarëdo arsye tjetër. Ju lutemi, përshkruani problemin.\nKjo do t’u raportohet moderatorëve të dhomës.",
+        "nature": "Ju lutemi, zgjidhni një karakterizim dhe përshkruani se ç’e bën këtë mesazh abuziv.",
+        "disagree": "S’pajtohem",
+        "toxic_behaviour": "Sjellje Toksike",
+        "illegal_content": "Lëndë e Paligjshme",
+        "spam_or_propaganda": "Mesazh i padëshiruar ose propagandë",
+        "report_entire_room": "Raporto krejt dhomën",
+        "report_content_to_homeserver": "Raportoni Lëndë te Përgjegjësi i Shërbyesit Tuaj Home",
+        "description": "Raportimi i këtij mesazhi do të shkaktojë dërgimin e 'ID-së së aktit' unike te përgjegjësi i shërbyesit tuaj Home. Nëse mesazhet në këtë dhomë fshehtëzohen, përgjegjësi i shërbyesit tuaj Home s’do të jetë në gjendje të lexojë tekstin e mesazhit apo të shohë çfarëdo kartelë apo figurë."
     }
 }

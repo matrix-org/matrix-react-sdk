@@ -505,7 +505,6 @@
     "The server has denied your request.": "سرور درخواست شما را رد کرده است.",
     "Use your Security Key to continue.": "برای ادامه از کلید امنیتی خود استفاده کنید.",
     "%(creator)s created and configured the room.": "%(creator)s اتاق را ایجاد و پیکربندی کرد.",
-    "Report Content to Your Homeserver Administrator": "گزارش محتوا به مدیر سرور خود",
     "Be found by phone or email": "از طریق تلفن یا ایمیل پیدا شوید",
     "Find others by phone or email": "دیگران را از طریق تلفن یا ایمیل پیدا کنید",
     "Sign out and remove encryption keys?": "خروج از حساب کاربری و حذف کلیدهای رمزنگاری؟",
@@ -521,7 +520,6 @@
     "a new cross-signing key signature": "یک کلید امضای متقابل جدید",
     "a new master key signature": "یک شاه‌کلید جدید",
     "Close dialog or context menu": "بستن پنجره یا منوی محتوا",
-    "Please fill why you're reporting.": "لطفا توضیح دهید که چرا گزارش می‌دهید.",
     "Password is allowed, but unsafe": "گذرواژه مجاز است ، اما ناامن است",
     "Upload files (%(current)s of %(total)s)": "بارگذاری فایل‌ها (%(current)s از %(total)s)",
     "Failed to decrypt %(failedCount)s sessions!": "رمزگشایی %(failedCount)s نشست موفقیت‌آمیز نبود!",
@@ -920,18 +918,8 @@
     "Room avatar": "آواتار اتاق",
     "Room Topic": "موضوع اتاق",
     "Room Name": "نام اتاق",
-    "Show %(count)s more": {
-        "other": "نمایش %(count)s مورد بیشتر",
-        "one": "نمایش %(count)s مورد بیشتر"
-    },
     "Jump to first invite.": "به اولین دعوت بروید.",
     "Jump to first unread room.": "به اولین اتاق خوانده نشده بروید.",
-    "List options": "لیست گزینه‌ها",
-    "A-Z": "حروف الفبا",
-    "Activity": "فعالیت",
-    "Sort by": "مرتب سازی بر اساس",
-    "Show previews of messages": "مشاهده پیش‌نمایش پیام‌ها",
-    "Show rooms with unread messages first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
     "%(roomName)s is not accessible at this time.": "در حال حاضر %(roomName)s قابل دسترسی نیست.",
     "%(roomName)s does not exist.": "%(roomName)s وجود ندارد.",
     "%(roomName)s can't be previewed. Do you want to join it?": "پیش بینی %(roomName)s امکان پذیر نیست. آیا می خواهید به آن بپیوندید؟",
@@ -1275,20 +1263,9 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "این اتاق از نسخه اتاق <roomVersion /> استفاده می کند، که این سرور آن را به عنوان <i> ناپایدار</i> علامت گذاری کرده است.",
     "This room has already been upgraded.": "این اتاق قبلاً ارتقا یافته است.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "با ارتقا این اتاق نسخه فعلی اتاق خاموش شده و یک اتاق ارتقا یافته به همین نام ایجاد می شود.",
-    "Unread messages.": "پیام های خوانده نشده.",
-    "%(count)s unread messages.": {
-        "one": "۱ پیام خوانده نشده.",
-        "other": "%(count)s پیام خوانده نشده."
-    },
-    "%(count)s unread messages including mentions.": {
-        "one": "۱ اشاره خوانده نشده.",
-        "other": "%(count)s پیام‌های خوانده نشده از جمله اشاره‌ها."
-    },
     "Room options": "تنظیمات اتاق",
     "Favourited": "مورد علاقه",
     "Forget Room": "اتاق را فراموش کن",
-    "Notification options": "تنظیمات اعلان",
-    "Show less": "نمایش کمتر",
     "exists": "وجود دارد",
     "Homeserver feature support:": "قابلیت‌های پشتیبانی‌شده سمت سرور:",
     "User signing private key:": "کلید امضاء خصوصی کاربر:",
@@ -1790,7 +1767,6 @@
     "Create a new room with the same name, description and avatar": "یک اتاق جدید با همان نام ، توضیحات و نمایه ایجاد کنید",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "ارتقاء این اتاق نیازمند بستن نسخه‌ی فعلی و ساختن درجای یک اتاق جدید است. برای داشتن بهترین تجربه‌ی کاربری ممکن، ما:",
     "The room upgrade could not be completed": "متاسفانه فرآیند ارتقاء اتاق به پایان نرسید",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "گزارش این پیام شناسه‌ی منحصر به فرد رخداد آن را برای مدیر سرور ارسال می‌کند. اگر پیام‌های این اتاق رمزشده باشند، مدیر سرور شما امکان خواندن متن آن پیام یا مشاهده‌ی عکس یا فایل‌های دیگر را نخواهد داشت.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "حواستان را جمع کنید، اگر ایمیلی اضافه نکرده و گذرواژه‌ی خود را فراموش کنید ، ممکن است <b>دسترسی به حساب کاربری خود را برای همیشه از دست دهید</b>.",
     "Doesn't look like a valid email address": "به نظر نمی‌رسد یک آدرس ایمیل معتبر باشد",
     "If they don't match, the security of your communication may be compromised.": "اگر آنها مطابقت نداشته‌باشند ، ممکن است امنیت ارتباطات شما به خطر افتاده باشد.",
@@ -2137,7 +2113,16 @@
         "send_report": "ارسال گزارش"
     },
     "a11y": {
-        "user_menu": "منوی کاربر"
+        "user_menu": "منوی کاربر",
+        "n_unread_messages_mentions": {
+            "one": "۱ اشاره خوانده نشده.",
+            "other": "%(count)s پیام‌های خوانده نشده از جمله اشاره‌ها."
+        },
+        "n_unread_messages": {
+            "one": "۱ پیام خوانده نشده.",
+            "other": "%(count)s پیام خوانده نشده."
+        },
+        "unread_messages": "پیام های خوانده نشده."
     },
     "labs": {
         "video_rooms": "اتاق های تصویری",
@@ -2750,5 +2735,24 @@
         "continue_with_idp": "با %(provider)s ادامه دهید",
         "sign_in_with_sso": "با احراز هویت یکپارچه وارد شوید",
         "sso": "ورود یکپارچه"
+    },
+    "room_list": {
+        "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
+        "show_previews": "مشاهده پیش‌نمایش پیام‌ها",
+        "sort_by": "مرتب سازی بر اساس",
+        "sort_by_activity": "فعالیت",
+        "sort_by_alphabet": "حروف الفبا",
+        "sublist_options": "لیست گزینه‌ها",
+        "show_n_more": {
+            "other": "نمایش %(count)s مورد بیشتر",
+            "one": "نمایش %(count)s مورد بیشتر"
+        },
+        "show_less": "نمایش کمتر",
+        "notification_options": "تنظیمات اعلان"
+    },
+    "report_content": {
+        "missing_reason": "لطفا توضیح دهید که چرا گزارش می‌دهید.",
+        "report_content_to_homeserver": "گزارش محتوا به مدیر سرور خود",
+        "description": "گزارش این پیام شناسه‌ی منحصر به فرد رخداد آن را برای مدیر سرور ارسال می‌کند. اگر پیام‌های این اتاق رمزشده باشند، مدیر سرور شما امکان خواندن متن آن پیام یا مشاهده‌ی عکس یا فایل‌های دیگر را نخواهد داشت."
     }
 }

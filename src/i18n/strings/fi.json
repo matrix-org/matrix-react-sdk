@@ -731,9 +731,6 @@
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Suuren viestimäärän tapauksessa toiminto voi kestää jonkin aikaa. Älä lataa asiakasohjelmaasi uudelleen sillä aikaa.",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Aseta identiteettipalvelin asetuksissa saadaksesi kutsuja suoraan %(brand)sissa.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Jaa tämä sähköposti asetuksissa saadaksesi kutsuja suoraan %(brand)sissa.",
-    "Please fill why you're reporting.": "Kerro miksi teet ilmoitusta.",
-    "Report Content to Your Homeserver Administrator": "Ilmoita sisällöstä kotipalvelimesi ylläpitäjälle",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Tämän viestin ilmoittaminen lähettää sen yksilöllisen tapahtumatunnuksen (event ID) kotipalvelimesi ylläpitäjälle. Jos tämän huoneen viestit on salattu, kotipalvelimesi ylläpitäjä ei voi lukea viestin tekstiä tai nähdä tiedostoja tai kuvia.",
     "Explore rooms": "Selaa huoneita",
     "Unable to revoke sharing for phone number": "Puhelinnumeron jakamista ei voi kumota",
     "Deactivate user?": "Poista käyttäjä pysyvästi?",
@@ -744,14 +741,6 @@
     "Please enter a name for the room": "Syötä huoneelle nimi",
     "Topic (optional)": "Aihe (valinnainen)",
     "Clear cache and reload": "Tyhjennä välimuisti ja lataa uudelleen",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s lukematonta viestiä, sisältäen maininnat.",
-        "one": "Yksi lukematon maininta."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s lukematonta viestiä.",
-        "one": "Yksi lukematon viesti."
-    },
     "Show image": "Näytä kuva",
     "Close dialog": "Sulje dialogi",
     "To continue you need to accept the terms of this service.": "Sinun täytyy hyväksyä palvelun käyttöehdot jatkaaksesi.",
@@ -788,7 +777,6 @@
     "eg: @bot:* or example.org": "esim. @bot:* tai esimerkki.org",
     "Your email address hasn't been verified yet": "Sähköpostiosoitettasi ei ole vielä varmistettu",
     "Verify the link in your inbox": "Varmista sähköpostiisi saapunut linkki",
-    "Unread messages.": "Lukemattomat viestit.",
     "Message Actions": "Viestitoiminnot",
     "None": "Ei mitään",
     "View rules": "Näytä säännöt",
@@ -889,7 +877,6 @@
     "Cancel entering passphrase?": "Peruuta salasanan syöttäminen?",
     "Encryption upgrade available": "Salauksen päivitys saatavilla",
     "Later": "Myöhemmin",
-    "Show less": "Näytä vähemmän",
     "in memory": "muistissa",
     "Bridges": "Sillat",
     "Unknown Command": "Tuntematon komento",
@@ -1094,7 +1081,6 @@
     "This address is available to use": "Tämä osoite on käytettävissä",
     "This address is already in use": "Tämä osoite on jo käytössä",
     "No recently visited rooms": "Ei hiljattain vierailtuja huoneita",
-    "Sort by": "Lajittelutapa",
     "Switch to light mode": "Vaihda vaaleaan teemaan",
     "Switch to dark mode": "Vaihda tummaan teemaan",
     "Switch theme": "Vaihda teemaa",
@@ -1102,7 +1088,6 @@
     "Feedback": "Palaute",
     "Looks good!": "Hyvältä näyttää!",
     "Use custom size": "Käytä mukautettua kokoa",
-    "Notification options": "Ilmoitusasetukset",
     "Room options": "Huoneen asetukset",
     "This room is public": "Tämä huone on julkinen",
     "Video conference started by %(senderName)s": "%(senderName)s aloitti ryhmävideopuhelun",
@@ -1113,10 +1098,6 @@
     "Wrong file type": "Väärä tiedostotyyppi",
     "Room address": "Huoneen osoite",
     "Message deleted on %(date)s": "Viesti poistettu %(date)s",
-    "Show %(count)s more": {
-        "one": "Näytä %(count)s lisää",
-        "other": "Näytä %(count)s lisää"
-    },
     "Read Marker off-screen lifetime (ms)": "Viestin luetuksi merkkaamisen kesto, kun Element ei ole näkyvissä (ms)",
     "Add widgets, bridges & bots": "Lisää sovelmia, siltoja ja botteja",
     "Edit widgets, bridges & bots": "Muokkaa sovelmia, siltoja ja botteja",
@@ -1139,8 +1120,6 @@
     "Click to view edits": "Napsauta nähdäksesi muokkaukset",
     "Edited at %(date)s": "Muokattu %(date)s",
     "Forget Room": "Unohda huone",
-    "Show previews of messages": "Näytä viestien esikatselut",
-    "Show rooms with unread messages first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
     "This is the start of <roomName/>.": "Tästä alkaa <roomName/>.",
     "%(displayName)s created this room.": "%(displayName)s loi tämän huoneen.",
     "You created this room.": "Loit tämän huoneen.",
@@ -1348,9 +1327,6 @@
     "Hide Widgets": "Piilota sovelmat",
     "Show Widgets": "Näytä sovelmat",
     "Explore public rooms": "Selaa julkisia huoneita",
-    "List options": "Lajittele",
-    "Activity": "Aktiivisuus",
-    "A-Z": "A-Ö",
     "Server Options": "Palvelinasetukset",
     "Information": "Tiedot",
     "Zimbabwe": "Zimbabwe",
@@ -1671,7 +1647,6 @@
     "Show preview": "Näytä esikatselu",
     "View source": "Näytä lähde",
     "Settings - %(spaceName)s": "Asetukset - %(spaceName)s",
-    "Report the entire room": "Raportoi koko huone",
     "Search spaces": "Etsi avaruuksia",
     "You may contact me if you have any follow up questions": "Voitte olla yhteydessä minuun, jos teillä on lisäkysymyksiä",
     "Search for rooms or people": "Etsi huoneita tai ihmisiä",
@@ -1797,7 +1772,6 @@
     "Who are you working with?": "Kenen kanssa työskentelet?",
     "Results": "Tulokset",
     "Suggested": "Ehdotettu",
-    "Illegal Content": "Laiton sisältö",
     "You won't be able to rejoin unless you are re-invited.": "Et voi liittyä uudelleen, ellei sinua kutsuta uudelleen.",
     "User Directory": "Käyttäjähakemisto",
     "MB": "Mt",
@@ -2104,8 +2078,6 @@
     "Link to room": "Linkitä huoneeseen",
     "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org on maailman suurin julkinen kotipalvelin, joten se on hyvä valinta useimmille.",
     "Automatically invite members from this room to the new one": "Kutsu jäsenet tästä huoneesta automaattisesti uuteen huoneeseen",
-    "Spam or propaganda": "Roskapostitusta tai propagandaa",
-    "Toxic Behaviour": "Myrkyllinen käyttäytyminen",
     "Feedback sent! Thanks, we appreciate it!": "Palaute lähetetty. Kiitos, arvostamme sitä!",
     "%(featureName)s Beta feedback": "Ominaisuuden %(featureName)s beetapalaute",
     "Including you, %(commaSeparatedMembers)s": "Mukaan lukien sinä, %(commaSeparatedMembers)s",
@@ -2117,7 +2089,6 @@
     "Copy room link": "Kopioi huoneen linkki",
     "New video room": "Uusi videohuone",
     "New room": "Uusi huone",
-    "Ignore user": "Sivuuta käyttäjä",
     "You don't have permission to do this": "Sinulla ei ole lupaa tehdä tätä",
     "Failed to end poll": "Kyselyn päättäminen epäonnistui",
     "Hide my messages from new joiners": "Piilota viestini uusilta liittyjiltä",
@@ -2844,7 +2815,16 @@
         "clear": "Tyhjennä"
     },
     "a11y": {
-        "user_menu": "Käyttäjän valikko"
+        "user_menu": "Käyttäjän valikko",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s lukematonta viestiä, sisältäen maininnat.",
+            "one": "Yksi lukematon maininta."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s lukematonta viestiä.",
+            "one": "Yksi lukematon viesti."
+        },
+        "unread_messages": "Lukemattomat viestit."
     },
     "labs": {
         "video_rooms": "Videohuoneet",
@@ -3698,5 +3678,29 @@
         "sso": "Kertakirjautuminen",
         "reset_password_action": "Nollaa salasana",
         "reset_password_title": "Nollaa salasanasi"
+    },
+    "room_list": {
+        "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
+        "show_previews": "Näytä viestien esikatselut",
+        "sort_by": "Lajittelutapa",
+        "sort_by_activity": "Aktiivisuus",
+        "sort_by_alphabet": "A-Ö",
+        "sublist_options": "Lajittele",
+        "show_n_more": {
+            "one": "Näytä %(count)s lisää",
+            "other": "Näytä %(count)s lisää"
+        },
+        "show_less": "Näytä vähemmän",
+        "notification_options": "Ilmoitusasetukset"
+    },
+    "report_content": {
+        "missing_reason": "Kerro miksi teet ilmoitusta.",
+        "ignore_user": "Sivuuta käyttäjä",
+        "toxic_behaviour": "Myrkyllinen käyttäytyminen",
+        "illegal_content": "Laiton sisältö",
+        "spam_or_propaganda": "Roskapostitusta tai propagandaa",
+        "report_entire_room": "Raportoi koko huone",
+        "report_content_to_homeserver": "Ilmoita sisällöstä kotipalvelimesi ylläpitäjälle",
+        "description": "Tämän viestin ilmoittaminen lähettää sen yksilöllisen tapahtumatunnuksen (event ID) kotipalvelimesi ylläpitäjälle. Jos tämän huoneen viestit on salattu, kotipalvelimesi ylläpitäjä ei voi lukea viestin tekstiä tai nähdä tiedostoja tai kuvia."
     }
 }

@@ -1307,12 +1307,6 @@
     "The room upgrade could not be completed": "Δεν ήταν δυνατή η ολοκλήρωση της αναβάθμισης δωματίου",
     "Failed to upgrade room": "Αποτυχία αναβάθμισης δωματίου",
     "Room Settings - %(roomName)s": "Ρυθμίσεις Δωματίου - %(roomName)s",
-    "Report Content to Your Homeserver Administrator": "Αναφορά Περιεχομένου στον Διαχειριστή του Διακομιστή σας",
-    "Report the entire room": "Αναφορά ολόκληρου του δωματίου",
-    "Spam or propaganda": "Spam ή προπαγάνδα",
-    "Illegal Content": "Παράνομο Περιεχόμενο",
-    "Toxic Behaviour": "Τοξική Συμπεριφορά",
-    "Disagree": "Διαφωνώ",
     "Email (optional)": "Email (προαιρετικό)",
     "You were banned from %(roomName)s by %(memberName)s": "Έχετε αποκλειστεί από το %(roomName)s από τον %(memberName)s",
     "Re-join": "Επανασύνδεση",
@@ -1485,29 +1479,8 @@
     "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Το Matrix.org είναι ο μεγαλύτερος δημόσιος διακομιστής στον κόσμο, επομένως είναι ένα καλό μέρος για να ξεκινήσετε.",
     "Specify a homeserver": "Καθορίστε τον κεντρικό διακομιστή σας",
     "Invalid URL": "Μη έγκυρο URL",
-    "Unread messages.": "Μη αναγνωσμένα μηνύματα.",
-    "%(count)s unread messages.": {
-        "one": "1 μη αναγνωσμένο μήνυμα.",
-        "other": "%(count)s μη αναγνωσμένα μηνύματα."
-    },
-    "%(count)s unread messages including mentions.": {
-        "one": "1 μη αναγνωσμένη αναφορά.",
-        "other": "%(count)s μη αναγνωσμένα μηνύματα συμπεριλαμβανομένων των αναφορών."
-    },
     "Copy room link": "Αντιγραφή συνδέσμου δωματίου",
     "Forget Room": "Ξεχάστε το δωμάτιο",
-    "Notification options": "Επιλογές ειδοποίησης",
-    "Show less": "Εμφάνιση λιγότερων",
-    "Show %(count)s more": {
-        "one": "Εμφάνιση %(count)s περισσότερων",
-        "other": "Εμφάνιση %(count)s περισσότερων"
-    },
-    "List options": "Επιλογές λίστας",
-    "A-Z": "Α-Ω",
-    "Activity": "Δραστηριότητα",
-    "Sort by": "Ταξινόμηση κατά",
-    "Show previews of messages": "Εμφάνιση προεπισκοπήσεων μηνυμάτων",
-    "Show rooms with unread messages first": "Εμφάνιση δωματίων με μη αναγνωσμένα μηνύματα πρώτα",
     "%(roomName)s can't be previewed. Do you want to join it?": "Δεν είναι δυνατή η προεπισκόπηση του %(roomName)s. Θέλετε να συμμετάσχετε;",
     "You're previewing %(roomName)s. Want to join it?": "Κάνετε προεπισκόπηση στο %(roomName)s. Θέλετε να συμμετάσχετε;",
     "Reject & Ignore user": "Απόρριψη & Παράβλεψη χρήστη",
@@ -2205,13 +2178,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Αυτό συνήθως επηρεάζει μόνο τον τρόπο επεξεργασίας του δωματίου στον διακομιστή. Εάν αντιμετωπίζετε προβλήματα με το %(brand)s σας, <a>αναφέρετε ένα σφάλμα</a>.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Αυτό συνήθως επηρεάζει μόνο τον τρόπο επεξεργασίας του δωματίου στον διακομιστή. Εάν αντιμετωπίζετε προβλήματα με το %(brand)s σας, αναφέρετε ένα σφάλμα.",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Η αναβάθμιση αυτού του δωματίου απαιτεί τη διαγραφή του και τη δημιουργία ενός νέου δωματίου στη θέση του. Για να προσφέρουμε στα μέλη του την καλύτερη δυνατή εμπειρία, θα:",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Η αναφορά αυτού του μηνύματος θα στείλει το μοναδικό «αναγνωριστικό συμβάντος» στον διαχειριστή του διακομιστή σας. Εάν τα μηνύματα σε αυτό το δωμάτιο είναι κρυπτογραφημένα, ο διαχειριστής του διακομιστή σας δε θα μπορεί να διαβάσει το κείμενο του μηνύματος ή να προβάλει αρχεία και εικόνες.",
-    "Please pick a nature and describe what makes this message abusive.": "Παρακαλώ επιλέξτε το είδος και περιγράψτε τι κάνει αυτό το μήνυμα καταχρηστικό.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Οποιοσδήποτε άλλος λόγος. Παρακαλώ περιγράψτε το πρόβλημα.\nΑυτό θα αναφερθεί στους συντονιστές του δωματίου.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Αυτός ο χρήστης στέλνει ανεπιθύμητα μηνύματα στην αίθουσα με διαφημίσεις, συνδέσμους προς διαφημίσεις ή προπαγάνδα.\nΑυτό θα αναφερθεί στους συντονιστές του δωματίου.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Αυτός ο χρήστης εμφανίζει παράνομη συμπεριφορά, για παράδειγμα, διαρρέει απόρρητες πληροφορίες ατόμων ή απειλεί με βία.\nΑυτό θα αναφερθεί στους συντονιστές του δωματίου, οι οποίοι ενδέχεται να το αναφέρουν στις αρμόδιες αρχές.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Αυτό που γράφει αυτός ο χρήστης είναι λάθος.\nΑυτό θα αναφερθεί στους συντονιστές του δωματίου.",
-    "Please fill why you're reporting.": "Παρακαλώ πείτε μας γιατί κάνετε αναφορά.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Μια προειδοποίηση, αν δεν προσθέσετε ένα email και ξεχάσετε τον κωδικό πρόσβασης, ενδέχεται να <b>χάσετε οριστικά την πρόσβαση στον λογαριασμό σας</b>.",
     "Incompatible local cache": "Μη συμβατή τοπική κρυφή μνήμη",
     "%(brand)s encountered an error during upload of:": "Το %(brand)s αντιμετώπισε ένα σφάλμα κατά τη μεταφόρτωση του:",
@@ -2260,7 +2226,6 @@
     "About homeservers": "Σχετικά με τους κεντρικούς διακομιστές",
     "Other homeserver": "Άλλος κεντρικός διακομιστής",
     "Unable to validate homeserver": "Δεν είναι δυνατή η επικύρωση του κεντρικού διακομιστή",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Αυτό το δωμάτιο είναι αφιερωμένο σε παράνομο ή τοξικό περιεχόμενο ή οι συντονιστές αποτυγχάνουν να μετριάσουν το παράνομο ή τοξικό περιεχόμενο.\nΑυτό θα αναφερθεί στους διαχειριστές του %(homeserver)s. Οι διαχειριστές ΔΕ θα μπορούν να διαβάσουν το κρυπτογραφημένο περιεχόμενο αυτού του δωματίου.",
     "The integration manager is offline or it cannot reach your homeserver.": "Ο διαχειριστής πρόσθετων είναι εκτός σύνδεσης ή δεν μπορεί να επικοινωνήσει με κεντρικό διακομιστή σας.",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Η μικροεφαρμογή θα επαληθεύσει το αναγνωριστικό χρήστη σας, αλλά δε θα μπορεί να εκτελέσει ενέργειες για εσάς:",
     "Allow this widget to verify your identity": "Επιτρέψτε σε αυτήν τη μικροεφαρμογή να επαληθεύσει την ταυτότητά σας",
@@ -2618,7 +2583,16 @@
         "clear": "Καθαρισμός"
     },
     "a11y": {
-        "user_menu": "Μενού χρήστη"
+        "user_menu": "Μενού χρήστη",
+        "n_unread_messages_mentions": {
+            "one": "1 μη αναγνωσμένη αναφορά.",
+            "other": "%(count)s μη αναγνωσμένα μηνύματα συμπεριλαμβανομένων των αναφορών."
+        },
+        "n_unread_messages": {
+            "one": "1 μη αναγνωσμένο μήνυμα.",
+            "other": "%(count)s μη αναγνωσμένα μηνύματα."
+        },
+        "unread_messages": "Μη αναγνωσμένα μηνύματα."
     },
     "labs": {
         "video_rooms": "Δωμάτια βίντεο",
@@ -3406,5 +3380,35 @@
         "continue_with_idp": "Συνεχίστε με %(provider)s",
         "sign_in_with_sso": "Συνδεθείτε με απλή σύνδεση",
         "sso": "Single Sign On"
+    },
+    "room_list": {
+        "sort_unread_first": "Εμφάνιση δωματίων με μη αναγνωσμένα μηνύματα πρώτα",
+        "show_previews": "Εμφάνιση προεπισκοπήσεων μηνυμάτων",
+        "sort_by": "Ταξινόμηση κατά",
+        "sort_by_activity": "Δραστηριότητα",
+        "sort_by_alphabet": "Α-Ω",
+        "sublist_options": "Επιλογές λίστας",
+        "show_n_more": {
+            "one": "Εμφάνιση %(count)s περισσότερων",
+            "other": "Εμφάνιση %(count)s περισσότερων"
+        },
+        "show_less": "Εμφάνιση λιγότερων",
+        "notification_options": "Επιλογές ειδοποίησης"
+    },
+    "report_content": {
+        "missing_reason": "Παρακαλώ πείτε μας γιατί κάνετε αναφορά.",
+        "nature_disagreement": "Αυτό που γράφει αυτός ο χρήστης είναι λάθος.\nΑυτό θα αναφερθεί στους συντονιστές του δωματίου.",
+        "nature_illegal": "Αυτός ο χρήστης εμφανίζει παράνομη συμπεριφορά, για παράδειγμα, διαρρέει απόρρητες πληροφορίες ατόμων ή απειλεί με βία.\nΑυτό θα αναφερθεί στους συντονιστές του δωματίου, οι οποίοι ενδέχεται να το αναφέρουν στις αρμόδιες αρχές.",
+        "nature_spam": "Αυτός ο χρήστης στέλνει ανεπιθύμητα μηνύματα στην αίθουσα με διαφημίσεις, συνδέσμους προς διαφημίσεις ή προπαγάνδα.\nΑυτό θα αναφερθεί στους συντονιστές του δωματίου.",
+        "report_to_homeserver_encrypted": "Αυτό το δωμάτιο είναι αφιερωμένο σε παράνομο ή τοξικό περιεχόμενο ή οι συντονιστές αποτυγχάνουν να μετριάσουν το παράνομο ή τοξικό περιεχόμενο.\nΑυτό θα αναφερθεί στους διαχειριστές του %(homeserver)s. Οι διαχειριστές ΔΕ θα μπορούν να διαβάσουν το κρυπτογραφημένο περιεχόμενο αυτού του δωματίου.",
+        "nature_other": "Οποιοσδήποτε άλλος λόγος. Παρακαλώ περιγράψτε το πρόβλημα.\nΑυτό θα αναφερθεί στους συντονιστές του δωματίου.",
+        "nature": "Παρακαλώ επιλέξτε το είδος και περιγράψτε τι κάνει αυτό το μήνυμα καταχρηστικό.",
+        "disagree": "Διαφωνώ",
+        "toxic_behaviour": "Τοξική Συμπεριφορά",
+        "illegal_content": "Παράνομο Περιεχόμενο",
+        "spam_or_propaganda": "Spam ή προπαγάνδα",
+        "report_entire_room": "Αναφορά ολόκληρου του δωματίου",
+        "report_content_to_homeserver": "Αναφορά Περιεχομένου στον Διαχειριστή του Διακομιστή σας",
+        "description": "Η αναφορά αυτού του μηνύματος θα στείλει το μοναδικό «αναγνωριστικό συμβάντος» στον διαχειριστή του διακομιστή σας. Εάν τα μηνύματα σε αυτό το δωμάτιο είναι κρυπτογραφημένα, ο διαχειριστής του διακομιστή σας δε θα μπορεί να διαβάσει το κείμενο του μηνύματος ή να προβάλει αρχεία και εικόνες."
     }
 }

@@ -568,7 +568,6 @@
     "Accept <policyLink /> to continue:": "Acepta <policyLink /> para continuar:",
     "This bridge was provisioned by <user />.": "Esta ponte está proporcionada por <user />.",
     "This bridge is managed by <user />.": "Esta ponte está xestionada por <user />.",
-    "Show less": "Mostrar menos",
     "Show more": "Mostrar máis",
     "Your homeserver does not support cross-signing.": "O teu servidor non soporta a sinatura cruzada.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "A túa conta ten unha identidade de sinatura cruzada no almacenaxe segredo, pero aínda non confiaches nela nesta sesión.",
@@ -757,25 +756,8 @@
     "Start chatting": "Comeza a conversa",
     "<userName/> invited you": "<userName/> convidoute",
     "Reject & Ignore user": "Rexeitar e Ignorar usuaria",
-    "Sort by": "Orde por",
-    "Activity": "Actividade",
-    "A-Z": "A-Z",
     "Message preview": "Vista previa da mensaxe",
-    "List options": "Opcións da listaxe",
     "Add room": "Engadir sala",
-    "Show %(count)s more": {
-        "other": "Mostrar %(count)s máis",
-        "one": "Mostrar %(count)s máis"
-    },
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s mensaxes non lidas incluíndo mencións.",
-        "one": "1 mención non lida."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s mensaxe non lidas.",
-        "one": "1 mensaxe non lida."
-    },
-    "Unread messages.": "Mensaxes non lidas.",
     "Room options": "Opcións da Sala",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Ao actualizar a sala pecharás a instancia actual da sala e crearás unha versión mellorada co mesmo nome.",
     "This room has already been upgraded.": "Esta sala xa foi actualizada.",
@@ -985,9 +967,6 @@
     "Verify session": "Verificar sesión",
     "Your homeserver doesn't seem to support this feature.": "O servidor non semella soportar esta característica.",
     "Message edits": "Edicións da mensaxe",
-    "Please fill why you're reporting.": "Escribe a razón do informe.",
-    "Report Content to Your Homeserver Administrator": "Denuncia sobre contido á Administración do teu servidor",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Ao denunciar esta mensaxe vasnos enviar o seu 'event ID' único á administración do servidor. Se as mensaxes da sala están cifradas, a administración do servidor non poderá ler o texto da mensaxe ou ver imaxes ou ficheiros.",
     "Failed to upgrade room": "Fallou a actualización da sala",
     "The room upgrade could not be completed": "A actualización da sala non se completou",
     "Upgrade this room to version %(version)s": "Actualiza esta sala á versión %(version)s",
@@ -1172,13 +1151,10 @@
     "Confirm Security Phrase": "Confirma a Frase de Seguridade",
     "Save your Security Key": "Garda a Chave de Seguridade",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s non pode por na caché local de xeito as mensaxes cifradas cando usa un navegador web. Usa <desktopLink>%(brand)s Desktop</desktopLink> para que as mensaxes cifradas aparezan nos resultados.",
-    "Notification options": "Opcións de notificación",
     "Favourited": "Con marca de Favorita",
     "Forget Room": "Esquecer sala",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Se a outra versión de %(brand)s aínda está aberta noutra lapela, péchaa xa que usar %(brand)s no mesmo servidor con carga preguiceira activada e desactivada ao mesmo tempo causará problemas.",
     "This room is public": "Esta é unha sala pública",
-    "Show rooms with unread messages first": "Mostrar primeiro as salas con mensaxes sen ler",
-    "Show previews of messages": "Mostrar vista previa das mensaxes",
     "Edited at %(date)s": "Editado o %(date)s",
     "Click to view edits": "Preme para ver as edicións",
     "Are you sure you want to cancel entering passphrase?": "¿Estás seguro de que non queres escribir a frase de paso?",
@@ -1843,10 +1819,6 @@
     "Could not connect to identity server": "Non hai conexión co Servidor de Identidade",
     "Not a valid identity server (status code %(code)s)": "Servidor de Identidade non válido (código de estado %(code)s)",
     "Identity server URL must be HTTPS": "O URL do servidor de identidade debe comezar HTTPS",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Esta sala está dedicada a contido ilegal ou tóxico ou a moderación non modera os contidos tóxicos ou ilegais.\nEsto vaise denunciar ante a administración de %(homeserver)s. As administradoras NON poderán ler o contido cifrado desta sala.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Esta usuaria está facendo spam na sala con anuncios, ligazóns a anuncios ou propaganda.\nEsto vai ser denunciado ante a moderación da sala.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Esta usuaria está a comportarse dun xeito ilegal, por exemplo ameazando a persoas ou exhibindo violencia.\nEsto vaise denunciar ante a moderación da sala que podería presentar o caso ante as autoridades legais.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "O que escribe esta usuaria non é correcto.\nSerá denunciado á moderación da sala.",
     "User Directory": "Directorio de Usuarias",
     "Please provide an address": "Proporciona un enderezo",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Fallou a inicialización da busca de mensaxes, comproba <a>os axustes</a> para máis información",
@@ -1895,13 +1867,6 @@
     "Show preview": "Ver vista previa",
     "View source": "Ver fonte",
     "Settings - %(spaceName)s": "Axustes - %(spaceName)s",
-    "Report the entire room": "Denunciar a toda a sala",
-    "Spam or propaganda": "Spam ou propaganda",
-    "Illegal Content": "Contido ilegal",
-    "Toxic Behaviour": "Comportamento tóxico",
-    "Disagree": "En desacordo",
-    "Please pick a nature and describe what makes this message abusive.": "Escolle unha opción e describe a razón pola que esta é unha mensaxe abusiva.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Outra razón. Por favor, describe o problema.\nInformaremos disto á moderación da sala.",
     "The call is in an unknown state!": "Esta chamada ten un estado descoñecido!",
     "Call back": "Devolver a chamada",
     "No answer": "Sen resposta",
@@ -2456,8 +2421,6 @@
     "An error occurred whilst sharing your live location, please try again": "Algo fallou ao compartir a túa localización en directo, inténtao outra vez",
     "An error occurred whilst sharing your live location": "Algo fallou ao intentar compartir a túa localización en directo",
     "View related event": "Ver evento relacionado",
-    "Check if you want to hide all current and future messages from this user.": "Marcar para agochar as mensaxes actuais e futuras desta usuaria.",
-    "Ignore user": "Ignorar usuaria",
     "Click to read topic": "Preme para ler o tema",
     "Edit topic": "Editar asunto",
     "Joining…": "Entrando…",
@@ -2771,7 +2734,16 @@
         "clear": "Limpar"
     },
     "a11y": {
-        "user_menu": "Menú de usuaria"
+        "user_menu": "Menú de usuaria",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s mensaxes non lidas incluíndo mencións.",
+            "one": "1 mención non lida."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s mensaxe non lidas.",
+            "one": "1 mensaxe non lida."
+        },
+        "unread_messages": "Mensaxes non lidas."
     },
     "labs": {
         "video_rooms": "Salas de vídeo",
@@ -3621,5 +3593,37 @@
         "continue_with_idp": "Continuar con %(provider)s",
         "sign_in_with_sso": "Entrar usando Single Sign On",
         "sso": "Single Sign On"
+    },
+    "room_list": {
+        "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",
+        "show_previews": "Mostrar vista previa das mensaxes",
+        "sort_by": "Orde por",
+        "sort_by_activity": "Actividade",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Opcións da listaxe",
+        "show_n_more": {
+            "other": "Mostrar %(count)s máis",
+            "one": "Mostrar %(count)s máis"
+        },
+        "show_less": "Mostrar menos",
+        "notification_options": "Opcións de notificación"
+    },
+    "report_content": {
+        "missing_reason": "Escribe a razón do informe.",
+        "ignore_user": "Ignorar usuaria",
+        "hide_messages_from_user": "Marcar para agochar as mensaxes actuais e futuras desta usuaria.",
+        "nature_disagreement": "O que escribe esta usuaria non é correcto.\nSerá denunciado á moderación da sala.",
+        "nature_illegal": "Esta usuaria está a comportarse dun xeito ilegal, por exemplo ameazando a persoas ou exhibindo violencia.\nEsto vaise denunciar ante a moderación da sala que podería presentar o caso ante as autoridades legais.",
+        "nature_spam": "Esta usuaria está facendo spam na sala con anuncios, ligazóns a anuncios ou propaganda.\nEsto vai ser denunciado ante a moderación da sala.",
+        "report_to_homeserver_encrypted": "Esta sala está dedicada a contido ilegal ou tóxico ou a moderación non modera os contidos tóxicos ou ilegais.\nEsto vaise denunciar ante a administración de %(homeserver)s. As administradoras NON poderán ler o contido cifrado desta sala.",
+        "nature_other": "Outra razón. Por favor, describe o problema.\nInformaremos disto á moderación da sala.",
+        "nature": "Escolle unha opción e describe a razón pola que esta é unha mensaxe abusiva.",
+        "disagree": "En desacordo",
+        "toxic_behaviour": "Comportamento tóxico",
+        "illegal_content": "Contido ilegal",
+        "spam_or_propaganda": "Spam ou propaganda",
+        "report_entire_room": "Denunciar a toda a sala",
+        "report_content_to_homeserver": "Denuncia sobre contido á Administración do teu servidor",
+        "description": "Ao denunciar esta mensaxe vasnos enviar o seu 'event ID' único á administración do servidor. Se as mensaxes da sala están cifradas, a administración do servidor non poderá ler o texto da mensaxe ou ver imaxes ou ficheiros."
     }
 }

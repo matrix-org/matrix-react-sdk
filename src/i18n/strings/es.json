@@ -547,15 +547,6 @@
     "Accept <policyLink /> to continue:": "<policyLink />, acepta para continuar:",
     "Cannot connect to integration manager": "No se puede conectar al gestor de integraciones",
     "The integration manager is offline or it cannot reach your homeserver.": "El gestor de integraciones está desconectado o no puede conectar con su servidor.",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s mensajes sin leer incluyendo menciones.",
-        "one": "1 mención sin leer."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s mensajes sin leer.",
-        "one": "1 mensaje sin leer."
-    },
-    "Unread messages.": "Mensajes sin leer.",
     "Jump to first unread room.": "Saltar a la primera sala sin leer.",
     "You have %(count)s unread notifications in a prior version of this room.": {
         "other": "Tiene %(count)s notificaciones sin leer en una versión anterior de esta sala.",
@@ -571,7 +562,6 @@
     "Lock": "Bloquear",
     "Other users may not trust it": "Puede que otros usuarios no confíen en ella",
     "Later": "Más tarde",
-    "Show less": "Ver menos",
     "Show more": "Ver más",
     "in memory": "en memoria",
     "not found": "no encontrado",
@@ -598,8 +588,6 @@
     "You'll lose access to your encrypted messages": "Perderás acceso a tus mensajes cifrados",
     "Are you sure you want to sign out?": "¿Estás seguro de que quieres salir?",
     "Message edits": "Ediciones del mensaje",
-    "Please fill why you're reporting.": "Por favor, explica por qué estás denunciando.",
-    "Report Content to Your Homeserver Administrator": "Denunciar contenido al administrador de tu servidor base",
     "Room Settings - %(roomName)s": "Configuración de la sala - %(roomName)s",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Actualizar esta sala requiere cerrar la instancia actual de esta sala y crear una nueva sala en su lugar. Para dar a los miembros de la sala la mejor experiencia, haremos lo siguiente:",
     "Upgrade private room": "Actualizar sala privada",
@@ -976,7 +964,6 @@
     "Confirm this user's session by comparing the following with their User Settings:": "Confirma la sesión de este usuario comparando lo siguiente con su configuración:",
     "If they don't match, the security of your communication may be compromised.": "Si no coinciden, la seguridad de su comunicación puede estar comprometida.",
     "Your homeserver doesn't seem to support this feature.": "Tu servidor base no parece soportar esta funcionalidad.",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Denunciar este mensaje enviará su único «event ID al administrador de tu servidor base. Si los mensajes en esta sala están cifrados, el administrador de tu servidor no podrá leer el texto del mensaje ni ver ningún archivo o imagen.",
     "Command Help": "Ayuda del comando",
     "Verification Request": "Solicitud de verificación",
     "Restoring keys from backup": "Restaurando las claves desde copia de seguridad",
@@ -1070,17 +1057,6 @@
     "ready": "Listo",
     "not ready": "no está listo",
     "Room ID or address of ban list": "ID de sala o dirección de la lista de prohibición",
-    "Show rooms with unread messages first": "Colocar al principio las salas con mensajes sin leer",
-    "Show previews of messages": "Incluir una vista previa del último mensaje",
-    "Sort by": "Ordenar por",
-    "Activity": "Actividad",
-    "A-Z": "A-Z",
-    "List options": "Opciones de la lista",
-    "Show %(count)s more": {
-        "other": "Ver %(count)s más",
-        "one": "Ver %(count)s más"
-    },
-    "Notification options": "Ajustes de notificaciones",
     "Forget Room": "Olvidar sala",
     "Favourited": "Favorecido",
     "Room options": "Opciones de la sala",
@@ -1834,22 +1810,11 @@
     "Pinned messages": "Mensajes fijados",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Si tienes permisos, abre el menú de cualquier mensaje y selecciona <b>Fijar</b> para colocarlo aquí.",
     "Nothing pinned, yet": "Ningún mensaje fijado… todavía",
-    "Disagree": "No estoy de acuerdo",
     "Report": "Denunciar",
     "Collapse reply thread": "Ocultar respuestas",
     "Show preview": "Mostrar vista previa",
     "View source": "Ver código fuente",
     "Settings - %(spaceName)s": "Ajustes - %(spaceName)s",
-    "Report the entire room": "Denunciar la sala entera",
-    "Spam or propaganda": "Publicidad no deseada o propaganda",
-    "Illegal Content": "Contenido ilegal",
-    "Toxic Behaviour": "Comportamiento tóxico",
-    "Please pick a nature and describe what makes this message abusive.": "Por favor, escoge una categoría y explica por qué el mensaje es abusivo.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Otro motivo. Por favor, describe el problema.\nSe avisará a los moderadores de la sala.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Esta sala está dedicada a un tema ilegal o contenido tóxico, o los moderadores no están tomando medidas frente a este tipo de contenido.\nSe avisará a los administradores de %(homeserver)s, pero no podrán leer el contenido cifrado de la sala.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Esta persona está mandando publicidad no deseada o propaganda.\nSe avisará a los moderadores de la sala.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Esta persona está comportándose de manera posiblemente ilegal. Por ejemplo, amenazando con violencia física o con revelar datos personales.\nSe avisará a los moderadores de la sala, que podrían denunciar los hechos.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Lo que esta persona está escribiendo no está bien.\nSe avisará a los moderadores de la sala.",
     "Please provide an address": "Por favor, elige una dirección",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Ha fallado el sistema de búsqueda de mensajes. Comprueba <a>tus ajustes</a> para más información",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Elige una dirección para este espacio y los usuarios de tu servidor base (%(localDomain)s) podrán encontrarlo a través del buscador",
@@ -2462,9 +2427,7 @@
         "one": "%(count)s persona unida",
         "other": "%(count)s personas unidas"
     },
-    "Check if you want to hide all current and future messages from this user.": "Comprueba que realmente quieres ocultar todos los mensajes actuales y futuros de este usuario.",
     "View related event": "Ver evento relacionado",
-    "Ignore user": "Ignorar usuario",
     "Failed to set direct message tag": "Fallo al poner la etiqueta al mensaje directo",
     "Read receipts": "Acuses de recibo",
     "You were disconnected from the call. (Error: %(message)s)": "Te has desconectado de la llamada. (Error: %(message)s)",
@@ -3003,7 +2966,16 @@
         "clear": "Borrar"
     },
     "a11y": {
-        "user_menu": "Menú del Usuario"
+        "user_menu": "Menú del Usuario",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s mensajes sin leer incluyendo menciones.",
+            "one": "1 mención sin leer."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s mensajes sin leer.",
+            "one": "1 mensaje sin leer."
+        },
+        "unread_messages": "Mensajes sin leer."
     },
     "labs": {
         "video_rooms": "Salas de vídeo",
@@ -3907,5 +3879,37 @@
         "continue_with_idp": "Continuar con %(provider)s",
         "sign_in_with_sso": "Ingresar con un Registro Único",
         "sso": "Single Sign On"
+    },
+    "room_list": {
+        "sort_unread_first": "Colocar al principio las salas con mensajes sin leer",
+        "show_previews": "Incluir una vista previa del último mensaje",
+        "sort_by": "Ordenar por",
+        "sort_by_activity": "Actividad",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Opciones de la lista",
+        "show_n_more": {
+            "other": "Ver %(count)s más",
+            "one": "Ver %(count)s más"
+        },
+        "show_less": "Ver menos",
+        "notification_options": "Ajustes de notificaciones"
+    },
+    "report_content": {
+        "missing_reason": "Por favor, explica por qué estás denunciando.",
+        "ignore_user": "Ignorar usuario",
+        "hide_messages_from_user": "Comprueba que realmente quieres ocultar todos los mensajes actuales y futuros de este usuario.",
+        "nature_disagreement": "Lo que esta persona está escribiendo no está bien.\nSe avisará a los moderadores de la sala.",
+        "nature_illegal": "Esta persona está comportándose de manera posiblemente ilegal. Por ejemplo, amenazando con violencia física o con revelar datos personales.\nSe avisará a los moderadores de la sala, que podrían denunciar los hechos.",
+        "nature_spam": "Esta persona está mandando publicidad no deseada o propaganda.\nSe avisará a los moderadores de la sala.",
+        "report_to_homeserver_encrypted": "Esta sala está dedicada a un tema ilegal o contenido tóxico, o los moderadores no están tomando medidas frente a este tipo de contenido.\nSe avisará a los administradores de %(homeserver)s, pero no podrán leer el contenido cifrado de la sala.",
+        "nature_other": "Otro motivo. Por favor, describe el problema.\nSe avisará a los moderadores de la sala.",
+        "nature": "Por favor, escoge una categoría y explica por qué el mensaje es abusivo.",
+        "disagree": "No estoy de acuerdo",
+        "toxic_behaviour": "Comportamiento tóxico",
+        "illegal_content": "Contenido ilegal",
+        "spam_or_propaganda": "Publicidad no deseada o propaganda",
+        "report_entire_room": "Denunciar la sala entera",
+        "report_content_to_homeserver": "Denunciar contenido al administrador de tu servidor base",
+        "description": "Denunciar este mensaje enviará su único «event ID al administrador de tu servidor base. Si los mensajes en esta sala están cifrados, el administrador de tu servidor no podrá leer el texto del mensaje ni ver ningún archivo o imagen."
     }
 }

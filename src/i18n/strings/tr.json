@@ -297,8 +297,6 @@
     "Are you sure you want to sign out?": "Oturumdan çıkmak istediğinize emin misiniz?",
     "Your homeserver doesn't seem to support this feature.": "Ana sunucunuz bu özelliği desteklemiyor gözüküyor.",
     "Message edits": "Mesajları düzenle",
-    "Please fill why you're reporting.": "Lütfen neden raporlama yaptığınızı belirtin.",
-    "Report Content to Your Homeserver Administrator": "Ana Sunucu Yöneticinize İçeriği Raporlayın",
     "Room Settings - %(roomName)s": "Oda Ayarları - %(roomName)s",
     "Failed to upgrade room": "Oda güncelleme başarısız",
     "The room upgrade could not be completed": "Oda güncelleme tamamlanamadı",
@@ -552,11 +550,6 @@
     "Do you want to join %(roomName)s?": "%(roomName)s odasına katılmak ister misin?",
     "<userName/> invited you": "<userName/> davet etti",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s odasında önizleme yapılamaz. Katılmak ister misin?",
-    "%(count)s unread messages.": {
-        "other": "%(count)s okunmamış mesaj.",
-        "one": "1 okunmamış mesaj."
-    },
-    "Unread messages.": "Okunmamış mesajlar.",
     "This room has already been upgraded.": "Bu ıda zaten güncellenmiş.",
     "Only room administrators will see this warning": "Bu uyarıyı sadece oda yöneticileri görür",
     "Failed to connect to integration manager": "Entegrasyon yöneticisine bağlanma başarısız",
@@ -721,7 +714,6 @@
     "Waiting for %(displayName)s to verify…": "%(displayName)s ın doğrulaması için bekleniyor…",
     "Other users may not trust it": "Diğer kullanıcılar güvenmeyebilirler",
     "Later": "Sonra",
-    "Show less": "Daha az göster",
     "Show more": "Daha fazla göster",
     "in memory": "hafızada",
     "in secret storage": "sır deposunda",
@@ -791,10 +783,6 @@
     "Encrypted by an unverified session": "Doğrulanmamış bir oturum tarafından şifrelenmiş",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
     "Reject & Ignore user": "Kullanıcı Reddet & Yoksay",
-    "%(count)s unread messages including mentions.": {
-        "one": "1 okunmamış bahis.",
-        "other": "anmalar dahil okunmayan %(count)s mesaj."
-    },
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Davet geri çekilemiyor. Sunucu geçici bir problem yaşıyor olabilir yada daveti geri çekmek için gerekli izinlere sahip değilsin.",
     "Mark all as read": "Tümünü okunmuş olarak işaretle",
     "Incoming Verification Request": "Gelen Doğrulama İsteği",
@@ -1283,13 +1271,6 @@
     "with state key %(stateKey)s": "%(stateKey)s durum anahtarı ile",
     "Verify all users in a room to ensure it's secure.": "Güvenli olduğuna emin olmak için odadaki tüm kullanıcıları onaylayın.",
     "No recent messages by %(user)s found": "%(user)s kullanıcısın hiç yeni ileti yok",
-    "Show %(count)s more": {
-        "one": "%(count)s adet daha fazla göster",
-        "other": "%(count)s adet daha fazla göster"
-    },
-    "Activity": "Aktivite",
-    "Show previews of messages": "Mesajların ön izlemelerini göster",
-    "Show rooms with unread messages first": "Önce okunmamış mesajları olan odaları göster",
     "Topic: %(topic)s (<a>edit</a>)": "Konu: %(topic)s (<a>düzenle</a>)",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Onaylamanız için size e-posta gönderdik. Lütfen yönergeleri takip edin ve sonra aşağıdaki butona tıklayın.",
     "Room settings": "Oda ayarları",
@@ -1301,11 +1282,8 @@
     "Room Autocomplete": "Otomatik Oda Tamamlama",
     "Notification Autocomplete": "Otomatik Bildirim Tamamlama",
     "Widgets": "Widgetlar",
-    "Notification options": "Bildirim ayarları",
     "Looks good!": "İyi görünüyor!",
     "Security Key": "Güvenlik anahtarı",
-    "List options": "Liste seçenekleri",
-    "Sort by": "Göre sırala",
     "All settings": "Tüm ayarlar",
     "Switch theme": "Temayı değiştir",
     "Keys restored": "Anahtarlar geri yüklendi",
@@ -1324,7 +1302,6 @@
     "Calls": "Aramalar",
     "Feedback": "Geri bildirim",
     "Accepting…": "Kabul ediliyor…",
-    "A-Z": "A-Z",
     "Room avatar": "Oda avatarı",
     "Room options": "Oda ayarları",
     "Forget Room": "Odayı unut",
@@ -1628,7 +1605,16 @@
         "send_report": "Rapor gönder"
     },
     "a11y": {
-        "user_menu": "Kullanıcı menüsü"
+        "user_menu": "Kullanıcı menüsü",
+        "n_unread_messages_mentions": {
+            "one": "1 okunmamış bahis.",
+            "other": "anmalar dahil okunmayan %(count)s mesaj."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s okunmamış mesaj.",
+            "one": "1 okunmamış mesaj."
+        },
+        "unread_messages": "Okunmamış mesajlar."
     },
     "labs": {
         "latex_maths": "Mesajlarda LaTex maths işleyin",
@@ -2139,5 +2125,23 @@
         "continue_with_idp": "%(provider)s ile devam et",
         "sign_in_with_sso": "Çoklu oturum açma ile giriş yap",
         "sso": "Tek seferlik oturum aç"
+    },
+    "room_list": {
+        "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
+        "show_previews": "Mesajların ön izlemelerini göster",
+        "sort_by": "Göre sırala",
+        "sort_by_activity": "Aktivite",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Liste seçenekleri",
+        "show_n_more": {
+            "one": "%(count)s adet daha fazla göster",
+            "other": "%(count)s adet daha fazla göster"
+        },
+        "show_less": "Daha az göster",
+        "notification_options": "Bildirim ayarları"
+    },
+    "report_content": {
+        "missing_reason": "Lütfen neden raporlama yaptığınızı belirtin.",
+        "report_content_to_homeserver": "Ana Sunucu Yöneticinize İçeriği Raporlayın"
     }
 }

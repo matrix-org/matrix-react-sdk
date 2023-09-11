@@ -654,7 +654,6 @@
     "Lock": "锁",
     "Your server isn't responding to some <a>requests</a>.": "你的服务器没有响应一些<a>请求</a>。",
     "Accept <policyLink /> to continue:": "接受 <policyLink /> 以继续：",
-    "Show less": "显示更少",
     "Show more": "显示更多",
     "Your homeserver does not support cross-signing.": "你的家服务器不支持交叉签名。",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "你的账户在秘密存储中有交叉签名身份，但并没有被此会话信任。",
@@ -810,32 +809,12 @@
     "Reject & Ignore user": "拒绝并忽略用户",
     "You're previewing %(roomName)s. Want to join it?": "你正在预览 %(roomName)s。想加入吗？",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s 不能被预览。你想加入吗？",
-    "Show rooms with unread messages first": "优先显示有未读消息的房间",
-    "Show previews of messages": "显示消息预览",
-    "Sort by": "排序",
-    "Activity": "活动",
-    "A-Z": "字典顺序",
-    "List options": "列表选项",
     "Jump to first unread room.": "跳转至第一个未读房间。",
     "Jump to first invite.": "跳转至第一个邀请。",
     "Add room": "添加房间",
-    "Show %(count)s more": {
-        "other": "多显示 %(count)s 个",
-        "one": "多显示 %(count)s 个"
-    },
-    "Notification options": "通知选项",
     "Forget Room": "忘记房间",
     "Favourited": "已收藏",
     "Room options": "房间选项",
-    "%(count)s unread messages including mentions.": {
-        "other": "包括提及在内有 %(count)s 个未读消息。",
-        "one": "1 个未读提及。"
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s 个未读消息。",
-        "one": "1 个未读消息。"
-    },
-    "Unread messages.": "未读消息。",
     "This room is public": "此房间为公共的",
     "This room has already been upgraded.": "此房间已经被升级。",
     "Unknown Command": "未知命令",
@@ -1018,9 +997,6 @@
     "Verify session": "验证会话",
     "Your homeserver doesn't seem to support this feature.": "你的家服务器似乎不支持此功能。",
     "Message edits": "消息编辑历史",
-    "Please fill why you're reporting.": "请填写你为何做此报告。",
-    "Report Content to Your Homeserver Administrator": "向你的家服务器管理员举报内容",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "举报此消息会将其唯一的“事件ID”发送给你的家服务器的管理员。如果此房间中的消息是加密的，则你的家服务器管理员将无法阅读消息文本，也无法查看任何文件或图片。",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "升级此房间需要关闭此房间的当前实例并创建一个新的房间代替它。为了给房间成员最好的体验，我们会：",
     "Upgrade private room": "更新私人房间",
     "Upgrade public room": "更新公共房间",
@@ -1839,17 +1815,6 @@
     "Show preview": "显示预览",
     "View source": "查看源代码",
     "Settings - %(spaceName)s": "设置 - %(spaceName)s",
-    "Report the entire room": "报告整个房间",
-    "Spam or propaganda": "垃圾信息或宣传",
-    "Illegal Content": "违法内容",
-    "Toxic Behaviour": "不良行为",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "此房间致力于违法或不良行为，或协管员未能审核违法或不良行为。\n这将报告给 %(homeserver)s 的管理员。管理员无法阅读此房间的加密内容。",
-    "Disagree": "不同意",
-    "Please pick a nature and describe what makes this message abusive.": "请选择性质并描述为什么此消息是滥用。",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "任何其他原因。请描述问题。\n这将报告给房间协管员。",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "此用户正在房间中滥发广告、广告链接或宣传。\n这将报告给房间协管员。",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "此用户正在做出违法行为，如对他人施暴，或威胁使用暴力。\n这将报告给房间协管员，他们可能会将其报告给执法部门。",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "此用户所写的是错误内容。\n这将会报告给房间协管员。",
     "Please provide an address": "请提供地址",
     "Message search initialisation failed, check <a>your settings</a> for more information": "消息搜索初始化失败，请检查<a>你的设置</a>以获取更多信息",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "设置此空间的地址，这样用户就能通过你的家服务器找到此空间（%(localDomain)s）",
@@ -2485,7 +2450,6 @@
     "Unsent": "未发送",
     "Search Dialog": "搜索对话",
     "Join %(roomAddress)s": "加入%(roomAddress)s",
-    "Ignore user": "忽略用户",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "当你登出时，这些密钥会从此设备删除。这意味着你将无法查阅已加密消息，除非你在其他设备上有那些消息的密钥，或者已将其备份到服务器。",
     "Open room": "打开房间",
     "Output devices": "输出设备",
@@ -2552,7 +2516,6 @@
     "Proxy URL (optional)": "代理URL（可选）",
     "Proxy URL": "代理URL",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若你也想移除关于此用户的系统消息（例如，成员更改、用户资料更改……），则取消勾选",
-    "Check if you want to hide all current and future messages from this user.": "若想隐藏来自此用户的全部当前和未来的消息，请打勾。",
     "Inviting %(user1)s and %(user2)s": "正在邀请 %(user1)s 与 %(user2)s",
     "%(user)s and %(count)s others": {
         "one": "%(user)s 与 1 个人",
@@ -2826,7 +2789,16 @@
         "clear": "清除"
     },
     "a11y": {
-        "user_menu": "用户菜单"
+        "user_menu": "用户菜单",
+        "n_unread_messages_mentions": {
+            "other": "包括提及在内有 %(count)s 个未读消息。",
+            "one": "1 个未读提及。"
+        },
+        "n_unread_messages": {
+            "other": "%(count)s 个未读消息。",
+            "one": "1 个未读消息。"
+        },
+        "unread_messages": "未读消息。"
     },
     "labs": {
         "video_rooms": "视频房间",
@@ -3688,5 +3660,37 @@
         "continue_with_idp": "使用 %(provider)s 继续",
         "sign_in_with_sso": "使用单点登录",
         "sso": "单点登录"
+    },
+    "room_list": {
+        "sort_unread_first": "优先显示有未读消息的房间",
+        "show_previews": "显示消息预览",
+        "sort_by": "排序",
+        "sort_by_activity": "活动",
+        "sort_by_alphabet": "字典顺序",
+        "sublist_options": "列表选项",
+        "show_n_more": {
+            "other": "多显示 %(count)s 个",
+            "one": "多显示 %(count)s 个"
+        },
+        "show_less": "显示更少",
+        "notification_options": "通知选项"
+    },
+    "report_content": {
+        "missing_reason": "请填写你为何做此报告。",
+        "ignore_user": "忽略用户",
+        "hide_messages_from_user": "若想隐藏来自此用户的全部当前和未来的消息，请打勾。",
+        "nature_disagreement": "此用户所写的是错误内容。\n这将会报告给房间协管员。",
+        "nature_illegal": "此用户正在做出违法行为，如对他人施暴，或威胁使用暴力。\n这将报告给房间协管员，他们可能会将其报告给执法部门。",
+        "nature_spam": "此用户正在房间中滥发广告、广告链接或宣传。\n这将报告给房间协管员。",
+        "report_to_homeserver_encrypted": "此房间致力于违法或不良行为，或协管员未能审核违法或不良行为。\n这将报告给 %(homeserver)s 的管理员。管理员无法阅读此房间的加密内容。",
+        "nature_other": "任何其他原因。请描述问题。\n这将报告给房间协管员。",
+        "nature": "请选择性质并描述为什么此消息是滥用。",
+        "disagree": "不同意",
+        "toxic_behaviour": "不良行为",
+        "illegal_content": "违法内容",
+        "spam_or_propaganda": "垃圾信息或宣传",
+        "report_entire_room": "报告整个房间",
+        "report_content_to_homeserver": "向你的家服务器管理员举报内容",
+        "description": "举报此消息会将其唯一的“事件ID”发送给你的家服务器的管理员。如果此房间中的消息是加密的，则你的家服务器管理员将无法阅读消息文本，也无法查看任何文件或图片。"
     }
 }

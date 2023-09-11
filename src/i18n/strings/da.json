@@ -230,7 +230,6 @@
     "Permissions": "Tilladelser",
     "Headphones": "Hovedtelefoner",
     "Show more": "Vis mere",
-    "Show less": "Vis mindre",
     "Passwords don't match": "Adgangskoderne matcher ikke",
     "Confirm password": "Bekræft adgangskode",
     "Enter password": "Indtast adgangskode",
@@ -795,5 +794,8 @@
     },
     "export_chat": {
         "messages": "Beskeder"
+    },
+    "room_list": {
+        "show_less": "Vis mindre"
     }
 }

@@ -2252,27 +2252,32 @@
     "To view, please enable video rooms in Labs first": "To view, please enable video rooms in Labs first",
     "To join, please enable video rooms in Labs first": "To join, please enable video rooms in Labs first",
     "Show Labs settings": "Show Labs settings",
-    "Show rooms with unread messages first": "Show rooms with unread messages first",
-    "Show previews of messages": "Show previews of messages",
-    "Sort by": "Sort by",
-    "Activity": "Activity",
-    "A-Z": "A-Z",
-    "List options": "List options",
-    "Show %(count)s more": {
-        "other": "Show %(count)s more",
-        "one": "Show %(count)s more"
+    "room_list": {
+        "sort_unread_first": "Show rooms with unread messages first",
+        "show_previews": "Show previews of messages",
+        "sort_by": "Sort by",
+        "sort_by_activity": "Activity",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "List options",
+        "show_n_more": {
+            "other": "Show %(count)s more",
+            "one": "Show %(count)s more"
+        },
+        "show_less": "Show less",
+        "notification_options": "Notification options"
     },
-    "Show less": "Show less",
-    "Notification options": "Notification options",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s unread messages including mentions.",
-        "one": "1 unread mention."
+    "a11y": {
+        "n_unread_messages_mentions": {
+            "other": "%(count)s unread messages including mentions.",
+            "one": "1 unread mention."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s unread messages.",
+            "one": "1 unread message."
+        },
+        "unread_messages": "Unread messages.",
+        "user_menu": "User menu"
     },
-    "%(count)s unread messages.": {
-        "other": "%(count)s unread messages.",
-        "one": "1 unread message."
-    },
-    "Unread messages.": "Unread messages.",
     "Joined": "Joined",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.",
     "This room has already been upgraded.": "This room has already been upgraded.",
@@ -3075,24 +3080,26 @@
     "Continuing without email": "Continuing without email",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.",
     "Email (optional)": "Email (optional)",
-    "Please fill why you're reporting.": "Please fill why you're reporting.",
+    "report_content": {
+        "missing_reason": "Please fill why you're reporting.",
+        "ignore_user": "Ignore user",
+        "hide_messages_from_user": "Check if you want to hide all current and future messages from this user.",
+        "nature_disagreement": "What this user is writing is wrong.\nThis will be reported to the room moderators.",
+        "nature": "Please pick a nature and describe what makes this message abusive.",
+        "disagree": "Disagree",
+        "toxic_behaviour": "Toxic Behaviour",
+        "illegal_content": "Illegal Content",
+        "spam_or_propaganda": "Spam or propaganda",
+        "report_entire_room": "Report the entire room",
+        "report_content_to_homeserver": "Report Content to Your Homeserver Administrator"
+    },
     "Unable to create room with moderation bot": "Unable to create room with moderation bot",
-    "Ignore user": "Ignore user",
-    "Check if you want to hide all current and future messages from this user.": "Check if you want to hide all current and future messages from this user.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "What this user is writing is wrong.\nThis will be reported to the room moderators.",
     "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.",
     "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.",
     "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.",
     "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.",
     "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.",
     "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.",
-    "Please pick a nature and describe what makes this message abusive.": "Please pick a nature and describe what makes this message abusive.",
-    "Disagree": "Disagree",
-    "Toxic Behaviour": "Toxic Behaviour",
-    "Illegal Content": "Illegal Content",
-    "Spam or propaganda": "Spam or propaganda",
-    "Report the entire room": "Report the entire room",
-    "Report Content to Your Homeserver Administrator": "Report Content to Your Homeserver Administrator",
     "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.",
     "Room Settings - %(roomName)s": "Room Settings - %(roomName)s",
     "Failed to upgrade room": "Failed to upgrade room",
@@ -3531,9 +3538,6 @@
     "Switch to light mode": "Switch to light mode",
     "Switch to dark mode": "Switch to dark mode",
     "Switch theme": "Switch theme",
-    "a11y": {
-        "user_menu": "User menu"
-    },
     "Could not load user profile": "Could not load user profile",
     "Decrypted event source": "Decrypted event source",
     "Decrypted source unavailable": "Decrypted source unavailable",

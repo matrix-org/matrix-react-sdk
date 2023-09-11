@@ -481,8 +481,6 @@
     "Information": "Informasi",
     "Widgets": "Widget",
     "Favourited": "Difavorit",
-    "A-Z": "A-Z",
-    "Activity": "Aktivitas",
     "ready": "siap",
     "Algorithm:": "Algoritma:",
     "Autocomplete": "Pelengkapan Otomatis",
@@ -675,7 +673,6 @@
     "Results": "Hasil",
     "Joined": "Tergabung",
     "Joining": "Bergabung",
-    "Disagree": "Tidak Setuju",
     "Sent": "Terkirim",
     "MB": "MB",
     "Custom level": "Tingkat kustom",
@@ -1177,26 +1174,7 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ruangan ini berjalan dengan versi ruangan <roomVersion />, yang homeserver ini menandainya sebagai <i>tidak stabil</i>.",
     "This room has already been upgraded.": "Ruangan ini telah ditingkatkan.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Meningkatkan ruangan ini akan mematikan instansi ruangan saat ini dan membuat ruangan yang ditingkatkan dengan nama yang sama.",
-    "Unread messages.": "Pesan yang belum dibaca.",
-    "%(count)s unread messages.": {
-        "one": "1 pesan yang belum dibaca.",
-        "other": "%(count)s pesan yang belum dibaca."
-    },
-    "%(count)s unread messages including mentions.": {
-        "one": "1 sebutan yang belum dibaca.",
-        "other": "%(count)s pesan yang belum dibaca termasuk sebutan."
-    },
     "Forget Room": "Lupakan Ruangan",
-    "Notification options": "Opsi notifikasi",
-    "Show less": "Tampilkan lebih sedikit",
-    "Show %(count)s more": {
-        "one": "Tampilkan %(count)s lagi",
-        "other": "Tampilkan %(count)s lagi"
-    },
-    "List options": "Tampilkan daftar opsi",
-    "Sort by": "Sortir berdasarkan",
-    "Show previews of messages": "Tampilkan tampilan pesan",
-    "Show rooms with unread messages first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",
     "%(roomName)s is not accessible at this time.": "%(roomName)s tidak dapat diakses sekarang.",
     "%(roomName)s does not exist.": "%(roomName)s tidak ada.",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s tidak dapat ditampilkan. Apakah Anda ingin bergabung?",
@@ -1629,19 +1607,6 @@
     "The room upgrade could not be completed": "Peningkatan ruangan tidak dapat diselesaikan",
     "Failed to upgrade room": "Gagal untuk meningkatkan ruangan",
     "Room Settings - %(roomName)s": "Pengaturan Ruangan — %(roomName)s",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Melaporkan pesan ini akan mengirimkan ID peristiwa yang untuk ke administrator homeserver Anda. Jika pesan-pesan di ruangan ini terenkripsi, maka administrator homeserver Anda tidak akan dapat membaca teks pesan atau menampilkan file atau gambar apa saja.",
-    "Report Content to Your Homeserver Administrator": "Laporkan Konten ke Administrator Homeserver Anda",
-    "Report the entire room": "Laporkan seluruh ruangan",
-    "Spam or propaganda": "Spam atau propaganda",
-    "Illegal Content": "Konten Ilegal",
-    "Toxic Behaviour": "Kelakukan Toxic",
-    "Please pick a nature and describe what makes this message abusive.": "Harap pilih sifat dan jelaskan apa yang membuat pesan ini kasar.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Alasan yang lain. Mohon jelaskan masalahnya.\nIni akan dilaporkan ke moderator ruangan.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Ruangan ini khusus untuk konten ilegal atau toxic atau moderator gagal untuk memoderasikan konten ilegal atau toxic.\nIni akan dilaporkan ke administrator %(homeserver)s. Administrator TIDAK akan dapat membaca konten yang terenkripsi di ruangan ini.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Pengguna ini spam ruangan dengan iklan, tautan ke iklan atau ke propaganda.\nIni akan dilaporkan ke moderator ruangan.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Pengguna ini menampilkan kelakuan yang ilegal, misalnya dengan doxing orang lain atau ancaman kekerasan.\nIni akan dilaporkan ke moderator ruangan yang mungkin melaporkannya juga ke otoritas hukum.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Apa yang ditulis pengguna itu salah.\nIni akan dilaporkan ke moderator ruangan.",
-    "Please fill why you're reporting.": "Mohon isi kenapa Anda melaporkan.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Sekadar mengingatkan saja, jika Anda belum menambahkan sebuah email dan Anda lupa kata sandi, Anda mungkin <b>dapat kehilangan akses ke akun Anda</b>.",
     "Terms of Service": "Persyaratan Layanan",
     "You may contact me if you have any follow up questions": "Anda mungkin menghubungi saya jika Anda mempunyai pertanyaan lanjutan",
@@ -2462,8 +2427,6 @@
         "one": "%(count)s orang bergabung",
         "other": "%(count)s orang bergabung"
     },
-    "Check if you want to hide all current and future messages from this user.": "Periksa jika Anda ingin menyembunyikan semua pesan saat ini dan pesan baru dari pengguna ini.",
-    "Ignore user": "Abaikan pengguna",
     "View related event": "Tampilkan peristiwa terkait",
     "Read receipts": "Laporan dibaca",
     "Failed to set direct message tag": "Gagal menetapkan tanda pesan langsung",
@@ -2793,8 +2756,6 @@
     "Loading live location…": "Memuat lokasi langsung…",
     "Fetching keys from server…": "Mendapatkan kunci- dari server…",
     "Checking…": "Memeriksa…",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Ruangan ini khusus untuk konten ilegal atau toksik atau moderator gagal untuk memoderasikan konten ilegal atau toksik.\nIni akan dilaporkan ke administrator %(homeserver)s.",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "Pengguna ini menampilkan kelakuan yang toksik, misalnya dengan menghina pengguna lain atau membagikan konten dewasa di ruangan ramah keluarga atau merusak aturan ruangan.\nIni akan dilaporkan ke moderator ruangan.",
     "Waiting for partner to confirm…": "Menunggu pengguna untuk konfirmasi…",
     "Adding…": "Menambahkan…",
     "Write something…": "Tulis sesuatu…",
@@ -2888,7 +2849,6 @@
     "Error while changing password: %(error)s": "Terjadi kesalahan mengubah kata sandi: %(error)s",
     "WebGL is required to display maps, please enable it in your browser settings.": "WebGL diperlukam untuk menampilkan peta, silakan aktifkan di pengaturan peramban.",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Tidak dapat mengundang pengguna dengan surel tanpa server identitas. Anda dapat menghubungkan di \"Pengaturan\".",
-    "Unable to create room with moderation bot": "Tidak dapat membuat ruangan dengan bot moderasi",
     "Failed to download source media, no source url was found": "Gagal mengunduh media sumber, tidak ada URL sumber yang ditemukan",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Setelah pengguna yang diundang telah bergabung ke %(brand)s, Anda akan dapat bercakapan dan ruangan akan terenkripsi secara ujung ke ujung",
     "Waiting for users to join %(brand)s": "Menunggu pengguna untuk bergabung ke %(brand)s",
@@ -3156,7 +3116,16 @@
         "clear": "Hapus"
     },
     "a11y": {
-        "user_menu": "Menu pengguna"
+        "user_menu": "Menu pengguna",
+        "n_unread_messages_mentions": {
+            "one": "1 sebutan yang belum dibaca.",
+            "other": "%(count)s pesan yang belum dibaca termasuk sebutan."
+        },
+        "n_unread_messages": {
+            "one": "1 pesan yang belum dibaca.",
+            "other": "%(count)s pesan yang belum dibaca."
+        },
+        "unread_messages": "Pesan yang belum dibaca."
     },
     "labs": {
         "video_rooms": "Ruangan video",
@@ -4106,5 +4075,40 @@
         "sso": "Single Sign On",
         "reset_password_action": "Atur ulang kata sandi",
         "reset_password_title": "Atur ulang kata sandi Anda"
+    },
+    "room_list": {
+        "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",
+        "show_previews": "Tampilkan tampilan pesan",
+        "sort_by": "Sortir berdasarkan",
+        "sort_by_activity": "Aktivitas",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Tampilkan daftar opsi",
+        "show_n_more": {
+            "one": "Tampilkan %(count)s lagi",
+            "other": "Tampilkan %(count)s lagi"
+        },
+        "show_less": "Tampilkan lebih sedikit",
+        "notification_options": "Opsi notifikasi"
+    },
+    "report_content": {
+        "missing_reason": "Mohon isi kenapa Anda melaporkan.",
+        "unable_create_room_moderation_bot": "Tidak dapat membuat ruangan dengan bot moderasi",
+        "ignore_user": "Abaikan pengguna",
+        "hide_messages_from_user": "Periksa jika Anda ingin menyembunyikan semua pesan saat ini dan pesan baru dari pengguna ini.",
+        "nature_disagreement": "Apa yang ditulis pengguna itu salah.\nIni akan dilaporkan ke moderator ruangan.",
+        "nature_toxic": "Pengguna ini menampilkan kelakuan yang toksik, misalnya dengan menghina pengguna lain atau membagikan konten dewasa di ruangan ramah keluarga atau merusak aturan ruangan.\nIni akan dilaporkan ke moderator ruangan.",
+        "nature_illegal": "Pengguna ini menampilkan kelakuan yang ilegal, misalnya dengan doxing orang lain atau ancaman kekerasan.\nIni akan dilaporkan ke moderator ruangan yang mungkin melaporkannya juga ke otoritas hukum.",
+        "nature_spam": "Pengguna ini spam ruangan dengan iklan, tautan ke iklan atau ke propaganda.\nIni akan dilaporkan ke moderator ruangan.",
+        "report_to_homeserver_encrypted": "Ruangan ini khusus untuk konten ilegal atau toxic atau moderator gagal untuk memoderasikan konten ilegal atau toxic.\nIni akan dilaporkan ke administrator %(homeserver)s. Administrator TIDAK akan dapat membaca konten yang terenkripsi di ruangan ini.",
+        "report_to_homeserver": "Ruangan ini khusus untuk konten ilegal atau toksik atau moderator gagal untuk memoderasikan konten ilegal atau toksik.\nIni akan dilaporkan ke administrator %(homeserver)s.",
+        "nature_other": "Alasan yang lain. Mohon jelaskan masalahnya.\nIni akan dilaporkan ke moderator ruangan.",
+        "nature": "Harap pilih sifat dan jelaskan apa yang membuat pesan ini kasar.",
+        "disagree": "Tidak Setuju",
+        "toxic_behaviour": "Kelakukan Toxic",
+        "illegal_content": "Konten Ilegal",
+        "spam_or_propaganda": "Spam atau propaganda",
+        "report_entire_room": "Laporkan seluruh ruangan",
+        "report_content_to_homeserver": "Laporkan Konten ke Administrator Homeserver Anda",
+        "description": "Melaporkan pesan ini akan mengirimkan ID peristiwa yang untuk ke administrator homeserver Anda. Jika pesan-pesan di ruangan ini terenkripsi, maka administrator homeserver Anda tidak akan dapat membaca teks pesan atau menampilkan file atau gambar apa saja."
     }
 }

@@ -755,19 +755,8 @@
     "Topic (optional)": "Argomento (facoltativo)",
     "Hide advanced": "Nascondi avanzate",
     "Show advanced": "Mostra avanzate",
-    "Please fill why you're reporting.": "Inserisci il motivo della segnalazione.",
-    "Report Content to Your Homeserver Administrator": "Segnala il contenuto all'amministratore dell'homeserver",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "La segnalazione di questo messaggio invierà il suo 'ID evento' univoco all'amministratore del tuo homeserver. Se i messaggi della stanza sono cifrati, l'amministratore non potrà leggere il messaggio o vedere file e immagini.",
     "Explore rooms": "Esplora stanze",
     "Clear cache and reload": "Svuota la cache e ricarica",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s messaggi non letti incluse le citazioni.",
-        "one": "1 citazione non letta."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s messaggi non letti.",
-        "one": "1 messaggio non letto."
-    },
     "Show image": "Mostra immagine",
     "To continue you need to accept the terms of this service.": "Per continuare devi accettare le condizioni di servizio.",
     "Document": "Documento",
@@ -796,7 +785,6 @@
     "Jump to first invite.": "Salta al primo invito.",
     "Command Autocomplete": "Autocompletamento comando",
     "Room %(name)s": "Stanza %(name)s",
-    "Unread messages.": "Messaggi non letti.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Questa azione richiede l'accesso al server di identità predefinito <server /> per verificare un indirizzo email o numero di telefono, ma il server non ha termini di servizio.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "My Ban List": "Mia lista ban",
@@ -915,7 +903,6 @@
     "Enable message search in encrypted rooms": "Attiva la ricerca messaggi nelle stanze cifrate",
     "Waiting for %(displayName)s to verify…": "In attesa della verifica da %(displayName)s …",
     "This bridge was provisioned by <user />.": "Questo bridge è stato fornito da <user />.",
-    "Show less": "Mostra meno",
     "Securely cache encrypted messages locally for them to appear in search results.": "Tieni in cache localmente i messaggi cifrati in modo sicuro affinché appaiano nei risultati di ricerca.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "A %(brand)s mancano alcuni componenti richiesti per tenere in cache i messaggi cifrati in modo sicuro. Se vuoi sperimentare questa funzionalità, compila un %(brand)s Desktop personale con <nativeLink>i componenti di ricerca aggiunti</nativeLink>.",
     "Verifies a user, session, and pubkey tuple": "Verifica un utente, una sessione e una tupla pubblica",
@@ -1144,23 +1131,14 @@
     "All settings": "Tutte le impostazioni",
     "Feedback": "Feedback",
     "No recently visited rooms": "Nessuna stanza visitata di recente",
-    "Sort by": "Ordina per",
     "Message preview": "Anteprima messaggio",
-    "List options": "Opzioni lista",
-    "Show %(count)s more": {
-        "other": "Mostra altri %(count)s",
-        "one": "Mostra %(count)s altro"
-    },
     "Room options": "Opzioni stanza",
-    "Activity": "Attività",
-    "A-Z": "A-Z",
     "Looks good!": "Sembra giusta!",
     "Use custom size": "Usa dimensione personalizzata",
     "Hey you. You're the best!": "Ehi tu. Sei il migliore!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "L'autenticità di questo messaggio cifrato non può essere garantita su questo dispositivo.",
     "Message deleted on %(date)s": "Messaggio eliminato il %(date)s",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s non può tenere in cache i messaggi cifrati quando usato in un browser web. Usa <desktopLink>%(brand)s Desktop</desktopLink> affinché i messaggi cifrati appaiano nei risultati di ricerca.",
-    "Notification options": "Opzioni di notifica",
     "Favourited": "Preferito",
     "Forget Room": "Dimentica stanza",
     "Wrong file type": "Tipo di file errato",
@@ -1177,8 +1155,6 @@
     "Confirm Security Phrase": "Conferma frase di sicurezza",
     "Save your Security Key": "Salva la tua chiave di sicurezza",
     "This room is public": "Questa stanza è pubblica",
-    "Show rooms with unread messages first": "Mostra prima le stanze con messaggi non letti",
-    "Show previews of messages": "Mostra anteprime dei messaggi",
     "Edited at %(date)s": "Modificato il %(date)s",
     "Click to view edits": "Clicca per vedere le modifiche",
     "Are you sure you want to cancel entering passphrase?": "Sei sicuro di volere annullare l'inserimento della frase?",
@@ -1838,11 +1814,6 @@
     "Show preview": "Mostra anteprima",
     "View source": "Visualizza sorgente",
     "Settings - %(spaceName)s": "Impostazioni - %(spaceName)s",
-    "Report the entire room": "Segnala l'intera stanza",
-    "Spam or propaganda": "Spam o propaganda",
-    "Illegal Content": "Contenuto illegale",
-    "Toxic Behaviour": "Cattivo comportamento",
-    "Please pick a nature and describe what makes this message abusive.": "Scegli la natura del problema e descrivi cosa rende questo messaggio un abuso.",
     "Please provide an address": "Inserisci un indirizzo",
     "This space has no local addresses": "Questo spazio non ha indirizzi locali",
     "Space information": "Informazioni spazio",
@@ -1857,12 +1828,6 @@
     "Collapse reply thread": "Riduci conversazione di risposta",
     "Some invites couldn't be sent": "Alcuni inviti non sono stati spediti",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Abbiamo inviato gli altri, ma non è stato possibile invitare le seguenti persone in <RoomName/>",
-    "Disagree": "Rifiuta",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Altri motivi. Si prega di descrivere il problema.\nVerrà segnalato ai moderatori della stanza.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Questa stanza è dedicata a contenuti illegali o dannosi, oppure i moderatori non riescono a censurare questo tipo di contenuti.\nVerrà segnalata agli amministratori di %(homeserver)s. Gli amministratori NON potranno leggere i contenuti cifrati di questa stanza.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Questo utente sta facendo spam nella stanza con pubblicità, collegamenti ad annunci o a propagande.\nVerrà segnalato ai moderatori della stanza.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Questo utente sta mostrando un comportamento illegale, ad esempio facendo doxing o minacciando violenza.\nVerrà segnalato ai moderatori della stanza che potrebbero portarlo in ambito legale.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Questo utente sta scrivendo cose sbagliate.\nVerrà segnalato ai moderatori della stanza.",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inizializzazione ricerca messaggi fallita, controlla <a>le impostazioni</a> per maggiori informazioni",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Imposta gli indirizzi per questo spazio affinché gli utenti lo trovino attraverso il tuo homeserver (%(localDomain)s)",
     "To publish an address, it needs to be set as a local address first.": "Per pubblicare un indirizzo, deve prima essere impostato come indirizzo locale.",
@@ -2463,8 +2428,6 @@
         "other": "Sono entrate %(count)s persone"
     },
     "View related event": "Vedi evento correlato",
-    "Check if you want to hide all current and future messages from this user.": "Seleziona se vuoi nascondere tutti i messaggi attuali e futuri di questo utente.",
-    "Ignore user": "Ignora utente",
     "Read receipts": "Ricevuta di lettura",
     "Failed to set direct message tag": "Impostazione etichetta chat diretta fallita",
     "You were disconnected from the call. (Error: %(message)s)": "Sei stato disconnesso dalla chiamata. (Errore: %(message)s)",
@@ -2791,8 +2754,6 @@
     "Loading live location…": "Caricamento posizione in tempo reale…",
     "Fetching keys from server…": "Ricezione delle chiavi dal server…",
     "Checking…": "Controllo…",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Questa stanza è dedicata a contenuti illegali o dannosi, oppure i moderatori non riescono a censurare questo tipo di contenuti.\nVerrà segnalata agli amministratori di %(homeserver)s.",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "Questo utente sta mostrando un cattivo comportamento, ad esempio insultando altri utenti o condividendo contenuti per adulti in una stanza per tutti, oppure violando le regole della stessa.\nVerrà segnalato ai moderatori della stanza.",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Attiva '%(manageIntegrations)s' nelle impostazioni per continuare.",
     "Waiting for partner to confirm…": "In attesa che il partner confermi…",
     "Adding…": "Aggiunta…",
@@ -2888,7 +2849,6 @@
     "Unknown password change error (%(stringifiedError)s)": "Errore sconosciuto di modifica della password (%(stringifiedError)s)",
     "Error while changing password: %(error)s": "Errore nella modifica della password: %(error)s",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Impossibile invitare l'utente per email senza un server d'identità. Puoi connetterti a uno in \"Impostazioni\".",
-    "Unable to create room with moderation bot": "Impossibile creare la stanza con il bot di moderazione",
     "Failed to download source media, no source url was found": "Scaricamento della fonte fallito, nessun url trovato",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Una volta che gli utenti si saranno uniti a %(brand)s, potrete scrivervi e la stanza sarà crittografata end-to-end",
     "Waiting for users to join %(brand)s": "In attesa che gli utenti si uniscano a %(brand)s",
@@ -3156,7 +3116,16 @@
         "clear": "Svuota"
     },
     "a11y": {
-        "user_menu": "Menu utente"
+        "user_menu": "Menu utente",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s messaggi non letti incluse le citazioni.",
+            "one": "1 citazione non letta."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s messaggi non letti.",
+            "one": "1 messaggio non letto."
+        },
+        "unread_messages": "Messaggi non letti."
     },
     "labs": {
         "video_rooms": "Stanze video",
@@ -4106,5 +4075,40 @@
         "sso": "Single Sign On",
         "reset_password_action": "Reimposta password",
         "reset_password_title": "Reimposta la tua password"
+    },
+    "room_list": {
+        "sort_unread_first": "Mostra prima le stanze con messaggi non letti",
+        "show_previews": "Mostra anteprime dei messaggi",
+        "sort_by": "Ordina per",
+        "sort_by_activity": "Attività",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Opzioni lista",
+        "show_n_more": {
+            "other": "Mostra altri %(count)s",
+            "one": "Mostra %(count)s altro"
+        },
+        "show_less": "Mostra meno",
+        "notification_options": "Opzioni di notifica"
+    },
+    "report_content": {
+        "missing_reason": "Inserisci il motivo della segnalazione.",
+        "unable_create_room_moderation_bot": "Impossibile creare la stanza con il bot di moderazione",
+        "ignore_user": "Ignora utente",
+        "hide_messages_from_user": "Seleziona se vuoi nascondere tutti i messaggi attuali e futuri di questo utente.",
+        "nature_disagreement": "Questo utente sta scrivendo cose sbagliate.\nVerrà segnalato ai moderatori della stanza.",
+        "nature_toxic": "Questo utente sta mostrando un cattivo comportamento, ad esempio insultando altri utenti o condividendo contenuti per adulti in una stanza per tutti, oppure violando le regole della stessa.\nVerrà segnalato ai moderatori della stanza.",
+        "nature_illegal": "Questo utente sta mostrando un comportamento illegale, ad esempio facendo doxing o minacciando violenza.\nVerrà segnalato ai moderatori della stanza che potrebbero portarlo in ambito legale.",
+        "nature_spam": "Questo utente sta facendo spam nella stanza con pubblicità, collegamenti ad annunci o a propagande.\nVerrà segnalato ai moderatori della stanza.",
+        "report_to_homeserver_encrypted": "Questa stanza è dedicata a contenuti illegali o dannosi, oppure i moderatori non riescono a censurare questo tipo di contenuti.\nVerrà segnalata agli amministratori di %(homeserver)s. Gli amministratori NON potranno leggere i contenuti cifrati di questa stanza.",
+        "report_to_homeserver": "Questa stanza è dedicata a contenuti illegali o dannosi, oppure i moderatori non riescono a censurare questo tipo di contenuti.\nVerrà segnalata agli amministratori di %(homeserver)s.",
+        "nature_other": "Altri motivi. Si prega di descrivere il problema.\nVerrà segnalato ai moderatori della stanza.",
+        "nature": "Scegli la natura del problema e descrivi cosa rende questo messaggio un abuso.",
+        "disagree": "Rifiuta",
+        "toxic_behaviour": "Cattivo comportamento",
+        "illegal_content": "Contenuto illegale",
+        "spam_or_propaganda": "Spam o propaganda",
+        "report_entire_room": "Segnala l'intera stanza",
+        "report_content_to_homeserver": "Segnala il contenuto all'amministratore dell'homeserver",
+        "description": "La segnalazione di questo messaggio invierà il suo 'ID evento' univoco all'amministratore del tuo homeserver. Se i messaggi della stanza sono cifrati, l'amministratore non potrà leggere il messaggio o vedere file e immagini."
     }
 }

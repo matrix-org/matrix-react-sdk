@@ -747,9 +747,6 @@
     "This invite to %(roomName)s was sent to %(email)s": "此 %(roomName)s 的邀請已傳送給 %(email)s",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "在設定中使用身分伺服器以直接在 %(brand)s 中接收邀請。",
     "Share this email in Settings to receive invites directly in %(brand)s.": "在設定中分享此電子郵件以直接在 %(brand)s 中接收邀請。",
-    "Please fill why you're reporting.": "請填寫為什麼您要回報。",
-    "Report Content to Your Homeserver Administrator": "回報內容給您的家伺服器管理員",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "回報此訊息將會傳送其獨特的「活動 ID」給您家伺服器的管理員。如果此聊天室中的訊息已加密，您的家伺服器管理員將無法閱讀訊息文字或檢視任何檔案或圖片。",
     "Explore rooms": "探索聊天室",
     "Read Marker lifetime (ms)": "讀取標記生命週期（毫秒）",
     "Read Marker off-screen lifetime (ms)": "畫面外讀取標記的生命週期（毫秒）",
@@ -766,14 +763,6 @@
     "Room Autocomplete": "聊天室自動完成",
     "User Autocomplete": "使用者自動完成",
     "Clear cache and reload": "清除快取並重新載入",
-    "%(count)s unread messages including mentions.": {
-        "other": "包含提及有 %(count)s 則未讀訊息。",
-        "one": "1 則未讀的提及。"
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s 則未讀訊息。",
-        "one": "1 則未讀的訊息。"
-    },
     "Show image": "顯示圖片",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "未於家伺服器設定中指定 Captcha 公鑰。請將此問題回報給您的家伺服器管理員。",
     "Your email address hasn't been verified yet": "您的電子郵件地址尚未被驗證",
@@ -794,7 +783,6 @@
     "Jump to first unread room.": "跳到第一個未讀的聊天室。",
     "Jump to first invite.": "跳到第一個邀請。",
     "Room %(name)s": "聊天室 %(name)s",
-    "Unread messages.": "未讀的訊息。",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "此動作需要存取預設的身分伺服器 <server /> 以驗證電子郵件或電話號碼，但伺服器沒有任何服務條款。",
     "Message Actions": "訊息動作",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -919,7 +907,6 @@
     "Enable message search in encrypted rooms": "在已加密的聊天室中啟用訊息搜尋",
     "Waiting for %(displayName)s to verify…": "正在等待 %(displayName)s 驗證…",
     "This bridge was provisioned by <user />.": "此橋接是由 <user /> 設定。",
-    "Show less": "顯示更少",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "您的帳號在秘密儲存空間中有交叉簽署的身分，但尚未被此工作階段信任。",
     "in memory": "在記憶體中",
     "Securely cache encrypted messages locally for them to appear in search results.": "將加密的訊息安全地在本機快取以出現在顯示結果中。",
@@ -1142,16 +1129,8 @@
     "All settings": "所有設定",
     "Feedback": "回饋",
     "No recently visited rooms": "沒有最近造訪過的聊天室",
-    "Sort by": "排序方式",
     "Message preview": "訊息預覽",
-    "List options": "列表選項",
-    "Show %(count)s more": {
-        "other": "再顯示 %(count)s 個",
-        "one": "再顯示 %(count)s 個"
-    },
     "Room options": "聊天室選項",
-    "Activity": "訊息順序",
-    "A-Z": "A-Z",
     "Looks good!": "看起來真棒！",
     "Use custom size": "使用自訂大小",
     "Hey you. You're the best!": "嘿！您最棒了！",
@@ -1173,9 +1152,6 @@
     "Are you sure you want to cancel entering passphrase?": "您確定要取消輸入安全密語嗎？",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s 無法在網頁瀏覽器中執行時，安全地在本機快取加密訊息。若需搜尋加密訊息，請使用 <desktopLink>%(brand)s 桌面版</desktopLink>。",
     "%(brand)s version:": "%(brand)s 版本：",
-    "Show rooms with unread messages first": "先顯示有未讀訊息的聊天室",
-    "Show previews of messages": "顯示訊息預覽",
-    "Notification options": "通知選項",
     "Favourited": "已加入我的最愛",
     "Forget Room": "忘記聊天室",
     "This room is public": "此聊天室為公開聊天室",
@@ -1839,17 +1815,6 @@
     "Show preview": "顯示預覽",
     "View source": "檢視原始碼",
     "Settings - %(spaceName)s": "設定 - %(spaceName)s",
-    "Report the entire room": "回報整個聊天室",
-    "Spam or propaganda": "垃圾郵件或宣傳",
-    "Illegal Content": "違法內容",
-    "Toxic Behaviour": "有問題的行為",
-    "Disagree": "不同意",
-    "Please pick a nature and describe what makes this message abusive.": "請挑選性質並描述此訊息為什麼是濫用。",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "任何其他理由。請描述問題。\n將會回報給聊天室版主。",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "此聊天室有違法或有毒的內容，或是管理員無法審核違法或有問題的內容。\n這將會回報給 %(homeserver)s 的管理員。管理員無法閱讀此聊天室的加密內容。",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "該使用者傳送廣告、廣告連結或宣傳等垃圾訊息至聊天室。\n將會回報給聊天室版主。",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "該使用者進行違法行為，例如洩漏他人個資，或威脅使用暴力。\n將會回報給聊天室版主，他們可能會將其回報給執法單位。",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "該使用者所寫的內容是錯誤的。\n這將會回報給聊天室管理員。",
     "Please provide an address": "請提供位址",
     "Message search initialisation failed, check <a>your settings</a> for more information": "訊息搜尋初始化失敗，請檢查<a>您的設定</a>以取得更多資訊",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "設定此聊天空間的位址，這樣使用者就能透過您的家伺服器找到此空間（%(localDomain)s）",
@@ -2462,8 +2427,6 @@
         "one": "%(count)s 個人已加入",
         "other": "%(count)s 個人已加入"
     },
-    "Check if you want to hide all current and future messages from this user.": "若想隱藏來自該使用者所有目前與未來的訊息，請打勾。",
-    "Ignore user": "忽略使用者",
     "View related event": "檢視相關的事件",
     "Read receipts": "讀取回條",
     "Failed to set direct message tag": "無法設定私人訊息標籤",
@@ -2793,8 +2756,6 @@
     "Loading live location…": "正在載入即時位置…",
     "Fetching keys from server…": "正在取得來自伺服器的金鑰…",
     "Checking…": "正在檢查…",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "此聊天室被用於討論違法或有問題的內容，或是版主未移除違法或有問題的內容。\n將會回報給 %(homeserver)s 的管理員。",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "該使用者表現出不良行為，例如侮辱其他使用者，或在適合家庭的聊天室中分享成人內容，又或是以其他方式違反該聊天室的規則。\n將回報給聊天室版主。",
     "Waiting for partner to confirm…": "正在等待夥伴確認…",
     "Adding…": "正在新增…",
     "Write something…": "寫點東西…",
@@ -2888,7 +2849,6 @@
     "Unknown password change error (%(stringifiedError)s)": "未知密碼變更錯誤（%(stringifiedError)s）",
     "Error while changing password: %(error)s": "變更密碼時發生錯誤：%(error)s",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "無法在未設定身分伺服器時，邀請使用者。您可以到「設定」畫面中連線到一組伺服器。",
-    "Unable to create room with moderation bot": "無法使用審核機器人建立聊天室",
     "Failed to download source media, no source url was found": "下載來源媒體失敗，找不到來源 URL",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "被邀請的使用者加入 %(brand)s 後，您就可以聊天，聊天室將會進行端到端加密",
     "Waiting for users to join %(brand)s": "等待使用者加入 %(brand)s",
@@ -3151,7 +3111,16 @@
         "clear": "清除"
     },
     "a11y": {
-        "user_menu": "使用者選單"
+        "user_menu": "使用者選單",
+        "n_unread_messages_mentions": {
+            "other": "包含提及有 %(count)s 則未讀訊息。",
+            "one": "1 則未讀的提及。"
+        },
+        "n_unread_messages": {
+            "other": "%(count)s 則未讀訊息。",
+            "one": "1 則未讀的訊息。"
+        },
+        "unread_messages": "未讀的訊息。"
     },
     "labs": {
         "video_rooms": "視訊聊天室",
@@ -4101,5 +4070,40 @@
         "sso": "單一登入",
         "reset_password_action": "重設密碼",
         "reset_password_title": "重新設定您的密碼"
+    },
+    "room_list": {
+        "sort_unread_first": "先顯示有未讀訊息的聊天室",
+        "show_previews": "顯示訊息預覽",
+        "sort_by": "排序方式",
+        "sort_by_activity": "訊息順序",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "列表選項",
+        "show_n_more": {
+            "other": "再顯示 %(count)s 個",
+            "one": "再顯示 %(count)s 個"
+        },
+        "show_less": "顯示更少",
+        "notification_options": "通知選項"
+    },
+    "report_content": {
+        "missing_reason": "請填寫為什麼您要回報。",
+        "unable_create_room_moderation_bot": "無法使用審核機器人建立聊天室",
+        "ignore_user": "忽略使用者",
+        "hide_messages_from_user": "若想隱藏來自該使用者所有目前與未來的訊息，請打勾。",
+        "nature_disagreement": "該使用者所寫的內容是錯誤的。\n這將會回報給聊天室管理員。",
+        "nature_toxic": "該使用者表現出不良行為，例如侮辱其他使用者，或在適合家庭的聊天室中分享成人內容，又或是以其他方式違反該聊天室的規則。\n將回報給聊天室版主。",
+        "nature_illegal": "該使用者進行違法行為，例如洩漏他人個資，或威脅使用暴力。\n將會回報給聊天室版主，他們可能會將其回報給執法單位。",
+        "nature_spam": "該使用者傳送廣告、廣告連結或宣傳等垃圾訊息至聊天室。\n將會回報給聊天室版主。",
+        "report_to_homeserver_encrypted": "此聊天室有違法或有毒的內容，或是管理員無法審核違法或有問題的內容。\n這將會回報給 %(homeserver)s 的管理員。管理員無法閱讀此聊天室的加密內容。",
+        "report_to_homeserver": "此聊天室被用於討論違法或有問題的內容，或是版主未移除違法或有問題的內容。\n將會回報給 %(homeserver)s 的管理員。",
+        "nature_other": "任何其他理由。請描述問題。\n將會回報給聊天室版主。",
+        "nature": "請挑選性質並描述此訊息為什麼是濫用。",
+        "disagree": "不同意",
+        "toxic_behaviour": "有問題的行為",
+        "illegal_content": "違法內容",
+        "spam_or_propaganda": "垃圾郵件或宣傳",
+        "report_entire_room": "回報整個聊天室",
+        "report_content_to_homeserver": "回報內容給您的家伺服器管理員",
+        "description": "回報此訊息將會傳送其獨特的「活動 ID」給您家伺服器的管理員。如果此聊天室中的訊息已加密，您的家伺服器管理員將無法閱讀訊息文字或檢視任何檔案或圖片。"
     }
 }

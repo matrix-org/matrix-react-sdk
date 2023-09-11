@@ -473,15 +473,6 @@
     "The room upgrade could not be completed": "Không thể hoàn thành việc nâng cấp phòng",
     "Failed to upgrade room": "Không nâng cấp được phòng",
     "Room Settings - %(roomName)s": "Cài đặt Phòng - %(roomName)s",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Báo cáo thông báo này sẽ gửi 'ID sự kiện' duy nhất của nó đến quản trị viên của máy chủ của bạn. Nếu tin nhắn trong phòng này được mã hóa, quản trị viên máy chủ của bạn sẽ không thể đọc nội dung tin nhắn hoặc xem bất kỳ tệp hoặc hình ảnh nào.",
-    "Report Content to Your Homeserver Administrator": "Báo cáo Nội dung cho Quản trị viên Máy chủ Trang chủ của Bạn",
-    "Report the entire room": "Báo cáo toàn bộ phòng",
-    "Spam or propaganda": "Thư rác hoặc tuyên truyền",
-    "Illegal Content": "Nội dung bất hợp pháp",
-    "Toxic Behaviour": "Hành vi độc hại",
-    "Disagree": "Không đồng ý",
-    "Please pick a nature and describe what makes this message abusive.": "Vui lòng chọn một bản chất và mô tả điều gì khiến thông báo này bị lạm dụng.",
-    "Please fill why you're reporting.": "Vui lòng điền lý do bạn đang báo cáo.",
     "Email (optional)": "Địa chỉ thư điện tử (tùy chọn)",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Lưu ý là nếu bạn không thêm địa chỉ thư điện tử và quên mật khẩu, bạn có thể <b>vĩnh viễn mất quyền truy cập vào tài khoản của mình</b>.",
     "Continuing without email": "Tiếp tục mà không cần địa chỉ thư điện tử",
@@ -993,33 +984,12 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Phòng này đang chạy phiên bản phòng <roomVersion /> mà máy chủ này đã đánh dấu là không ổn định <i>unstable</i>.",
     "This room has already been upgraded.": "Phòng này đã được nâng cấp.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Việc nâng cấp phòng này sẽ đóng phiên bản hiện tại của phòng và tạo một phòng được nâng cấp có cùng tên.",
-    "Unread messages.": "Các tin nhắn chưa đọc.",
-    "%(count)s unread messages.": {
-        "one": "1 tin chưa đọc.",
-        "other": "%(count)s tin nhắn chưa đọc."
-    },
-    "%(count)s unread messages including mentions.": {
-        "one": "1 đề cập chưa đọc.",
-        "other": "%(count)s tin nhắn chưa đọc bao gồm các đề cập."
-    },
     "Room options": "Tùy chọn phòng",
     "Low Priority": "Ưu tiên thấp",
     "Favourite": "Yêu thích",
     "Favourited": "Được yêu thích",
     "Forget Room": "Quên phòng",
-    "Notification options": "Tùy chọn thông báo",
     "All messages": "Tất cả tin nhắn",
-    "Show less": "Hiện ít hơn",
-    "Show %(count)s more": {
-        "one": "Hiển thị %(count)s thêm",
-        "other": "Hiển thị %(count)s thêm"
-    },
-    "List options": "Liệt kê các tùy chọn",
-    "A-Z": "AZ",
-    "Activity": "Hoạt động",
-    "Sort by": "Sắp xếp theo",
-    "Show previews of messages": "Hiển thị bản xem trước của tin nhắn",
-    "Show rooms with unread messages first": "Hiển thị các phòng có tin nhắn chưa đọc trước",
     "%(roomName)s is not accessible at this time.": "Không thể truy cập %(roomName)s vào lúc này.",
     "%(roomName)s does not exist.": "%(roomName)s không tồn tại.",
     "%(roomName)s can't be previewed. Do you want to join it?": "Không thể xem trước %(roomName)s. Bạn có muốn tham gia nó không?",
@@ -2066,11 +2036,6 @@
     },
     "We call the places where you can host your account 'homeservers'.": "Chúng tôi gọi những nơi bạn có thể lưu trữ tài khoản của bạn là 'homeserver'.",
     "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org là homeserver công cộng lớn nhất, vì vậy nó là nơi lý tưởng cho nhiều người.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Bất kỳ lý do nào khác. Xin hãy mô tả vấn đề.\nĐiều này sẽ được báo cáo cho người điều hành phòng.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Phòng này được dành riêng cho nội dung bất hợp pháp hoặc độc hại hay điều phối viên không kiểm soát nội dung bất hợp pháp hoặc độc hại.\nĐiều này sẽ được báo cáo cho quản trị viên của %(homeserver)s. Các quản trị viên sẽ KHÔNG thể đọc nội dung được mã hóa của phòng này.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Người dùng này đang spam phòng bằng quảng cáo, liên kết đến quảng cáo hoặc tuyên truyền.\nĐiều này sẽ được báo cáo cho người điều hành phòng.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Người dùng này đang hiển thị hành vi bất hợp pháp, ví dụ bằng cách doxing mọi người hoặc đe dọa bạo lực.\nĐiều này sẽ được báo cáo cho những người điều hành phòng có thể leo thang điều này cho các cơ quan pháp lý.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Những gì người dùng này đang viết là sai.\nĐiều này sẽ được báo cáo tới các moderator của phòng.",
     "Spaces you know that contain this space": "Các space bạn biết có chứa space này",
     "If you can't see who you're looking for, send them your invite link below.": "Nếu bạn không thể thấy người bạn đang tìm, hãy gửi cho họ liên kết mời của bạn bên dưới.",
     "You may contact me if you want to follow up or to let me test out upcoming ideas": "Chúng tôi có thể liên hệ với bạn để cho phép bạn theo dõi hoặc thử nghiệm những tính năng sắp tới",
@@ -2502,7 +2467,6 @@
     "Unban from room": "Bỏ cấm trong phòng",
     "Ban from room": "Cấm khỏi phòng",
     "Invites by email can only be sent one at a time": "Chỉ có thể gửi một thư điện tử mời mỗi lần",
-    "Ignore user": "Tảng lờ người dùng",
     "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": "Chỉ tiếp tục nếu bạn chắc chắn là mình đã mất mọi thiết bị khác và khóa bảo mật.",
     "Room info": "Thông tin phòng",
     "Wrong email address?": "Địa chỉ thư điện tử sai?",
@@ -2611,7 +2575,6 @@
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s không được cho phép để tìm vị trí của bạn. Vui lòng cho phép truy cập vị trí trong cài đặt trình duyệt của bạn.",
     "Developer command: Discards the current outbound group session and sets up new Olm sessions": "Lệnh cho nhà phát triển: Hủy phiên ra ngoài hiện tại của nhóm và thiết lập phiên Olm mới",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Toàn bộ tin nhắn và lời mời từ người dùng này sẽ bị ẩn. Bạn có muốn tảng lờ người dùng?",
-    "Unable to create room with moderation bot": "Không thể tạo phòng với bot điều phối",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Khi bạn đăng xuất, các khóa sẽ được xóa khỏi thiết bị này, tức là bạn không thể đọc các tin nhắn được mã hóa trừ khi bạn có khóa cho chúng trong thiết bị khác, hoặc sao lưu chúng lên máy chủ.",
     "<b>Warning</b>: upgrading a room will <i>not automatically migrate room members to the new version of the room.</i> We'll post a link to the new room in the old version of the room - room members will have to click this link to join the new room.": "<b>Cảnh báo</b>: nâng cấp một phòng sẽ <i>không tự động đưa thành viên sang phiên bản mới của phòng.</i> Chúng tôi đăng liên kết tới phòng mới trong phòng cũ - thành viên sẽ cần nhấp vào liên kết để tham gia phòng mới.",
     "Join %(roomAddress)s": "Tham gia %(roomAddress)s",
@@ -2919,7 +2882,16 @@
         "clear": "Xoá"
     },
     "a11y": {
-        "user_menu": "Menu người dùng"
+        "user_menu": "Menu người dùng",
+        "n_unread_messages_mentions": {
+            "one": "1 đề cập chưa đọc.",
+            "other": "%(count)s tin nhắn chưa đọc bao gồm các đề cập."
+        },
+        "n_unread_messages": {
+            "one": "1 tin chưa đọc.",
+            "other": "%(count)s tin nhắn chưa đọc."
+        },
+        "unread_messages": "Các tin nhắn chưa đọc."
     },
     "labs": {
         "video_rooms": "Phòng video",
@@ -3804,5 +3776,37 @@
         "sso": "Đăng Nhập Một Lần",
         "reset_password_action": "Đặt lại mật khẩu",
         "reset_password_title": "Đặt lại mật khẩu của bạn"
+    },
+    "room_list": {
+        "sort_unread_first": "Hiển thị các phòng có tin nhắn chưa đọc trước",
+        "show_previews": "Hiển thị bản xem trước của tin nhắn",
+        "sort_by": "Sắp xếp theo",
+        "sort_by_activity": "Hoạt động",
+        "sort_by_alphabet": "AZ",
+        "sublist_options": "Liệt kê các tùy chọn",
+        "show_n_more": {
+            "one": "Hiển thị %(count)s thêm",
+            "other": "Hiển thị %(count)s thêm"
+        },
+        "show_less": "Hiện ít hơn",
+        "notification_options": "Tùy chọn thông báo"
+    },
+    "report_content": {
+        "missing_reason": "Vui lòng điền lý do bạn đang báo cáo.",
+        "unable_create_room_moderation_bot": "Không thể tạo phòng với bot điều phối",
+        "ignore_user": "Tảng lờ người dùng",
+        "nature_disagreement": "Những gì người dùng này đang viết là sai.\nĐiều này sẽ được báo cáo tới các moderator của phòng.",
+        "nature_illegal": "Người dùng này đang hiển thị hành vi bất hợp pháp, ví dụ bằng cách doxing mọi người hoặc đe dọa bạo lực.\nĐiều này sẽ được báo cáo cho những người điều hành phòng có thể leo thang điều này cho các cơ quan pháp lý.",
+        "nature_spam": "Người dùng này đang spam phòng bằng quảng cáo, liên kết đến quảng cáo hoặc tuyên truyền.\nĐiều này sẽ được báo cáo cho người điều hành phòng.",
+        "report_to_homeserver_encrypted": "Phòng này được dành riêng cho nội dung bất hợp pháp hoặc độc hại hay điều phối viên không kiểm soát nội dung bất hợp pháp hoặc độc hại.\nĐiều này sẽ được báo cáo cho quản trị viên của %(homeserver)s. Các quản trị viên sẽ KHÔNG thể đọc nội dung được mã hóa của phòng này.",
+        "nature_other": "Bất kỳ lý do nào khác. Xin hãy mô tả vấn đề.\nĐiều này sẽ được báo cáo cho người điều hành phòng.",
+        "nature": "Vui lòng chọn một bản chất và mô tả điều gì khiến thông báo này bị lạm dụng.",
+        "disagree": "Không đồng ý",
+        "toxic_behaviour": "Hành vi độc hại",
+        "illegal_content": "Nội dung bất hợp pháp",
+        "spam_or_propaganda": "Thư rác hoặc tuyên truyền",
+        "report_entire_room": "Báo cáo toàn bộ phòng",
+        "report_content_to_homeserver": "Báo cáo Nội dung cho Quản trị viên Máy chủ Trang chủ của Bạn",
+        "description": "Báo cáo thông báo này sẽ gửi 'ID sự kiện' duy nhất của nó đến quản trị viên của máy chủ của bạn. Nếu tin nhắn trong phòng này được mã hóa, quản trị viên máy chủ của bạn sẽ không thể đọc nội dung tin nhắn hoặc xem bất kỳ tệp hoặc hình ảnh nào."
     }
 }

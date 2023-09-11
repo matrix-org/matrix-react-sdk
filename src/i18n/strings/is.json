@@ -224,7 +224,6 @@
     "Change notification settings": "Breytta tilkynningastillingum",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Þú getur ekki sent nein skilaboð fyrr en þú hefur farið yfir og samþykkir <consentLink>skilmála okkar</consentLink>.",
     "Send a Direct Message": "Senda bein skilaboð",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Tilkynning um þessi skilaboð mun senda einstakt 'atviksauðkenni' til stjórnanda heimaþjóns. Ef skilaboð í þessari spjallrás eru dulrituð getur stjórnandi heimaþjóns ekki lesið skilaboðatextann eða skoðað skrár eða myndir.",
     "Send as message": "Senda sem skilaboð",
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Þú getur notað <code>/help</code> til að lista tilteknar skipanir. Ætlaðir þú að senda þetta sem skilaboð?",
     "Never send encrypted messages to unverified sessions in this room from this session": "Aldrei senda dulrituð skilaboð af þessu tæki til ósannvottaðra tækja á þessari spjallrás úr þessari setu",
@@ -347,10 +346,8 @@
     "%(duration)sh": "%(duration)sklst",
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)ss",
-    "Show less": "Sýna minna",
     "Message deleted on %(date)s": "Skilaboð eytt á %(date)s",
     "Message edits": "Breytingar á skilaboðum",
-    "List options": "Lista valkosti",
     "Create a Group Chat": "Búa til hópspjall",
     "Explore Public Rooms": "Kanna almenningsspjallrásir",
     "Explore public rooms": "Kanna almenningsspjallrásir",
@@ -777,15 +774,7 @@
     "Stop recording": "Stöðva upptöku",
     "No microphone found": "Enginn hljóðnemi fannst",
     "Mark all as read": "Merkja allt sem lesið",
-    "Unread messages.": "Ólesin skilaboð.",
-    "%(count)s unread messages.": {
-        "one": "1 ólesin skilaboð.",
-        "other": "%(count)s ólesin skilaboð."
-    },
     "Copy room link": "Afrita tengil spjallrásar",
-    "A-Z": "A-Ö",
-    "Activity": "Virkni",
-    "Sort by": "Raða eftir",
     "%(roomName)s does not exist.": "%(roomName)s er ekki til.",
     "Do you want to join %(roomName)s?": "Viltu taka þátt í %(roomName)s?",
     "Start chatting": "Hefja spjall",
@@ -1174,13 +1163,6 @@
     "Cannot reach homeserver": "Næ ekki að tengjast heimaþjóni",
     "Could not find user in room": "Gat ekki fundið notanda á spjallrás",
     "Favourited": "Í eftirlætum",
-    "Notification options": "Valkostir tilkynninga",
-    "Show %(count)s more": {
-        "one": "Birta %(count)s til viðbótar",
-        "other": "Birta %(count)s til viðbótar"
-    },
-    "Show previews of messages": "Sýna forskoðun skilaboða",
-    "Show rooms with unread messages first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
     "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Svæði eru ný leið til að hópa fólk og spjallrásir. Hverskyns svæði langar þig til að útbúa? Þessu má breyta síðar.",
     "Spanner": "Skrúflykill",
     "Waiting for %(displayName)s to verify…": "Bíð eftir að %(displayName)s sannreyni…",
@@ -1192,7 +1174,6 @@
     "Other homeserver": "Annar heimaþjónn",
     "Sign into your homeserver": "Skráðu þig inn á heimaþjóninn þinn",
     "Unable to validate homeserver": "Ekki tókst að sannreyna heimaþjón",
-    "Report Content to Your Homeserver Administrator": "Kæra efni til kerfisstjóra heimaþjónsins þíns",
     "Your homeserver": "Heimaþjónninn þinn",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Stilltu vistföng fyrir þessa spjallrás svo notendur geti fundið hana í gegnum heimaþjóninn þinn (%(localDomain)s)",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Stilltu vistföng fyrir þetta svæði svo notendur geti fundið það í gegnum heimaþjóninn þinn (%(localDomain)s)",
@@ -1506,11 +1487,6 @@
     "You're all caught up.": "Þú hefur klárað að lesa allt.",
     "Upgrade public room": "Uppfæra almenningsspjallrás",
     "Upgrade private room": "Uppfæra einkaspjallrás",
-    "Report the entire room": "Kæra alla spjallrásina",
-    "Spam or propaganda": "Ruslpóstur eða áróður",
-    "Illegal Content": "Ólöglegt efni",
-    "Toxic Behaviour": "Eitruð hegðun",
-    "Disagree": "Ósammála",
     "Verify session": "Sannprófa setu",
     "Search spaces": "Leita að svæðum",
     "%(count)s members": {
@@ -1689,10 +1665,6 @@
         "other": "%(count)s svör"
     },
     "Add some now": "Bæta við núna",
-    "%(count)s unread messages including mentions.": {
-        "one": "1 ólesin tilvísun í þig.",
-        "other": "%(count)s ólesin skilaboð að meðtöldum þar sem minnst er á þig."
-    },
     "%(roomName)s is not accessible at this time.": "%(roomName)s er ekki aðgengileg í augnablikinu.",
     "Do you want to chat with %(user)s?": "Viltu spjalla við %(user)s?",
     "Add space": "Bæta við svæði",
@@ -2015,13 +1987,6 @@
     "You are about to leave <spaceName/>.": "Þú ert í þann mund að yfirgefa <spaceName/>.",
     "Automatically invite members from this room to the new one": "Bjóða meðlimum á þessari spjallrás sjálfvirkt yfir í þá nýju",
     "Create a new room with the same name, description and avatar": "Búa til nýja spjallrás með sama heiti, lýsingu og auðkennismynd",
-    "Please pick a nature and describe what makes this message abusive.": "Veldu ástæðu og lýstu því hvað gerir þessi skilaboð ótæk.",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Einhver önnur ástæða. Lýstu vandamálinu.\nÞetta verður tilkynnt til umsjónarmanna spjallrásarinnar.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Þessi spjallrás er tileinkuð ólöglegu eða eitruðu efni eða skorti á viðbrögðum umsjónarmanna gagnvart ólöglegu eða eitruðu efni.\nÞetta verður tilkynnt til stjórnenda %(homeserver)s. Kerfisstjórarnir geta EKKI LESIÐ dulritað efni þessarar spjallrásar.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "Þessi notandi er að dreifa auglýsingum inn á spjallrásina, tenglum á auglýsingar eða áróður.\nÞetta verður tilkynnt til umsjónarmanna spjallrásarinnar.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "Þessi notandi er að sýna ólöglega hegðun, til dæmis með því að hrella aðra notendur eða hóta ofbeldi.\nÞetta verður tilkynnt til umsjónarmanna spjallrásarinnar, sem gætu þurft að tilkynna þetta til viðeigandi yfirvalda.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Það sem notandinn er að skrifa sem er rangt.\nÞetta verður tilkynnt til umsjónarmanna spjallrásarinnar.",
-    "Please fill why you're reporting.": "Fylltu út skýringu á því hvers vegna þú ert að kæra.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Bara til að minna á; ef þú gleymir lykilorðinu þínu, <b>þá er engin leið til að endurheimta aðganginn þinn</b>.",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Óþekkt pörun (notandi, seta): (%(userId)s, %(deviceId)s)",
     "See when the avatar changes in your active room": "Sjá þegar auðkennismynd virku spjallrásarinnar þinnar breytist",
@@ -2180,7 +2145,6 @@
         "one": "%(count)s meðlimur",
         "other": "%(count)s meðlimir"
     },
-    "Ignore user": "Hunsa notanda",
     "Add new server…": "Bæta við nýjum þjóni…",
     "%(count)s participants": {
         "one": "1 þáttakandi",
@@ -2647,7 +2611,16 @@
         "clear": "Hreinsa"
     },
     "a11y": {
-        "user_menu": "Valmynd notandans"
+        "user_menu": "Valmynd notandans",
+        "n_unread_messages_mentions": {
+            "one": "1 ólesin tilvísun í þig.",
+            "other": "%(count)s ólesin skilaboð að meðtöldum þar sem minnst er á þig."
+        },
+        "n_unread_messages": {
+            "one": "1 ólesin skilaboð.",
+            "other": "%(count)s ólesin skilaboð."
+        },
+        "unread_messages": "Ólesin skilaboð."
     },
     "labs": {
         "video_rooms": "Myndspjallrásir",
@@ -3488,5 +3461,36 @@
         "sso": "Einföld innskráning (single-sign-on)",
         "reset_password_action": "Endurstilla lykilorð",
         "reset_password_title": "Endurstilltu lykilorðið þitt"
+    },
+    "room_list": {
+        "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
+        "show_previews": "Sýna forskoðun skilaboða",
+        "sort_by": "Raða eftir",
+        "sort_by_activity": "Virkni",
+        "sort_by_alphabet": "A-Ö",
+        "sublist_options": "Lista valkosti",
+        "show_n_more": {
+            "one": "Birta %(count)s til viðbótar",
+            "other": "Birta %(count)s til viðbótar"
+        },
+        "show_less": "Sýna minna",
+        "notification_options": "Valkostir tilkynninga"
+    },
+    "report_content": {
+        "missing_reason": "Fylltu út skýringu á því hvers vegna þú ert að kæra.",
+        "ignore_user": "Hunsa notanda",
+        "nature_disagreement": "Það sem notandinn er að skrifa sem er rangt.\nÞetta verður tilkynnt til umsjónarmanna spjallrásarinnar.",
+        "nature_illegal": "Þessi notandi er að sýna ólöglega hegðun, til dæmis með því að hrella aðra notendur eða hóta ofbeldi.\nÞetta verður tilkynnt til umsjónarmanna spjallrásarinnar, sem gætu þurft að tilkynna þetta til viðeigandi yfirvalda.",
+        "nature_spam": "Þessi notandi er að dreifa auglýsingum inn á spjallrásina, tenglum á auglýsingar eða áróður.\nÞetta verður tilkynnt til umsjónarmanna spjallrásarinnar.",
+        "report_to_homeserver_encrypted": "Þessi spjallrás er tileinkuð ólöglegu eða eitruðu efni eða skorti á viðbrögðum umsjónarmanna gagnvart ólöglegu eða eitruðu efni.\nÞetta verður tilkynnt til stjórnenda %(homeserver)s. Kerfisstjórarnir geta EKKI LESIÐ dulritað efni þessarar spjallrásar.",
+        "nature_other": "Einhver önnur ástæða. Lýstu vandamálinu.\nÞetta verður tilkynnt til umsjónarmanna spjallrásarinnar.",
+        "nature": "Veldu ástæðu og lýstu því hvað gerir þessi skilaboð ótæk.",
+        "disagree": "Ósammála",
+        "toxic_behaviour": "Eitruð hegðun",
+        "illegal_content": "Ólöglegt efni",
+        "spam_or_propaganda": "Ruslpóstur eða áróður",
+        "report_entire_room": "Kæra alla spjallrásina",
+        "report_content_to_homeserver": "Kæra efni til kerfisstjóra heimaþjónsins þíns",
+        "description": "Tilkynning um þessi skilaboð mun senda einstakt 'atviksauðkenni' til stjórnanda heimaþjóns. Ef skilaboð í þessari spjallrás eru dulrituð getur stjórnandi heimaþjóns ekki lesið skilaboðatextann eða skoðað skrár eða myndir."
     }
 }

@@ -750,9 +750,6 @@
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Hiba történt a szobához szükséges hozzáférési szint megváltoztatása során. Ellenőrizze, hogy megvan-e hozzá a megfelelő jogosultsága, és próbálja újra.",
     "Explore rooms": "Szobák felderítése",
     "Verify the link in your inbox": "Ellenőrizd a hivatkozást a bejövő leveleid között",
-    "Please fill why you're reporting.": "Adja meg, hogy miért jelenti.",
-    "Report Content to Your Homeserver Administrator": "Tartalom bejelentése a Matrix-kiszolgáló rendszergazdájának",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Az üzenet bejelentése egy egyedi „eseményazonosítót” küld el a Matrix-kiszolgáló rendszergazdájának. Ha az üzenetek titkosítottak a szobában, akkor a Matrix-kiszolgáló rendszergazdája nem tudja elolvasni az üzenetet, vagy nem tudja megnézni a fájlokat vagy képeket.",
     "Read Marker lifetime (ms)": "Olvasási visszajelzés érvényessége (ms)",
     "Read Marker off-screen lifetime (ms)": "Olvasási visszajelzés érvényessége a képernyőn kívül (ms)",
     "e.g. my-room": "pl.: szobam",
@@ -762,14 +759,6 @@
     "Show advanced": "Speciális beállítások megjelenítése",
     "Close dialog": "Ablak bezárása",
     "Clear cache and reload": "Gyorsítótár ürítése és újratöltés",
-    "%(count)s unread messages including mentions.": {
-        "other": "%(count)s olvasatlan üzenet megemlítéssel.",
-        "one": "1 olvasatlan megemlítés."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s olvasatlan üzenet.",
-        "one": "1 olvasatlan üzenet."
-    },
     "Show image": "Kép megjelenítése",
     "To continue you need to accept the terms of this service.": "A folytatáshoz el kell fogadnia a felhasználási feltételeket.",
     "Document": "Dokumentum",
@@ -796,7 +785,6 @@
     "Jump to first unread room.": "Ugrás az első olvasatlan szobához.",
     "Jump to first invite.": "Újrás az első meghívóhoz.",
     "Room %(name)s": "Szoba: %(name)s",
-    "Unread messages.": "Olvasatlan üzenetek.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ez a művelet az e-mail-cím vagy telefonszám ellenőrzése miatt hozzáférést igényel a(z) <server /> alapértelmezett azonosítási kiszolgálójához, de a kiszolgálónak nincsenek felhasználási feltételei.",
     "Message Actions": "Üzenet Műveletek",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -913,7 +901,6 @@
     "Encryption upgrade available": "A titkosítási fejlesztés elérhető",
     "Enable message search in encrypted rooms": "Üzenetek keresésének bekapcsolása a titkosított szobákban",
     "This bridge was provisioned by <user />.": "Ezt a hidat a következő készítette: <user />.",
-    "Show less": "Kevesebb megjelenítése",
     "Securely cache encrypted messages locally for them to appear in search results.": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "A titkosított üzenetek biztonságos helyi tárolásához hiányzik néhány összetevő a(z) %(brand)s alkalmazásból. Ha kísérletezni szeretne ezzel a funkcióval, akkor állítson össze egy egyéni asztali %(brand)s alkalmazást, amely <nativeLink>tartalmazza a keresési összetevőket</nativeLink>.",
     "Message search": "Üzenet keresése",
@@ -1138,21 +1125,13 @@
     "Use a different passphrase?": "Másik jelmondat használata?",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "A kiszolgáló rendszergazdája alapértelmezetten kikapcsolta a végpontok közötti titkosítást a privát szobákban és a közvetlen beszélgetésekben.",
     "No recently visited rooms": "Nincsenek nemrégiben meglátogatott szobák",
-    "Sort by": "Rendezés",
     "Message preview": "Üzenet előnézet",
-    "List options": "Lista beállításai",
-    "Show %(count)s more": {
-        "other": "Még %(count)s megjelenítése",
-        "one": "Még %(count)s megjelenítése"
-    },
     "Room options": "Szoba beállítások",
     "Switch to light mode": "Világos módra váltás",
     "Switch to dark mode": "Sötét módra váltás",
     "Switch theme": "Kinézet váltása",
     "All settings": "Minden beállítás",
     "Feedback": "Visszajelzés",
-    "Activity": "Aktivitás",
-    "A-Z": "A-Z",
     "Looks good!": "Jónak tűnik!",
     "Use custom size": "Egyéni méret használata",
     "Hey you. You're the best!": "Szia! Te vagy a legjobb!",
@@ -1171,15 +1150,12 @@
     "Set a Security Phrase": "Biztonsági Jelmondat beállítása",
     "Confirm Security Phrase": "Biztonsági jelmondat megerősítése",
     "Save your Security Key": "Mentse el a biztonsági kulcsát",
-    "Notification options": "Értesítési beállítások",
     "Favourited": "Kedvencnek jelölt",
     "Forget Room": "Szoba elfelejtése",
     "This room is public": "Ez egy nyilvános szoba",
     "Are you sure you want to cancel entering passphrase?": "Biztos, hogy megszakítja a jelmondat bevitelét?",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "A(z) %(brand)s nem képes helyileg biztonságosan elmenteni a titkosított üzeneteket, ha webböngészőben fut. Használja az <desktopLink>asztali %(brand)s</desktopLink> alkalmazást, hogy az üzenetekben való kereséskor a titkosított üzenetek is megjelenjenek.",
     "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "A mellőzendő felhasználókat és kiszolgálókat itt adja meg. Használjon csillagot a(z) %(brand)s kliensben, hogy minden karakterre illeszkedjen. Például a <code>@bot:*</code> figyelmen kívül fog hagyni minden „bot” nevű felhasználót, minden kiszolgálóról.",
-    "Show rooms with unread messages first": "Olvasatlan üzeneteket tartalmazó szobák megjelenítése elől",
-    "Show previews of messages": "Üzenet előnézet megjelenítése",
     "Edited at %(date)s": "Szerkesztve ekkor: %(date)s",
     "Click to view edits": "A szerkesztések megtekintéséhez kattints",
     "Change notification settings": "Értesítési beállítások megváltoztatása",
@@ -1835,10 +1811,6 @@
     "Nothing pinned, yet": "Még semmi sincs kitűzve",
     "End-to-end encryption isn't enabled": "Végpontok közötti titkosítás nincs engedélyezve",
     "Some invites couldn't be sent": "Néhány meghívót nem sikerült elküldeni",
-    "Please pick a nature and describe what makes this message abusive.": "Válassza ki az üzenet természetét, vagy írja le, hogy miért elítélendő.",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s. The administrators will NOT be able to read the encrypted content of this room.": "Ez a szoba illegális vagy mérgező tartalmat közvetít, vagy a moderátorok képtelenek ezeket megfelelően moderálni.\nEz jelezve lesz a(z) %(homeserver)s rendszergazdái felé. Az rendszergazdák NEM tudják olvasni a szoba titkosított tartalmát.",
-    "This user is spamming the room with ads, links to ads or to propaganda.\nThis will be reported to the room moderators.": "A felhasználó kéretlen reklámokkal, reklámhivatkozásokkal vagy propagandával bombázza a szobát.\nEz jelezve lesz a szoba moderátorai felé.",
-    "This user is displaying illegal behaviour, for instance by doxing people or threatening violence.\nThis will be reported to the room moderators who may escalate this to legal authorities.": "A felhasználó illegális viselkedést valósít meg, például kipécézett valakit vagy tettlegességgel fenyeget.\nEz moderátorok felé jelzésre kerül akik akár hivatalos személyek felé továbbíthatják ezt.",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Üzenek keresés kezdő beállítása sikertelen, ellenőrizze a <a>beállításait</a> további információkért",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Cím beállítása ehhez a térhez, hogy a felhasználók a matrix szerveren megtalálhassák (%(localDomain)s)",
     "To publish an address, it needs to be set as a local address first.": "A cím publikálásához először helyi címet kell beállítani.",
@@ -1852,13 +1824,6 @@
     "Show preview": "Előnézet megjelenítése",
     "View source": "Forrás megtekintése",
     "Settings - %(spaceName)s": "Beállítások – %(spaceName)s",
-    "Report the entire room": "Az egész szoba jelentése",
-    "Spam or propaganda": "Kéretlen tartalom vagy propaganda",
-    "Illegal Content": "Törvénytelen tartalom",
-    "Toxic Behaviour": "Mérgező viselkedés",
-    "Disagree": "Nem értek egyet",
-    "Any other reason. Please describe the problem.\nThis will be reported to the room moderators.": "Bármi más ok. Írja le a problémát.\nEz lesz elküldve a szoba moderátorainak.",
-    "What this user is writing is wrong.\nThis will be reported to the room moderators.": "Amit ez a felhasználó ír az rossz.\nErről a szoba moderátorának jelentés készül.",
     "Please provide an address": "Kérem adja meg a címet",
     "This space has no local addresses": "Ennek a térnek nincs helyi címe",
     "Space information": "Tér információi",
@@ -2463,8 +2428,6 @@
         "other": "%(count)s személy belépett"
     },
     "View related event": "Kapcsolódó események megjelenítése",
-    "Check if you want to hide all current and future messages from this user.": "Válaszd ki ha ennek a felhasználónak a jelenlegi és jövőbeli üzeneteit el szeretnéd rejteni.",
-    "Ignore user": "Felhasználó mellőzése",
     "Read receipts": "Olvasási visszajelzés",
     "You were disconnected from the call. (Error: %(message)s)": "A híváskapcsolat megszakadt (Hiba: %(message)s)",
     "Failed to set direct message tag": "Nem sikerült a közvetlen beszélgetés címkét beállítani",
@@ -2792,8 +2755,6 @@
     "There are no active polls in this room": "Nincsenek aktív szavazások ebben a szobában",
     "Fetching keys from server…": "Kulcsok lekérése a kiszolgálóról…",
     "Checking…": "Ellenőrzés…",
-    "This room is dedicated to illegal or toxic content or the moderators fail to moderate illegal or toxic content.\nThis will be reported to the administrators of %(homeserver)s.": "Ez a szoba illegális vagy mérgező tartalmat közvetít, vagy a moderátorok képtelenek ezeket megfelelően moderálni.\nEz jelezve lesz a(z) %(homeserver)s rendszergazdái felé.",
-    "This user is displaying toxic behaviour, for instance by insulting other users or sharing adult-only content in a family-friendly room or otherwise violating the rules of this room.\nThis will be reported to the room moderators.": "A felhasználó mérgező viselkedést jelenít meg, például más felhasználókat inzultál vagy felnőtt tartalmat oszt meg egy családbarát szobában vagy más módon sérti meg a szoba szabályait.\nEz moderátorok felé jelzésre kerül.",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Ehhez engedélyezd a(z) „%(manageIntegrations)s”-t a Beállításokban.",
     "Waiting for partner to confirm…": "Várakozás a partner megerősítésére…",
     "Adding…": "Hozzáadás…",
@@ -2889,7 +2850,6 @@
     "Error while changing password: %(error)s": "Hiba a jelszó módosítása során: %(error)s",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Matrix-kiszolgáló nélkül nem lehet felhasználókat meghívni e-mailben. Kapcsolódjon egyhez a „Beállítások” alatt.",
     "Failed to download source media, no source url was found": "A forrásmédia letöltése sikertelen, nem található forráswebcím",
-    "Unable to create room with moderation bot": "Nem hozható létre szoba moderációs bottal",
     "common": {
         "about": "Névjegy",
         "analytics": "Analitika",
@@ -3081,7 +3041,16 @@
         "clear": "Törlés"
     },
     "a11y": {
-        "user_menu": "Felhasználói menü"
+        "user_menu": "Felhasználói menü",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s olvasatlan üzenet megemlítéssel.",
+            "one": "1 olvasatlan megemlítés."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s olvasatlan üzenet.",
+            "one": "1 olvasatlan üzenet."
+        },
+        "unread_messages": "Olvasatlan üzenetek."
     },
     "labs": {
         "video_rooms": "Videószobák",
@@ -4005,5 +3974,40 @@
         "sso": "Egyszeri bejelentkezés",
         "reset_password_action": "Jelszó visszaállítása",
         "reset_password_title": "Jelszó megváltoztatása"
+    },
+    "room_list": {
+        "sort_unread_first": "Olvasatlan üzeneteket tartalmazó szobák megjelenítése elől",
+        "show_previews": "Üzenet előnézet megjelenítése",
+        "sort_by": "Rendezés",
+        "sort_by_activity": "Aktivitás",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Lista beállításai",
+        "show_n_more": {
+            "other": "Még %(count)s megjelenítése",
+            "one": "Még %(count)s megjelenítése"
+        },
+        "show_less": "Kevesebb megjelenítése",
+        "notification_options": "Értesítési beállítások"
+    },
+    "report_content": {
+        "missing_reason": "Adja meg, hogy miért jelenti.",
+        "unable_create_room_moderation_bot": "Nem hozható létre szoba moderációs bottal",
+        "ignore_user": "Felhasználó mellőzése",
+        "hide_messages_from_user": "Válaszd ki ha ennek a felhasználónak a jelenlegi és jövőbeli üzeneteit el szeretnéd rejteni.",
+        "nature_disagreement": "Amit ez a felhasználó ír az rossz.\nErről a szoba moderátorának jelentés készül.",
+        "nature_toxic": "A felhasználó mérgező viselkedést jelenít meg, például más felhasználókat inzultál vagy felnőtt tartalmat oszt meg egy családbarát szobában vagy más módon sérti meg a szoba szabályait.\nEz moderátorok felé jelzésre kerül.",
+        "nature_illegal": "A felhasználó illegális viselkedést valósít meg, például kipécézett valakit vagy tettlegességgel fenyeget.\nEz moderátorok felé jelzésre kerül akik akár hivatalos személyek felé továbbíthatják ezt.",
+        "nature_spam": "A felhasználó kéretlen reklámokkal, reklámhivatkozásokkal vagy propagandával bombázza a szobát.\nEz jelezve lesz a szoba moderátorai felé.",
+        "report_to_homeserver_encrypted": "Ez a szoba illegális vagy mérgező tartalmat közvetít, vagy a moderátorok képtelenek ezeket megfelelően moderálni.\nEz jelezve lesz a(z) %(homeserver)s rendszergazdái felé. Az rendszergazdák NEM tudják olvasni a szoba titkosított tartalmát.",
+        "report_to_homeserver": "Ez a szoba illegális vagy mérgező tartalmat közvetít, vagy a moderátorok képtelenek ezeket megfelelően moderálni.\nEz jelezve lesz a(z) %(homeserver)s rendszergazdái felé.",
+        "nature_other": "Bármi más ok. Írja le a problémát.\nEz lesz elküldve a szoba moderátorainak.",
+        "nature": "Válassza ki az üzenet természetét, vagy írja le, hogy miért elítélendő.",
+        "disagree": "Nem értek egyet",
+        "toxic_behaviour": "Mérgező viselkedés",
+        "illegal_content": "Törvénytelen tartalom",
+        "spam_or_propaganda": "Kéretlen tartalom vagy propaganda",
+        "report_entire_room": "Az egész szoba jelentése",
+        "report_content_to_homeserver": "Tartalom bejelentése a Matrix-kiszolgáló rendszergazdájának",
+        "description": "Az üzenet bejelentése egy egyedi „eseményazonosítót” küld el a Matrix-kiszolgáló rendszergazdájának. Ha az üzenetek titkosítottak a szobában, akkor a Matrix-kiszolgáló rendszergazdája nem tudja elolvasni az üzenetet, vagy nem tudja megnézni a fájlokat vagy képeket."
     }
 }
