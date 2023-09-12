@@ -423,9 +423,6 @@
     "Joins room with given address": "به اتاق با آدرس داده‌شده بپیوندید",
     "Session already verified!": "نشست پیش از این تائید شده‌است!",
     "Verifies a user, session, and pubkey tuple": "یک کاربر، نشست و عبارت کلید عمومی را تائید می‌کند",
-    "You cannot modify widgets in this room.": "شما امکان تغییر ویجت‌ها در این اتاق را ندارید.",
-    "Please supply a https:// or http:// widget URL": "لطفا نشانی یک ویجت را به پروتکل http:// یا https:// وارد کنید",
-    "Please supply a widget URL or embed code": "لطفا نشانی (URL) ویجت یا یک کد قابل جاسازی (embeded) وارد کنید",
     "Could not find user in room": "کاربر در اتاق پیدا نشد",
     "Define the power level of a user": "سطح قدرت یک کاربر را تعریف کنید",
     "You are no longer ignoring %(userId)s": "شما دیگر کاربر %(userId)s را نادیده نمی‌گیرید",
@@ -445,8 +442,6 @@
     "See when a sticker is posted in this room": "زمان نصب برچسب در این اتاق را ببینید",
     "Repeats like \"aaa\" are easy to guess": "تکرارهایی مانند بببب به راحتی قابل حدس هستند",
     "with an empty state key": "با یک کلید حالت خالی",
-    "Converts the DM to a room": "DM را به اتاق تبدیل می کند",
-    "Converts the room to a DM": "اتاق را به DM تبدیل می کند",
     "Takes the call in the current room off hold": "تماس را در اتاق فعلی خاموش نگه می دارد",
     "See when people join, leave, or are invited to this room": "ببینید که کی مردم در این اتاق عضو شده اند، ترک کرده اند یا به آن دعوت شده اند",
     "Your %(brand)s is misconfigured": "%(brand)s‌ی شما به درستی پیکربندی نشده‌است",
@@ -735,12 +730,7 @@
         "other": "و %(count)s مورد بیشتر ..."
     },
     "This server does not support authentication with a phone number.": "این سرور از قابلیت احراز با شماره تلفن پشتیبانی نمی کند.",
-    "Continue with %(ssoButtons)s": "با %(ssoButtons)s ادامه بده",
     "Join millions for free on the largest public server": "به بزرگترین سرور عمومی با میلیون ها نفر کاربر بپیوندید",
-    "%(ssoButtons)s Or %(usernamePassword)s": "%(ssoButtons)s یا %(usernamePassword)s",
-    "Your new account (%(newAccountId)s) is registered, but you're already logged into a different account (%(loggedInUserId)s).": "حساب جدید شما (%(newAccountId)s) s) ثبت شده‌است ، اما شما قبلاً به حساب کاربری دیگری (%(loggedInUserId)s) وارد شده‌اید.",
-    "Continue with previous account": "با حساب کاربری قبلی ادامه دهید",
-    "<a>Log in</a> to your new account.": "به حساب کاربری جدید خود <a>وارد شوید</a>.",
     "Failed to re-authenticate due to a homeserver problem": "به دلیل مشکلی که در سرور وجود دارد ، احراز هویت مجدد انجام نشد",
     "You cannot sign in to your account. Please contact your homeserver admin for more information.": "نمی توانید وارد حساب کاربری خود شوید. لطفا برای اطلاعات بیشتر با مدیر سرور خود تماس بگیرید.",
     "Server Options": "گزینه های سرور",
@@ -1458,11 +1448,7 @@
     "Failed to re-authenticate": "احراز هویت مجدد موفیت‌آمیز نبود",
     "Incorrect password": "گذرواژه صحیح نیست",
     "Verify your identity to access encrypted messages and prove your identity to others.": "با تائید هویت خود به پیام‌های رمزشده دسترسی یافته و هویت خود را به دیگران ثابت می‌کنید.",
-    "Decide where your account is hosted": "حساب کاربری شما بر روی کجا ساخته شود",
-    "Host account on": "ساختن حساب کاربری بر روی",
     "Create account": "ساختن حساب کاربری",
-    "Registration Successful": "ثبت‌نام موفقیت‌آمیز بود",
-    "Already have an account? <a>Sign in here</a>": "حساب کاربری دارید؟ <a>وارد شوید</a>",
     "Registration has been disabled on this homeserver.": "ثبت‌نام بر روی این سرور غیرفعال شده‌است.",
     "New? <a>Create account</a>": "کاربر جدید هستید؟ <a>حساب کاربری بسازید</a>",
     "Return to login screen": "بازگشت به صفحه‌ی ورود",
@@ -1504,14 +1490,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "این فضا عمومی نیست. امکان پیوستن مجدد بدون دعوتنامه امکان‌پذیر نخواهد بود.",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "شما در این‌جا تنها هستید. اگر اینجا را ترک کنید، دیگر هیچ‌کس حتی خودتان امکان پیوستن مجدد را نخواهید داشت.",
     "Failed to reject invitation": "رد دعوتنامه موفقیت‌آمیز نبود",
-    "Create a Group Chat": "ساختن یک گروه",
-    "Explore Public Rooms": "جستجوی اتاق‌های عمومی",
-    "Send a Direct Message": "ارسال یک پیام مستقیم",
-    "Welcome to %(appName)s": "به %(appName)s خوش‌آمدید",
-    "Now, let's help you get started": "همین الان شروع کنید",
-    "Welcome %(name)s": "%(name)s خوش‌آمدید",
-    "Add a photo so people know it's you.": "برای اینکه بقیه شما را بشناسند، یک تصویر اضافه کنید.",
-    "Great, that'll help people know it's you": "احسنت، با این کار شما به سایر افراد کمک می‌کنید که شما را بشناسند",
     "Cross-signing is not set up.": "امضاء متقابل تنظیم نشده‌است.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "حساب کاربری شما یک هویت برای امضاء متقابل در حافظه‌ی نهان دارد، اما این هویت هنوز توسط این نشست تائید نشده‌است.",
     "Cross-signing is ready for use.": "امضاء متقابل برای استفاده در دسترس است.",
@@ -2601,7 +2579,12 @@
         "category_admin": "ادمین",
         "category_advanced": "پیشرفته",
         "category_effects": "جلوه‌ها",
-        "category_other": "دیگر"
+        "category_other": "دیگر",
+        "addwidget_missing_url": "لطفا نشانی (URL) ویجت یا یک کد قابل جاسازی (embeded) وارد کنید",
+        "addwidget_invalid_protocol": "لطفا نشانی یک ویجت را به پروتکل http:// یا https:// وارد کنید",
+        "addwidget_no_permissions": "شما امکان تغییر ویجت‌ها در این اتاق را ندارید.",
+        "converttodm": "اتاق را به DM تبدیل می کند",
+        "converttoroom": "DM را به اتاق تبدیل می کند"
     },
     "presence": {
         "online_for": "آنلاین برای مدت %(duration)s",
@@ -2734,7 +2717,16 @@
     "auth": {
         "continue_with_idp": "با %(provider)s ادامه دهید",
         "sign_in_with_sso": "با احراز هویت یکپارچه وارد شوید",
-        "sso": "ورود یکپارچه"
+        "sso": "ورود یکپارچه",
+        "continue_with_sso": "با %(ssoButtons)s ادامه بده",
+        "sso_or_username_password": "%(ssoButtons)s یا %(usernamePassword)s",
+        "sign_in_instead": "حساب کاربری دارید؟ <a>وارد شوید</a>",
+        "account_clash": "حساب جدید شما (%(newAccountId)s) s) ثبت شده‌است ، اما شما قبلاً به حساب کاربری دیگری (%(loggedInUserId)s) وارد شده‌اید.",
+        "account_clash_previous_account": "با حساب کاربری قبلی ادامه دهید",
+        "log_in_new_account": "به حساب کاربری جدید خود <a>وارد شوید</a>.",
+        "registration_successful": "ثبت‌نام موفقیت‌آمیز بود",
+        "server_picker_title": "ساختن حساب کاربری بر روی",
+        "server_picker_dialog_title": "حساب کاربری شما بر روی کجا ساخته شود"
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2754,5 +2746,15 @@
         "missing_reason": "لطفا توضیح دهید که چرا گزارش می‌دهید.",
         "report_content_to_homeserver": "گزارش محتوا به مدیر سرور خود",
         "description": "گزارش این پیام شناسه‌ی منحصر به فرد رخداد آن را برای مدیر سرور ارسال می‌کند. اگر پیام‌های این اتاق رمزشده باشند، مدیر سرور شما امکان خواندن متن آن پیام یا مشاهده‌ی عکس یا فایل‌های دیگر را نخواهد داشت."
+    },
+    "onboarding": {
+        "has_avatar_label": "احسنت، با این کار شما به سایر افراد کمک می‌کنید که شما را بشناسند",
+        "no_avatar_label": "برای اینکه بقیه شما را بشناسند، یک تصویر اضافه کنید.",
+        "welcome_user": "%(name)s خوش‌آمدید",
+        "welcome_detail": "همین الان شروع کنید",
+        "intro_welcome": "به %(appName)s خوش‌آمدید",
+        "send_dm": "ارسال یک پیام مستقیم",
+        "explore_rooms": "جستجوی اتاق‌های عمومی",
+        "create_room": "ساختن یک گروه"
     }
 }

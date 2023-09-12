@@ -1,6 +1,5 @@
 {
     "Sign in with": "Sínigh isteach le",
-    "Already have an account? <a>Sign in here</a>": "An bhfuil cuntas agat cheana? <a>Sínigh isteach anseo</a>",
     "Show more": "Taispeáin níos mó",
     "Switch to dark mode": "Athraigh go mód dorcha",
     "Switch to light mode": "Athraigh go mód geal",
@@ -421,7 +420,6 @@
     "Are you sure you want to sign out?": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?",
     "Signed Out": "Sínithe Amach",
     "Unable to query for supported registration methods.": "Ní féidir iarratas a dhéanamh faoi modhanna cláraithe tacaithe.",
-    "Host account on": "Óstáil cuntas ar",
     "Create account": "Déan cuntas a chruthú",
     "Deactivate Account": "Cuir cuntas as feidhm",
     "Account management": "Bainistíocht cuntais",
@@ -799,7 +797,9 @@
         "categories": "Catagóire"
     },
     "auth": {
-        "sso": "Single Sign On"
+        "sso": "Single Sign On",
+        "sign_in_instead": "An bhfuil cuntas agat cheana? <a>Sínigh isteach anseo</a>",
+        "server_picker_title": "Óstáil cuntas ar"
     },
     "export_chat": {
         "messages": "Teachtaireachtaí"

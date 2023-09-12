@@ -288,8 +288,6 @@
     "Banned by %(displayName)s": "%(displayName)s द्वारा प्रतिबंधित",
     "No users have specific privileges in this room": "इस कमरे में किसी भी उपयोगकर्ता के विशेष विशेषाधिकार नहीं हैं",
     "The file '%(fileName)s' failed to upload.": "फ़ाइल '%(fileName)s' अपलोड करने में विफल रही।",
-    "Please supply a https:// or http:// widget URL": "कृपया एक https:// या http:// विजेट URL की आपूर्ति करें",
-    "You cannot modify widgets in this room.": "आप इस रूम में विजेट्स को संशोधित नहीं कर सकते।",
     "The user must be unbanned before they can be invited.": "उपयोगकर्ता को आमंत्रित करने से पहले उन्हें प्रतिबंधित किया जाना चाहिए।",
     "Explore rooms": "रूम का अन्वेषण करें",
     "Create Account": "खाता बनाएं",
@@ -649,7 +647,9 @@
         "addwidget": "रूम में URL द्वारा एक कस्टम विजेट जोड़ता है",
         "usage": "प्रयोग",
         "category_admin": "व्यवस्थापक",
-        "category_advanced": "उन्नत"
+        "category_advanced": "उन्नत",
+        "addwidget_invalid_protocol": "कृपया एक https:// या http:// विजेट URL की आपूर्ति करें",
+        "addwidget_no_permissions": "आप इस रूम में विजेट्स को संशोधित नहीं कर सकते।"
     },
     "presence": {
         "online_for": "%(duration)s के लिए ऑनलाइन",

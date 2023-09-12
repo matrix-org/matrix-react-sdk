@@ -423,11 +423,9 @@
     "Gambia": "Gâmbia",
     "Georgia": "Geórgia",
     "Mayotte": "Mayotte",
-    "Host account on": "Hospedar conta em",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Recomendamos que remova seus endereços de email e números de telefone do servidor de identidade antes de se desconectar.",
     "Failed to invite users to %(roomName)s": "Falha ao convidar utilizadores para %(roomName)s",
     "Command error: Unable to find rendering type (%(renderingType)s)": "Erro de comando: Não foi possível encontrar o tipo de renderização(%(renderingType)s)",
-    "%(ssoButtons)s Or %(usernamePassword)s": "%(ssoButtons)s Ou %(usernamePassword)s",
     "Macau": "Macau",
     "Malaysia": "Malásia",
     "Some invites couldn't be sent": "Alguns convites não puderam ser enviados",
@@ -438,7 +436,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Comece uma conversa com alguém a partir do nome ou nome de utilizador (por exemplo: <userId/>).",
     "Use email or phone to optionally be discoverable by existing contacts.": "Use email ou telefone para, opcionalmente, ser detectável por contactos existentes.",
     "Invite by username": "Convidar por nome de utilizador",
-    "Already have an account? <a>Sign in here</a>": "Já tem uma conta? <a>Entre aqui</a>",
     "Use an email address to recover your account": "Usar um endereço de email para recuperar a sua conta",
     "Malta": "Malta",
     "Lebanon": "Líbano",
@@ -819,7 +816,10 @@
         "group_rooms": "Salas"
     },
     "auth": {
-        "sso": "Single Sign On"
+        "sso": "Single Sign On",
+        "sso_or_username_password": "%(ssoButtons)s Ou %(usernamePassword)s",
+        "sign_in_instead": "Já tem uma conta? <a>Entre aqui</a>",
+        "server_picker_title": "Hospedar conta em"
     },
     "export_chat": {
         "messages": "Mensagens"

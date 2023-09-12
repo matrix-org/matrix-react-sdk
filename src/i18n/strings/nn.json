@@ -364,10 +364,6 @@
     "Create account": "Lag konto",
     "Registration has been disabled on this homeserver.": "Registrering er skrudd av for denne heimetenaren.",
     "Unable to query for supported registration methods.": "Klarte ikkje å spørre etter støtta registreringsmetodar.",
-    "Your new account (%(newAccountId)s) is registered, but you're already logged into a different account (%(loggedInUserId)s).": "Kontoen din %(newAccountId)s er no registrert, men du er frå tidligare logga på med ein annan konto (%(loggedInUserId)s).",
-    "Continue with previous account": "Fortsett med tidligare konto",
-    "<a>Log in</a> to your new account.": "<a>Logg på</a> den nye kontoen din.",
-    "Registration Successful": "Registrering fullført",
     "Failed to re-authenticate due to a homeserver problem": "Fekk ikkje til å re-authentisere grunna ein feil på heimetenaren",
     "Failed to re-authenticate": "Fekk ikkje til å re-autentisere",
     "Enter your password to sign in and regain access to your account.": "Skriv inn ditt passord for å logge på og ta tilbake tilgang til kontoen din.",
@@ -398,8 +394,6 @@
     "Use an identity server": "Bruk ein identitetstenar",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Bruk ein identitetstenar for å invitera via e-post. Klikk for å fortsetja å bruka standard identitetstenar (%(defaultIdentityServerName)s) eller styre dette i innstillingane.",
     "Use an identity server to invite by email. Manage in Settings.": "Bruk ein identitetstenar for å invitera via e-post. Styr dette i Innstillingane.",
-    "Please supply a https:// or http:// widget URL": "Skriv inn https:// eller http:// URL-en for miniprogrammet",
-    "You cannot modify widgets in this room.": "Du kan ikkje endra miniprogram i dette rommet.",
     "Forces the current outbound group session in an encrypted room to be discarded": "Tvingar i eit kryptert rom kassering av gjeldande utgåande gruppe-økt",
     "Cancel entering passphrase?": "Avbryte inntasting av passfrase ?",
     "Setting up keys": "Setter opp nøklar",
@@ -558,7 +552,6 @@
     "Use your account or create a new one to continue.": "Bruk kontoen din eller opprett ein ny for å halda fram.",
     "Joins room with given address": "Legg saman rom med spesifisert adresse",
     "Could not find user in room": "Klarde ikkje å finna brukaren i rommet",
-    "Please supply a widget URL or embed code": "Oppgje ein widget-URL eller innebygd kode",
     "Opens chat with the given user": "Opna ein samtale med den spesifiserte brukaren",
     "Later": "Seinare",
     "Never send encrypted messages to unverified sessions from this session": "Aldri send krypterte meldingar til ikkje-verifiserte sesjonar frå denne sesjonen",
@@ -599,7 +592,6 @@
     "Video conference started by %(senderName)s": "Videokonferanse starta av %(senderName)s",
     "Video conference updated by %(senderName)s": "Videokonferanse oppdatert av %(senderName)s",
     "Video conference ended by %(senderName)s": "Videokonferanse avslutta av %(senderName)s",
-    "Explore Public Rooms": "Utforsk offentlege rom",
     "Explore public rooms": "Utforsk offentlege rom",
     "Email Address": "E-postadresse",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Du bør <b>fjerne dine personlege data</b> frå identitetstenaren <idserver /> før du koplar frå. Dessverre er identitetstenaren <idserver /> utilgjengeleg og kan ikkje nåast akkurat no.",
@@ -1111,7 +1103,10 @@
         "category_actions": "Handlingar",
         "category_admin": "Administrator",
         "category_advanced": "Avansert",
-        "category_other": "Anna"
+        "category_other": "Anna",
+        "addwidget_missing_url": "Oppgje ein widget-URL eller innebygd kode",
+        "addwidget_invalid_protocol": "Skriv inn https:// eller http:// URL-en for miniprogrammet",
+        "addwidget_no_permissions": "Du kan ikkje endra miniprogram i dette rommet."
     },
     "presence": {
         "online_for": "tilkopla i %(duration)s",
@@ -1164,7 +1159,11 @@
     },
     "auth": {
         "sign_in_with_sso": "Logg på med Single-Sign-On",
-        "sso": "Single-sign-on"
+        "sso": "Single-sign-on",
+        "account_clash": "Kontoen din %(newAccountId)s er no registrert, men du er frå tidligare logga på med ein annan konto (%(loggedInUserId)s).",
+        "account_clash_previous_account": "Fortsett med tidligare konto",
+        "log_in_new_account": "<a>Logg på</a> den nye kontoen din.",
+        "registration_successful": "Registrering fullført"
     },
     "export_chat": {
         "messages": "Meldingar"
@@ -1183,5 +1182,8 @@
             "one": "1 ulesen melding."
         },
         "unread_messages": "Uleste meldingar."
+    },
+    "onboarding": {
+        "explore_rooms": "Utforsk offentlege rom"
     }
 }

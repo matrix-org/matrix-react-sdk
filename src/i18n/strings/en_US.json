@@ -271,8 +271,6 @@
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "The file '%(fileName)s' exceeds this homeserver's size limit for uploads",
     "The server does not support the room version specified.": "The server does not support the room version specified.",
     "Unable to load! Check your network connectivity and try again.": "Unable to load! Check your network connectivity and try again.",
-    "Please supply a https:// or http:// widget URL": "Please supply an https:// or http:// widget URL",
-    "You cannot modify widgets in this room.": "You cannot modify widgets in this room.",
     "Your %(brand)s is misconfigured": "Your %(brand)s is misconfigured",
     "Call failed due to misconfigured server": "Call failed due to misconfigured server",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.",
@@ -486,7 +484,9 @@
         "category_actions": "Actions",
         "category_admin": "Admin",
         "category_advanced": "Advanced",
-        "category_other": "Other"
+        "category_other": "Other",
+        "addwidget_invalid_protocol": "Please supply an https:// or http:// widget URL",
+        "addwidget_no_permissions": "You cannot modify widgets in this room."
     },
     "presence": {
         "online": "Online",

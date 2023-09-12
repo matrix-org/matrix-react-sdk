@@ -624,7 +624,7 @@ export const Commands = [
             !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, threadId, widgetUrl) {
             if (!widgetUrl) {
-                return reject(new UserFriendlyError("Please supply a widget URL or embed code"));
+                return reject(new UserFriendlyError("slash_command|addwidget_missing_url"));
             }
 
             // Try and parse out a widget URL from iframes
@@ -635,7 +635,7 @@ export const Commands = [
                     if (iframe?.tagName.toLowerCase() === "iframe") {
                         logger.log("Pulling URL out of iframe (embed code)");
                         if (!iframe.hasAttribute("src")) {
-                            return reject(new UserFriendlyError("iframe has no src attribute"));
+                            return reject(new UserFriendlyError("slash_command|addwidget_iframe_missing_src"));
                         }
                         widgetUrl = iframe.getAttribute("src")!;
                     }
@@ -643,7 +643,7 @@ export const Commands = [
             }
 
             if (!widgetUrl.startsWith("https://") && !widgetUrl.startsWith("http://")) {
-                return reject(new UserFriendlyError("Please supply a https:// or http:// widget URL"));
+                return reject(new UserFriendlyError("slash_command|addwidget_invalid_protocol"));
             }
             if (WidgetUtils.canUserModifyWidgets(cli, roomId)) {
                 const userId = cli.getUserId();
@@ -665,7 +665,7 @@ export const Commands = [
 
                 return success(WidgetUtils.setRoomWidget(cli, roomId, widgetId, type, widgetUrl, name, data));
             } else {
-                return reject(new UserFriendlyError("You cannot modify widgets in this room."));
+                return reject(new UserFriendlyError("slash_command|addwidget_no_permissions"));
             }
         },
         category: CommandCategories.admin,
@@ -979,24 +979,24 @@ export const Commands = [
     }),
     new Command({
         command: "converttodm",
-        description: _td("Converts the room to a DM"),
+        description: _td("slash_command|converttodm"),
         category: CommandCategories.other,
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, threadId, args) {
             const room = cli.getRoom(roomId);
-            if (!room) return reject(new UserFriendlyError("Could not find room"));
+            if (!room) return reject(new UserFriendlyError("slash_command|could_not_find_room"));
             return success(guessAndSetDMRoom(room, true));
         },
         renderingTypes: [TimelineRenderingType.Room],
     }),
     new Command({
         command: "converttoroom",
-        description: _td("Converts the DM to a room"),
+        description: _td("slash_command|converttoroom"),
         category: CommandCategories.other,
         isEnabled: (cli) => !isCurrentLocalRoom(cli),
         runFn: function (cli, roomId, threadId, args) {
             const room = cli.getRoom(roomId);
-            if (!room) return reject(new UserFriendlyError("Could not find room"));
+            if (!room) return reject(new UserFriendlyError("slash_command|could_not_find_room"));
             return success(guessAndSetDMRoom(room, false));
         },
         renderingTypes: [TimelineRenderingType.Room],

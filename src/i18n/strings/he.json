@@ -86,9 +86,6 @@
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "אזהרה: אימות מפתח נכשל! חתימת המפתח של %(userId)s ושל ההתחברות של מכשיר %(deviceId)s הינו \"%(fprint)s\" אשר אינו תואם למפתח הנתון \"%(fingerprint)s\". דבר זה יכול להעיר על כך שישנו נסיון להאזין לתקשורת שלכם!",
     "Session already verified!": "ההתחברות כבר אושרה!",
     "Verifies a user, session, and pubkey tuple": "מוודא משתמש, התחברות וצמד מפתח ציבורי",
-    "You cannot modify widgets in this room.": "אינכם יכולים לערוך ווידג'ט בחדר זה.",
-    "Please supply a https:// or http:// widget URL": "אנא הוסיפו קישור לווידג'ט עם http:// או https://",
-    "Please supply a widget URL or embed code": "אנא ספקו כתובת של ווידג'ט או קוד הטמעה",
     "Deops user with given id": "מסיר משתמש עם קוד זיהוי זה",
     "Could not find user in room": "משתמש זה לא נמצא בחדר",
     "Define the power level of a user": "הגדירו את רמת ההרשאות של משתמש",
@@ -1207,14 +1204,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "חדר זה אינו ציבורי. לא תוכל להצטרף שוב ללא הזמנה.",
     "Failed to reject invitation": "דחיית ההזמנה נכשלה",
     "Explore rooms": "גלה חדרים",
-    "Create a Group Chat": "צור צ'אט קבוצתי",
-    "Explore Public Rooms": "חקור חדרים ציבוריים",
-    "Send a Direct Message": "שלח הודעה ישירה",
-    "Welcome to %(appName)s": "ברוכים הבאים אל %(appName)s",
-    "Now, let's help you get started": "עכשיו, בואו נעזור לכם להתחיל",
-    "Welcome %(name)s": "ברוכים הבאים %(name)s",
-    "Add a photo so people know it's you.": "הוסף תמונה כדי שאנשים יידעו שאתה זה.",
-    "Great, that'll help people know it's you": "נהדר, זה יעזור לאנשים לדעת שזה אתה",
     "Upload avatar": "העלה אוואטר",
     "Attach files from chat or just drag and drop them anywhere in a room.": "צרף קבצים מצ'ט או פשוט גרור ושחרר אותם לכל מקום בחדר.",
     "No files visible in this room": "אין קבצים גלויים בחדר זה",
@@ -1526,16 +1515,7 @@
     "Failed to re-authenticate": "האימות מחדש נכשל",
     "Incorrect password": "סיסמה שגויה",
     "Failed to re-authenticate due to a homeserver problem": "האימות מחדש נכשל עקב בעיית שרת בית",
-    "Decide where your account is hosted": "החלט היכן מתארח חשבונך",
-    "Host account on": "חשבון מארח ב",
     "Create account": "חשבון משתמש חדש",
-    "Registration Successful": "ההרשמה בוצעה בהצלחה",
-    "<a>Log in</a> to your new account.": "<a> היכנס </a> לחשבונך החדש.",
-    "Continue with previous account": "המשך בחשבון הקודם",
-    "Your new account (%(newAccountId)s) is registered, but you're already logged into a different account (%(loggedInUserId)s).": "החשבון החדש שלך (%(newAccountId)s) רשום, אך אתה כבר מחובר לחשבון אחר (%(loggedInUserId)s).",
-    "Already have an account? <a>Sign in here</a>": "כבר יש לכם חשבון? <a> היכנסו כאן </a>",
-    "%(ssoButtons)s Or %(usernamePassword)s": "%(ssoButtons)s או %(usernamePassword)s",
-    "Continue with %(ssoButtons)s": "המשך עם %(ssoButtons)s",
     "This server does not support authentication with a phone number.": "שרת זה אינו תומך באימות עם מספר טלפון.",
     "Registration has been disabled on this homeserver.": "ההרשמה הושבתה בשרת הבית הזה.",
     "Unable to query for supported registration methods.": "לא ניתן לשאול לשיטות רישום נתמכות.",
@@ -1627,8 +1607,6 @@
     "Change which room, message, or user you're viewing": "שנה את החדר, ההודעה או המשתמש שאתה צופה בו",
     "Use app": "השתמש באפליקציה",
     "Use app for a better experience": "השתמש באפליקציה לחוויה טובה יותר",
-    "Converts the DM to a room": "המר את השיחה הפרטית לחדר",
-    "Converts the room to a DM": "ממיר את החדר ל- DM",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "ביקשנו מהדפדפן לזכור באיזה שרת בית אתה משתמש כדי לאפשר לך להיכנס, אך למרבה הצער הדפדפן שלך שכח אותו. עבור לדף הכניסה ונסה שוב.",
     "We couldn't log you in": "לא הצלחנו להתחבר אליך",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s שלכם אינו מאפשר לך להשתמש במנהל שילוב לשם כך. אנא צרו קשר עם מנהל מערכת.",
@@ -2722,7 +2700,12 @@
         "category_admin": "אדמין",
         "category_advanced": "מתקדם",
         "category_effects": "אפקטים",
-        "category_other": "אחר"
+        "category_other": "אחר",
+        "addwidget_missing_url": "אנא ספקו כתובת של ווידג'ט או קוד הטמעה",
+        "addwidget_invalid_protocol": "אנא הוסיפו קישור לווידג'ט עם http:// או https://",
+        "addwidget_no_permissions": "אינכם יכולים לערוך ווידג'ט בחדר זה.",
+        "converttodm": "ממיר את החדר ל- DM",
+        "converttoroom": "המר את השיחה הפרטית לחדר"
     },
     "presence": {
         "online_for": "מחובר %(duration)s",
@@ -2876,7 +2859,16 @@
     "auth": {
         "continue_with_idp": "המשך עם %(provider)s",
         "sign_in_with_sso": "היכנס באמצעות כניסה יחידה",
-        "sso": "כניסה חד שלבית"
+        "sso": "כניסה חד שלבית",
+        "continue_with_sso": "המשך עם %(ssoButtons)s",
+        "sso_or_username_password": "%(ssoButtons)s או %(usernamePassword)s",
+        "sign_in_instead": "כבר יש לכם חשבון? <a> היכנסו כאן </a>",
+        "account_clash": "החשבון החדש שלך (%(newAccountId)s) רשום, אך אתה כבר מחובר לחשבון אחר (%(loggedInUserId)s).",
+        "account_clash_previous_account": "המשך בחשבון הקודם",
+        "log_in_new_account": "<a> היכנס </a> לחשבונך החדש.",
+        "registration_successful": "ההרשמה בוצעה בהצלחה",
+        "server_picker_title": "חשבון מארח ב",
+        "server_picker_dialog_title": "החלט היכן מתארח חשבונך"
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
@@ -2896,5 +2888,15 @@
         "missing_reason": "אנא מלאו מדוע אתם מדווחים.",
         "report_content_to_homeserver": "דווח על תוכן למנהל שרת הבית שלך",
         "description": "דיווח על הודעה זו ישלח את 'מזהה האירוע' הייחודי למנהל שרת הבית שלך. אם הודעות בחדר זה מוצפנות, מנהל שרת הבית שלך לא יוכל לקרוא את טקסט ההודעה או להציג קבצים או תמונות."
+    },
+    "onboarding": {
+        "has_avatar_label": "נהדר, זה יעזור לאנשים לדעת שזה אתה",
+        "no_avatar_label": "הוסף תמונה כדי שאנשים יידעו שאתה זה.",
+        "welcome_user": "ברוכים הבאים %(name)s",
+        "welcome_detail": "עכשיו, בואו נעזור לכם להתחיל",
+        "intro_welcome": "ברוכים הבאים אל %(appName)s",
+        "send_dm": "שלח הודעה ישירה",
+        "explore_rooms": "חקור חדרים ציבוריים",
+        "create_room": "צור צ'אט קבוצתי"
     }
 }

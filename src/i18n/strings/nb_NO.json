@@ -94,8 +94,6 @@
     "You are no longer ignoring %(userId)s": "%(userId)s blir ikke lengre ignorert",
     "Define the power level of a user": "Definer tilgangnivå til en bruker",
     "Deops user with given id": "Fjerner OP nivå til bruker med gitt ID",
-    "Please supply a https:// or http:// widget URL": "Oppgi en https: // eller http: // widget-URL",
-    "You cannot modify widgets in this room.": "Du kan ikke endre widgets i dette rommet.",
     "Verified key": "Verifisert nøkkel",
     "Displays action": "Viser handling",
     "Forces the current outbound group session in an encrypted room to be discarded": "Tvinger den gjeldende utgående gruppeøkten i et kryptert rom til å stoppe",
@@ -449,7 +447,6 @@
     "You must join the room to see its files": "Du må bli med i rommet for å se filene dens",
     "Signed Out": "Avlogget",
     "%(creator)s created and configured the room.": "%(creator)s opprettet og satte opp rommet.",
-    "Registration Successful": "Registreringen var vellykket",
     "Forgotten your password?": "Har du glemt passordet ditt?",
     "Export room keys": "Eksporter romnøkler",
     "Import room keys": "Importer romnøkler",
@@ -569,8 +566,6 @@
     "a key signature": "en nøkkelsignatur",
     "Send Logs": "Send loggbøker",
     "Command Help": "Kommandohjelp",
-    "Welcome to %(appName)s": "Velkommen til %(appName)s",
-    "Send a Direct Message": "Send en direktemelding",
     "Connectivity to the server has been lost.": "Tilkoblingen til tjeneren er nede.",
     "Uploading %(filename)s": "Laster opp %(filename)s",
     "Could not load user profile": "Klarte ikke å laste inn brukerprofilen",
@@ -578,7 +573,6 @@
     "New passwords must match each other.": "De nye passordene må samsvare med hverandre.",
     "This account has been deactivated.": "Denne kontoen har blitt deaktivert.",
     "Incorrect username and/or password.": "Feil brukernavn og/eller passord.",
-    "Continue with previous account": "Fortsett med tidligere konto",
     "Clear personal data": "Tøm personlige data",
     "Passphrases must match": "Passfrasene må samsvare",
     "Passphrase must not be empty": "Passfrasen kan ikke være tom",
@@ -640,8 +634,6 @@
     "Reject invitation": "Avslå invitasjonen",
     "Start authentication": "Begynn autentisering",
     "Couldn't load page": "Klarte ikke å laste inn siden",
-    "Explore Public Rooms": "Utforsk offentlige rom",
-    "Create a Group Chat": "Opprett en gruppechat",
     "Review terms and conditions": "Gå gjennom betingelser og vilkår",
     "Jump to first invite.": "Hopp til den første invitasjonen.",
     "You seem to be uploading files, are you sure you want to quit?": "Du ser til å laste opp filer, er du sikker på at du vil avslutte?",
@@ -693,7 +685,6 @@
     "Failed to revoke invite": "Klarte ikke å trekke tilbake invitasjon",
     "Unable to revoke sharing for phone number": "Klarte ikke trekke tilbake deling for telefonnummer",
     "Unable to revoke sharing for email address": "Klarte ikke å trekke tilbake deling for denne e-postadressen",
-    "Great, that'll help people know it's you": "Flott, det vil hjelp folk å ha tillit til at det er deg",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Legg inn en lenke tilbake til det gamle rommet i starten av det nye rommet slik at folk kan finne eldre meldinger",
     "Add a photo, so people can easily spot your room.": "Legg til et bilde så folk lettere kan finne rommet ditt.",
     "<a>Add a topic</a> to help people know what it is about.": "<a>Legg til et tema</a> for hjelpe folk å forstå hva dette handler om.",
@@ -757,7 +748,6 @@
     "Resume": "Fortsett",
     "Avatar": "Profilbilde",
     "Suggested Rooms": "Foreslåtte rom",
-    "Welcome %(name)s": "Velkommen, %(name)s",
     "Verification requested": "Verifisering ble forespurt",
     "%(count)s members": {
         "one": "%(count)s medlem",
@@ -807,10 +797,7 @@
     "Security Phrase": "Sikkerhetsfrase",
     "Open dial pad": "Åpne nummerpanelet",
     "Message deleted on %(date)s": "Meldingen ble slettet den %(date)s",
-    "Already have an account? <a>Sign in here</a>": "Har du allerede en konto? <a>Logg på</a>",
-    "%(ssoButtons)s Or %(usernamePassword)s": "%(ssoButtons)s eller %(usernamePassword)s",
     "New here? <a>Create an account</a>": "Er du ny her? <a>Opprett en konto</a>",
-    "Now, let's help you get started": "Nå, la oss hjelpe deg med å komme i gang",
     "Enter email address": "Legg inn e-postadresse",
     "Enter phone number": "Skriv inn telefonnummer",
     "Please enter the code it contains:": "Vennligst skriv inn koden den inneholder:",
@@ -1583,7 +1570,9 @@
         "category_admin": "Admin",
         "category_advanced": "Avansert",
         "category_effects": "Effekter",
-        "category_other": "Andre"
+        "category_other": "Andre",
+        "addwidget_invalid_protocol": "Oppgi en https: // eller http: // widget-URL",
+        "addwidget_no_permissions": "Du kan ikke endre widgets i dette rommet."
     },
     "presence": {
         "online_for": "På nett i %(duration)s",
@@ -1673,7 +1662,11 @@
     },
     "auth": {
         "continue_with_idp": "Fortsett med %(provider)s",
-        "sso": "Single Sign On"
+        "sso": "Single Sign On",
+        "sso_or_username_password": "%(ssoButtons)s eller %(usernamePassword)s",
+        "sign_in_instead": "Har du allerede en konto? <a>Logg på</a>",
+        "account_clash_previous_account": "Fortsett med tidligere konto",
+        "registration_successful": "Registreringen var vellykket"
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",
@@ -1686,5 +1679,14 @@
         },
         "show_less": "Vis mindre",
         "notification_options": "Varselsinnstillinger"
+    },
+    "onboarding": {
+        "has_avatar_label": "Flott, det vil hjelp folk å ha tillit til at det er deg",
+        "welcome_user": "Velkommen, %(name)s",
+        "welcome_detail": "Nå, la oss hjelpe deg med å komme i gang",
+        "intro_welcome": "Velkommen til %(appName)s",
+        "send_dm": "Send en direktemelding",
+        "explore_rooms": "Utforsk offentlige rom",
+        "create_room": "Opprett en gruppechat"
     }
 }

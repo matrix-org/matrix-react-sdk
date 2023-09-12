@@ -353,9 +353,6 @@
     "This account has been deactivated.": "Hesap devre dışı bırakıldı.",
     "Create account": "Yeni hesap",
     "Unable to query for supported registration methods.": "Desteklenen kayıt yöntemleri için sorgulama yapılamıyor.",
-    "Continue with previous account": "Önceki hesapla devam et",
-    "<a>Log in</a> to your new account.": "Yeni hesabınızla <a>Oturum aç</a>ın.",
-    "Registration Successful": "Kayıt Başarılı",
     "Forgotten your password?": "Parolanızı mı unuttunuz?",
     "Sign in and regain access to your account.": "Oturum açın ve yeniden hesabınıza ulaşın.",
     "You do not have permission to start a conference call in this room": "Bu odada bir konferans başlatmak için izniniz yok",
@@ -363,7 +360,6 @@
     "The server does not support the room version specified.": "Belirtilen oda sürümünü sunucu desteklemiyor.",
     "Unable to create widget.": "Görsel bileşen oluşturulamıyor.",
     "Use an identity server to invite by email. Manage in Settings.": "E-posta ile davet etmek için bir kimlik sunucusu kullan. Ayarlardan Yönet.",
-    "You cannot modify widgets in this room.": "Bu odadaki görsel bileşenleri değiştiremezsiniz.",
     "This homeserver has exceeded one of its resource limits.": "Bu anasunucu kaynak limitlerinden birini aştı.",
     "%(items)s and %(count)s others": {
         "other": "%(items)s ve diğer %(count)s",
@@ -674,7 +670,6 @@
     "Continue With Encryption Disabled": "Şifreleme Kapalı Şekilde Devam Et",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "%(fileName)s dosyası anasunucunun yükleme boyutu limitini aşıyor",
     "Double check that your server supports the room version chosen and try again.": "Seçtiğiniz oda sürümünün sunucunuz tarafından desteklenip desteklenmediğini iki kez kontrol edin ve yeniden deneyin.",
-    "Please supply a https:// or http:// widget URL": "Lütfen bir https:// ya da http:// olarak bir görsel bileşen URL i belirtin",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "%(brand)s yöneticinize <a>yapılandırmanızın</a> hatalı ve mükerrer girdilerini kontrol etmesi için talepte bulunun.",
     "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Kayıt olabilirsiniz, fakat kimlik sunucunuz çevrimiçi olana kadar bazı özellikler mevcut olmayacak. Bu uyarıyı sürekli görüyorsanız, yapılandırmanızı kontrol edin veya sunucu yöneticinizle iletişime geçin.",
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Parolanızı sıfırlayabilirsiniz, fakat kimlik sunucunuz çevrimiçi olana kadar bazı özellikler mevcut olmayacak. Bu uyarıyı sürekli görüyorsanız, yapılandırmanızı kontrol edin veya sunucu yöneticinizle iletişime geçin.",
@@ -900,7 +895,6 @@
     "Send stickers into this room": "Bu odaya çıkartma gönderin",
     "Takes the call in the current room off hold": "Mevcut odadaki aramayı beklemeden çıkarır",
     "Places the call in the current room on hold": "Mevcut odadaki aramayı beklemeye alır",
-    "Please supply a widget URL or embed code": "Lütfen bir widget URL'si veya yerleşik kod girin",
     "Zimbabwe": "Zimbabve",
     "Zambia": "Zambiya",
     "Yemen": "Yemen",
@@ -1139,11 +1133,6 @@
     "Review terms and conditions": "Hükümler ve koşulları incele",
     "Terms and Conditions": "Hükümler ve koşullar",
     "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "%(homeserverDomain)s ana sunucusunu kullanmaya devam etmek için hüküm ve koşulları incelemeli ve kabul etmelisiniz.",
-    "Create a Group Chat": "Grup sohbeti başlat",
-    "Explore Public Rooms": "Herkese açık odaları keşfet",
-    "Send a Direct Message": "Direkt mesaj gönderin",
-    "Welcome to %(appName)s": "%(appName)s' e hoş geldiniz",
-    "Now, let's help you get started": "Şimdi, başlamanıza yardım edelim",
     "Click to view edits": "Düzenlemeleri görmek için tıkla",
     "Edited at %(date)s": "%(date)s tarihinde düzenlendi",
     "This room is a continuation of another conversation.": "Bu oda başka bir görüşmenin devamıdır.",
@@ -1324,8 +1313,6 @@
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s internet tarayıcısında çalışıyorken şifrelenmiş mesajları güvenli bir şekilde önbelleğe alamaz. Şifrelenmiş mesajların arama sonucunda görünmesi için <desktopLink>%(brand)s Masaüstü</desktopLink> kullanın.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s, şifrelenmiş iletileri yerel olarak güvenli bir şekilde önbelleğe almak için gereken bazı bileşenlerden yoksun. Bu özelliği denemek istiyorsanız, <nativeLink> arama bileşenlerinin eklendiği</nativeLink> özel bir masaüstü oluşturun.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Bu oturum <b> anahtarlarınızı yedeklemiyor</b>, ama zaten geri yükleyebileceğiniz ve ileride ekleyebileceğiniz bir yedeğiniz var.",
-    "Converts the room to a DM": "Odayı birebir mesajlaşmaya dönüştürür",
-    "Converts the DM to a room": "Birebir mesajlaşmayı odaya çevirir",
     "Enter a server name": "Sunucu adı girin",
     "Can't find this server or its room list": "Sunucuda veya oda listesinde bulunamıyor",
     "Add a new server": "Yeni sunucu ekle",
@@ -2011,7 +1998,12 @@
         "category_admin": "Admin",
         "category_advanced": "Gelişmiş",
         "category_effects": "Efektler",
-        "category_other": "Diğer"
+        "category_other": "Diğer",
+        "addwidget_missing_url": "Lütfen bir widget URL'si veya yerleşik kod girin",
+        "addwidget_invalid_protocol": "Lütfen bir https:// ya da http:// olarak bir görsel bileşen URL i belirtin",
+        "addwidget_no_permissions": "Bu odadaki görsel bileşenleri değiştiremezsiniz.",
+        "converttodm": "Odayı birebir mesajlaşmaya dönüştürür",
+        "converttoroom": "Birebir mesajlaşmayı odaya çevirir"
     },
     "presence": {
         "online_for": "%(duration)s süresince çevrimiçi",
@@ -2124,7 +2116,10 @@
     "auth": {
         "continue_with_idp": "%(provider)s ile devam et",
         "sign_in_with_sso": "Çoklu oturum açma ile giriş yap",
-        "sso": "Tek seferlik oturum aç"
+        "sso": "Tek seferlik oturum aç",
+        "account_clash_previous_account": "Önceki hesapla devam et",
+        "log_in_new_account": "Yeni hesabınızla <a>Oturum aç</a>ın.",
+        "registration_successful": "Kayıt Başarılı"
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
@@ -2143,5 +2138,12 @@
     "report_content": {
         "missing_reason": "Lütfen neden raporlama yaptığınızı belirtin.",
         "report_content_to_homeserver": "Ana Sunucu Yöneticinize İçeriği Raporlayın"
+    },
+    "onboarding": {
+        "welcome_detail": "Şimdi, başlamanıza yardım edelim",
+        "intro_welcome": "%(appName)s' e hoş geldiniz",
+        "send_dm": "Direkt mesaj gönderin",
+        "explore_rooms": "Herkese açık odaları keşfet",
+        "create_room": "Grup sohbeti başlat"
     }
 }

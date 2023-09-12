@@ -420,7 +420,6 @@
     "Recent Conversations": "Недавни разговори",
     "Recently Direct Messaged": "Недавне директне поруке",
     "Looks good!": "Изгледа добро!",
-    "Send a Direct Message": "Пошаљи директну поруку",
     "Switch theme": "Промени тему",
     "Error upgrading room": "Грешка при надоградњи собе",
     "Setting up keys": "Постављам кључеве",
@@ -704,9 +703,6 @@
     "Places the call in the current room on hold": "Ставља позив на чекање у тренутној соби",
     "Opens chat with the given user": "Отвара ћаскање са наведеним корисником",
     "Session already verified!": "Сесија је већ верификована!",
-    "You cannot modify widgets in this room.": "Не можете мењати виџете у овој соби.",
-    "Please supply a https:// or http:// widget URL": "Наведите https:// или http:// УРЛ виџета",
-    "Please supply a widget URL or embed code": "Наведите УРЛ виџета или убаците код",
     "Could not find user in room": "Не налазим корисника у соби",
     "Joins room with given address": "Придружује се соби са датом адресом",
     "Use an identity server to invite by email. Manage in Settings.": "Користите сервер идентитета за позивнице е-поштом. Управљајте у поставкама.",
@@ -730,8 +726,6 @@
     "Error changing power level": "Грешка при промени нивоа снаге",
     "Power level": "Ниво снаге",
     "Explore rooms": "Истражи собе",
-    "Converts the room to a DM": "Претвара собу у директно дописивање",
-    "Converts the DM to a room": "Претвара директно дописивање у собу",
     "We couldn't log you in": "Не могу да вас пријавим",
     "Double check that your server supports the room version chosen and try again.": "Добро проверите да ли сервер подржава изабрану верзију собе и пробајте поново.",
     "Folder": "фасцикла",
@@ -1365,7 +1359,12 @@
         "category_admin": "Админ",
         "category_advanced": "Напредно",
         "category_effects": "Ефекти",
-        "category_other": "Остало"
+        "category_other": "Остало",
+        "addwidget_missing_url": "Наведите УРЛ виџета или убаците код",
+        "addwidget_invalid_protocol": "Наведите https:// или http:// УРЛ виџета",
+        "addwidget_no_permissions": "Не можете мењати виџете у овој соби.",
+        "converttodm": "Претвара собу у директно дописивање",
+        "converttoroom": "Претвара директно дописивање у собу"
     },
     "presence": {
         "online_for": "На мрежи %(duration)s",
@@ -1433,5 +1432,8 @@
     },
     "report_content": {
         "report_content_to_homeserver": "Пријави садржај администратору вашег домаћег сервера"
+    },
+    "onboarding": {
+        "send_dm": "Пошаљи директну поруку"
     }
 }

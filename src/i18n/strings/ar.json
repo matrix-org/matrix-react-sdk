@@ -106,9 +106,6 @@
     "Define the power level of a user": "قم بتعريف مستوى الطاقة للمستخدم",
     "Could not find user in room": "لم يستطع ايجاد مستخدم في غرفة",
     "Deops user with given id": "يُلغي إدارية المستخدم حسب المعرّف المعطى",
-    "Please supply a widget URL or embed code": "رجاء قم بتحديد Widget URL او قم بتضمين كود",
-    "Please supply a https:// or http:// widget URL": "يرجى ادخال a https:// او http:// widget URL",
-    "You cannot modify widgets in this room.": "لا يمكنك تعديل الحاجيات في هذه الغرفة.",
     "Verifies a user, session, and pubkey tuple": "يتحقق من العناصر: المستخدم والجلسة والمفتاح العام",
     "Session already verified!": "تم التحقق من الجلسة بالفعل!",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "تحذير: فشل التحقق من المفتاح! مفتاح التوقيع للمستخدم %(userId)s و الجلسة %(deviceId)s هو \"%(fprint)s\" والتي لا تتوافق مع المفتاح \"%(fingerprint)s\" المعطى. هذا يعني ان اتصالك اصبح مكشوف!",
@@ -858,8 +855,6 @@
     "Cancel replying to a message": "إلغاء الرد على رسالة",
     "New line": "سطر جديد",
     "Greece": "اليونان",
-    "Converts the DM to a room": "تحويل المحادثة المباشرة إلى غرفة",
-    "Converts the room to a DM": "تحويل الغرفة إلى محادثة مباشرة",
     "Some invites couldn't be sent": "تعذر إرسال بعض الدعوات",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "أرسلنا الآخرين، ولكن لم تتم دعوة الأشخاص أدناه إلى <RoomName/>",
     "Zimbabwe": "زمبابوي",
@@ -1315,7 +1310,12 @@
         "category_actions": "الإجراءات",
         "category_admin": "مدير",
         "category_advanced": "متقدم",
-        "category_other": "أخرى"
+        "category_other": "أخرى",
+        "addwidget_missing_url": "رجاء قم بتحديد Widget URL او قم بتضمين كود",
+        "addwidget_invalid_protocol": "يرجى ادخال a https:// او http:// widget URL",
+        "addwidget_no_permissions": "لا يمكنك تعديل الحاجيات في هذه الغرفة.",
+        "converttodm": "تحويل الغرفة إلى محادثة مباشرة",
+        "converttoroom": "تحويل المحادثة المباشرة إلى غرفة"
     },
     "presence": {
         "online_for": "متصل منذ %(duration)s",

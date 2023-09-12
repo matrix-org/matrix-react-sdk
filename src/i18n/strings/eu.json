@@ -564,7 +564,6 @@
     "Power level": "Botere maila",
     "Room Settings - %(roomName)s": "Gelaren ezarpenak - %(roomName)s",
     "Could not load user profile": "Ezin izan da erabiltzaile-profila kargatu",
-    "You cannot modify widgets in this room.": "Ezin dituzu gela honetako trepetak aldatu.",
     "Upgrade this room to the recommended room version": "Bertsio-berritu gela hau aholkatutako bertsiora",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Gela hau bertsio-berritzeak gelaren oraingo instantzia itzaliko du eta izen bereko beste gela berri bat sortuko du.",
     "Failed to revoke invite": "Gonbidapena indargabetzeak huts egin du",
@@ -577,7 +576,6 @@
     },
     "The file '%(fileName)s' failed to upload.": "Huts egin du '%(fileName)s' fitxategia igotzean.",
     "The server does not support the room version specified.": "Zerbitzariak ez du emandako gela-bertsioa onartzen.",
-    "Please supply a https:// or http:// widget URL": "Eman https:// edo http:// motako trepetaren URL-a",
     "Cannot reach homeserver": "Ezin izan da hasiera-zerbitzaria atzitu",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Baieztatu Internet konexio egonkor bat duzula, edo jarri kontaktuan zerbitzariaren administratzailearekin",
     "Your %(brand)s is misconfigured": "Zure %(brand)s gaizki konfiguratuta dago",
@@ -654,11 +652,7 @@
     "Failed to get autodiscovery configuration from server": "Huts egin du aurkikuntza automatikoaren konfigurazioa zerbitzaritik eskuratzean",
     "Invalid base_url for m.homeserver": "Baliogabeko base_url  m.homeserver zerbitzariarentzat",
     "Invalid base_url for m.identity_server": "Baliogabeko base_url m.identity_server zerbitzariarentzat",
-    "<a>Log in</a> to your new account.": "<a>Hasi saioa</a> zure kontu berrian.",
-    "Registration Successful": "Ongi erregistratuta",
     "Upload all": "Igo denak",
-    "Your new account (%(newAccountId)s) is registered, but you're already logged into a different account (%(loggedInUserId)s).": "Zure kontu berria (%(newAccountId)s) erregistratuta dago, baina dagoeneko saioa hasi duzu beste kontu batekin (%(loggedInUserId)s).",
-    "Continue with previous account": "Jarraitu aurreko kontuarekin",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Gela hau bertsio-berritzeak gelaren oraingo instantzia itzaliko du eta izen bereko beste gela berri bat sortuko du. Kideei esperientziarik onena emateko, hau egingo dugu:",
     "Edited at %(date)s. Click to view edits.": "Edizio data: %(date)s. Sakatu edizioak ikusteko.",
     "Message edits": "Mezuaren edizioak",
@@ -1067,12 +1061,7 @@
     "Server did not require any authentication": "Zerbitzariak ez du autentifikaziorik eskatu",
     "Server did not return valid authentication information.": "Zerbitzariak ez du baliozko autentifikazio informaziorik itzuli.",
     "There was a problem communicating with the server. Please try again.": "Arazo bat egon da zerbitzariarekin komunikatzeko. Saiatu berriro.",
-    "Welcome to %(appName)s": "Ongi etorri %(appName)s-era",
-    "Send a Direct Message": "Bidali mezu zuzena",
-    "Explore Public Rooms": "Arakatu gela publikoak",
-    "Create a Group Chat": "Sortu talde-txata",
     "Could not find user in room": "Ezin izan da erabiltzailea gelan aurkitu",
-    "Please supply a widget URL or embed code": "Eman trepetaren URLa edo txertatu kodea",
     "Can't load this message": "Ezin izan da mezu hau kargatu",
     "Submit logs": "Bidali egunkariak",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Oroigarria: Ez dugu zure nabigatzailearentzako euskarririk, ezin da zure esperientzia nolakoa izango den aurreikusi.",
@@ -1635,7 +1624,10 @@
         "category_actions": "Ekintzak",
         "category_admin": "Kudeatzailea",
         "category_advanced": "Aurreratua",
-        "category_other": "Beste bat"
+        "category_other": "Beste bat",
+        "addwidget_missing_url": "Eman trepetaren URLa edo txertatu kodea",
+        "addwidget_invalid_protocol": "Eman https:// edo http:// motako trepetaren URL-a",
+        "addwidget_no_permissions": "Ezin dituzu gela honetako trepetak aldatu."
     },
     "presence": {
         "online_for": "Konektatua %(duration)s",
@@ -1717,7 +1709,11 @@
     },
     "auth": {
         "sign_in_with_sso": "Hai saioa urrats batean",
-        "sso": "Single sign-on"
+        "sso": "Single sign-on",
+        "account_clash": "Zure kontu berria (%(newAccountId)s) erregistratuta dago, baina dagoeneko saioa hasi duzu beste kontu batekin (%(loggedInUserId)s).",
+        "account_clash_previous_account": "Jarraitu aurreko kontuarekin",
+        "log_in_new_account": "<a>Hasi saioa</a> zure kontu berrian.",
+        "registration_successful": "Ongi erregistratuta"
     },
     "export_chat": {
         "messages": "Mezuak"
@@ -1738,5 +1734,11 @@
         "missing_reason": "Idatzi zergatik salatzen duzun.",
         "report_content_to_homeserver": "Salatu edukia zure hasiera-zerbitzariko administratzaileari",
         "description": "Mezu hau salatzeak bere 'gertaera ID'-a bidaliko dio hasiera-zerbitzariko administratzaileari. Gela honetako mezuak zifratuta badaude, zure hasiera-zerbitzariko administratzaileak ezin izango du mezuaren testua irakurri edo irudirik ikusi."
+    },
+    "onboarding": {
+        "intro_welcome": "Ongi etorri %(appName)s-era",
+        "send_dm": "Bidali mezu zuzena",
+        "explore_rooms": "Arakatu gela publikoak",
+        "create_room": "Sortu talde-txata"
     }
 }

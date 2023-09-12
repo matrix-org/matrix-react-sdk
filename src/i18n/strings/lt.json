@@ -326,8 +326,6 @@
     "You are no longer ignoring %(userId)s": "Dabar nebeignoruojate %(userId)s",
     "Define the power level of a user": "Nustatykite vartotojo galios lygį",
     "Deops user with given id": "Deop'ina vartotoją su nurodytu id",
-    "Please supply a https:// or http:// widget URL": "Pateikite https:// arba http:// valdiklio URL",
-    "You cannot modify widgets in this room.": "Jūs negalite modifikuoti valdiklių šiame kambaryje.",
     "Forces the current outbound group session in an encrypted room to be discarded": "Priverčia išmesti esamą užsibaigiantį grupės seansą užšifruotame kambaryje",
     "Cannot reach homeserver": "Serveris nepasiekiamas",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Įsitikinkite, kad jūsų interneto ryšys yra stabilus, arba susisiekite su serverio administratoriumi",
@@ -445,7 +443,6 @@
     "Messages in this room are not end-to-end encrypted.": "Žinutės šiame kambaryje nėra visapusiškai užšifruotos.",
     "Confirm Removal": "Patvirtinkite pašalinimą",
     "Manually export keys": "Eksportuoti raktus rankiniu būdu",
-    "Send a Direct Message": "Siųsti tiesioginę žinutę",
     "Go back to set it again.": "Grįžti atgal, kad nustatyti iš naujo.",
     "Click the button below to confirm adding this email address.": "Paspauskite mygtuką žemiau, kad patvirtintumėte šio el. pašto pridėjimą.",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Prieš atsijungiant rekomenduojame iš tapatybės serverio pašalinti savo el. pašto adresus ir telefono numerius.",
@@ -465,11 +462,6 @@
     "That doesn't match.": "Tai nesutampa.",
     "Your password has been reset.": "Jūsų slaptažodis buvo iš naujo nustatytas.",
     "Show more": "Rodyti daugiau",
-    "<a>Log in</a> to your new account.": "<a>Prisijunkite</a> prie naujos paskyros.",
-    "Registration Successful": "Registracija sėkminga",
-    "Welcome to %(appName)s": "Sveiki prisijungę į %(appName)s",
-    "Explore Public Rooms": "Žvalgyti viešus kambarius",
-    "Create a Group Chat": "Sukurti grupės pokalbį",
     "New login. Was this you?": "Naujas prisijungimas. Ar tai jūs?",
     "Verify your other session using one of the options below.": "Patvirtinkite savo kitą seansą naudodami vieną iš žemiau esančių parinkčių.",
     "Restore from Backup": "Atkurti iš Atsarginės Kopijos",
@@ -866,7 +858,6 @@
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Jūsų pateiktas pasirašymo raktas sutampa su pasirašymo raktu, gautu iš vartotojo %(userId)s seanso %(deviceId)s. Seansas pažymėtas kaip patikrintas.",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ĮSPĖJIMAS: RAKTŲ PATIKRINIMAS NEPAVYKO! Pasirašymo raktas vartotojui %(userId)s ir seansui %(deviceId)s yra \"%(fprint)s\", kuris nesutampa su pateiktu raktu \"%(fingerprint)s\". Tai gali reikšti, kad jūsų komunikacijos yra perimamos!",
     "Verifies a user, session, and pubkey tuple": "Patvirtina vartotojo, seanso ir pubkey daugiadalę duomenų struktūrą",
-    "Please supply a widget URL or embed code": "Pateikite valdiklio URL arba įterpimo kodą",
     "Could not find user in room": "Vartotojo rasti kambaryje nepavyko",
     "You signed in to a new session without verifying it:": "Jūs prisijungėte prie naujo seanso, jo nepatvirtinę:",
     "You can also set up Secure Backup & manage your keys in Settings.": "Jūs taip pat galite nustatyti Saugią Atsarginę Kopiją ir tvarkyti savo raktus Nustatymuose.",
@@ -1026,8 +1017,6 @@
     "Successfully restored %(sessionCount)s keys": "Sėkmingai atkurti %(sessionCount)s raktai",
     "Reason (optional)": "Priežastis (nebūtina)",
     "Reason: %(reason)s": "Priežastis: %(reason)s",
-    "Already have an account? <a>Sign in here</a>": "Jau turite paskyrą? <a>Prisijunkite čia</a>",
-    "Host account on": "Kurti paskyrą serveryje",
     "Forgotten your password?": "Pamiršote savo slaptažodį?",
     "New? <a>Create account</a>": "Naujas vartotojas? <a>Sukurkite paskyrą</a>",
     "Preparing to download logs": "Ruošiamasi parsiųsti žurnalus",
@@ -2084,7 +2073,11 @@
         "download_app_description": "Nepraleiskite nieko, jei su savimi pasiimsite %(brand)s",
         "download_app_action": "Atsisiųsti programėles",
         "download_app": "Atsisiųsti %(brand)s",
-        "download_brand": "Atsisiųsti %(brand)s"
+        "download_brand": "Atsisiųsti %(brand)s",
+        "intro_welcome": "Sveiki prisijungę į %(appName)s",
+        "send_dm": "Siųsti tiesioginę žinutę",
+        "explore_rooms": "Žvalgyti viešus kambarius",
+        "create_room": "Sukurti grupės pokalbį"
     },
     "settings": {
         "show_breadcrumbs": "Rodyti neseniai peržiūrėtų kambarių nuorodas virš kambarių sąrašo",
@@ -2454,7 +2447,10 @@
         "category_actions": "Veiksmai",
         "category_admin": "Administratorius",
         "category_advanced": "Išplėstiniai",
-        "category_other": "Kitas"
+        "category_other": "Kitas",
+        "addwidget_missing_url": "Pateikite valdiklio URL arba įterpimo kodą",
+        "addwidget_invalid_protocol": "Pateikite https:// arba http:// valdiklio URL",
+        "addwidget_no_permissions": "Jūs negalite modifikuoti valdiklių šiame kambaryje."
     },
     "presence": {
         "busy": "Užsiėmęs",
@@ -2614,7 +2610,11 @@
         "error_no_permission_add_space": "Neturite leidimų į šią erdvę pridėti erdvių"
     },
     "auth": {
-        "sso": "Vienas Prisijungimas"
+        "sso": "Vienas Prisijungimas",
+        "sign_in_instead": "Jau turite paskyrą? <a>Prisijunkite čia</a>",
+        "log_in_new_account": "<a>Prisijunkite</a> prie naujos paskyros.",
+        "registration_successful": "Registracija sėkminga",
+        "server_picker_title": "Kurti paskyrą serveryje"
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
