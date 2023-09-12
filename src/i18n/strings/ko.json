@@ -34,7 +34,6 @@
     "Are you sure you want to reject the invitation?": "초대를 거절하시겠어요?",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "홈서버에 연결할 수 없음 - 연결 상태를 확인하거나, <a>홈서버의 SSL 인증서</a>가 믿을 수 있는지 확인하고, 브라우저 확장 기능이 요청을 막고 있는지 확인해주세요.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "주소 창에 HTTPS URL이 있을 때는 HTTP로 홈서버를 연결할 수 없습니다. HTTPS를 쓰거나 <a>안전하지 않은 스크립트를 허용</a>해주세요.",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s님이 %(powerLevelDiffText)s의 권한 등급을 바꿨습니다.",
     "Command error": "명령어 오류",
     "Commands": "명령어",
     "Cryptography": "암호화",
@@ -62,7 +61,6 @@
     "Filter room members": "방 구성원 필터",
     "Forget room": "방 지우기",
     "For security, this session has been signed out. Please sign in again.": "안전을 위해서 이 세션에서 로그아웃했습니다. 다시 로그인해주세요.",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s를 %(fromPowerLevel)s에서 %(toPowerLevel)s로",
     "Historical": "기록",
     "Home": "홈",
     "Import E2E room keys": "종단간 암호화 방 키 불러오기",
@@ -239,7 +237,6 @@
     "Invite to this room": "이 방에 초대",
     "You cannot delete this message. (%(code)s)": "이 메시지를 삭제할 수 없습니다. (%(code)s)",
     "Thursday": "목요일",
-    "Show message in desktop notification": "컴퓨터 알림에서 내용 보이기",
     "Yesterday": "어제",
     "Error encountered (%(errorDetail)s).": "오류가 일어났습니다 (%(errorDetail)s).",
     "Low Priority": "중요하지 않음",
@@ -691,7 +688,6 @@
     "This account has been deactivated.": "이 계정은 비활성화되었습니다.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "지금 %(hs)s 서버로 로그인하고 있는데, matrix.org로 로그인해야 합니다.",
     "Failed to perform homeserver discovery": "홈서버 검색 수행에 실패함",
-    "Sign in with single sign-on": "통합 인증(SSO)으로 로그인",
     "Create account": "계정 만들기",
     "Registration has been disabled on this homeserver.": "이 홈서버는 등록이 비활성화되어 있습니다.",
     "Unable to query for supported registration methods.": "지원하는 등록 방식을 쿼리할 수 없습니다.",
@@ -752,9 +748,6 @@
     },
     "Remove recent messages": "최근 메시지 삭제",
     "Explore rooms": "방 검색",
-    "Please fill why you're reporting.": "왜 신고하는 지 이유를 적어주세요.",
-    "Report Content to Your Homeserver Administrator": "홈서버 관리자에게 내용 신고하기",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "이 메시지를 신고하면 고유 '이벤트 ID'를 홈서버의 관리자에게 보내게 됩니다. 이 방의 메시지가 암호화되어 있다면, 홈서버 관리자는 메시지 문자를 읽거나 파일 혹은 사진을 볼 수 없습니다.",
     "Verify the link in your inbox": "메일함에 있는 링크로 확인",
     "Read Marker lifetime (ms)": "이전 대화 경계선 표시 시간 (ms)",
     "Read Marker off-screen lifetime (ms)": "이전 대화 경계선 사라지는 시간 (ms)",
@@ -772,14 +765,6 @@
     "User Autocomplete": "사용자 자동 완성",
     "Show image": "이미지 보이기",
     "Clear cache and reload": "캐시 지우기 및 새로고침",
-    "%(count)s unread messages including mentions.": {
-        "other": "언급을 포함한 %(count)s개의 읽지 않은 메시지.",
-        "one": "1개의 읽지 않은 언급."
-    },
-    "%(count)s unread messages.": {
-        "other": "%(count)s개의 읽지 않은 메시지.",
-        "one": "1개의 읽지 않은 메시지."
-    },
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "홈서버 설정에서 캡챠 공개 키가 없습니다. 홈서버 관리자에게 이것을 신고해주세요.",
     "Your email address hasn't been verified yet": "이메일 주소가 아직 확인되지 않았습니다",
     "Click the link in the email you received to verify and then click continue again.": "받은 이메일에 있는 링크를 클릭해서 확인한 후에 계속하기를 클릭하세요.",
@@ -799,7 +784,6 @@
     "Jump to first unread room.": "읽지 않은 첫 방으로 건너뜁니다.",
     "Jump to first invite.": "첫 초대로 건너뜁니다.",
     "Room %(name)s": "%(name)s 방",
-    "Unread messages.": "읽지 않은 메시지.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "이 작업에는 이메일 주소 또는 전화번호를 확인하기 위해 기본 ID 서버 <server />에 접근해야 합니다. 하지만 서버가 서비스 약관을 갖고 있지 않습니다.",
     "Message Actions": "메시지 동작",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -870,8 +854,6 @@
     "Could not connect to identity server": "ID 서버에 연결할 수 없음",
     "Not a valid identity server (status code %(code)s)": "올바르지 않은 ID 서버 (상태 코드 %(code)s)",
     "Identity server URL must be HTTPS": "ID 서버 URL은 HTTPS이어야 함",
-    "Appearance Settings only affect this %(brand)s session.": "모습 설정은 이 %(brand)s 세션에만 영향을 끼칩니다.",
-    "Customise your appearance": "모습 개인화하기",
     "Delete avatar": "아바타 삭제",
     "More options": "추가 옵션",
     "Pin to sidebar": "사이드바 고정",
@@ -933,7 +915,6 @@
     "All rooms": "모든 방 목록",
     "Create a new space": "새로운 스페이스 만들기",
     "Create a space": "스페이스 만들기",
-    "Export Chat": "대화 내보내기",
     "Export chat": "대화 내보내기",
     "Room settings": "방 설정",
     "Hide Widgets": "위젯 숨기기",
@@ -952,9 +933,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "이름이나 사용자명(<userId/> 형식)을 사용하는 사람들과 대화를 시작하세요.",
     "Direct Messages": "다이렉트 메세지",
     "Explore public rooms": "공개 방 목록 살펴보기",
-    "Show %(count)s more": {
-        "other": "%(count)s개 더 보기"
-    },
     "If you can't see who you're looking for, send them your invite link below.": "찾으려는 사람이 보이지 않으면, 아래의 초대링크를 보내세요.",
     "Some suggestions may be hidden for privacy.": "일부 추천 목록은 개인 정보 보호를 위해 보이지 않을 수 있습니다.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "이름, 이메일, 사용자명(<userId/>) 으로 대화를 시작하세요.",
@@ -1011,7 +989,6 @@
     "Match system": "시스템 테마",
     "Spell check": "맞춤법 검사",
     "Unverified sessions": "검증되지 않은 세션들",
-    "Match system theme": "시스템 테마 사용",
     "Sessions": "세션목록",
     "Unverified session": "검증되지 않은 세션",
     "Favourited": "즐겨찾기 됨",
@@ -1139,7 +1116,12 @@
     },
     "labs": {
         "pinning": "메시지 고정",
-        "state_counters": "방 헤더에 간단한 카운터 표현"
+        "state_counters": "방 헤더에 간단한 카운터 표현",
+        "group_profile": "프로필",
+        "group_widgets": "위젯",
+        "group_rooms": "방",
+        "group_voip": "음성 & 영상",
+        "group_encryption": "암호화"
     },
     "keyboard": {
         "home": "홈"
@@ -1206,7 +1188,14 @@
             "rule_call": "전화 초대",
             "rule_suppress_notices": "봇에게 받은 메시지",
             "rule_tombstone": "방을 업그레이드했을 때",
-            "rule_encrypted_room_one_to_one": "1:1 대화 암호화된 메시지"
+            "rule_encrypted_room_one_to_one": "1:1 대화 암호화된 메시지",
+            "show_message_desktop_notification": "컴퓨터 알림에서 내용 보이기"
+        },
+        "appearance": {
+            "heading": "모습 개인화하기",
+            "subheading": "모습 설정은 이 %(brand)s 세션에만 영향을 끼칩니다.",
+            "match_system_theme": "시스템 테마 사용",
+            "timeline_image_size_default": "기본"
         }
     },
     "devtools": {
@@ -1377,6 +1366,10 @@
                 "other": "%(oneUser)s님이 %(count)s번 변경 사항을 되돌렸습니다",
                 "one": "%(oneUser)s님이 변경 사항을 되돌렸습니다"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s님이 %(powerLevelDiffText)s의 권한 등급을 바꿨습니다.",
+            "user_from_to": "%(userId)s를 %(fromPowerLevel)s에서 %(toPowerLevel)s로"
         }
     },
     "slash_command": {
@@ -1431,7 +1424,6 @@
         "unable_to_access_media": "웹캠 / 마이크에 접근 불가",
         "already_in_call": "이미 전화중"
     },
-    "Messages": "메시지",
     "Other": "기타",
     "Advanced": "고급",
     "room_settings": {
@@ -1471,5 +1463,33 @@
         "category_symbols": "기호",
         "category_flags": "깃발",
         "quick_reactions": "빠른 리액션"
+    },
+    "auth": {
+        "sign_in_with_sso": "통합 인증(SSO)으로 로그인"
+    },
+    "export_chat": {
+        "title": "대화 내보내기",
+        "messages": "메시지"
+    },
+    "room_list": {
+        "show_n_more": {
+            "other": "%(count)s개 더 보기"
+        }
+    },
+    "report_content": {
+        "missing_reason": "왜 신고하는 지 이유를 적어주세요.",
+        "report_content_to_homeserver": "홈서버 관리자에게 내용 신고하기",
+        "description": "이 메시지를 신고하면 고유 '이벤트 ID'를 홈서버의 관리자에게 보내게 됩니다. 이 방의 메시지가 암호화되어 있다면, 홈서버 관리자는 메시지 문자를 읽거나 파일 혹은 사진을 볼 수 없습니다."
+    },
+    "a11y": {
+        "n_unread_messages_mentions": {
+            "other": "언급을 포함한 %(count)s개의 읽지 않은 메시지.",
+            "one": "1개의 읽지 않은 언급."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s개의 읽지 않은 메시지.",
+            "one": "1개의 읽지 않은 메시지."
+        },
+        "unread_messages": "읽지 않은 메시지."
     }
 }

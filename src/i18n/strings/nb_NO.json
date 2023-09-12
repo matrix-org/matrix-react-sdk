@@ -134,7 +134,6 @@
     "Anchor": "Anker",
     "Headphones": "Hodetelefoner",
     "Folder": "Mappe",
-    "Show less": "Vis mindre",
     "Current password": "Nåværende passord",
     "New Password": "Nytt passord",
     "Confirm password": "Bekreft passord",
@@ -208,7 +207,6 @@
     "Set up": "Sett opp",
     "Identity server has no terms of service": "Identitetstjeneren har ingen brukervilkår",
     "Mirror local video feed": "Speil den lokale videostrømmen",
-    "Match system theme": "Bind fast til systemtemaet",
     "Send analytics data": "Send analytiske data",
     "Show hidden events in timeline": "Vis skjulte hendelser i tidslinjen",
     "My Ban List": "Min bannlysningsliste",
@@ -237,9 +235,6 @@
     "Guitar": "Gitar",
     "Later": "Senere",
     "Accept <policyLink /> to continue:": "Aksepter <policyLink /> for å fortsette:",
-    "Enable desktop notifications for this session": "Skru på skrivebordsvarsler for denne økten",
-    "Show message in desktop notification": "Vis meldingen i skrivebordsvarselet",
-    "Enable audible notifications for this session": "Skru på hørbare varsler for denne økten",
     "Profile picture": "Profilbilde",
     "Checking server": "Sjekker tjeneren",
     "Change identity server": "Bytt ut identitetstjener",
@@ -247,8 +242,6 @@
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Å bruke en identitetstjener er valgfritt. Dersom du velger å ikke bruke en identitetstjener, vil du ikke kunne oppdages av andre brukere, og du vil ikke kunne invitere andre ut i fra E-postadresse eller telefonnummer.",
     "Do not use an identity server": "Ikke bruk en identitetstjener",
     "Manage integrations": "Behandle integreringer",
-    "Theme added!": "Temaet er lagt til!",
-    "Add theme": "Legg til tema",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Godkjenn identitetstjenerens (%(serverName)s) brukervilkår, slik at du kan bli oppdaget ut i fra E-postadresse eller telefonnummer.",
     "Account management": "Kontobehandling",
     "Deactivate Account": "Deaktiver kontoen",
@@ -414,11 +407,6 @@
     "Replying": "Svarer på",
     "Room %(name)s": "Rom %(name)s",
     "Start chatting": "Begynn å chatte",
-    "%(count)s unread messages.": {
-        "one": "1 ulest melding.",
-        "other": "%(count)s uleste meldinger."
-    },
-    "Unread messages.": "Uleste meldinger.",
     "Send as message": "Send som en melding",
     "You don't currently have any stickerpacks enabled": "Du har ikke skrudd på noen klistremerkepakker for øyeblikket",
     "Add some now": "Legg til noen nå",
@@ -481,10 +469,6 @@
     "Remove %(email)s?": "Vil du fjerne %(email)s?",
     "Invalid Email Address": "Ugyldig E-postadresse",
     "Try to join anyway": "Forsøk å bli med likevel",
-    "%(count)s unread messages including mentions.": {
-        "one": "1 ulest nevnelse.",
-        "other": "%(count)s uleste meldinger inkludert der du nevnes."
-    },
     "Command error": "Kommandofeil",
     "Room avatar": "Rommets avatar",
     "Start Verification": "Begynn verifisering",
@@ -533,7 +517,6 @@
     "Use an identity server": "Bruk en identitetstjener",
     "Could not find user in room": "Klarte ikke å finne brukeren i rommet",
     "Session already verified!": "Økten er allerede verifisert!",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s gikk fra %(fromPowerLevel)s til %(toPowerLevel)s",
     "Your %(brand)s is misconfigured": "Ditt %(brand)s-oppsett er feiloppsatt",
     "Not a valid %(brand)s keyfile": "Ikke en gyldig %(brand)s-nøkkelfil",
     "Unrecognised address": "Adressen ble ikke gjenkjent",
@@ -615,17 +598,12 @@
     "Use a few words, avoid common phrases": "Bruk noen få ord, unngå vanlig fraser",
     "Ok": "OK",
     "Encryption upgrade available": "Krypteringsoppdatering tilgjengelig",
-    "Font size": "Skriftstørrelse",
     "Santa": "Julenisse",
     "wait and try again later": "vent og prøv igjen senere",
     "Size must be a number": "Størrelsen må være et nummer",
-    "Customise your appearance": "Tilpass utseendet du bruker",
     "eg: @bot:* or example.org": "f.eks.: @bot:* eller example.org",
     "To link to this room, please add an address.": "For å lenke til dette rommet, vennligst legg til en adresse.",
     "Remove %(phone)s?": "Vil du fjerne %(phone)s?",
-    "Sort by": "Sorter etter",
-    "Activity": "Aktivitet",
-    "A-Z": "A-Å",
     "Message preview": "Meldingsforhåndsvisning",
     "This room has no local addresses": "Dette rommet har ikke noen lokale adresser",
     "Remove recent messages by %(user)s": "Fjern nylige meldinger fra %(user)s",
@@ -642,7 +620,6 @@
     "Add an Integration": "Legg til en integrering",
     "Can't load this message": "Klarte ikke å laste inn denne meldingen",
     "Popout widget": "Utsprettsmodul",
-    "QR Code": "QR-kode",
     "Room address": "Rommets adresse",
     "This address is available to use": "Denne adressen er allerede i bruk",
     "Failed to send logs: ": "Mislyktes i å sende loggbøker: ",
@@ -685,11 +662,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "For å hjelpe oss med å forhindre dette i fremtiden, vennligst <a>send oss loggfiler</a>.",
     "Lock": "Lås",
     "Server or user ID to ignore": "Tjener- eller bruker-ID-en som skal ignoreres",
-    "Show %(count)s more": {
-        "other": "Vis %(count)s til",
-        "one": "Vis %(count)s til"
-    },
-    "Notification options": "Varselsinnstillinger",
     "Room options": "Rominnstillinger",
     "Your messages are not secure": "Dine meldinger er ikke sikre",
     "Edited at %(date)s": "Redigert den %(date)s",
@@ -732,7 +704,6 @@
     "Hey you. You're the best!": "Hei der. Du er fantastisk!",
     "Use custom size": "Bruk tilpasset størrelse",
     "Use Single Sign On to continue": "Bruk Single Sign On for å fortsette",
-    "Appearance Settings only affect this %(brand)s session.": "Stilendringer gjelder kun i denne %(brand)s sesjonen.",
     "Belgium": "Belgia",
     "American Samoa": "Amerikansk Samoa",
     "United States": "USA",
@@ -776,7 +747,6 @@
     "The call was answered on another device.": "Samtalen ble besvart på en annen enhet.",
     "The call could not be established": "Samtalen kunne ikke etableres",
     "Click the button below to confirm adding this phone number.": "Klikk knappen nedenfor for å bekrefte dette telefonnummeret.",
-    "Single Sign On": "Single Sign On",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Bekreft dette telefonnummeret ved å bruke Single Sign On for å bevise din identitet.",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Befrekt denne e-postadressen ved å bruke Single Sign On for å bevise din identitet.",
     "Recently visited rooms": "Nylig besøkte rom",
@@ -860,7 +830,6 @@
     "Confirm your Security Phrase": "Bekreft sikkerhetsfrasen din",
     "Use app": "Bruk app",
     "Use app for a better experience": "Bruk appen for en bedre opplevelse",
-    "Continue with %(provider)s": "Fortsett med %(provider)s",
     "This address is already in use": "Denne adressen er allerede i bruk",
     "<a>In reply to</a> <pill>": "<a>Som svar på</a> <pill>",
     "Information": "Informasjon",
@@ -873,7 +842,6 @@
     "Widgets": "Komponenter",
     "Favourited": "Favorittmerket",
     "Forget Room": "Glem rommet",
-    "Show previews of messages": "Vis forhåndsvisninger av meldinger",
     "Invalid URL": "Ugyldig URL",
     "Continuing without email": "Fortsetter uten E-post",
     "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
@@ -891,7 +859,6 @@
     "Failed to deactivate user": "Mislyktes i å deaktivere brukeren",
     "Accept all %(invitedRooms)s invites": "Aksepter alle %(invitedRooms)s-invitasjoner",
     "<not supported>": "<ikke støttet>",
-    "Custom theme URL": "URL-en til et selvvalgt tema",
     "not ready": "ikke klar",
     "ready": "klar",
     "Algorithm:": "Algoritme:",
@@ -900,9 +867,6 @@
     "Update %(brand)s": "Oppdater %(brand)s",
     "You are currently ignoring:": "Du ignorerer for øyeblikket:",
     "Dial pad": "Nummerpanel",
-    "sends confetti": "sender konfetti",
-    "System font name": "Systemskrifttypenavn",
-    "Use a system font": "Bruk en systemskrifttype",
     "Channel: <channelLink/>": "Kanal: <channelLink/>",
     "Enable desktop notifications": "Aktiver skrivebordsvarsler",
     "Don't miss a reply": "Ikke gå glipp av noen svar",
@@ -1123,7 +1087,6 @@
     "Report": "Rapporter",
     "Sent": "Sendt",
     "Sending": "Sender",
-    "Format": "Format",
     "MB": "MB",
     "Add reaction": "Legg til reaksjon",
     "Downloading": "Laster ned",
@@ -1212,7 +1175,8 @@
         "system_alerts": "Systemvarsler",
         "cross_signing": "Kryssignering",
         "identity_server": "Identitetstjener",
-        "integration_manager": "Integreringsbehandler"
+        "integration_manager": "Integreringsbehandler",
+        "qr_code": "QR-kode"
     },
     "action": {
         "continue": "Fortsett",
@@ -1301,10 +1265,24 @@
         "send_report": "Send inn rapport"
     },
     "a11y": {
-        "user_menu": "Brukermeny"
+        "user_menu": "Brukermeny",
+        "n_unread_messages_mentions": {
+            "one": "1 ulest nevnelse.",
+            "other": "%(count)s uleste meldinger inkludert der du nevnes."
+        },
+        "n_unread_messages": {
+            "one": "1 ulest melding.",
+            "other": "%(count)s uleste meldinger."
+        },
+        "unread_messages": "Uleste meldinger."
     },
     "labs": {
-        "pinning": "Meldingsklistring"
+        "pinning": "Meldingsklistring",
+        "group_profile": "Profil",
+        "group_widgets": "Komponenter",
+        "group_rooms": "Rom",
+        "group_voip": "Stemme og video",
+        "group_encryption": "Kryptering"
     },
     "keyboard": {
         "home": "Hjem",
@@ -1392,7 +1370,22 @@
             "rule_call": "Anropsinvitasjon",
             "rule_suppress_notices": "Meldinger sendt av bot",
             "rule_tombstone": "Når rom blir oppgradert",
-            "rule_encrypted_room_one_to_one": "Krypterte meldinger i samtaler under fire øyne"
+            "rule_encrypted_room_one_to_one": "Krypterte meldinger i samtaler under fire øyne",
+            "enable_desktop_notifications_session": "Skru på skrivebordsvarsler for denne økten",
+            "show_message_desktop_notification": "Vis meldingen i skrivebordsvarselet",
+            "enable_audible_notifications_session": "Skru på hørbare varsler for denne økten"
+        },
+        "appearance": {
+            "heading": "Tilpass utseendet du bruker",
+            "subheading": "Stilendringer gjelder kun i denne %(brand)s sesjonen.",
+            "match_system_theme": "Bind fast til systemtemaet",
+            "custom_font": "Bruk en systemskrifttype",
+            "custom_font_name": "Systemskrifttypenavn",
+            "custom_theme_success": "Temaet er lagt til!",
+            "custom_theme_url": "URL-en til et selvvalgt tema",
+            "custom_theme_add_button": "Legg til tema",
+            "font_size": "Skriftstørrelse",
+            "timeline_image_size_default": "Standard"
         }
     },
     "devtools": {
@@ -1412,7 +1405,9 @@
     "export_chat": {
         "html": "HTML",
         "json": "JSON",
-        "text": "Ren tekst"
+        "text": "Ren tekst",
+        "format": "Format",
+        "messages": "Meldinger"
     },
     "create_room": {
         "title_public_room": "Opprett et offentlig rom",
@@ -1557,6 +1552,9 @@
                 "one": "%(oneUser)s endret navnet sitt",
                 "other": "%(oneUser)sendret navnet sitt %(count)s ganger"
             }
+        },
+        "m.room.power_levels": {
+            "user_from_to": "%(userId)s gikk fra %(fromPowerLevel)s til %(toPowerLevel)s"
         }
     },
     "slash_command": {
@@ -1627,7 +1625,6 @@
         "unsupported": "Samtaler støttes ikke",
         "unsupported_browser": "Du kan ikke ringe i denne nettleseren."
     },
-    "Messages": "Meldinger",
     "Other": "Andre",
     "Advanced": "Avansert",
     "room_settings": {
@@ -1670,5 +1667,24 @@
         "category_flags": "Flagg",
         "categories": "Kategorier",
         "quick_reactions": "Hurtigreaksjoner"
+    },
+    "chat_effects": {
+        "confetti_message": "sender konfetti"
+    },
+    "auth": {
+        "continue_with_idp": "Fortsett med %(provider)s",
+        "sso": "Single Sign On"
+    },
+    "room_list": {
+        "show_previews": "Vis forhåndsvisninger av meldinger",
+        "sort_by": "Sorter etter",
+        "sort_by_activity": "Aktivitet",
+        "sort_by_alphabet": "A-Å",
+        "show_n_more": {
+            "other": "Vis %(count)s til",
+            "one": "Vis %(count)s til"
+        },
+        "show_less": "Vis mindre",
+        "notification_options": "Varselsinnstillinger"
     }
 }

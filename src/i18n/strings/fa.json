@@ -41,7 +41,6 @@
     "This email address is already in use": "این آدرس ایمیل در حال حاضر در حال استفاده است",
     "This phone number is already in use": "این شماره تلفن در حال استفاده است",
     "Use Single Sign On to continue": "برای ادامه، از ورود یکپارچه استفاده کنید",
-    "Single Sign On": "ورود یکپارچه",
     "Confirm adding email": "تأیید افزودن رایانامه",
     "Add Email Address": "افزودن نشانی رایانامه",
     "Confirm adding phone number": "تأیید افزودن شماره تلفن",
@@ -450,16 +449,6 @@
     "Converts the room to a DM": "اتاق را به DM تبدیل می کند",
     "Takes the call in the current room off hold": "تماس را در اتاق فعلی خاموش نگه می دارد",
     "See when people join, leave, or are invited to this room": "ببینید که کی مردم در این اتاق عضو شده اند، ترک کرده اند یا به آن دعوت شده اند",
-    "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s سطح قدرت %(powerLevelDiffText)s تغییر داد.",
-    "%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s": "%(userId)s از %(fromPowerLevel)s به %(toPowerLevel)s",
-    "%(senderName)s removed the alternative addresses %(addresses)s for this room.": {
-        "one": "%(senderName)s آدرس جایگزین %(addresses)s این اتاق را حذف کرد.",
-        "other": "%(senderName)s آدرس های جایگزین %(addresses)s این اتاق را حذف کرد."
-    },
-    "%(senderName)s added the alternative addresses %(addresses)s for this room.": {
-        "one": "%(senderName)s آدرس جایگزین %(addresses)s را برای این اتاق اضافه کرد.",
-        "other": "%(senderName)s آدرس های جایگزین %(addresses)s را برای این اتاق اضافه کرد."
-    },
     "Your %(brand)s is misconfigured": "%(brand)s‌ی شما به درستی پیکربندی نشده‌است",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "از اتصال اینترنت پایدار اطمینان حاصل‌کرده و سپس با مدیر سرور ارتباط بگیرید",
     "Cannot reach homeserver": "دسترسی به سرور میسر نیست",
@@ -513,27 +502,9 @@
     "Change which room you're viewing": "اتاق‌هایی را که مشاهده می‌کنید تغییر دهید",
     "Send stickers into your active room": "در اتاق‌های فعال خود استیکر ارسال کنید",
     "Send stickers into this room": "در این اتاق استیکر ارسال کنید",
-    "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s یک قاعده تحریم را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای به‌روزرسانی کرد که با %(newGlob)s تطابق داشته باشد",
-    "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s یک قاعده تحریم سرورها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
-    "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s یک قاعده تحریم اتاق‌ها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
-    "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s یک قاعده تحریم کاربران را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
-    "%(senderName)s created a ban rule matching %(glob)s for %(reason)s": "%(senderName)s یک قاعده تحریم را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
-    "%(senderName)s created a rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s یک قاعده تحریم سرورها را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
-    "%(senderName)s created a rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s یک قاعده تحریم اتاق‌ها را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
-    "%(senderName)s created a rule banning users matching %(glob)s for %(reason)s": "%(senderName)s یک قاعده تحریم کاربران را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
-    "%(senderName)s updated a ban rule matching %(glob)s for %(reason)s": "%(senderName)s یک قاعده تحریم را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
-    "%(senderName)s updated the rule banning servers matching %(glob)s for %(reason)s": "%(senderName)s قاعده تحریم سرورها را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
-    "%(senderName)s updated the rule banning rooms matching %(glob)s for %(reason)s": "%(senderName)s قاعده تحریم اتاق‌ها را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
-    "%(senderName)s updated the rule banning users matching %(glob)s for %(reason)s": "%(senderName)s قاعده تحریم کاربران را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
-    "%(senderName)s updated an invalid ban rule": "%(senderName)s یک قاعده‌ی تحریم نامعتبر را به‌روزرسانی کرد",
-    "%(senderName)s removed a ban rule matching %(glob)s": "%(senderName)s قاعده تحریمی را که با %(glob)s تطابق داشت، حذف کرد",
-    "%(senderName)s removed the rule banning servers matching %(glob)s": "%(senderName)s قاعده تحریم سرورها را که با %(glob)s تطابق داشت، حذف کرد",
-    "%(senderName)s removed the rule banning rooms matching %(glob)s": "%(senderName)s قاعده تحریم اتاق‌ها را که با %(glob)s تطابق داشت، حذف کرد",
-    "%(senderName)s removed the rule banning users matching %(glob)s": "%(senderName)s قاعده تحریم کاربران را که با %(glob)s تطابق داشت، حذف کرد",
     "The server has denied your request.": "سرور درخواست شما را رد کرده است.",
     "Use your Security Key to continue.": "برای ادامه از کلید امنیتی خود استفاده کنید.",
     "%(creator)s created and configured the room.": "%(creator)s اتاق را ایجاد و پیکربندی کرد.",
-    "Report Content to Your Homeserver Administrator": "گزارش محتوا به مدیر سرور خود",
     "Be found by phone or email": "از طریق تلفن یا ایمیل پیدا شوید",
     "Find others by phone or email": "دیگران را از طریق تلفن یا ایمیل پیدا کنید",
     "Sign out and remove encryption keys?": "خروج از حساب کاربری و حذف کلیدهای رمزنگاری؟",
@@ -549,7 +520,6 @@
     "a new cross-signing key signature": "یک کلید امضای متقابل جدید",
     "a new master key signature": "یک شاه‌کلید جدید",
     "Close dialog or context menu": "بستن پنجره یا منوی محتوا",
-    "Please fill why you're reporting.": "لطفا توضیح دهید که چرا گزارش می‌دهید.",
     "Password is allowed, but unsafe": "گذرواژه مجاز است ، اما ناامن است",
     "Upload files (%(current)s of %(total)s)": "بارگذاری فایل‌ها (%(current)s از %(total)s)",
     "Failed to decrypt %(failedCount)s sessions!": "رمزگشایی %(failedCount)s نشست موفقیت‌آمیز نبود!",
@@ -764,9 +734,7 @@
     "And %(count)s more...": {
         "other": "و %(count)s مورد بیشتر ..."
     },
-    "Sign in with single sign-on": "با احراز هویت یکپارچه وارد شوید",
     "This server does not support authentication with a phone number.": "این سرور از قابلیت احراز با شماره تلفن پشتیبانی نمی کند.",
-    "Continue with %(provider)s": "با %(provider)s ادامه دهید",
     "Continue with %(ssoButtons)s": "با %(ssoButtons)s ادامه بده",
     "Join millions for free on the largest public server": "به بزرگترین سرور عمومی با میلیون ها نفر کاربر بپیوندید",
     "%(ssoButtons)s Or %(usernamePassword)s": "%(ssoButtons)s یا %(usernamePassword)s",
@@ -793,7 +761,6 @@
     "User Autocomplete": "تکمیل خودکار کاربر",
     "Enter a Security Phrase": "یک عبارت امنیتی وارد کنید",
     "Great! This Security Phrase looks strong enough.": "عالی! این عبارت امنیتی به اندازه کافی قوی به نظر می رسد.",
-    "QR Code": "کد QR",
     "Custom level": "سطح دلخواه",
     "Power level": "سطح قدرت",
     "That matches!": "مطابقت دارد!",
@@ -951,18 +918,8 @@
     "Room avatar": "آواتار اتاق",
     "Room Topic": "موضوع اتاق",
     "Room Name": "نام اتاق",
-    "Show %(count)s more": {
-        "other": "نمایش %(count)s مورد بیشتر",
-        "one": "نمایش %(count)s مورد بیشتر"
-    },
     "Jump to first invite.": "به اولین دعوت بروید.",
     "Jump to first unread room.": "به اولین اتاق خوانده نشده بروید.",
-    "List options": "لیست گزینه‌ها",
-    "A-Z": "حروف الفبا",
-    "Activity": "فعالیت",
-    "Sort by": "مرتب سازی بر اساس",
-    "Show previews of messages": "مشاهده پیش‌نمایش پیام‌ها",
-    "Show rooms with unread messages first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
     "%(roomName)s is not accessible at this time.": "در حال حاضر %(roomName)s قابل دسترسی نیست.",
     "%(roomName)s does not exist.": "%(roomName)s وجود ندارد.",
     "%(roomName)s can't be previewed. Do you want to join it?": "پیش بینی %(roomName)s امکان پذیر نیست. آیا می خواهید به آن بپیوندید؟",
@@ -993,8 +950,6 @@
     "Historical": "تاریخی",
     "Low priority": "اولویت کم",
     "Explore public rooms": "کاوش در اتاق‌های عمومی",
-    "You do not have permissions to add rooms to this space": "شما اجازه افزودن اتاق به این فضای کاری را ندارید",
-    "You do not have permissions to create new rooms in this space": "شما اجازه ایجاد اتاق جدید در این فضای کاری را ندارید",
     "Add room": "افزودن اتاق",
     "Rooms": "اتاق‌ها",
     "Open dial pad": "باز کردن صفحه شماره‌گیری",
@@ -1095,7 +1050,6 @@
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "اگر متد بازیابی را حذف نکرده‌اید، ممکن است حمله‌کننده‌ای سعی در دسترسی به حساب‌کاربری شما داشته باشد. گذرواژه حساب کاربری خود را تغییر داده و فورا یک روش بازیابی را از بخش تنظیمات خود تنظیم کنید.",
     "Message downloading sleep time(ms)": "زمان خواب بارگیری پیام (ms)",
     "Something went wrong!": "مشکلی پیش آمد!",
-    "Theme added!": "پوسته اضافه شد!",
     "If you've joined lots of rooms, this might take a while": "اگر عضو اتاق‌های بسیار زیادی هستید، ممکن است این فرآیند مقدای به طول بیانجامد",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "مدیر سرور شما قابلیت رمزنگاری سرتاسر برای اتاق‌ها و گفتگوهای خصوصی را به صورت پیش‌فرض غیرفعال کرده‌است.",
     "To link to this room, please add an address.": "برای لینک دادن به این اتاق، لطفا یک نشانی برای آن اضافه کنید.",
@@ -1128,8 +1082,6 @@
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "نکته: پیام خود را با <code>//</code> شروع کنید تا با یک اسلش شروع شود.",
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "برای لیست کردن دستورات موجود می توانید از <code>/help</code> استفاده کنید. آیا قصد داشتید این پیام را به عنوان متم ارسال کنید؟",
     "Read Marker off-screen lifetime (ms)": "خواندن نشانگر طول عمر خارج از صفحه نمایش (میلی ثانیه)",
-    "sends space invaders": "ارسال مهاجمان فضایی",
-    "Sends the given message with a space themed effect": "پیام داده شده را به صورت مضمون فضای کاری ارسال می کند",
     "If disabled, messages from encrypted rooms won't appear in search results.": "اگر غیر فعال شود، پیام‌های اتاق‌های رمزشده در نتایج جستجوها نمایش داده نمی‌شوند.",
     "Currently indexing: %(currentRoom)s": "هم‌اکنون ایندکس می‌شوند: %(currentRoom)s",
     "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s پیام‌های رمزشده را به صورت امن و محلی ذخیره کرده تا در نتایج جستجو نمایش دهد:",
@@ -1197,8 +1149,6 @@
     "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "برای گرفتن کمک در استفاده از %(brand)s، <a>اینجا</a> کلید کرده یا با استفاده از دکمه‌ی زیر اقدام به شروع گفتگو با بات ما نمائید.",
     "For help with using %(brand)s, click <a>here</a>.": "برای گرفتن کمک در استفاده از %(brand)s، <a>اینجا</a> کلیک کنید.",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "با شرایط و ضوایط سرویس سرور هویت‌سنجی (%(serverName)s) موافقت کرده تا بتوانید از طریق آدرس ایمیل و شماره تلفن قابل یافته‌شدن باشید.",
-    "Appearance Settings only affect this %(brand)s session.": "تنظیمات ظاهری برنامه تنها همین نشست %(brand)s را تحت تاثیر قرار می‌دهد.",
-    "Set the name of a font installed on your system & %(brand)s will attempt to use it.": "نام فونتی که بر روی سیستم‌تان نصب است را وارد کرده و %(brand)s سعی می‌کند از آن استفاده کند.",
     "Use between %(min)s pt and %(max)s pt": "از عددی بین %(min)s pt و %(max)s pt استفاده کنید",
     "Custom font size can only be between %(min)s pt and %(max)s pt": "اندازه فونت دلخواه تنها می‌تواند عددی بین %(min)s pt و %(max)s pt باشد",
     "New version available. <a>Update now.</a>": "نسخه‌ی جدید موجود است. <a>هم‌اکنون به‌روزرسانی کنید.</a>",
@@ -1251,9 +1201,6 @@
     "Profile": "پروفایل",
     "The operation could not be completed": "امکان تکمیل عملیات وجود ندارد",
     "Failed to save your profile": "ذخیره‌ی تنظیمات شما موفقیت‌آمیز نبود",
-    "Enable audible notifications for this session": "فعال‌سازی اعلان‌های صدادار برای این نشست",
-    "Show message in desktop notification": "پیام‌ها را در اعلان دسکتاپ نشان بده",
-    "Enable desktop notifications for this session": "فعال‌سازی اعلان‌های دسکتاپ برای این نشست",
     "The integration manager is offline or it cannot reach your homeserver.": "مدیر یکپارچه‌سازی‌ یا آفلاین است و یا نمی‌تواند به سرور شما متصل شود.",
     "Cannot connect to integration manager": "امکان اتصال به مدیر یکپارچه‌سازی‌ها وجود ندارد",
     "Message search initialisation failed": "آغاز فرآیند جستجوی پیام‌ها با شکست همراه بود",
@@ -1316,20 +1263,9 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "این اتاق از نسخه اتاق <roomVersion /> استفاده می کند، که این سرور آن را به عنوان <i> ناپایدار</i> علامت گذاری کرده است.",
     "This room has already been upgraded.": "این اتاق قبلاً ارتقا یافته است.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "با ارتقا این اتاق نسخه فعلی اتاق خاموش شده و یک اتاق ارتقا یافته به همین نام ایجاد می شود.",
-    "Unread messages.": "پیام های خوانده نشده.",
-    "%(count)s unread messages.": {
-        "one": "۱ پیام خوانده نشده.",
-        "other": "%(count)s پیام خوانده نشده."
-    },
-    "%(count)s unread messages including mentions.": {
-        "one": "۱ اشاره خوانده نشده.",
-        "other": "%(count)s پیام‌های خوانده نشده از جمله اشاره‌ها."
-    },
     "Room options": "تنظیمات اتاق",
     "Favourited": "مورد علاقه",
     "Forget Room": "اتاق را فراموش کن",
-    "Notification options": "تنظیمات اعلان",
-    "Show less": "نمایش کمتر",
     "exists": "وجود دارد",
     "Homeserver feature support:": "قابلیت‌های پشتیبانی‌شده سمت سرور:",
     "User signing private key:": "کلید امضاء خصوصی کاربر:",
@@ -1424,12 +1360,6 @@
     "Unable to look up phone number": "امکان یافتن شماره تلفن میسر نیست",
     "Connecting": "در حال اتصال",
     "unknown person": "فرد ناشناس",
-    "sends confetti": "انیمیشن بارش کاغذ شادی را ارسال کن",
-    "sends snowfall": "انیمیشن بارش برف را ارسال کن",
-    "Sends the given message with snowfall": "این پیام را با انیمیشن بارش برف ارسال کن",
-    "sends fireworks": "انیمیشن آتش‌بازی را ارسال کن",
-    "Sends the given message with fireworks": "این پیام را با انیمیشن آتش‌بازی ارسال کن",
-    "Sends the given message with confetti": "این پیام را با انیمیشن بارش کاغد شادی ارسال کن",
     "This is your list of users/servers you have blocked - don't leave the room!": "این لیست کاربران/اتاق‌هایی است که شما آن‌ها را بلاک کرده‌اید - اتاق را ترک نکنید!",
     "My Ban List": "لیست تحریم‌های من",
     "IRC display name width": "عرض نمایش نام‌های IRC",
@@ -1443,9 +1373,6 @@
     "Never send encrypted messages to unverified sessions in this room from this session": "هرگز از این نشست، پیام‌های رمزشده برای به نشست‌های تائید نشده در این اتاق ارسال مکن",
     "Never send encrypted messages to unverified sessions from this session": "هرگز از این نشست، پیام‌های رمزشده را به نشست‌های تائید نشده ارسال مکن",
     "Send analytics data": "ارسال داده‌های تجزیه و تحلیلی",
-    "System font name": "نام فونت سیستمی",
-    "Use a system font": "استفاده از یک فونت موجود بر روی سیستم شما",
-    "Match system theme": "با پوسته‌ی سیستم تطبیق پیدا کن",
     "Mirror local video feed": "تصویر خودتان را هنگام تماس تصویری برعکس (مثل آینه) نمایش بده",
     "Space used:": "فضای مصرفی:",
     "Indexed messages:": "پیام‌های ایندکس‌شده:",
@@ -1480,7 +1407,6 @@
     "Edit message": "ویرایش پیام",
     "Send as message": "ارسال به عنوان پیام",
     "Use custom size": "از اندازه‌ی دلخواه استفاده کنید",
-    "Font size": "اندازه فونت",
     "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\"": "تکرارهایی مانند \"abcabcabc\" تنها مقداری سخت‌تر از \"abc\" قابل حدس‌زدن هستند",
     "Add another word or two. Uncommon words are better.": "یک یا دو کلمه دیگر اضافه کنید. کلمات غیرمعمول بهتر هستند.",
     "Reversed words aren't much harder to guess": "حدس زدن کلمات معکوس خیلی سخت تر نیست",
@@ -1636,8 +1562,6 @@
     "Something went wrong in confirming your identity. Cancel and try again.": "تائید هویت شما با مشکل مواجه شد. لطفا فرآیند را لغو کرده و مجددا اقدام نمائید.",
     "This room is public": "این اتاق عمومی است",
     "Avatar": "نمایه",
-    "Join the beta": "اضافه‌شدن به نسخه‌ی بتا",
-    "Leave the beta": "ترک نسخه‌ی بتا",
     "Move right": "به سمت راست ببر",
     "Move left": "به سمت چپ ببر",
     "Revoke permissions": "دسترسی‌ها را لغو کنید",
@@ -1759,13 +1683,8 @@
     "Language and region": "زبان و جغرافیا",
     "Phone numbers": "شماره تلفن",
     "Email addresses": "آدرس ایمیل",
-    "Customise your appearance": "ظاهر پیام‌رسان خود را سفارشی‌سازی کنید",
     "Show advanced": "نمایش بخش پیشرفته",
     "Hide advanced": "پنهان‌کردن بخش پیشرفته",
-    "Add theme": "افزودن پوسته",
-    "Custom theme URL": "آدرس پوسته دلخواه",
-    "Error downloading theme information.": "بارگیری اطلاعات پوسته با خطا همراه بود.",
-    "Invalid theme schema.": "ساختار پوسته صحیح نیست.",
     "Size must be a number": "سایز باید یک عدد باشد",
     "Hey you. You're the best!": "سلام. حال شما خوبه؟",
     "Check for update": "بررسی برای به‌روزرسانی جدید",
@@ -1848,7 +1767,6 @@
     "Create a new room with the same name, description and avatar": "یک اتاق جدید با همان نام ، توضیحات و نمایه ایجاد کنید",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "ارتقاء این اتاق نیازمند بستن نسخه‌ی فعلی و ساختن درجای یک اتاق جدید است. برای داشتن بهترین تجربه‌ی کاربری ممکن، ما:",
     "The room upgrade could not be completed": "متاسفانه فرآیند ارتقاء اتاق به پایان نرسید",
-    "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "گزارش این پیام شناسه‌ی منحصر به فرد رخداد آن را برای مدیر سرور ارسال می‌کند. اگر پیام‌های این اتاق رمزشده باشند، مدیر سرور شما امکان خواندن متن آن پیام یا مشاهده‌ی عکس یا فایل‌های دیگر را نخواهد داشت.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "حواستان را جمع کنید، اگر ایمیلی اضافه نکرده و گذرواژه‌ی خود را فراموش کنید ، ممکن است <b>دسترسی به حساب کاربری خود را برای همیشه از دست دهید</b>.",
     "Doesn't look like a valid email address": "به نظر نمی‌رسد یک آدرس ایمیل معتبر باشد",
     "If they don't match, the security of your communication may be compromised.": "اگر آنها مطابقت نداشته‌باشند ، ممکن است امنیت ارتباطات شما به خطر افتاده باشد.",
@@ -1955,8 +1873,6 @@
     "Mentions & keywords": "منشن ها و کلمات کلیدی",
     "New keyword": "کلمه کلیدی جدید",
     "Keyword": "کلمه کلیدی",
-    "Messages containing keywords": "پیام های حاوی کلمات کلیدی",
-    "Enable notifications for this account": "اعلان‌ها را برای این اکانت فعال کنید",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "مدیران ادغام داده‌های پیکربندی را دریافت می‌کنند و می‌توانند ویجت‌ها را تغییر دهند، دعوت‌نامه‌های اتاق ارسال کنند و سطوح قدرت را از طرف شما تنظیم کنند.",
     "Deactivating your account is a permanent action — be careful!": "غیرفعال سازی اکانت شما یک اقدام دائمی است - مراقب باشید!",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "عبارت امنیتی خود را وارد کنید و یا <button>کلید امنیتی خود را استفاده کنید</button>.",
@@ -2107,7 +2023,8 @@
         "secure_backup": "پشتیبان‌گیری امن",
         "cross_signing": "امضاء متقابل",
         "identity_server": "کارساز هویت",
-        "integration_manager": "مدیر یکپارچگی"
+        "integration_manager": "مدیر یکپارچگی",
+        "qr_code": "کد QR"
     },
     "action": {
         "continue": "ادامه",
@@ -2196,7 +2113,16 @@
         "send_report": "ارسال گزارش"
     },
     "a11y": {
-        "user_menu": "منوی کاربر"
+        "user_menu": "منوی کاربر",
+        "n_unread_messages_mentions": {
+            "one": "۱ اشاره خوانده نشده.",
+            "other": "%(count)s پیام‌های خوانده نشده از جمله اشاره‌ها."
+        },
+        "n_unread_messages": {
+            "one": "۱ پیام خوانده نشده.",
+            "other": "%(count)s پیام خوانده نشده."
+        },
+        "unread_messages": "پیام های خوانده نشده."
     },
     "labs": {
         "video_rooms": "اتاق های تصویری",
@@ -2207,7 +2133,20 @@
         "dehydration": "ارسال پیام رمزشده به شکل آفلاین با استفاده از دستگاه‌های خاص",
         "bridge_state": "اطلاعات پل‌های ارتباطی را در تنظیمات اتاق نمایش بده",
         "voice_broadcast": "صدای جمعی",
-        "video_rooms_a_new_way_to_chat": "راهکار جدیدی برای گفتگوی صوتی و تصویری در%(brand)sوجود دارد."
+        "video_rooms_a_new_way_to_chat": "راهکار جدیدی برای گفتگوی صوتی و تصویری در%(brand)sوجود دارد.",
+        "group_messaging": "پیام رسانی",
+        "group_profile": "پروفایل",
+        "group_spaces": "محیط‌ها",
+        "group_widgets": "ابزارک ها",
+        "group_rooms": "اتاق‌ها",
+        "group_voip": "صدا و تصویر",
+        "group_moderation": "اعتدال",
+        "group_themes": "قالب ها",
+        "group_encryption": "رمزنگاری",
+        "group_experimental": "تجربی",
+        "group_developer": "توسعه دهنده",
+        "leave_beta": "ترک نسخه‌ی بتا",
+        "join_beta": "اضافه‌شدن به نسخه‌ی بتا"
     },
     "keyboard": {
         "home": "خانه",
@@ -2319,7 +2258,27 @@
             "rule_call": "دعوت به تماس",
             "rule_suppress_notices": "پیام‌های ارسال شده توسط ربات",
             "rule_tombstone": "زمانی که اتاق‌ها به‌روزرسانی می‌گردند",
-            "rule_encrypted_room_one_to_one": "پیام‌های رمزشده در گفتگو‌های خصوصی"
+            "rule_encrypted_room_one_to_one": "پیام‌های رمزشده در گفتگو‌های خصوصی",
+            "messages_containing_keywords": "پیام های حاوی کلمات کلیدی",
+            "enable_notifications_account": "اعلان‌ها را برای این اکانت فعال کنید",
+            "enable_desktop_notifications_session": "فعال‌سازی اعلان‌های دسکتاپ برای این نشست",
+            "show_message_desktop_notification": "پیام‌ها را در اعلان دسکتاپ نشان بده",
+            "enable_audible_notifications_session": "فعال‌سازی اعلان‌های صدادار برای این نشست"
+        },
+        "appearance": {
+            "heading": "ظاهر پیام‌رسان خود را سفارشی‌سازی کنید",
+            "subheading": "تنظیمات ظاهری برنامه تنها همین نشست %(brand)s را تحت تاثیر قرار می‌دهد.",
+            "match_system_theme": "با پوسته‌ی سیستم تطبیق پیدا کن",
+            "custom_font": "استفاده از یک فونت موجود بر روی سیستم شما",
+            "custom_font_name": "نام فونت سیستمی",
+            "custom_theme_invalid": "ساختار پوسته صحیح نیست.",
+            "custom_theme_error_downloading": "بارگیری اطلاعات پوسته با خطا همراه بود.",
+            "custom_theme_success": "پوسته اضافه شد!",
+            "custom_theme_url": "آدرس پوسته دلخواه",
+            "custom_theme_add_button": "افزودن پوسته",
+            "font_size": "اندازه فونت",
+            "custom_font_description": "نام فونتی که بر روی سیستم‌تان نصب است را وارد کرده و %(brand)s سعی می‌کند از آن استفاده کند.",
+            "timeline_image_size_default": "پیشفرض"
         }
     },
     "devtools": {
@@ -2366,7 +2325,8 @@
         "creator_summary": "%(creatorName)s این اتاق ساخته شده.",
         "topic": "عنوان: %(topic)s",
         "error_fetching_file": "خطا در واکشی فایل",
-        "file_attached": "فایل ضمیمه شد"
+        "file_attached": "فایل ضمیمه شد",
+        "messages": "پیام ها"
     },
     "create_room": {
         "title_public_room": "ساختن اتاق عمومی",
@@ -2438,7 +2398,15 @@
             "removed": "%(senderName)s آدرس اصلی این اتاق را حذف کرد.",
             "changed_alternative": "%(senderName)s آدرس های جایگزین این اتاق را تغییر داد.",
             "changed_main_and_alternative": "%(senderName)s آدرس اصلی و جایگزین این اتاق را تغییر داد.",
-            "changed": "%(senderName)s آدرس های این اتاق را تغییر داد."
+            "changed": "%(senderName)s آدرس های این اتاق را تغییر داد.",
+            "alt_added": {
+                "one": "%(senderName)s آدرس جایگزین %(addresses)s را برای این اتاق اضافه کرد.",
+                "other": "%(senderName)s آدرس های جایگزین %(addresses)s را برای این اتاق اضافه کرد."
+            },
+            "alt_removed": {
+                "one": "%(senderName)s آدرس جایگزین %(addresses)s این اتاق را حذف کرد.",
+                "other": "%(senderName)s آدرس های جایگزین %(addresses)s این اتاق را حذف کرد."
+            }
         },
         "m.room.third_party_invite": {
             "revoked": "%(senderName)s دعوت نامه %(targetDisplayName)s را برای پیوستن به اتاق باطل کرد.",
@@ -2569,6 +2537,29 @@
                 "one": "%(oneUser)s هیچ تغییری ایجاد نکرد",
                 "other": "%(oneUser)s %(count)s مرتبه هیچ تغییری ایجاد نکرد"
             }
+        },
+        "m.room.power_levels": {
+            "changed": "%(senderName)s سطح قدرت %(powerLevelDiffText)s تغییر داد.",
+            "user_from_to": "%(userId)s از %(fromPowerLevel)s به %(toPowerLevel)s"
+        },
+        "mjolnir": {
+            "removed_rule_users": "%(senderName)s قاعده تحریم کاربران را که با %(glob)s تطابق داشت، حذف کرد",
+            "removed_rule_rooms": "%(senderName)s قاعده تحریم اتاق‌ها را که با %(glob)s تطابق داشت، حذف کرد",
+            "removed_rule_servers": "%(senderName)s قاعده تحریم سرورها را که با %(glob)s تطابق داشت، حذف کرد",
+            "removed_rule": "%(senderName)s قاعده تحریمی را که با %(glob)s تطابق داشت، حذف کرد",
+            "updated_invalid_rule": "%(senderName)s یک قاعده‌ی تحریم نامعتبر را به‌روزرسانی کرد",
+            "updated_rule_users": "%(senderName)s قاعده تحریم کاربران را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
+            "updated_rule_rooms": "%(senderName)s قاعده تحریم اتاق‌ها را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
+            "updated_rule_servers": "%(senderName)s قاعده تحریم سرورها را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
+            "updated_rule": "%(senderName)s یک قاعده تحریم را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد",
+            "created_rule_users": "%(senderName)s یک قاعده تحریم کاربران را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
+            "created_rule_rooms": "%(senderName)s یک قاعده تحریم اتاق‌ها را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
+            "created_rule_servers": "%(senderName)s یک قاعده تحریم سرورها را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
+            "created_rule": "%(senderName)s یک قاعده تحریم را که با %(glob)s تطابق دارد، به دلیل (دلایل) %(reason)s ایجاد کرد",
+            "changed_rule_users": "%(senderName)s یک قاعده تحریم کاربران را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
+            "changed_rule_rooms": "%(senderName)s یک قاعده تحریم اتاق‌ها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
+            "changed_rule_servers": "%(senderName)s یک قاعده تحریم سرورها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
+            "changed_rule_glob": "%(senderName)s یک قاعده تحریم را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای به‌روزرسانی کرد که با %(newGlob)s تطابق داشته باشد"
         }
     },
     "slash_command": {
@@ -2672,7 +2663,6 @@
         "unsupported": "تماس ها پشتیبانی نمی شوند",
         "unsupported_browser": "شما نمیتوانید در این مرورگر تماس برقرار کنید."
     },
-    "Messages": "پیام ها",
     "Other": "دیگر",
     "Advanced": "پیشرفته",
     "room_settings": {
@@ -2726,5 +2716,43 @@
         "enable_prompt": "بهتر کردن راهنمای کاربری %(analyticsOwner)s",
         "consent_migration": "شما به ارسال گزارش چگونگی استفاده از سرویس رضایت داده بودید. ما نحوه استفاده از این اطلاعات را بروز میکنیم.",
         "learn_more": "اطلاعات خود را به صورت ناشناس با ما به اشتراک بگذارید تا متوجه مشکلات موجود شویم. بدون استفاده شخصی توسط خود و یا شرکا<LearnMoreLink>یادگیری بیشتر</LearnMoreLink>"
+    },
+    "chat_effects": {
+        "confetti_description": "این پیام را با انیمیشن بارش کاغد شادی ارسال کن",
+        "confetti_message": "انیمیشن بارش کاغذ شادی را ارسال کن",
+        "fireworks_description": "این پیام را با انیمیشن آتش‌بازی ارسال کن",
+        "fireworks_message": "انیمیشن آتش‌بازی را ارسال کن",
+        "snowfall_description": "این پیام را با انیمیشن بارش برف ارسال کن",
+        "snowfall_message": "انیمیشن بارش برف را ارسال کن",
+        "spaceinvaders_description": "پیام داده شده را به صورت مضمون فضای کاری ارسال می کند",
+        "spaceinvaders_message": "ارسال مهاجمان فضایی"
+    },
+    "spaces": {
+        "error_no_permission_create_room": "شما اجازه ایجاد اتاق جدید در این فضای کاری را ندارید",
+        "error_no_permission_add_room": "شما اجازه افزودن اتاق به این فضای کاری را ندارید"
+    },
+    "auth": {
+        "continue_with_idp": "با %(provider)s ادامه دهید",
+        "sign_in_with_sso": "با احراز هویت یکپارچه وارد شوید",
+        "sso": "ورود یکپارچه"
+    },
+    "room_list": {
+        "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
+        "show_previews": "مشاهده پیش‌نمایش پیام‌ها",
+        "sort_by": "مرتب سازی بر اساس",
+        "sort_by_activity": "فعالیت",
+        "sort_by_alphabet": "حروف الفبا",
+        "sublist_options": "لیست گزینه‌ها",
+        "show_n_more": {
+            "other": "نمایش %(count)s مورد بیشتر",
+            "one": "نمایش %(count)s مورد بیشتر"
+        },
+        "show_less": "نمایش کمتر",
+        "notification_options": "تنظیمات اعلان"
+    },
+    "report_content": {
+        "missing_reason": "لطفا توضیح دهید که چرا گزارش می‌دهید.",
+        "report_content_to_homeserver": "گزارش محتوا به مدیر سرور خود",
+        "description": "گزارش این پیام شناسه‌ی منحصر به فرد رخداد آن را برای مدیر سرور ارسال می‌کند. اگر پیام‌های این اتاق رمزشده باشند، مدیر سرور شما امکان خواندن متن آن پیام یا مشاهده‌ی عکس یا فایل‌های دیگر را نخواهد داشت."
     }
 }
