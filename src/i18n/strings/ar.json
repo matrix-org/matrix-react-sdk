@@ -111,10 +111,7 @@
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "تحذير: فشل التحقق من المفتاح! مفتاح التوقيع للمستخدم %(userId)s و الجلسة %(deviceId)s هو \"%(fprint)s\" والتي لا تتوافق مع المفتاح \"%(fingerprint)s\" المعطى. هذا يعني ان اتصالك اصبح مكشوف!",
     "Verified key": "مفتاح مؤكد",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "مفتاح التوقيع الذي اعطيته يتوافق مع مفتاح التوقيع الذي استلمته من جلسة المستخدم %(userId)s رقم %(deviceId)s. تم تحديد الجلسة على انها مؤكدة.",
-    "Forces the current outbound group session in an encrypted room to be discarded": "يفرض تجاهل جلسة المجموعة الصادرة الحالية في غرفة مشفرة",
     "Logs sent": "تم ارسال سجل الاحداث",
-    "Opens chat with the given user": "يفتح دردشة من المستخدم المعطى",
-    "Displays action": "يعرض إجراءً",
     "Reason": "السبب",
     "You cannot place a call with yourself.": "لا يمكنك الاتصال بنفسك.",
     "You signed in to a new session without verifying it:": "قمت بتسجيل الدخول لجلسة جديدة من غير التحقق منها:",
@@ -779,8 +776,6 @@
     "Send stickers into this room": "أرسل ملصقات إلى هذه الغرفة",
     "Remain on your screen while running": "ابقَ على شاشتك أثناء إجراء",
     "Remain on your screen when viewing another room, when running": "ابقَ على شاشتك عند مشاهدة غرفة أخرى أثناء إجراء",
-    "Takes the call in the current room off hold": "يوقف المكالمة في الغرفة الحالية",
-    "Places the call in the current room on hold": "يضع المكالمة في الغرفة الحالية قيد الانتظار",
     "Cuba": "كوبا",
     "Croatia": "كرواتيا",
     "Costa Rica": "كوستا ريكا",
@@ -1315,7 +1310,12 @@
         "addwidget_invalid_protocol": "يرجى ادخال a https:// او http:// widget URL",
         "addwidget_no_permissions": "لا يمكنك تعديل الحاجيات في هذه الغرفة.",
         "converttodm": "تحويل الغرفة إلى محادثة مباشرة",
-        "converttoroom": "تحويل المحادثة المباشرة إلى غرفة"
+        "converttoroom": "تحويل المحادثة المباشرة إلى غرفة",
+        "discardsession": "يفرض تجاهل جلسة المجموعة الصادرة الحالية في غرفة مشفرة",
+        "query": "يفتح دردشة من المستخدم المعطى",
+        "holdcall": "يضع المكالمة في الغرفة الحالية قيد الانتظار",
+        "unholdcall": "يوقف المكالمة في الغرفة الحالية",
+        "me": "يعرض إجراءً"
     },
     "presence": {
         "online_for": "متصل منذ %(duration)s",

@@ -42,7 +42,6 @@
     "Deactivate Account": "계정 비활성화",
     "Decrypt %(text)s": "%(text)s 복호화",
     "Deops user with given id": "받은 ID로 사용자의 등급을 낮추기",
-    "Displays action": "활동 표시하기",
     "Download %(text)s": "%(text)s 다운로드",
     "Enter passphrase": "암호 입력",
     "Error decrypting attachment": "첨부 파일 복호화 중 오류",
@@ -352,7 +351,6 @@
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "'%(fileName)s' 파일이 홈서버의 업로드 크기 제한을 초과합니다",
     "The server does not support the room version specified.": "서버가 지정된 방 버전을 지원하지 않습니다.",
     "Unable to load! Check your network connectivity and try again.": "불러올 수 없습니다! 네트워크 연결 상태를 확인한 후 다시 시도하세요.",
-    "Forces the current outbound group session in an encrypted room to be discarded": "암호화된 방에서 현재 방 외부의 그룹 세션을 강제로 삭제합니다",
     "Cannot reach homeserver": "홈서버에 연결할 수 없습니다",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "인터넷 연결이 안정적인지 확인하세요, 또는 서버 관리자에게 연락하세요",
     "Your %(brand)s is misconfigured": "%(brand)s이 잘못 설정됨",
@@ -965,7 +963,6 @@
     "United States": "미국",
     "The call was answered on another device.": "이 전화는 다른 기기에서 응답했습니다.",
     "Answered Elsewhere": "다른 기기에서 응답함",
-    "No active call in this room": "이 방에 진행중인 통화 없음",
     "Your current session is ready for secure messaging.": "현재 세션에서 보안 메세지를 사용할 수 있습니다.",
     "Last activity": "최근 활동",
     "Mark all as read": "모두 읽음으로 표시",
@@ -1393,7 +1390,10 @@
         "category_other": "기타",
         "addwidget_invalid_protocol": "https:// 혹은 http:// 위젯 URL을 제공하세요",
         "addwidget_no_permissions": "이 방에서 위젯을 수정할 수 없습니다.",
-        "converttoroom": "DM을 방으로 변환"
+        "converttoroom": "DM을 방으로 변환",
+        "discardsession": "암호화된 방에서 현재 방 외부의 그룹 세션을 강제로 삭제합니다",
+        "no_active_call": "이 방에 진행중인 통화 없음",
+        "me": "활동 표시하기"
     },
     "presence": {
         "online_for": "%(duration)s 동안 온라인",

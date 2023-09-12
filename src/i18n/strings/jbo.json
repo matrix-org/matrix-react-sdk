@@ -62,8 +62,6 @@
     "Define the power level of a user": ".i ninga'igau lo ni lo pilno cu vlipa",
     "Deops user with given id": ".i xruti lo ni lo pilno poi se judri ti cu vlipa",
     "Verified key": "ckiku vau je se lacri",
-    "Displays action": ".i mrilu lo nu do gasnu",
-    "Forces the current outbound group session in an encrypted room to be discarded": ".i macnu vimcu lo ca barkla termifckiku gunma lo kumfa pe'a poi mifra",
     "Reason": "krinu",
     "This homeserver has hit its Monthly Active User limit.": ".i le samtcise'u cu bancu lo masti jimte be ri bei lo ni ca'o pilno",
     "This homeserver has exceeded one of its resource limits.": ".i le samtcise'u cu bancu pa lo jimte be ri",
@@ -407,7 +405,9 @@
         "category_actions": "ka'e se zukte",
         "category_admin": "vlipa so'i da",
         "category_advanced": "macnu",
-        "category_other": "drata"
+        "category_other": "drata",
+        "discardsession": ".i macnu vimcu lo ca barkla termifckiku gunma lo kumfa pe'a poi mifra",
+        "me": ".i mrilu lo nu do gasnu"
     },
     "event_preview": {
         "m.call.answer": {

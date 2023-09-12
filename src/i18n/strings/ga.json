@@ -33,7 +33,6 @@
     "Ignored/Blocked": "Neamhairde/Tachta",
     "Avoid sequences": "Seachain seicheamh",
     "Unrecognised address": "Seoladh nár aithníodh",
-    "Displays action": "Taispeáin gníomh",
     "Verified key": "Eochair deimhnithe",
     "Unignored user": "Úsáideoir leis aird",
     "Ignored user": "Úsáideoir neamhairde",
@@ -728,7 +727,8 @@
         "category_admin": "Riarthóir",
         "category_advanced": "Forbartha",
         "category_effects": "Tionchair",
-        "category_other": "Eile"
+        "category_other": "Eile",
+        "me": "Taispeáin gníomh"
     },
     "presence": {
         "online": "Ar Líne",

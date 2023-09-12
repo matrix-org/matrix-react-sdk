@@ -11,7 +11,6 @@
     "Deactivate Account": "Desativar conta",
     "Default": "Padrão",
     "Deops user with given id": "Retirar função de moderador do usuário com o identificador informado",
-    "Displays action": "Visualizar atividades",
     "Export E2E room keys": "Exportar chaves ponta-a-ponta da sala",
     "Failed to change password. Is your password correct?": "Falha ao alterar a palavra-passe. A sua palavra-passe está correta?",
     "Failed to reject invitation": "Falha ao tentar rejeitar convite",
@@ -783,7 +782,8 @@
         "category_admin": "Administrador",
         "category_advanced": "Avançado",
         "category_effects": "Ações",
-        "category_other": "Outros"
+        "category_other": "Outros",
+        "me": "Visualizar atividades"
     },
     "presence": {
         "online": "Online",

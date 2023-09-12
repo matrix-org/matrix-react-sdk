@@ -33,7 +33,6 @@
     "Deops user with given id": "Deops user with given id",
     "Default": "Default",
     "Delete widget": "Delete widget",
-    "Displays action": "Displays action",
     "Download %(text)s": "Download %(text)s",
     "Email": "Email",
     "Email address": "Email address",
@@ -262,7 +261,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Restricted": "Restricted",
     "Missing roomId.": "Missing roomId.",
-    "Forces the current outbound group session in an encrypted room to be discarded": "Forces the current outbound group session in an encrypted room to be discarded",
     "Spanner": "Wrench",
     "Aeroplane": "Airplane",
     "Cat": "Cat",
@@ -486,7 +484,9 @@
         "category_advanced": "Advanced",
         "category_other": "Other",
         "addwidget_invalid_protocol": "Please supply an https:// or http:// widget URL",
-        "addwidget_no_permissions": "You cannot modify widgets in this room."
+        "addwidget_no_permissions": "You cannot modify widgets in this room.",
+        "discardsession": "Forces the current outbound group session in an encrypted room to be discarded",
+        "me": "Displays action"
     },
     "presence": {
         "online": "Online",

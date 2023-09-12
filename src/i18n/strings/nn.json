@@ -59,7 +59,6 @@
     "Failed to verify email address: make sure you clicked the link in the email": "Fekk ikkje til å stadfesta e-postadressa: sjå til at du klikka på den rette lenkja i e-posten",
     "Deops user with given id": "AvOPar brukarar med den gjevne IDen",
     "Verified key": "Godkjend nøkkel",
-    "Displays action": "Visar handlingar",
     "Reason": "Grunnlag",
     "Failure to create room": "Klarte ikkje å laga rommet",
     "Server may be unavailable, overloaded, or you hit a bug.": "Tenaren er kanskje utilgjengeleg, overlasta elles så traff du ein bug.",
@@ -394,7 +393,6 @@
     "Use an identity server": "Bruk ein identitetstenar",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Bruk ein identitetstenar for å invitera via e-post. Klikk for å fortsetja å bruka standard identitetstenar (%(defaultIdentityServerName)s) eller styre dette i innstillingane.",
     "Use an identity server to invite by email. Manage in Settings.": "Bruk ein identitetstenar for å invitera via e-post. Styr dette i Innstillingane.",
-    "Forces the current outbound group session in an encrypted room to be discarded": "Tvingar i eit kryptert rom kassering av gjeldande utgåande gruppe-økt",
     "Cancel entering passphrase?": "Avbryte inntasting av passfrase ?",
     "Setting up keys": "Setter opp nøklar",
     "Verify this session": "Stadfest denne økta",
@@ -547,7 +545,6 @@
     "Use your account or create a new one to continue.": "Bruk kontoen din eller opprett ein ny for å halda fram.",
     "Joins room with given address": "Legg saman rom med spesifisert adresse",
     "Could not find user in room": "Klarde ikkje å finna brukaren i rommet",
-    "Opens chat with the given user": "Opna ein samtale med den spesifiserte brukaren",
     "Later": "Seinare",
     "Never send encrypted messages to unverified sessions from this session": "Aldri send krypterte meldingar til ikkje-verifiserte sesjonar frå denne sesjonen",
     "Never send encrypted messages to unverified sessions in this room from this session": "Aldri send krypterte meldingar i dette rommet til ikkje-verifiserte sesjonar frå denne sesjonen",
@@ -1106,7 +1103,10 @@
         "category_other": "Anna",
         "addwidget_missing_url": "Oppgje ein widget-URL eller innebygd kode",
         "addwidget_invalid_protocol": "Skriv inn https:// eller http:// URL-en for miniprogrammet",
-        "addwidget_no_permissions": "Du kan ikkje endra miniprogram i dette rommet."
+        "addwidget_no_permissions": "Du kan ikkje endra miniprogram i dette rommet.",
+        "discardsession": "Tvingar i eit kryptert rom kassering av gjeldande utgåande gruppe-økt",
+        "query": "Opna ein samtale med den spesifiserte brukaren",
+        "me": "Visar handlingar"
     },
     "presence": {
         "online_for": "tilkopla i %(duration)s",

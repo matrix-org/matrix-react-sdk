@@ -65,7 +65,6 @@
     "Deactivate Account": "Itxi kontua",
     "Decrypt %(text)s": "Deszifratu %(text)s",
     "Default": "Lehenetsia",
-    "Displays action": "Ekintza bistaratzen du",
     "%(items)s and %(lastItem)s": "%(items)s eta %(lastItem)s",
     "Download %(text)s": "Deskargatu %(text)s",
     "Error decrypting attachment": "Errorea eranskina deszifratzean",
@@ -352,7 +351,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Zure mezua ez da bidali zure hasiera zerbitzariak hilabeteko erabiltzaile aktiboen muga jo duelako. <a>Jarri kontaktuan zerbitzuaren administratzailearekin</a> zerbitzua erabiltzen jarraitzeko.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Zure mezua ez da bidali zure hasiera zerbitzariak baliabide mugaren bat jo duelako. <a>Jarri kontaktuan zerbitzuaren administratzailearekin</a> zerbitzua erabiltzen jarraitzeko.",
     "Please <a>contact your service administrator</a> to continue using this service.": "<a>Jarri kontaktuan zerbitzuaren administratzailearekin</a> zerbitzu hau erabiltzen jarraitzeko.",
-    "Forces the current outbound group session in an encrypted room to be discarded": "Uneko irteerako talde saioa zifratutako gela batean baztertzera behartzen du",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Egunkariak bidali aurretik, <a>GitHub arazo bat sortu</a> behar duzu gertatzen zaizuna azaltzeko.",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s-ek orain 3-5 aldiz memoria gutxiago darabil, beste erabiltzaileen informazioa behar denean besterik ez kargatzen. Itxaron zerbitzariarekin sinkronizatzen garen bitartean!",
     "Updating %(brand)s": "%(brand)s eguneratzen",
@@ -1051,7 +1049,6 @@
     "Unable to query secret storage status": "Ezin izan da biltegi sekretuaren egoera kontsultatu",
     "Currently indexing: %(currentRoom)s": "Orain indexatzen: %(currentRoom)s",
     "New login. Was this you?": "Saio berria. Zu izan zara?",
-    "Opens chat with the given user": "Erabiltzailearekin txata irekitzen du",
     "You signed in to a new session without verifying it:": "Saio berria hasi duzu hau egiaztatu gabe:",
     "Verify your other session using one of the options below.": "Egiaztatu zure beste saioa beheko aukeretako batekin.",
     "IRC display name width": "IRC-ko pantaila izenaren zabalera",
@@ -1627,7 +1624,10 @@
         "category_other": "Beste bat",
         "addwidget_missing_url": "Eman trepetaren URLa edo txertatu kodea",
         "addwidget_invalid_protocol": "Eman https:// edo http:// motako trepetaren URL-a",
-        "addwidget_no_permissions": "Ezin dituzu gela honetako trepetak aldatu."
+        "addwidget_no_permissions": "Ezin dituzu gela honetako trepetak aldatu.",
+        "discardsession": "Uneko irteerako talde saioa zifratutako gela batean baztertzera behartzen du",
+        "query": "Erabiltzailearekin txata irekitzen du",
+        "me": "Ekintza bistaratzen du"
     },
     "presence": {
         "online_for": "Konektatua %(duration)s",

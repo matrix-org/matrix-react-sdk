@@ -95,8 +95,6 @@
     "Define the power level of a user": "Definer tilgangnivå til en bruker",
     "Deops user with given id": "Fjerner OP nivå til bruker med gitt ID",
     "Verified key": "Verifisert nøkkel",
-    "Displays action": "Viser handling",
-    "Forces the current outbound group session in an encrypted room to be discarded": "Tvinger den gjeldende utgående gruppeøkten i et kryptert rom til å stoppe",
     "Reason": "Årsak",
     "Add Email Address": "Legg til E-postadresse",
     "Add Phone Number": "Legg til telefonnummer",
@@ -1572,7 +1570,9 @@
         "category_effects": "Effekter",
         "category_other": "Andre",
         "addwidget_invalid_protocol": "Oppgi en https: // eller http: // widget-URL",
-        "addwidget_no_permissions": "Du kan ikke endre widgets i dette rommet."
+        "addwidget_no_permissions": "Du kan ikke endre widgets i dette rommet.",
+        "discardsession": "Tvinger den gjeldende utgående gruppeøkten i et kryptert rom til å stoppe",
+        "me": "Viser handling"
     },
     "presence": {
         "online_for": "På nett i %(duration)s",

@@ -66,8 +66,6 @@
     "Define the power level of a user": "Bepoal ’t machtsniveau van e gebruuker",
     "Deops user with given id": "Ountmachtigt de gebruuker me de gegeevn ID",
     "Verified key": "Geverifieerde sleuter",
-    "Displays action": "Toogt actie",
-    "Forces the current outbound group session in an encrypted room to be discarded": "Forceert de huudige uutwoartsche groepssessie in e versleuterd gesprek vo verworpn te wordn",
     "Reason": "Reedn",
     "No homeserver URL provided": "Geen thuusserver-URL ingegeevn",
     "Unexpected error resolving homeserver configuration": "Ounverwachte foute by ’t controleern van de thuusserverconfiguroasje",
@@ -1047,7 +1045,9 @@
         "category_advanced": "Geavanceerd",
         "category_other": "Overige",
         "addwidget_invalid_protocol": "Gift een https://- of http://-widget-URL in",
-        "addwidget_no_permissions": "J’en kut de widgets in ’t gesprek hier nie anpassn."
+        "addwidget_no_permissions": "J’en kut de widgets in ’t gesprek hier nie anpassn.",
+        "discardsession": "Forceert de huudige uutwoartsche groepssessie in e versleuterd gesprek vo verworpn te wordn",
+        "me": "Toogt actie"
     },
     "presence": {
         "online_for": "Online vo %(duration)s",

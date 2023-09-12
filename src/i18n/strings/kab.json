@@ -212,8 +212,6 @@
     "Session already verified!": "Tiɣimit tettwasenqed yakan!",
     "Verified key": "Tasarut tettwasenqed",
     "Logs sent": "Iɣmisen ttewaznen",
-    "Opens chat with the given user": "Yeldi adiwenni d useqdac i d-yettunefken",
-    "Displays action": "Yeskan tigawt",
     "Not Trusted": "Ur yettwattkal ara",
     "%(items)s and %(count)s others": {
         "other": "%(items)s d %(count)s wiyaḍ",
@@ -866,7 +864,6 @@
     "Verify this user by confirming the following emoji appear on their screen.": "Senqed aseqdac-a s usentem dakken imujiten-a ttbanen-d ɣef ugdil-is.",
     "Verify this user by confirming the following number appears on their screen.": "Senqed aseqdac-a s usentem dakken amḍan-a ittban-d ɣef ugdil-is.",
     "Thumbs up": "Adebbuz d asawen",
-    "Forces the current outbound group session in an encrypted room to be discarded": "Ḥettem tiɣimit n ugraw ara d-yeffɣen akka tura deg texxamt tawgelhant ad tettwakkes",
     "Unexpected server error trying to leave the room": "Tuccḍa n uqeddac ur nettwaṛǧa ara lawan n tuffɣa seg texxamt",
     "How fast should messages be downloaded.": "Acḥal i ilaq ad yili urured i wakken ad d-adren yiznan.",
     "Waiting for %(displayName)s to verify…": "Aṛaǧu n %(displayName)s i usenqed…",
@@ -1431,8 +1428,6 @@
     "The call could not be established": "Asiwel ur yeqεid ara",
     "Send videos as you in this room": "Azen tividyutin deg texxamt-a am wakken d kečč",
     "See images posted to your active room": "Wali tignatin i d-yeffɣen deg texxamt-a iremden",
-    "Takes the call in the current room off hold": "Uɣal ɣer usiwel ara iteddun deg -texxamt-a",
-    "Places the call in the current room on hold": "Seḥbes asiwel deg texxamt-a i kra n wakud",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-ik·im ur ak·am yefki ara tisirag i useqdec n umsefrak n umsidef i wakken ad tgeḍ aya. Ttxil-k·m nermes anedbal.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Aseqdec n uwiǧit-a yezmer ad yebḍu isefka <helpIcon/> d %(widgetDomain)s & amsefrak-inek·inem n umsidef.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Imsefrak n yimsidaf remmsen-d isefka n uswel, syen ad uɣalen zemren ad beddlen iwiǧiten, ad aznen tinubgiwin ɣer texxamin, ad yesbadu daɣen tazmert n yiswiren s yiswiren deg ubdil-ik·im.",
@@ -1983,7 +1978,12 @@
         "category_other": "Nniḍen",
         "addwidget_missing_url": "Ttxil-k·m mudd URL n uwiǧit neɣ tangalt tusliɣt",
         "addwidget_invalid_protocol": "Ttxil-k·m mudd URL n uwigit https:// neɣ http://",
-        "addwidget_no_permissions": "Ur tezmireḍ ara ad tbeddleḍ iwiǧiten n texxamt-a."
+        "addwidget_no_permissions": "Ur tezmireḍ ara ad tbeddleḍ iwiǧiten n texxamt-a.",
+        "discardsession": "Ḥettem tiɣimit n ugraw ara d-yeffɣen akka tura deg texxamt tawgelhant ad tettwakkes",
+        "query": "Yeldi adiwenni d useqdac i d-yettunefken",
+        "holdcall": "Seḥbes asiwel deg texxamt-a i kra n wakud",
+        "unholdcall": "Uɣal ɣer usiwel ara iteddun deg -texxamt-a",
+        "me": "Yeskan tigawt"
     },
     "presence": {
         "online_for": "Srid azal n %(duration)s",

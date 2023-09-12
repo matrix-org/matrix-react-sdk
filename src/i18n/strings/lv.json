@@ -28,7 +28,6 @@
     "Decrypt %(text)s": "Atšifrēt %(text)s",
     "Deops user with given id": "Atceļ operatora statusu lietotājam ar norādīto Id",
     "Default": "Noklusējuma",
-    "Displays action": "Parāda darbību",
     "Download %(text)s": "Lejupielādēt: %(text)s",
     "Email": "Epasts",
     "Email address": "Epasta adrese",
@@ -784,10 +783,6 @@
     "Send stickers into this room": "Iesūtīt stikerus šajā istabā",
     "Remain on your screen while running": "Darbības laikā paliek uz ekrāna",
     "Remain on your screen when viewing another room, when running": "Darbības laikā paliek uz ekrāna, kad tiek skatīta cita istaba",
-    "Places the call in the current room on hold": "Iepauzē sazvanu šajā istabā",
-    "Takes the call in the current room off hold": "Šajā istabā iepauzētās sazvana atpauzēšana",
-    "Opens chat with the given user": "Atvērt čatu ar šo lietotāju",
-    "Forces the current outbound group session in an encrypted room to be discarded": "Piespiedu kārtā pārtrauc pašreizējo izejošo grupas sesiju šifrētajā istabā",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Jūsu iesniegtā parakstīšanas atslēga atbilst parakstīšanas atslēgai, kuru saņēmāt no %(userId)s sesijas %(deviceId)s. Sesija atzīmēta kā verificēta.",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "BRĪDINĀJUMS: ATSLĒGU VERIFIKĀCIJA NEIZDEVĀS! Parakstīšanas atslēga lietotājam %(userId)s un sesijai %(deviceId)s ir \"%(fprint)s\", kura neatbilst norādītajai atslēgai \"%(fingerprint)s\". Tas var nozīmēt, ka jūsu saziņa tiek pārtverta!",
     "Verifies a user, session, and pubkey tuple": "Verificē lietotāju, sesiju un publiskās atslēgas",
@@ -1818,7 +1813,12 @@
         "addwidget_invalid_protocol": "Lūdzu ievadiet logrīka URL https:// vai http:// formā",
         "addwidget_no_permissions": "Jūs nevarat mainīt vidžetus/logrīkus šajā istabā.",
         "converttodm": "Pārveido istabu par DM",
-        "converttoroom": "Pārveido DM par istabu"
+        "converttoroom": "Pārveido DM par istabu",
+        "discardsession": "Piespiedu kārtā pārtrauc pašreizējo izejošo grupas sesiju šifrētajā istabā",
+        "query": "Atvērt čatu ar šo lietotāju",
+        "holdcall": "Iepauzē sazvanu šajā istabā",
+        "unholdcall": "Šajā istabā iepauzētās sazvana atpauzēšana",
+        "me": "Parāda darbību"
     },
     "presence": {
         "online_for": "Tiešsaistē %(duration)s",
