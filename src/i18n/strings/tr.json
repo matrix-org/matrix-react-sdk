@@ -1265,8 +1265,6 @@
     "Room settings": "Oda ayarları",
     "Not encrypted": "Şifrelenmemiş",
     "Backup version:": "Yedekleme sürümü:",
-    "Autocomplete": "Otomatik Tamamlama",
-    "Navigation": "Navigasyon",
     "User Autocomplete": "Kullanıcı Otomatik Tamamlama",
     "Room Autocomplete": "Otomatik Oda Tamamlama",
     "Notification Autocomplete": "Otomatik Bildirim Tamamlama",
@@ -1277,8 +1275,6 @@
     "Switch theme": "Temayı değiştir",
     "Keys restored": "Anahtarlar geri yüklendi",
     "Submit logs": "Günlükleri kaydet",
-    "New line": "Yeni satır",
-    "Room List": "Oda listesi",
     "Server name": "Sunucu adı",
     "Your server": "Senin sunucun",
     "All rooms": "Tüm odalar",
@@ -1288,7 +1284,6 @@
     "Hold": "Beklet",
     "Resume": "Devam et",
     "Information": "Bilgi",
-    "Calls": "Aramalar",
     "Feedback": "Geri bildirim",
     "Accepting…": "Kabul ediliyor…",
     "Room avatar": "Oda avatarı",
@@ -1449,7 +1444,6 @@
         "other": "Şu cihazlardan oturumu kapatmayı onayla"
     },
     "Current session": "Şimdiki oturum",
-    "Search (must be enabled)": "Arama (etkinleştirilmeli)",
     "common": {
         "about": "Hakkında",
         "analytics": "Analitik",
@@ -1625,7 +1619,13 @@
         "end": "End",
         "alt": "Alt",
         "control": "Ctrl",
-        "shift": "Shift"
+        "shift": "Shift",
+        "category_calls": "Aramalar",
+        "category_room_list": "Oda listesi",
+        "category_navigation": "Navigasyon",
+        "category_autocomplete": "Otomatik Tamamlama",
+        "composer_new_line": "Yeni satır",
+        "search": "Arama (etkinleştirilmeli)"
     },
     "composer": {
         "format_bold": "Kalın",

@@ -850,10 +850,6 @@
     "Identity server URL must be HTTPS": "يجب أن يستعمل رابط (URL) خادوم الهوية ميفاق HTTPS",
     "Paraguay": "باراغواي",
     "Netherlands": "هولندا",
-    "Dismiss read marker and jump to bottom": "تجاهل علامة القراءة وانتقل إلى الأسفل",
-    "Toggle microphone mute": "تبديل كتم صوت الميكروفون",
-    "Cancel replying to a message": "إلغاء الرد على رسالة",
-    "New line": "سطر جديد",
     "Greece": "اليونان",
     "Some invites couldn't be sent": "تعذر إرسال بعض الدعوات",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "أرسلنا الآخرين، ولكن لم تتم دعوة الأشخاص أدناه إلى <RoomName/>",
@@ -1075,7 +1071,11 @@
         "group_encryption": "تشفير"
     },
     "keyboard": {
-        "number": "[رقم]"
+        "number": "[رقم]",
+        "cancel_reply": "إلغاء الرد على رسالة",
+        "toggle_microphone_mute": "تبديل كتم صوت الميكروفون",
+        "dismiss_read_marker_and_jump_bottom": "تجاهل علامة القراءة وانتقل إلى الأسفل",
+        "composer_new_line": "سطر جديد"
     },
     "composer": {
         "format_bold": "ثخين",

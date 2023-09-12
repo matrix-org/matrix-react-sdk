@@ -237,9 +237,6 @@
     "Favourited": "Roghnaithe",
     "Feedback": "Aiseolas",
     "Ok": "Togha",
-    "Autocomplete": "Uathiomlánaigh",
-    "Calls": "Glaonna",
-    "Navigation": "Nascleanúint",
     "Accepting…": "ag Glacadh leis…",
     "Cancelling…": "ag Cealú…",
     "exists": "a bheith ann",
@@ -657,7 +654,10 @@
         "alt": "Alt",
         "control": "Ctrl",
         "shift": "Shift",
-        "number": "[uimhir]"
+        "number": "[uimhir]",
+        "category_calls": "Glaonna",
+        "category_navigation": "Nascleanúint",
+        "category_autocomplete": "Uathiomlánaigh"
     },
     "composer": {
         "format_bold": "Trom",

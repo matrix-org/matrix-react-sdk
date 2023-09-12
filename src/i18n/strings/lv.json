@@ -366,7 +366,6 @@
     "Lebanon": "Libāna",
     "Bangladesh": "Bangladeša",
     "Albania": "Albānija",
-    "Toggle microphone mute": "Ieslēgt/izslēgt mikrofonu",
     "Muted Users": "Apklusinātie lietotāji",
     "Confirm to continue": "Apstipriniet, lai turpinātu",
     "Confirm account deactivation": "Apstipriniet konta deaktivizēšanu",
@@ -496,8 +495,6 @@
     "Help & About": "Palīdzība un par lietotni",
     "About homeservers": "Par bāzes serveriem",
     "Enable message search in encrypted rooms": "Iespējot ziņu meklēšanu šifrētās istabās",
-    "Search (must be enabled)": "Meklēšana (jābūt iespējotai)",
-    "Jump to room search": "Pāriet uz istabu meklēšanu",
     "Message search": "Ziņu meklēšana",
     "Cancel search": "Atcelt meklējumu",
     "Flag": "Karogs",
@@ -619,7 +616,6 @@
     "Incoming Verification Request": "Ienākošais veifikācijas pieprasījums",
     "%(name)s is requesting verification": "%(name)s pieprasa verifikāciju",
     "Verification Request": "Verifikācijas pieprasījums",
-    "Activate selected button": "Aktivizēt izvēlēto pogu",
     "Currently indexing: %(currentRoom)s": "Pašlaik indeksē: %(currentRoom)s",
     "A private space for you and your teammates": "Privāta vieta jums un jūsu komandas dalībniekiem",
     "A private space to organise your rooms": "Privāta vieta, kur organizēt jūsu istabas",
@@ -716,7 +712,6 @@
     },
     "Save Changes": "Saglabāt izmaiņas",
     "Welcome to <name/>": "Laipni lūdzam uz <name/>",
-    "Room List": "Istabu saraksts",
     "Send as message": "Nosūtīt kā ziņu",
     "%(brand)s URL": "%(brand)s URL",
     "Room version": "Istabas versija",
@@ -1420,7 +1415,12 @@
         "group_encryption": "Šifrēšana"
     },
     "keyboard": {
-        "home": "Mājup"
+        "home": "Mājup",
+        "category_room_list": "Istabu saraksts",
+        "toggle_microphone_mute": "Ieslēgt/izslēgt mikrofonu",
+        "jump_room_search": "Pāriet uz istabu meklēšanu",
+        "activate_button": "Aktivizēt izvēlēto pogu",
+        "search": "Meklēšana (jābūt iespējotai)"
     },
     "composer": {
         "format_inline_code": "Kods",

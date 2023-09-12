@@ -171,8 +171,6 @@
     "Users": "pilno",
     "That matches!": ".i du",
     "Success!": ".i snada",
-    "Room List": "liste le'i ve zilbe'i",
-    "Upload a file": "nu kibdu'a pa vreji",
     "Verify your other session using one of the options below.": ".i ko cuxna da le di'e cei'i le ka tadji lo nu do co'a lacri",
     "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
     "Not Trusted": "na se lacri",
@@ -475,5 +473,9 @@
             "one": "nu viska %(count)s na du"
         },
         "show_less": "nu viska so'u da"
+    },
+    "keyboard": {
+        "category_room_list": "liste le'i ve zilbe'i",
+        "upload_file": "nu kibdu'a pa vreji"
     }
 }

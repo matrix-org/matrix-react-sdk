@@ -76,7 +76,6 @@
     "This homeserver does not support login using email address.": "Ovaj server ne podržava prijavu korištenjem e-mail adrese.",
     "Incorrect username and/or password.": "Neispravno korisničko ime i/ili lozinka.",
     "This account has been deactivated.": "Ovaj nalog je dekativiran.",
-    "Open this settings tab": "Otvori podešavanja",
     "Start a group chat": "Pokreni grupni razgovor",
     "User is already in the room": "Korisnik je već u sobi",
     "common": {
@@ -117,5 +116,8 @@
     },
     "auth": {
         "sso": "Jedinstvena prijava (SSO)"
+    },
+    "keyboard": {
+        "keyboard_shortcuts_tab": "Otvori podešavanja"
     }
 }

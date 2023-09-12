@@ -511,10 +511,6 @@
     "Upload completed": "Opplasting fullført",
     "Cancelled signature upload": "Kansellerte opplasting av signatur",
     "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
-    "Room List": "Romkatalog",
-    "Select room from the room list": "Vel rom frå romkatalogen",
-    "Collapse room list section": "Minimer romkatalog-seksjonen",
-    "Expand room list section": "Utvid romkatalog-seksjonen",
     "Manually verify all remote sessions": "Manuelt verifiser alle eksterne økter",
     "My Ban List": "Mi blokkeringsliste",
     "For help with using %(brand)s, click <a>here</a>.": "For hjelp med å bruka %(brand)s, klikk <a>her</a>.",
@@ -542,7 +538,6 @@
     "Jump to first unread room.": "Hopp til fyrste uleste rom.",
     "Jump to first invite.": "Hopp til fyrste invitasjon.",
     "Unable to set up secret storage": "Oppsett av hemmeleg lager feila",
-    "Toggle microphone mute": "Slå av/på demping av mikrofon",
     "Confirm adding email": "Stadfest at du ynskjer å legga til e-postadressa",
     "Click the button below to confirm adding this email address.": "Trykk på knappen under for å stadfesta at du ynskjer å legga til denne e-postadressa.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Stadfest dette telefonnummeret for å bruka Single-sign-on for å bevisa identiteten din.",
@@ -799,7 +794,12 @@
         "group_encryption": "Kryptografi"
     },
     "keyboard": {
-        "home": "Heim"
+        "home": "Heim",
+        "category_room_list": "Romkatalog",
+        "toggle_microphone_mute": "Slå av/på demping av mikrofon",
+        "room_list_select_room": "Vel rom frå romkatalogen",
+        "room_list_collapse_section": "Minimer romkatalog-seksjonen",
+        "room_list_expand_section": "Utvid romkatalog-seksjonen"
     },
     "composer": {
         "format_bold": "Feit",
