@@ -95,7 +95,6 @@
     "Return to login screen": "Return to login screen",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s does not have permission to send you notifications - please check your browser settings",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s was not given permission to send notifications - please try again",
-    "%(brand)s version:": "%(brand)s version:",
     "Room %(roomId)s not visible": "Room %(roomId)s not visible",
     "Rooms": "Rooms",
     "Search failed": "Search failed",
@@ -519,5 +518,10 @@
     },
     "export_chat": {
         "messages": "Messages"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s version:"
+        }
     }
 }

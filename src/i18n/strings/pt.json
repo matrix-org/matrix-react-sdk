@@ -138,7 +138,6 @@
     "Error decrypting attachment": "Erro ao descriptografar o anexo",
     "Invalid file%(extra)s": "Arquivo inválido %(extra)s",
     "Operation failed": "A operação falhou",
-    "%(brand)s version:": "versão do %(brand)s:",
     "Warning!": "Atenção!",
     "Passphrases must match": "As frases-passe devem coincidir",
     "Passphrase must not be empty": "A frase-passe não pode estar vazia",
@@ -823,5 +822,10 @@
     },
     "export_chat": {
         "messages": "Mensagens"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "versão do %(brand)s:"
+        }
     }
 }

@@ -234,7 +234,6 @@
     "Notifications": "Notificacións",
     "Profile": "Perfil",
     "Account": "Conta",
-    "%(brand)s version:": "versión %(brand)s:",
     "The email address linked to your account must be entered.": "Debe introducir o correo electrónico ligado a súa conta.",
     "A new password must be entered.": "Debe introducir un novo contrasinal.",
     "New passwords must match each other.": "Os novos contrasinais deben ser coincidentes.",
@@ -391,9 +390,6 @@
     "General": "Xeral",
     "Discovery": "Descubrir",
     "Deactivate account": "Desactivar conta",
-    "For help with using %(brand)s, click <a>here</a>.": "Para ter axuda con %(brand)s, preme <a>aquí</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Se precisas axuda usando %(brand)s, preme <a>aquí</a> ou inicia unha conversa co noso bot usando o botón inferior.",
-    "Help & About": "Axuda & Acerca de",
     "Security & Privacy": "Seguridade & Privacidade",
     "Roles & Permissions": "Roles & Permisos",
     "Room %(name)s": "Sala %(name)s",
@@ -631,10 +627,7 @@
     "Phone numbers": "Número de teléfono",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Acepta os Termos do Servizo do servidor (%(serverName)s) para permitir que te atopen polo enderezo de email ou número de teléfono.",
     "Account management": "Xestión da conta",
-    "Chat with %(brand)s Bot": "Chat co Bot %(brand)s",
-    "Clear cache and reload": "Baleirar caché e recargar",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar dun asunto relacionado coa seguridade de Matrix, le a <a>Política de Revelación de Privacidade</a> de Matrix.org.",
-    "Versions": "Versións",
     "Ignored/Blocked": "Ignorado/Bloqueado",
     "Error adding ignored user/server": "Fallo ao engadir a ignorado usuaria/servidor",
     "Something went wrong. Please try again or view your console for hints.": "Algo fallou. Inténtao outra vez o mira na consola para ter algunha pista.",
@@ -1729,7 +1722,6 @@
     "No microphone found": "Non atopamos ningún micrófono",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Non puidemos acceder ao teu micrófono. Comproba os axustes do navegador e proba outra vez.",
     "Unable to access your microphone": "Non se puido acceder ao micrófono",
-    "Your access token gives full access to your account. Do not share it with anyone.": "O teu token de acceso da acceso completo á túa conta. Non o compartas con ninguén.",
     "Please enter a name for the space": "Escribe un nome para o espazo",
     "Connecting": "Conectando",
     "Search names and descriptions": "Buscar nome e descricións",
@@ -1890,7 +1882,6 @@
     "Call declined": "Chamada rexeitada",
     "Stop recording": "Deter a gravación",
     "Send voice message": "Enviar mensaxe de voz",
-    "Olm version:": "Version olm:",
     "More": "Máis",
     "Show sidebar": "Mostrar a barra lateral",
     "Hide sidebar": "Agochar barra lateral",
@@ -3625,5 +3616,18 @@
         "report_entire_room": "Denunciar a toda a sala",
         "report_content_to_homeserver": "Denuncia sobre contido á Administración do teu servidor",
         "description": "Ao denunciar esta mensaxe vasnos enviar o seu 'event ID' único á administración do servidor. Se as mensaxes da sala están cifradas, a administración do servidor non poderá ler o texto da mensaxe ou ver imaxes ou ficheiros."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "versión %(brand)s:",
+            "olm_version": "Version olm:",
+            "help_link": "Para ter axuda con %(brand)s, preme <a>aquí</a>.",
+            "help_link_chat_bot": "Se precisas axuda usando %(brand)s, preme <a>aquí</a> ou inicia unha conversa co noso bot usando o botón inferior.",
+            "chat_bot": "Chat co Bot %(brand)s",
+            "title": "Axuda & Acerca de",
+            "versions": "Versións",
+            "access_token_detail": "O teu token de acceso da acceso completo á túa conta. Non o compartas con ninguén.",
+            "clear_cache_reload": "Baleirar caché e recargar"
+        }
     }
 }

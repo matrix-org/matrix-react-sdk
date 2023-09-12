@@ -1679,22 +1679,26 @@
     "Deactivating your account is a permanent action — be careful!": "Deactivating your account is a permanent action — be careful!",
     "Deactivate Account": "Deactivate Account",
     "Discovery": "Discovery",
-    "%(brand)s version:": "%(brand)s version:",
-    "Olm version:": "Olm version:",
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s version:",
+            "olm_version": "Olm version:",
+            "help_link": "For help with using %(brand)s, click <a>here</a>.",
+            "help_link_chat_bot": "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.",
+            "chat_bot": "Chat with %(brand)s Bot",
+            "title": "Help & About",
+            "versions": "Versions",
+            "homeserver": "Homeserver is <code>%(homeserverUrl)s</code>",
+            "identity_server": "Identity server is <code>%(identityServerUrl)s</code>",
+            "access_token_detail": "Your access token gives full access to your account. Do not share it with anyone.",
+            "clear_cache_reload": "Clear cache and reload"
+        }
+    },
     "credits": {
         "default_cover_photo": "The <photo>default cover photo</photo> is © <author>Jesús Roncero</author> used under the terms of <terms>CC-BY-SA 4.0</terms>.",
         "twemoji_colr": "The <colr>twemoji-colr</colr> font is © <author>Mozilla Foundation</author> used under the terms of <terms>Apache 2.0</terms>.",
         "twemoji": "The <twemoji>Twemoji</twemoji> emoji art is © <author>Twitter, Inc and other contributors</author> used under the terms of <terms>CC-BY 4.0</terms>."
     },
-    "For help with using %(brand)s, click <a>here</a>.": "For help with using %(brand)s, click <a>here</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.",
-    "Chat with %(brand)s Bot": "Chat with %(brand)s Bot",
-    "Help & About": "Help & About",
-    "Versions": "Versions",
-    "Homeserver is <code>%(homeserverUrl)s</code>": "Homeserver is <code>%(homeserverUrl)s</code>",
-    "Identity server is <code>%(identityServerUrl)s</code>": "Identity server is <code>%(identityServerUrl)s</code>",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Your access token gives full access to your account. Do not share it with anyone.",
-    "Clear cache and reload": "Clear cache and reload",
     "Keyboard": "Keyboard",
     "Upcoming features": "Upcoming features",
     "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.": "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.",

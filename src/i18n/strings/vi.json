@@ -1098,16 +1098,7 @@
     "Something went wrong. Please try again or view your console for hints.": "Đã xảy ra lỗi. Vui lòng thử lại hoặc xem bảng điều khiển của bạn để biết gợi ý.",
     "Error adding ignored user/server": "Lỗi khi thêm người dùng / máy chủ bị bỏ qua",
     "Ignored/Blocked": "Bị bỏ qua / bị chặn",
-    "Clear cache and reload": "Xóa bộ nhớ cache và tải lại",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Mã thông báo truy cập của bạn cấp quyền truy cập đầy đủ vào tài khoản của bạn. Không chia sẻ nó với bất kỳ ai.",
-    "Versions": "Phiên bản",
-    "Help & About": "Trợ giúp & Giới thiệu",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Để báo cáo sự cố bảo mật liên quan đến Matrix, vui lòng đọc Chính sách tiết lộ bảo mật của Matrix.org <a>Security Disclosure Policy</a>.",
-    "Chat with %(brand)s Bot": "Trò chuyện với Bot %(brand)s",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Để được trợ giúp về cách sử dụng %(brand)s, hãy nhấp vào đây <a>here</a> hoặc bắt đầu trò chuyện với bot của chúng tôi bằng nút bên dưới.",
-    "For help with using %(brand)s, click <a>here</a>.": "Để được trợ giúp về cách sử dụng %(brand)s, hãy nhấp vào đây <a>here</a>.",
-    "Olm version:": "Phiên bản Olm:",
-    "%(brand)s version:": "Phiên bản %(brand)s:",
     "Discovery": "Khám phá",
     "Deactivate account": "Vô hiệu hoá tài khoản",
     "Deactivate Account": "Hủy kích hoạt Tài khoản",
@@ -2220,7 +2211,6 @@
     "Share your activity and status with others.": "Chia sẻ hoạt động và trạng thái với người khác.",
     "Early previews": "Thử trước tính năng mới",
     "Upcoming features": "Tính năng sắp tới",
-    "Homeserver is <code>%(homeserverUrl)s</code>": "Máy chủ nhà là <code>%(homeserverUrl)s</code>",
     "Deactivating your account is a permanent action — be careful!": "Vô hiệu hóa tài khoản của bạn là vĩnh viễn — hãy cẩn trọng!",
     "Spell check": "Kiểm tra chính tả",
     "Manage account": "Quản lý tài khoản",
@@ -2326,7 +2316,6 @@
     "Verify Session": "Xác thực phiên",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Thông tin tài khoản bạn được quản lý riêng ở <code>%(hostname)s</code>.",
     "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Space là một cách mới để nhóm các phòng và mọi người. Loại space nào bạn muốn tạo? Bạn có thể thay đổi sau.",
-    "Identity server is <code>%(identityServerUrl)s</code>": "Máy chủ định danh là <code>%(identityServerUrl)s</code>",
     "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Để có bảo mật và quyền riêng tư tốt nhất, nên dùng các phần mềm máy khách Matrix có hỗ trợ mã hóa.",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Nếu bạn không tìm được phòng bạn muốn, yêu cầu lời mời hay tạo phòng mới.",
     "Fetching keys from server…": "Đang lấy các khóa từ máy chủ…",
@@ -3808,5 +3797,20 @@
         "report_entire_room": "Báo cáo toàn bộ phòng",
         "report_content_to_homeserver": "Báo cáo Nội dung cho Quản trị viên Máy chủ Trang chủ của Bạn",
         "description": "Báo cáo thông báo này sẽ gửi 'ID sự kiện' duy nhất của nó đến quản trị viên của máy chủ của bạn. Nếu tin nhắn trong phòng này được mã hóa, quản trị viên máy chủ của bạn sẽ không thể đọc nội dung tin nhắn hoặc xem bất kỳ tệp hoặc hình ảnh nào."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "Phiên bản %(brand)s:",
+            "olm_version": "Phiên bản Olm:",
+            "help_link": "Để được trợ giúp về cách sử dụng %(brand)s, hãy nhấp vào đây <a>here</a>.",
+            "help_link_chat_bot": "Để được trợ giúp về cách sử dụng %(brand)s, hãy nhấp vào đây <a>here</a> hoặc bắt đầu trò chuyện với bot của chúng tôi bằng nút bên dưới.",
+            "chat_bot": "Trò chuyện với Bot %(brand)s",
+            "title": "Trợ giúp & Giới thiệu",
+            "versions": "Phiên bản",
+            "homeserver": "Máy chủ nhà là <code>%(homeserverUrl)s</code>",
+            "identity_server": "Máy chủ định danh là <code>%(identityServerUrl)s</code>",
+            "access_token_detail": "Mã thông báo truy cập của bạn cấp quyền truy cập đầy đủ vào tài khoản của bạn. Không chia sẻ nó với bất kỳ ai.",
+            "clear_cache_reload": "Xóa bộ nhớ cache và tải lại"
+        }
     }
 }

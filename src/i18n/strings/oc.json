@@ -82,7 +82,6 @@
     "Profile": "Perfil",
     "Account": "Compte",
     "General": "General",
-    "Versions": "Versions",
     "Composer": "Compositor",
     "Unignore": "Ignorar pas",
     "Security & Privacy": "Seguretat e vida privada",
@@ -349,5 +348,10 @@
         "sort_by_alphabet": "A-Z",
         "sublist_options": "Opcions de lista",
         "show_less": "Ne veire mens"
+    },
+    "setting": {
+        "help_about": {
+            "versions": "Versions"
+        }
     }
 }

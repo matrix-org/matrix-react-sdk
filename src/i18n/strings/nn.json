@@ -291,7 +291,6 @@
     "Audio Output": "Ljodavspeling",
     "Email": "Epost",
     "Account": "Brukar",
-    "%(brand)s version:": "%(brand)s versjon:",
     "The email address linked to your account must be entered.": "Du må skriva epostadressa som er tilknytta brukaren din inn.",
     "A new password must be entered.": "Du må skriva eit nytt passord inn.",
     "New passwords must match each other.": "Dei nye passorda må vera like.",
@@ -414,7 +413,6 @@
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Å bruka ein identitetstenar er frivillig. Om du vel å ikkje bruka dette, vil ikkje brukaren din bli oppdaga av andre brukarar, og du kan ikkje invitera andre med e-post eller telefonnummer.",
     "Email addresses": "E-postadresser",
     "Phone numbers": "Telefonnummer",
-    "Help & About": "Hjelp og om",
     "Accept all %(invitedRooms)s invites": "Aksepter alle invitasjonar frå %(invitedRooms)s",
     "Security & Privacy": "Tryggleik og personvern",
     "Error changing power level requirement": "Feil under endring av krav for tilgangsnivå",
@@ -511,9 +509,6 @@
     "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
     "Manually verify all remote sessions": "Manuelt verifiser alle eksterne økter",
     "My Ban List": "Mi blokkeringsliste",
-    "For help with using %(brand)s, click <a>here</a>.": "For hjelp med å bruka %(brand)s, klikk <a>her</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "For hjelp med å bruka %(brand)s, klikk <a>her</a>, eller start ein samtale med vår bot ved å bruke knappen under.",
-    "Clear cache and reload": "Tøm buffer og last inn på nytt",
     "Composer": "Teksteditor",
     "Upgrade this room to the recommended room version": "Oppgrader dette rommet til anbefalt romversjon",
     "Your theme": "Ditt tema",
@@ -588,7 +583,6 @@
     "Email Address": "E-postadresse",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Du bør <b>fjerne dine personlege data</b> frå identitetstenaren <idserver /> før du koplar frå. Dessverre er identitetstenaren <idserver /> utilgjengeleg og kan ikkje nåast akkurat no.",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Vi tilrår at du slettar personleg informasjon, som e-postadresser og telefonnummer frå identitetstenaren før du koplar frå.",
-    "Versions": "Versjonar",
     "The call was answered on another device.": "Samtalen vart svart på på ei anna eining.",
     "Norway": "Noreg",
     "Bahamas": "Bahamas",
@@ -1185,5 +1179,15 @@
     },
     "onboarding": {
         "explore_rooms": "Utforsk offentlege rom"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s versjon:",
+            "help_link": "For hjelp med å bruka %(brand)s, klikk <a>her</a>.",
+            "help_link_chat_bot": "For hjelp med å bruka %(brand)s, klikk <a>her</a>, eller start ein samtale med vår bot ved å bruke knappen under.",
+            "title": "Hjelp og om",
+            "versions": "Versjonar",
+            "clear_cache_reload": "Tøm buffer og last inn på nytt"
+        }
     }
 }

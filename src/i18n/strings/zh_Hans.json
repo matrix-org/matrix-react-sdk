@@ -33,7 +33,6 @@
     "Return to login screen": "返回登录页面",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s 没有通知发送权限 - 请检查你的浏览器设置",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s 没有通知发送权限 - 请重试",
-    "%(brand)s version:": "%(brand)s 版本：",
     "Room %(roomId)s not visible": "房间%(roomId)s不可见",
     "Rooms": "房间",
     "Search failed": "搜索失败",
@@ -479,11 +478,6 @@
     "Language and region": "语言与地区",
     "Account management": "账户管理",
     "General": "通用",
-    "For help with using %(brand)s, click <a>here</a>.": "关于 %(brand)s 的<a>使用说明</a>。",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "关于 %(brand)s 的使用说明，请点击<a>这里</a>或者通过下方按钮同我们的机器人聊聊。",
-    "Chat with %(brand)s Bot": "与 %(brand)s 机器人聊天",
-    "Help & About": "帮助及关于",
-    "Versions": "版本",
     "Composer": "编辑器",
     "Room list": "房间列表",
     "Autocomplete delay (ms)": "自动完成延迟（毫秒）",
@@ -697,7 +691,6 @@
     "Custom font size can only be between %(min)s pt and %(max)s pt": "自定义字体大小只能介于 %(min)s pt 和 %(max)s pt 之间",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "同意身份服务器（%(serverName)s）的服务协议以允许自己被通过邮件地址或电话号码发现。",
     "Discovery": "发现",
-    "Clear cache and reload": "清理缓存并重载",
     "Ignored/Blocked": "已忽略/已屏蔽",
     "Error adding ignored user/server": "添加已忽略的用户/服务器时出现错误",
     "Error subscribing to list": "订阅列表时出现错误",
@@ -1675,7 +1668,6 @@
     "Only the two of you are in this conversation, unless either of you invites anyone to join.": "除非你们其中一个邀请了别人加入，否则将仅有你们两个人在此对话中。",
     "Failed to send": "发送失败",
     "You have no ignored users.": "你没有设置忽略用户。",
-    "Your access token gives full access to your account. Do not share it with anyone.": "你的访问令牌可以完全访问你的账户。不要将其与任何人分享。",
     "Message search initialisation failed": "消息搜索初始化失败",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
         "one": "使用%(size)s存储%(rooms)s个房间的消息。在本地安全地缓存已加密的消息以使其出现在搜索结果中。",
@@ -1803,7 +1795,6 @@
     "Code blocks": "代码块",
     "Displaying time": "显示的时间戳",
     "Keyboard shortcuts": "键盘快捷键",
-    "Olm version:": "Olm 版本：",
     "There was an error loading your notification settings.": "加载你的通知设置时出错。",
     "Mentions & keywords": "提及&关键词",
     "Global": "全局",
@@ -3692,5 +3683,18 @@
         "report_entire_room": "报告整个房间",
         "report_content_to_homeserver": "向你的家服务器管理员举报内容",
         "description": "举报此消息会将其唯一的“事件ID”发送给你的家服务器的管理员。如果此房间中的消息是加密的，则你的家服务器管理员将无法阅读消息文本，也无法查看任何文件或图片。"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s 版本：",
+            "olm_version": "Olm 版本：",
+            "help_link": "关于 %(brand)s 的<a>使用说明</a>。",
+            "help_link_chat_bot": "关于 %(brand)s 的使用说明，请点击<a>这里</a>或者通过下方按钮同我们的机器人聊聊。",
+            "chat_bot": "与 %(brand)s 机器人聊天",
+            "title": "帮助及关于",
+            "versions": "版本",
+            "access_token_detail": "你的访问令牌可以完全访问你的账户。不要将其与任何人分享。",
+            "clear_cache_reload": "清理缓存并重载"
+        }
     }
 }

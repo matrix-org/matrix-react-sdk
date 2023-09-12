@@ -109,7 +109,6 @@
     "Reject invitation": "Отклонить приглашение",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "У %(brand)s нет разрешения на отправку уведомлений — проверьте настройки браузера",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s не получил разрешение на отправку уведомлений: пожалуйста, попробуйте снова",
-    "%(brand)s version:": "Версия %(brand)s:",
     "Room %(roomId)s not visible": "Комната %(roomId)s невидима",
     "Rooms": "Комнаты",
     "Search failed": "Поиск не удался",
@@ -389,9 +388,6 @@
     "Phone numbers": "Телефонные номера",
     "Language and region": "Язык и регион",
     "Account management": "Управление учётной записью",
-    "Chat with %(brand)s Bot": "Чат с ботом %(brand)s",
-    "Help & About": "Помощь и о программе",
-    "Versions": "Версии",
     "Room list": "Список комнат",
     "Autocomplete delay (ms)": "Задержка автодополнения (мс)",
     "Roles & Permissions": "Роли и права",
@@ -510,8 +506,6 @@
     "Accept all %(invitedRooms)s invites": "Принять все приглашения (%(invitedRooms)s)",
     "Missing media permissions, click the button below to request.": "Отсутствуют разрешения для доступа к камере/микрофону. Нажмите кнопку ниже, чтобы запросить их.",
     "Request media permissions": "Запросить доступ к медиа устройству",
-    "For help with using %(brand)s, click <a>here</a>.": "Для получения помощи по использованию %(brand)s, нажмите <a>здесь</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Для получения помощи по использованию %(brand)s, нажмите <a>здесь</a> или начните чат с нашим ботом с помощью кнопки ниже.",
     "Enable encryption?": "Разрешить шифрование?",
     "Error updating main address": "Ошибка обновления основного адреса",
     "Incompatible local cache": "Несовместимый локальный кэш",
@@ -707,7 +701,6 @@
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Подтвердите условия предоставления услуг сервера идентификации (%(serverName)s), чтобы вас можно было обнаружить по адресу электронной почты или номеру телефона.",
     "Discovery": "Обнаружение",
     "Deactivate account": "Деактивировать учётную запись",
-    "Clear cache and reload": "Очистить кэш и перезагрузить",
     "Always show the window menu bar": "Всегда показывать строку меню",
     "Read Marker lifetime (ms)": "Задержка прочтения сообщения (мс)",
     "Read Marker off-screen lifetime (ms)": "Задержка прочтения сообщения при отсутствии активности (мс)",
@@ -1859,7 +1852,6 @@
     "Code blocks": "Блоки кода",
     "Displaying time": "Отображение времени",
     "Keyboard shortcuts": "Горячие клавиши",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Ваш токен доступа даёт полный доступ к вашей учётной записи. Не передавайте его никому.",
     "There was an error loading your notification settings.": "Произошла ошибка при загрузке настроек уведомлений.",
     "Mentions & keywords": "Упоминания и ключевые слова",
     "Global": "Глобально",
@@ -1893,7 +1885,6 @@
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Мы отправили остальных, но нижеперечисленные люди не могут быть приглашены в <RoomName/>",
     "Transfer Failed": "Перевод не удался",
     "Unable to transfer call": "Не удалось перевести звонок",
-    "Olm version:": "Версия Olm:",
     "Delete avatar": "Удалить аватар",
     "Rooms and spaces": "Комнаты и пространства",
     "Results": "Результаты",
@@ -3792,5 +3783,18 @@
         "report_entire_room": "Сообщить обо всей комнате",
         "report_content_to_homeserver": "Сообщите о содержании своему администратору домашнего сервера",
         "description": "Отчет о данном сообщении отправит свой уникальный 'event ID' администратору вашего домашнего сервера. Если сообщения в этой комнате зашифрованы, администратор вашего домашнего сервера не сможет прочитать текст сообщения или просмотреть какие-либо файлы или изображения."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "Версия %(brand)s:",
+            "olm_version": "Версия Olm:",
+            "help_link": "Для получения помощи по использованию %(brand)s, нажмите <a>здесь</a>.",
+            "help_link_chat_bot": "Для получения помощи по использованию %(brand)s, нажмите <a>здесь</a> или начните чат с нашим ботом с помощью кнопки ниже.",
+            "chat_bot": "Чат с ботом %(brand)s",
+            "title": "Помощь и о программе",
+            "versions": "Версии",
+            "access_token_detail": "Ваш токен доступа даёт полный доступ к вашей учётной записи. Не передавайте его никому.",
+            "clear_cache_reload": "Очистить кэш и перезагрузить"
+        }
     }
 }

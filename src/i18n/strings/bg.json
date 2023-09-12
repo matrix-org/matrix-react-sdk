@@ -236,7 +236,6 @@
     "Email": "Имейл",
     "Profile": "Профил",
     "Account": "Акаунт",
-    "%(brand)s version:": "Версия на %(brand)s:",
     "The email address linked to your account must be entered.": "Имейл адресът, свързан с профила Ви, трябва да бъде въведен.",
     "A new password must be entered.": "Трябва да бъде въведена нова парола.",
     "New passwords must match each other.": "Новите пароли трябва да съвпадат една с друга.",
@@ -439,11 +438,6 @@
     "Phone numbers": "Телефонни номера",
     "Language and region": "Език и регион",
     "Account management": "Управление на акаунта",
-    "For help with using %(brand)s, click <a>here</a>.": "За помощ при използването на %(brand)s, кликнете <a>тук</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "За помощ при използването на %(brand)s, кликнете <a>тук</a> или започнете чат с бота ни използвайки бутона по-долу.",
-    "Chat with %(brand)s Bot": "Чати с %(brand)s Bot",
-    "Help & About": "Помощ и относно",
-    "Versions": "Версии",
     "Composer": "Въвеждане на съобщения",
     "Room list": "Списък със стаи",
     "Autocomplete delay (ms)": "Забавяне преди подсказки (милисекунди)",
@@ -758,7 +752,6 @@
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "проверите браузър добавките за всичко, което може да блокира връзката със сървъра за самоличност (например Privacy Badger)",
     "contact the administrators of identity server <idserver />": "се свържете с администратора на сървъра за самоличност <idserver />",
     "wait and try again later": "изчакате и опитате пак",
-    "Clear cache and reload": "Изчисти кеша и презареди",
     "Your email address hasn't been verified yet": "Имейл адресът ви все още не е потвърден",
     "Click the link in the email you received to verify and then click continue again.": "Кликнете на връзката получена по имейл за да потвърдите, а след това натиснете продължи отново.",
     "Room %(name)s": "Стая %(name)s",
@@ -2238,5 +2231,16 @@
         "send_dm": "Изпрати директно съобщение",
         "explore_rooms": "Разгледай публичните стаи",
         "create_room": "Създай групов чат"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "Версия на %(brand)s:",
+            "help_link": "За помощ при използването на %(brand)s, кликнете <a>тук</a>.",
+            "help_link_chat_bot": "За помощ при използването на %(brand)s, кликнете <a>тук</a> или започнете чат с бота ни използвайки бутона по-долу.",
+            "chat_bot": "Чати с %(brand)s Bot",
+            "title": "Помощ и относно",
+            "versions": "Версии",
+            "clear_cache_reload": "Изчисти кеша и презареди"
+        }
     }
 }

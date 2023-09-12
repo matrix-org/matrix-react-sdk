@@ -239,7 +239,6 @@
     "Notifications": "Обавештења",
     "Profile": "Профил",
     "Account": "Налог",
-    "%(brand)s version:": "%(brand)s издање:",
     "The email address linked to your account must be entered.": "Морате унети мејл адресу која је везана за ваш налог.",
     "A new password must be entered.": "Морате унети нову лозинку.",
     "New passwords must match each other.": "Нове лозинке се морају подударати.",
@@ -404,7 +403,6 @@
     "Light bulb": "сијалица",
     "Hey you. You're the best!": "Хеј! Само напред!",
     "Custom font size can only be between %(min)s pt and %(max)s pt": "Прилагођена величина фонта може бити између %(min)s и %(max)s тачака",
-    "Help & About": "Помоћ и подаци о програму",
     "Voice & Video": "Глас и видео",
     "Unable to revoke sharing for email address": "Не могу да опозовем дељење ове мејл адресе",
     "Unable to revoke sharing for phone number": "Не могу да опозовем дељење броја телефона",
@@ -916,7 +914,6 @@
     "Who are you working with?": "Са ким радите?",
     "This room is public": "Ова соба је јавна",
     "Browse": "Прегледајте",
-    "Versions": "Верзије",
     "User rules": "Корисничка правила",
     "Use the <a>Desktop app</a> to see all encrypted files": "Користи <a> десктоп апликација </a> да видиш све шифроване датотеке",
     "This widget may use cookies.": "Овај виџет може користити колачиће.",
@@ -1435,5 +1432,12 @@
     },
     "onboarding": {
         "send_dm": "Пошаљи директну поруку"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s издање:",
+            "title": "Помоћ и подаци о програму",
+            "versions": "Верзије"
+        }
     }
 }

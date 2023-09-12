@@ -232,7 +232,6 @@
     "Notifications": "Sciigoj",
     "Profile": "Profilo",
     "Account": "Konto",
-    "%(brand)s version:": "versio de %(brand)s:",
     "The email address linked to your account must be entered.": "Vi devas enigi retpoŝtadreson ligitan al via konto.",
     "A new password must be entered.": "Vi devas enigi novan pasvorton.",
     "New passwords must match each other.": "Novaj pasvortoj devas akordi.",
@@ -400,11 +399,6 @@
     "Display Name": "Vidiga nomo",
     "Email addresses": "Retpoŝtadresoj",
     "Phone numbers": "Telefonnumeroj",
-    "For help with using %(brand)s, click <a>here</a>.": "Por helpo pri uzado de %(brand)s, klaku <a>ĉi tien</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Por helpo pri uzado de %(brand)s, klaku <a>ĉi tien</a> aŭ komencu babilon kun nia roboto per la butono sube.",
-    "Chat with %(brand)s Bot": "Babilu kun la roboto %(brand)s Bot",
-    "Help & About": "Helpo kaj Prio",
-    "Versions": "Versioj",
     "Composer": "Komponilo",
     "Room list": "Ĉambrolisto",
     "Ignored users": "Malatentaj uzantoj",
@@ -733,7 +727,6 @@
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "kontrolu kromprogramojn de via foliumilo je ĉio, kio povus malhelpi konekton al la identiga servilo (ekzemple « Privacy Badger »)",
     "contact the administrators of identity server <idserver />": "kontaktu la administrantojn de la identiga servilo <idserver />",
     "wait and try again later": "atendu, kaj reprovu poste",
-    "Clear cache and reload": "Vakigi kaŝmemoron kaj relegi",
     "Read Marker lifetime (ms)": "Vivodaŭro de legomarko (ms)",
     "Read Marker off-screen lifetime (ms)": "Vivodaŭro de eksterekrana legomarko (ms)",
     "Unable to revoke sharing for email address": "Ne povas senvalidigi havigadon je retpoŝtadreso",
@@ -1687,7 +1680,6 @@
     "unknown person": "nekonata persono",
     "%(deviceId)s from %(ip)s": "%(deviceId)s de %(ip)s",
     "Review to ensure your account is safe": "Kontrolu por certigi sekurecon de via konto",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Via alirpeco donas plenan aliron al via konto. Donu ĝin al neniu.",
     "We couldn't create your DM.": "Ni ne povis krei vian individuan ĉambron.",
     "You may contact me if you have any follow up questions": "Vi povas min kontakti okaze de pliaj demandoj",
     "To leave the beta, visit your settings.": "Por foriri de la prova versio, iru al viaj agordoj.",
@@ -1809,7 +1801,6 @@
     "Images, GIFs and videos": "Bildoj, GIF-bildoj kaj filmoj",
     "Code blocks": "Kodujoj",
     "Keyboard shortcuts": "Ŝparklavoj",
-    "Olm version:": "Versio de Olm:",
     "Identity server URL must be HTTPS": "URL de identiga servilo devas esti je HTTPS",
     "There was an error loading your notification settings.": "Eraris enlegado de viaj agordoj pri sciigoj.",
     "Mentions & keywords": "Mencioj kaj ĉefvortoj",
@@ -3081,5 +3072,18 @@
         "send_dm": "Sendi rektan mesaĝon",
         "explore_rooms": "Esplori publikajn ĉambrojn",
         "create_room": "Krei grupan babilon"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "versio de %(brand)s:",
+            "olm_version": "Versio de Olm:",
+            "help_link": "Por helpo pri uzado de %(brand)s, klaku <a>ĉi tien</a>.",
+            "help_link_chat_bot": "Por helpo pri uzado de %(brand)s, klaku <a>ĉi tien</a> aŭ komencu babilon kun nia roboto per la butono sube.",
+            "chat_bot": "Babilu kun la roboto %(brand)s Bot",
+            "title": "Helpo kaj Prio",
+            "versions": "Versioj",
+            "access_token_detail": "Via alirpeco donas plenan aliron al via konto. Donu ĝin al neniu.",
+            "clear_cache_reload": "Vakigi kaŝmemoron kaj relegi"
+        }
     }
 }

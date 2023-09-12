@@ -353,14 +353,7 @@
     "Something went wrong. Please try again or view your console for hints.": "هناك خطأ ما. يرجى المحاولة مرة أخرى أو عرض وحدة التحكم (console) للتلميحات.",
     "Error adding ignored user/server": "تعذر إضافة مستخدم/خادم مُتجاهَل",
     "Ignored/Blocked": "المُتجاهل/المحظور",
-    "Clear cache and reload": "محو مخزن الجيب وإعادة التحميل",
-    "%(brand)s version:": "إصدار %(brand)s:",
-    "Versions": "الإصدارات",
-    "Help & About": "المساعدة وعن البرنامج",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "للإبلاغ عن مشكلة أمنية متعلقة بMatrix ، يرجى قراءة <a>سياسة الإفصاح الأمني</a> في Matrix.org.",
-    "Chat with %(brand)s Bot": "تخاطب مع الروبوت الخاص ب%(brand)s",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "للمساعدة في استخدام %(brand)s ، انقر <a> هنا </a> أو ابدأ محادثة مع برنامج الروبوت الخاص بنا باستخدام الزر أدناه.",
-    "For help with using %(brand)s, click <a>here</a>.": "للمساعدة في استخدام %(brand)s انقر <a>هنا</a>.",
     "General": "عام",
     "Discovery": "الاكتشاف",
     "Deactivate account": "تعطيل الحساب",
@@ -1441,5 +1434,16 @@
             "other": "%(count)s من الرسائل غير مقروءة."
         },
         "unread_messages": "رسائل غير المقروءة."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "إصدار %(brand)s:",
+            "help_link": "للمساعدة في استخدام %(brand)s انقر <a>هنا</a>.",
+            "help_link_chat_bot": "للمساعدة في استخدام %(brand)s ، انقر <a> هنا </a> أو ابدأ محادثة مع برنامج الروبوت الخاص بنا باستخدام الزر أدناه.",
+            "chat_bot": "تخاطب مع الروبوت الخاص ب%(brand)s",
+            "title": "المساعدة وعن البرنامج",
+            "versions": "الإصدارات",
+            "clear_cache_reload": "محو مخزن الجيب وإعادة التحميل"
+        }
     }
 }

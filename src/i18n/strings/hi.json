@@ -260,8 +260,6 @@
     "Account management": "खाता प्रबंधन",
     "Deactivate Account": "खाता निष्क्रिय करें",
     "Check for update": "अपडेट के लिये जांचें",
-    "Help & About": "सहायता और के बारे में",
-    "Versions": "संस्करण",
     "Notifications": "सूचनाएं",
     "Scissors": "कैंची",
     "Room list": "कक्ष सूचि",
@@ -693,5 +691,11 @@
     },
     "auth": {
         "sso": "केवल हस्ताक्षर के ऊपर"
+    },
+    "setting": {
+        "help_about": {
+            "title": "सहायता और के बारे में",
+            "versions": "संस्करण"
+        }
     }
 }

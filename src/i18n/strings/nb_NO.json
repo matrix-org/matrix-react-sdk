@@ -83,7 +83,6 @@
     "Missing room_id in request": "Manglende room_id i forespørselen",
     "Room %(roomId)s not visible": "Rom %(roomId)s er ikke synlig",
     "Missing user_id in request": "Manglende user_id i forespørselen",
-    "Chat with %(brand)s Bot": "Chat med %(brand)s Bot",
     "Call failed due to misconfigured server": "Oppringingen feilet på grunn av feil-konfigurert tjener",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Vennligst be administratoren av din hjemmetjener (<code>%(homeserverDomain)s</code>) til å konfigurere en TURN tjener slik at samtaler vil fungere best mulig.",
     "The file '%(fileName)s' failed to upload.": "Filen '%(fileName)s' kunne ikke lastes opp.",
@@ -141,7 +140,6 @@
     "Account": "Konto",
     "Language and region": "Språk og område",
     "General": "Generelt",
-    "Versions": "Versjoner",
     "None": "Ingen",
     "Composer": "Komposør",
     "Security & Privacy": "Sikkerhet og personvern",
@@ -244,8 +242,6 @@
     "Discovery": "Oppdagelse",
     "Deactivate account": "Deaktiver kontoen",
     "Check for update": "Let etter oppdateringer",
-    "Help & About": "Hjelp/Om",
-    "%(brand)s version:": "'%(brand)s'-versjon:",
     "Ignored/Blocked": "Ignorert/Blokkert",
     "Server rules": "Tjenerregler",
     "User rules": "Brukerregler",
@@ -384,8 +380,6 @@
     "Start using Key Backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Hvis du ikke ønsker å bruke <server /> til å oppdage og bli oppdaget av eksisterende kontakter som du kjenner, skriv inn en annen identitetstjener nedenfor.",
     "Enter a new identity server": "Skriv inn en ny identitetstjener",
-    "For help with using %(brand)s, click <a>here</a>.": "For å få hjelp til å bruke %(brand)s, klikk <a>her</a>.",
-    "Clear cache and reload": "Tøm mellomlageret og last inn siden på nytt",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Import E2E room keys": "Importer E2E-romnøkler",
     "Privileged Users": "Priviligerte brukere",
@@ -1688,5 +1682,15 @@
         "send_dm": "Send en direktemelding",
         "explore_rooms": "Utforsk offentlige rom",
         "create_room": "Opprett en gruppechat"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "'%(brand)s'-versjon:",
+            "help_link": "For å få hjelp til å bruke %(brand)s, klikk <a>her</a>.",
+            "chat_bot": "Chat med %(brand)s Bot",
+            "title": "Hjelp/Om",
+            "versions": "Versjoner",
+            "clear_cache_reload": "Tøm mellomlageret og last inn siden på nytt"
+        }
     }
 }

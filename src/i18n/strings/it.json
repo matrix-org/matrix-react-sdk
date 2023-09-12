@@ -235,7 +235,6 @@
     "No media permissions": "Nessuna autorizzazione per i media",
     "Email": "Email",
     "Profile": "Profilo",
-    "%(brand)s version:": "versione %(brand)s:",
     "The email address linked to your account must be entered.": "Deve essere inserito l'indirizzo email collegato al tuo account.",
     "A new password must be entered.": "Deve essere inserita una nuova password.",
     "New passwords must match each other.": "Le nuove password devono coincidere.",
@@ -506,11 +505,6 @@
     "Language and region": "Lingua e regione",
     "Account management": "Gestione account",
     "General": "Generale",
-    "For help with using %(brand)s, click <a>here</a>.": "Per aiuto su come usare %(brand)s, clicca <a>qui</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Per aiuto su come usare %(brand)s, clicca <a>qui</a> o inizia una chat con il nostro bot usando il pulsante sotto.",
-    "Chat with %(brand)s Bot": "Chatta con %(brand)s Bot",
-    "Help & About": "Aiuto e informazioni",
-    "Versions": "Versioni",
     "Composer": "Compositore",
     "Room list": "Elenco stanze",
     "Autocomplete delay (ms)": "Ritardo autocompletamento (ms)",
@@ -748,7 +742,6 @@
     "Hide advanced": "Nascondi avanzate",
     "Show advanced": "Mostra avanzate",
     "Explore rooms": "Esplora stanze",
-    "Clear cache and reload": "Svuota la cache e ricarica",
     "Show image": "Mostra immagine",
     "To continue you need to accept the terms of this service.": "Per continuare devi accettare le condizioni di servizio.",
     "Document": "Documento",
@@ -1729,7 +1722,6 @@
     "No microphone found": "Nessun microfono trovato",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Non abbiamo potuto accedere al tuo microfono. Controlla le impostazioni del browser e riprova.",
     "Unable to access your microphone": "Impossibile accedere al microfono",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Il tuo token di accesso ti dà l'accesso al tuo account. Non condividerlo con nessuno.",
     "Please enter a name for the space": "Inserisci un nome per lo spazio",
     "Connecting": "In connessione",
     "Search names and descriptions": "Cerca nomi e descrizioni",
@@ -1889,7 +1881,6 @@
     "Call declined": "Chiamata rifiutata",
     "Stop recording": "Ferma la registrazione",
     "Send voice message": "Invia messaggio vocale",
-    "Olm version:": "Versione Olm:",
     "More": "Altro",
     "Show sidebar": "Mostra barra laterale",
     "Hide sidebar": "Nascondi barra laterale",
@@ -2692,8 +2683,6 @@
     "Answered elsewhere": "Risposto altrove",
     "The sender has blocked you from receiving this message": "Il mittente ti ha bloccato dalla ricezione di questo messaggio",
     "Room directory": "Elenco delle stanze",
-    "Identity server is <code>%(identityServerUrl)s</code>": "Il server d'identità è <code>%(identityServerUrl)s</code>",
-    "Homeserver is <code>%(homeserverUrl)s</code>": "L'homeserver è <code>%(homeserverUrl)s</code>",
     "If you know a room address, try joining through that instead.": "Se conosci un indirizzo della stanza, prova ad entrare tramite quello.",
     "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Hai provato ad entrare usando un ID stanza senza fornire una lista di server attraverso cui entrare. Gli ID stanza sono identificativi interni e non possono essere usati per entrare in una stanza senza informazioni aggiuntive.",
     "Yes, it was me": "Sì, ero io",
@@ -4110,5 +4099,20 @@
         "report_entire_room": "Segnala l'intera stanza",
         "report_content_to_homeserver": "Segnala il contenuto all'amministratore dell'homeserver",
         "description": "La segnalazione di questo messaggio invierà il suo 'ID evento' univoco all'amministratore del tuo homeserver. Se i messaggi della stanza sono cifrati, l'amministratore non potrà leggere il messaggio o vedere file e immagini."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "versione %(brand)s:",
+            "olm_version": "Versione Olm:",
+            "help_link": "Per aiuto su come usare %(brand)s, clicca <a>qui</a>.",
+            "help_link_chat_bot": "Per aiuto su come usare %(brand)s, clicca <a>qui</a> o inizia una chat con il nostro bot usando il pulsante sotto.",
+            "chat_bot": "Chatta con %(brand)s Bot",
+            "title": "Aiuto e informazioni",
+            "versions": "Versioni",
+            "homeserver": "L'homeserver è <code>%(homeserverUrl)s</code>",
+            "identity_server": "Il server d'identità è <code>%(identityServerUrl)s</code>",
+            "access_token_detail": "Il tuo token di accesso ti dà l'accesso al tuo account. Non condividerlo con nessuno.",
+            "clear_cache_reload": "Svuota la cache e ricarica"
+        }
     }
 }

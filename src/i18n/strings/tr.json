@@ -91,7 +91,6 @@
     "Return to login screen": "Giriş ekranına dön",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s size bildirim gönderme iznine sahip değil - lütfen tarayıcı ayarlarınızı kontrol edin",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s'a bildirim gönderme izni verilmedi - lütfen tekrar deneyin",
-    "%(brand)s version:": "%(brand)s versiyon:",
     "Room %(roomId)s not visible": "%(roomId)s odası görünür değil",
     "%(roomName)s does not exist.": "%(roomName)s mevcut değil.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s şu anda erişilebilir değil.",
@@ -468,8 +467,6 @@
     "General": "Genel",
     "Discovery": "Keşfet",
     "Check for update": "Güncelleme kontrolü",
-    "Help & About": "Yardım & Hakkında",
-    "Versions": "Sürümler",
     "Server rules": "Sunucu kuralları",
     "User rules": "Kullanıcı kuralları",
     "View rules": "Kuralları görüntüle",
@@ -577,8 +574,6 @@
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Kimlik sunucusu üzerinde hala <b>kişisel veri paylaşımı</b> yapıyorsunuz <idserver />.",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Kimlik sunucusundan bağlantıyı kesmeden önce telefon numaranızı ve e-posta adreslerinizi silmenizi tavsiye ederiz.",
     "Deactivate account": "Hesabı pasifleştir",
-    "For help with using %(brand)s, click <a>here</a>.": "%(brand)s kullanarak yardım etmek için, <a>buraya</a> tıklayın.",
-    "Chat with %(brand)s Bot": "%(brand)s Bot ile Sohbet Et",
     "Something went wrong. Please try again or view your console for hints.": "Bir şeyler hatalı gitti. Lütfen yeniden deneyin veya ipuçları için konsolunuza bakın.",
     "Please try again or view your console for hints.": "Lütfen yeniden deneyin veya ipuçları için konsolunuza bakın.",
     "None": "Yok",
@@ -641,7 +636,6 @@
     "Names and surnames by themselves are easy to guess": "Adlar ve soyadlar kendi kendilerine tahmin için kolaydır",
     "Mirror local video feed": "Yerel video beslemesi yansısı",
     "Missing media permissions, click the button below to request.": "Medya izinleri eksik, alttaki butona tıkayarak talep edin.",
-    "Clear cache and reload": "Belleği temizle ve yeniden yükle",
     "Ignored/Blocked": "Yoksayılan/Bloklanan",
     "Error adding ignored user/server": "Yoksayılan kullanıcı/sunucu eklenirken hata",
     "Error subscribing to list": "Listeye abone olunurken hata",
@@ -1349,7 +1343,6 @@
     "Ignoring people is done through ban lists which contain rules for who to ban. Subscribing to a ban list means the users/servers blocked by that list will be hidden from you.": "Kullanıcıları engelleme, hangi kullanıcıları engelleyeceğini belirleyen kurallar bulunduran bir engelleme listesi kullanılarak gerçekleşir. Bir engelleme listesine abone olmak, o listeden engellenen kullanıcıların veya sunucuların sizden gizlenmesi demektir.",
     "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "Görmezden gelmek istediğiniz kullanıcıları ya da sunucuları buraya ekleyin. %(brand)s uygulamasının herhangi bir karakteri eşleştirmesini istiyorsanız yıldız imi kullanın. Örneğin <code>@fobar:*</code>, \"foobar\" adlı kullanıcıların hepsini bütün sunucularda görmezden gelir.",
     "Please verify the room ID or address and try again.": "Lütfen oda kimliğini ya da adresini doğrulayıp yeniden deneyin.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "%(brand)s uygulamasına yardımcı olmak için <a>buraya</a> tıklayın ya da aşağıdaki tuşları kullanarak bot'umuzla sohbet edin.",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Başkaları tarafından e-posta adresi ya da telefon numarası ile bulunabilmek için %(serverName)s kimlik sunucusunun Kullanım Koşullarını kabul edin.",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Bir kimlik sunucusu kullanmak isteğe bağlıdır. Eğer bir tane kullanmak istemezseniz başkaları tarafından bulunamayabilir ve başkalarını e-posta adresi ya da telefon numarası ile davet edemeyebilirsiniz.",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Kimlik sunucunuz ile bağlantıyı keserseniz başkaları tarafından bulunamayabilir ve başkalarını e-posta adresi ya da telefon numarası ile davet edemeyebilirsiniz.",
@@ -2145,5 +2138,16 @@
         "send_dm": "Direkt mesaj gönderin",
         "explore_rooms": "Herkese açık odaları keşfet",
         "create_room": "Grup sohbeti başlat"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s versiyon:",
+            "help_link": "%(brand)s kullanarak yardım etmek için, <a>buraya</a> tıklayın.",
+            "help_link_chat_bot": "%(brand)s uygulamasına yardımcı olmak için <a>buraya</a> tıklayın ya da aşağıdaki tuşları kullanarak bot'umuzla sohbet edin.",
+            "chat_bot": "%(brand)s Bot ile Sohbet Et",
+            "title": "Yardım & Hakkında",
+            "versions": "Sürümler",
+            "clear_cache_reload": "Belleği temizle ve yeniden yükle"
+        }
     }
 }

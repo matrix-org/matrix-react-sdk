@@ -217,7 +217,6 @@
     "Notifications": "Oznámenia",
     "Profile": "Profil",
     "Account": "Účet",
-    "%(brand)s version:": "Verzia %(brand)s:",
     "The email address linked to your account must be entered.": "Musíte zadať emailovú adresu prepojenú s vašim účtom.",
     "A new password must be entered.": "Musíte zadať nové heslo.",
     "New passwords must match each other.": "Obe nové heslá musia byť zhodné.",
@@ -504,11 +503,6 @@
     "Language and region": "Jazyk a región",
     "Account management": "Správa účtu",
     "General": "Všeobecné",
-    "For help with using %(brand)s, click <a>here</a>.": "Pomoc pri používaní %(brand)s môžete získať kliknutím <a>sem</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Pomoc pri používaní aplikácie %(brand)s môžete získať kliknutím <a>sem</a>, alebo začnite konverzáciu s našim robotom pomocou tlačidla dole.",
-    "Chat with %(brand)s Bot": "Konverzácia s %(brand)s Bot",
-    "Help & About": "Pomocník a o programe",
-    "Versions": "Verzie",
     "Composer": "Písanie správ",
     "Room list": "Zoznam miestností",
     "Autocomplete delay (ms)": "Oneskorenie automatického dokončovania (ms)",
@@ -626,7 +620,6 @@
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Súhlaste s podmienkami používania servera totožností (%(serverName)s), aby ste mohli byť nájdení zadaním emailovej adresy alebo telefónneho čísla.",
     "Discovery": "Objavovanie",
     "Deactivate account": "Deaktivovať účet",
-    "Clear cache and reload": "Vymazať vyrovnávaciu pamäť a načítať znovu",
     "Ignored/Blocked": "Ignorovaní / Blokovaní",
     "Error adding ignored user/server": "Chyba pri pridávaní ignorovaného používateľa / servera",
     "Something went wrong. Please try again or view your console for hints.": "Niečo sa nepodarilo. Prosím, skúste znovu neskôr alebo si prečítajte ďalšie usmernenia zobrazením konzoly.",
@@ -1149,7 +1142,6 @@
     "Your public space": "Váš verejný priestor",
     "Share your public space": "Zdieľajte svoj verejný priestor",
     "Rooms and spaces": "Miestnosti a priestory",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Váš prístupový token poskytuje úplný prístup k vášmu účtu. S nikým ho nezdieľajte.",
     "You have no ignored users.": "Nemáte žiadnych ignorovaných používateľov.",
     "Some suggestions may be hidden for privacy.": "Niektoré návrhy môžu byť skryté kvôli ochrane súkromia.",
     "Cross-signing is ready for use.": "Krížové podpisovanie je pripravené na použitie.",
@@ -1254,7 +1246,6 @@
     "This version of %(brand)s does not support searching encrypted messages": "Táto verzia aplikácie %(brand)s nepodporuje vyhľadávanie zašifrovaných správ",
     "This version of %(brand)s does not support viewing some encrypted files": "Táto verzia aplikácie %(brand)s nepodporuje zobrazovanie niektorých zašifrovaných súborov",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Táto miestnosť používa verziu miestnosti <roomVersion />, ktorú tento domovský server označil ako <i>nestabilnú</i>.",
-    "Olm version:": "Olm verzia:",
     "Backup version:": "Verzia zálohy:",
     "New version of %(brand)s is available": "K dispozícii je nová verzia %(brand)s",
     "Role in <RoomName/>": "Rola v <RoomName/>",
@@ -2691,8 +2682,6 @@
     "Due to decryption errors, some votes may not be counted": "Z dôvodu chýb v dešifrovaní sa niektoré hlasy nemusia započítať",
     "The sender has blocked you from receiving this message": "Odosielateľ vám zablokoval príjem tejto správy",
     "Room directory": "Adresár miestností",
-    "Identity server is <code>%(identityServerUrl)s</code>": "Server identity je <code>%(identityServerUrl)s</code>",
-    "Homeserver is <code>%(homeserverUrl)s</code>": "Domovský server je <code>%(homeserverUrl)s</code>",
     "Yes, it was me": "Áno, bol som to ja",
     "Answered elsewhere": "Hovor prijatý inde",
     "If you know a room address, try joining through that instead.": "Ak poznáte adresu miestnosti, skúste sa pripojiť prostredníctvom nej.",
@@ -4105,5 +4094,20 @@
         "report_entire_room": "Nahlásiť celú miestnosť",
         "report_content_to_homeserver": "Nahlásenie obsahu správcovi domovského serveru",
         "description": "Nahlásenie tejto správy odošle jej jedinečné \"ID udalosti\" správcovi vášho domovského servera. Ak sú správy v tejto miestnosti zašifrované, správca domovského servera nebude môcť prečítať text správy ani zobraziť žiadne súbory alebo obrázky."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "Verzia %(brand)s:",
+            "olm_version": "Olm verzia:",
+            "help_link": "Pomoc pri používaní %(brand)s môžete získať kliknutím <a>sem</a>.",
+            "help_link_chat_bot": "Pomoc pri používaní aplikácie %(brand)s môžete získať kliknutím <a>sem</a>, alebo začnite konverzáciu s našim robotom pomocou tlačidla dole.",
+            "chat_bot": "Konverzácia s %(brand)s Bot",
+            "title": "Pomocník a o programe",
+            "versions": "Verzie",
+            "homeserver": "Domovský server je <code>%(homeserverUrl)s</code>",
+            "identity_server": "Server identity je <code>%(identityServerUrl)s</code>",
+            "access_token_detail": "Váš prístupový token poskytuje úplný prístup k vášmu účtu. S nikým ho nezdieľajte.",
+            "clear_cache_reload": "Vymazať vyrovnávaciu pamäť a načítať znovu"
+        }
     }
 }

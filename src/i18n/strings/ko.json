@@ -97,7 +97,6 @@
     "Return to login screen": "로그인 화면으로 돌아가기",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s은 알림을 보낼 권한을 가지고 있지 않습니다. 브라우저 설정을 확인해주세요",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s이 알림을 보낼 권한을 받지 못했습니다. 다시 해주세요",
-    "%(brand)s version:": "%(brand)s 웹 버전:",
     "Room %(roomId)s not visible": "방 %(roomId)s이(가) 보이지 않음",
     "%(roomName)s does not exist.": "%(roomName)s은 없는 방이에요.",
     "%(roomName)s is not accessible at this time.": "현재는 %(roomName)s에 들어갈 수 없습니다.",
@@ -496,11 +495,6 @@
     "General": "기본",
     "Discovery": "탐색",
     "Deactivate account": "계정 비활성화",
-    "For help with using %(brand)s, click <a>here</a>.": "%(brand)s 사용 중 도움이 필요하다면, <a>여기</a>를 클릭하세요.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "%(brand)s을 사용하다가 도움이 필요하다면, <a>여기</a>를 클릭하거나, 아래 버튼을 사용해 우리의 봇과 대화를 시작하세요.",
-    "Chat with %(brand)s Bot": "%(brand)s 봇과 대화",
-    "Help & About": "도움 & 정보",
-    "Versions": "버전",
     "Always show the window menu bar": "항상 윈도우 메뉴 막대에 보이기",
     "Composer": "작성기",
     "Room list": "방 목록",
@@ -756,7 +750,6 @@
     "Room Autocomplete": "방 자동 완성",
     "User Autocomplete": "사용자 자동 완성",
     "Show image": "이미지 보이기",
-    "Clear cache and reload": "캐시 지우기 및 새로고침",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "홈서버 설정에서 캡챠 공개 키가 없습니다. 홈서버 관리자에게 이것을 신고해주세요.",
     "Your email address hasn't been verified yet": "이메일 주소가 아직 확인되지 않았습니다",
     "Click the link in the email you received to verify and then click continue again.": "받은 이메일에 있는 링크를 클릭해서 확인한 후에 계속하기를 클릭하세요.",
@@ -1493,5 +1486,16 @@
         "send_dm": "다이렉트 메세지 보내기",
         "explore_rooms": "공개 방 살펴보기",
         "create_room": "그룹 대화 생성하기"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s 웹 버전:",
+            "help_link": "%(brand)s 사용 중 도움이 필요하다면, <a>여기</a>를 클릭하세요.",
+            "help_link_chat_bot": "%(brand)s을 사용하다가 도움이 필요하다면, <a>여기</a>를 클릭하거나, 아래 버튼을 사용해 우리의 봇과 대화를 시작하세요.",
+            "chat_bot": "%(brand)s 봇과 대화",
+            "title": "도움 & 정보",
+            "versions": "버전",
+            "clear_cache_reload": "캐시 지우기 및 새로고침"
+        }
     }
 }

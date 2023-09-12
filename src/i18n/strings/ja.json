@@ -331,7 +331,6 @@
     "Email": "電子メール",
     "Profile": "プロフィール",
     "Account": "アカウント",
-    "%(brand)s version:": "%(brand)sのバージョン：",
     "The email address linked to your account must be entered.": "あなたのアカウントに登録されたメールアドレスの入力が必要です。",
     "A new password must be entered.": "新しいパスワードを入力する必要があります。",
     "New passwords must match each other.": "新しいパスワードは互いに一致する必要があります。",
@@ -434,9 +433,6 @@
     "Delete Backup": "バックアップを削除",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "暗号化されたメッセージは、エンドツーエンドの暗号化によって保護されています。これらの暗号化されたメッセージを読むための鍵を持っているのは、あなたと受信者だけです。",
     "Restore from Backup": "バックアップから復元",
-    "For help with using %(brand)s, click <a>here</a>.": "%(brand)sの使用方法に関するヘルプは<a>こちら</a>をご覧ください。",
-    "Help & About": "ヘルプと概要",
-    "Versions": "バージョン",
     "Voice & Video": "音声とビデオ",
     "Remove recent messages": "最近のメッセージを削除",
     "%(creator)s created and configured the room.": "%(creator)sがルームを作成し設定しました。",
@@ -459,7 +455,6 @@
     "The encryption used by this room isn't supported.": "このルームで使用されている暗号化はサポートされていません。",
     "Cross-signing public keys:": "クロス署名の公開鍵：",
     "Cross-signing private keys:": "クロス署名の秘密鍵：",
-    "Clear cache and reload": "キャッシュを削除して再読み込み",
     "Session ID:": "セッションID：",
     "Session key:": "セッションキー：",
     "Session name": "セッション名",
@@ -765,8 +760,6 @@
     "Something went wrong. Please try again or view your console for hints.": "問題が発生しました。もう一度試すか、コンソールで手がかりを確認してください。",
     "Error adding ignored user/server": "無視したユーザーまたはサーバーを追加する際にエラーが発生しました",
     "Ignored/Blocked": "無視/ブロック",
-    "Chat with %(brand)s Bot": "%(brand)sボットとチャット",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "%(brand)sの使用についてサポートが必要な場合は、<a>こちら</a>をクリックするか、下のボタンを使用してボットとチャットを開始してください。",
     "Discovery": "ディスカバリー（発見）",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "メールアドレスか電話番号でアカウントを検出可能にするには、IDサーバー（%(serverName)s）の利用規約への同意が必要です。",
     "Use between %(min)s pt and %(max)s pt": "%(min)s～%(max)s（pt）の間の数字を指定",
@@ -1336,7 +1329,6 @@
     "This homeserver has been blocked by its administrator.": "このホームサーバーは管理者によりブロックされています。",
     "Edit devices": "端末を編集",
     "You have no ignored users.": "無視しているユーザーはいません。",
-    "Your access token gives full access to your account. Do not share it with anyone.": "アクセストークンを用いると、あなたのアカウントの全ての情報にアクセスできます。外部に公開したり、誰かと共有したりしないでください。",
     "Save Changes": "変更を保存",
     "Edit settings relating to your space.": "スペースの設定を変更します。",
     "Spaces": "スペース",
@@ -1977,7 +1969,6 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "マイクにアクセスできませんでした。ブラウザーの設定を確認して、もう一度やり直してください。",
     "Unable to access your microphone": "マイクを使用できません",
     "Are you sure you want to add encryption to this public room?": "公開ルームに暗号化を追加してよろしいですか？",
-    "Olm version:": "Olmのバージョン：",
     "There was an error loading your notification settings.": "通知設定を読み込む際にエラーが発生しました。",
     "Message search initialisation failed": "メッセージの検索機能の初期化に失敗しました",
     "Failed to update the visibility of this space": "このスペースの見え方の更新に失敗しました",
@@ -3903,5 +3894,18 @@
         "report_entire_room": "ルーム全体を報告",
         "report_content_to_homeserver": "あなたのホームサーバーの管理者にコンテンツを報告",
         "description": "このメッセージを報告すると、このメッセージの一意の「イベントID」があなたのホームサーバーの管理者に送信されます。このルーム内のメッセージが暗号化されている場合、ホームサーバーの管理者はメッセージのテキストを読んだり、ファイルや画像を表示したりすることはできません。"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)sのバージョン：",
+            "olm_version": "Olmのバージョン：",
+            "help_link": "%(brand)sの使用方法に関するヘルプは<a>こちら</a>をご覧ください。",
+            "help_link_chat_bot": "%(brand)sの使用についてサポートが必要な場合は、<a>こちら</a>をクリックするか、下のボタンを使用してボットとチャットを開始してください。",
+            "chat_bot": "%(brand)sボットとチャット",
+            "title": "ヘルプと概要",
+            "versions": "バージョン",
+            "access_token_detail": "アクセストークンを用いると、あなたのアカウントの全ての情報にアクセスできます。外部に公開したり、誰かと共有したりしないでください。",
+            "clear_cache_reload": "キャッシュを削除して再読み込み"
+        }
     }
 }

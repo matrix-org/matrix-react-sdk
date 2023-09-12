@@ -107,7 +107,6 @@
     "Reject all %(invitedRooms)s invites": "Baztertu %(invitedRooms)s gelarako gonbidapen guztiak",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)sek ez du zuri jakinarazpenak bidaltzeko baimenik,  egiaztatu nabigatzailearen ezarpenak",
     "%(brand)s was not given permission to send notifications - please try again": "Ez zaio jakinarazpenak bidaltzeko baimena eman %(brand)si, saiatu berriro",
-    "%(brand)s version:": "%(brand)s bertsioa:",
     "Room %(roomId)s not visible": "%(roomId)s gela ez dago ikusgai",
     "%(roomName)s does not exist.": "Ez dago %(roomName)s izeneko gela.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s ez dago eskuragarri orain.",
@@ -479,11 +478,6 @@
     "Phone numbers": "Telefono zenbakiak",
     "Language and region": "Hizkuntza eta eskualdea",
     "Account management": "Kontuen kudeaketa",
-    "For help with using %(brand)s, click <a>here</a>.": "%(brand)s erabiltzeko laguntza behar baduzu, egin klik <a>hemen</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "%(brand)s erabiltzeko laguntza behar baduzu, egin klik <a>hemen</a> edo hasi txat bat gure botarekin beheko botoia sakatuz.",
-    "Chat with %(brand)s Bot": "Txateatu %(brand)s botarekin",
-    "Help & About": "Laguntza eta honi buruz",
-    "Versions": "Bertsioak",
     "Room list": "Gelen zerrenda",
     "Autocomplete delay (ms)": "Automatikoki osatzeko atzerapena (ms)",
     "Roles & Permissions": "Rolak eta baimenak",
@@ -720,7 +714,6 @@
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Ez baduzu <server /> erabili nahi jendea aurkitzeko eta zure kontaktuek zu aurkitzeko, idatzi beste identitate-zerbitzari bat behean.",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Identitate-zerbitzari bat erabiltzea aukerazkoa da. Identitate-zerbitzari bat ez erabiltzea erabakitzen baduzu, ezin izango zaituztete e-mail edo telefonoa erabilita aurkitu eta ezin izango dituzu besteak e-mail edo telefonoa erabiliz gonbidatu.",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Onartu %(serverName)s identitate-zerbitzariaren erabilera baldintzak besteek zu e-mail helbidea edo telefonoa erabiliz aurkitzea ahalbidetzeko.",
-    "Clear cache and reload": "Garbitu cachea eta birkargatu",
     "Read Marker lifetime (ms)": "Orri-markagailuaren biziraupena (ms)",
     "Read Marker off-screen lifetime (ms)": "Orri-markagailuaren biziraupena pantailaz kanpo (ms)",
     "Error changing power level requirement": "Errorea botere-maila eskaria aldatzean",
@@ -1740,5 +1733,16 @@
         "send_dm": "Bidali mezu zuzena",
         "explore_rooms": "Arakatu gela publikoak",
         "create_room": "Sortu talde-txata"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s bertsioa:",
+            "help_link": "%(brand)s erabiltzeko laguntza behar baduzu, egin klik <a>hemen</a>.",
+            "help_link_chat_bot": "%(brand)s erabiltzeko laguntza behar baduzu, egin klik <a>hemen</a> edo hasi txat bat gure botarekin beheko botoia sakatuz.",
+            "chat_bot": "Txateatu %(brand)s botarekin",
+            "title": "Laguntza eta honi buruz",
+            "versions": "Bertsioak",
+            "clear_cache_reload": "Garbitu cachea eta birkargatu"
+        }
     }
 }

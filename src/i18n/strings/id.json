@@ -29,7 +29,6 @@
     "Permissions": "Izin",
     "Profile": "Profil",
     "Reason": "Alasan",
-    "%(brand)s version:": "Versi %(brand)s:",
     "Return to login screen": "Kembali ke halaman masuk",
     "Rooms": "Ruangan",
     "Search failed": "Pencarian gagal",
@@ -558,7 +557,6 @@
     "Demote": "Turunkan",
     "Replying": "Membalas",
     "Composer": "Komposer",
-    "Versions": "Versi",
     "Encryption": "Enkripsi",
     "General": "Umum",
     "Emoji Autocomplete": "Penyelesaian Otomatis Emoji",
@@ -1071,14 +1069,7 @@
     "Please verify the room ID or address and try again.": "Mohon verifikasi ID ruangan atau alamat dan coba lagi.",
     "Something went wrong. Please try again or view your console for hints.": "Ada sesuatu yang salah. Mohon coba lagi atau lihat konsol Anda untuk petunjuk.",
     "Error adding ignored user/server": "Terjadi kesalahan menambahkan pengguna/server yang diabaikan",
-    "Clear cache and reload": "Hapus cache dan muat ulang",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Token akses Anda memberikan akses penuh ke akun Anda. Jangan bagikan dengan siapa pun.",
-    "Help & About": "Bantuan & Tentang",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Untuk melaporkan masalah keamanan yang berkaitan dengan Matrix, mohon baca <a>Kebijakan Penyingkapan Keamanan</a> Matrix.org.",
-    "Chat with %(brand)s Bot": "Mulai mengobrol dengan %(brand)s Bot",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Untuk bantuan dengan menggunakan %(brand)s, klik <a>di sini</a> atau mulai sebuah obrolan dengan bot kami dengan menggunakan tombol di bawah.",
-    "For help with using %(brand)s, click <a>here</a>.": "Untuk bantuan dengan menggunakan %(brand)s, klik <a>di sini</a>.",
-    "Olm version:": "Versi Olm:",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Terima Ketentuan Layanannya server identitas %(serverName)s untuk mengizinkan Anda untuk dapat ditemukan dengan alamat email atau nomor telepon.",
     "Language and region": "Bahasa dan wilayah",
     "Rooms outside of a space": "Ruangan yang tidak berada di sebuah space",
@@ -2691,8 +2682,6 @@
     "Due to decryption errors, some votes may not be counted": "Karena kesalahan pendekripsian, beberapa suara tidak dihitung",
     "The sender has blocked you from receiving this message": "Pengirim telah memblokir Anda supaya tidak menerima pesan ini",
     "Room directory": "Direktori ruangan",
-    "Identity server is <code>%(identityServerUrl)s</code>": "Server identitas adalah <code>%(identityServerUrl)s</code>",
-    "Homeserver is <code>%(homeserverUrl)s</code>": "Homeserver adalah <code>%(homeserverUrl)s</code>",
     "Yes, it was me": "Ya, itu saya",
     "Answered elsewhere": "Dijawab di tempat lain",
     "If you know a room address, try joining through that instead.": "Jika Anda tahu sebuah alamat ruangan, coba bergabung melalui itu saja.",
@@ -4110,5 +4099,20 @@
         "report_entire_room": "Laporkan seluruh ruangan",
         "report_content_to_homeserver": "Laporkan Konten ke Administrator Homeserver Anda",
         "description": "Melaporkan pesan ini akan mengirimkan ID peristiwa yang untuk ke administrator homeserver Anda. Jika pesan-pesan di ruangan ini terenkripsi, maka administrator homeserver Anda tidak akan dapat membaca teks pesan atau menampilkan file atau gambar apa saja."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "Versi %(brand)s:",
+            "olm_version": "Versi Olm:",
+            "help_link": "Untuk bantuan dengan menggunakan %(brand)s, klik <a>di sini</a>.",
+            "help_link_chat_bot": "Untuk bantuan dengan menggunakan %(brand)s, klik <a>di sini</a> atau mulai sebuah obrolan dengan bot kami dengan menggunakan tombol di bawah.",
+            "chat_bot": "Mulai mengobrol dengan %(brand)s Bot",
+            "title": "Bantuan & Tentang",
+            "versions": "Versi",
+            "homeserver": "Homeserver adalah <code>%(homeserverUrl)s</code>",
+            "identity_server": "Server identitas adalah <code>%(identityServerUrl)s</code>",
+            "access_token_detail": "Token akses Anda memberikan akses penuh ke akun Anda. Jangan bagikan dengan siapa pun.",
+            "clear_cache_reload": "Hapus cache dan muat ulang"
+        }
     }
 }

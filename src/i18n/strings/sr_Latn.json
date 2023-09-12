@@ -5,7 +5,6 @@
     "Failed to verify email address: make sure you clicked the link in the email": "Neuspela provera adrese elektronske pošte: proverite da li ste kliknuli na link u poruci elektronske pošte",
     "Add Phone Number": "Dodajte broj telefona",
     "Your %(brand)s is misconfigured": "Vaš %(brand)s nije dobro podešen",
-    "Chat with %(brand)s Bot": "Ćaskajte sa %(brand)s botom",
     "powered by Matrix": "pokreće Matriks",
     "Explore rooms": "Istražite sobe",
     "Send": "Pošalji",
@@ -119,5 +118,10 @@
     },
     "keyboard": {
         "keyboard_shortcuts_tab": "Otvori podešavanja"
+    },
+    "setting": {
+        "help_about": {
+            "chat_bot": "Ćaskajte sa %(brand)s botom"
+        }
     }
 }

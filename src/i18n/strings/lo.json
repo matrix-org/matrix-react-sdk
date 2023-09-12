@@ -507,9 +507,6 @@
     "Error adding ignored user/server": "ເກີດຄວາມຜິດພາດໃນການເພີ່ມຜູ້ໃຊ້/ເຊີບເວີທີ່ລະເລີຍ",
     "Ignored/Blocked": "ບໍ່ສົນໃຈ/ຖືກບລັອກ",
     "Keyboard": "ແປ້ນພິມ",
-    "Clear cache and reload": "ລຶບ cache ແລະ ໂຫຼດໃຫມ່",
-    "Your access token gives full access to your account. Do not share it with anyone.": "ການເຂົ້າເຖິງໂທເຄັນຂອງທ່ານເປັນການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງເຕັມທີ່. ຢ່າແບ່ງປັນໃຫ້ຄົນອຶ່ນ.",
-    "Versions": "ເວິຊັ້ນ",
     "Cross-signing public keys:": "ກະແຈສາທາລະນະທີ່ມີ Cross-signing:",
     "Cross-signing is not set up.": "ບໍ່ໄດ້ຕັ້ງຄ່າ Cross-signing.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "ບັນຊີຂອງທ່ານມີຂໍ້ມູນແບບ cross-signing ໃນການເກັບຮັກສາຄວາມລັບ, ແຕ່ວ່າຍັງບໍ່ມີຄວາມເຊື່ອຖືໃນລະບົບນີ້.",
@@ -1987,7 +1984,6 @@
     "Leave space": "ອອກຈາກພື້ນທີ່",
     "Leave some rooms": "ອອກຈາກບາງຫ້ອງ",
     "Leave all rooms": "ອອກຈາກຫ້ອງທັງຫມົດ",
-    "Olm version:": "ເວີຊັ້ນ Olm:",
     "On": "ເທິງ",
     "New keyword": "ຄໍາສໍາຄັນໃຫມ່",
     "Keyword": "ຄໍາສໍາຄັນ",
@@ -2129,7 +2125,6 @@
     "Flower": "ດອກໄມ້",
     "Butterfly": "ແມງກະເບື້ອ",
     "Octopus": "ປາຫມຶກ",
-    "%(brand)s version:": "%(brand)sເວີຊັ້ນ:",
     "Discovery": "ການຄົ້ນພົບ",
     "Deactivate account": "ປິດການນຳໃຊ້ບັນຊີ",
     "Deactivate Account": "ປິດການນຳໃຊ້ບັນຊີ",
@@ -2171,11 +2166,7 @@
     "Upgrade this room to version %(version)s": "ຍົກລະດັບຫ້ອງນີ້ເປັນເວີຊັ່ນ %(version)s",
     "The room upgrade could not be completed": "ການຍົກລະດັບຫ້ອງບໍ່ສຳເລັດໄດ້",
     "Failed to upgrade room": "ຍົກລະດັບຫ້ອງບໍ່ສຳເລັດ",
-    "Help & About": "ຊ່ວຍເຫຼືອ & ກ່ຽວກັບ",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "ເພື່ອລາຍງານບັນຫາຄວາມປອດໄພທີ່ກ່ຽວຂ້ອງກັບ Matrix, ກະລຸນາອ່ານ <a>ນະໂຍບາຍການເປີດເຜີຍຄວາມປອດໄພ</a> Matrix.org.",
-    "Chat with %(brand)s Bot": "ສົນທະນາກັບ %(brand)s Bot",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "ສໍາລັບການຊ່ວຍເຫຼືອໃນການນໍາໃຊ້ %(brand)s, ກົດ <a>ທີ່ນີ້</a> ຫຼືເລີ່ມການສົນທະນາກັບ bot ຂອງພວກເຮົາໂດຍໃຊ້ປຸ່ມຂ້າງລຸ່ມນີ້.",
-    "For help with using %(brand)s, click <a>here</a>.": "ສໍາລັບການຊ່ວຍເຫຼືອໃນການນໍາໃຊ້ %(brand)s, ກົດ <a>ທີ່ນີ້</a>.",
     "Clear all data in this session?": "ລຶບລ້າງຂໍ້ມູນທັງໝົດໃນລະບົບນີ້ບໍ?",
     "Reason (optional)": "ເຫດຜົນ (ທາງເລືອກ)",
     "Confirm Removal": "ຢືນຢັນການລຶບອອກ",
@@ -3429,5 +3420,18 @@
         "send_dm": "ສົ່ງຂໍ້ຄວາມໂດຍກົງ",
         "explore_rooms": "ສຳຫຼວດຫ້ອງສາທາລະນະ",
         "create_room": "ສ້າງກຸ່ມສົນທະນາ"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)sເວີຊັ້ນ:",
+            "olm_version": "ເວີຊັ້ນ Olm:",
+            "help_link": "ສໍາລັບການຊ່ວຍເຫຼືອໃນການນໍາໃຊ້ %(brand)s, ກົດ <a>ທີ່ນີ້</a>.",
+            "help_link_chat_bot": "ສໍາລັບການຊ່ວຍເຫຼືອໃນການນໍາໃຊ້ %(brand)s, ກົດ <a>ທີ່ນີ້</a> ຫຼືເລີ່ມການສົນທະນາກັບ bot ຂອງພວກເຮົາໂດຍໃຊ້ປຸ່ມຂ້າງລຸ່ມນີ້.",
+            "chat_bot": "ສົນທະນາກັບ %(brand)s Bot",
+            "title": "ຊ່ວຍເຫຼືອ & ກ່ຽວກັບ",
+            "versions": "ເວິຊັ້ນ",
+            "access_token_detail": "ການເຂົ້າເຖິງໂທເຄັນຂອງທ່ານເປັນການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງເຕັມທີ່. ຢ່າແບ່ງປັນໃຫ້ຄົນອຶ່ນ.",
+            "clear_cache_reload": "ລຶບ cache ແລະ ໂຫຼດໃຫມ່"
+        }
     }
 }

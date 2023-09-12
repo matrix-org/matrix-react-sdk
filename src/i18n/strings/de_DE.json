@@ -134,7 +134,6 @@
     "Email": "E-Mail-Adresse",
     "New passwords don't match": "Die neuen Passwörter stimmen nicht überein",
     "Passwords can't be empty": "Passwortfelder dürfen nicht leer sein",
-    "%(brand)s version:": "Version von %(brand)s:",
     "Email address": "E-Mail-Adresse",
     "Error decrypting attachment": "Fehler beim Entschlüsseln des Anhangs",
     "Operation failed": "Aktion fehlgeschlagen",
@@ -438,11 +437,6 @@
     "Phone numbers": "Telefonnummern",
     "Language and region": "Sprache und Region",
     "Account management": "Benutzerkontenverwaltung",
-    "For help with using %(brand)s, click <a>here</a>.": "<a>Um Hilfe zur Benutzung von %(brand)s zu erhalten, klicke hier</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Um Hilfe zur Benutzung von %(brand)s zu erhalten, klicke <a>hier</a> oder beginne eine Unterhaltung mit unserem Bot mittels nachfolgender Schaltfläche.",
-    "Chat with %(brand)s Bot": "Unterhalte dich mit dem %(brand)s-Bot",
-    "Help & About": "Hilfe und Info",
-    "Versions": "Versionen",
     "Room Addresses": "Raumadressen",
     "Room list": "Raumliste",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Die Datei „%(fileName)s“ überschreitet das Hochladelimit deines Heim-Servers",
@@ -646,7 +640,6 @@
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Zurzeit benutzt du keinen Identitäts-Server. Trage unten einen Server ein, um Kontakte zu finden und von anderen gefunden zu werden.",
     "Manage integrations": "Integrationen verwalten",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Stimme den Nutzungsbedingungen des Identitäts-Servers %(serverName)s zu, um per E-Mail-Adresse oder Telefonnummer auffindbar zu werden.",
-    "Clear cache and reload": "Zwischenspeicher löschen und neu laden",
     "Ignored/Blocked": "Ignoriert/Blockiert",
     "Something went wrong. Please try again or view your console for hints.": "Etwas ist schief gelaufen. Bitte versuche es erneut oder sieh für weitere Hinweise in deiner Konsole nach.",
     "Error subscribing to list": "Fehler beim Abonnieren der Liste",
@@ -1737,7 +1730,6 @@
     "You may contact me if you have any follow up questions": "Kontaktiert mich, falls ihr weitere Fragen zu meiner Rückmeldung habt",
     "To leave the beta, visit your settings.": "Du kannst die Beta in den Einstellungen deaktivieren.",
     "Your platform and username will be noted to help us use your feedback as much as we can.": "Deine Systeminformationen und dein Benutzername werden mitgeschickt, damit wir deine Rückmeldung bestmöglich nachvollziehen können.",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Dein Zugriffstoken gibt vollen Zugriff auf dein Konto. Teile ihn niemals mit anderen.",
     "Space Autocomplete": "Spaces automatisch vervollständigen",
     "Currently joining %(count)s rooms": {
         "one": "Betrete %(count)s Raum",
@@ -1858,7 +1850,6 @@
     "Only invited people can join.": "Nur Eingeladene können betreten.",
     "Private (invite only)": "Privat (Betreten mit Einladung)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Diese Aktualisierung gewährt Mitgliedern der ausgewählten Spaces Zugang zu diesem Raum ohne Einladung.",
-    "Olm version:": "Version von Olm:",
     "Show all rooms": "Alle Räume anzeigen",
     "Delete avatar": "Avatar löschen",
     "Only people invited will be able to find and join this room.": "Nur eingeladene Personen können den Raum finden und betreten.",
@@ -2691,8 +2682,6 @@
     "Room directory": "Raumverzeichnis",
     "Due to decryption errors, some votes may not be counted": "Evtl. werden infolge von Entschlüsselungsfehlern einige Stimmen nicht gezählt",
     "Ended a poll": "Eine Umfrage beendet",
-    "Identity server is <code>%(identityServerUrl)s</code>": "Identitäts-Server ist <code>%(identityServerUrl)s</code>",
-    "Homeserver is <code>%(homeserverUrl)s</code>": "Heim-Server ist <code>%(homeserverUrl)s</code>",
     "Yes, it was me": "Ja, das war ich",
     "Answered elsewhere": "Anderswo beantwortet",
     "If you know a room address, try joining through that instead.": "Falls du eine Adresse kennst, versuche den Raum mit dieser zu betreten.",
@@ -4110,5 +4099,20 @@
         "report_entire_room": "Den ganzen Raum melden",
         "report_content_to_homeserver": "Inhalte an die Administration deines Heim-Servers melden",
         "description": "Wenn du diese Nachricht meldest, wird die eindeutige Ereignis-ID an die Administration deines Heim-Servers übermittelt. Wenn die Nachrichten in diesem Raum verschlüsselt sind, wird deine Heim-Server-Administration nicht in der Lage sein, Nachrichten zu lesen oder Medien einzusehen."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "Version von %(brand)s:",
+            "olm_version": "Version von Olm:",
+            "help_link": "<a>Um Hilfe zur Benutzung von %(brand)s zu erhalten, klicke hier</a>.",
+            "help_link_chat_bot": "Um Hilfe zur Benutzung von %(brand)s zu erhalten, klicke <a>hier</a> oder beginne eine Unterhaltung mit unserem Bot mittels nachfolgender Schaltfläche.",
+            "chat_bot": "Unterhalte dich mit dem %(brand)s-Bot",
+            "title": "Hilfe und Info",
+            "versions": "Versionen",
+            "homeserver": "Heim-Server ist <code>%(homeserverUrl)s</code>",
+            "identity_server": "Identitäts-Server ist <code>%(identityServerUrl)s</code>",
+            "access_token_detail": "Dein Zugriffstoken gibt vollen Zugriff auf dein Konto. Teile ihn niemals mit anderen.",
+            "clear_cache_reload": "Zwischenspeicher löschen und neu laden"
+        }
     }
 }

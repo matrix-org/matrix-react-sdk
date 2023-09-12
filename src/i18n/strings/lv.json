@@ -88,7 +88,6 @@
     "Return to login screen": "Atgriezties uz pierakstīšanās lapu",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s nav atļauts nosūtīt jums paziņojumus. Lūdzu pārbaudi sava pārlūka iestatījumus",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s nav piešķirta atļauja nosūtīt paziņojumus. Lūdzu mēģini vēlreiz",
-    "%(brand)s version:": "%(brand)s versija:",
     "Unable to enable Notifications": "Neizdevās iespējot paziņojumus",
     "This will allow you to reset your password and receive notifications.": "Tas atļaus Tev atiestatīt paroli un saņemt paziņojumus.",
     "Room %(roomId)s not visible": "Istaba %(roomId)s nav redzama",
@@ -491,7 +490,6 @@
     "Room Settings - %(roomName)s": "Istabas iestatījumi - %(roomName)s",
     "Room settings": "Istabas iestatījumi",
     "Share room": "Dalīties ar istabu",
-    "Help & About": "Palīdzība un par lietotni",
     "About homeservers": "Par bāzes serveriem",
     "Enable message search in encrypted rooms": "Iespējot ziņu meklēšanu šifrētās istabās",
     "Message search": "Ziņu meklēšana",
@@ -565,9 +563,6 @@
     "Session key": "Sesijas atslēga",
     "Accept all %(invitedRooms)s invites": "Pieņemt visus %(invitedRooms)s uzaicinājumus",
     "Bulk options": "Lielapjoma opcijas",
-    "Clear cache and reload": "Notīrīt kešatmiņu un pārlādēt",
-    "Versions": "Versijas",
-    "For help with using %(brand)s, click <a>here</a>.": "Palīdzībai %(brand)s izmantošanā, spiediet <a>šeit</a>.",
     "Account management": "Konta pārvaldība",
     "New version available. <a>Update now.</a>": "Pieejama jauna versija. <a>Atjaunināt.</a>",
     "Failed to save your profile": "Neizdevās salabāt jūsu profilu",
@@ -1940,5 +1935,14 @@
         "report_entire_room": "Ziņot par visu istabu",
         "report_content_to_homeserver": "Ziņojums par saturu bāzes servera administratoram",
         "description": "Iesniedzot ziņojumu par konkrēto ziņu, tās unikālais notikuma ID tiks nosūtīts jūsu bāzes servera administratoram. Ja ziņas šajā istabā ir šifrētas, jūsu bāzes servera administrators nevarēs lasīt ziņas tekstu vai skatīt failus un attēlus."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s versija:",
+            "help_link": "Palīdzībai %(brand)s izmantošanā, spiediet <a>šeit</a>.",
+            "title": "Palīdzība un par lietotni",
+            "versions": "Versijas",
+            "clear_cache_reload": "Notīrīt kešatmiņu un pārlādēt"
+        }
     }
 }

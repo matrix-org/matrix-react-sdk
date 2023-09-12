@@ -1108,14 +1108,7 @@
     "Something went wrong. Please try again or view your console for hints.": "משהו השתבש. נסה שוב או הצג את המסוף שלך לקבלת רמזים.",
     "Error adding ignored user/server": "שגיאה בהוספת שרת\\משתמש שהתעלמתם ממנו",
     "Ignored/Blocked": "התעלם\\חסום",
-    "Clear cache and reload": "נקה מטמון ואתחל",
-    "%(brand)s version:": "גרסאת %(brand)s:",
-    "Versions": "גרסאות",
-    "Help & About": "עזרה ואודות",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "כדי לדווח על בעיית אבטחה , אנא קראו את <a> מדיניות גילוי האבטחה של Matrix.org </a>.",
-    "Chat with %(brand)s Bot": "דבר עם הבוט של %(brand)s",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "לעזרה בשימוש ב-%(brand)s לחץ על <a> כאן </a> או התחל צ'אט עם הבוט שלנו באמצעות הלחצן למטה.",
-    "For help with using %(brand)s, click <a>here</a>.": "בשביל לעזור בקידום ושימוש ב- %(brand)s, לחצו <a>כאן</a>.",
     "General": "כללי",
     "Discovery": "מציאה",
     "Deactivate account": "סגור חשבון",
@@ -2898,5 +2891,16 @@
         "send_dm": "שלח הודעה ישירה",
         "explore_rooms": "חקור חדרים ציבוריים",
         "create_room": "צור צ'אט קבוצתי"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "גרסאת %(brand)s:",
+            "help_link": "בשביל לעזור בקידום ושימוש ב- %(brand)s, לחצו <a>כאן</a>.",
+            "help_link_chat_bot": "לעזרה בשימוש ב-%(brand)s לחץ על <a> כאן </a> או התחל צ'אט עם הבוט שלנו באמצעות הלחצן למטה.",
+            "chat_bot": "דבר עם הבוט של %(brand)s",
+            "title": "עזרה ואודות",
+            "versions": "גרסאות",
+            "clear_cache_reload": "נקה מטמון ואתחל"
+        }
     }
 }

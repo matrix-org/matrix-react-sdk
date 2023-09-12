@@ -227,7 +227,6 @@
     "Uploading %(filename)s": "Pujant %(filename)s",
     "Import E2E room keys": "Importar claus E2E de sala",
     "Cryptography": "Criptografia",
-    "%(brand)s version:": "Versió de %(brand)s:",
     "Incorrect username and/or password.": "Usuari i/o contrasenya incorrectes.",
     "Session ID": "ID de la sessió",
     "Export room keys": "Exporta les claus de la sala",
@@ -727,5 +726,10 @@
     },
     "export_chat": {
         "messages": "Missatges"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "Versió de %(brand)s:"
+        }
     }
 }

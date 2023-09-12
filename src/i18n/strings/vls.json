@@ -233,13 +233,7 @@
     "Account management": "Accountbeheer",
     "Deactivate Account": "Account deactiveern",
     "General": "Algemeen",
-    "For help with using %(brand)s, click <a>here</a>.": "Klikt <a>hier</a> voor hulp by ’t gebruukn van %(brand)s.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Klikt <a>hier</a> voor hulp by ’t gebruukn van %(brand)s, of begint e gesprek met uzze robot me de knop hieroundern.",
-    "Chat with %(brand)s Bot": "Chattn me %(brand)s-robot",
     "Check for update": "Controleern ip updates",
-    "Help & About": "Hulp & Info",
-    "Versions": "Versies",
-    "%(brand)s version:": "%(brand)s-versie:",
     "Notifications": "Meldiengn",
     "Composer": "Ipsteller",
     "Room list": "Gesprekslyste",
@@ -1101,5 +1095,15 @@
     },
     "export_chat": {
         "messages": "Berichtn"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s-versie:",
+            "help_link": "Klikt <a>hier</a> voor hulp by ’t gebruukn van %(brand)s.",
+            "help_link_chat_bot": "Klikt <a>hier</a> voor hulp by ’t gebruukn van %(brand)s, of begint e gesprek met uzze robot me de knop hieroundern.",
+            "chat_bot": "Chattn me %(brand)s-robot",
+            "title": "Hulp & Info",
+            "versions": "Versies"
+        }
     }
 }

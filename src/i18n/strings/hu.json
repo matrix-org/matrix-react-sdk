@@ -93,7 +93,6 @@
     "Return to login screen": "Vissza a bejelentkezési képernyőre",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "A(z) %(brand)s alkalmazásnak nincs jogosultsága értesítést küldeni – ellenőrizze a böngésző beállításait",
     "%(brand)s was not given permission to send notifications - please try again": "A(z) %(brand)s alkalmazásnak nincs jogosultsága értesítést küldeni – próbálja újra",
-    "%(brand)s version:": "%(brand)s verzió:",
     "Room %(roomId)s not visible": "A(z) %(roomId)s szoba nem látható",
     "%(roomName)s does not exist.": "%(roomName)s nem létezik.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s jelenleg nem érhető el.",
@@ -439,10 +438,6 @@
     "Phone numbers": "Telefonszámok",
     "Language and region": "Nyelv és régió",
     "Account management": "Fiókkezelés",
-    "For help with using %(brand)s, click <a>here</a>.": "Az %(brand)s használatában való segítséghez kattintson <a>ide</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Az %(brand)s használatában való segítségért kattintson <a>ide</a>, vagy kezdjen beszélgetést a botunkkal az alábbi gombra kattintva.",
-    "Help & About": "Súgó és névjegy",
-    "Versions": "Verziók",
     "Composer": "Szerkesztő",
     "Room list": "Szobalista",
     "Autocomplete delay (ms)": "Automatikus kiegészítés késleltetése (ms)",
@@ -468,7 +463,6 @@
     "Create account": "Fiók létrehozása",
     "Recovery Method Removed": "Helyreállítási mód törölve",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ha nem Ön törölte a helyreállítási módot, akkor lehet, hogy egy támadó hozzá akar férni a fiókjához. Azonnal változtassa meg a jelszavát, és állítson be egy helyreállítási módot a Beállításokban.",
-    "Chat with %(brand)s Bot": "Csevegés az %(brand)s bottal",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "A(z) „%(fileName)s” mérete túllépi a Matrix-kiszolgáló által megengedett korlátot",
     "Verify this user by confirming the following emoji appear on their screen.": "Ellenőrizze ezt a felhasználót azzal, hogy megerősíti, hogy a következő emodzsi jelenik meg a képernyőjén.",
     "Unable to find a supported verification method.": "Nem található támogatott ellenőrzési eljárás.",
@@ -750,7 +744,6 @@
     "Hide advanced": "Speciális beállítások elrejtése",
     "Show advanced": "Speciális beállítások megjelenítése",
     "Close dialog": "Ablak bezárása",
-    "Clear cache and reload": "Gyorsítótár ürítése és újratöltés",
     "Show image": "Kép megjelenítése",
     "To continue you need to accept the terms of this service.": "A folytatáshoz el kell fogadnia a felhasználási feltételeket.",
     "Document": "Dokumentum",
@@ -1729,7 +1722,6 @@
     "No microphone found": "Nem található mikrofon",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Nem lehet a mikrofont használni. Ellenőrizze a böngésző beállításait és próbálja újra.",
     "Unable to access your microphone": "A mikrofont nem lehet használni",
-    "Your access token gives full access to your account. Do not share it with anyone.": "A hozzáférési kulcs teljes elérést biztosít a fiókhoz. Soha ne ossza meg mással.",
     "Please enter a name for the space": "Adjon meg egy nevet a térhez",
     "Connecting": "Kapcsolódás",
     "To leave the beta, visit your settings.": "A beállításokban tudja elhagyni a bétát.",
@@ -1887,7 +1879,6 @@
     "Decrypting": "Visszafejtés",
     "Missed call": "Nem fogadott hívás",
     "Call declined": "Hívás elutasítva",
-    "Olm version:": "Olm verzió:",
     "Stop recording": "Felvétel megállítása",
     "Send voice message": "Hang üzenet küldése",
     "More": "Több",
@@ -2691,8 +2682,6 @@
     "Due to decryption errors, some votes may not be counted": "Visszafejtési hibák miatt néhány szavazat nem kerül beszámításra",
     "The sender has blocked you from receiving this message": "A feladó megtagadta az Ön hozzáférését ehhez az üzenethez",
     "Room directory": "Szobalista",
-    "Identity server is <code>%(identityServerUrl)s</code>": "Azonosítási kiszolgáló: <code>%(identityServerUrl)s</code>",
-    "Homeserver is <code>%(homeserverUrl)s</code>": "Matrix-kiszolgáló: <code>%(homeserverUrl)s</code>",
     "Yes, it was me": "Igen, én voltam",
     "Answered elsewhere": "Máshol lett felvéve",
     "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months": {
@@ -4009,5 +3998,20 @@
         "report_entire_room": "Az egész szoba jelentése",
         "report_content_to_homeserver": "Tartalom bejelentése a Matrix-kiszolgáló rendszergazdájának",
         "description": "Az üzenet bejelentése egy egyedi „eseményazonosítót” küld el a Matrix-kiszolgáló rendszergazdájának. Ha az üzenetek titkosítottak a szobában, akkor a Matrix-kiszolgáló rendszergazdája nem tudja elolvasni az üzenetet, vagy nem tudja megnézni a fájlokat vagy képeket."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s verzió:",
+            "olm_version": "Olm verzió:",
+            "help_link": "Az %(brand)s használatában való segítséghez kattintson <a>ide</a>.",
+            "help_link_chat_bot": "Az %(brand)s használatában való segítségért kattintson <a>ide</a>, vagy kezdjen beszélgetést a botunkkal az alábbi gombra kattintva.",
+            "chat_bot": "Csevegés az %(brand)s bottal",
+            "title": "Súgó és névjegy",
+            "versions": "Verziók",
+            "homeserver": "Matrix-kiszolgáló: <code>%(homeserverUrl)s</code>",
+            "identity_server": "Azonosítási kiszolgáló: <code>%(identityServerUrl)s</code>",
+            "access_token_detail": "A hozzáférési kulcs teljes elérést biztosít a fiókhoz. Soha ne ossza meg mással.",
+            "clear_cache_reload": "Gyorsítótár ürítése és újratöltés"
+        }
     }
 }

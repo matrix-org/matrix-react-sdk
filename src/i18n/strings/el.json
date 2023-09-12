@@ -63,7 +63,6 @@
     "No more results": "Δεν υπάρχουν άλλα αποτελέσματα",
     "Passwords can't be empty": "Οι κωδικοί πρόσβασης δεν γίνετε να είναι κενοί",
     "Phone": "Τηλέφωνο",
-    "%(brand)s version:": "Έκδοση %(brand)s:",
     "Rooms": "Δωμάτια",
     "Search failed": "Η αναζήτηση απέτυχε",
     "Server error": "Σφάλμα διακομιστή",
@@ -1110,15 +1109,7 @@
     "Error adding ignored user/server": "Σφάλμα κατά την προσθήκη χρήστη/διακομιστή που αγνοήθηκε",
     "Ignored/Blocked": "Αγνοήθηκε/Αποκλείστηκε",
     "Keyboard": "Πληκτρολόγιο",
-    "Clear cache and reload": "Εκκαθάριση προσωρινής μνήμης και επαναφόρτωση",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Το διακριτικό πρόσβασής σας παρέχει πλήρη πρόσβαση στον λογαριασμό σας. Μην το μοιραστείτε με κανέναν.",
-    "Versions": "Εκδόσεις",
-    "Help & About": "Βοήθεια & Σχετικά",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Για να αναφέρετε ένα ζήτημα ασφάλειας που σχετίζεται με το Matrix, διαβάστε την <a>Πολιτική Γνωστοποίησης Ασφαλείας</a> του Matrix.org.",
-    "Chat with %(brand)s Bot": "Συνομιλία με το %(brand)s Bot",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Για βοήθεια σχετικά με τη χρήση του %(brand)s, κάντε κλικ <a>εδώ</a> ή ξεκινήστε μια συνομιλία με το bot μας χρησιμοποιώντας το παρακάτω κουμπί.",
-    "For help with using %(brand)s, click <a>here</a>.": "Για βοήθεια σχετικά με τη χρήση του %(brand)s, κάντε κλικ <a>εδώ</a>.",
-    "Olm version:": "Έκδοση Olm:",
     "Deactivate account": "Απενεργοποίηση λογαριασμού",
     "Signature upload failed": "Αποτυχία μεταφόρτωσης υπογραφής",
     "Signature upload success": "Επιτυχία μεταφόρτωσης υπογραφής",
@@ -3412,5 +3403,18 @@
         "send_dm": "Στείλτε ένα άμεσο μήνυμα",
         "explore_rooms": "Εξερευνήστε Δημόσια Δωμάτια",
         "create_room": "Δημιουργήστε μια Ομαδική Συνομιλία"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "Έκδοση %(brand)s:",
+            "olm_version": "Έκδοση Olm:",
+            "help_link": "Για βοήθεια σχετικά με τη χρήση του %(brand)s, κάντε κλικ <a>εδώ</a>.",
+            "help_link_chat_bot": "Για βοήθεια σχετικά με τη χρήση του %(brand)s, κάντε κλικ <a>εδώ</a> ή ξεκινήστε μια συνομιλία με το bot μας χρησιμοποιώντας το παρακάτω κουμπί.",
+            "chat_bot": "Συνομιλία με το %(brand)s Bot",
+            "title": "Βοήθεια & Σχετικά",
+            "versions": "Εκδόσεις",
+            "access_token_detail": "Το διακριτικό πρόσβασής σας παρέχει πλήρη πρόσβαση στον λογαριασμό σας. Μην το μοιραστείτε με κανέναν.",
+            "clear_cache_reload": "Εκκαθάριση προσωρινής μνήμης και επαναφόρτωση"
+        }
     }
 }

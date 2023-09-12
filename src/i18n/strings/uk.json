@@ -166,7 +166,6 @@
     "Demote": "Зменшити повноваження",
     "Failed to mute user": "Не вдалося заглушити користувача",
     "Failed to change power level": "Не вдалося змінити рівень повноважень",
-    "Chat with %(brand)s Bot": "Бесіда з %(brand)s-ботом",
     "The file '%(fileName)s' failed to upload.": "Не вдалося вивантажити файл '%(fileName)s'.",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Файл '%(fileName)s' перевищує ліміт розміру для відвантажень домашнього сервера",
     "The server does not support the room version specified.": "Сервер не підтримує вказану версію кімнати.",
@@ -234,8 +233,6 @@
     "Account management": "Керування обліковим записом",
     "Deactivate Account": "Деактивувати обліковий запис",
     "Deactivate account": "Деактивувати обліковий запис",
-    "For help with using %(brand)s, click <a>here</a>.": "Якщо необхідна допомога у користуванні %(brand)s'ом, клацніть <a>тут</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Якщо необхідна допомога у користуванні %(brand)s, клацніть <a>тут</a> або розпочніть бесіду з нашим ботом, клацнувши на кнопку внизу.",
     "Join the conversation with an account": "Приєднатись до бесіди з обліковим записом",
     "Unable to restore session": "Не вдалося відновити сеанс",
     "We encountered an error trying to restore your previous session.": "Ми натрапили на помилку, намагаючись відновити ваш попередній сеанс.",
@@ -347,11 +344,7 @@
     "Use custom size": "Використовувати нетиповий розмір",
     "General": "Загальні",
     "Discovery": "Виявлення",
-    "Help & About": "Допомога та про програму",
-    "Clear cache and reload": "Очистити кеш та перезавантажити",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Щоб повідомити про проблеми безпеки Matrix, будь ласка, прочитайте <a>Політику розкриття інформації</a> Matrix.org.",
-    "Versions": "Версії",
-    "%(brand)s version:": "Версія %(brand)s:",
     "Ignored/Blocked": "Ігноровані/Заблоковані",
     "Error adding ignored user/server": "Помилка при додаванні ігнорованого користувача/сервера",
     "Something went wrong. Please try again or view your console for hints.": "Щось пішло не так. Спробуйте знову, або пошукайте підказки в консолі.",
@@ -1502,8 +1495,6 @@
     "Images, GIFs and videos": "Зображення, GIF та відео",
     "Displaying time": "Формат часу",
     "Code blocks": "Блоки коду",
-    "Olm version:": "Версія Olm:",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Токен доступу надає повний доступ до вашого облікового запису. Не передавайте його нікому.",
     "Messaging": "Спілкування",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Зберігайте ключ безпеки в надійному місці, скажімо в менеджері паролів чи сейфі, бо ключ оберігає ваші зашифровані дані.",
     "You do not have permission to start polls in this room.": "Ви не маєте дозволу створювати опитування в цій кімнаті.",
@@ -2691,8 +2682,6 @@
     "Due to decryption errors, some votes may not be counted": "Через помилки розшифрування деякі голоси можуть бути не враховані",
     "The sender has blocked you from receiving this message": "Відправник заблокував вам отримання цього повідомлення",
     "Room directory": "Каталог кімнат",
-    "Identity server is <code>%(identityServerUrl)s</code>": "Сервер ідентифікації <code>%(identityServerUrl)s</code>",
-    "Homeserver is <code>%(homeserverUrl)s</code>": "Домашній сервер <code>%(homeserverUrl)s</code>",
     "Yes, it was me": "Так, це я",
     "Answered elsewhere": "Відповіли деінде",
     "If you know a room address, try joining through that instead.": "Якщо ви знаєте адресу кімнати, спробуйте приєднатися через неї.",
@@ -4105,5 +4094,20 @@
         "report_entire_room": "Поскаржитися на всю кімнату",
         "report_content_to_homeserver": "Поскаржитися на вміст адміністратору вашого домашнього сервера",
         "description": "Зі скаргою на це повідомлення буде надіслано його унікальний «ID події» адміністраторові вашого домашнього сервера. Якщо повідомлення у цій кімнаті зашифровані, то адміністратор не зможе побачити ані тексту повідомлень, ані жодних файлів чи зображень."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "Версія %(brand)s:",
+            "olm_version": "Версія Olm:",
+            "help_link": "Якщо необхідна допомога у користуванні %(brand)s'ом, клацніть <a>тут</a>.",
+            "help_link_chat_bot": "Якщо необхідна допомога у користуванні %(brand)s, клацніть <a>тут</a> або розпочніть бесіду з нашим ботом, клацнувши на кнопку внизу.",
+            "chat_bot": "Бесіда з %(brand)s-ботом",
+            "title": "Допомога та про програму",
+            "versions": "Версії",
+            "homeserver": "Домашній сервер <code>%(homeserverUrl)s</code>",
+            "identity_server": "Сервер ідентифікації <code>%(identityServerUrl)s</code>",
+            "access_token_detail": "Токен доступу надає повний доступ до вашого облікового запису. Не передавайте його нікому.",
+            "clear_cache_reload": "Очистити кеш та перезавантажити"
+        }
     }
 }

@@ -302,7 +302,6 @@
     "Cryptography": "Cripteagrafaíocht",
     "Composer": "Eagarthóir",
     "Notifications": "Fógraí",
-    "Versions": "Leaganacha",
     "General": "Ginearálta",
     "Account": "Cuntas",
     "Profile": "Próifíl",
@@ -815,5 +814,10 @@
     },
     "report_content": {
         "disagree": "Easaontaigh"
+    },
+    "setting": {
+        "help_about": {
+            "versions": "Leaganacha"
+        }
     }
 }

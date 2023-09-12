@@ -138,7 +138,6 @@
     "Error decrypting attachment": "Erro ao descriptografar o anexo",
     "Invalid file%(extra)s": "Arquivo inválido %(extra)s",
     "Operation failed": "A operação falhou",
-    "%(brand)s version:": "versão do %(brand)s:",
     "Warning!": "Atenção!",
     "Passphrases must match": "As senhas têm que ser iguais",
     "Passphrase must not be empty": "A frase não pode estar em branco",
@@ -504,11 +503,6 @@
     "Language and region": "Idioma e região",
     "Account management": "Gerenciamento da Conta",
     "General": "Geral",
-    "For help with using %(brand)s, click <a>here</a>.": "Para obter ajuda com o uso do %(brand)s, clique <a>aqui</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Para obter ajuda com o uso do %(brand)s, clique <a>aqui</a> ou inicie um bate-papo com nosso bot usando o botão abaixo.",
-    "Chat with %(brand)s Bot": "Converse com o bot do %(brand)s",
-    "Help & About": "Ajuda e sobre",
-    "Versions": "Versões",
     "Composer": "Campo de texto",
     "Room list": "Lista de salas",
     "Autocomplete delay (ms)": "Atraso no preenchimento automático (ms)",
@@ -827,7 +821,6 @@
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Concorde com os Termos de Serviço do servidor de identidade (%(serverName)s), para que você possa ser descoberto por endereço de e-mail ou por número de celular.",
     "Discovery": "Contatos",
     "Deactivate account": "Desativar minha conta",
-    "Clear cache and reload": "Limpar cache e recarregar",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
     "Always show the window menu bar": "Mostrar a barra de menu na janela",
     "Read Marker lifetime (ms)": "Duração do marcador de leitura (ms)",
@@ -1691,8 +1684,6 @@
     "Review to ensure your account is safe": "Revise para assegurar que sua conta está segura",
     "See when people join, leave, or are invited to your active room": "Ver quando as pessoas entram, saem, ou são convidadas para sua sala ativa",
     "See when people join, leave, or are invited to this room": "Ver quando as pessoas entrarem, sairem ou são convidadas para esta sala",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Seu token de acesso dá acesso total à sua conta. Não o compartilhe com ninguém.",
-    "Olm version:": "Versão do Olm:",
     "There was an error loading your notification settings.": "Um erro ocorreu ao carregar suas configurações de notificação.",
     "Anyone in a space can find and join. You can select multiple spaces.": "Qualquer um em um espaço pode encontrar e se juntar. Você pode selecionar múltiplos espaços.",
     "Message search initialisation failed": "Falha na inicialização da pesquisa de mensagens",
@@ -3022,5 +3013,18 @@
         "missing_reason": "Por favor, descreva porque você está reportando.",
         "report_content_to_homeserver": "Denunciar conteúdo ao administrador do seu servidor principal",
         "description": "Reportar esta mensagem enviará o seu 'event ID' único para o/a administrador/a do seu Homeserver. Se as mensagens nesta sala são criptografadas, o/a administrador/a não conseguirá ler o texto da mensagem nem ver nenhuma imagem ou arquivo."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "versão do %(brand)s:",
+            "olm_version": "Versão do Olm:",
+            "help_link": "Para obter ajuda com o uso do %(brand)s, clique <a>aqui</a>.",
+            "help_link_chat_bot": "Para obter ajuda com o uso do %(brand)s, clique <a>aqui</a> ou inicie um bate-papo com nosso bot usando o botão abaixo.",
+            "chat_bot": "Converse com o bot do %(brand)s",
+            "title": "Ajuda e sobre",
+            "versions": "Versões",
+            "access_token_detail": "Seu token de acesso dá acesso total à sua conta. Não o compartilhe com ninguém.",
+            "clear_cache_reload": "Limpar cache e recarregar"
+        }
     }
 }

@@ -117,7 +117,6 @@
     "Return to login screen": "Terug naar het loginscherm",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s heeft geen toestemming jou meldingen te sturen - controleer je browserinstellingen",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s kreeg geen toestemming jou meldingen te sturen - probeer het opnieuw",
-    "%(brand)s version:": "%(brand)s-versie:",
     "Room %(roomId)s not visible": "Kamer %(roomId)s is niet zichtbaar",
     "%(roomName)s does not exist.": "%(roomName)s bestaat niet.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s is op dit moment niet toegankelijk.",
@@ -446,7 +445,6 @@
     "Restore from Backup": "Uit back-up herstellen",
     "Back up your keys before signing out to avoid losing them.": "Maak een back-up van je sleutels voordat je jezelf afmeldt om ze niet te verliezen.",
     "All keys backed up": "Alle sleutels zijn geback-upt",
-    "Chat with %(brand)s Bot": "Met %(brand)s-robot chatten",
     "Start using Key Backup": "Begin sleutelback-up te gebruiken",
     "Unable to verify phone number.": "Kan telefoonnummer niet verifiëren.",
     "Verification code": "Verificatiecode",
@@ -458,10 +456,6 @@
     "Language and region": "Taal en regio",
     "Account management": "Accountbeheer",
     "General": "Algemeen",
-    "For help with using %(brand)s, click <a>here</a>.": "Klik <a>hier</a> voor hulp bij het gebruiken van %(brand)s.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "Klik <a>hier</a> voor hulp bij het gebruiken van %(brand)s of begin een kamer met onze robot met de knop hieronder.",
-    "Help & About": "Hulp & info",
-    "Versions": "Versies",
     "Composer": "Opsteller",
     "Room list": "Kamerslijst",
     "Autocomplete delay (ms)": "Vertraging voor autoaanvullen (ms)",
@@ -744,7 +738,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om uit te nodigen op e-mailadres. <default>Gebruik de standaardserver (%(defaultIdentityServerName)s)</default> of beheer de server in de <settings>Instellingen</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om anderen uit te nodigen via e-mail. Beheer de server in de <settings>Instellingen</settings>.",
     "Explore rooms": "Kamers ontdekken",
-    "Clear cache and reload": "Cache wissen en herladen",
     "Show image": "Afbeelding tonen",
     "e.g. my-room": "bv. mijn-kamer",
     "Close dialog": "Dialoog sluiten",
@@ -1728,7 +1721,6 @@
     "No microphone found": "Geen microfoon gevonden",
     "We were unable to access your microphone. Please check your browser settings and try again.": "We hebben geen toegang tot je microfoon. Controleer je browserinstellingen en probeer het opnieuw.",
     "Unable to access your microphone": "Geen toegang tot je microfoon",
-    "Your access token gives full access to your account. Do not share it with anyone.": "Jouw toegangstoken geeft je toegang tot je account. Deel hem niet met anderen.",
     "Please enter a name for the space": "Vul een naam in voor deze space",
     "Connecting": "Verbinden",
     "Message search initialisation failed": "Zoeken in berichten opstarten is mislukt",
@@ -1891,7 +1883,6 @@
     "Surround selected text when typing special characters": "Geselecteerde tekst omsluiten bij het typen van speciale tekens",
     "Stop recording": "Opname stoppen",
     "Send voice message": "Spraakbericht versturen",
-    "Olm version:": "Olm-versie:",
     "More": "Meer",
     "Show sidebar": "Zijbalk weergeven",
     "Hide sidebar": "Zijbalk verbergen",
@@ -3708,5 +3699,18 @@
         "report_entire_room": "Rapporteer het hele kamer",
         "report_content_to_homeserver": "Inhoud melden aan de beheerder van jouw homeserver",
         "description": "Dit bericht melden zal zijn unieke ‘gebeurtenis-ID’ versturen naar de beheerder van jouw homeserver. Als de berichten in deze kamer versleuteld zijn, zal de beheerder van jouw homeserver het bericht niet kunnen lezen, noch enige bestanden of afbeeldingen zien."
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "%(brand)s-versie:",
+            "olm_version": "Olm-versie:",
+            "help_link": "Klik <a>hier</a> voor hulp bij het gebruiken van %(brand)s.",
+            "help_link_chat_bot": "Klik <a>hier</a> voor hulp bij het gebruiken van %(brand)s of begin een kamer met onze robot met de knop hieronder.",
+            "chat_bot": "Met %(brand)s-robot chatten",
+            "title": "Hulp & info",
+            "versions": "Versies",
+            "access_token_detail": "Jouw toegangstoken geeft je toegang tot je account. Deel hem niet met anderen.",
+            "clear_cache_reload": "Cache wissen en herladen"
+        }
     }
 }

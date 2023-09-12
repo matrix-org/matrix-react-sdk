@@ -61,8 +61,6 @@
     "Profile": "Amaɣnu",
     "Account": "Amiḍan",
     "General": "Amatu",
-    "Chat with %(brand)s Bot": "Asqerdec akked %(brand)s Bot",
-    "Versions": "Ileqman",
     "None": "Ula yiwen",
     "Composer": "Imsuddes",
     "Sounds": "Imesla",
@@ -348,8 +346,6 @@
     "Account management": "Asefrek n umiḍan",
     "Deactivate Account": "Sens amiḍan",
     "Deactivate account": "Sens amiḍan",
-    "Clear cache and reload": "Sfeḍ takatut tuffirt syen sali-d",
-    "%(brand)s version:": "Lqem %(brand)s:",
     "Ignored/Blocked": "Yettunfen/Yettusweḥlen",
     "Error unsubscribing from list": "Tuccḍa deg usefsex n ujerred seg texxamt",
     "Server rules": "Ilugan n uqeddac",
@@ -703,7 +699,6 @@
     "Contact your <a>server admin</a>.": "Nermes anedbal-inek·inem <a>n uqeddac</a>.",
     "Size must be a number": "Teɣzi ilaq ad tili d uṭṭun",
     "Discovery": "Tagrut",
-    "Help & About": "Tallalt & Ɣef",
     "Error adding ignored user/server": "Tuccḍa deg tmerna n useqdac/uqeddac yettwanfen",
     "Something went wrong. Please try again or view your console for hints.": "Yella wayen ur nteddu ara akken iwata, ma ulac aɣilif ales tikkelt-nniḍen neɣ senqed tadiwent-ik·im i yiwellihen.",
     "Error subscribing to list": "Tuccḍa deg ujerred ɣef tebdart",
@@ -920,8 +915,6 @@
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Mazal-ik·ikem <b>tbeṭṭuḍ isefka-inek·inem udmawanen</b> ɣef uqeddac n timagit <idserver />.",
     "Error encountered (%(errorDetail)s).": "Tuccaḍ i d-yettwamuggren (%(errorDetail)s).",
     "Custom font size can only be between %(min)s pt and %(max)s pt": "Teɣzi n tsefsit tudmawant tezmer kan ad tili gar %(min)s pt d %(max)s pt",
-    "For help with using %(brand)s, click <a>here</a>.": "I tallalt n useqdec n %(brand)s, sit <a>dagi</a>.",
-    "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.": "I tallalt ɣef useqdec n %(brand)s, sit <a>dagi</a> neɣ bdu adiwenni d wabuṭ-nneɣ s useqdec n tqeffalt ddaw.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "I wakken ad d-tazneḍ ugur n tɣellist i icudden ɣer Matrix, ttxil-k·m ɣer <a>tasertit n ukcaf n tɣellist</a> deg Matrix.org.",
     "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "Rnu dagi iseqdacen d yiqeddacen i tebɣiḍ ad tzegleḍ. Seqdec izamelen n yitran i wakken %(brand)s ad yemṣada d yal asekkil. D amedya, <code>@bot:*</code> izeggel akk iseqdacen i yesɛan isem \"abuṭ\" ɣef yal aqeddac.",
     "Subscribing to a ban list will cause you to join it!": "Amulteɣ ɣer tebdart n tegtin ad ak·akem-yawi ad tettekkiḍ deg-s!",
@@ -2117,5 +2110,16 @@
         "send_dm": "Azen izen uslig",
         "explore_rooms": "Snirem tixxamin tizuyaz",
         "create_room": "Rnu adiwenni n ugraw"
+    },
+    "setting": {
+        "help_about": {
+            "brand_version": "Lqem %(brand)s:",
+            "help_link": "I tallalt n useqdec n %(brand)s, sit <a>dagi</a>.",
+            "help_link_chat_bot": "I tallalt ɣef useqdec n %(brand)s, sit <a>dagi</a> neɣ bdu adiwenni d wabuṭ-nneɣ s useqdec n tqeffalt ddaw.",
+            "chat_bot": "Asqerdec akked %(brand)s Bot",
+            "title": "Tallalt & Ɣef",
+            "versions": "Ileqman",
+            "clear_cache_reload": "Sfeḍ takatut tuffirt syen sali-d"
+        }
     }
 }
