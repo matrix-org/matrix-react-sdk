@@ -73,31 +73,4 @@ describe("<LabsUserSettingsTab />", () => {
         const labsSections = container.getElementsByClassName("mx_SettingsSubsection");
         expect(labsSections).toHaveLength(9);
     });
-
-    it("allow setting a labs flag which requires unstable support once support is confirmed", async () => {
-        // enable labs
-        sdkConfigSpy.mockImplementation((configName) => configName === "show_labs_settings");
-
-        const deferred = defer<boolean>();
-        cli.doesServerSupportUnstableFeature.mockImplementation(async (featureName) => {
-            return featureName === "org.matrix.msc3952_intentional_mentions" ? deferred.promise : false;
-        });
-        MatrixClientBackedController.matrixClient = cli;
-
-        const { queryByText } = render(getComponent());
-
-        expect(
-            queryByText("Enable intentional mentions")!
-                .closest(".mx_SettingsFlag")!
-                .querySelector(".mx_AccessibleButton"),
-        ).toHaveAttribute("aria-disabled", "true");
-        deferred.resolve(true);
-        await waitFor(() => {
-            expect(
-                queryByText("Enable intentional mentions")!
-                    .closest(".mx_SettingsFlag")!
-                    .querySelector(".mx_AccessibleButton"),
-            ).toHaveAttribute("aria-disabled", "false");
-        });
-    });
 });

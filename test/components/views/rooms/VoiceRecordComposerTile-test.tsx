@@ -103,10 +103,6 @@ describe("<VoiceRecordComposerTile/>", () => {
                 return fn(roomId);
             },
         );
-
-        jest.spyOn(SettingsStore, "getValue").mockImplementation(
-            (settingName) => settingName === "feature_intentional_mentions",
-        );
     });
 
     describe("send", () => {

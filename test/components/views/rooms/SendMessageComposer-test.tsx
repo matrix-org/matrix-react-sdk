@@ -99,6 +99,7 @@ describe("<SendMessageComposer/>", () => {
             expect(content).toEqual({
                 body: "hello world",
                 msgtype: "m.text",
+                "m.mentions": {},
             });
         });
 
@@ -114,6 +115,7 @@ describe("<SendMessageComposer/>", () => {
                 msgtype: "m.text",
                 format: "org.matrix.custom.html",
                 formatted_body: "hello <em>world</em>",
+                "m.mentions": {},
             });
         });
 
@@ -129,6 +131,7 @@ describe("<SendMessageComposer/>", () => {
                 msgtype: "m.emote",
                 format: "org.matrix.custom.html",
                 formatted_body: "blinks <strong>quickly</strong>",
+                "m.mentions": {},
             });
         });
 
@@ -143,6 +146,7 @@ describe("<SendMessageComposer/>", () => {
             expect(content).toEqual({
                 body: "✨sparkles✨",
                 msgtype: "m.emote",
+                "m.mentions": {},
             });
         });
 
@@ -157,21 +161,12 @@ describe("<SendMessageComposer/>", () => {
             expect(content).toEqual({
                 body: "/dev/null is my favourite place",
                 msgtype: "m.text",
+                "m.mentions": {},
             });
         });
     });
 
     describe("attachMentions", () => {
-        beforeEach(() => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation(
-                (settingName) => settingName === "feature_intentional_mentions",
-            );
-        });
-
-        afterEach(() => {
-            jest.spyOn(SettingsStore, "getValue").mockReset();
-        });
-
         const partsCreator = createPartCreator();
 
         it("no mentions", () => {
@@ -490,6 +485,7 @@ describe("<SendMessageComposer/>", () => {
             expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
                 body: "test message",
                 msgtype: MsgType.Text,
+                "m.mentions": {},
             });
         });
 
@@ -509,6 +505,7 @@ describe("<SendMessageComposer/>", () => {
             expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
                 body: "test message",
                 msgtype: MsgType.Text,
+                "m.mentions": {},
             });
 
             expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({ action: `effects.confetti` });
@@ -536,6 +533,7 @@ describe("<SendMessageComposer/>", () => {
             expect(mockClient.sendMessage).toHaveBeenCalledWith("myfakeroom", null, {
                 body: "test message",
                 msgtype: MsgType.Text,
+                "m.mentions": {},
             });
 
             expect(defaultDispatcher.dispatch).not.toHaveBeenCalledWith({ action: `effects.confetti` });
