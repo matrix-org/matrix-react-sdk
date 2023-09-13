@@ -16,9 +16,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent, createRef, KeyboardEvent, SyntheticEvent } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
+import { Room, RoomType, JoinRule, Preset, Visibility } from "matrix-js-sdk/src/matrix";
 
 import SdkConfig from "../../../SdkConfig";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
@@ -35,6 +33,7 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { privateShouldBeEncrypted } from "../../../utils/rooms";
 import SettingsStore from "../../../settings/SettingsStore";
+import LabelledCheckbox from "../elements/LabelledCheckbox";
 
 interface IProps {
     type?: RoomType;
@@ -47,15 +46,46 @@ interface IProps {
 }
 
 interface IState {
+    /**
+     * The selected room join rule.
+     */
     joinRule: JoinRule;
-    isPublic: boolean;
+    /**
+     * Indicates whether the created room should have public visibility (ie, it should be
+     * shown in the public room list). Only applicable if `joinRule` == `JoinRule.Knock`.
+     */
+    isPublicKnockRoom: boolean;
+    /**
+     * Indicates whether end-to-end encryption is enabled for the room.
+     */
     isEncrypted: boolean;
+    /**
+     * The room name.
+     */
     name: string;
+    /**
+     * The room topic.
+     */
     topic: string;
+    /**
+     * The room alias.
+     */
     alias: string;
+    /**
+     * Indicates whether the details section is open.
+     */
     detailsOpen: boolean;
+    /**
+     * Indicates whether federation is disabled for the room.
+     */
     noFederate: boolean;
+    /**
+     * Indicates whether the room name is valid.
+     */
     nameIsValid: boolean;
+    /**
+     * Indicates whether the user can change encryption settings for the room.
+     */
     canChangeEncryption: boolean;
 }
 
@@ -80,7 +110,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
 
         const cli = MatrixClientPeg.safeGet();
         this.state = {
-            isPublic: this.props.defaultPublic || false,
+            isPublicKnockRoom: this.props.defaultPublic || false,
             isEncrypted: this.props.defaultEncrypted ?? privateShouldBeEncrypted(cli),
             joinRule,
             name: this.props.defaultName || "",
@@ -131,6 +161,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
 
         if (this.state.joinRule === JoinRule.Knock) {
             opts.joinRule = JoinRule.Knock;
+            createOpts.visibility = this.state.isPublicKnockRoom ? Visibility.Public : Visibility.Private;
         }
 
         return opts;
@@ -217,6 +248,10 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         return result;
     };
 
+    private onIsPublicKnockRoomChange = (isPublicKnockRoom: boolean): void => {
+        this.setState({ isPublicKnockRoom });
+    };
+
     private static validateRoomName = withValidation({
         rules: [
             {
@@ -253,7 +288,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         "Everyone in <SpaceName/> will be able to find and join this room.",
                         {},
                         {
-                            SpaceName: () => <b>{this.props.parentSpace?.name ?? _t("Unnamed Space")}</b>,
+                            SpaceName: () => <b>{this.props.parentSpace?.name ?? _t("common|unnamed_space")}</b>,
                         },
                     )}
                     &nbsp;
@@ -267,7 +302,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         "Anyone will be able to find and join this room, not just members of <SpaceName/>.",
                         {},
                         {
-                            SpaceName: () => <b>{this.props.parentSpace?.name ?? _t("Unnamed Space")}</b>,
+                            SpaceName: () => <b>{this.props.parentSpace?.name ?? _t("common|unnamed_space")}</b>,
                         },
                     )}
                     &nbsp;
@@ -300,6 +335,18 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             );
         }
 
+        let visibilitySection: JSX.Element | undefined;
+        if (this.state.joinRule === JoinRule.Knock) {
+            visibilitySection = (
+                <LabelledCheckbox
+                    className="mx_CreateRoomDialog_labelledCheckbox"
+                    label={_t("Make this room visible in the public room directory.")}
+                    onChange={this.onIsPublicKnockRoomChange}
+                    value={this.state.isPublicKnockRoom}
+                />
+            );
+        }
+
         let e2eeSection: JSX.Element | undefined;
         if (this.state.joinRule !== JoinRule.Public) {
             let microcopy: string;
@@ -313,8 +360,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                 }
             } else {
                 microcopy = _t(
-                    "Your server admin has disabled end-to-end encryption by default " +
-                        "in private rooms & Direct Messages.",
+                    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
                 );
             }
             e2eeSection = (
@@ -332,25 +378,26 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         }
 
         let federateLabel = _t(
-            "You might enable this if the room will only be used for collaborating with internal " +
-                "teams on your homeserver. This cannot be changed later.",
+            "You might enable this if the room will only be used for collaborating with internal teams on your homeserver. This cannot be changed later.",
         );
         if (SdkConfig.get().default_federate === false) {
             // We only change the label if the default setting is different to avoid jarring text changes to the
             // user. They will have read the implications of turning this off/on, so no need to rephrase for them.
             federateLabel = _t(
-                "You might disable this if the room will be used for collaborating with external " +
-                    "teams who have their own homeserver. This cannot be changed later.",
+                "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.",
             );
         }
 
         let title: string;
         if (isVideoRoom) {
-            title = _t("Create a video room");
+            title = _t("create_room|title_video_room");
         } else if (this.props.parentSpace || this.state.joinRule === JoinRule.Knock) {
-            title = _t("Create a room");
+            title = _t("action|create_a_room");
         } else {
-            title = this.state.joinRule === JoinRule.Public ? _t("Create a public room") : _t("Create a private room");
+            title =
+                this.state.joinRule === JoinRule.Public
+                    ? _t("create_room|title_public_room")
+                    : _t("create_room|title_private_room");
         }
 
         return (
@@ -364,7 +411,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                     <div className="mx_Dialog_content">
                         <Field
                             ref={this.nameField}
-                            label={_t("Name")}
+                            label={_t("common|name")}
                             onChange={this.onNameChange}
                             onValidate={this.onNameValidate}
                             value={this.state.name}
@@ -388,6 +435,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         />
 
                         {publicPrivateLabel}
+                        {visibilitySection}
                         {e2eeSection}
                         {aliasField}
                         <details onToggle={this.onDetailsToggled} className="mx_CreateRoomDialog_details">
@@ -406,7 +454,9 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                     </div>
                 </form>
                 <DialogButtons
-                    primaryButton={isVideoRoom ? _t("Create video room") : _t("Create room")}
+                    primaryButton={
+                        isVideoRoom ? _t("create_room|action_create_video_room") : _t("create_room|action_create_room")
+                    }
                     onPrimaryButtonClick={this.onOk}
                     onCancel={this.onCancel}
                 />

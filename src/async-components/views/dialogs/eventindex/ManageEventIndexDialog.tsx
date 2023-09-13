@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../languageHandler";
 import SdkConfig from "../../../../SdkConfig";
@@ -195,10 +195,10 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
             >
                 {eventIndexingSettings}
                 <DialogButtons
-                    primaryButton={_t("Done")}
+                    primaryButton={_t("action|done")}
                     onPrimaryButtonClick={this.props.onFinished}
                     primaryButtonClass="primary"
-                    cancelButton={_t("Disable")}
+                    cancelButton={_t("action|disable")}
                     onCancel={this.onDisable}
                     cancelButtonClass="danger"
                 />

@@ -117,7 +117,11 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
 
     public render(): React.ReactNode {
         return (
-            <SettingsSubsection heading={_t("Font size")} stretchContent data-testid="mx_FontScalingPanel">
+            <SettingsSubsection
+                heading={_t("settings|appearance|font_size")}
+                stretchContent
+                data-testid="mx_FontScalingPanel"
+            >
                 <EventTilePreview
                     className="mx_FontScalingPanel_preview"
                     message={this.MESSAGE_PREVIEW_TEXT}
@@ -136,7 +140,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
                         onChange={this.onFontSizeChanged}
                         displayFunc={(_) => ""}
                         disabled={this.state.useCustomFontSize}
-                        label={_t("Font size")}
+                        label={_t("settings|appearance|font_size")}
                     />
                     <div className="mx_FontScalingPanel_fontSlider_largeText">Aa</div>
                 </div>
@@ -159,7 +163,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
 
                 <Field
                     type="number"
-                    label={_t("Font size")}
+                    label={_t("settings|appearance|font_size")}
                     autoComplete="off"
                     placeholder={this.state.fontSize.toString()}
                     value={this.state.fontSize.toString()}

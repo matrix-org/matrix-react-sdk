@@ -14,10 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
-import { IJoinRuleEventContent, JoinRule, RestrictedAllowType } from "matrix-js-sdk/src/@types/partials";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import React, { ReactNode, useEffect, useState } from "react";
+import {
+    IJoinRuleEventContent,
+    JoinRule,
+    RestrictedAllowType,
+    Room,
+    EventType,
+    Visibility,
+} from "matrix-js-sdk/src/matrix";
 
 import StyledRadioGroup, { IDefinition } from "../elements/StyledRadioGroup";
 import { _t } from "../../../languageHandler";
@@ -36,6 +41,7 @@ import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "../../../utils/PreferredRoomVersions";
 import SettingsStore from "../../../settings/SettingsStore";
+import LabelledCheckbox from "../elements/LabelledCheckbox";
 
 export interface JoinRuleSettingsProps {
     room: Room;
@@ -77,6 +83,22 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
         joinRule === JoinRule.Restricted
             ? content?.allow?.filter((o) => o.type === RestrictedAllowType.RoomMembership).map((o) => o.room_id)
             : undefined;
+
+    const [isPublicKnockRoom, setIsPublicKnockRoom] = useState(false);
+
+    useEffect(() => {
+        if (joinRule === JoinRule.Knock) {
+            cli.getRoomDirectoryVisibility(room.roomId)
+                .then(({ visibility }) => setIsPublicKnockRoom(visibility === Visibility.Public))
+                .catch(onError);
+        }
+    }, [cli, joinRule, onError, room.roomId]);
+
+    const onIsPublicKnockRoomChange = (checked: boolean): void => {
+        cli.setRoomDirectoryVisibility(room.roomId, checked ? Visibility.Public : Visibility.Private)
+            .then(() => setIsPublicKnockRoom(checked))
+            .catch(onError);
+    };
 
     const editRestrictedRoomIds = async (): Promise<string[] | undefined> => {
         let selected = restrictedAllowRoomIds;
@@ -169,7 +191,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
         },
         {
             value: JoinRule.Public,
-            label: _t("Public"),
+            label: _t("common|public"),
             description: (
                 <>
                     {_t("Anyone can find and join.")}
@@ -255,7 +277,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                         {shownSpaces.map((room) => {
                             return (
                                 <span key={room.roomId}>
-                                    <RoomAvatar room={room} height={32} width={32} />
+                                    <RoomAvatar room={room} size="32px" />
                                     {room.name}
                                 </span>
                             );
@@ -299,7 +321,22 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                     {preferredKnockVersion && upgradeRequiredPill}
                 </>
             ),
-            description: _t("People cannot join unless access is granted."),
+            description: (
+                <>
+                    {_t("People cannot join unless access is granted.")}
+                    <LabelledCheckbox
+                        className="mx_JoinRuleSettings_labelledCheckbox"
+                        disabled={joinRule !== JoinRule.Knock}
+                        label={
+                            room.isSpaceRoom()
+                                ? _t("Make this space visible in the public room directory.")
+                                : _t("Make this room visible in the public room directory.")
+                        }
+                        onChange={onIsPublicKnockRoomChange}
+                        value={isPublicKnockRoom}
+                    />
+                </>
+            ),
         });
     }
 
@@ -325,9 +362,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                     warning = (
                         <b>
                             {_t(
-                                "This room is in some spaces you're not an admin of. " +
-                                    "In those spaces, the old room will still be shown, " +
-                                    "but people will be prompted to join the new one.",
+                                "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.",
                             )}
                         </b>
                     );
@@ -337,8 +372,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                     targetVersion,
                     <>
                         {_t(
-                            "This upgrade will allow members of selected spaces " +
-                                "access to this room without an invite.",
+                            "This upgrade will allow members of selected spaces access to this room without an invite.",
                         )}
                         {warning}
                     </>,

@@ -146,7 +146,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
 
     private async getUpdatedDiagnostics(): Promise<void> {
         const cli = MatrixClientPeg.safeGet();
-        const crypto = cli.crypto;
+        const crypto = cli.getCrypto();
         if (!crypto) return;
 
         const secretStorage = cli.secretStorage;
@@ -259,17 +259,14 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                     <>
                         <SettingsSubsectionText>
                             {_t(
-                                "This session is <b>not backing up your keys</b>, " +
-                                    "but you do have an existing backup you can restore from " +
-                                    "and add to going forward.",
+                                "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.",
                                 {},
                                 { b: (sub) => <b>{sub}</b> },
                             )}
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
                             {_t(
-                                "Connect this session to key backup before signing out to avoid " +
-                                    "losing any keys that may only be on this session.",
+                                "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.",
                             )}
                         </SettingsSubsectionText>
                     </>
@@ -295,105 +292,6 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 );
             }
 
-            let backupSigStatuses: React.ReactNode | undefined = backupSigStatus?.sigs?.map((sig, i) => {
-                const deviceName = sig.device ? sig.device.getDisplayName() || sig.device.deviceId : null;
-                const validity = (sub: string): JSX.Element => (
-                    <span className={sig.valid ? "mx_SecureBackupPanel_sigValid" : "mx_SecureBackupPanel_sigInvalid"}>
-                        {sub}
-                    </span>
-                );
-                const verify = (sub: string): JSX.Element => (
-                    <span
-                        className={
-                            sig.device && sig.deviceTrust?.isVerified()
-                                ? "mx_SecureBackupPanel_deviceVerified"
-                                : "mx_SecureBackupPanel_deviceNotVerified"
-                        }
-                    >
-                        {sub}
-                    </span>
-                );
-                const device = (sub: string): JSX.Element => (
-                    <span className="mx_SecureBackupPanel_deviceName">{deviceName}</span>
-                );
-                const fromThisDevice =
-                    sig.device && sig.device.getFingerprint() === MatrixClientPeg.safeGet().getDeviceEd25519Key();
-                const fromThisUser =
-                    sig.crossSigningId && sig.deviceId === MatrixClientPeg.safeGet().getCrossSigningId();
-                let sigStatus;
-                if (sig.valid && fromThisUser) {
-                    sigStatus = _t(
-                        "Backup has a <validity>valid</validity> signature from this user",
-                        {},
-                        { validity },
-                    );
-                } else if (!sig.valid && fromThisUser) {
-                    sigStatus = _t(
-                        "Backup has a <validity>invalid</validity> signature from this user",
-                        {},
-                        { validity },
-                    );
-                } else if (sig.crossSigningId) {
-                    sigStatus = _t(
-                        "Backup has a signature from <verify>unknown</verify> user with ID %(deviceId)s",
-                        { deviceId: sig.deviceId },
-                        { verify },
-                    );
-                } else if (!sig.device) {
-                    sigStatus = _t(
-                        "Backup has a signature from <verify>unknown</verify> session with ID %(deviceId)s",
-                        { deviceId: sig.deviceId },
-                        { verify },
-                    );
-                } else if (sig.valid && fromThisDevice) {
-                    sigStatus = _t(
-                        "Backup has a <validity>valid</validity> signature from this session",
-                        {},
-                        { validity },
-                    );
-                } else if (!sig.valid && fromThisDevice) {
-                    // it can happen...
-                    sigStatus = _t(
-                        "Backup has an <validity>invalid</validity> signature from this session",
-                        {},
-                        { validity },
-                    );
-                } else if (sig.valid && sig.deviceTrust?.isVerified()) {
-                    sigStatus = _t(
-                        "Backup has a <validity>valid</validity> signature from " +
-                            "<verify>verified</verify> session <device></device>",
-                        {},
-                        { validity, verify, device },
-                    );
-                } else if (sig.valid && !sig.deviceTrust?.isVerified()) {
-                    sigStatus = _t(
-                        "Backup has a <validity>valid</validity> signature from " +
-                            "<verify>unverified</verify> session <device></device>",
-                        {},
-                        { validity, verify, device },
-                    );
-                } else if (!sig.valid && sig.deviceTrust?.isVerified()) {
-                    sigStatus = _t(
-                        "Backup has an <validity>invalid</validity> signature from " +
-                            "<verify>verified</verify> session <device></device>",
-                        {},
-                        { validity, verify, device },
-                    );
-                } else if (!sig.valid && !sig.deviceTrust?.isVerified()) {
-                    sigStatus = _t(
-                        "Backup has an <validity>invalid</validity> signature from " +
-                            "<verify>unverified</verify> session <device></device>",
-                        {},
-                        { validity, verify, device },
-                    );
-                }
-
-                return <div key={i}>{sigStatus}</div>;
-            });
-            if (!backupSigStatus?.sigs?.length) {
-                backupSigStatuses = _t("Backup is not signed by any of your sessions");
-            }
-
             let trustedLocally: string | undefined;
             if (backupSigStatus?.trusted_locally) {
                 trustedLocally = _t("This backup is trusted because it has been restored on this session");
@@ -415,7 +313,6 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             extraDetails = (
                 <>
                     {uploadStatus}
-                    <div>{backupSigStatuses}</div>
                     <div>{trustedLocally}</div>
                 </>
             );
@@ -458,7 +355,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         if (secretStorageKeyInAccount) {
             actions.push(
                 <AccessibleButton key="reset" kind="danger" onClick={this.resetSecretStorage}>
-                    {_t("Reset")}
+                    {_t("action|reset")}
                 </AccessibleButton>,
             );
         }
@@ -482,9 +379,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             <>
                 <SettingsSubsectionText>
                     {_t(
-                        "Back up your encryption keys with your account data in case you " +
-                            "lose access to your sessions. Your keys will be secured with a " +
-                            "unique Security Key.",
+                        "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.",
                     )}
                 </SettingsSubsectionText>
                 {statusDescription}

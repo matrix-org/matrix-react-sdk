@@ -155,7 +155,7 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
         options: [
             {
                 key: { roomServer, instanceId: undefined },
-                label: _t("Matrix"),
+                label: _t("common|matrix"),
             },
             ...(roomServer === homeServer && protocols
                 ? Object.values(protocols)
@@ -193,7 +193,7 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
                             {
                                 title: _t("Add a new server"),
                                 description: _t("Enter the name of a new server you want to explore."),
-                                button: _t("Add"),
+                                button: _t("action|add"),
                                 hasCancel: false,
                                 placeholder: _t("Server name"),
                                 validator: validServer,

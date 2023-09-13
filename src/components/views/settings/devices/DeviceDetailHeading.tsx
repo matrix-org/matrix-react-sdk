@@ -84,14 +84,12 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({ devic
                             <>
                                 <p>
                                     {_t(
-                                        `Other users in direct messages and rooms that you join ` +
-                                            `are able to view a full list of your sessions.`,
+                                        "Other users in direct messages and rooms that you join are able to view a full list of your sessions.",
                                     )}
                                 </p>
                                 <p>
                                     {_t(
-                                        `This provides them with confidence that they are really speaking to you, ` +
-                                            `but it also means they can see the session name you enter here.`,
+                                        "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.",
                                     )}
                                 </p>
                             </>
@@ -111,7 +109,7 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({ devic
                     data-testid="device-rename-submit-cta"
                     disabled={isLoading}
                 >
-                    {_t("Save")}
+                    {_t("action|save")}
                 </AccessibleButton>
                 <AccessibleButton
                     onClick={stopEditing}
@@ -119,7 +117,7 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({ devic
                     data-testid="device-rename-cancel-cta"
                     disabled={isLoading}
                 >
-                    {_t("Cancel")}
+                    {_t("action|cancel")}
                 </AccessibleButton>
                 {isLoading && <Spinner w={16} h={16} />}
             </div>
@@ -141,7 +139,7 @@ export const DeviceDetailHeading: React.FC<Props> = ({ device, saveDeviceName })
                 className="mx_DeviceDetailHeading_renameCta"
                 data-testid="device-heading-rename-cta"
             >
-                {_t("Rename")}
+                {_t("action|rename")}
             </AccessibleButton>
         </div>
     );

@@ -126,7 +126,6 @@ export const mockClientMethodsEvents = () => ({
  * Returns basic mocked client methods related to server support
  */
 export const mockClientMethodsServer = (): Partial<Record<MethodLikeKeys<MatrixClient>, unknown>> => ({
-    doesServerSupportSeparateAddAndBind: jest.fn(),
     getIdentityServerUrl: jest.fn(),
     getHomeserverUrl: jest.fn(),
     getCapabilities: jest.fn().mockReturnValue({}),
@@ -155,10 +154,6 @@ export const mockClientMethodsCrypto = (): Partial<
     getStoredCrossSigningForUser: jest.fn(),
     checkKeyBackup: jest.fn().mockReturnValue({}),
     secretStorage: { hasKey: jest.fn() },
-    crypto: {
-        isSecretStorageReady: jest.fn(),
-        getSessionBackupPrivateKey: jest.fn(),
-    },
     getCrypto: jest.fn().mockReturnValue({
         getUserDeviceInfo: jest.fn(),
         getCrossSigningStatus: jest.fn().mockResolvedValue({
@@ -171,5 +166,7 @@ export const mockClientMethodsCrypto = (): Partial<
             },
         }),
         isCrossSigningReady: jest.fn().mockResolvedValue(true),
+        isSecretStorageReady: jest.fn(),
+        getSessionBackupPrivateKey: jest.fn(),
     }),
 });

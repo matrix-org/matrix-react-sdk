@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import React, { ChangeEvent, ContextType, createRef, SyntheticEvent } from "react";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import EditableItemList from "../elements/EditableItemList";
 import { _t } from "../../../languageHandler";
@@ -71,7 +70,7 @@ class EditableAliasesList extends EditableItemList<IEditableAliasesListProps> {
                     roomId={this.props.roomId}
                 />
                 <AccessibleButton onClick={this.onAliasAdded} kind="primary">
-                    {_t("Add")}
+                    {_t("action|add")}
                 </AccessibleButton>
             </form>
         );
@@ -183,8 +182,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Error updating main address"),
                     description: _t(
-                        "There was an error updating the room's main address. It may not be allowed by the server " +
-                            "or a temporary failure occurred.",
+                        "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.",
                     ),
                 });
                 this.setState({ canonicalAlias: oldAlias });
@@ -223,8 +221,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Error updating main address"),
                     description: _t(
-                        "There was an error updating the room's alternative addresses. " +
-                            "It may not be allowed by the server or a temporary failure occurred.",
+                        "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.",
                     ),
                 });
             })
@@ -259,8 +256,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                 Modal.createDialog(ErrorDialog, {
                     title: _t("Error creating address"),
                     description: _t(
-                        "There was an error creating that address. It may not be allowed by the server " +
-                            "or a temporary failure occurred.",
+                        "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.",
                     ),
                 });
             });
@@ -287,8 +283,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                     description = _t("You don't have permission to delete the address.");
                 } else {
                     description = _t(
-                        "There was an error removing that address. It may no longer exist or a temporary " +
-                            "error occurred.",
+                        "There was an error removing that address. It may no longer exist or a temporary error occurred.",
                     );
                 }
                 Modal.createDialog(ErrorDialog, {
@@ -451,20 +446,18 @@ export default class AliasSettings extends React.Component<IProps, IState> {
                     description={
                         isSpaceRoom
                             ? _t(
-                                  "Set addresses for this space so users can find this space " +
-                                      "through your homeserver (%(localDomain)s)",
+                                  "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)",
                                   { localDomain },
                               )
                             : _t(
-                                  "Set addresses for this room so users can find this room " +
-                                      "through your homeserver (%(localDomain)s)",
+                                  "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)",
                                   { localDomain },
                               )
                     }
                 >
                     <details onToggle={this.onLocalAliasesToggled} open={this.state.detailsOpen}>
                         <summary className="mx_AliasSettings_localAddresses">
-                            {this.state.detailsOpen ? _t("Show less") : _t("Show more")}
+                            {this.state.detailsOpen ? _t("room_list|show_less") : _t("Show more")}
                         </summary>
                         {localAliasesList}
                     </details>

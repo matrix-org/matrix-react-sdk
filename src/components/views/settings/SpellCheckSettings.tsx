@@ -47,7 +47,7 @@ export class ExistingSpellCheckLanguage extends React.Component<ExistingSpellChe
             <div className="mx_ExistingSpellCheckLanguage">
                 <span className="mx_ExistingSpellCheckLanguage_language">{this.props.language}</span>
                 <AccessibleButton onClick={this.onRemove} kind="danger_sm">
-                    {_t("Remove")}
+                    {_t("action|remove")}
                 </AccessibleButton>
             </div>
         );
@@ -93,7 +93,7 @@ export default class SpellCheckLanguages extends React.Component<SpellCheckLangu
 
         const addButton = (
             <AccessibleButton onClick={this.onAddClick} kind="primary">
-                {_t("Add")}
+                {_t("action|add")}
             </AccessibleButton>
         );
 

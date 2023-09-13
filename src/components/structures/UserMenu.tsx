@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, ReactNode } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -327,7 +327,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             homeButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconHome"
-                    label={_t("Home")}
+                    label={_t("common|home")}
                     onClick={this.onHomeClick}
                 />
             );
@@ -366,7 +366,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 <IconizedContextMenuOption
                     className="mx_IconizedContextMenu_option_red"
                     iconClassName="mx_UserMenu_iconSignOut"
-                    label={_t("Sign out")}
+                    label={_t("action|sign_out")}
                     onClick={this.onSignOutClick}
                 />
             </IconizedContextMenuOptionList>
@@ -378,7 +378,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     {homeButton}
                     <IconizedContextMenuOption
                         iconClassName="mx_UserMenu_iconSettings"
-                        label={_t("Settings")}
+                        label={_t("common|settings")}
                         onClick={(e) => this.onSettingsOpen(e)}
                     />
                     {feedbackButton}
@@ -449,7 +449,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     className="mx_UserMenu_contextMenuButton"
                     onClick={this.onOpenMenuClick}
                     inputRef={this.buttonRef}
-                    label={_t("User menu")}
+                    label={_t("a11y|user_menu")}
                     isExpanded={!!this.state.contextMenuPosition}
                     onContextMenu={this.onContextMenu}
                 >
@@ -458,9 +458,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                             idName={userId}
                             name={displayName}
                             url={avatarUrl}
-                            width={avatarSize}
-                            height={avatarSize}
-                            resizeMethod="crop"
+                            size={avatarSize + "px"}
                             className="mx_UserMenu_userAvatar_BaseAvatar"
                         />
                         {liveAvatarAddon}

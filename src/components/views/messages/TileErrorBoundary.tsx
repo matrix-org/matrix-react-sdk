@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import classNames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
@@ -95,7 +95,7 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
                     <>
                         &nbsp;
                         <AccessibleButton onClick={this.onViewSource} kind="link">
-                            {_t("View Source")}
+                            {_t("action|view_source")}
                         </AccessibleButton>
                     </>
                 );

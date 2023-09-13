@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import {
@@ -36,8 +35,7 @@ const showStopBroadcastingDialog = async (): Promise<boolean> => {
         description: (
             <p>
                 {_t(
-                    "Are you sure you want to stop your live broadcast? " +
-                        "This will end the broadcast and the full recording will be available in the room.",
+                    "Are you sure you want to stop your live broadcast? This will end the broadcast and the full recording will be available in the room.",
                 )}
             </p>
         ),

@@ -16,12 +16,15 @@ limitations under the License.
 
 import React, { createRef, ReactNode } from "react";
 import classNames from "classnames";
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import {
+    IEventRelation,
+    MatrixEvent,
+    Room,
+    RoomMember,
+    EventType,
+    THREAD_RELATION_TYPE,
+} from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -61,6 +64,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 import { UIFeature } from "../../../settings/UIFeature";
+import { formatTimeLeft } from "../../../DateUtils";
 
 let instanceCount = 0;
 
@@ -74,7 +78,7 @@ function SendButton(props: ISendButtonProps): JSX.Element {
         <AccessibleTooltipButton
             className="mx_MessageComposer_sendMessage"
             onClick={props.onClick}
-            title={props.title ?? _t("Send message")}
+            title={props.title ?? _t("composer|send_button_title")}
             data-testid="sendmessagebtn"
         />
     );
@@ -299,19 +303,19 @@ export class MessageComposer extends React.Component<IProps, IState> {
         if (this.props.replyToEvent) {
             const replyingToThread = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name;
             if (replyingToThread && this.props.e2eStatus) {
-                return _t("Reply to encrypted thread…");
+                return _t("composer|placeholder_thread_encrypted");
             } else if (replyingToThread) {
-                return _t("Reply to thread…");
+                return _t("composer|placeholder_thread");
             } else if (this.props.e2eStatus) {
-                return _t("Send an encrypted reply…");
+                return _t("composer|placeholder_reply_encrypted");
             } else {
-                return _t("Send a reply…");
+                return _t("composer|placeholder_reply");
             }
         } else {
             if (this.props.e2eStatus) {
-                return _t("Send an encrypted message…");
+                return _t("composer|placeholder_encrypted");
             } else {
-                return _t("Send a message…");
+                return _t("composer|placeholder");
             }
         }
     };
@@ -371,7 +375,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
         const { isRichTextEnabled, composerContent } = this.state;
         const convertedContent = isRichTextEnabled
-            ? await richToPlain(composerContent)
+            ? await richToPlain(composerContent, false)
             : await plainToRich(composerContent, false);
 
         this.setState({
@@ -566,11 +570,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         if (this.state.recordingTimeLeftSeconds) {
             const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
             recordingTooltip = (
-                <Tooltip
-                    id={this.tooltipId}
-                    label={_t("%(seconds)ss left", { seconds: secondsLeft })}
-                    alignment={Alignment.Top}
-                />
+                <Tooltip id={this.tooltipId} label={formatTimeLeft(secondsLeft)} alignment={Alignment.Top} />
             );
         }
 

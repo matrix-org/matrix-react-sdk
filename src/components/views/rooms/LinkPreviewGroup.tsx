@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 import React, { useContext, useEffect } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { IPreviewUrlResponse, MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixEvent, MatrixError, IPreviewUrlResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { useStateToggle } from "../../../hooks/useStateToggle";
 import LinkPreviewWidget from "./LinkPreviewWidget";
@@ -60,7 +58,7 @@ const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onH
         toggleButton = (
             <AccessibleButton onClick={toggleExpanded}>
                 {expanded
-                    ? _t("Collapse")
+                    ? _t("action|collapse")
                     : _t("Show %(count)s other previews", { count: previews.length - showPreviews.length })}
             </AccessibleButton>
         );

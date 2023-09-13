@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
@@ -39,10 +39,12 @@ import QuestionDialog from "../../../dialogs/QuestionDialog";
 import { FilterVariation } from "../../devices/filter";
 import { OtherSessionsSectionHeading } from "../../devices/OtherSessionsSectionHeading";
 import { SettingsSection } from "../../shared/SettingsSection";
+import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
+import { OidcLogoutDialog } from "../../../dialogs/oidc/OidcLogoutDialog";
 
 const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
-        title: _t("Sign out"),
+        title: _t("action|sign_out"),
         description: (
             <div>
                 <p>
@@ -52,8 +54,18 @@ const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> 
                 </p>
             </div>
         ),
-        cancelButton: _t("Cancel"),
-        button: _t("Sign out"),
+        cancelButton: _t("action|cancel"),
+        button: _t("action|sign_out"),
+    });
+    const [confirmed] = await finished;
+
+    return !!confirmed;
+};
+
+const confirmDelegatedAuthSignOut = async (delegatedAuthAccountUrl: string, deviceId: string): Promise<boolean> => {
+    const { finished } = Modal.createDialog(OidcLogoutDialog, {
+        deviceId,
+        delegatedAuthAccountUrl,
     });
     const [confirmed] = await finished;
 
@@ -63,6 +75,7 @@ const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> 
 const useSignOut = (
     matrixClient: MatrixClient,
     onSignoutResolvedCallback: () => Promise<void>,
+    delegatedAuthAccountUrl?: string,
 ): {
     onSignOutCurrentDevice: () => void;
     onSignOutOtherDevices: (deviceIds: ExtendedDevice["device_id"][]) => Promise<void>;
@@ -84,19 +97,44 @@ const useSignOut = (
         if (!deviceIds.length) {
             return;
         }
-        const userConfirmedSignout = await confirmSignOut(deviceIds.length);
-        if (!userConfirmedSignout) {
+        // we can only sign out exactly one OIDC-aware device at a time
+        // we should not encounter this
+        if (delegatedAuthAccountUrl && deviceIds.length !== 1) {
+            logger.warn("Unexpectedly tried to sign out multiple OIDC-aware devices.");
             return;
+        }
+
+        // delegated auth logout flow confirms and signs out together
+        // so only confirm if we are NOT doing a delegated auth sign out
+        if (!delegatedAuthAccountUrl) {
+            const userConfirmedSignout = await confirmSignOut(deviceIds.length);
+            if (!userConfirmedSignout) {
+                return;
+            }
         }
 
         try {
             setSigningOutDeviceIds([...signingOutDeviceIds, ...deviceIds]);
-            await deleteDevicesWithInteractiveAuth(matrixClient, deviceIds, async (success): Promise<void> => {
+
+            const onSignOutFinished = async (success: boolean): Promise<void> => {
                 if (success) {
                     await onSignoutResolvedCallback();
                 }
                 setSigningOutDeviceIds(signingOutDeviceIds.filter((deviceId) => !deviceIds.includes(deviceId)));
-            });
+            };
+
+            if (delegatedAuthAccountUrl) {
+                const [deviceId] = deviceIds;
+                try {
+                    setSigningOutDeviceIds([...signingOutDeviceIds, deviceId]);
+                    const success = await confirmDelegatedAuthSignOut(delegatedAuthAccountUrl, deviceId);
+                    await onSignOutFinished(success);
+                } catch (error) {
+                    logger.error("Error deleting OIDC-aware sessions", error);
+                }
+            } else {
+                await deleteDevicesWithInteractiveAuth(matrixClient, deviceIds, onSignOutFinished);
+            }
         } catch (error) {
             logger.error("Error deleting sessions", error);
             setSigningOutDeviceIds(signingOutDeviceIds.filter((deviceId) => !deviceIds.includes(deviceId)));
@@ -130,6 +168,14 @@ const SessionManagerTab: React.FC = () => {
     const scrollIntoViewTimeoutRef = useRef<number>();
 
     const matrixClient = useContext(MatrixClientContext);
+    /**
+     * If we have a delegated auth account management URL, all sessions but the current session need to be managed in the
+     * delegated auth provider.
+     * See https://github.com/matrix-org/matrix-spec-proposals/pull/3824
+     */
+    const delegatedAuthAccountUrl = getDelegatedAuthAccountUrl(matrixClient.getClientWellKnown());
+    const disableMultipleSignout = !!delegatedAuthAccountUrl;
+
     const userId = matrixClient?.getUserId();
     const currentUserMember = (userId && matrixClient?.getUser(userId)) || undefined;
     const clientVersions = useAsyncMemo(() => matrixClient.getVersions(), [matrixClient]);
@@ -191,6 +237,7 @@ const SessionManagerTab: React.FC = () => {
     const { onSignOutCurrentDevice, onSignOutOtherDevices, signingOutDeviceIds } = useSignOut(
         matrixClient,
         onSignoutResolvedCallback,
+        delegatedAuthAccountUrl,
     );
 
     useEffect(
@@ -205,11 +252,12 @@ const SessionManagerTab: React.FC = () => {
         setSelectedDeviceIds([]);
     }, [filter, setSelectedDeviceIds]);
 
-    const signOutAllOtherSessions = shouldShowOtherSessions
-        ? () => {
-              onSignOutOtherDevices(Object.keys(otherDevices));
-          }
-        : undefined;
+    const signOutAllOtherSessions =
+        shouldShowOtherSessions && !disableMultipleSignout
+            ? () => {
+                  onSignOutOtherDevices(Object.keys(otherDevices));
+              }
+            : undefined;
 
     const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>();
 
@@ -250,13 +298,12 @@ const SessionManagerTab: React.FC = () => {
                         heading={
                             <OtherSessionsSectionHeading
                                 otherSessionsCount={otherSessionsCount}
-                                signOutAllOtherSessions={signOutAllOtherSessions!}
+                                signOutAllOtherSessions={signOutAllOtherSessions}
                                 disabled={!!signingOutDeviceIds.length}
                             />
                         }
                         description={_t(
-                            `For best security, verify your sessions and sign out ` +
-                                `from any session that you don't recognize or use anymore.`,
+                            "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.",
                         )}
                         data-testid="other-sessions-section"
                         stretchContent
@@ -280,6 +327,7 @@ const SessionManagerTab: React.FC = () => {
                             setPushNotifications={setPushNotifications}
                             ref={filteredDeviceListRef}
                             supportsMSC3881={supportsMSC3881}
+                            disableMultipleSignout={disableMultipleSignout}
                         />
                     </SettingsSubsection>
                 )}

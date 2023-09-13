@@ -16,13 +16,20 @@ limitations under the License.
 
 import React, { createRef, KeyboardEvent, SyntheticEvent } from "react";
 import EMOJI_REGEX from "emojibase-regex";
-import { IContent, MatrixEvent, IEventRelation, IMentions } from "matrix-js-sdk/src/models/event";
+import {
+    IContent,
+    MatrixEvent,
+    IEventRelation,
+    IMentions,
+    Room,
+    EventType,
+    MsgType,
+    RelationType,
+    THREAD_RELATION_TYPE,
+} from "matrix-js-sdk/src/matrix";
 import { DebouncedFunc, throttle } from "lodash";
-import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import dis from "../../../dispatcher/dispatcher";
 import EditorModel from "../../../editor/model";
@@ -447,6 +454,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const posthogEvent: ComposerEvent = {
             eventName: "Composer",
             isEditing: false,
+            isLocation: false,
             isReply: !!this.props.replyToEvent,
             inThread: this.props.relation?.rel_type === THREAD_RELATION_TYPE.name,
         };
@@ -488,7 +496,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     return; // errored
                 }
 
-                if (content && [CommandCategories.messages, CommandCategories.effects].includes(cmd.category)) {
+                if (
+                    content &&
+                    [CommandCategories.messages as string, CommandCategories.effects as string].includes(cmd.category)
+                ) {
                     // Attach any mentions which might be contained in the command content.
                     attachMentions(this.props.mxClient.getSafeUserId(), content, model, replyToEvent);
                     attachRelation(content, this.props.relation);

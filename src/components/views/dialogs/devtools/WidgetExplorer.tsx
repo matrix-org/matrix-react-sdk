@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { useContext, useState } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { useEventEmitterState } from "../../../../hooks/useEventEmitter";
 import { _t } from "../../../../languageHandler";
@@ -51,7 +51,7 @@ const WidgetExplorer: React.FC<IDevtoolsProps> = ({ onBack }) => {
         const event = allState.find((ev) => ev.getId() === widget.eventId);
         if (!event) {
             // "should never happen"
-            return <BaseTool onBack={onBack}>{_t("There was an error finding this widget.")}</BaseTool>;
+            return <BaseTool onBack={onBack}>{_t("devtools|failed_to_find_widget")}</BaseTool>;
         }
 
         return <StateEventEditor mxEvent={event} onBack={onBack} />;

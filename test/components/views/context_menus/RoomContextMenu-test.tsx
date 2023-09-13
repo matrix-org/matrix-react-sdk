@@ -19,8 +19,7 @@ limitations under the License.
 import { render, screen } from "@testing-library/react";
 import React, { ComponentProps } from "react";
 import { mocked } from "jest-mock";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContextMenu from "../../../../src/components/views/context_menus/RoomContextMenu";
@@ -29,6 +28,8 @@ import { stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import SettingsStore from "../../../../src/settings/SettingsStore";
+import { EchoChamber } from "../../../../src/stores/local-echo/EchoChamber";
+import { RoomNotifState } from "../../../../src/RoomNotifs";
 
 jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),
@@ -100,5 +101,16 @@ describe("RoomContextMenu", () => {
             renderComponent();
             expect(screen.getByText("Developer tools")).toBeInTheDocument();
         });
+    });
+
+    it("should render notification option for joined rooms", () => {
+        const chamber = EchoChamber.forRoom(room);
+        chamber.notificationVolume = RoomNotifState.Mute;
+        jest.spyOn(room, "getMyMembership").mockReturnValue("join");
+        renderComponent();
+
+        expect(
+            screen.getByRole("menuitem", { name: "Notifications" }).querySelector(".mx_IconizedContextMenu_sublabel"),
+        ).toHaveTextContent("Mute");
     });
 });

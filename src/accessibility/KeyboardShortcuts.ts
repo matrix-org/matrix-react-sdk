@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { _td } from "../languageHandler";
+import { _td, TranslationKey } from "../languageHandler";
 import { IS_MAC, Key } from "../Keyboard";
 import { IBaseSetting } from "../settings/Settings";
 import { KeyCombo } from "../KeyBindingsManager";
@@ -154,13 +154,15 @@ export enum KeyBindingAction {
     ToggleHiddenEventVisibility = "KeyBinding.toggleHiddenEventVisibility",
 }
 
-type KeyboardShortcutSetting = Omit<IBaseSetting<KeyCombo>, "supportedLevels">;
+export type KeyboardShortcutSetting = Omit<IBaseSetting<KeyCombo>, "supportedLevels" | "displayName"> & {
+    displayName?: TranslationKey;
+};
 
 // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
 export type IKeyboardShortcuts = Partial<Record<KeyBindingAction, KeyboardShortcutSetting>>;
 
 export interface ICategory {
-    categoryLabel?: string;
+    categoryLabel?: TranslationKey;
     // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
     settingNames: KeyBindingAction[];
 }
@@ -179,18 +181,18 @@ export enum CategoryName {
 // Meta-key representing the digits [0-9] often found at the top of standard keyboard layouts
 export const DIGITS = "digits";
 
-export const ALTERNATE_KEY_NAME: Record<string, string> = {
-    [Key.PAGE_UP]: _td("Page Up"),
-    [Key.PAGE_DOWN]: _td("Page Down"),
-    [Key.ESCAPE]: _td("Esc"),
-    [Key.ENTER]: _td("Enter"),
-    [Key.SPACE]: _td("Space"),
-    [Key.HOME]: _td("Home"),
-    [Key.END]: _td("End"),
-    [Key.ALT]: _td("Alt"),
-    [Key.CONTROL]: _td("Ctrl"),
-    [Key.SHIFT]: _td("Shift"),
-    [DIGITS]: _td("[number]"),
+export const ALTERNATE_KEY_NAME: Record<string, TranslationKey> = {
+    [Key.PAGE_UP]: _td("keyboard|page_up"),
+    [Key.PAGE_DOWN]: _td("keyboard|page_down"),
+    [Key.ESCAPE]: _td("keyboard|escape"),
+    [Key.ENTER]: _td("keyboard|enter"),
+    [Key.SPACE]: _td("keyboard|space"),
+    [Key.HOME]: _td("keyboard|home"),
+    [Key.END]: _td("keyboard|end"),
+    [Key.ALT]: _td("keyboard|alt"),
+    [Key.CONTROL]: _td("keyboard|control"),
+    [Key.SHIFT]: _td("keyboard|shift"),
+    [DIGITS]: _td("keyboard|number"),
 };
 export const KEY_ICON: Record<string, string> = {
     [Key.ARROW_UP]: "↑",
@@ -227,11 +229,11 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
         ],
     },
     [CategoryName.CALLS]: {
-        categoryLabel: _td("Calls"),
+        categoryLabel: _td("keyboard|category_calls"),
         settingNames: [KeyBindingAction.ToggleMicInCall, KeyBindingAction.ToggleWebcamInCall],
     },
     [CategoryName.ROOM]: {
-        categoryLabel: _td("Room"),
+        categoryLabel: _td("common|room"),
         settingNames: [
             KeyBindingAction.SearchInRoom,
             KeyBindingAction.UploadFile,
@@ -244,7 +246,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
         ],
     },
     [CategoryName.ROOM_LIST]: {
-        categoryLabel: _td("Room List"),
+        categoryLabel: _td("keyboard|category_room_list"),
         settingNames: [
             KeyBindingAction.SelectRoomInRoomList,
             KeyBindingAction.ClearRoomFilter,
@@ -255,7 +257,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
         ],
     },
     [CategoryName.ACCESSIBILITY]: {
-        categoryLabel: _td("Accessibility"),
+        categoryLabel: _td("common|accessibility"),
         settingNames: [
             KeyBindingAction.Escape,
             KeyBindingAction.Enter,
@@ -272,7 +274,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
         ],
     },
     [CategoryName.NAVIGATION]: {
-        categoryLabel: _td("Navigation"),
+        categoryLabel: _td("keyboard|category_navigation"),
         settingNames: [
             KeyBindingAction.ToggleUserMenu,
             KeyBindingAction.ToggleRoomSidePanel,
@@ -291,7 +293,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
         ],
     },
     [CategoryName.AUTOCOMPLETE]: {
-        categoryLabel: _td("Autocomplete"),
+        categoryLabel: _td("keyboard|category_autocomplete"),
         settingNames: [
             KeyBindingAction.CancelAutocomplete,
             KeyBindingAction.NextSelectionInAutocomplete,
@@ -301,7 +303,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
         ],
     },
     [CategoryName.LABS]: {
-        categoryLabel: _td("Labs"),
+        categoryLabel: _td("common|labs"),
         settingNames: [KeyBindingAction.ToggleHiddenEventVisibility],
     },
 };
@@ -325,14 +327,14 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             ctrlOrCmdKey: true,
             key: Key.B,
         },
-        displayName: _td("Toggle Bold"),
+        displayName: _td("keyboard|composer_toggle_bold"),
     },
     [KeyBindingAction.FormatItalics]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.I,
         },
-        displayName: _td("Toggle Italics"),
+        displayName: _td("keyboard|composer_toggle_italics"),
     },
     [KeyBindingAction.FormatQuote]: {
         default: {
@@ -340,14 +342,14 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             shiftKey: true,
             key: Key.GREATER_THAN,
         },
-        displayName: _td("Toggle Quote"),
+        displayName: _td("keyboard|composer_toggle_quote"),
     },
     [KeyBindingAction.FormatCode]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.E,
         },
-        displayName: _td("Toggle Code Block"),
+        displayName: _td("keyboard|composer_toggle_code_block"),
     },
     [KeyBindingAction.FormatLink]: {
         default: {
@@ -355,39 +357,39 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             shiftKey: true,
             key: Key.L,
         },
-        displayName: _td("Toggle Link"),
+        displayName: _td("keyboard|composer_toggle_link"),
     },
     [KeyBindingAction.CancelReplyOrEdit]: {
         default: {
             key: Key.ESCAPE,
         },
-        displayName: _td("Cancel replying to a message"),
+        displayName: _td("keyboard|cancel_reply"),
     },
     [KeyBindingAction.EditNextMessage]: {
         default: {
             key: Key.ARROW_DOWN,
         },
-        displayName: _td("Navigate to next message to edit"),
+        displayName: _td("keyboard|navigate_next_message_edit"),
     },
     [KeyBindingAction.EditPrevMessage]: {
         default: {
             key: Key.ARROW_UP,
         },
-        displayName: _td("Navigate to previous message to edit"),
+        displayName: _td("keyboard|navigate_prev_message_edit"),
     },
     [KeyBindingAction.MoveCursorToStart]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.HOME,
         },
-        displayName: _td("Jump to start of the composer"),
+        displayName: _td("keyboard|composer_jump_start"),
     },
     [KeyBindingAction.MoveCursorToEnd]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.END,
         },
-        displayName: _td("Jump to end of the composer"),
+        displayName: _td("keyboard|composer_jump_end"),
     },
     [KeyBindingAction.SelectNextSendHistory]: {
         default: {
@@ -395,7 +397,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             ctrlKey: true,
             key: Key.ARROW_DOWN,
         },
-        displayName: _td("Navigate to next message in composer history"),
+        displayName: _td("keyboard|composer_navigate_next_history"),
     },
     [KeyBindingAction.SelectPrevSendHistory]: {
         default: {
@@ -403,41 +405,41 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             ctrlKey: true,
             key: Key.ARROW_UP,
         },
-        displayName: _td("Navigate to previous message in composer history"),
+        displayName: _td("keyboard|composer_navigate_prev_history"),
     },
     [KeyBindingAction.ShowStickerPicker]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.SEMICOLON,
         },
-        displayName: _td("Send a sticker"),
+        displayName: _td("keyboard|send_sticker"),
     },
     [KeyBindingAction.ToggleMicInCall]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.D,
         },
-        displayName: _td("Toggle microphone mute"),
+        displayName: _td("keyboard|toggle_microphone_mute"),
     },
     [KeyBindingAction.ToggleWebcamInCall]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.E,
         },
-        displayName: _td("Toggle webcam on/off"),
+        displayName: _td("keyboard|toggle_webcam_mute"),
     },
     [KeyBindingAction.DismissReadMarker]: {
         default: {
             key: Key.ESCAPE,
         },
-        displayName: _td("Dismiss read marker and jump to bottom"),
+        displayName: _td("keyboard|dismiss_read_marker_and_jump_bottom"),
     },
     [KeyBindingAction.JumpToOldestUnread]: {
         default: {
             shiftKey: true,
             key: Key.PAGE_UP,
         },
-        displayName: _td("Jump to oldest unread message"),
+        displayName: _td("keyboard|jump_to_read_marker"),
     },
     [KeyBindingAction.UploadFile]: {
         default: {
@@ -445,77 +447,77 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             shiftKey: true,
             key: Key.U,
         },
-        displayName: _td("Upload a file"),
+        displayName: _td("keyboard|upload_file"),
     },
     [KeyBindingAction.ScrollUp]: {
         default: {
             key: Key.PAGE_UP,
         },
-        displayName: _td("Scroll up in the timeline"),
+        displayName: _td("keyboard|scroll_up_timeline"),
     },
     [KeyBindingAction.ScrollDown]: {
         default: {
             key: Key.PAGE_DOWN,
         },
-        displayName: _td("Scroll down in the timeline"),
+        displayName: _td("keyboard|scroll_down_timeline"),
     },
     [KeyBindingAction.FilterRooms]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.K,
         },
-        displayName: _td("Jump to room search"),
+        displayName: _td("keyboard|jump_room_search"),
     },
     [KeyBindingAction.SelectRoomInRoomList]: {
         default: {
             key: Key.ENTER,
         },
-        displayName: _td("Select room from the room list"),
+        displayName: _td("keyboard|room_list_select_room"),
     },
     [KeyBindingAction.CollapseRoomListSection]: {
         default: {
             key: Key.ARROW_LEFT,
         },
-        displayName: _td("Collapse room list section"),
+        displayName: _td("keyboard|room_list_collapse_section"),
     },
     [KeyBindingAction.ExpandRoomListSection]: {
         default: {
             key: Key.ARROW_RIGHT,
         },
-        displayName: _td("Expand room list section"),
+        displayName: _td("keyboard|room_list_expand_section"),
     },
     [KeyBindingAction.NextRoom]: {
         default: {
             key: Key.ARROW_DOWN,
         },
-        displayName: _td("Navigate down in the room list"),
+        displayName: _td("keyboard|room_list_navigate_down"),
     },
     [KeyBindingAction.PrevRoom]: {
         default: {
             key: Key.ARROW_UP,
         },
-        displayName: _td("Navigate up in the room list"),
+        displayName: _td("keyboard|room_list_navigate_up"),
     },
     [KeyBindingAction.ToggleUserMenu]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.BACKTICK,
         },
-        displayName: _td("Toggle the top left menu"),
+        displayName: _td("keyboard|toggle_top_left_menu"),
     },
     [KeyBindingAction.ToggleRoomSidePanel]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.PERIOD,
         },
-        displayName: _td("Toggle right panel"),
+        displayName: _td("keyboard|toggle_right_panel"),
     },
     [KeyBindingAction.ShowKeyboardSettings]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.SLASH,
         },
-        displayName: _td("Open this settings tab"),
+        displayName: _td("keyboard|keyboard_shortcuts_tab"),
     },
     [KeyBindingAction.GoToHome]: {
         default: {
@@ -524,7 +526,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             shiftKey: IS_MAC,
             key: Key.H,
         },
-        displayName: _td("Go to Home View"),
+        displayName: _td("keyboard|go_home_view"),
     },
     [KeyBindingAction.SelectNextUnreadRoom]: {
         default: {
@@ -532,7 +534,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             altKey: true,
             key: Key.ARROW_DOWN,
         },
-        displayName: _td("Next unread room or DM"),
+        displayName: _td("keyboard|next_unread_room"),
     },
     [KeyBindingAction.SelectPrevUnreadRoom]: {
         default: {
@@ -540,39 +542,39 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             altKey: true,
             key: Key.ARROW_UP,
         },
-        displayName: _td("Previous unread room or DM"),
+        displayName: _td("keyboard|prev_unread_room"),
     },
     [KeyBindingAction.SelectNextRoom]: {
         default: {
             altKey: true,
             key: Key.ARROW_DOWN,
         },
-        displayName: _td("Next room or DM"),
+        displayName: _td("keyboard|next_room"),
     },
     [KeyBindingAction.SelectPrevRoom]: {
         default: {
             altKey: true,
             key: Key.ARROW_UP,
         },
-        displayName: _td("Previous room or DM"),
+        displayName: _td("keyboard|prev_room"),
     },
     [KeyBindingAction.CancelAutocomplete]: {
         default: {
             key: Key.ESCAPE,
         },
-        displayName: _td("Cancel autocomplete"),
+        displayName: _td("keyboard|autocomplete_cancel"),
     },
     [KeyBindingAction.NextSelectionInAutocomplete]: {
         default: {
             key: Key.ARROW_DOWN,
         },
-        displayName: _td("Next autocomplete suggestion"),
+        displayName: _td("keyboard|autocomplete_navigate_next"),
     },
     [KeyBindingAction.PrevSelectionInAutocomplete]: {
         default: {
             key: Key.ARROW_UP,
         },
-        displayName: _td("Previous autocomplete suggestion"),
+        displayName: _td("keyboard|autocomplete_navigate_prev"),
     },
     [KeyBindingAction.ToggleSpacePanel]: {
         default: {
@@ -580,7 +582,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             shiftKey: true,
             key: Key.D,
         },
-        displayName: _td("Toggle space panel"),
+        displayName: _td("keyboard|toggle_space_panel"),
     },
     [KeyBindingAction.ToggleHiddenEventVisibility]: {
         default: {
@@ -588,28 +590,28 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             shiftKey: true,
             key: Key.H,
         },
-        displayName: _td("Toggle hidden event visibility"),
+        displayName: _td("keyboard|toggle_hidden_events"),
     },
     [KeyBindingAction.JumpToFirstMessage]: {
         default: {
             key: Key.HOME,
             ctrlKey: true,
         },
-        displayName: _td("Jump to first message"),
+        displayName: _td("keyboard|jump_first_message"),
     },
     [KeyBindingAction.JumpToLatestMessage]: {
         default: {
             key: Key.END,
             ctrlKey: true,
         },
-        displayName: _td("Jump to last message"),
+        displayName: _td("keyboard|jump_last_message"),
     },
     [KeyBindingAction.EditUndo]: {
         default: {
             key: Key.Z,
             ctrlOrCmdKey: true,
         },
-        displayName: _td("Undo edit"),
+        displayName: _td("keyboard|composer_undo"),
     },
     [KeyBindingAction.EditRedo]: {
         default: {
@@ -617,7 +619,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             ctrlOrCmdKey: true,
             shiftKey: IS_MAC,
         },
-        displayName: _td("Redo edit"),
+        displayName: _td("keyboard|composer_redo"),
     },
     [KeyBindingAction.PreviousVisitedRoomOrSpace]: {
         default: {
@@ -625,7 +627,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             altKey: !IS_MAC,
             key: IS_MAC ? Key.SQUARE_BRACKET_LEFT : Key.ARROW_LEFT,
         },
-        displayName: _td("Previous recently visited room or space"),
+        displayName: _td("keyboard|navigate_prev_history"),
     },
     [KeyBindingAction.NextVisitedRoomOrSpace]: {
         default: {
@@ -633,33 +635,33 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             altKey: !IS_MAC,
             key: IS_MAC ? Key.SQUARE_BRACKET_RIGHT : Key.ARROW_RIGHT,
         },
-        displayName: _td("Next recently visited room or space"),
+        displayName: _td("keyboard|navigate_next_history"),
     },
     [KeyBindingAction.SwitchToSpaceByNumber]: {
         default: {
             ctrlOrCmdKey: true,
             key: DIGITS,
         },
-        displayName: _td("Switch to space by number"),
+        displayName: _td("keyboard|switch_to_space"),
     },
     [KeyBindingAction.OpenUserSettings]: {
         default: {
             metaKey: true,
             key: Key.COMMA,
         },
-        displayName: _td("Open user settings"),
+        displayName: _td("keyboard|open_user_settings"),
     },
     [KeyBindingAction.Escape]: {
         default: {
             key: Key.ESCAPE,
         },
-        displayName: _td("Close dialog or context menu"),
+        displayName: _td("keyboard|close_dialog_menu"),
     },
     [KeyBindingAction.Enter]: {
         default: {
             key: Key.ENTER,
         },
-        displayName: _td("Activate selected button"),
+        displayName: _td("keyboard|activate_button"),
     },
     [KeyBindingAction.Space]: {
         default: {

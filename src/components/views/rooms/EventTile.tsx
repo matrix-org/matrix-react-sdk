@@ -17,13 +17,22 @@ limitations under the License.
 
 import React, { createRef, forwardRef, MouseEvent, ReactNode, useRef } from "react";
 import classNames from "classnames";
-import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Relations } from "matrix-js-sdk/src/models/relations";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
+import {
+    EventType,
+    MsgType,
+    RelationType,
+    EventStatus,
+    MatrixEvent,
+    MatrixEventEvent,
+    RoomMember,
+    NotificationCountType,
+    Room,
+    RoomEvent,
+    Relations,
+    Thread,
+    ThreadEvent,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
@@ -246,6 +255,21 @@ interface IState {
     threadNotification?: NotificationCountType;
 }
 
+/**
+ * When true, the tile qualifies for some sort of special read receipt.
+ * This could be a 'sending' or 'sent' receipt, for example.
+ * @returns {boolean}
+ */
+export function isEligibleForSpecialReceipt(event: MatrixEvent): boolean {
+    // Determine if the type is relevant to the user.
+    // This notably excludes state events and pretty much anything that can't be sent by the composer as a message.
+    // For those we rely on local echo giving the impression of things changing, and expect them to be quick.
+    if (!isMessageEvent(event) && event.getType() !== EventType.RoomMessageEncrypted) return false;
+
+    // Default case
+    return true;
+}
+
 // MUST be rendered within a RoomContext with a set timelineRenderingType
 export class UnwrappedEventTile extends React.Component<EventTileProps, IState> {
     private suppressReadReceiptAnimation: boolean;
@@ -313,23 +337,10 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         // Quickly check to see if the event was sent by us. If it wasn't, it won't qualify for
         // special read receipts.
-        const myUserId = MatrixClientPeg.safeGet().getUserId();
+        const myUserId = MatrixClientPeg.safeGet().getSafeUserId();
+        // Check to see if the event was sent by us. If it wasn't, it won't qualify for special read receipts.
         if (this.props.mxEvent.getSender() !== myUserId) return false;
-
-        // Finally, determine if the type is relevant to the user. This notably excludes state
-        // events and pretty much anything that can't be sent by the composer as a message. For
-        // those we rely on local echo giving the impression of things changing, and expect them
-        // to be quick.
-        const simpleSendableEvents = [
-            EventType.Sticker,
-            EventType.RoomMessage,
-            EventType.RoomMessageEncrypted,
-            EventType.PollStart,
-        ];
-        if (!simpleSendableEvents.includes(this.props.mxEvent.getType() as EventType)) return false;
-
-        // Default case
-        return true;
+        return isEligibleForSpecialReceipt(this.props.mxEvent);
     }
 
     private get shouldShowSentReceipt(): boolean {
@@ -970,9 +981,6 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             mx_EventTile_lastInSection: this.props.lastInSection,
             mx_EventTile_contextual: this.props.contextual,
             mx_EventTile_actionBarFocused: this.state.actionBarFocused,
-            mx_EventTile_verified: !isBubbleMessage && this.state.verified === E2EState.Verified,
-            mx_EventTile_unverified: !isBubbleMessage && this.state.verified === E2EState.Warning,
-            mx_EventTile_unknown: !isBubbleMessage && this.state.verified === E2EState.Unknown,
             mx_EventTile_bad: isEncryptionFailure,
             mx_EventTile_emote: msgtype === MsgType.Emote,
             mx_EventTile_noSender: this.props.hideSender,
@@ -995,28 +1003,28 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         let avatar: JSX.Element | null = null;
         let sender: JSX.Element | null = null;
-        let avatarSize: number;
+        let avatarSize: string | null;
         let needsSenderProfile: boolean;
 
         if (isRenderingNotification) {
-            avatarSize = 24;
+            avatarSize = "24px";
             needsSenderProfile = true;
         } else if (isInfoMessage) {
             // a small avatar, with no sender profile, for
             // joins/parts/etc
-            avatarSize = 14;
+            avatarSize = "14px";
             needsSenderProfile = false;
         } else if (
             this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
             (this.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation)
         ) {
-            avatarSize = 32;
+            avatarSize = "32px";
             needsSenderProfile = true;
         } else if (eventType === EventType.RoomCreate || isBubbleMessage) {
-            avatarSize = 0;
+            avatarSize = null;
             needsSenderProfile = false;
         } else if (this.props.layout == Layout.IRC) {
-            avatarSize = 14;
+            avatarSize = "14px";
             needsSenderProfile = true;
         } else if (
             (this.props.continuation && this.context.timelineRenderingType !== TimelineRenderingType.File) ||
@@ -1024,14 +1032,14 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             ElementCall.CALL_EVENT_TYPE.matches(eventType)
         ) {
             // no avatar or sender profile for continuation messages and call tiles
-            avatarSize = 0;
+            avatarSize = null;
             needsSenderProfile = false;
         } else {
-            avatarSize = 30;
+            avatarSize = "30px";
             needsSenderProfile = true;
         }
 
-        if (this.props.mxEvent.sender && avatarSize) {
+        if (this.props.mxEvent.sender && avatarSize !== null) {
             let member: RoomMember | null = null;
             // set member to receiver (target) if it is a 3PID invite
             // so that the correct avatar is shown as the text is
@@ -1051,8 +1059,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                 <div className="mx_EventTile_avatar">
                     <MemberAvatar
                         member={member}
-                        width={avatarSize}
-                        height={avatarSize}
+                        size={avatarSize}
                         viewUserOnClick={viewUserOnClick}
                         forceHistorical={this.props.mxEvent.getType() === EventType.RoomMember}
                     />
@@ -1298,7 +1305,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         </div>
                         {isRenderingNotification && room ? (
                             <div className="mx_EventTile_avatar">
-                                <RoomAvatar room={room} width={28} height={28} />
+                                <RoomAvatar room={room} size="28px" />
                             </div>
                         ) : (
                             avatar

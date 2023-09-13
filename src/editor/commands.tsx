@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IContent } from "matrix-js-sdk/src/models/event";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { IContent, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import EditorModel from "./model";
 import { Type } from "./parts";
@@ -116,8 +115,7 @@ export async function shouldSendAnyway(commandText: string): Promise<boolean> {
                 <p>{_t("Unrecognised command: %(commandText)s", { commandText })}</p>
                 <p>
                     {_t(
-                        "You can use <code>/help</code> to list available commands. " +
-                            "Did you mean to send this as a message?",
+                        "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?",
                         {},
                         {
                             code: (t) => <code>{t}</code>,
