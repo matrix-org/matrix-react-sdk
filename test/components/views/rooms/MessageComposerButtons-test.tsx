@@ -75,6 +75,7 @@ describe("MessageComposerButtons", () => {
                 showLocationButton={true}
                 showPollsButton={true}
                 showStickersButton={true}
+                showVoiceRecordingButton={true}
             />,
             false,
         );
@@ -90,6 +91,7 @@ describe("MessageComposerButtons", () => {
                 showLocationButton={true}
                 showPollsButton={true}
                 showStickersButton={true}
+                showVoiceRecordingButton={true}
             />,
             false,
         );
@@ -110,6 +112,7 @@ describe("MessageComposerButtons", () => {
                 showLocationButton={true}
                 showPollsButton={true}
                 showStickersButton={true}
+                showVoiceRecordingButton={true}
             />,
             true,
         );
@@ -125,6 +128,7 @@ describe("MessageComposerButtons", () => {
                 showLocationButton={true}
                 showPollsButton={true}
                 showStickersButton={true}
+                showVoiceRecordingButton={true}
             />,
             true,
         );
@@ -141,6 +145,7 @@ describe("MessageComposerButtons", () => {
                     showLocationButton={true}
                     showPollsButton={true}
                     showStickersButton={true}
+                    showVoiceRecordingButton={true}
                 />,
                 true,
             );
@@ -156,6 +161,7 @@ describe("MessageComposerButtons", () => {
                     showLocationButton={true}
                     showPollsButton={false} // !! the change from the alternate test
                     showStickersButton={true}
+                    showVoiceRecordingButton={true}
                 />,
                 true,
             );
@@ -182,6 +188,7 @@ describe("MessageComposerButtons", () => {
                     showLocationButton={true}
                     showPollsButton={true}
                     showStickersButton={true}
+                    showVoiceRecordingButton={true}
                     showVoiceBroadcastButton={true}
                 />,
                 false,
@@ -192,6 +199,30 @@ describe("MessageComposerButtons", () => {
                 "Attachment",
                 "More options",
                 ["Sticker", "Voice Message", "Voice broadcast", "Poll", "Location"],
+            ]);
+        });
+    });
+
+    describe("with showVoiceRecordingButton = false", () => {
+        it("should not render the »Voice Message« button", () => {
+            wrapAndRender(
+                <MessageComposerButtons
+                    {...mockProps}
+                    isMenuOpen={true}
+                    showLocationButton={true}
+                    showPollsButton={true}
+                    showStickersButton={true}
+                    showVoiceRecordingButton={false}
+                    showVoiceBroadcastButton={false}
+                />,
+                false,
+            );
+
+            expect(getButtonLabels()).toEqual([
+                "Emoji",
+                "Attachment",
+                "More options",
+                ["Sticker", "Poll", "Location"],
             ]);
         });
     });

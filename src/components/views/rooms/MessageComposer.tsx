@@ -104,6 +104,7 @@ interface IState {
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
     showPollsButton: boolean;
+    showVoiceRecordingButton: boolean;
     showVoiceBroadcastButton: boolean;
     isWysiwygLabEnabled: boolean;
     isRichTextEnabled: boolean;
@@ -142,6 +143,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
             showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
+            showVoiceRecordingButton: SettingsStore.getValue("MessageComposerInput.showVoiceRecordingButton"),
             showVoiceBroadcastButton: SettingsStore.getValue(Features.VoiceBroadcast),
             isWysiwygLabEnabled: SettingsStore.getValue<boolean>("feature_wysiwyg_composer"),
             isRichTextEnabled: true,
@@ -152,6 +154,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
         SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
+        SettingsStore.monitorSetting("MessageComposerInput.showVoiceRecordingButton", null);
         SettingsStore.monitorSetting(Features.VoiceBroadcast, null);
         SettingsStore.monitorSetting("feature_wysiwyg_composer", null);
     }
@@ -225,6 +228,15 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         const showPollsButton = SettingsStore.getValue("MessageComposerInput.showPollsButton");
                         if (this.state.showPollsButton !== showPollsButton) {
                             this.setState({ showPollsButton });
+                        }
+                        break;
+                    }
+                    case "MessageComposerInput.showVoiceRecordingButton": {
+                        const showVoiceRecordingButton = SettingsStore.getValue(
+                            "MessageComposerInput.showVoiceRecordingButton",
+                        );
+                        if (this.state.showVoiceRecordingButton !== showVoiceRecordingButton) {
+                            this.setState({ showVoiceRecordingButton });
                         }
                         break;
                     }
@@ -632,6 +644,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                     isRichTextEnabled={this.state.isRichTextEnabled}
                                     onComposerModeClick={this.onRichTextToggle}
                                     toggleButtonMenu={this.toggleButtonMenu}
+                                    showVoiceRecordingButton={this.state.showVoiceRecordingButton}
                                     showVoiceBroadcastButton={this.state.showVoiceBroadcastButton}
                                     onStartVoiceBroadcastClick={() => {
                                         setUpVoiceBroadcastPreRecording(
