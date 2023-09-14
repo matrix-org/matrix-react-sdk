@@ -15,7 +15,15 @@ limitations under the License.
 */
 
 import { Mocked, mocked } from "jest-mock";
-import { MatrixEvent, Room, MatrixClient, DeviceVerificationStatus, Device } from "matrix-js-sdk/src/matrix";
+import {
+    MatrixEvent,
+    Room,
+    MatrixClient,
+    DeviceVerificationStatus,
+    CryptoApi,
+    Device,
+    ClientStoppedError,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
@@ -252,6 +260,20 @@ describe("DeviceListener", () => {
             await createAndStart();
 
             expect(mockClient.getCrypto()?.isCrossSigningReady).not.toHaveBeenCalled();
+        });
+        it("correctly handles the client being stopped", async () => {
+            mockCrypto!.isCrossSigningReady.mockImplementation(() => {
+                throw new ClientStoppedError();
+            });
+            await createAndStart();
+            expect(logger.error).not.toHaveBeenCalled();
+        });
+        it("correctly handles other errors", async () => {
+            mockCrypto!.isCrossSigningReady.mockImplementation(() => {
+                throw new Error("blah");
+            });
+            await createAndStart();
+            expect(logger.error).toHaveBeenCalledTimes(1);
         });
 
         describe("set up encryption", () => {

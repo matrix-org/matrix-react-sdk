@@ -247,7 +247,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                     {},
                     { idserver: (sub) => <b>{abbreviateUrl(this.state.currentClientIdServer)}</b> },
                 ),
-                button: _t("Disconnect"),
+                button: _t("action|disconnect"),
             });
             if (confirmed) {
                 this.disconnectIdServer();
@@ -396,7 +396,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                 );
             }
         } else {
-            sectionTitle = _t("Identity server");
+            sectionTitle = _t("common|identity_server");
             bodyText = _t(
                 "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.",
             );
@@ -404,7 +404,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
 
         let discoSection;
         if (idServerUrl) {
-            let discoButtonContent: React.ReactNode = _t("Disconnect");
+            let discoButtonContent: React.ReactNode = _t("action|disconnect");
             let discoBodyText = _t(
                 "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.",
             );
@@ -448,7 +448,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                         onClick={this.checkIdServer}
                         disabled={!this.idServerChangeEnabled()}
                     >
-                        {_t("Change")}
+                        {_t("action|change")}
                     </AccessibleButton>
                     {discoSection}
                 </form>

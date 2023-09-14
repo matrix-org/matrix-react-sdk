@@ -58,6 +58,7 @@ interface IProps {
     room: Room;
     permalinkCreator: RoomPermalinkCreator;
     onClose(): void;
+    onSearchClick?: () => void;
 }
 
 interface IAppsSectionProps {
@@ -162,7 +163,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
               WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center);
           };
 
-    const maximiseTitle = isMaximised ? _t("action|close") : _t("Maximise");
+    const maximiseTitle = isMaximised ? _t("action|close") : _t("action|maximise");
 
     let openTitle = "";
     if (isPinned) {
@@ -272,7 +273,7 @@ const onRoomSettingsClick = (ev: ButtonEvent): void => {
     PosthogTrackers.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
 };
 
-const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) => {
+const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchClick }) => {
     const cli = useContext(MatrixClientContext);
 
     const onShareRoomClick = (): void => {
@@ -309,7 +310,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
             <div className="mx_RoomSummaryCard_avatar" role="presentation">
                 <RoomAvatar room={room} size="54px" viewAvatarOnClick />
                 <TextWithTooltip
-                    tooltip={isRoomEncrypted ? _t("Encrypted") : _t("Not encrypted")}
+                    tooltip={isRoomEncrypted ? _t("common|encrypted") : _t("Not encrypted")}
                     class={classNames("mx_RoomSummaryCard_e2ee", {
                         mx_RoomSummaryCard_e2ee_normal: isRoomEncrypted,
                         mx_RoomSummaryCard_e2ee_warning: isRoomEncrypted && e2eStatus === E2EStatus.Warning,
@@ -342,6 +343,16 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
                     {_t("common|people")}
                     <span className="mx_BaseCard_Button_sublabel">{memberCount}</span>
                 </Button>
+                {SettingsStore.getValue("feature_new_room_decoration_ui") && (
+                    <Button
+                        className="mx_RoomSummaryCard_icon_search"
+                        onClick={() => {
+                            onSearchClick?.();
+                        }}
+                    >
+                        {_t("Search")}
+                    </Button>
+                )}
                 {!isVideoRoom && (
                     <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
                         {_t("Files")}

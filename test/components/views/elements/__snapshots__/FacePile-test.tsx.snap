@@ -4,11 +4,10 @@ exports[`<FacePile /> renders with a tooltip 1`] = `
 <DocumentFragment>
   <div
     class="mx_FacePile"
+    data-state="closed"
   >
     <div
-      aria-describedby="mx_TooltipTarget_vY7Q4uEh"
-      class="mx_TextWithTooltip_target mx_FacePile_faces"
-      tabindex="0"
+      class="_stacked-avatars_2lhia_116"
     >
       <span
         class="_avatar_2lhia_17 mx_BaseAvatar _avatar-imageless_2lhia_56"

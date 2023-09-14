@@ -1,8 +1,4 @@
 {
-    "%(senderDisplayName)s sent an image.": "yuzen %(senderDisplayName)s yat twelaft.",
-    "Other": "Yaḍn",
-    "Actions": "Tugawin",
-    "Messages": "Tuzinin",
     "Create Account": "senflul amiḍan",
     "Dec": "Duj",
     "Nov": "Nuw",
@@ -24,9 +20,6 @@
     "Add Phone Number": "Rnu uṭṭun n utilifun",
     "Add Email Address": "Rnu tasna imayl",
     "Permissions": "Tisirag",
-    "Subscribe": "Zemmem",
-    "Change": "Senfel",
-    "Disconnect": "Kkes azday",
     "exists": "illa",
     "Santa": "Santa",
     "Pizza": "Tapizzat",
@@ -51,24 +44,16 @@
     "Andorra": "Andura",
     "Algeria": "Dzayer",
     "Albania": "Albanya",
-    "Space": "Space",
-    "Calls": "Iɣuṛiten",
-    "Emoji": "Imuji",
     "Afghanistan": "Afɣanistan",
     "Phone": "Atilifun",
     "Email": "Imayl",
-    "Go": "Ddu",
     "Send": "Azen",
-    "Flags": "Icenyalen",
     "edited": "infel",
     "Copied!": "inɣel!",
     "Home": "Asnubeg",
     "Search…": "Arezzu…",
-    "A-Z": "A-Ẓ",
     "Re-join": "als-lkem",
     "%(duration)sd": "%(duration)sas",
-    "Camera": "Takamiṛa",
-    "Microphone": "Amikṛu",
     "None": "Walu",
     "Account": "Amiḍan",
     "Algorithm:": "Talguritmit:",
@@ -99,10 +84,8 @@
     "Lion": "Izem",
     "Cat": "Amuc",
     "Dog": "Aydi",
-    "Guest": "Anebgi",
     "Ok": "Wax",
     "Notifications": "Tineɣmisin",
-    "Usage": "Asemres",
     "Feb": "Bṛa",
     "Jan": "Yen",
     "common": {
@@ -113,7 +96,12 @@
         "theme": "Asgum",
         "name": "Isem",
         "home": "Asnubeg",
-        "dark": "Adeɣmum"
+        "dark": "Adeɣmum",
+        "guest": "Anebgi",
+        "camera": "Takamiṛa",
+        "microphone": "Amikṛu",
+        "emoji": "Imuji",
+        "space": "Space"
     },
     "action": {
         "continue": "Kemmel",
@@ -137,7 +125,11 @@
         "confirm": "Sentem",
         "close": "Rgel",
         "cancel": "Sser",
-        "add": "Rnu"
+        "add": "Rnu",
+        "disconnect": "Kkes azday",
+        "change": "Senfel",
+        "subscribe": "Zemmem",
+        "go": "Ddu"
     },
     "keyboard": {
         "home": "Asnubeg",
@@ -145,6 +137,32 @@
         "escape": "Esc",
         "end": "End",
         "control": "Ctrl",
-        "shift": "Shift"
+        "shift": "Shift",
+        "category_calls": "Iɣuṛiten"
+    },
+    "timeline": {
+        "m.image": "yuzen %(senderDisplayName)s yat twelaft."
+    },
+    "slash_command": {
+        "usage": "Asemres",
+        "category_messages": "Tuzinin",
+        "category_actions": "Tugawin",
+        "category_other": "Yaḍn"
+    },
+    "devtools": {
+        "category_other": "Yaḍn"
+    },
+    "Other": "Yaḍn",
+    "emoji": {
+        "category_flags": "Icenyalen"
+    },
+    "labs": {
+        "group_profile": "Ifres"
+    },
+    "export_chat": {
+        "messages": "Tuzinin"
+    },
+    "room_list": {
+        "sort_by_alphabet": "A-Ẓ"
     }
 }
