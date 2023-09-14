@@ -52,60 +52,60 @@ export interface TranslatedCapabilityText {
 export class CapabilityText {
     private static simpleCaps: Record<Capability, Partial<Record<WidgetKind | GENERIC_WIDGET_KIND, TranslationKey>>> = {
         [MatrixCapabilities.AlwaysOnScreen]: {
-            [WidgetKind.Room]: _td("Remain on your screen when viewing another room, when running"),
-            [GENERIC_WIDGET_KIND]: _td("Remain on your screen while running"),
+            [WidgetKind.Room]: _td("widget|capability|always_on_screen_viewing_another_room"),
+            [GENERIC_WIDGET_KIND]: _td("widget|capability|always_on_screen_generic"),
         },
         [MatrixCapabilities.StickerSending]: {
-            [WidgetKind.Room]: _td("Send stickers into this room"),
-            [GENERIC_WIDGET_KIND]: _td("Send stickers into your active room"),
+            [WidgetKind.Room]: _td("widget|capability|send_stickers_this_room"),
+            [GENERIC_WIDGET_KIND]: _td("widget|capability|send_stickers_active_room"),
         },
         [ElementWidgetCapabilities.CanChangeViewedRoom]: {
-            [GENERIC_WIDGET_KIND]: _td("Change which room you're viewing"),
+            [GENERIC_WIDGET_KIND]: _td("widget|capability|switch_room"),
         },
         [MatrixCapabilities.MSC2931Navigate]: {
-            [GENERIC_WIDGET_KIND]: _td("Change which room, message, or user you're viewing"),
+            [GENERIC_WIDGET_KIND]: _td("widget|capability|switch_room_message_user"),
         },
     };
 
     private static stateSendRecvCaps: SendRecvStaticCapText = {
         [EventType.RoomTopic]: {
             [WidgetKind.Room]: {
-                [EventDirection.Send]: _td("Change the topic of this room"),
-                [EventDirection.Receive]: _td("See when the topic changes in this room"),
+                [EventDirection.Send]: _td("widget|capability|change_topic_this_room"),
+                [EventDirection.Receive]: _td("widget|capability|see_topic_change_this_room"),
             },
             [GENERIC_WIDGET_KIND]: {
-                [EventDirection.Send]: _td("Change the topic of your active room"),
-                [EventDirection.Receive]: _td("See when the topic changes in your active room"),
+                [EventDirection.Send]: _td("widget|capability|change_topic_active_room"),
+                [EventDirection.Receive]: _td("widget|capability|see_topic_change_active_room"),
             },
         },
         [EventType.RoomName]: {
             [WidgetKind.Room]: {
-                [EventDirection.Send]: _td("Change the name of this room"),
-                [EventDirection.Receive]: _td("See when the name changes in this room"),
+                [EventDirection.Send]: _td("widget|capability|change_name_this_room"),
+                [EventDirection.Receive]: _td("widget|capability|see_name_change_this_room"),
             },
             [GENERIC_WIDGET_KIND]: {
-                [EventDirection.Send]: _td("Change the name of your active room"),
-                [EventDirection.Receive]: _td("See when the name changes in your active room"),
+                [EventDirection.Send]: _td("widget|capability|change_name_active_room"),
+                [EventDirection.Receive]: _td("widget|capability|see_name_change_active_room"),
             },
         },
         [EventType.RoomAvatar]: {
             [WidgetKind.Room]: {
-                [EventDirection.Send]: _td("Change the avatar of this room"),
-                [EventDirection.Receive]: _td("See when the avatar changes in this room"),
+                [EventDirection.Send]: _td("widget|capability|change_avatar_this_room"),
+                [EventDirection.Receive]: _td("widget|capability|see_avatar_change_this_room"),
             },
             [GENERIC_WIDGET_KIND]: {
-                [EventDirection.Send]: _td("Change the avatar of your active room"),
-                [EventDirection.Receive]: _td("See when the avatar changes in your active room"),
+                [EventDirection.Send]: _td("widget|capability|change_avatar_active_room"),
+                [EventDirection.Receive]: _td("widget|capability|see_avatar_change_active_room"),
             },
         },
         [EventType.RoomMember]: {
             [WidgetKind.Room]: {
-                [EventDirection.Send]: _td("Remove, ban, or invite people to this room, and make you leave"),
-                [EventDirection.Receive]: _td("See when people join, leave, or are invited to this room"),
+                [EventDirection.Send]: _td("widget|capability|remove_ban_invite_leave_this_room"),
+                [EventDirection.Receive]: _td("widget|capability|receive_membership_this_room"),
             },
             [GENERIC_WIDGET_KIND]: {
-                [EventDirection.Send]: _td("Remove, ban, or invite people to your active room, and make you leave"),
-                [EventDirection.Receive]: _td("See when people join, leave, or are invited to your active room"),
+                [EventDirection.Send]: _td("widget|capability|remove_ban_invite_leave_active_room"),
+                [EventDirection.Receive]: _td("widget|capability|receive_membership_active_room"),
             },
         },
     };
@@ -113,12 +113,12 @@ export class CapabilityText {
     private static nonStateSendRecvCaps: SendRecvStaticCapText = {
         [EventType.Sticker]: {
             [WidgetKind.Room]: {
-                [EventDirection.Send]: _td("Send stickers to this room as you"),
-                [EventDirection.Receive]: _td("See when a sticker is posted in this room"),
+                [EventDirection.Send]: _td("widget|capability|send_stickers_this_room_as_you"),
+                [EventDirection.Receive]: _td("widget|capability|see_sticker_posted_this_room"),
             },
             [GENERIC_WIDGET_KIND]: {
-                [EventDirection.Send]: _td("Send stickers to your active room as you"),
-                [EventDirection.Receive]: _td("See when anyone posts a sticker to your active room"),
+                [EventDirection.Send]: _td("widget|capability|send_stickers_active_room_as_you"),
+                [EventDirection.Receive]: _td("widget|capability|see_sticker_posted_active_room"),
             },
         },
     };
