@@ -20,7 +20,6 @@ import {
     Room,
     MatrixClient,
     DeviceVerificationStatus,
-    CryptoApi,
     Device,
     ClientStoppedError,
 } from "matrix-js-sdk/src/matrix";
@@ -262,14 +261,14 @@ describe("DeviceListener", () => {
             expect(mockClient.getCrypto()?.isCrossSigningReady).not.toHaveBeenCalled();
         });
         it("correctly handles the client being stopped", async () => {
-            mockCrypto!.isCrossSigningReady.mockImplementation(() => {
+            mocked(mockClient.getCrypto()!.isCrossSigningReady).mockImplementation(() => {
                 throw new ClientStoppedError();
             });
             await createAndStart();
             expect(logger.error).not.toHaveBeenCalled();
         });
         it("correctly handles other errors", async () => {
-            mockCrypto!.isCrossSigningReady.mockImplementation(() => {
+            mocked(mockClient.getCrypto()!.isCrossSigningReady).mockImplementation(() => {
                 throw new Error("blah");
             });
             await createAndStart();
