@@ -843,7 +843,6 @@
     "Capitalization doesn't help very much": "Store bokstaver er ikke spesielt nyttig",
     "Use a longer keyboard pattern with more turns": "Bruke et lengre og mer uventet tastatur mønster",
     "No need for symbols, digits, or uppercase letters": "Ikke nødvendig med symboler, sifre eller bokstaver",
-    "See images posted to this room": "Se bilder som er lagt ut i dette rommet",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
     "Zambia": "Zambia",
@@ -1694,7 +1693,8 @@
     "widget": {
         "capability": {
             "change_topic_this_room": "Endre dette rommets tema",
-            "change_name_this_room": "Endre rommets navn"
+            "change_name_this_room": "Endre rommets navn",
+            "see_images_sent_this_room": "Se bilder som er lagt ut i dette rommet"
         }
     }
 }

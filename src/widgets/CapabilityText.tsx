@@ -126,8 +126,8 @@ export class CapabilityText {
     private static bylineFor(eventCap: WidgetEventCapability): TranslatedString {
         if (eventCap.kind === EventKind.State) {
             return !eventCap.keyStr
-                ? _t("with an empty state key")
-                : _t("with state key %(stateKey)s", { stateKey: eventCap.keyStr });
+                ? _t("widget|capability|byline_empty_state_key")
+                : _t("widget|capability|byline_state_key", { stateKey: eventCap.keyStr });
         }
         return null; // room messages are handled specially
     }
@@ -149,13 +149,13 @@ export class CapabilityText {
         // the timeline caps to the end for UI purposes.
         if (isTimelineCapability(capability)) {
             if (isTimelineCapabilityFor(capability, Symbols.AnyRoom)) {
-                return { primary: _t("The above, but in any room you are joined or invited to as well") };
+                return { primary: _t("widget|capability|any_room") };
             } else {
                 const roomId = getTimelineRoomIDFromCapability(capability);
                 const room = MatrixClientPeg.safeGet().getRoom(roomId);
                 return {
                     primary: _t(
-                        "The above, but in <Room /> as well",
+                        "widget|capability|specific_room",
                         {},
                         {
                             Room: () => {
@@ -212,7 +212,7 @@ export class CapabilityText {
                 if (eventCap.direction === EventDirection.Send) {
                     return {
                         primary: _t(
-                            "Send <b>%(eventType)s</b> events as you in this room",
+                            "widget|capability|send_event_type_this_room",
                             {
                                 eventType: eventCap.eventType,
                             },
@@ -225,7 +225,7 @@ export class CapabilityText {
                 } else {
                     return {
                         primary: _t(
-                            "See <b>%(eventType)s</b> events posted to this room",
+                            "widget|capability|see_event_type_sent_this_room",
                             {
                                 eventType: eventCap.eventType,
                             },
@@ -241,7 +241,7 @@ export class CapabilityText {
                 if (eventCap.direction === EventDirection.Send) {
                     return {
                         primary: _t(
-                            "Send <b>%(eventType)s</b> events as you in your active room",
+                            "widget|capability|send_event_type_active_room",
                             {
                                 eventType: eventCap.eventType,
                             },
@@ -254,7 +254,7 @@ export class CapabilityText {
                 } else {
                     return {
                         primary: _t(
-                            "See <b>%(eventType)s</b> events posted to your active room",
+                            "widget|capability|see_event_type_sent_active_room",
                             {
                                 eventType: eventCap.eventType,
                             },
@@ -271,7 +271,7 @@ export class CapabilityText {
         // We don't have enough context to render this capability specially, so we'll present it as-is
         return {
             primary: _t(
-                "The <b>%(capability)s</b> capability",
+                "widget|capability|capability",
                 { capability },
                 {
                     b: (sub) => <b>{sub}</b>,
@@ -287,15 +287,15 @@ export class CapabilityText {
                 return {
                     primary:
                         kind === WidgetKind.Room
-                            ? _t("Send messages as you in this room")
-                            : _t("Send messages as you in your active room"),
+                            ? _t("widget|capability|send_messages_this_room")
+                            : _t("widget|capability|send_messages_active_room"),
                 };
             } else {
                 return {
                     primary:
                         kind === WidgetKind.Room
-                            ? _t("See messages posted to this room")
-                            : _t("See messages posted to your active room"),
+                            ? _t("widget|capability|see_messages_sent_this_room")
+                            : _t("widget|capability|see_messages_sent_active_room"),
                 };
             }
         }
@@ -308,15 +308,15 @@ export class CapabilityText {
                     return {
                         primary:
                             kind === WidgetKind.Room
-                                ? _t("Send text messages as you in this room")
-                                : _t("Send text messages as you in your active room"),
+                                ? _t("widget|capability|send_text_messages_this_room")
+                                : _t("widget|capability|send_text_messages_active_room"),
                     };
                 } else {
                     return {
                         primary:
                             kind === WidgetKind.Room
-                                ? _t("See text messages posted to this room")
-                                : _t("See text messages posted to your active room"),
+                                ? _t("widget|capability|see_text_messages_sent_this_room")
+                                : _t("widget|capability|see_text_messages_sent_active_room"),
                     };
                 }
             }
@@ -325,15 +325,15 @@ export class CapabilityText {
                     return {
                         primary:
                             kind === WidgetKind.Room
-                                ? _t("Send emotes as you in this room")
-                                : _t("Send emotes as you in your active room"),
+                                ? _t("widget|capability|send_emotes_this_room")
+                                : _t("widget|capability|send_emotes_active_room"),
                     };
                 } else {
                     return {
                         primary:
                             kind === WidgetKind.Room
-                                ? _t("See emotes posted to this room")
-                                : _t("See emotes posted to your active room"),
+                                ? _t("widget|capability|see_sent_emotes_this_room")
+                                : _t("widget|capability|see_sent_emotes_active_room"),
                     };
                 }
             }
@@ -342,15 +342,15 @@ export class CapabilityText {
                     return {
                         primary:
                             kind === WidgetKind.Room
-                                ? _t("Send images as you in this room")
-                                : _t("Send images as you in your active room"),
+                                ? _t("widget|capability|send_images_this_room")
+                                : _t("widget|capability|send_images_active_room"),
                     };
                 } else {
                     return {
                         primary:
                             kind === WidgetKind.Room
-                                ? _t("See images posted to this room")
-                                : _t("See images posted to your active room"),
+                                ? _t("widget|capability|see_images_sent_this_room")
+                                : _t("widget|capability|see_images_sent_active_room"),
                     };
                 }
             }
@@ -359,15 +359,15 @@ export class CapabilityText {
                     return {
                         primary:
                             kind === WidgetKind.Room
-                                ? _t("Send videos as you in this room")
-                                : _t("Send videos as you in your active room"),
+                                ? _t("widget|capability|send_videos_this_room")
+                                : _t("widget|capability|send_videos_active_room"),
                     };
                 } else {
                     return {
                         primary:
                             kind === WidgetKind.Room
-                                ? _t("See videos posted to this room")
-                                : _t("See videos posted to your active room"),
+                                ? _t("widget|capability|see_videos_sent_this_room")
+                                : _t("widget|capability|see_videos_sent_active_room"),
                     };
                 }
             }
@@ -376,15 +376,15 @@ export class CapabilityText {
                     return {
                         primary:
                             kind === WidgetKind.Room
-                                ? _t("Send general files as you in this room")
-                                : _t("Send general files as you in your active room"),
+                                ? _t("widget|capability|send_files_this_room")
+                                : _t("widget|capability|send_files_active_room"),
                     };
                 } else {
                     return {
                         primary:
                             kind === WidgetKind.Room
-                                ? _t("See general files posted to this room")
-                                : _t("See general files posted to your active room"),
+                                ? _t("widget|capability|see_sent_files_this_room")
+                                : _t("widget|capability|see_sent_files_active_room"),
                     };
                 }
             }
@@ -393,7 +393,7 @@ export class CapabilityText {
                 if (eventCap.direction === EventDirection.Send) {
                     if (kind === WidgetKind.Room) {
                         primary = _t(
-                            "Send <b>%(msgtype)s</b> messages as you in this room",
+                            "widget|capability|send_msgtype_this_room",
                             {
                                 msgtype: eventCap.keyStr,
                             },
@@ -403,7 +403,7 @@ export class CapabilityText {
                         );
                     } else {
                         primary = _t(
-                            "Send <b>%(msgtype)s</b> messages as you in your active room",
+                            "widget|capability|send_msgtype_active_room",
                             {
                                 msgtype: eventCap.keyStr,
                             },
@@ -415,7 +415,7 @@ export class CapabilityText {
                 } else {
                     if (kind === WidgetKind.Room) {
                         primary = _t(
-                            "See <b>%(msgtype)s</b> messages posted to this room",
+                            "widget|capability|see_msgtype_sent_this_room",
                             {
                                 msgtype: eventCap.keyStr,
                             },
@@ -425,7 +425,7 @@ export class CapabilityText {
                         );
                     } else {
                         primary = _t(
-                            "See <b>%(msgtype)s</b> messages posted to your active room",
+                            "widget|capability|see_msgtype_sent_active_room",
                             {
                                 msgtype: eventCap.keyStr,
                             },

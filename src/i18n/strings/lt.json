@@ -1702,10 +1702,6 @@
     "Unable to copy room link": "Nepavyko nukopijuoti kambario nurodos",
     "Copy room link": "Kopijuoti kambario nuorodą",
     "Manage & explore rooms": "Valdyti & tyrinėti kambarius",
-    "The above, but in any room you are joined or invited to as well": "Aukščiau išvardyti, bet ir bet kuriame kambaryje, prie kurio prisijungėte arba į kurį esate pakviestas",
-    "with state key %(stateKey)s": "su būsenos raktu %(stateKey)s",
-    "with an empty state key": "su tuščiu būsenos raktu",
-    "See <b>%(eventType)s</b> events posted to your active room": "Peržiūrėti <b>%(eventType)s</b> įvykius, paskelbtus jūsų aktyviame kambaryje",
     "Light high contrast": "Šviesi didelio kontrasto",
     "pause voice broadcast": "pristabdyti balso transliaciją",
     "resume voice broadcast": "tęsti balso transliaciją",
@@ -2651,7 +2647,11 @@
             "remove_ban_invite_leave_this_room": "Pašalinti, užblokuoti arba pakviesti žmones į šį kambarį ir priversti jus išeiti",
             "receive_membership_this_room": "Matyti, kada žmonės prisijungia, išeina arba yra pakviesti į šį kambarį",
             "remove_ban_invite_leave_active_room": "Pašalinti, užblokuoti arba pakviesti žmones į jūsų aktyvų kambarį ir priversti jus išeiti",
-            "receive_membership_active_room": "Matyti, kada žmonės prisijungia, išeina arba yra pakviečiami į jūsų aktyvų kambarį"
+            "receive_membership_active_room": "Matyti, kada žmonės prisijungia, išeina arba yra pakviečiami į jūsų aktyvų kambarį",
+            "byline_empty_state_key": "su tuščiu būsenos raktu",
+            "byline_state_key": "su būsenos raktu %(stateKey)s",
+            "any_room": "Aukščiau išvardyti, bet ir bet kuriame kambaryje, prie kurio prisijungėte arba į kurį esate pakviestas",
+            "see_event_type_sent_active_room": "Peržiūrėti <b>%(eventType)s</b> įvykius, paskelbtus jūsų aktyviame kambaryje"
         }
     }
 }
