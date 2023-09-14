@@ -137,8 +137,8 @@ describe("<EditMessageComposer/>", () => {
             ...editedEvent.getContent(),
             "body": " * original message + edit",
             "m.new_content": {
-                body: "original message + edit",
-                msgtype: "m.text",
+                "body": "original message + edit",
+                "msgtype": "m.text",
                 "m.mentions": {},
             },
             "m.relates_to": {
@@ -170,8 +170,8 @@ describe("<EditMessageComposer/>", () => {
                 "body": " * hello world",
                 "msgtype": "m.text",
                 "m.new_content": {
-                    body: "hello world",
-                    msgtype: "m.text",
+                    "body": "hello world",
+                    "msgtype": "m.text",
                     "m.mentions": {},
                 },
                 "m.relates_to": {
@@ -195,10 +195,10 @@ describe("<EditMessageComposer/>", () => {
                 "format": "org.matrix.custom.html",
                 "formatted_body": " * hello <em>world</em>",
                 "m.new_content": {
-                    body: "hello *world*",
-                    msgtype: "m.text",
-                    format: "org.matrix.custom.html",
-                    formatted_body: "hello <em>world</em>",
+                    "body": "hello *world*",
+                    "msgtype": "m.text",
+                    "format": "org.matrix.custom.html",
+                    "formatted_body": "hello <em>world</em>",
                     "m.mentions": {},
                 },
                 "m.relates_to": {
@@ -222,10 +222,10 @@ describe("<EditMessageComposer/>", () => {
                 "format": "org.matrix.custom.html",
                 "formatted_body": " * blinks <strong>quickly</strong>",
                 "m.new_content": {
-                    body: "blinks __quickly__",
-                    msgtype: "m.emote",
-                    format: "org.matrix.custom.html",
-                    formatted_body: "blinks <strong>quickly</strong>",
+                    "body": "blinks __quickly__",
+                    "msgtype": "m.emote",
+                    "format": "org.matrix.custom.html",
+                    "formatted_body": "blinks <strong>quickly</strong>",
                     "m.mentions": {},
                 },
                 "m.relates_to": {
@@ -248,8 +248,8 @@ describe("<EditMessageComposer/>", () => {
                 "body": " * ✨sparkles✨",
                 "msgtype": "m.emote",
                 "m.new_content": {
-                    body: "✨sparkles✨",
-                    msgtype: "m.emote",
+                    "body": "✨sparkles✨",
+                    "msgtype": "m.emote",
                     "m.mentions": {},
                 },
                 "m.relates_to": {
@@ -274,8 +274,8 @@ describe("<EditMessageComposer/>", () => {
                 "body": " * //dev/null is my favourite place",
                 "msgtype": "m.text",
                 "m.new_content": {
-                    body: "//dev/null is my favourite place",
-                    msgtype: "m.text",
+                    "body": "//dev/null is my favourite place",
+                    "msgtype": "m.text",
                     "m.mentions": {},
                 },
                 "m.relates_to": {

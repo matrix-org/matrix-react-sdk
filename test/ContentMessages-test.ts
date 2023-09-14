@@ -23,7 +23,6 @@ import ContentMessages, { UploadCanceledError, uploadFile } from "../src/Content
 import { doMaybeLocalRoomAction } from "../src/utils/local-room";
 import { createTestClient, mkEvent } from "./test-utils";
 import { BlurhashEncoder } from "../src/BlurhashEncoder";
-import SettingsStore from "../src/settings/SettingsStore";
 
 jest.mock("matrix-encrypt-attachment", () => ({ encryptAttachment: jest.fn().mockResolvedValue({}) }));
 

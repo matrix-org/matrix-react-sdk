@@ -15,18 +15,11 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
-import { defer } from "matrix-js-sdk/src/utils";
+import { render, screen } from "@testing-library/react";
 
 import LabsUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/LabsUserSettingsTab";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
-import {
-    getMockClientWithEventEmitter,
-    mockClientMethodsServer,
-    mockClientMethodsUser,
-} from "../../../../../test-utils";
 import SdkConfig from "../../../../../../src/SdkConfig";
-import MatrixClientBackedController from "../../../../../../src/settings/controllers/MatrixClientBackedController";
 
 describe("<LabsUserSettingsTab />", () => {
     const sdkConfigSpy = jest.spyOn(SdkConfig, "get");
@@ -35,12 +28,6 @@ describe("<LabsUserSettingsTab />", () => {
         closeSettingsFn: jest.fn(),
     };
     const getComponent = () => <LabsUserSettingsTab {...defaultProps} />;
-
-    const userId = "@alice:server.org";
-    const cli = getMockClientWithEventEmitter({
-        ...mockClientMethodsUser(userId),
-        ...mockClientMethodsServer(),
-    });
 
     const settingsValueSpy = jest.spyOn(SettingsStore, "getValue");
 
