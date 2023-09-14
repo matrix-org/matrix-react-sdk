@@ -345,6 +345,8 @@ describe("<EditMessageComposer/>", () => {
             const editContent = " and @d";
             await editText(editContent);
 
+            // wait for autocompletion to render
+            await screen.findByText("Dan");
             // submit autocomplete for mention
             await editText("{enter}");
 
@@ -368,6 +370,8 @@ describe("<EditMessageComposer/>", () => {
             await editText("{backspace}{backspace}");
             // and replace with @room
             await editText("@d");
+            // wait for autocompletion to render
+            await screen.findByText("Dan");
             // submit autocomplete for @dan mention
             await editText("{enter}");
 
@@ -464,6 +468,8 @@ describe("<EditMessageComposer/>", () => {
             const editState = new EditorStateTransfer(replyEvent);
             getComponent(editState);
             await editText(" and @d");
+            // wait for autocompletion to render
+            await screen.findByText("Dan");
             // submit autocomplete for @dan mention
             await editText("{enter}");
 
