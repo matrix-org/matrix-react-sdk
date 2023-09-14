@@ -342,9 +342,6 @@
     "Peru": "ເປຣູ",
     "Paraguay": "ປາຣາກວາຍ",
     "Message Actions": "ການດຳເນີນການທາງຂໍ້ຄວາມ",
-    "Encrypted messages before this point are unavailable.": "ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້ກ່ອນຈຸດນີ້ບໍ່ສາມາດໃຊ້ໄດ້.",
-    "You don't have permission to view messages from before you joined.": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງຂໍ້ຄວາມ ກ່ອນທີ່ທ່ານເຂົ້າຮ່ວມ.",
-    "You don't have permission to view messages from before you were invited.": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງຂໍ້ຄວາມ ກ່ອນທີ່ທ່ານໄດ້ຖືກເຊີນ.",
     "Failed to send": "ການສົ່ງບໍ່ສຳເລັດ",
     "Your message was sent": "ຂໍ້ຄວາມຂອງທ່ານຖືກສົ່ງໄປແລ້ວ",
     "Encrypted by a deleted session": "ເຂົ້າລະຫັດໂດຍພາກສ່ວນທີ່ຖືກລຶບ",
@@ -1258,7 +1255,6 @@
     "Email": "ອີເມວ",
     "Country Dropdown": "ເລືອກປະເທດຜ່ານເມນູແບບເລື່ອນລົງ",
     "This homeserver would like to make sure you are not a robot.": "homeserver ນີ້ຕ້ອງການໃຫ້ແນ່ໃຈວ່າທ່ານບໍ່ແມ່ນຫຸ່ນຍົນ.",
-    "powered by Matrix": "ຂັບເຄື່ອນໂດຍ Matrix",
     "This room is public": "ນີ້ແມ່ນຫ້ອງສາທາລະນະ",
     "Avatar": "ຮູບແທນຕົວ",
     "An error occurred while stopping your live location, please try again": "ເກີດຄວາມຜິດພາດໃນລະຫວ່າງການຢຸດສະຖານທີ່ປັດຈຸບັນຂອງທ່ານ, ກະລຸນາລອງໃໝ່ອີກຄັ້ງ",
@@ -1507,23 +1503,7 @@
     "Only people invited will be able to find and join this space.": "ມີແຕ່ຄົນທີ່ຖືກເຊີນເທົ່ານັ້ນທີ່ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມພື້ນທີ່ນີ້ໄດ້.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "ທຸກຄົນຈະສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມພື້ນທີ່ນີ້, ບໍ່ພຽງແຕ່ສະມາຊິກຂອງ <SpaceName/> ເທົ່ານັ້ນ.",
     "Anyone in <SpaceName/> will be able to find and join.": "ທຸກຄົນໃນ <SpaceName/> ຈະສາມາດຊອກຫາ ແລະ ເຂົ້າຮ່ວມໄດ້.",
-    "Block anyone not part of %(serverName)s from ever joining this room.": "ບລັອກຜູ້ທີ່ບໍ່ມີສ່ວນຮ່ວມ %(serverName)s ບໍ່ໃຫ້ເຂົ້າຮ່ວມຫ້ອງນີ້.",
-    "Visible to space members": "ເບິ່ງເຫັນພື້ນທີ່ຂອງສະມາຊິກ",
     "Public room": "ຫ້ອງສາທາລະນະ",
-    "Private room (invite only)": "ຫ້ອງສ່ວນຕົວ (ເຊີນເທົ່ານັ້ນ)",
-    "Room visibility": "ການເບິ່ງເຫັນຫ້ອງ",
-    "Topic (optional)": "ຫົວຂໍ້ (ທາງເລືອກ)",
-    "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.": "ທ່ານອາດຈະປິດການທໍາງານນີ້ຖ້າຫ້ອງຈະຖືກໃຊ້ສໍາລັບການຮ່ວມມືກັບທີມງານພາຍນອກທີ່ມີ homeserver ເປັນຂອງຕົນເອງ. ອັນນີ້ບໍ່ສາມາດປ່ຽນແປງໄດ້ໃນພາຍຫຼັງ.",
-    "You might enable this if the room will only be used for collaborating with internal teams on your homeserver. This cannot be changed later.": "ທ່ານອາດຈະເປີດໃຊ້ງານຫ້ອງນີ້ຖ້າຫາກຈະໃຊ້ເພື່ອຮ່ວມມືກັບທີມງານພາຍໃນຢູ່ໃນເຊີບເວີຂອງທ່ານເທົ່ານັ້ນ. ອັນນີ້ບໍ່ສາມາດປ່ຽນແປງໄດ້ໃນພາຍຫຼັງ.",
-    "Enable end-to-end encryption": "ເປີດໃຊ້ການເຂົ້າລະຫັດແຕ່ຕົ້ນທາງເຖິງປາຍທາງ",
-    "Your server requires encryption to be enabled in private rooms.": "ເຊີບເວີຂອງທ່ານຮຽກຮ້ອງໃຫ້ມີການເຂົ້າລະຫັດເພື່ອເປີດໃຊ້ຫ້ອງສ່ວນຕົວ.",
-    "You can't disable this later. Bridges & most bots won't work yet.": "ທ່ານບໍ່ສາມາດປິດການທໍາງານນີ້ໄດ້ໃນພາຍຫຼັງ. Bridges ແລະ bots ສ່ວນໃຫຍ່ຈະບໍ່ເຮັດວຽກເທື່ອ.",
-    "Only people invited will be able to find and join this room.": "ມີແຕ່ຄົນທີ່ໄດ້ຮັບເຊີນເທົ່ານັ້ນທີ່ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມຫ້ອງນີ້ໄດ້.",
-    "Anyone will be able to find and join this room.": "ທຸກຄົນຈະສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມຫ້ອງນີ້ໄດ້.",
-    "Anyone will be able to find and join this room, not just members of <SpaceName/>.": "ທຸກຄົນຈະສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມຫ້ອງນີ້ໄດ້, ບໍ່ພຽງແຕ່ສະມາຊິກຂອງ <SpaceName/> ເທົ່ານັ້ນ.",
-    "You can change this at any time from room settings.": "ທ່ານສາມາດປ່ຽນສິ່ງນີ້ໄດ້ທຸກເວລາຈາກການຕັ້ງຄ່າຫ້ອງ.",
-    "Everyone in <SpaceName/> will be able to find and join this room.": "ທຸກຄົນໃນ <SpaceName/> ຈະສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມຫ້ອງນີ້ໄດ້.",
-    "Please enter a name for the room": "ກະລຸນາໃສ່ຊື່ຫ້ອງ",
     "Clear all data": "ລຶບລ້າງຂໍ້ມູນທັງໝົດ",
     "Feedback sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
     "An error has occurred.": "ໄດ້ເກີດຂໍ້ຜິດພາດ.",
@@ -2201,7 +2181,6 @@
         "other": "ສະແດງຕົວຢ່າງອື່ນໆ %(count)s"
     },
     "Scroll to most recent messages": "ເລື່ອນໄປຫາຂໍ້ຄວາມຫຼ້າສຸດ",
-    "You can't see earlier messages": "ທ່ານບໍ່ສາມາດເຫັນຂໍ້ຄວາມກ່ອນໜ້ານີ້",
     "Once enabled, encryption for a room cannot be disabled. Messages sent in an encrypted room cannot be seen by the server, only by the participants of the room. Enabling encryption may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>": "ເມື່ອເປີດໃຊ້ແລ້ວ, ການເຂົ້າລະຫັດລັບຂອງຫ້ອງບໍ່ສາມາດປິດໃຊ້ງານໄດ້. ຂໍ້ຄວາມທີ່ສົ່ງຢູ່ໃນຫ້ອງທີ່ເຂົ້າລະຫັດບໍ່ສາມາດເຫັນໄດ້ໂດຍເຊີບເວີ, ສະເພາະແຕ່ຜູ້ເຂົ້າຮ່ວມຂອງຫ້ອງເທົ່ານັ້ນ. ການເປີດໃຊ້ການເຂົ້າລະຫັດອາດຈະເຮັດໃຫ້ bots ແລະ bridges ຈໍານວນຫຼາຍເຮັດວຽກບໍ່ຖືກຕ້ອງ. <a>ສຶກສາເພີ່ມເຕີມກ່ຽວກັບການເຂົ້າລະຫັດ.</a>",
     "Enable encryption?": "ເປີດໃຊ້ງານການເຂົ້າລະຫັດບໍ?",
     "To avoid these issues, create a <a>new encrypted room</a> for the conversation you plan to have.": "ເພື່ອຫຼີກລ້ຽງບັນຫາເຫຼົ່ານີ້, ສ້າງ <a>ຫ້ອງເຂົ້າລະຫັດໃຫມ່</a> ສໍາລັບການສົນທະນາທີ່ທ່ານວາງແຜນຈະມີ.",
@@ -2876,7 +2855,23 @@
         "title_public_room": "ສ້າງຫ້ອງສາທາລະນະ",
         "title_private_room": "ສ້າງຫ້ອງສ່ວນຕົວ",
         "action_create_video_room": "ສ້າງຫ້ອງວິດີໂອ",
-        "action_create_room": "ສ້າງຫ້ອງ"
+        "action_create_room": "ສ້າງຫ້ອງ",
+        "name_validation_required": "ກະລຸນາໃສ່ຊື່ຫ້ອງ",
+        "join_rule_restricted_label": "ທຸກຄົນໃນ <SpaceName/> ຈະສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມຫ້ອງນີ້ໄດ້.",
+        "join_rule_change_notice": "ທ່ານສາມາດປ່ຽນສິ່ງນີ້ໄດ້ທຸກເວລາຈາກການຕັ້ງຄ່າຫ້ອງ.",
+        "join_rule_public_parent_space_label": "ທຸກຄົນຈະສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມຫ້ອງນີ້ໄດ້, ບໍ່ພຽງແຕ່ສະມາຊິກຂອງ <SpaceName/> ເທົ່ານັ້ນ.",
+        "join_rule_public_label": "ທຸກຄົນຈະສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມຫ້ອງນີ້ໄດ້.",
+        "join_rule_invite_label": "ມີແຕ່ຄົນທີ່ໄດ້ຮັບເຊີນເທົ່ານັ້ນທີ່ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມຫ້ອງນີ້ໄດ້.",
+        "encrypted_warning": "ທ່ານບໍ່ສາມາດປິດການທໍາງານນີ້ໄດ້ໃນພາຍຫຼັງ. Bridges ແລະ bots ສ່ວນໃຫຍ່ຈະບໍ່ເຮັດວຽກເທື່ອ.",
+        "encryption_forced": "ເຊີບເວີຂອງທ່ານຮຽກຮ້ອງໃຫ້ມີການເຂົ້າລະຫັດເພື່ອເປີດໃຊ້ຫ້ອງສ່ວນຕົວ.",
+        "encryption_label": "ເປີດໃຊ້ການເຂົ້າລະຫັດແຕ່ຕົ້ນທາງເຖິງປາຍທາງ",
+        "unfederated_label_default_off": "ທ່ານອາດຈະເປີດໃຊ້ງານຫ້ອງນີ້ຖ້າຫາກຈະໃຊ້ເພື່ອຮ່ວມມືກັບທີມງານພາຍໃນຢູ່ໃນເຊີບເວີຂອງທ່ານເທົ່ານັ້ນ. ອັນນີ້ບໍ່ສາມາດປ່ຽນແປງໄດ້ໃນພາຍຫຼັງ.",
+        "unfederated_label_default_on": "ທ່ານອາດຈະປິດການທໍາງານນີ້ຖ້າຫ້ອງຈະຖືກໃຊ້ສໍາລັບການຮ່ວມມືກັບທີມງານພາຍນອກທີ່ມີ homeserver ເປັນຂອງຕົນເອງ. ອັນນີ້ບໍ່ສາມາດປ່ຽນແປງໄດ້ໃນພາຍຫຼັງ.",
+        "topic_label": "ຫົວຂໍ້ (ທາງເລືອກ)",
+        "room_visibility_label": "ການເບິ່ງເຫັນຫ້ອງ",
+        "join_rule_invite": "ຫ້ອງສ່ວນຕົວ (ເຊີນເທົ່ານັ້ນ)",
+        "join_rule_restricted": "ເບິ່ງເຫັນພື້ນທີ່ຂອງສະມາຊິກ",
+        "unfederated": "ບລັອກຜູ້ທີ່ບໍ່ມີສ່ວນຮ່ວມ %(serverName)s ບໍ່ໃຫ້ເຂົ້າຮ່ວມຫ້ອງນີ້."
     },
     "timeline": {
         "m.call.invite": {
@@ -3144,7 +3139,11 @@
             "changed_rule_rooms": "%(senderName)s ໄດ້ປ່ຽນກົດລະບຽບທີ່ຫ້າມການຈັບຄູ່ຫ້ອງ %(oldGlob)s ເປັນການຈັບຄູ່ %(newGlob)s ສໍາລັບ %(reason)s",
             "changed_rule_servers": "%(senderName)s ໄດ້ປ່ຽນກົດລະບຽບທີ່ຫ້າມເຊີບເວີຈັບຄູ່ກັນ %(oldGlob)s ເປັນການຈັບຄູ່%(newGlob)s ສໍາລັບ %(reason)s",
             "changed_rule_glob": "%(senderName)s ອັບເດດກົດລະບຽບການຫ້າມຈັບຄູ່ກັນ %(oldGlob)s ການຈັບຄູ່ກັນ%(newGlob)s ສໍາລັບ %(reason)s"
-        }
+        },
+        "no_permission_messages_before_invite": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງຂໍ້ຄວາມ ກ່ອນທີ່ທ່ານໄດ້ຖືກເຊີນ.",
+        "no_permission_messages_before_join": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງຂໍ້ຄວາມ ກ່ອນທີ່ທ່ານເຂົ້າຮ່ວມ.",
+        "encrypted_historical_messages_unavailable": "ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້ກ່ອນຈຸດນີ້ບໍ່ສາມາດໃຊ້ໄດ້.",
+        "historical_messages_unavailable": "ທ່ານບໍ່ສາມາດເຫັນຂໍ້ຄວາມກ່ອນໜ້ານີ້"
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",
@@ -3376,7 +3375,8 @@
         "log_in_new_account": "<a>ເຂົ້າສູ່ລະບົບ</a> ບັນຊີໃໝ່ຂອງທ່ານ.",
         "registration_successful": "ການລົງທະບຽນສຳເລັດແລ້ວ",
         "server_picker_title": "ບັນຊີເຈົ້າພາບເປີດຢູ່",
-        "server_picker_dialog_title": "ຕັດສິນໃຈວ່າບັນຊີຂອງທ່ານໃຊ້ເປັນເຈົ້າພາບຢູ່ໃສ"
+        "server_picker_dialog_title": "ຕັດສິນໃຈວ່າບັນຊີຂອງທ່ານໃຊ້ເປັນເຈົ້າພາບຢູ່ໃສ",
+        "footer_powered_by_matrix": "ຂັບເຄື່ອນໂດຍ Matrix"
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",

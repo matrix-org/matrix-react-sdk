@@ -159,7 +159,6 @@
     "A text message has been sent to %(msisdn)s": "Текстуална порука је послата на %(msisdn)s",
     "Please enter the code it contains:": "Унесите код који се налази у њој:",
     "Start authentication": "Започните идентификацију",
-    "powered by Matrix": "покреће га Матрикс",
     "Sign in with": "Пријавите се преко",
     "Email address": "Мејл адреса",
     "Something went wrong!": "Нешто је пошло наопако!",
@@ -384,7 +383,6 @@
     "The encryption used by this room isn't supported.": "Начин шифровања унутар ове собе није подржан.",
     "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>реаговали са %(shortName)s</reactedWith>",
     "Widgets do not use message encryption.": "Виџети не користе шифровање порука.",
-    "Enable end-to-end encryption": "Омогући шифровање с краја на крај",
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Terms of Service": "Услови коришћења",
     "To continue you need to accept the terms of this service.": "За наставак, морате прихватити услове коришћења ове услуге.",
@@ -1413,7 +1411,8 @@
         "quick_reactions": "Брзе реакције"
     },
     "auth": {
-        "sso": "Јединствена пријава"
+        "sso": "Јединствена пријава",
+        "footer_powered_by_matrix": "покреће га Матрикс"
     },
     "export_chat": {
         "messages": "Поруке"
@@ -1439,5 +1438,8 @@
             "title": "Помоћ и подаци о програму",
             "versions": "Верзије"
         }
+    },
+    "create_room": {
+        "encryption_label": "Омогући шифровање с краја на крај"
     }
 }

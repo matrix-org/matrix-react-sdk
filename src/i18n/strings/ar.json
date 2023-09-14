@@ -15,7 +15,6 @@
     "Waiting for response from server": "في انتظار الرد مِن الخادوم",
     "Thank you!": "شكرًا !",
     "What's new?": "ما الجديد ؟",
-    "powered by Matrix": "مشغل بواسطة Matrix",
     "Use Single Sign On to continue": "استعمل الولوج الموحّد للمواصلة",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "أكّد إضافتك لعنوان البريد هذا باستعمال الولوج الموحّد لإثبات هويّتك.",
     "Confirm adding email": "أكّد إضافة البريد الإلكتروني",
@@ -1405,7 +1404,8 @@
         "quick_reactions": "ردود الفعل السريعة"
     },
     "auth": {
-        "sso": "الولوج الموحّد"
+        "sso": "الولوج الموحّد",
+        "footer_powered_by_matrix": "مشغل بواسطة Matrix"
     },
     "export_chat": {
         "messages": "الرسائل"

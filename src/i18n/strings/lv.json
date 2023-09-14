@@ -193,7 +193,6 @@
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ja iepriekš izmantojāt jaunāku %(brand)s versiju, jūsu sesija var nebūt saderīga ar šo versiju. Aizveriet šo logu un atgriezieties jaunākajā versijā.",
     "Token incorrect": "Nepareizs autentifikācijas tokens",
     "Please enter the code it contains:": "Lūdzu, ievadiet tajā ietverto kodu:",
-    "powered by Matrix": "tiek darbināta ar Matrix",
     "Error decrypting image": "Kļūda atšifrējot attēlu",
     "Error decrypting video": "Kļūda atšifrējot video",
     "Add an Integration": "Pievienot integrāciju",
@@ -469,7 +468,6 @@
     "General failure": "Vispārīga kļūda",
     "General": "Vispārīgi",
     "Recently Direct Messaged": "Nesenās tiešās sarakstes",
-    "Topic (optional)": "Temats (izvēles)",
     "Topic: %(topic)s (<a>edit</a>)": "Temats: %(topic)s (<a>redigēt</a>)",
     "Topic: %(topic)s ": "Temats: %(topic)s ",
     "This is the start of <roomName/>.": "Šis ir <roomName/> istabas pats sākums.",
@@ -477,12 +475,8 @@
     "%(creator)s created and configured the room.": "%(creator)s izveidoja un nokonfigurēja istabu.",
     "e.g. my-room": "piem., mana-istaba",
     "Room address": "Istabas adrese",
-    "You might enable this if the room will only be used for collaborating with internal teams on your homeserver. This cannot be changed later.": "Jūs varat iespējot šo situācijā, kad istaba paredzēta izmantošanai tikai saziņai starp jūsu bāzes serverī esošajām komandām. Tas nav maināms vēlāk.",
-    "Block anyone not part of %(serverName)s from ever joining this room.": "Liegt pievienoties šai istabai ikvienam, kas nav reģistrēts %(serverName)s serverī.",
     "Show advanced": "Rādīt papildu iestatījumus",
     "Hide advanced": "Slēpt papildu iestatījumus",
-    "Your server requires encryption to be enabled in private rooms.": "Jūsu serveris pieprasa iespējotu šifrēšānu privātās istabās.",
-    "Enable end-to-end encryption": "Iespējot pilnīgu šifrēšanu",
     "Add a new server": "Pievienot jaunu serveri",
     "Your homeserver": "Jūsu bāzes serveris",
     "Your server": "Jūsu serveris",
@@ -1062,10 +1056,6 @@
     "Search for rooms or people": "Meklēt istabas vai cilvēkus",
     "Message preview": "Ziņas priekšskatījums",
     "Public room": "Publiska istaba",
-    "Private room (invite only)": "Privāta istaba (tikai ar ielūgumiem)",
-    "Only people invited will be able to find and join this room.": "Tikai uzaicinātās cilvēki varēs atrast un pievienoties šai istabai.",
-    "Anyone will be able to find and join this room.": "Ikviens varēs atrast un pievienoties šai istabai.",
-    "You can change this at any time from room settings.": "Jūs to varat mainīt istabas iestatījumos jebkurā laikā.",
     "Search for rooms": "Meklēt istabas",
     "Server name": "Servera nosaukums",
     "Enter the name of a new server you want to explore.": "Ievadiet nosaukumu jaunam serverim, kuru vēlaties pārlūkot.",
@@ -1537,7 +1527,16 @@
         "title_public_room": "Izveidot publisku istabu",
         "title_private_room": "Izveidot privātu istabu",
         "action_create_video_room": "Izveidot video istabu",
-        "action_create_room": "Izveidot istabu"
+        "action_create_room": "Izveidot istabu",
+        "join_rule_change_notice": "Jūs to varat mainīt istabas iestatījumos jebkurā laikā.",
+        "join_rule_public_label": "Ikviens varēs atrast un pievienoties šai istabai.",
+        "join_rule_invite_label": "Tikai uzaicinātās cilvēki varēs atrast un pievienoties šai istabai.",
+        "encryption_forced": "Jūsu serveris pieprasa iespējotu šifrēšānu privātās istabās.",
+        "encryption_label": "Iespējot pilnīgu šifrēšanu",
+        "unfederated_label_default_off": "Jūs varat iespējot šo situācijā, kad istaba paredzēta izmantošanai tikai saziņai starp jūsu bāzes serverī esošajām komandām. Tas nav maināms vēlāk.",
+        "topic_label": "Temats (izvēles)",
+        "join_rule_invite": "Privāta istaba (tikai ar ielūgumiem)",
+        "unfederated": "Liegt pievienoties šai istabai ikvienam, kas nav reģistrēts %(serverName)s serverī."
     },
     "timeline": {
         "m.call.invite": {
@@ -1915,7 +1914,8 @@
         "account_clash": "Jūsu jaunais konts (%(newAccountId)s) ir reģistrēts, bet jūs jau esat pierakstījies citā kontā (%(loggedInUserId)s).",
         "account_clash_previous_account": "Turpināt ar iepriekšējo kontu",
         "log_in_new_account": "<a>Pierakstīties</a> jaunajā kontā.",
-        "registration_successful": "Reģistrācija ir veiksmīga"
+        "registration_successful": "Reģistrācija ir veiksmīga",
+        "footer_powered_by_matrix": "tiek darbināta ar Matrix"
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",

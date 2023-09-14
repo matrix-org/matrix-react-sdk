@@ -192,7 +192,6 @@
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Eğer daha önce %(brand)s'un daha yeni bir versiyonunu kullandıysanız , oturumunuz bu sürümle uyumsuz olabilir . Bu pencereyi kapatın ve daha yeni sürüme geri dönün.",
     "Token incorrect": "Belirteç(Token) hatalı",
     "Please enter the code it contains:": "Lütfen içerdiği kodu girin:",
-    "powered by Matrix": "Matrix'den besleniyor",
     "Error decrypting image": "Resim şifre çözme hatası",
     "Error decrypting video": "Video şifre çözme hatası",
     "Add an Integration": "Entegrasyon ekleyin",
@@ -279,7 +278,6 @@
     "Notes": "Notlar",
     "Removing…": "Siliniyor…",
     "Clear all data": "Bütün verileri sil",
-    "Please enter a name for the room": "Lütfen oda için bir ad girin",
     "Hide advanced": "Gelişmiş gizle",
     "Show advanced": "Gelişmiş göster",
     "Incompatible Database": "Uyumsuz Veritabanı",
@@ -1268,7 +1266,6 @@
     "Your server": "Senin sunucun",
     "All rooms": "Tüm odalar",
     "Looks good": "İyi görünüyor",
-    "Topic (optional)": "Konu (isteğe bağlı)",
     "Transfer": "Aktar",
     "Hold": "Beklet",
     "Resume": "Devam et",
@@ -1737,7 +1734,9 @@
     },
     "create_room": {
         "title_public_room": "Halka açık bir oda oluşturun",
-        "title_private_room": "Özel bir oda oluştur"
+        "title_private_room": "Özel bir oda oluştur",
+        "name_validation_required": "Lütfen oda için bir ad girin",
+        "topic_label": "Konu (isteğe bağlı)"
     },
     "timeline": {
         "m.call.invite": {
@@ -2112,7 +2111,8 @@
         "sso": "Tek seferlik oturum aç",
         "account_clash_previous_account": "Önceki hesapla devam et",
         "log_in_new_account": "Yeni hesabınızla <a>Oturum aç</a>ın.",
-        "registration_successful": "Kayıt Başarılı"
+        "registration_successful": "Kayıt Başarılı",
+        "footer_powered_by_matrix": "Matrix'den besleniyor"
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
