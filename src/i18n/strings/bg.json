@@ -1060,7 +1060,6 @@
     "Switch to dark mode": "Смени на тъмен режим",
     "Switch theme": "Смени темата",
     "All settings": "Всички настройки",
-    "Feedback": "Обратна връзка",
     "If you've joined lots of rooms, this might take a while": "Това може да отнеме известно време, ако сте в много стаи",
     "Confirm encryption setup": "Потвърждение на настройки за шифроване",
     "Click the button below to confirm setting up encryption.": "Кликнете бутона по-долу за да потвърдите настройването на шифроване.",
@@ -1129,11 +1128,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Започнете разговор с някой използвайки тяхното име или потребителско име (като <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Започнете разговор с някой използвайки тяхното име, имейл адрес или потребителско име (като <userId/>).",
     "Invite by email": "Покани по имейл",
-    "Send feedback": "Изпрати обратна връзка",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "ПРОФЕСИОНАЛЕН СЪВЕТ: Ако ще съобщавате за проблем, изпратете и <debugLogsLink>логове за разработчици</debugLogsLink> за да ни помогнете да открием проблема.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Първо прегледайте <existingIssuesLink>съществуващите проблеми в Github</existingIssuesLink>. Няма подобни? <newIssueLink>Създайте нов</newIssueLink>.",
-    "Comment": "Коментар",
-    "Feedback sent": "Обратната връзка беше изпратена",
     "Preparing to download logs": "Подготвяне за изтегляне на логове",
     "Information": "Информация",
     "This version of %(brand)s does not support searching encrypted messages": "Тази версия на %(brand)s не поддържа търсенето в шифровани съобщения",
@@ -1573,7 +1567,8 @@
         "cross_signing": "Кръстосано-подписване",
         "identity_server": "Сървър за самоличност",
         "integration_manager": "Мениджър на интеграции",
-        "qr_code": "QR код"
+        "qr_code": "QR код",
+        "feedback": "Обратна връзка"
     },
     "action": {
         "continue": "Продължи",
@@ -2242,5 +2237,12 @@
             "versions": "Версии",
             "clear_cache_reload": "Изчисти кеша и презареди"
         }
+    },
+    "feedback": {
+        "sent": "Обратната връзка беше изпратена",
+        "comment_label": "Коментар",
+        "pro_type": "ПРОФЕСИОНАЛЕН СЪВЕТ: Ако ще съобщавате за проблем, изпратете и <debugLogsLink>логове за разработчици</debugLogsLink> за да ни помогнете да открием проблема.",
+        "existing_issue_link": "Първо прегледайте <existingIssuesLink>съществуващите проблеми в Github</existingIssuesLink>. Няма подобни? <newIssueLink>Създайте нов</newIssueLink>.",
+        "send_feedback_action": "Изпрати обратна връзка"
     }
 }

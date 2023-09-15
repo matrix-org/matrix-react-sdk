@@ -775,7 +775,6 @@
     "Switch to dark mode": "Kasuta tumedat teemat",
     "Switch theme": "Vaheta teemat",
     "All settings": "Kõik seadistused",
-    "Feedback": "Tagasiside",
     "Use Single Sign On to continue": "Jätkamiseks kasuta ühekordset sisselogimist",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Kinnita selle e-posti aadress kasutades oma isiku tuvastamiseks ühekordset sisselogimist (Single Sign On).",
     "Confirm adding email": "Kinnita e-posti aadressi lisamine",
@@ -1180,11 +1179,6 @@
     "Answered Elsewhere": "Vastatud mujal",
     "Data on this screen is shared with %(widgetDomain)s": "Andmeid selles vaates jagatakse %(widgetDomain)s serveriga",
     "Modal Widget": "Modaalne vidin",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "SOOVITUS: Kui sa koostad uut veateadet, siis meil on lihtsam vea põhjuseni leida, kui sa lisad juurde ka <debugLogsLink>silumislogid</debugLogsLink>.",
-    "Send feedback": "Saada tagasiside",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Palun esmalt vaata, kas <existingIssuesLink>Githubis on selline viga juba kirjeldatud</existingIssuesLink>. Sa ei leidnud midagi? <newIssueLink>Siis saada uus veateade</newIssueLink>.",
-    "Comment": "Kommentaar",
-    "Feedback sent": "Tagasiside on saadetud",
     "New version of %(brand)s is available": "%(brand)s ralenduse uus versioon on saadaval",
     "Update %(brand)s": "Uuenda %(brand)s rakendust",
     "Enable desktop notifications": "Võta kasutusele töölauakeskkonna teavitused",
@@ -1662,7 +1656,6 @@
     "Search names and descriptions": "Otsi nimede ja kirjelduste seast",
     "You may contact me if you have any follow up questions": "Kui sul on lisaküsimusi, siis vastan neile hea meelega",
     "To leave the beta, visit your settings.": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Lisame sinu kommentaaridele ka kasutajanime ja operatsioonisüsteemi.",
     "Add reaction": "Lisa reaktsioon",
     "Message search initialisation failed": "Sõnumite otsingu alustamine ei õnnestunud",
     "Go to my space": "Palun vaata minu kogukonnakeskust",
@@ -1975,7 +1968,6 @@
     "Pin to sidebar": "Kinnita külgpaanile",
     "Quick settings": "Kiirseadistused",
     "Spaces you know that contain this space": "Sulle teadaolevad kogukonnakeskused, millesse kuulub see kogukond",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Võid minuga ühendust võtta, kui soovid jätkata mõttevahetust või lasta mul tulevasi ideid katsetada",
     "Home options": "Avalehe valikud",
     "%(spaceName)s menu": "%(spaceName)s menüü",
     "Join public room": "Liitu avaliku jututoaga",
@@ -2820,7 +2812,8 @@
         "cross_signing": "Risttunnustamine",
         "identity_server": "Isikutuvastusserver",
         "integration_manager": "Lõiminguhaldur",
-        "qr_code": "QR kood"
+        "qr_code": "QR kood",
+        "feedback": "Tagasiside"
     },
     "action": {
         "continue": "Jätka",
@@ -4113,5 +4106,14 @@
             "see_msgtype_sent_this_room": "Näha sellesse jututuppa saadetud <b>%(msgtype)s</b> sõnumeid",
             "see_msgtype_sent_active_room": "Näha sinu aktiivsesse jututuppa saadetud <b>%(msgtype)s</b> sõnumeid"
         }
+    },
+    "feedback": {
+        "sent": "Tagasiside on saadetud",
+        "comment_label": "Kommentaar",
+        "platform_username": "Lisame sinu kommentaaridele ka kasutajanime ja operatsioonisüsteemi.",
+        "may_contact_label": "Võid minuga ühendust võtta, kui soovid jätkata mõttevahetust või lasta mul tulevasi ideid katsetada",
+        "pro_type": "SOOVITUS: Kui sa koostad uut veateadet, siis meil on lihtsam vea põhjuseni leida, kui sa lisad juurde ka <debugLogsLink>silumislogid</debugLogsLink>.",
+        "existing_issue_link": "Palun esmalt vaata, kas <existingIssuesLink>Githubis on selline viga juba kirjeldatud</existingIssuesLink>. Sa ei leidnud midagi? <newIssueLink>Siis saada uus veateade</newIssueLink>.",
+        "send_feedback_action": "Saada tagasiside"
     }
 }

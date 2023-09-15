@@ -1080,7 +1080,6 @@
     "Switch to dark mode": "Zum dunklen Thema wechseln",
     "Switch theme": "Design wechseln",
     "All settings": "Alle Einstellungen",
-    "Feedback": "Rückmeldung",
     "Room ID or address of ban list": "Raum-ID oder Adresse der Verbotsliste",
     "No recently visited rooms": "Keine kürzlich besuchten Räume",
     "Message preview": "Nachrichtenvorschau",
@@ -1180,8 +1179,6 @@
     "The call could not be established": "Der Anruf kann nicht getätigt werden",
     "Data on this screen is shared with %(widgetDomain)s": "Daten auf diesem Bildschirm werden mit %(widgetDomain)s geteilt",
     "Modal Widget": "Modales Widget",
-    "Send feedback": "Rückmeldung senden",
-    "Feedback sent": "Rückmeldung gesendet",
     "Uzbekistan": "Usbekistan",
     "Don't miss a reply": "Verpasse keine Antwort",
     "Enable desktop notifications": "Aktiviere Desktopbenachrichtigungen",
@@ -1200,9 +1197,6 @@
     "%(displayName)s created this room.": "%(displayName)s hat diesen Raum erstellt.",
     "Add a photo, so people can easily spot your room.": "Füge ein Bild hinzu, damit andere deinen Raum besser erkennen können.",
     "This is the start of <roomName/>.": "Dies ist der Beginn von <roomName/>.",
-    "Comment": "Kommentar",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Bitte wirf einen Blick auf <existingIssuesLink>existierende Programmfehler auf Github</existingIssuesLink>. Keinen passenden gefunden? <newIssueLink>Erstelle einen neuen</newIssueLink>.",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "PRO TIPP: Wenn du einen Programmfehler meldest, füge bitte <debugLogsLink>Debug-Protokolle</debugLogsLink> hinzu, um uns beim Finden des Problems zu helfen.",
     "Invite by email": "Via Email einladen",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Beginne eine Konversation mittels Name, E-Mail-Adresse oder Matrix-ID (wie <userId/>).",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Lade jemanden mittels Name, E-Mail-Adresse oder Benutzername (wie <userId/>) ein, oder <a>teile diesen Raum</a>.",
@@ -1664,7 +1658,6 @@
     "Add reaction": "Reaktion hinzufügen",
     "You may contact me if you have any follow up questions": "Kontaktiert mich, falls ihr weitere Fragen zu meiner Rückmeldung habt",
     "To leave the beta, visit your settings.": "Du kannst die Beta in den Einstellungen deaktivieren.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Deine Systeminformationen und dein Benutzername werden mitgeschickt, damit wir deine Rückmeldung bestmöglich nachvollziehen können.",
     "Space Autocomplete": "Spaces automatisch vervollständigen",
     "Currently joining %(count)s rooms": {
         "one": "Betrete %(count)s Raum",
@@ -1981,7 +1974,6 @@
     "Spaces you're in": "Spaces, in denen du Mitglied bist",
     "Sections to show": "Anzuzeigende Bereiche",
     "Link to room": "Link zum Raum",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Ich möchte kontaktiert werden, wenn ihr mehr wissen oder mich neue Funktionen testen lassen wollt",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Willst du die Umfrage wirklich beenden? Die finalen Ergebnisse werden angezeigt und können nicht mehr geändert werden.",
     "End Poll": "Umfrage beenden",
     "Sorry, the poll did not end. Please try again.": "Die Umfrage konnte nicht beendet werden. Bitte versuche es erneut.",
@@ -2824,7 +2816,8 @@
         "cross_signing": "Quersignierung",
         "identity_server": "Identitäts-Server",
         "integration_manager": "Integrationsverwaltung",
-        "qr_code": "QR-Code"
+        "qr_code": "QR-Code",
+        "feedback": "Rückmeldung"
     },
     "action": {
         "continue": "Fortfahren",
@@ -4118,5 +4111,14 @@
             "see_msgtype_sent_this_room": "Zeige <b>%(msgtype)s</b> Nachrichten, welche in diesen Raum gesendet worden sind",
             "see_msgtype_sent_active_room": "Zeige <b>%(msgtype)s</b> Nachrichten, welche in deinen aktiven Raum gesendet worden sind"
         }
+    },
+    "feedback": {
+        "sent": "Rückmeldung gesendet",
+        "comment_label": "Kommentar",
+        "platform_username": "Deine Systeminformationen und dein Benutzername werden mitgeschickt, damit wir deine Rückmeldung bestmöglich nachvollziehen können.",
+        "may_contact_label": "Ich möchte kontaktiert werden, wenn ihr mehr wissen oder mich neue Funktionen testen lassen wollt",
+        "pro_type": "PRO TIPP: Wenn du einen Programmfehler meldest, füge bitte <debugLogsLink>Debug-Protokolle</debugLogsLink> hinzu, um uns beim Finden des Problems zu helfen.",
+        "existing_issue_link": "Bitte wirf einen Blick auf <existingIssuesLink>existierende Programmfehler auf Github</existingIssuesLink>. Keinen passenden gefunden? <newIssueLink>Erstelle einen neuen</newIssueLink>.",
+        "send_feedback_action": "Rückmeldung senden"
     }
 }

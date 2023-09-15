@@ -1001,7 +1001,6 @@
         "other": "Você tem %(count)s notificações não lidas em uma versão anterior desta sala.",
         "one": "Você tem %(count)s notificações não lidas em uma versão anterior desta sala."
     },
-    "Feedback": "Fale conosco",
     "Could not load user profile": "Não foi possível carregar o perfil do usuário",
     "Your password has been reset.": "Sua senha foi alterada.",
     "Invalid base_url for m.homeserver": "base_url inválido para m.homeserver",
@@ -1179,11 +1178,6 @@
     "Answered Elsewhere": "Respondido em algum lugar",
     "Modal Widget": "Popup do widget",
     "Data on this screen is shared with %(widgetDomain)s": "Dados nessa tela são compartilhados com %(widgetDomain)s",
-    "Send feedback": "Enviar comentário",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "DICA: se você nos informar um erro, envie <debugLogsLink> relatórios de erro </debugLogsLink> para nos ajudar a rastrear o problema.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Por favor, consulte os <existingIssuesLink> erros conhecidos no Github </existingIssuesLink> antes de enviar o seu. Se ninguém tiver mencionado o seu erro, <newIssueLink> informe-nos sobre um erro novo </newIssueLink>.",
-    "Feedback sent": "Comentário enviado",
-    "Comment": "Comentário",
     "Don't miss a reply": "Não perca uma resposta",
     "Enable desktop notifications": "Ativar notificações na área de trabalho",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convide alguém a partir do nome, e-mail ou nome de usuário (por exemplo: <userId/>) ou <a>compartilhe esta sala</a>.",
@@ -2058,7 +2052,8 @@
         "cross_signing": "Autoverificação",
         "identity_server": "Servidor de identidade",
         "integration_manager": "Gerenciador de integrações",
-        "qr_code": "Código QR"
+        "qr_code": "Código QR",
+        "feedback": "Fale conosco"
     },
     "action": {
         "continue": "Continuar",
@@ -3030,5 +3025,12 @@
             "see_msgtype_sent_this_room": "Veja mensagens de <b>%(msgtype)s</b> enviadas nesta sala",
             "see_msgtype_sent_active_room": "Veja mensagens de <b>%(msgtype)s</b> enviadas nesta sala ativa"
         }
+    },
+    "feedback": {
+        "sent": "Comentário enviado",
+        "comment_label": "Comentário",
+        "pro_type": "DICA: se você nos informar um erro, envie <debugLogsLink> relatórios de erro </debugLogsLink> para nos ajudar a rastrear o problema.",
+        "existing_issue_link": "Por favor, consulte os <existingIssuesLink> erros conhecidos no Github </existingIssuesLink> antes de enviar o seu. Se ninguém tiver mencionado o seu erro, <newIssueLink> informe-nos sobre um erro novo </newIssueLink>.",
+        "send_feedback_action": "Enviar comentário"
     }
 }

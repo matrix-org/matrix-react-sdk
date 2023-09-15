@@ -1081,7 +1081,6 @@
     "Switch to dark mode": "Passer au mode sombre",
     "Switch theme": "Changer le thème",
     "All settings": "Tous les paramètres",
-    "Feedback": "Commentaire",
     "No recently visited rooms": "Aucun salon visité récemment",
     "Message preview": "Aperçu de message",
     "Room options": "Options du salon",
@@ -1180,11 +1179,6 @@
     "Modal Widget": "Fenêtre de widget",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Invitez quelqu’un à partir de son nom, pseudo (comme <userId/>) ou <a>partagez ce salon</a>.",
     "Start a conversation with someone using their name or username (like <userId/>).": "Commencer une conversation privée avec quelqu’un en utilisant son nom ou son pseudo (comme <userId/>).",
-    "Send feedback": "Envoyer un commentaire",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "CONSEIL : si vous rapportez un bug, merci d’envoyer <debugLogsLink>les journaux de débogage</debugLogsLink> pour nous aider à identifier le problème.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Merci de regarder d’abord les <existingIssuesLink>bugs déjà répertoriés sur Github</existingIssuesLink>. Pas de résultat ? <newIssueLink>Rapportez un nouveau bug</newIssueLink>.",
-    "Comment": "Commentaire",
-    "Feedback sent": "Commentaire envoyé",
     "%(creator)s created this DM.": "%(creator)s a créé cette conversation privée.",
     "Got an account? <a>Sign in</a>": "Vous avez un compte ? <a>Connectez-vous</a>",
     "New here? <a>Create an account</a>": "Nouveau ici ? <a>Créez un compte</a>",
@@ -1663,7 +1657,6 @@
     "Search names and descriptions": "Rechercher par nom et description",
     "You may contact me if you have any follow up questions": "Vous pouvez me contacter si vous avez des questions par la suite",
     "To leave the beta, visit your settings.": "Pour quitter la bêta, consultez les paramètres.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Votre plateforme et nom d’utilisateur seront consignés pour nous aider à tirer le maximum de vos commentaires.",
     "Add reaction": "Ajouter une réaction",
     "Space Autocomplete": "Autocomplétion d’espace",
     "Go to my space": "Accéder à mon espace",
@@ -1952,7 +1945,6 @@
     "Large": "Grande",
     "Other rooms": "Autres salons",
     "Spaces you know that contain this space": "Les espaces connus qui contiennent cet espace",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Vous pouvez me contacter si vous voulez un suivi ou me laisser tester de nouvelles idées",
     "Sorry, the poll you tried to create was not posted.": "Désolé, le sondage que vous avez essayé de créer n’a pas été envoyé.",
     "Failed to post poll": "Échec lors de la soumission du sondage",
     "Based on %(count)s votes": {
@@ -2820,7 +2812,8 @@
         "cross_signing": "Signature croisée",
         "identity_server": "Serveur d’identité",
         "integration_manager": "Gestionnaire d’intégration",
-        "qr_code": "QR code"
+        "qr_code": "QR code",
+        "feedback": "Commentaire"
     },
     "action": {
         "continue": "Continuer",
@@ -4113,5 +4106,14 @@
             "see_msgtype_sent_this_room": "Voir les messages de type <b>%(msgtype)s</b> envoyés dans ce salon",
             "see_msgtype_sent_active_room": "Voir les messages de type <b>%(msgtype)s</b> envoyés dans le salon actuel"
         }
+    },
+    "feedback": {
+        "sent": "Commentaire envoyé",
+        "comment_label": "Commentaire",
+        "platform_username": "Votre plateforme et nom d’utilisateur seront consignés pour nous aider à tirer le maximum de vos commentaires.",
+        "may_contact_label": "Vous pouvez me contacter si vous voulez un suivi ou me laisser tester de nouvelles idées",
+        "pro_type": "CONSEIL : si vous rapportez un bug, merci d’envoyer <debugLogsLink>les journaux de débogage</debugLogsLink> pour nous aider à identifier le problème.",
+        "existing_issue_link": "Merci de regarder d’abord les <existingIssuesLink>bugs déjà répertoriés sur Github</existingIssuesLink>. Pas de résultat ? <newIssueLink>Rapportez un nouveau bug</newIssueLink>.",
+        "send_feedback_action": "Envoyer un commentaire"
     }
 }

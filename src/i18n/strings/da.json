@@ -232,7 +232,6 @@
     "You're signed out": "Du er logget ud",
     "Change Password": "Skift adgangskode",
     "Current password": "Nuværende adgangskode",
-    "Comment": "Kommentar",
     "Profile": "Profil",
     "Local address": "Lokal adresse",
     "This room has no local addresses": "Dette rum har ingen lokal adresse",
@@ -801,5 +800,8 @@
     },
     "create_room": {
         "name_validation_required": "Indtast et navn for rummet"
+    },
+    "feedback": {
+        "comment_label": "Kommentar"
     }
 }

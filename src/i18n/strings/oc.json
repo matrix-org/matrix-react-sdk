@@ -138,7 +138,6 @@
     "Passwords don't match": "Los senhals correspondon pas",
     "Unknown error": "Error desconeguda",
     "Search failed": "La recèrca a fracassat",
-    "Feedback": "Comentaris",
     "Incorrect password": "Senhal incorrècte",
     "Commands": "Comandas",
     "Users": "Utilizaires",
@@ -186,7 +185,8 @@
         "matrix": "Matritz",
         "trusted": "Fisable",
         "not_trusted": "Pas securizat",
-        "system_alerts": "Alèrtas sistèma"
+        "system_alerts": "Alèrtas sistèma",
+        "feedback": "Comentaris"
     },
     "action": {
         "continue": "Contunhar",

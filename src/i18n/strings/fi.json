@@ -1046,7 +1046,6 @@
     "Switch to dark mode": "Vaihda tummaan teemaan",
     "Switch theme": "Vaihda teemaa",
     "All settings": "Kaikki asetukset",
-    "Feedback": "Palaute",
     "Looks good!": "Hyvältä näyttää!",
     "Use custom size": "Käytä mukautettua kokoa",
     "Room options": "Huoneen asetukset",
@@ -1103,7 +1102,6 @@
     "The server is offline.": "Palvelin ei ole verkossa.",
     "Your firewall or anti-virus is blocking the request.": "Palomuurisi tai virustentorjuntaohjelmasi estää pyynnön.",
     "The server (%(serverName)s) took too long to respond.": "Palvelin (%(serverName)s) ei vastannut ajoissa.",
-    "Feedback sent": "Palaute lähetetty",
     "Preparing to download logs": "Valmistellaan lokien lataamista",
     "The operation could not be completed": "Toimintoa ei voitu tehdä loppuun asti",
     "Comoros": "Komorit",
@@ -1421,13 +1419,11 @@
     "Create key backup": "Luo avaimen varmuuskopio",
     "Invalid URL": "Virheellinen URL",
     "Reason (optional)": "Syy (valinnainen)",
-    "Send feedback": "Lähetä palautetta",
     "Security Phrase": "Turvalause",
     "Security Key": "Turva-avain",
     "Verify session": "Vahvista istunto",
     "Hold": "Pidä",
     "Resume": "Jatka",
-    "Comment": "Kommentti",
     "Please verify the room ID or address and try again.": "Tarkista huonetunnus ja yritä uudelleen.",
     "Are you sure you want to deactivate your account? This is irreversible.": "Haluatko varmasti poistaa tilisi pysyvästi?",
     "Data on this screen is shared with %(widgetDomain)s": "Tällä näytöllä olevaa tietoa jaetaan verkkotunnuksen %(widgetDomain)s kanssa",
@@ -2240,8 +2236,6 @@
         "other": "Avaruudessa %(spaceName)s ja %(count)s muussa avaruudessa."
     },
     "Get notifications as set up in your <a>settings</a>": "Vastaanota ilmoitukset <a>asetuksissa</a> määrittämälläsi tavalla",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "Vinkki: Jos teet virheilmoituksen, lähetä <debugLogsLink>vianjäljityslokit</debugLogsLink> jotta ongelman ratkaiseminen helpottuu.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Katso ensin <existingIssuesLink>aiemmin raportoidut virheet Githubissa</existingIssuesLink>. Eikö samanlaista virhettä löydy? <newIssueLink>Tee uusi ilmoitus virheestä</newIssueLink>.",
     "Search for": "Etsittävät kohteet",
     "To join, please enable video rooms in Labs first": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta",
     "Home options": "Etusivun valinnat",
@@ -2255,8 +2249,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä avaruus</a>.",
     "To search messages, look for this icon at the top of a room <icon/>": "Etsi viesteistä huoneen yläosassa olevalla kuvakkeella <icon/>",
     "Use \"%(query)s\" to search": "Etsitään \"%(query)s\"",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Voitte olla yhteydessä minuun, jos haluatte keskustella palautteesta tai antaa minun testata tulevia ideoita",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Alustasi ja käyttäjänimesi huomataan, jotta palautteesi on meille mahdollisimman käyttökelpoista.",
     "For best security, sign out from any session that you don't recognize or use anymore.": "Parhaan turvallisuuden takaamiseksi kirjaudu ulos istunnoista, joita et tunnista tai et enää käytä.",
     "Voice broadcast": "Äänen yleislähetys",
     "pause voice broadcast": "keskeytä äänen yleislähetys",
@@ -2545,7 +2537,8 @@
         "cross_signing": "Ristiinvarmennus",
         "identity_server": "Identiteettipalvelin",
         "integration_manager": "Integraatiohallinta",
-        "qr_code": "QR-koodi"
+        "qr_code": "QR-koodi",
+        "feedback": "Palaute"
     },
     "action": {
         "continue": "Jatka",
@@ -3710,5 +3703,14 @@
             "send_msgtype_this_room": "Lähetä <b>%(msgtype)s</b>-viestejä itsenäsi tähän huoneeseen",
             "send_msgtype_active_room": "Lähetä <b>%(msgtype)s</b>-viestejä itsenäsi aktiiviseen huoneeseesi"
         }
+    },
+    "feedback": {
+        "sent": "Palaute lähetetty",
+        "comment_label": "Kommentti",
+        "platform_username": "Alustasi ja käyttäjänimesi huomataan, jotta palautteesi on meille mahdollisimman käyttökelpoista.",
+        "may_contact_label": "Voitte olla yhteydessä minuun, jos haluatte keskustella palautteesta tai antaa minun testata tulevia ideoita",
+        "pro_type": "Vinkki: Jos teet virheilmoituksen, lähetä <debugLogsLink>vianjäljityslokit</debugLogsLink> jotta ongelman ratkaiseminen helpottuu.",
+        "existing_issue_link": "Katso ensin <existingIssuesLink>aiemmin raportoidut virheet Githubissa</existingIssuesLink>. Eikö samanlaista virhettä löydy? <newIssueLink>Tee uusi ilmoitus virheestä</newIssueLink>.",
+        "send_feedback_action": "Lähetä palautetta"
     }
 }

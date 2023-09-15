@@ -790,7 +790,6 @@
     "Show advanced": "Ukázať pokročilé možnosti",
     "Explore rooms": "Preskúmať miestnosti",
     "All settings": "Všetky nastavenia",
-    "Feedback": "Spätná väzba",
     "Indexed rooms:": "Indexované miestnosti:",
     "Unexpected server error trying to leave the room": "Neočakávaná chyba servera pri pokuse opustiť miestnosť",
     "Italics": "Kurzíva",
@@ -1214,7 +1213,6 @@
     "Sending": "Odosielanie",
     "Avatar": "Obrázok",
     "Suggested": "Navrhované",
-    "Comment": "Komentár",
     "Accepting…": "Akceptovanie…",
     "Document": "Dokument",
     "Summary": "Zhrnutie",
@@ -1400,9 +1398,7 @@
     "Switch theme": "Prepnúť motív",
     "Switch to dark mode": "Prepnúť na tmavý režim",
     "Switch to light mode": "Prepnúť na svetlý režim",
-    "Send feedback": "Odoslať spätnú väzbu",
     "You may contact me if you have any follow up questions": "V prípade ďalších otázok ma môžete kontaktovať",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Vaša platforma a používateľské meno budú zaznamenané, aby sme mohli čo najlepšie využiť vašu spätnú väzbu.",
     "Search names and descriptions": "Vyhľadávanie názvov a popisov",
     "You may want to try a different search or check for typos.": "Možno by ste mali vyskúšať iné vyhľadávanie alebo skontrolovať preklepy.",
     "Recent searches": "Nedávne vyhľadávania",
@@ -1470,8 +1466,6 @@
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Táto miestnosť nepremosťuje správy so žiadnymi platformami. <a>Viac informácií</a>",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Zdieľajte anonymné údaje, ktoré nám pomôžu identifikovať problémy. Nič osobné. Žiadne tretie strany.",
     "Backup key cached:": "Záložný kľúč v medzipamäti:",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Môžete ma kontaktovať, ak budete potrebovať nejaké ďalšie podrobnosti alebo otestovať chystané nápady",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Najprv si prosím pozrite <existingIssuesLink>existujúce chyby na Githube</existingIssuesLink>. Žiadna zhoda? <newIssueLink>Založte novú</newIssueLink>.",
     "Home options": "Možnosti domovskej obrazovky",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
     "You accepted": "Prijali ste",
@@ -1619,7 +1613,6 @@
     "Decline All": "Zamietnuť všetky",
     "Topic: %(topic)s ": "Téma: %(topic)s ",
     "Update %(brand)s": "Aktualizovať %(brand)s",
-    "Feedback sent": "Spätná väzba odoslaná",
     "Unknown App": "Neznáma aplikácia",
     "Security Key": "Bezpečnostný kľúč",
     "Security Phrase": "Bezpečnostná fráza",
@@ -1776,7 +1769,6 @@
     "Enter your Security Phrase a second time to confirm it.": "Zadajte svoju bezpečnostnú frázu znova, aby ste ju potvrdili.",
     "Enter a Security Phrase": "Zadajte bezpečnostnú frázu",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Zadajte svoju bezpečnostnú frázu alebo <button>použite svoj bezpečnostný kľúč</button> pre pokračovanie.",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "PRO TIP: Ak napíšete príspevok o chybe, odošlite prosím <debugLogsLink>ladiace záznamy</debugLogsLink>, aby ste nám pomohli vystopovať problém.",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Neznámy pár (používateľ, relácia): (%(userId)s, %(deviceId)s)",
     "Automatically send debug logs on decryption errors": "Automatické odosielanie záznamov ladenia pri chybe dešifrovania",
     "You were removed from %(roomName)s by %(memberName)s": "Boli ste odstránení z %(roomName)s používateľom %(memberName)s",
@@ -2820,7 +2812,8 @@
         "cross_signing": "Krížové podpisovanie",
         "identity_server": "Server totožností",
         "integration_manager": "Správca integrácie",
-        "qr_code": "QR kód"
+        "qr_code": "QR kód",
+        "feedback": "Spätná väzba"
     },
     "action": {
         "continue": "Pokračovať",
@@ -4113,5 +4106,14 @@
             "see_msgtype_sent_this_room": "Zobraziť <b>%(msgtype)s</b> správy zverejnené v tejto miestnosti",
             "see_msgtype_sent_active_room": "Zobraziť <b>%(msgtype)s</b> správy zverejnené vo vašej aktívnej miestnosti"
         }
+    },
+    "feedback": {
+        "sent": "Spätná väzba odoslaná",
+        "comment_label": "Komentár",
+        "platform_username": "Vaša platforma a používateľské meno budú zaznamenané, aby sme mohli čo najlepšie využiť vašu spätnú väzbu.",
+        "may_contact_label": "Môžete ma kontaktovať, ak budete potrebovať nejaké ďalšie podrobnosti alebo otestovať chystané nápady",
+        "pro_type": "PRO TIP: Ak napíšete príspevok o chybe, odošlite prosím <debugLogsLink>ladiace záznamy</debugLogsLink>, aby ste nám pomohli vystopovať problém.",
+        "existing_issue_link": "Najprv si prosím pozrite <existingIssuesLink>existujúce chyby na Githube</existingIssuesLink>. Žiadna zhoda? <newIssueLink>Založte novú</newIssueLink>.",
+        "send_feedback_action": "Odoslať spätnú väzbu"
     }
 }

@@ -228,13 +228,11 @@
     "Algeria": "an Ailgéir",
     "Albania": "an Albáin",
     "Afghanistan": "an Afganastáin",
-    "Comment": "Trácht",
     "Widgets": "Giuirléidí",
     "ready": "réidh",
     "Algorithm:": "Algartam:",
     "Information": "Eolas",
     "Favourited": "Roghnaithe",
-    "Feedback": "Aiseolas",
     "Ok": "Togha",
     "Accepting…": "ag Glacadh leis…",
     "Cancelling…": "ag Cealú…",
@@ -556,7 +554,8 @@
         "trusted": "Dílis",
         "unnamed_room": "Seomra gan ainm",
         "stickerpack": "Pacáiste greamáin",
-        "cross_signing": "Cros-síniú"
+        "cross_signing": "Cros-síniú",
+        "feedback": "Aiseolas"
     },
     "action": {
         "continue": "Lean ar aghaidh",
@@ -819,5 +818,8 @@
         "help_about": {
             "versions": "Leaganacha"
         }
+    },
+    "feedback": {
+        "comment_label": "Trácht"
     }
 }

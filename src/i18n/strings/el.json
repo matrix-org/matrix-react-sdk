@@ -1637,11 +1637,6 @@
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Μπορείτε να χρησιμοποιήσετε τις προσαρμοσμένες επιλογές διακομιστή για να συνδεθείτε σε άλλους διακομιστές Matrix, καθορίζοντας μια διαφορετική διεύθυνση URL του κεντρικού διακομιστή. Αυτό σας επιτρέπει να χρησιμοποιείτε το %(brand)s με έναν υπάρχοντα λογαριασμό Matrix σε διαφορετικό τοπικό διακομιστή.",
     "Message preview": "Προεπισκόπηση μηνύματος",
     "You don't have permission to do this": "Δεν έχετε άδεια να το κάνετε αυτό",
-    "Send feedback": "Στείλετε τα σχόλιά σας",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Δείτε πρώτα τα <existingIssuesLink>υπάρχοντα ζητήματα (issues) στο Github</existingIssuesLink>. Δε βρήκατε κάτι; <newIssueLink>Ξεκινήστε ένα νέο</newIssueLink>.",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Μπορείτε να επικοινωνήσετε μαζί μου εάν θέλετε να έρθετε σε επαφή ή να με αφήσετε να δοκιμάσω επερχόμενες ιδέες",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Η πλατφόρμα και το όνομα χρήστη σας θα καταγραφούν για να μας βοηθήσουν να χρησιμοποιήσουμε τα σχόλιά σας όσο μπορούμε περισσότερο.",
-    "Feedback sent": "Τα σχόλια στάλθηκαν",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Είστε βέβαιοι ότι θέλετε να τερματίσετε αυτήν τη δημοσκόπηση; Αυτό θα εμφανίσει τα τελικά αποτελέσματα της δημοσκόπησης και θα εμποδίσει νέους ψήφους.",
     "Sorry, the poll did not end. Please try again.": "Συγνώμη, η δημοσκόπηση δεν τερματίστηκε. Παρακαλώ προσπαθήστε ξανά.",
     "Failed to end poll": "Αποτυχία τερματισμού της δημοσκόπησης",
@@ -1927,7 +1922,6 @@
     "Click the button below to confirm your identity.": "Κλικ στο κουμπί παρακάτω για να επιβεβαιώσετε την ταυτότητά σας.",
     "Confirm to continue": "Επιβεβαιώστε για να συνεχίσετε",
     "To continue, use Single Sign On to prove your identity.": "Για να συνεχίσετε, χρησιμοποιήστε σύνδεση Single Sign On για να αποδείξετε την ταυτότητά σας.",
-    "Feedback": "Ανατροφοδότηση",
     "Enter the name of a new server you want to explore.": "Εισαγάγετε το όνομα ενός νέου διακομιστή που θέλετε να εξερευνήσετε.",
     "Add a new server": "Προσθήκη νέου διακομιστή",
     "Your server": "Ο διακομιστής σας",
@@ -1973,7 +1967,6 @@
     "Dial pad": "Πληκτρολόγιο κλήσης",
     "Transfer": "Μεταφορά",
     "Sent": "Απεσταλμένα",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "ΣΥΜΒΟΥΛΗ: Εάν αναφέρετε ένα σφάλμα, υποβάλετε <debugLogsLink>αρχεία καταγραφής εντοπισμού σφαλμάτων</debugLogsLink> για να μας βοηθήσετε να εντοπίσουμε το πρόβλημα.",
     "Space used:": "Χώρος που χρησιμοποιείται:",
     "Not currently indexing messages for any room.": "Αυτήν τη στιγμή δεν υπάρχει ευρετηρίαση μηνυμάτων για κανένα δωμάτιο.",
     "If disabled, messages from encrypted rooms won't appear in search results.": "Εάν απενεργοποιηθεί, τα μηνύματα από κρυπτογραφημένα δωμάτια δε θα εμφανίζονται στα αποτελέσματα αναζήτησης.",
@@ -2040,7 +2033,6 @@
     "You may contact me if you have any follow up questions": "Μπορείτε να επικοινωνήσετε μαζί μου εάν έχετε περαιτέρω ερωτήσεις",
     "Feedback sent! Thanks, we appreciate it!": "Τα σχόλια ανατροφοδότησης στάλθηκαν! Ευχαριστούμε, το εκτιμούμε!",
     "Search for rooms or people": "Αναζήτηση δωματίων ή ατόμων",
-    "Comment": "Σχόλιο",
     "The poll has ended. Top answer: %(topAnswer)s": "Η δημοσκόπηση έληξε. Κορυφαία απάντηση: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Η δημοσκόπηση έληξε. Δεν υπάρχουν ψήφοι.",
     "Failed to connect to integration manager": "Αποτυχία σύνδεσης με τον διαχειριστή πρόσθετων",
@@ -2304,7 +2296,8 @@
         "cross_signing": "Διασταυρούμενη υπογραφή",
         "identity_server": "Διακομιστής ταυτότητας",
         "integration_manager": "Διαχειριστής πρόσθετων",
-        "qr_code": "Κωδικός QR"
+        "qr_code": "Κωδικός QR",
+        "feedback": "Ανατροφοδότηση"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -3420,5 +3413,14 @@
             "see_msgtype_sent_this_room": "Δείτε <b>%(msgtype)s</b> μηνύματα που δημοσιεύτηκαν σε αυτό το δωμάτιο",
             "see_msgtype_sent_active_room": "Δείτε <b>%(msgtype)s</b> μηνύματα που δημοσιεύτηκαν στο ενεργό δωμάτιό σας"
         }
+    },
+    "feedback": {
+        "sent": "Τα σχόλια στάλθηκαν",
+        "comment_label": "Σχόλιο",
+        "platform_username": "Η πλατφόρμα και το όνομα χρήστη σας θα καταγραφούν για να μας βοηθήσουν να χρησιμοποιήσουμε τα σχόλιά σας όσο μπορούμε περισσότερο.",
+        "may_contact_label": "Μπορείτε να επικοινωνήσετε μαζί μου εάν θέλετε να έρθετε σε επαφή ή να με αφήσετε να δοκιμάσω επερχόμενες ιδέες",
+        "pro_type": "ΣΥΜΒΟΥΛΗ: Εάν αναφέρετε ένα σφάλμα, υποβάλετε <debugLogsLink>αρχεία καταγραφής εντοπισμού σφαλμάτων</debugLogsLink> για να μας βοηθήσετε να εντοπίσουμε το πρόβλημα.",
+        "existing_issue_link": "Δείτε πρώτα τα <existingIssuesLink>υπάρχοντα ζητήματα (issues) στο Github</existingIssuesLink>. Δε βρήκατε κάτι; <newIssueLink>Ξεκινήστε ένα νέο</newIssueLink>.",
+        "send_feedback_action": "Στείλετε τα σχόλιά σας"
     }
 }

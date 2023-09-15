@@ -747,9 +747,6 @@
     "Enable desktop notifications": "Włącz powiadomienia na pulpicie",
     "Don't miss a reply": "Nie przegap odpowiedzi",
     "Use custom size": "Użyj niestandardowego rozmiaru",
-    "Feedback sent": "Wysłano opinię użytkownka",
-    "Send feedback": "Wyślij opinię użytkownika",
-    "Feedback": "Opinia użytkownika",
     "%(creator)s created this DM.": "%(creator)s utworzył tę wiadomość prywatną.",
     "Israel": "Izrael",
     "Isle of Man": "Man",
@@ -1155,9 +1152,6 @@
     "Integrations not allowed": "Integracje nie są dozwolone",
     "Incoming Verification Request": "Oczekująca prośba o weryfikację",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Zweryfikuj tego użytkownika, aby oznaczyć go jako zaufanego. Użytkownicy zaufani dodają większej pewności, gdy korzystasz z wiadomości szyfrowanych end-to-end.",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "PRO TIP: Jeżeli zgłaszasz błąd, wyślij <debugLogsLink>dzienniki debugowania</debugLogsLink>, aby pomóc nam znaleźć problem.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Najpierw zobacz <existingIssuesLink>istniejące zgłoszenia na GitHubie</existingIssuesLink>. Nic nie znalazłeś? <newIssueLink>Utwórz nowe</newIssueLink>.",
-    "Comment": "Komentarz",
     "Encryption not enabled": "Nie włączono szyfrowania",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Poprosiliśmy przeglądarkę o zapamiętanie, z którego serwera domowego korzystasz, aby umożliwić Ci logowanie, ale niestety Twoja przeglądarka o tym zapomniała. Przejdź do strony logowania i spróbuj ponownie.",
     "We couldn't log you in": "Nie mogliśmy Cię zalogować",
@@ -2193,8 +2187,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Weryfikacja tego użytkownika oznaczy Twoją i jego sesję jako zaufaną.",
     "You may contact me if you have any follow up questions": "Możesz się ze mną skontaktować, jeśli masz jakiekolwiek pytania",
     "Open room": "Otwórz pokój",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Możesz się ze mną skontaktować, jeśli chcesz mnie śledzić lub pomóc wypróbować nadchodzące pomysły",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Twoja platforma i nazwa użytkownika zostaną zapisane, aby pomóc nam ulepszyć nasze produkty.",
     "MB": "MB",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Czy na pewno chcesz zakończyć ankietę? Zostaną wyświetlone ostateczne wyniki, a osoby nie będą mogły głosować.",
     "End Poll": "Zakończ ankietę",
@@ -2804,7 +2796,8 @@
         "cross_signing": "Weryfikacja krzyżowa",
         "identity_server": "Serwer tożsamości",
         "integration_manager": "Menedżer integracji",
-        "qr_code": "Kod QR"
+        "qr_code": "Kod QR",
+        "feedback": "Opinia użytkownika"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -4095,5 +4088,14 @@
             "see_msgtype_sent_this_room": "Zobacz wiadomości <b>%(msgtype)s</b> wysyłane do tego pokoju",
             "see_msgtype_sent_active_room": "Zobacz wiadomości <b>%(msgtype)s</b> wysyłane do aktywnego pokoju"
         }
+    },
+    "feedback": {
+        "sent": "Wysłano opinię użytkownka",
+        "comment_label": "Komentarz",
+        "platform_username": "Twoja platforma i nazwa użytkownika zostaną zapisane, aby pomóc nam ulepszyć nasze produkty.",
+        "may_contact_label": "Możesz się ze mną skontaktować, jeśli chcesz mnie śledzić lub pomóc wypróbować nadchodzące pomysły",
+        "pro_type": "PRO TIP: Jeżeli zgłaszasz błąd, wyślij <debugLogsLink>dzienniki debugowania</debugLogsLink>, aby pomóc nam znaleźć problem.",
+        "existing_issue_link": "Najpierw zobacz <existingIssuesLink>istniejące zgłoszenia na GitHubie</existingIssuesLink>. Nic nie znalazłeś? <newIssueLink>Utwórz nowe</newIssueLink>.",
+        "send_feedback_action": "Wyślij opinię użytkownika"
     }
 }

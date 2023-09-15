@@ -497,7 +497,6 @@
     "Upgrade private room": "Поліпшити закриту кімнату",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Ви поліпшите цю кімнату з <oldVersion /> до <newVersion /> версії.",
     "Share Room Message": "Поділитися повідомленням кімнати",
-    "Feedback": "Відгук",
     "General failure": "Загальний збій",
     "Enter your account password to confirm the upgrade:": "Введіть пароль вашого облікового запису щоб підтвердити поліпшення:",
     "Secret storage public key:": "Таємне сховище відкритого ключа:",
@@ -1261,7 +1260,6 @@
     "Leave space": "Вийти з простору",
     "Sent": "Надіслано",
     "Sending": "Надсилання",
-    "Comment": "Коментар",
     "MB": "МБ",
     "In reply to <a>this message</a>": "У відповідь на <a>це повідомлення</a>",
     "Widget added by": "Вджет додано",
@@ -1542,7 +1540,6 @@
     },
     "Loading new room": "Звантаження нової кімнати",
     "Upgrading room": "Поліпшення кімнати",
-    "Feedback sent": "Відгук надіслано",
     "Link to selected message": "Посилання на вибране повідомлення",
     "To help us prevent this in future, please <a>send us logs</a>.": "Щоб уникнути цього в майбутньому просимо <a>надіслати нам журнал</a>.",
     "Missing session data": "Відсутні дані сеансу",
@@ -1634,11 +1631,6 @@
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Поліпшення цієї кімнати припинить роботу наявного її примірника й створить поліпшену кімнату з такою ж назвою.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ця кімната — версії <roomVersion />, позначена цим домашнім сервером <i>нестабільною</i>.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s зараз офлайн.",
-    "Send feedback": "Надіслати відгук",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Можете звернутись до мене за подальшими діями чи допомогою з випробуванням ідей",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Ваша платформа й користувацьке ім'я будуть додані, щоб допомогти нам якнайточніше використати ваш відгук.",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "ПОРАДА: Звітуючи про ваду, додайте <debugLogsLink>журнали зневадження</debugLogsLink>, щоб допомогти нам визначити проблему.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Спершу гляньте <existingIssuesLink>відомі вади на Github</existingIssuesLink>. Ця ще невідома? <newIssueLink>Звітувати про нову ваду</newIssueLink>.",
     "%(creator)s created and configured the room.": "%(creator)s створює й налаштовує кімнату.",
     "This room is a continuation of another conversation.": "Ця кімната — продовження іншої розмови.",
     "Jump to read receipt": "Перейти до останнього прочитаного",
@@ -2820,7 +2812,8 @@
         "cross_signing": "Перехресне підписування",
         "identity_server": "Сервер ідентифікації",
         "integration_manager": "Менеджер інтеграцій",
-        "qr_code": "QR-код"
+        "qr_code": "QR-код",
+        "feedback": "Відгук"
     },
     "action": {
         "continue": "Продовжити",
@@ -4113,5 +4106,14 @@
             "see_msgtype_sent_this_room": "Бачити повідомлення <b>%(msgtype)s</b>, надіслані до цієї кімнати",
             "see_msgtype_sent_active_room": "Бачити повідомлення <b>%(msgtype)s</b>, надіслані до вашої активної кімнати"
         }
+    },
+    "feedback": {
+        "sent": "Відгук надіслано",
+        "comment_label": "Коментар",
+        "platform_username": "Ваша платформа й користувацьке ім'я будуть додані, щоб допомогти нам якнайточніше використати ваш відгук.",
+        "may_contact_label": "Можете звернутись до мене за подальшими діями чи допомогою з випробуванням ідей",
+        "pro_type": "ПОРАДА: Звітуючи про ваду, додайте <debugLogsLink>журнали зневадження</debugLogsLink>, щоб допомогти нам визначити проблему.",
+        "existing_issue_link": "Спершу гляньте <existingIssuesLink>відомі вади на Github</existingIssuesLink>. Ця ще невідома? <newIssueLink>Звітувати про нову ваду</newIssueLink>.",
+        "send_feedback_action": "Надіслати відгук"
     }
 }

@@ -465,13 +465,11 @@
     "Removing…": "Menghilangkan…",
     "Suggested": "Disarankan",
     "Resume": "Lanjutkan",
-    "Comment": "Komentar",
     "Information": "Informasi",
     "Widgets": "Widget",
     "Favourited": "Difavorit",
     "ready": "siap",
     "Algorithm:": "Algoritma:",
-    "Feedback": "Masukan",
     "Unencrypted": "Tidak Dienkripsi",
     "Bridges": "Jembatan",
     "exists": "sudah ada",
@@ -1508,14 +1506,9 @@
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Sekadar mengingatkan saja, jika Anda belum menambahkan sebuah email dan Anda lupa kata sandi, Anda mungkin <b>dapat kehilangan akses ke akun Anda</b>.",
     "Terms of Service": "Persyaratan Layanan",
     "You may contact me if you have any follow up questions": "Anda mungkin menghubungi saya jika Anda mempunyai pertanyaan lanjutan",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Platform dan nama pengguna Anda akan dicatat untuk membantu kami menggunakan masukan Anda sebanyak yang kita bisa.",
     "Search for rooms or people": "Cari ruangan atau orang",
     "Message preview": "Tampilan pesan",
     "You don't have permission to do this": "Anda tidak memiliki izin untuk melakukannya",
-    "Send feedback": "Kirimkan masukan",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Mohon lihat <existingIssuesLink>bug yang sudah ada di GitHub</existingIssuesLink> dahulu. Tidak ada? <newIssueLink>Buat yang baru</newIssueLink>.",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "Jika Anda membuat issue, silakan kirimkan <debugLogsLink>log pengawakutu</debugLogsLink> untuk membantu kami menemukan masalahnya.",
-    "Feedback sent": "Masukan terkirim",
     "Unable to query secret storage status": "Tidak dapat menanyakan status penyimpanan rahasia",
     "Someone already has that username, please try another.": "Seseorang sudah memiliki nama pengguna itu, mohon coba yang lain.",
     "This server does not support authentication with a phone number.": "Server ini tidak mendukung autentikasi dengan sebuah nomor telepon.",
@@ -1976,7 +1969,6 @@
     "Quick settings": "Pengaturan cepat",
     "Spaces you know that contain this space": "Space yang Anda tahu yang berisi space ini",
     "Chat": "Obrolan",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Anda mungkin hubungi saya jika Anda ingin menindaklanjuti atau memberi tahu saya untuk menguji ide baru",
     "Home options": "Opsi Beranda",
     "%(spaceName)s menu": "Menu %(spaceName)s",
     "Join public room": "Bergabung dengan ruangan publik",
@@ -2824,7 +2816,8 @@
         "cross_signing": "Penandatanganan silang",
         "identity_server": "Server identitas",
         "integration_manager": "Manajer integrasi",
-        "qr_code": "Kode QR"
+        "qr_code": "Kode QR",
+        "feedback": "Masukan"
     },
     "action": {
         "continue": "Lanjut",
@@ -4118,5 +4111,14 @@
             "see_msgtype_sent_this_room": "Lihat pesan <b>%(msgtype)s</b> yang terkirim ke ruangan ini",
             "see_msgtype_sent_active_room": "Lihat pesan <b>%(msgtype)s</b> yang terkirim ke ruangan aktif Anda"
         }
+    },
+    "feedback": {
+        "sent": "Masukan terkirim",
+        "comment_label": "Komentar",
+        "platform_username": "Platform dan nama pengguna Anda akan dicatat untuk membantu kami menggunakan masukan Anda sebanyak yang kita bisa.",
+        "may_contact_label": "Anda mungkin hubungi saya jika Anda ingin menindaklanjuti atau memberi tahu saya untuk menguji ide baru",
+        "pro_type": "Jika Anda membuat issue, silakan kirimkan <debugLogsLink>log pengawakutu</debugLogsLink> untuk membantu kami menemukan masalahnya.",
+        "existing_issue_link": "Mohon lihat <existingIssuesLink>bug yang sudah ada di GitHub</existingIssuesLink> dahulu. Tidak ada? <newIssueLink>Buat yang baru</newIssueLink>.",
+        "send_feedback_action": "Kirimkan masukan"
     }
 }

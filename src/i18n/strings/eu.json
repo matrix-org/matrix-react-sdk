@@ -1080,7 +1080,6 @@
     "Switch to dark mode": "Aldatu modu ilunera",
     "Switch theme": "Aldatu azala",
     "All settings": "Ezarpen guztiak",
-    "Feedback": "Iruzkinak",
     "Use a different passphrase?": "Erabili pasa-esaldi desberdin bat?",
     "Change notification settings": "Aldatu jakinarazpenen ezarpenak",
     "Use custom size": "Erabili tamaina pertsonalizatua",
@@ -1153,7 +1152,8 @@
         "cross_signing": "Zeharkako sinadura",
         "identity_server": "Identitate zerbitzaria",
         "integration_manager": "Integrazio-kudeatzailea",
-        "qr_code": "QR kodea"
+        "qr_code": "QR kodea",
+        "feedback": "Iruzkinak"
     },
     "action": {
         "continue": "Jarraitu",

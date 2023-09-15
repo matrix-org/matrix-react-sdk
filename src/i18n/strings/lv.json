@@ -334,9 +334,6 @@
     "%(creator)s created this DM.": "%(creator)s uzsāka šo tiešo saraksti.",
     "None": "Neviena",
     "Room options": "Istabas opcijas",
-    "Send feedback": "Nosūtīt atsauksmi",
-    "Feedback sent": "Atsauksme nosūtīta",
-    "Feedback": "Atsauksmes",
     "All settings": "Visi iestatījumi",
     "Security & Privacy": "Drošība un konfidencialitāte",
     "Change notification settings": "Mainīt paziņojumu iestatījumus",
@@ -1247,7 +1244,8 @@
         "unnamed_room": "Istaba bez nosaukuma",
         "secure_backup": "Droša rezerves kopija",
         "identity_server": "Identitāšu serveris",
-        "integration_manager": "Integrācija pārvaldnieks"
+        "integration_manager": "Integrācija pārvaldnieks",
+        "feedback": "Atsauksmes"
     },
     "action": {
         "continue": "Turpināt",
@@ -1948,5 +1946,9 @@
             "see_msgtype_sent_this_room": "Apskatīt <b>%(msgtype)s</b> ziņas, kas publicētas šajā istabā",
             "see_msgtype_sent_active_room": "Apskatīt <b>%(msgtype)s</b> ziņas, kas publicētas jūsu aktīvajā istabā"
         }
+    },
+    "feedback": {
+        "sent": "Atsauksme nosūtīta",
+        "send_feedback_action": "Nosūtīt atsauksmi"
     }
 }

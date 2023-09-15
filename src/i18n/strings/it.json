@@ -1082,7 +1082,6 @@
     "Switch to dark mode": "Passa alla modalità scura",
     "Switch theme": "Cambia tema",
     "All settings": "Tutte le impostazioni",
-    "Feedback": "Feedback",
     "No recently visited rooms": "Nessuna stanza visitata di recente",
     "Message preview": "Anteprima messaggio",
     "Room options": "Opzioni stanza",
@@ -1179,11 +1178,6 @@
     "The call was answered on another device.": "La chiamata è stata accettata su un altro dispositivo.",
     "Answered Elsewhere": "Risposto altrove",
     "Data on this screen is shared with %(widgetDomain)s": "I dati in questa schermata vengono condivisi con %(widgetDomain)s",
-    "Send feedback": "Invia feedback",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "CONSIGLIO: se segnali un errore, invia <debugLogsLink>i log di debug</debugLogsLink> per aiutarci ad individuare il problema.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Prima controlla <existingIssuesLink>gli errori esistenti su Github</existingIssuesLink>. Non l'hai trovato? <newIssueLink>Apri una segnalazione</newIssueLink>.",
-    "Comment": "Commento",
-    "Feedback sent": "Feedback inviato",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Invita qualcuno usando il suo nome, indirizzo email, nome utente (come <userId/>) o <a>condividi questa stanza</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Inizia una conversazione con qualcuno usando il suo nome, indirizzo email o nome utente (come <userId/>).",
     "Invite by email": "Invita per email",
@@ -1662,7 +1656,6 @@
     "Search names and descriptions": "Cerca nomi e descrizioni",
     "You may contact me if you have any follow up questions": "Potete contattarmi se avete altre domande",
     "To leave the beta, visit your settings.": "Per abbandonare la beta, vai nelle impostazioni.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Verranno annotate la tua piattaforma e il nome utente per aiutarci ad usare la tua opinione al meglio.",
     "Add reaction": "Aggiungi reazione",
     "Message search initialisation failed": "Inizializzazione ricerca messaggi fallita",
     "Space Autocomplete": "Autocompletamento spazio",
@@ -1975,7 +1968,6 @@
     "Spaces you know that contain this space": "Spazi di cui sai che contengono questo spazio",
     "Pin to sidebar": "Fissa nella barra laterale",
     "Quick settings": "Impostazioni rapide",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Potete contattarmi se volete rispondermi o per farmi provare nuove idee in arrivo",
     "Chat": "Chat",
     "Home options": "Opzioni pagina iniziale",
     "%(spaceName)s menu": "Menu di %(spaceName)s",
@@ -2824,7 +2816,8 @@
         "cross_signing": "Firma incrociata",
         "identity_server": "Server di identità",
         "integration_manager": "Gestore di integrazioni",
-        "qr_code": "Codice QR"
+        "qr_code": "Codice QR",
+        "feedback": "Feedback"
     },
     "action": {
         "continue": "Continua",
@@ -4118,5 +4111,14 @@
             "see_msgtype_sent_this_room": "Vedi messaggi <b>%(msgtype)s</b> inviati a questa stanza",
             "see_msgtype_sent_active_room": "Vedi messaggi <b>%(msgtype)s</b> inviati alla tua stanza attiva"
         }
+    },
+    "feedback": {
+        "sent": "Feedback inviato",
+        "comment_label": "Commento",
+        "platform_username": "Verranno annotate la tua piattaforma e il nome utente per aiutarci ad usare la tua opinione al meglio.",
+        "may_contact_label": "Potete contattarmi se volete rispondermi o per farmi provare nuove idee in arrivo",
+        "pro_type": "CONSIGLIO: se segnali un errore, invia <debugLogsLink>i log di debug</debugLogsLink> per aiutarci ad individuare il problema.",
+        "existing_issue_link": "Prima controlla <existingIssuesLink>gli errori esistenti su Github</existingIssuesLink>. Non l'hai trovato? <newIssueLink>Apri una segnalazione</newIssueLink>.",
+        "send_feedback_action": "Invia feedback"
     }
 }

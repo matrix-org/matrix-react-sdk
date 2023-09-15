@@ -266,7 +266,6 @@
     "Create Account": "Criar conta",
     "Not a valid identity server (status code %(code)s)": "Servidor de Identidade inválido (código de status %(code)s)",
     "Identity server URL must be HTTPS": "O link do servidor de identidade deve começar com HTTPS",
-    "Comment": "Comente",
     "Use Single Sign On to continue": "Use Single Sign On para continuar",
     "Identity server not set": "Servidor de identidade não definido",
     "No identity access token found": "Nenhum token de identidade de acesso encontrado",
@@ -477,7 +476,6 @@
     "<userName/> invited you": "<userName/> convidou-o",
     "Someone already has that username. Try another or if it is you, sign in below.": "Alguém já tem esse nome de utilizador. Tente outro ou, se fores tu, inicia sessão em baixo.",
     "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Ninguém poderá reutilizar o seu nome de utilizador (MXID), incluindo o próprio: este nome de utilizador permanecerá indisponível",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "A sua plataforma e o seu nome de utilizador serão anotados para nos ajudar a utilizar o seu feedback da melhor forma possível.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Comece uma conversa com alguém a partir do nome, endereço de email ou nome de utilizador (por exemplo: <userId/>).",
     "Zambia": "Zâmbia",
     "Missing roomId.": "Falta ID de Sala.",
@@ -827,5 +825,9 @@
         "help_about": {
             "brand_version": "versão do %(brand)s:"
         }
+    },
+    "feedback": {
+        "comment_label": "Comente",
+        "platform_username": "A sua plataforma e o seu nome de utilizador serão anotados para nos ajudar a utilizar o seu feedback da melhor forma possível."
     }
 }

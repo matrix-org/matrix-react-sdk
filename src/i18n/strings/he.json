@@ -1336,12 +1336,6 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "אמתו את המכשיר הזה כדי לסמן אותו כאמין. אמון במכשיר זה מעניק לכם ולמשתמשים אחרים שקט נפשי נוסף בשימוש בהודעות מוצפנות מקצה לקצה.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "אימות משתמש זה יסמן את ההפעלה שלו כאמינה, וגם יסמן את ההפעלה שלכם כאמינה להם.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "אמתו את המשתמש הזה כדי לסמן אותו כאמין. אמון במשתמשים מעניק לכם שקט נפשי נוסף בשימוש בהודעות מוצפנות מקצה לקצה.",
-    "Send feedback": "שלח משוב",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "טיפ למקצוענים: אם אתה מפעיל באג, שלח <debugLogsLink> יומני איתור באגים </debugLogsLink> כדי לעזור לנו לאתר את הבעיה.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "אנא צפה תחילה ב <existingIssuesLink> באגים קיימים ב- Github </existingIssuesLink>. אין התאמה? <newIssueLink> התחל חדש </newIssueLink>.",
-    "Feedback": "משוב",
-    "Comment": "תגובה",
-    "Feedback sent": "משוב נשלח",
     "An error has occurred.": "קרתה שגיאה.",
     "Transfer": "לְהַעֲבִיר",
     "Failed to transfer call": "העברת השיחה נכשלה",
@@ -1944,7 +1938,8 @@
         "cross_signing": "חתימה צולבת",
         "identity_server": "שרת הזדהות",
         "integration_manager": "מנהל אינטגרציה",
-        "qr_code": "קוד QR"
+        "qr_code": "קוד QR",
+        "feedback": "משוב"
     },
     "action": {
         "continue": "המשך",
@@ -2906,5 +2901,12 @@
             "see_msgtype_sent_this_room": "ראו <b>%(msgtype)s</b> הודעות שפורסמו בחדר זה",
             "see_msgtype_sent_active_room": "ראו <b>%(msgtype)s</b> הודעות שפורסמו בחדר הפעיל שלכם"
         }
+    },
+    "feedback": {
+        "sent": "משוב נשלח",
+        "comment_label": "תגובה",
+        "pro_type": "טיפ למקצוענים: אם אתה מפעיל באג, שלח <debugLogsLink> יומני איתור באגים </debugLogsLink> כדי לעזור לנו לאתר את הבעיה.",
+        "existing_issue_link": "אנא צפה תחילה ב <existingIssuesLink> באגים קיימים ב- Github </existingIssuesLink>. אין התאמה? <newIssueLink> התחל חדש </newIssueLink>.",
+        "send_feedback_action": "שלח משוב"
     }
 }

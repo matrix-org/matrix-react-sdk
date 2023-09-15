@@ -338,7 +338,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             feedbackButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconMessage"
-                    label={_t("Feedback")}
+                    label={_t("common|feedback")}
                     onClick={this.onProvideFeedback}
                 />
             );

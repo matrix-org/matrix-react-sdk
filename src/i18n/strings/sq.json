@@ -1081,7 +1081,6 @@
     "Switch to dark mode": "Kalo nën mënyrën e errët",
     "Switch theme": "Ndërroni temën",
     "All settings": "Krejt rregullimet",
-    "Feedback": "Mendime",
     "No recently visited rooms": "S’ka dhoma të vizituara së fundi",
     "Message preview": "Paraparje mesazhi",
     "Room options": "Mundësi dhome",
@@ -1177,11 +1176,6 @@
     "Answered Elsewhere": "Përgjigjur Gjetkë",
     "Data on this screen is shared with %(widgetDomain)s": "Të dhënat në këtë skenë ndahen me %(widgetDomain)s",
     "Modal Widget": "Widget Modal",
-    "Send feedback": "Dërgoni përshtypjet",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "NDIHMËZ PROFESIONISTËSH: Nëse nisni një njoftim të mete, ju lutemi, parashtroni <debugLogsLink>regjistra diagnostikimi</debugLogsLink>, që të na ndihmoni të gjejmë problemin.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Ju lutemi, shihni <existingIssuesLink>të meta ekzistuese në Github</existingIssuesLink> së pari. S’ka përputhje? <newIssueLink>Nisni një të re</newIssueLink>.",
-    "Comment": "Koment",
-    "Feedback sent": "Përshtypjet u dërguan",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Ftoni dikë duke përdorur emrin e tij, adresën email, emrin e përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Nisni një bisedë me dikë duke përdorur emrin e tij, adresën email ose emrin e përdoruesit (bie fjala, <userId/>).",
     "Invite by email": "Ftojeni me email",
@@ -1643,7 +1637,6 @@
     "Select a room below first": "Së pari, përzgjidhni më poshtë një dhomë",
     "You may contact me if you have any follow up questions": "Mund të lidheni me mua, nëse keni pyetje të mëtejshme",
     "To leave the beta, visit your settings.": "Që të braktisni beta-n, vizitoni rregullimet tuaja.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Platforma dhe emri juaj i përdoruesit do të mbahen shënim, për të na ndihmuar t’i përdorim përshtypjet tuaja sa më shumë që të mundemi.",
     "Want to add a new room instead?": "Doni të shtohet një dhomë e re, në vend të kësaj?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Po shtohet dhomë…",
@@ -1973,7 +1966,6 @@
     "Moderation": "Moderim",
     "Messaging": "Shkëmbim mesazhes",
     "Spaces you know that contain this space": "Hapësira që e dini se përmbajnë këtë hapësirë",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Mund të lidheni me mua për vazhdimin, ose për të më lejuar të testoj ide të ardhshme",
     "Chat": "Fjalosje",
     "Home options": "Mundësi kreu",
     "%(spaceName)s menu": "Menu %(spaceName)s",
@@ -2748,7 +2740,8 @@
         "cross_signing": "<em>Cross-signing</em>",
         "identity_server": "Shërbyes identitetesh",
         "integration_manager": "Përgjegjës integrimesh",
-        "qr_code": "Kod QR"
+        "qr_code": "Kod QR",
+        "feedback": "Mendime"
     },
     "action": {
         "continue": "Vazhdo",
@@ -4006,5 +3999,14 @@
             "see_msgtype_sent_this_room": "Shihni mesazhe <b>%(msgtype)s</b> postuar në këtë dhomë",
             "see_msgtype_sent_active_room": "Shihni mesazhe <b>%(msgtype)s</b> postuar në dhomën tuaj aktive"
         }
+    },
+    "feedback": {
+        "sent": "Përshtypjet u dërguan",
+        "comment_label": "Koment",
+        "platform_username": "Platforma dhe emri juaj i përdoruesit do të mbahen shënim, për të na ndihmuar t’i përdorim përshtypjet tuaja sa më shumë që të mundemi.",
+        "may_contact_label": "Mund të lidheni me mua për vazhdimin, ose për të më lejuar të testoj ide të ardhshme",
+        "pro_type": "NDIHMËZ PROFESIONISTËSH: Nëse nisni një njoftim të mete, ju lutemi, parashtroni <debugLogsLink>regjistra diagnostikimi</debugLogsLink>, që të na ndihmoni të gjejmë problemin.",
+        "existing_issue_link": "Ju lutemi, shihni <existingIssuesLink>të meta ekzistuese në Github</existingIssuesLink> së pari. S’ka përputhje? <newIssueLink>Nisni një të re</newIssueLink>.",
+        "send_feedback_action": "Dërgoni përshtypjet"
     }
 }

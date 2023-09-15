@@ -222,7 +222,8 @@
         "support": "Support",
         "room_name": "Room name",
         "thread": "Thread",
-        "accessibility": "Accessibility"
+        "accessibility": "Accessibility",
+        "feedback": "Feedback"
     },
     "Unable to load! Check your network connectivity and try again.": "Unable to load! Check your network connectivity and try again.",
     "The file '%(fileName)s' failed to upload.": "The file '%(fileName)s' failed to upload.",
@@ -3044,14 +3045,6 @@
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.",
     "An error has occurred.": "An error has occurred.",
     "MB": "MB",
-    "Feedback sent": "Feedback sent",
-    "Comment": "Comment",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Your platform and username will be noted to help us use your feedback as much as we can.",
-    "Feedback": "Feedback",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "You may contact me if you want to follow up or to let me test out upcoming ideas",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.",
-    "Send feedback": "Send feedback",
     "You don't have permission to do this": "You don't have permission to do this",
     "Sending": "Sending",
     "Sent": "Sent",
@@ -3765,5 +3758,14 @@
     "Message downloading sleep time(ms)": "Message downloading sleep time(ms)",
     "Failed to set direct message tag": "Failed to set direct message tag",
     "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
-    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room"
+    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
+    "feedback": {
+        "sent": "Feedback sent",
+        "comment_label": "Comment",
+        "platform_username": "Your platform and username will be noted to help us use your feedback as much as we can.",
+        "may_contact_label": "You may contact me if you want to follow up or to let me test out upcoming ideas",
+        "pro_type": "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.",
+        "existing_issue_link": "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.",
+        "send_feedback_action": "Send feedback"
+    }
 }

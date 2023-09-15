@@ -1348,7 +1348,6 @@
     "Invite by email": "Via e-mail uitnodigen",
     "Click the button below to confirm your identity.": "Druk op de knop hieronder om je identiteit te bevestigen.",
     "Confirm to continue": "Bevestig om door te gaan",
-    "Comment": "Opmerking",
     "Manually verify all remote sessions": "Handmatig alle externe sessies verifiëren",
     "Safeguard against losing access to encrypted messages & data": "Beveiliging tegen verlies van toegang tot versleutelde berichten en gegevens",
     "Set up Secure Backup": "Beveiligde back-up instellen",
@@ -1373,12 +1372,8 @@
     "No recently visited rooms": "Geen onlangs bezochte kamers",
     "Use the <a>Desktop app</a> to see all encrypted files": "Gebruik de <a>Desktop-app</a> om alle versleutelde bestanden te zien",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Herinnering: Jouw browser wordt niet ondersteund. Dit kan een negatieve impact hebben op je ervaring.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Bekijk eerst de <existingIssuesLink>bestaande bugs op GitHub</existingIssuesLink>. <newIssueLink>Maak een nieuwe aan</newIssueLink> wanneer je jouw bugs niet hebt gevonden.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Nodig iemand uit door gebruik te maken van hun naam, e-mailadres, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Nodig iemand uit door gebruik te maken van hun naam, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
-    "Send feedback": "Feedback versturen",
-    "Feedback": "Feedback",
-    "Feedback sent": "Feedback verstuurd",
     "Workspace: <networkLink/>": "Werkplaats: <networkLink/>",
     "Your firewall or anti-virus is blocking the request.": "Jouw firewall of antivirussoftware blokkeert de aanvraag.",
     "Currently indexing: %(currentRoom)s": "Momenteel indexeren: %(currentRoom)s",
@@ -1471,7 +1466,6 @@
     "a new master key signature": "een nieuwe hoofdsleutel ondertekening",
     "Failed to transfer call": "Oproep niet doorverbonden",
     "A call can only be transferred to a single user.": "Een oproep kan slechts naar één personen worden doorverbonden.",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "PRO TIP: Als je een nieuwe bug maakt, stuur ons dan je <debugLogsLink>foutenlogboek</debugLogsLink> om ons te helpen het probleem op te sporen.",
     "Server did not return valid authentication information.": "Server heeft geen geldige verificatiegegevens teruggestuurd.",
     "Server did not require any authentication": "Server heeft geen authenticatie nodig",
     "There was a problem communicating with the server. Please try again.": "Er was een communicatie probleem met de server. Probeer het opnieuw.",
@@ -1662,7 +1656,6 @@
     "Search names and descriptions": "In namen en omschrijvingen zoeken",
     "You may contact me if you have any follow up questions": "Je mag contact met mij opnemen als je nog vervolg vragen heeft",
     "To leave the beta, visit your settings.": "Om de beta te verlaten, ga naar je instellingen.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Jouw platform en inlognaam zullen worden opgeslagen om onze te helpen je feedback zo goed mogelijk te gebruiken.",
     "Add reaction": "Reactie toevoegen",
     "Space Autocomplete": "Space autocomplete",
     "Go to my space": "Ga naar mijn Space",
@@ -1976,7 +1969,6 @@
     "Messaging": "Messaging",
     "Spaces you know that contain this space": "Spaces die je kent met deze Space",
     "Chat": "Chat",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Je kan contact met mij opnemen als je updates wil van of wilt deelnemen aan nieuwe ideeën",
     "Home options": "Home-opties",
     "%(spaceName)s menu": "%(spaceName)s-menu",
     "Join public room": "Publieke kamer toetreden",
@@ -2528,7 +2520,8 @@
         "cross_signing": "Kruiselings ondertekenen",
         "identity_server": "Identiteitsserver",
         "integration_manager": "Integratiebeheerder",
-        "qr_code": "QR-code"
+        "qr_code": "QR-code",
+        "feedback": "Feedback"
     },
     "action": {
         "continue": "Doorgaan",
@@ -3716,5 +3709,14 @@
             "see_msgtype_sent_this_room": "Zie <b>%(msgtype)s</b>-berichten verstuurd in deze kamer",
             "see_msgtype_sent_active_room": "Zie <b>%(msgtype)s</b>-berichten verstuurd in je actieve kamer"
         }
+    },
+    "feedback": {
+        "sent": "Feedback verstuurd",
+        "comment_label": "Opmerking",
+        "platform_username": "Jouw platform en inlognaam zullen worden opgeslagen om onze te helpen je feedback zo goed mogelijk te gebruiken.",
+        "may_contact_label": "Je kan contact met mij opnemen als je updates wil van of wilt deelnemen aan nieuwe ideeën",
+        "pro_type": "PRO TIP: Als je een nieuwe bug maakt, stuur ons dan je <debugLogsLink>foutenlogboek</debugLogsLink> om ons te helpen het probleem op te sporen.",
+        "existing_issue_link": "Bekijk eerst de <existingIssuesLink>bestaande bugs op GitHub</existingIssuesLink>. <newIssueLink>Maak een nieuwe aan</newIssueLink> wanneer je jouw bugs niet hebt gevonden.",
+        "send_feedback_action": "Feedback versturen"
     }
 }

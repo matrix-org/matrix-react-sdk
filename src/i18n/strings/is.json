@@ -213,9 +213,6 @@
     "Roles & Permissions": "Hlutverk og heimildir",
     "Reject & Ignore user": "Hafna og hunsa notanda",
     "Security & Privacy": "Öryggi og gagnaleynd",
-    "Feedback sent": "Umsögn send",
-    "Send feedback": "Senda umsögn",
-    "Feedback": "Umsagnir",
     "All settings": "Allar stillingar",
     "Change notification settings": "Breytta tilkynningastillingum",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Þú getur ekki sent nein skilaboð fyrr en þú hefur farið yfir og samþykkir <consentLink>skilmála okkar</consentLink>.",
@@ -700,7 +697,6 @@
     "Message preview": "Forskoðun skilaboða",
     "Sent": "Sent",
     "Sending": "Sendi",
-    "Comment": "Athugasemd",
     "MB": "MB",
     "Public space": "Opinbert svæði",
     "Private space (invite only)": "Einkasvæði (einungis gegn boði)",
@@ -2337,7 +2333,8 @@
         "cross_signing": "Kross-undirritun",
         "identity_server": "Auðkennisþjónn",
         "integration_manager": "Samþættingarstýring",
-        "qr_code": "QR-kóði"
+        "qr_code": "QR-kóði",
+        "feedback": "Umsagnir"
     },
     "action": {
         "continue": "Halda áfram",
@@ -3500,5 +3497,10 @@
             "see_msgtype_sent_this_room": "Sjá <b>%(msgtype)s</b> skilaboð sem birtast í þessari spjallrás",
             "see_msgtype_sent_active_room": "Sjá <b>%(msgtype)s</b> skilaboð sem birtast í virku spjallrásina þinni"
         }
+    },
+    "feedback": {
+        "sent": "Umsögn send",
+        "comment_label": "Athugasemd",
+        "send_feedback_action": "Senda umsögn"
     }
 }

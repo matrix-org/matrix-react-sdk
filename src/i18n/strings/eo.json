@@ -1110,7 +1110,6 @@
     "Edited at %(date)s": "Redaktita je %(date)s",
     "Click to view edits": "Klaku por vidi redaktojn",
     "Are you sure you want to cancel entering passphrase?": "Ĉu vi certe volas nuligi enigon de pasfrazo?",
-    "Feedback": "Prikomenti",
     "Change notification settings": "Ŝanĝi agordojn pri sciigoj",
     "Your server isn't responding to some <a>requests</a>.": "Via servilo ne respondas al iuj <a>petoj</a>.",
     "Server isn't responding": "Servilo ne respondas",
@@ -1178,12 +1177,7 @@
     "The call was answered on another device.": "La voko estis respondita per alia aparato.",
     "Answered Elsewhere": "Respondita aliloke",
     "The call could not be established": "Ne povis meti la vokon",
-    "Feedback sent": "Prikomentoj sendiĝis",
     "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
-    "Send feedback": "Prikomenti",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "KONSILO: Kiam vi raportas eraron, bonvolu kunsendi <debugLogsLink>erarserĉan protokolon</debugLogsLink>, por ke ni povu pli facile trovi la problemon.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Bonvolu unue vidi <existingIssuesLink>jamajn erarojn en GitHub</existingIssuesLink>. Ĉu neniu akordas la vian? <newIssueLink>Raportu novan</newIssueLink>.",
-    "Comment": "Komento",
     "Uzbekistan": "Uzbekujo",
     "United Arab Emirates": "Unuiĝinaj Arabaj Emirlandoj",
     "Ukraine": "Ukrainujo",
@@ -1618,7 +1612,6 @@
     "We couldn't create your DM.": "Ni ne povis krei vian individuan ĉambron.",
     "You may contact me if you have any follow up questions": "Vi povas min kontakti okaze de pliaj demandoj",
     "To leave the beta, visit your settings.": "Por foriri de la prova versio, iru al viaj agordoj.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Via platformo kaj uzantonomo helpos al ni pli bone uzi viajn prikomentojn.",
     "Want to add a new room instead?": "Ĉu vi volas anstataŭe aldoni novan ĉambron?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Aldonante ĉambron…",
@@ -2110,7 +2103,8 @@
         "cross_signing": "Delegaj subskriboj",
         "identity_server": "Identiga servilo",
         "integration_manager": "Kunigilo",
-        "qr_code": "Rapidresponda kodo"
+        "qr_code": "Rapidresponda kodo",
+        "feedback": "Prikomenti"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -3089,5 +3083,13 @@
             "see_msgtype_sent_this_room": "Vidi mesaĝojn de speco <b>%(msgtype)s</b> afiŝitajn al ĉi tiu ĉambro",
             "see_msgtype_sent_active_room": "Vidi mesaĝojn de speco <b>%(msgtype)s</b> afiŝitajn al via aktiva ĉambro"
         }
+    },
+    "feedback": {
+        "sent": "Prikomentoj sendiĝis",
+        "comment_label": "Komento",
+        "platform_username": "Via platformo kaj uzantonomo helpos al ni pli bone uzi viajn prikomentojn.",
+        "pro_type": "KONSILO: Kiam vi raportas eraron, bonvolu kunsendi <debugLogsLink>erarserĉan protokolon</debugLogsLink>, por ke ni povu pli facile trovi la problemon.",
+        "existing_issue_link": "Bonvolu unue vidi <existingIssuesLink>jamajn erarojn en GitHub</existingIssuesLink>. Ĉu neniu akordas la vian? <newIssueLink>Raportu novan</newIssueLink>.",
+        "send_feedback_action": "Prikomenti"
     }
 }

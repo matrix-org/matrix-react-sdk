@@ -1077,9 +1077,6 @@
     "Cancelled signature upload": "Nahrávání podpisu zrušeno",
     "Unable to upload": "Nelze nahrát",
     "Server isn't responding": "Server neodpovídá",
-    "Send feedback": "Odeslat zpětnou vazbu",
-    "Feedback": "Zpětná vazba",
-    "Feedback sent": "Zpětná vazba byla odeslána",
     "All settings": "Všechna nastavení",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Napište jméno nebo emailovou adresu uživatele se kterým chcete začít konverzaci (např. <userId/>).",
     "Czech Republic": "Česká republika",
@@ -1092,8 +1089,6 @@
     "The call was answered on another device.": "Hovor byl přijat na jiném zařízení.",
     "Answered Elsewhere": "Zodpovězeno jinde",
     "The call could not be established": "Hovor se nepovedlo navázat",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "TIP pro profíky: Pokud nahlásíte chybu, odešlete prosím <debugLogsLink>ladicí protokoly</debugLogsLink>, které nám pomohou problém vypátrat.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Nejříve si prosím prohlédněte <existingIssuesLink>existující chyby na Githubu</existingIssuesLink>. Žádná shoda? <newIssueLink>Nahlašte novou chybu</newIssueLink>.",
     "Add widgets, bridges & bots": "Přidat widgety, propojení a boty",
     "Widgets": "Widgety",
     "Show Widgets": "Zobrazit widgety",
@@ -1143,7 +1138,6 @@
     "You created this room.": "Vytvořili jste tuto místnost.",
     "<a>Add a topic</a> to help people know what it is about.": "<a>Přidejte téma</a>, aby lidé věděli, o co jde.",
     "Invite by email": "Pozvat emailem",
-    "Comment": "Komentář",
     "Reason (optional)": "Důvod (volitelné)",
     "Currently indexing: %(currentRoom)s": "Aktuálně se indexuje: %(currentRoom)s",
     "Use email to optionally be discoverable by existing contacts.": "Pomocí e-mailu můžete být volitelně viditelní pro existující kontakty.",
@@ -1662,7 +1656,6 @@
     "Search names and descriptions": "Hledat názvy a popisy",
     "You may contact me if you have any follow up questions": "V případě dalších dotazů se na mě můžete obrátit",
     "To leave the beta, visit your settings.": "Chcete-li opustit beta verzi, jděte do nastavení.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Vaše platforma a uživatelské jméno budou zaznamenány, abychom mohli co nejlépe využít vaši zpětnou vazbu.",
     "Add reaction": "Přidat reakci",
     "Space Autocomplete": "Automatické dokončení prostoru",
     "Go to my space": "Přejít do mého prostoru",
@@ -1976,7 +1969,6 @@
     "Quick settings": "Rychlá nastavení",
     "Spaces you know that contain this space": "Prostory, které znáte obsahující tento prostor",
     "Chat": "Chat",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Můžete mě kontaktovat, pokud budete chtít doplnit informace nebo mě nechat vyzkoušet připravované návrhy",
     "Home options": "Možnosti domovské obrazovky",
     "%(spaceName)s menu": "Nabídka pro %(spaceName)s",
     "Join public room": "Připojit se k veřejné místnosti",
@@ -2824,7 +2816,8 @@
         "cross_signing": "Křížové podepisování",
         "identity_server": "Server identit",
         "integration_manager": "Správce integrací",
-        "qr_code": "QR kód"
+        "qr_code": "QR kód",
+        "feedback": "Zpětná vazba"
     },
     "action": {
         "continue": "Pokračovat",
@@ -4118,5 +4111,14 @@
             "see_msgtype_sent_this_room": "Prohlédnout zprávy <b>%(msgtype)s</b> zveřejněné v této místnosti",
             "see_msgtype_sent_active_room": "Prohlédnout zprávy <b>%(msgtype)s</b> zveřejněné ve vaší aktivní místnosti"
         }
+    },
+    "feedback": {
+        "sent": "Zpětná vazba byla odeslána",
+        "comment_label": "Komentář",
+        "platform_username": "Vaše platforma a uživatelské jméno budou zaznamenány, abychom mohli co nejlépe využít vaši zpětnou vazbu.",
+        "may_contact_label": "Můžete mě kontaktovat, pokud budete chtít doplnit informace nebo mě nechat vyzkoušet připravované návrhy",
+        "pro_type": "TIP pro profíky: Pokud nahlásíte chybu, odešlete prosím <debugLogsLink>ladicí protokoly</debugLogsLink>, které nám pomohou problém vypátrat.",
+        "existing_issue_link": "Nejříve si prosím prohlédněte <existingIssuesLink>existující chyby na Githubu</existingIssuesLink>. Žádná shoda? <newIssueLink>Nahlašte novou chybu</newIssueLink>.",
+        "send_feedback_action": "Odeslat zpětnou vazbu"
     }
 }

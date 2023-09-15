@@ -566,7 +566,6 @@
     "Switch to dark mode": "ダークテーマに切り替える",
     "Switch theme": "テーマを切り替える",
     "All settings": "全ての設定",
-    "Feedback": "フィードバック",
     "Cannot connect to integration manager": "インテグレーションマネージャーに接続できません",
     "Failed to connect to integration manager": "インテグレーションマネージャーへの接続に失敗しました",
     "Start verification again from their profile.": "プロフィールから再度認証を開始してください。",
@@ -667,7 +666,6 @@
     "New version available. <a>Update now.</a>": "新しいバージョンが利用可能です。<a>今すぐ更新</a>",
     "Create Account": "アカウントを作成",
     "Explore rooms": "ルームを探す",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "まず、<existingIssuesLink>Githubで既知の不具合</existingIssuesLink>を確認してください。また掲載されていない新しい不具合を発見した場合は<newIssueLink>報告してください</newIssueLink>。",
     "Update %(brand)s": "%(brand)sの更新",
     "New version of %(brand)s is available": "%(brand)sの新しいバージョンが利用可能です",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix関連のセキュリティー問題を報告するには、Matrix.orgの<a>Security Disclosure Policy</a>をご覧ください。",
@@ -1280,7 +1278,6 @@
     "Make sure the right people have access to %(name)s": "正しい参加者が%(name)sにアクセスできるようにしましょう。",
     "Who are you working with?": "誰と使いますか？",
     "Invite to %(roomName)s": "%(roomName)sに招待",
-    "Send feedback": "フィードバックを送信",
     "Manage & explore rooms": "ルームの管理および探索",
     "Select a room below first": "以下からルームを選択してください",
     "A private space to organise your rooms": "ルームを整理するための非公開のスペース",
@@ -1562,7 +1559,6 @@
     "Remove from room": "ルームから追放",
     "Failed to remove user": "ユーザーの追放に失敗しました",
     "Success!": "成功しました！",
-    "Comment": "コメント",
     "Information": "情報",
     "Search for spaces": "スペースを検索",
     "Share location": "位置情報を共有",
@@ -1612,8 +1608,6 @@
     "Share %(name)s": "%(name)sを共有",
     "Application window": "アプリケーションのウィンドウ",
     "Verification Request": "認証の要求",
-    "Feedback sent": "フィードバックを送信しました",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "追加で確認が必要な事項や、テストすべき新しいアイデアがある場合は、連絡可",
     "Verification requested": "認証が必要です",
     "Unable to copy a link to the room to the clipboard.": "ルームのリンクをクリップボードにコピーできませんでした。",
     "Unable to copy room link": "ルームのリンクをコピーできません",
@@ -1664,7 +1658,6 @@
     "Private space (invite only)": "非公開スペース（招待者のみ参加可能）",
     "Public space": "公開スペース",
     "Sending": "送信しています",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "ヒント：バグレポートを報告する場合は、問題の分析のために<debugLogsLink>デバッグログ</debugLogsLink>を送信してください。",
     "MB": "MB",
     "Failed to end poll": "アンケートの終了に失敗しました",
     "End Poll": "アンケートを終了",
@@ -2014,7 +2007,6 @@
     "Yours, or the other users' session": "あなた、もしくは他のユーザーのセッション",
     "Yours, or the other users' internet connection": "あなた、もしくは他のユーザーのインターネット接続",
     "The homeserver the user you're verifying is connected to": "認証しようとしているユーザーが接続しているホームサーバー",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "フィードバックを最大限に活用するため、使用中のプラットフォームとユーザー名が送信されます。",
     "There was a problem communicating with the server. Please try again.": "サーバーとの通信時に問題が発生しました。もう一度やり直してください。",
     "%(deviceId)s from %(ip)s": "%(ip)sの%(deviceId)s",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "注意：メールアドレスを追加せずパスワードを忘れた場合、<b>永久にアカウントにアクセスできなくなる</b>可能性があります。",
@@ -2677,7 +2669,8 @@
         "cross_signing": "クロス署名",
         "identity_server": "IDサーバー",
         "integration_manager": "インテグレーションマネージャー",
-        "qr_code": "QRコード"
+        "qr_code": "QRコード",
+        "feedback": "フィードバック"
     },
     "action": {
         "continue": "続行",
@@ -3911,5 +3904,14 @@
             "see_msgtype_sent_this_room": "このルームに投稿された<b>%(msgtype)s</b>メッセージを表示",
             "see_msgtype_sent_active_room": "アクティブなルームに投稿された<b>%(msgtype)s</b>メッセージを表示"
         }
+    },
+    "feedback": {
+        "sent": "フィードバックを送信しました",
+        "comment_label": "コメント",
+        "platform_username": "フィードバックを最大限に活用するため、使用中のプラットフォームとユーザー名が送信されます。",
+        "may_contact_label": "追加で確認が必要な事項や、テストすべき新しいアイデアがある場合は、連絡可",
+        "pro_type": "ヒント：バグレポートを報告する場合は、問題の分析のために<debugLogsLink>デバッグログ</debugLogsLink>を送信してください。",
+        "existing_issue_link": "まず、<existingIssuesLink>Githubで既知の不具合</existingIssuesLink>を確認してください。また掲載されていない新しい不具合を発見した場合は<newIssueLink>報告してください</newIssueLink>。",
+        "send_feedback_action": "フィードバックを送信"
     }
 }

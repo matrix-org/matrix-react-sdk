@@ -998,7 +998,6 @@
     "Favourited": "В избранном",
     "Room options": "Настройки комнаты",
     "All settings": "Все настройки",
-    "Feedback": "Отзыв",
     "Forget Room": "Забыть комнату",
     "This room is public": "Это публичная комната",
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Введите <code>/help</code> для списка доступных команд. Хотите отправить это сообщение как есть?",
@@ -1179,11 +1178,6 @@
     "The call was answered on another device.": "На звонок ответили на другом устройстве.",
     "Answered Elsewhere": "Ответил в другом месте",
     "The call could not be established": "Звонок не может быть установлен",
-    "Send feedback": "Отправить отзыв",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "СОВЕТ ДЛЯ ПРОФЕССИОНАЛОВ: если вы запустите ошибку, отправьте <debugLogsLink>журналы отладки</debugLogsLink>, чтобы помочь нам отследить проблему.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Пожалуйста, сначала просмотрите <existingIssuesLink>существующие ошибки на Github</existingIssuesLink>. Нет совпадений? <newIssueLink>Сообщите о новой</newIssueLink>.",
-    "Comment": "Комментарий",
-    "Feedback sent": "Отзыв отправлен",
     "This is the start of <roomName/>.": "Это начало <roomName/>.",
     "Add a photo, so people can easily spot your room.": "Добавьте фото, чтобы люди могли легко заметить вашу комнату.",
     "%(displayName)s created this room.": "%(displayName)s создал(а) эту комнату.",
@@ -1674,7 +1668,6 @@
     "Some suggestions may be hidden for privacy.": "Некоторые предложения могут быть скрыты в целях конфиденциальности.",
     "We couldn't create your DM.": "Мы не смогли создать ваш диалог.",
     "You may contact me if you have any follow up questions": "Вы можете связаться со мной, если у вас возникнут какие-либо последующие вопросы",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Ваша платформа и имя пользователя будут отмечены, чтобы мы могли максимально использовать ваш отзыв.",
     "Search for rooms or people": "Поиск комнат или людей",
     "Message preview": "Просмотр сообщения",
     "Sent": "Отправлено",
@@ -1928,7 +1921,6 @@
     "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org — крупнейший в мире домашний публичный сервер, который подходит многим.",
     "Spaces you know that contain this space": "Пространства, которые вы знаете, уже содержат эту комнату",
     "If you can't see who you're looking for, send them your invite link below.": "Если вы не видите того, кого ищете, отправьте ему свое приглашение по ссылке ниже.",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Вы можете связаться со мной, за дальнейшими действиями или помощью с испытанием идей",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Вы уверены, что хотите завершить этот опрос? Это покажет окончательные результаты опроса и лишит людей возможности голосовать.",
     "End Poll": "Завершить опрос",
     "Sorry, the poll did not end. Please try again.": "Извините, опрос не завершился. Пожалуйста, попробуйте еще раз.",
@@ -2587,7 +2579,8 @@
         "cross_signing": "Кросс-подпись",
         "identity_server": "Идентификационный сервер",
         "integration_manager": "Менеджер интеграции",
-        "qr_code": "QR-код"
+        "qr_code": "QR-код",
+        "feedback": "Отзыв"
     },
     "action": {
         "continue": "Продолжить",
@@ -3800,5 +3793,14 @@
             "see_msgtype_sent_this_room": "Посмотрите <b>%(msgtype)s</b> сообщения размещённые в этой комнате",
             "see_msgtype_sent_active_room": "Посмотрите <b>%(msgtype)s</b> сообщения, размещённые в вашей активной комнате"
         }
+    },
+    "feedback": {
+        "sent": "Отзыв отправлен",
+        "comment_label": "Комментарий",
+        "platform_username": "Ваша платформа и имя пользователя будут отмечены, чтобы мы могли максимально использовать ваш отзыв.",
+        "may_contact_label": "Вы можете связаться со мной, за дальнейшими действиями или помощью с испытанием идей",
+        "pro_type": "СОВЕТ ДЛЯ ПРОФЕССИОНАЛОВ: если вы запустите ошибку, отправьте <debugLogsLink>журналы отладки</debugLogsLink>, чтобы помочь нам отследить проблему.",
+        "existing_issue_link": "Пожалуйста, сначала просмотрите <existingIssuesLink>существующие ошибки на Github</existingIssuesLink>. Нет совпадений? <newIssueLink>Сообщите о новой</newIssueLink>.",
+        "send_feedback_action": "Отправить отзыв"
     }
 }

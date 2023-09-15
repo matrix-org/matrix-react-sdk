@@ -1081,7 +1081,6 @@
     "Switch to dark mode": "切換至深色模式",
     "Switch theme": "切換佈景主題",
     "All settings": "所有設定",
-    "Feedback": "回饋",
     "No recently visited rooms": "沒有最近造訪過的聊天室",
     "Message preview": "訊息預覽",
     "Room options": "聊天室選項",
@@ -1180,11 +1179,6 @@
     "Answered Elsewhere": "在其他地方回答",
     "Data on this screen is shared with %(widgetDomain)s": "在此畫面上的資料會與 %(widgetDomain)s 分享",
     "Modal Widget": "程式小工具",
-    "Send feedback": "傳送回饋",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "專業建議：如果您開始了一個錯誤，請遞交<debugLogsLink>除錯紀錄檔</debugLogsLink>以協助我們尋找問題。",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "請先檢視 <existingIssuesLink>GitHub 上既有的錯誤</existingIssuesLink>。沒有相符的嗎？<newIssueLink>回報新的問題</newIssueLink>。",
-    "Comment": "評論",
-    "Feedback sent": "已傳送回饋",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "使用某人的名字、電子郵件地址、使用者名稱（如 <userId/>）或<a>分享此聊天空間</a>來邀請人。",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "使用某人的名字、電子郵件地址或使用者名稱（如 <userId/>）來與他們開始對話。",
     "Invite by email": "透過電子郵件邀請",
@@ -1663,7 +1657,6 @@
     "Search names and descriptions": "搜尋名稱與描述",
     "You may contact me if you have any follow up questions": "如果後續有任何問題，可以聯絡我",
     "To leave the beta, visit your settings.": "請到設定頁面離開 Beta 測試版。",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "將會記錄您使用的平台與使用者名稱，以盡可能使用回饋資訊來調整本功能。",
     "Add reaction": "新增反應",
     "Space Autocomplete": "空間自動完成",
     "Go to my space": "到我的聊天空間",
@@ -1976,7 +1969,6 @@
     "Quick settings": "快速設定",
     "Spaces you know that contain this space": "您知道的包含此聊天空間的聊天空間",
     "Chat": "聊天",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "若您想跟進或讓我測試即將到來的想法，可以聯絡我",
     "Home options": "家選項",
     "%(spaceName)s menu": "%(spaceName)s 選單",
     "Join public room": "加入公開聊天室",
@@ -2820,7 +2812,8 @@
         "cross_signing": "交叉簽署",
         "identity_server": "身分伺服器",
         "integration_manager": "整合管理員",
-        "qr_code": "QR Code"
+        "qr_code": "QR Code",
+        "feedback": "回饋"
     },
     "action": {
         "continue": "繼續",
@@ -4113,5 +4106,14 @@
             "see_msgtype_sent_this_room": "檢視發佈到此聊天室的 <b>%(msgtype)s</b> 訊息",
             "see_msgtype_sent_active_room": "檢視發佈到您活躍聊天室的 <b>%(msgtype)s</b> 訊息"
         }
+    },
+    "feedback": {
+        "sent": "已傳送回饋",
+        "comment_label": "評論",
+        "platform_username": "將會記錄您使用的平台與使用者名稱，以盡可能使用回饋資訊來調整本功能。",
+        "may_contact_label": "若您想跟進或讓我測試即將到來的想法，可以聯絡我",
+        "pro_type": "專業建議：如果您開始了一個錯誤，請遞交<debugLogsLink>除錯紀錄檔</debugLogsLink>以協助我們尋找問題。",
+        "existing_issue_link": "請先檢視 <existingIssuesLink>GitHub 上既有的錯誤</existingIssuesLink>。沒有相符的嗎？<newIssueLink>回報新的問題</newIssueLink>。",
+        "send_feedback_action": "傳送回饋"
     }
 }

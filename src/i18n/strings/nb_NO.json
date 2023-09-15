@@ -622,7 +622,6 @@
     "Switch to dark mode": "Bytt til mørk modus",
     "Switch theme": "Bytt tema",
     "All settings": "Alle innstillinger",
-    "Feedback": "Tilbakemelding",
     "Emoji Autocomplete": "Auto-fullfør emojier",
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
     "Create key backup": "Opprett nøkkelsikkerhetskopi",
@@ -811,7 +810,6 @@
     "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
     "Transfer": "Overfør",
     "Invite by email": "Inviter gjennom E-post",
-    "Comment": "Kommentar",
     "Reason (optional)": "Årsak (valgfritt)",
     "Explore public rooms": "Utforsk offentlige rom",
     "Verify the link in your inbox": "Verifiser lenken i innboksen din",
@@ -1136,7 +1134,8 @@
         "cross_signing": "Kryssignering",
         "identity_server": "Identitetstjener",
         "integration_manager": "Integreringsbehandler",
-        "qr_code": "QR-kode"
+        "qr_code": "QR-kode",
+        "feedback": "Tilbakemelding"
     },
     "action": {
         "continue": "Fortsett",
@@ -1696,5 +1695,8 @@
             "change_name_this_room": "Endre rommets navn",
             "see_images_sent_this_room": "Se bilder som er lagt ut i dette rommet"
         }
+    },
+    "feedback": {
+        "comment_label": "Kommentar"
     }
 }

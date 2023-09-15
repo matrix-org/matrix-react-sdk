@@ -1215,7 +1215,6 @@
     "Hold": "Beklet",
     "Resume": "Devam et",
     "Information": "Bilgi",
-    "Feedback": "Geri bildirim",
     "Accepting…": "Kabul ediliyor…",
     "Room avatar": "Oda avatarı",
     "Room options": "Oda ayarları",
@@ -1430,7 +1429,8 @@
         "cross_signing": "Çapraz-imzalama",
         "identity_server": "Kimlik sunucusu",
         "integration_manager": "Bütünleştirme Yöneticisi",
-        "qr_code": "Kare kod (QR)"
+        "qr_code": "Kare kod (QR)",
+        "feedback": "Geri bildirim"
     },
     "action": {
         "continue": "Devam Et",

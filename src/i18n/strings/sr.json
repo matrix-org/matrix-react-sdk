@@ -394,7 +394,6 @@
     "Switch to light mode": "Пребаци на светлу тему",
     "Switch to dark mode": "Пребаци на тамну тему",
     "All settings": "Сва подешавања",
-    "Feedback": "Повратни подаци",
     "General failure": "Општа грешка",
     "Use custom size": "Користи прилагођену величину",
     "Got It": "Разумем",
@@ -921,7 +920,8 @@
         "trusted": "поуздан",
         "not_trusted": "није поуздан",
         "unnamed_room": "Неименована соба",
-        "stickerpack": "Паковање са налепницама"
+        "stickerpack": "Паковање са налепницама",
+        "feedback": "Повратни подаци"
     },
     "action": {
         "continue": "Настави",

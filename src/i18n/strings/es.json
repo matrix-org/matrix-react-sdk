@@ -1081,7 +1081,6 @@
     "No files visible in this room": "No hay archivos visibles en esta sala",
     "Attach files from chat or just drag and drop them anywhere in a room.": "Adjunta archivos desde el chat o simplemente arrástralos y suéltalos en cualquier lugar de una sala.",
     "All settings": "Ajustes",
-    "Feedback": "Danos tu opinión",
     "Switch to light mode": "Cambiar al tema claro",
     "Switch to dark mode": "Cambiar al tema oscuro",
     "Switch theme": "Cambiar tema",
@@ -1374,9 +1373,6 @@
     "Failed to transfer call": "No se ha podido transferir la llamada",
     "A call can only be transferred to a single user.": "Una llamada solo puede transferirse a un usuario.",
     "Invite by email": "Invitar a través de correo electrónico",
-    "Send feedback": "Enviar comentarios",
-    "Comment": "Comentario",
-    "Feedback sent": "Comentarios enviados",
     "This version of %(brand)s does not support viewing some encrypted files": "Esta versión de %(brand)s no permite ver algunos archivos cifrados",
     "Use the <a>Desktop app</a> to search encrypted messages": "Usa la <a>aplicación de escritorio</a> para buscar en los mensajes cifrados",
     "Use the <a>Desktop app</a> to see all encrypted files": "Usa la <a>aplicación de escritorio</a> para ver todos los archivos cifrados",
@@ -1520,8 +1516,6 @@
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Empieza una conversación con alguien usando su nombre, correo electrónico o nombre de usuario (como <userId/>).",
     "This is the beginning of your direct message history with <displayName/>.": "Este es el inicio de tu historial de mensajes directos con <displayName/>.",
     "Recently visited rooms": "Salas visitadas recientemente",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "CONSEJO: Si creas una incidencia, adjunta <debugLogsLink>tus registros de depuración</debugLogsLink> para ayudarnos a localizar el problema.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Por favor, echa un vistazo primero a <existingIssuesLink>las incidencias de Github</existingIssuesLink>. Si no encuentras nada relacionado, <newIssueLink>crea una nueva incidencia</newIssueLink>.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "No podrás deshacer esto, ya que te estás quitando tus permisos. Si eres la última persona con permisos en este usuario, no será posible recuperarlos.",
     "Welcome to <name/>": "Te damos la bienvenida a <name/>",
     "Original event source": "Fuente original del evento",
@@ -1662,7 +1656,6 @@
     "Search names and descriptions": "Buscar por nombre y descripción",
     "You may contact me if you have any follow up questions": "Os podéis poner en contacto conmigo si tenéis alguna pregunta",
     "To leave the beta, visit your settings.": "Para salir de la beta, ve a tus ajustes.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Tu nombre de usuario y plataforma irán adjuntos para que podamos interpretar tus comentarios lo mejor posible.",
     "Add reaction": "Reaccionar",
     "Space Autocomplete": "Autocompletar espacios",
     "Go to my space": "Ir a mi espacio",
@@ -1964,7 +1957,6 @@
     "Spaces you're in": "Tus espacios",
     "Link to room": "Enlace a la sala",
     "Spaces you know that contain this space": "Espacios que conoces que contienen este espacio",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Podéis poneros en contacto conmigo para responderme o informarme sobre nuevas ideas",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "¿Seguro que quieres terminar la encuesta? Publicarás los resultados finales y no se podrá votar más.",
     "End Poll": "Terminar encuesta",
     "Sorry, the poll did not end. Please try again.": "Lo sentimos, la encuesta no ha terminado. Por favor, inténtalo otra vez.",
@@ -2678,7 +2670,8 @@
         "cross_signing": "Firma cruzada",
         "identity_server": "Servidor de identidad",
         "integration_manager": "Gestor de integración",
-        "qr_code": "Código QR"
+        "qr_code": "Código QR",
+        "feedback": "Danos tu opinión"
     },
     "action": {
         "continue": "Continuar",
@@ -3919,5 +3912,14 @@
             "see_msgtype_sent_this_room": "Ver mensajes de tipo <b>%(msgtype)s</b> enviados a esta sala",
             "see_msgtype_sent_active_room": "Ver mensajes de tipo <b>%(msgtype)s</b> enviados a tu sala activa"
         }
+    },
+    "feedback": {
+        "sent": "Comentarios enviados",
+        "comment_label": "Comentario",
+        "platform_username": "Tu nombre de usuario y plataforma irán adjuntos para que podamos interpretar tus comentarios lo mejor posible.",
+        "may_contact_label": "Podéis poneros en contacto conmigo para responderme o informarme sobre nuevas ideas",
+        "pro_type": "CONSEJO: Si creas una incidencia, adjunta <debugLogsLink>tus registros de depuración</debugLogsLink> para ayudarnos a localizar el problema.",
+        "existing_issue_link": "Por favor, echa un vistazo primero a <existingIssuesLink>las incidencias de Github</existingIssuesLink>. Si no encuentras nada relacionado, <newIssueLink>crea una nueva incidencia</newIssueLink>.",
+        "send_feedback_action": "Enviar comentarios"
     }
 }

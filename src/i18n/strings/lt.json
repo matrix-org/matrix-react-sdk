@@ -746,7 +746,6 @@
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Jei tai padarėte netyčia, šiame seanse galite nustatyti saugias žinutes, kurios pakartotinai užšifruos šio seanso žinučių istoriją nauju atgavimo metodu.",
     "Error upgrading room": "Klaida atnaujinant kambarį",
     "Are you sure you want to cancel entering passphrase?": "Ar tikrai norite atšaukti slaptafrazės įvedimą?",
-    "Feedback": "Atsiliepimai",
     "All settings": "Visi nustatymai",
     "Change notification settings": "Keisti pranešimų nustatymus",
     "View older messages in %(roomName)s.": "Peržiūrėti senesnes žinutes %(roomName)s.",
@@ -938,10 +937,8 @@
     "New version of %(brand)s is available": "Yra nauja %(brand)s versija",
     "Update %(brand)s": "Atnaujinti %(brand)s",
     "Someone is using an unknown session": "Kažkas naudoja nežinomą seansą",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "PRO PATARIMAS: Jei pradėjote klaidos pranešimą, pateikite <debugLogsLink>derinimo žurnalus</debugLogsLink>, kad padėtumėte mums išsiaiškinti problemą.",
     "Please review and accept the policies of this homeserver:": "Peržiūrėkite ir sutikite su šio serverio politika:",
     "Please review and accept all of the homeserver's policies": "Peržiūrėkite ir sutikite su visa serverio politika",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Pirmiausia peržiūrėkite <existingIssuesLink>Github'e esančius pranešimus apie klaidas</existingIssuesLink>. Jokio atitikmens? <newIssueLink>Pradėkite naują pranešimą</newIssueLink>.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Paprastai tai turi įtakos tik kambario apdorojimui serveryje. Jei jūs turite problemų su savo %(brand)s, <a>praneškite apie klaidą</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Pakviesti ką nors, naudojant jų vardą, el. pašto adresą, vartotojo vardą (pvz.: <userId/>) arba <a>bendrinti šį kambarį</a>.",
     "Azerbaijan": "Azerbaidžanas",
@@ -1168,8 +1165,6 @@
     "Sent": "Išsiųsta",
     "Sending": "Siunčiama",
     "You don't have permission to do this": "Jūs neturite leidimo tai daryti",
-    "Comment": "Komentaras",
-    "Feedback sent": "Atsiliepimas išsiųstas",
     "Server did not return valid authentication information.": "Serveris negrąžino galiojančios autentifikavimo informacijos.",
     "Server did not require any authentication": "Serveris nereikalavo jokio autentifikavimo",
     "There was a problem communicating with the server. Please try again.": "Kilo problemų bendraujant su serveriu. Bandykite dar kartą.",
@@ -1177,7 +1172,6 @@
     "Clear all data": "Išvalyti visus duomenis",
     "Removing…": "Pašalinama…",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Primename: Jūsų naršyklė yra nepalaikoma, todėl jūsų patirtis gali būti nenuspėjama.",
-    "Send feedback": "Siųsti atsiliepimą",
     "You may contact me if you have any follow up questions": "Jei turite papildomų klausimų, galite susisiekti su manimi",
     "To leave the beta, visit your settings.": "Norėdami išeiti iš beta versijos, apsilankykite savo nustatymuose.",
     "Close dialog": "Uždaryti dialogą",
@@ -1777,7 +1771,8 @@
         "secure_backup": "Saugi Atsarginė Kopija",
         "cross_signing": "Kryžminis pasirašymas",
         "identity_server": "Tapatybės serveris",
-        "integration_manager": "Integracijų tvarkyklė"
+        "integration_manager": "Integracijų tvarkyklė",
+        "feedback": "Atsiliepimai"
     },
     "action": {
         "continue": "Tęsti",
@@ -2653,5 +2648,12 @@
             "any_room": "Aukščiau išvardyti, bet ir bet kuriame kambaryje, prie kurio prisijungėte arba į kurį esate pakviestas",
             "see_event_type_sent_active_room": "Peržiūrėti <b>%(eventType)s</b> įvykius, paskelbtus jūsų aktyviame kambaryje"
         }
+    },
+    "feedback": {
+        "sent": "Atsiliepimas išsiųstas",
+        "comment_label": "Komentaras",
+        "pro_type": "PRO PATARIMAS: Jei pradėjote klaidos pranešimą, pateikite <debugLogsLink>derinimo žurnalus</debugLogsLink>, kad padėtumėte mums išsiaiškinti problemą.",
+        "existing_issue_link": "Pirmiausia peržiūrėkite <existingIssuesLink>Github'e esančius pranešimus apie klaidas</existingIssuesLink>. Jokio atitikmens? <newIssueLink>Pradėkite naują pranešimą</newIssueLink>.",
+        "send_feedback_action": "Siųsti atsiliepimą"
     }
 }

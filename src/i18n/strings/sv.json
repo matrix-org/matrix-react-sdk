@@ -1066,7 +1066,6 @@
         "one": "Du har %(count)s oläst avisering i en tidigare version av det här rummet."
     },
     "All settings": "Alla inställningar",
-    "Feedback": "Återkoppling",
     "Switch to light mode": "Byt till ljust läge",
     "Switch to dark mode": "Byt till mörkt läge",
     "Switch theme": "Byt tema",
@@ -1179,11 +1178,6 @@
     "Hide Widgets": "Dölj widgets",
     "The call was answered on another device.": "Samtalet mottogs på en annan enhet.",
     "Answered Elsewhere": "Mottaget någon annanstans",
-    "Send feedback": "Skicka återkoppling",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "TIPS: Om du startar en bugg, vänligen inkludera <debugLogsLink>avbuggninsloggar</debugLogsLink> för att hjälpa oss att hitta problemet.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Vänligen se <existingIssuesLink> existerade buggar på GitHub</existingIssuesLink> först. Finns det ingen som matchar? <newIssueLink>Starta en ny</newIssueLink>.",
-    "Comment": "Kommentera",
-    "Feedback sent": "Återkoppling skickad",
     "Canada": "Kanada",
     "Cameroon": "Kamerun",
     "Cambodia": "Kambodja",
@@ -1648,7 +1642,6 @@
     "Select a room below first": "Välj ett rum nedan först",
     "You may contact me if you have any follow up questions": "Ni kan kontakta mig om ni har vidare frågor",
     "To leave the beta, visit your settings.": "För att lämna betan, besök dina inställningar.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "Din plattform och ditt användarnamn kommer att noteras för att hjälpa oss att använda din återkoppling så mycket vi kan.",
     "Want to add a new room instead?": "Vill du lägga till ett nytt rum istället?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Lägger till rum…",
@@ -2043,7 +2036,6 @@
     "Sections to show": "Sektioner att visa",
     "Link to room": "Länk till rum",
     "Spaces you know that contain this space": "Utrymmen du känner till som innehåller det här utrymmet",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Ni kan kontakta mig om ni vill följa upp eller låta mig testa kommande idéer",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Är du säker på att du vill avsluta den hör omröstningen? Detta kommer att visa det slutgiltiga resultatet och stoppa folk från att rösta.",
     "End Poll": "Avsluta omröstning",
     "Sorry, the poll did not end. Please try again.": "Tyvärr avslutades inte omröstningen. Vänligen pröva igen.",
@@ -2776,7 +2768,8 @@
         "cross_signing": "Korssignering",
         "identity_server": "Identitetsserver",
         "integration_manager": "Integrationshanterare",
-        "qr_code": "QR-kod"
+        "qr_code": "QR-kod",
+        "feedback": "Återkoppling"
     },
     "action": {
         "continue": "Fortsätt",
@@ -4053,5 +4046,14 @@
             "see_msgtype_sent_this_room": "Se <b>%(msgtype)s</b>-meddelanden som skickas i det här rummet",
             "see_msgtype_sent_active_room": "Se <b>%(msgtype)s</b>-meddelanden som skickas i ditt aktiva rum"
         }
+    },
+    "feedback": {
+        "sent": "Återkoppling skickad",
+        "comment_label": "Kommentera",
+        "platform_username": "Din plattform och ditt användarnamn kommer att noteras för att hjälpa oss att använda din återkoppling så mycket vi kan.",
+        "may_contact_label": "Ni kan kontakta mig om ni vill följa upp eller låta mig testa kommande idéer",
+        "pro_type": "TIPS: Om du startar en bugg, vänligen inkludera <debugLogsLink>avbuggninsloggar</debugLogsLink> för att hjälpa oss att hitta problemet.",
+        "existing_issue_link": "Vänligen se <existingIssuesLink> existerade buggar på GitHub</existingIssuesLink> först. Finns det ingen som matchar? <newIssueLink>Starta en ny</newIssueLink>.",
+        "send_feedback_action": "Skicka återkoppling"
     }
 }

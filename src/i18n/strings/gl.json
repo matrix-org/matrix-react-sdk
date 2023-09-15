@@ -1029,7 +1029,6 @@
     "Switch to dark mode": "Cambiar a decorado escuro",
     "Switch theme": "Cambiar decorado",
     "All settings": "Todos os axustes",
-    "Feedback": "Comenta",
     "Could not load user profile": "Non se cargou o perfil da usuaria",
     "Invalid homeserver discovery response": "Resposta de descubrimento do servidor non válida",
     "Failed to get autodiscovery configuration from server": "Fallo ó obter a configuración de autodescubrimento desde o servidor",
@@ -1180,11 +1179,6 @@
     "Answered Elsewhere": "Respondido noutro lugar",
     "Data on this screen is shared with %(widgetDomain)s": "Os datos nesta pantalla compártense con %(widgetDomain)s",
     "Modal Widget": "Widget modal",
-    "Feedback sent": "Comentario enviado",
-    "Send feedback": "Enviar comentario",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "PRO TIP: se inicias un novo informe, envía <debugLogsLink>rexistros de depuración</debugLogsLink> para axudarnos a investigar o problema.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Primeiro revisa <existingIssuesLink>a lista existente de fallo en Github</existingIssuesLink>. Non hai nada? <newIssueLink>Abre un novo</newIssueLink>.",
-    "Comment": "Comentar",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Inicia unha conversa con alguén usando o seu nome, enderezo de email ou nome de usuaria (como <userId/>).",
     "Invite by email": "Convidar por email",
@@ -1662,7 +1656,6 @@
     "Search names and descriptions": "Buscar nome e descricións",
     "You may contact me if you have any follow up questions": "Podes contactar conmigo se tes algunha outra suxestión",
     "To leave the beta, visit your settings.": "Para saír da beta, vai aos axustes.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "A túa plataforma e nome de usuaria serán notificados para axudarnos a utilizar a túa opinión do mellor xeito posible.",
     "Add reaction": "Engadir reacción",
     "Message search initialisation failed": "Fallou a inicialización da busca de mensaxes",
     "Space Autocomplete": "Autocompletado do espazo",
@@ -1976,7 +1969,6 @@
     "Quick settings": "Axustes rápidos",
     "Spaces you know that contain this space": "Espazos que sabes conteñen este espazo",
     "Chat": "Chat",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Podes contactar conmigo se queres estar ao día ou comentarme algunha suxestión",
     "Home options": "Opcións de Incio",
     "%(spaceName)s menu": "Menú de %(spaceName)s",
     "Join public room": "Unirse a sala pública",
@@ -2451,7 +2443,8 @@
         "cross_signing": "Sinatura cruzada",
         "identity_server": "Servidor de identidade",
         "integration_manager": "Xestor de Integracións",
-        "qr_code": "Código QR"
+        "qr_code": "Código QR",
+        "feedback": "Comenta"
     },
     "action": {
         "continue": "Continuar",
@@ -3633,5 +3626,14 @@
             "see_msgtype_sent_this_room": "Ver mensaxes <b>%(msgtype)s</b> publicados nesta sala",
             "see_msgtype_sent_active_room": "Ver mensaxes <b>%(msgtype)s</b> publicados na túa sala activa"
         }
+    },
+    "feedback": {
+        "sent": "Comentario enviado",
+        "comment_label": "Comentar",
+        "platform_username": "A túa plataforma e nome de usuaria serán notificados para axudarnos a utilizar a túa opinión do mellor xeito posible.",
+        "may_contact_label": "Podes contactar conmigo se queres estar ao día ou comentarme algunha suxestión",
+        "pro_type": "PRO TIP: se inicias un novo informe, envía <debugLogsLink>rexistros de depuración</debugLogsLink> para axudarnos a investigar o problema.",
+        "existing_issue_link": "Primeiro revisa <existingIssuesLink>a lista existente de fallo en Github</existingIssuesLink>. Non hai nada? <newIssueLink>Abre un novo</newIssueLink>.",
+        "send_feedback_action": "Enviar comentario"
     }
 }

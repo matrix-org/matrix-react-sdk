@@ -1084,7 +1084,6 @@
     "Switch to dark mode": "Sötét módra váltás",
     "Switch theme": "Kinézet váltása",
     "All settings": "Minden beállítás",
-    "Feedback": "Visszajelzés",
     "Looks good!": "Jónak tűnik!",
     "Use custom size": "Egyéni méret használata",
     "Hey you. You're the best!": "Szia! Te vagy a legjobb!",
@@ -1180,7 +1179,6 @@
     "Hide Widgets": "Kisalkalmazások elrejtése",
     "The call was answered on another device.": "A hívás másik eszközön lett fogadva.",
     "Answered Elsewhere": "Máshol lett felvéve",
-    "Feedback sent": "Visszajelzés elküldve",
     "New version of %(brand)s is available": "Új %(brand)s verzió érhető el",
     "Update %(brand)s": "A(z) %(brand)s frissítése",
     "Enable desktop notifications": "Asztali értesítések engedélyezése",
@@ -1188,10 +1186,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Hívj meg valakit a nevét, e-mail címét, vagy felhasználónevét (például <userId/>) megadva, vagy <a>oszd meg ezt a szobát</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Indítson beszélgetést valakivel a nevének, e-mail-címének vagy a felhasználónevének használatával (mint <userId/>).",
     "Invite by email": "Meghívás e-maillel",
-    "Send feedback": "Visszajelzés küldése",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "Tipp: Ha hibajegyet készítesz, légyszíves segíts a probléma feltárásában azzal, hogy elküldöd a <debugLogsLink>részletes naplót</debugLogsLink>.",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "Először nézd meg, hogy <existingIssuesLink>van-e már jegy róla a Github-on</existingIssuesLink>. Nincs? <newIssueLink>Adj fel egy új jegyet</newIssueLink>.",
-    "Comment": "Megjegyzés",
     "Bermuda": "Bermuda",
     "Benin": "Benin",
     "Belize": "Belize",
@@ -1660,7 +1654,6 @@
     "Please enter a name for the space": "Adjon meg egy nevet a térhez",
     "Connecting": "Kapcsolódás",
     "To leave the beta, visit your settings.": "A beállításokban tudja elhagyni a bétát.",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "A platformja és a felhasználóneve fel lesz jegyezve, hogy segítsen nekünk a lehető legjobban felhasználni a visszajelzését.",
     "Add reaction": "Reakció hozzáadása",
     "Message search initialisation failed": "Az üzenetkeresés előkészítése sikertelen",
     "Space Autocomplete": "Tér automatikus kiegészítése",
@@ -2017,7 +2010,6 @@
     "Including you, %(commaSeparatedMembers)s": "Önt is beleértve, %(commaSeparatedMembers)s",
     "Copy room link": "Szoba hivatkozásának másolása",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Anonimizált adatok megosztása a problémák feltárásához. Semmi személyes. Nincs harmadik fél.",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "Keressenek ha további információkra lenne szükségük vagy szeretnék, ha készülő ötleteket tesztelnék",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ez csoportosítja a tér tagjaival folytatott közvetlen beszélgetéseit. A kikapcsolása elrejti ezeket a beszélgetéseket a(z) %(spaceName)s nézetéből.",
     "Your new device is now verified. Other users will see it as trusted.": "Az új eszköze ellenőrizve van. Mások megbízhatónak fogják látni.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Ez az eszköz hitelesítve van. A titkosított üzenetekhez hozzáférése van és más felhasználók megbízhatónak látják.",
@@ -2752,7 +2744,8 @@
         "cross_signing": "Eszközök közti hitelesítés",
         "identity_server": "Azonosítási kiszolgáló",
         "integration_manager": "Integrációkezelő",
-        "qr_code": "QR kód"
+        "qr_code": "QR kód",
+        "feedback": "Visszajelzés"
     },
     "action": {
         "continue": "Folytatás",
@@ -4017,5 +4010,14 @@
             "see_msgtype_sent_this_room": "Az ebbe a szobába küldött <b>%(msgtype)s</b> üzenetek megjelenítése",
             "see_msgtype_sent_active_room": "Az aktív szobájába küldött <b>%(msgtype)s</b> üzenetek megjelenítése"
         }
+    },
+    "feedback": {
+        "sent": "Visszajelzés elküldve",
+        "comment_label": "Megjegyzés",
+        "platform_username": "A platformja és a felhasználóneve fel lesz jegyezve, hogy segítsen nekünk a lehető legjobban felhasználni a visszajelzését.",
+        "may_contact_label": "Keressenek ha további információkra lenne szükségük vagy szeretnék, ha készülő ötleteket tesztelnék",
+        "pro_type": "Tipp: Ha hibajegyet készítesz, légyszíves segíts a probléma feltárásában azzal, hogy elküldöd a <debugLogsLink>részletes naplót</debugLogsLink>.",
+        "existing_issue_link": "Először nézd meg, hogy <existingIssuesLink>van-e már jegy róla a Github-on</existingIssuesLink>. Nincs? <newIssueLink>Adj fel egy új jegyet</newIssueLink>.",
+        "send_feedback_action": "Visszajelzés küldése"
     }
 }

@@ -1358,13 +1358,6 @@
     "Sent": "ສົ່ງແລ້ວ",
     "Sending": "ກຳລັງສົ່ງ",
     "You don't have permission to do this": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຮັດສິ່ງນີ້",
-    "Send feedback": "ສົ່ງຄໍາຄິດເຫັນ",
-    "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.": "ກະລຸນາເບິ່ງ <existingIssuesLink>ຂໍ້ບົກຜ່ອງທີ່ມີຢູ່ແລ້ວໃນ Github</existingIssuesLink> ກ່ອນ. ບໍ່ກົງກັນບໍ? <newIssueLink>ເລີ່ມອັນໃໝ່</newIssueLink>.",
-    "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "PRO TIP: ຖ້າທ່ານເລີ່ມມີຂໍ້ຜິດພາດ, ກະລຸນາສົ່ງ <debugLogsLink>ບັນທຶກການແກ້ບັນຫາ</debugLogsLink> ເພື່ອຊ່ວຍພວກເຮົາຕິດຕາມບັນຫາ.",
-    "You may contact me if you want to follow up or to let me test out upcoming ideas": "ທ່ານສາມາດຕິດຕໍ່ຫາຂ້ອຍໄດ້ ຖ້າທ່ານຕ້ອງການຕິດຕາມ ຫຼືໃຫ້ຂ້ອຍທົດສອບແນວຄວາມຄິດທີ່ເກີດຂື້ນ",
-    "Feedback": "ຄໍາຕິຊົມ",
-    "Your platform and username will be noted to help us use your feedback as much as we can.": "ແຟັດຟອມ ແລະ ຊື່ຜູ້ໃຊ້ຂອງທ່ານຈະຖືກບັນທຶກໄວ້ເພື່ອຊ່ວຍໃຫ້ພວກເຮົາໃຊ້ຄໍາຕິຊົມຂອງທ່ານເທົ່າທີ່ພວກເຮົາສາມາດເຮັດໄດ້.",
-    "Comment": "ຄໍາເຫັນ",
     "An error occurred while stopping your live location": "ເກີດຄວາມຜິດພາດໃນຂະນະທີ່ຢຸດສະຖານທີ່ສະຖານທີ່ຂອງທ່ານ",
     "%(name)s accepted": "ຍອມຮັບ %(name)s",
     "You accepted": "ທ່ານຍອມຮັບ",
@@ -1461,7 +1454,6 @@
     "Anyone in <SpaceName/> will be able to find and join.": "ທຸກຄົນໃນ <SpaceName/> ຈະສາມາດຊອກຫາ ແລະ ເຂົ້າຮ່ວມໄດ້.",
     "Public room": "ຫ້ອງສາທາລະນະ",
     "Clear all data": "ລຶບລ້າງຂໍ້ມູນທັງໝົດ",
-    "Feedback sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
     "An error has occurred.": "ໄດ້ເກີດຂໍ້ຜິດພາດ.",
     "Sorry, the poll did not end. Please try again.": "ຂໍອະໄພ,ບໍ່ສາມາດສິ້ນສຸດການສຳຫຼວດ. ກະລຸນາລອງອີກຄັ້ງ.",
     "Failed to end poll": "ບໍ່ສາມາດສີ່ນສູດການສຳຫຼວດ",
@@ -2324,7 +2316,8 @@
         "cross_signing": "ການເຂົ້າລະຫັດແບບໄຂ້ວ",
         "identity_server": "ຕົວເຊີບເວີ",
         "integration_manager": "ຜູ້ຈັດການປະສົມປະສານ",
-        "qr_code": "ລະຫັດ QR"
+        "qr_code": "ລະຫັດ QR",
+        "feedback": "ຄໍາຕິຊົມ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -3437,5 +3430,14 @@
             "see_msgtype_sent_this_room": "ເບິ່ງ <b>%(msgtype)s</b> ຂໍ້ຄວາມທີ່ໂພສໃນຫ້ອງນີ້",
             "see_msgtype_sent_active_room": "ເບິ່ງ <b>%(msgtype)s</b> ຂໍ້ຄວາມທີ່ໂພສໃນຫ້ອງໃຊ້ງານຂອງທ່ານ"
         }
+    },
+    "feedback": {
+        "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
+        "comment_label": "ຄໍາເຫັນ",
+        "platform_username": "ແຟັດຟອມ ແລະ ຊື່ຜູ້ໃຊ້ຂອງທ່ານຈະຖືກບັນທຶກໄວ້ເພື່ອຊ່ວຍໃຫ້ພວກເຮົາໃຊ້ຄໍາຕິຊົມຂອງທ່ານເທົ່າທີ່ພວກເຮົາສາມາດເຮັດໄດ້.",
+        "may_contact_label": "ທ່ານສາມາດຕິດຕໍ່ຫາຂ້ອຍໄດ້ ຖ້າທ່ານຕ້ອງການຕິດຕາມ ຫຼືໃຫ້ຂ້ອຍທົດສອບແນວຄວາມຄິດທີ່ເກີດຂື້ນ",
+        "pro_type": "PRO TIP: ຖ້າທ່ານເລີ່ມມີຂໍ້ຜິດພາດ, ກະລຸນາສົ່ງ <debugLogsLink>ບັນທຶກການແກ້ບັນຫາ</debugLogsLink> ເພື່ອຊ່ວຍພວກເຮົາຕິດຕາມບັນຫາ.",
+        "existing_issue_link": "ກະລຸນາເບິ່ງ <existingIssuesLink>ຂໍ້ບົກຜ່ອງທີ່ມີຢູ່ແລ້ວໃນ Github</existingIssuesLink> ກ່ອນ. ບໍ່ກົງກັນບໍ? <newIssueLink>ເລີ່ມອັນໃໝ່</newIssueLink>.",
+        "send_feedback_action": "ສົ່ງຄໍາຄິດເຫັນ"
     }
 }
