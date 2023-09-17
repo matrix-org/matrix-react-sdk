@@ -799,7 +799,7 @@ async function persistTokenInStorage(
     storageKey: string,
     name: string,
     token: string | undefined,
-    pickleKey: IMatrixClientCreds["pickleKey"],
+    pickleKey: string | undefined,
     hasTokenStorageKey: string,
 ): Promise<void> {
     // store whether we expect to find a token, to detect the case
