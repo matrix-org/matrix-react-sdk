@@ -40,9 +40,9 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
 
     private onClearStorageClick = (): void => {
         Modal.createDialog(QuestionDialog, {
-            title: _t("Sign out"),
+            title: _t("action|sign_out"),
             description: <div>{_t("Sign out and remove encryption keys?")}</div>,
-            button: _t("Sign out"),
+            button: _t("action|sign_out"),
             danger: true,
             onFinished: this.props.onFinished,
         });
@@ -67,7 +67,7 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
         if (SdkConfig.get().bug_report_endpoint_url) {
             dialogButtons = (
                 <DialogButtons
-                    primaryButton={_t("Send Logs")}
+                    primaryButton={_t("bug_reporting|send_logs")}
                     onPrimaryButtonClick={this.sendBugReport}
                     focus={true}
                     hasCancel={false}
@@ -78,7 +78,7 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
         } else {
             dialogButtons = (
                 <DialogButtons
-                    primaryButton={_t("Refresh")}
+                    primaryButton={_t("action|refresh")}
                     onPrimaryButtonClick={this.onRefreshClick}
                     focus={true}
                     hasCancel={false}
@@ -101,17 +101,14 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
 
                     <p>
                         {_t(
-                            "If you have previously used a more recent version of %(brand)s, your session " +
-                                "may be incompatible with this version. Close this window and return " +
-                                "to the more recent version.",
+                            "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.",
                             { brand },
                         )}
                     </p>
 
                     <p>
                         {_t(
-                            "Clearing your browser's storage may fix the problem, but will sign you " +
-                                "out and cause any encrypted chat history to become unreadable.",
+                            "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.",
                         )}
                     </p>
                 </div>

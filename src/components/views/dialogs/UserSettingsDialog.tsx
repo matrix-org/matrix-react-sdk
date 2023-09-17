@@ -86,7 +86,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         tabs.push(
             new Tab(
                 UserTab.Appearance,
-                _td("Appearance"),
+                _td("common|appearance"),
                 "mx_UserSettingsDialog_appearanceIcon",
                 <AppearanceUserSettingsTab />,
                 "UserSettingsAppearance",
@@ -104,7 +104,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         tabs.push(
             new Tab(
                 UserTab.Preferences,
-                _td("Preferences"),
+                _td("common|preferences"),
                 "mx_UserSettingsDialog_preferencesIcon",
                 <PreferencesUserSettingsTab closeSettingsFn={this.props.onFinished} />,
                 "UserSettingsPreferences",
@@ -168,7 +168,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             tabs.push(
                 new Tab(
                     UserTab.Labs,
-                    _td("Labs"),
+                    _td("common|labs"),
                     "mx_UserSettingsDialog_labsIcon",
                     <LabsUserSettingsTab />,
                     "UserSettingsLabs",
@@ -189,7 +189,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         tabs.push(
             new Tab(
                 UserTab.Help,
-                _td("Help & About"),
+                _td("setting|help_about|title"),
                 "mx_UserSettingsDialog_helpIcon",
                 <HelpUserSettingsTab closeSettingsFn={() => this.props.onFinished()} />,
                 "UserSettingsHelpAbout",
@@ -205,7 +205,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 className="mx_UserSettingsDialog"
                 hasCancel={true}
                 onFinished={this.props.onFinished}
-                title={_t("Settings")}
+                title={_t("common|settings")}
             >
                 <div className="mx_SettingsDialog_content">
                     <TabbedView

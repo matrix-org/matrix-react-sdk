@@ -17,23 +17,32 @@ limitations under the License.
 import EventEmitter from "events";
 import { mocked } from "jest-mock";
 import { waitFor } from "@testing-library/react";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
-import { PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import {
+    RoomType,
+    Room,
+    RoomEvent,
+    MatrixEvent,
+    RoomStateEvent,
+    PendingEventOrdering,
+    GroupCallIntent,
+} from "matrix-js-sdk/src/matrix";
 import { Widget } from "matrix-widget-api";
-import { GroupCallIntent } from "matrix-js-sdk/src/webrtc/groupCall";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import type { Mocked } from "jest-mock";
-import type { MatrixClient, IMyDevice } from "matrix-js-sdk/src/client";
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { MatrixClient, IMyDevice, RoomMember } from "matrix-js-sdk/src/matrix";
 import type { ClientWidgetApi } from "matrix-widget-api";
-import { JitsiCallMemberContent, Layout } from "../../src/models/Call";
+import {
+    JitsiCallMemberContent,
+    Layout,
+    Call,
+    CallEvent,
+    ConnectionState,
+    JitsiCall,
+    ElementCall,
+} from "../../src/models/Call";
 import { stubClient, mkEvent, mkRoomMember, setupAsyncStoreWithClient, mockPlatformPeg } from "../test-utils";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../src/MediaDeviceHandler";
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
-import { Call, CallEvent, ConnectionState, JitsiCall, ElementCall } from "../../src/models/Call";
 import WidgetStore from "../../src/stores/WidgetStore";
 import { WidgetMessagingStore } from "../../src/stores/widgets/WidgetMessagingStore";
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../../src/stores/ActiveWidgetStore";

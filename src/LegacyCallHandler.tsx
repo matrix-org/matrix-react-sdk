@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
+import { MatrixError, RuleId, TweakName, SyncState } from "matrix-js-sdk/src/matrix";
 import {
     CallError,
     CallErrorCode,
@@ -31,9 +31,7 @@ import {
 } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
 import EventEmitter from "events";
-import { RuleId, TweakName } from "matrix-js-sdk/src/@types/PushRules";
 import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
-import { SyncState } from "matrix-js-sdk/src/sync";
 import { CallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/callEventHandler";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -431,15 +429,6 @@ export default class LegacyCallHandler extends EventEmitter {
         return this.calls.get(roomId) || null;
     }
 
-    public getAnyActiveCall(): MatrixCall | null {
-        for (const call of this.calls.values()) {
-            if (call.state !== CallState.Ended) {
-                return call;
-            }
-        }
-        return null;
-    }
-
     public getAllActiveCalls(): MatrixCall[] {
         const activeCalls: MatrixCall[] = [];
 
@@ -578,7 +567,7 @@ export default class LegacyCallHandler extends EventEmitter {
             }
 
             Modal.createDialog(ErrorDialog, {
-                title: _t("Call Failed"),
+                title: _t("voip|call_failed"),
                 description: err.message,
             });
         });
@@ -719,7 +708,7 @@ export default class LegacyCallHandler extends EventEmitter {
                         title = _t("User Busy");
                         description = _t("The user you called is busy.");
                     } else {
-                        title = _t("Call Failed");
+                        title = _t("voip|call_failed");
                         description = _t("The call could not be established");
                     }
 
@@ -834,19 +823,14 @@ export default class LegacyCallHandler extends EventEmitter {
                     <div>
                         <p>
                             {_t(
-                                "Please ask the administrator of your homeserver " +
-                                    "(<code>%(homeserverDomain)s</code>) to configure a TURN server in " +
-                                    "order for calls to work reliably.",
+                                "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.",
                                 { homeserverDomain: cli.getDomain() },
                                 { code: (sub: string) => <code>{sub}</code> },
                             )}
                         </p>
                         <p>
                             {_t(
-                                "Alternatively, you can try to use the public server at " +
-                                    "<server/>, but this will not be as reliable, and " +
-                                    "it will share your IP address with that server. You can also manage " +
-                                    "this in Settings.",
+                                "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.",
                                 undefined,
                                 { server: () => <code>{new URL(FALLBACK_ICE_SERVER).pathname}</code> },
                             )}
@@ -856,7 +840,7 @@ export default class LegacyCallHandler extends EventEmitter {
                 button: _t("Try using %(server)s", {
                     server: new URL(FALLBACK_ICE_SERVER).pathname,
                 }),
-                cancelButton: _t("OK"),
+                cancelButton: _t("action|ok"),
                 onFinished: (allow) => {
                     SettingsStore.setValue("fallbackICEServerAllowed", null, SettingLevel.DEVICE, allow);
                     cli.setFallbackICEServerAllowed(!!allow);
@@ -872,24 +856,17 @@ export default class LegacyCallHandler extends EventEmitter {
         let description;
 
         if (call.type === CallType.Voice) {
-            title = _t("Unable to access microphone");
-            description = (
-                <div>
-                    {_t(
-                        "Call failed because microphone could not be accessed. " +
-                            "Check that a microphone is plugged in and set up correctly.",
-                    )}
-                </div>
-            );
+            title = _t("voip|unable_to_access_microphone");
+            description = <div>{_t("voip|call_failed_microphone")}</div>;
         } else if (call.type === CallType.Video) {
-            title = _t("Unable to access webcam / microphone");
+            title = _t("voip|unable_to_access_media");
             description = (
                 <div>
-                    {_t("Call failed because webcam or microphone could not be accessed. Check that:")}
+                    {_t("voip|call_failed_media")}
                     <ul>
-                        <li>{_t("A microphone and webcam are plugged in and set up correctly")}</li>
-                        <li>{_t("Permission is granted to use the webcam")}</li>
-                        <li>{_t("No other application is using the webcam")}</li>
+                        <li>{_t("voip|call_failed_media_connected")}</li>
+                        <li>{_t("voip|call_failed_media_permissions")}</li>
+                        <li>{_t("voip|call_failed_media_applications")}</li>
                     </ul>
                 </div>
             );
@@ -931,8 +908,8 @@ export default class LegacyCallHandler extends EventEmitter {
             this.addCallForRoom(roomId, call);
         } catch (e) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Already in call"),
-                description: _t("You're already in a call with this person."),
+                title: _t("voip|already_in_call"),
+                description: _t("voip|already_in_call_person"),
             });
             return;
         }
@@ -973,8 +950,8 @@ export default class LegacyCallHandler extends EventEmitter {
         // if the runtime env doesn't do VoIP, whine.
         if (!cli.supportsVoip()) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Calls are unsupported"),
-                description: _t("You cannot place calls in this browser."),
+                title: _t("voip|unsupported"),
+                description: _t("voip|unsupported_browser"),
             });
             return;
         }

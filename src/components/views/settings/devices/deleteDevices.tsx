@@ -40,7 +40,7 @@ export const deleteDevicesWithInteractiveAuth = async (
     try {
         await makeDeleteRequest(matrixClient, deviceIds)(null);
         // no interactive auth needed
-        onFinished(true, undefined);
+        await onFinished(true, undefined);
     } catch (error) {
         if (!(error instanceof MatrixError) || error.httpStatus !== 401 || !error.data?.flows) {
             // doesn't look like an interactive-auth failure
@@ -56,7 +56,7 @@ export const deleteDevicesWithInteractiveAuth = async (
                 body: _t("Confirm logging out these devices by using Single Sign On to prove your identity.", {
                     count: numDevices,
                 }),
-                continueText: _t("Single Sign On"),
+                continueText: _t("auth|sso"),
                 continueKind: "primary",
             },
             [SSOAuthEntry.PHASE_POSTAUTH]: {

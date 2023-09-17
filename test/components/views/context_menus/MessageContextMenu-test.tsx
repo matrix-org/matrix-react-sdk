@@ -16,18 +16,20 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, RenderResult } from "@testing-library/react";
-import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
 import {
+    EventStatus,
+    MatrixEvent,
+    Room,
     PendingEventOrdering,
     BeaconIdentifier,
     Beacon,
     getBeaconInfoIdentifier,
     EventType,
+    FeatureSupport,
+    Thread,
+    M_POLL_KIND_DISCLOSED,
 } from "matrix-js-sdk/src/matrix";
-import { M_POLL_KIND_DISCLOSED } from "matrix-js-sdk/src/@types/polls";
 import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
-import { FeatureSupport, Thread } from "matrix-js-sdk/src/models/thread";
 import { mocked } from "jest-mock";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";

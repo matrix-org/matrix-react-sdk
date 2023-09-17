@@ -17,11 +17,18 @@ limitations under the License.
 import React from "react";
 import { render, act, RenderResult, fireEvent, waitForElementToBeRemoved, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RelationType, MsgType } from "matrix-js-sdk/src/@types/event";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { IEvent, Room, EventTimelineSet, IMinimalEvent } from "matrix-js-sdk/src/matrix";
-import { M_POLL_KIND_DISCLOSED } from "matrix-js-sdk/src/@types/polls";
+import {
+    MatrixEvent,
+    RoomStateEvent,
+    IEvent,
+    Room,
+    EventTimelineSet,
+    IMinimalEvent,
+    EventType,
+    RelationType,
+    MsgType,
+    M_POLL_KIND_DISCLOSED,
+} from "matrix-js-sdk/src/matrix";
 import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
 import { PollResponseEvent } from "matrix-js-sdk/src/extensible_events_v1/PollResponseEvent";
 import { PollEndEvent } from "matrix-js-sdk/src/extensible_events_v1/PollEndEvent";

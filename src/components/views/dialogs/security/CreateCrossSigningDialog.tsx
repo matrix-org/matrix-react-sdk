@@ -16,10 +16,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { CrossSigningKeys } from "matrix-js-sdk/src/client";
+import { CrossSigningKeys, AuthDict, MatrixError, UIAFlow, UIAResponse } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { AuthDict, MatrixError, UIAFlow } from "matrix-js-sdk/src/matrix";
-import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
@@ -116,13 +114,13 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                 [SSOAuthEntry.PHASE_PREAUTH]: {
                     title: _t("Use Single Sign On to continue"),
                     body: _t("To continue, use Single Sign On to prove your identity."),
-                    continueText: _t("Single Sign On"),
+                    continueText: _t("auth|sso"),
                     continueKind: "primary",
                 },
                 [SSOAuthEntry.PHASE_POSTAUTH]: {
                     title: _t("Confirm encryption setup"),
                     body: _t("Click the button below to confirm setting up encryption."),
-                    continueText: _t("Confirm"),
+                    continueText: _t("action|confirm"),
                     continueKind: "primary",
                 },
             };
@@ -178,7 +176,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
                     <p>{_t("Unable to set up keys")}</p>
                     <div className="mx_Dialog_buttons">
                         <DialogButtons
-                            primaryButton={_t("Retry")}
+                            primaryButton={_t("action|retry")}
                             onPrimaryButtonClick={this.bootstrapCrossSigning}
                             onCancel={this.onCancel}
                         />

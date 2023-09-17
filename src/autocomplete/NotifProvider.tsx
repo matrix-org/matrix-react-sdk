@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import AutocompleteProvider from "./AutocompleteProvider";
 import { _t } from "../languageHandler";
@@ -56,7 +56,7 @@ export default class NotifProvider extends AutocompleteProvider {
                     suffix: " ",
                     component: (
                         <PillCompletion title="@room" description={_t("Notify the whole room")}>
-                            <RoomAvatar width={24} height={24} room={this.room} />
+                            <RoomAvatar size="24px" room={this.room} />
                         </PillCompletion>
                     ),
                     range: range!,

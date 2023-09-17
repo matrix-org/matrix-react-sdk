@@ -20,7 +20,7 @@ limitations under the License.
 import React, { ContextType, createRef, CSSProperties, MutableRefObject, ReactNode } from "react";
 import classNames from "classnames";
 import { IWidget, MatrixCapabilities } from "matrix-widget-api";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ApprovalOpts, WidgetLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
 
@@ -134,8 +134,9 @@ export default class AppTile extends React.Component<IProps, IState> {
     private dispatcherRef?: string;
     private unmounted = false;
 
-    public constructor(props: IProps) {
+    public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
         super(props);
+        this.context = context; // XXX: workaround for lack of `declare` support on `public context!:` definition
 
         // Tiles in miniMode are floating, and therefore not docked
         if (!this.props.miniMode) {
@@ -345,14 +346,16 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private setupSgListeners(): void {
         this.sgWidget?.on("preparing", this.onWidgetPreparing);
+        this.sgWidget?.on("error:preparing", this.updateRequiresClient);
         // emits when the capabilities have been set up or changed
-        this.sgWidget?.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
+        this.sgWidget?.on("capabilitiesNotified", this.updateRequiresClient);
     }
 
     private stopSgListeners(): void {
         if (!this.sgWidget) return;
         this.sgWidget.off("preparing", this.onWidgetPreparing);
-        this.sgWidget.off("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
+        this.sgWidget.off("error:preparing", this.updateRequiresClient);
+        this.sgWidget.off("capabilitiesNotified", this.updateRequiresClient);
     }
 
     private resetWidget(newProps: IProps): void {
@@ -441,7 +444,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.setState({ loading: false });
     };
 
-    private onWidgetCapabilitiesNotified = (): void => {
+    private updateRequiresClient = (): void => {
         this.setState({
             requiresClient: !!this.sgWidget?.widgetApi?.hasCapability(ElementWidgetCapabilities.RequiresClient),
         });
@@ -523,7 +526,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         return (
             <span>
-                <WidgetAvatar app={this.props.app} />
+                <WidgetAvatar app={this.props.app} size="20px" />
                 <b>{name}</b>
                 <span>
                     {title ? titleSpacer : ""}
@@ -617,7 +620,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         const loadingElement = (
             <div className="mx_AppTileBody_fadeInSpinner">
-                <Spinner message={_t("Loading…")} />
+                <Spinner message={_t("common|loading")} />
             </div>
         );
 
@@ -734,7 +737,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 <AccessibleButton
                     key="toggleMaximised"
                     className="mx_AppTileMenuBar_widgets_button"
-                    title={isMaximised ? _t("Un-maximise") : _t("Maximise")}
+                    title={isMaximised ? _t("Un-maximise") : _t("action|maximise")}
                     onClick={this.onToggleMaximisedClick}
                 >
                     {isMaximised ? (
@@ -749,7 +752,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 <AccessibleButton
                     key="minimise"
                     className="mx_AppTileMenuBar_widgets_button"
-                    title={_t("Minimise")}
+                    title={_t("action|minimise")}
                     onClick={this.onMinimiseClicked}
                 >
                     <MinimiseIcon className="mx_Icon mx_Icon_12" />
@@ -782,7 +785,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                                 {this.state.hasContextMenuOptions && (
                                     <ContextMenuButton
                                         className="mx_AppTileMenuBar_widgets_button"
-                                        label={_t("Options")}
+                                        label={_t("common|options")}
                                         isExpanded={this.state.menuDisplayed}
                                         inputRef={this.contextMenuButton}
                                         onClick={this.onContextMenuClick}

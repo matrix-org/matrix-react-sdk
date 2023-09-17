@@ -15,12 +15,15 @@ limitations under the License.
 */
 
 import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
-import { NotificationCountType } from "matrix-js-sdk/src/models/room";
-import { ConditionKind, PushRuleActionName, PushRuleKind, TweakName } from "matrix-js-sdk/src/@types/PushRules";
+import {
+    NotificationCountType,
+    ConditionKind,
+    PushRuleActionName,
+    PushRuleKind,
+    TweakName,
+} from "matrix-js-sdk/src/matrix";
 
-import type { IPushRule } from "matrix-js-sdk/src/@types/PushRules";
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { MatrixClient } from "matrix-js-sdk/src/matrix";
+import type { IPushRule, Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { NotificationColor } from "./stores/notifications/NotificationColor";
 import { getUnsentMessages } from "./components/structures/RoomStatusBar";
 import { doesRoomHaveUnreadMessages, doesRoomOrThreadHaveUnreadMessages } from "./Unread";
@@ -152,8 +155,6 @@ function setRoomNotifsStateUnmuted(cli: MatrixClient, roomId: string, newState: 
                 actions: [PushRuleActionName.DontNotify],
             }),
         );
-        // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled("global", PushRuleKind.RoomSpecific, roomId, true));
     } else if (newState === RoomNotifState.AllMessagesLoud) {
         promises.push(
             cli.addPushRule("global", PushRuleKind.RoomSpecific, roomId, {
@@ -166,8 +167,6 @@ function setRoomNotifsStateUnmuted(cli: MatrixClient, roomId: string, newState: 
                 ],
             }),
         );
-        // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled("global", PushRuleKind.RoomSpecific, roomId, true));
     }
 
     return Promise.all(promises);
@@ -257,9 +256,8 @@ export function determineUnreadState(
         return { symbol: null, count: trueCount, color: NotificationColor.Grey };
     }
 
-    // We don't have any notified messages, but we might have unread messages. Let's
-    // find out.
-    let hasUnread = false;
+    // We don't have any notified messages, but we might have unread messages. Let's find out.
+    let hasUnread: boolean;
     if (threadId) hasUnread = doesRoomOrThreadHaveUnreadMessages(room.getThread(threadId)!);
     else hasUnread = doesRoomHaveUnreadMessages(room);
 

@@ -7,12 +7,12 @@ jobs:
         permissions:
             pull-requests: read
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: "Get modified files"
               id: changed_files
-              if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'RiotTranslateBot'
-              uses: tj-actions/changed-files@bb3376162b179308a79fc4450262a15a8e1d6888 # v37
+              if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'RiotTranslateBot' && github.event.pull_request.user.login != 't3chguy'
+              uses: tj-actions/changed-files@48566bbcc22ceb7c5809ebdd27377309f2c3de8c # v39
               with:
                   files: |
                       src/i18n/strings/*
@@ -25,8 +25,8 @@ jobs:
                   github.event.pull_request.user.login != 'RiotTranslateBot' &&
                   steps.changed_files.outputs.any_modified == 'true'
               run: |
-                  echo "Only translation files modified by `yarn i18n` can be committed - other translation files will confuse weblate in unrecoverable ways."
                   exit 1
+                  echo "Only translation files modified by 'yarn i18n' can be committed - other translation files will confuse weblate in unrecoverable ways."
 
             - uses: actions/setup-node@v3
               with:

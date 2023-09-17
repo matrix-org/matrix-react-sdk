@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback } from "react";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -73,12 +72,12 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({ roomId, call }) =>
     return (
         <div className="mx_RoomCallBanner" onClick={onClick}>
             <div className="mx_RoomCallBanner_text">
-                <span className="mx_RoomCallBanner_label">{_t("Video call")}</span>
+                <span className="mx_RoomCallBanner_label">{_t("voip|video_call")}</span>
                 <GroupCallDuration groupCall={call.groupCall} />
             </div>
 
             <AccessibleButton onClick={connect} kind="primary" element="button" disabled={false}>
-                {_t("Join")}
+                {_t("action|join")}
             </AccessibleButton>
         </div>
     );
