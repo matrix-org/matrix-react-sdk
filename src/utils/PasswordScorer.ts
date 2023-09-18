@@ -91,23 +91,25 @@ export function scorePassword(
 ): ZxcvbnResult | null {
     if (password.length === 0) return null;
 
+    const inputs = [...userInputs];
+
     if (matrixClient) {
-        userInputs.push(matrixClient.getUserIdLocalpart()!);
+        inputs.push(matrixClient.getUserIdLocalpart()!);
     }
 
     try {
         const domain = MatrixClientPeg.getHomeserverName();
-        userInputs.push(domain);
+        inputs.push(domain);
     } catch {
         // This is fine
     }
 
     zxcvbnOptions.setTranslations(getTranslations());
 
-    let zxcvbnResult = zxcvbn(password, userInputs);
+    let zxcvbnResult = zxcvbn(password, inputs);
     // Work around https://github.com/dropbox/zxcvbn/issues/216
     if (password.includes(" ")) {
-        const resultNoSpaces = zxcvbn(password.replace(/ /g, ""), userInputs);
+        const resultNoSpaces = zxcvbn(password.replace(/ /g, ""), inputs);
         if (resultNoSpaces.score < zxcvbnResult.score) zxcvbnResult = resultNoSpaces;
     }
 
