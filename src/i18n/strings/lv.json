@@ -643,9 +643,6 @@
     "Accept <policyLink /> to continue:": "Akceptēt <policyLink />, lai turpinātu:",
     "Anchor": "Enkurs",
     "Aeroplane": "Aeroplāns",
-    "A word by itself is easy to guess": "Vārds pats par sevi ir viegli uzminams",
-    "Add another word or two. Uncommon words are better.": "Papildiniet ar vēl kādiem vārdiem. Netipiski vārdi ir labāk.",
-    "All-uppercase is almost as easy to guess as all-lowercase": "Visus lielos burtus ir gandrīz tikpat viegli uzminēt kā visus mazos",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) pierakstījās jaunā sesijā, neveicot tās verifikāciju:",
     "Denmark": "Dānija",
@@ -1037,7 +1034,6 @@
     "Show hidden events in timeline": "Rādīt slēptos notikumus laika skalā",
     "Surround selected text when typing special characters": "Iekļaut iezīmēto tekstu, rakstot speciālās rakstzīmes",
     "Use custom size": "Izmantot pielāgotu izmēru",
-    "Dates are often easy to guess": "Datumi bieži vien ir viegli uzminami",
     "Final result based on %(count)s votes": {
         "one": "Gala rezultāts pamatojoties uz %(count)s balss",
         "other": "Gala rezultāts pamatojoties uz %(count)s balsīm"
@@ -1947,6 +1943,16 @@
             "send_msgtype_active_room": "Sūtīt <b>%(msgtype)s</b> ziņas savā vārdā savā aktīvajā istabā",
             "see_msgtype_sent_this_room": "Apskatīt <b>%(msgtype)s</b> ziņas, kas publicētas šajā istabā",
             "see_msgtype_sent_active_room": "Apskatīt <b>%(msgtype)s</b> ziņas, kas publicētas jūsu aktīvajā istabā"
+        }
+    },
+    "zxcvbn": {
+        "suggestions": {
+            "allUppercase": "Visus lielos burtus ir gandrīz tikpat viegli uzminēt kā visus mazos",
+            "anotherWord": "Papildiniet ar vēl kādiem vārdiem. Netipiski vārdi ir labāk."
+        },
+        "warnings": {
+            "dates": "Datumi bieži vien ir viegli uzminami",
+            "wordByItself": "Vārds pats par sevi ir viegli uzminams"
         }
     }
 }

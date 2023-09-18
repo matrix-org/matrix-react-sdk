@@ -150,3 +150,34 @@ export function objectClone<O extends {}>(obj: O): O {
 export function isObject(item: any): item is object {
     return item && typeof item === "object" && !Array.isArray(item);
 }
+
+/**
+ * Object.fromEntries with better inferred types
+ * Based on https://stackoverflow.com/questions/69019873/how-can-i-get-typed-object-entries-and-object-fromentries-in-typescript
+ * @param arr key,value array
+ */
+export function createTypedObjectFromEntries<ArrayType extends EntriesType>(
+    arr: ArrayType,
+): EntriesToObject<ArrayType> {
+    return Object.fromEntries(arr) as EntriesToObject<ArrayType>;
+}
+type EntriesType = [PropertyKey, unknown][] | ReadonlyArray<readonly [PropertyKey, unknown]>;
+type DeepWritable<ObjectType> = { -readonly [P in keyof ObjectType]: DeepWritable<ObjectType[P]> };
+type UnionToIntersection<UnionType> = // From https://stackoverflow.com/a/50375286
+    (UnionType extends any ? (k: UnionType) => void : never) extends (k: infer I) => void ? I : never;
+type UnionObjectFromArrayOfPairs<ArrayTYpe extends EntriesType> = DeepWritable<ArrayTYpe> extends (infer R)[]
+    ? R extends [infer key, infer val]
+        ? { [prop in key & PropertyKey]: val }
+        : never
+    : never;
+type MergeIntersectingObjects<ObjT> = { [key in keyof ObjT]: ObjT[key] };
+type EntriesToObject<ArrayType extends EntriesType> = MergeIntersectingObjects<
+    UnionToIntersection<UnionObjectFromArrayOfPairs<ArrayType>>
+>;
+
+/**
+ * Object.keys with better inferred types
+ * Based on https://stackoverflow.com/questions/52856496/typescript-object-keys-return-string
+ * @param arr obj to return keys of
+ */
+export const typedKeys = Object.keys as <T extends object>(obj: T) => Array<keyof T>;

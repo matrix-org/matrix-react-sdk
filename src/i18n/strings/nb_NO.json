@@ -96,7 +96,6 @@
     "Reason": "Årsak",
     "Add Email Address": "Legg til E-postadresse",
     "Add Phone Number": "Legg til telefonnummer",
-    "This is a very common password": "Dette er et veldig vanlig passord",
     "Dog": "Hund",
     "Cat": "Katt",
     "Horse": "Hest",
@@ -442,8 +441,6 @@
     "Go to Settings": "Gå til Innstillinger",
     "Indexed messages:": "Indekserte meldinger:",
     "Enter passphrase": "Skriv inn passordfrase",
-    "Avoid sequences": "Unngå sekvenser",
-    "Avoid recent years": "Unngå nylige år",
     "Cancelling…": "Avbryter …",
     "in memory": "i minnet",
     "Delete Backup": "Slett sikkerhetskopien",
@@ -501,10 +498,6 @@
     "Not a valid %(brand)s keyfile": "Ikke en gyldig %(brand)s-nøkkelfil",
     "Unrecognised address": "Adressen ble ikke gjenkjent",
     "Unknown server error": "Ukjent tjenerfeil",
-    "Recent years are easy to guess": "Nylige år er lette å gjette",
-    "Dates are often easy to guess": "Datoer er ofte lette å gjette",
-    "This is a top-10 common password": "Dette er et topp-10 vanlig passord",
-    "This is a top-100 common password": "Dette er et topp-100 vanlig passord",
     "Aeroplane": "Fly",
     "No display name": "Ingen visningsnavn",
     "New passwords don't match": "De nye passordene samsvarer ikke",
@@ -570,7 +563,6 @@
     "Use a different passphrase?": "Vil du bruke en annen passfrase?",
     "Jump to read receipt": "Hopp til lesekvitteringen",
     "Verify your other session using one of the options below.": "Verifiser den andre økten din med en av metodene nedenfor.",
-    "Use a few words, avoid common phrases": "Bruk noen få ord, unngå vanlig fraser",
     "Ok": "OK",
     "Encryption upgrade available": "Krypteringsoppdatering tilgjengelig",
     "Santa": "Julenisse",
@@ -835,14 +827,6 @@
     "Enable desktop notifications": "Aktiver skrivebordsvarsler",
     "Don't miss a reply": "Ikke gå glipp av noen svar",
     "Unknown App": "Ukjent app",
-    "Short keyboard patterns are easy to guess": "Korte tastatur mønstre er lett å gjette",
-    "This is similar to a commonly used password": "Dette ligner på et passord som er brukt mye",
-    "Predictable substitutions like '@' instead of 'a' don't help very much": "Forutsigbar erstatninger som ‘ @‘ istedet for ‘a’ hjelper ikke mye",
-    "Reversed words aren't much harder to guess": "Ord som er skrevet baklengs er vanskeligere å huske.",
-    "All-uppercase is almost as easy to guess as all-lowercase": "Bare store bokstaver er nesten like enkelt å gjette som bare små bokstaver",
-    "Capitalization doesn't help very much": "Store bokstaver er ikke spesielt nyttig",
-    "Use a longer keyboard pattern with more turns": "Bruke et lengre og mer uventet tastatur mønster",
-    "No need for symbols, digits, or uppercase letters": "Ikke nødvendig med symboler, sifre eller bokstaver",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
     "Zambia": "Zambia",
@@ -1695,6 +1679,28 @@
             "change_topic_this_room": "Endre dette rommets tema",
             "change_name_this_room": "Endre rommets navn",
             "see_images_sent_this_room": "Se bilder som er lagt ut i dette rommet"
+        }
+    },
+    "zxcvbn": {
+        "suggestions": {
+            "useWords": "Bruk noen få ord, unngå vanlig fraser",
+            "noNeed": "Ikke nødvendig med symboler, sifre eller bokstaver",
+            "longerKeyboardPattern": "Bruke et lengre og mer uventet tastatur mønster",
+            "sequences": "Unngå sekvenser",
+            "recentYears": "Unngå nylige år",
+            "capitalization": "Store bokstaver er ikke spesielt nyttig",
+            "allUppercase": "Bare store bokstaver er nesten like enkelt å gjette som bare små bokstaver",
+            "reverseWords": "Ord som er skrevet baklengs er vanskeligere å huske.",
+            "l33t": "Forutsigbar erstatninger som ‘ @‘ istedet for ‘a’ hjelper ikke mye"
+        },
+        "warnings": {
+            "recentYears": "Nylige år er lette å gjette",
+            "dates": "Datoer er ofte lette å gjette",
+            "topTen": "Dette er et topp-10 vanlig passord",
+            "topHundred": "Dette er et topp-100 vanlig passord",
+            "common": "Dette er et veldig vanlig passord",
+            "similarToCommon": "Dette ligner på et passord som er brukt mye",
+            "keyPattern": "Korte tastatur mønstre er lett å gjette"
         }
     }
 }
