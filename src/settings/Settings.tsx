@@ -99,18 +99,18 @@ export enum Features {
 }
 
 export const labGroupNames: Record<LabGroup, TranslationKey> = {
-    [LabGroup.Messaging]: _td("Messaging"),
-    [LabGroup.Profile]: _td("Profile"),
-    [LabGroup.Spaces]: _td("Spaces"),
-    [LabGroup.Widgets]: _td("Widgets"),
-    [LabGroup.Rooms]: _td("Rooms"),
-    [LabGroup.VoiceAndVideo]: _td("Voice & Video"),
-    [LabGroup.Moderation]: _td("Moderation"),
+    [LabGroup.Messaging]: _td("labs|group_messaging"),
+    [LabGroup.Profile]: _td("labs|group_profile"),
+    [LabGroup.Spaces]: _td("labs|group_spaces"),
+    [LabGroup.Widgets]: _td("labs|group_widgets"),
+    [LabGroup.Rooms]: _td("labs|group_rooms"),
+    [LabGroup.VoiceAndVideo]: _td("labs|group_voip"),
+    [LabGroup.Moderation]: _td("labs|group_moderation"),
     [LabGroup.Analytics]: _td("common|analytics"),
-    [LabGroup.Themes]: _td("Themes"),
-    [LabGroup.Encryption]: _td("Encryption"),
-    [LabGroup.Experimental]: _td("Experimental"),
-    [LabGroup.Developer]: _td("Developer"),
+    [LabGroup.Themes]: _td("labs|group_themes"),
+    [LabGroup.Encryption]: _td("labs|group_encryption"),
+    [LabGroup.Experimental]: _td("labs|group_experimental"),
+    [LabGroup.Developer]: _td("labs|group_developer"),
 };
 
 export type SettingValueType =
@@ -467,7 +467,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         controller: new RustCryptoSdkController(),
     },
     "baseFontSize": {
-        displayName: _td("Font size"),
+        displayName: _td("settings|appearance|font_size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: "",
         controller: new FontSizeController(),
@@ -487,7 +487,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
      *
      */
     "baseFontSizeV2": {
-        displayName: _td("Font size"),
+        displayName: _td("settings|appearance|font_size"),
         supportedLevels: [SettingLevel.DEVICE],
         default: FontWatcher.DEFAULT_SIZE,
         controller: new FontSizeController(),
@@ -531,20 +531,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Rooms,
         default: false,
     },
-    // MSC3952 intentional mentions support.
-    "feature_intentional_mentions": {
-        isFeature: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td("labs|intentional_mentions"),
-        labsGroup: LabGroup.Rooms,
-        default: false,
-        controller: new ServerSupportUnstableFeatureController(
-            "feature_intentional_mentions",
-            defaultWatchManager,
-            [["org.matrix.msc3952_intentional_mentions"]],
-            "v1.7",
-        ),
-    },
     "feature_ask_to_join": {
         default: false,
         displayName: _td("labs|ask_to_join"),
@@ -560,6 +546,14 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
         controller: new ReloadOnChangeController(),
+    },
+    "feature_notifications": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        displayName: _td("labs|notifications"),
+        description: _td("labs|unrealiable_e2e"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
     },
     "useCompactLayout": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
@@ -713,18 +707,18 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "use_system_theme": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: true,
-        displayName: _td("Match system theme"),
+        displayName: _td("settings|appearance|match_system_theme"),
     },
     "useSystemFont": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
-        displayName: _td("Use a system font"),
+        displayName: _td("settings|appearance|custom_font"),
         controller: new UseSystemFontController(),
     },
     "systemFont": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: "",
-        displayName: _td("System font name"),
+        displayName: _td("settings|appearance|custom_font_name"),
         controller: new SystemFontController(),
     },
     "webRtcAllowPeerToPeer": {

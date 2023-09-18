@@ -129,6 +129,7 @@ import { WaitingForThirdPartyRoomView } from "./WaitingForThirdPartyRoomView";
 import { isNotUndefined } from "../../Typeguards";
 import { CancelAskToJoinPayload } from "../../dispatcher/payloads/CancelAskToJoinPayload";
 import { SubmitAskToJoinPayload } from "../../dispatcher/payloads/SubmitAskToJoinPayload";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 
 const DEBUG = false;
 const PREVENT_MULTIPLE_JITSI_WITHIN = 30_000;
@@ -245,7 +246,6 @@ export interface IRoomState {
 
     canAskToJoin: boolean;
     promptAskToJoin: boolean;
-    knocked: boolean;
 }
 
 interface LocalRoomViewProps {
@@ -458,7 +458,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             msc3946ProcessDynamicPredecessor: SettingsStore.getValue("feature_dynamic_room_predecessors"),
             canAskToJoin: this.askToJoinEnabled,
             promptAskToJoin: false,
-            knocked: false,
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -664,7 +663,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 : false,
             activeCall: roomId ? CallStore.instance.getActiveCall(roomId) : null,
             promptAskToJoin: this.context.roomViewStore.promptAskToJoin(),
-            knocked: this.context.roomViewStore.knocked(),
         };
 
         if (
@@ -1251,6 +1249,33 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     this.messagePanel?.jumpToLiveTimeline();
                 }
                 break;
+            case Action.ViewUser:
+                if (payload.member) {
+                    if (payload.push) {
+                        RightPanelStore.instance.pushCard({
+                            phase: RightPanelPhases.RoomMemberInfo,
+                            state: { member: payload.member },
+                        });
+                    } else {
+                        RightPanelStore.instance.setCards([
+                            { phase: RightPanelPhases.RoomSummary },
+                            { phase: RightPanelPhases.RoomMemberList },
+                            { phase: RightPanelPhases.RoomMemberInfo, state: { member: payload.member } },
+                        ]);
+                    }
+                } else {
+                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
+                }
+                break;
+            case "view_3pid_invite":
+                if (payload.event) {
+                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.Room3pidMemberInfo, {
+                        memberInfoEvent: payload.event,
+                    });
+                } else {
+                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
+                }
+                break;
         }
     };
 
@@ -1787,12 +1812,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private onSearchClick = (): void => {
-        this.setState({
-            timelineRenderingType:
-                this.state.timelineRenderingType === TimelineRenderingType.Search
-                    ? TimelineRenderingType.Room
-                    : TimelineRenderingType.Search,
-        });
+        if (this.state.timelineRenderingType === TimelineRenderingType.Search) {
+            this.onCancelSearchClick();
+        } else {
+            this.setState({
+                timelineRenderingType: TimelineRenderingType.Search,
+            });
+        }
     };
 
     private onCancelSearchClick = (): Promise<void> => {
@@ -2118,7 +2144,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                                 signUrl={this.props.threepidInvite?.signUrl}
                                 roomId={this.state.roomId}
                                 promptAskToJoin={this.state.promptAskToJoin}
-                                knocked={this.state.knocked}
                                 onSubmitAskToJoin={this.onSubmitAskToJoin}
                                 onCancelAskToJoin={this.onCancelAskToJoin}
                             />
@@ -2202,7 +2227,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                         <RoomPreviewBar
                             room={this.state.room}
                             promptAskToJoin={myMembership === "leave" || this.state.promptAskToJoin}
-                            knocked={myMembership === "knock" || this.state.knocked}
+                            knocked={myMembership === "knock"}
                             onSubmitAskToJoin={this.onSubmitAskToJoin}
                             onCancelAskToJoin={this.onCancelAskToJoin}
                             onForgetClick={this.onForgetClick}
