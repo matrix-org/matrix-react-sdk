@@ -63,7 +63,6 @@
     "You are now ignoring %(userId)s": "Bạn đã bỏ qua %(userId)s",
     "Unignored user": "Đã ngừng bỏ qua người dùng",
     "You are no longer ignoring %(userId)s": "Bạn không còn bỏ qua %(userId)s nữa",
-    "Define the power level of a user": "Xác định cấp độ quyền của một thành viên",
     "Verified key": "Khóa được xác thực",
     "Reason": "Lý do",
     "Cannot reach homeserver": "Không thể kết nối tới máy chủ",
@@ -125,7 +124,6 @@
     "Enable URL previews by default for participants in this room": "Bật xem trước nội dung liên kết cho mọi người trong phòng này",
     "Enable widget screenshots on supported widgets": "Bật widget chụp màn hình cho các widget có hỗ trợ",
     "Explore rooms": "Khám phá các phòng",
-    "Create Account": "Tạo tài khoản",
     "Vietnam": "Việt Nam",
     "This account has been deactivated.": "Tài khoản này đã bị vô hiệu hóa.",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Tin nhắn an toàn với người dùng này được mã hóa đầu cuối và không thể được các bên thứ ba đọc.",
@@ -1537,9 +1535,6 @@
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "CẢNH BÁO: XÁC THỰC KHÓA THẤT BẠI! Khóa đăng nhập cho %(userId)s và thiết bị %(deviceId)s là \"%(fprint)s\" không khớp với khóa được cung cấp \"%(fingerprint)s\". Điều này có nghĩa là các thông tin liên lạc của bạn đang bị chặn!",
     "Session already verified!": "Thiết bị đã được xác thực rồi!",
     "Verifies a user, session, and pubkey tuple": "Xác thực người dùng, thiết bị và tuple pubkey",
-    "Deops user with given id": "Deops user với id đã cho",
-    "Could not find user in room": "Không tìm thấy người dùng trong phòng",
-    "Joins room with given address": "Tham gia phòng có địa chỉ được chỉ định",
     "Use an identity server to invite by email. Manage in Settings.": "Sử dụng máy chủ định danh để mời qua thư điện tử. Quản lý trong Cài đặt.",
     "Use an identity server": "Sử dụng máy chủ định danh",
     "Command error": "Lỗi lệnh",
@@ -1548,8 +1543,6 @@
     "Cancel entering passphrase?": "Hủy nhập cụm mật khẩu?",
     "Some invites couldn't be sent": "Không thể gửi một số lời mời",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Chúng tôi đã mời những người khác, nhưng những người dưới đây không thể được mời tham gia <RoomName/>",
-    "Use your account or create a new one to continue.": "Sử dụng tài khoản của bạn hoặc tạo một tài khoản mới để tiếp tục.",
-    "Sign In or Create Account": "Đăng nhập hoặc Tạo tài khoản",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
     "Yemen": "Yemen",
@@ -2014,10 +2007,7 @@
     "Back to thread": "Quay lại luồng",
     "Room members": "Thành viên phòng",
     "Back to chat": "Quay lại trò chuyện",
-    "Command failed: Unable to find room (%(roomId)s": "Lỗi khi thực hiện lệnh: Không tìm thấy phòng (%(roomId)s)",
     "Unrecognised room address: %(roomAlias)s": "Không thể nhận dạng địa chỉ phòng: %(roomAlias)s",
-    "Command error: Unable to find rendering type (%(renderingType)s)": "Lỗi khi thực hiện lệnh: Không tìm thấy kiểu dữ liệu (%(renderingType)s)",
-    "Command error: Unable to handle slash command.": "Lỗi khi thực hiện lệnh: Không thể xử lý lệnh slash.",
     "Failed to invite users to %(roomName)s": "Mời người dùng vào %(roomName)s thất bại",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "You were disconnected from the call. (Error: %(message)s)": "Bạn bị mất kết nối đến cuộc gọi. (Lỗi: %(message)s)",
@@ -2061,7 +2051,6 @@
     "Failed to read events": "Không xem sự kiện được",
     "Failed to send event": "Không gửi sự kiện được",
     "You need to be able to kick users to do that.": "Bạn phải đuổi được người dùng thì mới làm vậy được.",
-    "Use your account to continue.": "Dùng tài khoản của bạn để tiếp tục.",
     "%(senderName)s started a voice broadcast": "%(senderName)s đã bắt đầu phát thanh",
     "Empty room (was %(oldName)s)": "Phòng trống (trước kia là %(oldName)s)",
     "Inviting %(user)s and %(count)s others": {
@@ -2471,8 +2460,6 @@
     "People cannot join unless access is granted.": "Người khác không thể tham gia khi chưa có phép.",
     "Something went wrong.": "Đã xảy ra lỗi.",
     "User cannot be invited until they are unbanned": "Người dùng không thể được mời nếu không được bỏ cấm",
-    "Views room with given address": "Phòng truyền hình với địa chỉ đã cho",
-    "Notification Settings": "Cài đặt thông báo",
     "Your server requires encryption to be disabled.": "Máy chủ của bạn yêu cầu mã hóa phải được vô hiệu hóa.",
     "Play a sound for": "Phát âm thanh cho",
     "Close call": "Đóng cuộc gọi",
@@ -2745,7 +2732,8 @@
         "leave_beta_reload": "Rời khỏi thử nghiệm sẽ tải lại %(brand)s.",
         "join_beta_reload": "Tham gia thử nghiệm sẽ tải lại %(brand)s.",
         "leave_beta": "Rời khỏi bản beta",
-        "join_beta": "Tham gia phiên bản beta"
+        "join_beta": "Tham gia phiên bản beta",
+        "notification_settings_beta_title": "Cài đặt thông báo"
     },
     "keyboard": {
         "home": "Nhà",
@@ -3476,7 +3464,15 @@
         "holdcall": "Tạm ngưng cuộc gọi trong phòng hiện tại",
         "no_active_call": "Không có cuộc gọi đang hoạt động trong phòng này",
         "unholdcall": "Nối lại cuộc gọi trong phòng hiện tại",
-        "me": "Hiển thị hành động"
+        "me": "Hiển thị hành động",
+        "error_invalid_runfn": "Lỗi khi thực hiện lệnh: Không thể xử lý lệnh slash.",
+        "error_invalid_rendering_type": "Lỗi khi thực hiện lệnh: Không tìm thấy kiểu dữ liệu (%(renderingType)s)",
+        "join": "Tham gia phòng có địa chỉ được chỉ định",
+        "view": "Phòng truyền hình với địa chỉ đã cho",
+        "failed_find_room": "Lỗi khi thực hiện lệnh: Không tìm thấy phòng (%(roomId)s)",
+        "failed_find_user": "Không tìm thấy người dùng trong phòng",
+        "op": "Xác định cấp độ quyền của một thành viên",
+        "deop": "Deops user với id đã cho"
     },
     "presence": {
         "busy": "Bận",
@@ -3692,7 +3688,11 @@
         "check_email_resend_prompt": "Không nhận được nó?",
         "check_email_resend_tooltip": "Đã gửi lại liên kết xác nhận địa chỉ thư điện tử!",
         "enter_email_heading": "Nhập địa chỉ thư điện tử để đặt lại mật khẩu",
-        "create_account_prompt": "Bạn là người mới? <a>Create an account</a>"
+        "create_account_prompt": "Bạn là người mới? <a>Create an account</a>",
+        "sign_in_or_register": "Đăng nhập hoặc Tạo tài khoản",
+        "sign_in_or_register_description": "Sử dụng tài khoản của bạn hoặc tạo một tài khoản mới để tiếp tục.",
+        "sign_in_description": "Dùng tài khoản của bạn để tiếp tục.",
+        "register_action": "Tạo tài khoản"
     },
     "room_list": {
         "sort_unread_first": "Hiển thị các phòng có tin nhắn chưa đọc trước",

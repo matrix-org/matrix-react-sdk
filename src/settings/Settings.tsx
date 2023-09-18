@@ -237,7 +237,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("labs|notification_settings"),
         default: false,
         betaInfo: {
-            title: _td("Notification Settings"),
+            title: _td("labs|notification_settings_beta_title"),
             caption: () => (
                 <>
                     <p>

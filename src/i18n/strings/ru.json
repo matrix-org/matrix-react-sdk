@@ -7,7 +7,6 @@
     "Cryptography": "Криптография",
     "Deactivate Account": "Деактивировать учётную запись",
     "Default": "По умолчанию",
-    "Deops user with given id": "Снимает полномочия оператора с пользователя с заданным ID",
     "Export E2E room keys": "Экспорт ключей шифрования",
     "Failed to change password. Is your password correct?": "Не удалось сменить пароль. Вы правильно ввели текущий пароль?",
     "Failed to reject invitation": "Не удалось отклонить приглашение",
@@ -206,7 +205,6 @@
     "This will allow you to reset your password and receive notifications.": "Это позволит при необходимости сбросить пароль и получать уведомления.",
     "Check for update": "Проверить наличие обновлений",
     "Delete widget": "Удалить виджет",
-    "Define the power level of a user": "Определить уровень прав пользователя",
     "AM": "ДП",
     "PM": "ПП",
     "Unable to create widget.": "Не удалось создать виджет.",
@@ -794,9 +792,6 @@
     "This bridge was provisioned by <user />.": "Этот мост был подготовлен пользователем <user />.",
     "This bridge is managed by <user />.": "Этот мост управляется <user />.",
     "Show more": "Показать больше",
-    "Sign In or Create Account": "Войдите или создайте учётную запись",
-    "Use your account or create a new one to continue.": "Воспользуйтесь своей учётной записью или создайте новую, чтобы продолжить.",
-    "Create Account": "Создать учётную запись",
     "Not Trusted": "Недоверенное",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) произвел(а) вход через новый сеанс без подтверждения:",
     "Ask this user to verify their session, or manually verify it below.": "Попросите этого пользователя подтвердить сеанс или подтвердите его вручную ниже.",
@@ -947,7 +942,6 @@
     "Session key": "Ключ сеанса",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Установить адрес этой комнаты, чтобы пользователи могли найти ее на вашем сервере (%(localDomain)s)",
-    "Could not find user in room": "Не удалось найти пользователя в комнате",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Отдельно подтверждать каждый сеанс пользователя как доверенный, не доверяя кросс-подписанным устройствам.",
     "Securely cache encrypted messages locally for them to appear in search results.": "Безопасно кэшировать шифрованные сообщения локально, чтобы они появлялись в результатах поиска.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "Отсутствуют некоторые необходимые компоненты для %(brand)s, чтобы безопасно кэшировать шифрованные сообщения локально. Если вы хотите попробовать эту возможность, соберите самостоятельно %(brand)s Desktop с <nativeLink>добавлением поисковых компонентов</nativeLink>.",
@@ -962,7 +956,6 @@
     "Unable to upload": "Невозможно отправить",
     "Signature upload success": "Отпечаток успешно отправлен",
     "Signature upload failed": "Сбой отправки отпечатка",
-    "Joins room with given address": "Присоединиться к комнате с указанным адресом",
     "You signed in to a new session without verifying it:": "Вы вошли в новый сеанс, не подтвердив его:",
     "Verify your other session using one of the options below.": "Подтвердите ваш другой сеанс, используя один из вариантов ниже.",
     "Your homeserver has exceeded its user limit.": "Ваш домашний сервер превысил свой лимит пользователей.",
@@ -2042,10 +2035,7 @@
     "That's fine": "Всё в порядке",
     "Light high contrast": "Контрастная светлая",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Неизвестная пара (пользователь, сеанс): (%(userId)s, %(deviceId)s)",
-    "Command failed: Unable to find room (%(roomId)s": "Ошибка команды: не удалось найти комнату (%(roomId)s",
     "Unrecognised room address: %(roomAlias)s": "Нераспознанный адрес комнаты: %(roomAlias)s",
-    "Command error: Unable to handle slash command.": "Ошибка команды: невозможно обработать команду slash.",
-    "Command error: Unable to find rendering type (%(renderingType)s)": "Ошибка команды: невозможно найти тип рендеринга (%(renderingType)s)",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s и %(count)s другой",
         "other": "%(spaceName)s и %(count)s других"
@@ -3471,7 +3461,14 @@
         "holdcall": "Перевести вызов в текущей комнате на удержание",
         "no_active_call": "Нет активного вызова в этой комнате",
         "unholdcall": "Прекратить удержание вызова в текущей комнате",
-        "me": "Отображение действий"
+        "me": "Отображение действий",
+        "error_invalid_runfn": "Ошибка команды: невозможно обработать команду slash.",
+        "error_invalid_rendering_type": "Ошибка команды: невозможно найти тип рендеринга (%(renderingType)s)",
+        "join": "Присоединиться к комнате с указанным адресом",
+        "failed_find_room": "Ошибка команды: не удалось найти комнату (%(roomId)s",
+        "failed_find_user": "Не удалось найти пользователя в комнате",
+        "op": "Определить уровень прав пользователя",
+        "deop": "Снимает полномочия оператора с пользователя с заданным ID"
     },
     "presence": {
         "busy": "Занят(а)",
@@ -3679,7 +3676,10 @@
         "soft_logout_intro_sso": "Войти и восстановить доступ к учётной записи.",
         "soft_logout_intro_unsupported_auth": "Не удаётся войти в учётную запись. Пожалуйста, обратитесь к администратору домашнего сервера за подробностями.",
         "enter_email_heading": "Введите свой адрес электронной почты для сброса пароля",
-        "create_account_prompt": "Впервые здесь? <a>Создать учётную запись</a>"
+        "create_account_prompt": "Впервые здесь? <a>Создать учётную запись</a>",
+        "sign_in_or_register": "Войдите или создайте учётную запись",
+        "sign_in_or_register_description": "Воспользуйтесь своей учётной записью или создайте новую, чтобы продолжить.",
+        "register_action": "Создать учётную запись"
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",

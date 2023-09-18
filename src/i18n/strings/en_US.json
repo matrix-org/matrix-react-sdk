@@ -30,7 +30,6 @@
     "Custom level": "Custom level",
     "Deactivate Account": "Deactivate Account",
     "Decrypt %(text)s": "Decrypt %(text)s",
-    "Deops user with given id": "Deops user with given id",
     "Default": "Default",
     "Delete widget": "Delete widget",
     "Download %(text)s": "Download %(text)s",
@@ -215,7 +214,6 @@
     "Do you want to set an email address?": "Do you want to set an email address?",
     "This will allow you to reset your password and receive notifications.": "This will allow you to reset your password and receive notifications.",
     "Check for update": "Check for update",
-    "Define the power level of a user": "Define the power level of a user",
     "Unable to create widget.": "Unable to create widget.",
     "You are not in this room.": "You are not in this room.",
     "You do not have permission to do that in this room.": "You do not have permission to do that in this room.",
@@ -279,9 +277,6 @@
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.",
     "Only continue if you trust the owner of the server.": "Only continue if you trust the owner of the server.",
     "%(name)s is requesting verification": "%(name)s is requesting verification",
-    "Sign In or Create Account": "Sign In or Create Account",
-    "Use your account or create a new one to continue.": "Use your account or create a new one to continue.",
-    "Create Account": "Create Account",
     "Error upgrading room": "Error upgrading room",
     "Double check that your server supports the room version chosen and try again.": "Double check that your server supports the room version chosen and try again.",
     "Favourited": "Favorited",
@@ -481,7 +476,9 @@
         "addwidget_invalid_protocol": "Please supply an https:// or http:// widget URL",
         "addwidget_no_permissions": "You cannot modify widgets in this room.",
         "discardsession": "Forces the current outbound group session in an encrypted room to be discarded",
-        "me": "Displays action"
+        "me": "Displays action",
+        "op": "Define the power level of a user",
+        "deop": "Deops user with given id"
     },
     "presence": {
         "online": "Online",
@@ -514,7 +511,10 @@
         "footer_powered_by_matrix": "powered by Matrix",
         "unsupported_auth_msisdn": "This server does not support authentication with a phone number.",
         "incorrect_password": "Incorrect password",
-        "forgot_password_email_required": "The email address linked to your account must be entered."
+        "forgot_password_email_required": "The email address linked to your account must be entered.",
+        "sign_in_or_register": "Sign In or Create Account",
+        "sign_in_or_register_description": "Use your account or create a new one to continue.",
+        "register_action": "Create Account"
     },
     "export_chat": {
         "messages": "Messages"

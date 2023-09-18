@@ -40,7 +40,6 @@
     "You need to be logged in.": "Morate biti prijavljeni",
     "You need to be able to invite users to do that.": "Mora vam biti dozvoljeno da pozovete korisnike kako bi to uradili.",
     "Failed to send request.": "Slanje zahteva nije uspelo.",
-    "Create Account": "Napravite nalog",
     "Call failed due to misconfigured server": "Poziv nije uspio zbog pogrešno konfigurisanog servera",
     "The call was answered on another device.": "Na poziv je odgovoreno na drugom uređaju.",
     "Answered Elsewhere": "Odgovoreno drugdje",
@@ -114,7 +113,8 @@
         "sso": "Jedinstvena prijava (SSO)",
         "footer_powered_by_matrix": "pokreće Matriks",
         "failed_homeserver_discovery": "Nisam uspio da izvršim otkrivanje privatnog/javnog servera.",
-        "unsupported_auth_email": "Ovaj server ne podržava prijavu korištenjem e-mail adrese."
+        "unsupported_auth_email": "Ovaj server ne podržava prijavu korištenjem e-mail adrese.",
+        "register_action": "Napravite nalog"
     },
     "keyboard": {
         "keyboard_shortcuts_tab": "Otvori podešavanja"

@@ -40,7 +40,6 @@
     "Custom level": "맞춤 등급",
     "Deactivate Account": "계정 비활성화",
     "Decrypt %(text)s": "%(text)s 복호화",
-    "Deops user with given id": "받은 ID로 사용자의 등급을 낮추기",
     "Download %(text)s": "%(text)s 다운로드",
     "Enter passphrase": "암호 입력",
     "Error decrypting attachment": "첨부 파일 복호화 중 오류",
@@ -253,7 +252,6 @@
     "You are now ignoring %(userId)s": "%(userId)s님을 이제 무시합니다",
     "Unignored user": "무시하지 않게 된 사용자",
     "You are no longer ignoring %(userId)s": "%(userId)s님을 더 이상 무시하고 있지 않습니다",
-    "Define the power level of a user": "사용자의 권한 등급 정의하기",
     "Send analytics data": "정보 분석 데이터 보내기",
     "Mirror local video feed": "보고 있는 비디오 전송 상태 비추기",
     "URL previews are enabled by default for participants in this room.": "기본으로 URL 미리 보기가 이 방에 참여한 사람들 모두에게 켜졌습니다.",
@@ -817,7 +815,6 @@
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "경고: 키 검증 실패! 제공된 키인 \"%(fingerprint)s\"가 사용자 %(userId)s와 %(deviceId)s 세션의 서명 키인 \"%(fprint)s\"와 일치하지 않습니다. 이는 통신이 탈취되고 있는 중일 수도 있다는 뜻입니다!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "사용자 %(userId)s의 세션 %(deviceId)s에서 받은 서명 키와 당신이 제공한 서명 키가 일치합니다. 세션이 검증되었습니다.",
     "Show more": "더 보기",
-    "Create Account": "계정 만들기",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "이 위젯을 사용하면 <helpcon /> %(widgetDomain)s & 통합 관리자와 데이터를 공유합니다.",
     "Identity server (%(server)s)": "ID 서버 (%(server)s)",
     "Could not connect to identity server": "ID 서버에 연결할 수 없음",
@@ -1370,7 +1367,9 @@
         "converttoroom": "DM을 방으로 변환",
         "discardsession": "암호화된 방에서 현재 방 외부의 그룹 세션을 강제로 삭제합니다",
         "no_active_call": "이 방에 진행중인 통화 없음",
-        "me": "활동 표시하기"
+        "me": "활동 표시하기",
+        "op": "사용자의 권한 등급 정의하기",
+        "deop": "받은 ID로 사용자의 등급을 낮추기"
     },
     "presence": {
         "online_for": "%(duration)s 동안 온라인",
@@ -1451,7 +1450,8 @@
         "forgot_password_prompt": "비밀번호를 잊었습니까?",
         "soft_logout_intro_password": "로그인하고 계정에 다시 접근하려면 비밀번호를 입력하세요.",
         "soft_logout_intro_sso": "로그인하고 계정에 다시 접근하기.",
-        "soft_logout_intro_unsupported_auth": "계정에 로그인할 수 없습니다. 자세한 정보는 홈서버 관리자에게 연락하세요."
+        "soft_logout_intro_unsupported_auth": "계정에 로그인할 수 없습니다. 자세한 정보는 홈서버 관리자에게 연락하세요.",
+        "register_action": "계정 만들기"
     },
     "export_chat": {
         "title": "대화 내보내기",

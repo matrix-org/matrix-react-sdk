@@ -316,8 +316,6 @@
     "Ignored user": "Ignoruojamas vartotojas",
     "Unignored user": "Nebeignoruojamas vartotojas",
     "You are no longer ignoring %(userId)s": "Dabar nebeignoruojate %(userId)s",
-    "Define the power level of a user": "Nustatykite vartotojo galios lygį",
-    "Deops user with given id": "Deop'ina vartotoją su nurodytu id",
     "Cannot reach homeserver": "Serveris nepasiekiamas",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Įsitikinkite, kad jūsų interneto ryšys yra stabilus, arba susisiekite su serverio administratoriumi",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Paprašykite savo %(brand)s administratoriaus patikrinti ar <a>jūsų konfigūracijoje</a> nėra neteisingų arba pasikartojančių įrašų.",
@@ -652,9 +650,6 @@
     "You can only join it with a working invite.": "Jūs galite prisijungti tik su veikiančiu pakvietimu.",
     "Cancel entering passphrase?": "Atšaukti slaptafrazės įvedimą?",
     "%(name)s is requesting verification": "%(name)s prašo patvirtinimo",
-    "Sign In or Create Account": "Prisijungti arba Sukurti Paskyrą",
-    "Use your account or create a new one to continue.": "Norėdami tęsti naudokite savo paskyrą arba sukurkite naują.",
-    "Create Account": "Sukurti Paskyrą",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
     "Encryption upgrade available": "Galimas šifravimo atnaujinimas",
     "Verify this user by confirming the following number appears on their screen.": "Patvirtinkite šį vartotoją, įsitikindami, kad jo ekrane rodomas toliau esantis skaičius.",
@@ -795,7 +790,6 @@
     "Join the conversation with an account": "Prisijunkite prie pokalbio su paskyra",
     "Join Room": "Prisijungti prie kambario",
     "Subscribing to a ban list will cause you to join it!": "Užsiprenumeravus draudimų sąrašą, būsite prie jo prijungtas!",
-    "Joins room with given address": "Prisijungia prie kambario su nurodytu adresu",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Jūs ignoravote šį vartotoją, todėl jo žinutė yra paslėpta. <a>Rodyti vistiek.</a>",
     "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.": "Kai kas nors į savo žinutę įtraukia URL, gali būti rodoma URL peržiūra, suteikianti daugiau informacijos apie tą nuorodą, tokios kaip pavadinimas, aprašymas ir vaizdas iš svetainės.",
     "Show Widgets": "Rodyti Valdiklius",
@@ -813,7 +807,6 @@
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Jūsų pateiktas pasirašymo raktas sutampa su pasirašymo raktu, gautu iš vartotojo %(userId)s seanso %(deviceId)s. Seansas pažymėtas kaip patikrintas.",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ĮSPĖJIMAS: RAKTŲ PATIKRINIMAS NEPAVYKO! Pasirašymo raktas vartotojui %(userId)s ir seansui %(deviceId)s yra \"%(fprint)s\", kuris nesutampa su pateiktu raktu \"%(fingerprint)s\". Tai gali reikšti, kad jūsų komunikacijos yra perimamos!",
     "Verifies a user, session, and pubkey tuple": "Patvirtina vartotojo, seanso ir pubkey daugiadalę duomenų struktūrą",
-    "Could not find user in room": "Vartotojo rasti kambaryje nepavyko",
     "You signed in to a new session without verifying it:": "Jūs prisijungėte prie naujo seanso, jo nepatvirtinę:",
     "You can also set up Secure Backup & manage your keys in Settings.": "Jūs taip pat galite nustatyti Saugią Atsarginę Kopiją ir tvarkyti savo raktus Nustatymuose.",
     "Set up Secure Backup": "Nustatyti Saugią Atsarginę Kopiją",
@@ -2405,7 +2398,11 @@
         "addwidget_no_permissions": "Jūs negalite modifikuoti valdiklių šiame kambaryje.",
         "discardsession": "Priverčia išmesti esamą užsibaigiantį grupės seansą užšifruotame kambaryje",
         "query": "Atidaro pokalbį su nurodytu vartotoju",
-        "me": "Rodo veiksmą"
+        "me": "Rodo veiksmą",
+        "join": "Prisijungia prie kambario su nurodytu adresu",
+        "failed_find_user": "Vartotojo rasti kambaryje nepavyko",
+        "op": "Nustatykite vartotojo galios lygį",
+        "deop": "Deop'ina vartotoją su nurodytu id"
     },
     "presence": {
         "busy": "Užsiėmęs",
@@ -2579,7 +2576,10 @@
         "incorrect_password": "Neteisingas slaptažodis",
         "forgot_password_email_required": "Privalo būti įvestas su jūsų paskyra susietas el. pašto adresas.",
         "forgot_password_prompt": "Pamiršote savo slaptažodį?",
-        "create_account_prompt": "Naujas vartotojas? <a>Sukurkite paskyrą</a>"
+        "create_account_prompt": "Naujas vartotojas? <a>Sukurkite paskyrą</a>",
+        "sign_in_or_register": "Prisijungti arba Sukurti Paskyrą",
+        "sign_in_or_register_description": "Norėdami tęsti naudokite savo paskyrą arba sukurkite naują.",
+        "register_action": "Sukurti Paskyrą"
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",

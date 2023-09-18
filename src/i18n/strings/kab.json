@@ -21,7 +21,6 @@
     "Dec": "Duj",
     "PM": "MD",
     "AM": "FT",
-    "Create Account": "Rnu amiḍan",
     "Default": "Amezwer",
     "Moderator": "Aseɣyad",
     "You need to be logged in.": "Tesriḍ ad teqqneḍ.",
@@ -153,8 +152,6 @@
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s ur d-yefk ara tisirag i tuzna n yilɣa - ttxil-k/m εreḍ tikkelt-nniḍen",
     "Unable to enable Notifications": "Sens irmad n yilɣa",
     "This email address was not found": "Tansa-a n yimayl ulac-it",
-    "Sign In or Create Account": "Kcem ɣer neɣ rnu amiḍan",
-    "Use your account or create a new one to continue.": "Seqdec amiḍan-ik/im neɣ snulfu-d yiwen akken ad tkemmleḍ.",
     "Failed to invite": "Ulamek i d-tnecdeḍ",
     "You need to be able to invite users to do that.": "Tesriḍ ad tizmireḍ ad d-tnecdeḍ iseqdacen ad gen ayagi.",
     "Failed to send request.": "Tuzna n usuter ur teddi ara.",
@@ -167,10 +164,8 @@
     "Command error": "Tuccḍa n tladna",
     "Error upgrading room": "Tuccḍa deg uleqqem n texxamt",
     "Use an identity server": "Seqdec timagit n uqeddac",
-    "Joins room with given address": "Kcem ɣer texxamt s tansa i d-yettunefken",
     "Ignored user": "Aseqdac yettunfen",
     "You are now ignoring %(userId)s": "Aql-ak tura tunfeḍ i %(userId)s",
-    "Could not find user in room": "Ur yettwaf ara useqdac deg texxamt",
     "New login. Was this you?": "Anekcam amaynut. D kečč/kemm?",
     "What's new?": "D acu-t umaynut?",
     "Please contact your homeserver administrator.": "Ttxil-k/m nermes anedbal-ik/im n usebter agejdan.",
@@ -204,7 +199,6 @@
     "Unable to create widget.": "Timerna n uwiǧit ulamek.",
     "Missing roomId.": "Ixuṣ usulay n texxamt.",
     "Use an identity server to invite by email. Manage in Settings.": "Seqdec aqeddac n timagit i uncad s yimayl. Asefrek deg yiɣewwaren.",
-    "Define the power level of a user": "Sbadu aswir iǧehden n useqdac",
     "Session already verified!": "Tiɣimit tettwasenqed yakan!",
     "Verified key": "Tasarut tettwasenqed",
     "Logs sent": "Iɣmisen ttewaznen",
@@ -302,7 +296,6 @@
     "Unignored user": "Aseqdac ur yettuzeglen ara",
     "You are no longer ignoring %(userId)s": "Dayen ur tettazgaleḍ ara akk %(userId)s",
     "Verifies a user, session, and pubkey tuple": "Yessenqad tagrumma-a: aseqdac, tiɣimit d tsarut tazayezt",
-    "Deops user with given id": "Aseqdac Deops s usulay i d-yettunefken",
     "Cannot reach homeserver": "Anekcum ɣer uqeddac agejdan d awezɣi",
     "Cannot reach identity server": "Anekcum ɣer uqeddac n tmagit d awezɣi",
     "No homeserver URL provided": "Ulac URL n uqeddac agejdan i d-yettunefken",
@@ -1957,7 +1950,11 @@
         "query": "Yeldi adiwenni d useqdac i d-yettunefken",
         "holdcall": "Seḥbes asiwel deg texxamt-a i kra n wakud",
         "unholdcall": "Uɣal ɣer usiwel ara iteddun deg -texxamt-a",
-        "me": "Yeskan tigawt"
+        "me": "Yeskan tigawt",
+        "join": "Kcem ɣer texxamt s tansa i d-yettunefken",
+        "failed_find_user": "Ur yettwaf ara useqdac deg texxamt",
+        "op": "Sbadu aswir iǧehden n useqdac",
+        "deop": "Aseqdac Deops s usulay i d-yettunefken"
     },
     "presence": {
         "online_for": "Srid azal n %(duration)s",
@@ -2077,7 +2074,10 @@
         "forgot_password_prompt": "Tettuḍ awal-ik·im uffir?",
         "soft_logout_intro_password": "Sekcem awal-ik·im uffir i wakken ad teqqneḍ syen ad tkecmeḍ i tikkelt tayeḍ ɣer umiḍan-ik·im.",
         "soft_logout_intro_sso": "Qqen syen εreḍ anekcum ɣer umiḍan-inek·inem tikkelt-nniḍen.",
-        "soft_logout_intro_unsupported_auth": "Ur tessawḍeḍ ara ad teqqneḍ ɣer umiḍan-inek:inem. Ttxil-k·m nermes anedbal n uqeddac-ik·im agejdan i wugar n talɣut."
+        "soft_logout_intro_unsupported_auth": "Ur tessawḍeḍ ara ad teqqneḍ ɣer umiḍan-inek:inem. Ttxil-k·m nermes anedbal n uqeddac-ik·im agejdan i wugar n talɣut.",
+        "sign_in_or_register": "Kcem ɣer neɣ rnu amiḍan",
+        "sign_in_or_register_description": "Seqdec amiḍan-ik/im neɣ snulfu-d yiwen akken ad tkemmleḍ.",
+        "register_action": "Rnu amiḍan"
     },
     "export_chat": {
         "messages": "Iznan"
