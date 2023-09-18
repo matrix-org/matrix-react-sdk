@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { zxcvbn, zxcvbnOptions, ZxcvbnResult } from "@zxcvbn-ts/core";
+import { zxcvbn, zxcvbnOptions, ZxcvbnResult, TranslationKeys } from "@zxcvbn-ts/core";
 import translationKeys from "@zxcvbn-ts/core/src/data/translationKeys";
 import * as zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
 import * as zxcvbnEnPackage from "@zxcvbn-ts/language-en";
@@ -45,6 +45,19 @@ zxcvbnOptions.setOptions({
     },
 });
 
+function getTranslations(): TranslationKeys {
+    return {
+        warnings: createTypedObjectFromEntries(
+            typedKeys(translationKeys.warnings).map((key) => [key, _t(`zxcvbn|warnings|${key}`)]),
+        ),
+        suggestions: createTypedObjectFromEntries(
+            typedKeys(translationKeys.suggestions).map((key) => [key, _t(`zxcvbn|suggestions|${key}`)]),
+        ),
+        // We don't utilise the time estimation at this time so just pass through the English translations here
+        timeEstimation: zxcvbnEnPackage.translations.timeEstimation,
+    };
+}
+
 /**
  * Wrapper around zxcvbn password strength estimation
  * Include this only from async components: it pulls in zxcvbn
@@ -72,6 +85,8 @@ export function scorePassword(
     } catch {
         // This is fine
     }
+
+    zxcvbnOptions.setTranslations(getTranslations());
 
     let zxcvbnResult = zxcvbn(password, userInputs);
     // Work around https://github.com/dropbox/zxcvbn/issues/216
