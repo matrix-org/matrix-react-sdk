@@ -56,6 +56,7 @@ export default function createMatrixClient(opts: ICreateClientOpts): MatrixClien
             dbName: "riot-web-sync",
             localStorage,
             workerFactory: () => new IndexedDBWorker(),
+            userId: opts.userId,
         });
     } else if (localStorage) {
         storeOpts.store = new MemoryStore({ localStorage });
