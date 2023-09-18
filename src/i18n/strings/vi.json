@@ -120,8 +120,6 @@
     "Please contact your homeserver administrator.": "Vui lòng liên hệ quản trị viên homeserver của bạn.",
     "Mirror local video feed": "Lập đường dẫn video dự phòng",
     "Send analytics data": "Gửi dữ liệu phân tích",
-    "Enable URL previews for this room (only affects you)": "Bật xem trước nội dung liên kết trong phòng này (chỉ với bạn)",
-    "Enable URL previews by default for participants in this room": "Bật xem trước nội dung liên kết cho mọi người trong phòng này",
     "Enable widget screenshots on supported widgets": "Bật widget chụp màn hình cho các widget có hỗ trợ",
     "Explore rooms": "Khám phá các phòng",
     "Vietnam": "Việt Nam",
@@ -373,10 +371,6 @@
     "Clear cross-signing keys": "Xóa các khóa ký chéo",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Xóa khóa ký chéo là vĩnh viễn. Bất kỳ ai mà bạn đã xác thực đều sẽ thấy cảnh báo bảo mật. Bạn gần như chắc chắn không muốn làm điều này, trừ khi bạn bị mất mọi thiết bị mà bạn có thể đăng nhập chéo.",
     "Destroy cross-signing keys?": "Hủy khóa xác thực chéo?",
-    "Sign into your homeserver": "Đăng nhập vào máy chủ của bạn",
-    "Specify a homeserver": "Chỉ định một máy chủ",
-    "Invalid URL": "URL không hợp lệ",
-    "Unable to validate homeserver": "Không thể xác thực máy chủ nhà",
     "Recent changes that have not yet been received": "Những thay đổi gần đây chưa được nhận",
     "The server is not configured to indicate what the problem is (CORS).": "Máy chủ không được định cấu hình để cho biết sự cố là gì (CORS).",
     "A connection error occurred while trying to contact the server.": "Đã xảy ra lỗi kết nối khi cố gắng kết nối với máy chủ.",
@@ -699,9 +693,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Nếu bạn làm vậy, xin lưu ý rằng không có thư nào của bạn sẽ bị xóa, nhưng trải nghiệm tìm kiếm có thể bị giảm sút trong một vài phút trong khi chỉ mục được tạo lại",
     "You most likely do not want to reset your event index store": "Rất có thể bạn không muốn đặt lại kho chỉ mục sự kiện của mình",
     "Reset event store?": "Đặt lại kho sự kiện?",
-    "About homeservers": "Giới thiệu về các máy chủ",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Sử dụng máy chủ Matrix ưa thích của bạn nếu bạn có, hoặc tự tạo máy chủ lưu trữ của riêng bạn.",
-    "Other homeserver": "Máy chủ khác",
     "Language Dropdown": "Danh sách ngôn ngữ",
     "Information": "Thông tin",
     "Rotate Right": "Xoay phải",
@@ -1861,8 +1852,6 @@
         "one": "Tải lên %(count)s tệp khác",
         "other": "Tải lên %(count)s tệp khác"
     },
-    "We call the places where you can host your account 'homeservers'.": "Chúng tôi gọi những nơi bạn có thể lưu trữ tài khoản của bạn là 'homeserver'.",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org là homeserver công cộng lớn nhất, vì vậy nó là nơi lý tưởng cho nhiều người.",
     "Spaces you know that contain this space": "Các space bạn biết có chứa space này",
     "If you can't see who you're looking for, send them your invite link below.": "Nếu bạn không thể thấy người bạn đang tìm, hãy gửi cho họ liên kết mời của bạn bên dưới.",
     "Add option": "Thêm tùy chọn",
@@ -2995,7 +2984,9 @@
             "timeline_image_size": "Kích thước hình ảnh trong timeline",
             "timeline_image_size_default": "Mặc định",
             "timeline_image_size_large": "Lớn"
-        }
+        },
+        "inline_url_previews_room_account": "Bật xem trước nội dung liên kết trong phòng này (chỉ với bạn)",
+        "inline_url_previews_room": "Bật xem trước nội dung liên kết cho mọi người trong phòng này"
     },
     "devtools": {
         "send_custom_account_data_event": "Gửi sự kiện tài khoản tùy chỉnh",
@@ -3660,7 +3651,7 @@
         "account_clash_previous_account": "Tiếp tục với tài khoản trước",
         "log_in_new_account": "<a>Sign in</a> để vào tài khoản mới của bạn.",
         "registration_successful": "Đăng ký thành công",
-        "server_picker_title": "Tài khoản máy chủ trên",
+        "server_picker_title": "Đăng nhập vào máy chủ của bạn",
         "server_picker_dialog_title": "Quyết định nơi tài khoản của bạn được lưu trữ",
         "footer_powered_by_matrix": "cung cấp bởi Matrix",
         "failed_homeserver_discovery": "Không thể thực hiện khám phá máy chủ",
@@ -3692,7 +3683,15 @@
         "sign_in_or_register": "Đăng nhập hoặc Tạo tài khoản",
         "sign_in_or_register_description": "Sử dụng tài khoản của bạn hoặc tạo một tài khoản mới để tiếp tục.",
         "sign_in_description": "Dùng tài khoản của bạn để tiếp tục.",
-        "register_action": "Tạo tài khoản"
+        "register_action": "Tạo tài khoản",
+        "server_picker_failed_validate_homeserver": "Không thể xác thực máy chủ nhà",
+        "server_picker_invalid_url": "URL không hợp lệ",
+        "server_picker_required": "Chỉ định một máy chủ",
+        "server_picker_matrix.org": "Matrix.org là homeserver công cộng lớn nhất, vì vậy nó là nơi lý tưởng cho nhiều người.",
+        "server_picker_intro": "Chúng tôi gọi những nơi bạn có thể lưu trữ tài khoản của bạn là 'homeserver'.",
+        "server_picker_custom": "Máy chủ khác",
+        "server_picker_explainer": "Sử dụng máy chủ Matrix ưa thích của bạn nếu bạn có, hoặc tự tạo máy chủ lưu trữ của riêng bạn.",
+        "server_picker_learn_more": "Giới thiệu về các máy chủ"
     },
     "room_list": {
         "sort_unread_first": "Hiển thị các phòng có tin nhắn chưa đọc trước",

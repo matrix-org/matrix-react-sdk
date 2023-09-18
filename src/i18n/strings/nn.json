@@ -66,8 +66,6 @@
     "Authentication check failed: incorrect password?": "Authentiseringsforsøk mislukkast: feil passord?",
     "Mirror local video feed": "Spegl den lokale videofeeden",
     "Send analytics data": "Send statistikkdata",
-    "Enable URL previews for this room (only affects you)": "Skru URL-førehandsvisingar på for dette rommet (påverkar deg åleine)",
-    "Enable URL previews by default for participants in this room": "Skru URL-førehandsvisingar på som utgangspunkt for deltakarar i dette rommet",
     "Enable widget screenshots on supported widgets": "Skru widget-skjermbilete på for støtta widgetar",
     "Waiting for response from server": "Ventar på svar frå tenaren",
     "Incorrect verification code": "Urett stadfestingskode",
@@ -867,7 +865,9 @@
             "timeline_image_size": "Storleik for bilete på tidslinja",
             "timeline_image_size_default": "Opphavleg innstilling",
             "timeline_image_size_large": "Stor"
-        }
+        },
+        "inline_url_previews_room_account": "Skru URL-førehandsvisingar på for dette rommet (påverkar deg åleine)",
+        "inline_url_previews_room": "Skru URL-førehandsvisingar på som utgangspunkt for deltakarar i dette rommet"
     },
     "devtools": {
         "event_type": "Hendingsort",

@@ -317,8 +317,6 @@
     "Could not load user profile": "Kasutajaprofiili laadimine ei õnnestunud",
     "Mirror local video feed": "Peegelda kohalikku videovoogu",
     "Send analytics data": "Saada arendajatele analüütikat",
-    "Enable URL previews for this room (only affects you)": "Luba URL'ide eelvaated selle jututoa jaoks (mõjutab vaid sind)",
-    "Enable URL previews by default for participants in this room": "Luba URL'ide vaikimisi eelvaated selles jututoas osalejate jaoks",
     "Enable widget screenshots on supported widgets": "Kui vidin seda toetab, siis luba tal teha ekraanitõmmiseid",
     "Show hidden events in timeline": "Näita peidetud sündmusi ajajoonel",
     "Composer": "Sõnumite kirjutamine",
@@ -1440,15 +1438,8 @@
     "Use email or phone to optionally be discoverable by existing contacts.": "Kui soovid, et teised kasutajad saaksid sind leida, siis palun lisa oma e-posti aadress või telefoninumber.",
     "Add an email to be able to reset your password.": "Selleks et saaksid vajadusel oma salasõna muuta, palun lisa oma e-posti aadress.",
     "That phone number doesn't look quite right, please check and try again": "See telefoninumber ei tundu õige olema, palun kontrolli ta üle ja proovi uuesti",
-    "About homeservers": "Teave koduserverite kohta",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Kui sul on oma koduserveri eelistus olemas, siis kasuta seda. Samuti võid soovi korral oma enda koduserveri püsti panna.",
-    "Other homeserver": "Muu koduserver",
-    "Sign into your homeserver": "Logi sisse oma koduserverisse",
-    "Specify a homeserver": "Sisesta koduserver",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Lihtsalt hoiatame, et kui sa ei lisa e-posti aadressi ning unustad oma konto salasõna, siis sa võid <b>püsivalt kaotada ligipääsu oma kontole</b>.",
     "Reason (optional)": "Põhjus (kui soovid lisada)",
-    "Invalid URL": "Vigane aadress",
-    "Unable to validate homeserver": "Koduserveri õigsust ei õnnestunud kontrollida",
     "Hold": "Pane ootele",
     "Resume": "Jätka",
     "You've reached the maximum number of simultaneous calls.": "Oled jõudnud suurima lubatud samaaegsete kõnede arvuni.",
@@ -1861,8 +1852,6 @@
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "Ilma verifitseerimiseta sul puudub ligipääs kõikidele oma sõnumitele ning teised ei näe sinu kasutajakontot usaldusväärsena.",
     "Shows all threads you've participated in": "Näitab kõiki jutulõngasid, kus sa oled osalenud",
     "You're all caught up": "Ei tea... kõik vist on nüüd tehtud",
-    "We call the places where you can host your account 'homeservers'.": "Me nimetame „koduserveriks“ sellist serverit, mis haldab sinu kasutajakontot.",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org on maailma suurim avalik koduserver ja see sobib paljude jaoks.",
     "If you can't see who you're looking for, send them your invite link below.": "Kui sa ei leia otsitavaid, siis saada neile kutse.",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "See jututuba on mõne sellise kogukonnakeskuse osa, kus sul pole haldaja õigusi. Selliselt juhul vana jututuba jätkuvalt kuvatakse, kuid selle asutajatele pakutakse võimalust uuega liituda.",
     "In encrypted rooms, verify all users to ensure it's secure.": "Krüptitud jututubades turvalisuse tagamiseks verifitseeri kõik kasutajad.",
@@ -2471,7 +2460,6 @@
     "Your current session is ready for secure messaging.": "Sinu praegune sessioon on valmis turvaliseks sõnumivahetuseks.",
     "Text": "Tekst",
     "Create a link": "Tee link",
-    "Force 15s voice broadcast chunk length": "Kasuta ringhäälingusõnumi puhul 15-sekundilist blokipikkust",
     "Sign out of %(count)s sessions": {
         "one": "Logi %(count)s'st sessioonist välja",
         "other": "Logi %(count)s'st sessioonist välja"
@@ -2621,7 +2609,6 @@
     "User is not logged in": "Kasutaja pole võrku loginud",
     "Allow fallback call assist server (%(server)s)": "Varuvariandina luba kasutada ka teist kõnehõlbustusserverit (%(server)s)",
     "Try using %(server)s": "Proovi kasutada %(server)s serverit",
-    "Enable new native OIDC flows (Under active development)": "Luba OIDC liidestus (aktiivselt arendamisel)",
     "Your server requires encryption to be disabled.": "Sinu server eeldab, et krüptimine on välja lülitatud.",
     "Are you sure you wish to remove (delete) this event?": "Kas sa oled kindel, et soovid kustutada selle sündmuse?",
     "Note that removing room changes like this could undo the change.": "Palun arvesta jututoa muudatuste eemaldamine võib eemaldada ka selle muutuse.",
@@ -2941,7 +2928,9 @@
         "join_beta_reload": "Beeta-funktsionaalsuste kasutusele võtmisel laadime uuesti rakenduse %(brand)s.",
         "leave_beta": "Lõpeta beetaversiooni kasutamine",
         "join_beta": "Hakka kasutama beetaversiooni",
-        "notification_settings_beta_title": "Teavituste seadistused"
+        "notification_settings_beta_title": "Teavituste seadistused",
+        "voice_broadcast_force_small_chunks": "Kasuta ringhäälingusõnumi puhul 15-sekundilist blokipikkust",
+        "oidc_native_flow": "Luba OIDC liidestus (aktiivselt arendamisel)"
     },
     "keyboard": {
         "home": "Avaleht",
@@ -3229,7 +3218,9 @@
             "timeline_image_size": "Ajajoone piltide suurus",
             "timeline_image_size_default": "Tavaline",
             "timeline_image_size_large": "Suur"
-        }
+        },
+        "inline_url_previews_room_account": "Luba URL'ide eelvaated selle jututoa jaoks (mõjutab vaid sind)",
+        "inline_url_previews_room": "Luba URL'ide vaikimisi eelvaated selles jututoas osalejate jaoks"
     },
     "devtools": {
         "send_custom_account_data_event": "Saada kohandatud kontoandmete päring",
@@ -3949,7 +3940,7 @@
         "account_clash_previous_account": "Jätka senise konto kasutamist",
         "log_in_new_account": "<a>Logi sisse</a> oma uuele kasutajakontole.",
         "registration_successful": "Registreerimine õnnestus",
-        "server_picker_title": "Sinu kasutajakontot teenindab",
+        "server_picker_title": "Logi sisse oma koduserverisse",
         "server_picker_dialog_title": "Vali kes võiks sinu kasutajakontot teenindada",
         "footer_powered_by_matrix": "põhineb Matrix'il",
         "failed_homeserver_discovery": "Koduserveri leidmine ebaõnnestus",
@@ -3986,7 +3977,15 @@
         "sign_in_or_register": "Logi sisse või loo uus konto",
         "sign_in_or_register_description": "Jätkamaks kasuta oma kontot või loo uus konto.",
         "sign_in_description": "Jätkamaks kasuta oma kontot.",
-        "register_action": "Loo konto"
+        "register_action": "Loo konto",
+        "server_picker_failed_validate_homeserver": "Koduserveri õigsust ei õnnestunud kontrollida",
+        "server_picker_invalid_url": "Vigane aadress",
+        "server_picker_required": "Sisesta koduserver",
+        "server_picker_matrix.org": "Matrix.org on maailma suurim avalik koduserver ja see sobib paljude jaoks.",
+        "server_picker_intro": "Me nimetame „koduserveriks“ sellist serverit, mis haldab sinu kasutajakontot.",
+        "server_picker_custom": "Muu koduserver",
+        "server_picker_explainer": "Kui sul on oma koduserveri eelistus olemas, siis kasuta seda. Samuti võid soovi korral oma enda koduserveri püsti panna.",
+        "server_picker_learn_more": "Teave koduserverite kohta"
     },
     "room_list": {
         "sort_unread_first": "Näita lugemata sõnumitega jututubasid esimesena",

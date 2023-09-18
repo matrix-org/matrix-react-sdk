@@ -237,8 +237,6 @@
     },
     "Notify the whole room": "Alle im Raum benachrichtigen",
     "Room Notification": "Raum-Benachrichtigung",
-    "Enable URL previews for this room (only affects you)": "URL-Vorschau für dich in diesem Raum",
-    "Enable URL previews by default for participants in this room": "URL-Vorschau für Raummitglieder",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Bitte beachte, dass du dich gerade auf %(hs)s anmeldest, nicht matrix.org.",
     "URL previews are disabled by default for participants in this room.": "URL-Vorschau ist für Mitglieder des Raumes standardmäßig deaktiviert.",
     "URL previews are enabled by default for participants in this room.": "URL-Vorschau ist für Mitglieder des Raumes standardmäßig aktiviert.",
@@ -1433,24 +1431,17 @@
     "Afghanistan": "Afghanistan",
     "United States": "Vereinigte Staaten",
     "United Kingdom": "Großbritannien",
-    "Specify a homeserver": "Gib einen Heim-Server an",
     "There was a problem communicating with the homeserver, please try again later.": "Es gab ein Problem bei der Kommunikation mit dem Heim-Server. Bitte versuche es später erneut.",
     "Use email to optionally be discoverable by existing contacts.": "Nutze optional eine E-Mail-Adresse, um von Nutzern gefunden werden zu können.",
     "Use email or phone to optionally be discoverable by existing contacts.": "Nutze optional eine E-Mail-Adresse oder Telefonnummer, um von Nutzern gefunden werden zu können.",
     "Add an email to be able to reset your password.": "Füge eine E-Mail-Adresse hinzu, um dein Passwort zurücksetzen zu können.",
     "That phone number doesn't look quite right, please check and try again": "Diese Telefonummer sieht nicht ganz richtig aus. Bitte überprüfe deine Eingabe und versuche es erneut",
-    "About homeservers": "Über Heim-Server",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Verwende einen Matrix-Heim-Server deiner Wahl oder betreibe deinen eigenen.",
-    "Other homeserver": "Anderer Heim-Server",
-    "Sign into your homeserver": "Melde dich bei deinem Heim-Server an",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Aufgepasst: Wenn du keine E-Mail-Adresse angibst und dein Passwort vergisst, kannst du den <b>Zugriff auf deinen Konto dauerhaft verlieren</b>.",
     "Continuing without email": "Ohne E-Mail fortfahren",
     "Reason (optional)": "Grund (optional)",
     "Server Options": "Server-Einstellungen",
     "Hold": "Halten",
     "Resume": "Fortsetzen",
-    "Invalid URL": "Ungültiger Link",
-    "Unable to validate homeserver": "Überprüfung des Heim-Servers nicht möglich",
     "You've reached the maximum number of simultaneous calls.": "Du hast die maximale Anzahl gleichzeitig möglicher Anrufe erreicht.",
     "Too Many Calls": "Zu viele Anrufe",
     "You have no visible notifications.": "Du hast keine sichtbaren Benachrichtigungen.",
@@ -1850,7 +1841,6 @@
     "Joining": "Trete bei",
     "Copy link to thread": "Link zu Thread kopieren",
     "Thread options": "Thread-Optionen",
-    "We call the places where you can host your account 'homeservers'.": "Wir nennen die Orte, an denen du dein Benutzerkonto speichern kannst, „Heim-Server“.",
     "These are likely ones other room admins are a part of.": "Das sind vermutliche solche, in denen andere Raumadministratoren Mitglieder sind.",
     "If you can't see who you're looking for, send them your invite link below.": "Wenn du die gesuchte Person nicht findest, sende ihr den Einladungslink zu.",
     "Add a space to a space you manage.": "Einen Space zu einem Space den du verwaltest hinzufügen.",
@@ -1886,7 +1876,6 @@
     "Use a more compact 'Modern' layout": "Modernes kompaktes Layout verwenden",
     "You're all caught up": "Du bist auf dem neuesten Stand",
     "Someone already has that username. Try another or if it is you, sign in below.": "Jemand anderes nutzt diesen Benutzernamen schon. Probier einen anderen oder wenn du es bist, melde dich unten an.",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org ist der größte öffentliche Heim-Server der Welt, also für viele ein guter Ort.",
     "Could not connect media": "Konnte Medien nicht verbinden",
     "In encrypted rooms, verify all users to ensure it's secure.": "Verifiziere alle Benutzer in verschlüsselten Räumen, um die Sicherheit zu garantieren.",
     "They'll still be able to access whatever you're not an admin of.": "Die Person wird weiterhin Zutritt zu Bereichen haben, in denen du nicht administrierst.",
@@ -2471,7 +2460,6 @@
     "Mark as read": "Als gelesen markieren",
     "Text": "Text",
     "Create a link": "Link erstellen",
-    "Force 15s voice broadcast chunk length": "Die Chunk-Länge der Sprachübertragungen auf 15 Sekunden erzwingen",
     "Sign out of %(count)s sessions": {
         "one": "Von %(count)s Sitzung abmelden",
         "other": "Von %(count)s Sitzungen abmelden"
@@ -2623,7 +2611,6 @@
     "Try using %(server)s": "Versuche %(server)s zu verwenden",
     "Your server requires encryption to be disabled.": "Dein Server erfordert die Deaktivierung der Verschlüsselung.",
     "Are you sure you wish to remove (delete) this event?": "Möchtest du dieses Ereignis wirklich entfernen (löschen)?",
-    "Enable new native OIDC flows (Under active development)": "Neue native OIDC-Verfahren aktivieren (in aktiver Entwicklung)",
     "Note that removing room changes like this could undo the change.": "Beachte, dass das Entfernen von Raumänderungen diese rückgängig machen könnte.",
     "User cannot be invited until they are unbanned": "Benutzer kann nicht eingeladen werden, solange er nicht entbannt ist",
     "People, Mentions and Keywords": "Personen, Erwähnungen und Schlüsselwörter",
@@ -2946,7 +2933,9 @@
         "join_beta_reload": "Die Teilnahme an der Beta wird %(brand)s neustarten.",
         "leave_beta": "Beta verlassen",
         "join_beta": "Beta beitreten",
-        "notification_settings_beta_title": "Benachrichtigungseinstellungen"
+        "notification_settings_beta_title": "Benachrichtigungseinstellungen",
+        "voice_broadcast_force_small_chunks": "Die Chunk-Länge der Sprachübertragungen auf 15 Sekunden erzwingen",
+        "oidc_native_flow": "Neue native OIDC-Verfahren aktivieren (in aktiver Entwicklung)"
     },
     "keyboard": {
         "home": "Startseite",
@@ -3234,7 +3223,9 @@
             "timeline_image_size": "Bildgröße im Verlauf",
             "timeline_image_size_default": "Standard",
             "timeline_image_size_large": "Groß"
-        }
+        },
+        "inline_url_previews_room_account": "URL-Vorschau für dich in diesem Raum",
+        "inline_url_previews_room": "URL-Vorschau für Raummitglieder"
     },
     "devtools": {
         "send_custom_account_data_event": "Sende benutzerdefiniertes Kontodatenereignis",
@@ -3954,7 +3945,7 @@
         "account_clash_previous_account": "Mit vorherigem Konto fortfahren",
         "log_in_new_account": "Mit deinem neuen Konto <a>anmelden</a>.",
         "registration_successful": "Registrierung erfolgreich",
-        "server_picker_title": "Konto betreiben auf",
+        "server_picker_title": "Melde dich bei deinem Heim-Server an",
         "server_picker_dialog_title": "Entscheide, wo sich dein Konto befinden soll",
         "footer_powered_by_matrix": "Betrieben mit Matrix",
         "failed_homeserver_discovery": "Fehler beim Aufspüren des Heim-Servers",
@@ -3991,7 +3982,15 @@
         "sign_in_or_register": "Anmelden oder Konto erstellen",
         "sign_in_or_register_description": "Benutze dein Konto oder erstelle ein neues, um fortzufahren.",
         "sign_in_description": "Nutze dein Konto, um fortzufahren.",
-        "register_action": "Konto erstellen"
+        "register_action": "Konto erstellen",
+        "server_picker_failed_validate_homeserver": "Überprüfung des Heim-Servers nicht möglich",
+        "server_picker_invalid_url": "Ungültiger Link",
+        "server_picker_required": "Gib einen Heim-Server an",
+        "server_picker_matrix.org": "Matrix.org ist der größte öffentliche Heim-Server der Welt, also für viele ein guter Ort.",
+        "server_picker_intro": "Wir nennen die Orte, an denen du dein Benutzerkonto speichern kannst, „Heim-Server“.",
+        "server_picker_custom": "Anderer Heim-Server",
+        "server_picker_explainer": "Verwende einen Matrix-Heim-Server deiner Wahl oder betreibe deinen eigenen.",
+        "server_picker_learn_more": "Über Heim-Server"
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",

@@ -69,8 +69,6 @@
     "Please contact your homeserver administrator.": "कृपया अपने होमसर्वर व्यवस्थापक से संपर्क करें।",
     "Mirror local video feed": "स्थानीय वीडियो फ़ीड को आईना करें",
     "Send analytics data": "विश्लेषण डेटा भेजें",
-    "Enable URL previews for this room (only affects you)": "इस रूम के लिए यूआरएल पूर्वावलोकन सक्षम करें (केवल आपको प्रभावित करता है)",
-    "Enable URL previews by default for participants in this room": "इस रूम में प्रतिभागियों के लिए डिफ़ॉल्ट रूप से यूआरएल पूर्वावलोकन सक्षम करें",
     "Enable widget screenshots on supported widgets": "समर्थित विजेट्स पर विजेट स्क्रीनशॉट सक्षम करें",
     "Waiting for response from server": "सर्वर से प्रतिक्रिया की प्रतीक्षा कर रहा है",
     "Incorrect verification code": "गलत सत्यापन कोड",
@@ -567,7 +565,9 @@
         },
         "appearance": {
             "timeline_image_size_default": "डिफ़ॉल्ट"
-        }
+        },
+        "inline_url_previews_room_account": "इस रूम के लिए यूआरएल पूर्वावलोकन सक्षम करें (केवल आपको प्रभावित करता है)",
+        "inline_url_previews_room": "इस रूम में प्रतिभागियों के लिए डिफ़ॉल्ट रूप से यूआरएल पूर्वावलोकन सक्षम करें"
     },
     "timeline": {
         "m.room.topic": "%(senderDisplayName)s ने विषय को \"%(topic)s\" में बदल दिया।",

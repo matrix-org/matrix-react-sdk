@@ -64,8 +64,6 @@
     "Authentication check failed: incorrect password?": "Aŭtentikiga kontrolo malsukcesis: ĉu pro malĝusta pasvorto?",
     "Send": "Sendi",
     "Mirror local video feed": "Speguli lokan filmon",
-    "Enable URL previews for this room (only affects you)": "Ŝalti URL-antaŭrigardon en ĉi tiu ĉambro (nur por vi)",
-    "Enable URL previews by default for participants in this room": "Ŝalti URL-antaŭrigardon por anoj de ĉi tiu ĉambro",
     "Incorrect verification code": "Malĝusta kontrola kodo",
     "Phone": "Telefono",
     "No display name": "Sen vidiga nomo",
@@ -1455,11 +1453,6 @@
     "Decline All": "Rifuzi ĉion",
     "This widget would like to:": "Ĉi tiu fenestraĵo volas:",
     "Approve widget permissions": "Aprobi rajtojn de fenestraĵo",
-    "About homeservers": "Pri hejmserviloj",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Uzu vian preferatan hejmservilon de Matrix se vi havas iun, aŭ gastigu vian propran.",
-    "Other homeserver": "Alia hejmservilo",
-    "Sign into your homeserver": "Salutu vian hejmservilon",
-    "Specify a homeserver": "Specifu hejmservilon",
     "Recently visited rooms": "Freŝe vizititiaj ĉambroj",
     "This is the start of <roomName/>.": "Jen la komenco de <roomName/>.",
     "Add a photo, so people can easily spot your room.": "Aldonu foton, por ke oni facile trovu vian ĉambron.",
@@ -1478,8 +1471,6 @@
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Ni petis la foliumilon memori, kiun hejmservilon vi uzas por saluti, sed domaĝe, via foliumilo forgesis. Iru al la saluta paĝo kaj reprovu.",
     "We couldn't log you in": "Ni ne povis salutigi vin",
     "%(creator)s created this DM.": "%(creator)s kreis ĉi tiun individuan ĉambron.",
-    "Invalid URL": "Nevalida URL",
-    "Unable to validate homeserver": "Ne povas validigi hejmservilon",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Averte, se vi ne aldonos retpoŝtadreson kaj poste forgesos vian pasvorton, vi eble <b>por ĉiam perdos aliron al via konto</b>.",
     "Continuing without email": "Daŭrigante sen retpoŝtadreso",
     "Transfer": "Transdoni",
@@ -2387,7 +2378,9 @@
             "font_size": "Grando de tiparo",
             "custom_font_description": "Agordu la nomon de tiparo instalita en via sistemo kaj %(brand)s provos ĝin uzi.",
             "timeline_image_size_default": "Ordinara"
-        }
+        },
+        "inline_url_previews_room_account": "Ŝalti URL-antaŭrigardon en ĉi tiu ĉambro (nur por vi)",
+        "inline_url_previews_room": "Ŝalti URL-antaŭrigardon por anoj de ĉi tiu ĉambro"
     },
     "devtools": {
         "event_type": "Tipo de okazo",
@@ -2928,7 +2921,7 @@
         "account_clash_previous_account": "Daŭrigi per antaŭa konto",
         "log_in_new_account": "<a>Saluti</a> per via nova konto.",
         "registration_successful": "Registro sukcesis",
-        "server_picker_title": "Gastigi konton ĉe",
+        "server_picker_title": "Salutu vian hejmservilon",
         "server_picker_dialog_title": "Decidu, kie via konto gastiĝos",
         "footer_powered_by_matrix": "funkciigata de Matrix",
         "failed_homeserver_discovery": "Malsukcesis trovi hejmservilon",
@@ -2960,7 +2953,13 @@
         "create_account_prompt": "Ĉu vi novas? <a>Kreu konton</a>",
         "sign_in_or_register": "Salutu aŭ kreu konton",
         "sign_in_or_register_description": "Por daŭrigi, uzu vian konton aŭ kreu novan.",
-        "register_action": "Krei konton"
+        "register_action": "Krei konton",
+        "server_picker_failed_validate_homeserver": "Ne povas validigi hejmservilon",
+        "server_picker_invalid_url": "Nevalida URL",
+        "server_picker_required": "Specifu hejmservilon",
+        "server_picker_custom": "Alia hejmservilo",
+        "server_picker_explainer": "Uzu vian preferatan hejmservilon de Matrix se vi havas iun, aŭ gastigu vian propran.",
+        "server_picker_learn_more": "Pri hejmserviloj"
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",

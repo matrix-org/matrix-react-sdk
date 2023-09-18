@@ -358,8 +358,6 @@
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Never send encrypted messages to unverified sessions in this room from this session": "Aldri send krypterte meldinger til uverifiserte økter i dette rommet fra denne økten",
-    "Enable URL previews for this room (only affects you)": "Skru på URL-forhåndsvisninger for dette rommet (Påvirker bare deg)",
-    "Enable URL previews by default for participants in this room": "Skru på URL-forhåndsvisninger som standard for deltakerne i dette rommet",
     "Manually verify all remote sessions": "Verifiser alle eksterne økter manuelt",
     "Show more": "Vis mer",
     "Warning!": "Advarsel!",
@@ -775,7 +773,6 @@
     "Security Key": "Sikkerhetsnøkkel",
     "Invalid Security Key": "Ugyldig sikkerhetsnøkkel",
     "Wrong Security Key": "Feil sikkerhetsnøkkel",
-    "About homeservers": "Om hjemmetjenere",
     "New Recovery Method": "Ny gjenopprettingsmetode",
     "Generate a Security Key": "Generer en sikkerhetsnøkkel",
     "Confirm your Security Phrase": "Bekreft sikkerhetsfrasen din",
@@ -793,7 +790,6 @@
     "Widgets": "Komponenter",
     "Favourited": "Favorittmerket",
     "Forget Room": "Glem rommet",
-    "Invalid URL": "Ugyldig URL",
     "Continuing without email": "Fortsetter uten E-post",
     "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
     "Transfer": "Overfør",
@@ -1345,7 +1341,9 @@
             "custom_theme_add_button": "Legg til tema",
             "font_size": "Skriftstørrelse",
             "timeline_image_size_default": "Standard"
-        }
+        },
+        "inline_url_previews_room_account": "Skru på URL-forhåndsvisninger for dette rommet (Påvirker bare deg)",
+        "inline_url_previews_room": "Skru på URL-forhåndsvisninger som standard for deltakerne i dette rommet"
     },
     "devtools": {
         "event_type": "Hendelsestype",
@@ -1655,7 +1653,9 @@
         "forgot_password_prompt": "Har du glemt passordet ditt?",
         "create_account_prompt": "Er du ny her? <a>Opprett en konto</a>",
         "sign_in_or_register": "Logg inn eller lag en konto",
-        "register_action": "Opprett konto"
+        "register_action": "Opprett konto",
+        "server_picker_invalid_url": "Ugyldig URL",
+        "server_picker_learn_more": "Om hjemmetjenere"
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",

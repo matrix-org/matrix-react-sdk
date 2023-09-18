@@ -61,8 +61,6 @@
     "Your browser does not support the required cryptography extensions": "O seu navegador non soporta as extensións de criptografía necesarias",
     "Not a valid %(brand)s keyfile": "Non é un ficheiro de chaves %(brand)s válido",
     "Authentication check failed: incorrect password?": "Fallou a comprobación de autenticación: contrasinal incorrecto?",
-    "Enable URL previews for this room (only affects you)": "Activar vista previa de URL nesta sala (só che afecta a ti)",
-    "Enable URL previews by default for participants in this room": "Activar a vista previa de URL por defecto para as participantes nesta sala",
     "Incorrect verification code": "Código de verificación incorrecto",
     "Phone": "Teléfono",
     "No display name": "Sen nome público",
@@ -1438,17 +1436,10 @@
     "Use email or phone to optionally be discoverable by existing contacts.": "Usa un email ou teléfono para ser (opcionalmente) descubrible polos contactos existentes.",
     "Add an email to be able to reset your password.": "Engade un email para poder restablecer o contrasinal.",
     "That phone number doesn't look quite right, please check and try again": "Non semella correcto este número, compróbao e inténtao outra vez",
-    "About homeservers": "Acerca dos servidores de inicio",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Usa o teu servidor de inicio Matrix preferido, ou usa o teu propio.",
-    "Other homeserver": "Outro servidor de inicio",
-    "Sign into your homeserver": "Conecta co teu servidor de inicio",
-    "Specify a homeserver": "Indica un servidor de inicio",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Lembra que se non engades un email e esqueces o contrasinal <b>perderás de xeito permanente o acceso á conta</b>.",
     "Continuing without email": "Continuando sen email",
     "Server Options": "Opcións do servidor",
     "Reason (optional)": "Razón (optativa)",
-    "Invalid URL": "URL non válido",
-    "Unable to validate homeserver": "Non se puido validar o servidor de inicio",
     "Hold": "Colgar",
     "Resume": "Retomar",
     "You've reached the maximum number of simultaneous calls.": "Acadaches o número máximo de chamadas simultáneas.",
@@ -1915,8 +1906,6 @@
     "Thread options": "Opcións da conversa",
     "Mentions only": "Só mencións",
     "Forget": "Esquecer",
-    "We call the places where you can host your account 'homeservers'.": "Chamámoslle 'Servidores de Inicio' aos lugares onde podes ter a túa conta.",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org é o servidor público máis grande do mundo, podería ser un bo lugar para comezar.",
     "If you can't see who you're looking for, send them your invite link below.": "Se non atopas a quen buscas, envíalle a túa ligazón de convite.",
     "Based on %(count)s votes": {
         "one": "Baseado en %(count)s voto",
@@ -2830,7 +2819,9 @@
             "timeline_image_size": "Tamaño de imaxe na cronoloxía",
             "timeline_image_size_default": "Por defecto",
             "timeline_image_size_large": "Grande"
-        }
+        },
+        "inline_url_previews_room_account": "Activar vista previa de URL nesta sala (só che afecta a ti)",
+        "inline_url_previews_room": "Activar a vista previa de URL por defecto para as participantes nesta sala"
     },
     "devtools": {
         "send_custom_account_data_event": "Enviar evento de datos da conta personalizado",
@@ -3489,7 +3480,7 @@
         "account_clash_previous_account": "Continúa coa conta anterior",
         "log_in_new_account": "<a>Accede</a> usando a conta nova.",
         "registration_successful": "Rexistro correcto",
-        "server_picker_title": "Crea a conta en",
+        "server_picker_title": "Conecta co teu servidor de inicio",
         "server_picker_dialog_title": "Decide onde queres crear a túa conta",
         "footer_powered_by_matrix": "funciona grazas a Matrix",
         "failed_homeserver_discovery": "Fallo ao intentar o descubrimento do servidor",
@@ -3512,7 +3503,15 @@
         "create_account_prompt": "Acabas de coñecernos? <a>Crea unha conta</a>",
         "sign_in_or_register": "Conéctate ou Crea unha Conta",
         "sign_in_or_register_description": "Usa a túa conta ou crea unha nova para continuar.",
-        "register_action": "Crear conta"
+        "register_action": "Crear conta",
+        "server_picker_failed_validate_homeserver": "Non se puido validar o servidor de inicio",
+        "server_picker_invalid_url": "URL non válido",
+        "server_picker_required": "Indica un servidor de inicio",
+        "server_picker_matrix.org": "Matrix.org é o servidor público máis grande do mundo, podería ser un bo lugar para comezar.",
+        "server_picker_intro": "Chamámoslle 'Servidores de Inicio' aos lugares onde podes ter a túa conta.",
+        "server_picker_custom": "Outro servidor de inicio",
+        "server_picker_explainer": "Usa o teu servidor de inicio Matrix preferido, ou usa o teu propio.",
+        "server_picker_learn_more": "Acerca dos servidores de inicio"
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",

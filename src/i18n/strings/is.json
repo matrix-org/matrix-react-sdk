@@ -254,8 +254,6 @@
     "URL previews are enabled by default for participants in this room.": "Forskoðun vefslóða er sjálfgefið virk fyrir þátttakendur í þessari spjallrás.",
     "You have <a>disabled</a> URL previews by default.": "Þú hefur <a>óvirkt</a> forskoðun vefslóða sjálfgefið.",
     "You have <a>enabled</a> URL previews by default.": "Þú hefur <a>virkt</a> forskoðun vefslóða sjálfgefið.",
-    "Enable URL previews by default for participants in this room": "Virkja forskoðun vefslóða sjálfgefið fyrir þátttakendur í þessari spjallrás",
-    "Enable URL previews for this room (only affects you)": "Virkja forskoðun vefslóða fyrir þessa spjallrás (einungis fyrir þig)",
     "Room settings": "Stillingar spjallrásar",
     "Room Settings - %(roomName)s": "Stillingar spjallrásar - %(roomName)s",
     "This is the beginning of your direct message history with <displayName/>.": "Þetta er upphaf ferils beinna skilaboða með <displayName/>.",
@@ -673,9 +671,6 @@
     "Link to room": "Tengill á spjallrás",
     "Share Room Message": "Deila skilaboðum spjallrásar",
     "Share Room": "Deila spjallrás",
-    "About homeservers": "Um heimaþjóna",
-    "Specify a homeserver": "Tilgreindu heimaþjón",
-    "Invalid URL": "Ógild slóð",
     "Email (optional)": "Tölvupóstfang (valfrjálst)",
     "Session name": "Nafn á setu",
     "%(count)s rooms": {
@@ -1098,9 +1093,6 @@
     "Enter phone number (required on this homeserver)": "Settu inn símanúmer (nauðsynlegt á þessum heimaþjóni)",
     "Enter email address (required on this homeserver)": "Settu inn tölvupóstfang (nauðsynlegt á þessum heimaþjóni)",
     "This homeserver would like to make sure you are not a robot.": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni.",
-    "Other homeserver": "Annar heimaþjónn",
-    "Sign into your homeserver": "Skráðu þig inn á heimaþjóninn þinn",
-    "Unable to validate homeserver": "Ekki tókst að sannreyna heimaþjón",
     "Your homeserver": "Heimaþjónninn þinn",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Stilltu vistföng fyrir þessa spjallrás svo notendur geti fundið hana í gegnum heimaþjóninn þinn (%(localDomain)s)",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Stilltu vistföng fyrir þetta svæði svo notendur geti fundið það í gegnum heimaþjóninn þinn (%(localDomain)s)",
@@ -1655,7 +1647,6 @@
     "Other searches": "Aðrar leitir",
     "Link to selected message": "Tengill í valin skilaboð",
     "Link to most recent message": "Tengill í nýjustu skilaboðin",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org is er heimsins stærsti opinberi heimaþjónninn, þannig að þar er góður staður fyrir marga.",
     "Invited people will be able to read old messages.": "Fólk sem er boðið mun geta lesið eldri skilaboð.",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Bjóddu einhverjum með því að nota nafn, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
@@ -2725,7 +2716,9 @@
             "timeline_image_size": "Stærð myndar í tímalínunni",
             "timeline_image_size_default": "Sjálfgefið",
             "timeline_image_size_large": "Stórt"
-        }
+        },
+        "inline_url_previews_room_account": "Virkja forskoðun vefslóða fyrir þessa spjallrás (einungis fyrir þig)",
+        "inline_url_previews_room": "Virkja forskoðun vefslóða sjálfgefið fyrir þátttakendur í þessari spjallrás"
     },
     "devtools": {
         "event_type": "Tegund atburðar",
@@ -3356,7 +3349,7 @@
         "account_clash_previous_account": "Halda áfram með fyrri aðgangi",
         "log_in_new_account": "<a>Skráðu þig inn</a> í nýja notandaaðganginn þinn.",
         "registration_successful": "Nýskráning tókst",
-        "server_picker_title": "Hýsa notandaaðgang á",
+        "server_picker_title": "Skráðu þig inn á heimaþjóninn þinn",
         "server_picker_dialog_title": "Ákveddu hvar aðgangurinn þinn er hýstur",
         "footer_powered_by_matrix": "keyrt með Matrix",
         "sync_footer_subtitle": "Þetta getur tekið dálítinn tíma ef þú tekur þátt í mörgum spjallrásum",
@@ -3383,7 +3376,13 @@
         "create_account_prompt": "Nýr hérna? <a>Stofnaðu aðgang</a>",
         "sign_in_or_register": "Skráðu þig inn eða búðu til aðgang",
         "sign_in_or_register_description": "Notaðu aðganginn þinn eða búðu til nýjan til að halda áfram.",
-        "register_action": "Búa til notandaaðgang"
+        "register_action": "Búa til notandaaðgang",
+        "server_picker_failed_validate_homeserver": "Ekki tókst að sannreyna heimaþjón",
+        "server_picker_invalid_url": "Ógild slóð",
+        "server_picker_required": "Tilgreindu heimaþjón",
+        "server_picker_matrix.org": "Matrix.org is er heimsins stærsti opinberi heimaþjónninn, þannig að þar er góður staður fyrir marga.",
+        "server_picker_custom": "Annar heimaþjónn",
+        "server_picker_learn_more": "Um heimaþjóna"
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",

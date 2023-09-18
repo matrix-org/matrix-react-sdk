@@ -238,8 +238,6 @@
     "File to import": "Importovať zo súboru",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Všimnite si: Práve sa prihlasujete na server %(hs)s, nie na server matrix.org.",
     "Restricted": "Obmedzené",
-    "Enable URL previews for this room (only affects you)": "Povoliť náhľady URL adries pre túto miestnosť (ovplyvňuje len vás)",
-    "Enable URL previews by default for participants in this room": "Predvolene povoliť náhľady URL adries pre členov tejto miestnosti",
     "URL previews are enabled by default for participants in this room.": "Náhľady URL adries sú predvolene povolené pre členov tejto miestnosti.",
     "URL previews are disabled by default for participants in this room.": "Náhľady URL adries sú predvolene zakázané pre členov tejto miestnosti.",
     "Send": "Odoslať",
@@ -1263,7 +1261,6 @@
         "one": "%(count)s relácia",
         "other": "%(count)s relácie"
     },
-    "About homeservers": "O domovských serveroch",
     "<a>Add a topic</a> to help people know what it is about.": "<a>Pridajte tému</a>, aby ľudia vedeli, o čo ide.",
     "Attach files from chat or just drag and drop them anywhere in a room.": "Pripojte súbory z konverzácie alebo ich jednoducho pretiahnite kamkoľvek do miestnosti.",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tento súbor je <b>príliš veľký</b> na odoslanie. Limit veľkosti súboru je %(limit)s, ale tento súbor má %(sizeOfThisFile)s.",
@@ -1416,7 +1413,6 @@
     "Add a photo, so people can easily spot your room.": "Pridajte fotografiu, aby si ľudia mohli ľahko všimnúť vašu miestnosť.",
     "Enable encryption in settings.": "Zapnúť šifrovanie v nastaveniach.",
     "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "Vaše súkromné správy sú bežne šifrované, ale táto miestnosť nie je. Zvyčajne je to spôsobené nepodporovaným zariadením alebo použitou metódou, ako napríklad e-mailové pozvánky.",
-    "Specify a homeserver": "Zadajte domovský server",
     "See room timeline (devtools)": "Pozrite si časovú os miestnosti (devtools)",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Skúste sa posunúť nahor na časovej osi a pozrite sa, či tam nie sú nejaké skoršie.",
     "Upgrade required": "Vyžaduje sa aktualizácia",
@@ -1587,7 +1583,6 @@
     "Channel: <channelLink/>": "Kanál: <channelLink/>",
     "Workspace: <networkLink/>": "Pracovný priestor: <networkLink/>",
     "Dial pad": "Číselník",
-    "Invalid URL": "Neplatná adresa URL",
     "Decline All": "Zamietnuť všetky",
     "Topic: %(topic)s ": "Téma: %(topic)s ",
     "Update %(brand)s": "Aktualizovať %(brand)s",
@@ -1651,7 +1646,6 @@
     "Suggested Rooms": "Navrhované miestnosti",
     "Share invite link": "Zdieľať odkaz na pozvánku",
     "Click to copy": "Kliknutím skopírujete",
-    "We call the places where you can host your account 'homeservers'.": "Miesta, kde môžete hosťovať svoj účet, nazývame \" domovské servery\".",
     "Other rooms in %(spaceName)s": "Ostatné miestnosti v %(spaceName)s",
     "Other rooms": "Ostatné miestnosti",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Pri vytváraní tejto adresy došlo k chybe. Je možné, že ju server nepovoľuje alebo došlo k dočasnému zlyhaniu.",
@@ -1734,10 +1728,6 @@
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Čaká sa na overenie na vašom druhom zariadení, %(deviceName)s (%(deviceId)s)…",
     "Waiting for you to verify on your other device…": "Čaká sa na overenie na vašom druhom zariadení…",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zabudli ste alebo ste stratili všetky metódy obnovy? <a>Resetovať všetko</a>",
-    "Sign into your homeserver": "Prihláste sa do svojho domovského servera",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Použite preferovaný domovský server Matrixu, ak ho máte, alebo si vytvorte vlastný.",
-    "Other homeserver": "Iný domovský server",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org je najväčší verejný domovský server na svete, takže je vhodným miestom pre mnohých.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s a %(count)s ďalší",
         "other": "%(spaceName)s a %(count)s ďalší"
@@ -1981,7 +1971,6 @@
     "A browser extension is preventing the request.": "Požiadavke bráni rozšírenie prehliadača.",
     "The server (%(serverName)s) took too long to respond.": "Serveru (%(serverName)s) trvalo príliš dlho, kým odpovedal.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Váš server neodpovedá na niektoré vaše požiadavky. Nižšie sú uvedené niektoré z najpravdepodobnejších dôvodov.",
-    "Unable to validate homeserver": "Nie je možné overiť domovský server",
     "Your server does not support showing space hierarchies.": "Váš server nepodporuje zobrazovanie hierarchií priestoru.",
     "Failed to remove some rooms. Try again later": "Nepodarilo sa odstrániť niektoré miestnosti. Skúste to neskôr",
     "Mark as not suggested": "Označiť ako neodporúčaný",
@@ -2471,7 +2460,6 @@
     "Your current session is ready for secure messaging.": "Vaša aktuálna relácia je pripravená na bezpečné zasielanie správ.",
     "Text": "Text",
     "Create a link": "Vytvoriť odkaz",
-    "Force 15s voice broadcast chunk length": "Vynútiť 15s dĺžku sekcie hlasového vysielania",
     "Sign out of %(count)s sessions": {
         "one": "Odhlásiť sa z %(count)s relácie",
         "other": "Odhlásiť sa z %(count)s relácií"
@@ -2621,7 +2609,6 @@
     "Try using %(server)s": "Skúste použiť %(server)s",
     "User is not logged in": "Používateľ nie je prihlásený",
     "Allow fallback call assist server (%(server)s)": "Povoliť náhradnú službu hovorov asistenčného servera (%(server)s)",
-    "Enable new native OIDC flows (Under active development)": "Povoliť nové natívne toky OIDC (v štádiu aktívneho vývoja)",
     "Your server requires encryption to be disabled.": "Váš server vyžaduje vypnuté šifrovanie.",
     "Are you sure you wish to remove (delete) this event?": "Ste si istí, že chcete túto udalosť odstrániť (vymazať)?",
     "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstránením takýchto zmien v miestnosti by sa zmena mohla zvrátiť.",
@@ -2941,7 +2928,9 @@
         "join_beta_reload": "Vstupom do beta verzie sa %(brand)s znovu načíta.",
         "leave_beta": "Opustiť beta verziu",
         "join_beta": "Pripojte sa k beta verzii",
-        "notification_settings_beta_title": "Nastavenia oznámení"
+        "notification_settings_beta_title": "Nastavenia oznámení",
+        "voice_broadcast_force_small_chunks": "Vynútiť 15s dĺžku sekcie hlasového vysielania",
+        "oidc_native_flow": "Povoliť nové natívne toky OIDC (v štádiu aktívneho vývoja)"
     },
     "keyboard": {
         "home": "Domov",
@@ -3229,7 +3218,9 @@
             "timeline_image_size": "Veľkosť obrázku na časovej osi",
             "timeline_image_size_default": "Predvolené",
             "timeline_image_size_large": "Veľký"
-        }
+        },
+        "inline_url_previews_room_account": "Povoliť náhľady URL adries pre túto miestnosť (ovplyvňuje len vás)",
+        "inline_url_previews_room": "Predvolene povoliť náhľady URL adries pre členov tejto miestnosti"
     },
     "devtools": {
         "send_custom_account_data_event": "Odoslať vlastnú udalosť s údajmi o účte",
@@ -3949,7 +3940,7 @@
         "account_clash_previous_account": "Pokračovať s predošlým účtom",
         "log_in_new_account": "<a>Prihláste sa</a> do vášho nového účtu.",
         "registration_successful": "Úspešná registrácia",
-        "server_picker_title": "Hostiteľský účet na",
+        "server_picker_title": "Prihláste sa do svojho domovského servera",
         "server_picker_dialog_title": "Rozhodnite sa, kde bude váš účet hostovaný",
         "footer_powered_by_matrix": "používa protokol Matrix",
         "failed_homeserver_discovery": "Nepodarilo sa zistiť adresu domovského servera",
@@ -3986,7 +3977,15 @@
         "sign_in_or_register": "Prihlásiť sa alebo vytvoriť nový účet",
         "sign_in_or_register_description": "Použite váš existujúci účet alebo si vytvorte nový, aby ste mohli pokračovať.",
         "sign_in_description": "Ak chcete pokračovať, použite svoje konto.",
-        "register_action": "Vytvoriť účet"
+        "register_action": "Vytvoriť účet",
+        "server_picker_failed_validate_homeserver": "Nie je možné overiť domovský server",
+        "server_picker_invalid_url": "Neplatná adresa URL",
+        "server_picker_required": "Zadajte domovský server",
+        "server_picker_matrix.org": "Matrix.org je najväčší verejný domovský server na svete, takže je vhodným miestom pre mnohých.",
+        "server_picker_intro": "Miesta, kde môžete hosťovať svoj účet, nazývame \" domovské servery\".",
+        "server_picker_custom": "Iný domovský server",
+        "server_picker_explainer": "Použite preferovaný domovský server Matrixu, ak ho máte, alebo si vytvorte vlastný.",
+        "server_picker_learn_more": "O domovských serveroch"
     },
     "room_list": {
         "sort_unread_first": "Najprv ukázať miestnosti s neprečítanými správami",

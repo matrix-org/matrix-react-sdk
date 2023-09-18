@@ -902,8 +902,6 @@
     "Enable message search in encrypted rooms": "Aktifkan pencarian pesan di ruangan terenkripsi",
     "Show hidden events in timeline": "Tampilkan peristiwa tersembunyi di lini masa",
     "Enable widget screenshots on supported widgets": "Aktifkan tangkapan layar widget di widget yang didukung",
-    "Enable URL previews by default for participants in this room": "Aktifkan tampilan URL secara bawaan untuk anggota di ruangan ini",
-    "Enable URL previews for this room (only affects you)": "Aktifkan tampilan URL secara bawaan (hanya memengaruhi Anda)",
     "Never send encrypted messages to unverified sessions in this room from this session": "Jangan kirim pesan terenkripsi ke sesi yang belum diverifikasi di ruangan ini dari sesi ini",
     "Never send encrypted messages to unverified sessions from this session": "Jangan kirim pesan terenkripsi ke sesi yang belum diverifikasi dari sesi ini",
     "Send analytics data": "Kirim data analitik",
@@ -1457,15 +1455,7 @@
     "Your display name": "Nama tampilan Anda",
     "Any of the following data may be shared:": "Data berikut ini mungkin dibagikan:",
     "Cancel search": "Batalkan pencarian",
-    "Other homeserver": "Homeserver lainnya",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Anda akan meningkatkan ruangan ini dari <oldVersion /> ke <newVersion />.",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Gunakan homeserver Matrix yang Anda inginkan jika Anda punya satu, atau host sendiri.",
-    "We call the places where you can host your account 'homeservers'.": "Kami memanggil tempat-tempat yang Anda dapat menghost akun Anda sebagai 'homeserver'.",
-    "Sign into your homeserver": "Masuk ke homeserver Anda",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org adalah homeserver publik terbesar di dunia, jadi itu adalah tempat yang bagus untuk banyak orang.",
-    "Specify a homeserver": "Tentukan sebuah homeserver",
-    "Invalid URL": "URL tidak absah",
-    "Unable to validate homeserver": "Tidak dapat memvalidasi homeserver",
     "Recent changes that have not yet been received": "Perubahan terbaru yang belum diterima",
     "The server is not configured to indicate what the problem is (CORS).": "Server tidak diatur untuk menandakan apa masalahnya (CORS).",
     "A connection error occurred while trying to contact the server.": "Sebuah kesalahan koneksi terjadi ketika mencoba untuk menghubungi server.",
@@ -1791,7 +1781,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Jika Anda ingin, dicatat bahwa pesan-pesan Anda tidak dihapus, tetapi pengalaman pencarian mungkin terdegradasi untuk beberapa saat indeksnya sedang dibuat ulang",
     "You most likely do not want to reset your event index store": "Kemungkinan besar Anda tidak ingin mengatur ulang penyimpanan indeks peristiwa Anda",
     "Reset event store?": "Atur ulang penyimanan peristiwa?",
-    "About homeservers": "Tentang homeserver",
     "Continuing without email": "Melanjutkan tanpa email",
     "Data on this screen is shared with %(widgetDomain)s": "Data di layar ini dibagikan dengan %(widgetDomain)s",
     "Modal Widget": "Widget Modal",
@@ -2471,7 +2460,6 @@
     "Your current session is ready for secure messaging.": "Sesi Anda saat ini siap untuk perpesanan aman.",
     "Text": "Teks",
     "Create a link": "Buat sebuah tautan",
-    "Force 15s voice broadcast chunk length": "Paksakan panjang bagian siaran suara 15d",
     "Sign out of %(count)s sessions": {
         "one": "Keluar dari %(count)s sesi",
         "other": "Keluar dari %(count)s sesi"
@@ -2621,7 +2609,6 @@
     "Are you sure you wish to remove (delete) this event?": "Apakah Anda yakin ingin menghilangkan (menghapus) peristiwa ini?",
     "Note that removing room changes like this could undo the change.": "Diingat bahwa menghilangkan perubahan ruangan dapat mengurungkan perubahannya.",
     "User is not logged in": "Pengguna belum masuk",
-    "Enable new native OIDC flows (Under active development)": "Aktifkan alur OIDC native baru (Dalam pengembangan aktif)",
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Secara alternatif, Anda dapat menggunakan server publik di <server/>, tetapi ini tidak akan selalu tersedia, dan akan membagikan alamat IP Anda dengan server itu. Anda juga dapat mengelola ini di Pengaturan.",
     "Ask to join": "Bertanya untuk bergabung",
     "People cannot join unless access is granted.": "Orang-orang tidak dapat bergabung kecuali diberikan akses.",
@@ -2946,7 +2933,9 @@
         "join_beta_reload": "Bergabung dengan beta akan memuat ulang %(brand)s.",
         "leave_beta": "Tinggalkan beta",
         "join_beta": "Bergabung dengan beta",
-        "notification_settings_beta_title": "Pengaturan Notifikasi"
+        "notification_settings_beta_title": "Pengaturan Notifikasi",
+        "voice_broadcast_force_small_chunks": "Paksakan panjang bagian siaran suara 15d",
+        "oidc_native_flow": "Aktifkan alur OIDC native baru (Dalam pengembangan aktif)"
     },
     "keyboard": {
         "home": "Beranda",
@@ -3234,7 +3223,9 @@
             "timeline_image_size": "Ukuran gambar di lini masa",
             "timeline_image_size_default": "Bawaan",
             "timeline_image_size_large": "Besar"
-        }
+        },
+        "inline_url_previews_room_account": "Aktifkan tampilan URL secara bawaan (hanya memengaruhi Anda)",
+        "inline_url_previews_room": "Aktifkan tampilan URL secara bawaan untuk anggota di ruangan ini"
     },
     "devtools": {
         "send_custom_account_data_event": "Kirim peristiwa data akun kustom",
@@ -3954,7 +3945,7 @@
         "account_clash_previous_account": "Lanjutkan dengan akun sebelumnya",
         "log_in_new_account": "<a>Masuk</a> ke akun yang baru.",
         "registration_successful": "Pendaftaran Berhasil",
-        "server_picker_title": "Host akun di",
+        "server_picker_title": "Masuk ke homeserver Anda",
         "server_picker_dialog_title": "Putuskan di mana untuk menghost akun Anda",
         "footer_powered_by_matrix": "diberdayakan oleh Matrix",
         "failed_homeserver_discovery": "Gagal untuk melakukan penemuan homeserver",
@@ -3991,7 +3982,15 @@
         "sign_in_or_register": "Masuk atau Buat Akun",
         "sign_in_or_register_description": "Gunakan akun Anda atau buat akun baru untuk lanjut.",
         "sign_in_description": "Gunakan akun Anda untuk melanjutkan.",
-        "register_action": "Buat Akun"
+        "register_action": "Buat Akun",
+        "server_picker_failed_validate_homeserver": "Tidak dapat memvalidasi homeserver",
+        "server_picker_invalid_url": "URL tidak absah",
+        "server_picker_required": "Tentukan sebuah homeserver",
+        "server_picker_matrix.org": "Matrix.org adalah homeserver publik terbesar di dunia, jadi itu adalah tempat yang bagus untuk banyak orang.",
+        "server_picker_intro": "Kami memanggil tempat-tempat yang Anda dapat menghost akun Anda sebagai 'homeserver'.",
+        "server_picker_custom": "Homeserver lainnya",
+        "server_picker_explainer": "Gunakan homeserver Matrix yang Anda inginkan jika Anda punya satu, atau host sendiri.",
+        "server_picker_learn_more": "Tentang homeserver"
     },
     "room_list": {
         "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",

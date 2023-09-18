@@ -112,8 +112,6 @@
     "Please contact your homeserver administrator.": "Gelieve contact ip te neemn me den beheerder van je thuusserver.",
     "Mirror local video feed": "Lokoale videoanvoer ook elders ipsloan (spiegeln)",
     "Send analytics data": "Statistische gegeevns (analytics) verstuurn",
-    "Enable URL previews for this room (only affects you)": "URL-voorvertoniengn in dit gesprek inschoakeln (geldt alleene vo joun)",
-    "Enable URL previews by default for participants in this room": "URL-voorvertoniengn standoard vo de gebruukers in dit gesprek inschoakeln",
     "Enable widget screenshots on supported widgets": "Widget-schermafdrukkn inschoakeln ip oundersteunde widgets",
     "Show hidden events in timeline": "Verborgn gebeurtenissn ip de tydslyn weregeevn",
     "Waiting for response from server": "Wachtn ip antwoord van de server",
@@ -840,7 +838,9 @@
         },
         "appearance": {
             "timeline_image_size_default": "Standoard"
-        }
+        },
+        "inline_url_previews_room_account": "URL-voorvertoniengn in dit gesprek inschoakeln (geldt alleene vo joun)",
+        "inline_url_previews_room": "URL-voorvertoniengn standoard vo de gebruukers in dit gesprek inschoakeln"
     },
     "devtools": {
         "event_type": "Gebeurtenistype",

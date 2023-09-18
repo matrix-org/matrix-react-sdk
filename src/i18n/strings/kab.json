@@ -811,8 +811,6 @@
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Tzemreḍ ad talseḍ awennez i wawal-ik•im uffir, maca kra n tmahilin ur ttilint ara almi yuɣal-d uqeddac n tmagit. Ma mazal tettwaliḍ alɣu-a, senqed tawila-inek•inem neɣ nermes anedbal n uqeddac.",
     "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Tzemreḍ ad teqqneḍ, maca kra n tmahilin ur ttilint ara almi yuɣal-d uqeddac n tmagit. Ma mazal tettwaliḍ alɣu-a senqed tawila-inek•inem neɣ nermes anedbal n uqeddac.",
     "Never send encrypted messages to unverified sessions in this room from this session": "Ur ttazen ara akk iznan yettwawgelhen ɣer tɣimiyin ur nettusenqad ara seg tɣimit-a",
-    "Enable URL previews by default for participants in this room": "Rmed tiskanin n URL s wudem amezwer i yimttekkiyen deg texxamt-a",
-    "Enable URL previews for this room (only affects you)": "Rmed tiskanin n URL i texxamt-a (i ak·akem-yeɛnan kan)",
     "Enable widget screenshots on supported widgets": "Rmed tuṭṭfiwin n ugdil n uwiǧit deg yiwiǧiten yettwasferken",
     "Enter a new identity server": "Sekcem aqeddac n timagit amaynut",
     "No update available.": "Ulac lqem i yellan.",
@@ -1185,7 +1183,6 @@
     "Uzbekistan": "Uzbikistan",
     "Guyana": "Guyane",
     "Kuwait": "Koweït",
-    "Invalid URL": "Yir URL",
     "Venezuela": "Vinizwila",
     "Greenland": "Griland",
     "Jamaica": "Jamaïque",
@@ -1691,7 +1688,9 @@
             "font_size": "Tuɣzi n tsefsit",
             "custom_font_description": "Sbadu isem n tsefsit yettwasbedden ɣef unagraw-ik·im & %(brand)s ad yeɛreḍ ad t-isseqdec.",
             "timeline_image_size_default": "Amezwer"
-        }
+        },
+        "inline_url_previews_room_account": "Rmed tiskanin n URL i texxamt-a (i ak·akem-yeɛnan kan)",
+        "inline_url_previews_room": "Rmed tiskanin n URL s wudem amezwer i yimttekkiyen deg texxamt-a"
     },
     "devtools": {
         "event_type": "Anaw n tedyant",
@@ -2077,7 +2076,8 @@
         "soft_logout_intro_unsupported_auth": "Ur tessawḍeḍ ara ad teqqneḍ ɣer umiḍan-inek:inem. Ttxil-k·m nermes anedbal n uqeddac-ik·im agejdan i wugar n talɣut.",
         "sign_in_or_register": "Kcem ɣer neɣ rnu amiḍan",
         "sign_in_or_register_description": "Seqdec amiḍan-ik/im neɣ snulfu-d yiwen akken ad tkemmleḍ.",
-        "register_action": "Rnu amiḍan"
+        "register_action": "Rnu amiḍan",
+        "server_picker_invalid_url": "Yir URL"
     },
     "export_chat": {
         "messages": "Iznan"

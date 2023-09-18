@@ -220,8 +220,6 @@
     "Unignored user": "Atignorēts lietotājs",
     "You are no longer ignoring %(userId)s": "Tu vairāk neignorē %(userId)s",
     "Mirror local video feed": "Rādīt spoguļskatā kameras video",
-    "Enable URL previews for this room (only affects you)": "Iespējot URL priekšskatījumus šajā istabā (ietekmē tikai jūs pašu)",
-    "Enable URL previews by default for participants in this room": "Iespējot URL priekšskatījumus pēc noklusējuma visiem šīs istabas dalībniekiem",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Jūs nevarēsiet atcelt šīs izmaiņas pēc sava statusa pazemināšanas. Gadījumā, ja esat pēdējais priviliģētais lietotājs istabā, būs neiespējami atgūt šīs privilēģijas.",
     "Unignore": "Atcelt ignorēšanu",
     "Jump to read receipt": "Pāriet uz pēdējo skatīto ziņu",
@@ -476,7 +474,6 @@
     "Room Settings - %(roomName)s": "Istabas iestatījumi - %(roomName)s",
     "Room settings": "Istabas iestatījumi",
     "Share room": "Dalīties ar istabu",
-    "About homeservers": "Par bāzes serveriem",
     "Enable message search in encrypted rooms": "Iespējot ziņu meklēšanu šifrētās istabās",
     "Message search": "Ziņu meklēšana",
     "Cancel search": "Atcelt meklējumu",
@@ -1418,7 +1415,9 @@
             "font_size": "Šrifta izmērs",
             "custom_font_description": "Iestaties uz jūsu sistēmas instalēta fonta nosaukumu, kuru & %(brand)s vajadzētu mēģināt izmantot.",
             "timeline_image_size_default": "Noklusējuma"
-        }
+        },
+        "inline_url_previews_room_account": "Iespējot URL priekšskatījumus šajā istabā (ietekmē tikai jūs pašu)",
+        "inline_url_previews_room": "Iespējot URL priekšskatījumus pēc noklusējuma visiem šīs istabas dalībniekiem"
     },
     "devtools": {
         "event_type": "Notikuma tips",
@@ -1853,7 +1852,8 @@
         "create_account_prompt": "Pirmo reizi šeit? <a>Izveidojiet kontu</a>",
         "sign_in_or_register": "Pierakstīties vai izveidot kontu",
         "sign_in_or_register_description": "Izmantojiet esošu kontu vai izveidojiet jaunu, lai turpinātu.",
-        "register_action": "Izveidot kontu"
+        "register_action": "Izveidot kontu",
+        "server_picker_learn_more": "Par bāzes serveriem"
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",

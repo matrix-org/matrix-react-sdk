@@ -68,8 +68,6 @@
     "Please contact your homeserver administrator.": ".i .e'o ko tavla lo admine be le samtcise'u",
     "Mirror local video feed": "lo du'u xu kau minra lo diklo vidvi",
     "Send analytics data": "lo du'u xu kau benji lo se lanli datni",
-    "Enable URL previews for this room (only affects you)": "lo du'u xu kau do zmiku purzga lo se urli ne'i le kumfa pe'a",
-    "Enable URL previews by default for participants in this room": "lo zmiselcu'a pe lo du'u xu kau lo cmima be le kumfa pe'a cu zmiku purzga lo se urli",
     "Enable widget screenshots on supported widgets": "lo du'u xu kau kakne lo nu co'a pixra lo uidje kei lo nu kakne tu'a .ubu",
     "Waiting for response from server": ".i ca'o denpa lo nu le samtcise'u cu spuda",
     "Incorrect verification code": ".i na'e drani ke lacri lerpoi",
@@ -305,7 +303,9 @@
             "custom_font": "nu da pe le vanbi cu ci'artai",
             "custom_font_name": "cmene le ci'artai pe le vanbi",
             "timeline_image_size_default": "zmiselcu'a"
-        }
+        },
+        "inline_url_previews_room_account": "lo du'u xu kau do zmiku purzga lo se urli ne'i le kumfa pe'a",
+        "inline_url_previews_room": "lo zmiselcu'a pe lo du'u xu kau lo cmima be le kumfa pe'a cu zmiku purzga lo se urli"
     },
     "create_room": {
         "title_public_room": "nu cupra pa ve zilbe'i poi gubni",

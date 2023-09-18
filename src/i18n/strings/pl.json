@@ -218,8 +218,6 @@
     "You are no longer ignoring %(userId)s": "Nie ignorujesz już %(userId)s",
     "Send": "Wyślij",
     "Mirror local video feed": "Lustrzane odbicie wideo",
-    "Enable URL previews for this room (only affects you)": "Włącz podgląd URL dla tego pokoju (dotyczy tylko Ciebie)",
-    "Enable URL previews by default for participants in this room": "Włącz domyślny podgląd URL dla uczestników w tym pokoju",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Nie będziesz mógł cofnąć tej zmiany, ponieważ degradujesz swoje uprawnienia. Jeśli jesteś ostatnim użytkownikiem uprzywilejowanym w tym pokoju, nie będziesz mógł ich odzyskać.",
     "Unnamed room": "Pokój bez nazwy",
     "Sunday": "Niedziela",
@@ -1506,7 +1504,6 @@
     "No identity access token found": "Nie znaleziono tokena dostępu tożsamości",
     "Identity server not set": "Serwer tożsamości nie jest ustawiony",
     "Sorry — this call is currently full": "Przepraszamy — to połączenie jest już zapełnione",
-    "Force 15s voice broadcast chunk length": "Wymuś 15s długość kawałków dla transmisji głosowej",
     "Requires your server to support the stable version of MSC3827": "Wymaga od Twojego serwera wsparcia wersji stabilnej MSC3827",
     "unknown": "nieznane",
     "Unsent": "Niewysłane",
@@ -1636,8 +1633,6 @@
     "Add privileged users": "Dodaj użytkowników uprzywilejowanych",
     "Ignore (%(counter)s)": "Ignoruj (%(counter)s)",
     "Space home": "Przestrzeń główna",
-    "About homeservers": "O serwerach domowych",
-    "Other homeserver": "Inne serwery domowe",
     "Home options": "Opcje głównej",
     "Home is useful for getting an overview of everything.": "Strona główna to przydatne miejsce dla podsumowania wszystkiego.",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Dla najlepszego bezpieczeństwa, zweryfikuj swoje sesje i wyloguj się ze wszystkich sesji, których nie rozpoznajesz lub nie używasz.",
@@ -2381,13 +2376,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Jeśli kontynuujesz, żadne wiadomości nie zostaną usunięte, lecz jakość wyszukiwania może się obniżyć na kilka miesięcy, w których indeks się zregeneruje",
     "You most likely do not want to reset your event index store": "Najprawdopodobniej nie chcesz zresetować swojego indeksu banku wydarzeń",
     "Reset event store?": "Zresetować bank wydarzeń?",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Korzystaj z wybranego przez Ciebie serwera domowego Matrix lub hostuj swój własny.",
-    "We call the places where you can host your account 'homeservers'.": "Kontaktujemy się z miejscami, gdzie możesz założyć swoje konto tzw. 'serwery domowe'.",
-    "Sign into your homeserver": "Zaloguj się do swojego serwera domowego",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org jest największym publicznym serwerem domowym na świecie, najlepsze miejsce dla wielu.",
-    "Specify a homeserver": "Podaj serwer domowy",
-    "Invalid URL": "Nieprawidłowy URL",
-    "Unable to validate homeserver": "Nie można zweryfikować serwera domowego",
     "Recent changes that have not yet been received": "Najnowsze zmiany nie zostały jeszcze wprowadzone",
     "The server is not configured to indicate what the problem is (CORS).": "Serwer nie został skonfigurowany, aby wskazać co jest problemem (CORS).",
     "A connection error occurred while trying to contact the server.": "Wystąpił błąd połączenia podczas próby skontaktowania się z serwerem.",
@@ -2624,7 +2612,6 @@
     "Are you sure you wish to remove (delete) this event?": "Czy na pewno chcesz usunąć to wydarzenie?",
     "Your server requires encryption to be disabled.": "Twój serwer wymaga wyłączenia szyfrowania.",
     "Note that removing room changes like this could undo the change.": "Usuwanie zmian pokoju w taki sposób może cofnąć zmianę.",
-    "Enable new native OIDC flows (Under active development)": "Włącz natywne przepływy OIDC (W trakcie aktywnego rozwoju)",
     "Ask to join": "Poproś o dołączenie",
     "People cannot join unless access is granted.": "Osoby nie mogą dołączyć, dopóki nie otrzymają zezwolenia.",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>Aktualizacja:</strong>Uprościliśmy Ustawienia powiadomień, aby łatwiej je nawigować. Niektóre ustawienia niestandardowe nie są już tu widoczne, lecz wciąż aktywne. Jeśli kontynuujesz, niektóre Twoje ustawienia mogą się zmienić. <a>Dowiedz się więcej</a>",
@@ -2925,7 +2912,9 @@
         "join_beta_reload": "Dołączenie do bety, wczyta ponownie %(brand)s.",
         "leave_beta": "Opuść betę",
         "join_beta": "Dołącz do bety",
-        "notification_settings_beta_title": "Ustawienia powiadomień"
+        "notification_settings_beta_title": "Ustawienia powiadomień",
+        "voice_broadcast_force_small_chunks": "Wymuś 15s długość kawałków dla transmisji głosowej",
+        "oidc_native_flow": "Włącz natywne przepływy OIDC (W trakcie aktywnego rozwoju)"
     },
     "keyboard": {
         "home": "Strona główna",
@@ -3213,7 +3202,9 @@
             "timeline_image_size": "Rozmiar obrazu na osi czasu",
             "timeline_image_size_default": "Zwykły",
             "timeline_image_size_large": "Duży"
-        }
+        },
+        "inline_url_previews_room_account": "Włącz podgląd URL dla tego pokoju (dotyczy tylko Ciebie)",
+        "inline_url_previews_room": "Włącz domyślny podgląd URL dla uczestników w tym pokoju"
     },
     "devtools": {
         "send_custom_account_data_event": "Wyślij własne wydarzenie danych konta",
@@ -3931,7 +3922,7 @@
         "account_clash_previous_account": "Kontynuuj, używając poprzedniego konta",
         "log_in_new_account": "<a>Zaloguj się</a> do nowego konta.",
         "registration_successful": "Pomyślnie zarejestrowano",
-        "server_picker_title": "Przechowuj konto na",
+        "server_picker_title": "Zaloguj się do swojego serwera domowego",
         "server_picker_dialog_title": "Decyduj, gdzie Twoje konto jest hostowane",
         "footer_powered_by_matrix": "napędzany przez Matrix",
         "failed_homeserver_discovery": "Nie udało się rozpocząć odkrywania serwerów domowych",
@@ -3968,7 +3959,15 @@
         "sign_in_or_register": "Zaloguj się lub utwórz konto",
         "sign_in_or_register_description": "Użyj konta lub utwórz nowe, aby kontynuować.",
         "sign_in_description": "Użyj swojego konta, aby kontynuować.",
-        "register_action": "Utwórz konto"
+        "register_action": "Utwórz konto",
+        "server_picker_failed_validate_homeserver": "Nie można zweryfikować serwera domowego",
+        "server_picker_invalid_url": "Nieprawidłowy URL",
+        "server_picker_required": "Podaj serwer domowy",
+        "server_picker_matrix.org": "Matrix.org jest największym publicznym serwerem domowym na świecie, najlepsze miejsce dla wielu.",
+        "server_picker_intro": "Kontaktujemy się z miejscami, gdzie możesz założyć swoje konto tzw. 'serwery domowe'.",
+        "server_picker_custom": "Inne serwery domowe",
+        "server_picker_explainer": "Korzystaj z wybranego przez Ciebie serwera domowego Matrix lub hostuj swój własny.",
+        "server_picker_learn_more": "O serwerach domowych"
     },
     "room_list": {
         "sort_unread_first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",

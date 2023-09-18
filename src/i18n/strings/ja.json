@@ -119,8 +119,6 @@
     "Please contact your homeserver administrator.": "ホームサーバー管理者に連絡してください。",
     "Mirror local video feed": "ビデオ映像のミラー効果（反転）を有効にする",
     "Send analytics data": "分析データを送信",
-    "Enable URL previews for this room (only affects you)": "このルームのURLプレビューを有効にする（あなたにのみ適用）",
-    "Enable URL previews by default for participants in this room": "このルームの参加者のために既定でURLプレビューを有効にする",
     "Enable widget screenshots on supported widgets": "サポートされているウィジェットで、ウィジェットのスクリーンショットを有効にする",
     "Incorrect verification code": "認証コードが誤っています",
     "Phone": "電話",
@@ -1487,11 +1485,6 @@
     "Use email or phone to optionally be discoverable by existing contacts.": "後ほど、このメールアドレスまたは電話番号で連絡先に見つけてもらうことができるようになります。",
     "Use email to optionally be discoverable by existing contacts.": "後ほど、このメールアドレスで連絡先に見つけてもらうことができるようになります。",
     "Add an email to be able to reset your password.": "アカウント復旧用のメールアドレスを追加。",
-    "About homeservers": "ホームサーバーについて（英語）",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "好みのホームサーバーがあるか、自分でホームサーバーを運営している場合は、そちらをお使いください。",
-    "Other homeserver": "他のホームサーバー",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.orgは、公開されているホームサーバーで世界最大のものなので、多くの人に適しています。",
-    "We call the places where you can host your account 'homeservers'.": "Matrixでは、あなたが自分のアカウントを管理する場所を「ホームサーバー」と呼んでいます。",
     "Join millions for free on the largest public server": "最大の公開サーバーで、数百万人に無料で参加",
     "This homeserver would like to make sure you are not a robot.": "このホームサーバーは、あなたがロボットではないことの確認を求めています。",
     "Doesn't look like a valid email address": "メールアドレスの形式が正しくありません",
@@ -1585,7 +1578,6 @@
     "The following users may not exist": "次のユーザーは存在しない可能性があります",
     "To leave the beta, visit your settings.": "ベータ版の使用を終了するには、設定を開いてください。",
     "Option %(number)s": "選択肢%(number)s",
-    "Unable to validate homeserver": "ホームサーバーを認証できません",
     "Message preview": "メッセージのプレビュー",
     "Sent": "送信済",
     "You don't have permission to do this": "これを行う権限がありません",
@@ -1596,9 +1588,6 @@
     "Verification requested": "認証が必要です",
     "Unable to copy a link to the room to the clipboard.": "ルームのリンクをクリップボードにコピーできませんでした。",
     "Unable to copy room link": "ルームのリンクをコピーできません",
-    "Sign into your homeserver": "あなたのホームサーバーにサインイン",
-    "Specify a homeserver": "ホームサーバーを指定してください",
-    "Invalid URL": "不正なURL",
     "The server is offline.": "サーバーはオフラインです。",
     "New Recovery Method": "新しい復元方法",
     "No answer": "応答がありません",
@@ -2492,7 +2481,6 @@
     "Reset event store": "イベントストアをリセット",
     "You most likely do not want to reset your event index store": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "ルームのアップグレードは高度な操作です。バグや欠けている機能、セキュリティーの脆弱性などによってルームが不安定な場合に、アップデートを推奨します。",
-    "Force 15s voice broadcast chunk length": "音声配信のチャンク長を15秒に強制",
     "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "あなたのメールアドレスは、このホームサーバーのMatrix IDに関連付けられていないようです。",
     "Your server lacks native support, you must specify a proxy": "あなたのサーバーはネイティブでサポートしていません。プロクシーを指定してください",
     "Your server lacks native support": "あなたのサーバーはネイティブでサポートしていません",
@@ -2791,7 +2779,8 @@
         "leave_beta_reload": "ベータ版を終了すると%(brand)sをリロードします。",
         "join_beta_reload": "ベータ版に参加すると%(brand)sをリロードします。",
         "leave_beta": "ベータ版を終了",
-        "join_beta": "ベータ版に参加"
+        "join_beta": "ベータ版に参加",
+        "voice_broadcast_force_small_chunks": "音声配信のチャンク長を15秒に強制"
     },
     "keyboard": {
         "home": "ホーム",
@@ -3070,7 +3059,9 @@
             "timeline_image_size": "タイムライン上での画像のサイズ",
             "timeline_image_size_default": "既定値",
             "timeline_image_size_large": "大"
-        }
+        },
+        "inline_url_previews_room_account": "このルームのURLプレビューを有効にする（あなたにのみ適用）",
+        "inline_url_previews_room": "このルームの参加者のために既定でURLプレビューを有効にする"
     },
     "devtools": {
         "send_custom_account_data_event": "アカウントのユーザー定義のデータイベントを送信",
@@ -3755,7 +3746,7 @@
         "account_clash_previous_account": "以前のアカウントで続行",
         "log_in_new_account": "新しいアカウントに<a>ログイン</a>しましょう。",
         "registration_successful": "登録しました",
-        "server_picker_title": "アカウントを以下のホームサーバーでホスト",
+        "server_picker_title": "あなたのホームサーバーにサインイン",
         "server_picker_dialog_title": "アカウントを管理する場所を決めましょう",
         "footer_powered_by_matrix": "powered by Matrix",
         "failed_homeserver_discovery": "ホームサーバーを発見できませんでした",
@@ -3790,7 +3781,15 @@
         "create_account_prompt": "初めてですか？<a>アカウントを作成しましょう</a>",
         "sign_in_or_register": "サインインするか、アカウントを作成してください",
         "sign_in_or_register_description": "続行するには、作成済のアカウントを使用するか、新しいアカウントを作成してください。",
-        "register_action": "アカウントを作成"
+        "register_action": "アカウントを作成",
+        "server_picker_failed_validate_homeserver": "ホームサーバーを認証できません",
+        "server_picker_invalid_url": "不正なURL",
+        "server_picker_required": "ホームサーバーを指定してください",
+        "server_picker_matrix.org": "Matrix.orgは、公開されているホームサーバーで世界最大のものなので、多くの人に適しています。",
+        "server_picker_intro": "Matrixでは、あなたが自分のアカウントを管理する場所を「ホームサーバー」と呼んでいます。",
+        "server_picker_custom": "他のホームサーバー",
+        "server_picker_explainer": "好みのホームサーバーがあるか、自分でホームサーバーを運営している場合は、そちらをお使いください。",
+        "server_picker_learn_more": "ホームサーバーについて（英語）"
     },
     "room_list": {
         "sort_unread_first": "未読メッセージのあるルームを最初に表示",

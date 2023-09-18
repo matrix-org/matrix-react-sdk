@@ -72,8 +72,6 @@
     "Not a valid %(brand)s keyfile": "Невалиден файл с ключ за %(brand)s",
     "Authentication check failed: incorrect password?": "Неуспешна автентикация: неправилна парола?",
     "Mirror local video feed": "Показвай ми огледално моя видео образ",
-    "Enable URL previews for this room (only affects you)": "Включване на URL прегледи за тази стая (засяга само Вас)",
-    "Enable URL previews by default for participants in this room": "Включване по подразбиране на URL прегледи за участници в тази стая",
     "Incorrect verification code": "Неправилен код за потвърждение",
     "Phone": "Телефон",
     "No display name": "Няма име",
@@ -1791,7 +1789,9 @@
             "font_size": "Размер на шрифта",
             "custom_font_description": "Настройте името на шрифт инсталиран в системата и %(brand)s ще се опита да го използва.",
             "timeline_image_size_default": "По подразбиране"
-        }
+        },
+        "inline_url_previews_room_account": "Включване на URL прегледи за тази стая (засяга само Вас)",
+        "inline_url_previews_room": "Включване по подразбиране на URL прегледи за участници в тази стая"
     },
     "devtools": {
         "event_type": "Вид на събитие",

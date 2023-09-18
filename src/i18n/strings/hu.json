@@ -239,8 +239,6 @@
     "Room Notification": "Szoba értesítések",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Vegye figyelembe, hogy a(z) %(hs)s kiszolgálóra jelentkezik be, és nem a matrix.org-ra.",
     "Restricted": "Korlátozott",
-    "Enable URL previews for this room (only affects you)": "Webcím-előnézetek engedélyezése ebben a szobában (csak Önt érinti)",
-    "Enable URL previews by default for participants in this room": "Webcím-előnézetek alapértelmezett engedélyezése a szobatagok számára",
     "URL previews are enabled by default for participants in this room.": "Az URL előnézetek alapértelmezetten engedélyezve vannak a szobában jelenlévőknek.",
     "URL previews are disabled by default for participants in this room.": "Az URL előnézet alapértelmezetten tiltva van a szobában jelenlévőknek.",
     "%(duration)ss": "%(duration)s mp",
@@ -1433,10 +1431,6 @@
     "Decline All": "Összes elutasítása",
     "This widget would like to:": "A kisalkalmazás ezeket szeretné:",
     "Approve widget permissions": "Kisalkalmazás-engedélyek elfogadása",
-    "Sign into your homeserver": "Bejelentkezés a Matrix-kiszolgálójába",
-    "Specify a homeserver": "Matrix-kiszolgáló megadása",
-    "Invalid URL": "Érvénytelen webcím",
-    "Unable to validate homeserver": "A Matrix-kiszolgálót nem lehet ellenőrizni",
     "Continuing without email": "Folytatás e-mail-cím nélkül",
     "Reason (optional)": "Ok (opcionális)",
     "You've reached the maximum number of simultaneous calls.": "Elérte az egyidejű hívások maximális számát.",
@@ -1446,9 +1440,6 @@
     "Add an email to be able to reset your password.": "Adj meg egy e-mail címet, hogy vissza tudd állítani a jelszavad.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Csak egy figyelmeztetés, ha nem ad meg e-mail-címet, és elfelejti a jelszavát, akkor <b>véglegesen elveszíti a hozzáférést a fiókjához</b>.",
     "Server Options": "Szerver lehetőségek",
-    "About homeservers": "A Matrix-kiszolgálókról",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Használja a választott Matrix-kiszolgálóját, ha van ilyenje, vagy üzemeltessen egy sajátot.",
-    "Other homeserver": "Másik Matrix-kiszolgáló",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
         "one": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között, ehhez %(size)s helyet használ %(rooms)s szoba üzeneteihez.",
         "other": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között, ehhez %(size)s helyet használ %(rooms)s szoba üzeneteihez."
@@ -1882,8 +1873,6 @@
     "Thread options": "Üzenetszál beállításai",
     "Shows all threads you've participated in": "Minden üzenetszál megjelenítése, amelyben részt vesz",
     "You're all caught up": "Minden elolvasva",
-    "We call the places where you can host your account 'homeservers'.": "Matrix-kiszolgálóknak nevezzük azokat a helyeket, ahol fiókot lehet létrehozni.",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "A matrix.org a legnagyobb nyilvános Matrix-kiszolgáló a világon, és sok felhasználónak megfelelő választás.",
     "If you can't see who you're looking for, send them your invite link below.": "Ha nem található a keresett személy, küldje el az alábbi hivatkozást neki.",
     "Add option": "Lehetőség hozzáadása",
     "Write an option": "Adjon meg egy lehetőséget",
@@ -2471,7 +2460,6 @@
     "Mark as read": "Megjelölés olvasottként",
     "Text": "Szöveg",
     "Create a link": "Hivatkozás készítése",
-    "Force 15s voice broadcast chunk length": "Hangközvetítések 15 másodperces darabolásának kényszerítése",
     "Sign out of %(count)s sessions": {
         "one": "Kijelentkezés %(count)s munkamenetből",
         "other": "Kijelentkezés %(count)s munkamenetből"
@@ -2869,7 +2857,8 @@
         "leave_beta_reload": "A béta kikapcsolása újratölti ezt: %(brand)s.",
         "join_beta_reload": "A béta funkció bekapcsolása újratölti ezt: %(brand)s.",
         "leave_beta": "Béta kikapcsolása",
-        "join_beta": "Csatlakozás béta lehetőségekhez"
+        "join_beta": "Csatlakozás béta lehetőségekhez",
+        "voice_broadcast_force_small_chunks": "Hangközvetítések 15 másodperces darabolásának kényszerítése"
     },
     "keyboard": {
         "home": "Kezdőlap",
@@ -3155,7 +3144,9 @@
             "timeline_image_size": "Képméret az idővonalon",
             "timeline_image_size_default": "Alapértelmezett",
             "timeline_image_size_large": "Nagy"
-        }
+        },
+        "inline_url_previews_room_account": "Webcím-előnézetek engedélyezése ebben a szobában (csak Önt érinti)",
+        "inline_url_previews_room": "Webcím-előnézetek alapértelmezett engedélyezése a szobatagok számára"
     },
     "devtools": {
         "send_custom_account_data_event": "Egyedi fiókadat esemény küldése",
@@ -3854,7 +3845,7 @@
         "account_clash_previous_account": "Folytatás az előző fiókkal",
         "log_in_new_account": "<a>Belépés</a> az új fiókodba.",
         "registration_successful": "Regisztráció sikeres",
-        "server_picker_title": "Fiók létrehozása itt:",
+        "server_picker_title": "Bejelentkezés a Matrix-kiszolgálójába",
         "server_picker_dialog_title": "Döntse el, hol szeretne fiókot létrehozni",
         "footer_powered_by_matrix": "a gépházban: Matrix",
         "failed_homeserver_discovery": "A Matrix-kiszolgáló felderítése sikertelen",
@@ -3890,7 +3881,15 @@
         "sign_in_or_register": "Bejelentkezés vagy fiók létrehozása",
         "sign_in_or_register_description": "A folytatáshoz használja a fiókját, vagy hozzon létre egy újat.",
         "sign_in_description": "Használja a fiókját a továbblépéshez.",
-        "register_action": "Fiók létrehozása"
+        "register_action": "Fiók létrehozása",
+        "server_picker_failed_validate_homeserver": "A Matrix-kiszolgálót nem lehet ellenőrizni",
+        "server_picker_invalid_url": "Érvénytelen webcím",
+        "server_picker_required": "Matrix-kiszolgáló megadása",
+        "server_picker_matrix.org": "A matrix.org a legnagyobb nyilvános Matrix-kiszolgáló a világon, és sok felhasználónak megfelelő választás.",
+        "server_picker_intro": "Matrix-kiszolgálóknak nevezzük azokat a helyeket, ahol fiókot lehet létrehozni.",
+        "server_picker_custom": "Másik Matrix-kiszolgáló",
+        "server_picker_explainer": "Használja a választott Matrix-kiszolgálóját, ha van ilyenje, vagy üzemeltessen egy sajátot.",
+        "server_picker_learn_more": "A Matrix-kiszolgálókról"
     },
     "room_list": {
         "sort_unread_first": "Olvasatlan üzeneteket tartalmazó szobák megjelenítése elől",

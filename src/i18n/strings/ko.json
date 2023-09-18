@@ -266,8 +266,6 @@
     "Demote": "강등",
     "Demote yourself?": "자신을 강등하시겠습니까?",
     "This room is not public. You will not be able to rejoin without an invite.": "이 방은 공개되지 않았습니다. 초대 없이는 다시 들어올 수 없습니다.",
-    "Enable URL previews for this room (only affects you)": "이 방에서 URL 미리보기 사용하기 (오직 나만 영향을 받음)",
-    "Enable URL previews by default for participants in this room": "이 방에 참여한 모두에게 기본으로 URL 미리보기 사용하기",
     "Enable widget screenshots on supported widgets": "지원되는 위젯에 대해 위젯 스크린샷 사용하기",
     "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.": "누군가 메시지에 URL을 넣으면, URL 미리 보기로 웹사이트에서 온 제목, 설명, 그리고 이미지 등 그 링크에 대한 정보가 표시됩니다.",
     "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.": "지금 이 방처럼, 암호화된 방에서는 홈서버 (미리 보기가 만들어지는 곳)에서 이 방에서 보여지는 링크에 대해 알 수 없도록 기본으로 URL 미리 보기가 꺼집니다.",
@@ -1152,7 +1150,9 @@
             "subheading": "모습 설정은 이 %(brand)s 세션에만 영향을 끼칩니다.",
             "match_system_theme": "시스템 테마 사용",
             "timeline_image_size_default": "기본"
-        }
+        },
+        "inline_url_previews_room_account": "이 방에서 URL 미리보기 사용하기 (오직 나만 영향을 받음)",
+        "inline_url_previews_room": "이 방에 참여한 모두에게 기본으로 URL 미리보기 사용하기"
     },
     "devtools": {
         "event_type": "이벤트 종류",

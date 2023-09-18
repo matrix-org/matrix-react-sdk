@@ -546,8 +546,6 @@
     "How fast should messages be downloaded.": "ما مدى سرعة تنزيل الرسائل.",
     "Enable message search in encrypted rooms": "تمكين البحث عن الرسائل في الغرف المشفرة",
     "Show hidden events in timeline": "إظهار الأحداث المخفية في الجدول الزمني",
-    "Enable URL previews by default for participants in this room": "تمكين معاينة الروابط أصلاً لأي مشارك في هذه الغرفة",
-    "Enable URL previews for this room (only affects you)": "تمكين معاينة الروابط لهذه الغرفة (يؤثر عليك فقط)",
     "Never send encrypted messages to unverified sessions in this room from this session": "لا ترسل أبدًا رسائل مشفرة إلى اتصالات التي لم يتم التحقق منها في هذه الغرفة من هذا الاتصال",
     "Never send encrypted messages to unverified sessions from this session": "لا ترسل أبدًا رسائل مشفرة إلى اتصالات لم يتم التحقق منها من هذا الاتصال",
     "Send analytics data": "إرسال بيانات التحليلات",
@@ -1088,7 +1086,9 @@
             "font_size": "حجم الخط",
             "custom_font_description": "قم بتعيين اسم الخط المثبت على نظامك وسيحاول %(brand)s استخدامه.",
             "timeline_image_size_default": "المبدئي"
-        }
+        },
+        "inline_url_previews_room_account": "تمكين معاينة الروابط لهذه الغرفة (يؤثر عليك فقط)",
+        "inline_url_previews_room": "تمكين معاينة الروابط أصلاً لأي مشارك في هذه الغرفة"
     },
     "devtools": {
         "state_key": "مفتاح الحالة",

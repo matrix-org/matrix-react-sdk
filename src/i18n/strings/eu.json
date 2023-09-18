@@ -222,8 +222,6 @@
     "Restricted": "Mugatua",
     "Send": "Bidali",
     "Mirror local video feed": "Bikoiztu tokiko bideo jarioa",
-    "Enable URL previews for this room (only affects you)": "Gaitu URLen aurrebista gela honetan (zuretzat bakarrik aldatuko duzu)",
-    "Enable URL previews by default for participants in this room": "Gaitu URLen aurrebista lehenetsita gela honetako partaideentzat",
     "%(duration)ss": "%(duration)s s",
     "%(duration)sm": "%(duration)s m",
     "%(duration)sh": "%(duration)s h",
@@ -1356,7 +1354,9 @@
             "custom_theme_add_button": "Gehitu azala",
             "font_size": "Letra-tamaina",
             "timeline_image_size_default": "Lehenetsia"
-        }
+        },
+        "inline_url_previews_room_account": "Gaitu URLen aurrebista gela honetan (zuretzat bakarrik aldatuko duzu)",
+        "inline_url_previews_room": "Gaitu URLen aurrebista lehenetsita gela honetako partaideentzat"
     },
     "devtools": {
         "event_type": "Gertaera mota",

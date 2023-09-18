@@ -566,8 +566,6 @@
     "Enable message search in encrypted rooms": "אפשר חיפוש הודעות בחדרים מוצפנים",
     "Show hidden events in timeline": "הצג ארועים מוסתרים בקו הזמן",
     "Enable widget screenshots on supported widgets": "אפשר צילומי מסך של ישומונים עבור ישומונים נתמכים",
-    "Enable URL previews by default for participants in this room": "אפשר לחברים בחדר זה לצפות בתצוגת קישורים",
-    "Enable URL previews for this room (only affects you)": "הראה תצוגה מקדימה של קישורים בחדר זה (משפיע רק עליכם)",
     "Never send encrypted messages to unverified sessions in this room from this session": "לעולם אל תשלח הודעות מוצפנות אל התחברות שאינה מאומתת בחדר זה, מהתחברות זו",
     "Never send encrypted messages to unverified sessions from this session": "לעולם אל תשלח הודעות מוצפנות אל התחברות שאינה מאומתת מהתחברות זו",
     "Send analytics data": "שלח מידע אנליטי",
@@ -1236,13 +1234,6 @@
     "Send Logs": "שלח יומנים",
     "Clear Storage and Sign Out": "נקה אחסון והתנתק",
     "Sign out and remove encryption keys?": "להתנתק ולהסיר מפתחות הצפנה?",
-    "About homeservers": "אודות שרתי בית",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "השתמש בשרת הבית המועדף על מטריקס אם יש לך כזה, או מארח משלך.",
-    "Other homeserver": "שרת בית אחר",
-    "Sign into your homeserver": "היכנס לשרת הבית שלך",
-    "Specify a homeserver": "ציין שרת בית",
-    "Invalid URL": "כתובת אתר לא חוקית",
-    "Unable to validate homeserver": "לא ניתן לאמת את שרת הבית",
     "Recent changes that have not yet been received": "שינויים אחרונים שטרם התקבלו",
     "The server is not configured to indicate what the problem is (CORS).": "השרת אינו מוגדר לציין מהי הבעיה (CORS).",
     "A connection error occurred while trying to contact the server.": "אירעה שגיאת חיבור בעת ניסיון ליצור קשר עם השרת.",
@@ -2227,7 +2218,9 @@
             "timeline_image_size": "גודל תמונה בציר הזמן",
             "timeline_image_size_default": "ברירת מחדל",
             "timeline_image_size_large": "גדול"
-        }
+        },
+        "inline_url_previews_room_account": "הראה תצוגה מקדימה של קישורים בחדר זה (משפיע רק עליכם)",
+        "inline_url_previews_room": "אפשר לחברים בחדר זה לצפות בתצוגת קישורים"
     },
     "devtools": {
         "event_type": "סוג ארוע",
@@ -2774,7 +2767,7 @@
         "account_clash_previous_account": "המשך בחשבון הקודם",
         "log_in_new_account": "<a> היכנס </a> לחשבונך החדש.",
         "registration_successful": "ההרשמה בוצעה בהצלחה",
-        "server_picker_title": "חשבון מארח ב",
+        "server_picker_title": "היכנס לשרת הבית שלך",
         "server_picker_dialog_title": "החלט היכן מתארח חשבונך",
         "footer_powered_by_matrix": "מופעל ע\"י Matrix",
         "failed_homeserver_discovery": "נכשל גילוי שרת הבית",
@@ -2797,7 +2790,13 @@
         "create_account_prompt": "חדש פה? <a> צור חשבון </a>",
         "sign_in_or_register": "התחברו או צרו חשבון",
         "sign_in_or_register_description": "השתמשו בחשבונכם או צרו חשבון חדש.",
-        "register_action": "משתמש חדש"
+        "register_action": "משתמש חדש",
+        "server_picker_failed_validate_homeserver": "לא ניתן לאמת את שרת הבית",
+        "server_picker_invalid_url": "כתובת אתר לא חוקית",
+        "server_picker_required": "ציין שרת בית",
+        "server_picker_custom": "שרת בית אחר",
+        "server_picker_explainer": "השתמש בשרת הבית המועדף על מטריקס אם יש לך כזה, או מארח משלך.",
+        "server_picker_learn_more": "אודות שרתי בית"
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",

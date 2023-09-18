@@ -216,8 +216,6 @@
     "Unignored user": "Usuário desbloqueado",
     "Send": "Enviar",
     "Mirror local video feed": "Espelhar o feed de vídeo local",
-    "Enable URL previews for this room (only affects you)": "Ativar, para esta sala, a visualização de links (só afeta você)",
-    "Enable URL previews by default for participants in this room": "Ativar, para todos os participantes desta sala, a visualização de links",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Você não poderá desfazer essa alteração, já que está rebaixando sua própria permissão. Se você for a última pessoa nesta sala, será impossível recuperar a permissão atual.",
     "Unignore": "Desbloquear",
     "Jump to read receipt": "Ir para a confirmação de leitura",
@@ -1437,17 +1435,10 @@
     "Use email or phone to optionally be discoverable by existing contacts.": "Seja encontrado por seus contatos a partir de um e-mail ou número de telefone.",
     "Add an email to be able to reset your password.": "Adicione um e-mail para depois poder redefinir sua senha.",
     "That phone number doesn't look quite right, please check and try again": "Esse número de telefone não é válido, verifique e tente novamente",
-    "About homeservers": "Sobre os servidores locais",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Use o seu servidor local Matrix preferido, ou hospede o seu próprio servidor.",
-    "Other homeserver": "Outro servidor local",
-    "Sign into your homeserver": "Faça login em seu servidor local",
-    "Specify a homeserver": "Digite um servidor local",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso: se você não adicionar um e-mail e depois esquecer sua senha, poderá <b>perder permanentemente o acesso à sua conta</b>.",
     "Continuing without email": "Continuar sem e-mail",
     "Server Options": "Opções do servidor",
     "Reason (optional)": "Motivo (opcional)",
-    "Invalid URL": "URL inválido",
-    "Unable to validate homeserver": "Não foi possível validar o servidor local",
     "Hold": "Pausar",
     "Resume": "Retomar",
     "You've reached the maximum number of simultaneous calls.": "Você atingiu o número máximo de chamadas simultâneas.",
@@ -2352,7 +2343,9 @@
             "timeline_image_size": "Tamanho da imagem na linha do tempo",
             "timeline_image_size_default": "Padrão",
             "timeline_image_size_large": "Grande"
-        }
+        },
+        "inline_url_previews_room_account": "Ativar, para esta sala, a visualização de links (só afeta você)",
+        "inline_url_previews_room": "Ativar, para todos os participantes desta sala, a visualização de links"
     },
     "devtools": {
         "event_type": "Tipo do Evento",
@@ -2903,7 +2896,7 @@
         "account_clash_previous_account": "Continuar com a conta anterior",
         "log_in_new_account": "<a>Entrar</a> em sua nova conta.",
         "registration_successful": "Registro bem-sucedido",
-        "server_picker_title": "Hospedar conta em",
+        "server_picker_title": "Faça login em seu servidor local",
         "server_picker_dialog_title": "Decida onde a sua conta será hospedada",
         "footer_powered_by_matrix": "oferecido por Matrix",
         "failed_homeserver_discovery": "Falha ao executar a descoberta do homeserver",
@@ -2924,7 +2917,13 @@
         "create_account_prompt": "Novo por aqui? <a>Crie uma conta</a>",
         "sign_in_or_register": "Faça login ou crie uma conta",
         "sign_in_or_register_description": "Use sua conta ou crie uma nova para continuar.",
-        "register_action": "Criar Conta"
+        "register_action": "Criar Conta",
+        "server_picker_failed_validate_homeserver": "Não foi possível validar o servidor local",
+        "server_picker_invalid_url": "URL inválido",
+        "server_picker_required": "Digite um servidor local",
+        "server_picker_custom": "Outro servidor local",
+        "server_picker_explainer": "Use o seu servidor local Matrix preferido, ou hospede o seu próprio servidor.",
+        "server_picker_learn_more": "Sobre os servidores locais"
     },
     "room_list": {
         "sort_unread_first": "Mostrar salas não lidas em primeiro",

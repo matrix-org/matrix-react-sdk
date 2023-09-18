@@ -287,8 +287,6 @@
     "Something went wrong!": "Något gick fel!",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Du kommer inte att kunna ångra den här ändringen eftersom du degraderar dig själv. Om du är den sista privilegierade användaren i rummet blir det omöjligt att återfå behörigheter.",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Du kommer inte att kunna ångra den här ändringen eftersom du höjer användaren till samma behörighetsnivå som dig själv.",
-    "Enable URL previews for this room (only affects you)": "Aktivera URL-förhandsgranskning för detta rum (påverkar bara dig)",
-    "Enable URL previews by default for participants in this room": "Aktivera URL-förhandsgranskning som standard för deltagare i detta rum",
     "You have <a>enabled</a> URL previews by default.": "Du har <a>aktiverat</a> URL-förhandsgranskning som förval.",
     "You have <a>disabled</a> URL previews by default.": "Du har <a>inaktiverat</a> URL-förhandsgranskning som förval.",
     "URL previews are enabled by default for participants in this room.": "URL-förhandsgranskning är aktiverat som förval för deltagare i detta rum.",
@@ -1443,13 +1441,6 @@
     "Decline All": "Neka alla",
     "This widget would like to:": "Den här widgeten skulle vilja:",
     "Approve widget permissions": "Godta widgetbehörigheter",
-    "About homeservers": "Om hemservrar",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Använd din föredragna hemserver om du har en, eller driv din egen.",
-    "Other homeserver": "Annan hemserver",
-    "Sign into your homeserver": "Logga in på din hemserver",
-    "Specify a homeserver": "Specificera en hemserver",
-    "Invalid URL": "Ogiltig URL",
-    "Unable to validate homeserver": "Kan inte validera hemservern",
     "You've reached the maximum number of simultaneous calls.": "Du har nått det maximala antalet samtidiga samtal.",
     "Too Many Calls": "För många samtal",
     "You have no visible notifications.": "Du har inga synliga aviseringar.",
@@ -1865,8 +1856,6 @@
     "You're all caught up": "Du är ikapp",
     "Copy link to thread": "Kopiera länk till tråd",
     "Thread options": "Trådalternativ",
-    "We call the places where you can host your account 'homeservers'.": "Vi kallar platser du kan ha ditt konto på för 'hemservrar'.",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org är den största offentliga hemservern i världen, så den är en bra plats för många.",
     "If you can't see who you're looking for, send them your invite link below.": "Om du inte ser den du letar efter, skicka din inbjudningslänk nedan till denne.",
     "Add option": "Lägg till alternativ",
     "Write an option": "Skriv ett alternativ",
@@ -2475,7 +2464,6 @@
     "Verify your current session for enhanced secure messaging.": "Verifiera din nuvarande session för förbättrade säkra meddelanden.",
     "Your current session is ready for secure messaging.": "Din nuvarande session är redo för säkra meddelanden.",
     "Sign out of all other sessions (%(otherSessionsCount)s)": "Logga ut ur alla andra sessioner (%(otherSessionsCount)s)",
-    "Force 15s voice broadcast chunk length": "Tvinga dellängd på 15s för röstsändning",
     "Yes, end my recording": "Ja, avsluta min inspelning",
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Om du börjar lyssna på den här direktsändningen så kommer din nuvarande direktsändningsinspelning att avslutas.",
     "Listen to live broadcast?": "Lyssna på direktsändning?",
@@ -2621,7 +2609,6 @@
     "Match default setting": "Matcha förvalsinställning",
     "Mute room": "Tysta rum",
     "Unable to find event at that date": "Kunde inte hitta händelse vid det datumet",
-    "Enable new native OIDC flows (Under active development)": "Aktivera nya inbyggda OIDC-flöden (Under aktiv utveckling)",
     "Your server requires encryption to be disabled.": "Din server kräver att kryptering är inaktiverat.",
     "Are you sure you wish to remove (delete) this event?": "Är du säker på att du vill ta bort (radera) den här händelsen?",
     "Note that removing room changes like this could undo the change.": "Observera att om du tar bort rumsändringar som den här kanske det ångrar ändringen.",
@@ -2897,7 +2884,9 @@
         "join_beta_reload": "Att gå med i betan kommer att ladda om %(brand)s.",
         "leave_beta": "Lämna betan",
         "join_beta": "Gå med i betan",
-        "notification_settings_beta_title": "Aviseringsinställningar"
+        "notification_settings_beta_title": "Aviseringsinställningar",
+        "voice_broadcast_force_small_chunks": "Tvinga dellängd på 15s för röstsändning",
+        "oidc_native_flow": "Aktivera nya inbyggda OIDC-flöden (Under aktiv utveckling)"
     },
     "keyboard": {
         "home": "Hem",
@@ -3185,7 +3174,9 @@
             "timeline_image_size": "Bildstorlek i tidslinjen",
             "timeline_image_size_default": "Standard",
             "timeline_image_size_large": "Stor"
-        }
+        },
+        "inline_url_previews_room_account": "Aktivera URL-förhandsgranskning för detta rum (påverkar bara dig)",
+        "inline_url_previews_room": "Aktivera URL-förhandsgranskning som standard för deltagare i detta rum"
     },
     "devtools": {
         "send_custom_account_data_event": "Skicka event med anpassad kontodata",
@@ -3890,7 +3881,7 @@
         "account_clash_previous_account": "Fortsätt med de tidigare kontot",
         "log_in_new_account": "<a>Logga in</a> i ditt nya konto.",
         "registration_successful": "Registrering lyckades",
-        "server_picker_title": "Skapa kontot på",
+        "server_picker_title": "Logga in på din hemserver",
         "server_picker_dialog_title": "Bestäm var ditt konto finns",
         "footer_powered_by_matrix": "drivs av Matrix",
         "failed_homeserver_discovery": "Misslyckades att genomföra hemserverupptäckt",
@@ -3926,7 +3917,15 @@
         "sign_in_or_register": "Logga in eller skapa konto",
         "sign_in_or_register_description": "Använd ditt konto eller skapa ett nytt för att fortsätta.",
         "sign_in_description": "Använd ditt konto för att fortsätta.",
-        "register_action": "Skapa konto"
+        "register_action": "Skapa konto",
+        "server_picker_failed_validate_homeserver": "Kan inte validera hemservern",
+        "server_picker_invalid_url": "Ogiltig URL",
+        "server_picker_required": "Specificera en hemserver",
+        "server_picker_matrix.org": "Matrix.org är den största offentliga hemservern i världen, så den är en bra plats för många.",
+        "server_picker_intro": "Vi kallar platser du kan ha ditt konto på för 'hemservrar'.",
+        "server_picker_custom": "Annan hemserver",
+        "server_picker_explainer": "Använd din föredragna hemserver om du har en, eller driv din egen.",
+        "server_picker_learn_more": "Om hemservrar"
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",

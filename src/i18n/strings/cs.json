@@ -202,8 +202,6 @@
     "Missing user_id in request": "V zadání chybí user_id",
     "Not a valid %(brand)s keyfile": "Neplatný soubor s klíčem %(brand)s",
     "Mirror local video feed": "Zrcadlit lokání video",
-    "Enable URL previews for this room (only affects you)": "Povolit náhledy URL adres pro tuto místnost (ovlivňuje pouze vás)",
-    "Enable URL previews by default for participants in this room": "Povolit náhledy URL adres pro členy této místnosti jako výchozí",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -1294,15 +1292,8 @@
     "Confirm encryption setup": "Potvrďte nastavení šifrování",
     "Unable to set up keys": "Nepovedlo se nastavit klíče",
     "Save your Security Key": "Uložte svůj bezpečnostní klíč",
-    "About homeservers": "O domovských serverech",
-    "Use your preferred Matrix homeserver if you have one, or host your own.": "Použijte svůj preferovaný domovský server Matrix, pokud ho máte, nebo hostujte svůj vlastní.",
-    "Other homeserver": "Jiný domovský server",
-    "Sign into your homeserver": "Přihlaste se do svého domovského serveru",
     "not found in storage": "nebylo nalezeno v úložišti",
     "ready": "připraveno",
-    "Specify a homeserver": "Zadejte domovský server",
-    "Invalid URL": "Neplatné URL",
-    "Unable to validate homeserver": "Nelze ověřit domovský server",
     "Don't miss a reply": "Nezmeškejte odpovědět",
     "Unknown App": "Neznámá aplikace",
     "Move right": "Posunout doprava",
@@ -1860,8 +1851,6 @@
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "Bez ověření nebudete mít přístup ke všem svým zprávám a můžete se ostatním jevit jako nedůvěryhodní.",
     "Shows all threads you've participated in": "Zobrazit všechna vlákna, kterých jste se zúčastnili",
     "Joining": "Připojování",
-    "We call the places where you can host your account 'homeservers'.": "Místa, kde můžete hostovat svůj účet, nazýváme \"domovské servery\".",
-    "Matrix.org is the biggest public homeserver in the world, so it's a good place for many.": "Matrix.org je největší veřejný domovský server na světě, takže je pro mnohé vhodným místem.",
     "If you can't see who you're looking for, send them your invite link below.": "Pokud nevidíte, koho hledáte, pošlete mu odkaz na pozvánku níže.",
     "In encrypted rooms, verify all users to ensure it's secure.": "V šifrovaných místnostech ověřte všechny uživatele, abyste zajistili bezpečnost komunikace.",
     "Yours, or the other users' session": "Vaše relace nebo relace ostatních uživatelů",
@@ -2471,7 +2460,6 @@
     "Mark as read": "Označit jako přečtené",
     "Text": "Text",
     "Create a link": "Vytvořit odkaz",
-    "Force 15s voice broadcast chunk length": "Vynutit 15s délku bloku hlasového vysílání",
     "Sign out of %(count)s sessions": {
         "one": "Odhlásit se z %(count)s relace",
         "other": "Odhlásit se z %(count)s relací"
@@ -2621,7 +2609,6 @@
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Případně můžete zkusit použít veřejný server na adrese <server/>, ale ten nebude tak spolehlivý a bude sdílet vaši IP adresu s tímto serverem. Můžete to spravovat také v Nastavení.",
     "Allow fallback call assist server (%(server)s)": "Povolit záložní asistenční server hovorů (%(server)s)",
     "Try using %(server)s": "Zkuste použít %(server)s",
-    "Enable new native OIDC flows (Under active development)": "Povolit nové původní toky OIDC (ve fázi aktivního vývoje)",
     "Great! This passphrase looks strong enough": "Skvělé! Tato bezpečnostní fráze vypadá dostatečně silná",
     "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstranění takových změn v místnosti by mohlo vést ke zrušení změny.",
     "Ask to join": "Požádat o vstup",
@@ -2946,7 +2933,9 @@
         "join_beta_reload": "Po připojení k betě se %(brand)s znovu načte.",
         "leave_beta": "Opustit beta verzi",
         "join_beta": "Připojit se k beta verzi",
-        "notification_settings_beta_title": "Nastavení oznámení"
+        "notification_settings_beta_title": "Nastavení oznámení",
+        "voice_broadcast_force_small_chunks": "Vynutit 15s délku bloku hlasového vysílání",
+        "oidc_native_flow": "Povolit nové původní toky OIDC (ve fázi aktivního vývoje)"
     },
     "keyboard": {
         "home": "Domov",
@@ -3234,7 +3223,9 @@
             "timeline_image_size": "Velikost obrázku na časové ose",
             "timeline_image_size_default": "Výchozí",
             "timeline_image_size_large": "Velký"
-        }
+        },
+        "inline_url_previews_room_account": "Povolit náhledy URL adres pro tuto místnost (ovlivňuje pouze vás)",
+        "inline_url_previews_room": "Povolit náhledy URL adres pro členy této místnosti jako výchozí"
     },
     "devtools": {
         "send_custom_account_data_event": "Odeslat vlastní událost s údaji o účtu",
@@ -3954,7 +3945,7 @@
         "account_clash_previous_account": "Pokračovat s předchozím účtem",
         "log_in_new_account": "<a>Přihlaste se</a> svým novým účtem.",
         "registration_successful": "Úspěšná registrace",
-        "server_picker_title": "Hostovat účet na",
+        "server_picker_title": "Přihlaste se do svého domovského serveru",
         "server_picker_dialog_title": "Rozhodněte, kde je váš účet hostován",
         "footer_powered_by_matrix": "používá protokol Matrix",
         "failed_homeserver_discovery": "Nepovedlo se zjisit adresu domovského serveru",
@@ -3991,7 +3982,15 @@
         "sign_in_or_register": "Přihlásit nebo vytvořit nový účet",
         "sign_in_or_register_description": "Pro pokračování se přihlaste stávajícím účtem, nebo si vytvořte nový.",
         "sign_in_description": "Pro pokračování použijte svůj účet.",
-        "register_action": "Vytvořit účet"
+        "register_action": "Vytvořit účet",
+        "server_picker_failed_validate_homeserver": "Nelze ověřit domovský server",
+        "server_picker_invalid_url": "Neplatné URL",
+        "server_picker_required": "Zadejte domovský server",
+        "server_picker_matrix.org": "Matrix.org je největší veřejný domovský server na světě, takže je pro mnohé vhodným místem.",
+        "server_picker_intro": "Místa, kde můžete hostovat svůj účet, nazýváme \"domovské servery\".",
+        "server_picker_custom": "Jiný domovský server",
+        "server_picker_explainer": "Použijte svůj preferovaný domovský server Matrix, pokud ho máte, nebo hostujte svůj vlastní.",
+        "server_picker_learn_more": "O domovských serverech"
     },
     "room_list": {
         "sort_unread_first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",

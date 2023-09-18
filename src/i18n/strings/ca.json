@@ -72,8 +72,6 @@
     "Your browser does not support the required cryptography extensions": "El vostre navegador no és compatible amb els complements criptogràfics necessaris",
     "Not a valid %(brand)s keyfile": "El fitxer no és un fitxer de claus de %(brand)s vàlid",
     "Authentication check failed: incorrect password?": "Ha fallat l'autenticació: heu introduït correctament la contrasenya?",
-    "Enable URL previews for this room (only affects you)": "Activa la vista prèvia d'URL d'aquesta sala (no afecta altres usuaris)",
-    "Enable URL previews by default for participants in this room": "Activa per defecte la vista prèvia d'URL per als participants d'aquesta sala",
     "Incorrect verification code": "El codi de verificació és incorrecte",
     "Phone": "Telèfon",
     "No display name": "Sense nom visible",
@@ -503,7 +501,9 @@
             "subheading": "La configuració d'aspecte només afecta aquesta sessió %(brand)s.",
             "custom_theme_error_downloading": "Error baixant informació de tema.",
             "timeline_image_size_default": "Predeterminat"
-        }
+        },
+        "inline_url_previews_room_account": "Activa la vista prèvia d'URL d'aquesta sala (no afecta altres usuaris)",
+        "inline_url_previews_room": "Activa per defecte la vista prèvia d'URL per als participants d'aquesta sala"
     },
     "devtools": {
         "event_type": "Tipus d'esdeveniment",
