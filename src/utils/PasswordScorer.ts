@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { zxcvbn, zxcvbnOptions, ZxcvbnResult, TranslationKeys } from "@zxcvbn-ts/core";
-import translationKeys from "@zxcvbn-ts/core/src/data/translationKeys";
 import * as zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
 import * as zxcvbnEnPackage from "@zxcvbn-ts/language-en";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
@@ -23,7 +22,6 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { _t } from "../languageHandler";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import SdkConfig from "../SdkConfig";
-import { createTypedObjectFromEntries, typedKeys } from "./objects";
 
 zxcvbnOptions.setOptions({
     dictionary: {
@@ -37,12 +35,40 @@ zxcvbnOptions.setOptions({
 
 function getTranslations(): TranslationKeys {
     return {
-        warnings: createTypedObjectFromEntries(
-            typedKeys(translationKeys.warnings).map((key) => [key, _t(`zxcvbn|warnings|${key}`)]),
-        ),
-        suggestions: createTypedObjectFromEntries(
-            typedKeys(translationKeys.suggestions).map((key) => [key, _t(`zxcvbn|suggestions|${key}`)]),
-        ),
+        warnings: {
+            straightRow: _t("zxcvbn|warnings|straightRow"),
+            keyPattern: _t("zxcvbn|warnings|keyPattern"),
+            simpleRepeat: _t("zxcvbn|warnings|simpleRepeat"),
+            extendedRepeat: _t("zxcvbn|warnings|extendedRepeat"),
+            sequences: _t("zxcvbn|warnings|sequences"),
+            recentYears: _t("zxcvbn|warnings|recentYears"),
+            dates: _t("zxcvbn|warnings|dates"),
+            topTen: _t("zxcvbn|warnings|topTen"),
+            topHundred: _t("zxcvbn|warnings|topHundred"),
+            common: _t("zxcvbn|warnings|common"),
+            similarToCommon: _t("zxcvbn|warnings|similarToCommon"),
+            wordByItself: _t("zxcvbn|warnings|wordByItself"),
+            namesByThemselves: _t("zxcvbn|warnings|namesByThemselves"),
+            commonNames: _t("zxcvbn|warnings|commonNames"),
+            userInputs: _t("zxcvbn|warnings|userInputs"),
+            pwned: _t("zxcvbn|warnings|pwned"),
+        },
+        suggestions: {
+            l33t: _t("zxcvbn|suggestions|l33t"),
+            reverseWords: _t("zxcvbn|suggestions|reverseWords"),
+            allUppercase: _t("zxcvbn|suggestions|allUppercase"),
+            capitalization: _t("zxcvbn|suggestions|capitalization"),
+            dates: _t("zxcvbn|suggestions|dates"),
+            recentYears: _t("zxcvbn|suggestions|recentYears"),
+            associatedYears: _t("zxcvbn|suggestions|associatedYears"),
+            sequences: _t("zxcvbn|suggestions|sequences"),
+            repeated: _t("zxcvbn|suggestions|repeated"),
+            longerKeyboardPattern: _t("zxcvbn|suggestions|longerKeyboardPattern"),
+            anotherWord: _t("zxcvbn|suggestions|anotherWord"),
+            useWords: _t("zxcvbn|suggestions|useWords"),
+            noNeed: _t("zxcvbn|suggestions|noNeed"),
+            pwned: _t("zxcvbn|suggestions|pwned"),
+        },
         // We don't utilise the time estimation at this time so just pass through the English translations here
         timeEstimation: zxcvbnEnPackage.translations.timeEstimation,
     };
