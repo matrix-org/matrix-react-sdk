@@ -49,8 +49,9 @@ describe("mkClient self-test", function () {
         ["@TF:h", true],
         ["@FT:h", false],
         ["@FF:h", false],
-    ])("behaves well for user trust %s", (userId, trust) => {
-        expect(mkClient().checkUserTrust(userId).isCrossSigningVerified()).toBe(trust);
+    ])("behaves well for user trust %s", async (userId, trust) => {
+        const status = await mkClient().getCrypto()?.getUserVerificationStatus(userId);
+        expect(status!.isCrossSigningVerified()).toBe(trust);
     });
 
     test.each([
