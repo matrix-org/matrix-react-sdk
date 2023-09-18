@@ -33,16 +33,6 @@ zxcvbnOptions.setOptions({
     },
     graphs: zxcvbnCommonPackage.adjacencyGraphs,
     useLevenshteinDistance: true,
-    translations: {
-        warnings: createTypedObjectFromEntries(
-            typedKeys(translationKeys.warnings).map((key) => [key, _t(`zxcvbn|warnings|${key}`)]),
-        ),
-        suggestions: createTypedObjectFromEntries(
-            typedKeys(translationKeys.suggestions).map((key) => [key, _t(`zxcvbn|suggestions|${key}`)]),
-        ),
-        // We don't utilise the time estimation at this time so just pass through the English translations here
-        timeEstimation: zxcvbnEnPackage.translations.timeEstimation,
-    },
 });
 
 function getTranslations(): TranslationKeys {
