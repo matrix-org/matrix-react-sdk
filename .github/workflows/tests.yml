@@ -33,7 +33,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   repository: ${{ inputs.matrix-js-sdk-sha && 'matrix-org/matrix-react-sdk' || github.repository }}
 
@@ -95,7 +95,7 @@ jobs:
         name: Element Web Integration Tests
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   repository: ${{ inputs.matrix-js-sdk-sha && 'matrix-org/matrix-react-sdk' || github.repository }}
 
