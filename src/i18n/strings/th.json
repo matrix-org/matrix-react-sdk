@@ -89,7 +89,6 @@
     "Export E2E room keys": "ส่งออกกุญแจถอดรหัส E2E",
     "Failed to change power level": "การเปลี่ยนระดับอำนาจล้มเหลว",
     "Import E2E room keys": "นำเข้ากุญแจถอดรหัส E2E",
-    "The email address linked to your account must be entered.": "กรุณากรอกที่อยู่อีเมลที่เชื่อมกับบัญชีของคุณ",
     "Unable to add email address": "ไมาสามารถเพิ่มที่อยู่อีเมล",
     "Unable to verify email address.": "ไม่สามารถยืนยันที่อยู่อีเมล",
     "Unban": "ปลดแบน",
@@ -136,7 +135,6 @@
     "Failed to invite": "การเชิญล้มเหลว",
     "Confirm Removal": "ยืนยันการลบ",
     "Unknown error": "ข้อผิดพลาดที่ไม่รู้จัก",
-    "Incorrect password": "รหัสผ่านไม่ถูกต้อง",
     "Home": "เมนูหลัก",
     "(~%(count)s results)": {
         "one": "(~%(count)s ผลลัพท์)",
@@ -526,7 +524,9 @@
     },
     "auth": {
         "sso": "ลงชื่อเข้าใช้เพียงครั้งเดียว",
-        "footer_powered_by_matrix": "ใช้เทคโนโลยี Matrix"
+        "footer_powered_by_matrix": "ใช้เทคโนโลยี Matrix",
+        "incorrect_password": "รหัสผ่านไม่ถูกต้อง",
+        "forgot_password_email_required": "กรุณากรอกที่อยู่อีเมลที่เชื่อมกับบัญชีของคุณ"
     },
     "setting": {
         "help_about": {

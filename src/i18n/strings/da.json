@@ -5,7 +5,6 @@
     "Historical": "Historisk",
     "New passwords must match each other.": "Nye adgangskoder skal matche hinanden.",
     "A new password must be entered.": "Der skal indtastes en ny adgangskode.",
-    "The email address linked to your account must be entered.": "Den emailadresse, der tilhører til din adgang, skal indtastes.",
     "Session ID": "Sessions ID",
     "Deops user with given id": "Fjerner OP af bruger med givet id",
     "Commands": "Kommandoer",
@@ -229,7 +228,6 @@
     "Change notification settings": "Skift notifikations indstillinger",
     "Profile picture": "Profil billede",
     "Checking server": "Tjekker server",
-    "You're signed out": "Du er logget ud",
     "Change Password": "Skift adgangskode",
     "Current password": "Nuværende adgangskode",
     "Profile": "Profil",
@@ -512,7 +510,6 @@
     "Unable to transfer call": "Kan ikke omstille opkald",
     "There was an error looking up the phone number": "Der opstod en fejl ved at slå telefonnummeret op",
     "Unable to look up phone number": "Kan ikke slå telefonnummer op",
-    "Incorrect password": "Forkert adgangskode",
     "Incorrect username and/or password.": "Forkert brugernavn og/eller adgangskode.",
     "Your password has been reset.": "Din adgangskode er blevet nulstillet.",
     "Your password was successfully changed.": "Din adgangskode blev ændret.",
@@ -785,7 +782,10 @@
     },
     "auth": {
         "sso": "Engangs login",
-        "footer_powered_by_matrix": "Drevet af Matrix"
+        "footer_powered_by_matrix": "Drevet af Matrix",
+        "incorrect_password": "Forkert adgangskode",
+        "soft_logout_heading": "Du er logget ud",
+        "forgot_password_email_required": "Den emailadresse, der tilhører til din adgang, skal indtastes."
     },
     "export_chat": {
         "messages": "Beskeder"

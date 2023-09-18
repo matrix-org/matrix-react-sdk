@@ -186,7 +186,6 @@
     },
     "Confirm Removal": "Confirmeu l'eliminació",
     "Unknown error": "Error desconegut",
-    "Incorrect password": "Contrasenya incorrecta",
     "Deactivate Account": "Desactivar el compte",
     "An error has occurred.": "S'ha produït un error.",
     "Unable to restore session": "No s'ha pogut restaurar la sessió",
@@ -722,7 +721,8 @@
     "auth": {
         "sign_in_with_sso": "Inicia sessió mitjançant la inscripció única (SSO)",
         "sso": "Inscripció única (SSO)",
-        "footer_powered_by_matrix": "amb tecnologia de Matrix"
+        "footer_powered_by_matrix": "amb tecnologia de Matrix",
+        "incorrect_password": "Contrasenya incorrecta"
     },
     "export_chat": {
         "messages": "Missatges"

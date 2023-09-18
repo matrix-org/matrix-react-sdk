@@ -180,7 +180,6 @@
     },
     "Confirm Removal": "Потврди уклањање",
     "Unknown error": "Непозната грешка",
-    "Incorrect password": "Нетачна лозинка",
     "Deactivate Account": "Деактивирај налог",
     "An error has occurred.": "Догодила се грешка.",
     "Unable to restore session": "Не могу да повратим сесију",
@@ -238,7 +237,6 @@
     "Notifications": "Обавештења",
     "Profile": "Профил",
     "Account": "Налог",
-    "The email address linked to your account must be entered.": "Морате унети мејл адресу која је везана за ваш налог.",
     "A new password must be entered.": "Морате унети нову лозинку.",
     "New passwords must match each other.": "Нове лозинке се морају подударати.",
     "Return to login screen": "Врати ме на екран за пријаву",
@@ -246,7 +244,6 @@
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Знајте да се пријављујете на сервер %(hs)s, не на matrix.org.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Не могу да се повежем на сервер преко ХТТП када је ХТТПС УРЛ у траци вашег прегледача. Или користите HTTPS или <a>омогућите небезбедне скрипте</a>.",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Не могу да се повежем на домаћи сервер. Проверите вашу интернет везу, постарајте се да је <a>ССЛ сертификат сервера</a> од поверења и да проширење прегледача не блокира захтеве.",
-    "This server does not support authentication with a phone number.": "Овај сервер не подржава идентификацију преко броја мобилног.",
     "Define the power level of a user": "Дефинише снагу корисника",
     "Deops user with given id": "Укида админа за корисника са датим ИД",
     "Commands": "Наредбе",
@@ -1355,7 +1352,10 @@
     },
     "auth": {
         "sso": "Јединствена пријава",
-        "footer_powered_by_matrix": "покреће га Матрикс"
+        "footer_powered_by_matrix": "покреће га Матрикс",
+        "unsupported_auth_msisdn": "Овај сервер не подржава идентификацију преко броја мобилног.",
+        "incorrect_password": "Нетачна лозинка",
+        "forgot_password_email_required": "Морате унети мејл адресу која је везана за ваш налог."
     },
     "export_chat": {
         "messages": "Поруке"

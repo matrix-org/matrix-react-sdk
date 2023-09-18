@@ -106,7 +106,6 @@
     "Signed Out": "Signed Out",
     "This email address is already in use": "This email address is already in use",
     "This email address was not found": "This email address was not found",
-    "The email address linked to your account must be entered.": "The email address linked to your account must be entered.",
     "This room has no local addresses": "This room has no local addresses",
     "This room is not recognised.": "This room is not recognized.",
     "This doesn't appear to be a valid email address": "This doesn't appear to be a valid email address",
@@ -158,7 +157,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "This server does not support authentication with a phone number.": "This server does not support authentication with a phone number.",
     "Connectivity to the server has been lost.": "Connectivity to the server has been lost.",
     "Sent messages will be stored until your connection has returned.": "Sent messages will be stored until your connection has returned.",
     "Banned by %(displayName)s": "Banned by %(displayName)s",
@@ -177,7 +175,6 @@
     "Failed to invite": "Failed to invite",
     "Confirm Removal": "Confirm Removal",
     "Unknown error": "Unknown error",
-    "Incorrect password": "Incorrect password",
     "Unable to restore session": "Unable to restore session",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.",
     "Token incorrect": "Token incorrect",
@@ -514,7 +511,10 @@
     },
     "auth": {
         "sso": "Single Sign On",
-        "footer_powered_by_matrix": "powered by Matrix"
+        "footer_powered_by_matrix": "powered by Matrix",
+        "unsupported_auth_msisdn": "This server does not support authentication with a phone number.",
+        "incorrect_password": "Incorrect password",
+        "forgot_password_email_required": "The email address linked to your account must be entered."
     },
     "export_chat": {
         "messages": "Messages"
