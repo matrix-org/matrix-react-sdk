@@ -91,6 +91,7 @@ export function scorePassword(
 ): ZxcvbnResult | null {
     if (password.length === 0) return null;
 
+    // copy the supplied array before modifying it
     const inputs = [...userInputs];
 
     if (matrixClient) {
