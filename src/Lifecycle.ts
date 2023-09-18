@@ -71,19 +71,19 @@ import GenericToast from "./components/views/toasts/GenericToast";
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
 
-/**
- * Used as storage key
+/*
+ * Keys used when storing the tokens in indexeddb or localstorage
  */
 const ACCESS_TOKEN_STORAGE_KEY = "mx_access_token";
 const REFRESH_TOKEN_STORAGE_KEY = "mx_refresh_token";
-/**
+/*
  * Used as initialization vector during encryption in persistTokenInStorage
  * And decryption in restoreFromLocalStorage
  */
-const ACCESS_TOKEN_NAME = "access_token";
-const REFRESH_TOKEN_NAME = "refresh_token";
-/**
- * Used in localstorage to store whether we expect a token in idb
+const ACCESS_TOKEN_IV = "access_token";
+const REFRESH_TOKEN_IV = "refresh_token";
+/*
+ * Keys for localstorage items which indicate whether we expect a token in indexeddb.
  */
 const HAS_ACCESS_TOKEN_STORAGE_KEY = "mx_has_access_token";
 const HAS_REFRESH_TOKEN_STORAGE_KEY = "mx_has_refresh_token";
@@ -555,7 +555,7 @@ export async function getStoredSessionVars(): Promise<Partial<IStoredSession>> {
 
 // The pickle key is a string of unspecified length and format.  For AES, we
 // need a 256-bit Uint8Array. So we HKDF the pickle key to generate the AES
-// key.  The AES key should be zeroed after it is used
+// key.  The AES key should be zeroed after it is used.
 async function pickleKeyToAesKey(pickleKey: string): Promise<Uint8Array> {
     const pickleKeyBuffer = new Uint8Array(pickleKey.length);
     for (let i = 0; i < pickleKey.length; i++) {
@@ -624,7 +624,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             logger.log("Got pickle key");
             if (typeof accessToken !== "string") {
                 const encrKey = await pickleKeyToAesKey(pickleKey);
-                decryptedAccessToken = await decryptAES(accessToken, encrKey, ACCESS_TOKEN_NAME);
+                decryptedAccessToken = await decryptAES(accessToken, encrKey, ACCESS_TOKEN_IV);
                 encrKey.fill(0);
             }
         } else {
@@ -869,15 +869,14 @@ class AbortLoginAndRebuildStorage extends Error {}
  * Stores in idb, falling back to localStorage
  *
  * @param storageKey key used to store the token
- * @param name eg "access_token" used as initialization vector during encryption
- *              only used when pickleKey is present to encrypt with
+ * @param initializationVector Initialization vector for encrypting the token. Only used when `pickleKey` is present
  * @param token the token to store, when undefined any existing token at the storageKey is removed from storage
  * @param pickleKey optional pickle key used to encrypt token
- * @param hasTokenStorageKey used to store in localstorage whether we expect to have a token in idb, eg "mx_has_access_token"
+ * @param hasTokenStorageKey Localstorage key for an item which stores whether we expect to have a token in indexeddb, eg "mx_has_access_token".
  */
 async function persistTokenInStorage(
     storageKey: string,
-    name: string,
+    initializationVector: string,
     token: string | undefined,
     pickleKey: string | undefined,
     hasTokenStorageKey: string,
@@ -898,7 +897,7 @@ async function persistTokenInStorage(
             }
             // try to encrypt the access token using the pickle key
             const encrKey = await pickleKeyToAesKey(pickleKey);
-            encryptedToken = await encryptAES(token, encrKey, name);
+            encryptedToken = await encryptAES(token, encrKey, initializationVector);
             encrKey.fill(0);
         } catch (e) {
             logger.warn("Could not encrypt access token", e);
@@ -941,14 +940,14 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
 
     await persistTokenInStorage(
         ACCESS_TOKEN_STORAGE_KEY,
-        ACCESS_TOKEN_NAME,
+        ACCESS_TOKEN_IV,
         credentials.accessToken,
         credentials.pickleKey,
         HAS_ACCESS_TOKEN_STORAGE_KEY,
     );
     await persistTokenInStorage(
         REFRESH_TOKEN_STORAGE_KEY,
-        REFRESH_TOKEN_NAME,
+        REFRESH_TOKEN_IV,
         credentials.refreshToken,
         credentials.pickleKey,
         HAS_REFRESH_TOKEN_STORAGE_KEY,
