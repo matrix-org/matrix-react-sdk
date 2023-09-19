@@ -44,7 +44,6 @@
     "Missing user_id in request": "Vantar notandaauðkenni í beiðni",
     "Reason": "Ástæða",
     "Send": "Senda",
-    "Send analytics data": "Senda greiningargögn",
     "Waiting for response from server": "Bíð eftir svari frá vefþjóni",
     "Phone": "Sími",
     "Export E2E room keys": "Flytja út E2E dulritunarlykla spjallrásar",
@@ -215,8 +214,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Þú getur ekki sent nein skilaboð fyrr en þú hefur farið yfir og samþykkir <consentLink>skilmála okkar</consentLink>.",
     "Send as message": "Senda sem skilaboð",
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Þú getur notað <code>/help</code> til að lista tilteknar skipanir. Ætlaðir þú að senda þetta sem skilaboð?",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Aldrei senda dulrituð skilaboð af þessu tæki til ósannvottaðra tækja á þessari spjallrás úr þessari setu",
-    "Never send encrypted messages to unverified sessions from this session": "Aldrei senda dulrituð skilaboð af þessu tæki til ósannvottaðra tækja",
     "No need for symbols, digits, or uppercase letters": "Engin þörf á táknum, tölustöfum, eða hástöfum",
     "Use a few words, avoid common phrases": "Notaðu nokkur orð. Forðastu algengar setningar",
     "Unknown server error": "Óþekkt villa á þjóni",
@@ -240,7 +237,6 @@
     "Not encrypted": "Ekki dulritað",
     "Encrypted by a deleted session": "Dulritað með eyddri setu",
     "Encrypted by an unverified session": "Dulritað meðf ósannreyndu tæki",
-    "Enable message search in encrypted rooms": "Virka skilaboðleit í dulrituðum spjallrásum",
     "This room is end-to-end encrypted": "Þessi spjallrás er enda-í-enda dulrituð",
     "Unencrypted": "Ódulritað",
     "Messages in this room are end-to-end encrypted.": "Skilaboð í þessari spjallrás eru enda-í-enda dulrituð.",
@@ -259,7 +255,6 @@
     "Recently Direct Messaged": "Nýsend bein skilaboð",
     "Direct Messages": "Bein skilaboð",
     "Preparing to download logs": "Undirbý niðurhal atvikaskráa",
-    "How fast should messages be downloaded.": "Hve hratt ætti að hlaða niður skilaboðum.",
     "Download %(text)s": "Niðurhala %(text)s",
     "Share Link to User": "Deila Hlekk að Notanda",
     "You have verified this user. This user has verified all of their sessions.": "Þú hefur sannreynt þennan notanda. Þessi notandi hefur sannreynt öll tæki þeirra.",
@@ -582,7 +577,6 @@
     "United Kingdom": "Stóra Bretland",
     "More": "Meira",
     "Connecting": "Tengist",
-    "Use custom size": "Nota sérsniðna stærð",
     "Developer": "Forritari",
     "Experimental": "Á tilraunastigi",
     "Themes": "Þemu",
@@ -850,7 +844,6 @@
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Prófaðu að skruna upp í tímalínunni til að sjá hvort það séu einhver eldri.",
     "Something went wrong. Please try again or view your console for hints.": "Eitthvað fór úrskeiðis. Reyndu aftur eða skoðaðu vísbendingar á stjórnskjánum þínum.",
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "Vísbending: Byrjaðu skilaboðin þín með <code>//</code> til að þau byrji með skástriki.",
-    "Show hidden events in timeline": "Birta falda atburði í tímalínu",
     "You are now ignoring %(userId)s": "Þú ert núna að hunsa %(userId)s",
     "Unrecognised room address: %(roomAlias)s": "Óþekkjanlegt vistfang spjallrásar: %(roomAlias)s",
     "Room %(roomId)s not visible": "Spjallrásin %(roomId)s er ekki sýnileg",
@@ -1100,7 +1093,6 @@
     "You should:": "Þú ættir:",
     "Disconnect from the identity server <idserver />?": "Aftengjast frá auðkennisþjóni <idserver />?",
     "Disconnect identity server": "Aftengja auðkennisþjón",
-    "Mirror local video feed": "Spegla staðværu myndmerki",
     "Spaces you know that contain this room": "Svæði sem þú veist að innihalda þetta svæði",
     "Spaces you know that contain this space": "Svæði sem þú veist að innihalda þetta svæði",
     "Pick a date to jump to": "Veldu dagsetningu til að hoppa á",
@@ -1112,8 +1104,6 @@
     "Hey you. You're the best!": "Hæ þú. Þú ert algjört æði!",
     "Jump to first invite.": "Fara í fyrsta boð.",
     "Jump to first unread room.": "Fara í fyrstu ólesnu spjallrásIna.",
-    "Use a more compact 'Modern' layout": "Nota þjappaðri 'nútímalegri' framsetningu",
-    "Show polls button": "Birta hnapp fyrir kannanir",
     "Generate a Security Key": "Útbúa öryggislykil",
     "User Autocomplete": "Orðaklárun notanda",
     "Space Autocomplete": "Orðaklárun svæða",
@@ -1152,7 +1142,6 @@
     "Unable to load key backup status": "Tókst ekki að hlaða inn stöðu öryggisafritunar dulritunarlykla",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Ertu viss? Þú munt tapa dulrituðu skilaboðunum þínum ef dulritunarlyklarnir þínir eru ekki rétt öryggisafritaðir.",
     "in secret storage": "í leynigeymslu",
-    "Manually verify all remote sessions": "Sannreyna handvirkt allar fjartengdar setur",
     "Switch theme": "Skipta um þema",
     "Unable to create key backup": "Tókst ekki að gera öryggisafrit af dulritunarlykli",
     "Create key backup": "Gera öryggisafrit af dulritunarlykli",
@@ -1186,14 +1175,10 @@
         "other": "Sýna %(count)s forskoðanir til viðbótar"
     },
     "You have no ignored users.": "Þú ert ekki með neina hunsaða notendur.",
-    "Show tray icon and minimise window to it on close": "Sýna táknmynd í kerfisbakka og lágmarka forritið niður í hana þegar því er lokað",
-    "Always show the window menu bar": "Alltaf að sýna valmyndastiku glugga",
     "Anyone in a space can find and join. You can select multiple spaces.": "Hver sem er í svæði getur fundið og tekið þátt. Þú getur valið mörg svæði.",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Hver sem er í <spaceName/> getur fundið og tekið þátt. Þú getur einnig valið önnur svæði.",
     "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Hver sem er í svæði getur fundið og tekið þátt. <a>Breyttu hér því hvaða svæði hafa aðgang.</a>",
     "Enable guest access": "Leyfa aðgang gesta",
-    "Enable widget screenshots on supported widgets": "Virkja skjámyndir viðmótshluta í studdum viðmótshlutum",
-    "Surround selected text when typing special characters": "Umlykja valinn texta þegar sértákn eru skrifuð",
     "Integrations are disabled": "Samþættingar eru óvirkar",
     "%(creator)s created this DM.": "%(creator)s bjó til oþessi beinu skilaboð.",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
@@ -1242,10 +1227,6 @@
     "Cross-signing is ready for use.": "Kross-undirritun er tilbúin til notkunar.",
     "Your homeserver does not support cross-signing.": "Heimaþjónninn þinn styður ekki kross-undirritun.",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Örugg skilaboð við þennan notanda eru enda-í-enda dulrituð þannig að enginn annar getur lesið þau.",
-    "Automatically send debug logs when key backup is not functioning": "Senda atvikaskrár sjálfkrafa þegar öryggisafrit dulritunarlykla virkar ekki",
-    "Automatically send debug logs on decryption errors": "Senda atvikaskrár sjálfkrafa við afkóðunarvillur",
-    "Automatically send debug logs on any error": "Senda atvikaskrár sjálfkrafa við allar villur",
-    "Developer mode": "Forritarahamur",
     "IRC display name width": "Breidd IRC-birtingarnafns",
     "%(brand)s URL": "%(brand)s URL",
     "Cancel search": "Hætta við leitina",
@@ -1858,7 +1839,6 @@
         "one": "%(count)s aðili hefur tekið þátt",
         "other": "%(count)s aðilar hafa tekið þátt"
     },
-    "Enable hardware acceleration": "Virkja vélbúnaðarhröðun",
     "Connection lost": "Tenging rofnaði",
     "Resent!": "Endursent!",
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
@@ -1941,7 +1921,6 @@
     "Current session": "Núverandi seta",
     "Other sessions": "Aðrar setur",
     "Sessions": "Setur",
-    "Your server doesn't support disabling sending read receipts.": "Netþjónninn þinn styður ekki að sending leskvittana sé gerð óvirk.",
     "Deactivating your account is a permanent action — be careful!": "Að gera aðganginn þinn óvirkan er endanleg aðgerð - farðu varlega!",
     "Your password was successfully changed.": "Það tókst að breyta lykilorðinu þínu.",
     "Mapbox logo": "Mapbox-táknmerki",
@@ -2025,9 +2004,6 @@
     "You won't be able to rejoin unless you are re-invited.": "Þú munt ekki geta tekið þátt aftur nema þér verði boðið aftur.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessari spjallrás, verður ómögulegt að ná aftur stjórn á henni.",
     "Select the roles required to change various parts of the room": "Veldu þau hlutverk sem krafist er til að breyta ýmsum þáttum spjallrásarinnar",
-    "Requires compatible homeserver.": "Krefst samhæfðs heimaþjóns.",
-    "Noise suppression": "Truflanabæling",
-    "Echo cancellation": "Útrýming bergmáls",
     "Unknown room": "Óþekkt spjallrás",
     "Connection error - Recording paused": "Villa í tengingu - Upptaka í bið",
     "play voice broadcast": "spila talútsendingu",
@@ -2076,10 +2052,6 @@
     "Video settings": "Myndstillingar",
     "Voice settings": "Raddstillingar",
     "Search users in this room…": "Leita að notendum á þessari spjallrás…",
-    "Low bandwidth mode": "Hamur fyrir litla bandbreidd",
-    "Automatic gain control": "Sjálfvirk stýring styrkaukningar",
-    "When enabled, the other party might be able to see your IP address": "Ef þetta er virkjað, getur viðkomandi mögulega séð IP-vistfangið þitt",
-    "Allow Peer-to-Peer for 1:1 calls": "Leyfa jafningi-á-jafningja fyrir maður-á-mann samtöl",
     "You have unverified sessions": "Þú ert með óstaðfestar setur",
     "Buffering…": "Hleð í biðminni…",
     "Go live": "Fara í beina útsendingu",
@@ -2388,7 +2360,10 @@
         "click_for_info": "Smelltu til að sjá frekari upplýsingar",
         "join_beta_reload": "Ef tekið er þátt í beta-prófunum verður %(brand)s endurhlaðið.",
         "leave_beta": "Fara út úr Beta-prófunarútgáfu",
-        "join_beta": "Taka þátt í Beta-prófunum"
+        "join_beta": "Taka þátt í Beta-prófunum",
+        "automatic_debug_logs": "Senda atvikaskrár sjálfkrafa við allar villur",
+        "automatic_debug_logs_decryption": "Senda atvikaskrár sjálfkrafa við afkóðunarvillur",
+        "automatic_debug_logs_key_backup": "Senda atvikaskrár sjálfkrafa þegar öryggisafrit dulritunarlykla virkar ekki"
     },
     "keyboard": {
         "home": "Forsíða",
@@ -2658,7 +2633,8 @@
             "custom_font_description": "Settu inn heiti á letri sem er uppsett á kerfinu þínu og %(brand)s mun reyna að nota það.",
             "timeline_image_size": "Stærð myndar í tímalínunni",
             "timeline_image_size_default": "Sjálfgefið",
-            "timeline_image_size_large": "Stórt"
+            "timeline_image_size_large": "Stórt",
+            "custom_font_size": "Nota sérsniðna stærð"
         },
         "inline_url_previews_room_account": "Virkja forskoðun vefslóða fyrir þessa spjallrás (einungis fyrir þig)",
         "inline_url_previews_room": "Virkja forskoðun vefslóða sjálfgefið fyrir þátttakendur í þessari spjallrás",
@@ -2671,7 +2647,11 @@
             "message_search_indexed_messages": "Skilaboð í efnisyfirliti:",
             "message_search_indexed_rooms": "Spjallrásir í efnisyfirliti:",
             "message_search_room_progress": "%(doneRooms)s af %(totalRooms)s",
-            "message_search_sleep_time": "Svæfingartími við niðurhal skilaboða (ms)"
+            "message_search_sleep_time": "Hve hratt ætti að hlaða niður skilaboðum.",
+            "send_analytics": "Senda greiningargögn",
+            "strict_encryption": "Aldrei senda dulrituð skilaboð af þessu tæki til ósannvottaðra tækja",
+            "enable_message_search": "Virka skilaboðleit í dulrituðum spjallrásum",
+            "manually_verify_all_sessions": "Sannreyna handvirkt allar fjartengdar setur"
         },
         "preferences": {
             "room_list_heading": "Spjallrásalisti",
@@ -2684,7 +2664,22 @@
             "media_heading": "Myndir, GIF-hreyfimyndir og myndskeið",
             "autocomplete_delay": "Töf við sjálfvirka klárun (ms)",
             "rm_lifetime": "Líftími lesmerkis (ms)",
-            "rm_lifetime_offscreen": "Líftími lesmerkis utan skjás (ms)"
+            "rm_lifetime_offscreen": "Líftími lesmerkis utan skjás (ms)",
+            "show_polls_button": "Birta hnapp fyrir kannanir",
+            "compact_modern": "Nota þjappaðri 'nútímalegri' framsetningu",
+            "surround_text": "Umlykja valinn texta þegar sértákn eru skrifuð",
+            "always_show_menu_bar": "Alltaf að sýna valmyndastiku glugga",
+            "enable_tray_icon": "Sýna táknmynd í kerfisbakka og lágmarka forritið niður í hana þegar því er lokað",
+            "enable_hardware_acceleration": "Virkja vélbúnaðarhröðun"
+        },
+        "send_read_receipts_unsupported": "Netþjónninn þinn styður ekki að sending leskvittana sé gerð óvirk.",
+        "voip": {
+            "mirror_local_feed": "Spegla staðværu myndmerki",
+            "allow_p2p": "Leyfa jafningi-á-jafningja fyrir maður-á-mann samtöl",
+            "allow_p2p_description": "Ef þetta er virkjað, getur viðkomandi mögulega séð IP-vistfangið þitt",
+            "auto_gain_control": "Sjálfvirk stýring styrkaukningar",
+            "echo_cancellation": "Útrýming bergmáls",
+            "noise_suppression": "Truflanabæling"
         }
     },
     "devtools": {
@@ -2748,7 +2743,12 @@
         "room_id": "Auðkenni spjallrásar: %(roomId)s",
         "event_id": "Auðkenni atburðar: %(eventId)s",
         "category_room": "Spjallrás",
-        "category_other": "Annað"
+        "category_other": "Annað",
+        "widget_screenshots": "Virkja skjámyndir viðmótshluta í studdum viðmótshlutum",
+        "show_hidden_events": "Birta falda atburði í tímalínu",
+        "low_bandwidth_mode": "Hamur fyrir litla bandbreidd",
+        "low_bandwidth_mode_description": "Krefst samhæfðs heimaþjóns.",
+        "developer_mode": "Forritarahamur"
     },
     "export_chat": {
         "html": "HTML",
@@ -3243,6 +3243,9 @@
             "ban": "Banna notendur",
             "redact": "Fjarlægja skilaboð send af öðrum",
             "notifications.room": "Tilkynna öllum"
+        },
+        "security": {
+            "strict_encryption": "Aldrei senda dulrituð skilaboð af þessu tæki til ósannvottaðra tækja á þessari spjallrás úr þessari setu"
         }
     },
     "encryption": {

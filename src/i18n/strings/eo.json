@@ -63,7 +63,6 @@
     "Not a valid %(brand)s keyfile": "Nevalida ŝlosila dosiero de %(brand)s",
     "Authentication check failed: incorrect password?": "Aŭtentikiga kontrolo malsukcesis: ĉu pro malĝusta pasvorto?",
     "Send": "Sendi",
-    "Mirror local video feed": "Speguli lokan filmon",
     "Incorrect verification code": "Malĝusta kontrola kodo",
     "Phone": "Telefono",
     "No display name": "Sen vidiga nomo",
@@ -285,7 +284,6 @@
     "Logs sent": "Protokolo sendiĝis",
     "Failed to send logs: ": "Malsukcesis sendi protokolon: ",
     "Preparing to send logs": "Pretigante sendon de protokolo",
-    "Send analytics data": "Sendi statistikajn datumojn",
     "Permission Required": "Necesas permeso",
     "Missing roomId.": "Mankas identigilo de la ĉambro.",
     "Unable to load! Check your network connectivity and try again.": "Ne eblas enlegi! Kontrolu vian retan konekton kaj reprovu.",
@@ -549,8 +547,6 @@
     "Unexpected error resolving identity server configuration": "Neatendita eraro eltrovi agordojn de identiga servilo",
     "Straight rows of keys are easy to guess": "Rektaj vicoj de klavoj estas facile diveneblaj",
     "Short keyboard patterns are easy to guess": "Mallongaj ripetoj de klavoj estas facile diveneblaj",
-    "Enable widget screenshots on supported widgets": "Ŝalti bildojn de fenestraĵoj por subtenataj fenestraĵoj",
-    "Show hidden events in timeline": "Montri kaŝitajn okazojn en historio",
     "Start using Key Backup": "Ekuzi Savkopiadon de ŝlosiloj",
     "Upgrade this room to the recommended room version": "Gradaltigi ĉi tiun ĉambron al rekomendata ĉambra versio",
     "Uploaded sound": "Alŝutita sono",
@@ -675,7 +671,6 @@
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Konsentu al uzkondiĉoj de la identiga servilo (%(serverName)s) por esti trovita per retpoŝtadreso aŭ telefonnumero.",
     "Discovery": "Trovado",
     "Deactivate account": "Malaktivigi konton",
-    "Always show the window menu bar": "Ĉiam montri la fenestran menubreton",
     "Error changing power level requirement": "Eraris ŝanĝo de postulo de povnivelo",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Eraris ŝanĝo de la postuloj de la ĉambro pri povnivelo. Certigu, ke vi havas sufiĉajn permesojn, kaj reprovu.",
     "Error changing power level": "Eraris ŝanĝo de povnivelo",
@@ -809,10 +804,6 @@
     "Session already verified!": "Salutaĵo jam estas kontrolita!",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "AVERTO: MALSUKCESIS KONTROLO DE ŜLOSILOJ! La subskriba ŝlosilo de %(userId)s kaj session %(deviceId)s estas «%(fprint)s», kiu ne akordas la donitan ŝlosilon «%(fingerprint)s». Tio povus signifi, ke via komunikado estas spionata!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "La subskriba ŝlosilo, kiun vi donis, akordas la subskribas ŝlosilon, kinu vi ricevis de la salutaĵo %(deviceId)s de la uzanto %(userId)s. Salutaĵo estis markita kontrolita.",
-    "Never send encrypted messages to unverified sessions from this session": "Neniam sendi ĉifritajn mesaĝojn al nekontrolitaj salutaĵoj de ĉi tiu salutaĵo",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Neniam sendi ĉifritajn mesaĝojn al nekontrolitaj salutaĵoj en ĉi tiu ĉambro de ĉi tiu salutaĵo",
-    "Enable message search in encrypted rooms": "Ŝalti serĉon de mesaĝoj en ĉifritaj ĉambroj",
-    "How fast should messages be downloaded.": "Kiel rapide elŝuti mesaĝojn.",
     "Waiting for %(displayName)s to verify…": "Atendas kontrolon de %(displayName)s…",
     "Cancelling…": "Nuligante…",
     "Show more": "Montri pli",
@@ -968,7 +959,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Konfirmu per komparo de la sekva kun la agardoj de uzanto en via alia salutaĵo:",
     "Confirm this user's session by comparing the following with their User Settings:": "Konfirmu la salutaĵon de ĉi tiu uzanto per komparo de la sekva kun ĝiaj agordoj de uzanto:",
     "If they don't match, the security of your communication may be compromised.": "Se ili ne akordas, la sekureco de via komunikado eble estas rompita.",
-    "Manually verify all remote sessions": "Permane kontroli ĉiujn forajn salutaĵojn",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Unuope kontroli ĉiun salutaĵon de uzanto por marki ĝin fidata, ne fidante delege subskribitajn aparatojn.",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "En ĉifritaj ĉambroj, viaj mesaĝoj estas sekurigitaj, kaj nur vi kaj la ricevanto havas la unikajn malĉifrajn ŝlosilojn.",
     "Verify all users in a room to ensure it's secure.": "Kontrolu ĉiujn uzantojn en ĉambro por certigi, ke ĝi sekuras.",
@@ -1036,7 +1026,6 @@
     "Contact your <a>server admin</a>.": "Kontaktu <a>administranton de via servilo</a>.",
     "Ok": "Bone",
     "New version available. <a>Update now.</a>": "Nova versio estas disponebla. <a>Ĝisdatigu nun.</a>",
-    "Use custom size": "Uzi propran grandon",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s ne povas sekure kaŝkopii ĉifritajn mesaĝojn loke, funkciante per foliumilo. Uzu <desktopLink>%(brand)s Desktop</desktopLink> por aperigi ĉifritajn mesaĝojn en serĉrezultoj.",
     "Hey you. You're the best!": "He, vi. Vi bonegas!",
     "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "Aldonu uzantojn kaj servilojn, kiujn vi volas malatenti, ĉi tien. Uzu steletojn por ke %(brand)s atendu iujn ajn signojn. Ekzemple, <code>@bot:*</code> malatentigus ĉiujn uzantojn, kiuj havas la nomon «bot» sur ĉiu ajn servilo.",
@@ -1615,7 +1604,6 @@
     "More": "Pli",
     "Show sidebar": "Montri flankan breton",
     "Hide sidebar": "Kaŝi flankan breton",
-    "Surround selected text when typing special characters": "Ĉirkaŭi elektitan tekston dum tajpado de specialaj signoj",
     "This space has no local addresses": "Ĉi tiu aro ne havas lokajn adresojn",
     "Stop recording": "Malŝalti registradon",
     "End-to-end encryption isn't enabled": "Tutvoja ĉifrado ne estas ŝaltita",
@@ -2328,7 +2316,8 @@
             "custom_theme_add_button": "Aldoni haŭton",
             "font_size": "Grando de tiparo",
             "custom_font_description": "Agordu la nomon de tiparo instalita en via sistemo kaj %(brand)s provos ĝin uzi.",
-            "timeline_image_size_default": "Ordinara"
+            "timeline_image_size_default": "Ordinara",
+            "custom_font_size": "Uzi propran grandon"
         },
         "inline_url_previews_room_account": "Ŝalti URL-antaŭrigardon en ĉi tiu ĉambro (nur por vi)",
         "inline_url_previews_room": "Ŝalti URL-antaŭrigardon por anoj de ĉi tiu ĉambro",
@@ -2341,7 +2330,11 @@
             "message_search_indexed_messages": "Indeksitaj masaĝoj:",
             "message_search_indexed_rooms": "Indeksitaj ĉambroj:",
             "message_search_room_progress": "%(doneRooms)s el %(totalRooms)s",
-            "message_search_sleep_time": "Dormotempo de elŝuto de mesaĝoj (milonsekunde)"
+            "message_search_sleep_time": "Kiel rapide elŝuti mesaĝojn.",
+            "send_analytics": "Sendi statistikajn datumojn",
+            "strict_encryption": "Neniam sendi ĉifritajn mesaĝojn al nekontrolitaj salutaĵoj de ĉi tiu salutaĵo",
+            "enable_message_search": "Ŝalti serĉon de mesaĝoj en ĉifritaj ĉambroj",
+            "manually_verify_all_sessions": "Permane kontroli ĉiujn forajn salutaĵojn"
         },
         "preferences": {
             "room_list_heading": "Ĉambrolisto",
@@ -2352,7 +2345,12 @@
             "media_heading": "Bildoj, GIF-bildoj kaj filmoj",
             "autocomplete_delay": "Prokrasto de memaga kompletigo",
             "rm_lifetime": "Vivodaŭro de legomarko (ms)",
-            "rm_lifetime_offscreen": "Vivodaŭro de eksterekrana legomarko (ms)"
+            "rm_lifetime_offscreen": "Vivodaŭro de eksterekrana legomarko (ms)",
+            "surround_text": "Ĉirkaŭi elektitan tekston dum tajpado de specialaj signoj",
+            "always_show_menu_bar": "Ĉiam montri la fenestran menubreton"
+        },
+        "voip": {
+            "mirror_local_feed": "Speguli lokan filmon"
         }
     },
     "devtools": {
@@ -2383,7 +2381,9 @@
         "toolbox": "Ilaro",
         "developer_tools": "Evoluigiloj",
         "category_room": "Ĉambro",
-        "category_other": "Alia"
+        "category_other": "Alia",
+        "widget_screenshots": "Ŝalti bildojn de fenestraĵoj por subtenataj fenestraĵoj",
+        "show_hidden_events": "Montri kaŝitajn okazojn en historio"
     },
     "export_chat": {
         "html": "HTML",
@@ -2836,6 +2836,9 @@
             "ban": "Forbari uzantojn",
             "redact": "Forigi mesaĝojn senditajn de aliaj",
             "notifications.room": "Sciigi ĉiujn"
+        },
+        "security": {
+            "strict_encryption": "Neniam sendi ĉifritajn mesaĝojn al nekontrolitaj salutaĵoj en ĉi tiu ĉambro de ĉi tiu salutaĵo"
         }
     },
     "encryption": {

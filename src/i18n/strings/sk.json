@@ -198,7 +198,6 @@
         "one": "Nahrávanie %(filename)s a %(count)s ďalší súbor"
     },
     "Uploading %(filename)s": "Nahrávanie %(filename)s",
-    "Mirror local video feed": "Zrkadliť lokálne video",
     "Failed to change password. Is your password correct?": "Nepodarilo sa zmeniť heslo. Zadali ste správne heslo?",
     "Unable to remove contact information": "Nie je možné odstrániť kontaktné informácie",
     "<not supported>": "<nepodporované>",
@@ -294,8 +293,6 @@
     "Clear Storage and Sign Out": "Vymazať úložisko a odhlásiť sa",
     "We encountered an error trying to restore your previous session.": "Počas obnovovania vašej predchádzajúcej relácie sa vyskytla chyba.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Vymazaním úložiska prehliadača možno opravíte váš problém, no zároveň sa týmto odhlásite a história vašich šifrovaných konverzácií sa pre vás môže stať nečitateľná.",
-    "Send analytics data": "Odosielať analytické údaje",
-    "Enable widget screenshots on supported widgets": "Umožniť zachytiť snímku obrazovky pre podporované widgety",
     "Muted Users": "Umlčaní používatelia",
     "Can't leave Server Notices room": "Nie je možné opustiť miestnosť Oznamy zo servera",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Táto miestnosť je určená na dôležité oznamy a správy od správcov domovského servera, preto ju nie je možné opustiť.",
@@ -553,7 +550,6 @@
     "Unexpected error resolving homeserver configuration": "Neočakávaná chyba pri zisťovaní nastavení domovského servera",
     "Unexpected error resolving identity server configuration": "Neočakávaná chyba pri zisťovaní nastavení servera totožností",
     "The user's homeserver does not support the version of the room.": "Používateľov domovský server nepodporuje verziu miestnosti.",
-    "Show hidden events in timeline": "Zobrazovať skryté udalosti v histórii obsahu miestností",
     "Accept <policyLink /> to continue:": "Ak chcete pokračovať, musíte prijať <policyLink />:",
     "Checking server": "Kontrola servera",
     "Terms of service not accepted or the identity server is invalid.": "Neprijali ste Podmienky poskytovania služby alebo to nie je správny server.",
@@ -640,11 +636,6 @@
     "a device cross-signing signature": "krížový podpis zariadenia",
     "Removing…": "Odstraňovanie…",
     "Failed to re-authenticate due to a homeserver problem": "Opätovná autentifikácia zlyhala kvôli problému domovského servera",
-    "Never send encrypted messages to unverified sessions from this session": "Nikdy neposielať šifrované správy neovereným reláciám z tejto relácie",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Nikdy neposielať šifrované správy neovereným reláciám v tejto miestnosti z tejto relácie",
-    "Enable message search in encrypted rooms": "Povoliť vyhľadávanie správ v šifrovaných miestnostiach",
-    "How fast should messages be downloaded.": "Ako rýchlo sa majú správy sťahovať.",
-    "Manually verify all remote sessions": "Manuálne overiť všetky relácie",
     "IRC display name width": "Šírka zobrazovaného mena IRC",
     "Clear personal data": "Zmazať osobné dáta",
     "Command Autocomplete": "Automatické dopĺňanie príkazov",
@@ -686,7 +677,6 @@
     "Contact your <a>server admin</a>.": "Kontaktujte svojho <a>administrátora serveru</a>.",
     "Ok": "Ok",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Požiadajte správcu vášho %(brand)su, aby skontroloval <a>vašu konfiguráciu</a>. Pravdepodobne obsahuje chyby alebo duplikáty.",
-    "Use custom size": "Použiť vlastnú veľkosť",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s nedokáže bezpečne lokálne ukladať do vyrovnávacej pamäte zašifrované správy, keď je spustený vo webovom prehliadači. Na zobrazenie šifrovaných správ vo výsledkoch vyhľadávania použite <desktopLink>%(brand)s Desktop</desktopLink>.",
     "New version available. <a>Update now.</a>": "Je dostupná nová verzia. <a>Aktualizovať.</a>",
     "Hey you. You're the best!": "Hej, ty. Si jednotka!",
@@ -714,7 +704,6 @@
     "Subscribing to a ban list will cause you to join it!": "Prihlásenie sa na zoznam zákazov spôsobí, že sa naň pridáte!",
     "If this isn't what you want, please use a different tool to ignore users.": "Pokiaľ toto nechcete, tak použite prosím iný nástroj na ignorovanie používateľov.",
     "Room ID or address of ban list": "ID miestnosti alebo adresa zoznamu zákazov",
-    "Always show the window menu bar": "Vždy zobraziť hornú lištu okna",
     "Session ID:": "ID relácie:",
     "Session key:": "Kľúč relácie:",
     "Message search": "Vyhľadávanie v správach",
@@ -1105,7 +1094,6 @@
     "Cross-signing is ready for use.": "Krížové podpisovanie je pripravené na použitie.",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Zálohujte si šifrovacie kľúče s údajmi o účte pre prípad, že stratíte prístup k reláciám. Vaše kľúče budú zabezpečené jedinečným bezpečnostným kľúčom.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Vierohodnosť tejto zašifrovanej správy nie je možné na tomto zariadení zaručiť.",
-    "Surround selected text when typing special characters": "Obklopiť vybraný text pri písaní špeciálnych znakov",
     "Large": "Veľký",
     "You're all caught up": "Všetko ste už stihli",
     "You're all caught up.": "Všetko ste už stihli.",
@@ -1301,7 +1289,6 @@
     "Backup key stored:": "Záložný kľúč uložený:",
     "You can also set up Secure Backup & manage your keys in Settings.": "Bezpečné zálohovanie a správu kľúčov môžete nastaviť aj v Nastaveniach.",
     "Set up Secure Backup": "Nastaviť bezpečné zálohovanie",
-    "Show tray icon and minimise window to it on close": "Zobraziť ikonu na lište a pri zatvorení minimalizovať okno na ňu",
     "View all %(count)s members": {
         "one": "Zobraziť 1 člena",
         "other": "Zobraziť všetkých %(count)s členov"
@@ -1473,7 +1460,6 @@
         "other": "Momentálne ste pripojení k %(count)s miestnostiam",
         "one": "Momentálne ste pripojení k %(count)s miestnosti"
     },
-    "Use a more compact 'Modern' layout": "Použiť kompaktnejšie \"moderné\" usporiadanie",
     "Show all rooms": "Zobraziť všetky miestnosti",
     "Forget Room": "Zabudnúť miestnosť",
     "Forget this room": "Zabudnúť túto miestnosť",
@@ -1667,8 +1653,6 @@
     "Quick settings": "Rýchle nastavenia",
     "Themes": "Vzhľad",
     "Moderation": "Moderovanie",
-    "Automatically send debug logs on any error": "Automatické odosielanie záznamov ladenia pri akejkoľvek chybe",
-    "Developer mode": "Režim pre vývojárov",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Získajte prístup k histórii zabezpečených správ a nastavte bezpečné zasielanie správ zadaním bezpečnostného kľúča.",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "Získajte prístup k histórii zabezpečených správ a nastavte bezpečné zasielanie správ zadaním bezpečnostnej frázy.",
     "Messaging": "Posielanie správ",
@@ -1691,7 +1675,6 @@
     "Enter a Security Phrase": "Zadajte bezpečnostnú frázu",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Zadajte svoju bezpečnostnú frázu alebo <button>použite svoj bezpečnostný kľúč</button> pre pokračovanie.",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Neznámy pár (používateľ, relácia): (%(userId)s, %(deviceId)s)",
-    "Automatically send debug logs on decryption errors": "Automatické odosielanie záznamov ladenia pri chybe dešifrovania",
     "You were removed from %(roomName)s by %(memberName)s": "Boli ste odstránení z %(roomName)s používateľom %(memberName)s",
     "Remove from %(roomName)s": "Odstrániť z %(roomName)s",
     "Failed to remove user": "Nepodarilo sa odstrániť používateľa",
@@ -1972,7 +1955,6 @@
         "other": "Potvrďte odhlásenie týchto zariadení pomocou jednotného prihlásenia (SSO) na preukázanie svojej totožnosti.",
         "one": "Potvrďte odhlásenie tohto zariadenia pomocou jednotného prihlásenia (SSO) na preukázanie svojej totožnosti."
     },
-    "Automatically send debug logs when key backup is not functioning": "Automaticky odosielať záznamy o ladení, ak zálohovanie kľúčov nefunguje",
     "Light high contrast": "Ľahký vysoký kontrast",
     "Command Help": "Pomocník príkazov",
     "My live location": "Moja poloha v reálnom čase",
@@ -1981,7 +1963,6 @@
     "What location type do you want to share?": "Aký typ polohy chcete zdieľať?",
     "We couldn't send your location": "Nepodarilo sa nám odoslať vašu polohu",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s nemohol odoslať vašu polohu. Skúste to prosím neskôr.",
-    "Show polls button": "Zobraziť tlačidlo ankiet",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Ostatným sme pozvánky poslali, ale nižšie uvedené osoby nemohli byť pozvané do <RoomName/>",
     "Answered Elsewhere": "Hovor prijatý inde",
     "Remove them from everything I'm able to": "Odstrániť ich zo všetkého, na čo mám oprávnenie",
@@ -2141,7 +2122,6 @@
     "Un-maximise": "Zrušiť maximalizáciu",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Po odhlásení sa tieto kľúče z tohto zariadenia vymažú, čo znamená, že nebudete môcť čítať zašifrované správy, pokiaľ k nim nemáte kľúče v iných zariadeniach alebo ich nemáte zálohované na serveri.",
     "Video rooms are a beta feature": "Video miestnosti sú beta funkciou",
-    "Enable hardware acceleration": "Povoliť hardvérovú akceleráciu",
     "%(count)s Members": {
         "other": "%(count)s členov",
         "one": "%(count)s člen"
@@ -2193,7 +2173,6 @@
     "Choose a locale": "Vyberte si jazyk",
     "Spell check": "Kontrola pravopisu",
     "We're creating a room with %(names)s": "Vytvárame miestnosť s %(names)s",
-    "Your server doesn't support disabling sending read receipts.": "Váš server nepodporuje vypnutie odosielania potvrdení o prečítaní.",
     "Last activity": "Posledná aktivita",
     "Sessions": "Relácie",
     "Current session": "Aktuálna relácia",
@@ -2206,7 +2185,6 @@
     "This session is ready for secure messaging.": "Táto relácia je pripravená na bezpečné zasielanie správ.",
     "Verified session": "Overená relácia",
     "Inactive for %(inactiveAgeDays)s+ days": "Neaktívny počas %(inactiveAgeDays)s+ dní",
-    "Show shortcut to welcome checklist above the room list": "Zobraziť skratku na uvítací kontrolný zoznam nad zoznamom miestností",
     "Inactive sessions": "Neaktívne relácie",
     "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Overte si relácie pre vylepšené bezpečné zasielanie správ alebo sa odhláste z tých, ktoré už nepoznáte alebo nepoužívate.",
     "Unverified sessions": "Neoverené relácie",
@@ -2263,7 +2241,6 @@
     "Video call ended": "Videohovor ukončený",
     "%(name)s started a video call": "%(name)s začal/a videohovor",
     "URL": "URL",
-    "Record the client name, version, and url to recognise sessions more easily in session manager": "Zaznamenať názov klienta, verziu a url, aby bolo možné ľahšie rozpoznať relácie v správcovi relácií",
     "Unknown session type": "Neznámy typ relácie",
     "Web session": "Webová relácia",
     "Mobile session": "Relácia na mobile",
@@ -2334,12 +2311,6 @@
     "Video settings": "Nastavenia videa",
     "Automatically adjust the microphone volume": "Automaticky upraviť hlasitosť mikrofónu",
     "Voice settings": "Nastavenia hlasu",
-    "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.": "Platí len v prípade, ak váš domovský server takúto možnosť neponúka. Vaša IP adresa bude počas hovoru zdieľaná.",
-    "Noise suppression": "Potlačenie hluku",
-    "Echo cancellation": "Potlačenie ozveny",
-    "Automatic gain control": "Automatické riadenie zosilnenia",
-    "When enabled, the other party might be able to see your IP address": "Ak je táto možnosť povolená, druhá strana môže vidieť vašu IP adresu",
-    "Allow Peer-to-Peer for 1:1 calls": "Povolenie Peer-to-Peer pre hovory 1:1",
     "Go live": "Prejsť naživo",
     "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": "Toto znamená, že máte všetky kľúče potrebné na odomknutie zašifrovaných správ a potvrdzujete ostatným používateľom, že tejto relácii dôverujete.",
     "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Overené relácie sú všade tam, kde používate toto konto po zadaní svojho prístupového hesla alebo po potvrdení vašej totožnosti inou overenou reláciou.",
@@ -2362,8 +2333,6 @@
     "Early previews": "Predbežné ukážky",
     "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.": "Čo vás čaká v aplikácii %(brand)s? Laboratóriá sú najlepším spôsobom, ako získať funkcie v predstihu, otestovať nové funkcie a pomôcť ich vytvoriť ešte pred ich skutočným spustením.",
     "Upcoming features": "Pripravované funkcie",
-    "Requires compatible homeserver.": "Vyžaduje kompatibilný domovský server.",
-    "Low bandwidth mode": "Režim nízkej šírky pásma",
     "You have unverified sessions": "Máte neoverené relácie",
     "Change layout": "Zmeniť rozloženie",
     "Search users in this room…": "Vyhľadať používateľov v tejto miestnosti…",
@@ -2490,10 +2459,7 @@
     "Once everyone has joined, you’ll be able to chat": "Keď sa všetci pridajú, budete môcť konverzovať",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Pri aktualizácii vašich predvolieb oznámení došlo k chybe. Skúste prosím prepnúť možnosť znova.",
     "Desktop app logo": "Logo aplikácie pre stolové počítače",
-    "Log out and back in to disable": "Odhláste sa a znova sa prihláste, aby sa to vyplo",
-    "Can currently only be enabled via config.json": "V súčasnosti sa dá povoliť len prostredníctvom súboru config.json",
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilnú verziu MSC3827",
-    "Show avatars in user, room and event mentions": "Zobraziť obrázky profilov v zmienkach o používateľoch, miestnostiach a udalostiach",
     "Message from %(user)s": "Správa od %(user)s",
     "Message in %(room)s": "Správa v %(room)s",
     "Error details": "Podrobnosti o chybe",
@@ -2538,7 +2504,6 @@
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Prípadne môžete skúsiť použiť verejný server na adrese <server/>, ale nebude to tak spoľahlivé a vaša IP adresa bude zdieľaná s týmto serverom. Môžete to spravovať aj v nastaveniach.",
     "Try using %(server)s": "Skúste použiť %(server)s",
     "User is not logged in": "Používateľ nie je prihlásený",
-    "Allow fallback call assist server (%(server)s)": "Povoliť náhradnú službu hovorov asistenčného servera (%(server)s)",
     "Your server requires encryption to be disabled.": "Váš server vyžaduje vypnuté šifrovanie.",
     "Are you sure you wish to remove (delete) this event?": "Ste si istí, že chcete túto udalosť odstrániť (vymazať)?",
     "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstránením takýchto zmien v miestnosti by sa zmena mohla zvrátiť.",
@@ -2862,7 +2827,12 @@
         "join_beta": "Pripojte sa k beta verzii",
         "notification_settings_beta_title": "Nastavenia oznámení",
         "voice_broadcast_force_small_chunks": "Vynútiť 15s dĺžku sekcie hlasového vysielania",
-        "oidc_native_flow": "Povoliť nové natívne toky OIDC (v štádiu aktívneho vývoja)"
+        "oidc_native_flow": "Povoliť nové natívne toky OIDC (v štádiu aktívneho vývoja)",
+        "automatic_debug_logs": "Automatické odosielanie záznamov ladenia pri akejkoľvek chybe",
+        "automatic_debug_logs_decryption": "Automatické odosielanie záznamov ladenia pri chybe dešifrovania",
+        "automatic_debug_logs_key_backup": "Automaticky odosielať záznamy o ladení, ak zálohovanie kľúčov nefunguje",
+        "rust_crypto_disabled_notice": "V súčasnosti sa dá povoliť len prostredníctvom súboru config.json",
+        "sliding_sync_disabled_notice": "Odhláste sa a znova sa prihláste, aby sa to vyplo"
     },
     "keyboard": {
         "home": "Domov",
@@ -3149,7 +3119,8 @@
             "custom_font_description": "Nastavte názov písma, ktoré máte nainštalované na vašom systéme & %(brand)s sa ho pokúsi použiť.",
             "timeline_image_size": "Veľkosť obrázku na časovej osi",
             "timeline_image_size_default": "Predvolené",
-            "timeline_image_size_large": "Veľký"
+            "timeline_image_size_large": "Veľký",
+            "custom_font_size": "Použiť vlastnú veľkosť"
         },
         "inline_url_previews_room_account": "Povoliť náhľady URL adries pre túto miestnosť (ovplyvňuje len vás)",
         "inline_url_previews_room": "Predvolene povoliť náhľady URL adries pre členov tejto miestnosti",
@@ -3162,7 +3133,12 @@
             "message_search_indexed_messages": "Indexované správy:",
             "message_search_indexed_rooms": "Indexované miestnosti:",
             "message_search_room_progress": "%(doneRooms)s z %(totalRooms)s",
-            "message_search_sleep_time": "Čas spánku pri sťahovaní správy (ms)"
+            "message_search_sleep_time": "Ako rýchlo sa majú správy sťahovať.",
+            "send_analytics": "Odosielať analytické údaje",
+            "record_session_details": "Zaznamenať názov klienta, verziu a url, aby bolo možné ľahšie rozpoznať relácie v správcovi relácií",
+            "strict_encryption": "Nikdy neposielať šifrované správy neovereným reláciám z tejto relácie",
+            "enable_message_search": "Povoliť vyhľadávanie správ v šifrovaných miestnostiach",
+            "manually_verify_all_sessions": "Manuálne overiť všetky relácie"
         },
         "preferences": {
             "room_list_heading": "Zoznam miestností",
@@ -3176,7 +3152,26 @@
             "room_directory_heading": "Adresár miestností",
             "autocomplete_delay": "Oneskorenie automatického dokončovania (ms)",
             "rm_lifetime": "Platnosť značky Prečítané (ms)",
-            "rm_lifetime_offscreen": "Platnosť značky Prečítané mimo obrazovku (ms)"
+            "rm_lifetime_offscreen": "Platnosť značky Prečítané mimo obrazovku (ms)",
+            "show_polls_button": "Zobraziť tlačidlo ankiet",
+            "compact_modern": "Použiť kompaktnejšie \"moderné\" usporiadanie",
+            "show_avatars_pills": "Zobraziť obrázky profilov v zmienkach o používateľoch, miestnostiach a udalostiach",
+            "surround_text": "Obklopiť vybraný text pri písaní špeciálnych znakov",
+            "show_checklist_shortcuts": "Zobraziť skratku na uvítací kontrolný zoznam nad zoznamom miestností",
+            "always_show_menu_bar": "Vždy zobraziť hornú lištu okna",
+            "enable_tray_icon": "Zobraziť ikonu na lište a pri zatvorení minimalizovať okno na ňu",
+            "enable_hardware_acceleration": "Povoliť hardvérovú akceleráciu"
+        },
+        "send_read_receipts_unsupported": "Váš server nepodporuje vypnutie odosielania potvrdení o prečítaní.",
+        "voip": {
+            "mirror_local_feed": "Zrkadliť lokálne video",
+            "allow_p2p": "Povolenie Peer-to-Peer pre hovory 1:1",
+            "allow_p2p_description": "Ak je táto možnosť povolená, druhá strana môže vidieť vašu IP adresu",
+            "auto_gain_control": "Automatické riadenie zosilnenia",
+            "echo_cancellation": "Potlačenie ozveny",
+            "noise_suppression": "Potlačenie hluku",
+            "enable_fallback_ice_server": "Povoliť náhradnú službu hovorov asistenčného servera (%(server)s)",
+            "enable_fallback_ice_server_description": "Platí len v prípade, ak váš domovský server takúto možnosť neponúka. Vaša IP adresa bude počas hovoru zdieľaná."
         }
     },
     "devtools": {
@@ -3270,7 +3265,12 @@
         "thread_root_id": "ID koreňového vlákna: %(threadRootId)s",
         "event_id": "ID udalosti: %(eventId)s",
         "category_room": "Miestnosť",
-        "category_other": "Ďalšie"
+        "category_other": "Ďalšie",
+        "widget_screenshots": "Umožniť zachytiť snímku obrazovky pre podporované widgety",
+        "show_hidden_events": "Zobrazovať skryté udalosti v histórii obsahu miestností",
+        "low_bandwidth_mode": "Režim nízkej šírky pásma",
+        "low_bandwidth_mode_description": "Vyžaduje kompatibilný domovský server.",
+        "developer_mode": "Režim pre vývojárov"
     },
     "export_chat": {
         "html": "HTML",
@@ -3823,6 +3823,9 @@
             "ban": "Zakázať používateľov",
             "redact": "Odstrániť správy odoslané inými osobami",
             "notifications.room": "Poslať oznámenie všetkým"
+        },
+        "security": {
+            "strict_encryption": "Nikdy neposielať šifrované správy neovereným reláciám v tejto miestnosti z tejto relácie"
         }
     },
     "encryption": {

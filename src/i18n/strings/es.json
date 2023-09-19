@@ -232,9 +232,6 @@
     "You are no longer ignoring %(userId)s": "Ya no ignoras a %(userId)s",
     "Your browser does not support the required cryptography extensions": "Su navegador no soporta las extensiones de criptografía requeridas",
     "Not a valid %(brand)s keyfile": "No es un archivo de claves de %(brand)s válido",
-    "Mirror local video feed": "Invertir el vídeo local horizontalmente (espejo)",
-    "Send analytics data": "Enviar datos estadísticos de uso",
-    "Enable widget screenshots on supported widgets": "Activar capturas de pantalla de accesorios en los accesorios que lo permitan",
     "Drop file here to upload": "Suelta aquí el archivo para enviarlo",
     "This event could not be displayed": "No se ha podido mostrar este evento",
     "Demote yourself?": "¿Quitarte permisos a ti mismo?",
@@ -504,7 +501,6 @@
     "Unexpected error resolving identity server configuration": "Error inesperado en la configuración del servidor de identidad",
     "The user must be unbanned before they can be invited.": "El usuario debe ser desbloqueado antes de poder ser invitado.",
     "The user's homeserver does not support the version of the room.": "El servidor del usuario no soporta la versión de la sala.",
-    "Show hidden events in timeline": "Mostrar eventos ocultos en la línea de tiempo",
     "Got It": "Entendido",
     "Scissors": "Tijeras",
     "Call failed due to misconfigured server": "La llamada ha fallado debido a una mala configuración del servidor",
@@ -620,10 +616,6 @@
     "Server or user ID to ignore": "Servidor o ID de usuario a ignorar",
     "eg: @bot:* or example.org": "ej.: @bot:* o ejemplo.org",
     "Cancel entering passphrase?": "¿Cancelar el ingresar tu contraseña de recuperación?",
-    "Never send encrypted messages to unverified sessions from this session": "No enviar nunca mensajes cifrados a sesiones sin verificar desde esta sesión",
-    "Never send encrypted messages to unverified sessions in this room from this session": "No enviar nunca mensajes cifrados a sesiones sin verificar en esta sala desde esta sesión",
-    "Enable message search in encrypted rooms": "Activar la búsqueda de mensajes en salas cifradas",
-    "How fast should messages be downloaded.": "Con qué rapidez deben ser descargados los mensajes.",
     "Waiting for %(displayName)s to verify…": "Esperando la verificación de %(displayName)s…",
     "in secret storage": "en almacén secreto",
     "Secret storage public key:": "Clave pública del almacén secreto:",
@@ -670,7 +662,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) inició una nueva sesión sin verificarla:",
     "Ask this user to verify their session, or manually verify it below.": "Pídele al usuario que verifique su sesión, o verifícala manualmente a continuación.",
     "Not Trusted": "No es de confianza",
-    "Manually verify all remote sessions": "Verificar manualmente todas las sesiones remotas",
     "Cancelling…": "Anulando…",
     "Set up": "Configurar",
     "This bridge was provisioned by <user />.": "Este puente fue aportado por <user />.",
@@ -709,7 +700,6 @@
     "Subscribed lists": "Listados a que subscribiste",
     "Subscribing to a ban list will cause you to join it!": "¡Suscribirse a una lista negra hará unirte a ella!",
     "If this isn't what you want, please use a different tool to ignore users.": "Si esto no es lo que quieres, por favor usa una herramienta diferente para ignorar usuarios.",
-    "Always show the window menu bar": "Siempre mostrar la barra de menú de la ventana",
     "Session ID:": "Identidad (ID) de sesión:",
     "Session key:": "Código de sesión:",
     "Accept all %(invitedRooms)s invites": "Aceptar todas las invitaciones de %(invitedRooms)s",
@@ -988,7 +978,6 @@
     "Contact your <a>server admin</a>.": "Contacta con el <a>administrador del servidor</a>.",
     "This session is encrypting history using the new recovery method.": "Esta sesión está cifrando el historial usando el nuevo método de recuperación.",
     "Change notification settings": "Cambiar los ajustes de notificaciones",
-    "Use custom size": "Usar un tamaño personalizado",
     "Your server isn't responding to some <a>requests</a>.": "Tú servidor no esta respondiendo a ciertas <a>solicitudes</a>.",
     "New version available. <a>Update now.</a>": "Nueva versión disponible. <a>Actualizar ahora.</a>",
     "Hey you. You're the best!": "Oye, tú… ¡eres genial!",
@@ -1720,7 +1709,6 @@
     "More": "Más",
     "Show sidebar": "Ver menú lateral",
     "Hide sidebar": "Ocultar menú lateral",
-    "Surround selected text when typing special characters": "Rodear texto seleccionado al escribir caracteres especiales",
     "Unknown failure: %(reason)s": "Fallo desconocido: %(reason)s",
     "<b>It's not recommended to make encrypted rooms public.</b> It will mean anyone can find and join the room, so anyone can read messages. You'll get none of the benefits of encryption. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>No está recomendado activar el cifrado en salas públicas.</b> Cualquiera puede encontrar la sala y unirse, por lo que cualquiera puede leer los mensajes. No disfrutarás de los beneficios del cifrado. Además, activarlo en una sala pública hará que recibir y enviar mensajes tarde más.",
     "Delete avatar": "Borrar avatar",
@@ -1786,7 +1774,6 @@
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe tu frase de seguridad o <button>usa tu clave de seguridad</button> para continuar.",
     "See room timeline (devtools)": "Ver línea de tiempo de la sala (herramientas de desarrollo)",
     "View in room": "Ver en la sala",
-    "Developer mode": "Modo de desarrollo",
     "Insert link": "Insertar enlace",
     "Joining": "Uniéndote",
     "You're all caught up": "Estás al día",
@@ -1804,10 +1791,8 @@
         "other": "Haz clic en el botón de abajo para confirmar y cerrar sesión en estos dispositivos.",
         "one": "Haz clic en el botón de abajo para confirmar que quieres cerrar la sesión de este dispositivo."
     },
-    "Use a more compact 'Modern' layout": "Usar una disposición más compacta y «moderna»",
     "Light high contrast": "Claro con contraste alto",
     "If you can't see who you're looking for, send them your invite link below.": "Si no encuentras a quien buscas, envíale tu enlace de invitación que encontrarás abajo.",
-    "Automatically send debug logs on any error": "Mandar automáticamente los registros de depuración cuando ocurra cualquier error",
     "Joined": "Te has unido",
     "Someone already has that username. Try another or if it is you, sign in below.": "Ya hay alguien con ese nombre de usuario. Prueba con otro o, si eres tú, inicia sesión más abajo.",
     "Copy link to thread": "Copiar enlace al hilo",
@@ -1821,7 +1806,6 @@
     "You do not have permission to start polls in this room.": "No tienes permisos para empezar encuestas en esta sala.",
     "Create Poll": "Crear encuesta",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está en algún espacio en el que no eres administrador. En esos espacios, la sala antigua todavía aparecerá, pero se avisará a los participantes para que se unan a la nueva.",
-    "Show tray icon and minimise window to it on close": "Mostrar un icono en la barra de tareas y minimizar la ventana a él cuando se cierre",
     "Spaces to show": "Qué espacios mostrar",
     "Home is useful for getting an overview of everything.": "La pantalla de Inicio es útil para tener una vista general de todas tus conversaciones.",
     "Show all your rooms in Home, even if they're in a space.": "Incluir todas tus salas en inicio, aunque estén dentro de un espacio.",
@@ -1909,7 +1893,6 @@
     "Expand map": "Expandir mapa",
     "Verify this device by confirming the following number appears on its screen.": "Verifica este dispositivo confirmando que el siguiente número aparece en pantalla.",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Confirma que los siguientes emojis aparecen en los dos dispositivos y en el mismo orden:",
-    "Automatically send debug logs on decryption errors": "Enviar los registros de depuración automáticamente de fallos al descifrar",
     "Room members": "Miembros de la sala",
     "Back to chat": "Volver a la conversación",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Pareja (usuario, sesión) desconocida: (%(userId)s, %(deviceId)s)",
@@ -1993,9 +1976,7 @@
         "one": "Confirma que quieres cerrar sesión en este dispositivo usando Single Sign On para probar tu identidad.",
         "other": "Confirma que quieres cerrar sesión de estos dispositivos usando Single Sign On para probar tu identidad."
     },
-    "Automatically send debug logs when key backup is not functioning": "Enviar automáticamente los registros de depuración cuando la clave de respaldo no funcione",
     "Match system": "Usar el del sistema",
-    "Show polls button": "Mostrar botón de encuestas",
     "Can't create a thread from an event with an existing relation": "No ha sido posible crear un hilo a partir de un evento con una relación existente",
     "You are sharing your live location": "Estás compartiendo tu ubicación en tiempo real",
     "This homeserver is not configured to display maps.": "Este servidor base no está configurado para mostrar mapas.",
@@ -2141,7 +2122,6 @@
     "Un-maximise": "Dejar de maximizar",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Al cerrar sesión, estas claves serán eliminadas del dispositivo. Esto significa que no podrás leer mensajes cifrados salvo que tengas sus claves en otros dispositivos, o hayas hecho una copia de seguridad usando el servidor.",
     "Video rooms are a beta feature": "Las salas de vídeo están en beta",
-    "Enable hardware acceleration": "Activar aceleración por hardware",
     "%(count)s Members": {
         "one": "%(count)s miembro",
         "other": "%(count)s miembros"
@@ -2201,7 +2181,6 @@
     "Unverified session": "Sesión sin verificar",
     "This session is ready for secure messaging.": "Esta sesión está lista para mensajería segura.",
     "Verified session": "Sesión verificada",
-    "Your server doesn't support disabling sending read receipts.": "Tu servidor no permite desactivar los acuses de recibo.",
     "Spell check": "Corrector ortográfico",
     "Interactively verify by emoji": "Verificar interactivamente usando emojis",
     "Manually verify by text": "Verificar manualmente usando un texto",
@@ -2223,7 +2202,6 @@
     "Verify or sign out from this session for best security and reliability.": "Verifica o cierra esta sesión, para mayor seguridad y estabilidad.",
     "Verified sessions": "Sesiones verificadas",
     "Inactive for %(inactiveAgeDays)s+ days": "Inactivo durante más de %(inactiveAgeDays)s días",
-    "Show shortcut to welcome checklist above the room list": "Mostrar un atajo a los pasos de bienvenida encima de la lista de salas",
     "Inviting %(user)s and %(count)s others": {
         "one": "Invitando a %(user)s y 1 más",
         "other": "Invitando a %(user)s y %(count)s más"
@@ -2284,7 +2262,6 @@
     "Live": "En directo",
     "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "Esto ayuda a otorgar la confianza de que realmente están hablando contigo, pero significa que podrán ver el nombre de la sesión que pongas aquí.",
     "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "La lista completa de tus sesiones podrá ser vista por otros usuarios en tus mensajes directos y salas en las que estés.",
-    "Record the client name, version, and url to recognise sessions more easily in session manager": "Registrar el nombre del cliente, la versión y URL para reconocer de forma más fácil las sesiones en el gestor",
     "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Considera cerrar sesión en los dispositivos que ya no uses (hace %(inactiveAgeDays)s días o más).",
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Puedes usar este dispositivo para iniciar sesión en uno nuevo escaneando un código QR. Tendrás que escanearlo con el nuevo dispositivo que quieras usar para iniciar sesión.",
     "Completing set up of your new device": "Terminando de configurar tu nuevo dispositivo",
@@ -2307,9 +2284,6 @@
         "one": "¿Seguro que quieres cerrar %(count)s sesión?",
         "other": "¿Seguro que quieres cerrar %(count)s sesiones?"
     },
-    "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.": "Solo se activará si tu servidor base no ofrece uno. Tu dirección IP se compartirá durante la llamada.",
-    "Automatic gain control": "Control automático de volumen",
-    "Allow Peer-to-Peer for 1:1 calls": "Permitir llamadas directas 1-a-1 (peer-to-peer)",
     "Yes, stop broadcast": "Sí, detener retransmisión",
     "Stop live broadcasting?": "¿Dejar de retransmitir?",
     "Devices connected": "Dispositivos conectados",
@@ -2327,9 +2301,6 @@
     "Connection": "Conexión",
     "Voice processing": "Procesamiento de vídeo",
     "Video settings": "Ajustes de vídeo",
-    "Noise suppression": "Supresión de ruido",
-    "Echo cancellation": "Cancelación de eco",
-    "When enabled, the other party might be able to see your IP address": "Si lo activas, la otra parte podría ver tu dirección IP",
     "Go live": "Empezar directo",
     "Sign out of all devices": "Cerrar sesión en todos los dispositivos",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Demasiados intentos en poco tiempo. Inténtalo de nuevo en %(timeout)s.",
@@ -2363,8 +2334,6 @@
     "Search users in this room…": "Buscar usuarios en esta sala…",
     "Give one or multiple users in this room more privileges": "Otorga a uno o más usuarios privilegios especiales en esta sala",
     "Add privileged users": "Añadir usuarios privilegiados",
-    "Requires compatible homeserver.": "Es necesario que el servidor base sea compatible.",
-    "Low bandwidth mode": "Modo de bajo ancho de banda",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "No puedes empezar una llamada, porque estás grabando una retransmisión en directo. Por favor, finaliza tu retransmisión en directo para empezar la llamada.",
     "Can’t start a call": "No se ha podido empezar la llamada",
     "Failed to read events": "No se han podido leer los eventos",
@@ -2433,8 +2402,6 @@
     "Keep going…": "Sigue…",
     "If you know a room address, try joining through that instead.": "Si conoces la dirección de una sala, prueba a unirte a través de ella.",
     "Requires your server to support the stable version of MSC3827": "Requiere que tu servidor sea compatible con la versión estable de MSC3827",
-    "Can currently only be enabled via config.json": "Ahora mismo solo se puede activar a través de config.json",
-    "Log out and back in to disable": "Cierra sesión y vuélvela a abrir para desactivar",
     "This session is backing up your keys.": "",
     "Once everyone has joined, you’ll be able to chat": "Cuando la gente se una, podrás hablar",
     "Desktop app logo": "Logotipo de la aplicación de escritorio",
@@ -2442,7 +2409,6 @@
     "Send email": "Enviar email",
     "Past polls": "Encuestas anteriores",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activa «%(manageIntegrations)s» en ajustes para poder hacer esto.",
-    "Show avatars in user, room and event mentions": "Mostrar fotos de perfil en las menciones de usuarios, salas y eventos",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Los detalles de tu cuenta los gestiona de forma separada <code>%(hostname)s</code>.",
     "Start DM anyway and never warn me again": "Enviar mensaje directo de todos modos y no avisar más",
     "Can't start voice message": "No se ha podido empezar el mensaje de voz",
@@ -2720,7 +2686,12 @@
         "join_beta_reload": "Al unirte a la beta, %(brand)s volverá a cargarse.",
         "leave_beta": "Salir de la beta",
         "join_beta": "Unirme a la beta",
-        "oidc_native_flow": "Activar flujos de OIDC nativos (en desarrollo)"
+        "oidc_native_flow": "Activar flujos de OIDC nativos (en desarrollo)",
+        "automatic_debug_logs": "Mandar automáticamente los registros de depuración cuando ocurra cualquier error",
+        "automatic_debug_logs_decryption": "Enviar los registros de depuración automáticamente de fallos al descifrar",
+        "automatic_debug_logs_key_backup": "Enviar automáticamente los registros de depuración cuando la clave de respaldo no funcione",
+        "rust_crypto_disabled_notice": "Ahora mismo solo se puede activar a través de config.json",
+        "sliding_sync_disabled_notice": "Cierra sesión y vuélvela a abrir para desactivar"
     },
     "keyboard": {
         "home": "Inicio",
@@ -3003,7 +2974,8 @@
             "custom_font_description": "Escribe el nombre de la fuente instalada en tu sistema y %(brand)s intentará usarla.",
             "timeline_image_size": "Tamaño de las imágenes en la línea de tiempo",
             "timeline_image_size_default": "Por defecto",
-            "timeline_image_size_large": "Grande"
+            "timeline_image_size_large": "Grande",
+            "custom_font_size": "Usar un tamaño personalizado"
         },
         "inline_url_previews_room_account": "Activar la vista previa de URLs en esta sala (solo para ti)",
         "inline_url_previews_room": "Activar la vista previa de URLs por defecto para los participantes de esta sala",
@@ -3016,7 +2988,12 @@
             "message_search_indexed_messages": "Mensajes indexados:",
             "message_search_indexed_rooms": "Salas indexadas:",
             "message_search_room_progress": "%(doneRooms)s fuera de %(totalRooms)s",
-            "message_search_sleep_time": "Tiempo de suspensión de descarga de mensajes(ms)"
+            "message_search_sleep_time": "Con qué rapidez deben ser descargados los mensajes.",
+            "send_analytics": "Enviar datos estadísticos de uso",
+            "record_session_details": "Registrar el nombre del cliente, la versión y URL para reconocer de forma más fácil las sesiones en el gestor",
+            "strict_encryption": "No enviar nunca mensajes cifrados a sesiones sin verificar desde esta sesión",
+            "enable_message_search": "Activar la búsqueda de mensajes en salas cifradas",
+            "manually_verify_all_sessions": "Verificar manualmente todas las sesiones remotas"
         },
         "preferences": {
             "room_list_heading": "Lista de salas",
@@ -3030,7 +3007,25 @@
             "room_directory_heading": "Directorio de salas",
             "autocomplete_delay": "Retardo autocompletado (ms)",
             "rm_lifetime": "Permanencia del marcador de lectura (en ms)",
-            "rm_lifetime_offscreen": "Permanencia del marcador de lectura fuera de la pantalla (en ms)"
+            "rm_lifetime_offscreen": "Permanencia del marcador de lectura fuera de la pantalla (en ms)",
+            "show_polls_button": "Mostrar botón de encuestas",
+            "compact_modern": "Usar una disposición más compacta y «moderna»",
+            "show_avatars_pills": "Mostrar fotos de perfil en las menciones de usuarios, salas y eventos",
+            "surround_text": "Rodear texto seleccionado al escribir caracteres especiales",
+            "show_checklist_shortcuts": "Mostrar un atajo a los pasos de bienvenida encima de la lista de salas",
+            "always_show_menu_bar": "Siempre mostrar la barra de menú de la ventana",
+            "enable_tray_icon": "Mostrar un icono en la barra de tareas y minimizar la ventana a él cuando se cierre",
+            "enable_hardware_acceleration": "Activar aceleración por hardware"
+        },
+        "send_read_receipts_unsupported": "Tu servidor no permite desactivar los acuses de recibo.",
+        "voip": {
+            "mirror_local_feed": "Invertir el vídeo local horizontalmente (espejo)",
+            "allow_p2p": "Permitir llamadas directas 1-a-1 (peer-to-peer)",
+            "allow_p2p_description": "Si lo activas, la otra parte podría ver tu dirección IP",
+            "auto_gain_control": "Control automático de volumen",
+            "echo_cancellation": "Cancelación de eco",
+            "noise_suppression": "Supresión de ruido",
+            "enable_fallback_ice_server_description": "Solo se activará si tu servidor base no ofrece uno. Tu dirección IP se compartirá durante la llamada."
         }
     },
     "devtools": {
@@ -3105,7 +3100,12 @@
         "room_id": "ID de la sala: %(roomId)s",
         "event_id": "ID del evento: %(eventId)s",
         "category_room": "Sala",
-        "category_other": "Otros"
+        "category_other": "Otros",
+        "widget_screenshots": "Activar capturas de pantalla de accesorios en los accesorios que lo permitan",
+        "show_hidden_events": "Mostrar eventos ocultos en la línea de tiempo",
+        "low_bandwidth_mode": "Modo de bajo ancho de banda",
+        "low_bandwidth_mode_description": "Es necesario que el servidor base sea compatible.",
+        "developer_mode": "Modo de desarrollo"
     },
     "export_chat": {
         "html": "HTML",
@@ -3641,6 +3641,9 @@
             "ban": "Bloquear usuarios",
             "redact": "Eliminar los mensajes enviados por otras personas",
             "notifications.room": "Notificar a todo el mundo"
+        },
+        "security": {
+            "strict_encryption": "No enviar nunca mensajes cifrados a sesiones sin verificar en esta sala desde esta sesión"
         }
     },
     "encryption": {

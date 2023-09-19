@@ -185,7 +185,6 @@
     "Your browser does not support the required cryptography extensions": "Jūsų naršyklė nepalaiko reikalingų kriptografijos plėtinių",
     "Not a valid %(brand)s keyfile": "Negaliojantis %(brand)s rakto failas",
     "Authentication check failed: incorrect password?": "Autentifikavimo patikra nepavyko: neteisingas slaptažodis?",
-    "Send analytics data": "Siųsti analitinius duomenis",
     "Change Password": "Keisti Slaptažodį",
     "Authentication": "Autentifikavimas",
     "Forget room": "Pamiršti kambarį",
@@ -225,7 +224,6 @@
     "Missing roomId.": "Trūksta kambario ID.",
     "This homeserver has hit its Monthly Active User limit.": "Šis serveris pasiekė savo mėnesinį aktyvių vartotojų limitą.",
     "This homeserver has exceeded one of its resource limits.": "Šis serveris viršijo vieno iš savo išteklių limitą.",
-    "Enable widget screenshots on supported widgets": "Įjungti valdiklių ekrano kopijas palaikomuose valdikliuose",
     "Export E2E room keys": "Eksportuoti E2E (visapusio šifravimo) kambarių raktus",
     "Unignore": "Nebeignoruoti",
     "and %(count)s others...": {
@@ -514,7 +512,6 @@
     "Invalid identity server discovery response": "Klaidingas tapatybės serverio radimo atsakas",
     "Double check that your server supports the room version chosen and try again.": "Dar kartą įsitikinkite, kad jūsų serveris palaiko pasirinktą kambario versiją ir bandykite iš naujo.",
     "Session already verified!": "Seansas jau patvirtintas!",
-    "Enable message search in encrypted rooms": "Įjungti žinučių paiešką užšifruotuose kambariuose",
     "Got It": "Supratau",
     "Waiting for %(displayName)s to verify…": "Laukiama kol %(displayName)s patvirtins…",
     "Cancelling…": "Atšaukiama…",
@@ -619,7 +616,6 @@
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Neįmanoma prisijungti prie serverio per HTTP, kai naršyklės juostoje yra HTTPS URL. Naudokite HTTPS arba <a>įjunkite nesaugias rašmenas</a>.",
     "No media permissions": "Nėra medijos leidimų",
     "Almost there! Is %(displayName)s showing the same shield?": "Beveik atlikta! Ar %(displayName)s rodo tokį patį skydą?",
-    "Mirror local video feed": "Atkartoti lokalų video tiekimą",
     "IRC display name width": "IRC rodomo vardo plotis",
     "My Ban List": "Mano Draudimų Sąrašas",
     "This is your list of users/servers you have blocked - don't leave the room!": "Tai yra jūsų užblokuotų vartotojų/serverių sąrašas - neišeikite iš kambario!",
@@ -664,7 +660,6 @@
     "Click the button below to confirm setting up encryption.": "Paspauskite mygtuką žemiau, kad patvirtintumėte šifravimo nustatymą.",
     "Restore your key backup to upgrade your encryption": "Atkurkite savo atsarginę raktų kopiją, kad atnaujintumėte šifravimą",
     "Upgrade your encryption": "Atnaujinkite savo šifravimą",
-    "Show hidden events in timeline": "Rodyti paslėptus įvykius laiko juostoje",
     "Unable to load key backup status": "Nepavyko įkelti atsarginės raktų kopijos būklės",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Prieš atsijungdami prijunkite šį seansą prie atsarginės raktų kopijos, kad neprarastumėte raktų, kurie gali būti tik šiame seanse.",
     "Connect this session to Key Backup": "Prijungti šį seansą prie Atsarginės Raktų Kopijos",
@@ -676,8 +671,6 @@
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Bandyta įkelti konkrečią vietą šio kambario laiko juostoje, bet jūs neturite leidimo peržiūrėti tos žinutės.",
     "Failed to load timeline position": "Nepavyko įkelti laiko juostos pozicijos",
     "Identity server URL does not appear to be a valid identity server": "Tapatybės serverio URL neatrodo kaip tinkamas tapatybės serveris",
-    "How fast should messages be downloaded.": "Kaip greitai žinutės turi būti parsiųstos.",
-    "Manually verify all remote sessions": "Rankiniu būdu patvirtinti visus nuotolinius seansus",
     "well formed": "gerai suformuotas",
     "unexpected type": "netikėto tipo",
     "in memory": "atmintyje",
@@ -705,8 +698,6 @@
     "Unable to create key backup": "Nepavyko sukurti atsarginės raktų kopijos",
     "Your homeserver has exceeded its user limit.": "Jūsų serveris pasiekė savo vartotojų limitą.",
     "Your homeserver has exceeded one of its resource limits.": "Jūsų serveris pasiekė vieną iš savo resursų limitų.",
-    "Never send encrypted messages to unverified sessions from this session": "Niekada nesiųsti šifruotų žinučių nepatvirtintiems seansams iš šio seanso",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Niekada nesiųsti šifruotų žinučių nepatvirtintiems seansams šiame kambaryje iš šio seanso",
     "Cannot connect to integration manager": "Neįmanoma prisijungti prie integracijų tvarkytuvo",
     "The integration manager is offline or it cannot reach your homeserver.": "Integracijų tvarkytuvas yra išjungtas arba negali pasiekti jūsų serverio.",
     "Disconnect anyway": "Vis tiek atsijungti",
@@ -786,7 +777,6 @@
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Jūs ignoravote šį vartotoją, todėl jo žinutė yra paslėpta. <a>Rodyti vistiek.</a>",
     "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.": "Kai kas nors į savo žinutę įtraukia URL, gali būti rodoma URL peržiūra, suteikianti daugiau informacijos apie tą nuorodą, tokios kaip pavadinimas, aprašymas ir vaizdas iš svetainės.",
     "Show Widgets": "Rodyti Valdiklius",
-    "Always show the window menu bar": "Visada rodyti lango meniu juostą",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Neleisti vartotojams kalbėti senoje kambario versijoje ir paskelbti pranešimą, kuriame vartotojams patariama persikelti į naują kambarį",
     "Update any local room aliases to point to the new room": "Atnaujinkite vietinių kambarių slapyvardžius, kad nurodytumėte į naująjį kambarį",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Norint atnaujinti šį kambarį, reikia uždaryti esamą kambario instanciją ir vietoje jo sukurti naują kambarį. Norėdami suteikti kambario nariams kuo geresnę patirtį, mes:",
@@ -891,7 +881,6 @@
     "This bridge was provisioned by <user />.": "Šis tiltas buvo parūpintas <user />.",
     "Your server isn't responding to some <a>requests</a>.": "Jūsų serveris neatsako į kai kurias <a>užklausas</a>.",
     "Unable to find a supported verification method.": "Nepavyko rasti palaikomo patvirtinimo metodo.",
-    "Use custom size": "Naudoti pasirinktinį dydį",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Jei kita %(brand)s versija vis dar yra atidaryta kitame skirtuke, uždarykite jį, nes %(brand)s naudojimas tame pačiame serveryje, tuo pačiu metu įjungus ir išjungus tingų įkėlimą, sukelks problemų.",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Jūs anksčiau naudojote %(brand)s ant %(host)s įjungę tingų narių įkėlimą. Šioje versijoje tingus įkėlimas yra išjungtas. Kadangi vietinė talpykla nesuderinama tarp šių dviejų nustatymų, %(brand)s reikia iš naujo sinchronizuoti jūsų paskyrą.",
     "You don't currently have any stickerpacks enabled": "Jūs šiuo metu neturite jokių įjungtų lipdukų paketų",
@@ -1423,7 +1412,6 @@
     "Sessions": "Sesijos",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Bendrinti anoniminius duomenis, kurie padės mums nustatyti problemas. Nieko asmeniško. Jokių trečiųjų šalių.",
     "You have no ignored users.": "Nėra ignoruojamų naudotojų.",
-    "Your server doesn't support disabling sending read receipts.": "Jūsų serveris nepalaiko skaitymo kvitų siuntimo išjungimo.",
     "Keyboard": "Klaviatūra",
     "Deactivating your account is a permanent action — be careful!": "Paskyros deaktyvavimas yra negrįžtamas veiksmas — būkite atsargūs!",
     "Spell check": "Rašybos tikrinimas",
@@ -1456,9 +1444,6 @@
     "Space options": "Erdvės parinktys",
     "Recommended for public spaces.": "Rekomenduojama viešosiose erdvėse.",
     "Allow people to preview your space before they join.": "Leisti žmonėms peržiūrėti jūsų erdvę prieš prisijungiant.",
-    "Surround selected text when typing special characters": "Apvesti pasirinktą tekstą rašant specialiuosius simbolius",
-    "Use a more compact 'Modern' layout": "Naudoti kompaktiškesnį 'Modernų' išdėstymą",
-    "Show polls button": "Rodyti apklausų mygtuką",
     "Explore public spaces in the new search dialog": "Tyrinėkite viešas erdves naujajame paieškos lange",
     "Reply in thread": "Atsakyti temoje",
     "Developer": "Kūrėjas",
@@ -1521,12 +1506,6 @@
     "Hint: Begin your message with <code>//</code> to start it with a slash.": "Patarimas: norėdami žinutę pradėti pasviruoju brūkšniu, pradėkite ją su <code>//</code>.",
     "Unrecognised command: %(commandText)s": "Neatpažinta komanda: %(commandText)s",
     "Unknown Command": "Nežinoma komanda",
-    "Enable hardware acceleration": "Įjungti aparatinį spartinimą",
-    "Show tray icon and minimise window to it on close": "Rodyti dėklo piktogramą ir uždarius langą jį sumažinti į ją",
-    "Automatically send debug logs when key backup is not functioning": "Automatiškai siųsti derinimo žurnalus, kai neveikia atsarginė raktų kopija",
-    "Automatically send debug logs on decryption errors": "Automatiškai siųsti derinimo žurnalus apie iššifravimo klaidas",
-    "Automatically send debug logs on any error": "Automatiškai siųsti derinimo žurnalus esant bet kokiai klaidai",
-    "Developer mode": "Kūrėjo režimas",
     "Vietnam": "Vietnamas",
     "United Arab Emirates": "Jungtiniai Arabų Emiratai",
     "Ukraine": "Ukraina",
@@ -1849,7 +1828,10 @@
         "group_encryption": "Šifravimas",
         "group_experimental": "Eksperimentinis",
         "group_developer": "Kūrėjas",
-        "leave_beta": "Palikti beta versiją"
+        "leave_beta": "Palikti beta versiją",
+        "automatic_debug_logs": "Automatiškai siųsti derinimo žurnalus esant bet kokiai klaidai",
+        "automatic_debug_logs_decryption": "Automatiškai siųsti derinimo žurnalus apie iššifravimo klaidas",
+        "automatic_debug_logs_key_backup": "Automatiškai siųsti derinimo žurnalus, kai neveikia atsarginė raktų kopija"
     },
     "keyboard": {
         "home": "Pradžia",
@@ -2058,7 +2040,8 @@
             "custom_font_description": "Nustatykite sistemoje įdiegto šrifto pavadinimą ir %(brand)s bandys jį naudoti.",
             "timeline_image_size": "Paveikslėlio dydis laiko juostoje",
             "timeline_image_size_default": "Numatytas",
-            "timeline_image_size_large": "Didelis"
+            "timeline_image_size_large": "Didelis",
+            "custom_font_size": "Naudoti pasirinktinį dydį"
         },
         "inline_url_previews_room_account": "Įjungti URL nuorodų peržiūras šiame kambaryje (įtakoja tik jus)",
         "inline_url_previews_room": "Įjungti URL nuorodų peržiūras kaip numatytasias šiame kambaryje esantiems dalyviams",
@@ -2073,7 +2056,24 @@
             "media_heading": "Paveikslėliai, GIF ir vaizdo įrašai",
             "autocomplete_delay": "Automatinio užbaigimo vėlinimas (ms)",
             "rm_lifetime": "Skaitymo žymeklio veikimo laikas (ms)",
-            "rm_lifetime_offscreen": "Skaitymo žymeklio ne ekraninis veikimo laikas (ms)"
+            "rm_lifetime_offscreen": "Skaitymo žymeklio ne ekraninis veikimo laikas (ms)",
+            "show_polls_button": "Rodyti apklausų mygtuką",
+            "compact_modern": "Naudoti kompaktiškesnį 'Modernų' išdėstymą",
+            "surround_text": "Apvesti pasirinktą tekstą rašant specialiuosius simbolius",
+            "always_show_menu_bar": "Visada rodyti lango meniu juostą",
+            "enable_tray_icon": "Rodyti dėklo piktogramą ir uždarius langą jį sumažinti į ją",
+            "enable_hardware_acceleration": "Įjungti aparatinį spartinimą"
+        },
+        "send_read_receipts_unsupported": "Jūsų serveris nepalaiko skaitymo kvitų siuntimo išjungimo.",
+        "voip": {
+            "mirror_local_feed": "Atkartoti lokalų video tiekimą"
+        },
+        "security": {
+            "send_analytics": "Siųsti analitinius duomenis",
+            "strict_encryption": "Niekada nesiųsti šifruotų žinučių nepatvirtintiems seansams iš šio seanso",
+            "enable_message_search": "Įjungti žinučių paiešką užšifruotuose kambariuose",
+            "message_search_sleep_time": "Kaip greitai žinutės turi būti parsiųstos.",
+            "manually_verify_all_sessions": "Rankiniu būdu patvirtinti visus nuotolinius seansus"
         }
     },
     "devtools": {
@@ -2090,7 +2090,10 @@
         "toolbox": "Įrankinė",
         "developer_tools": "Programuotojo Įrankiai",
         "category_room": "Kambarys",
-        "category_other": "Kitas"
+        "category_other": "Kitas",
+        "widget_screenshots": "Įjungti valdiklių ekrano kopijas palaikomuose valdikliuose",
+        "show_hidden_events": "Rodyti paslėptus įvykius laiko juostoje",
+        "developer_mode": "Kūrėjo režimas"
     },
     "export_chat": {
         "html": "HTML",
@@ -2491,6 +2494,9 @@
             "ban": "Užblokuoti naudotojus",
             "redact": "Pašalinti kitų siųstas žinutes",
             "notifications.room": "Pranešti visiems"
+        },
+        "security": {
+            "strict_encryption": "Niekada nesiųsti šifruotų žinučių nepatvirtintiems seansams šiame kambaryje iš šio seanso"
         }
     },
     "encryption": {

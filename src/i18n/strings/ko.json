@@ -250,8 +250,6 @@
     "You are now ignoring %(userId)s": "%(userId)s님을 이제 무시합니다",
     "Unignored user": "무시하지 않게 된 사용자",
     "You are no longer ignoring %(userId)s": "%(userId)s님을 더 이상 무시하고 있지 않습니다",
-    "Send analytics data": "정보 분석 데이터 보내기",
-    "Mirror local video feed": "보고 있는 비디오 전송 상태 비추기",
     "URL previews are enabled by default for participants in this room.": "기본으로 URL 미리 보기가 이 방에 참여한 사람들 모두에게 켜졌습니다.",
     "URL previews are disabled by default for participants in this room.": "기본으로 URL 미리 보기가 이 방에 참여한 사람들 모두에게 꺼졌습니다.",
     "%(duration)ss": "%(duration)s초",
@@ -264,7 +262,6 @@
     "Demote": "강등",
     "Demote yourself?": "자신을 강등하시겠습니까?",
     "This room is not public. You will not be able to rejoin without an invite.": "이 방은 공개되지 않았습니다. 초대 없이는 다시 들어올 수 없습니다.",
-    "Enable widget screenshots on supported widgets": "지원되는 위젯에 대해 위젯 스크린샷 사용하기",
     "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.": "누군가 메시지에 URL을 넣으면, URL 미리 보기로 웹사이트에서 온 제목, 설명, 그리고 이미지 등 그 링크에 대한 정보가 표시됩니다.",
     "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.": "지금 이 방처럼, 암호화된 방에서는 홈서버 (미리 보기가 만들어지는 곳)에서 이 방에서 보여지는 링크에 대해 알 수 없도록 기본으로 URL 미리 보기가 꺼집니다.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "자기 자신을 강등하는 것은 되돌릴 수 없고, 자신이 마지막으로 이 방에서 특권을 가진 사용자라면 다시 특권을 얻는 건 불가능합니다.",
@@ -448,7 +445,6 @@
     "Common names and surnames are easy to guess": "흔한 이름과 성은 추측하기 쉽습니다",
     "Straight rows of keys are easy to guess": "키의 한 줄은 추측하기 쉽습니다",
     "Short keyboard patterns are easy to guess": "짧은 키보드 패턴은 추측하기 쉽습니다",
-    "Show hidden events in timeline": "타임라인에서 숨겨진 이벤트 보이기",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "이 사용자 간의 보안 메시지는 종단간 암호화되며 제 3자가 읽을 수 없습니다.",
     "Got It": "알겠습니다",
     "Verify this user by confirming the following emoji appear on their screen.": "다음 이모지가 상대방의 화면에 나타나는 것을 확인하는 것으로 이 사용자를 인증합니다.",
@@ -485,7 +481,6 @@
     "General": "기본",
     "Discovery": "탐색",
     "Deactivate account": "계정 비활성화",
-    "Always show the window menu bar": "항상 윈도우 메뉴 막대에 보이기",
     "Ignored users": "무시한 사용자",
     "Bulk options": "대량 설정",
     "Accept all %(invitedRooms)s invites": "모든 %(invitedRooms)s개의 초대를 수락",
@@ -828,7 +823,6 @@
     "You won't get any notifications": "어떤 알람도 받지 않습니다",
     "Space members": "스페이스 멤버 목록",
     "Private (invite only)": "비공개 (초대 필요)",
-    "Never send encrypted messages to unverified sessions in this room from this session": "이 채팅방의 현재 세션에서 확인되지 않은 세션으로 암호화된 메시지를 보내지 않음",
     "Decide who can view and join %(spaceName)s.": "누가 %(spaceName)s를 보거나 참여할 수 있는지 설정합니다.",
     "Access": "접근",
     "Recommended for public spaces.": "공개 스페이스에 권장 합니다.",
@@ -1149,7 +1143,14 @@
             "composer_heading": "작성기",
             "autocomplete_delay": "자동 완성 딜레이 (ms)",
             "rm_lifetime": "이전 대화 경계선 표시 시간 (ms)",
-            "rm_lifetime_offscreen": "이전 대화 경계선 사라지는 시간 (ms)"
+            "rm_lifetime_offscreen": "이전 대화 경계선 사라지는 시간 (ms)",
+            "always_show_menu_bar": "항상 윈도우 메뉴 막대에 보이기"
+        },
+        "voip": {
+            "mirror_local_feed": "보고 있는 비디오 전송 상태 비추기"
+        },
+        "security": {
+            "send_analytics": "정보 분석 데이터 보내기"
         }
     },
     "devtools": {
@@ -1161,7 +1162,9 @@
         "toolbox": "도구 상자",
         "developer_tools": "개발자 도구",
         "category_room": "방",
-        "category_other": "기타"
+        "category_other": "기타",
+        "widget_screenshots": "지원되는 위젯에 대해 위젯 스크린샷 사용하기",
+        "show_hidden_events": "타임라인에서 숨겨진 이벤트 보이기"
     },
     "create_room": {
         "title_public_room": "공개 방 만들기",
@@ -1408,6 +1411,9 @@
             "state_default": "설정 변경",
             "ban": "사용자 출입 금지",
             "notifications.room": "모두에게 알림"
+        },
+        "security": {
+            "strict_encryption": "이 채팅방의 현재 세션에서 확인되지 않은 세션으로 암호화된 메시지를 보내지 않음"
         }
     },
     "encryption": {

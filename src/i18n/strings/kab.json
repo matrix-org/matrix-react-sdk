@@ -168,7 +168,6 @@
     "New login. Was this you?": "Anekcam amaynut. D kečč/kemm?",
     "What's new?": "D acu-t umaynut?",
     "Please contact your homeserver administrator.": "Ttxil-k/m nermes anedbal-ik/im n usebter agejdan.",
-    "Use custom size": "Seqdec teɣzi tudmawant",
     "Unable to load! Check your network connectivity and try again.": "Yegguma ad d-yali! Senqed tuqqna-inek.inem ɣer uzeṭṭa syen tεerḍeḍ tikkelt-nniḍen.",
     "Failure to create room": "Timerna n texxamt ur teddi ara",
     "Call failed due to misconfigured server": "Ur yeddi ara usiwel ssebba n uqeddac ur nettuswel ara akken iwata",
@@ -254,7 +253,6 @@
     "Avoid recent years": "Zgel iseggasen ineggura",
     "Avoid years that are associated with you": "Zgel iseggasen i icudden ɣur-k",
     "Avoid dates and years that are associated with you": "Zgel izmaz akked iseggasen i icudden ɣur-k",
-    "Send analytics data": "Azen isefka n tesleḍt",
     "Cancelling…": "Asefsex…",
     "Dog": "Aqjun",
     "Horse": "Aεewdiw",
@@ -300,7 +298,6 @@
     "This is a top-100 common password": "Wagi d awal uffir gar 100 yimezwura yettwassnen",
     "This is a very common password": "Wagi d awal uffir yettwassnen",
     "Change notification settings": "Snifel iɣewwaren n yilɣa",
-    "Never send encrypted messages to unverified sessions from this session": "Ur ttazen ara akk iznan yettwawgelhen ɣer tɣimiyin ur nettusenqad ara seg tɣimit-a",
     "My Ban List": "Tabdart-inu n tigtin",
     "Got It": "Awi-t",
     "Accept <policyLink /> to continue:": "Qbel <policyLink /> i wakken ad tkemmleḍ:",
@@ -795,8 +792,6 @@
     "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Tzemreḍ ad tjerrdeḍ, maca kra n tmahilin ur ttilint ara almi yuɣal-d uqeddac n tmagit. Ma mazal tettwaliḍ alɣu-a, senqed tawila-inek•inem neɣ nermes anedbal n uqeddac.",
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Tzemreḍ ad talseḍ awennez i wawal-ik•im uffir, maca kra n tmahilin ur ttilint ara almi yuɣal-d uqeddac n tmagit. Ma mazal tettwaliḍ alɣu-a, senqed tawila-inek•inem neɣ nermes anedbal n uqeddac.",
     "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Tzemreḍ ad teqqneḍ, maca kra n tmahilin ur ttilint ara almi yuɣal-d uqeddac n tmagit. Ma mazal tettwaliḍ alɣu-a senqed tawila-inek•inem neɣ nermes anedbal n uqeddac.",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Ur ttazen ara akk iznan yettwawgelhen ɣer tɣimiyin ur nettusenqad ara seg tɣimit-a",
-    "Enable widget screenshots on supported widgets": "Rmed tuṭṭfiwin n ugdil n uwiǧit deg yiwiǧiten yettwasferken",
     "Enter a new identity server": "Sekcem aqeddac n timagit amaynut",
     "No update available.": "Ulac lqem i yellan.",
     "Hey you. You're the best!": "Kečč·kemm. Ulac win i ak·akem-yifen!",
@@ -815,16 +810,12 @@
     "Incompatible local cache": "Tuffra tadigant ur temṣada ara",
     "Room Settings - %(roomName)s": "Iɣewwaren n texxamt - %(roomName)s",
     "The room upgrade could not be completed": "Aleqqem n texxamt yegguma ad yemmed",
-    "Show hidden events in timeline": "Sken-d ineḍruyen yeffren deg uzray",
-    "Enable message search in encrypted rooms": "Rmed anadi n yiznan deg texxamin yettwawgelhen",
-    "Manually verify all remote sessions": "Senqed s ufus akk tiɣimiyin tinmeggagin",
     "IRC display name width": "Tehri n yisem i d-yettwaseknen IRC",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Iznan iɣellsanen akked useqdac-a ttwawgelhen seg yixef ɣer yixef yerna yiwen ur yezmir ad ten-iɣeṛ.",
     "Verify this user by confirming the following emoji appear on their screen.": "Senqed aseqdac-a s usentem dakken imujiten-a ttbanen-d ɣef ugdil-is.",
     "Verify this user by confirming the following number appears on their screen.": "Senqed aseqdac-a s usentem dakken amḍan-a ittban-d ɣef ugdil-is.",
     "Thumbs up": "Adebbuz d asawen",
     "Unexpected server error trying to leave the room": "Tuccḍa n uqeddac ur nettwaṛǧa ara lawan n tuffɣa seg texxamt",
-    "How fast should messages be downloaded.": "Acḥal i ilaq ad yili urured i wakken ad d-adren yiznan.",
     "Waiting for %(displayName)s to verify…": "Aṛaǧu n %(displayName)s i usenqed…",
     "Securely cache encrypted messages locally for them to appear in search results.": "Ḥrez iznan iwgelhanen idiganen s wudem awurman i wakken ad d-banen deg yigmaḍ n unadi.",
     "The integration manager is offline or it cannot reach your homeserver.": "Amsefrak n umsidef ha-t-an beṛṛa n tuqqna neɣ ur yezmir ara ad yaweḍ ɣer uqeddac-ik·im agejdan.",
@@ -884,7 +875,6 @@
     "Subscribing to a ban list will cause you to join it!": "Amulteɣ ɣer tebdart n tegtin ad ak·akem-yawi ad tettekkiḍ deg-s!",
     "If this isn't what you want, please use a different tool to ignore users.": "Ma yella ayagi mačči d ayen i tebɣiḍ, ttxil-k·m seqdec afecku-nniḍen i wakken ad tzegleḍ iseqdacen.",
     "Room ID or address of ban list": "Asulay n texxamt neɣ tansa n tebdart n tegtin",
-    "Always show the window menu bar": "Afeggag n wumuɣ n usfaylu eǧǧ-it yettban",
     "Unignore": "Ur yettwazgel ara",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Anedbal-ik·im n uqeddac issens awgelhen seg yixef ɣer yixef s wudem amezwer deg texxamin tusligin & yiznan usriden.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Tzegleḍ useqdac-a, ihi iznan-ines ffren. <a>Ɣas akken sken-iten-id.</a>",
@@ -923,7 +913,6 @@
     "You can also set up Secure Backup & manage your keys in Settings.": "Tzemreḍ daɣen aḥraz uffir & tesferkeḍ tisura-ik·im deg yiɣewwaren.",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ma yella ur tesbaduḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ma yella ur tekkiseḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren.",
-    "Mirror local video feed": "Asbani n usuddem n tvidyut tadigant",
     "Unable to find a supported verification method.": "D awezɣi ad d-naf tarrayt n usenqed yettusefraken.",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Ilaq-ak·am ahat ad tesirgeḍ s ufus %(brand)s i unekcum ɣer usawaḍ/webcam",
     "This room is not accessible by remote Matrix servers": "Anekcum er texxamt-a ulamek s yiqeddacen n Matrix inmeggagen",
@@ -1671,7 +1660,8 @@
             "custom_theme_add_button": "Rnu asentel",
             "font_size": "Tuɣzi n tsefsit",
             "custom_font_description": "Sbadu isem n tsefsit yettwasbedden ɣef unagraw-ik·im & %(brand)s ad yeɛreḍ ad t-isseqdec.",
-            "timeline_image_size_default": "Amezwer"
+            "timeline_image_size_default": "Amezwer",
+            "custom_font_size": "Seqdec teɣzi tudmawant"
         },
         "inline_url_previews_room_account": "Rmed tiskanin n URL i texxamt-a (i ak·akem-yeɛnan kan)",
         "inline_url_previews_room": "Rmed tiskanin n URL s wudem amezwer i yimttekkiyen deg texxamt-a",
@@ -1684,14 +1674,22 @@
             "message_search_indexed_messages": "Iznan s umatar:",
             "message_search_indexed_rooms": "Tixxamin s umatar:",
             "message_search_room_progress": "%(doneRooms)s beṛṛa n %(totalRooms)s",
-            "message_search_sleep_time": "Akud n usgunfu n usali n yiznan (ms)"
+            "message_search_sleep_time": "Acḥal i ilaq ad yili urured i wakken ad d-adren yiznan.",
+            "send_analytics": "Azen isefka n tesleḍt",
+            "strict_encryption": "Ur ttazen ara akk iznan yettwawgelhen ɣer tɣimiyin ur nettusenqad ara seg tɣimit-a",
+            "enable_message_search": "Rmed anadi n yiznan deg texxamin yettwawgelhen",
+            "manually_verify_all_sessions": "Senqed s ufus akk tiɣimiyin tinmeggagin"
         },
         "preferences": {
             "room_list_heading": "Tabdart n texxamt",
             "composer_heading": "Imsuddes",
             "autocomplete_delay": "Tanzagt n usmad awurman (ms)",
             "rm_lifetime": "Ɣer tanzagt n tudert n tecreḍt (ms)",
-            "rm_lifetime_offscreen": "Ɣer tanzagt n tudert n tecreḍt beṛṛa n ugdil (ms)"
+            "rm_lifetime_offscreen": "Ɣer tanzagt n tudert n tecreḍt beṛṛa n ugdil (ms)",
+            "always_show_menu_bar": "Afeggag n wumuɣ n usfaylu eǧǧ-it yettban"
+        },
+        "voip": {
+            "mirror_local_feed": "Asbani n usuddem n tvidyut tadigant"
         }
     },
     "devtools": {
@@ -1702,7 +1700,9 @@
         "toolbox": "Tabewwaḍt n yifecka",
         "developer_tools": "Ifecka n uneflay",
         "category_room": "Taxxamt",
-        "category_other": "Nniḍen"
+        "category_other": "Nniḍen",
+        "widget_screenshots": "Rmed tuṭṭfiwin n ugdil n uwiǧit deg yiwiǧiten yettwasferken",
+        "show_hidden_events": "Sken-d ineḍruyen yeffren deg uzray"
     },
     "create_room": {
         "title_public_room": "Rnu taxxamt tazayezt",
@@ -2021,6 +2021,9 @@
             "ban": "Agi yiseqdacen",
             "redact": "Kkes iznan i uznen wiyaḍ",
             "notifications.room": "Selɣu yal yiwen"
+        },
+        "security": {
+            "strict_encryption": "Ur ttazen ara akk iznan yettwawgelhen ɣer tɣimiyin ur nettusenqad ara seg tɣimit-a"
         }
     },
     "encryption": {

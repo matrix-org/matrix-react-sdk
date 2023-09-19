@@ -407,7 +407,6 @@
     "Checking server": "Sunucu kontrol ediliyor",
     "Change identity server": "Kimlik sunucu değiştir",
     "Please contact your homeserver administrator.": "Lütfen anasunucu yöneticiniz ile bağlantıya geçin.",
-    "Send analytics data": "Analiz verilerini gönder",
     "My Ban List": "Yasaklı Listem",
     "Unable to find a supported verification method.": "Desteklenen doğrulama yöntemi bulunamadı.",
     "Dog": "Köpek",
@@ -570,7 +569,6 @@
     "eg: @bot:* or example.org": "örn: @bot:* veya example.org",
     "Subscribed lists": "Abone olunmuş listeler",
     "If this isn't what you want, please use a different tool to ignore users.": "Eğer istediğiniz bu değilse, kullanıcıları yoksaymak için lütfen farklı bir araç kullanın.",
-    "Always show the window menu bar": "Pencerenin menü çubuğunu her zaman göster",
     "Bulk options": "Toplu işlem seçenekleri",
     "Accept all %(invitedRooms)s invites": "Bütün %(invitedRooms)s davetlerini kabul et",
     "Request media permissions": "Medya izinleri talebi",
@@ -617,7 +615,6 @@
     "This is a very common password": "Bu oldukça yaygın parola",
     "This is similar to a commonly used password": "Bu yaygınca kullanılan bir parolaya benziyor",
     "Names and surnames by themselves are easy to guess": "Adlar ve soyadlar kendi kendilerine tahmin için kolaydır",
-    "Mirror local video feed": "Yerel video beslemesi yansısı",
     "Missing media permissions, click the button below to request.": "Medya izinleri eksik, alttaki butona tıkayarak talep edin.",
     "Ignored/Blocked": "Yoksayılan/Bloklanan",
     "Error adding ignored user/server": "Yoksayılan kullanıcı/sunucu eklenirken hata",
@@ -654,8 +651,6 @@
     "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\"": "“abcabcabc” gibi tekrarlar “abc” yi tahmin etmekten çok az daha zor olur",
     "Sequences like abc or 6543 are easy to guess": "abc veya 6543 gibi diziler tahmin için oldukça kolaydır",
     "Common names and surnames are easy to guess": "Yaygın isimleri ve soyisimleri tahmin etmek oldukça kolay",
-    "Enable widget screenshots on supported widgets": "Desteklenen görsel bileşenlerde anlık görüntüleri aç",
-    "Show hidden events in timeline": "Zaman çizelgesinde gizli olayları göster",
     "This is your list of users/servers you have blocked - don't leave the room!": "Bu sizin engellediğiniz kullanıcılar/sunucular listeniz - odadan ayrılmayın!",
     "Got It": "Anlaşıldı",
     "Subscribing to a ban list will cause you to join it!": "Bir yasak listesine abonelik ona katılmanıza yol açar!",
@@ -733,7 +728,6 @@
     "Recently Direct Messaged": "Güncel Doğrudan Mesajlar",
     "Add another word or two. Uncommon words are better.": "Bir iki kelime daha ekleyin. Yaygın olmayan kelimeler daha iyi olur.",
     "Recent years are easy to guess": "Güncel yılların tahmini kolaydır",
-    "Enable message search in encrypted rooms": "Şifrelenmiş odalardaki mesaj aramayı aktifleştir",
     "Cancelling…": "İptal ediliyor…",
     "Lock": "Kilit",
     "Your homeserver does not support cross-signing.": "Ana sunucunuz çapraz imzalamayı desteklemiyor.",
@@ -798,8 +792,6 @@
     "A word by itself is easy to guess": "Kelime zaten kolay tahmin edilir",
     "Straight rows of keys are easy to guess": "Aynı klavye satırındaki ardışık tuşlar kolay tahmin edilir",
     "Short keyboard patterns are easy to guess": "Kısa klavye desenleri kolay tahmin edilir",
-    "Never send encrypted messages to unverified sessions from this session": "Şifreli mesajları asla bu oturumdaki doğrulanmamış oturumlara iletme",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Şifreli mesajları asla oturumdaki bu odadaki doğrulanmamış oturumlara iletme",
     "Local address": "Yerel adres",
     "Local Addresses": "Yerel Adresler",
     "Hide sessions": "Oturumları gizle",
@@ -1085,9 +1077,6 @@
     "Verification timed out.": "Doğrulama zaman aşımına uğradı.",
     "Answered Elsewhere": "Arama başka bir yerde yanıtlandı",
     "IRC display name width": "IRC görünen ad genişliği",
-    "Manually verify all remote sessions": "Bütün uzaktan oturumları el ile onayla",
-    "How fast should messages be downloaded.": "Mesajlar ne kadar hızlı indirilmeli.",
-    "Use custom size": "Özel büyüklük kullan",
     "New published address (e.g. #alias:server)": "Yeni yayınlanmış adresler (e.g. #alias:server)",
     "Published Addresses": "Yayınlanmış adresler",
     "No other published addresses yet, add one below": "Henüz yayınlanmış başka adres yok, aşağıdan bir tane ekle",
@@ -1620,7 +1609,8 @@
             "custom_theme_add_button": "Tema ekle",
             "font_size": "Yazı boyutu",
             "custom_font_description": "Sisteminizde bulunan bir font adı belirtiniz. %(brand)s sizin için onu kullanmaya çalışacak.",
-            "timeline_image_size_default": "Varsayılan"
+            "timeline_image_size_default": "Varsayılan",
+            "custom_font_size": "Özel büyüklük kullan"
         },
         "inline_url_previews_room_account": "Bu oda için URL önizlemeyi aç (sadece sizi etkiler)",
         "inline_url_previews_room": "Bu odadaki katılımcılar için URL önizlemeyi varsayılan olarak açık hale getir",
@@ -1628,7 +1618,12 @@
             "message_search_indexing_idle": "Şu an hiç bir odada mesaj indeksleme yapılmıyor.",
             "message_search_space_used": "Kullanılan alan:",
             "message_search_indexed_messages": "İndekslenmiş mesajlar:",
-            "message_search_indexed_rooms": "İndekslenmiş odalar:"
+            "message_search_indexed_rooms": "İndekslenmiş odalar:",
+            "send_analytics": "Analiz verilerini gönder",
+            "strict_encryption": "Şifreli mesajları asla bu oturumdaki doğrulanmamış oturumlara iletme",
+            "enable_message_search": "Şifrelenmiş odalardaki mesaj aramayı aktifleştir",
+            "message_search_sleep_time": "Mesajlar ne kadar hızlı indirilmeli.",
+            "manually_verify_all_sessions": "Bütün uzaktan oturumları el ile onayla"
         },
         "preferences": {
             "room_list_heading": "Oda listesi",
@@ -1638,7 +1633,11 @@
             "code_blocks_heading": "Kod blokları",
             "autocomplete_delay": "Oto tamamlama gecikmesi (ms)",
             "rm_lifetime": "Okundu iminin gösterim süresi (ms)",
-            "rm_lifetime_offscreen": "Okundu iminin ekran dışındaki gösterim süresi (ms)"
+            "rm_lifetime_offscreen": "Okundu iminin ekran dışındaki gösterim süresi (ms)",
+            "always_show_menu_bar": "Pencerenin menü çubuğunu her zaman göster"
+        },
+        "voip": {
+            "mirror_local_feed": "Yerel video beslemesi yansısı"
         }
     },
     "devtools": {
@@ -1649,7 +1648,9 @@
         "toolbox": "Araç Kutusu",
         "developer_tools": "Geliştirici Araçları",
         "category_room": "Oda",
-        "category_other": "Diğer"
+        "category_other": "Diğer",
+        "widget_screenshots": "Desteklenen görsel bileşenlerde anlık görüntüleri aç",
+        "show_hidden_events": "Zaman çizelgesinde gizli olayları göster"
     },
     "export_chat": {
         "text": "Düz Metin",
@@ -1997,6 +1998,9 @@
             "ban": "Kullanıcıları yasakla",
             "redact": "Diğerleri tarafından gönderilen iletileri kaldır",
             "notifications.room": "Herkesi bilgilendir"
+        },
+        "security": {
+            "strict_encryption": "Şifreli mesajları asla oturumdaki bu odadaki doğrulanmamış oturumlara iletme"
         }
     },
     "encryption": {

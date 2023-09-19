@@ -75,7 +75,6 @@
     "Authentication": "Autenticación",
     "Failed to set display name": "Fallo ao establecer o nome público",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "Mirror local video feed": "Replicar a fonte de vídeo local",
     "Drop file here to upload": "Solte aquí o ficheiro para subilo",
     "Unban": "Non bloquear",
     "Failed to ban user": "Fallo ao bloquear usuaria",
@@ -296,8 +295,6 @@
     "Clear Storage and Sign Out": "Limpar o almacenamento e Saír",
     "We encountered an error trying to restore your previous session.": "Atopamos un fallo intentando restablecer a súa sesión anterior.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Limpando o almacenamento do navegador podería resolver o problema, pero sairás da sesión e non poderás ler o historial cifrado da conversa.",
-    "Send analytics data": "Enviar datos de análises",
-    "Enable widget screenshots on supported widgets": "Activar as capturas de trebellos para aqueles que as permiten",
     "Share Link to User": "Compartir a ligazón coa usuaria",
     "Share room": "Compartir sala",
     "Muted Users": "Usuarias silenciadas",
@@ -454,14 +451,8 @@
     "Join millions for free on the largest public server": "Únete a millóns de persoas gratuitamente no maior servidor público",
     "Language and region": "Idioma e rexión",
     "Your theme": "O teu decorado",
-    "Never send encrypted messages to unverified sessions from this session": "Non enviar nunca desde esta sesión mensaxes cifradas a sesións non verificadas",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Non enviar mensaxes cifradas desde esta sesión a sesións non verificadas nesta sala",
-    "Show hidden events in timeline": "Mostrar na cronoloxía eventos ocultos",
     "Straight rows of keys are easy to guess": "Palabras de letras contiguas son doadas de adiviñar",
     "Short keyboard patterns are easy to guess": "Patróns curtos de teclas son doados de adiviñar",
-    "Enable message search in encrypted rooms": "Activar a busca de mensaxes en salas cifradas",
-    "How fast should messages be downloaded.": "Velocidade á que deberían descargarse as mensaxes.",
-    "Manually verify all remote sessions": "Verificar manualmente todas as sesións remotas",
     "IRC display name width": "Ancho do nome mostrado de IRC",
     "My Ban List": "Listaxe de bloqueo",
     "This is your list of users/servers you have blocked - don't leave the room!": "Esta é a listaxe de usuarias/servidores que ti bloqueaches - non deixes a sala!",
@@ -636,7 +627,6 @@
     "Subscribed lists": "Listaxes subscritas",
     "If this isn't what you want, please use a different tool to ignore users.": "Se esto non é o que queres, usa unha ferramenta diferente para ignorar usuarias.",
     "Room ID or address of ban list": "ID da sala ou enderezo da listaxe de bloqueo",
-    "Always show the window menu bar": "Mostrar sempre a barra de menú da ventá",
     "Session ID:": "ID da sesión:",
     "Session key:": "Chave da sesión:",
     "Bulk options": "Opcións agrupadas",
@@ -882,7 +872,6 @@
     "Server did not return valid authentication information.": "O servidor non devolveu información válida de autenticación.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifica esta usuaria para marcala como confiable. Ao confiar nas usuarias proporcionache tranquilidade extra cando usas cifrado de extremo-a-extremo.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Ao verificar esta usuaria marcarás a súa sesión como confiable, e tamén marcará a túa sesión como confiable para elas.",
-    "Use custom size": "Usar tamaño personalizado",
     "Hey you. You're the best!": "Ei ti. Es grande!",
     "Power level": "Nivel responsabilidade",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Verifica este dispositivo para marcalo como confiable. Confiando neste dispositivo permite que ti e outras usuarias estedes máis tranquilas ao utilizar mensaxes cifradas.",
@@ -1720,7 +1709,6 @@
     "More": "Máis",
     "Show sidebar": "Mostrar a barra lateral",
     "Hide sidebar": "Agochar barra lateral",
-    "Surround selected text when typing special characters": "Rodea o texto seleccionado ao escribir caracteres especiais",
     "Delete avatar": "Eliminar avatar",
     "Unknown failure: %(reason)s": "Fallo descoñecido: %(reason)s",
     "Rooms and spaces": "Salas e espazos",
@@ -1786,7 +1774,6 @@
     "View in room": "Ver na sala",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe a túa Frase de Seguridade ou <button>usa a túa Chave de Seguridade</button> para continuar.",
     "See room timeline (devtools)": "Ver cronoloxía da sala (devtools)",
-    "Developer mode": "Modo desenvolvemento",
     "Insert link": "Escribir ligazón",
     "Joined": "Unícheste",
     "Joining": "Uníndote",
@@ -1818,7 +1805,6 @@
     "Home is useful for getting an overview of everything.": "O Inicio é útil para ter unha visión xeral do que acontece.",
     "Spaces to show": "Espazos a mostrar",
     "Sidebar": "Barra lateral",
-    "Show tray icon and minimise window to it on close": "Mostra icona na bandexa do sistema e minimiza ventá ao pechar",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está nalgúns espazos nos que non es admin. Nesos espazos, seguirase mostrando a sala antiga, pero as usuarias serán convidadas a unirse á nova.",
     "Large": "Grande",
     "Select all": "Seleccionar todos",
@@ -1835,8 +1821,6 @@
         "one": "Confirma a desconexión deste dispositivo usando Single Sign On para probar a túa identidade.",
         "other": "Confirma a desconexión destos dispositivos usando Single Sign On para probar a túa identidade."
     },
-    "Automatically send debug logs on any error": "Enviar automáticamente rexistros de depuración para calquera fallo",
-    "Use a more compact 'Modern' layout": "Usar unha disposición 'Moderna' máis compacta",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Garda a túa Chave de Seguridade nun lugar seguro, como un xestor de contrasinais ou caixa forte, xa que vai protexer os teus datos cifrados.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Imos crear unha Chave de Seguridade para que a gardes nun lugar seguro, como nun xestor de contrasinais ou caixa forte.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera o acceso á túa conta e ás chaves de cifrado gardadas nesta sesión. Sen elas, non poderás ler tódalas túas mensaxes seguras en calquera sesión.",
@@ -1944,7 +1928,6 @@
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Agardando a que verifiques o teu outro dispositivo, %(deviceName)s %(deviceId)s …",
     "Verify this device by confirming the following number appears on its screen.": "Verifica este dispositivo confirmando que o seguinte número aparece na pantalla.",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Confirma que os emoji inferiores se mostran nos dous dispositivos, na mesma orde:",
-    "Automatically send debug logs on decryption errors": "Envía automáticamente rexistro de depuración se hai erros no cifrado",
     "Back to thread": "Volver ao fío",
     "Room members": "Membros da sala",
     "Back to chat": "Volver ao chat",
@@ -1974,7 +1957,6 @@
     "Use <arrows/> to scroll": "Usa <arrows/> para desprazarte",
     "Feedback sent! Thanks, we appreciate it!": "Opinión enviada! Moitas grazas!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "Automatically send debug logs when key backup is not functioning": "Enviar automáticamente rexistros de depuración cando a chave da copia de apoio non funcione",
     "Join %(roomAddress)s": "Unirse a %(roomAddress)s",
     "Edit poll": "Editar enquisa",
     "Sorry, you can't edit a poll after votes have been cast.": "Non se pode editar unha enquisa cando xa recibiu votos.",
@@ -1998,7 +1980,6 @@
     "Click": "Premer",
     "Expand quotes": "Despregar as citas",
     "Collapse quotes": "Pregar as citas",
-    "Show polls button": "Mostrar botón de enquisas",
     "You are sharing your live location": "Vas compartir en directo a túa localización",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Desmarcar se tamén queres eliminar as mensaxes do sistema acerca da usuaria (ex. cambios na membresía, cambios no perfil...)",
     "Preserve system messages": "Conservar mensaxes do sistema",
@@ -2141,7 +2122,6 @@
     "Un-maximise": "Restablecer",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ao saír, estas chaves serán eliminadas deste dispositivo, o que significa que non poderás ler as mensaxes cifradas a menos que teñas as chaves noutro dos teus dispositivos, ou unha copia de apoio no servidor.",
     "Video rooms are a beta feature": "As salas de vídeo están en fase beta",
-    "Enable hardware acceleration": "Activar aceleración por hardware",
     "Remove search filter for %(filter)s": "Elimina o filtro de busca de %(filter)s",
     "Start a group chat": "Inicia un chat en grupo",
     "Other options": "Outras opcións",
@@ -2193,7 +2173,6 @@
     "Choose a locale": "Elixe o idioma",
     "Spell check": "Corrección",
     "We're creating a room with %(names)s": "Estamos creando unha sala con %(names)s",
-    "Your server doesn't support disabling sending read receipts.": "O teu servidor non ten soporte para desactivar o envío de resgardos de lectura.",
     "Inactive for %(inactiveAgeDays)s+ days": "Inactiva durante %(inactiveAgeDays)s+ días",
     "Session details": "Detalles da sesión",
     "IP address": "Enderezo IP",
@@ -2245,7 +2224,6 @@
     "Your server lacks native support, you must specify a proxy": "O teu servidor non ten servidor nativo, tes que indicar un proxy",
     "Your server lacks native support": "O teu servidor non ten soporte nativo",
     "Your server has native support": "O teu servidor ten soporte nativo",
-    "Show shortcut to welcome checklist above the room list": "Mostrar atallo á lista de comprobacións de benvida sobre a lista de salas",
     "You need to be able to kick users to do that.": "Tes que poder expulsar usuarias para facer eso.",
     "Voice broadcast": "Emisión de voz",
     "Sign out of this session": "Pechar esta sesión",
@@ -2486,7 +2464,10 @@
         "leave_beta_reload": "Ao saír da beta volveremos a cargar %(brand)s.",
         "join_beta_reload": "Ao unirte á beta recargaremos %(brand)s.",
         "leave_beta": "Saír da beta",
-        "join_beta": "Unirse á beta"
+        "join_beta": "Unirse á beta",
+        "automatic_debug_logs": "Enviar automáticamente rexistros de depuración para calquera fallo",
+        "automatic_debug_logs_decryption": "Envía automáticamente rexistro de depuración se hai erros no cifrado",
+        "automatic_debug_logs_key_backup": "Enviar automáticamente rexistros de depuración cando a chave da copia de apoio non funcione"
     },
     "keyboard": {
         "home": "Inicio",
@@ -2753,7 +2734,8 @@
             "custom_font_description": "Escolle unha das tipografías instaladas no teu sistema e %(brand)s intentará utilizalas.",
             "timeline_image_size": "Tamaño de imaxe na cronoloxía",
             "timeline_image_size_default": "Por defecto",
-            "timeline_image_size_large": "Grande"
+            "timeline_image_size_large": "Grande",
+            "custom_font_size": "Usar tamaño personalizado"
         },
         "inline_url_previews_room_account": "Activar vista previa de URL nesta sala (só che afecta a ti)",
         "inline_url_previews_room": "Activar a vista previa de URL por defecto para as participantes nesta sala",
@@ -2766,7 +2748,11 @@
             "message_search_indexed_messages": "Mensaxes indexadas:",
             "message_search_indexed_rooms": "Salas indexadas:",
             "message_search_room_progress": "%(doneRooms)s de %(totalRooms)s",
-            "message_search_sleep_time": "Tempo de espera da mensaxe de descarga(ms)"
+            "message_search_sleep_time": "Velocidade á que deberían descargarse as mensaxes.",
+            "send_analytics": "Enviar datos de análises",
+            "strict_encryption": "Non enviar nunca desde esta sesión mensaxes cifradas a sesións non verificadas",
+            "enable_message_search": "Activar a busca de mensaxes en salas cifradas",
+            "manually_verify_all_sessions": "Verificar manualmente todas as sesións remotas"
         },
         "preferences": {
             "room_list_heading": "Listaxe de Salas",
@@ -2779,7 +2765,18 @@
             "media_heading": "Imaxes, GIFs e vídeos",
             "autocomplete_delay": "Retraso no autocompletado (ms)",
             "rm_lifetime": "Duración do marcador de lectura (ms)",
-            "rm_lifetime_offscreen": "Duración do marcador de lectura fóra de pantall (ms)"
+            "rm_lifetime_offscreen": "Duración do marcador de lectura fóra de pantall (ms)",
+            "show_polls_button": "Mostrar botón de enquisas",
+            "compact_modern": "Usar unha disposición 'Moderna' máis compacta",
+            "surround_text": "Rodea o texto seleccionado ao escribir caracteres especiais",
+            "show_checklist_shortcuts": "Mostrar atallo á lista de comprobacións de benvida sobre a lista de salas",
+            "always_show_menu_bar": "Mostrar sempre a barra de menú da ventá",
+            "enable_tray_icon": "Mostra icona na bandexa do sistema e minimiza ventá ao pechar",
+            "enable_hardware_acceleration": "Activar aceleración por hardware"
+        },
+        "send_read_receipts_unsupported": "O teu servidor non ten soporte para desactivar o envío de resgardos de lectura.",
+        "voip": {
+            "mirror_local_feed": "Replicar a fonte de vídeo local"
         }
     },
     "devtools": {
@@ -2847,7 +2844,10 @@
         "room_id": "ID da sala: %(roomId)s",
         "event_id": "ID do evento: %(eventId)s",
         "category_room": "Sala",
-        "category_other": "Outro"
+        "category_other": "Outro",
+        "widget_screenshots": "Activar as capturas de trebellos para aqueles que as permiten",
+        "show_hidden_events": "Mostrar na cronoloxía eventos ocultos",
+        "developer_mode": "Modo desenvolvemento"
     },
     "export_chat": {
         "html": "HTML",
@@ -3367,6 +3367,9 @@
             "ban": "Bloquear usuarias",
             "redact": "Eliminar mensaxes enviadas por outras",
             "notifications.room": "Notificar a todas"
+        },
+        "security": {
+            "strict_encryption": "Non enviar mensaxes cifradas desde esta sesión a sesións non verificadas nesta sala"
         }
     },
     "encryption": {

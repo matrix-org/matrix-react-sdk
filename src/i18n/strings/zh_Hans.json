@@ -288,8 +288,6 @@
     "And %(count)s more...": {
         "other": "和 %(count)s 个其他…"
     },
-    "Send analytics data": "发送统计数据",
-    "Enable widget screenshots on supported widgets": "对支持的挂件启用挂件截图",
     "Demote yourself?": "是否降低你自己的权限？",
     "Demote": "降权",
     "Permission Required": "需要权限",
@@ -319,7 +317,6 @@
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "尝试了加载此房间时间线上的特定点，但你没有查看相关消息的权限。",
     "No Audio Outputs detected": "未检测到可用的音频输出方式",
     "Audio Output": "音频输出",
-    "Mirror local video feed": "镜像本地视频源",
     "This room has been replaced and is no longer active.": "此房间已被取代，且不再活跃。",
     "The conversation continues here.": "对话在这里继续。",
     "Only room administrators will see this warning": "此警告仅房间管理员可见",
@@ -607,12 +604,7 @@
     "Contact your <a>server admin</a>.": "请联系你的<a>服务器管理员</a>。",
     "Ok": "确定",
     "Other users may not trust it": "其他用户可能不信任它",
-    "Use custom size": "使用自定义大小",
-    "Never send encrypted messages to unverified sessions from this session": "永不从本会话向未验证的会话发送加密消息",
-    "Never send encrypted messages to unverified sessions in this room from this session": "永不从此会话向此房间中未验证的会话发送加密消息",
-    "Enable message search in encrypted rooms": "在加密房间中启用消息搜索",
     "Change notification settings": "修改通知设置",
-    "Manually verify all remote sessions": "手动验证所有远程会话",
     "My Ban List": "我的封禁列表",
     "This is your list of users/servers you have blocked - don't leave the room!": "这是你屏蔽的用户/服务器的列表——不要离开此房间！",
     "Waiting for %(displayName)s to verify…": "正在等待%(displayName)s进行验证……",
@@ -694,7 +686,6 @@
     "Subscribing to a ban list will cause you to join it!": "订阅一个封禁列表会使你加入它！",
     "If this isn't what you want, please use a different tool to ignore users.": "如果这不是你想要的，请使用别的的工具来忽略用户。",
     "Room ID or address of ban list": "封禁列表的房间 ID 或地址",
-    "Always show the window menu bar": "总是显示窗口菜单栏",
     "Session ID:": "会话 ID：",
     "Session key:": "会话密钥：",
     "Message search": "消息搜索",
@@ -723,7 +714,6 @@
     "This user has not verified all of their sessions.": "此用户没有验证其全部会话。",
     "You have not verified this user.": "你没有验证此用户。",
     "You have verified this user. This user has verified all of their sessions.": "你验证了此用户。此用户已验证了其全部会话。",
-    "Show hidden events in timeline": "显示时间线中的隐藏事件",
     "This bridge is managed by <user />.": "此桥接由 <user /> 管理。",
     "Homeserver feature support:": "家服务器功能支持：",
     "Securely cache encrypted messages locally for them to appear in search results.": "在本地安全地缓存加密消息以使其出现在搜索结果中。",
@@ -1069,7 +1059,6 @@
     "Create key backup": "创建密钥备份",
     "This session is encrypting history using the new recovery method.": "此会话正在使用新的恢复方法加密历史。",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "如果你出于意外这样做了，你可以在此会话上设置安全消息，以使用新的加密方式重新加密此会话的消息历史。",
-    "How fast should messages be downloaded.": "消息下载速度。",
     "IRC display name width": "IRC 显示名称宽度",
     "Unexpected server error trying to leave the room": "试图离开房间时发生意外服务器错误",
     "Error leaving room": "离开房间时出错",
@@ -1722,7 +1711,6 @@
         "one": "& 另外 %(count)s"
     },
     "Upgrade required": "需要升级",
-    "Surround selected text when typing special characters": "输入特殊字符时圈出选定的文本",
     "Rooms and spaces": "房间与空间",
     "Results": "结果",
     "Enable encryption in settings.": "在设置中启用加密。",
@@ -1786,12 +1774,10 @@
     "View in room": "在房间内查看",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "输入安全短语或<button>使用安全密钥</button>以继续。",
     "See room timeline (devtools)": "查看房间时间线（开发工具）",
-    "Developer mode": "开发者模式",
     "Insert link": "插入链接",
     "Joined": "已加入",
     "Light high contrast": "浅色高对比",
     "Joining": "加入中",
-    "Automatically send debug logs on any error": "遇到任何错误自动发送调试日志",
     "Select all": "全选",
     "Deselect all": "取消全选",
     "Sign out devices": {
@@ -1818,7 +1804,6 @@
     "The homeserver the user you're verifying is connected to": "你正在验证的用户所连接的家服务器",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "这个房间不会将消息桥接到任何平台。<a>了解更多</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "这个房间位于你不是管理员的某些空间中。 在这些空间中，旧房间仍将显示，但系统会提示人们加入新房间。",
-    "Use a more compact 'Modern' layout": "使用更紧凑的“现代”布局",
     "Add option": "添加选项",
     "Write an option": "写个选项",
     "Option %(number)s": "选项 %(number)s",
@@ -1830,7 +1815,6 @@
     "Copy link to thread": "复制到消息列的链接",
     "Thread options": "消息列选项",
     "Someone already has that username. Try another or if it is you, sign in below.": "该名称已被占用。 尝试另一个，或者如果是您，请在下面登录。",
-    "Show tray icon and minimise window to it on close": "显示托盘图标并在关闭时最小化窗口至托盘",
     "Reply in thread": "在消息列中回复",
     "Spaces to show": "要显示的空间",
     "Sidebar": "侧边栏",
@@ -2032,10 +2016,6 @@
         "one": "%(count)s个人已加入",
         "other": "%(count)s个人已加入"
     },
-    "Enable hardware acceleration": "启用硬件加速",
-    "Automatically send debug logs when key backup is not functioning": "当密钥备份无法运作时自动发送debug日志",
-    "Automatically send debug logs on decryption errors": "自动发送有关解密错误的debug日志",
-    "Show polls button": "显示投票按钮",
     "Explore public spaces in the new search dialog": "在新的搜索对话框中探索公开空间",
     "Join the room to participate": "加入房间以参与",
     "Can't create a thread from an event with an existing relation": "无法从既有关系的事件创建消息列",
@@ -2137,14 +2117,12 @@
     "Closed poll": "封闭式投票",
     "Open poll": "开放式投票",
     "Poll type": "投票类型",
-    "Your server doesn't support disabling sending read receipts.": "你的服务器不支持禁用发送已读回执。",
     "We're creating a room with %(names)s": "正在创建房间%(names)s",
     "Sessions": "会话",
     "Current session": "当前会话",
     "Verified session": "已验证的会话",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "为了最佳的安全，请验证会话，登出任何不认识或不再使用的会话。",
     "Other sessions": "其他会话",
-    "Show shortcut to welcome checklist above the room list": "在房间列表上方显示欢迎清单的捷径",
     "Remove them from everything I'm able to": "",
     "Inactive sessions": "不活跃的会话",
     "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "验证你的会话以增强消息传输的安全性，或从那些你不认识或不再使用的会话登出。",
@@ -2237,7 +2215,6 @@
         "one": "正在邀请%(user)s和另外1个人",
         "other": "正在邀请%(user)s和其他%(count)s人"
     },
-    "Record the client name, version, and url to recognise sessions more easily in session manager": "记录客户端名称、版本和url以便在会话管理器里更易识别",
     "Room info": "房间信息",
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "你没有必要的权限在这个房间开始语音广播。请联系房间管理员以提升你的权限。",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "你已经在录制一个语音广播。请结束你当前的语音广播以开始新的语音广播。",
@@ -2254,12 +2231,7 @@
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
     "You have unverified sessions": "你有未验证的会话",
     "Change layout": "更改布局",
-    "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.": "仅当你的家服务器不提供时才适用。你的IP地址在通话期间会被分享。",
-    "When enabled, the other party might be able to see your IP address": "启用后，对方可能能看到你的IP地址",
-    "Allow Peer-to-Peer for 1:1 calls": "允许1:1通话的点对点",
     "Connection": "连接",
-    "Echo cancellation": "回声消除",
-    "Noise suppression": "噪音抑制",
     "Voice processing": "语音处理",
     "Video settings": "视频设置",
     "Voice settings": "语音设置",
@@ -2279,9 +2251,6 @@
     "Give one or multiple users in this room more privileges": "授权给该房间内的某人或某些人",
     "Add privileged users": "添加特权用户",
     "Sorry — this call is currently full": "抱歉——目前线路拥挤",
-    "Requires compatible homeserver.": "需要兼容的家服务器。",
-    "Low bandwidth mode": "低带宽模式",
-    "Automatic gain control": "自动获得控制权",
     "Rename session": "重命名会话",
     "Call type": "通话类型",
     "You do not have sufficient permissions to change this.": "你没有足够的权限更改这个。",
@@ -2551,7 +2520,10 @@
         "leave_beta_reload": "离开beta会重载%(brand)s。",
         "join_beta_reload": "加入beta会重载%(brand)s。",
         "leave_beta": "离开beta",
-        "join_beta": "加入beta"
+        "join_beta": "加入beta",
+        "automatic_debug_logs": "遇到任何错误自动发送调试日志",
+        "automatic_debug_logs_decryption": "自动发送有关解密错误的debug日志",
+        "automatic_debug_logs_key_backup": "当密钥备份无法运作时自动发送debug日志"
     },
     "keyboard": {
         "home": "主页",
@@ -2819,7 +2791,8 @@
             "custom_font_description": "设置一个安装在你的系统上的字体名称，%(brand)s 会尝试使用它。",
             "timeline_image_size": "时间线中的图像大小",
             "timeline_image_size_default": "默认",
-            "timeline_image_size_large": "大"
+            "timeline_image_size_large": "大",
+            "custom_font_size": "使用自定义大小"
         },
         "inline_url_previews_room_account": "对此房间启用URL预览（仅影响你）",
         "inline_url_previews_room": "对此房间的所有参与者默认启用URL预览",
@@ -2832,7 +2805,12 @@
             "message_search_indexed_messages": "已索引的消息：",
             "message_search_indexed_rooms": "已索引的房间：",
             "message_search_room_progress": "%(totalRooms)s 中之 %(doneRooms)s",
-            "message_search_sleep_time": "消息下载休眠时间 (ms)"
+            "message_search_sleep_time": "消息下载速度。",
+            "send_analytics": "发送统计数据",
+            "record_session_details": "记录客户端名称、版本和url以便在会话管理器里更易识别",
+            "strict_encryption": "永不从本会话向未验证的会话发送加密消息",
+            "enable_message_search": "在加密房间中启用消息搜索",
+            "manually_verify_all_sessions": "手动验证所有远程会话"
         },
         "preferences": {
             "room_list_heading": "房间列表",
@@ -2845,7 +2823,24 @@
             "media_heading": "图片、GIF 和视频",
             "autocomplete_delay": "自动完成延迟（毫秒）",
             "rm_lifetime": "已读标记生存期（毫秒）",
-            "rm_lifetime_offscreen": "已读标记屏幕外生存期（毫秒）"
+            "rm_lifetime_offscreen": "已读标记屏幕外生存期（毫秒）",
+            "show_polls_button": "显示投票按钮",
+            "compact_modern": "使用更紧凑的“现代”布局",
+            "surround_text": "输入特殊字符时圈出选定的文本",
+            "show_checklist_shortcuts": "在房间列表上方显示欢迎清单的捷径",
+            "always_show_menu_bar": "总是显示窗口菜单栏",
+            "enable_tray_icon": "显示托盘图标并在关闭时最小化窗口至托盘",
+            "enable_hardware_acceleration": "启用硬件加速"
+        },
+        "send_read_receipts_unsupported": "你的服务器不支持禁用发送已读回执。",
+        "voip": {
+            "mirror_local_feed": "镜像本地视频源",
+            "allow_p2p": "允许1:1通话的点对点",
+            "allow_p2p_description": "启用后，对方可能能看到你的IP地址",
+            "auto_gain_control": "自动获得控制权",
+            "echo_cancellation": "回声消除",
+            "noise_suppression": "噪音抑制",
+            "enable_fallback_ice_server_description": "仅当你的家服务器不提供时才适用。你的IP地址在通话期间会被分享。"
         }
     },
     "devtools": {
@@ -2907,7 +2902,12 @@
         "room_id": "房间ID: %(roomId)s",
         "event_id": "事件ID：%(eventId)s",
         "category_room": "房间",
-        "category_other": "其他"
+        "category_other": "其他",
+        "widget_screenshots": "对支持的挂件启用挂件截图",
+        "show_hidden_events": "显示时间线中的隐藏事件",
+        "low_bandwidth_mode": "低带宽模式",
+        "low_bandwidth_mode_description": "需要兼容的家服务器。",
+        "developer_mode": "开发者模式"
     },
     "export_chat": {
         "html": "HTML",
@@ -3435,6 +3435,9 @@
             "ban": "封禁用户",
             "redact": "移除其他人的消息",
             "notifications.room": "通知每个人"
+        },
+        "security": {
+            "strict_encryption": "永不从此会话向此房间中未验证的会话发送加密消息"
         }
     },
     "encryption": {

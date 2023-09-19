@@ -222,7 +222,6 @@
     "You are no longer ignoring %(userId)s": "Je negeert %(userId)s niet meer",
     "Send": "Versturen",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
-    "Mirror local video feed": "Lokale videoaanvoer ook elders opslaan (spiegelen)",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Zelfdegradatie is onomkeerbaar. Als je de laatst gemachtigde persoon in de kamer bent zullen deze rechten voorgoed verloren gaan.",
     "Unignore": "Niet meer negeren",
     "Jump to read receipt": "Naar het laatst gelezen bericht gaan",
@@ -290,8 +289,6 @@
     "Failed to send logs: ": "Versturen van logs mislukt: ",
     "Preparing to send logs": "Logs voorbereiden voor versturen",
     "Missing roomId.": "roomId ontbreekt.",
-    "Send analytics data": "Gebruiksgegevens delen",
-    "Enable widget screenshots on supported widgets": "Widget-schermafbeeldingen inschakelen op ondersteunde widgets",
     "Muted Users": "Gedempte personen",
     "Popout widget": "Widget in nieuw venster openen",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Kan de gebeurtenis waarop gereageerd was niet laden. Wellicht bestaat die niet, of je hebt geen toestemming die te bekijken.",
@@ -574,7 +571,6 @@
     "No homeserver URL provided": "Geen homeserver-URL opgegeven",
     "Unexpected error resolving homeserver configuration": "Onverwachte fout bij het controleren van de homeserver-configuratie",
     "The user's homeserver does not support the version of the room.": "De homeserver van de persoon biedt geen ondersteuning voor deze kamerversie.",
-    "Show hidden events in timeline": "Verborgen gebeurtenissen op de tijdslijn weergeven",
     "View older messages in %(roomName)s.": "Bekijk oudere berichten in %(roomName)s.",
     "Join the conversation with an account": "Neem deel aan de kamer met een account",
     "Sign Up": "Registreren",
@@ -654,7 +650,6 @@
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Als je de verbinding met je identiteitsserver verbreekt zal je niet door andere personen gevonden kunnen worden, en dat je anderen niet via e-mail of telefoon zal kunnen uitnodigen.",
     "Discovery": "Vindbaarheid",
     "Deactivate account": "Account sluiten",
-    "Always show the window menu bar": "De venstermenubalk altijd tonen",
     "Unable to revoke sharing for email address": "Kan delen voor dit e-mailadres niet intrekken",
     "Unable to share email address": "Kan e-mailadres niet delen",
     "Discovery options will appear once you have added an email above.": "Vindbaarheidopties zullen verschijnen wanneer je een e-mailadres hebt toegevoegd.",
@@ -742,10 +737,6 @@
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "PAS OP: sleutelverificatie MISLUKT! De combinatie %(userId)s + sessie %(deviceId)s is ondertekend met ‘%(fprint)s’ - maar de opgegeven sleutel is ‘%(fingerprint)s’.  Wellicht worden jouw berichten onderschept!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "De door jou verschafte sleutel en de van %(userId)ss sessie %(deviceId)s verkregen sleutels komen overeen. De sessie is daarmee geverifieerd.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "Never send encrypted messages to unverified sessions from this session": "Vanaf deze sessie nooit versleutelde berichten naar ongeverifieerde sessies versturen",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Vanaf deze sessie nooit versleutelde berichten naar ongeverifieerde sessies in deze kamer versturen",
-    "Enable message search in encrypted rooms": "Zoeken in versleutelde kamers inschakelen",
-    "How fast should messages be downloaded.": "Ophaalfrequentie van berichten.",
     "My Ban List": "Mijn banlijst",
     "This is your list of users/servers you have blocked - don't leave the room!": "Dit is de lijst van door jou geblokkeerde servers/personen. Verlaat deze kamer niet!",
     "Waiting for %(displayName)s to verify…": "Wachten tot %(displayName)s geverifieerd heeft…",
@@ -1253,7 +1244,6 @@
     "Channel: <channelLink/>": "Kanaal: <channelLink/>",
     "There was an error looking up the phone number": "Bij het zoeken naar het telefoonnummer is een fout opgetreden",
     "Unable to look up phone number": "Kan telefoonnummer niet opzoeken",
-    "Use custom size": "Aangepaste lettergrootte gebruiken",
     "Change notification settings": "Meldingsinstellingen wijzigen",
     "New version of %(brand)s is available": "Nieuwe versie van %(brand)s is beschikbaar",
     "Update %(brand)s": "%(brand)s updaten",
@@ -1311,7 +1301,6 @@
     "Invite by email": "Via e-mail uitnodigen",
     "Click the button below to confirm your identity.": "Druk op de knop hieronder om je identiteit te bevestigen.",
     "Confirm to continue": "Bevestig om door te gaan",
-    "Manually verify all remote sessions": "Handmatig alle externe sessies verifiëren",
     "Safeguard against losing access to encrypted messages & data": "Beveiliging tegen verlies van toegang tot versleutelde berichten en gegevens",
     "Set up Secure Backup": "Beveiligde back-up instellen",
     "Contact your <a>server admin</a>.": "Neem contact op met je <a>serverbeheerder</a>.",
@@ -1715,7 +1704,6 @@
     "Show all rooms": "Alle kamers tonen",
     "Missed call": "Oproep gemist",
     "Call declined": "Oproep geweigerd",
-    "Surround selected text when typing special characters": "Geselecteerde tekst omsluiten bij het typen van speciale tekens",
     "Stop recording": "Opname stoppen",
     "Send voice message": "Spraakbericht versturen",
     "More": "Meer",
@@ -1778,7 +1766,6 @@
     },
     "Loading new room": "Nieuwe kamer laden",
     "Upgrading room": "Kamer aan het bijwerken",
-    "Developer mode": "Ontwikkelaar mode",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "Het resetten van je verificatiesleutels kan niet ongedaan worden gemaakt. Na het resetten heb je geen toegang meer tot oude versleutelde berichten, en vrienden die je eerder hebben geverifieerd zullen veiligheidswaarschuwingen zien totdat je opnieuw bij hen geverifieert bent.",
     "I'll verify later": "Ik verifieer het later",
     "Verify with Security Key": "Verifieer met veiligheidssleutel",
@@ -1805,8 +1792,6 @@
         "one": "Bevestig je identiteit met eenmalig inloggen om dit apparaat uit te loggen.",
         "other": "Bevestig je identiteit met eenmalig inloggen om deze apparaten uit te loggen."
     },
-    "Use a more compact 'Modern' layout": "Compacte 'Moderne'-indeling gebruiken",
-    "Automatically send debug logs on any error": "Automatisch foutenlogboek versturen bij een fout",
     "You're all caught up": "Je bent helemaal bij",
     "Someone already has that username. Try another or if it is you, sign in below.": "Iemand heeft die inlognaam al. Probeer een andere of als je het bent, log dan hieronder in.",
     "Copy link to thread": "Kopieer link naar draad",
@@ -1849,7 +1834,6 @@
     "Home is useful for getting an overview of everything.": "Home is handig om een overzicht van alles te krijgen.",
     "Spaces to show": "Spaces om te tonen",
     "Sidebar": "Zijbalk",
-    "Show tray icon and minimise window to it on close": "Geef een pictogram weer in de systeembalk en minimaliseer het venster wanneer het wordt gesloten",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Deze kamer is in spaces waar je geen beheerder van bent. In deze spaces zal de oude kamer nog worden getoond, maar leden zullen een melding krijgen om deel te nemen aan de nieuwe kamer.",
     "Large": "Groot",
     "%(spaceName)s and %(count)s others": {
@@ -1953,7 +1937,6 @@
     "You were removed from %(roomName)s by %(memberName)s": "Je bent verwijderd uit %(roomName)s door %(memberName)s",
     "From a thread": "Uit een conversatie",
     "Keyboard": "Toetsenbord",
-    "Automatically send debug logs on decryption errors": "Automatisch foutopsporingslogboeken versturen bij decoderingsfouten",
     "Internal room ID": "Interne ruimte ID",
     "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Als je weet wat je doet, Element is open-source, bekijk dan zeker onze GitHub (https://github.com/vector-im/element-web/) en draag bij!",
     "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Als iemand je heeft gezegd iets hier te kopiëren/plakken, is de kans groot dat je wordt opgelicht!",
@@ -1973,7 +1956,6 @@
     "Hide stickers": "Verberg stickers",
     "Use <arrows/> to scroll": "Gebruik <arrows/> om te scrollen",
     "Feedback sent! Thanks, we appreciate it!": "Reactie verzonden! Bedankt, we waarderen het!",
-    "Automatically send debug logs when key backup is not functioning": "Automatisch foutopsporingslogboeken versturen wanneer de sleutelback-up niet werkt",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s en %(space2Name)s",
     "You do not have permission to invite people to this space.": "Je bent niet gemachtigd om mensen voor deze space uit te nodigen.",
     "Failed to invite users to %(roomName)s": "Kan personen niet uitnodigen voor %(roomName)s",
@@ -2046,7 +2028,6 @@
     "Upgrade this space to the recommended room version": "Upgrade deze ruimte naar de aanbevolen kamerversie",
     "Match system": "Match systeem",
     "Developer tools": "Ontwikkelaarstools",
-    "Show polls button": "Toon polls-knop",
     "Failed to join": "Kan niet deelnemen",
     "The person who invited you has already left, or their server is offline.": "De persoon die je heeft uitgenodigd is al vertrokken, of zijn server is offline.",
     "The person who invited you has already left.": "De persoon die je heeft uitgenodigd is al vertrokken.",
@@ -2158,7 +2139,6 @@
     "Add new server…": "Nieuwe server toevoegen…",
     "Remove server “%(roomServer)s”": "Verwijder server “%(roomServer)s”",
     "Video rooms are a beta feature": "Videokamers zijn een bètafunctie",
-    "Enable hardware acceleration": "Hardwareversnelling inschakelen",
     "You cannot search for rooms that are neither a room nor a space": "U kunt niet zoeken naar kamers die geen kamer of een space zijn",
     "Show spaces": "Toon spaces",
     "Show rooms": "Toon kamers",
@@ -2224,8 +2204,6 @@
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Voor de beste beveiliging verifieer je jouw sessies en meldt je jezelf af bij elke sessie die je niet meer herkent of gebruikt.",
     "Other sessions": "Andere sessies",
     "Sessions": "Sessies",
-    "Your server doesn't support disabling sending read receipts.": "Jouw server biedt geen ondersteuning voor het uitschakelen van het verzenden van leesbevestigingen.",
-    "Show shortcut to welcome checklist above the room list": "Toon snelkoppeling naar welkomstchecklist boven de kamer gids",
     "Empty room (was %(oldName)s)": "Lege ruimte (was %(oldName)s)",
     "Inviting %(user)s and %(count)s others": {
         "one": "%(user)s en 1 andere uitnodigen",
@@ -2312,7 +2290,6 @@
         "other": "Weet u zeker dat u zich wilt afmelden bij %(count)s sessies?"
     },
     "Sorry — this call is currently full": "Sorry — dit gesprek is momenteel vol",
-    "Record the client name, version, and url to recognise sessions more easily in session manager": "Noteer de naam, versie en url van de applicatie om sessies gemakkelijker te herkennen in sessiebeheer",
     "Unknown room": "Onbekende kamer",
     "Voice broadcast": "Spraakuitzending",
     "Live": "Live",
@@ -2564,7 +2541,10 @@
         "leave_beta_reload": "Als je de bèta verlaat, wordt %(brand)s opnieuw geladen.",
         "join_beta_reload": "Door deel te nemen aan de bèta wordt %(brand)s opnieuw geladen.",
         "leave_beta": "Beta verlaten",
-        "join_beta": "Beta inschakelen"
+        "join_beta": "Beta inschakelen",
+        "automatic_debug_logs": "Automatisch foutenlogboek versturen bij een fout",
+        "automatic_debug_logs_decryption": "Automatisch foutopsporingslogboeken versturen bij decoderingsfouten",
+        "automatic_debug_logs_key_backup": "Automatisch foutopsporingslogboeken versturen wanneer de sleutelback-up niet werkt"
     },
     "keyboard": {
         "home": "Home",
@@ -2831,7 +2811,8 @@
             "custom_font_description": "Stel de naam in van een lettertype dat op uw systeem is geïnstalleerd en %(brand)s zal proberen het te gebruiken.",
             "timeline_image_size": "Afbeeldingformaat in de tijdlijn",
             "timeline_image_size_default": "Standaard",
-            "timeline_image_size_large": "Groot"
+            "timeline_image_size_large": "Groot",
+            "custom_font_size": "Aangepaste lettergrootte gebruiken"
         },
         "inline_url_previews_room_account": "URL-voorvertoning in dit kamer inschakelen (geldt alleen voor jou)",
         "inline_url_previews_room": "URL-voorvertoning voor alle deelnemers aan deze kamer standaard inschakelen",
@@ -2844,7 +2825,12 @@
             "message_search_indexed_messages": "Geïndexeerde berichten:",
             "message_search_indexed_rooms": "Geïndexeerde kamers:",
             "message_search_room_progress": "%(doneRooms)s van %(totalRooms)s",
-            "message_search_sleep_time": "Wachttijd voor downloaden van berichten (ms)"
+            "message_search_sleep_time": "Ophaalfrequentie van berichten.",
+            "send_analytics": "Gebruiksgegevens delen",
+            "record_session_details": "Noteer de naam, versie en url van de applicatie om sessies gemakkelijker te herkennen in sessiebeheer",
+            "strict_encryption": "Vanaf deze sessie nooit versleutelde berichten naar ongeverifieerde sessies versturen",
+            "enable_message_search": "Zoeken in versleutelde kamers inschakelen",
+            "manually_verify_all_sessions": "Handmatig alle externe sessies verifiëren"
         },
         "preferences": {
             "room_list_heading": "Kamerslijst",
@@ -2857,7 +2843,18 @@
             "media_heading": "Afbeeldingen, GIF's en video's",
             "autocomplete_delay": "Vertraging voor autoaanvullen (ms)",
             "rm_lifetime": "Levensduur van leesbevestigingen (ms)",
-            "rm_lifetime_offscreen": "Levensduur van levensbevestigingen, niet op scherm (ms)"
+            "rm_lifetime_offscreen": "Levensduur van levensbevestigingen, niet op scherm (ms)",
+            "show_polls_button": "Toon polls-knop",
+            "compact_modern": "Compacte 'Moderne'-indeling gebruiken",
+            "surround_text": "Geselecteerde tekst omsluiten bij het typen van speciale tekens",
+            "show_checklist_shortcuts": "Toon snelkoppeling naar welkomstchecklist boven de kamer gids",
+            "always_show_menu_bar": "De venstermenubalk altijd tonen",
+            "enable_tray_icon": "Geef een pictogram weer in de systeembalk en minimaliseer het venster wanneer het wordt gesloten",
+            "enable_hardware_acceleration": "Hardwareversnelling inschakelen"
+        },
+        "send_read_receipts_unsupported": "Jouw server biedt geen ondersteuning voor het uitschakelen van het verzenden van leesbevestigingen.",
+        "voip": {
+            "mirror_local_feed": "Lokale videoaanvoer ook elders opslaan (spiegelen)"
         }
     },
     "devtools": {
@@ -2925,7 +2922,10 @@
         "room_id": "Kamer ID: %(roomId)s",
         "event_id": "Gebeurtenis ID: %(eventId)s",
         "category_room": "Kamer",
-        "category_other": "Overige"
+        "category_other": "Overige",
+        "widget_screenshots": "Widget-schermafbeeldingen inschakelen op ondersteunde widgets",
+        "show_hidden_events": "Verborgen gebeurtenissen op de tijdslijn weergeven",
+        "developer_mode": "Ontwikkelaar mode"
     },
     "export_chat": {
         "html": "HTML",
@@ -3450,6 +3450,9 @@
             "ban": "Personen verbannen",
             "redact": "Berichten van anderen verwijderen",
             "notifications.room": "Iedereen melden"
+        },
+        "security": {
+            "strict_encryption": "Vanaf deze sessie nooit versleutelde berichten naar ongeverifieerde sessies in deze kamer versturen"
         }
     },
     "encryption": {

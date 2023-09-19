@@ -462,8 +462,6 @@
     "Bulk options": "ຕົວເລືອກຈຳນວນຫຼາຍ",
     "You have no ignored users.": "ທ່ານບໍ່ມີຜູ້ໃຊ້ທີ່ຖືກລະເລີຍ.",
     "Unignore": "ບໍ່ສົນໃຈ",
-    "Show tray icon and minimise window to it on close": "ສະແດງໄອຄອນ ແລະ ຫຍໍ້ຫນ້າຕ່າງໃຫ້ມັນຢູ່ໃກ້",
-    "Always show the window menu bar": "ສະແດງແຖບເມນູໜ້າຕ່າງສະເໝີ",
     "Room ID or address of ban list": "IDຫ້ອງ ຫຼື ທີ່ຢູ່ຂອງລາຍການຫ້າມ",
     "If this isn't what you want, please use a different tool to ignore users.": "ຖ້າສິ່ງນີ້ບໍ່ແມ່ນສິ່ງທີ່ທ່ານຕ້ອງການ, ກະລຸນາໃຊ້ເຄື່ອງມືອື່ນເພື່ອລະເວັ້ນຜູ້ໃຊ້.",
     "Subscribed lists": "ລາຍຊື່ທີ່ສະໝັກແລ້ວ",
@@ -1366,24 +1364,7 @@
     "This is your list of users/servers you have blocked - don't leave the room!": "ນີ້ແມ່ນບັນຊີລາຍຊື່ຜູ້ໃຊ້ / ເຊີບເວີຂອງທ່ານທີ່ທ່ານໄດ້ບລັອກ - ຢ່າອອກຈາກຫ້ອງ!",
     "My Ban List": "ບັນຊີລາຍຊື່ການຫ້າມຂອງຂ້ອຍ",
     "Waiting for response from server": "ກຳລັງລໍຖ້າການຕອບສະໜອງຈາກເຊີບເວີ",
-    "Automatically send debug logs when key backup is not functioning": "ສົ່ງບັນທຶກການດີບັ໊ກໂດຍອັດຕະໂນມັດເມື່ອການສຳຮອງຂໍ້ມູນກະແຈບໍ່ເຮັດວຽກ",
-    "Automatically send debug logs on decryption errors": "ສົ່ງບັນທຶກການດີບັ໊ກໂດຍອັດຕະໂນມັດໃນຄວາມຜິດພາດການຖອດລະຫັດ",
-    "Automatically send debug logs on any error": "ສົ່ງບັນທຶກ ບັນຫາບັກ ໂດຍອັດຕະໂນມັດກ່ຽວກັບຂໍ້ຜິດພາດໃດໆ",
-    "Developer mode": "ຮູບແບບນັກພັດທະນາ",
     "IRC display name width": "ຄວາມກວ້າງຂອງຊື່ສະແດງ IRC",
-    "Manually verify all remote sessions": "ຢັ້ງຢືນທຸກລະບົບທາງໄກດ້ວຍຕົນເອງ",
-    "How fast should messages be downloaded.": "ຂໍ້ຄວາມຄວນຖືກດາວໂຫຼດໄວເທົ່າໃດ.",
-    "Enable message search in encrypted rooms": "ເປີດໃຊ້ການຊອກຫາຂໍ້ຄວາມຢູ່ໃນຫ້ອງທີ່ຖືກເຂົ້າລະຫັດ",
-    "Show hidden events in timeline": "ສະແດງເຫດການທີ່ເຊື່ອງໄວ້ໃນທາມລາຍ",
-    "Enable widget screenshots on supported widgets": "ເປີດໃຊ້ widget ຖ່າຍໜ້າຈໍໃນ widget ທີ່ຮອງຮັບ",
-    "Never send encrypted messages to unverified sessions in this room from this session": "ບໍ່ສົ່ງຂໍ້ຄວາມເຂົ້າລະຫັດໄປຫາລະບົບທີ່ບໍ່ໄດ້ຢືນຢັນໃນຫ້ອງນີ້ຈາກລະບົບນີ້",
-    "Never send encrypted messages to unverified sessions from this session": "ບໍ່ສົ່ງຂໍ້ຄວາມເຂົ້າລະຫັດໄປຫາລະບົບທີ່ບໍ່ໄດ້ຢືນຢັນຈາກລະບົບນີ້",
-    "Send analytics data": "ສົ່ງຂໍ້ມູນການວິເຄາະ",
-    "Mirror local video feed": "ເບິ່ງຟີດວິດີໂອທ້ອງຖິ່ນ",
-    "Surround selected text when typing special characters": "ອ້ອມຮອບຂໍ້ຄວາມທີ່ເລືອກໃນເວລາພິມຕົວອັກສອນພິເສດ",
-    "Use a more compact 'Modern' layout": "ໃຊ້ຮູບແບບ 'ທັນສະໄຫມ' ທີ່ກະທັດຮັດກວ່າ",
-    "Show polls button": "ສະແດງປຸ່ມແບບສຳຫຼວດ",
-    "Use custom size": "ໃຊ້ຂະຫນາດທີ່ກໍາຫນົດເອງ",
     "Reply in thread": "ຕອບໃນກະທູ້",
     "Developer": "ນັກພັດທະນາ",
     "Experimental": "ທົດລອງ",
@@ -2346,7 +2327,10 @@
         "beta_feature": "ນີ້ແມ່ນຄຸນສົມບັດເບຕ້າ",
         "click_for_info": "ກົດສຳລັບຂໍ້ມູນເພີ່ມເຕີມ",
         "leave_beta": "ອອກຈາກເບຕ້າ",
-        "join_beta": "ເຂົ້າຮ່ວມເບຕ້າ"
+        "join_beta": "ເຂົ້າຮ່ວມເບຕ້າ",
+        "automatic_debug_logs": "ສົ່ງບັນທຶກ ບັນຫາບັກ ໂດຍອັດຕະໂນມັດກ່ຽວກັບຂໍ້ຜິດພາດໃດໆ",
+        "automatic_debug_logs_decryption": "ສົ່ງບັນທຶກການດີບັ໊ກໂດຍອັດຕະໂນມັດໃນຄວາມຜິດພາດການຖອດລະຫັດ",
+        "automatic_debug_logs_key_backup": "ສົ່ງບັນທຶກການດີບັ໊ກໂດຍອັດຕະໂນມັດເມື່ອການສຳຮອງຂໍ້ມູນກະແຈບໍ່ເຮັດວຽກ"
     },
     "keyboard": {
         "home": "ໜ້າຫຼັກ",
@@ -2556,7 +2540,8 @@
             "custom_font_description": "ກຳນົດຊື່ຕົວອັກສອນທີ່ຕິດຕັ້ງຢູ່ໃນລະບົບຂອງທ່ານ & %(brand)sຈະພະຍາຍາມໃຊ້ມັນ.",
             "timeline_image_size": "ຂະຫນາດຮູບພາບຢູ່ໃນທາມລາຍ",
             "timeline_image_size_default": "ຄ່າເລີ່ມຕົ້ນ",
-            "timeline_image_size_large": "ຂະຫນາດໃຫຍ່"
+            "timeline_image_size_large": "ຂະຫນາດໃຫຍ່",
+            "custom_font_size": "ໃຊ້ຂະຫນາດທີ່ກໍາຫນົດເອງ"
         },
         "inline_url_previews_room_account": "ເປີດໃຊ້ຕົວຢ່າງ URL ສໍາລັບຫ້ອງນີ້ (ມີຜົນຕໍ່ທ່ານເທົ່ານັ້ນ)",
         "inline_url_previews_room": "ເປີດໃຊ້ການສະແດງຕົວຢ່າງ URL ໂດຍຄ່າເລີ່ມຕົ້ນສໍາລັບຜູ້ເຂົ້າຮ່ວມໃນຫ້ອງນີ້",
@@ -2569,7 +2554,11 @@
             "message_search_indexed_messages": "ດັດສະນີຂໍ້ຄວາມ:",
             "message_search_indexed_rooms": "ຫ້ອງທີ່ຈັດດັດສະນີ:",
             "message_search_room_progress": "%(doneRooms)s ຈາກທັງໝົດ %(totalRooms)s",
-            "message_search_sleep_time": "ຂໍ້ຄວາມດາວໂຫຼດເວລາພັກເຄື່ອງ(ms)"
+            "message_search_sleep_time": "ຂໍ້ຄວາມຄວນຖືກດາວໂຫຼດໄວເທົ່າໃດ.",
+            "send_analytics": "ສົ່ງຂໍ້ມູນການວິເຄາະ",
+            "strict_encryption": "ບໍ່ສົ່ງຂໍ້ຄວາມເຂົ້າລະຫັດໄປຫາລະບົບທີ່ບໍ່ໄດ້ຢືນຢັນຈາກລະບົບນີ້",
+            "enable_message_search": "ເປີດໃຊ້ການຊອກຫາຂໍ້ຄວາມຢູ່ໃນຫ້ອງທີ່ຖືກເຂົ້າລະຫັດ",
+            "manually_verify_all_sessions": "ຢັ້ງຢືນທຸກລະບົບທາງໄກດ້ວຍຕົນເອງ"
         },
         "preferences": {
             "room_list_heading": "ລາຍຊື່ຫ້ອງ",
@@ -2581,7 +2570,15 @@
             "media_heading": "ຮູບພາບ, GIF ແລະ ວິດີໂອ",
             "autocomplete_delay": "ການຕື່ມຂໍ້ມູນອັດຕະໂນມັດຊັກຊ້າ (ms)",
             "rm_lifetime": "ອ່ານອາຍຸ ການໃຊ້ງານຂອງເຄື່ອງຫມາຍ. (ມິນລິວິນາທີ)",
-            "rm_lifetime_offscreen": "ອ່ານອາຍຸການໃຊ້ງານຂອງໜ້າຈໍ (ມິລິວິນາທີ)"
+            "rm_lifetime_offscreen": "ອ່ານອາຍຸການໃຊ້ງານຂອງໜ້າຈໍ (ມິລິວິນາທີ)",
+            "show_polls_button": "ສະແດງປຸ່ມແບບສຳຫຼວດ",
+            "compact_modern": "ໃຊ້ຮູບແບບ 'ທັນສະໄຫມ' ທີ່ກະທັດຮັດກວ່າ",
+            "surround_text": "ອ້ອມຮອບຂໍ້ຄວາມທີ່ເລືອກໃນເວລາພິມຕົວອັກສອນພິເສດ",
+            "always_show_menu_bar": "ສະແດງແຖບເມນູໜ້າຕ່າງສະເໝີ",
+            "enable_tray_icon": "ສະແດງໄອຄອນ ແລະ ຫຍໍ້ຫນ້າຕ່າງໃຫ້ມັນຢູ່ໃກ້"
+        },
+        "voip": {
+            "mirror_local_feed": "ເບິ່ງຟີດວິດີໂອທ້ອງຖິ່ນ"
         }
     },
     "devtools": {
@@ -2649,7 +2646,10 @@
         "room_id": "ID ຫ້ອງ: %(roomId)s",
         "event_id": "ກໍລິນີ ID %(eventId)s",
         "category_room": "ຫ້ອງ",
-        "category_other": "ອື່ນໆ"
+        "category_other": "ອື່ນໆ",
+        "widget_screenshots": "ເປີດໃຊ້ widget ຖ່າຍໜ້າຈໍໃນ widget ທີ່ຮອງຮັບ",
+        "show_hidden_events": "ສະແດງເຫດການທີ່ເຊື່ອງໄວ້ໃນທາມລາຍ",
+        "developer_mode": "ຮູບແບບນັກພັດທະນາ"
     },
     "export_chat": {
         "html": "HTML",
@@ -3162,6 +3162,9 @@
             "ban": "ຫ້າມຜູ້ໃຊ້",
             "redact": "ລົບຂໍ້ຄວາມທີ່ຄົນອື່ນສົ່ງມາ",
             "notifications.room": "ແຈ້ງເຕືອນທຸກຄົນ"
+        },
+        "security": {
+            "strict_encryption": "ບໍ່ສົ່ງຂໍ້ຄວາມເຂົ້າລະຫັດໄປຫາລະບົບທີ່ບໍ່ໄດ້ຢືນຢັນໃນຫ້ອງນີ້ຈາກລະບົບນີ້"
         }
     },
     "encryption": {

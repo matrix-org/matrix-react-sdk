@@ -117,9 +117,6 @@
     "Not a valid %(brand)s keyfile": "有効な%(brand)sキーファイルではありません",
     "Authentication check failed: incorrect password?": "認証に失敗しました：間違ったパスワード？",
     "Please contact your homeserver administrator.": "ホームサーバー管理者に連絡してください。",
-    "Mirror local video feed": "ビデオ映像のミラー効果（反転）を有効にする",
-    "Send analytics data": "分析データを送信",
-    "Enable widget screenshots on supported widgets": "サポートされているウィジェットで、ウィジェットのスクリーンショットを有効にする",
     "Incorrect verification code": "認証コードが誤っています",
     "Phone": "電話",
     "No display name": "表示名がありません",
@@ -448,8 +445,6 @@
     "Session key:": "セッションキー：",
     "Session name": "セッション名",
     "Session key": "セッションキー",
-    "Never send encrypted messages to unverified sessions from this session": "このセッションでは、未認証のセッションに対して暗号化されたメッセージを送信しない",
-    "Never send encrypted messages to unverified sessions in this room from this session": "このセッションでは、このルームの未認証のセッションに対して暗号化されたメッセージを送信しない",
     "Email addresses": "メールアドレス",
     "This room is end-to-end encrypted": "このルームはエンドツーエンドで暗号化されています",
     "Encrypted by an unverified session": "未認証のセッションによる暗号化",
@@ -521,7 +516,6 @@
     "%(brand)s URL": "%(brand)sのURL",
     "Room ID": "ルームID",
     "More options": "他のオプション",
-    "Manually verify all remote sessions": "全てのリモートセッションを手動で認証",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "クロス署名された端末を信頼せず、ユーザーが使用する各セッションを個別に認証し、信頼済に設定。",
     "Show more": "さらに表示",
     "This backup is trusted because it has been restored on this session": "このバックアップは、このセッションで復元されたため信頼されています",
@@ -539,7 +533,6 @@
     "Join the discussion": "ルームに参加",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)sはプレビューできません。ルームに参加しますか？",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "アドレスを設定すると、他のユーザーがあなたのホームサーバー（%(localDomain)s）を通じてこのルームを見つけられるようになります。",
-    "Use custom size": "ユーザー定義のサイズを使用",
     "Hey you. You're the best!": "こんにちは、よろしくね！",
     "Verify User": "ユーザーの認証",
     "Your homeserver": "あなたのホームサーバー",
@@ -555,7 +548,6 @@
     "Do not use an identity server": "IDサーバーを使用しない",
     "Use Single Sign On to continue": "シングルサインオンを使用して続行",
     "Accept <policyLink /> to continue:": "<policyLink />に同意して続行：",
-    "Always show the window menu bar": "常にウィンドウメニューバーを表示",
     "Favourited": "お気に入り登録中",
     "Room options": "ルームの設定",
     "Ignored users": "無視しているユーザー",
@@ -1143,9 +1135,6 @@
     "This is your list of users/servers you have blocked - don't leave the room!": "あなたがブロックしたユーザーとサーバーのリストです。このルームから退出しないでください！",
     "My Ban List": "マイブロックリスト",
     "IRC display name width": "IRCの表示名の幅",
-    "How fast should messages be downloaded.": "メッセージをダウンロードする速度。",
-    "Enable message search in encrypted rooms": "暗号化されたルームでメッセージの検索を有効にする",
-    "Show hidden events in timeline": "タイムラインで非表示のイベントを表示",
     "Change notification settings": "通知設定を変更",
     "New login. Was this you?": "新しいログインです。ログインしましたか？",
     "Safeguard against losing access to encrypted messages & data": "暗号化されたメッセージとデータへのアクセスが失われるのを防ぎましょう",
@@ -1368,9 +1357,6 @@
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "このスペースのメンバーとの会話をまとめます。無効にすると、それらの会話は%(spaceName)sの表示画面に表示されなくなります。",
     "Space home": "スペースのホーム",
     "Expand map": "地図を開く",
-    "Automatically send debug logs when key backup is not functioning": "鍵のバックアップが機能していない際に、自動的にデバッグログを送信",
-    "Automatically send debug logs on decryption errors": "復号化エラーが生じた際に、自動的にデバッグログを送信",
-    "Automatically send debug logs on any error": "エラーが生じた際に、自動的にデバッグログを送信",
     "%(count)s votes": {
         "one": "%(count)s個の投票",
         "other": "%(count)s個の投票"
@@ -1386,7 +1372,6 @@
     "Submit logs": "ログを提出",
     "Click to view edits": "クリックすると変更履歴を表示",
     "Can't load this message": "このメッセージを読み込めません",
-    "Use a more compact 'Modern' layout": "よりコンパクトな「モダン」レイアウトを使用",
     "Large": "大",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "スペースを更新しています…",
@@ -1398,7 +1383,6 @@
     },
     "Loading new room": "新しいルームを読み込んでいます",
     "Upgrading room": "ルームをアップグレードしています",
-    "Developer mode": "開発者モード",
     "Address": "アドレス",
     "Notes": "メモ",
     "Search for rooms": "ルームを検索",
@@ -1718,7 +1702,6 @@
     },
     "Call declined": "拒否しました",
     "Unable to check if username has been taken. Try again later.": "そのユーザー名が既に取得されているか確認できません。後でもう一度やり直してください。",
-    "Show tray icon and minimise window to it on close": "トレイアイコンを表示し、ウインドウを閉じるとトレイに最小化",
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "認証を行わないと、あなたの全てのメッセージにアクセスできず、他のユーザーに信頼済として表示されない可能性があります。",
     "I'll verify later": "後で認証",
     "To proceed, please accept the verification request on your other device.": "続行するには、他の端末で認証リクエストを承認してください。",
@@ -1861,7 +1844,6 @@
     },
     "Error downloading audio": "音声をダウンロードする際にエラーが発生しました",
     "Share entire screen": "全画面を共有",
-    "Show polls button": "アンケートのボタンを表示",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s個のリアクションを再送信",
     "Enter your account password to confirm the upgrade:": "アップグレードを承認するには、アカウントのパスワードを入力してください：",
     "You'll need to authenticate with the server to confirm the upgrade.": "サーバーをアップグレードするには認証が必要です。",
@@ -1890,7 +1872,6 @@
     "The call is in an unknown state!": "通話の状態が不明です！",
     "They won't be able to access whatever you're not an admin of.": "あなたが管理者でない場所にアクセスすることができなくなります。",
     "Failed to update the join rules": "参加のルールの更新に失敗しました",
-    "Surround selected text when typing special characters": "特殊な文字の入力中に、選択した文章を囲む",
     "They'll still be able to access whatever you're not an admin of.": "あなたが管理者ではないスペースやルームには、引き続きアクセスできます。",
     "Restore your key backup to upgrade your encryption": "鍵のバックアップを復元し、暗号化をアップグレードしてください",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "セキュリティーフレーズと、セキュアメッセージの鍵が削除されました。",
@@ -2054,9 +2035,6 @@
     "Spell check": "スペルチェック",
     "Your password was successfully changed.": "パスワードを変更しました。",
     "Developer tools": "開発者ツール",
-    "Noise suppression": "雑音抑制",
-    "Echo cancellation": "エコーキャンセル",
-    "Automatic gain control": "自動音量調整",
     "Rename session": "セッション名を変更",
     "Video settings": "ビデオの設定",
     "Voice settings": "音声の設定",
@@ -2126,8 +2104,6 @@
     "Video call (%(brand)s)": "ビデオ通話（%(brand)s）",
     "Filter devices": "端末を絞り込む",
     "Sorry — this call is currently full": "すみません ― この通話は現在満員です",
-    "Enable hardware acceleration": "ハードウェアアクセラレーションを有効にする",
-    "Allow Peer-to-Peer for 1:1 calls": "1対1通話でP2Pを使用する",
     "Enter fullscreen": "フルスクリーンにする",
     "Error downloading image": "画像をダウンロードする際にエラーが発生しました",
     "Unable to show image due to error": "エラーにより画像を表示できません",
@@ -2138,7 +2114,6 @@
         "one": "%(count)s人が参加しました",
         "other": "%(count)s人が参加しました"
     },
-    "Show shortcut to welcome checklist above the room list": "ルームの一覧の上に、最初に設定すべき項目のチェックリストのショートカットを表示",
     "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "既に音声配信を録音しています。新しく始めるには現在の音声配信を終了してください。",
     "Close sidebar": "サイドバーを閉じる",
     "You are sharing your live location": "位置情報（ライブ）を共有しています",
@@ -2209,7 +2184,6 @@
         "other": "%(count)s個のセッションからサインアウトしてよろしいですか？"
     },
     "Bulk options": "一括オプション",
-    "Your server doesn't support disabling sending read receipts.": "あなたのサーバーは開封確認メッセージの送信防止をサポートしていません。",
     "Change input device": "入力端末を変更",
     "Yes, end my recording": "はい、録音を終了してください",
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "このライブ配信の視聴を開始すると、現在のライブ配信の録音は終了します。",
@@ -2234,11 +2208,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s（%(matrixId)s）",
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "このセッションでは、暗号化が有効になっているルームに参加することができません。",
-    "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.": "あなたのホームサーバーがアシストサーバーを提供していない場合にのみ適用。IPアドレスが通話中に共有されます。",
-    "Requires compatible homeserver.": "対応するホームサーバーが必要。",
-    "Low bandwidth mode": "低速モード",
-    "Record the client name, version, and url to recognise sessions more easily in session manager": "クライアントの名称、バージョン、URLを記録し、セッションマネージャーでより容易にセッションを認識できるよう設定",
-    "When enabled, the other party might be able to see your IP address": "有効にすると、第三者があなたのIPアドレスを閲覧できるようになる可能性があります",
     "Toggle attribution": "属性を切り替える",
     "Buffering…": "バッファリングしています…",
     "Go live": "ライブ配信",
@@ -2457,7 +2426,6 @@
     "Unable to connect to Homeserver. Retrying…": "ホームサーバーに接続できません。 再試行しています…",
     "Secure Backup successful": "セキュアバックアップに成功しました",
     "Your keys are now being backed up from this device.": "鍵はこの端末からバックアップされています。",
-    "Show avatars in user, room and event mentions": "アバターをユーザー、ルーム、イベントのメンションに表示",
     "common": {
         "about": "概要",
         "analytics": "分析",
@@ -2713,7 +2681,10 @@
         "join_beta_reload": "ベータ版に参加すると%(brand)sをリロードします。",
         "leave_beta": "ベータ版を終了",
         "join_beta": "ベータ版に参加",
-        "voice_broadcast_force_small_chunks": "音声配信のチャンク長を15秒に強制"
+        "voice_broadcast_force_small_chunks": "音声配信のチャンク長を15秒に強制",
+        "automatic_debug_logs": "エラーが生じた際に、自動的にデバッグログを送信",
+        "automatic_debug_logs_decryption": "復号化エラーが生じた際に、自動的にデバッグログを送信",
+        "automatic_debug_logs_key_backup": "鍵のバックアップが機能していない際に、自動的にデバッグログを送信"
     },
     "keyboard": {
         "home": "ホーム",
@@ -2991,7 +2962,8 @@
             "custom_font_description": "システムにインストールされているフォントの名前を設定すると、%(brand)sはそれを使用します。",
             "timeline_image_size": "タイムライン上での画像のサイズ",
             "timeline_image_size_default": "既定値",
-            "timeline_image_size_large": "大"
+            "timeline_image_size_large": "大",
+            "custom_font_size": "ユーザー定義のサイズを使用"
         },
         "inline_url_previews_room_account": "このルームのURLプレビューを有効にする（あなたにのみ適用）",
         "inline_url_previews_room": "このルームの参加者のために既定でURLプレビューを有効にする",
@@ -3004,7 +2976,12 @@
             "message_search_indexed_messages": "インデックス済のメッセージ数：",
             "message_search_indexed_rooms": "インデックス済のルーム数：",
             "message_search_room_progress": "計%(totalRooms)s個のルームの内%(doneRooms)s個",
-            "message_search_sleep_time": "メッセージをダウンロードする際の待機時間（ミリ秒）"
+            "message_search_sleep_time": "メッセージをダウンロードする速度。",
+            "send_analytics": "分析データを送信",
+            "record_session_details": "クライアントの名称、バージョン、URLを記録し、セッションマネージャーでより容易にセッションを認識できるよう設定",
+            "strict_encryption": "このセッションでは、未認証のセッションに対して暗号化されたメッセージを送信しない",
+            "enable_message_search": "暗号化されたルームでメッセージの検索を有効にする",
+            "manually_verify_all_sessions": "全てのリモートセッションを手動で認証"
         },
         "preferences": {
             "room_list_heading": "ルーム一覧",
@@ -3017,7 +2994,25 @@
             "media_heading": "画像・GIF・動画",
             "autocomplete_delay": "自動補完の遅延（ミリ秒）",
             "rm_lifetime": "既読マーカーを動かすまでの時間（ミリ秒）",
-            "rm_lifetime_offscreen": "既読マーカーを動かすまでの時間（画面オフ時）（ミリ秒）"
+            "rm_lifetime_offscreen": "既読マーカーを動かすまでの時間（画面オフ時）（ミリ秒）",
+            "show_polls_button": "アンケートのボタンを表示",
+            "compact_modern": "よりコンパクトな「モダン」レイアウトを使用",
+            "show_avatars_pills": "アバターをユーザー、ルーム、イベントのメンションに表示",
+            "surround_text": "特殊な文字の入力中に、選択した文章を囲む",
+            "show_checklist_shortcuts": "ルームの一覧の上に、最初に設定すべき項目のチェックリストのショートカットを表示",
+            "always_show_menu_bar": "常にウィンドウメニューバーを表示",
+            "enable_tray_icon": "トレイアイコンを表示し、ウインドウを閉じるとトレイに最小化",
+            "enable_hardware_acceleration": "ハードウェアアクセラレーションを有効にする"
+        },
+        "send_read_receipts_unsupported": "あなたのサーバーは開封確認メッセージの送信防止をサポートしていません。",
+        "voip": {
+            "mirror_local_feed": "ビデオ映像のミラー効果（反転）を有効にする",
+            "allow_p2p": "1対1通話でP2Pを使用する",
+            "allow_p2p_description": "有効にすると、第三者があなたのIPアドレスを閲覧できるようになる可能性があります",
+            "auto_gain_control": "自動音量調整",
+            "echo_cancellation": "エコーキャンセル",
+            "noise_suppression": "雑音抑制",
+            "enable_fallback_ice_server_description": "あなたのホームサーバーがアシストサーバーを提供していない場合にのみ適用。IPアドレスが通話中に共有されます。"
         }
     },
     "devtools": {
@@ -3099,7 +3094,12 @@
         "room_id": "ルームID：%(roomId)s",
         "event_id": "イベントID：%(eventId)s",
         "category_room": "ルーム",
-        "category_other": "その他"
+        "category_other": "その他",
+        "widget_screenshots": "サポートされているウィジェットで、ウィジェットのスクリーンショットを有効にする",
+        "show_hidden_events": "タイムラインで非表示のイベントを表示",
+        "low_bandwidth_mode": "低速モード",
+        "low_bandwidth_mode_description": "対応するホームサーバーが必要。",
+        "developer_mode": "開発者モード"
     },
     "export_chat": {
         "html": "HTML",
@@ -3629,6 +3629,9 @@
             "ban": "ユーザーのブロック",
             "redact": "他の人から送信されたメッセージの削除",
             "notifications.room": "全員に通知"
+        },
+        "security": {
+            "strict_encryption": "このセッションでは、このルームの未認証のセッションに対して暗号化されたメッセージを送信しない"
         }
     },
     "encryption": {

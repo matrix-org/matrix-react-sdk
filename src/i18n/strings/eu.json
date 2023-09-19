@@ -221,7 +221,6 @@
     "Banned by %(displayName)s": "%(displayName)s erabiltzaileak debekatuta",
     "Restricted": "Mugatua",
     "Send": "Bidali",
-    "Mirror local video feed": "Bikoiztu tokiko bideo jarioa",
     "%(duration)ss": "%(duration)s s",
     "%(duration)sm": "%(duration)s m",
     "%(duration)sh": "%(duration)s h",
@@ -296,8 +295,6 @@
     "We encountered an error trying to restore your previous session.": "Errore bat aurkitu dugu zure aurreko saioa berrezartzen saiatzean.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Zure nabigatzailearen biltegiratzea garbitzeak arazoa konpon lezake, baina saioa amaituko da eta zifratutako txaten historiala ezin izango da berriro irakurri.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Ezin izan da erantzundako gertaera kargatu, edo ez dago edo ez duzu ikusteko baimenik.",
-    "Enable widget screenshots on supported widgets": "Gaitu trepeten pantaila-argazkiak, onartzen duten trepetetan",
-    "Send analytics data": "Bidali datu analitikoak",
     "Muted Users": "Mutututako erabiltzaileak",
     "Terms and Conditions": "Termino eta baldintzak",
     "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "%(homeserverDomain)s hasiera-zerbitzaria erabiltzen jarraitzeko gure termino eta baldintzak irakurri eta onartu behar dituzu.",
@@ -558,7 +555,6 @@
     "Unexpected error resolving homeserver configuration": "Ustekabeko errorea hasiera-zerbitzariaren konfigurazioa ebaztean",
     "Unexpected error resolving identity server configuration": "Ustekabeko errorea identitate-zerbitzariaren konfigurazioa ebaztean",
     "The user's homeserver does not support the version of the room.": "Erabiltzailearen hasiera-zerbitzariak ez du gelaren bertsioa onartzen.",
-    "Show hidden events in timeline": "Erakutsi gertaera ezkutuak denbora-lerroan",
     "View older messages in %(roomName)s.": "Ikusi %(roomName)s gelako mezu zaharragoak.",
     "Uploaded sound": "Igotako soinua",
     "Sounds": "Soinuak",
@@ -653,7 +649,6 @@
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Zure identitate-zerbitzaritik deskonektatzean ez zara beste erabiltzaileentzat aurkigarria izango eta ezin izango dituzu besteak gonbidatu e-mail helbidea edo telefono zenbakia erabiliz.",
     "Discovery": "Aurkitzea",
     "Deactivate account": "Desaktibatu kontua",
-    "Always show the window menu bar": "Erakutsi beti leihoaren menu barra",
     "Unable to revoke sharing for email address": "Ezin izan da partekatzea indargabetu e-mail helbidearentzat",
     "Unable to share email address": "Ezin izan da e-mail helbidea partekatu",
     "Discovery options will appear once you have added an email above.": "Aurkitze aukerak behin goian e-mail helbide bat gehitu duzunean agertuko dira.",
@@ -859,10 +854,6 @@
     "Session already verified!": "Saioa jada egiaztatu da!",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ABISUA: GAKO EGIAZTAKETAK HUTS EGIN DU! %(userId)s eta %(deviceId)s saioaren sinatze gakoa %(fprint)s da, eta ez dator bat emandako %(fingerprint)s gakoarekin. Honek esan nahi lezake norbaitek zure komunikazioan esku sartzen ari dela!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Eman duzun sinatze gakoa bat dator %(userId)s eta %(deviceId)s saioarentzat jaso duzun sinatze-gakoarekin. Saioa egiaztatu gisa markatu da.",
-    "Never send encrypted messages to unverified sessions from this session": "Ez bidali inoiz zifratutako mezuak egiaztatu gabeko saioetara saio honetatik",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Ez bidali inoiz zifratutako mezuak egiaztatu gabeko saioetara gela honetan saio honetatik",
-    "Enable message search in encrypted rooms": "Gaitu mezuen bilaketa gela zifratuetan",
-    "How fast should messages be downloaded.": "Zeinen azkar deskargatu behar diren mezuak.",
     "Waiting for %(displayName)s to verify…": "%(displayName)s egiaztatu bitartean zain…",
     "This bridge was provisioned by <user />.": "Zubi hau <user /> erabiltzaileak hornitu du.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Zure kontuak zeharkako sinatze identitate bat du biltegi sekretuan, baina saio honek ez du oraindik fidagarritzat.",
@@ -961,7 +952,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Berretsi honako hau zure beste saioaren erabiltzaile-ezarpenetan agertzen denarekin alderatuz:",
     "Confirm this user's session by comparing the following with their User Settings:": "Egiaztatu erabiltzailearen saio hau, honako hau bestearen erabiltzaile-ezarpenekin alderatuz:",
     "If they don't match, the security of your communication may be compromised.": "Ez badatoz bat, komunikazioaren segurtasuna konprometitua egon daiteke.",
-    "Manually verify all remote sessions": "Egiaztatu eskuz urruneko saio guztiak",
     "Self signing private key:": "Norberak sinatutako gako pribatua:",
     "cached locally": "cache lokalean",
     "not found locally": "ez da lokalean aurkitu",
@@ -1042,7 +1032,6 @@
     "All settings": "Ezarpen guztiak",
     "Use a different passphrase?": "Erabili pasa-esaldi desberdin bat?",
     "Change notification settings": "Aldatu jakinarazpenen ezarpenak",
-    "Use custom size": "Erabili tamaina pertsonalizatua",
     "Hey you. You're the best!": "Aupa txo. Onena zara!",
     "Forget Room": "Ahaztu gela",
     "This room is public": "Gela hau publikoa da",
@@ -1337,7 +1326,8 @@
             "custom_theme_url": "Azal pertsonalizatuaren URLa",
             "custom_theme_add_button": "Gehitu azala",
             "font_size": "Letra-tamaina",
-            "timeline_image_size_default": "Lehenetsia"
+            "timeline_image_size_default": "Lehenetsia",
+            "custom_font_size": "Erabili tamaina pertsonalizatua"
         },
         "inline_url_previews_room_account": "Gaitu URLen aurrebista gela honetan (zuretzat bakarrik aldatuko duzu)",
         "inline_url_previews_room": "Gaitu URLen aurrebista lehenetsita gela honetako partaideentzat",
@@ -1350,14 +1340,22 @@
             "message_search_indexed_messages": "Indexatutako mezuak:",
             "message_search_indexed_rooms": "Indexatutako gelak:",
             "message_search_room_progress": "%(doneRooms)s / %(totalRooms)s",
-            "message_search_sleep_time": "Mezuen deskargaren itxarote tartea (ms)"
+            "message_search_sleep_time": "Zeinen azkar deskargatu behar diren mezuak.",
+            "send_analytics": "Bidali datu analitikoak",
+            "strict_encryption": "Ez bidali inoiz zifratutako mezuak egiaztatu gabeko saioetara saio honetatik",
+            "enable_message_search": "Gaitu mezuen bilaketa gela zifratuetan",
+            "manually_verify_all_sessions": "Egiaztatu eskuz urruneko saio guztiak"
         },
         "preferences": {
             "room_list_heading": "Gelen zerrenda",
             "composer_heading": "Idazlekua",
             "autocomplete_delay": "Automatikoki osatzeko atzerapena (ms)",
             "rm_lifetime": "Orri-markagailuaren biziraupena (ms)",
-            "rm_lifetime_offscreen": "Orri-markagailuaren biziraupena pantailaz kanpo (ms)"
+            "rm_lifetime_offscreen": "Orri-markagailuaren biziraupena pantailaz kanpo (ms)",
+            "always_show_menu_bar": "Erakutsi beti leihoaren menu barra"
+        },
+        "voip": {
+            "mirror_local_feed": "Bikoiztu tokiko bideo jarioa"
         }
     },
     "devtools": {
@@ -1368,7 +1366,9 @@
         "toolbox": "Tresna-kutxa",
         "developer_tools": "Garatzaile-tresnak",
         "category_room": "Gela",
-        "category_other": "Beste bat"
+        "category_other": "Beste bat",
+        "widget_screenshots": "Gaitu trepeten pantaila-argazkiak, onartzen duten trepetetan",
+        "show_hidden_events": "Erakutsi gertaera ezkutuak denbora-lerroan"
     },
     "create_room": {
         "title_public_room": "Sortu gela publikoa",
@@ -1656,6 +1656,9 @@
             "state_default": "Aldatu ezarpenak",
             "ban": "Debekatu erabiltzaileak",
             "notifications.room": "Jakinarazi denei"
+        },
+        "security": {
+            "strict_encryption": "Ez bidali inoiz zifratutako mezuak egiaztatu gabeko saioetara gela honetan saio honetatik"
         }
     },
     "encryption": {

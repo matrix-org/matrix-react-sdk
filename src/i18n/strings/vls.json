@@ -110,10 +110,6 @@
     "Straight rows of keys are easy to guess": "Zulk’n aneengeslootn riksje toetsn es gemakkelik te roadn",
     "Short keyboard patterns are easy to guess": "Korte patroonn ip ’t toetsenbord wordn gemakkelik geroadn",
     "Please contact your homeserver administrator.": "Gelieve contact ip te neemn me den beheerder van je thuusserver.",
-    "Mirror local video feed": "Lokoale videoanvoer ook elders ipsloan (spiegeln)",
-    "Send analytics data": "Statistische gegeevns (analytics) verstuurn",
-    "Enable widget screenshots on supported widgets": "Widget-schermafdrukkn inschoakeln ip oundersteunde widgets",
-    "Show hidden events in timeline": "Verborgn gebeurtenissn ip de tydslyn weregeevn",
     "Waiting for response from server": "Wachtn ip antwoord van de server",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Beveiligde berichtn me deze gebruuker zyn eind-tout-eind-versleuterd en kunn nie door derdn wordn geleezn.",
     "Got It": "’k Snappen ’t",
@@ -654,7 +650,6 @@
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "De verbindienge me jen identiteitsserver verbreekn goat dervoorn zorgn da je nie mi deur andere gebruukers gevoundn goa kunn wordn, en dat andere menschn je nie via e-mail of telefong goan kunn uutnodign.",
     "Discovery": "Ountdekkienge",
     "Deactivate account": "Account deactiveern",
-    "Always show the window menu bar": "De veinstermenubalk alsan toogn",
     "Unable to revoke sharing for email address": "Kostege ’t deeln vo dat e-mailadresse hier nie intrekkn",
     "Unable to share email address": "Kostege ’t e-mailadresse nie deeln",
     "Discovery options will appear once you have added an email above.": "Ountdekkiengsopties goan verschynn a j’een e-mailadresse toegevoegd ghed èt.",
@@ -839,7 +834,14 @@
         "preferences": {
             "room_list_heading": "Gesprekslyste",
             "composer_heading": "Ipsteller",
-            "autocomplete_delay": "Vertroagienge vo ’t automatisch anvulln (ms)"
+            "autocomplete_delay": "Vertroagienge vo ’t automatisch anvulln (ms)",
+            "always_show_menu_bar": "De veinstermenubalk alsan toogn"
+        },
+        "voip": {
+            "mirror_local_feed": "Lokoale videoanvoer ook elders ipsloan (spiegeln)"
+        },
+        "security": {
+            "send_analytics": "Statistische gegeevns (analytics) verstuurn"
         }
     },
     "devtools": {
@@ -850,7 +852,9 @@
         "toolbox": "Gereedschap",
         "developer_tools": "Ountwikkeliengsgereedschap",
         "category_room": "Gesprek",
-        "category_other": "Overige"
+        "category_other": "Overige",
+        "widget_screenshots": "Widget-schermafdrukkn inschoakeln ip oundersteunde widgets",
+        "show_hidden_events": "Verborgn gebeurtenissn ip de tydslyn weregeevn"
     },
     "timeline": {
         "m.room.topic": "%(senderDisplayName)s èt ’t ounderwerp gewyzigd noa ‘%(topic)s’.",

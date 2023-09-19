@@ -542,15 +542,6 @@
     "This is your list of users/servers you have blocked - don't leave the room!": "هذه قائمتك للمستخدمين / الخوادم التي حظرت - لا تغادر الغرفة!",
     "My Ban List": "قائمة الحظر",
     "IRC display name width": "عرض الاسم الظاهر لIRC",
-    "Manually verify all remote sessions": "تحقق يدويًا من جميع الاتصالات البعيدة",
-    "How fast should messages be downloaded.": "ما مدى سرعة تنزيل الرسائل.",
-    "Enable message search in encrypted rooms": "تمكين البحث عن الرسائل في الغرف المشفرة",
-    "Show hidden events in timeline": "إظهار الأحداث المخفية في الجدول الزمني",
-    "Never send encrypted messages to unverified sessions in this room from this session": "لا ترسل أبدًا رسائل مشفرة إلى اتصالات التي لم يتم التحقق منها في هذه الغرفة من هذا الاتصال",
-    "Never send encrypted messages to unverified sessions from this session": "لا ترسل أبدًا رسائل مشفرة إلى اتصالات لم يتم التحقق منها من هذا الاتصال",
-    "Send analytics data": "إرسال بيانات التحليلات",
-    "Mirror local video feed": "محاكاة تغذية الفيديو المحلية",
-    "Use custom size": "استخدام حجم مخصص",
     "Change notification settings": "تغيير إعدادات الإشعار",
     "Please contact your homeserver administrator.": "يُرجى تواصلك مع مدير خادمك.",
     "New version of %(brand)s is available": "يتوفر إصدار جديد من %(brand)s",
@@ -650,7 +641,6 @@
     "Cryptography": "التشفير",
     "Import E2E room keys": "تعبئة مفاتيح E2E للغرف",
     "<not supported>": "<غير معتمد>",
-    "Always show the window menu bar": "أظهر شريط قائمة النافذة دائمًا",
     "Room ID or address of ban list": "معرف الغرفة أو عنوان قائمة الحظر",
     "If this isn't what you want, please use a different tool to ignore users.": "إذا لم يكن هذا ما تريده ، فيرجى استخدام أداة مختلفة لتجاهل المستخدمين.",
     "Subscribing to a ban list will cause you to join it!": "سيؤدي الاشتراك في قائمة الحظر إلى انضمامك إليها!",
@@ -1082,21 +1072,34 @@
             "custom_theme_add_button": "إضافة مظهر",
             "font_size": "حجم الخط",
             "custom_font_description": "قم بتعيين اسم الخط المثبت على نظامك وسيحاول %(brand)s استخدامه.",
-            "timeline_image_size_default": "المبدئي"
+            "timeline_image_size_default": "المبدئي",
+            "custom_font_size": "استخدام حجم مخصص"
         },
         "inline_url_previews_room_account": "تمكين معاينة الروابط لهذه الغرفة (يؤثر عليك فقط)",
         "inline_url_previews_room": "تمكين معاينة الروابط أصلاً لأي مشارك في هذه الغرفة",
         "preferences": {
             "room_list_heading": "قائمة الغرفة",
             "composer_heading": "الكاتب",
-            "autocomplete_delay": "تأخير الإكمال التلقائي (مللي ثانية)"
+            "autocomplete_delay": "تأخير الإكمال التلقائي (مللي ثانية)",
+            "always_show_menu_bar": "أظهر شريط قائمة النافذة دائمًا"
+        },
+        "voip": {
+            "mirror_local_feed": "محاكاة تغذية الفيديو المحلية"
+        },
+        "security": {
+            "send_analytics": "إرسال بيانات التحليلات",
+            "strict_encryption": "لا ترسل أبدًا رسائل مشفرة إلى اتصالات لم يتم التحقق منها من هذا الاتصال",
+            "enable_message_search": "تمكين البحث عن الرسائل في الغرف المشفرة",
+            "message_search_sleep_time": "ما مدى سرعة تنزيل الرسائل.",
+            "manually_verify_all_sessions": "تحقق يدويًا من جميع الاتصالات البعيدة"
         }
     },
     "devtools": {
         "state_key": "مفتاح الحالة",
         "toolbox": "علبة الأدوات",
         "developer_tools": "أدوات التطوير",
-        "category_other": "أخرى"
+        "category_other": "أخرى",
+        "show_hidden_events": "إظهار الأحداث المخفية في الجدول الزمني"
     },
     "timeline": {
         "m.call.invite": {
@@ -1326,6 +1329,9 @@
             "ban": "حظر المستخدمين",
             "redact": "حذف رسائل الآخرين",
             "notifications.room": "إشعار الجميع"
+        },
+        "security": {
+            "strict_encryption": "لا ترسل أبدًا رسائل مشفرة إلى اتصالات التي لم يتم التحقق منها في هذه الغرفة من هذا الاتصال"
         }
     },
     "encryption": {

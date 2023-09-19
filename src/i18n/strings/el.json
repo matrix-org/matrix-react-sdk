@@ -267,7 +267,6 @@
     "Your %(brand)s is misconfigured": "Οι παράμετροι του %(brand)s σας είναι λανθασμένα ρυθμισμένοι",
     "Explore rooms": "Εξερευνήστε δωμάτια",
     "Click the button below to confirm adding this phone number.": "Πιέστε το κουμπί από κάτω για να επιβεβαίωσετε την προσθήκη του τηλεφωνικού αριθμού.",
-    "Use custom size": "Χρησιμοποιήστε προσαρμοσμένο μέγεθος",
     "Ok": "Εντάξει",
     "Your homeserver has exceeded its user limit.": "Ο διακομιστής σας ξεπέρασε το όριο χρηστών.",
     "Use app": "Χρησιμοποιήστε την εφαρμογή",
@@ -662,12 +661,6 @@
     "Copied!": "Αντιγράφηκε!",
     "Click to copy": "Κλικ για αντιγραφή",
     "Show all rooms": "Εμφάνιση όλων των δωματίων",
-    "Developer mode": "Λειτουργία για προγραμματιστές",
-    "Enable message search in encrypted rooms": "Ενεργοποίηση αναζήτησης μηνυμάτων σε κρυπτογραφημένα δωμάτια",
-    "Show hidden events in timeline": "Εμφάνιση κρυφών συμβάντων στη γραμμή χρόνου",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Μη στέλνετε ποτέ κρυπτογραφημένα μηνύματα σε μη επαληθευμένες συνεδρίες σε αυτό το δωμάτιο από αυτή τη συνεδρία",
-    "Never send encrypted messages to unverified sessions from this session": "Μη στέλνετε ποτέ κρυπτογραφημένα μηνύματα σε μη επαληθευμένες συνεδρίες από αυτήν τη συνεδρία",
-    "Send analytics data": "Αποστολή δεδομένων αναλυτικών στοιχείων",
     "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Μπορείτε να συνδεθείτε, αλλά ορισμένες λειτουργίες δε θα είναι διαθέσιμες μέχρι να συνδεθεί ξανά ο διακομιστής ταυτότητας. Εάν εξακολουθείτε να βλέπετε αυτήν την προειδοποίηση, ελέγξτε τις ρυθμίσεις σας ή επικοινωνήστε με έναν διαχειριστή του διακομιστή σας.",
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Μπορείτε να επαναφέρετε τον κωδικό πρόσβασης σας, αλλά ορισμένες λειτουργίες δε θα είναι διαθέσιμες μέχρι να συνδεθεί ξανά ο διακομιστής ταυτότητας. Εάν εξακολουθείτε να βλέπετε αυτήν την προειδοποίηση, ελέγξτε τις ρυθμίσεις σας ή επικοινωνήστε με έναν διαχειριστή του διακομιστή σας.",
     "Group all your people in one place.": "Ομαδοποιήστε όλα τα άτομα σας σε ένα μέρος.",
@@ -755,14 +748,7 @@
     "Later": "Αργότερα",
     "Review to ensure your account is safe": "Ελέγξτε για να βεβαιωθείτε ότι ο λογαριασμός σας είναι ασφαλής",
     "That's fine": "Είναι εντάξει",
-    "Surround selected text when typing special characters": "Περιτριγυριστείτε το επιλεγμένο κείμενο κατά την πληκτρολόγηση ειδικών χαρακτήρων",
-    "Use a more compact 'Modern' layout": "Χρησιμοποιήστε μια πιο συμπαγή \"Μοντέρνα\" διάταξη",
-    "Show polls button": "Εμφάνιση κουμπιού δημοσκοπήσεων",
-    "Enable widget screenshots on supported widgets": "Ενεργοποίηση στιγμιότυπων οθόνης μικροεφαρμογών σε υποστηριζόμενες μικροεφαρμογές",
-    "Mirror local video feed": "Αντικατοπτρίστε την τοπική ροή βίντεο",
     "IRC display name width": "Πλάτος εμφανιζόμενου ονόματος IRC",
-    "Manually verify all remote sessions": "Επαληθεύστε χειροκίνητα όλες τις απομακρυσμένες συνεδρίες",
-    "How fast should messages be downloaded.": "Πόσο γρήγορα πρέπει να γίνεται λήψη των μηνυμάτων.",
     "Pizza": "Πίτσα",
     "Corn": "Καλαμπόκι",
     "Strawberry": "Φράουλα",
@@ -813,9 +799,6 @@
     "Unknown Command": "Αγνωστη εντολή",
     "This is your list of users/servers you have blocked - don't leave the room!": "Αυτή είναι η λίστα με τους χρήστες/διακομιστές που έχετε αποκλείσει - μην φύγετε από το δωμάτιο!",
     "My Ban List": "Η λίστα απαγορεύσεων μου",
-    "Automatically send debug logs when key backup is not functioning": "Αυτόματη αποστολή αρχείων καταγραφής εντοπισμού σφαλμάτων όταν η δημιουργία αντίγραφου κλειδιού ασφαλείας δεν λειτουργεί",
-    "Automatically send debug logs on decryption errors": "Αυτόματη αποστολή αρχείων καταγραφής εντοπισμού σφαλμάτων για σφάλματα αποκρυπτογράφησης",
-    "Automatically send debug logs on any error": "Αυτόματη αποστολή αρχείων καταγραφής εντοπισμού σφαλμάτων για οποιοδήποτε σφάλμα",
     "Heart": "Καρδιά",
     "Cake": "Τούρτα",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Αυτή η αναβάθμιση θα επιτρέψει σε μέλη επιλεγμένων Χώρων πρόσβαση σε αυτό το δωμάτιο χωρίς πρόσκληση.",
@@ -985,7 +968,6 @@
     "Private (invite only)": "Ιδιωτικό (μόνο με πρόσκληση)",
     "Large": "Μεγάλο",
     "Use between %(min)s pt and %(max)s pt": "Χρήση μεταξύ %(min)s pt και %(max)s pt",
-    "Always show the window menu bar": "Να εμφανίζεται πάντα η μπάρα μενού παραθύρου",
     "Room ID or address of ban list": "Ταυτότητα δωματίου ή διεύθυνση της λίστας απαγορευσων",
     "If this isn't what you want, please use a different tool to ignore users.": "Εάν αυτό δεν είναι αυτό που θέλετε, χρησιμοποιήστε ένα διαφορετικό εργαλείο για να αγνοήσετε τους χρήστες.",
     "Subscribing to a ban list will cause you to join it!": "Η εγγραφή σε μια λίστα απαγορεύσων θα σας κάνει να εγγραφείτε σε αυτήν!",
@@ -1731,7 +1713,6 @@
     "You can only join it with a working invite.": "Μπορείτε να συμμετάσχετε μόνο με ενεργή πρόσκληση.",
     "Home options": "Επιλογές αρχικής",
     "Unignore": "Αναίρεση αγνόησης",
-    "Show tray icon and minimise window to it on close": "Εμφάνιση του εικονιδίου στη γραμμή εργασιών και ελαχιστοποίηση του παραθύρου στο κλείσιμο",
     "Match system": "Ταίριασμα με του συστήματος",
     "Spanner": "Γερμανικό κλειδί",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "Το %(brand)s είναι πειραματικό σε πρόγραμμα περιήγησης για κινητά. Για καλύτερη εμπειρία και τις πιο πρόσφατες δυνατότητες, χρησιμοποιήστε τη δωρεάν εφαρμογή μας για κινητά.",
@@ -2113,7 +2094,6 @@
         "other": "Αναγνώστηκε από %(count)s άτομα"
     },
     "Deactivating your account is a permanent action — be careful!": "Η απενεργοποίηση του λογαριασμού σας είναι μια μόνιμη ενέργεια — να είστε προσεκτικοί!",
-    "Enable hardware acceleration": "Ενεργοποίηση επιτάχυνσης υλικού",
     "You were disconnected from the call. (Error: %(message)s)": "Αποσυνδεθήκατε από την κλήση. (Σφάλμα: %(message)s)",
     "Connection lost": "Η σύνδεση χάθηκε",
     "common": {
@@ -2334,7 +2314,10 @@
         "beta_feature": "Αυτή είναι μια δυνατότητα beta",
         "click_for_info": "Κλικ για περισσότερες πληροφορίες",
         "leave_beta": "Αποχώρηση από τη beta",
-        "join_beta": "Συμμετοχή στη beta"
+        "join_beta": "Συμμετοχή στη beta",
+        "automatic_debug_logs": "Αυτόματη αποστολή αρχείων καταγραφής εντοπισμού σφαλμάτων για οποιοδήποτε σφάλμα",
+        "automatic_debug_logs_decryption": "Αυτόματη αποστολή αρχείων καταγραφής εντοπισμού σφαλμάτων για σφάλματα αποκρυπτογράφησης",
+        "automatic_debug_logs_key_backup": "Αυτόματη αποστολή αρχείων καταγραφής εντοπισμού σφαλμάτων όταν η δημιουργία αντίγραφου κλειδιού ασφαλείας δεν λειτουργεί"
     },
     "keyboard": {
         "home": "Αρχική",
@@ -2544,7 +2527,8 @@
             "custom_font_description": "Ορίστε το όνομα μιας γραμματοσειράς που είναι εγκατεστημένη στο σύστημά σας και o %(brand)s θα προσπαθήσει να τη χρησιμοποιήσει.",
             "timeline_image_size": "Μέγεθος εικόνας στη γραμμή χρόνου",
             "timeline_image_size_default": "Προεπιλογή",
-            "timeline_image_size_large": "Μεγάλο"
+            "timeline_image_size_large": "Μεγάλο",
+            "custom_font_size": "Χρησιμοποιήστε προσαρμοσμένο μέγεθος"
         },
         "inline_url_previews_room_account": "Ενεργοποίηση προεπισκόπισης URL για αυτό το δωμάτιο (επηρεάζει μόνο εσάς)",
         "inline_url_previews_room": "Ενεργοποιήστε τις προεπισκοπήσεις URL από προεπιλογή για τους συμμετέχοντες σε αυτό το δωμάτιο",
@@ -2557,7 +2541,11 @@
             "message_search_indexed_messages": "Ευρετηριασμένα μηνύματα:",
             "message_search_indexed_rooms": "Ευρετηριασμένα δωμάτια:",
             "message_search_room_progress": "%(doneRooms)s από %(totalRooms)s",
-            "message_search_sleep_time": "Χρόνος αδράνειας λήψης μηνύματος (ms)"
+            "message_search_sleep_time": "Πόσο γρήγορα πρέπει να γίνεται λήψη των μηνυμάτων.",
+            "send_analytics": "Αποστολή δεδομένων αναλυτικών στοιχείων",
+            "strict_encryption": "Μη στέλνετε ποτέ κρυπτογραφημένα μηνύματα σε μη επαληθευμένες συνεδρίες από αυτήν τη συνεδρία",
+            "enable_message_search": "Ενεργοποίηση αναζήτησης μηνυμάτων σε κρυπτογραφημένα δωμάτια",
+            "manually_verify_all_sessions": "Επαληθεύστε χειροκίνητα όλες τις απομακρυσμένες συνεδρίες"
         },
         "preferences": {
             "room_list_heading": "Λίστα δωματίων",
@@ -2569,7 +2557,16 @@
             "media_heading": "Εικόνες, GIF και βίντεο",
             "autocomplete_delay": "Καθυστέρηση αυτόματης συμπλήρωσης (ms)",
             "rm_lifetime": "Διάρκεια του Δείκτη Ανάγνωσης (ms)",
-            "rm_lifetime_offscreen": "Διάρκεια Δείκτη εκτός οθόνης (ms)"
+            "rm_lifetime_offscreen": "Διάρκεια Δείκτη εκτός οθόνης (ms)",
+            "show_polls_button": "Εμφάνιση κουμπιού δημοσκοπήσεων",
+            "compact_modern": "Χρησιμοποιήστε μια πιο συμπαγή \"Μοντέρνα\" διάταξη",
+            "surround_text": "Περιτριγυριστείτε το επιλεγμένο κείμενο κατά την πληκτρολόγηση ειδικών χαρακτήρων",
+            "always_show_menu_bar": "Να εμφανίζεται πάντα η μπάρα μενού παραθύρου",
+            "enable_tray_icon": "Εμφάνιση του εικονιδίου στη γραμμή εργασιών και ελαχιστοποίηση του παραθύρου στο κλείσιμο",
+            "enable_hardware_acceleration": "Ενεργοποίηση επιτάχυνσης υλικού"
+        },
+        "voip": {
+            "mirror_local_feed": "Αντικατοπτρίστε την τοπική ροή βίντεο"
         }
     },
     "devtools": {
@@ -2637,7 +2634,10 @@
         "room_id": "ID δωματίου: %(roomId)s",
         "event_id": "ID συμβάντος: %(eventId)s",
         "category_room": "Δωμάτιο",
-        "category_other": "Άλλα"
+        "category_other": "Άλλα",
+        "widget_screenshots": "Ενεργοποίηση στιγμιότυπων οθόνης μικροεφαρμογών σε υποστηριζόμενες μικροεφαρμογές",
+        "show_hidden_events": "Εμφάνιση κρυφών συμβάντων στη γραμμή χρόνου",
+        "developer_mode": "Λειτουργία για προγραμματιστές"
     },
     "export_chat": {
         "html": "HTML",
@@ -3150,6 +3150,9 @@
             "ban": "Αποκλεισμός χρηστών",
             "redact": "Καταργήστε τα μηνύματα που αποστέλλονται από άλλους",
             "notifications.room": "Ειδοποιήστε όλους"
+        },
+        "security": {
+            "strict_encryption": "Μη στέλνετε ποτέ κρυπτογραφημένα μηνύματα σε μη επαληθευμένες συνεδρίες σε αυτό το δωμάτιο από αυτή τη συνεδρία"
         }
     },
     "encryption": {

@@ -66,9 +66,6 @@
     "Your browser does not support the required cryptography extensions": ".i le kibrbrauzero na ka'e pilno le mifra ciste poi jai sarcu",
     "Authentication check failed: incorrect password?": ".i pu fliba lo nu birti lo du'u curmi lo nu do jonse .i na'e drani xu japyvla",
     "Please contact your homeserver administrator.": ".i .e'o ko tavla lo admine be le samtcise'u",
-    "Mirror local video feed": "lo du'u xu kau minra lo diklo vidvi",
-    "Send analytics data": "lo du'u xu kau benji lo se lanli datni",
-    "Enable widget screenshots on supported widgets": "lo du'u xu kau kakne lo nu co'a pixra lo uidje kei lo nu kakne tu'a .ubu",
     "Waiting for response from server": ".i ca'o denpa lo nu le samtcise'u cu spuda",
     "Incorrect verification code": ".i na'e drani ke lacri lerpoi",
     "Phone": "fonxa",
@@ -166,14 +163,12 @@
     "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
     "Not Trusted": "na se lacri",
     "Cannot reach homeserver": ".i ca ku na da ka'e zilbe'i le samtcise'u",
-    "Never send encrypted messages to unverified sessions in this room from this session": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u le cei'i",
     "Got It": "je'e",
     "Waiting for %(displayName)s to verify…": ".i ca'o denpa lo nu la'o zoi. %(displayName)s .zoi mo'u co'a lacri",
     "Cancelling…": ".i ca'o co'u co'e",
     "Ok": "je'e",
     "Verify this session": "nu co'a lacri le se samtcise'u",
     "What's New": "notci le du'u cnino",
-    "Never send encrypted messages to unverified sessions from this session": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u",
     "Later": "nu ca na co'e",
     "Other users may not trust it": ".i la'a na pa na du be do cu lacri",
     "Sign Up": "nu co'a na'o jaspu",
@@ -305,7 +300,14 @@
             "timeline_image_size_default": "zmiselcu'a"
         },
         "inline_url_previews_room_account": "lo du'u xu kau do zmiku purzga lo se urli ne'i le kumfa pe'a",
-        "inline_url_previews_room": "lo zmiselcu'a pe lo du'u xu kau lo cmima be le kumfa pe'a cu zmiku purzga lo se urli"
+        "inline_url_previews_room": "lo zmiselcu'a pe lo du'u xu kau lo cmima be le kumfa pe'a cu zmiku purzga lo se urli",
+        "voip": {
+            "mirror_local_feed": "lo du'u xu kau minra lo diklo vidvi"
+        },
+        "security": {
+            "send_analytics": "lo du'u xu kau benji lo se lanli datni",
+            "strict_encryption": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u"
+        }
     },
     "create_room": {
         "title_public_room": "nu cupra pa ve zilbe'i poi gubni",
@@ -431,7 +433,8 @@
         "call_failed": ".i da nabmi fi lo nu co'a fonjo'e"
     },
     "devtools": {
-        "category_other": "drata"
+        "category_other": "drata",
+        "widget_screenshots": "lo du'u xu kau kakne lo nu co'a pixra lo uidje kei lo nu kakne tu'a .ubu"
     },
     "Other": "drata",
     "Advanced": "macnu",
@@ -448,6 +451,9 @@
             "m.room.canonical_alias": "nu basti fi le ka ralju lu'i ro judri be le ve zilbe'i",
             "m.room.topic": "nu basti fi le ka skicu lerpoi",
             "invite": "nu friti le ka ziljmina kei pa pilno"
+        },
+        "security": {
+            "strict_encryption": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u le cei'i"
         }
     },
     "encryption": {

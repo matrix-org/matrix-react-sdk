@@ -559,16 +559,6 @@
     "This is your list of users/servers you have blocked - don't leave the room!": "זוהי רשימת השרתים\\משתמשים אשר בחרתם לחסום - אל תצאו מחדר זה!",
     "My Ban List": "רשימת החסומים שלי",
     "IRC display name width": "רוחב תצוגת השם של IRC",
-    "Manually verify all remote sessions": "אמת באופן ידני את כל ההתחברויות",
-    "How fast should messages be downloaded.": "באיזו מהירות הודעות יורדות.",
-    "Enable message search in encrypted rooms": "אפשר חיפוש הודעות בחדרים מוצפנים",
-    "Show hidden events in timeline": "הצג ארועים מוסתרים בקו הזמן",
-    "Enable widget screenshots on supported widgets": "אפשר צילומי מסך של ישומונים עבור ישומונים נתמכים",
-    "Never send encrypted messages to unverified sessions in this room from this session": "לעולם אל תשלח הודעות מוצפנות אל התחברות שאינה מאומתת בחדר זה, מהתחברות זו",
-    "Never send encrypted messages to unverified sessions from this session": "לעולם אל תשלח הודעות מוצפנות אל התחברות שאינה מאומתת מהתחברות זו",
-    "Send analytics data": "שלח מידע אנליטי",
-    "Mirror local video feed": "שקף זרימת וידאו מקומית",
-    "Use custom size": "השתמשו בגודל מותאם אישית",
     "Change notification settings": "שינוי הגדרת התרעות",
     "Please contact your homeserver administrator.": "אנא צרו קשר עם מנהל השרת שלכם.",
     "New version of %(brand)s is available": "גרסה חדשה של %(brand)s קיימת",
@@ -998,7 +988,6 @@
     "Import E2E room keys": "ייבא מפתחות לחדר E2E",
     "<not supported>": "<לא נתמך>",
     "Unignore": "הסר התעלמות",
-    "Always show the window menu bar": "הראה תמיד את שורת תפריט החלונות",
     "Room ID or address of ban list": "זהות החדר או כתובת של רשימת החסומים",
     "If this isn't what you want, please use a different tool to ignore users.": "אם זה לא מה שאתה רוצה, השתמש בכלי אחר כדי להתעלם ממשתמשים.",
     "Subscribing to a ban list will cause you to join it!": "הרשמה לרשימת איסורים תגרום לך להצטרף אליה!",
@@ -1482,7 +1471,6 @@
     "Message search initialisation failed": "אתחול חיפוש הודעות נכשל",
     "Share your public space": "שתף את מרחב העבודה הציבורי שלך",
     "You cannot place calls without a connection to the server.": "אינך יכול לבצע שיחות ללא חיבור לשרת.",
-    "Developer mode": "מצב מפתח",
     "Developer": "מפתח",
     "Experimental": "נִסיוֹנִי",
     "Spaces": "מרחבי עבודה",
@@ -1576,7 +1564,6 @@
         "one": "%(count)s.קולות הצביעו כדי לראות את התוצאות"
     },
     "Verification requested": "התבקש אימות",
-    "Your server doesn't support disabling sending read receipts.": "השרת שלכם לא תומך בביטול שליחת אישורי קריאה.",
     "Send your first message to invite <displayName/> to chat": "שילחו את ההודעה הראשונה שלכם להזמין את <displayName/> לצ'אט",
     "User Directory": "ספריית משתמשים",
     "Space Autocomplete": "השלמה אוטומטית של חלל העבודה",
@@ -1639,8 +1626,6 @@
     "Home is useful for getting an overview of everything.": "מסך הבית עוזר לסקירה כללית.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "מרחבי עבודה הם דרך לקבץ חדרים ואנשים. במקביל למרחבי העבודה בהם אתם נמצאים ניתן להשתמש גם בכאלה שנבנו מראש.",
     "Spaces to show": "מרחבי עבודה להצגה",
-    "Show polls button": "הצג את כפתור הסקרים",
-    "Surround selected text when typing special characters": "סמן טקסט כאשר מקלידים סמלים מיוחדים",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
     "@mentions & keywords": "אזכורים ומילות מפתח",
     "Mentions & keywords": "אזכורים ומילות מפתח",
@@ -1736,8 +1721,6 @@
     "Copy room link": "העתק קישור לחדר",
     "Match system": "בהתאם למערכת",
     "Last activity": "פעילות אחרונה",
-    "Echo cancellation": "ביטול הד",
-    "Noise suppression": "ביטול רעשים",
     "Voice processing": "עיבוד קול",
     "Video settings": "הגדרות וידאו",
     "Automatically adjust the microphone volume": "התאמה אוטומטית של עוצמת המיקרופון",
@@ -1755,9 +1738,6 @@
     "Pinned": "הודעות נעוצות",
     "Nothing pinned, yet": "אין הודעות נעוצות, לבינתיים",
     "Files": "קבצים",
-    "When enabled, the other party might be able to see your IP address": "כאשר מופעל, הצד השני יוכל לראות את כתובת ה-IP שלך",
-    "Allow Peer-to-Peer for 1:1 calls": "אפשר חיבור ישיר (Peer-to-Peer) בשיחות 1:1",
-    "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.": "רלוונטי רק אם שרת הבית לא מציע שרת שיחות. כתובת ה-IP שלך תשותף במהלך שיחה.",
     "Set a new account password…": "הגדרת סיסמה חדשה לחשבונך…",
     "Send email": "שלח אימייל",
     "New room": "חדר חדש",
@@ -2154,7 +2134,8 @@
             "custom_font_description": "הגדר את שם הגופן המותקן במערכת שלך ו- %(brand)s ים ינסו להשתמש בו.",
             "timeline_image_size": "גודל תמונה בציר הזמן",
             "timeline_image_size_default": "ברירת מחדל",
-            "timeline_image_size_large": "גדול"
+            "timeline_image_size_large": "גדול",
+            "custom_font_size": "השתמשו בגודל מותאם אישית"
         },
         "inline_url_previews_room_account": "הראה תצוגה מקדימה של קישורים בחדר זה (משפיע רק עליכם)",
         "inline_url_previews_room": "אפשר לחברים בחדר זה לצפות בתצוגת קישורים",
@@ -2167,7 +2148,11 @@
             "message_search_indexed_messages": "הודעות באינדקס:",
             "message_search_indexed_rooms": "חדרים רשומים:",
             "message_search_room_progress": "%(doneRooms)s מתוך %(totalRooms)s",
-            "message_search_sleep_time": "הורדת זמן שינה (ms)"
+            "message_search_sleep_time": "באיזו מהירות הודעות יורדות.",
+            "send_analytics": "שלח מידע אנליטי",
+            "strict_encryption": "לעולם אל תשלח הודעות מוצפנות אל התחברות שאינה מאומתת מהתחברות זו",
+            "enable_message_search": "אפשר חיפוש הודעות בחדרים מוצפנים",
+            "manually_verify_all_sessions": "אמת באופן ידני את כל ההתחברויות"
         },
         "preferences": {
             "room_list_heading": "רשימת חדרים",
@@ -2181,7 +2166,19 @@
             "room_directory_heading": "רשימת חדרים",
             "autocomplete_delay": "עיכוב השלמה אוטומטית (ms)",
             "rm_lifetime": "חיי סמן קריאה (ms)",
-            "rm_lifetime_offscreen": "חיי סמן קריאה מחוץ למסך (ms)"
+            "rm_lifetime_offscreen": "חיי סמן קריאה מחוץ למסך (ms)",
+            "show_polls_button": "הצג את כפתור הסקרים",
+            "surround_text": "סמן טקסט כאשר מקלידים סמלים מיוחדים",
+            "always_show_menu_bar": "הראה תמיד את שורת תפריט החלונות"
+        },
+        "send_read_receipts_unsupported": "השרת שלכם לא תומך בביטול שליחת אישורי קריאה.",
+        "voip": {
+            "mirror_local_feed": "שקף זרימת וידאו מקומית",
+            "allow_p2p": "אפשר חיבור ישיר (Peer-to-Peer) בשיחות 1:1",
+            "allow_p2p_description": "כאשר מופעל, הצד השני יוכל לראות את כתובת ה-IP שלך",
+            "echo_cancellation": "ביטול הד",
+            "noise_suppression": "ביטול רעשים",
+            "enable_fallback_ice_server_description": "רלוונטי רק אם שרת הבית לא מציע שרת שיחות. כתובת ה-IP שלך תשותף במהלך שיחה."
         }
     },
     "devtools": {
@@ -2206,7 +2203,10 @@
         "developer_tools": "כלי מפתחים",
         "room_id": "זיהוי חדר: %(roomId)s",
         "category_room": "חדר",
-        "category_other": "אחר"
+        "category_other": "אחר",
+        "widget_screenshots": "אפשר צילומי מסך של ישומונים עבור ישומונים נתמכים",
+        "show_hidden_events": "הצג ארועים מוסתרים בקו הזמן",
+        "developer_mode": "מצב מפתח"
     },
     "export_chat": {
         "html": "HTML",
@@ -2665,6 +2665,9 @@
             "ban": "חסימת משתמשים",
             "redact": "הסרת הודעות שנשלחו על ידי אחרים",
             "notifications.room": "התראה לכולם"
+        },
+        "security": {
+            "strict_encryption": "לעולם אל תשלח הודעות מוצפנות אל התחברות שאינה מאומתת בחדר זה, מהתחברות זו"
         }
     },
     "encryption": {

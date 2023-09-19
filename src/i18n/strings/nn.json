@@ -64,9 +64,6 @@
     "Your browser does not support the required cryptography extensions": "Nettlesaren din støttar ikkje dei naudsynte kryptografiske utvidingane",
     "Not a valid %(brand)s keyfile": "Ikkje ei gyldig %(brand)s-nykelfil",
     "Authentication check failed: incorrect password?": "Authentiseringsforsøk mislukkast: feil passord?",
-    "Mirror local video feed": "Spegl den lokale videofeeden",
-    "Send analytics data": "Send statistikkdata",
-    "Enable widget screenshots on supported widgets": "Skru widget-skjermbilete på for støtta widgetar",
     "Waiting for response from server": "Ventar på svar frå tenaren",
     "Incorrect verification code": "Urett stadfestingskode",
     "Phone": "Telefon",
@@ -463,7 +460,6 @@
     "Room avatar": "Rom-avatar",
     "Power level": "Tilgangsnivå",
     "Voice & Video": "Tale og video",
-    "Show hidden events in timeline": "Vis skjulte hendelsar i historikken",
     "This is your list of users/servers you have blocked - don't leave the room!": "Dette er di liste over brukarar/tenarar du har blokkert - ikkje forlat rommet!",
     "Show more": "Vis meir",
     "Display Name": "Visningsnamn",
@@ -483,7 +479,6 @@
     "Upload completed": "Opplasting fullført",
     "Cancelled signature upload": "Kansellerte opplasting av signatur",
     "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
-    "Manually verify all remote sessions": "Manuelt verifiser alle eksterne økter",
     "My Ban List": "Mi blokkeringsliste",
     "Upgrade this room to the recommended room version": "Oppgrader dette rommet til anbefalt romversjon",
     "Your theme": "Ditt tema",
@@ -512,9 +507,6 @@
     "Click the button below to confirm adding this phone number.": "Trykk på knappen nedanfor for å legge til dette telefonnummeret.",
     "%(name)s is requesting verification": "%(name)s spør etter verifikasjon",
     "Later": "Seinare",
-    "Never send encrypted messages to unverified sessions from this session": "Aldri send krypterte meldingar til ikkje-verifiserte sesjonar frå denne sesjonen",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Aldri send krypterte meldingar i dette rommet til ikkje-verifiserte sesjonar frå denne sesjonen",
-    "Enable message search in encrypted rooms": "Aktiver søk etter meldingar i krypterte rom",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Sikre meldingar med denne brukaren er ende-til-ende krypterte og kan ikkje lesast av tredjepart.",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Er du sikker? Alle dine krypterte meldingar vil gå tapt viss nøklane dine ikkje er sikkerheitskopierte.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
@@ -537,7 +529,6 @@
     "I don't want my encrypted messages": "Eg treng ikkje mine krypterte meldingar",
     "You'll lose access to your encrypted messages": "Du vil miste tilgangen til dine krypterte meldingar",
     "Join millions for free on the largest public server": "Kom ihop med millionar av andre på den største offentlege tenaren",
-    "Always show the window menu bar": "Vis alltid menyfeltet i toppen av vindauget",
     "All settings": "Alle innstillingar",
     "Delete Backup": "Slett sikkerheitskopi",
     "Restore from Backup": "Gjenopprett frå sikkerheitskopi",
@@ -600,7 +591,6 @@
     "Keyboard": "Tastatur",
     "Large": "Stor",
     "Use between %(min)s pt and %(max)s pt": "Må vere mellom %(min)s og %(max)s punkt",
-    "Use custom size": "Bruk ein spesifikk skriftstorleik",
     "Identity server (%(server)s)": "Identietstenar (%(server)s)",
     "Change identity server": "Endre identitetstenar",
     "Not a valid identity server (status code %(code)s)": "Ikkje ein gyldig identietstenar (statuskode %(code)s)",
@@ -857,7 +847,8 @@
             "custom_font_description": "Skriv  namnet på skrifttypen(fonten) og %(brand)s forsøka å henta den frå operativsystemet.",
             "timeline_image_size": "Storleik for bilete på tidslinja",
             "timeline_image_size_default": "Opphavleg innstilling",
-            "timeline_image_size_large": "Stor"
+            "timeline_image_size_large": "Stor",
+            "custom_font_size": "Bruk ein spesifikk skriftstorleik"
         },
         "inline_url_previews_room_account": "Skru URL-førehandsvisingar på for dette rommet (påverkar deg åleine)",
         "inline_url_previews_room": "Skru URL-førehandsvisingar på som utgangspunkt for deltakarar i dette rommet",
@@ -866,7 +857,17 @@
             "keyboard_heading": "Tastatursnarvegar",
             "keyboard_view_shortcuts_button": "For å sjå alle tastatursnarvegane, <a>klikk her</a>.",
             "composer_heading": "Teksteditor",
-            "autocomplete_delay": "Forsinkelse på autofullfør (ms)"
+            "autocomplete_delay": "Forsinkelse på autofullfør (ms)",
+            "always_show_menu_bar": "Vis alltid menyfeltet i toppen av vindauget"
+        },
+        "voip": {
+            "mirror_local_feed": "Spegl den lokale videofeeden"
+        },
+        "security": {
+            "send_analytics": "Send statistikkdata",
+            "strict_encryption": "Aldri send krypterte meldingar til ikkje-verifiserte sesjonar frå denne sesjonen",
+            "enable_message_search": "Aktiver søk etter meldingar i krypterte rom",
+            "manually_verify_all_sessions": "Manuelt verifiser alle eksterne økter"
         }
     },
     "devtools": {
@@ -877,7 +878,9 @@
         "toolbox": "Verktøykasse",
         "developer_tools": "Utviklarverktøy",
         "category_room": "Rom",
-        "category_other": "Anna"
+        "category_other": "Anna",
+        "widget_screenshots": "Skru widget-skjermbilete på for støtta widgetar",
+        "show_hidden_events": "Vis skjulte hendelsar i historikken"
     },
     "create_room": {
         "title_private_room": "Lag eit privat rom",
@@ -1132,6 +1135,9 @@
             "state_default": "Endre innstillingar",
             "ban": "Stenge ute brukarar",
             "notifications.room": "Varsle alle"
+        },
+        "security": {
+            "strict_encryption": "Aldri send krypterte meldingar i dette rommet til ikkje-verifiserte sesjonar frå denne sesjonen"
         }
     },
     "auth": {

@@ -215,7 +215,6 @@
     "You are now ignoring %(userId)s": "Agora você está bloqueando %(userId)s",
     "Unignored user": "Usuário desbloqueado",
     "Send": "Enviar",
-    "Mirror local video feed": "Espelhar o feed de vídeo local",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Você não poderá desfazer essa alteração, já que está rebaixando sua própria permissão. Se você for a última pessoa nesta sala, será impossível recuperar a permissão atual.",
     "Unignore": "Desbloquear",
     "Jump to read receipt": "Ir para a confirmação de leitura",
@@ -319,8 +318,6 @@
     "Straight rows of keys are easy to guess": "Linhas retas de teclas são fáceis de adivinhar",
     "Short keyboard patterns are easy to guess": "Padrões de teclado curtos são fáceis de adivinhar",
     "Please contact your homeserver administrator.": "Por favor, entre em contato com o administrador do seu homeserver.",
-    "Send analytics data": "Enviar dados analíticos",
-    "Enable widget screenshots on supported widgets": "Ativar capturas de tela do widget em widgets suportados",
     "Delete Backup": "Remover backup",
     "Unable to load key backup status": "Não foi possível carregar o status do backup da chave",
     "This event could not be displayed": "Este evento não pôde ser exibido",
@@ -556,13 +553,6 @@
     "Verify this session": "Confirmar esta sessão",
     "Other users may not trust it": "Outras(os) usuárias(os) podem não confiar nela",
     "New login. Was this you?": "Novo login. Foi você?",
-    "Use custom size": "Usar tamanho personalizado",
-    "Never send encrypted messages to unverified sessions from this session": "Nunca envie mensagens criptografadas a partir desta sessão para sessões não confirmadas",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Nunca envie mensagens criptografadas a partir desta sessão para sessões não confirmadas nessa sala",
-    "Show hidden events in timeline": "Mostrar eventos ocultos nas conversas",
-    "Enable message search in encrypted rooms": "Ativar busca de mensagens em salas criptografadas",
-    "How fast should messages be downloaded.": "Com qual rapidez as mensagens devem ser baixadas.",
-    "Manually verify all remote sessions": "Verificar manualmente todas as sessões remotas",
     "IRC display name width": "Largura do nome e sobrenome nas mensagens",
     "My Ban List": "Minha lista de banidos",
     "This is your list of users/servers you have blocked - don't leave the room!": "Esta é a sua lista de usuárias(os)/servidores que você bloqueou - não saia da sala!",
@@ -795,7 +785,6 @@
     "Discovery": "Contatos",
     "Deactivate account": "Desativar minha conta",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
-    "Always show the window menu bar": "Mostrar a barra de menu na janela",
     "Send %(eventType)s events": "Enviar eventos de %(eventType)s",
     "Roles & Permissions": "Cargos e permissões",
     "Select the roles required to change various parts of the room": "Selecione os cargos necessários para alterar várias partes da sala",
@@ -1643,7 +1632,6 @@
     "Export chat": "Exportar conversa",
     "Light high contrast": "Claro (alto contraste)",
     "Space selection": "Seleção de Espaços",
-    "Use a more compact 'Modern' layout": "Usar um layout \"moderno\" mais compacto",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s e %(count)s outro",
         "other": "%(spaceName)s e %(count)s outros"
@@ -1660,9 +1648,6 @@
     "Search %(spaceName)s": "Pesquisar %(spaceName)s",
     "Pin to sidebar": "Fixar na barra lateral",
     "Quick settings": "Configurações rápidas",
-    "Developer mode": "Modo desenvolvedor",
-    "Automatically send debug logs on any error": "Enviar automaticamente logs de depuração em qualquer erro",
-    "Surround selected text when typing special characters": "Circule o texto selecionado ao digitar caracteres especiais",
     "Click the button below to confirm signing out these devices.": {
         "one": "Clique no botão abaixo para confirmar a desconexão deste dispositivo.",
         "other": "Clique no botão abaixo para confirmar a desconexão de outros dispositivos."
@@ -1758,7 +1743,6 @@
     "Spaces to show": "Espaços para mostrar",
     "Sidebar": "Barra lateral",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Compartilhe dados anônimos para nos ajudar a identificar problemas. Nada pessoal. Sem terceiros.",
-    "Show tray icon and minimise window to it on close": "Mostrar o ícone da bandeja e minimizar a janela ao fechar",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Atualizando espaço...",
         "other": "Atualizando espaços... (%(progress)s de %(count)s)"
@@ -1815,7 +1799,6 @@
     "Other sessions": "Outras sessões",
     "Sessions": "Sessões",
     "Keyboard": "Teclado",
-    "Enable hardware acceleration": "Habilitar aceleração de hardware",
     "User is already in the space": "O usuário já está no espaço",
     "User is already in the room": "O usuário já está na sala",
     "User does not exist": "O usuário não existe",
@@ -2103,7 +2086,8 @@
         "group_themes": "Temas",
         "group_encryption": "Criptografia",
         "group_experimental": "Experimental",
-        "group_developer": "Desenvolvedor"
+        "group_developer": "Desenvolvedor",
+        "automatic_debug_logs": "Enviar automaticamente logs de depuração em qualquer erro"
     },
     "keyboard": {
         "home": "Home",
@@ -2309,7 +2293,8 @@
             "custom_font_description": "Defina o nome de uma fonte instalada no seu sistema e o %(brand)s tentará usá-la.",
             "timeline_image_size": "Tamanho da imagem na linha do tempo",
             "timeline_image_size_default": "Padrão",
-            "timeline_image_size_large": "Grande"
+            "timeline_image_size_large": "Grande",
+            "custom_font_size": "Usar tamanho personalizado"
         },
         "inline_url_previews_room_account": "Ativar, para esta sala, a visualização de links (só afeta você)",
         "inline_url_previews_room": "Ativar, para todos os participantes desta sala, a visualização de links",
@@ -2322,7 +2307,11 @@
             "message_search_indexed_messages": "Mensagens armazenadas:",
             "message_search_indexed_rooms": "Salas armazenadas:",
             "message_search_room_progress": "%(doneRooms)s de %(totalRooms)s",
-            "message_search_sleep_time": "Tempo de espera entre o download de mensagens (ms)"
+            "message_search_sleep_time": "Com qual rapidez as mensagens devem ser baixadas.",
+            "send_analytics": "Enviar dados analíticos",
+            "strict_encryption": "Nunca envie mensagens criptografadas a partir desta sessão para sessões não confirmadas",
+            "enable_message_search": "Ativar busca de mensagens em salas criptografadas",
+            "manually_verify_all_sessions": "Verificar manualmente todas as sessões remotas"
         },
         "preferences": {
             "room_list_heading": "Lista de salas",
@@ -2334,7 +2323,15 @@
             "media_heading": "Imagens, GIFs e vídeos",
             "autocomplete_delay": "Atraso no preenchimento automático (ms)",
             "rm_lifetime": "Duração do marcador de leitura (ms)",
-            "rm_lifetime_offscreen": "Vida útil do marcador de leitura fora da tela (ms)"
+            "rm_lifetime_offscreen": "Vida útil do marcador de leitura fora da tela (ms)",
+            "compact_modern": "Usar um layout \"moderno\" mais compacto",
+            "surround_text": "Circule o texto selecionado ao digitar caracteres especiais",
+            "always_show_menu_bar": "Mostrar a barra de menu na janela",
+            "enable_tray_icon": "Mostrar o ícone da bandeja e minimizar a janela ao fechar",
+            "enable_hardware_acceleration": "Habilitar aceleração de hardware"
+        },
+        "voip": {
+            "mirror_local_feed": "Espelhar o feed de vídeo local"
         }
     },
     "devtools": {
@@ -2365,7 +2362,10 @@
         "developer_tools": "Ferramentas do desenvolvedor",
         "room_id": "ID da sala: %(roomId)s",
         "category_room": "Sala",
-        "category_other": "Outros"
+        "category_other": "Outros",
+        "widget_screenshots": "Ativar capturas de tela do widget em widgets suportados",
+        "show_hidden_events": "Mostrar eventos ocultos nas conversas",
+        "developer_mode": "Modo desenvolvedor"
     },
     "export_chat": {
         "html": "HTML",
@@ -2824,6 +2824,9 @@
             "ban": "Banir usuários",
             "redact": "Remover mensagens enviadas por outros",
             "notifications.room": "Notificar todos"
+        },
+        "security": {
+            "strict_encryption": "Nunca envie mensagens criptografadas a partir desta sessão para sessões não confirmadas nessa sala"
         }
     },
     "encryption": {

@@ -192,9 +192,6 @@
     "Success!": "Suksess!",
     "Set up": "Sett opp",
     "Identity server has no terms of service": "Identitetstjeneren har ingen brukervilkår",
-    "Mirror local video feed": "Speil den lokale videostrømmen",
-    "Send analytics data": "Send analytiske data",
-    "Show hidden events in timeline": "Vis skjulte hendelser i tidslinjen",
     "My Ban List": "Min bannlysningsliste",
     "Got It": "Skjønner",
     "Lion": "Løve",
@@ -349,8 +346,6 @@
     },
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Aldri send krypterte meldinger til uverifiserte økter i dette rommet fra denne økten",
-    "Manually verify all remote sessions": "Verifiser alle eksterne økter manuelt",
     "Show more": "Vis mer",
     "Warning!": "Advarsel!",
     "Export E2E room keys": "Eksporter E2E-romnøkler",
@@ -460,7 +455,6 @@
     "Upload completed": "Opplasting fullført",
     "Unable to upload": "Mislyktes i å laste opp",
     "Remove for everyone": "Fjern for alle",
-    "Never send encrypted messages to unverified sessions from this session": "Aldri send krypterte meldinger til uverifiserte økter fra denne økten",
     "Cross-signing public keys:": "Offentlige nøkler for kryssignering:",
     "Cross-signing private keys:": "Private nøkler for kryssignering:",
     "Self signing private key:": "Selvsignert privat nøkkel:",
@@ -646,7 +640,6 @@
     "You do not have permission to invite people to this room.": "Du har ikke tilgang til å invitere personer til dette rommet.",
     "Click the button below to confirm adding this email address.": "Klikk på knappen under for å bekrefte at du vil legge til denne e-postadressen.",
     "Hey you. You're the best!": "Hei der. Du er fantastisk!",
-    "Use custom size": "Bruk tilpasset størrelse",
     "Use Single Sign On to continue": "Bruk Single Sign On for å fortsette",
     "Belgium": "Belgia",
     "American Samoa": "Amerikansk Samoa",
@@ -1321,14 +1314,18 @@
             "custom_theme_url": "URL-en til et selvvalgt tema",
             "custom_theme_add_button": "Legg til tema",
             "font_size": "Skriftstørrelse",
-            "timeline_image_size_default": "Standard"
+            "timeline_image_size_default": "Standard",
+            "custom_font_size": "Bruk tilpasset størrelse"
         },
         "inline_url_previews_room_account": "Skru på URL-forhåndsvisninger for dette rommet (Påvirker bare deg)",
         "inline_url_previews_room": "Skru på URL-forhåndsvisninger som standard for deltakerne i dette rommet",
         "security": {
             "message_search_space_used": "Plass brukt:",
             "message_search_indexed_messages": "Indekserte meldinger:",
-            "message_search_indexed_rooms": "Indekserte rom:"
+            "message_search_indexed_rooms": "Indekserte rom:",
+            "send_analytics": "Send analytiske data",
+            "strict_encryption": "Aldri send krypterte meldinger til uverifiserte økter fra denne økten",
+            "manually_verify_all_sessions": "Verifiser alle eksterne økter manuelt"
         },
         "preferences": {
             "room_list_heading": "Romliste",
@@ -1337,6 +1334,9 @@
             "autocomplete_delay": "Autofullføringsforsinkelse (ms)",
             "rm_lifetime": "Lesemarkørens visningstid (ms)",
             "rm_lifetime_offscreen": "Lesemarkørens visningstid utenfor skjermen (ms)"
+        },
+        "voip": {
+            "mirror_local_feed": "Speil den lokale videostrømmen"
         }
     },
     "devtools": {
@@ -1351,7 +1351,8 @@
         "toolbox": "Verktøykasse",
         "developer_tools": "Utviklerverktøy",
         "category_room": "Rom",
-        "category_other": "Andre"
+        "category_other": "Andre",
+        "show_hidden_events": "Vis skjulte hendelser i tidslinjen"
     },
     "export_chat": {
         "html": "HTML",
@@ -1605,6 +1606,9 @@
             "state_default": "Endre innstillinger",
             "ban": "Bannlys brukere",
             "notifications.room": "Varsle alle"
+        },
+        "security": {
+            "strict_encryption": "Aldri send krypterte meldinger til uverifiserte økter i dette rommet fra denne økten"
         }
     },
     "encryption": {

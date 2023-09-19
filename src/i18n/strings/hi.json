@@ -67,9 +67,6 @@
     "Your browser does not support the required cryptography extensions": "आपका ब्राउज़र आवश्यक क्रिप्टोग्राफी एक्सटेंशन का समर्थन नहीं करता है",
     "Authentication check failed: incorrect password?": "प्रमाणीकरण जांच विफल: गलत पासवर्ड?",
     "Please contact your homeserver administrator.": "कृपया अपने होमसर्वर व्यवस्थापक से संपर्क करें।",
-    "Mirror local video feed": "स्थानीय वीडियो फ़ीड को आईना करें",
-    "Send analytics data": "विश्लेषण डेटा भेजें",
-    "Enable widget screenshots on supported widgets": "समर्थित विजेट्स पर विजेट स्क्रीनशॉट सक्षम करें",
     "Waiting for response from server": "सर्वर से प्रतिक्रिया की प्रतीक्षा कर रहा है",
     "Incorrect verification code": "गलत सत्यापन कोड",
     "Phone": "फ़ोन",
@@ -569,6 +566,12 @@
         "preferences": {
             "room_list_heading": "कक्ष सूचि",
             "autocomplete_delay": "स्वत: पूर्ण विलंब (ms)"
+        },
+        "voip": {
+            "mirror_local_feed": "स्थानीय वीडियो फ़ीड को आईना करें"
+        },
+        "security": {
+            "send_analytics": "विश्लेषण डेटा भेजें"
         }
     },
     "timeline": {
@@ -699,5 +702,8 @@
             "title": "सहायता और के बारे में",
             "versions": "संस्करण"
         }
+    },
+    "devtools": {
+        "widget_screenshots": "समर्थित विजेट्स पर विजेट स्क्रीनशॉट सक्षम करें"
     }
 }

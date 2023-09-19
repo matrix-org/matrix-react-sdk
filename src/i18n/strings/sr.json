@@ -62,7 +62,6 @@
     "Your browser does not support the required cryptography extensions": "Ваш прегледач не подржава потребна криптографска проширења",
     "Not a valid %(brand)s keyfile": "Није исправана %(brand)s кључ-датотека",
     "Authentication check failed: incorrect password?": "Провера идентитета није успела: нетачна лозинка?",
-    "Mirror local video feed": "Копирај довод локалног видеа",
     "Incorrect verification code": "Нетачни потврдни код",
     "Phone": "Телефон",
     "No display name": "Нема приказног имена",
@@ -295,8 +294,6 @@
     "Clear Storage and Sign Out": "Очисти складиште и одјави ме",
     "We encountered an error trying to restore your previous session.": "Наишли смо на грешку приликом повраћаја ваше претходне сесије.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Чишћење складишта вашег прегледача може решити проблем али ће вас то одјавити и учинити шифровани историјат ћаскања нечитљивим.",
-    "Send analytics data": "Пошаљи аналитичке податке",
-    "Enable widget screenshots on supported widgets": "Омогући снимке екрана виџета у подржаним виџетима",
     "Muted Users": "Утишани корисници",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не могу да учитам догађај на који је послат одговор, или не постоји или немате овлашћење да га погледате.",
     "Can't leave Server Notices room": "Не могу да напустим собу са напоменама сервера",
@@ -386,7 +383,6 @@
     "Switch to dark mode": "Пребаци на тамну тему",
     "All settings": "Сва подешавања",
     "General failure": "Општа грешка",
-    "Use custom size": "Користи прилагођену величину",
     "Got It": "Разумем",
     "Light bulb": "сијалица",
     "Hey you. You're the best!": "Хеј! Само напред!",
@@ -770,7 +766,6 @@
     "Cancel search": "Откажи претрагу",
     "Message search": "Претрага порука",
     "Securely cache encrypted messages locally for them to appear in search results.": "Сигурно локално кеширајте шифроване поруке да би се појавиле у резултатима претраге.",
-    "Enable message search in encrypted rooms": "Омогућите претрагу порука у шифрованим собама",
     "Failed to save space settings.": "Чување подешавања простора није успело.",
     "Confirm this user's session by comparing the following with their User Settings:": "Потврдите сесију овог корисника упоређивањем следећег са њиховим корисничким подешавањима:",
     "Confirm by comparing the following with the User Settings in your other session:": "Потврдите упоређивањем следећег са корисничким подешавањима у вашој другој сесији:",
@@ -1048,13 +1043,19 @@
             "custom_theme_url": "Адреса прилагођене теме",
             "custom_theme_add_button": "Додај тему",
             "font_size": "Величина фонта",
-            "timeline_image_size_default": "Подразумевано"
+            "timeline_image_size_default": "Подразумевано",
+            "custom_font_size": "Користи прилагођену величину"
         },
         "inline_url_previews_room_account": "Укључи УРЛ прегледе у овој соби (утиче само на вас)",
         "inline_url_previews_room": "Подразумевано омогући прегледе адреса за чланове ове собе",
         "security": {
             "message_search_disable_warning": "Ако је искључено, поруке из шифрованих соба неће се приказивати у резултатима.",
-            "message_search_intro": "%(brand)s је локално сигурно кешира шифроване поруке да би се појавиле у резултатима претраге:"
+            "message_search_intro": "%(brand)s је локално сигурно кешира шифроване поруке да би се појавиле у резултатима претраге:",
+            "send_analytics": "Пошаљи аналитичке податке",
+            "enable_message_search": "Омогућите претрагу порука у шифрованим собама"
+        },
+        "voip": {
+            "mirror_local_feed": "Копирај довод локалног видеа"
         }
     },
     "devtools": {
@@ -1066,7 +1067,8 @@
         "toolbox": "Алатница",
         "developer_tools": "Програмерске алатке",
         "category_room": "Соба",
-        "category_other": "Остало"
+        "category_other": "Остало",
+        "widget_screenshots": "Омогући снимке екрана виџета у подржаним виџетима"
     },
     "timeline": {
         "m.call.invite": {

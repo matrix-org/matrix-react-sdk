@@ -203,7 +203,6 @@
     "Restricted": "Rajoitettu",
     "You are now ignoring %(userId)s": "Et enää huomioi käyttäjää %(userId)s",
     "You are no longer ignoring %(userId)s": "Huomioit jälleen käyttäjän %(userId)s",
-    "Mirror local video feed": "Peilaa paikallinen videosyöte",
     "Unignore": "Huomioi käyttäjä jälleen",
     "Jump to read receipt": "Hyppää lukukuittaukseen",
     "Admin Tools": "Ylläpitotyökalut",
@@ -373,7 +372,6 @@
     "Language and region": "Kieli ja alue",
     "Account management": "Tilin hallinta",
     "Voice & Video": "Ääni ja video",
-    "Send analytics data": "Lähetä analytiikkatietoja",
     "No Audio Outputs detected": "Äänen ulostuloja ei havaittu",
     "Audio Output": "Äänen ulostulo",
     "Go to Settings": "Siirry asetuksiin",
@@ -471,7 +469,6 @@
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "Missing roomId.": "roomId puuttuu.",
-    "Enable widget screenshots on supported widgets": "Ota sovelmien kuvankaappaukset käyttöön tuetuissa sovelmissa",
     "This event could not be displayed": "Tätä tapahtumaa ei voitu näyttää",
     "Demote yourself?": "Alenna itsesi?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Et voi perua tätä muutosta, koska olet alentamassa itseäsi. Jos olet viimeinen oikeutettu henkilö tässä huoneessa, oikeuksia ei voi enää saada takaisin.",
@@ -607,7 +604,6 @@
     "No homeserver URL provided": "Kotipalvelimen osoite puuttuu",
     "Unexpected error resolving homeserver configuration": "Odottamaton virhe selvitettäessä kotipalvelimen asetuksia",
     "Edit message": "Muokkaa viestiä",
-    "Show hidden events in timeline": "Näytä piilotetut tapahtumat aikajanalla",
     "Notes": "Huomautukset",
     "Add room": "Lisää huone",
     "Cannot reach homeserver": "Kotipalvelinta ei voida tavoittaa",
@@ -642,7 +638,6 @@
     "Terms of Service": "Käyttöehdot",
     "Service": "Palvelu",
     "Summary": "Yhteenveto",
-    "Always show the window menu bar": "Näytä aina ikkunan valikkorivi",
     "Unable to revoke sharing for email address": "Sähköpostiosoitteen jakamista ei voi perua",
     "Unable to share email address": "Sähköpostiosoitetta ei voi jakaa",
     "Unable to share phone number": "Puhelinnumeroa ei voi jakaa",
@@ -872,15 +867,11 @@
     "Session already verified!": "Istunto on jo vahvistettu!",
     "Not Trusted": "Ei luotettu",
     "Ask this user to verify their session, or manually verify it below.": "Pyydä tätä käyttäjää vahvistamaan istuntonsa, tai vahvista se manuaalisesti alla.",
-    "Never send encrypted messages to unverified sessions from this session": "Älä koskaan lähetä salattuja viestejä vahvistamattomiin istuntoihin tästä istunnosta",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Älä lähetä salattuja viestejä vahvistamattomiin istuntoihin tässä huoneessa tässä istunnossa",
     "Setting up keys": "Otetaan avaimet käyttöön",
     "Verifies a user, session, and pubkey tuple": "Varmentaa käyttäjän, istunnon ja julkiset avaimet",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "VAROITUS: AVAIMEN VARMENTAMINEN EPÄONNISTUI! Käyttäjän %(userId)s ja laitteen %(deviceId)s istunnon allekirjoitusavain on ”%(fprint)s”, mikä ei täsmää annettuun avaimeen ”%(fingerprint)s”. Tämä voi tarkoittaa, että viestintäänne siepataan!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Antamasi allekirjoitusavain täsmää käyttäjältä %(userId)s saamaasi istunnon %(deviceId)s allekirjoitusavaimeen. Istunto on varmennettu.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) kirjautui uudella istunnolla varmentamatta sitä:",
-    "Enable message search in encrypted rooms": "Ota viestihaku salausta käyttävissä huoneissa käyttöön",
-    "How fast should messages be downloaded.": "Kuinka nopeasti viestit pitäisi ladata.",
     "Waiting for %(displayName)s to verify…": "Odotetaan käyttäjän %(displayName)s varmennusta…",
     "Cancelling…": "Peruutetaan…",
     "Other users may not trust it": "Muut eivät välttämättä luota siihen",
@@ -931,7 +922,6 @@
     "%(completed)s of %(total)s keys restored": "%(completed)s / %(total)s avainta palautettu",
     "Keys restored": "Avaimet palautettu",
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s avaimen palautus onnistui",
-    "Manually verify all remote sessions": "Varmenna kaikki etäistunnot käsin",
     "IRC display name width": "IRC-näyttönimen leveys",
     "Your homeserver does not support cross-signing.": "Kotipalvelimesi ei tue ristiinvarmennusta.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Tililläsi on ristiinvarmennuksen identiteetti salaisessa tallennustilassa, mutta tämä istunto ei vielä luota siihen.",
@@ -1011,7 +1001,6 @@
     "Switch theme": "Vaihda teemaa",
     "All settings": "Kaikki asetukset",
     "Looks good!": "Hyvältä näyttää!",
-    "Use custom size": "Käytä mukautettua kokoa",
     "Room options": "Huoneen asetukset",
     "This room is public": "Tämä huone on julkinen",
     "Video conference started by %(senderName)s": "%(senderName)s aloitti ryhmävideopuhelun",
@@ -1637,7 +1626,6 @@
     "Upgrade required": "Päivitys vaaditaan",
     "Message search initialisation failed": "Viestihaun alustus epäonnistui",
     "More": "Lisää",
-    "Developer mode": "Kehittäjätila",
     "Sidebar": "Sivupalkki",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Jaa anonyymia tietoa auttaaksesi ongelmien tunnistamisessa. Ei mitään henkilökohtaista. Ei kolmansia osapuolia.",
     "Updating spaces... (%(progress)s out of %(count)s)": {
@@ -1652,7 +1640,6 @@
     },
     "Pin to sidebar": "Kiinnitä sivupalkkiin",
     "Quick settings": "Pika-asetukset",
-    "Use a more compact 'Modern' layout": "Käytä entistä kompaktimpaa, \"Modernia\", asettelua",
     "Experimental": "Kokeellinen",
     "Themes": "Teemat",
     "You cannot place calls without a connection to the server.": "Et voi soittaa puheluja ilman yhteyttä palvelimeen.",
@@ -1760,7 +1747,6 @@
     "People with supported clients will be able to join the room without having a registered account.": "Käyttäjät, joilla on tuettu asiakasohjelma, voivat liittyä huoneeseen ilman rekisteröityä käyttäjätiliä.",
     "To avoid these issues, create a <a>new public room</a> for the conversation you plan to have.": "Vältä nämä ongelmat luomalla <a>uusi julkinen huone</a> aikomallesi keskustelulle.",
     "Get notified for every message": "Vastaanota ilmoitus joka viestistä",
-    "Show tray icon and minimise window to it on close": "Näytä ilmaisinalueen kuvake ja pienennä ikkuna siihen suljettaessa",
     "Keyboard": "Näppäimistö",
     "Large": "Suuri",
     "Access": "Pääsy",
@@ -1835,7 +1821,6 @@
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Tämän salatun viestin aitoutta ei voida taata tällä laitteella.",
     "Developer tools": "Kehittäjätyökalut",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Varmista, että alla olevat emojit näkyvät molemmilla laitteilla samassa järjestyksessä:",
-    "Show polls button": "Näytä kyselypainike",
     "Failed to join": "Liittyminen epäonnistui",
     "The person who invited you has already left.": "Henkilö, joka kutsui sinut on jo poistunut.",
     "The person who invited you has already left, or their server is offline.": "Henkilö, joka kutsui sinut on jo poistunut tai hänen palvelimensa on poissa verkosta.",
@@ -2019,7 +2004,6 @@
     "Remove server “%(roomServer)s”": "Poista palvelin ”%(roomServer)s”",
     "This room or space is not accessible at this time.": "Tämä huone tai avaruus ei ole käytettävissä juuri tällä hetkellä.",
     "Video rooms are a beta feature": "Videohuoneet ovat beetaominaisuus",
-    "Enable hardware acceleration": "Ota laitteistokiihdytys käyttöön",
     "Moderation": "Moderointi",
     "You were disconnected from the call. (Error: %(message)s)": "Yhteytesi puheluun katkaistiin. (Virhe: %(message)s)",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s tai %(copyButton)s",
@@ -2126,11 +2110,8 @@
         "one": "Pidä salatut viestit turvallisessa välimuistissa, jotta ne näkyvät hakutuloksissa. Käytössä %(size)s, talletetaan viestit %(rooms)s huoneesta."
     },
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Varmuuskopioi salausavaimesi tilisi datan kanssa siltä varalta, että menetät pääsyn istuntoihisi. Avaimesi turvataan yksilöllisellä turva-avaimella.",
-    "Your server doesn't support disabling sending read receipts.": "Palvelimesi ei tue lukukuittausten lähettämisen poistamista käytöstä.",
     "Group all your rooms that aren't part of a space in one place.": "Ryhmitä kaikki huoneesi, jotka eivät ole osa avaruutta, yhteen paikkaan.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Avaruudet ovat uusi tapa ryhmitellä huoneita ja ihmisiä. Voit käyttää esiluotuja avaruuksia niiden avaruuksien lisäksi, joissa jo olet.",
-    "Automatically send debug logs on decryption errors": "Lähetä vianjäljityslokit automaattisesti salauksen purkuun liittyvien virheiden tapahtuessa",
-    "Automatically send debug logs on any error": "Lähetä vianjäljityslokit automaattisesti minkä tahansa virheen tapahtuessa",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Avaruudessa %(spaceName)s ja %(count)s muussa avaruudessa.",
         "other": "Avaruudessa %(spaceName)s ja %(count)s muussa avaruudessa."
@@ -2142,7 +2123,6 @@
     "Internal room ID": "Sisäinen huoneen ID-tunniste",
     "Reset bearing to north": "Aseta suunta pohjoiseen",
     "Show Labs settings": "Näytä laboratorion asetukset",
-    "Record the client name, version, and url to recognise sessions more easily in session manager": "Talleta asiakasohjelmiston nimi, versio ja URL-osoite tunnistaaksesi istunnot istuntohallinnassa",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Sinut on kirjattu ulos kaikilta laitteilta, etkä enää vastaanota push-ilmoituksia. Ota ilmoitukset uudelleen käyttöön kirjautumalla jokaiselle haluamallesi laitteelle.",
     "Toggle push notifications on this session.": "Push-ilmoitukset tälle istunnolle päälle/pois.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
@@ -2187,8 +2167,6 @@
     "Show details": "Näytä yksityiskohdat",
     "Hide details": "Piilota yksityiskohdat",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s on päästä päähän salattu, mutta on tällä hetkellä rajattu pienelle määrälle käyttäjiä.",
-    "Echo cancellation": "Kaiunpoisto",
-    "When enabled, the other party might be able to see your IP address": "Kun käytössä, toinen osapuoli voi mahdollisesti nähdä IP-osoitteesi",
     "30s forward": "30 s eteenpäin",
     "30s backward": "30 s taaksepäin",
     "Send email": "Lähetä sähköpostia",
@@ -2207,7 +2185,6 @@
     "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Parhaan tietoturvan ja yksityisyyden vuoksi on suositeltavaa käyttää salausta tukevia Matrix-asiakasohjelmistoja.",
     "Upcoming features": "Tulevat ominaisuudet",
     "Search users in this room…": "Etsi käyttäjiä tästä huoneesta…",
-    "Requires compatible homeserver.": "Vaatii yhteensopivan kotipalvelimen.",
     "You have unverified sessions": "Sinulla on vahvistamattomia istuntoja",
     "Buffering…": "Puskuroidaan…",
     "Change input device": "Vaihda sisääntulolaitetta",
@@ -2232,8 +2209,6 @@
     "Enable %(brand)s as an additional calling option in this room": "Ota %(brand)s käyttöön puheluiden lisävaihtoehtona tässä huoneessa",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Julkisten huoneiden salaamista ei suositella.</b> Kuka vain voi löytää julkisen huoneen ja liittyä siihen, joten kuka vain voi lukea sen viestejä. Salauksesta ei ole hyötyä eikä sitä voi poistaa käytöstä myöhemmin. Julkisen huoneen viestien salaaminen hidastaa viestien vastaanottamista ja lähettämistä.",
     "Early previews": "Ennakot",
-    "Noise suppression": "Kohinanvaimennus",
-    "Allow Peer-to-Peer for 1:1 calls": "Salli vertaisyhteydet kahdenvälisissä puheluissa",
     "View List": "Näytä luettelo",
     "View list": "Näytä luettelo",
     "Mark as read": "Merkitse luetuksi",
@@ -2317,8 +2292,6 @@
     "Checking for an update…": "Tarkistetaan päivityksiä…",
     "Error while changing password: %(error)s": "Virhe salasanan vaihtamisessa: %(error)s",
     "Ignore (%(counter)s)": "Sivuuta (%(counter)s)",
-    "Log out and back in to disable": "Poista käytöstä kirjautumalla ulos ja takaisin sisään",
-    "Automatic gain control": "Automaattinen vahvistuksen säätö",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
     "If you know a room address, try joining through that instead.": "Jos tiedät huoneen osoitteen, yritä liittyä sen kautta.",
     "Safeguard against losing access to encrypted messages & data": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä",
@@ -2581,7 +2554,10 @@
         "leave_beta_reload": "Beetasta poistuminen lataa %(brand)sin uudelleen.",
         "join_beta_reload": "Beetaan liittyminen lataa %(brand)sin uudelleen.",
         "leave_beta": "Poistu beetasta",
-        "join_beta": "Liity beetaan"
+        "join_beta": "Liity beetaan",
+        "automatic_debug_logs": "Lähetä vianjäljityslokit automaattisesti minkä tahansa virheen tapahtuessa",
+        "automatic_debug_logs_decryption": "Lähetä vianjäljityslokit automaattisesti salauksen purkuun liittyvien virheiden tapahtuessa",
+        "sliding_sync_disabled_notice": "Poista käytöstä kirjautumalla ulos ja takaisin sisään"
     },
     "keyboard": {
         "home": "Etusivu",
@@ -2860,7 +2836,8 @@
             "custom_font_description": "Aseta käyttöjärjestelmääsi asennetun fontin nimi, niin %(brand)s pyrkii käyttämään sitä.",
             "timeline_image_size": "Kuvan koko aikajanalla",
             "timeline_image_size_default": "Oletus",
-            "timeline_image_size_large": "Suuri"
+            "timeline_image_size_large": "Suuri",
+            "custom_font_size": "Käytä mukautettua kokoa"
         },
         "inline_url_previews_room_account": "Ota linkkien esikatselut käyttöön tässä huoneessa (koskee ainoastaan sinua)",
         "inline_url_previews_room": "Ota linkkien esikatselu käyttöön kaikille huoneen jäsenille",
@@ -2873,7 +2850,12 @@
             "message_search_indexed_messages": "Indeksoidut viestit:",
             "message_search_indexed_rooms": "Indeksoidut huoneet:",
             "message_search_room_progress": "%(doneRooms)s / %(totalRooms)s",
-            "message_search_sleep_time": "Viestin lataamisen odotusaika (ms)"
+            "message_search_sleep_time": "Kuinka nopeasti viestit pitäisi ladata.",
+            "send_analytics": "Lähetä analytiikkatietoja",
+            "record_session_details": "Talleta asiakasohjelmiston nimi, versio ja URL-osoite tunnistaaksesi istunnot istuntohallinnassa",
+            "strict_encryption": "Älä koskaan lähetä salattuja viestejä vahvistamattomiin istuntoihin tästä istunnosta",
+            "enable_message_search": "Ota viestihaku salausta käyttävissä huoneissa käyttöön",
+            "manually_verify_all_sessions": "Varmenna kaikki etäistunnot käsin"
         },
         "preferences": {
             "room_list_heading": "Huoneluettelo",
@@ -2887,7 +2869,21 @@
             "room_directory_heading": "Huoneluettelo",
             "autocomplete_delay": "Automaattisen täydennyksen viive (ms)",
             "rm_lifetime": "Viestin luetuksi merkkaamisen kesto (ms)",
-            "rm_lifetime_offscreen": "Viestin luetuksi merkkaamisen kesto, kun Element ei ole näkyvissä (ms)"
+            "rm_lifetime_offscreen": "Viestin luetuksi merkkaamisen kesto, kun Element ei ole näkyvissä (ms)",
+            "show_polls_button": "Näytä kyselypainike",
+            "compact_modern": "Käytä entistä kompaktimpaa, \"Modernia\", asettelua",
+            "always_show_menu_bar": "Näytä aina ikkunan valikkorivi",
+            "enable_tray_icon": "Näytä ilmaisinalueen kuvake ja pienennä ikkuna siihen suljettaessa",
+            "enable_hardware_acceleration": "Ota laitteistokiihdytys käyttöön"
+        },
+        "send_read_receipts_unsupported": "Palvelimesi ei tue lukukuittausten lähettämisen poistamista käytöstä.",
+        "voip": {
+            "mirror_local_feed": "Peilaa paikallinen videosyöte",
+            "allow_p2p": "Salli vertaisyhteydet kahdenvälisissä puheluissa",
+            "allow_p2p_description": "Kun käytössä, toinen osapuoli voi mahdollisesti nähdä IP-osoitteesi",
+            "auto_gain_control": "Automaattinen vahvistuksen säätö",
+            "echo_cancellation": "Kaiunpoisto",
+            "noise_suppression": "Kohinanvaimennus"
         }
     },
     "devtools": {
@@ -2940,7 +2936,11 @@
         "room_id": "Huoneen ID-tunniste: %(roomId)s",
         "event_id": "Tapahtuman ID-tunniste: %(eventId)s",
         "category_room": "Huone",
-        "category_other": "Muut"
+        "category_other": "Muut",
+        "widget_screenshots": "Ota sovelmien kuvankaappaukset käyttöön tuetuissa sovelmissa",
+        "show_hidden_events": "Näytä piilotetut tapahtumat aikajanalla",
+        "low_bandwidth_mode_description": "Vaatii yhteensopivan kotipalvelimen.",
+        "developer_mode": "Kehittäjätila"
     },
     "export_chat": {
         "html": "HTML",
@@ -3460,6 +3460,9 @@
             "ban": "Anna porttikieltoja",
             "redact": "Poista toisten lähettämät viestit",
             "notifications.room": "Kiinnitä kaikkien huomio"
+        },
+        "security": {
+            "strict_encryption": "Älä lähetä salattuja viestejä vahvistamattomiin istuntoihin tässä huoneessa tässä istunnossa"
         }
     },
     "encryption": {

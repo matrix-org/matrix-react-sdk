@@ -69,7 +69,6 @@
     "Your browser does not support the required cryptography extensions": "Вашият браузър не поддържа необходимите разширения за шифроване",
     "Not a valid %(brand)s keyfile": "Невалиден файл с ключ за %(brand)s",
     "Authentication check failed: incorrect password?": "Неуспешна автентикация: неправилна парола?",
-    "Mirror local video feed": "Показвай ми огледално моя видео образ",
     "Incorrect verification code": "Неправилен код за потвърждение",
     "Phone": "Телефон",
     "No display name": "Няма име",
@@ -296,8 +295,6 @@
     "Send Logs": "Изпрати логове",
     "We encountered an error trying to restore your previous session.": "Възникна грешка при възстановяване на предишната Ви сесия.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Изчистване на запазените данни в браузъра може да поправи проблема, но ще Ви изкара от профила и ще направи шифрованите съобщения нечетими.",
-    "Enable widget screenshots on supported widgets": "Включи скрийншоти за поддържащи ги приспособления",
-    "Send analytics data": "Изпращане на статистически данни",
     "Muted Users": "Заглушени потребители",
     "Can't leave Server Notices room": "Не може да напуснете стая \"Server Notices\"",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Тази стая се използва за важни съобщения от сървъра, така че не можете да я напуснете.",
@@ -574,7 +571,6 @@
     "No homeserver URL provided": "Не е указан адрес на сървър",
     "Unexpected error resolving homeserver configuration": "Неочаквана грешка в намирането на сървърната конфигурация",
     "The user's homeserver does not support the version of the room.": "Сървърът на потребителя не поддържа версията на стаята.",
-    "Show hidden events in timeline": "Покажи скрити събития по времевата линия",
     "View older messages in %(roomName)s.": "Виж по-стари съобщения в %(roomName)s.",
     "Join the conversation with an account": "Присъедини се към разговор с акаунт",
     "Sign Up": "Регистриране",
@@ -661,7 +657,6 @@
     "Enter a new identity server": "Въведете нов сървър за самоличност",
     "Discovery": "Откриване",
     "Deactivate account": "Деактивиране на акаунт",
-    "Always show the window menu bar": "Винаги показвай менютата на прозореца",
     "Unable to revoke sharing for email address": "Неуспешно оттегляне на споделянето на имейл адреса",
     "Unable to share email address": "Неуспешно споделяне на имейл адрес",
     "Discovery options will appear once you have added an email above.": "Опциите за откриване ще се покажат след като добавите имейл адрес по-горе.",
@@ -854,11 +849,6 @@
     "Not Trusted": "Недоверено",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) влезе в нова сесия без да я потвърди:",
     "Ask this user to verify their session, or manually verify it below.": "Поискайте от този потребител да потвърди сесията си, или я потвърдете ръчно по-долу.",
-    "Never send encrypted messages to unverified sessions from this session": "Никога не изпращай шифровани съобщения към непотвърдени сесии от тази сесия",
-    "Never send encrypted messages to unverified sessions in this room from this session": "Никога не изпращай шифровани съобщения към непотвърдени сесии в тази стая от тази сесия",
-    "Enable message search in encrypted rooms": "Включи търсенето на съобщения в шифровани стаи",
-    "How fast should messages be downloaded.": "Колко бързо да се изтеглят съобщенията.",
-    "Manually verify all remote sessions": "Ръчно потвърждаване на всички отдалечени сесии",
     "New login. Was this you?": "Нов вход. Вие ли бяхте това?",
     "%(name)s is requesting verification": "%(name)s изпрати запитване за верификация",
     "Waiting for %(displayName)s to verify…": "Изчакване на %(displayName)s да потвърди…",
@@ -1043,7 +1033,6 @@
     "This session is encrypting history using the new recovery method.": "Тази сесия шифрова историята използвайки новия метод за възстановяване.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ако сте направили това без да искате, може да настройте защитени съобщения за тази сесия, което ще зашифрова наново историята на съобщенията използвайки новия метод за възстановяване.",
     "No recently visited rooms": "Няма наскоро-посетени стаи",
-    "Use custom size": "Използвай собствен размер",
     "Hey you. You're the best!": "Хей, ти. Върхът си!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Автентичността на това шифровано съобщение не може да бъде гарантирана на това устройство.",
     "Message preview": "Преглед на съобщението",
@@ -1766,7 +1755,8 @@
             "custom_theme_add_button": "Добави тема",
             "font_size": "Размер на шрифта",
             "custom_font_description": "Настройте името на шрифт инсталиран в системата и %(brand)s ще се опита да го използва.",
-            "timeline_image_size_default": "По подразбиране"
+            "timeline_image_size_default": "По подразбиране",
+            "custom_font_size": "Използвай собствен размер"
         },
         "inline_url_previews_room_account": "Включване на URL прегледи за тази стая (засяга само Вас)",
         "inline_url_previews_room": "Включване по подразбиране на URL прегледи за участници в тази стая",
@@ -1779,14 +1769,22 @@
             "message_search_indexed_messages": "Индексирани съобщения:",
             "message_search_indexed_rooms": "Индексирани стаи:",
             "message_search_room_progress": "%(doneRooms)s от %(totalRooms)s",
-            "message_search_sleep_time": "Период на пауза между свалянията на съобщения (ms)"
+            "message_search_sleep_time": "Колко бързо да се изтеглят съобщенията.",
+            "send_analytics": "Изпращане на статистически данни",
+            "strict_encryption": "Никога не изпращай шифровани съобщения към непотвърдени сесии от тази сесия",
+            "enable_message_search": "Включи търсенето на съобщения в шифровани стаи",
+            "manually_verify_all_sessions": "Ръчно потвърждаване на всички отдалечени сесии"
         },
         "preferences": {
             "room_list_heading": "Списък със стаи",
             "composer_heading": "Въвеждане на съобщения",
             "autocomplete_delay": "Забавяне преди подсказки (милисекунди)",
             "rm_lifetime": "Живот на маркера за прочитане (мсек)",
-            "rm_lifetime_offscreen": "Живот на маркера за прочитане извън екрана (мсек)"
+            "rm_lifetime_offscreen": "Живот на маркера за прочитане извън екрана (мсек)",
+            "always_show_menu_bar": "Винаги показвай менютата на прозореца"
+        },
+        "voip": {
+            "mirror_local_feed": "Показвай ми огледално моя видео образ"
         }
     },
     "devtools": {
@@ -1797,7 +1795,9 @@
         "toolbox": "Инструменти",
         "developer_tools": "Инструменти за разработчика",
         "category_room": "Стая",
-        "category_other": "Други"
+        "category_other": "Други",
+        "widget_screenshots": "Включи скрийншоти за поддържащи ги приспособления",
+        "show_hidden_events": "Покажи скрити събития по времевата линия"
     },
     "create_room": {
         "title_public_room": "Създай публична стая",
@@ -2123,6 +2123,9 @@
             "ban": "Блокиране на потребители",
             "redact": "Премахвай съобщения изпратени от други",
             "notifications.room": "Уведомяване на всички"
+        },
+        "security": {
+            "strict_encryption": "Никога не изпращай шифровани съобщения към непотвърдени сесии в тази стая от тази сесия"
         }
     },
     "encryption": {

@@ -106,7 +106,6 @@
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (autoritat %(powerLevelNumber)s)",
     "You do not have permission to post to this room": "No tens permís per enviar res en aquesta sala",
     "Server error": "Error de servidor",
-    "Mirror local video feed": "Remet el flux de vídeo local",
     "Server unavailable, overloaded, or something else went wrong.": "El servidor no està disponible, està sobrecarregat o alguna altra cosa no ha funcionat correctament.",
     "Command error": "Error en l'ordre",
     "%(duration)ss": "%(duration)ss",
@@ -302,7 +301,6 @@
     "Avoid years that are associated with you": "Eviteu anys que es puguin relacionar amb vós",
     "Avoid dates and years that are associated with you": "Eviteu dates i anys que estiguin associats amb vós",
     "Please contact your homeserver administrator.": "Si us plau contacteu amb l'administrador del vostre homeserver.",
-    "Send analytics data": "Envia dades d'anàlisi",
     "Email addresses": "Adreces de correu electrònic",
     "Phone numbers": "Números de telèfon",
     "Language and region": "Idioma i regió",
@@ -501,7 +499,13 @@
             "timeline_image_size_default": "Predeterminat"
         },
         "inline_url_previews_room_account": "Activa la vista prèvia d'URL d'aquesta sala (no afecta altres usuaris)",
-        "inline_url_previews_room": "Activa per defecte la vista prèvia d'URL per als participants d'aquesta sala"
+        "inline_url_previews_room": "Activa per defecte la vista prèvia d'URL per als participants d'aquesta sala",
+        "voip": {
+            "mirror_local_feed": "Remet el flux de vídeo local"
+        },
+        "security": {
+            "send_analytics": "Envia dades d'anàlisi"
+        }
     },
     "devtools": {
         "event_type": "Tipus d'esdeveniment",
