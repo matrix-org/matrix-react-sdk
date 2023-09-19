@@ -54,6 +54,13 @@ describe("Read receipts", () => {
     let alphaRoomId: string;
     let bot: MatrixClient | undefined;
 
+    /**
+     * Map of message content -> event. Allows us to find e.g. edited or
+     * redacted messages even if their content has changed or disappeared from
+     * screen.
+     */
+    const messages = new Map<String, MatrixEvent>();
+
     before(() => {
         // Note: unusually for the Cypress tests in this repo, we share a single
         // Synapse between all the tests in this file.
@@ -73,6 +80,8 @@ describe("Read receipts", () => {
     });
 
     beforeEach(() => {
+        messages.clear();
+
         // Create 2 rooms: Alpha & Beta. We join the bot to both of them
         cy.initTestUser(homeserver, userName)
             .then(() => {
@@ -210,6 +219,11 @@ describe("Read receipts", () => {
      * @param includeThreads - whether to search within threads too
      */
     async function getMessage(room: Room, message: string, includeThreads = false): Promise<MatrixEvent> {
+        const cached = messages.get(message);
+        if (cached) {
+            return cached;
+        }
+
         let ev = room.timeline.find((e) => e.getContent().body === message);
         if (!ev && includeThreads) {
             for (const thread of room.getThreads()) {
@@ -218,11 +232,15 @@ describe("Read receipts", () => {
             }
         }
 
-        if (ev) return ev;
+        if (ev) {
+            messages.set(message, ev);
+            return ev;
+        }
 
         return new Promise((resolve) => {
             room.on("Room.timeline" as any, (ev: MatrixEvent) => {
                 if (ev.getContent().body === message) {
+                    messages.set(message, ev);
                     resolve(ev);
                 }
             });
@@ -239,12 +257,14 @@ describe("Read receipts", () => {
             public async getContent(room: Room): Promise<Record<string, unknown>> {
                 const ev = await getMessage(room, originalMessage, true);
 
-                const content = ev.getContent();
+                // If this event has been redacted, its msgtype will be
+                // undefined. In that case, we guess msgtype as m.text.
+                const msgtype = ev.getContent().msgtype ?? "m.text";
                 return {
-                    "msgtype": content.msgtype,
+                    "msgtype": msgtype,
                     "body": `* ${newMessage}`,
                     "m.new_content": {
-                        msgtype: content.msgtype,
+                        msgtype: msgtype,
                         body: newMessage,
                     },
                     "m.relates_to": {
@@ -264,7 +284,7 @@ describe("Read receipts", () => {
     function replyTo(targetMessage: string, newMessage: string): MessageContentSpec {
         return new (class extends MessageContentSpec {
             public async getContent(room: Room): Promise<Record<string, unknown>> {
-                const ev = await getMessage(room, targetMessage);
+                const ev = await getMessage(room, targetMessage, true);
 
                 return {
                     "msgtype": "m.text",
@@ -1648,8 +1668,7 @@ describe("Read receipts", () => {
                 // Then the room is still read
                 assertRead(room2);
             });
-            // TODO: Doesn't work because the test setup can't (yet) find the ID of a redacted message
-            it.skip("Reacting to a redacted message leaves the room read", () => {
+            it("Reacting to a redacted message leaves the room read", () => {
                 // Given a redacted message exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2"]);
@@ -1663,16 +1682,12 @@ describe("Read receipts", () => {
                 goTo(room1);
 
                 // When I react to the redacted message
-                // TODO: doesn't work yet because we need to be able to look up
-                // the ID of Msg2 even though it has now disappeared from the
-                // timeline.
                 receiveMessages(room2, [reactionTo("Msg2", "🪿")]);
 
                 // Then the room is still read
                 assertStillRead(room2);
             });
-            // TODO: Doesn't work because the test setup can't (yet) find the ID of a redacted message
-            it.skip("Editing a redacted message leaves the room read", () => {
+            it("Editing a redacted message leaves the room read", () => {
                 // Given a redacted message exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2"]);
@@ -1685,16 +1700,12 @@ describe("Read receipts", () => {
                 goTo(room1);
 
                 // When I attempt to edit the redacted message
-                // TODO: doesn't work yet because we need to be able to look up
-                // the ID of Msg2 even though it has now disappeared from the
-                // timeline.
                 receiveMessages(room2, [editOf("Msg2", "Msg2 is BACK")]);
 
                 // Then the room is still read
                 assertStillRead(room2);
             });
-            // TODO: Doesn't work because the test setup can't (yet) find the ID of a redacted message
-            it.skip("A reply to a redacted message makes the room unread", () => {
+            it("A reply to a redacted message makes the room unread", () => {
                 // Given a message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2"]);
@@ -1707,16 +1718,12 @@ describe("Read receipts", () => {
                 goTo(room1);
 
                 // When I receive a reply to the redacted message
-                // TODO: doesn't work yet because we need to be able to look up
-                // the ID of Msg2 even though it has now disappeared from the
-                // timeline.
                 receiveMessages(room2, [replyTo("Msg2", "Reply to Msg2")]);
 
                 // Then the room is unread
                 assertUnread(room2, 1);
             });
-            // TODO: Doesn't work because the test setup can't (yet) find the ID of a redacted message
-            it.skip("Reading a reply to a redacted message marks the room as read", () => {
+            it("Reading a reply to a redacted message marks the room as read", () => {
                 // Given someone replied to a redacted message
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2"]);
@@ -1725,9 +1732,6 @@ describe("Read receipts", () => {
                 goTo(room2);
                 assertRead(room2);
                 goTo(room1);
-                // TODO: doesn't work yet because we need to be able to look up
-                // the ID of Msg2 even though it has now disappeared from the
-                // timeline.
                 receiveMessages(room2, [replyTo("Msg2", "Reply to Msg2")]);
                 assertUnread(room2, 1);
 
@@ -1896,8 +1900,7 @@ describe("Read receipts", () => {
                 goTo(room2);
                 assertReadThread("Root");
             });
-            // TODO: Doesn't work because the test setup can't (yet) find the ID of a redacted message
-            it.skip("Reacting to a redacted message leaves the thread read", () => {
+            it("Reacting to a redacted message leaves the thread read", () => {
                 // Given a message in a thread was redacted and everything is read
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "Msg2"), threadedOff("Root", "Msg3")]);
@@ -1910,16 +1913,12 @@ describe("Read receipts", () => {
                 goTo(room1);
 
                 // When we receive a reaction to the redacted event
-                // TODO: doesn't work yet because we need to be able to look up
-                // the ID of Msg2 even though it has now disappeared from the
-                // timeline.
-                receiveMessages(room2, [reactionTo(room2, "Msg2")]);
+                receiveMessages(room2, [reactionTo("Msg2", "z")]);
 
                 // Then the room is unread
                 assertStillRead(room2);
             });
-            // TODO: Doesn't work because the test setup can't (yet) find the ID of a redacted message
-            it.skip("Editing a redacted message leaves the thread read", () => {
+            it("Editing a redacted message leaves the thread read", () => {
                 // Given a message in a thread was redacted and everything is read
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "Msg2"), threadedOff("Root", "Msg3")]);
@@ -1932,9 +1931,6 @@ describe("Read receipts", () => {
                 goTo(room1);
 
                 // When we receive an edit of the redacted message
-                // TODO: doesn't work yet because we need to be able to look up
-                // the ID of Msg2 even though it has now disappeared from the
-                // timeline.
                 receiveMessages(room2, [editOf("Msg2", "New Msg2")]);
 
                 // Then the room is unread
@@ -1962,8 +1958,8 @@ describe("Read receipts", () => {
                 assertRead(room2);
                 assertReadThread("Root");
             });
-            // TODO: fails because the test framework can't (yet) redact the original message
-            it.skip("Reading an edit of a redacted message marks the thread as read", () => {
+            // XXX: fails because the unread count stays at 1 instead of zero
+            it.skip("Reading a thread containing a redacted, edited message marks the thread as read", () => {
                 // Given a redacted message in a thread exists, but someone edited it before it was redacted
                 goTo(room1);
                 receiveMessages(room2, [
@@ -1975,7 +1971,7 @@ describe("Read receipts", () => {
                 assertUnread(room2, 3);
                 receiveMessages(room2, [redactionOf("Msg3")]);
 
-                // When we read the thread, creating a receipt that points at the edit
+                // When we read the thread
                 goTo(room2);
                 openThread("Root");
 
@@ -2131,8 +2127,7 @@ describe("Read receipts", () => {
         });
 
         describe("thread roots", () => {
-            // TODO: test framework doesn't (yet) allow us to refer to a redacted thread root
-            it.skip("Redacting a thread root after it was read leaves the room read", () => {
+            it("Redacting a thread root after it was read leaves the room read", () => {
                 // Given a thread exists and is read
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "Msg2"), threadedOff("Root", "Msg3")]);
@@ -2147,9 +2142,8 @@ describe("Read receipts", () => {
 
                 // Then the room is still read
                 assertStillRead(room2);
-                assertReadThread("Root");
             });
-            // TODO: test framework doesn't (yet) allow us to refer to a redacted thread root
+            // TODO: Can't open a thread on a redacted thread root
             it.skip("Redacting a thread root still allows us to read the thread", () => {
                 // Given an unread thread exists
                 goTo(room1);
@@ -2169,7 +2163,7 @@ describe("Read receipts", () => {
                 assertRead(room2);
                 assertReadThread("Root");
             });
-            // TODO: test framework doesn't (yet) allow us to refer to a redacted thread root
+            // TODO: Can't open a thread on a redacted thread root
             it.skip("Sending a threaded message onto a redacted thread root leaves the room unread", () => {
                 // Given a thread exists, is read and its root is redacted
                 goTo(room1);
@@ -2189,8 +2183,7 @@ describe("Read receipts", () => {
                 goTo(room2);
                 assertUnreadThread("Root");
             });
-            // TODO: test framework doesn't (yet) allow us to refer to a redacted thread root
-            it.skip("Reacting to a redacted thread root leaves the room read", () => {
+            it("Reacting to a redacted thread root leaves the room read", () => {
                 // Given a thread exists, is read and the root was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "Msg2"), threadedOff("Root", "Msg3")]);
@@ -2206,11 +2199,8 @@ describe("Read receipts", () => {
 
                 // Then the room is still read
                 assertRead(room2);
-                goTo(room2);
-                assertReadThread("Root");
             });
-            // TODO: test framework doesn't (yet) allow us to refer to a redacted thread root
-            it.skip("Editing a redacted thread root leaves the room read", () => {
+            it("Editing a redacted thread root leaves the room read", () => {
                 // Given a thread exists, is read and the root was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "Msg2"), threadedOff("Root", "Msg3")]);
@@ -2226,11 +2216,8 @@ describe("Read receipts", () => {
 
                 // Then the room is still read
                 assertRead(room2);
-                goTo(room2);
-                assertReadThread("Root");
             });
-            // TODO: test framework doesn't (yet) allow us to refer to a redacted thread root
-            it.skip("Replying to a redacted thread root makes the room unread", () => {
+            it("Replying to a redacted thread root makes the room unread", () => {
                 // Given a thread exists, is read and the root was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "Msg2"), threadedOff("Root", "Msg3")]);
@@ -2247,8 +2234,7 @@ describe("Read receipts", () => {
                 // Then the room is unread
                 assertUnread(room2, 1);
             });
-            // TODO: test framework doesn't (yet) allow us to refer to a redacted thread root
-            it.skip("Reading a reply to a redacted thread root makes the room read", () => {
+            it("Reading a reply to a redacted thread root makes the room read", () => {
                 // Given a thread exists, is read and the root was redacted, and
                 // someone replied to it
                 goTo(room1);
