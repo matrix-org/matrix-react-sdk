@@ -834,7 +834,6 @@
     "Enter the name of a new server you want to explore.": "Унесите име новог сервера који желите да истражите.",
     "Add a new server": "Додајте нови сервер",
     "Your server": "Ваш сервер",
-    "Who are you working with?": "Са ким радите?",
     "This room is public": "Ова соба је јавна",
     "Browse": "Прегледајте",
     "User rules": "Корисничка правила",
@@ -1447,5 +1446,8 @@
             "see_msgtype_sent_this_room": "Видите <b>%(msgtype)s</b> поруке објављене у овој соби",
             "see_msgtype_sent_active_room": "Видите <b>%(msgtype)s</b> поруке објављене у Вашој активној соби"
         }
+    },
+    "create_space": {
+        "private_personal_heading": "Са ким радите?"
     }
 }

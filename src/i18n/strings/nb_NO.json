@@ -718,7 +718,6 @@
         "other": "%(count)s rom",
         "one": "%(count)s rom"
     },
-    "Invite by username": "Inviter etter brukernavn",
     "Invite to %(spaceName)s": "Inviter til %(spaceName)s",
     "unknown person": "ukjent person",
     "Click to copy": "Klikk for å kopiere",
@@ -729,9 +728,6 @@
     },
     "Add existing rooms": "Legg til eksisterende rom",
     "Create a new room": "Opprett et nytt rom",
-    "Skip for now": "Hopp over for nå",
-    "Share %(name)s": "Del %(name)s",
-    "Just me": "Bare meg selv",
     "Upgrade private room": "Oppgrader privat rom",
     "Upgrade public room": "Oppgrader offentlig rom",
     "Decline All": "Avslå alle",
@@ -1011,7 +1007,6 @@
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Bruk en integreringsbehandler <b>(%(serverName)s)</b> til å behandle botter, moduler, og klistremerkepakker.",
     "Identity server (%(server)s)": "Identitetstjener (%(server)s)",
     "Could not connect to identity server": "Kunne ikke koble til identitetsserveren",
-    "Show:": "Vis:",
     "Results": "Resultat",
     "Retry all": "Prøv alle igjen",
     "Report": "Rapporter",
@@ -1702,6 +1697,13 @@
     "create_space": {
         "public_heading": "Ditt offentlige område",
         "private_heading": "Ditt private område",
-        "add_details_prompt": "Legg til mer detaljer for å gjøre det letter å gjenkjenne."
+        "add_details_prompt": "Legg til mer detaljer for å gjøre det letter å gjenkjenne.",
+        "skip_action": "Hopp over for nå",
+        "share_heading": "Del %(name)s",
+        "personal_space": "Bare meg selv",
+        "invite_teammates_by_username": "Inviter etter brukernavn"
+    },
+    "threads": {
+        "show_thread_filter": "Vis:"
     }
 }

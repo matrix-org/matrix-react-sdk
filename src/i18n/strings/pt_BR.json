@@ -1469,10 +1469,7 @@
     "Empty room": "Sala vazia",
     "Suggested Rooms": "Salas sugeridas",
     "Add existing room": "Adicionar sala existente",
-    "Skip for now": "Ignorar por enquanto",
-    "Welcome to <name/>": "Boas-vindas ao <name/>",
     "This homeserver has been blocked by its administrator.": "Este servidor local foi bloqueado pelo seu administrador.",
-    "Failed to create initial space rooms": "Falha ao criar salas de espaço iniciais",
     "%(count)s members": {
         "one": "%(count)s integrante",
         "other": "%(count)s integrantes"
@@ -1498,7 +1495,6 @@
     "Click to copy": "Clique para copiar",
     "Create a space": "Criar um espaço",
     "Decrypted event source": "Fonte de evento descriptografada",
-    "Invite by username": "Convidar por nome de usuário",
     "Original event source": "Fonte do evento original",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Seu %(brand)s não permite que você use o gerenciador de integrações para fazer isso. Entre em contato com o administrador.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Se você usar esse widget, os dados poderão ser compartilhados <helpIcon /> com %(widgetDomain)s & seu gerenciador de integrações.",
@@ -1782,7 +1778,6 @@
         "other": "Desconectar dispositivos"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "Show:": "Exibir:",
     "Leave some rooms": "Sair de algumas salas",
     "Leave all rooms": "Sair de todas as salas",
     "Don't leave any rooms": "Não saia de nenhuma sala",
@@ -3035,6 +3030,15 @@
         "private_description": "Somente convite, melhor para si mesmo(a) ou para equipes",
         "public_heading": "O seu espaço público",
         "private_heading": "O seu espaço privado",
-        "add_details_prompt": "Adicione alguns detalhes para ajudar as pessoas a reconhecê-lo."
+        "add_details_prompt": "Adicione alguns detalhes para ajudar as pessoas a reconhecê-lo.",
+        "failed_create_initial_rooms": "Falha ao criar salas de espaço iniciais",
+        "skip_action": "Ignorar por enquanto",
+        "invite_teammates_by_username": "Convidar por nome de usuário"
+    },
+    "space": {
+        "landing_welcome": "Boas-vindas ao <name/>"
+    },
+    "threads": {
+        "show_thread_filter": "Exibir:"
     }
 }

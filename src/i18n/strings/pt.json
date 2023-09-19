@@ -422,7 +422,6 @@
     "<userName/> wants to chat": "<userName/> quer falar",
     "Start a conversation with someone using their name or username (like <userId/>).": "Comece uma conversa com alguém a partir do nome ou nome de utilizador (por exemplo: <userId/>).",
     "Use email or phone to optionally be discoverable by existing contacts.": "Use email ou telefone para, opcionalmente, ser detectável por contactos existentes.",
-    "Invite by username": "Convidar por nome de utilizador",
     "Use an email address to recover your account": "Usar um endereço de email para recuperar a sua conta",
     "Malta": "Malta",
     "Lebanon": "Líbano",
@@ -830,5 +829,8 @@
     "room_list": {
         "failed_remove_tag": "Não foi possível remover a marcação %(tagName)s desta sala",
         "failed_add_tag": "Falha ao adicionar %(tagName)s à sala"
+    },
+    "create_space": {
+        "invite_teammates_by_username": "Convidar por nome de utilizador"
     }
 }

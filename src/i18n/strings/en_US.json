@@ -285,7 +285,6 @@
     "Use Single Sign On to continue": "Use Single Sign On to continue",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait while we resynchronize with the server!",
     "Unrecognised command: %(commandText)s": "Unrecognized command: %(commandText)s",
-    "A private space to organise your rooms": "A private space to organize your rooms",
     "Message search initialisation failed": "Message search initialization failed",
     "The call was answered on another device.": "The call was answered on another device.",
     "Answered Elsewhere": "Answered Elsewhere",
@@ -526,6 +525,7 @@
         "failed_add_tag": "Failed to add tag %(tagName)s to room"
     },
     "create_space": {
-        "add_details_prompt": "Add some details to help people recognize it."
+        "add_details_prompt": "Add some details to help people recognize it.",
+        "personal_space_description": "A private space to organize your rooms"
     }
 }

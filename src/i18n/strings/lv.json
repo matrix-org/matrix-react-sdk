@@ -574,8 +574,6 @@
     "Incoming Verification Request": "Ienākošais veifikācijas pieprasījums",
     "%(name)s is requesting verification": "%(name)s pieprasa verifikāciju",
     "Verification Request": "Verifikācijas pieprasījums",
-    "A private space for you and your teammates": "Privāta vieta jums un jūsu komandas dalībniekiem",
-    "A private space to organise your rooms": "Privāta vieta, kur organizēt jūsu istabas",
     "<inviter/> invites you": "<inviter/> uzaicina jūs",
     "%(count)s rooms": {
         "one": "%(count)s istaba",
@@ -666,7 +664,6 @@
         "other": "%(count)s dalībnieki"
     },
     "Save Changes": "Saglabāt izmaiņas",
-    "Welcome to <name/>": "Laipni lūdzam uz <name/>",
     "Send as message": "Nosūtīt kā ziņu",
     "%(brand)s URL": "%(brand)s URL",
     "Room version": "Istabas versija",
@@ -949,7 +946,6 @@
     "Send voice message": "Sūtīt balss ziņu",
     "Address": "Adrese",
     "Hey you. You're the best!": "Sveiks! Tu esi labākais!",
-    "Share %(name)s": "Dalīties ar %(name)s",
     "Show preview": "Rādīt priekšskatījumu",
     "View source": "Skatīt pirmkodu",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Aizmirsāt vai pazaudējāt visas atkopšanās iespējas? <a>Atiestatiet visu</a>",
@@ -1102,9 +1098,6 @@
     "Share your public space": "Dalīties ar jūsu publisko vietu",
     "You can change these anytime.": "Jebkurā laikā varat to mainīt.",
     "Join public room": "Pievienoties publiskai istabai",
-    "Let's create a room for each of them.": "Izveidojam katram no tiem savu istabu!",
-    "We'll create rooms for each of them.": "Mēs izveidosim istabas katram no tiem.",
-    "Failed to create initial space rooms": "Neizdevās izveidot sākotnējās vietas istabas",
     "Update any local room aliases to point to the new room": "Atjaunināt jebkurus vietējās istabas aizstājvārdus, lai tie norādītu uz jauno istabu",
     "Unrecognised room address: %(roomAlias)s": "Neatpazīta istabas adrese: %(roomAlias)s",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Šī istabā atrodas dažās vietās, kurās jūs neesat administrators. Šajās vietās vecā istaba joprojām būs redzama, bet cilvēki tiks aicināti pievienoties jaunajai istabai.",
@@ -1141,7 +1134,6 @@
     "Add new server…": "Pievienot jaunu serveri…",
     "Show: %(instance)s rooms (%(server)s)": "Rādīt: %(instance)s istabas (%(server)s)",
     "Show: Matrix rooms": "Rādīt: Matrix istabas",
-    "Show:": "Rādīt:",
     "Other options": "Citas iespējas",
     "Use \"%(query)s\" to search": "Izmantot \"%(query)s\" meklēšanai",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Mēģiniet ritināt laika joslu uz augšu, lai redzētu, vai ir kādas agrākas ziņas.",
@@ -1954,6 +1946,18 @@
         "explainer": "Vietas ir jauns veids, kā grupēt istabas un cilvēkus. Kādu vietu vēlaties izveidot? To var mainīt vēlāk.",
         "public_heading": "Jūsu publiska vieta",
         "private_heading": "Jūsu privāta vieta",
-        "add_details_prompt": "Pievienojiet aprakstu, lai palīdzētu cilvēkiem to atpazīt."
+        "add_details_prompt": "Pievienojiet aprakstu, lai palīdzētu cilvēkiem to atpazīt.",
+        "failed_create_initial_rooms": "Neizdevās izveidot sākotnējās vietas istabas",
+        "share_heading": "Dalīties ar %(name)s",
+        "personal_space_description": "Privāta vieta, kur organizēt jūsu istabas",
+        "private_space_description": "Privāta vieta jums un jūsu komandas dalībniekiem",
+        "setup_rooms_community_description": "Izveidojam katram no tiem savu istabu!",
+        "setup_rooms_private_description": "Mēs izveidosim istabas katram no tiem."
+    },
+    "space": {
+        "landing_welcome": "Laipni lūdzam uz <name/>"
+    },
+    "threads": {
+        "show_thread_filter": "Rādīt:"
     }
 }
