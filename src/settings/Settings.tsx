@@ -509,7 +509,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "MessageComposerInput.showVoiceRecordingButton": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td("Show voice message button"),
+        displayName: _td("settings|preferences|show_voice_message_button"),
         default: true,
     },
     "MessageComposerInput.insertTrailingColon": {

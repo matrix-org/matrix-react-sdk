@@ -1315,7 +1315,7 @@
         "show_stickers_button": "Show stickers button",
         "preferences": {
             "show_polls_button": "Show polls button",
-            "Show voice message button": "Show voice message button",
+            "show_voice_message_button": "Show voice message button",
             "compact_modern": "Use a more compact 'Modern' layout",
             "show_avatars_pills": "Show avatars in user, room and event mentions",
             "surround_text": "Surround selected text when typing special characters",
