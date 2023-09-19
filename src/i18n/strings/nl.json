@@ -2282,12 +2282,6 @@
     "pause voice broadcast": "spraakuitzending pauzeren",
     "resume voice broadcast": "hervat spraakuitzending",
     "play voice broadcast": "spraakuitzending afspelen",
-    "Yes, stop broadcast": "Ja, stop uitzending",
-    "Stop live broadcasting?": "Live uitzending stoppen?",
-    "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Iemand anders neemt al een spraakuitzending op. Wacht tot de spraakuitzending is afgelopen om een nieuwe te starten.",
-    "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "U heeft niet de vereiste rechten om een spraakuitzending in deze kamer te starten. Neem contact op met een kamer beheerder om uw machtiging aan te passen.",
-    "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "U neemt al een spraakuitzending op. Beëindig uw huidige spraakuitzending om een nieuwe te starten.",
-    "Can't start a new voice broadcast": "Kan geen nieuwe spraakuitzending starten",
     "You need to be able to kick users to do that.": "U moet in staat zijn om gebruikers te verwijderen om dit te doen.",
     "common": {
         "about": "Over",
@@ -3731,5 +3725,15 @@
         "failed_generic": "Kan jouw locatie niet ophalen. Probeer het later opnieuw.",
         "failed_timeout": "Er is een time-out opgetreden bij het ophalen van jouw locatie. Probeer het later opnieuw.",
         "failed_unknown": "Onbekende fout bij ophalen van locatie. Probeer het later opnieuw."
+    },
+    "voice_broadcast": {
+        "failed_already_recording_title": "Kan geen nieuwe spraakuitzending starten",
+        "failed_insufficient_permission_title": "Kan geen nieuwe spraakuitzending starten",
+        "failed_others_already_recording_title": "Kan geen nieuwe spraakuitzending starten",
+        "failed_already_recording_description": "U neemt al een spraakuitzending op. Beëindig uw huidige spraakuitzending om een nieuwe te starten.",
+        "failed_insufficient_permission_description": "U heeft niet de vereiste rechten om een spraakuitzending in deze kamer te starten. Neem contact op met een kamer beheerder om uw machtiging aan te passen.",
+        "failed_others_already_recording_description": "Iemand anders neemt al een spraakuitzending op. Wacht tot de spraakuitzending is afgelopen om een nieuwe te starten.",
+        "confirm_stop_title": "Live uitzending stoppen?",
+        "confirm_stop_affirm": "Ja, stop uitzending"
     }
 }

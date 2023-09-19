@@ -2195,21 +2195,15 @@
     "You do not have permission to start video calls": "你没有权限开始视频通话",
     "There's no one here to call": "这里没有人可以打电话",
     "You do not have permission to start voice calls": "你没有权限开始语音通话",
-    "Can't start a new voice broadcast": "无法开始新的语音广播",
     "You need to be able to kick users to do that.": "你需要能够移除用户才能做到那件事。",
     "Inviting %(user)s and %(count)s others": {
         "one": "正在邀请%(user)s和另外1个人",
         "other": "正在邀请%(user)s和其他%(count)s人"
     },
     "Room info": "房间信息",
-    "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "你没有必要的权限在这个房间开始语音广播。请联系房间管理员以提升你的权限。",
-    "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "你已经在录制一个语音广播。请结束你当前的语音广播以开始新的语音广播。",
     "pause voice broadcast": "暂停语音广播",
     "resume voice broadcast": "恢复语音广播",
     "play voice broadcast": "播放语音广播",
-    "Yes, stop broadcast": "是的，停止广播",
-    "Stop live broadcasting?": "停止直播吗？",
-    "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "别人已经在录制语音广播了。等到他们的语音广播结束后再开始新的广播。",
     "Upcoming features": "即将到来的功能",
     "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.": "%(brand)s的下一步是什么？实验室是早期获得东西、测试新功能和在它们发布前帮助塑造的最好方式。",
     "Early previews": "早期预览",
@@ -2225,9 +2219,6 @@
     "Buffering…": "正在缓冲……",
     "Live": "实时",
     "Change input device": "变更输入设备",
-    "Go live": "开始直播",
-    "30s forward": "前进30秒",
-    "30s backward": "后退30秒",
     "Automatically adjust the microphone volume": "自动调整话筒音量",
     "Are you sure you want to sign out of %(count)s sessions?": {
         "one": "你确定要登出%(count)s个会话吗？",
@@ -2244,8 +2235,6 @@
     "Enable %(brand)s as an additional calling option in this room": "启用%(brand)s作为此房间的额外通话选项",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>不建议为公共房间添加加密。</b>任何人都能找到并加入公共房间，所以任何人都能阅读其中的消息。你不会获得加密的任何好处，并且之后你无法将其关闭。在公共房间中加密消息会使接收和发送消息变慢。",
     "Can’t start a call": "无法开始通话",
-    "Unfortunately we're unable to start a recording right now. Please try again later.": "很遗憾，我们现在无法开始录音。请稍后再试。",
-    "Connection error": "连接错误",
     "WARNING: session already verified, but keys do NOT MATCH!": "警告：会话已验证，然而密钥不匹配！",
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "用户（%(user)s）最终未被邀请到%(roomId)s，但邀请工具没给出错误",
     "Failed to read events": "读取时间失败",
@@ -3715,5 +3704,20 @@
         "failed_generic": "获取你的位置失败。请之后再试。",
         "failed_timeout": "尝试获取你的位置超时。请之后再试。",
         "failed_unknown": "获取位置时发生错误。请之后再试。"
+    },
+    "voice_broadcast": {
+        "failed_already_recording_title": "无法开始新的语音广播",
+        "failed_insufficient_permission_title": "无法开始新的语音广播",
+        "failed_others_already_recording_title": "无法开始新的语音广播",
+        "failed_already_recording_description": "你已经在录制一个语音广播。请结束你当前的语音广播以开始新的语音广播。",
+        "failed_insufficient_permission_description": "你没有必要的权限在这个房间开始语音广播。请联系房间管理员以提升你的权限。",
+        "failed_others_already_recording_description": "别人已经在录制语音广播了。等到他们的语音广播结束后再开始新的广播。",
+        "failed_no_connection_title": "连接错误",
+        "failed_no_connection_description": "很遗憾，我们现在无法开始录音。请稍后再试。",
+        "confirm_stop_title": "停止直播吗？",
+        "confirm_stop_affirm": "是的，停止广播",
+        "30s_backward": "后退30秒",
+        "30s_forward": "前进30秒",
+        "go_live": "开始直播"
     }
 }

@@ -2270,8 +2270,6 @@
         "one": "¿Seguro que quieres cerrar %(count)s sesión?",
         "other": "¿Seguro que quieres cerrar %(count)s sesiones?"
     },
-    "Yes, stop broadcast": "Sí, detener retransmisión",
-    "Stop live broadcasting?": "¿Dejar de retransmitir?",
     "Devices connected": "Dispositivos conectados",
     "An unexpected error occurred.": "Ha ocurrido un error inesperado.",
     "The request was cancelled.": "La solicitud ha sido cancelada.",
@@ -2287,7 +2285,6 @@
     "Connection": "Conexión",
     "Voice processing": "Procesamiento de vídeo",
     "Video settings": "Ajustes de vídeo",
-    "Go live": "Empezar directo",
     "Sign out of all devices": "Cerrar sesión en todos los dispositivos",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Demasiados intentos en poco tiempo. Inténtalo de nuevo en %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Demasiados intentos en poco tiempo. Espera un poco antes de volverlo a intentar.",
@@ -2373,16 +2370,10 @@
     "Starting export process…": "Iniciando el proceso de exportación…",
     "Connection error - Recording paused": "Error de conexión, grabación detenida",
     "play voice broadcast": "reproducir difusión de voz",
-    "30s backward": "retroceder 30s",
-    "30s forward": "avanzar 30s",
-    "Yes, end my recording": "Sí, terminar grabación",
-    "Connection error": "Error de conexión",
-    "Can't start a new voice broadcast": "No se ha podido iniciar una nueva difusión de voz",
     "WARNING: session already verified, but keys do NOT MATCH!": "ADVERTENCIA: la sesión ya está verificada, pero las claves NO COINCIDEN",
     "Database unexpectedly closed": "La base de datos se ha cerrado de forma inesperada",
     "Identity server not set": "Servidor de identidad no configurado",
     "Ended a poll": "Cerró una encuesta",
-    "Unfortunately we're unable to start a recording right now. Please try again later.": "Lamentablemente, no hemos podido empezar a grabar ahora mismo. Inténtalo de nuevo más tarde.",
     "Unable to connect to Homeserver. Retrying…": "No se ha podido conectar al servidor base. Reintentando…",
     "Keep going…": "Sigue…",
     "If you know a room address, try joining through that instead.": "Si conoces la dirección de una sala, prueba a unirte a través de ella.",
@@ -3934,5 +3925,18 @@
         "failed_generic": "No se ha podido conseguir tu ubicación. Por favor, inténtalo de nuevo más tarde.",
         "failed_timeout": "Tras un tiempo intentándolo, no hemos podido obtener tu ubicación. Por favor, inténtalo de nuevo más tarde.",
         "failed_unknown": "Error desconocido al conseguir tu ubicación. Por favor, inténtalo de nuevo más tarde."
+    },
+    "voice_broadcast": {
+        "failed_already_recording_title": "No se ha podido iniciar una nueva difusión de voz",
+        "failed_insufficient_permission_title": "No se ha podido iniciar una nueva difusión de voz",
+        "failed_others_already_recording_title": "No se ha podido iniciar una nueva difusión de voz",
+        "failed_no_connection_title": "Error de conexión",
+        "failed_no_connection_description": "Lamentablemente, no hemos podido empezar a grabar ahora mismo. Inténtalo de nuevo más tarde.",
+        "confirm_stop_title": "¿Dejar de retransmitir?",
+        "confirm_stop_affirm": "Sí, detener retransmisión",
+        "confirm_listen_affirm": "Sí, terminar grabación",
+        "30s_backward": "retroceder 30s",
+        "30s_forward": "avanzar 30s",
+        "go_live": "Empezar directo"
     }
 }

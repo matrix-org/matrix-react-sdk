@@ -2122,11 +2122,6 @@
     "pause voice broadcast": "keskeytä äänen yleislähetys",
     "resume voice broadcast": "palaa äänen yleislähetykseen",
     "play voice broadcast": "toista äänen yleislähetys",
-    "Yes, stop broadcast": "Kyllä, pysäytä yleislähetys",
-    "Stop live broadcasting?": "Pysäytetäänkö liveyleislähetys?",
-    "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "Joku toinen tallentaa jo äänen yleislähetystä. Odota äänen yleislähetyksen päättymistä, jotta voit aloittaa uuden.",
-    "You are already recording a voice broadcast. Please end your current voice broadcast to start a new one.": "Tallennat jo äänen yleislähetystä. Lopeta nykyinen äänen yleislähetys aloittaaksesi uuden.",
-    "Can't start a new voice broadcast": "Uutta äänen yleislähetystä ei voi käynnistää",
     "You need to be able to kick users to do that.": "Sinun täytyy pystyä potkia käyttäjiä voidaksesi tehdä tuon.",
     "Error downloading image": "Virhe kuvaa ladatessa",
     "Unable to show image due to error": "Kuvan näyttäminen epäonnistui virheen vuoksi",
@@ -2155,8 +2150,6 @@
     "Show details": "Näytä yksityiskohdat",
     "Hide details": "Piilota yksityiskohdat",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s on päästä päähän salattu, mutta on tällä hetkellä rajattu pienelle määrälle käyttäjiä.",
-    "30s forward": "30 s eteenpäin",
-    "30s backward": "30 s taaksepäin",
     "Send email": "Lähetä sähköpostia",
     "Sign out of all devices": "Kirjaudu ulos kaikista laitteista",
     "Confirm new password": "Vahvista uusi salasana",
@@ -2211,7 +2204,6 @@
     },
     "Your current session is ready for secure messaging.": "Nykyinen istuntosi on valmis turvalliseen viestintään.",
     "Sign out of all other sessions (%(otherSessionsCount)s)": "Kirjaudu ulos kaikista muista istunnoista (%(otherSessionsCount)s)",
-    "Connection error": "Yhteysvirhe",
     "%(senderName)s started a voice broadcast": "%(senderName)s aloitti äänen yleislähetyksen",
     "Saving…": "Tallennetaan…",
     "Creating…": "Luodaan…",
@@ -3729,5 +3721,17 @@
         "failed_generic": "Sijaintisi noutaminen epäonnistui. Yritä myöhemmin uudelleen.",
         "failed_timeout": "Sijaintisi noutaminen aikakatkaistiin. Yritä myöhemmin uudelleen.",
         "failed_unknown": "Tuntematon virhe sijaintia noudettaessa. Yritä myöhemmin uudelleen."
+    },
+    "voice_broadcast": {
+        "failed_already_recording_title": "Uutta äänen yleislähetystä ei voi käynnistää",
+        "failed_insufficient_permission_title": "Uutta äänen yleislähetystä ei voi käynnistää",
+        "failed_others_already_recording_title": "Uutta äänen yleislähetystä ei voi käynnistää",
+        "failed_already_recording_description": "Tallennat jo äänen yleislähetystä. Lopeta nykyinen äänen yleislähetys aloittaaksesi uuden.",
+        "failed_others_already_recording_description": "Joku toinen tallentaa jo äänen yleislähetystä. Odota äänen yleislähetyksen päättymistä, jotta voit aloittaa uuden.",
+        "failed_no_connection_title": "Yhteysvirhe",
+        "confirm_stop_title": "Pysäytetäänkö liveyleislähetys?",
+        "confirm_stop_affirm": "Kyllä, pysäytä yleislähetys",
+        "30s_backward": "30 s taaksepäin",
+        "30s_forward": "30 s eteenpäin"
     }
 }

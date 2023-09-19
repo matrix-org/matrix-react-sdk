@@ -1633,8 +1633,6 @@
     "resume voice broadcast": "tęsti balso transliaciją",
     "play voice broadcast": "paleisti balso transliaciją",
     "Live": "Gyvai",
-    "Stop live broadcasting?": "Sustabdyti transliaciją gyvai?",
-    "Yes, stop broadcast": "Taip, sustabdyti transliaciją",
     "common": {
         "about": "Apie",
         "analytics": "Analitika",
@@ -2664,5 +2662,9 @@
         "public_heading": "Jūsų vieša erdvė",
         "private_heading": "Jūsų privati erdvė",
         "add_details_prompt": "Pridėkite šiek tiek detalių, kad žmonės galėtų ją atpažinti."
+    },
+    "voice_broadcast": {
+        "confirm_stop_title": "Sustabdyti transliaciją gyvai?",
+        "confirm_stop_affirm": "Taip, sustabdyti transliaciją"
     }
 }
