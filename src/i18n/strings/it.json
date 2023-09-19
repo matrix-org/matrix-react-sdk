@@ -105,9 +105,6 @@
     "Filter room members": "Filtra membri della stanza",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (poteri %(powerLevelNumber)s)",
     "You do not have permission to post to this room": "Non hai il permesso di inviare in questa stanza",
-    "Server error": "Errore del server",
-    "Server unavailable, overloaded, or something else went wrong.": "Server non disponibile, sovraccarico o qualcos'altro è andato storto.",
-    "Command error": "Errore nel comando",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)so",
@@ -152,9 +149,6 @@
     "Invalid file%(extra)s": "File non valido %(extra)s",
     "Error decrypting image": "Errore decifratura immagine",
     "Error decrypting video": "Errore decifratura video",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s ha cambiato l'avatar per %(roomName)s",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s ha rimosso l'avatar della stanza.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s ha cambiato l'avatar della stanza a <img/>",
     "Copied!": "Copiato!",
     "Failed to copy": "Copia fallita",
     "Add an Integration": "Aggiungi un'integrazione",
@@ -258,12 +252,9 @@
     "Notification targets": "Obiettivi di notifica",
     "Today": "Oggi",
     "Friday": "Venerdì",
-    "On": "Acceso",
     "Changelog": "Cambiamenti",
-    "Waiting for response from server": "In attesa di una risposta dal server",
     "Failed to send logs: ": "Invio dei log fallito: ",
     "This Room": "Questa stanza",
-    "Noisy": "Rumoroso",
     "Unavailable": "Non disponibile",
     "Source URL": "URL d'origine",
     "Filter results": "Filtra risultati",
@@ -285,7 +276,6 @@
     "Error encountered (%(errorDetail)s).": "Errore riscontrato (%(errorDetail)s).",
     "Low Priority": "Priorità bassa",
     "What's New": "Novità",
-    "Off": "Spento",
     "Thank you!": "Grazie!",
     "Missing roomId.": "ID stanza mancante.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Impossibile caricare l'evento a cui si è risposto, o non esiste o non hai il permesso di visualizzarlo.",
@@ -332,8 +322,6 @@
     "Please contact your homeserver administrator.": "Contatta l'amministratore del tuo homeserver.",
     "This room has been replaced and is no longer active.": "Questa stanza è stata sostituita e non è più attiva.",
     "The conversation continues here.": "La conversazione continua qui.",
-    "This room is a continuation of another conversation.": "Questa stanza è la continuazione di un'altra conversazione.",
-    "Click here to see older messages.": "Clicca qui per vedere i messaggi precedenti.",
     "Failed to upgrade room": "Aggiornamento stanza fallito",
     "The room upgrade could not be completed": "Non è stato possibile completare l'aggiornamento della stanza",
     "Upgrade this room to version %(version)s": "Aggiorna questa stanza alla versione %(version)s",
@@ -569,7 +557,6 @@
     "You're previewing %(roomName)s. Want to join it?": "Stai vedendo l'anteprima di %(roomName)s. Vuoi unirti?",
     "%(roomName)s can't be previewed. Do you want to join it?": "Anteprima di %(roomName)s non disponibile. Vuoi unirti?",
     "This room has already been upgraded.": "Questa stanza è già stata aggiornata.",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>ha reagito con %(shortName)s</reactedWith>",
     "edited": "modificato",
     "Rotate Left": "Ruota a sinistra",
     "Rotate Right": "Ruota a destra",
@@ -740,8 +727,6 @@
     "Room %(name)s": "Stanza %(name)s",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Questa azione richiede l'accesso al server di identità predefinito <server /> per verificare un indirizzo email o numero di telefono, ma il server non ha termini di servizio.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "My Ban List": "Mia lista ban",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Questa è la lista degli utenti/server che hai bloccato - non lasciare la stanza!",
     "Error adding ignored user/server": "Errore di aggiunta utente/server ignorato",
     "Something went wrong. Please try again or view your console for hints.": "Qualcosa è andato storto. Riprova o controlla la console per suggerimenti.",
     "Error subscribing to list": "Errore di iscrizione alla lista",
@@ -843,11 +828,6 @@
     "This room is end-to-end encrypted": "Questa stanza è cifrata end-to-end",
     "Everyone in this room is verified": "Tutti in questa stanza sono verificati",
     "Reject & Ignore user": "Rifiuta e ignora l'utente",
-    "Unknown Command": "Comando sconosciuto",
-    "Unrecognised command: %(commandText)s": "Comando non riconosciuto: %(commandText)s",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Puoi usare <code>/help</code> per elencare i comandi disponibili. Volevo forse inviarlo come messaggio?",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Suggerimento: anteponi al tuo messaggio <code>//</code> per farlo iniziare con uno slash.",
-    "Send as message": "Invia come messaggio",
     "Enter your account password to confirm the upgrade:": "Inserisci la password del tuo account per confermare l'aggiornamento:",
     "You'll need to authenticate with the server to confirm the upgrade.": "Dovrai autenticarti con il server per confermare l'aggiornamento.",
     "Upgrade your encryption": "Aggiorna la tua crittografia",
@@ -1006,9 +986,6 @@
     "Confirm encryption setup": "Conferma impostazione crittografia",
     "Click the button below to confirm setting up encryption.": "Clicca il pulsante sotto per confermare l'impostazione della crittografia.",
     "IRC display name width": "Larghezza nome di IRC",
-    "Size must be a number": "La dimensione deve essere un numero",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "La dimensione del carattere personalizzata può solo essere tra %(min)s pt e %(max)s pt",
-    "Use between %(min)s pt and %(max)s pt": "Usa tra %(min)s pt e %(max)s pt",
     "Please verify the room ID or address and try again.": "Verifica l'ID o l'indirizzo della stanza e riprova.",
     "Room ID or address of ban list": "ID o indirizzo stanza della lista ban",
     "To link to this room, please add an address.": "Per collegare a questa stanza, aggiungi un indirizzo.",
@@ -1036,9 +1013,7 @@
     "Message preview": "Anteprima messaggio",
     "Room options": "Opzioni stanza",
     "Looks good!": "Sembra giusta!",
-    "Hey you. You're the best!": "Ehi tu. Sei il migliore!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "L'autenticità di questo messaggio cifrato non può essere garantita su questo dispositivo.",
-    "Message deleted on %(date)s": "Messaggio eliminato il %(date)s",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s non può tenere in cache i messaggi cifrati quando usato in un browser web. Usa <desktopLink>%(brand)s Desktop</desktopLink> affinché i messaggi cifrati appaiano nei risultati di ricerca.",
     "Favourited": "Preferito",
     "Forget Room": "Dimentica stanza",
@@ -1674,9 +1649,6 @@
         "one": "e altri %(count)s"
     },
     "Upgrade required": "Aggiornamento necessario",
-    "Anyone can find and join.": "Chiunque può trovare ed entrare.",
-    "Only invited people can join.": "Solo le persone invitate possono entrare.",
-    "Private (invite only)": "Privato (solo a invito)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Questo aggiornamento permetterà ai membri di spazi selezionati di accedere alla stanza senza invito.",
     "Add space": "Aggiungi spazio",
     "Leave %(spaceName)s": "Esci da %(spaceName)s",
@@ -1729,7 +1701,6 @@
     "Select the roles required to change various parts of the space": "Seleziona i ruoli necessari per cambiare varie parti dello spazio",
     "Message didn't send. Click for info.": "Il messaggio non è stato inviato. Clicca per informazioni.",
     "To join a space you'll need an invite.": "Per entrare in uno spazio ti serve un invito.",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s ha reagito con %(content)s",
     "Would you like to leave the rooms in this space?": "Vuoi uscire dalle stanze di questo spazio?",
     "You are about to leave <spaceName/>.": "Stai per uscire da <spaceName/>.",
     "Leave some rooms": "Esci da alcune stanze",
@@ -1831,7 +1802,6 @@
     "Get notifications as set up in your <a>settings</a>": "Ricevi notifiche come configurato nelle tue <a>impostazioni</a>",
     "Close this widget to view it in this panel": "Chiudi questo widget per vederlo in questo pannello",
     "Unpin this widget to view it in this panel": "Sblocca questo widget per vederlo in questo pannello",
-    "Large": "Grande",
     "Based on %(count)s votes": {
         "one": "Basato su %(count)s voto",
         "other": "Basato su %(count)s voti"
@@ -1909,7 +1879,6 @@
     "Verify this device": "Verifica questo dispositivo",
     "Unable to verify this device": "Impossibile verificare questo dispositivo",
     "Verify other device": "Verifica altro dispositivo",
-    "Expand map": "Espandi mappa",
     "You cancelled verification on your other device.": "Hai annullato la verifica nell'altro dispositivo.",
     "Almost there! Is your other device showing the same shield?": "Quasi fatto! L'altro dispositivo sta mostrando lo stesso scudo?",
     "To proceed, please accept the verification request on your other device.": "Per continuare, accetta la richiesta di verifica nell'altro tuo dispositivo.",
@@ -1930,7 +1899,6 @@
     "Remove them from everything I'm able to": "Rimuovilo da ovunque io possa farlo",
     "Remove from %(roomName)s": "Rimuovi da %(roomName)s",
     "You were removed from %(roomName)s by %(memberName)s": "Sei stato rimosso da %(roomName)s da %(memberName)s",
-    "Keyboard": "Tastiera",
     "Message pending moderation": "Messaggio in attesa di moderazione",
     "Message pending moderation: %(reason)s": "Messaggio in attesa di moderazione: %(reason)s",
     "Space home": "Pagina iniziale dello spazio",
@@ -1979,9 +1947,6 @@
     "Click": "Click",
     "Expand quotes": "Espandi le citazioni",
     "Collapse quotes": "Riduci le citazioni",
-    "Shared a location: ": "Ha condiviso una posizione: ",
-    "Shared their location: ": "Ha condiviso la sua posizione: ",
-    "Unable to load map": "Impossibile caricare la mappa",
     "Can't create a thread from an event with an existing relation": "Impossibile creare una conversazione da un evento con una relazione esistente",
     "You are sharing your live location": "Stai condividendo la tua posizione in tempo reale",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Deseleziona se vuoi rimuovere anche i messaggi di sistema per questo utente (es. cambiamenti di sottoscrizione, modifiche al profilo…)",
@@ -1998,7 +1963,6 @@
     },
     "Unsent": "Non inviato",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Puoi usare le opzioni server personalizzate per accedere ad altri server Matrix specificando un URL homeserver diverso. Ciò ti permette di usare %(brand)s con un account Matrix esistente su un homeserver differente.",
-    "Developer tools": "Strumenti per sviluppatori",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s è sperimentale su un browser web mobile. Per un'esperienza migliore e le ultime funzionalità, usa la nostra app nativa gratuita.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s si è verificato tentando di accedere alla stanza o spazio. Se pensi che tu stia vedendo questo messaggio per errore, <issueLink>invia una segnalazione</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Riprova più tardi, o chiedi ad un admin della stanza o spazio di controllare se hai l'accesso.",
@@ -2444,8 +2408,6 @@
     "Start DM anyway": "Inizia il messaggio lo stesso",
     "Start DM anyway and never warn me again": "Inizia il messaggio lo stesso e non avvisarmi più",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossibile trovare profili per gli ID Matrix elencati sotto - vuoi comunque iniziare un messaggio diretto?",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Impossibile trovare la vecchia versione della stanza (ID stanza: %(roomId)s) e non ci è stato fornito 'via_servers' per cercarla.",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Impossibile trovare la vecchia versione della stanza (ID stanza: %(roomId)s) e non ci è stato fornito 'via_servers' per cercarla. È possibile che indovinare il server dall'ID della stanza possa funzionare. Se vuoi provare, clicca questo link:",
     "Formatting": "Formattazione",
     "No identity access token found": "Nessun token di accesso d'identità trovato",
     "Identity server not set": "Server d'identità non impostato",
@@ -2619,7 +2581,10 @@
         "qr_code": "Codice QR",
         "feedback": "Feedback",
         "all_rooms": "Tutte le stanze",
-        "orphan_rooms": "Altre stanze"
+        "orphan_rooms": "Altre stanze",
+        "preview_message": "Ehi tu. Sei il migliore!",
+        "on": "Acceso",
+        "off": "Spento"
     },
     "action": {
         "continue": "Continua",
@@ -2926,7 +2891,8 @@
         "collecting_logs": "Sto recuperando i log",
         "uploading_logs": "Invio dei log",
         "downloading_logs": "Scaricamento dei log",
-        "create_new_issue": "<newIssueLink>Segnala un nuovo problema</newIssueLink> su GitHub in modo che possiamo indagare su questo errore."
+        "create_new_issue": "<newIssueLink>Segnala un nuovo problema</newIssueLink> su GitHub in modo che possiamo indagare su questo errore.",
+        "waiting_for_server": "In attesa di una risposta dal server"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)so %(minutes)sm %(seconds)ss rimasti",
@@ -3070,7 +3036,8 @@
             "enable_notifications_device": "Attiva le notifiche per questo dispositivo",
             "enable_desktop_notifications_session": "Attiva le notifiche desktop per questa sessione",
             "show_message_desktop_notification": "Mostra i messaggi nelle notifiche desktop",
-            "enable_audible_notifications_session": "Attiva le notifiche audio per questa sessione"
+            "enable_audible_notifications_session": "Attiva le notifiche audio per questa sessione",
+            "noisy": "Rumoroso"
         },
         "appearance": {
             "layout_irc": "IRC (Sperimentale)",
@@ -3091,7 +3058,12 @@
             "timeline_image_size": "Dimensione immagine nella linea temporale",
             "timeline_image_size_default": "Predefinito",
             "timeline_image_size_large": "Grande",
-            "custom_font_size": "Usa dimensione personalizzata"
+            "custom_font_size": "Usa dimensione personalizzata",
+            "font_size_nan": "La dimensione deve essere un numero",
+            "font_size_limit": "La dimensione del carattere personalizzata può solo essere tra %(min)s pt e %(max)s pt",
+            "font_size_valid": "Usa tra %(min)s pt e %(max)s pt",
+            "image_size_default": "Predefinito",
+            "image_size_large": "Grande"
         },
         "inline_url_previews_room_account": "Attiva le anteprime URL in questa stanza (riguarda solo te)",
         "inline_url_previews_room": "Attiva le anteprime URL in modo predefinito per i partecipanti in questa stanza",
@@ -3143,6 +3115,9 @@
             "noise_suppression": "Riduzione del rumore",
             "enable_fallback_ice_server": "Permetti server di chiamata di ripiego (%(server)s)",
             "enable_fallback_ice_server_description": "Si applica solo se il tuo homeserver non ne offre uno. Il tuo indirizzo IP verrebbe condiviso durante una chiamata."
+        },
+        "keyboard": {
+            "title": "Tastiera"
         }
     },
     "devtools": {
@@ -3241,7 +3216,8 @@
         "show_hidden_events": "Mostra eventi nascosti nella linea temporale",
         "low_bandwidth_mode": "Modalità larghezza di banda bassa",
         "low_bandwidth_mode_description": "Richiede un homeserver compatibile.",
-        "developer_mode": "Modalità sviluppatore"
+        "developer_mode": "Modalità sviluppatore",
+        "title": "Strumenti per sviluppatori"
     },
     "export_chat": {
         "html": "HTML",
@@ -3363,7 +3339,12 @@
             "kick": "%(senderName)s ha rimosso %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s ha modificato l'argomento in \"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s ha cambiato l'avatar della stanza.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s ha cambiato l'avatar della stanza.",
+            "lightbox_title": "%(senderDisplayName)s ha cambiato l'avatar per %(roomName)s",
+            "removed": "%(senderDisplayName)s ha rimosso l'avatar della stanza.",
+            "changed_img": "%(senderDisplayName)s ha cambiato l'avatar della stanza a <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s ha rimosso il nome della stanza.",
             "change": "%(senderDisplayName)s ha cambiato il nome della stanza da %(oldRoomName)s a %(newRoomName)s.",
@@ -3430,7 +3411,11 @@
             "removed": "Widget %(widgetName)s rimosso da %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s ha aggiornato la disposizione della stanza",
-        "m.location": "%(senderName)s ha condiviso la sua posizione",
+        "m.location": {
+            "full": "%(senderName)s ha condiviso la sua posizione",
+            "self_location": "Ha condiviso la sua posizione: ",
+            "location": "Ha condiviso una posizione: "
+        },
         "self_redaction": "Messaggio eliminato",
         "redaction": "Messaggio eliminato da %(name)s",
         "m.poll.start": "%(senderName)s ha iniziato un sondaggio - %(pollQuestion)s",
@@ -3615,6 +3600,19 @@
         "io.element.voice_broadcast_info": {
             "you": "Hai terminato una <a>trasmissione vocale</a>",
             "user": "%(senderName)s ha terminato una <a>trasmissione vocale</a>"
+        },
+        "reactions": {
+            "label": "%(reactors)s ha reagito con %(content)s",
+            "tooltip": "<reactors/><reactedWith>ha reagito con %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Messaggio eliminato il %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Questa stanza è la continuazione di un'altra conversazione.",
+            "unknown_predecessor_guess_server": "Impossibile trovare la vecchia versione della stanza (ID stanza: %(roomId)s) e non ci è stato fornito 'via_servers' per cercarla. È possibile che indovinare il server dall'ID della stanza possa funzionare. Se vuoi provare, clicca questo link:",
+            "unknown_predecessor": "Impossibile trovare la vecchia versione della stanza (ID stanza: %(roomId)s) e non ci è stato fornito 'via_servers' per cercarla.",
+            "see_older_messages": "Clicca qui per vedere i messaggi precedenti."
         }
     },
     "slash_command": {
@@ -3683,7 +3681,15 @@
         "failed_find_room": "Comando fallito: impossibile trovare la stanza (%(roomId)s",
         "failed_find_user": "Utente non trovato nella stanza",
         "op": "Definisce il livello di poteri di un utente",
-        "deop": "Toglie privilegi all'utente per ID"
+        "deop": "Toglie privilegi all'utente per ID",
+        "server_error": "Errore del server",
+        "command_error": "Errore nel comando",
+        "server_error_detail": "Server non disponibile, sovraccarico o qualcos'altro è andato storto.",
+        "unknown_command": "Comando sconosciuto",
+        "unknown_command_detail": "Comando non riconosciuto: %(commandText)s",
+        "unknown_command_help": "Puoi usare <code>/help</code> per elencare i comandi disponibili. Volevo forse inviarlo come messaggio?",
+        "unknown_command_hint": "Suggerimento: anteponi al tuo messaggio <code>//</code> per farlo iniziare con uno slash.",
+        "unknown_command_button": "Invia come messaggio"
     },
     "presence": {
         "busy": "Occupato",
@@ -3804,7 +3810,10 @@
             "notifications.room": "Notifica tutti"
         },
         "security": {
-            "strict_encryption": "Non inviare mai messaggi cifrati a sessioni non verificate in questa stanza da questa sessione"
+            "strict_encryption": "Non inviare mai messaggi cifrati a sessioni non verificate in questa stanza da questa sessione",
+            "join_rule_invite": "Privato (solo a invito)",
+            "join_rule_invite_description": "Solo le persone invitate possono entrare.",
+            "join_rule_public_description": "Chiunque può trovare ed entrare."
         }
     },
     "encryption": {
@@ -4118,7 +4127,9 @@
         "failed_permission": "%(brand)s non ha l'autorizzazione per rilevare la tua posizione. Consenti l'accesso alla posizione nelle impostazioni del browser.",
         "failed_generic": "Impossibile rilevare la tua posizione. Riprova più tardi.",
         "failed_timeout": "Tentativo di rilevare la tua posizione scaduto. Riprova più tardi.",
-        "failed_unknown": "Errore sconosciuto rilevando la posizione. Riprova più tardi."
+        "failed_unknown": "Errore sconosciuto rilevando la posizione. Riprova più tardi.",
+        "expand_map": "Espandi mappa",
+        "failed_load_map": "Impossibile caricare la mappa"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Impossibile iniziare una nuova trasmissione vocale",
@@ -4140,5 +4151,9 @@
         "30s_backward": "30s indietro",
         "30s_forward": "30s avanti",
         "go_live": "Vai in diretta"
+    },
+    "labs_mjolnir": {
+        "room_name": "Mia lista ban",
+        "room_topic": "Questa è la lista degli utenti/server che hai bloccato - non lasciare la stanza!"
     }
 }

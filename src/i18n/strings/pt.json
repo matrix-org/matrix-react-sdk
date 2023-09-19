@@ -104,7 +104,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s às %(time)s",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Não consigo conectar ao servidor padrão através de HTTP quando uma URL HTTPS está na barra de endereços do seu navegador. Use HTTPS ou então <a>habilite scripts não seguros no seu navegador</a>.",
     "Change Password": "Alterar Palavra-Passe",
-    "Command error": "Erro de comando",
     "Decrypt %(text)s": "Descriptografar %(text)s",
     "Download %(text)s": "Baixar %(text)s",
     "Failed to ban user": "Não foi possível banir o/a usuário/a",
@@ -119,9 +118,7 @@
     "not specified": "não especificado",
     "No more results": "Não há mais resultados",
     "Search failed": "Busca falhou",
-    "Server error": "Erro no servidor",
     "Server may be unavailable, overloaded, or search timed out :(": "O servidor pode estar indisponível, sobrecarregado, ou a busca ultrapassou o tempo limite :(",
-    "Server unavailable, overloaded, or something else went wrong.": "O servidor pode estar indisponível, sobrecarregado, ou alguma outra coisa não funcionou.",
     "This room has no local addresses": "Esta sala não tem endereços locais",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Tentei carregar um ponto específico na linha do tempo desta sala, mas parece que você não tem permissões para ver a mensagem em questão.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Tentei carregar um ponto específico na linha do tempo desta sala, mas não o encontrei.",
@@ -164,9 +161,6 @@
     "Incorrect username and/or password.": "Nome de utilizador e/ou palavra-passe incorreta.",
     "Invited": "Convidada(o)",
     "Verified key": "Chave verificada",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s removeu a imagem da sala.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s alterou a imagem da sala %(roomName)s",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s alterou a imagem da sala para <img/>",
     "No Microphones detected": "Não foi detetado nenhum microfone",
     "No Webcams detected": "Não foi detetada nenhuma Webcam",
     "No media permissions": "Não há permissões para o uso de vídeo/áudio no seu navegador",
@@ -224,15 +218,12 @@
     "Today": "Hoje",
     "Friday": "Sexta-feira",
     "What's New": "Novidades",
-    "On": "Ativado",
     "Changelog": "Histórico de alterações",
-    "Waiting for response from server": "À espera de resposta do servidor",
     "This Room": "Esta sala",
     "Unavailable": "Indisponível",
     "Source URL": "URL fonte",
     "Filter results": "Filtrar resultados",
     "No update available.": "Nenhuma atualização disponível.",
-    "Noisy": "Barulhento",
     "Tuesday": "Terça-feira",
     "Search…": "Pesquisar…",
     "Unnamed room": "Sala sem nome",
@@ -248,7 +239,6 @@
     "Yesterday": "Ontem",
     "Error encountered (%(errorDetail)s).": "Erro encontrado (%(errorDetail)s).",
     "Low Priority": "Baixa prioridade",
-    "Off": "Desativado",
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
     "Add Email Address": "Adicione adresso de e-mail",
@@ -619,7 +609,9 @@
         "microphone": "Microfone",
         "emoji": "Emoji",
         "someone": "Alguém",
-        "unnamed_room": "Sala sem nome"
+        "unnamed_room": "Sala sem nome",
+        "on": "Ativado",
+        "off": "Desativado"
     },
     "action": {
         "continue": "Continuar",
@@ -674,7 +666,8 @@
         "description": "Os registos de depuração contêm dados de utilização da aplicação, incluindo o seu nome de utilizador, os IDs ou pseudónimos das salas que visitou, os últimos elementos da IU com que interagiu e os nomes de utilizador de outros utilizadores. No entanto não contêm mensagens.",
         "send_logs": "Enviar relatórios de erro",
         "collecting_information": "A recolher informação da versão da app",
-        "collecting_logs": "A recolher logs"
+        "collecting_logs": "A recolher logs",
+        "waiting_for_server": "À espera de resposta do servidor"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
@@ -702,10 +695,12 @@
             "rule_message": "Mensagens em salas",
             "rule_invite_for_me": "Quando sou convidado para uma sala",
             "rule_call": "Convite para chamada",
-            "rule_suppress_notices": "Mensagens enviadas por bots"
+            "rule_suppress_notices": "Mensagens enviadas por bots",
+            "noisy": "Barulhento"
         },
         "appearance": {
-            "timeline_image_size_default": "Padrão"
+            "timeline_image_size_default": "Padrão",
+            "image_size_default": "Padrão"
         }
     },
     "devtools": {
@@ -742,6 +737,11 @@
         "m.room.power_levels": {
             "changed": "%(senderName)s alterou o nível de permissões de %(powerLevelDiffText)s.",
             "user_from_to": "%(userId)s de %(fromPowerLevel)s para %(toPowerLevel)s"
+        },
+        "m.room.avatar": {
+            "lightbox_title": "%(senderDisplayName)s alterou a imagem da sala %(roomName)s",
+            "removed": "%(senderDisplayName)s removeu a imagem da sala.",
+            "changed_img": "%(senderDisplayName)s alterou a imagem da sala para <img/>"
         }
     },
     "slash_command": {
@@ -766,7 +766,10 @@
         "error_invalid_runfn": "Erro de comando: Não foi possível lidar com o comando de barra.",
         "error_invalid_rendering_type": "Erro de comando: Não foi possível encontrar o tipo de renderização(%(renderingType)s)",
         "op": "Definir o nível de privilégios de um utilizador",
-        "deop": "Retirar função de moderador do usuário com o identificador informado"
+        "deop": "Retirar função de moderador do usuário com o identificador informado",
+        "server_error": "Erro no servidor",
+        "command_error": "Erro de comando",
+        "server_error_detail": "O servidor pode estar indisponível, sobrecarregado, ou alguma outra coisa não funcionou."
     },
     "presence": {
         "online": "Online",

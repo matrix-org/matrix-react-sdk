@@ -13,7 +13,6 @@
     "Banned users": "Verbannen personen",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Kan geen verbinding maken met de homeserver via HTTP wanneer er een HTTPS-URL in je browserbalk staat. Gebruik HTTPS of <a>schakel onveilige scripts in</a>.",
     "Change Password": "Wachtwoord wijzigen",
-    "Command error": "Opdrachtfout",
     "Commands": "Opdrachten",
     "Confirm password": "Bevestig wachtwoord",
     "Admin Tools": "Beheerdersgereedschap",
@@ -120,10 +119,8 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s is op dit moment niet toegankelijk.",
     "Rooms": "Kamers",
     "Search failed": "Zoeken mislukt",
-    "Server error": "Serverfout",
     "Server may be unavailable, overloaded, or search timed out :(": "De server is misschien onbereikbaar of overbelast, of het zoeken duurde te lang :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "De server is misschien onbereikbaar of overbelast, of je bent een bug tegengekomen.",
-    "Server unavailable, overloaded, or something else went wrong.": "De server is onbereikbaar of overbelast, of er is iets anders foutgegaan.",
     "Session ID": "Sessie-ID",
     "Signed Out": "Uitgelogd",
     "This email address is already in use": "Dit e-mailadres is al in gebruik",
@@ -195,9 +192,6 @@
     "URL Previews": "URL-voorvertoningen",
     "Drop file here to upload": "Versleep het bestand naar hier om het te uploaden",
     "Check for update": "Controleren op updates",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s heeft de kamerafbeelding aangepast naar <img/>",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s heeft de kamerafbeelding verwijderd.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s heeft de afbeelding van %(roomName)s veranderd",
     "Something went wrong!": "Er is iets misgegaan!",
     "Your browser does not support the required cryptography extensions": "Jouw browser ondersteunt de benodigde cryptografie-extensies niet",
     "Not a valid %(brand)s keyfile": "Geen geldig %(brand)s-sleutelbestand",
@@ -260,15 +254,12 @@
     "Today": "Vandaag",
     "Friday": "Vrijdag",
     "What's New": "Wat is er nieuw",
-    "On": "Aan",
     "Changelog": "Wijzigingslogboek",
-    "Waiting for response from server": "Wachten op antwoord van de server",
     "This Room": "Deze kamer",
     "Unavailable": "Niet beschikbaar",
     "Source URL": "Bron-URL",
     "Filter results": "Resultaten filteren",
     "No update available.": "Geen update beschikbaar.",
-    "Noisy": "Luid",
     "Tuesday": "Dinsdag",
     "Search…": "Zoeken…",
     "Saturday": "Zaterdag",
@@ -282,7 +273,6 @@
     "Yesterday": "Gisteren",
     "Error encountered (%(errorDetail)s).": "Er is een fout opgetreden (%(errorDetail)s).",
     "Low Priority": "Lage prioriteit",
-    "Off": "Uit",
     "Wednesday": "Woensdag",
     "Thank you!": "Bedankt!",
     "Logs sent": "Logs verstuurd",
@@ -470,8 +460,6 @@
     "Room avatar": "Kamerafbeelding",
     "Room Name": "Kamernaam",
     "Room Topic": "Kameronderwerp",
-    "This room is a continuation of another conversation.": "Deze kamer is een voortzetting van een ander gesprek.",
-    "Click here to see older messages.": "Klik hier om oudere berichten te bekijken.",
     "Power level": "Machtsniveau",
     "The following users may not exist": "Volgende personen bestaan mogelijk niet",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Kan geen profielen voor de Matrix-ID’s hieronder vinden - wil je ze toch uitnodigen?",
@@ -588,7 +576,6 @@
     "You're previewing %(roomName)s. Want to join it?": "Je bekijkt %(roomName)s. Wilt je eraan deelnemen?",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s kan niet vooraf bekeken worden. Wil je eraan deelnemen?",
     "This room has already been upgraded.": "Deze kamer is reeds geüpgraded.",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>heeft gereageerd met %(shortName)s</reactedWith>",
     "edited": "bewerkt",
     "Rotate Left": "Links draaien",
     "Rotate Right": "Rechts draaien",
@@ -728,7 +715,6 @@
     "Setting up keys": "Sleutelconfiguratie",
     "Verify this session": "Verifieer deze sessie",
     "Encryption upgrade available": "Versleutelingsupgrade beschikbaar",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Typ <code>/help</code> om alle opdrachten te zien. Was het je bedoeling dit als bericht te sturen?",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Dit vergt validatie van een e-mailadres of telefoonnummer middels de standaard identiteitsserver <server />, maar die server heeft geen gebruiksvoorwaarden.",
     "Error upgrading room": "Upgraden van kamer mislukt",
     "Double check that your server supports the room version chosen and try again.": "Ga nogmaals na dat de server de gekozen kamerversie ondersteunt, en probeer het dan opnieuw.",
@@ -737,8 +723,6 @@
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "PAS OP: sleutelverificatie MISLUKT! De combinatie %(userId)s + sessie %(deviceId)s is ondertekend met ‘%(fprint)s’ - maar de opgegeven sleutel is ‘%(fingerprint)s’.  Wellicht worden jouw berichten onderschept!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "De door jou verschafte sleutel en de van %(userId)ss sessie %(deviceId)s verkregen sleutels komen overeen. De sessie is daarmee geverifieerd.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "My Ban List": "Mijn banlijst",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Dit is de lijst van door jou geblokkeerde servers/personen. Verlaat deze kamer niet!",
     "Waiting for %(displayName)s to verify…": "Wachten tot %(displayName)s geverifieerd heeft…",
     "Lock": "Hangslot",
     "Other users may not trust it": "Mogelijk wantrouwen anderen het",
@@ -820,10 +804,6 @@
     "<userName/> wants to chat": "<userName/> wil een chat met je beginnen",
     "Start chatting": "Gesprek beginnen",
     "Reject & Ignore user": "Weigeren en persoon negeren",
-    "Unknown Command": "Onbekende opdracht",
-    "Unrecognised command: %(commandText)s": "Onbekende opdracht: %(commandText)s",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Tip: begin uw bericht met <code>//</code> om het te laten voorafgaan door een schuine streep.",
-    "Send as message": "Versturen als bericht",
     "Failed to connect to integration manager": "Verbinding met integratiebeheerder is mislukt",
     "Waiting for %(displayName)s to accept…": "Wachten tot %(displayName)s aanvaardt…",
     "Accepting…": "Toestaan…",
@@ -1227,9 +1207,6 @@
     "Scroll to most recent messages": "Spring naar meest recente bericht",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "De echtheid van dit versleutelde bericht kan op dit apparaat niet worden gegarandeerd.",
     "To link to this room, please add an address.": "Voeg een adres toe om naar deze kamer te kunnen verwijzen.",
-    "Use between %(min)s pt and %(max)s pt": "Gebruik een getal tussen %(min)s pt en %(max)s pt",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Aangepaste lettergrootte kan alleen een getal tussen %(min)s pt en %(max)s pt zijn",
-    "Size must be a number": "Grootte moet een getal zijn",
     "New version available. <a>Update now.</a>": "Nieuwe versie beschikbaar. <a>Nu updaten.</a>",
     "not ready": "Niet gereed",
     "ready": "Gereed",
@@ -1266,7 +1243,6 @@
     "Can't load this message": "Dit bericht kan niet geladen worden",
     "Click to view edits": "Klik om bewerkingen te zien",
     "Edited at %(date)s": "Bewerkt op %(date)s",
-    "Message deleted on %(date)s": "Bericht verwijderd op %(date)s",
     "Join the conference at the top of this room": "Deelnemen aan de vergadering bovenaan deze kamer",
     "Ignored attempt to disable encryption": "Poging om versleuteling uit te schakelen genegeerd",
     "Start verification again from the notification.": "Verificatie opnieuw beginnen vanuit de melding.",
@@ -1433,7 +1409,6 @@
     "Room ID or address of ban list": "Kamer-ID of het adres van de banlijst",
     "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "Voeg hier personen en servers toe die je wil negeren. Gebruik asterisken om %(brand)s met alle tekens te laten overeenkomen. Bijvoorbeeld, <code>@bot:*</code> zou alle personen negeren die de naam 'bot' hebben op elke server.",
     "Please verify the room ID or address and try again.": "Controleer het kamer-ID of het adres en probeer het opnieuw.",
-    "Hey you. You're the best!": "Hey. Jij bent de beste!",
     "Backup key cached:": "Back-up sleutel cached:",
     "Backup key stored:": "Back-up sleutel bewaard:",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Maak een back-up van je versleutelingssleutels met je accountgegevens voor het geval je de toegang tot je sessies verliest. Je sleutels worden beveiligd met een unieke veiligheidssleutel.",
@@ -1658,9 +1633,6 @@
         "one": "& %(count)s meer"
     },
     "Upgrade required": "Upgrade noodzakelijk",
-    "Anyone can find and join.": "Iedereen kan hem vinden en deelnemen.",
-    "Only invited people can join.": "Alleen uitgenodigde personen kunnen deelnemen.",
-    "Private (invite only)": "Privé (alleen op uitnodiging)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Deze upgrade maakt het mogelijk voor leden van geselecteerde spaces om toegang te krijgen tot deze kamer zonder een uitnodiging.",
     "Access": "Toegang",
     "People with supported clients will be able to join the room without having a registered account.": "Personen met geschikte apps zullen aan de kamer kunnen deelnemen zonder een account te hebben.",
@@ -1729,7 +1701,6 @@
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Iedereen in <spaceName/> kan hem vinden en deelnemen. Je kan ook andere spaces selecteren.",
     "Message didn't send. Click for info.": "Bericht is niet verstuur. Klik voor meer info.",
     "To join a space you'll need an invite.": "Om te kunnen deelnemen aan een space heb je een uitnodiging nodig.",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s reageerde met %(content)s",
     "Would you like to leave the rooms in this space?": "Wil je de kamers verlaten in deze Space?",
     "You are about to leave <spaceName/>.": "Je staat op het punt <spaceName/> te verlaten.",
     "Leave some rooms": "Sommige kamers verlaten",
@@ -1835,7 +1806,6 @@
     "Spaces to show": "Spaces om te tonen",
     "Sidebar": "Zijbalk",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Deze kamer is in spaces waar je geen beheerder van bent. In deze spaces zal de oude kamer nog worden getoond, maar leden zullen een melding krijgen om deel te nemen aan de nieuwe kamer.",
-    "Large": "Groot",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s en %(count)s andere",
         "other": "%(spaceName)s en %(count)s andere"
@@ -1919,7 +1889,6 @@
     "Back to thread": "Terug naar draad",
     "Room members": "Kamerleden",
     "Back to chat": "Terug naar chat",
-    "Expand map": "Map uitvouwen",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Onbekend paar (persoon, sessie): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Niet herkend kameradres: %(roomAlias)s",
     "Space home": "Space home",
@@ -1933,7 +1902,6 @@
     "Remove from %(roomName)s": "Verwijderen uit %(roomName)s",
     "You were removed from %(roomName)s by %(memberName)s": "Je bent verwijderd uit %(roomName)s door %(memberName)s",
     "From a thread": "Uit een conversatie",
-    "Keyboard": "Toetsenbord",
     "Internal room ID": "Interne ruimte ID",
     "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Als je weet wat je doet, Element is open-source, bekijk dan zeker onze GitHub (https://github.com/vector-im/element-web/) en draag bij!",
     "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Als iemand je heeft gezegd iets hier te kopiëren/plakken, is de kans groot dat je wordt opgelicht!",
@@ -1986,9 +1954,6 @@
     "Results will be visible when the poll is ended": "Resultaten zijn zichtbaar wanneer de poll is afgelopen",
     "Sorry, you can't edit a poll after votes have been cast.": "Sorry, je kan een poll niet bewerken nadat er gestemd is.",
     "Can't edit poll": "Kan poll niet bewerken",
-    "Shared a location: ": "Een locatie gedeeld: ",
-    "Shared their location: ": "Hun locatie gedeeld: ",
-    "Unable to load map": "Kan kaart niet laden",
     "Click": "Klik",
     "Expand quotes": "Citaten uitvouwen",
     "Collapse quotes": "Citaten invouwen",
@@ -2023,7 +1988,6 @@
     "View older version of %(spaceName)s.": "Bekijk oudere versie van %(spaceName)s.",
     "Upgrade this space to the recommended room version": "Upgrade deze ruimte naar de aanbevolen kamerversie",
     "Match system": "Match systeem",
-    "Developer tools": "Ontwikkelaarstools",
     "Failed to join": "Kan niet deelnemen",
     "The person who invited you has already left, or their server is offline.": "De persoon die je heeft uitgenodigd is al vertrokken, of zijn server is offline.",
     "The person who invited you has already left.": "De persoon die je heeft uitgenodigd is al vertrokken.",
@@ -2373,7 +2337,10 @@
         "qr_code": "QR-code",
         "feedback": "Feedback",
         "all_rooms": "Alle kamers",
-        "orphan_rooms": "Andere kamers"
+        "orphan_rooms": "Andere kamers",
+        "preview_message": "Hey. Jij bent de beste!",
+        "on": "Aan",
+        "off": "Uit"
     },
     "action": {
         "continue": "Doorgaan",
@@ -2638,7 +2605,8 @@
         "collecting_logs": "Logs worden verzameld",
         "uploading_logs": "Logs uploaden",
         "downloading_logs": "Logs downloaden",
-        "create_new_issue": "<newIssueLink>Maak een nieuwe issue aan</newIssueLink> op GitHub zodat we deze bug kunnen onderzoeken."
+        "create_new_issue": "<newIssueLink>Maak een nieuwe issue aan</newIssueLink> op GitHub zodat we deze bug kunnen onderzoeken.",
+        "waiting_for_server": "Wachten op antwoord van de server"
     },
     "time": {
         "seconds_left": "%(seconds)s's over",
@@ -2773,7 +2741,8 @@
             "enable_notifications_device": "Meldingen inschakelen voor dit apparaat",
             "enable_desktop_notifications_session": "Bureaubladmeldingen voor deze sessie inschakelen",
             "show_message_desktop_notification": "Bericht in bureaubladmelding tonen",
-            "enable_audible_notifications_session": "Meldingen met geluid voor deze sessie inschakelen"
+            "enable_audible_notifications_session": "Meldingen met geluid voor deze sessie inschakelen",
+            "noisy": "Luid"
         },
         "appearance": {
             "layout_irc": "IRC (Experimenteel)",
@@ -2794,7 +2763,12 @@
             "timeline_image_size": "Afbeeldingformaat in de tijdlijn",
             "timeline_image_size_default": "Standaard",
             "timeline_image_size_large": "Groot",
-            "custom_font_size": "Aangepaste lettergrootte gebruiken"
+            "custom_font_size": "Aangepaste lettergrootte gebruiken",
+            "font_size_nan": "Grootte moet een getal zijn",
+            "font_size_limit": "Aangepaste lettergrootte kan alleen een getal tussen %(min)s pt en %(max)s pt zijn",
+            "font_size_valid": "Gebruik een getal tussen %(min)s pt en %(max)s pt",
+            "image_size_default": "Standaard",
+            "image_size_large": "Groot"
         },
         "inline_url_previews_room_account": "URL-voorvertoning in dit kamer inschakelen (geldt alleen voor jou)",
         "inline_url_previews_room": "URL-voorvertoning voor alle deelnemers aan deze kamer standaard inschakelen",
@@ -2837,6 +2811,9 @@
         "send_read_receipts_unsupported": "Jouw server biedt geen ondersteuning voor het uitschakelen van het verzenden van leesbevestigingen.",
         "voip": {
             "mirror_local_feed": "Lokale videoaanvoer ook elders opslaan (spiegelen)"
+        },
+        "keyboard": {
+            "title": "Toetsenbord"
         }
     },
     "devtools": {
@@ -2907,7 +2884,8 @@
         "category_other": "Overige",
         "widget_screenshots": "Widget-schermafbeeldingen inschakelen op ondersteunde widgets",
         "show_hidden_events": "Verborgen gebeurtenissen op de tijdslijn weergeven",
-        "developer_mode": "Ontwikkelaar mode"
+        "developer_mode": "Ontwikkelaar mode",
+        "title": "Ontwikkelaarstools"
     },
     "export_chat": {
         "html": "HTML",
@@ -3019,7 +2997,12 @@
             "kick": "%(senderName)s verwijderd %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s heeft het onderwerp gewijzigd naar ‘%(topic)s’.",
-        "m.room.avatar": "%(senderDisplayName)s veranderde de kamerafbeelding.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s veranderde de kamerafbeelding.",
+            "lightbox_title": "%(senderDisplayName)s heeft de afbeelding van %(roomName)s veranderd",
+            "removed": "%(senderDisplayName)s heeft de kamerafbeelding verwijderd.",
+            "changed_img": "%(senderDisplayName)s heeft de kamerafbeelding aangepast naar <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s heeft de kamernaam verwijderd.",
             "change": "%(senderDisplayName)s heeft de kamer %(oldRoomName)s hernoemd tot %(newRoomName)s.",
@@ -3085,7 +3068,11 @@
             "removed": "%(widgetName)s-widget verwijderd door %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s heeft de kamerindeling bijgewerkt",
-        "m.location": "%(senderName)s heeft zijn locatie gedeeld",
+        "m.location": {
+            "full": "%(senderName)s heeft zijn locatie gedeeld",
+            "self_location": "Hun locatie gedeeld: ",
+            "location": "Een locatie gedeeld: "
+        },
         "self_redaction": "Bericht verwijderd",
         "redaction": "Bericht verwijderd door %(name)s",
         "m.poll.start": "%(senderName)s is een poll gestart - %(pollQuestion)s",
@@ -3258,7 +3245,18 @@
         "no_permission_messages_before_invite": "Je bent niet gemachtigd om berichten te bekijken van voordat je werd uitgenodigd.",
         "no_permission_messages_before_join": "Je hebt geen toestemming om berichten te bekijken voor voordat je lid werd.",
         "encrypted_historical_messages_unavailable": "Versleutelde berichten vóór dit punt zijn niet beschikbaar.",
-        "historical_messages_unavailable": "Je kan eerdere berichten niet zien"
+        "historical_messages_unavailable": "Je kan eerdere berichten niet zien",
+        "reactions": {
+            "label": "%(reactors)s reageerde met %(content)s",
+            "tooltip": "<reactors/><reactedWith>heeft gereageerd met %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Bericht verwijderd op %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Deze kamer is een voortzetting van een ander gesprek.",
+            "see_older_messages": "Klik hier om oudere berichten te bekijken."
+        }
     },
     "slash_command": {
         "spoiler": "Verstuurt het bericht als een spoiler",
@@ -3321,7 +3319,15 @@
         "failed_find_room": "Commando mislukt: Kan kamer niet vinden (%(roomId)s",
         "failed_find_user": "Kan die persoon in de kamer niet vinden",
         "op": "Bepaal het machtsniveau van een persoon",
-        "deop": "Ontmachtigt persoon met de gegeven ID"
+        "deop": "Ontmachtigt persoon met de gegeven ID",
+        "server_error": "Serverfout",
+        "command_error": "Opdrachtfout",
+        "server_error_detail": "De server is onbereikbaar of overbelast, of er is iets anders foutgegaan.",
+        "unknown_command": "Onbekende opdracht",
+        "unknown_command_detail": "Onbekende opdracht: %(commandText)s",
+        "unknown_command_help": "Typ <code>/help</code> om alle opdrachten te zien. Was het je bedoeling dit als bericht te sturen?",
+        "unknown_command_hint": "Tip: begin uw bericht met <code>//</code> om het te laten voorafgaan door een schuine streep.",
+        "unknown_command_button": "Versturen als bericht"
     },
     "presence": {
         "busy": "Bezet",
@@ -3434,7 +3440,10 @@
             "notifications.room": "Iedereen melden"
         },
         "security": {
-            "strict_encryption": "Vanaf deze sessie nooit versleutelde berichten naar ongeverifieerde sessies in deze kamer versturen"
+            "strict_encryption": "Vanaf deze sessie nooit versleutelde berichten naar ongeverifieerde sessies in deze kamer versturen",
+            "join_rule_invite": "Privé (alleen op uitnodiging)",
+            "join_rule_invite_description": "Alleen uitgenodigde personen kunnen deelnemen.",
+            "join_rule_public_description": "Iedereen kan hem vinden en deelnemen."
         }
     },
     "encryption": {
@@ -3724,7 +3733,9 @@
         "failed_permission": "%(brand)s heeft geen toestemming gekregen om jouw locatie op te halen. Sta locatietoegang toe in je browserinstellingen.",
         "failed_generic": "Kan jouw locatie niet ophalen. Probeer het later opnieuw.",
         "failed_timeout": "Er is een time-out opgetreden bij het ophalen van jouw locatie. Probeer het later opnieuw.",
-        "failed_unknown": "Onbekende fout bij ophalen van locatie. Probeer het later opnieuw."
+        "failed_unknown": "Onbekende fout bij ophalen van locatie. Probeer het later opnieuw.",
+        "expand_map": "Map uitvouwen",
+        "failed_load_map": "Kan kaart niet laden"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Kan geen nieuwe spraakuitzending starten",
@@ -3735,5 +3746,9 @@
         "failed_others_already_recording_description": "Iemand anders neemt al een spraakuitzending op. Wacht tot de spraakuitzending is afgelopen om een nieuwe te starten.",
         "confirm_stop_title": "Live uitzending stoppen?",
         "confirm_stop_affirm": "Ja, stop uitzending"
+    },
+    "labs_mjolnir": {
+        "room_name": "Mijn banlijst",
+        "room_topic": "Dit is de lijst van door jou geblokkeerde servers/personen. Verlaat deze kamer niet!"
     }
 }

@@ -100,9 +100,6 @@
     "Filter room members": "Филтриране на членовете",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (ниво на достъп %(powerLevelNumber)s)",
     "You do not have permission to post to this room": "Нямате разрешение да публикувате в тази стая",
-    "Server error": "Сървърна грешка",
-    "Server unavailable, overloaded, or something else went wrong.": "Сървърът е недостъпен, претоварен или нещо друго се обърка.",
-    "Command error": "Грешка в командата",
     "%(duration)ss": "%(duration)sсек",
     "%(duration)sm": "%(duration)sмин",
     "%(duration)sh": "%(duration)sч",
@@ -147,9 +144,6 @@
     "Invalid file%(extra)s": "Невалиден файл%(extra)s",
     "Error decrypting image": "Грешка при разшифроване на снимка",
     "Error decrypting video": "Грешка при разшифроване на видео",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s промени аватара на %(roomName)s",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s премахна аватара на стаята.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s промени аватара на стаята на <img/>",
     "Copied!": "Копирано!",
     "Failed to copy": "Неуспешно копиране",
     "Add an Integration": "Добавяне на интеграция",
@@ -259,16 +253,13 @@
     "Notification targets": "Устройства, получаващи известия",
     "Today": "Днес",
     "Friday": "Петък",
-    "On": "Вкл.",
     "Changelog": "Списък на промените",
-    "Waiting for response from server": "Изчакване на отговор от сървъра",
     "Failed to send logs: ": "Неуспешно изпращане на логове: ",
     "This Room": "В тази стая",
     "Unavailable": "Не е наличен",
     "Source URL": "URL на източника",
     "Filter results": "Филтриране на резултати",
     "No update available.": "Няма нова версия.",
-    "Noisy": "Шумно",
     "Search…": "Търсене…",
     "Tuesday": "Вторник",
     "Preparing to send logs": "Подготовка за изпращане на логове",
@@ -286,7 +277,6 @@
     "Error encountered (%(errorDetail)s).": "Възникна грешка (%(errorDetail)s).",
     "Low Priority": "Нисък приоритет",
     "What's New": "Какво ново",
-    "Off": "Изкл.",
     "Thank you!": "Благодарим!",
     "Missing roomId.": "Липсва идентификатор на стая.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не може да се зареди събитието, на което е отговорено. Или не съществува или нямате достъп да го видите.",
@@ -332,8 +322,6 @@
     "Please contact your homeserver administrator.": "Моля, свържете се със сървърния администратор.",
     "This room has been replaced and is no longer active.": "Тази стая е била заменена и вече не е активна.",
     "The conversation continues here.": "Разговора продължава тук.",
-    "This room is a continuation of another conversation.": "Тази стая е продължение на предишен разговор.",
-    "Click here to see older messages.": "Кликнете тук за да видите предишните съобщения.",
     "Failed to upgrade room": "Неуспешно обновяване на стаята",
     "The room upgrade could not be completed": "Обновяването на тази стая не можа да бъде завършено",
     "Upgrade this room to version %(version)s": "Обновете тази стая до версия %(version)s",
@@ -593,7 +581,6 @@
     "Set a new custom sound": "Настрой нов собствен звук",
     "Browse": "Избор",
     "This room has already been upgraded.": "Тази стая вече е била обновена.",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>реагира с %(shortName)s</reactedWith>",
     "edited": "редактирано",
     "Rotate Left": "Завърти наляво",
     "Rotate Right": "Завърти надясно",
@@ -750,8 +737,6 @@
     "%(name)s cancelled": "%(name)s отказа",
     "%(name)s wants to verify": "%(name)s иска да извърши потвърждение",
     "You sent a verification request": "Изпратихте заявка за потвърждение",
-    "My Ban List": "Моя списък с блокирания",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Това е списък с хора/сървъри, които сте блокирали - не напускайте стаята!",
     "Cannot connect to integration manager": "Неуспешна връзка с мениджъра на интеграции",
     "The integration manager is offline or it cannot reach your homeserver.": "Мениджъра на интеграции е офлайн или не може да се свърже със сървъра ви.",
     "Error upgrading room": "Грешка при обновяване на стаята",
@@ -892,11 +877,6 @@
     "Encrypted by a deleted session": "Шифровано от изтрита сесия",
     "Scroll to most recent messages": "Отиди до най-скорошните съобщения",
     "Reject & Ignore user": "Откажи и игнорирай потребителя",
-    "Unknown Command": "Непозната команда",
-    "Unrecognised command: %(commandText)s": "Неразпозната команда: %(commandText)s",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Може да използвате <code>/help</code> за да видите наличните команди. Или пък искахте да изпратите това като съобщение?",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Съвет: Започнете съобщението си с <code>//</code> за да изпратите съобщение започващо с наклонена черта.",
-    "Send as message": "Изпрати като съобщение",
     "Mark all as read": "Маркирай всичко като прочетено",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Възникна грешка при обновяване на алтернативните адреси на стаята. Или не е позволено от сървъра или се е случила временна грешка.",
     "Local address": "Локален адрес",
@@ -972,9 +952,6 @@
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Не можахме да поканим тези потребители. Проверете потребителите, които искате да поканите и опитайте пак.",
     "Recently Direct Messaged": "Скорошни директни чатове",
     "IRC display name width": "Ширина на IRC името",
-    "Size must be a number": "Размера трябва да е число",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Собствения размер на шрифта може да бъде единствено между %(min)s pt и %(max)s pt",
-    "Use between %(min)s pt and %(max)s pt": "Изберете между %(min)s pt и %(max)s pt",
     "You've successfully verified your device!": "Успешно потвърдихте устройството си!",
     "To continue, use Single Sign On to prove your identity.": "За да продължите, използвайте Single Sign On за да потвърдите самоличността си.",
     "Confirm to continue": "Потвърдете за да продължите",
@@ -1033,7 +1010,6 @@
     "This session is encrypting history using the new recovery method.": "Тази сесия шифрова историята използвайки новия метод за възстановяване.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ако сте направили това без да искате, може да настройте защитени съобщения за тази сесия, което ще зашифрова наново историята на съобщенията използвайки новия метод за възстановяване.",
     "No recently visited rooms": "Няма наскоро-посетени стаи",
-    "Hey you. You're the best!": "Хей, ти. Върхът си!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Автентичността на това шифровано съобщение не може да бъде гарантирана на това устройство.",
     "Message preview": "Преглед на съобщението",
     "Room options": "Настройки на стаята",
@@ -1085,7 +1061,6 @@
     "Use the <a>Desktop app</a> to see all encrypted files": "Използвайте <a>Desktop приложението</a> за да видите всички шифровани файлове",
     "Click to view edits": "Кликнете за да видите редакциите",
     "Edited at %(date)s": "Редактирано на %(date)s",
-    "Message deleted on %(date)s": "Съобщението изтрито на %(date)s",
     "Video conference started by %(senderName)s": "Видео конференцията беше стартирана от %(senderName)s",
     "Video conference updated by %(senderName)s": "Видео конференцията беше обновена от %(senderName)s",
     "Video conference ended by %(senderName)s": "Видео конференцията беше прекратена от %(senderName)s",
@@ -1509,7 +1484,10 @@
         "integration_manager": "Мениджър на интеграции",
         "qr_code": "QR код",
         "feedback": "Обратна връзка",
-        "all_rooms": "Всички стаи"
+        "all_rooms": "Всички стаи",
+        "preview_message": "Хей, ти. Върхът си!",
+        "on": "Вкл.",
+        "off": "Изкл."
     },
     "action": {
         "continue": "Продължи",
@@ -1683,7 +1661,8 @@
         "collecting_logs": "Събиране на логове",
         "uploading_logs": "Качване на логове",
         "downloading_logs": "Изтегляне на логове",
-        "create_new_issue": "Моля, <newIssueLink>отворете нов проблем</newIssueLink> в GitHub за да проучим проблема."
+        "create_new_issue": "Моля, <newIssueLink>отворете нов проблем</newIssueLink> в GitHub за да проучим проблема.",
+        "waiting_for_server": "Изчакване на отговор от сървъра"
     },
     "time": {
         "date_at_time": "%(date)s в %(time)s",
@@ -1740,7 +1719,8 @@
             "rule_encrypted_room_one_to_one": "Шифровани съобщения в 1-на-1 чатове",
             "enable_desktop_notifications_session": "Включи уведомления на работния плот за тази сесия",
             "show_message_desktop_notification": "Показване на съдържание в известията на работния плот",
-            "enable_audible_notifications_session": "Включи звукови уведомления за тази сесия"
+            "enable_audible_notifications_session": "Включи звукови уведомления за тази сесия",
+            "noisy": "Шумно"
         },
         "appearance": {
             "heading": "Настройте изгледа",
@@ -1756,7 +1736,11 @@
             "font_size": "Размер на шрифта",
             "custom_font_description": "Настройте името на шрифт инсталиран в системата и %(brand)s ще се опита да го използва.",
             "timeline_image_size_default": "По подразбиране",
-            "custom_font_size": "Използвай собствен размер"
+            "custom_font_size": "Използвай собствен размер",
+            "font_size_nan": "Размера трябва да е число",
+            "font_size_limit": "Собствения размер на шрифта може да бъде единствено между %(min)s pt и %(max)s pt",
+            "font_size_valid": "Изберете между %(min)s pt и %(max)s pt",
+            "image_size_default": "По подразбиране"
         },
         "inline_url_previews_room_account": "Включване на URL прегледи за тази стая (засяга само Вас)",
         "inline_url_previews_room": "Включване по подразбиране на URL прегледи за участници в тази стая",
@@ -2000,6 +1984,21 @@
             "changed_rule_rooms": "%(senderName)s промени правило блокиращо достъпа до стаи отговарящи на %(oldGlob)s към отговарящи на %(newGlob)s поради %(reason)s",
             "changed_rule_servers": "%(senderName)s промени правило блокиращо достъпа до сървъри отговарящи на %(oldGlob)s към отговарящи на %(newGlob)s поради %(reason)s",
             "changed_rule_glob": "%(senderName)s промени правило блокиращо достъпа до неща отговарящи на %(oldGlob)s към отговарящи на %(newGlob)s поради %(reason)s"
+        },
+        "reactions": {
+            "tooltip": "<reactors/><reactedWith>реагира с %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Съобщението изтрито на %(date)s"
+        },
+        "m.room.avatar": {
+            "lightbox_title": "%(senderDisplayName)s промени аватара на %(roomName)s",
+            "removed": "%(senderDisplayName)s премахна аватара на стаята.",
+            "changed_img": "%(senderDisplayName)s промени аватара на стаята на <img/>"
+        },
+        "m.room.create": {
+            "continuation": "Тази стая е продължение на предишен разговор.",
+            "see_older_messages": "Кликнете тук за да видите предишните съобщения."
         }
     },
     "slash_command": {
@@ -2051,7 +2050,15 @@
         "join": "Присъединява се към стая с дадения адрес",
         "failed_find_user": "Неуспешно намиране на потребител в стаята",
         "op": "Променя нивото на достъп на потребителя",
-        "deop": "Отнема правата на потребител с даден идентификатор"
+        "deop": "Отнема правата на потребител с даден идентификатор",
+        "server_error": "Сървърна грешка",
+        "command_error": "Грешка в командата",
+        "server_error_detail": "Сървърът е недостъпен, претоварен или нещо друго се обърка.",
+        "unknown_command": "Непозната команда",
+        "unknown_command_detail": "Неразпозната команда: %(commandText)s",
+        "unknown_command_help": "Може да използвате <code>/help</code> за да видите наличните команди. Или пък искахте да изпратите това като съобщение?",
+        "unknown_command_hint": "Съвет: Започнете съобщението си с <code>//</code> за да изпратите съобщение започващо с наклонена черта.",
+        "unknown_command_button": "Изпрати като съобщение"
     },
     "presence": {
         "online_for": "Онлайн от %(duration)s",
@@ -2252,5 +2259,9 @@
         "public_heading": "Вашето публично пространство",
         "private_heading": "Вашето лично пространство",
         "add_details_prompt": "Добавете някои подробности, за да помогнете на хората да го разпознаят."
+    },
+    "labs_mjolnir": {
+        "room_name": "Моя списък с блокирания",
+        "room_topic": "Това е списък с хора/сървъри, които сте блокирали - не напускайте стаята!"
     }
 }

@@ -82,16 +82,12 @@
     "Today": "I dag",
     "Friday": "Fredag",
     "What's New": "Hvad er nyt",
-    "On": "Tændt",
     "Changelog": "Ændringslog",
-    "Waiting for response from server": "Venter på svar fra server",
-    "Off": "Slukket",
     "This Room": "Dette rum",
     "Unavailable": "Utilgængelig",
     "Source URL": "Kilde URL",
     "Filter results": "Filtrér resultater",
     "No update available.": "Ingen opdatering tilgængelig.",
-    "Noisy": "Støjende",
     "Search…": "Søg…",
     "Tuesday": "Tirsdag",
     "Saturday": "Lørdag",
@@ -226,7 +222,6 @@
     "Local address": "Lokal adresse",
     "This room has no local addresses": "Dette rum har ingen lokal adresse",
     "The conversation continues here.": "Samtalen fortsætter her.",
-    "Message deleted on %(date)s": "Besked slettet d. %(date)s",
     "France": "Frankrig",
     "Finland": "Finland",
     "Egypt": "Egypten",
@@ -523,7 +518,9 @@
         "someone": "Nogen",
         "encrypted": "Krypteret",
         "matrix": "Matrix",
-        "unnamed_room": "Unavngivet rum"
+        "unnamed_room": "Unavngivet rum",
+        "on": "Tændt",
+        "off": "Slukket"
     },
     "action": {
         "continue": "Fortsæt",
@@ -575,7 +572,8 @@
         "submit_debug_logs": "Indsend debug-logfiler",
         "send_logs": "Send logs",
         "collecting_information": "Indsamler app versionsoplysninger",
-        "collecting_logs": "Indsamler logfiler"
+        "collecting_logs": "Indsamler logfiler",
+        "waiting_for_server": "Venter på svar fra server"
     },
     "time": {
         "date_at_time": "%(date)s om %(time)s"
@@ -590,11 +588,13 @@
             "rule_invite_for_me": "Når jeg bliver inviteret til et rum",
             "rule_call": "Opkalds invitation",
             "rule_suppress_notices": "Beskeder sendt af en bot",
-            "show_message_desktop_notification": "Vis besked i skrivebordsnotifikation"
+            "show_message_desktop_notification": "Vis besked i skrivebordsnotifikation",
+            "noisy": "Støjende"
         },
         "appearance": {
             "custom_theme_success": "Tema tilføjet!",
-            "timeline_image_size_default": "Standard"
+            "timeline_image_size_default": "Standard",
+            "image_size_default": "Standard"
         }
     },
     "devtools": {
@@ -689,6 +689,9 @@
             "updated_rule_rooms": "%(senderName)s opdaterede den regel der banner rum som matcher %(glob)s på grund af %(reason)s",
             "updated_rule_servers": "%(senderName)s opdaterede den regel der banner servere der matcher %(glob)s på grund af %(reason)s",
             "updated_rule": "%(senderName)s opdaterede en ban-regel der matcher %(glob)s på grund af %(reason)s"
+        },
+        "redacted": {
+            "tooltip": "Besked slettet d. %(date)s"
         }
     },
     "slash_command": {

@@ -57,9 +57,7 @@
     "Today": "Sot",
     "Friday": "E premte",
     "Notifications": "Njoftime",
-    "On": "On",
     "Changelog": "Regjistër ndryshimesh",
-    "Waiting for response from server": "Po pritet për përgjigje nga shërbyesi",
     "Failed to change password. Is your password correct?": "S’u arrit të ndryshohej fjalëkalimi. A është i saktë fjalëkalimi juaj?",
     "Failed to send logs: ": "S’u arrit të dërgoheshin regjistra: ",
     "This Room": "Këtë Dhomë",
@@ -69,7 +67,6 @@
     "Source URL": "URL Burimi",
     "Filter results": "Filtroni përfundimet",
     "No update available.": "S’ka përditësim gati.",
-    "Noisy": "I zhurmshëm",
     "Search…": "Kërkoni…",
     "Tuesday": "E martë",
     "Preparing to send logs": "Po përgatitet për dërgim regjistrash",
@@ -90,7 +87,6 @@
     "Error encountered (%(errorDetail)s).": "U has gabim (%(errorDetail)s).",
     "Low Priority": "Përparësi e Ulët",
     "What's New": "Ç’ka të Re",
-    "Off": "Off",
     "Rooms": "Dhoma",
     "PM": "PM",
     "AM": "AM",
@@ -123,8 +119,6 @@
     },
     "Filter room members": "Filtroni anëtarë dhome",
     "You do not have permission to post to this room": "S’keni leje të postoni në këtë dhomë",
-    "Server error": "Gabim shërbyesi",
-    "Command error": "Gabim urdhri",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -251,11 +245,8 @@
     "%(roomName)s is not accessible at this time.": "Te %(roomName)s s’hyhet dot tani.",
     "Error decrypting attachment": "Gabim në shfshehtëzim bashkëngjitjeje",
     "Invalid file%(extra)s": "Kartelë e pavlefshme%(extra)s",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s ndryshoi avatarin në %(roomName)s",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s hoqi avatarin e dhomës.",
     "You seem to be uploading files, are you sure you want to quit?": "Duket se jeni duke ngarkuar kartela, jeni i sigurt se doni të dilet?",
     "Add some now": "Shtohen ca tani",
-    "Click here to see older messages.": "Klikoni këtu për të parë mesazhe më të vjetër.",
     "Clear cache and resync": "Spastro fshehtinën dhe rinjëkohëso",
     "Clear Storage and Sign Out": "Spastro Depon dhe Dil",
     "Permission Required": "Lypset Leje",
@@ -285,8 +276,6 @@
     "This room has been replaced and is no longer active.": "Kjo dhomë është zëvendësuar dhe s’është më aktive.",
     "Share room": "Ndani dhomë me të tjerë",
     "You don't currently have any stickerpacks enabled": "Hëpërhë, s’keni të aktivizuar ndonjë pako ngjitësesh",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s ndryshoi avatarin e dhomës në <img/>",
-    "This room is a continuation of another conversation.": "Kjo dhomë është një vazhdim i një bisede tjetër.",
     "Upgrade this room to version %(version)s": "Përmirësojeni këtë dhomë me versionin %(version)s",
     "Share Room": "Ndani Dhomë Me të Tjerë",
     "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
@@ -302,7 +291,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "S’lidhet dot te shërbyes Home - ju lutemi, kontrolloni lidhjen tuaj, sigurohuni që <a>dëshmia SSL e shërbyesit tuaj Home</a> besohet, dhe që s’ka ndonjë zgjerim shfletuesi që po bllokon kërkesat tuaja.",
     "Demote yourself?": "Të zhgradohet vetvetja?",
     "Demote": "Zhgradoje",
-    "Server unavailable, overloaded, or something else went wrong.": "Shërbyesi është i pakapshëm, i mbingarkuar, ose diç tjetër shkoi ters.",
     "No users have specific privileges in this room": "S’ka përdorues me privilegje të caktuara në këtë dhomë",
     "Publish this room to the public in %(domain)s's room directory?": "Të bëhet publike kjo dhomë te drejtoria e dhomave %(domain)s?",
     "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.": "Në dhoma të fshehtëzuara, si kjo, paraparja e URL-ve është e çaktivizuar, si parazgjedhje, për të garantuar që shërbyesi juaj home (ku edhe prodhohen paraparjet) të mos grumbullojë të dhëna rreth lidhjesh që shihni në këtë dhomë.",
@@ -593,7 +581,6 @@
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Përmirësimi i kësaj dhome do të asgjësojë instancën e tanishme të dhomës dhe do të krijojë një dhomë të përmirësuar me të njëjtin emër.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Kjo dhomë gjendet nën versionin <roomVersion /> e dhomës, të cilit shërbyesi Home i ka vënë shenjë si <i>i paqëndrueshëm</i>.",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "S’u shfuqizua dot ftesa. Shërbyesi mund të jetë duke kaluar një problem të përkohshëm ose s’keni leje të mjaftueshme për të shfuqizuar ftesën.",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reagoi me %(shortName)s</reactedWith>",
     "To help us prevent this in future, please <a>send us logs</a>.": "Për të na ndihmuar ta parandalojmë këtë në të ardhmen, ju lutemi, <a>dërgonani regjistra</a>.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Mungojnë disa të dhëna sesioni, përfshi kyçe mesazhesh të fshehtëzuar. Për të ndrequr këtë, dilni dhe hyni, duke rikthyer kështu kyçet nga kopjeruajtje.",
     "Your browser likely removed this data when running low on disk space.": "Ka gjasa që shfletuesi juaj të ketë hequr këto të dhëna kur kish pak hapësirë në disk.",
@@ -749,8 +736,6 @@
     "Cancel search": "Anulo kërkimin",
     "Jump to first unread room.": "Hidhu te dhoma e parë e palexuar.",
     "Jump to first invite.": "Hidhu te ftesa e parë.",
-    "My Ban List": "Lista Ime e Dëbimeve",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Kjo është lista juaj e përdoruesve/shërbyesve që keni bllokuar - mos dilni nga dhoma!",
     "Ignored/Blocked": "Të shpërfillur/Të bllokuar",
     "Error adding ignored user/server": "Gabim shtimi përdoruesi/shërbyesi të shpërfillur",
     "Something went wrong. Please try again or view your console for hints.": "Diç shkoi ters. Ju lutemi, riprovoni ose, për ndonjë ide, shihni konsolën tuaj.",
@@ -833,11 +818,6 @@
     "This room is end-to-end encrypted": "Kjo dhomë është e fshehtëzuar skaj-më-skaj",
     "Everyone in this room is verified": "Gjithkush në këtë dhomë është verifikuar",
     "Reject & Ignore user": "Hidhe poshtë & Shpërfille përdoruesin",
-    "Unknown Command": "Urdhër i Panjohur",
-    "Unrecognised command: %(commandText)s": "Urdhër Jo i Pranuar: %(commandText)s",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Mund të përdorni <code>/help</code> që të shfaqen urdhrat e gatshëm. Donit vërtet ta dërgoni këtë si një mesazh?",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Ndihmëz: Fillojeni mesazhin tuaj me <code>//</code> që të nisë me një pjerrake.",
-    "Send as message": "Dërgoni një mesazh",
     "Verify User": "Verifikoni Përdoruesin",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Për siguri ekstra, verifikojeni këtë përdorues duke kontrolluar në të dyja pajisjet tuaja një kod njëpërdorimsh.",
     "Start Verification": "Fillo Verifikimin",
@@ -1004,9 +984,6 @@
     "Confirm encryption setup": "Ripohoni ujdisje fshehtëzimi",
     "Click the button below to confirm setting up encryption.": "Klikoni mbi butonin më poshtë që të ripohoni ujdisjen e fshehtëzimit.",
     "IRC display name width": "Gjerësi shfaqjeje emrash IRC",
-    "Size must be a number": "Madhësia duhet të jetë një numër",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Madhësia vetjake për shkronjat mund të jetë vetëm mes vlerave %(min)s pt dhe %(max)s pt",
-    "Use between %(min)s pt and %(max)s pt": "Përdor me %(min)s pt dhe %(max)s pt",
     "Your homeserver has exceeded its user limit.": "Shërbyesi juaj Home ka tejkaluar kufijtë e tij të përdorimit.",
     "Your homeserver has exceeded one of its resource limits.": "Shërbyesi juaj Home ka tejkaluar një nga kufijtë e tij të burimeve.",
     "Contact your <a>server admin</a>.": "Lidhuni me <a>përgjegjësin e shërbyesit tuaj</a>.",
@@ -1035,9 +1012,7 @@
     "Message preview": "Paraparje mesazhi",
     "Room options": "Mundësi dhome",
     "Looks good!": "Mirë duket!",
-    "Hey you. You're the best!": "Hej, ju. S’u ka kush shokun!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Mirëfilltësia e këtij mesazhi të fshehtëzuar s’mund të garantohet në këtë pajisje.",
-    "Message deleted on %(date)s": "Mesazh i fshirë më %(date)s",
     "Wrong file type": "Lloj i gabuar kartele",
     "Security Phrase": "Frazë Sigurie",
     "Security Key": "Kyç Sigurie",
@@ -1668,9 +1643,6 @@
         "one": "& %(count)s më tepër"
     },
     "Upgrade required": "Lypset domosdo përmirësim",
-    "Anyone can find and join.": "Kushdo mund ta gjejë dhe hyjë në të.",
-    "Only invited people can join.": "Vetëm personat e ftuar mund të hyjnë.",
-    "Private (invite only)": "Private (vetëm me ftesa)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Ky përmirësim do t’u lejojë anëtarëve të hapësirave të përzgjedhura të hyjnë në këtë dhomë pa ndonjë ftesë.",
     "You're removing all spaces. Access will default to invite only": "Po hiqni krejt hapësirat. Hyrja do të kthehet te parazgjedhja, pra vetëm me ftesa",
     "Share content": "Ndani lëndë",
@@ -1725,7 +1697,6 @@
     "Select the roles required to change various parts of the space": "Përzgjidhni rolet e domosdoshëm për të ndryshuar pjesë të ndryshme të hapësirës",
     "Message didn't send. Click for info.": "Mesazhi s’u dërgua. Klikoni për hollësi.",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s reagoi me %(content)s",
     "Would you like to leave the rooms in this space?": "Doni të braktisen dhomat në këtë hapësirë?",
     "You are about to leave <spaceName/>.": "Ju ndan një hap nga braktisja e <spaceName/>.",
     "Leave some rooms": "Braktis disa dhoma",
@@ -1831,7 +1802,6 @@
     "Favourited": "U bë e parapëlqyer",
     "Close this widget to view it in this panel": "Mbylleni këtë widget, që ta shihni te ky panel",
     "Unpin this widget to view it in this panel": "Hiqjani fiksimin këtij widget-i, që ta shihni te ky panel",
-    "Large": "E madhe",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s dhe %(count)s tjetër",
         "other": "%(spaceName)s dhe %(count)s të tjerë"
@@ -1918,7 +1888,6 @@
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Po pritet që ju të verifikoni në pajisjen tuaj tjetër, %(deviceName)s (%(deviceId)s)…",
     "Verify this device by confirming the following number appears on its screen.": "Verifikoni këtë pajisje duke ripohuar se numri vijues shfaqet në ekranin e saj.",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Ripohoni se emoji-t më poshtë shfaqen në të dyja pajisjet, sipas të njëjtës radhë:",
-    "Expand map": "Zgjeroje hartën",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Çift (përdorues, sesion) i pavlefshëm: (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Adresë e panjohur dhome: %(roomAlias)s",
     "From a thread": "Nga një rrjedhë",
@@ -1931,7 +1900,6 @@
     "You were removed from %(roomName)s by %(memberName)s": "U hoqët %(roomName)s nga %(memberName)s",
     "Message pending moderation": "Mesazh në pritje të moderimit",
     "Message pending moderation: %(reason)s": "Mesazh në pritje të moderimit: %(reason)s",
-    "Keyboard": "Tastierë",
     "Space home": "Shtëpia e hapësirës",
     "Internal room ID": "ID e brendshme dhome",
     "Group all your rooms that aren't part of a space in one place.": "Gruponi në një vend krejt dhomat tuaja që s’janë pjesë e një hapësire.",
@@ -1977,7 +1945,6 @@
     "Drop a Pin": "Lini një Piketë",
     "Click to drop a pin": "Klikoni që të lihet një piketë",
     "Click to move the pin": "Klikoni që të lëvizet piketa",
-    "Unable to load map": "S’arrihet të ngarkohet hartë",
     "Click": "Klikim",
     "Can't create a thread from an event with an existing relation": "S’mund të krijohet një rrjedhë prej një akti me një marrëdhënie ekzistuese",
     "You are sharing your live location": "Po jepni vendndodhjen tuaj aty për aty",
@@ -1993,11 +1960,8 @@
         "one": "Aktualisht po hiqen mesazhe në %(count)s dhomë",
         "other": "Aktualisht po hiqen mesazhe në %(count)s dhoma"
     },
-    "Shared a location: ": "Dha një vendndodhje: ",
-    "Shared their location: ": "Dha vendndodhjen e vet: ",
     "Unsent": "Të padërguar",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Që të bëni hyrjen te shërbyes të tjerë Matrix, duke specifikuar një URL të një shërbyesi Home tjetër, mund të përdorni mundësitë vetjake për shërbyesin. Kjo ju lejon të përdorni %(brand)s në një tjetër shërbyes Home me një llogari Matrix ekzistuese.",
-    "Developer tools": "Mjete zhvilluesi",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s është eksperimental në një shfletues telefoni celular. Për punimin më të mirë dhe veçoritë më të reja, përdorni aplikacionin tonë falas.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s erdhi teksa provohej të hyhej në dhomë ose hapësirë. Nëse mendoni se po e shihni gabimisht këtë mesazh, ju lutemi, <issueLink>parashtroni një njoftim të mete</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Riprovoni më vonë, ose kërkojini një përgjegjësi dhome apo hapësire të kontrollojë nëse keni apo jo hyrje.",
@@ -2441,8 +2405,6 @@
     "Start DM anyway": "Nis MD sido qoftë",
     "Start DM anyway and never warn me again": "Nis MD sido qoftë dhe mos më sinjalizo kurrë më",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "S’arrihet të gjenden profile për ID-të Matrix radhitur më poshtë - doni të niset një MD sido që të jetë?",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "S’gjendet dot versioni i vjetër i kësaj dhome (ID dhome: %(roomId)s) dhe s’na është dhënë “via_servers” që të shohim për të.",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "S’gjendet dot versioni i vjetër i kësaj dhome (ID dhome: %(roomId)s) dhe s’na është dhënë “via_servers” që të shohim për të. Ka mundësi që hamendësimi i shërbyesit prej ID-së së dhomës të funksionojë. Nëse doni të provoni, klikoni këtë lidhje:",
     "Image view": "Parje figure",
     "Search all rooms": "Kërko në krejt dhomat",
     "Search this room": "Kërko në këtë dhomë",
@@ -2551,7 +2513,10 @@
         "qr_code": "Kod QR",
         "feedback": "Mendime",
         "all_rooms": "Krejt dhomat",
-        "orphan_rooms": "Dhoma të tjera"
+        "orphan_rooms": "Dhoma të tjera",
+        "preview_message": "Hej, ju. S’u ka kush shokun!",
+        "on": "On",
+        "off": "Off"
     },
     "action": {
         "continue": "Vazhdo",
@@ -2846,7 +2811,8 @@
         "collecting_logs": "Po grumbullohen regjistra",
         "uploading_logs": "Po ngarkohen regjistra",
         "downloading_logs": "Po shkarkohen regjistra",
-        "create_new_issue": "Ju lutemi, <newIssueLink>krijoni një çështje të re</newIssueLink> në GitHub, që të mund ta hetojmë këtë të metë."
+        "create_new_issue": "Ju lutemi, <newIssueLink>krijoni një çështje të re</newIssueLink> në GitHub, që të mund ta hetojmë këtë të metë.",
+        "waiting_for_server": "Po pritet për përgjigje nga shërbyesi"
     },
     "time": {
         "hours_minutes_seconds_left": "Edhe %(hours)sh %(minutes)sm %(seconds)ss",
@@ -2988,7 +2954,8 @@
             "enable_notifications_device": "Aktivizo njoftime për këtë pajisje",
             "enable_desktop_notifications_session": "Aktivizo njoftime desktop për këtë sesion",
             "show_message_desktop_notification": "Shfaq mesazh në njoftim për desktop",
-            "enable_audible_notifications_session": "Aktivizo njoftime audio për këtë sesion"
+            "enable_audible_notifications_session": "Aktivizo njoftime audio për këtë sesion",
+            "noisy": "I zhurmshëm"
         },
         "appearance": {
             "layout_irc": "IRC (Eksperimentale)",
@@ -3009,7 +2976,12 @@
             "timeline_image_size": "Madhësi figure në rrjedhën kohore",
             "timeline_image_size_default": "Parazgjedhje",
             "timeline_image_size_large": "E madhe",
-            "custom_font_size": "Përdor madhësi vetjake"
+            "custom_font_size": "Përdor madhësi vetjake",
+            "font_size_nan": "Madhësia duhet të jetë një numër",
+            "font_size_limit": "Madhësia vetjake për shkronjat mund të jetë vetëm mes vlerave %(min)s pt dhe %(max)s pt",
+            "font_size_valid": "Përdor me %(min)s pt dhe %(max)s pt",
+            "image_size_default": "Parazgjedhje",
+            "image_size_large": "E madhe"
         },
         "inline_url_previews_room_account": "Aktivizo paraparje URL-sh për këtë dhomë (prek vetëm ju)",
         "inline_url_previews_room": "Aktivizo, si parazgjedhje, paraparje URL-sh për pjesëmarrësit në këtë dhomë",
@@ -3060,6 +3032,9 @@
             "echo_cancellation": "Anulim jehonash",
             "noise_suppression": "Mbytje zhurmash",
             "enable_fallback_ice_server_description": "Vlen vetëm nëse shërbyes juaj Home nuk ofron një të tillë. Adresa juaj IP mund t’u zbulohet të tjerëve gjatë thirrjes."
+        },
+        "keyboard": {
+            "title": "Tastierë"
         }
     },
     "devtools": {
@@ -3151,7 +3126,8 @@
         "show_hidden_events": "Shfaq te rrjedha kohore veprimtari të fshehura",
         "low_bandwidth_mode": "Mënyra gjerësi e ulët bande",
         "low_bandwidth_mode_description": "Lyp shërbyes Home të përputhshëm.",
-        "developer_mode": "Mënyra zhvillues"
+        "developer_mode": "Mënyra zhvillues",
+        "title": "Mjete zhvilluesi"
     },
     "export_chat": {
         "html": "HTML",
@@ -3268,7 +3244,12 @@
             "kick": "%(senderName)s hoqi %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s ndryshoi temën në \"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s ndryshoi avatarin e dhomës.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s ndryshoi avatarin e dhomës.",
+            "lightbox_title": "%(senderDisplayName)s ndryshoi avatarin në %(roomName)s",
+            "removed": "%(senderDisplayName)s hoqi avatarin e dhomës.",
+            "changed_img": "%(senderDisplayName)s ndryshoi avatarin e dhomës në <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s hoqi emrin e dhomës.",
             "change": "%(senderDisplayName)s ndryshoi emrin e dhomës nga %(oldRoomName)s në %(newRoomName)s.",
@@ -3334,7 +3315,11 @@
             "removed": "Widget-i %(widgetName)s u hoq nga %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s ka përditësuar skemën e dhomës",
-        "m.location": "%(senderName)s dha vendndodhjen e vet",
+        "m.location": {
+            "full": "%(senderName)s dha vendndodhjen e vet",
+            "self_location": "Dha vendndodhjen e vet: ",
+            "location": "Dha një vendndodhje: "
+        },
         "self_redaction": "Mesazhi u fshi",
         "redaction": "Mesazh i fshirë nga %(name)s",
         "m.poll.start": "%(senderName)s nisi një anketim - %(pollQuestion)s",
@@ -3511,6 +3496,19 @@
         "io.element.voice_broadcast_info": {
             "you": "Përfunduat një <a>transmetim zanor</a>",
             "user": "%(senderName)s përfundoi një <a>transmetim zanor</a>"
+        },
+        "reactions": {
+            "label": "%(reactors)s reagoi me %(content)s",
+            "tooltip": "<reactors/><reactedWith>reagoi me %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Mesazh i fshirë më %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Kjo dhomë është një vazhdim i një bisede tjetër.",
+            "unknown_predecessor_guess_server": "S’gjendet dot versioni i vjetër i kësaj dhome (ID dhome: %(roomId)s) dhe s’na është dhënë “via_servers” që të shohim për të. Ka mundësi që hamendësimi i shërbyesit prej ID-së së dhomës të funksionojë. Nëse doni të provoni, klikoni këtë lidhje:",
+            "unknown_predecessor": "S’gjendet dot versioni i vjetër i kësaj dhome (ID dhome: %(roomId)s) dhe s’na është dhënë “via_servers” që të shohim për të.",
+            "see_older_messages": "Klikoni këtu për të parë mesazhe më të vjetër."
         }
     },
     "slash_command": {
@@ -3576,7 +3574,15 @@
         "failed_find_room": "Urdhri dështoi: S’arrihet të gjendet dhoma (%(roomId)s",
         "failed_find_user": "S’u gjet përdorues në dhomë",
         "op": "Përcaktoni shkallë pushteti të një përdoruesi",
-        "deop": "I heq cilësinë e operatorit përdoruesit me ID-në e dhënë"
+        "deop": "I heq cilësinë e operatorit përdoruesit me ID-në e dhënë",
+        "server_error": "Gabim shërbyesi",
+        "command_error": "Gabim urdhri",
+        "server_error_detail": "Shërbyesi është i pakapshëm, i mbingarkuar, ose diç tjetër shkoi ters.",
+        "unknown_command": "Urdhër i Panjohur",
+        "unknown_command_detail": "Urdhër Jo i Pranuar: %(commandText)s",
+        "unknown_command_help": "Mund të përdorni <code>/help</code> që të shfaqen urdhrat e gatshëm. Donit vërtet ta dërgoni këtë si një mesazh?",
+        "unknown_command_hint": "Ndihmëz: Fillojeni mesazhin tuaj me <code>//</code> që të nisë me një pjerrake.",
+        "unknown_command_button": "Dërgoni një mesazh"
     },
     "presence": {
         "busy": "I zënë",
@@ -3696,7 +3702,10 @@
             "notifications.room": "Njoftoni gjithkënd"
         },
         "security": {
-            "strict_encryption": "Mos dërgo kurrë prej këtij sesioni mesazhe të fshehtëzuar te sesione të paverifikuar në këtë dhomë"
+            "strict_encryption": "Mos dërgo kurrë prej këtij sesioni mesazhe të fshehtëzuar te sesione të paverifikuar në këtë dhomë",
+            "join_rule_invite": "Private (vetëm me ftesa)",
+            "join_rule_invite_description": "Vetëm personat e ftuar mund të hyjnë.",
+            "join_rule_public_description": "Kushdo mund ta gjejë dhe hyjë në të."
         }
     },
     "encryption": {
@@ -4007,7 +4016,9 @@
         "failed_permission": "%(brand)s iu mohua leja për të sjellë vendndodhjen tuaj. Ju lutemi, lejoni përdorim vendndodhjeje, te rregullimet e shfletuesit tuaj.",
         "failed_generic": "S’u arrit të sillet vendndodhja juaj. Ju lutemi, riprovoni më vonë.",
         "failed_timeout": "Mbaroi koha duke provuar të sillet vendndodhja juaj. Ju lutemi, riprovoni më vonë.",
-        "failed_unknown": "Gabim i panjohur në sjelljen e vendndodhjes. Ju lutemi, riprovoni më vonë."
+        "failed_unknown": "Gabim i panjohur në sjelljen e vendndodhjes. Ju lutemi, riprovoni më vonë.",
+        "expand_map": "Zgjeroje hartën",
+        "failed_load_map": "S’arrihet të ngarkohet hartë"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "S’niset dot një transmetim zanor i ri",
@@ -4028,5 +4039,9 @@
         "confirm_listen_affirm": "Po, përfundoje regjistrimin tim",
         "30s_backward": "30s mbrapsht",
         "30s_forward": "30s përpara"
+    },
+    "labs_mjolnir": {
+        "room_name": "Lista Ime e Dëbimeve",
+        "room_topic": "Kjo është lista juaj e përdoruesve/shërbyesve që keni bllokuar - mos dilni nga dhoma!"
     }
 }

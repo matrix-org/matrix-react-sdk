@@ -40,12 +40,9 @@
     "Today": "היום",
     "Friday": "שישי",
     "What's New": "מה חדש",
-    "On": "התראה",
     "Changelog": "דו\"ח שינויים",
-    "Waiting for response from server": "ממתין לתשובה מהשרת",
     "Failed to send logs: ": "כשל במשלוח יומנים: ",
     "This Room": "החדר הזה",
-    "Noisy": "התראה קולית",
     "Unavailable": "לא זמין",
     "Source URL": "כתובת URL אתר המקור",
     "Filter results": "סנן התוצאות",
@@ -66,7 +63,6 @@
     "Yesterday": "אתמול",
     "Error encountered (%(errorDetail)s).": "ארעה שגיעה %(errorDetail)s .",
     "Low Priority": "עדיפות נמוכה",
-    "Off": "ללא",
     "Thank you!": "רב תודות!",
     "Your %(brand)s is misconfigured": "ה %(brand)s שלך מוגדר באופן שגוי",
     "Add Phone Number": "הוסף מספר טלפון",
@@ -90,7 +86,6 @@
     "Use an identity server": "השתמש בשרת זיהוי",
     "Double check that your server supports the room version chosen and try again.": "בדקו שהשרת תומך בגרסאת החדר ונסו שוב.",
     "Error upgrading room": "שגיאה בשדרוג חדר",
-    "Command error": "שגיאת פקודה",
     "Setting up keys": "מגדיר מפתחות",
     "Are you sure you want to cancel entering passphrase?": "האם אתם בטוחים שהינכם רוצים לבטל?",
     "Cancel entering passphrase?": "בטל הקלדת סיסמא?",
@@ -556,8 +551,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s - %(day)s - %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s - %(day)s - %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "This is your list of users/servers you have blocked - don't leave the room!": "זוהי רשימת השרתים\\משתמשים אשר בחרתם לחסום - אל תצאו מחדר זה!",
-    "My Ban List": "רשימת החסומים שלי",
     "IRC display name width": "רוחב תצוגת השם של IRC",
     "Change notification settings": "שינוי הגדרת התרעות",
     "Please contact your homeserver administrator.": "אנא צרו קשר עם מנהל השרת שלכם.",
@@ -667,7 +660,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "השתמשו ב <a> אפליקציית שולחן העבודה </a> לחיפוש הודעות מוצפנות",
     "Use the <a>Desktop app</a> to see all encrypted files": "השתמשו ב <a> אפליקציית שולחן העבודה </a> כדי לראות את כל הקבצים המוצפנים",
     "Popout widget": "יישומון קופץ",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith> הגיבו עם %(shortName)s</reactedWith>",
     "Error decrypting video": "שגיאה בפענוח וידאו",
     "You sent a verification request": "שלחתם בקשה לקוד אימות",
     "%(name)s wants to verify": "%(name)s רוצה לאמת",
@@ -804,13 +796,6 @@
     "Add some now": "הוסף אותם כעת",
     "You don't currently have any stickerpacks enabled": "כרגע אין לך חבילות מדבקה מופעלות",
     "Failed to connect to integration manager": "ההתחברות למנהל האינטגרציה נכשלה",
-    "Send as message": "שלח כהודעה",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "רמז: התחל את ההודעה שלך עם <code>//</code> כדי להתחיל אותה עם קו נטוי.",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "באפשרותך להשתמש ב- <code> /help </code> כדי לרשום פקודות זמינות. האם התכוונת לשלוח זאת כהודעה?",
-    "Unrecognised command: %(commandText)s": "פקודה לא מזוהה: %(commandText)s",
-    "Unknown Command": "פקודה לא ידועה",
-    "Server unavailable, overloaded, or something else went wrong.": "השרת לא זמין, עמוס מדי או שמשהו אחר השתבש.",
-    "Server error": "שגיאת שרת",
     "Only room administrators will see this warning": "רק מנהלי חדרים יראו את האזהרה הזו",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "חדר זה מריץ את גרסת החדר <roomVersion/>, ששרת הבית הזה סימן כ- <i> לא יציב </i>.",
     "This room has already been upgraded.": "החדר הזה כבר שודרג.",
@@ -946,12 +931,6 @@
     "Add an Integration": "הוסף אינטגרציה",
     "Failed to copy": "שגיאה בהעתקה",
     "Copied!": "הועתק!",
-    "This room is a continuation of another conversation.": "החדר הזה הוא המשך לשיחה אחרת.",
-    "Click here to see older messages.": "לחץ כאן לראות הודעות ישנות.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s שינה את האווטאר של החדר ל- <img/>",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s הסיר את האווטאר של החדר.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s שינה את האווטר עבור חדר %(roomName)s",
-    "Message deleted on %(date)s": "הודעה נמחקה בתאריך %(date)s",
     "Browse": "דפדף",
     "Set a new custom sound": "הגדר צליל מותאם אישי",
     "Notification sound": "צליל התראה",
@@ -1029,10 +1008,6 @@
     "Email addresses": "כתובות דוא\"ל",
     "Show advanced": "הצג מתקדם",
     "Hide advanced": "הסתר מתקדם",
-    "Use between %(min)s pt and %(max)s pt": "השתמש בין %(min)s ל %(max)s נקודות",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "גודל גופן מותאם אישית יכול להיות רק בין %(min)s ל %(max)s נקודות",
-    "Size must be a number": "הגדול חייב להיות מספר",
-    "Hey you. You're the best!": "היי, אתם אלופים!",
     "Check for update": "בדוק עדכונים",
     "New version available. <a>Update now.</a>": "גרסא חדשה קיימת. <a>שדרגו עכשיו.</a>",
     "Manage integrations": "נהל שילובים",
@@ -1485,15 +1460,12 @@
     "Copy link to thread": "העתק קישור לשרשור",
     "Unknown failure": "כשל לא ידוע",
     "You have no ignored users.": "אין לך משתמשים שהתעלמו מהם.",
-    "Keyboard": "מקלדת",
     "Global": "כללי",
     "Loading new room": "טוען חדר חדש",
     "Sending invites... (%(progress)s out of %(count)s)": {
         "one": "שולח הזמנה..."
     },
     "Upgrade required": "נדרש שדרוג",
-    "Anyone can find and join.": "כל אחד יכול למצוא ולהצטרף.",
-    "Large": "גדול",
     "Select all": "בחר הכל",
     "Deselect all": "הסר סימון מהכל",
     "Sign out devices": {
@@ -1547,8 +1519,6 @@
     "No unverified sessions found.": "לא נמצאו הפעלות לא מאומתות.",
     "Friends and family": "חברים ומשפחה",
     "An error occurred whilst sharing your live location, please try again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב",
-    "Only invited people can join.": "רק משתשים מוזמנים יכולים להצטרף.",
-    "Private (invite only)": "פרטי (הזמנות בלבד)",
     "%(count)s Members": {
         "one": "%(count)s חברים"
     },
@@ -1807,7 +1777,10 @@
         "qr_code": "קוד QR",
         "feedback": "משוב",
         "all_rooms": "כל החדרים",
-        "orphan_rooms": "חדרים אחרים"
+        "orphan_rooms": "חדרים אחרים",
+        "preview_message": "היי, אתם אלופים!",
+        "on": "התראה",
+        "off": "ללא"
     },
     "action": {
         "continue": "המשך",
@@ -2030,7 +2003,8 @@
         "collecting_logs": "אוסף יומנים לנפוי שגיאה (דבאג)",
         "uploading_logs": "מעלה לוגים",
         "downloading_logs": "מוריד לוגים",
-        "create_new_issue": "אנא <newIssueLink> צור בעיה חדשה </newIssueLink> ב- GitHub כדי שנוכל לחקור את הבאג הזה."
+        "create_new_issue": "אנא <newIssueLink> צור בעיה חדשה </newIssueLink> ב- GitHub כדי שנוכל לחקור את הבאג הזה.",
+        "waiting_for_server": "ממתין לתשובה מהשרת"
     },
     "time": {
         "hours_minutes_seconds_left": "נשארו %(hours)s שעות, %(minutes)s דקות ו-%(seconds)s שניות",
@@ -2108,7 +2082,8 @@
             "enable_notifications_device": "אפשר קבלת התראות במכשיר זה",
             "enable_desktop_notifications_session": "החל התראות עבור התחברות זו",
             "show_message_desktop_notification": "הצג הודעה בהתראות שולחן עבודה",
-            "enable_audible_notifications_session": "אפשר התראות נשמעות עבור התחברות זו"
+            "enable_audible_notifications_session": "אפשר התראות נשמעות עבור התחברות זו",
+            "noisy": "התראה קולית"
         },
         "appearance": {
             "layout_bubbles": "בועות הודעות",
@@ -2127,7 +2102,12 @@
             "timeline_image_size": "גודל תמונה בציר הזמן",
             "timeline_image_size_default": "ברירת מחדל",
             "timeline_image_size_large": "גדול",
-            "custom_font_size": "השתמשו בגודל מותאם אישית"
+            "custom_font_size": "השתמשו בגודל מותאם אישית",
+            "font_size_nan": "הגדול חייב להיות מספר",
+            "font_size_limit": "גודל גופן מותאם אישית יכול להיות רק בין %(min)s ל %(max)s נקודות",
+            "font_size_valid": "השתמש בין %(min)s ל %(max)s נקודות",
+            "image_size_default": "ברירת מחדל",
+            "image_size_large": "גדול"
         },
         "inline_url_previews_room_account": "הראה תצוגה מקדימה של קישורים בחדר זה (משפיע רק עליכם)",
         "inline_url_previews_room": "אפשר לחברים בחדר זה לצפות בתצוגת קישורים",
@@ -2171,6 +2151,9 @@
             "echo_cancellation": "ביטול הד",
             "noise_suppression": "ביטול רעשים",
             "enable_fallback_ice_server_description": "רלוונטי רק אם שרת הבית לא מציע שרת שיחות. כתובת ה-IP שלך תשותף במהלך שיחה."
+        },
+        "keyboard": {
+            "title": "מקלדת"
         }
     },
     "devtools": {
@@ -2289,7 +2272,12 @@
             "withdrew_invite": "%(senderName)s ביטל/ה את ההזמנה של %(targetName)s לחדר"
         },
         "m.room.topic": "%(senderDisplayName)s שינה את שם הנושא ל-\"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s שינה את תמונת החדר.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s שינה את תמונת החדר.",
+            "lightbox_title": "%(senderDisplayName)s שינה את האווטר עבור חדר %(roomName)s",
+            "removed": "%(senderDisplayName)s הסיר את האווטאר של החדר.",
+            "changed_img": "%(senderDisplayName)s שינה את האווטאר של החדר ל- <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s הסיר את שם החדר.",
             "change": "%(senderDisplayName)s שינה את שם החדר מ-%(oldRoomName)s ל%(newRoomName)s.",
@@ -2353,7 +2341,9 @@
             "added": "היישומון %(widgetName)s התווסף על ידי %(senderName)s",
             "removed": "היישומון %(widgetName)s הוסר על ידי %(senderName)s"
         },
-        "m.location": "%(senderName)s שיתף/ה מיקום",
+        "m.location": {
+            "full": "%(senderName)s שיתף/ה מיקום"
+        },
         "self_redaction": "הודעה נמחקה",
         "redaction": "הודעה נמחקה על ידיד%(name)s",
         "m.poll.start": "%(senderName)s התחיל סקר - %(pollQuestion)s",
@@ -2498,7 +2488,17 @@
             "changed_rule_servers": "%(senderName)sשינה כלל אשר חסם שרתים שתאמו ל%(oldGlob)s ל%(newGlob)s עבור %(reason)s",
             "changed_rule_glob": "%(senderName)s עדכן כלל חסימה אשר תאם ל%(oldGlob)s ל%(newGlob)s עבור %(reason)s"
         },
-        "historical_messages_unavailable": "לא ניתן לצפות בהודעות קודמות"
+        "historical_messages_unavailable": "לא ניתן לצפות בהודעות קודמות",
+        "reactions": {
+            "tooltip": "<reactors/><reactedWith> הגיבו עם %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "הודעה נמחקה בתאריך %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "החדר הזה הוא המשך לשיחה אחרת.",
+            "see_older_messages": "לחץ כאן לראות הודעות ישנות."
+        }
     },
     "slash_command": {
         "spoiler": "שולח הודעה ומסמן אותה כספוילר",
@@ -2559,7 +2559,15 @@
         "failed_find_room": "הפעולה נכשלה: לא ניתן למצוא את החדר (%(roomId)s",
         "failed_find_user": "משתמש זה לא נמצא בחדר",
         "op": "הגדירו את רמת ההרשאות של משתמש",
-        "deop": "מסיר משתמש עם קוד זיהוי זה"
+        "deop": "מסיר משתמש עם קוד זיהוי זה",
+        "server_error": "שגיאת שרת",
+        "command_error": "שגיאת פקודה",
+        "server_error_detail": "השרת לא זמין, עמוס מדי או שמשהו אחר השתבש.",
+        "unknown_command": "פקודה לא ידועה",
+        "unknown_command_detail": "פקודה לא מזוהה: %(commandText)s",
+        "unknown_command_help": "באפשרותך להשתמש ב- <code> /help </code> כדי לרשום פקודות זמינות. האם התכוונת לשלוח זאת כהודעה?",
+        "unknown_command_hint": "רמז: התחל את ההודעה שלך עם <code>//</code> כדי להתחיל אותה עם קו נטוי.",
+        "unknown_command_button": "שלח כהודעה"
     },
     "presence": {
         "online_for": "מחובר %(duration)s",
@@ -2659,7 +2667,10 @@
             "notifications.room": "התראה לכולם"
         },
         "security": {
-            "strict_encryption": "לעולם אל תשלח הודעות מוצפנות אל התחברות שאינה מאומתת בחדר זה, מהתחברות זו"
+            "strict_encryption": "לעולם אל תשלח הודעות מוצפנות אל התחברות שאינה מאומתת בחדר זה, מהתחברות זו",
+            "join_rule_invite": "פרטי (הזמנות בלבד)",
+            "join_rule_invite_description": "רק משתשים מוזמנים יכולים להצטרף.",
+            "join_rule_public_description": "כל אחד יכול למצוא ולהצטרף."
         }
     },
     "encryption": {
@@ -2920,5 +2931,9 @@
         "mapbox_logo": "לוגו",
         "reset_bearing": "נעלו את המפה לכיוון צפון",
         "failed_generic": "איתור המיקום שלך נכשל. אנא נסה שוב מאוחר יותר."
+    },
+    "labs_mjolnir": {
+        "room_name": "רשימת החסומים שלי",
+        "room_topic": "זוהי רשימת השרתים\\משתמשים אשר בחרתם לחסום - אל תצאו מחדר זה!"
     }
 }

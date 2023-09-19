@@ -45,7 +45,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Nelze se připojit k domovskému serveru – zkontrolujte prosím své připojení, prověřte, zda je <a>SSL certifikát</a> vašeho domovského serveru důvěryhodný, a že některé z rozšíření prohlížeče neblokuje komunikaci.",
     "Banned users": "Vykázaní uživatelé",
     "Change Password": "Změnit heslo",
-    "Command error": "Chyba příkazu",
     "Commands": "Příkazy",
     "Confirm password": "Potvrďte heslo",
     "Cryptography": "Šifrování",
@@ -103,10 +102,8 @@
     "Room %(roomId)s not visible": "Místnost %(roomId)s není viditelná",
     "%(roomName)s does not exist.": "%(roomName)s neexistuje.",
     "%(roomName)s is not accessible at this time.": "Místnost %(roomName)s není v tuto chvíli dostupná.",
-    "Server error": "Chyba serveru",
     "Server may be unavailable, overloaded, or search timed out :(": "Server může být nedostupný, přetížený nebo vyhledávání vypršelo :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server může být nedostupný, přetížený nebo jste narazili na chybu.",
-    "Server unavailable, overloaded, or something else went wrong.": "Server je nedostupný, přetížený nebo se něco pokazilo.",
     "Session ID": "ID sezení",
     "Start authentication": "Zahájit autentizaci",
     "This email address is already in use": "Tato e-mailová adresa je již používána",
@@ -161,8 +158,6 @@
     "Delete Widget": "Smazat widget",
     "Error decrypting image": "Chyba při dešifrování obrázku",
     "Error decrypting video": "Chyba při dešifrování videa",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s odstranil(a) avatar místnosti.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s změnil(a) avatar místnosti na <img/>",
     "Copied!": "Zkopírováno!",
     "Failed to copy": "Nepodařilo se zkopírovat",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Smazáním widgetu ho odstraníte všem uživatelům v této místnosti. Opravdu chcete tento widget smazat?",
@@ -188,7 +183,6 @@
     "You have <a>disabled</a> URL previews by default.": "<a>Vypnuli</a> jste automatické náhledy webových adres.",
     "You have <a>enabled</a> URL previews by default.": "<a>Zapnuli</a> jste automatické náhledy webových adres.",
     "URL Previews": "Náhledy webových adres",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s změnil(a) avatar místnosti %(roomName)s",
     "Add an Integration": "Přidat začlenění",
     "File to import": "Soubor k importu",
     "Passphrases must match": "Přístupové fráze se musí shodovat",
@@ -253,11 +247,8 @@
     "Today": "Dnes",
     "Friday": "Pátek",
     "What's New": "Co je nového",
-    "On": "Zapnout",
     "Changelog": "Seznam změn",
-    "Waiting for response from server": "Čekám na odezvu ze serveru",
     "This Room": "Tato místnost",
-    "Noisy": "Hlučný",
     "Unavailable": "Nedostupné",
     "Source URL": "Zdrojová URL",
     "Filter results": "Filtrovat výsledky",
@@ -275,7 +266,6 @@
     "Yesterday": "Včera",
     "Error encountered (%(errorDetail)s).": "Nastala chyba (%(errorDetail)s).",
     "Low Priority": "Nízká priorita",
-    "Off": "Vypnout",
     "Wednesday": "Středa",
     "Thank you!": "Děkujeme vám!",
     "Permission Required": "Vyžaduje oprávnění",
@@ -476,8 +466,6 @@
     "Folder": "Desky",
     "Add some now": "Přidat nějaké",
     "Main address": "Hlavní adresa",
-    "This room is a continuation of another conversation.": "Tato místost je pokračováním jiné konverzace.",
-    "Click here to see older messages.": "Klepnutím zobrazíte starší zprávy.",
     "The following users may not exist": "Následující uživatel možná neexistuje",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nepovedlo se najít profily následujících Matrix ID - chcete je stejně pozvat?",
     "Invite anyway and never warn me again": "Stejně je pozvat a nikdy mě nevarujte znovu",
@@ -564,7 +552,6 @@
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Pozvání se nepovedlo zrušit. Mohlo dojít k dočasnému problému nebo na to nemáte dostatečná práva.",
     "Revoke invite": "Zrušit pozvání",
     "Invited by %(sender)s": "Pozván od uživatele %(sender)s",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith> reagoval(a) %(shortName)s</reactedWith>",
     "edited": "upraveno",
     "Rotate Left": "Otočit doleva",
     "Rotate Right": "Otočit doprava",
@@ -750,8 +737,6 @@
     "User Autocomplete": "Automatické doplňování uživatelů",
     "Error upgrading room": "Chyba při aktualizaci místnosti",
     "Double check that your server supports the room version chosen and try again.": "Zkontrolujte, že váš server opravdu podporuje zvolenou verzi místnosti.",
-    "My Ban List": "Můj seznam zablokovaných",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Toto je váš seznam blokovaných uživatelů/serverů - neopouštějte tuto místnost!",
     "Cannot connect to integration manager": "Nepovedlo se připojení ke správci integrací",
     "The integration manager is offline or it cannot reach your homeserver.": "Správce integrací neběží nebo se nemůže připojit k vašemu domovskému serveru.",
     "Manage integrations": "Správa integrací",
@@ -856,11 +841,6 @@
     "Encrypted by a deleted session": "Šifrované smazanou relací",
     "Direct Messages": "Přímé zprávy",
     "Reject & Ignore user": "Odmítnout a ignorovat uživatele",
-    "Unknown Command": "Neznámý příkaz",
-    "Unrecognised command: %(commandText)s": "Nerozpoznaný příkaz: %(commandText)s",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Můžete použít <code>/help</code> na vypsání všech příkazů. Nebo jste text chtěli odeslat jako zprávu?",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Tip: Zprávu můžete začít <code>//</code>, pokud chcete aby začínala lomítkem.",
-    "Send as message": "Odeslat jako zprávu",
     "Waiting for %(displayName)s to accept…": "Čekáme, než %(displayName)s výzvu přijme…",
     "Start Verification": "Zahájit ověření",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Vaše zprávy jsou zabezpečené - pouze vy a jejich příjemci máte klíče potřebné k jejich přečtení.",
@@ -975,9 +955,6 @@
     "There was a problem communicating with the server. Please try again.": "Došlo k potížím při komunikaci se serverem. Zkuste to prosím znovu.",
     "IRC display name width": "šířka zobrazovného IRC jména",
     "unexpected type": "neočekávaný typ",
-    "Size must be a number": "Velikost musí být číslo",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Vlastní velikost písma může být pouze mezi %(min)s pt a %(max)s pt",
-    "Use between %(min)s pt and %(max)s pt": "Použijte velikost mezi %(min)s pt a %(max)s pt",
     "Please verify the room ID or address and try again.": "Ověřte prosím, že ID místnosti je správné a zkuste to znovu.",
     "Room ID or address of ban list": "ID nebo adresa seznamu zablokovaných",
     "Your homeserver has exceeded its user limit.": "Na vašem domovském serveru byl překročen limit počtu uživatelů.",
@@ -994,7 +971,6 @@
     "You don't have permission to delete the address.": "Nemáte oprávnění adresu smazat.",
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "Při odstraňování adresy došlo k chybě. Adresa již nemusí ekzistovat, nebo mohlo dojít k dočasné chybě.",
     "Error removing address": "Chyba při odstraňování adresy",
-    "Message deleted on %(date)s": "Zpráva byla odstraněna %(date)s",
     "Edited at %(date)s": "Upraveno %(date)s",
     "Click to view edits": "Klikněte pro zobrazení úprav",
     "Room address": "Adresa místnosti",
@@ -1048,7 +1024,6 @@
     "Use the <a>Desktop app</a> to see all encrypted files": "Pro zobrazení všech šifrovaných souborů použijte <a>desktopovou aplikaci</a>",
     "Attach files from chat or just drag and drop them anywhere in a room.": "Připojte soubory z chatu nebo je jednoduše přetáhněte kamkoli do místnosti.",
     "No files visible in this room": "V této místnosti nejsou viditelné žádné soubory",
-    "Hey you. You're the best!": "Hej ty. Jsi nejlepší!",
     "Secret storage:": "Bezpečné úložiště:",
     "Backup key cached:": "Klíč zálohy cachován:",
     "Backup key stored:": "Klíč zálohy uložen:",
@@ -1640,8 +1615,6 @@
         "other": "a %(count)s dalších",
         "one": "a %(count)s další"
     },
-    "Only invited people can join.": "Připojit se mohou pouze pozvané osoby.",
-    "Private (invite only)": "Soukromý (pouze pro pozvané)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Tato změna umožní členům vybraných prostorů přístup do této místnosti bez pozvánky.",
     "There was an error loading your notification settings.": "Došlo k chybě při načítání nastavení oznámení.",
     "Global": "Globální",
@@ -1653,7 +1626,6 @@
     "Could not connect media": "Nepodařilo se připojit média",
     "Unable to copy a link to the room to the clipboard.": "Nelze zkopírovat odkaz na místnost do schránky.",
     "Unable to copy room link": "Nelze zkopírovat odkaz na místnost",
-    "Anyone can find and join.": "Kdokoliv může místnost najít a připojit se do ní.",
     "Public room": "Veřejná místnost",
     "The call is in an unknown state!": "Hovor je v neznámém stavu!",
     "Call back": "Zavolat zpět",
@@ -1729,7 +1701,6 @@
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Kdokoli v <spaceName/> může prostor najít a připojit se. Můžete vybrat i další prostory.",
     "Message didn't send. Click for info.": "Zpráva se neodeslala. Klikněte pro informace.",
     "To join a space you'll need an invite.": "Pro připojení k prostoru potřebujete pozvánku.",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s reagoval(a) na %(content)s",
     "Would you like to leave the rooms in this space?": "Chcete odejít z místností v tomto prostoru?",
     "You are about to leave <spaceName/>.": "Odcházíte z <spaceName/>.",
     "Leave some rooms": "Odejít z některých místností",
@@ -1831,7 +1802,6 @@
     "Get notifications as set up in your <a>settings</a>": "Dostávat oznámení podle <a>nastavení</a>",
     "Close this widget to view it in this panel": "Zavřít tento widget a zobrazit ho na tomto panelu",
     "Unpin this widget to view it in this panel": "Odepnout tento widget a zobrazit ho na tomto panelu",
-    "Large": "Velký",
     "Based on %(count)s votes": {
         "one": "Na základě %(count)s hlasu",
         "other": "Na základě %(count)s hlasů"
@@ -1919,7 +1889,6 @@
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Čekáme na ověření na vašem dalším zařízení, %(deviceName)s (%(deviceId)s)…",
     "Verify this device by confirming the following number appears on its screen.": "Ověřte toto zařízení tak, že potvrdíte, že se na jeho obrazovce zobrazí následující číslo.",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Potvrďte, že se následující emotikony zobrazují na obou zařízeních ve stejném pořadí:",
-    "Expand map": "Rozbalit mapu",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Neznámý pár (uživatel, relace): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Nerozpoznaná adresa místnosti: %(roomAlias)s",
     "From a thread": "Z vlákna",
@@ -1930,7 +1899,6 @@
     "Remove them from everything I'm able to": "Odebrat je ze všeho, kde mohu",
     "Remove from %(roomName)s": "Odebrat z %(roomName)s",
     "You were removed from %(roomName)s by %(memberName)s": "Byl(a) jsi odebrán(a) z %(roomName)s uživatelem %(memberName)s",
-    "Keyboard": "Klávesnice",
     "Message pending moderation": "Zpráva čeká na moderaci",
     "Message pending moderation: %(reason)s": "Zpráva čeká na moderaci: %(reason)s",
     "Space home": "Domov prostoru",
@@ -1979,9 +1947,6 @@
     "Collapse quotes": "Sbalit citace",
     "Click to drop a pin": "Kliknutím umístíte špendlík",
     "Click to move the pin": "Kliknutím přesunete špendlík",
-    "Shared a location: ": "Sdílel(a) polohu: ",
-    "Shared their location: ": "Sdíleli svou polohu: ",
-    "Unable to load map": "Nelze načíst mapu",
     "Can't create a thread from an event with an existing relation": "Nelze založit vlákno ve vlákně",
     "You are sharing your live location": "Sdílíte svoji polohu živě",
     "%(displayName)s's live location": "Poloha %(displayName)s živě",
@@ -1998,7 +1963,6 @@
     "Share for %(duration)s": "Sdílet na %(duration)s",
     "Unsent": "Neodeslané",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Můžete použít vlastní volbu serveru a přihlásit se k jiným Matrix serverům zadáním adresy URL domovského serveru. To vám umožní používat %(brand)s s existujícím Matrix účtem na jiném domovském serveru.",
-    "Developer tools": "Nástroje pro vývojáře",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s je experimentální v mobilním webovém prohlížeči. Chcete-li získat lepší zážitek a nejnovější funkce, použijte naši bezplatnou nativní aplikaci.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Při pokusu o přístup do místnosti nebo prostoru bylo vráceno %(errcode)s. Pokud si myslíte, že se vám tato zpráva zobrazuje chybně, pošlete prosím <issueLink>hlášení o chybě</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Zkuste to později nebo požádejte správce místnosti či prostoru, aby zkontroloval, zda máte přístup.",
@@ -2445,8 +2409,6 @@
     "Start DM anyway and never warn me again": "Zahájit přímou zprávu i přesto a nikdy už mě nevarovat",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Není možné najít uživatelské profily pro níže uvedené Matrix ID - chcete přesto založit DM?",
     "Formatting": "Formátování",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Nepodařilo se najít starou verzi této místnosti (ID místnosti: %(roomId)s), a nebyl poskytnut parametr 'via_servers', který by umožnil její vyhledání.",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Nepodařilo se najít starou verzi této místnosti (ID místnosti: %(roomId)s), a nebyl poskytnut parametr 'via_servers', který by umožnil její vyhledání. Je možné, že odhad serveru z ID místnosti bude fungovat. Pokud to chcete zkusit, klikněte na tento odkaz:",
     "The add / bind with MSISDN flow is misconfigured": "Přidání/připojení s MSISDN je nesprávně nakonfigurováno",
     "No identity access token found": "Nebyl nalezen žádný přístupový token identity",
     "Identity server not set": "Server identit není nastaven",
@@ -2619,7 +2581,10 @@
         "qr_code": "QR kód",
         "feedback": "Zpětná vazba",
         "all_rooms": "Všechny místnosti",
-        "orphan_rooms": "Ostatní místnosti"
+        "orphan_rooms": "Ostatní místnosti",
+        "preview_message": "Hej ty. Jsi nejlepší!",
+        "on": "Zapnout",
+        "off": "Vypnout"
     },
     "action": {
         "continue": "Pokračovat",
@@ -2926,7 +2891,8 @@
         "collecting_logs": "Sběr záznamů",
         "uploading_logs": "Nahrávání záznamů",
         "downloading_logs": "Stahování záznamů",
-        "create_new_issue": "Vytvořte prosím <newIssueLink>novou issue</newIssueLink> na GitHubu abychom mohli chybu opravit."
+        "create_new_issue": "Vytvořte prosím <newIssueLink>novou issue</newIssueLink> na GitHubu abychom mohli chybu opravit.",
+        "waiting_for_server": "Čekám na odezvu ze serveru"
     },
     "time": {
         "hours_minutes_seconds_left": "zbývá %(hours)sh %(minutes)sm %(seconds)ss",
@@ -3070,7 +3036,8 @@
             "enable_notifications_device": "Povolit oznámení pro toto zařízení",
             "enable_desktop_notifications_session": "Povolit v této relaci oznámení",
             "show_message_desktop_notification": "Zobrazit text zprávy v oznámení na ploše",
-            "enable_audible_notifications_session": "Povolit v této relaci zvuková oznámení"
+            "enable_audible_notifications_session": "Povolit v této relaci zvuková oznámení",
+            "noisy": "Hlučný"
         },
         "appearance": {
             "layout_irc": "IRC (experimentální)",
@@ -3091,7 +3058,12 @@
             "timeline_image_size": "Velikost obrázku na časové ose",
             "timeline_image_size_default": "Výchozí",
             "timeline_image_size_large": "Velký",
-            "custom_font_size": "Použít vlastní velikost"
+            "custom_font_size": "Použít vlastní velikost",
+            "font_size_nan": "Velikost musí být číslo",
+            "font_size_limit": "Vlastní velikost písma může být pouze mezi %(min)s pt a %(max)s pt",
+            "font_size_valid": "Použijte velikost mezi %(min)s pt a %(max)s pt",
+            "image_size_default": "Výchozí",
+            "image_size_large": "Velký"
         },
         "inline_url_previews_room_account": "Povolit náhledy URL adres pro tuto místnost (ovlivňuje pouze vás)",
         "inline_url_previews_room": "Povolit náhledy URL adres pro členy této místnosti jako výchozí",
@@ -3143,6 +3115,9 @@
             "noise_suppression": "Potlačení hluku",
             "enable_fallback_ice_server": "Povolit záložní asistenční server hovorů (%(server)s)",
             "enable_fallback_ice_server_description": "Platí pouze v případě, že váš domovský server tuto možnost nenabízí. Vaše IP adresa bude během hovoru sdílena."
+        },
+        "keyboard": {
+            "title": "Klávesnice"
         }
     },
     "devtools": {
@@ -3241,7 +3216,8 @@
         "show_hidden_events": "Zobrazovat v časové ose skryté události",
         "low_bandwidth_mode": "Režim malé šířky pásma",
         "low_bandwidth_mode_description": "Vyžaduje kompatibilní domovský server.",
-        "developer_mode": "Vývojářský režim"
+        "developer_mode": "Vývojářský režim",
+        "title": "Nástroje pro vývojáře"
     },
     "export_chat": {
         "html": "HTML",
@@ -3363,7 +3339,12 @@
             "kick": "%(senderName)s odebral(a) %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s změnil(a) téma na „%(topic)s“.",
-        "m.room.avatar": "%(senderDisplayName)s změnil(a) avatar místnosti.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s změnil(a) avatar místnosti.",
+            "lightbox_title": "%(senderDisplayName)s změnil(a) avatar místnosti %(roomName)s",
+            "removed": "%(senderDisplayName)s odstranil(a) avatar místnosti.",
+            "changed_img": "%(senderDisplayName)s změnil(a) avatar místnosti na <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s odstranil(a) název místnosti.",
             "change": "%(senderDisplayName)s změnil(a) jméno místnosti z %(oldRoomName)s na %(newRoomName)s.",
@@ -3430,7 +3411,11 @@
             "removed": "%(senderName)s odstranil(a) widget %(widgetName)s"
         },
         "io.element.widgets.layout": "%(senderName)s aktualizoval rozvržení místnosti",
-        "m.location": "%(senderName)s sdílí svou polohu",
+        "m.location": {
+            "full": "%(senderName)s sdílí svou polohu",
+            "self_location": "Sdíleli svou polohu: ",
+            "location": "Sdílel(a) polohu: "
+        },
         "self_redaction": "Zpráva smazána",
         "redaction": "Zpráva smazána uživatelem %(name)s",
         "m.poll.start": "%(senderName)s zahájil(a) hlasování - %(pollQuestion)s",
@@ -3615,6 +3600,19 @@
         "io.element.voice_broadcast_info": {
             "you": "Ukončili jste <a>hlasové vysílání</a>",
             "user": "%(senderName)s ukončil(a) <a>hlasové vysílání</a>"
+        },
+        "reactions": {
+            "label": "%(reactors)s reagoval(a) na %(content)s",
+            "tooltip": "<reactors/><reactedWith> reagoval(a) %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Zpráva byla odstraněna %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Tato místost je pokračováním jiné konverzace.",
+            "unknown_predecessor_guess_server": "Nepodařilo se najít starou verzi této místnosti (ID místnosti: %(roomId)s), a nebyl poskytnut parametr 'via_servers', který by umožnil její vyhledání. Je možné, že odhad serveru z ID místnosti bude fungovat. Pokud to chcete zkusit, klikněte na tento odkaz:",
+            "unknown_predecessor": "Nepodařilo se najít starou verzi této místnosti (ID místnosti: %(roomId)s), a nebyl poskytnut parametr 'via_servers', který by umožnil její vyhledání.",
+            "see_older_messages": "Klepnutím zobrazíte starší zprávy."
         }
     },
     "slash_command": {
@@ -3683,7 +3681,15 @@
         "failed_find_room": "Příkaz se nezdařil: Nelze najít místnost (%(roomId)s",
         "failed_find_user": "Nepovedlo se najít uživatele v místnosti",
         "op": "Stanovte úroveň oprávnění uživatele",
-        "deop": "Zruší stav moderátor uživateli se zadaným ID"
+        "deop": "Zruší stav moderátor uživateli se zadaným ID",
+        "server_error": "Chyba serveru",
+        "command_error": "Chyba příkazu",
+        "server_error_detail": "Server je nedostupný, přetížený nebo se něco pokazilo.",
+        "unknown_command": "Neznámý příkaz",
+        "unknown_command_detail": "Nerozpoznaný příkaz: %(commandText)s",
+        "unknown_command_help": "Můžete použít <code>/help</code> na vypsání všech příkazů. Nebo jste text chtěli odeslat jako zprávu?",
+        "unknown_command_hint": "Tip: Zprávu můžete začít <code>//</code>, pokud chcete aby začínala lomítkem.",
+        "unknown_command_button": "Odeslat jako zprávu"
     },
     "presence": {
         "busy": "Zaneprázdněný",
@@ -3804,7 +3810,10 @@
             "notifications.room": "Oznámení pro celou místnost"
         },
         "security": {
-            "strict_encryption": "Nikdy v této místnosti neposílat šifrované zprávy neověřeným relacím"
+            "strict_encryption": "Nikdy v této místnosti neposílat šifrované zprávy neověřeným relacím",
+            "join_rule_invite": "Soukromý (pouze pro pozvané)",
+            "join_rule_invite_description": "Připojit se mohou pouze pozvané osoby.",
+            "join_rule_public_description": "Kdokoliv může místnost najít a připojit se do ní."
         }
     },
     "encryption": {
@@ -4118,7 +4127,9 @@
         "failed_permission": "Aplikaci %(brand)s bylo odepřeno oprávnění ke zjištění vaší polohy. Povolte prosím přístup k poloze v nastavení prohlížeče.",
         "failed_generic": "Nepodařilo se zjistit vaši polohu. Zkuste to prosím později.",
         "failed_timeout": "Pokus o zjištění vaší polohy vypršel. Zkuste to prosím později.",
-        "failed_unknown": "Neznámá chyba při zjištění polohy. Zkuste to prosím později."
+        "failed_unknown": "Neznámá chyba při zjištění polohy. Zkuste to prosím později.",
+        "expand_map": "Rozbalit mapu",
+        "failed_load_map": "Nelze načíst mapu"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Nelze spustit nové hlasové vysílání",
@@ -4140,5 +4151,9 @@
         "30s_backward": "30s zpět",
         "30s_forward": "30s vpřed",
         "go_live": "Přejít naživo"
+    },
+    "labs_mjolnir": {
+        "room_name": "Můj seznam zablokovaných",
+        "room_topic": "Toto je váš seznam blokovaných uživatelů/serverů - neopouštějte tuto místnost!"
     }
 }

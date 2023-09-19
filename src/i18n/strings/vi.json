@@ -705,14 +705,6 @@
     "Edited at %(date)s": "Đã chỉnh sửa lúc %(date)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Bạn sắp được đưa đến trang web của bên thứ ba để bạn có thể xác thực tài khoản của mình để sử dụng với %(integrationsUrl)s. Bạn có muốn tiếp tục không?",
     "Add an Integration": "Thêm tích hợp",
-    "This room is a continuation of another conversation.": "Căn phòng này là sự tiếp nối của một cuộc trò chuyện khác.",
-    "Click here to see older messages.": "Bấm vào đây để xem các tin nhắn cũ hơn.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s đã thay đổi hình đại diện của phòng thành <img />",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s đã xóa hình đại diện của phòng.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s đã thay đổi hình đại diện cho %(roomName)s",
-    "Message deleted on %(date)s": "Tin nhắn đã bị xóa vào %(date)s",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>đã phản hồi với %(shortName)s</reactedWith>",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s đã phản hồi với %(content)s",
     "Add reaction": "Thêm phản ứng",
     "Error processing voice message": "Lỗi khi xử lý tin nhắn thoại",
     "Error decrypting video": "Lỗi khi giải mã video",
@@ -1234,8 +1226,6 @@
     "Hide sidebar": "Ẩn thanh bên",
     "Connecting": "Đang kết nối",
     "unknown person": "người không rõ",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Đây là danh sách người dùng/máy chủ mà bạn đã chặn - đừng rời khỏi phòng!",
-    "My Ban List": "Danh sách Cấm của tôi",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (chỉ số %(powerLevelNumber)s)",
     "Filter room members": "Lọc thành viên phòng",
     "Invited": "Đã mời",
@@ -1263,13 +1253,6 @@
         "other": "%(count)s trả lời"
     },
     "Edit message": "Chỉnh sửa tin nhắn",
-    "Send as message": "Gửi dưới dạng tin nhắn",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Gợi ý: Bắt đầu thư của bạn bằng <code>//</code> để bắt đầu thư bằng dấu gạch chéo.",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Bạn có thể sử dụng <code>/help</code> để liệt kê các lệnh có sẵn. Ý của bạn là gửi cái này dưới dạng tin nhắn?",
-    "Unrecognised command: %(commandText)s": "Lệnh không được công nhận: %(commandText)s",
-    "Unknown Command": "Lệnh không xác định",
-    "Server unavailable, overloaded, or something else went wrong.": "Máy chủ không khả dụng, quá tải hoặc có vấn đề gì khác.",
-    "Server error": "Lỗi máy chủ",
     "Everyone in this room is verified": "Mọi người trong phòng này đã được xác thực",
     "This room is end-to-end encrypted": "Phòng này được mã hóa end-to-end",
     "Someone is using an unknown session": "Ai đó đang sử dụng một phiên không xác định",
@@ -1330,7 +1313,6 @@
     "Muted Users": "Người dùng bị tắt tiếng",
     "Privileged Users": "Người dùng đặc quyền",
     "No users have specific privileges in this room": "Không có người dùng nào có đặc quyền cụ thể trong phòng này",
-    "Waiting for response from server": "Đang chờ phản hồi từ máy chủ",
     "IRC display name width": "Chiều rộng tên hiển thị IRC",
     "What's New": "Có gì mới",
     "What's new?": "Có gì mới?",
@@ -1379,9 +1361,6 @@
     "Failed to save your profile": "Không lưu được hồ sơ của bạn",
     "There was an error loading your notification settings.": "Đã xảy ra lỗi khi tải cài đặt thông báo của bạn.",
     "Notification targets": "Mục tiêu thông báo",
-    "Noisy": "Bật âm",
-    "On": "Bật",
-    "Off": "Tắt",
     "Mentions & keywords": "Đề cập & từ khóa",
     "Global": "Toàn cầu",
     "New keyword": "Từ khóa mới",
@@ -1411,15 +1390,8 @@
         "other": "& %(count)s thêm"
     },
     "Upgrade required": "Yêu cầu nâng cấp",
-    "Anyone can find and join.": "Bất kỳ ai cũng có thể tìm và tham gia.",
-    "Only invited people can join.": "Chỉ những người được mời mới có thể tham gia.",
-    "Private (invite only)": "Riêng tư (chỉ mời)",
     "The integration manager is offline or it cannot reach your homeserver.": "Trình quản lý tích hợp đang ngoại tuyến hoặc không thể kết nối với Máy chủ của bạn.",
     "Cannot connect to integration manager": "Không thể kết nối với trình quản lý tích hợp",
-    "Use between %(min)s pt and %(max)s pt": "Sử dụng từ khoảng %(min)s pt đến %(max)s pt",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Kích thước phông chữ tùy chỉnh chỉ có thể nằm trong khoảng từ %(min)s pt đến %(max)s pt",
-    "Size must be a number": "Kích thước phải là một số",
-    "Hey you. You're the best!": "Này bạn. Bạn là nhất!",
     "Message search initialisation failed": "Khởi tạo tìm kiếm tin nhắn không thành công",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s không thể lưu trữ cục bộ an toàn các tin nhắn được mã hóa khi đang chạy trong trình duyệt web. Sử dụng <desktopLink>%(brand)s cho máy tính</desktopLink> để các tin nhắn được mã hóa xuất hiện trong kết quả tìm kiếm.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s thiếu một số thành phần thiết yếu để lưu trữ cục bộ an toàn các tin nhắn được mã hóa. Nếu bạn muốn thử nghiệm với tính năng này, hãy dựng một bản %(brand)s tùy chỉnh cho máy tính có thêm <nativeLink>các thành phần để tìm kiếm</nativeLink>.",
@@ -1470,7 +1442,6 @@
     "Verifies a user, session, and pubkey tuple": "Xác thực người dùng, thiết bị và tuple pubkey",
     "Use an identity server to invite by email. Manage in Settings.": "Sử dụng máy chủ định danh để mời qua thư điện tử. Quản lý trong Cài đặt.",
     "Use an identity server": "Sử dụng máy chủ định danh",
-    "Command error": "Lỗi lệnh",
     "Setting up keys": "Đang thiết lập khóa bảo mật",
     "Are you sure you want to cancel entering passphrase?": "Bạn có chắc chắn muốn hủy nhập cụm mật khẩu không?",
     "Cancel entering passphrase?": "Hủy nhập cụm mật khẩu?",
@@ -1842,7 +1813,6 @@
     "Sidebar": "Thanh bên",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Chia sẻ dữ liệu ẩn danh giúp chúng tôi xác định các sự cố. Không có thông tin cá nhân. Không có bên thứ ba.",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Phòng này đang trong một số space mà bạn không phải là quản trị viên. Trong các space đó, phòng cũ vẫn sẽ được hiển thị, nhưng mọi người sẽ được thông báo để tham gia phòng mới.",
-    "Large": "Lớn",
     "Select all": "Chọn tất cả",
     "Deselect all": "Bỏ chọn tất cả",
     "Sign out devices": {
@@ -1908,7 +1878,6 @@
         "one": "Kết quả cuối cùng dựa trên %(count)s phiếu bầu",
         "other": "Kết quả cuối cùng dựa trên %(count)s phiếu bầu"
     },
-    "Expand map": "Mở rộng bản đồ",
     "You cancelled verification on your other device.": "Bạn đã hủy xác thực trên thiết bị khác của bạn.",
     "Almost there! Is your other device showing the same shield?": "Sắp xong rồi! Có phải thiết bị khác của bạn hiển thị cùng một lá chắn không?",
     "To proceed, please accept the verification request on your other device.": "Để tiến hành, vui lòng chấp nhận yêu cầu xác thực trên thiết bị khác của bạn.",
@@ -1947,7 +1916,6 @@
     "In spaces %(space1Name)s and %(space2Name)s.": "Trong các space %(space1Name)s và %(space2Name)s.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Cặp (người dùng, phiên) không xác định: (%(userId)s, %(deviceId)s)",
-    "Keyboard": "Bàn phím",
     "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Địa chỉ thư điện tử của bạn không được liên kết với một định danh Matrix trên máy chủ này.",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Không thể mời người dùng bằng địa chỉ thư điện tử mà không dùng máy chủ định danh. Bạn có thể kết nối với một máy chủ trong phần \"Cài đặt\".",
     "Failed to read events": "Không xem sự kiện được",
@@ -2041,7 +2009,6 @@
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (Trạng thái HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Lỗi không xác định khi đổi mật khẩu (%(stringifiedError)s)",
     "Ignore (%(counter)s)": "Ẩn (%(counter)s)",
-    "Developer tools": "Công cụ phát triển",
     "Match system": "Theo hệ thống",
     "Search users in this room…": "Tìm người trong phòng…",
     "Give one or multiple users in this room more privileges": "Cho người trong phòng này nhiều quyền hơn",
@@ -2298,7 +2265,6 @@
     "Message pending moderation": "Tin nhắn chờ duyệt",
     "Message in %(room)s": "Tin nhắn trong %(room)s",
     "Message from %(user)s": "Tin nhắn từ %(user)s",
-    "Unable to load map": "Không thể tải bản đồ",
     "Poll type": "Hình thức bỏ phiếu",
     "Show: Matrix rooms": "Hiện: Phòng Matrix",
     "Friends and family": "Bạn bè và gia đình",
@@ -2419,7 +2385,10 @@
         "qr_code": "Mã QR",
         "feedback": "Phản hồi",
         "all_rooms": "Tất cả các phòng",
-        "orphan_rooms": "Các phòng khác"
+        "orphan_rooms": "Các phòng khác",
+        "preview_message": "Này bạn. Bạn là nhất!",
+        "on": "Bật",
+        "off": "Tắt"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -2701,7 +2670,8 @@
         "collecting_logs": "Thu thập nhật ký",
         "uploading_logs": "Tải lên nhật ký",
         "downloading_logs": "Đang tải nhật ký xuống",
-        "create_new_issue": "Vui lòng <newIssueLink> tạo một vấn đề mới </newIssueLink> trên GitHub để chúng tôi có thể điều tra lỗi này."
+        "create_new_issue": "Vui lòng <newIssueLink> tạo một vấn đề mới </newIssueLink> trên GitHub để chúng tôi có thể điều tra lỗi này.",
+        "waiting_for_server": "Đang chờ phản hồi từ máy chủ"
     },
     "time": {
         "hours_minutes_seconds_left": "Còn lại %(hours)s giờ %(minutes)s phút %(seconds)s giây",
@@ -2839,7 +2809,8 @@
             "enable_notifications_device": "Bật thông báo cho thiết bị này",
             "enable_desktop_notifications_session": "Bật thông báo trên màn hình cho phiên này",
             "show_message_desktop_notification": "Hiển thị tin nhắn trong thông báo trên màn hình",
-            "enable_audible_notifications_session": "Bật thông báo âm thanh cho phiên này"
+            "enable_audible_notifications_session": "Bật thông báo âm thanh cho phiên này",
+            "noisy": "Bật âm"
         },
         "appearance": {
             "layout_irc": "IRC (thử nghiệm)",
@@ -2860,7 +2831,12 @@
             "timeline_image_size": "Kích thước hình ảnh trong timeline",
             "timeline_image_size_default": "Mặc định",
             "timeline_image_size_large": "Lớn",
-            "custom_font_size": "Sử dụng kích thước tùy chỉnh"
+            "custom_font_size": "Sử dụng kích thước tùy chỉnh",
+            "font_size_nan": "Kích thước phải là một số",
+            "font_size_limit": "Kích thước phông chữ tùy chỉnh chỉ có thể nằm trong khoảng từ %(min)s pt đến %(max)s pt",
+            "font_size_valid": "Sử dụng từ khoảng %(min)s pt đến %(max)s pt",
+            "image_size_default": "Mặc định",
+            "image_size_large": "Lớn"
         },
         "inline_url_previews_room_account": "Bật xem trước nội dung liên kết trong phòng này (chỉ với bạn)",
         "inline_url_previews_room": "Bật xem trước nội dung liên kết cho mọi người trong phòng này",
@@ -2911,6 +2887,9 @@
             "noise_suppression": "Loại bỏ tạp âm",
             "enable_fallback_ice_server": "Cho phép máy chủ hỗ trợ cuộc gọi dự phòng (%(server)s)",
             "enable_fallback_ice_server_description": "Chỉ áp dụng nếu máy chủ nhà của bạn không cung cấp. Địa chỉ Internet (IP) của bạn có thể được chia sẻ trong một cuộc gọi."
+        },
+        "keyboard": {
+            "title": "Bàn phím"
         }
     },
     "devtools": {
@@ -2969,7 +2948,8 @@
         "show_hidden_events": "Hiện các sự kiện ẩn trong dòng thời gian",
         "low_bandwidth_mode": "Chế độ băng thông thấp",
         "low_bandwidth_mode_description": "Cần máy chủ nhà tương thích.",
-        "developer_mode": "Chế độ nhà phát triển"
+        "developer_mode": "Chế độ nhà phát triển",
+        "title": "Công cụ phát triển"
     },
     "export_chat": {
         "html": "HTML",
@@ -3089,7 +3069,12 @@
             "kick": "%(senderName)s đã xóa %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s đổi chủ đề thành \"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s đã thay đổi avatar phòng.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s đã thay đổi avatar phòng.",
+            "lightbox_title": "%(senderDisplayName)s đã thay đổi hình đại diện cho %(roomName)s",
+            "removed": "%(senderDisplayName)s đã xóa hình đại diện của phòng.",
+            "changed_img": "%(senderDisplayName)s đã thay đổi hình đại diện của phòng thành <img />"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s loại bỏ tên phòng chat.",
             "change": "%(senderDisplayName)s đã đổi tên phòng từ %(oldRoomName)s thành %(newRoomName)s.",
@@ -3156,7 +3141,9 @@
             "removed": "%(widgetName)s widget được gỡ bởi %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s đã cập nhật bố trí của phòng",
-        "m.location": "%(senderName)s đã chia sẻ vị trí của họ",
+        "m.location": {
+            "full": "%(senderName)s đã chia sẻ vị trí của họ"
+        },
         "self_redaction": "Tin nhắn đã xóa",
         "redaction": "Tin nhắn đã bị %(name)s xóa",
         "m.poll.start": "%(senderName)s vừa bắt đầu một cuộc bình chọn - %(pollQuestion)s",
@@ -3329,6 +3316,17 @@
         "io.element.voice_broadcast_info": {
             "you": "Bạn đã kết thúc một <a>cuộc phát thanh</a>",
             "user": "%(senderName)s đã kết thúc một <a>cuộc phát thanh</a>"
+        },
+        "reactions": {
+            "label": "%(reactors)s đã phản hồi với %(content)s",
+            "tooltip": "<reactors/><reactedWith>đã phản hồi với %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Tin nhắn đã bị xóa vào %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Căn phòng này là sự tiếp nối của một cuộc trò chuyện khác.",
+            "see_older_messages": "Bấm vào đây để xem các tin nhắn cũ hơn."
         }
     },
     "slash_command": {
@@ -3397,7 +3395,15 @@
         "failed_find_room": "Lỗi khi thực hiện lệnh: Không tìm thấy phòng (%(roomId)s)",
         "failed_find_user": "Không tìm thấy người dùng trong phòng",
         "op": "Xác định cấp độ quyền của một thành viên",
-        "deop": "Deops user với id đã cho"
+        "deop": "Deops user với id đã cho",
+        "server_error": "Lỗi máy chủ",
+        "command_error": "Lỗi lệnh",
+        "server_error_detail": "Máy chủ không khả dụng, quá tải hoặc có vấn đề gì khác.",
+        "unknown_command": "Lệnh không xác định",
+        "unknown_command_detail": "Lệnh không được công nhận: %(commandText)s",
+        "unknown_command_help": "Bạn có thể sử dụng <code>/help</code> để liệt kê các lệnh có sẵn. Ý của bạn là gửi cái này dưới dạng tin nhắn?",
+        "unknown_command_hint": "Gợi ý: Bắt đầu thư của bạn bằng <code>//</code> để bắt đầu thư bằng dấu gạch chéo.",
+        "unknown_command_button": "Gửi dưới dạng tin nhắn"
     },
     "presence": {
         "busy": "Bận",
@@ -3518,7 +3524,10 @@
             "notifications.room": "Thông báo mọi người"
         },
         "security": {
-            "strict_encryption": "Không bao giờ gửi tin nhắn được mã hóa đến các phiên chưa được xác thực trong phòng này từ phiên này"
+            "strict_encryption": "Không bao giờ gửi tin nhắn được mã hóa đến các phiên chưa được xác thực trong phòng này từ phiên này",
+            "join_rule_invite": "Riêng tư (chỉ mời)",
+            "join_rule_invite_description": "Chỉ những người được mời mới có thể tham gia.",
+            "join_rule_public_description": "Bất kỳ ai cũng có thể tìm và tham gia."
         }
     },
     "encryption": {
@@ -3816,7 +3825,9 @@
         "failed_permission": "%(brand)s không được cho phép để tìm vị trí của bạn. Vui lòng cho phép truy cập vị trí trong cài đặt trình duyệt của bạn.",
         "failed_generic": "Không tìm được vị trí của bạn. Hãy thử lại sau.",
         "failed_timeout": "Tìm vị trí của bạn mất quá lâu. Hãy thử lại sau.",
-        "failed_unknown": "Lỗi không xác định khi tìm vị trí của bạn. Hãy thử lại sau."
+        "failed_unknown": "Lỗi không xác định khi tìm vị trí của bạn. Hãy thử lại sau.",
+        "expand_map": "Mở rộng bản đồ",
+        "failed_load_map": "Không thể tải bản đồ"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Không thể bắt đầu cuộc phát thanh mới",
@@ -3838,5 +3849,9 @@
         "30s_backward": "30 giây trước",
         "30s_forward": "30 giây kế tiếp",
         "go_live": "Phát trực tiếp"
+    },
+    "labs_mjolnir": {
+        "room_name": "Danh sách Cấm của tôi",
+        "room_topic": "Đây là danh sách người dùng/máy chủ mà bạn đã chặn - đừng rời khỏi phòng!"
     }
 }

@@ -94,9 +94,6 @@
     "Filter room members": "Филтрирај чланове собе",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (снага %(powerLevelNumber)s)",
     "You do not have permission to post to this room": "Немате овлашћење за писање у овој соби",
-    "Server error": "Грешка на серверу",
-    "Server unavailable, overloaded, or something else went wrong.": "Сервер није доступан или је преоптерећен или је нешто пошло наопако.",
-    "Command error": "Грешка у наредби",
     "%(duration)ss": "%(duration)sс",
     "%(duration)sm": "%(duration)sм",
     "%(duration)sh": "%(duration)sч",
@@ -145,9 +142,6 @@
     "Invalid file%(extra)s": "Неисправна датотека %(extra)s",
     "Error decrypting image": "Грешка при дешифровању слике",
     "Error decrypting video": "Грешка при дешифровању видеа",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s измени аватар собе %(roomName)s",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s уклони аватар собе.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s промени аватар собе у <img/>",
     "Copied!": "Копирано!",
     "Failed to copy": "Нисам успео да ископирам",
     "Add an Integration": "Додај уградњу",
@@ -258,16 +252,12 @@
     "Notification targets": "Циљеви обавештења",
     "Today": "Данас",
     "Friday": "Петак",
-    "On": "Укључено",
     "Changelog": "Записник о изменама",
-    "Waiting for response from server": "Чекам на одговор са сервера",
-    "Off": "Искључено",
     "This Room": "Ова соба",
     "Unavailable": "Недоступан",
     "Source URL": "Адреса извора",
     "Filter results": "Филтрирај резултате",
     "No update available.": "Нема нових ажурирања.",
-    "Noisy": "Бучно",
     "Search…": "Претрага…",
     "Tuesday": "Уторак",
     "Saturday": "Субота",
@@ -369,7 +359,6 @@
     "Remove recent messages": "Уклони недавне поруке",
     "Encryption not enabled": "Шифровање није омогућено",
     "The encryption used by this room isn't supported.": "Начин шифровања унутар ове собе није подржан.",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>реаговали са %(shortName)s</reactedWith>",
     "Widgets do not use message encryption.": "Виџети не користе шифровање порука.",
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Terms of Service": "Услови коришћења",
@@ -385,13 +374,10 @@
     "General failure": "Општа грешка",
     "Got It": "Разумем",
     "Light bulb": "сијалица",
-    "Hey you. You're the best!": "Хеј! Само напред!",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Прилагођена величина фонта може бити између %(min)s и %(max)s тачака",
     "Voice & Video": "Глас и видео",
     "Unable to revoke sharing for email address": "Не могу да опозовем дељење ове мејл адресе",
     "Unable to revoke sharing for phone number": "Не могу да опозовем дељење броја телефона",
     "No recently visited rooms": "Нема недавно посећених соба",
-    "Send as message": "Пошаљи у облику поруке",
     "Failed to revoke invite": "Неуспех при отказивању позивнице",
     "Revoke invite": "Откажи позивницу",
     "Your theme": "Ваша тема",
@@ -899,7 +885,10 @@
         "unnamed_room": "Неименована соба",
         "stickerpack": "Паковање са налепницама",
         "feedback": "Повратни подаци",
-        "all_rooms": "Све собе"
+        "all_rooms": "Све собе",
+        "preview_message": "Хеј! Само напред!",
+        "on": "Укључено",
+        "off": "Искључено"
     },
     "action": {
         "continue": "Настави",
@@ -1002,7 +991,8 @@
         "submit_debug_logs": "Пошаљи записнике за поправљање грешака",
         "send_logs": "Пошаљи записнике",
         "collecting_information": "Прикупљам податке о издању апликације",
-        "collecting_logs": "Прикупљам записнике"
+        "collecting_logs": "Прикупљам записнике",
+        "waiting_for_server": "Чекам на одговор са сервера"
     },
     "time": {
         "few_seconds_ago": "пре неколико секунди",
@@ -1031,7 +1021,8 @@
             "rule_invite_for_me": "Када сам позван у собу",
             "rule_call": "Позивница за позив",
             "rule_suppress_notices": "Поруке послате од бота",
-            "show_message_desktop_notification": "Прикажи поруку у стоном обавештењу"
+            "show_message_desktop_notification": "Прикажи поруку у стоном обавештењу",
+            "noisy": "Бучно"
         },
         "appearance": {
             "heading": "Прилагодите изглед",
@@ -1044,7 +1035,9 @@
             "custom_theme_add_button": "Додај тему",
             "font_size": "Величина фонта",
             "timeline_image_size_default": "Подразумевано",
-            "custom_font_size": "Користи прилагођену величину"
+            "custom_font_size": "Користи прилагођену величину",
+            "font_size_limit": "Прилагођена величина фонта може бити између %(min)s и %(max)s тачака",
+            "image_size_default": "Подразумевано"
         },
         "inline_url_previews_room_account": "Укључи УРЛ прегледе у овој соби (утиче само на вас)",
         "inline_url_previews_room": "Подразумевано омогући прегледе адреса за чланове ове собе",
@@ -1247,6 +1240,14 @@
             "changed_rule_rooms": "%(senderName)s је променио правило које је забрањивало собе који се подударају са %(oldGlob)s да би се подударале са %(newGlob)s због %(reason)s",
             "changed_rule_servers": "%(senderName)s је променио правило које је забрањинвало сервере који су се подударале са %(oldGlob)s да би се подударале са %(newGlob)s због %(reason)s",
             "changed_rule_glob": "%(senderName)s је аужурирао правило о забрани које се подударало са %(oldGlob)s да би се подударало са %(newGlob)s због %(reason)s"
+        },
+        "reactions": {
+            "tooltip": "<reactors/><reactedWith>реаговали са %(shortName)s</reactedWith>"
+        },
+        "m.room.avatar": {
+            "lightbox_title": "%(senderDisplayName)s измени аватар собе %(roomName)s",
+            "removed": "%(senderDisplayName)s уклони аватар собе.",
+            "changed_img": "%(senderDisplayName)s промени аватар собе у <img/>"
         }
     },
     "slash_command": {
@@ -1297,7 +1298,11 @@
         "join": "Придружује се соби са датом адресом",
         "failed_find_user": "Не налазим корисника у соби",
         "op": "Дефинише снагу корисника",
-        "deop": "Укида админа за корисника са датим ИД"
+        "deop": "Укида админа за корисника са датим ИД",
+        "server_error": "Грешка на серверу",
+        "command_error": "Грешка у наредби",
+        "server_error_detail": "Сервер није доступан или је преоптерећен или је нешто пошло наопако.",
+        "unknown_command_button": "Пошаљи у облику поруке"
     },
     "presence": {
         "online_for": "На мрежи %(duration)s",

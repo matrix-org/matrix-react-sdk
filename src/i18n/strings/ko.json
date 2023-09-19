@@ -33,7 +33,6 @@
     "Are you sure you want to reject the invitation?": "초대를 거절하시겠어요?",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "홈서버에 연결할 수 없음 - 연결 상태를 확인하거나, <a>홈서버의 SSL 인증서</a>가 믿을 수 있는지 확인하고, 브라우저 확장 기능이 요청을 막고 있는지 확인해주세요.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "주소 창에 HTTPS URL이 있을 때는 HTTP로 홈서버를 연결할 수 없습니다. HTTPS를 쓰거나 <a>안전하지 않은 스크립트를 허용</a>해주세요.",
-    "Command error": "명령어 오류",
     "Commands": "명령어",
     "Cryptography": "암호화",
     "Current password": "현재 비밀번호",
@@ -100,10 +99,8 @@
     "%(roomName)s is not accessible at this time.": "현재는 %(roomName)s에 들어갈 수 없습니다.",
     "Rooms": "방",
     "Search failed": "검색 실패함",
-    "Server error": "서버 오류",
     "Server may be unavailable, overloaded, or search timed out :(": "서버를 쓸 수 없거나 과부하거나, 검색 시간을 초과했어요 :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "서버를 쓸 수 없거나 과부하거나, 오류입니다.",
-    "Server unavailable, overloaded, or something else went wrong.": "서버를 쓸 수 없거나 과부하거나, 다른 문제가 있습니다.",
     "Session ID": "세션 ID",
     "Signed Out": "로그아웃함",
     "Start authentication": "인증 시작",
@@ -195,9 +192,6 @@
     "URL Previews": "URL 미리보기",
     "Drop file here to upload": "업로드할 파일을 여기에 놓으세요",
     "Check for update": "업데이트 확인",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s님이 방 아바타를 <img/>(으)로 바꿈",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s님이 방 아바타를 제거했습니다.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s님이 %(roomName)s 방의 아바타를 바꿈",
     "Something went wrong!": "문제가 생겼습니다!",
     "Your browser does not support the required cryptography extensions": "필요한 암호화 확장 기능을 브라우저가 지원하지 않습니다",
     "Not a valid %(brand)s keyfile": "올바른 %(brand)s 열쇠 파일이 아닙니다",
@@ -209,15 +203,12 @@
     "Today": "오늘",
     "Friday": "금요일",
     "What's New": "새로운 점",
-    "On": "켜기",
     "Changelog": "바뀐 점",
-    "Waiting for response from server": "서버에서 응답을 기다리는 중",
     "This Room": "방",
     "Unavailable": "이용할 수 없음",
     "Send": "보내기",
     "Source URL": "출처 URL",
     "No update available.": "업데이트가 없습니다.",
-    "Noisy": "소리",
     "Tuesday": "화요일",
     "Search…": "찾기…",
     "Unnamed room": "이름 없는 방",
@@ -232,7 +223,6 @@
     "Yesterday": "어제",
     "Error encountered (%(errorDetail)s).": "오류가 일어났습니다 (%(errorDetail)s).",
     "Low Priority": "중요하지 않음",
-    "Off": "끄기",
     "Wednesday": "수요일",
     "Thank you!": "감사합니다!",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "이전 버전 %(brand)s의 데이터가 감지됬습니다. 이 때문에 이전 버전에서 종단간 암호화가 작동하지 않을 수 있습니다. 이전 버전을 사용하면서 최근에 교환한 종단간 암호화 메시지를 이 버전에서는 복호화할 수 없습니다. 이 버전에서 메시지를 교환할 수 없을 수도 있습니다. 문제가 발생하면 로그아웃한 후 다시 로그인하세요. 메시지 기록을 유지하려면 키를 내보낸 후 다시 가져오세요.",
@@ -316,8 +306,6 @@
     "Members only (since the point in time of selecting this option)": "구성원만(이 설정을 선택한 시점부터)",
     "Members only (since they were invited)": "구성원만(구성원이 초대받은 시점부터)",
     "Only room administrators will see this warning": "방 관리자만이 이 경고를 볼 수 있음",
-    "This room is a continuation of another conversation.": "이 방은 다른 대화방의 연장선입니다.",
-    "Click here to see older messages.": "여길 눌러 오래된 메시지를 보세요.",
     "<a>In reply to</a> <pill>": "<a>관련 대화</a> <pill>",
     "Updating %(brand)s": "%(brand)s 업데이트 중",
     "Upgrade this room to version %(version)s": "이 방을 %(version)s 버전으로 업그레이드",
@@ -553,7 +541,6 @@
     "Room avatar": "방 아바타",
     "Room Name": "방 이름",
     "Room Topic": "방 주제",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>%(shortName)s으로 리액션함</reactedWith>",
     "Edited at %(date)s. Click to view edits.": "%(date)s에 편집함. 클릭해서 편집 보기.",
     "edited": "편집됨",
     "Rotate Left": "왼쪽으로 회전",
@@ -749,8 +736,6 @@
     "%(name)s cancelled": "%(name)s님이 취소했습니다",
     "%(name)s wants to verify": "%(name)s님이 확인을 요청합니다",
     "You sent a verification request": "확인 요청을 보냈습니다",
-    "My Ban List": "차단 목록",
-    "This is your list of users/servers you have blocked - don't leave the room!": "차단한 사용자/서버 목록입니다 - 방을 떠나지 마세요!",
     "Ignored/Blocked": "무시됨/차단됨",
     "Error adding ignored user/server": "무시한 사용자/서버 추가 중 오류",
     "Something went wrong. Please try again or view your console for hints.": "무언가 잘못되었습니다. 다시 시도하거나 콘솔을 통해 원인을 알아봐주세요.",
@@ -809,7 +794,6 @@
     "Delete avatar": "아바타 삭제",
     "More options": "추가 옵션",
     "Pin to sidebar": "사이드바 고정",
-    "Developer tools": "개발자 도구",
     "All settings": "전체 설정",
     "Use Single Sign On to continue": "SSO로 계속하기",
     "Join public room": "공개 방 참가하기",
@@ -822,15 +806,12 @@
     "Get notified for every message": "모든 메세지 알림을 받습니다",
     "You won't get any notifications": "어떤 알람도 받지 않습니다",
     "Space members": "스페이스 멤버 목록",
-    "Private (invite only)": "비공개 (초대 필요)",
     "Decide who can view and join %(spaceName)s.": "누가 %(spaceName)s를 보거나 참여할 수 있는지 설정합니다.",
     "Access": "접근",
     "Recommended for public spaces.": "공개 스페이스에 권장 합니다.",
     "Allow people to preview your space before they join.": "스페이스에 참여하기 전에 미리볼 수 있도록 허용합니다.",
     "Preview Space": "스페이스 미리보기",
-    "Anyone can find and join.": "누구나 찾고 참여할 수 있습니다.",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "<spaceName/>에 소속된 누구나 찾고 참여할 수 있습니다. 다른 스페이스도 선택 가능합니다.",
-    "Only invited people can join.": "초대한 경우에만 참여할 수 있습니다.",
     "Visibility": "가시성",
     "Manage & explore rooms": "관리 및 방 목록 보기",
     "Space home": "스페이스 홈",
@@ -853,7 +834,6 @@
     "Private space": "비공개 스페이스",
     "Rooms and spaces": "방 및 스페이스 목록",
     "Sidebar": "사이드바",
-    "Keyboard": "키보드 (단축키)",
     "Leave all rooms": "모든 방에서 떠나기",
     "Show all rooms": "모든 방 목록 보기",
     "Create a new space": "새로운 스페이스 만들기",
@@ -984,7 +964,9 @@
         "integration_manager": "통합 관리자",
         "feedback": "피드백",
         "all_rooms": "모든 방 목록",
-        "orphan_rooms": "다른 방 목록"
+        "orphan_rooms": "다른 방 목록",
+        "on": "켜기",
+        "off": "끄기"
     },
     "action": {
         "continue": "계속하기",
@@ -1091,7 +1073,8 @@
         "before_submitting": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>.",
         "collecting_information": "앱 버전 정보를 수집하는 중",
         "collecting_logs": "로그 수집 중",
-        "create_new_issue": "이 버그를 조사할 수 있도록 GitHub에 <newIssueLink>새 이슈를 추가</newIssueLink>해주세요."
+        "create_new_issue": "이 버그를 조사할 수 있도록 GitHub에 <newIssueLink>새 이슈를 추가</newIssueLink>해주세요.",
+        "waiting_for_server": "서버에서 응답을 기다리는 중"
     },
     "time": {
         "n_minutes_ago": "%(num)s분 전",
@@ -1128,13 +1111,15 @@
             "rule_suppress_notices": "봇에게 받은 메시지",
             "rule_tombstone": "방을 업그레이드했을 때",
             "rule_encrypted_room_one_to_one": "1:1 대화 암호화된 메시지",
-            "show_message_desktop_notification": "컴퓨터 알림에서 내용 보이기"
+            "show_message_desktop_notification": "컴퓨터 알림에서 내용 보이기",
+            "noisy": "소리"
         },
         "appearance": {
             "heading": "모습 개인화하기",
             "subheading": "모습 설정은 이 %(brand)s 세션에만 영향을 끼칩니다.",
             "match_system_theme": "시스템 테마 사용",
-            "timeline_image_size_default": "기본"
+            "timeline_image_size_default": "기본",
+            "image_size_default": "기본"
         },
         "inline_url_previews_room_account": "이 방에서 URL 미리보기 사용하기 (오직 나만 영향을 받음)",
         "inline_url_previews_room": "이 방에 참여한 모두에게 기본으로 URL 미리보기 사용하기",
@@ -1151,6 +1136,9 @@
         },
         "security": {
             "send_analytics": "정보 분석 데이터 보내기"
+        },
+        "keyboard": {
+            "title": "키보드 (단축키)"
         }
     },
     "devtools": {
@@ -1164,7 +1152,8 @@
         "category_room": "방",
         "category_other": "기타",
         "widget_screenshots": "지원되는 위젯에 대해 위젯 스크린샷 사용하기",
-        "show_hidden_events": "타임라인에서 숨겨진 이벤트 보이기"
+        "show_hidden_events": "타임라인에서 숨겨진 이벤트 보이기",
+        "title": "개발자 도구"
     },
     "create_room": {
         "title_public_room": "공개 방 만들기",
@@ -1330,6 +1319,18 @@
         "m.room.power_levels": {
             "changed": "%(senderName)s님이 %(powerLevelDiffText)s의 권한 등급을 바꿨습니다.",
             "user_from_to": "%(userId)s를 %(fromPowerLevel)s에서 %(toPowerLevel)s로"
+        },
+        "reactions": {
+            "tooltip": "<reactors/><reactedWith>%(shortName)s으로 리액션함</reactedWith>"
+        },
+        "m.room.avatar": {
+            "lightbox_title": "%(senderDisplayName)s님이 %(roomName)s 방의 아바타를 바꿈",
+            "removed": "%(senderDisplayName)s님이 방 아바타를 제거했습니다.",
+            "changed_img": "%(senderDisplayName)s님이 방 아바타를 <img/>(으)로 바꿈"
+        },
+        "m.room.create": {
+            "continuation": "이 방은 다른 대화방의 연장선입니다.",
+            "see_older_messages": "여길 눌러 오래된 메시지를 보세요."
         }
     },
     "slash_command": {
@@ -1370,7 +1371,10 @@
         "no_active_call": "이 방에 진행중인 통화 없음",
         "me": "활동 표시하기",
         "op": "사용자의 권한 등급 정의하기",
-        "deop": "받은 ID로 사용자의 등급을 낮추기"
+        "deop": "받은 ID로 사용자의 등급을 낮추기",
+        "server_error": "서버 오류",
+        "command_error": "명령어 오류",
+        "server_error_detail": "서버를 쓸 수 없거나 과부하거나, 다른 문제가 있습니다."
     },
     "presence": {
         "online_for": "%(duration)s 동안 온라인",
@@ -1413,7 +1417,10 @@
             "notifications.room": "모두에게 알림"
         },
         "security": {
-            "strict_encryption": "이 채팅방의 현재 세션에서 확인되지 않은 세션으로 암호화된 메시지를 보내지 않음"
+            "strict_encryption": "이 채팅방의 현재 세션에서 확인되지 않은 세션으로 암호화된 메시지를 보내지 않음",
+            "join_rule_invite": "비공개 (초대 필요)",
+            "join_rule_invite_description": "초대한 경우에만 참여할 수 있습니다.",
+            "join_rule_public_description": "누구나 찾고 참여할 수 있습니다."
         }
     },
     "encryption": {
@@ -1509,5 +1516,9 @@
     "create_space": {
         "public_heading": "당신의 공개 스페이스",
         "private_heading": "당신의 비공개 스페이스"
+    },
+    "labs_mjolnir": {
+        "room_name": "차단 목록",
+        "room_topic": "차단한 사용자/서버 목록입니다 - 방을 떠나지 마세요!"
     }
 }

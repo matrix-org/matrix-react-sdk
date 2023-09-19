@@ -29,7 +29,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Nem lehet kapcsolódni a Matrix-kiszolgálóhoz – ellenőrizze a kapcsolatot, győződjön meg arról, hogy a <a>Matrix-kiszolgáló tanúsítványa</a> hiteles, és hogy a böngészőkiegészítők nem blokkolják a kéréseket.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Nem lehet HTTP-vel csatlakozni a Matrix-kiszolgálóhoz, ha HTTPS van a böngésző címsorában. Vagy használjon HTTPS-t vagy <a>engedélyezze a nem biztonságos parancsfájlokat</a>.",
     "Change Password": "Jelszó módosítása",
-    "Command error": "Parancshiba",
     "Commands": "Parancsok",
     "Confirm password": "Jelszó megerősítése",
     "Cryptography": "Titkosítás",
@@ -97,10 +96,8 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s jelenleg nem érhető el.",
     "Rooms": "Szobák",
     "Search failed": "Keresés sikertelen",
-    "Server error": "Kiszolgálóhiba",
     "Server may be unavailable, overloaded, or search timed out :(": "A kiszolgáló elérhetetlen, túlterhelt vagy a keresés túllépte az időkorlátot :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "A kiszolgáló elérhetetlen, túlterhelt vagy hibára futott.",
-    "Server unavailable, overloaded, or something else went wrong.": "A kiszolgáló nem érhető el, túlterhelt vagy valami más probléma van.",
     "Session ID": "Kapcsolat azonosító",
     "Signed Out": "Kijelentkezett",
     "Start authentication": "Hitelesítés indítása",
@@ -190,9 +187,6 @@
     "Add an Integration": "Integráció hozzáadása",
     "URL Previews": "URL előnézet",
     "Drop file here to upload": "Feltöltéshez húzz ide egy fájlt",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s megváltoztatta a szoba profilképét: <img/>",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s törölte a szoba profilképét.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s megváltoztatta %(roomName)s szoba profilképét",
     "Something went wrong!": "Valami rosszul sikerült.",
     "Your browser does not support the required cryptography extensions": "A böngészője nem támogatja a szükséges titkosítási kiterjesztéseket",
     "Not a valid %(brand)s keyfile": "Nem érvényes %(brand)s kulcsfájl",
@@ -260,16 +254,13 @@
     "Today": "Ma",
     "Friday": "Péntek",
     "What's New": "Újdonságok",
-    "On": "Be",
     "Changelog": "Változások",
-    "Waiting for response from server": "Várakozás a kiszolgáló válaszára",
     "Failed to send logs: ": "Hiba a napló küldésénél: ",
     "This Room": "Ebben a szobában",
     "Unavailable": "Elérhetetlen",
     "Source URL": "Forrás URL",
     "Filter results": "Találatok szűrése",
     "No update available.": "Nincs elérhető frissítés.",
-    "Noisy": "Hangos",
     "Tuesday": "Kedd",
     "Preparing to send logs": "Előkészülés napló küldéshez",
     "Saturday": "Szombat",
@@ -285,7 +276,6 @@
     "Yesterday": "Tegnap",
     "Error encountered (%(errorDetail)s).": "Hiba történt (%(errorDetail)s).",
     "Low Priority": "Alacsony prioritás",
-    "Off": "Ki",
     "Wednesday": "Szerda",
     "Thank you!": "Köszönjük!",
     "Missing roomId.": "Hiányzó szobaazonosító.",
@@ -332,8 +322,6 @@
     "Please contact your homeserver administrator.": "Vegye fel a kapcsolatot a Matrix-kiszolgáló rendszergazdájával.",
     "This room has been replaced and is no longer active.": "Ezt a szobát lecseréltük és nem aktív többé.",
     "The conversation continues here.": "A beszélgetés itt folytatódik.",
-    "This room is a continuation of another conversation.": "Ez a szoba egy másik beszélgetés folytatása.",
-    "Click here to see older messages.": "Ide kattintva megnézheted a régi üzeneteket.",
     "Failed to upgrade room": "A szoba fejlesztése sikertelen",
     "The room upgrade could not be completed": "A szoba fejlesztését nem sikerült befejezni",
     "Upgrade this room to version %(version)s": "A szoba fejlesztése erre a verzióra: %(version)s",
@@ -604,7 +592,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "A matrix URL nem tűnik érvényesnek",
     "Invalid base_url for m.identity_server": "Érvénytelen base_url az m.identity_server -hez",
     "Identity server URL does not appear to be a valid identity server": "Az azonosítási kiszolgáló webcíme nem tűnik érvényesnek",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>ezzel reagált: %(shortName)s</reactedWith>",
     "edited": "szerkesztve",
     "Add room": "Szoba hozzáadása",
     "No homeserver URL provided": "Nincs megadva a Matrix-kiszolgáló webcíme",
@@ -750,8 +737,6 @@
     "%(name)s cancelled": "%(name)s megszakította",
     "%(name)s wants to verify": "%(name)s ellenőrizni szeretné",
     "You sent a verification request": "Ellenőrzési kérést küldtél",
-    "My Ban List": "Saját tiltólista",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Ez a saját, tiltott felhasználókat és kiszolgálókat tartalmazó listája – ne hagyja el ezt a szobát!",
     "Ignored/Blocked": "Mellőzött/tiltott",
     "Error adding ignored user/server": "Hiba a mellőzendő felhasználó/kiszolgáló hozzáadása során",
     "Something went wrong. Please try again or view your console for hints.": "Valami nem sikerült. Próbálja újra, vagy nézze meg a konzolt a hiba okának felderítéséhez.",
@@ -839,11 +824,6 @@
     "Verify User": "Felhasználó ellenőrzése",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "A biztonság fokozásáért ellenőrizd ezt a felhasználót egy egyszeri kód egyeztetésével mindkettőtök készülékén.",
     "Start Verification": "Ellenőrzés elindítása",
-    "Unknown Command": "Ismeretlen parancs",
-    "Unrecognised command: %(commandText)s": "Ismeretlen parancs: %(commandText)s",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Használhatja a <code>/help</code> parancsot az elérhető parancsok listázásához. Ezt üzenetként akarta elküldeni?",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Tipp: Kezdje az üzenetet ezzel: <code>//</code>, ha perjellel szeretné kezdeni.",
-    "Send as message": "Küldés üzenetként",
     "This room is end-to-end encrypted": "Ez a szoba végpontok közötti titkosítást használ",
     "Everyone in this room is verified": "A szobában mindenki ellenőrizve van",
     "Reject & Ignore user": "Felhasználó elutasítása és figyelmen kívül hagyása",
@@ -1005,9 +985,6 @@
     "Confirm encryption setup": "Erősítsd meg a titkosítási beállításokat",
     "Click the button below to confirm setting up encryption.": "Az alábbi gomb megnyomásával erősítsd meg, hogy megadod a titkosítási beállításokat.",
     "IRC display name width": "IRC-n megjelenítendő név szélessége",
-    "Size must be a number": "A méretnek számnak kell lennie",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Az egyéni betűméret csak %(min)s pont és %(max)s pont közötti lehet",
-    "Use between %(min)s pt and %(max)s pt": "%(min)s pont és %(max)s pont közötti értéket használjon",
     "Your homeserver has exceeded its user limit.": "A Matrix-kiszolgálója túllépte a felhasználói szám korlátját.",
     "Your homeserver has exceeded one of its resource limits.": "A Matrix-kiszolgálója túllépte valamelyik erőforráskorlátját.",
     "Contact your <a>server admin</a>.": "Vegye fel a kapcsolatot a <a>kiszolgáló rendszergazdájával</a>.",
@@ -1035,9 +1012,7 @@
     "Switch theme": "Kinézet váltása",
     "All settings": "Minden beállítás",
     "Looks good!": "Jónak tűnik!",
-    "Hey you. You're the best!": "Szia! Te vagy a legjobb!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "A titkosított üzenetek valódiságát ezen az eszközön nem lehet garantálni.",
-    "Message deleted on %(date)s": "Az üzenetet ekkor törölték: %(date)s",
     "Wrong file type": "A fájltípus hibás",
     "Security Phrase": "Biztonsági jelmondat",
     "Security Key": "Biztonsági kulcs",
@@ -1668,9 +1643,6 @@
         "one": "és még %(count)s"
     },
     "Upgrade required": "Fejlesztés szükséges",
-    "Anyone can find and join.": "Bárki megtalálhatja és beléphet.",
-    "Only invited people can join.": "Csak a meghívott emberek léphetnek be.",
-    "Private (invite only)": "Privát (csak meghívóval)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Ez a fejlesztés lehetővé teszi, hogy a kiválasztott terek tagjai meghívó nélkül is elérjék ezt a szobát.",
     "There was an error loading your notification settings.": "Hiba történt az értesítés beállítások betöltése során.",
     "Mentions & keywords": "Megemlítések és kulcsszavak",
@@ -1729,7 +1701,6 @@
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "A(z) <spaceName/> téren bárki megtalálhatja és beléphet. Kiválaszthat más tereket is.",
     "Message didn't send. Click for info.": "Az üzenet nincs elküldve. Kattintson az információkért.",
     "To join a space you'll need an invite.": "A térre való belépéshez meghívóra van szükség.",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s reagált: %(content)s",
     "Would you like to leave the rooms in this space?": "Ki szeretne lépni ennek a térnek minden szobájából?",
     "You are about to leave <spaceName/>.": "Éppen el akarja hagyni <spaceName/> teret.",
     "Leave some rooms": "Kilépés néhány szobából",
@@ -1831,7 +1802,6 @@
     "Get notified for every message": "Értesítés fogadása az összes üzenetről",
     "Get notifications as set up in your <a>settings</a>": "Értesítések fogadása a <a>beállításokban</a> megadottak szerint",
     "Rooms outside of a space": "Téren kívüli szobák",
-    "Large": "Nagy",
     "Based on %(count)s votes": {
         "one": "%(count)s szavazat alapján",
         "other": "%(count)s szavazat alapján"
@@ -1909,7 +1879,6 @@
     "Missing room name or separator e.g. (my-room:domain.org)": "Szoba név vagy elválasztó hiányzik, pl.: (szobam:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Domain elválasztás hiányzik, pl.: (:domain.org)",
     "toggle event": "esemény be/ki",
-    "Expand map": "Térkép szétnyitása",
     "You cancelled verification on your other device.": "Az ellenőrzést megszakította a másik eszközön.",
     "Almost there! Is your other device showing the same shield?": "Majdnem kész! A többi eszköze is ugyanazt a pajzsot mutatja?",
     "To proceed, please accept the verification request on your other device.": "A folytatáshoz fogadja el az ellenőrzés kérést a másik eszközről.",
@@ -1933,7 +1902,6 @@
     "Remove from %(roomName)s": "Eltávolít innen: %(roomName)s",
     "You were removed from %(roomName)s by %(memberName)s": "Önt %(memberName)s eltávolította ebből a szobából: %(roomName)s",
     "From a thread": "Az üzenetszálból",
-    "Keyboard": "Billentyűzet",
     "Internal room ID": "Belső szobaazonosító",
     "Group all your people in one place.": "Csoportosítsa az összes ismerősét egy helyre.",
     "Group all your favourite rooms and people in one place.": "Csoportosítsa az összes kedvenc szobáját és ismerősét egy helyre.",
@@ -1976,9 +1944,6 @@
     "We couldn't send your location": "A földrajzi helyzetet nem sikerült elküldeni",
     "Click to move the pin": "Kattintson a jelölő mozgatásához",
     "Click to drop a pin": "Kattintson a hely megjelöléséhez",
-    "Shared a location: ": "Megosztott egy földrajzi helyzetet: ",
-    "Shared their location: ": "Megosztották a földrajzi helyzetüket: ",
-    "Unable to load map": "A térkép betöltése sikertelen",
     "Click": "Kattintson",
     "Expand quotes": "Idézetek megjelenítése",
     "Collapse quotes": "Idézetek összecsukása",
@@ -1998,7 +1963,6 @@
     },
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Használhatja a más szerver opciót, hogy egy másik matrix szerverre jelentkezz be amihez megadod a szerver url címét. Ezzel használhatja a(z) %(brand)s klienst egy már létező Matrix fiókkal egy másik matrix szerveren.",
     "Share for %(duration)s": "Megosztás eddig: %(duration)s",
-    "Developer tools": "Fejlesztői eszközök",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "A(z) %(brand)s kísérleti állapotban van a mobilos webböngészőkben. A jobb élmény és a legújabb funkciók használatához használja az ingyenes natív alkalmazásunkat.",
     "Sorry, your homeserver is too old to participate here.": "Sajnáljuk, a Matrix-kiszolgáló túl régi verziójú ahhoz, hogy ebben részt vegyen.",
     "There was an error joining.": "A csatlakozás során hiba történt.",
@@ -2445,8 +2409,6 @@
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Ez lehet attól, hogy az alkalmazás több lapon is nyitva van, vagy hogy a böngészőadatok törölve lettek.",
     "Database unexpectedly closed": "Az adatbázis váratlanul lezárult",
     "Formatting": "Formázás",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "A szoba régi verziója nem található (szobaazonosító: %(roomId)s), és a megkereséséhez nem lett megadva a „via_servers”.",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "A szoba régi verziója nem található (szobaazonosító: %(roomId)s), és a megkereséséhez nem lett megadva a „via_servers”. Lehetséges, hogy a szobaazonosító kitalálása működni fog. Ha meg akarja próbálni, kattintson erre a hivatkozásra:",
     "The add / bind with MSISDN flow is misconfigured": "Az MSISDN folyamattal történő hozzáadás / kötés hibásan van beállítva",
     "No identity access token found": "Nem található személyazonosság-hozzáférési kulcs",
     "Identity server not set": "Az azonosítási kiszolgáló nincs megadva",
@@ -2552,7 +2514,10 @@
         "qr_code": "QR kód",
         "feedback": "Visszajelzés",
         "all_rooms": "Összes szoba",
-        "orphan_rooms": "További szobák"
+        "orphan_rooms": "További szobák",
+        "preview_message": "Szia! Te vagy a legjobb!",
+        "on": "Be",
+        "off": "Ki"
     },
     "action": {
         "continue": "Folytatás",
@@ -2850,7 +2815,8 @@
         "collecting_logs": "Naplók összegyűjtése",
         "uploading_logs": "Naplók feltöltése folyamatban",
         "downloading_logs": "Naplók letöltése folyamatban",
-        "create_new_issue": "Ahhoz hogy megvizsgálhassuk a hibát, <newIssueLink>hozzon létre egy új hibajegyet</newIssueLink> a GitHubon."
+        "create_new_issue": "Ahhoz hogy megvizsgálhassuk a hibát, <newIssueLink>hozzon létre egy új hibajegyet</newIssueLink> a GitHubon.",
+        "waiting_for_server": "Várakozás a kiszolgáló válaszára"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)s ó %(minutes)s p %(seconds)s mp van hátra",
@@ -2992,7 +2958,8 @@
             "enable_notifications_device": "Értesítések engedélyezése ehhez az eszközhöz",
             "enable_desktop_notifications_session": "Asztali értesítések engedélyezése ehhez a munkamenethez",
             "show_message_desktop_notification": "Üzenet megjelenítése az asztali értesítésekben",
-            "enable_audible_notifications_session": "Hallható értesítések engedélyezése ehhez a munkamenethez"
+            "enable_audible_notifications_session": "Hallható értesítések engedélyezése ehhez a munkamenethez",
+            "noisy": "Hangos"
         },
         "appearance": {
             "layout_irc": "IRC (kísérleti)",
@@ -3013,7 +2980,12 @@
             "timeline_image_size": "Képméret az idővonalon",
             "timeline_image_size_default": "Alapértelmezett",
             "timeline_image_size_large": "Nagy",
-            "custom_font_size": "Egyéni méret használata"
+            "custom_font_size": "Egyéni méret használata",
+            "font_size_nan": "A méretnek számnak kell lennie",
+            "font_size_limit": "Az egyéni betűméret csak %(min)s pont és %(max)s pont közötti lehet",
+            "font_size_valid": "%(min)s pont és %(max)s pont közötti értéket használjon",
+            "image_size_default": "Alapértelmezett",
+            "image_size_large": "Nagy"
         },
         "inline_url_previews_room_account": "Webcím-előnézetek engedélyezése ebben a szobában (csak Önt érinti)",
         "inline_url_previews_room": "Webcím-előnézetek alapértelmezett engedélyezése a szobatagok számára",
@@ -3064,6 +3036,9 @@
             "echo_cancellation": "Visszhangcsillapítás",
             "noise_suppression": "Zajcsillapítás",
             "enable_fallback_ice_server_description": "Csak abban az esetben, ha a Matrix-kiszolgáló nem kínál fel egyet sem. Az IP-címe megosztásra kerülhet a hívás során."
+        },
+        "keyboard": {
+            "title": "Billentyűzet"
         }
     },
     "devtools": {
@@ -3157,7 +3132,8 @@
         "show_hidden_events": "Rejtett események megjelenítése az idővonalon",
         "low_bandwidth_mode": "Alacsony sávszélességű mód",
         "low_bandwidth_mode_description": "Kompatibilis Matrix-kiszolgálóra van szükség.",
-        "developer_mode": "Fejlesztői mód"
+        "developer_mode": "Fejlesztői mód",
+        "title": "Fejlesztői eszközök"
     },
     "export_chat": {
         "html": "HTML",
@@ -3275,7 +3251,12 @@
             "kick": "%(senderName)s eltávolította a következőt: %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s a következőre változtatta a témát: „%(topic)s”.",
-        "m.room.avatar": "%(senderDisplayName)s megváltoztatta a szoba profilképét.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s megváltoztatta a szoba profilképét.",
+            "lightbox_title": "%(senderDisplayName)s megváltoztatta %(roomName)s szoba profilképét",
+            "removed": "%(senderDisplayName)s törölte a szoba profilképét.",
+            "changed_img": "%(senderDisplayName)s megváltoztatta a szoba profilképét: <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s törölte a szoba nevét.",
             "change": "%(senderDisplayName)s megváltoztatta a szoba nevét erről: %(oldRoomName)s, erre: %(newRoomName)s.",
@@ -3341,7 +3322,11 @@
             "removed": "%(senderName)s eltávolította a %(widgetName)s kisalkalmazást"
         },
         "io.element.widgets.layout": "%(senderName)s frissítette a szoba kinézetét",
-        "m.location": "%(senderName)s megosztotta a földrajzi helyzetét",
+        "m.location": {
+            "full": "%(senderName)s megosztotta a földrajzi helyzetét",
+            "self_location": "Megosztották a földrajzi helyzetüket: ",
+            "location": "Megosztott egy földrajzi helyzetet: "
+        },
         "self_redaction": "Üzenet törölve",
         "redaction": "%(name)s törölte ezt az üzenetet",
         "m.poll.start": "%(senderName)s szavazást indított - %(pollQuestion)s",
@@ -3518,6 +3503,19 @@
         "io.element.voice_broadcast_info": {
             "you": "Befejezte a <a>hangközvetítést</a>",
             "user": "%(senderName)s befejezte a <a>hangközvetítést</a>"
+        },
+        "reactions": {
+            "label": "%(reactors)s reagált: %(content)s",
+            "tooltip": "<reactors/><reactedWith>ezzel reagált: %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Az üzenetet ekkor törölték: %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Ez a szoba egy másik beszélgetés folytatása.",
+            "unknown_predecessor_guess_server": "A szoba régi verziója nem található (szobaazonosító: %(roomId)s), és a megkereséséhez nem lett megadva a „via_servers”. Lehetséges, hogy a szobaazonosító kitalálása működni fog. Ha meg akarja próbálni, kattintson erre a hivatkozásra:",
+            "unknown_predecessor": "A szoba régi verziója nem található (szobaazonosító: %(roomId)s), és a megkereséséhez nem lett megadva a „via_servers”.",
+            "see_older_messages": "Ide kattintva megnézheted a régi üzeneteket."
         }
     },
     "slash_command": {
@@ -3583,7 +3581,15 @@
         "failed_find_room": "Parancs hiba: A szoba nem található (%(roomId)s)",
         "failed_find_user": "A felhasználó nem található a szobában",
         "op": "A felhasználó szintjének meghatározása",
-        "deop": "A megadott azonosítójú felhasználó lefokozása"
+        "deop": "A megadott azonosítójú felhasználó lefokozása",
+        "server_error": "Kiszolgálóhiba",
+        "command_error": "Parancshiba",
+        "server_error_detail": "A kiszolgáló nem érhető el, túlterhelt vagy valami más probléma van.",
+        "unknown_command": "Ismeretlen parancs",
+        "unknown_command_detail": "Ismeretlen parancs: %(commandText)s",
+        "unknown_command_help": "Használhatja a <code>/help</code> parancsot az elérhető parancsok listázásához. Ezt üzenetként akarta elküldeni?",
+        "unknown_command_hint": "Tipp: Kezdje az üzenetet ezzel: <code>//</code>, ha perjellel szeretné kezdeni.",
+        "unknown_command_button": "Küldés üzenetként"
     },
     "presence": {
         "busy": "Foglalt",
@@ -3704,7 +3710,10 @@
             "notifications.room": "Mindenki értesítése"
         },
         "security": {
-            "strict_encryption": "Ebben a szobában sose küldjön titkosított üzenetet ellenőrizetlen munkamenetekbe ebből a munkamenetből"
+            "strict_encryption": "Ebben a szobában sose küldjön titkosított üzenetet ellenőrizetlen munkamenetekbe ebből a munkamenetből",
+            "join_rule_invite": "Privát (csak meghívóval)",
+            "join_rule_invite_description": "Csak a meghívott emberek léphetnek be.",
+            "join_rule_public_description": "Bárki megtalálhatja és beléphet."
         }
     },
     "encryption": {
@@ -4017,7 +4026,9 @@
         "failed_permission": "A(z) %(brand)s alkalmazásnak nincs jogosultsága a földrajzi helyzetének lekérdezéséhez. Engedélyezze a hely hozzáférését a böngészőbeállításokban.",
         "failed_generic": "Nem sikerült a földrajzi helyzetének lekérése. Próbálja újra később.",
         "failed_timeout": "Időtúllépés történt a földrajzi helyzetének lekérésekor. Próbálja újra később.",
-        "failed_unknown": "Ismeretlen hiba a földrajzi helyzetének lekérésekor. Próbálja újra később."
+        "failed_unknown": "Ismeretlen hiba a földrajzi helyzetének lekérésekor. Próbálja újra később.",
+        "expand_map": "Térkép szétnyitása",
+        "failed_load_map": "A térkép betöltése sikertelen"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Az új hangközvetítés nem indítható el",
@@ -4039,5 +4050,9 @@
         "30s_backward": "vissza 30 másodperccel",
         "30s_forward": "előre 30 másodperccel",
         "go_live": "Élő közvetítés indítása"
+    },
+    "labs_mjolnir": {
+        "room_name": "Saját tiltólista",
+        "room_topic": "Ez a saját, tiltott felhasználókat és kiszolgálókat tartalmazó listája – ne hagyja el ezt a szobát!"
     }
 }

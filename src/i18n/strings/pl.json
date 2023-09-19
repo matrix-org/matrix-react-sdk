@@ -60,7 +60,6 @@
     },
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Nie można nawiązać połączenia z serwerem - proszę sprawdź twoje połączenie, upewnij się, że <a>certyfikat SSL serwera</a> jest zaufany, i że dodatki przeglądarki nie blokują żądania.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Nie można nawiązać połączenia z serwerem przy użyciu HTTP podczas korzystania z HTTPS dla bieżącej strony. Użyj HTTPS lub <a>włącz niebezpieczne skrypty</a>.",
-    "Command error": "Błąd polecenia",
     "Commands": "Polecenia",
     "Custom level": "Własny poziom",
     "Deactivate Account": "Dezaktywuj konto",
@@ -129,10 +128,8 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s nie jest dostępny w tym momencie.",
     "Rooms": "Pokoje",
     "Search failed": "Wyszukiwanie nie powiodło się",
-    "Server error": "Błąd serwera",
     "Server may be unavailable, overloaded, or search timed out :(": "Serwer może być niedostępny, przeciążony, lub upłynął czas wyszukiwania :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Serwer może być niedostępny, przeciążony, lub trafiłeś na błąd.",
-    "Server unavailable, overloaded, or something else went wrong.": "Serwer może być niedostępny, przeciążony, lub coś innego poszło źle.",
     "Session ID": "Identyfikator sesji",
     "Signed Out": "Wylogowano",
     "Start authentication": "Rozpocznij uwierzytelnienie",
@@ -202,9 +199,6 @@
     "Error decrypting video": "Błąd deszyfrowania wideo",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Próbowano załadować konkretny punkt na osi czasu w tym pokoju, ale nie można go znaleźć.",
     "Check for update": "Sprawdź aktualizacje",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s zmienił awatar pokoju na <img/>",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s usunął awatar pokoju.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s zmienił awatar %(roomName)s",
     "Not a valid %(brand)s keyfile": "Niepoprawny plik klucza %(brand)s",
     "Authentication check failed: incorrect password?": "Próba autentykacji nieudana: nieprawidłowe hasło?",
     "Do you want to set an email address?": "Czy chcesz ustawić adres e-mail?",
@@ -224,16 +218,13 @@
     "Today": "Dzisiaj",
     "Friday": "Piątek",
     "What's New": "Co nowego",
-    "On": "Włącz",
     "Changelog": "Dziennik zmian",
-    "Waiting for response from server": "Czekam na odpowiedź serwera",
     "Failed to send logs: ": "Nie udało się wysłać dzienników: ",
     "This Room": "Ten pokój",
     "Unavailable": "Niedostępny",
     "Source URL": "Źródłowy URL",
     "Filter results": "Filtruj wyniki",
     "No update available.": "Brak aktualizacji.",
-    "Noisy": "Głośny",
     "Tuesday": "Wtorek",
     "Preparing to send logs": "Przygotowuję do wysłania dzienników",
     "Saturday": "Sobota",
@@ -250,7 +241,6 @@
     "Yesterday": "Wczoraj",
     "Error encountered (%(errorDetail)s).": "Wystąpił błąd (%(errorDetail)s).",
     "Low Priority": "Niski priorytet",
-    "Off": "Wyłącz",
     "Thank you!": "Dziękujemy!",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
@@ -313,8 +303,6 @@
     "This room has been replaced and is no longer active.": "Ten pokój został zamieniony i nie jest już aktywny.",
     "The conversation continues here.": "Konwersacja jest kontynuowana tutaj.",
     "You don't currently have any stickerpacks enabled": "Nie masz obecnie włączonych żadnych pakietów naklejek",
-    "This room is a continuation of another conversation.": "Ten pokój jest kontynuacją innej rozmowy.",
-    "Click here to see older messages.": "Kliknij tutaj, aby zobaczyć starsze wiadomości.",
     "Updating %(brand)s": "Aktualizowanie %(brand)s",
     "Please <a>contact your service administrator</a> to continue using this service.": "Proszę, <a>skontaktuj się z administratorem</a> aby korzystać dalej z funkcji.",
     "Only room administrators will see this warning": "Tylko administratorzy pokojów widzą to ostrzeżenie",
@@ -516,8 +504,6 @@
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Użyj serwera tożsamości, by zaprosić z użyciem adresu e-mail. Kliknij dalej, żeby użyć domyślnego serwera tożsamości (%(defaultIdentityServerName)s), lub zmień w Ustawieniach.",
     "Use an identity server to invite by email. Manage in Settings.": "Użyj serwera tożsamości, by zaprosić za pomocą adresu e-mail. Zarządzaj w ustawieniach.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "My Ban List": "Moja lista zablokowanych",
-    "This is your list of users/servers you have blocked - don't leave the room!": "To jest Twoja lista zablokowanych użytkowników/serwerów – nie opuszczaj tego pokoju!",
     "Change identity server": "Zmień serwer tożsamości",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Rozłączyć się z bieżącym serwerem tożsamości <current /> i połączyć się z <new />?",
     "Disconnect identity server": "Rozłącz serwer tożsamości",
@@ -652,11 +638,6 @@
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Potwierdź dodanie tego numeru telefonu przy użyciu pojedynczego logowania, aby potwierdzić swoją tożsamość.",
     "Favourited": "Ulubiony",
     "This room is public": "Ten pokój jest publiczny",
-    "Unknown Command": "Nieznane polecenie",
-    "Unrecognised command: %(commandText)s": "Nieznane polecenie: %(commandText)s",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Możesz użyć <code>/help</code> aby wyświetlić listę dostępnych poleceń. Czy chciałeś wysłać to jako wiadomość?",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Wskazówka: Rozpocznij swoją wiadomość od <code>//</code>, aby rozpocząć ją ukośnikiem.",
-    "Send as message": "Wyślij jako wiadomość",
     "Remove %(count)s messages": {
         "other": "Usuń %(count)s wiadomości",
         "one": "Usuń 1 wiadomość"
@@ -1255,12 +1236,6 @@
         "other": "i %(count)s więcej"
     },
     "Upgrade required": "Aktualizacja wymagana",
-    "Anyone can find and join.": "Każdy może znaleźć i dołączyć.",
-    "Only invited people can join.": "Tylko zaproszeni ludzie mogą dołączyć.",
-    "Private (invite only)": "Prywatny (tylko na zaproszenie)",
-    "Large": "Duży",
-    "Size must be a number": "Rozmiar musi być liczbą",
-    "Hey you. You're the best!": "Hej, ty. Jesteś super!",
     "Message search initialisation failed": "Inicjalizacja wyszukiwania wiadomości nie powiodła się",
     "Select all": "Zaznacz wszystkie",
     "Deselect all": "Odznacz wszystkie",
@@ -1357,7 +1332,6 @@
     "Space selection": "Wybór przestrzeni",
     "Match system": "Dopasuj do systemu",
     "Pin to sidebar": "Przypnij do paska bocznego",
-    "Developer tools": "Ustawienia deweloperskie",
     "Quick settings": "Szybkie ustawienia",
     "Waiting for you to verify on your other device…": "Oczekiwanie na zweryfikowanie przez ciebie twojego innego urządzenia…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Oczekiwanie na zweryfikowanie przez ciebie twojego innego urządzenia, %(deviceName)s (%(deviceId)s)…",
@@ -1378,7 +1352,6 @@
     "Invite to %(roomName)s": "Zaproś do %(roomName)s",
     "Deactivating your account is a permanent action — be careful!": "Dezaktywacja konta jest akcją trwałą — bądź ostrożny!",
     "Send voice message": "Wyślij wiadomość głosową",
-    "Keyboard": "Skróty klawiszowe",
     "Unpin this widget to view it in this panel": "Odepnij widżet, aby wyświetlić go w tym panelu",
     "Location": "Lokalizacja",
     "Poll": "Ankieta",
@@ -1528,8 +1501,6 @@
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Wystąpił błąd podczas aktualizowania Twoich preferencji powiadomień. Przełącz opcję ponownie.",
     "Mark all as read": "Oznacz wszystko jako przeczytane",
     "Connecting to integration manager…": "Łączenie z menedżerem integracji…",
-    "Use between %(min)s pt and %(max)s pt": "Użyj pomiędzy %(min)s pt i %(max)s pt",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Niestandardowy rozmiar czcionki może być wyłącznie pomiędzy %(min)s pt i %(max)s pt",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s nie jest w stanie bezpiecznie przechowywać wiadomości szyfrowanych lokalnie, gdy działa w przeglądarce. Użyj <desktopLink> Desktop</desktopLink>, aby wiadomości pojawiły się w wynikach wyszukiwania.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s brakuje niektórych komponentów wymaganych do bezpiecznego przechowywania wiadomości szyfrowanych lokalnie. Jeśli chcesz eksperymentować z tą funkcją, zbuduj własny %(brand)s Desktop z <nativeLink> dodanymi komponentami wyszukiwania</nativeLink>.",
     "Securely cache encrypted messages locally for them to appear in search results.": "Bezpiecznie przechowuj lokalnie wiadomości szyfrowane, aby mogły się wyświetlać w wynikach wyszukiwania.",
@@ -1980,11 +1951,6 @@
     "Submit logs": "Wyślij dzienniki",
     "Click to view edits": "Kliknij, aby wyświetlić edycje",
     "Edited at %(date)s": "Edytowano o %(date)s",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Nie można znaleźć starej wersji tego pokoju (ID pokoju: %(roomId)s), a nie dostarczono nam 'via_servers', aby ją znaleźć.",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Nie można znaleźć starej wersji tego pokoju (ID pokoju: %(roomId)s), a nie dostarczono nam 'via_servers', aby ją znaleźć. Można spróbować odgadnąć serwer na podstawie ID pokoju. Jeśli chcesz spróbować, kliknij ten link:",
-    "Message deleted on %(date)s": "Wiadomość usunięta dnia %(date)s",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith> zareagował z %(shortName)s</reactedWith>",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s zareagował z %(content)s",
     "Add reaction": "Dodaj reakcje",
     "Error processing voice message": "Wystąpił błąd procesowania wiadomości głosowej",
     "Ended a poll": "Zakończył ankietę",
@@ -2003,10 +1969,6 @@
     "Vote not registered": "Głos nie został zarejestrowany",
     "Sorry, you can't edit a poll after votes have been cast.": "Przepraszamy, nie możesz edytować ankiety po zakończonym głosowaniu.",
     "Can't edit poll": "Nie można edytować ankiety",
-    "Shared a location: ": "Udostępnili lokalizację: ",
-    "Shared their location: ": "Udostępnili swoją lokalizację: ",
-    "Unable to load map": "Nie udało się wczytać mapy",
-    "Expand map": "Rozwiń mapę",
     "You sent a verification request": "Wysłałeś żądanie weryfikacji",
     "%(name)s wants to verify": "%(name)s chce weryfikacji",
     "Declining…": "Odrzucanie…",
@@ -2599,7 +2561,10 @@
         "qr_code": "Kod QR",
         "feedback": "Opinia użytkownika",
         "all_rooms": "Wszystkie pokoje",
-        "orphan_rooms": "Inne pokoje"
+        "orphan_rooms": "Inne pokoje",
+        "preview_message": "Hej, ty. Jesteś super!",
+        "on": "Włącz",
+        "off": "Wyłącz"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -2905,7 +2870,8 @@
         "collecting_logs": "Zbieranie dzienników",
         "uploading_logs": "Wysyłanie logów",
         "downloading_logs": "Pobieranie logów",
-        "create_new_issue": "<newIssueLink>Utwórz nowe zgłoszenie</newIssueLink> na GitHubie, abyśmy mogli zbadać ten błąd."
+        "create_new_issue": "<newIssueLink>Utwórz nowe zgłoszenie</newIssueLink> na GitHubie, abyśmy mogli zbadać ten błąd.",
+        "waiting_for_server": "Czekam na odpowiedź serwera"
     },
     "time": {
         "hours_minutes_seconds_left": "pozostało %(hours)s godz. %(minutes)s min. %(seconds)ss",
@@ -3049,7 +3015,8 @@
             "enable_notifications_device": "Włącz powiadomienia dla tego urządzenia",
             "enable_desktop_notifications_session": "Włącz powiadomienia na pulpicie dla tej sesji",
             "show_message_desktop_notification": "Pokaż wiadomość w notyfikacji na pulpicie",
-            "enable_audible_notifications_session": "Włącz powiadomienia dźwiękowe dla tej sesji"
+            "enable_audible_notifications_session": "Włącz powiadomienia dźwiękowe dla tej sesji",
+            "noisy": "Głośny"
         },
         "appearance": {
             "layout_irc": "IRC (eksperymentalny)",
@@ -3070,7 +3037,12 @@
             "timeline_image_size": "Rozmiar obrazu na osi czasu",
             "timeline_image_size_default": "Zwykły",
             "timeline_image_size_large": "Duży",
-            "custom_font_size": "Użyj niestandardowego rozmiaru"
+            "custom_font_size": "Użyj niestandardowego rozmiaru",
+            "font_size_nan": "Rozmiar musi być liczbą",
+            "font_size_limit": "Niestandardowy rozmiar czcionki może być wyłącznie pomiędzy %(min)s pt i %(max)s pt",
+            "font_size_valid": "Użyj pomiędzy %(min)s pt i %(max)s pt",
+            "image_size_default": "Zwykły",
+            "image_size_large": "Duży"
         },
         "inline_url_previews_room_account": "Włącz podgląd URL dla tego pokoju (dotyczy tylko Ciebie)",
         "inline_url_previews_room": "Włącz domyślny podgląd URL dla uczestników w tym pokoju",
@@ -3122,6 +3094,9 @@
             "noise_suppression": "Redukcja szumów",
             "enable_fallback_ice_server": "Zezwól na alternatywny serwer wspierający (%(server)s)",
             "enable_fallback_ice_server_description": "Stosuje się go tylko wtedy, kiedy Twój serwer domowy go nie oferuje. Twój adres IP zostanie współdzielony w trakcie połączenia."
+        },
+        "keyboard": {
+            "title": "Skróty klawiszowe"
         }
     },
     "devtools": {
@@ -3220,7 +3195,8 @@
         "show_hidden_events": "Pokaż ukryte wydarzenia na linii czasowej",
         "low_bandwidth_mode": "Tryb niskiej przepustowości",
         "low_bandwidth_mode_description": "Wymaga kompatybilnego serwera domowego.",
-        "developer_mode": "Tryb programisty"
+        "developer_mode": "Tryb programisty",
+        "title": "Ustawienia deweloperskie"
     },
     "export_chat": {
         "html": "HTML",
@@ -3342,7 +3318,12 @@
             "kick": "%(senderName)s usunął %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s zmienił temat na \"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s zmienił awatar pokoju.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s zmienił awatar pokoju.",
+            "lightbox_title": "%(senderDisplayName)s zmienił awatar %(roomName)s",
+            "removed": "%(senderDisplayName)s usunął awatar pokoju.",
+            "changed_img": "%(senderDisplayName)s zmienił awatar pokoju na <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s usunął nazwę pokoju.",
             "change": "%(senderDisplayName)s zmienił nazwę pokoju z %(oldRoomName)s na %(newRoomName)s.",
@@ -3409,7 +3390,11 @@
             "removed": "Widżet %(widgetName)s został usunięty przez %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s zmienił układ pokoju",
-        "m.location": "%(senderName)s udostępnił lokalizację",
+        "m.location": {
+            "full": "%(senderName)s udostępnił lokalizację",
+            "self_location": "Udostępnili swoją lokalizację: ",
+            "location": "Udostępnili lokalizację: "
+        },
         "self_redaction": "Wiadomość usunięta",
         "redaction": "Wiadomość usunięta przez %(name)s",
         "m.poll.start": "%(senderName)s utworzył ankietę - %(pollQuestion)s",
@@ -3592,6 +3577,19 @@
         "io.element.voice_broadcast_info": {
             "you": "Zakończyłeś <a>transmisje głosową</a>",
             "user": "%(senderName)s zakończył <a>transmisję głosową</a>"
+        },
+        "reactions": {
+            "label": "%(reactors)s zareagował z %(content)s",
+            "tooltip": "<reactors/><reactedWith> zareagował z %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Wiadomość usunięta dnia %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Ten pokój jest kontynuacją innej rozmowy.",
+            "unknown_predecessor_guess_server": "Nie można znaleźć starej wersji tego pokoju (ID pokoju: %(roomId)s), a nie dostarczono nam 'via_servers', aby ją znaleźć. Można spróbować odgadnąć serwer na podstawie ID pokoju. Jeśli chcesz spróbować, kliknij ten link:",
+            "unknown_predecessor": "Nie można znaleźć starej wersji tego pokoju (ID pokoju: %(roomId)s), a nie dostarczono nam 'via_servers', aby ją znaleźć.",
+            "see_older_messages": "Kliknij tutaj, aby zobaczyć starsze wiadomości."
         }
     },
     "slash_command": {
@@ -3660,7 +3658,15 @@
         "failed_find_room": "Błąd polecenia: Nie można znaleźć pokoju (%(roomId)s",
         "failed_find_user": "Nie znaleziono użytkownika w pokoju",
         "op": "Określ poziom uprawnień użytkownika",
-        "deop": "Usuwa prawa administratora użytkownikowi o danym ID"
+        "deop": "Usuwa prawa administratora użytkownikowi o danym ID",
+        "server_error": "Błąd serwera",
+        "command_error": "Błąd polecenia",
+        "server_error_detail": "Serwer może być niedostępny, przeciążony, lub coś innego poszło źle.",
+        "unknown_command": "Nieznane polecenie",
+        "unknown_command_detail": "Nieznane polecenie: %(commandText)s",
+        "unknown_command_help": "Możesz użyć <code>/help</code> aby wyświetlić listę dostępnych poleceń. Czy chciałeś wysłać to jako wiadomość?",
+        "unknown_command_hint": "Wskazówka: Rozpocznij swoją wiadomość od <code>//</code>, aby rozpocząć ją ukośnikiem.",
+        "unknown_command_button": "Wyślij jako wiadomość"
     },
     "presence": {
         "busy": "Zajęty",
@@ -3781,7 +3787,10 @@
             "notifications.room": "Powiadamianie wszystkich"
         },
         "security": {
-            "strict_encryption": "Nigdy nie wysyłaj zaszyfrowanych wiadomości do niezweryfikowanych sesji z tej sesji w tym pokoju"
+            "strict_encryption": "Nigdy nie wysyłaj zaszyfrowanych wiadomości do niezweryfikowanych sesji z tej sesji w tym pokoju",
+            "join_rule_invite": "Prywatny (tylko na zaproszenie)",
+            "join_rule_invite_description": "Tylko zaproszeni ludzie mogą dołączyć.",
+            "join_rule_public_description": "Każdy może znaleźć i dołączyć."
         }
     },
     "encryption": {
@@ -4095,7 +4104,9 @@
         "failed_permission": "%(brand)s został odmówiony uprawnień do pobrania Twojej lokalizacji. Zezwól na dostęp do lokalizacji w ustawieniach przeglądarki.",
         "failed_generic": "Nie udało się pobrać Twojej lokalizacji. Spróbuj ponownie później.",
         "failed_timeout": "Upłynął czas oczekiwania podczas pobierania lokalizacji. Spróbuj ponownie później.",
-        "failed_unknown": "Wystąpił nieznany błąd podczas pobierania lokalizacji. Spróbuj ponownie później."
+        "failed_unknown": "Wystąpił nieznany błąd podczas pobierania lokalizacji. Spróbuj ponownie później.",
+        "expand_map": "Rozwiń mapę",
+        "failed_load_map": "Nie udało się wczytać mapy"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Nie można rozpocząć nowej transmisji głosowej",
@@ -4117,5 +4128,9 @@
         "30s_backward": "30s do tyłu",
         "30s_forward": "30s do przodu",
         "go_live": "Rozpocznij transmisję"
+    },
+    "labs_mjolnir": {
+        "room_name": "Moja lista zablokowanych",
+        "room_topic": "To jest Twoja lista zablokowanych użytkowników/serwerów – nie opuszczaj tego pokoju!"
     }
 }

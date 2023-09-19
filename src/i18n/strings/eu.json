@@ -55,7 +55,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "Ziur '%(roomName)s' gelatik atera nahi duzula?",
     "Are you sure you want to reject the invitation?": "Ziur gonbidapena baztertu nahi duzula?",
     "Change Password": "Aldatu pasahitza",
-    "Command error": "Aginduaren errorea",
     "Commands": "Aginduak",
     "Confirm password": "Berretsi pasahitza",
     "Current password": "Oraingo pasahitza",
@@ -109,9 +108,7 @@
     "%(roomName)s does not exist.": "Ez dago %(roomName)s izeneko gela.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s ez dago eskuragarri orain.",
     "Search failed": "Bilaketak huts egin du",
-    "Server error": "Zerbitzari-errorea",
     "Server may be unavailable, overloaded, or search timed out :(": "Zerbitzaria eskuraezin edo gainezka egon daiteke, edo bilaketaren denbora muga gainditu da :(",
-    "Server unavailable, overloaded, or something else went wrong.": "Zerbitzaria eskuraezin edo gainezka egon daiteke edo zerbaitek huts egin du.",
     "Signed Out": "Saioa amaituta",
     "This email address was not found": "Ez da e-mail helbide hau aurkitu",
     "This room is not recognised.": "Ez da gela hau ezagutzen.",
@@ -190,9 +187,6 @@
     "URL Previews": "URL-en aurrebistak",
     "Drop file here to upload": "Jaregin fitxategia hona igotzeko",
     "Check for update": "Bilatu ekuneraketa",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s erabiltzaileak gelaren abatarra aldatu du beste honetara: <img/>",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s erabiltzaileak gelaren abatarra ezabatu du.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s erabiltzaileak %(roomName)s gelaren abatarra aldatu du",
     "Something went wrong!": "Zerk edo zerk huts egin du!",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Kanpo webgune batetara eramango zaizu zure kontua %(integrationsUrl)s helbidearekin erabiltzeko egiaztatzeko. Jarraitu nahi duzu?",
     "Your browser does not support the required cryptography extensions": "Zure nabigatzaileak ez ditu onartzen beharrezkoak diren kriptografia gehigarriak",
@@ -260,12 +254,9 @@
     "Today": "Gaur",
     "Friday": "Ostirala",
     "What's New": "Zer dago berri",
-    "On": "Bai",
     "Changelog": "Aldaketa-egunkaria",
-    "Waiting for response from server": "Zerbitzariaren erantzunaren zain",
     "Failed to send logs: ": "Huts egin du egunkariak bidaltzean: ",
     "This Room": "Gela hau",
-    "Noisy": "Zaratatsua",
     "Unavailable": "Eskuraezina",
     "Source URL": "Iturriaren URLa",
     "Filter results": "Iragazi emaitzak",
@@ -286,7 +277,6 @@
     "Yesterday": "Atzo",
     "Error encountered (%(errorDetail)s).": "Errorea aurkitu da (%(errorDetail)s).",
     "Low Priority": "Lehentasun baxua",
-    "Off": "Ez",
     "Thank you!": "Eskerrik asko!",
     "Missing roomId.": "Gelaren ID-a falta da.",
     "Popout widget": "Laster-leiho trepeta",
@@ -322,8 +312,6 @@
     "This room has been replaced and is no longer active.": "Gela hau ordeztu da eta ez dago aktibo jada.",
     "The conversation continues here.": "Elkarrizketak hemen darrai.",
     "Only room administrators will see this warning": "Gelaren administratzaileek besterik ez dute abisu hau ikusiko",
-    "This room is a continuation of another conversation.": "Gela hau aurreko elkarrizketa baten jarraipena da.",
-    "Click here to see older messages.": "Egin klik hemen mezu zaharrak ikusteko.",
     "This homeserver has hit its Monthly Active User limit.": "Hasiera zerbitzari honek bere hilabeteko erabiltzaile aktiboen muga gainditu du.",
     "This homeserver has exceeded one of its resource limits.": "Hasiera zerbitzari honek bere baliabide mugetako bat gainditu du.",
     "Failed to upgrade room": "Huts egin du gela eguneratzea",
@@ -614,7 +602,6 @@
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Zure pasahitza berrezarri dezakezu, baina ezaugarri batzuk ez dira eskuragarri izango identitate-zerbitzaria berriro eskuragarri egon arte. Abisu hau ikusten jarraitzen baduzu, egiaztatu zure konfigurazioa edo kontaktatu zerbitzariaren administratzailea.",
     "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Saioa hasi dezakezu, baina ezaugarri batzuk ez dira eskuragarri izango identitate-zerbitzaria berriro eskuragarri egon arte. Abisu hau ikusten jarraitzen baduzu, egiaztatu zure konfigurazioa edo kontaktatu zerbitzariaren administratzailea.",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Ezin izan da gonbidapena baliogabetu. Zerbitzariak une bateko arazoren bat izan lezake edo agian ez duzu gonbidapena baliogabetzeko baimen nahiko.",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/> erabiltzaileak <reactedWith>%(shortName)s batekin erreakzionatu du</reactedWith>",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Saioaren datu batzuk, zifratutako mezuen gakoak barne, falta dira. Amaitu saioa eta hasi saioa berriro hau konpontzeko, gakoak babes-kopiatik berreskuratuz.",
     "Your browser likely removed this data when running low on disk space.": "Ziur asko zure nabigatzaileak kendu ditu datu hauek diskoan leku gutxi zuelako.",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Fitxategi hau <b>handiegia da</b> igo ahal izateko. Fitxategiaren tamaina-muga %(limit)s da, baina fitxategi honen tamaina %(sizeOfThisFile)s da.",
@@ -748,8 +735,6 @@
     "%(name)s cancelled": "%(name)s utzita",
     "%(name)s wants to verify": "%(name)s(e)k egiaztatu nahi du",
     "You sent a verification request": "Egiaztaketa eskari bat bidali duzu",
-    "My Ban List": "Nire debeku-zerrenda",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Hau blokeatu dituzun erabiltzaile edo zerbitzarien zerrenda da, ez atera gelatik!",
     "Cannot connect to integration manager": "Ezin da integrazio kudeatzailearekin konektatu",
     "The integration manager is offline or it cannot reach your homeserver.": "Integrazio kudeatzailea lineaz kanpo dago edo ezin du zure hasiera-zerbitzaria atzitu.",
     "Manage integrations": "Kudeatu integrazioak",
@@ -836,11 +821,6 @@
     "This room is end-to-end encrypted": "Gela hau muturretik muturrera zifratuta dago",
     "Everyone in this room is verified": "Gelako guztiak egiaztatuta daude",
     "Reject & Ignore user": "Ukatu eta ezikusi erabiltzailea",
-    "Unknown Command": "Agindu ezezaguna",
-    "Unrecognised command: %(commandText)s": "Agindu ezezaguna: %(commandText)s",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "<code>/help</code> erabili dezakezu agindu erabilgarrien zerrenda ikusteko. Ala mezu gisa bidali nahi zenuen hau?",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Aholkua: Hasi zure mezua <code>//</code> idatziz barra batekin hasi nahi baduzu.",
-    "Send as message": "Bidali mezu gisa",
     "Verify User": "Egiaztatu erabiltzailea",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Segurtasun gehiagorako, egiaztatu erabiltzaile hau aldi-bakarrerako kode bat bi gailuetan egiaztatuz.",
     "Start Verification": "Hasi egiaztaketa",
@@ -992,9 +972,6 @@
     "You signed in to a new session without verifying it:": "Saio berria hasi duzu hau egiaztatu gabe:",
     "Verify your other session using one of the options below.": "Egiaztatu zure beste saioa beheko aukeretako batekin.",
     "IRC display name width": "IRC-ko pantaila izenaren zabalera",
-    "Size must be a number": "Tamaina zenbaki bat izan behar da",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Letra tamaina pertsonalizatua %(min)s pt eta %(max)s pt bitartean egon behar du",
-    "Use between %(min)s pt and %(max)s pt": "Erabili %(min)s pt eta %(max)s pt bitarteko  balioa",
     "You've successfully verified your device!": "Ongi egiaztatu duzu zure gailua!",
     "To continue, use Single Sign On to prove your identity.": "Jarraitzeko, erabili Single Sign On zure identitatea frogatzeko.",
     "Confirm to continue": "Berretsi jarraitzeko",
@@ -1032,7 +1009,6 @@
     "All settings": "Ezarpen guztiak",
     "Use a different passphrase?": "Erabili pasa-esaldi desberdin bat?",
     "Change notification settings": "Aldatu jakinarazpenen ezarpenak",
-    "Hey you. You're the best!": "Aupa txo. Onena zara!",
     "Forget Room": "Ahaztu gela",
     "This room is public": "Gela hau publikoa da",
     "Click to view edits": "Klik egin edizioak ikusteko",
@@ -1103,7 +1079,10 @@
         "integration_manager": "Integrazio-kudeatzailea",
         "qr_code": "QR kodea",
         "feedback": "Iruzkinak",
-        "all_rooms": "Gela guztiak"
+        "all_rooms": "Gela guztiak",
+        "preview_message": "Aupa txo. Onena zara!",
+        "on": "Bai",
+        "off": "Ez"
     },
     "action": {
         "continue": "Jarraitu",
@@ -1265,7 +1244,8 @@
         "before_submitting": "Egunkariak bidali aurretik, <a>GitHub arazo bat sortu</a> behar duzu gertatzen zaizuna azaltzeko.",
         "collecting_information": "Aplikazioaren bertsio-informazioa biltzen",
         "collecting_logs": "Egunkariak biltzen",
-        "create_new_issue": "<newIssueLink>Sortu txosten berri bat</newIssueLink> GitHub zerbitzarian arazo hau ikertu dezagun."
+        "create_new_issue": "<newIssueLink>Sortu txosten berri bat</newIssueLink> GitHub zerbitzarian arazo hau ikertu dezagun.",
+        "waiting_for_server": "Zerbitzariaren erantzunaren zain"
     },
     "time": {
         "few_seconds_ago": "duela segundo batzuk",
@@ -1314,7 +1294,8 @@
             "rule_encrypted_room_one_to_one": "Zifratutako mezuak bi pertsonen arteko txatetan",
             "enable_desktop_notifications_session": "Gaitu mahaigaineko jakinarazpenak saio honentzat",
             "show_message_desktop_notification": "Erakutsi mezua mahaigaineko jakinarazpenean",
-            "enable_audible_notifications_session": "Gaitu jakinarazpen entzungarriak saio honentzat"
+            "enable_audible_notifications_session": "Gaitu jakinarazpen entzungarriak saio honentzat",
+            "noisy": "Zaratatsua"
         },
         "appearance": {
             "match_system_theme": "Bat egin sistemako azalarekin",
@@ -1327,7 +1308,11 @@
             "custom_theme_add_button": "Gehitu azala",
             "font_size": "Letra-tamaina",
             "timeline_image_size_default": "Lehenetsia",
-            "custom_font_size": "Erabili tamaina pertsonalizatua"
+            "custom_font_size": "Erabili tamaina pertsonalizatua",
+            "font_size_nan": "Tamaina zenbaki bat izan behar da",
+            "font_size_limit": "Letra tamaina pertsonalizatua %(min)s pt eta %(max)s pt bitartean egon behar du",
+            "font_size_valid": "Erabili %(min)s pt eta %(max)s pt bitarteko  balioa",
+            "image_size_default": "Lehenetsia"
         },
         "inline_url_previews_room_account": "Gaitu URLen aurrebista gela honetan (zuretzat bakarrik aldatuko duzu)",
         "inline_url_previews_room": "Gaitu URLen aurrebista lehenetsita gela honetako partaideentzat",
@@ -1562,6 +1547,18 @@
             "changed_rule_rooms": "%(senderName)s erabiltzaileak gelak debekatzen dituen araua aldatu du %(oldGlob)s adierazpenetik %(newGlob)s adierazpenera, arrazoia: %(reason)s",
             "changed_rule_servers": "%(senderName)s erabiltzaileak zerbitzariak debekatzen dituen araua aldatu du %(oldGlob)s adierazpenetik %(newGlob)s adierazpenera, arrazoia: %(reason)s",
             "changed_rule_glob": "%(senderName)s erabiltzaileak debeku arau bat aldatu du %(oldGlob)s adierazpenetik %(newGlob)s adierazpenera, arrazoia: %(reason)s"
+        },
+        "reactions": {
+            "tooltip": "<reactors/> erabiltzaileak <reactedWith>%(shortName)s batekin erreakzionatu du</reactedWith>"
+        },
+        "m.room.avatar": {
+            "lightbox_title": "%(senderDisplayName)s erabiltzaileak %(roomName)s gelaren abatarra aldatu du",
+            "removed": "%(senderDisplayName)s erabiltzaileak gelaren abatarra ezabatu du.",
+            "changed_img": "%(senderDisplayName)s erabiltzaileak gelaren abatarra aldatu du beste honetara: <img/>"
+        },
+        "m.room.create": {
+            "continuation": "Gela hau aurreko elkarrizketa baten jarraipena da.",
+            "see_older_messages": "Egin klik hemen mezu zaharrak ikusteko."
         }
     },
     "slash_command": {
@@ -1604,7 +1601,15 @@
         "join": "Emandako helbidea duen gelara elkartzen da",
         "failed_find_user": "Ezin izan da erabiltzailea gelan aurkitu",
         "op": "Zehaztu erabiltzaile baten botere maila",
-        "deop": "Emandako ID-a duen erabiltzailea mailaz jaisten du"
+        "deop": "Emandako ID-a duen erabiltzailea mailaz jaisten du",
+        "server_error": "Zerbitzari-errorea",
+        "command_error": "Aginduaren errorea",
+        "server_error_detail": "Zerbitzaria eskuraezin edo gainezka egon daiteke edo zerbaitek huts egin du.",
+        "unknown_command": "Agindu ezezaguna",
+        "unknown_command_detail": "Agindu ezezaguna: %(commandText)s",
+        "unknown_command_help": "<code>/help</code> erabili dezakezu agindu erabilgarrien zerrenda ikusteko. Ala mezu gisa bidali nahi zenuen hau?",
+        "unknown_command_hint": "Aholkua: Hasi zure mezua <code>//</code> idatziz barra batekin hasi nahi baduzu.",
+        "unknown_command_button": "Bidali mezu gisa"
     },
     "presence": {
         "online_for": "Konektatua %(duration)s",
@@ -1751,5 +1756,9 @@
             "versions": "Bertsioak",
             "clear_cache_reload": "Garbitu cachea eta birkargatu"
         }
+    },
+    "labs_mjolnir": {
+        "room_name": "Nire debeku-zerrenda",
+        "room_topic": "Hau blokeatu dituzun erabiltzaile edo zerbitzarien zerrenda da, ez atera gelatik!"
     }
 }

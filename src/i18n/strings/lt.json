@@ -7,9 +7,7 @@
     "Today": "Šiandien",
     "Friday": "Penktadienis",
     "Notifications": "Pranešimai",
-    "On": "Įjungta",
     "Changelog": "Keitinių žurnalas",
-    "Waiting for response from server": "Laukiama atsakymo iš serverio",
     "Failed to change password. Is your password correct?": "Nepavyko pakeisti slaptažodžio. Ar jūsų slaptažodis teisingas?",
     "Operation failed": "Operacija nepavyko",
     "This Room": "Šis pokalbių kambarys",
@@ -19,7 +17,6 @@
     "Source URL": "Šaltinio URL adresas",
     "Filter results": "Išfiltruoti rezultatus",
     "No update available.": "Nėra galimų atnaujinimų.",
-    "Noisy": "Triukšmingas",
     "Tuesday": "Antradienis",
     "Search…": "Paieška…",
     "Unnamed room": "Kambarys be pavadinimo",
@@ -39,7 +36,6 @@
     "Yesterday": "Vakar",
     "Error encountered (%(errorDetail)s).": "Susidurta su klaida (%(errorDetail)s).",
     "Low Priority": "Žemo prioriteto",
-    "Off": "Išjungta",
     "Thank you!": "Ačiū!",
     "Permission Required": "Reikalingas Leidimas",
     "Upload Failed": "Įkėlimas Nepavyko",
@@ -97,8 +93,6 @@
     "Failed to mute user": "Nepavyko nutildyti vartotojo",
     "Are you sure?": "Ar tikrai?",
     "Admin Tools": "Administratoriaus įrankiai",
-    "Server error": "Serverio klaida",
-    "Command error": "Komandos klaida",
     "(~%(count)s results)": {
         "other": "(~%(count)s rezultatų(-ai))",
         "one": "(~%(count)s rezultatas)"
@@ -177,7 +171,6 @@
     "Failed to ban user": "Nepavyko užblokuoti vartotojo",
     "Invited": "Pakviesta",
     "Filter room members": "Filtruoti kambario dalyvius",
-    "Server unavailable, overloaded, or something else went wrong.": "Serveris neprieinamas, perkrautas arba nutiko kažkas kito.",
     "%(duration)ss": "%(duration)s sek",
     "%(duration)sm": "%(duration)s min",
     "%(duration)sh": "%(duration)s val",
@@ -204,8 +197,6 @@
     "URL previews are enabled by default for participants in this room.": "URL nuorodų peržiūros šio kambario dalyviams yra įjungtos kaip numatytosios.",
     "URL previews are disabled by default for participants in this room.": "URL nuorodų peržiūros šio kambario dalyviams yra išjungtos kaip numatytosios.",
     "Invalid file%(extra)s": "Neteisingas failas %(extra)s",
-    "This room is a continuation of another conversation.": "Šis kambarys yra kito pokalbio pratęsimas.",
-    "Click here to see older messages.": "Spustelėkite čia, norėdami matyti senesnes žinutes.",
     "Token incorrect": "Neteisingas prieigos raktas",
     "Sign in with": "Prisijungti naudojant",
     "Create new room": "Sukurti naują kambarį",
@@ -235,9 +226,6 @@
     "Failed to unban": "Nepavyko atblokuoti",
     "not specified": "nenurodyta",
     "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.": "Šifruotuose kambariuose, tokiuose kaip šis, URL nuorodų peržiūros pagal numatymą yra išjungtos, kad būtų užtikrinta, jog jūsų serveris (kur yra generuojamos peržiūros) negali rinkti informacijos apie jūsų šiame kambaryje peržiūrėtas nuorodas.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s pakeitė kambario %(roomName)s pseudoportretą",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s pašalino kambario pseudoportretą.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s pakeitė kambario pseudoportretą į <img/>",
     "Home": "Pradžia",
     "And %(count)s more...": {
         "other": "Ir dar %(count)s..."
@@ -415,7 +403,6 @@
     "Add room": "Sukurti kambarį",
     "Later": "Vėliau",
     "This room is end-to-end encrypted": "Šis kambarys visapusiškai užšifruotas",
-    "Send as message": "Siųsti kaip žinutę",
     "Messages in this room are end-to-end encrypted.": "Žinutės šiame kambaryje yra visapusiškai užšifruotos.",
     "Messages in this room are not end-to-end encrypted.": "Žinutės šiame kambaryje nėra visapusiškai užšifruotos.",
     "Confirm Removal": "Patvirtinkite pašalinimą",
@@ -617,11 +604,8 @@
     "No media permissions": "Nėra medijos leidimų",
     "Almost there! Is %(displayName)s showing the same shield?": "Beveik atlikta! Ar %(displayName)s rodo tokį patį skydą?",
     "IRC display name width": "IRC rodomo vardo plotis",
-    "My Ban List": "Mano Draudimų Sąrašas",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Tai yra jūsų užblokuotų vartotojų/serverių sąrašas - neišeikite iš kambario!",
     "Verify this user by confirming the following emoji appear on their screen.": "Patvirtinkite šį vartotoją, įsitikindami, kad jo ekrane rodomas toliau esantis jaustukas.",
     "⚠ These settings are meant for advanced users.": "⚠ Šie nustatymai yra skirti pažengusiems vartotojams.",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Jūs galite naudoti <code>/help</code>, kad pamatytumėte galimų komandų sąrašą. Ar norėjote siųsti tai kaip žinutę?",
     "Room avatar": "Kambario pseudoportretas",
     "Verify by comparing unique emoji.": "Patvirtinti palyginant unikalius jaustukus.",
     "Verify by emoji": "Patvirtinti naudojant jaustukus",
@@ -834,10 +818,6 @@
     "Something went wrong. Please try again or view your console for hints.": "Kažkas ne taip. Bandykite dar kartą arba peržiūrėkite konsolę, kad rastumėte užuominų.",
     "Error adding ignored user/server": "Klaida pridedant ignoruojamą vartotoją/serverį",
     "Ignored/Blocked": "Ignoruojami/Blokuojami",
-    "Use between %(min)s pt and %(max)s pt": "Naudokite dydį tarp %(min)s pt ir %(max)s pt",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Pasirinktinis šrifto dydis gali būti tik tarp %(min)s pt ir %(max)s pt",
-    "Size must be a number": "Dydis turi būti skaičius",
-    "Hey you. You're the best!": "Labukas. Tu geriausias(-a)!",
     "New version available. <a>Update now.</a>": "Galima nauja versija. <a>Atnaujinti dabar.</a>",
     "You should:": "Jūs turėtumėte:",
     "Checking server": "Tikrinamas serveris",
@@ -946,8 +926,6 @@
     "Edited at %(date)s": "Keista %(date)s",
     "Click to view edits": "Spustelėkite kad peržiūrėti pakeitimus",
     "Add an Integration": "Pridėti Integraciją",
-    "Message deleted on %(date)s": "Žinutė buvo ištrinta %(date)s",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reagavo su %(shortName)s</reactedWith>",
     "Add reaction": "Pridėti reakciją",
     "Error processing voice message": "Klaida apdorojant balso pranešimą",
     "Ignored attempt to disable encryption": "Bandymas išjungti šifravimą buvo ignoruotas",
@@ -1196,15 +1174,11 @@
     },
     "Loading new room": "Įkeliamas naujas kambarys",
     "Upgrading room": "Atnaujinamas kambarys",
-    "Large": "Didelis",
     "& %(count)s more": {
         "one": "& %(count)s daugiau",
         "other": "& %(count)s daugiau"
     },
     "Upgrade required": "Reikalingas atnaujinimas",
-    "Anyone can find and join.": "Bet kas gali rasti ir prisijungti.",
-    "Only invited people can join.": "Tik pakviesti žmonės gali prisijungti.",
-    "Private (invite only)": "Privatus (tik su pakvietimu)",
     "Click the button below to confirm signing out these devices.": {
         "other": "Spustelėkite mygtuką žemiau kad patvirtinti šių įrenginių atjungimą.",
         "one": "Spustelėkite mygtuką žemiau kad patvirtinti šio įrenginio atjungimą."
@@ -1412,7 +1386,6 @@
     "Sessions": "Sesijos",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Bendrinti anoniminius duomenis, kurie padės mums nustatyti problemas. Nieko asmeniško. Jokių trečiųjų šalių.",
     "You have no ignored users.": "Nėra ignoruojamų naudotojų.",
-    "Keyboard": "Klaviatūra",
     "Deactivating your account is a permanent action — be careful!": "Paskyros deaktyvavimas yra negrįžtamas veiksmas — būkite atsargūs!",
     "Spell check": "Rašybos tikrinimas",
     "Your password was successfully changed.": "Jūsų slaptažodis sėkmingai pakeistas.",
@@ -1490,7 +1463,6 @@
     "Space selection": "Erdvės pasirinkimas",
     "Match system": "Atitikti sistemą",
     "Pin to sidebar": "Prisegti prie šoninės juostos",
-    "Developer tools": "Kūrėjo įrankiai",
     "Quick settings": "Greiti nustatymai",
     "Waiting for you to verify on your other device…": "Laukiame, kol patvirtinsite kitame įrenginyje…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Laukiama, kol patvirtinsite kitame įrenginyje, %(deviceName)s (%(deviceId)s)…",
@@ -1503,9 +1475,6 @@
         "one": "%(count)s žmogus prisijungė",
         "other": "%(count)s žmonės prisijungė"
     },
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Patarimas: norėdami žinutę pradėti pasviruoju brūkšniu, pradėkite ją su <code>//</code>.",
-    "Unrecognised command: %(commandText)s": "Neatpažinta komanda: %(commandText)s",
-    "Unknown Command": "Nežinoma komanda",
     "Vietnam": "Vietnamas",
     "United Arab Emirates": "Jungtiniai Arabų Emiratai",
     "Ukraine": "Ukraina",
@@ -1704,7 +1673,10 @@
         "integration_manager": "Integracijų tvarkyklė",
         "feedback": "Atsiliepimai",
         "all_rooms": "Visi kambariai",
-        "orphan_rooms": "Kiti kambariai"
+        "orphan_rooms": "Kiti kambariai",
+        "preview_message": "Labukas. Tu geriausias(-a)!",
+        "on": "Įjungta",
+        "off": "Išjungta"
     },
     "action": {
         "continue": "Tęsti",
@@ -1899,7 +1871,8 @@
         "collecting_logs": "Renkami žurnalai",
         "uploading_logs": "Įkeliami žurnalai",
         "downloading_logs": "Parsiunčiami žurnalai",
-        "create_new_issue": "Prašome <newIssueLink>sukurti naują problemą</newIssueLink> GitHub'e, kad mes galėtume ištirti šią klaidą."
+        "create_new_issue": "Prašome <newIssueLink>sukurti naują problemą</newIssueLink> GitHub'e, kad mes galėtume ištirti šią klaidą.",
+        "waiting_for_server": "Laukiama atsakymo iš serverio"
     },
     "time": {
         "seconds_left": "%(seconds)ss liko",
@@ -2018,7 +1991,8 @@
             "enable_email_notifications": "Įjungti el. pašto pranešimus %(email)s",
             "enable_desktop_notifications_session": "Įjungti darbalaukio pranešimus šiam seansui",
             "show_message_desktop_notification": "Rodyti žinutę darbalaukio pranešime",
-            "enable_audible_notifications_session": "Įjungti garsinius pranešimus šiam seansui"
+            "enable_audible_notifications_session": "Įjungti garsinius pranešimus šiam seansui",
+            "noisy": "Triukšmingas"
         },
         "appearance": {
             "layout_irc": "IRC (eksperimentinis)",
@@ -2039,7 +2013,12 @@
             "timeline_image_size": "Paveikslėlio dydis laiko juostoje",
             "timeline_image_size_default": "Numatytas",
             "timeline_image_size_large": "Didelis",
-            "custom_font_size": "Naudoti pasirinktinį dydį"
+            "custom_font_size": "Naudoti pasirinktinį dydį",
+            "font_size_nan": "Dydis turi būti skaičius",
+            "font_size_limit": "Pasirinktinis šrifto dydis gali būti tik tarp %(min)s pt ir %(max)s pt",
+            "font_size_valid": "Naudokite dydį tarp %(min)s pt ir %(max)s pt",
+            "image_size_default": "Numatytas",
+            "image_size_large": "Didelis"
         },
         "inline_url_previews_room_account": "Įjungti URL nuorodų peržiūras šiame kambaryje (įtakoja tik jus)",
         "inline_url_previews_room": "Įjungti URL nuorodų peržiūras kaip numatytasias šiame kambaryje esantiems dalyviams",
@@ -2072,6 +2051,9 @@
             "enable_message_search": "Įjungti žinučių paiešką užšifruotuose kambariuose",
             "message_search_sleep_time": "Kaip greitai žinutės turi būti parsiųstos.",
             "manually_verify_all_sessions": "Rankiniu būdu patvirtinti visus nuotolinius seansus"
+        },
+        "keyboard": {
+            "title": "Klaviatūra"
         }
     },
     "devtools": {
@@ -2091,7 +2073,8 @@
         "category_other": "Kitas",
         "widget_screenshots": "Įjungti valdiklių ekrano kopijas palaikomuose valdikliuose",
         "show_hidden_events": "Rodyti paslėptus įvykius laiko juostoje",
-        "developer_mode": "Kūrėjo režimas"
+        "developer_mode": "Kūrėjo režimas",
+        "title": "Kūrėjo įrankiai"
     },
     "export_chat": {
         "html": "HTML",
@@ -2147,7 +2130,12 @@
             "kick": "%(senderName)s pašalino %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s pakeitė temą į \"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s pakeitė kambario avatarą.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s pakeitė kambario avatarą.",
+            "lightbox_title": "%(senderDisplayName)s pakeitė kambario %(roomName)s pseudoportretą",
+            "removed": "%(senderDisplayName)s pašalino kambario pseudoportretą.",
+            "changed_img": "%(senderDisplayName)s pakeitė kambario pseudoportretą į <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s pašalino kambario pavadinimą.",
             "change": "%(senderDisplayName)s pakeitė kambario pavadinimą iš %(oldRoomName)s į %(newRoomName)s.",
@@ -2213,7 +2201,9 @@
             "removed": "%(senderName)s pašalino %(widgetName)s valdiklį"
         },
         "io.element.widgets.layout": "%(senderName)s atnaujino kambario išdėstymą",
-        "m.location": "%(senderName)s bendrino savo būvimo vietą",
+        "m.location": {
+            "full": "%(senderName)s bendrino savo būvimo vietą"
+        },
         "self_redaction": "Žinutė ištrinta",
         "redaction": "Žinutė, ištrinta %(name)s",
         "m.poll.start": "%(senderName)s pradėjo apklausą - %(pollQuestion)s",
@@ -2346,7 +2336,17 @@
         "no_permission_messages_before_invite": "Neturite leidimo peržiūrėti žinučių, rašytų prieš jūsų pakvietimą.",
         "no_permission_messages_before_join": "Neturite leidimo peržiūrėti žinučių, rašytų prieš jums prisijungiant.",
         "encrypted_historical_messages_unavailable": "Iki šio taško užšifruotos žinutės yra neprieinamos.",
-        "historical_messages_unavailable": "Negalite matyti ankstesnių žinučių"
+        "historical_messages_unavailable": "Negalite matyti ankstesnių žinučių",
+        "reactions": {
+            "tooltip": "<reactors/><reactedWith>reagavo su %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Žinutė buvo ištrinta %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Šis kambarys yra kito pokalbio pratęsimas.",
+            "see_older_messages": "Spustelėkite čia, norėdami matyti senesnes žinutes."
+        }
     },
     "slash_command": {
         "shrug": "Prideda ¯\\_(ツ)_/¯ prie paprasto teksto žinutės",
@@ -2389,7 +2389,15 @@
         "join": "Prisijungia prie kambario su nurodytu adresu",
         "failed_find_user": "Vartotojo rasti kambaryje nepavyko",
         "op": "Nustatykite vartotojo galios lygį",
-        "deop": "Deop'ina vartotoją su nurodytu id"
+        "deop": "Deop'ina vartotoją su nurodytu id",
+        "server_error": "Serverio klaida",
+        "command_error": "Komandos klaida",
+        "server_error_detail": "Serveris neprieinamas, perkrautas arba nutiko kažkas kito.",
+        "unknown_command": "Nežinoma komanda",
+        "unknown_command_detail": "Neatpažinta komanda: %(commandText)s",
+        "unknown_command_help": "Jūs galite naudoti <code>/help</code>, kad pamatytumėte galimų komandų sąrašą. Ar norėjote siųsti tai kaip žinutę?",
+        "unknown_command_hint": "Patarimas: norėdami žinutę pradėti pasviruoju brūkšniu, pradėkite ją su <code>//</code>.",
+        "unknown_command_button": "Siųsti kaip žinutę"
     },
     "presence": {
         "busy": "Užsiėmęs",
@@ -2494,7 +2502,10 @@
             "notifications.room": "Pranešti visiems"
         },
         "security": {
-            "strict_encryption": "Niekada nesiųsti šifruotų žinučių nepatvirtintiems seansams šiame kambaryje iš šio seanso"
+            "strict_encryption": "Niekada nesiųsti šifruotų žinučių nepatvirtintiems seansams šiame kambaryje iš šio seanso",
+            "join_rule_invite": "Privatus (tik su pakvietimu)",
+            "join_rule_invite_description": "Tik pakviesti žmonės gali prisijungti.",
+            "join_rule_public_description": "Bet kas gali rasti ir prisijungti."
         }
     },
     "encryption": {
@@ -2666,5 +2677,9 @@
     "voice_broadcast": {
         "confirm_stop_title": "Sustabdyti transliaciją gyvai?",
         "confirm_stop_affirm": "Taip, sustabdyti transliaciją"
+    },
+    "labs_mjolnir": {
+        "room_name": "Mano Draudimų Sąrašas",
+        "room_topic": "Tai yra jūsų užblokuotų vartotojų/serverių sąrašas - neišeikite iš kambario!"
     }
 }

@@ -29,7 +29,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "คุณแน่ใจหรือว่าต้องการจะออกจากห้อง '%(roomName)s'?",
     "Are you sure you want to reject the invitation?": "คุณแน่ใจหรือว่าต้องการจะปฏิเสธคำเชิญ?",
     "Banned users": "ผู้ใช้ที่ถูกแบน",
-    "Command error": "คำสั่งผิดพลาด",
     "Commands": "คำสั่ง",
     "Confirm password": "ยืนยันรหัสผ่าน",
     "Cryptography": "วิทยาการเข้ารหัส",
@@ -76,10 +75,8 @@
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s ไม่ได้รับสิทธิ์ส่งการแจ้งเตือน - กรุณาลองใหม่อีกครั้ง",
     "Rooms": "ห้องสนทนา",
     "Search failed": "การค้นหาล้มเหลว",
-    "Server error": "เซิร์ฟเวอร์ผิดพลาด",
     "Server may be unavailable, overloaded, or search timed out :(": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือการค้นหาหมดเวลา :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือเจอจุดบกพร่อง",
-    "Server unavailable, overloaded, or something else went wrong.": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือบางอย่างผิดปกติ",
     "Signed Out": "ออกจากระบบแล้ว",
     "This email address is already in use": "ที่อยู่อีเมลถูกใช้แล้ว",
     "This email address was not found": "ไม่พบที่อยู่อีเมล",
@@ -158,15 +155,12 @@
     "Today": "วันนี้",
     "Friday": "วันศุกร์",
     "What's New": "มีอะไรใหม่",
-    "On": "เปิด",
     "Changelog": "บันทึกการเปลี่ยนแปลง",
-    "Waiting for response from server": "กำลังรอการตอบสนองจากเซิร์ฟเวอร์",
     "This Room": "ห้องนี้",
     "Unavailable": "ไม่มี",
     "Send": "ส่ง",
     "Source URL": "URL ต้นฉบับ",
     "No update available.": "ไม่มีอัปเดตที่ใหม่กว่า",
-    "Noisy": "เสียงดัง",
     "Tuesday": "วันอังคาร",
     "Search…": "ค้นหา…",
     "Unnamed room": "ห้องที่ไม่มีชื่อ",
@@ -182,7 +176,6 @@
     "Yesterday": "เมื่อวานนี้",
     "Error encountered (%(errorDetail)s).": "เกิดข้อผิดพลาด (%(errorDetail)s)",
     "Low Priority": "ความสำคัญต่ำ",
-    "Off": "ปิด",
     "Explore rooms": "สำรวจห้อง",
     "Add Email Address": "เพิ่มที่อยู่อีเมล",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "โปรดสอบถามผู้ดูแลระบบของโฮมเซิร์ฟเวอร์ของคุณ (<code>%(homeserverDomain)s</code>) เพื่อกำหนดคอนฟิกเซิร์ฟเวอร์ TURN เพื่อให้การเรียกทำงานได้อย่างน่าเชื่อถือ.",
@@ -374,7 +367,9 @@
         "version": "รุ่น",
         "device": "อุปกรณ์",
         "unnamed_room": "ห้องที่ยังไม่ได้ตั้งชื่อ",
-        "stickerpack": "ชุดสติ๊กเกอร์"
+        "stickerpack": "ชุดสติ๊กเกอร์",
+        "on": "เปิด",
+        "off": "ปิด"
     },
     "action": {
         "continue": "ดำเนินการต่อ",
@@ -437,7 +432,8 @@
     "bug_reporting": {
         "send_logs": "ส่งล็อก",
         "collecting_information": "กำลังรวบรวมข้อมูลเวอร์ชันแอป",
-        "collecting_logs": "กำลังรวบรวมล็อก"
+        "collecting_logs": "กำลังรวบรวมล็อก",
+        "waiting_for_server": "กำลังรอการตอบสนองจากเซิร์ฟเวอร์"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss ที่ผ่านมา",
@@ -454,10 +450,12 @@
             "rule_message": "ข้อความในแชทกลุ่ม",
             "rule_invite_for_me": "เมื่อฉันได้รับคำเชิญเข้าห้อง",
             "rule_call": "คำเชิญเข้าร่วมการโทร",
-            "rule_suppress_notices": "ข้อความจากบอท"
+            "rule_suppress_notices": "ข้อความจากบอท",
+            "noisy": "เสียงดัง"
         },
         "appearance": {
-            "timeline_image_size_default": "ค่าเริ่มต้น"
+            "timeline_image_size_default": "ค่าเริ่มต้น",
+            "image_size_default": "ค่าเริ่มต้น"
         }
     },
     "timeline": {
@@ -480,7 +478,10 @@
         "ban": "ผู้ใช้และ id ที่ถูกแบน",
         "usage": "การใช้งาน",
         "category_admin": "ผู้ดูแล",
-        "category_advanced": "ขึ้นสูง"
+        "category_advanced": "ขึ้นสูง",
+        "server_error": "เซิร์ฟเวอร์ผิดพลาด",
+        "command_error": "คำสั่งผิดพลาด",
+        "server_error_detail": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือบางอย่างผิดปกติ"
     },
     "presence": {
         "online": "ออนไลน์",

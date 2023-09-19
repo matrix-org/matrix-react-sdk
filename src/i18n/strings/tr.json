@@ -22,7 +22,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Ana Sunucu'ya bağlanılamıyor - lütfen bağlantınızı kontrol edin ,<a> Ana Sunucu SSL sertifikanızın </a> güvenilir olduğundan ve bir tarayıcı uzantısının istekleri engellemiyor olduğundan emin olun.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Tarayıcı çubuğunuzda bir HTTPS URL'si olduğunda Ana Sunusuna HTTP üzerinden bağlanılamıyor . Ya HTTPS kullanın veya <a> güvensiz komut dosyalarını</a> etkinleştirin.",
     "Change Password": "Şifre Değiştir",
-    "Command error": "Komut Hatası",
     "Commands": "Komutlar",
     "Confirm password": "Şifreyi Onayla",
     "Cryptography": "Kriptografi",
@@ -95,10 +94,8 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s şu anda erişilebilir değil.",
     "Rooms": "Odalar",
     "Search failed": "Arama başarısız",
-    "Server error": "Sunucu Hatası",
     "Server may be unavailable, overloaded, or search timed out :(": "Sunucu kullanılamıyor , aşırı yüklenmiş veya arama zaman aşımına uğramış olabilir :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Sunucu kullanılamıyor , aşırı yüklenmiş , veya bir hatayla karşılaşmış olabilirsiniz.",
-    "Server unavailable, overloaded, or something else went wrong.": "Sunucu kullanılamıyor , aşırı yüklenmiş veya başka bir şey ters gitmiş olabilir.",
     "Session ID": "Oturum ID",
     "Signed Out": "Oturum Kapatıldı",
     "Start authentication": "Kimlik Doğrulamayı başlatın",
@@ -194,9 +191,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Hesabınızı %(integrationsUrl)s ile kullanmak üzere doğrulayabilmeniz için üçüncü taraf bir siteye götürülmek üzeresiniz. Devam etmek istiyor musunuz ?",
     "URL Previews": "URL önizlemeleri",
     "Drop file here to upload": "Yüklemek için dosyaları buraya bırakın",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s odanın avatarını <img/> olarak çevirdi",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s odanın avatarını kaldırdı.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s %(roomName)s için avatarı değiştirdi",
     "Something went wrong!": "Bir şeyler yanlış gitti!",
     "Your browser does not support the required cryptography extensions": "Tarayıcınız gerekli şifreleme uzantılarını desteklemiyor",
     "Not a valid %(brand)s keyfile": "Geçersiz bir %(brand)s anahtar dosyası",
@@ -208,11 +202,8 @@
     "Today": "Bugün",
     "Friday": "Cuma",
     "What's New": "Yenilikler",
-    "On": "Açık",
     "Changelog": "Değişiklikler",
-    "Waiting for response from server": "Sunucudan yanıt bekleniyor",
     "This Room": "Bu Oda",
-    "Noisy": "Gürültülü",
     "Unavailable": "Kullanım dışı",
     "Source URL": "Kaynak URL",
     "Tuesday": "Salı",
@@ -230,7 +221,6 @@
     "Search…": "Arama…",
     "Yesterday": "Dün",
     "Low Priority": "Düşük Öncelikli",
-    "Off": "Kapalı",
     "Add Email Address": "Eposta Adresi Ekle",
     "Add Phone Number": "Telefon Numarası Ekle",
     "Call failed due to misconfigured server": "Hatalı yapılandırılmış sunucu nedeniyle arama başarısız",
@@ -407,7 +397,6 @@
     "Checking server": "Sunucu kontrol ediliyor",
     "Change identity server": "Kimlik sunucu değiştir",
     "Please contact your homeserver administrator.": "Lütfen anasunucu yöneticiniz ile bağlantıya geçin.",
-    "My Ban List": "Yasaklı Listem",
     "Unable to find a supported verification method.": "Desteklenen doğrulama yöntemi bulunamadı.",
     "Dog": "Köpek",
     "Cat": "Kedi",
@@ -549,7 +538,6 @@
     "%(name)s cancelled": "%(name)s iptal etti",
     "%(name)s wants to verify": "%(name)s doğrulamak istiyor",
     "You sent a verification request": "Doğrulama isteği gönderdiniz",
-    "Click here to see older messages.": "Daha eski mesajları görmek için buraya tıklayın.",
     "Copied!": "Kopyalandı!",
     "Failed to copy": "Kopyalama başarısız",
     "edited": "düzenlendi",
@@ -651,7 +639,6 @@
     "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\"": "“abcabcabc” gibi tekrarlar “abc” yi tahmin etmekten çok az daha zor olur",
     "Sequences like abc or 6543 are easy to guess": "abc veya 6543 gibi diziler tahmin için oldukça kolaydır",
     "Common names and surnames are easy to guess": "Yaygın isimleri ve soyisimleri tahmin etmek oldukça kolay",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Bu sizin engellediğiniz kullanıcılar/sunucular listeniz - odadan ayrılmayın!",
     "Got It": "Anlaşıldı",
     "Subscribing to a ban list will cause you to join it!": "Bir yasak listesine abonelik ona katılmanıza yol açar!",
     "Message search": "Mesaj arama",
@@ -696,9 +683,6 @@
     "Remember my selection for this widget": "Bu görsel bileşen işin seçimimi hatırla",
     "Bridges": "Köprüler",
     "Direct Messages": "Doğrudan Mesajlar",
-    "Unknown Command": "Bilinmeyen Komut",
-    "Unrecognised command: %(commandText)s": "Tanınmayan komut: %(commandText)s",
-    "Send as message": "Mesaj olarak gönder",
     "Start Verification": "Doğrulamayı Başlat",
     "Verify User": "Kullanıcı Doğrula",
     "Your messages are not secure": "Mesajlarınız korunmuyor",
@@ -1061,8 +1045,6 @@
     "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "%(homeserverDomain)s ana sunucusunu kullanmaya devam etmek için hüküm ve koşulları incelemeli ve kabul etmelisiniz.",
     "Click to view edits": "Düzenlemeleri görmek için tıkla",
     "Edited at %(date)s": "%(date)s tarihinde düzenlendi",
-    "This room is a continuation of another conversation.": "Bu oda başka bir görüşmenin devamıdır.",
-    "Message deleted on %(date)s": "Mesaj %(date)s tarihinde silindi",
     "%(name)s declined": "%(name)s reddetti",
     "You declined": "Reddettiniz",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Bu kullanıcıyı yok saydınız, bu yüzden mesajları gizlidir. <a>Yine de göster.</a>",
@@ -1179,10 +1161,6 @@
     "Forget Room": "Odayı unut",
     "Open dial pad": "Arama tuşlarını aç",
     "New version available. <a>Update now.</a>": "Yeni sürüm mevcut: <a> Şimdi güncelle.</a>",
-    "Use between %(min)s pt and %(max)s pt": "%(min)s ile %(max)s arasında girin",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Özel yazı tipi boyutu %(min)s ile %(max)s arasında olmalı",
-    "Size must be a number": "Boyut bir sayı olmalıdır",
-    "Hey you. You're the best!": "Hey sen. Sen en iyisisin!",
     "You should:": "Şunu yapmalısınız:",
     "not ready": "hazır değil",
     "ready": "hazır",
@@ -1219,8 +1197,6 @@
     "URL previews are disabled by default for participants in this room.": "URL ön izlemeleri, bu odadaki kullanıcılar için varsayılan olarak devre dışı bıraktırılmıştır.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Adanın alternatif adresini güncellerken bir hata oluştu. Bu eylem, sunucu tarafından izin verilmemiş olabilir ya da geçici bir sorun oluşmuş olabilir.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Odanın ana adresini güncellerken bir sorun oluştu. Bu eylem, sunucu tarafından izin verilmemiş olabilir ya da geçici bir sorun oluşmuş olabilir.",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "İpucu: İletilerinizi eğik çizgi ile başlatmak için <code>//</code> ile başlayın.",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "<code>/help</code> yazarak var olan komutları listeleyebilirsiniz. Yoksa bunu bir ileti olarak mı göndermek istemiştiniz?",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Bu oda, <roomVersion /> oda sürümünü kullanmaktadır ve ana sunucunuz tarafından <i>tutarsız</i> olarak işaretlenmiştir.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Bu odayı güncellerseniz bu oda kapanacak ve yerine aynı adlı, güncellenmiş bir oda geçecek.",
     "Favourited": "Beğenilenler",
@@ -1383,7 +1359,10 @@
         "integration_manager": "Bütünleştirme Yöneticisi",
         "qr_code": "Kare kod (QR)",
         "feedback": "Geri bildirim",
-        "all_rooms": "Tüm odalar"
+        "all_rooms": "Tüm odalar",
+        "preview_message": "Hey sen. Sen en iyisisin!",
+        "on": "Açık",
+        "off": "Kapalı"
     },
     "action": {
         "continue": "Devam Et",
@@ -1539,7 +1518,8 @@
         "collecting_logs": "Kayıtlar toplanıyor",
         "uploading_logs": "Günlükler yükleniyor",
         "downloading_logs": "Günlükler indiriliyor",
-        "create_new_issue": "Lütfen GitHub’da <newIssueLink>Yeni bir talep</newIssueLink> oluşturun ki bu hatayı inceleyebilelim."
+        "create_new_issue": "Lütfen GitHub’da <newIssueLink>Yeni bir talep</newIssueLink> oluşturun ki bu hatayı inceleyebilelim.",
+        "waiting_for_server": "Sunucudan yanıt bekleniyor"
     },
     "time": {
         "seconds_left": "%(seconds)s saniye kaldı",
@@ -1594,7 +1574,8 @@
             "rule_encrypted_room_one_to_one": "Birebir sohbetlerdeki şifrelenmiş mesajlar",
             "enable_desktop_notifications_session": "Bu oturum için masaüstü bildirimlerini aç",
             "show_message_desktop_notification": "Masaüstü bildiriminde mesaj göster",
-            "enable_audible_notifications_session": "Bu oturum için sesli bildirimleri aktifleştir"
+            "enable_audible_notifications_session": "Bu oturum için sesli bildirimleri aktifleştir",
+            "noisy": "Gürültülü"
         },
         "appearance": {
             "heading": "Görünüşü özelleştir",
@@ -1610,7 +1591,11 @@
             "font_size": "Yazı boyutu",
             "custom_font_description": "Sisteminizde bulunan bir font adı belirtiniz. %(brand)s sizin için onu kullanmaya çalışacak.",
             "timeline_image_size_default": "Varsayılan",
-            "custom_font_size": "Özel büyüklük kullan"
+            "custom_font_size": "Özel büyüklük kullan",
+            "font_size_nan": "Boyut bir sayı olmalıdır",
+            "font_size_limit": "Özel yazı tipi boyutu %(min)s ile %(max)s arasında olmalı",
+            "font_size_valid": "%(min)s ile %(max)s arasında girin",
+            "image_size_default": "Varsayılan"
         },
         "inline_url_previews_room_account": "Bu oda için URL önizlemeyi aç (sadece sizi etkiler)",
         "inline_url_previews_room": "Bu odadaki katılımcılar için URL önizlemeyi varsayılan olarak açık hale getir",
@@ -1872,6 +1857,18 @@
             "changed_rule_rooms": "%(senderName)s %(oldGlob)s ile eşleşen odaları banlama kuralını %(newGlob)s ile eşleşen olarak değiştirdi sebebi %(reason)s",
             "changed_rule_servers": "%(senderName)s %(oldGlob)s ile eşleşen sunucuları banlama kuralını %(newGlob)s ile eşleşen olarak değiştirdi sebebi %(reason)s",
             "changed_rule_glob": "%(senderName)s %(oldGlob)s ile eşleşen banlama kuralını %(newGlob)s ile eşleşen olarak değiştirdi sebebi %(reason)s"
+        },
+        "redacted": {
+            "tooltip": "Mesaj %(date)s tarihinde silindi"
+        },
+        "m.room.avatar": {
+            "lightbox_title": "%(senderDisplayName)s %(roomName)s için avatarı değiştirdi",
+            "removed": "%(senderDisplayName)s odanın avatarını kaldırdı.",
+            "changed_img": "%(senderDisplayName)s odanın avatarını <img/> olarak çevirdi"
+        },
+        "m.room.create": {
+            "continuation": "Bu oda başka bir görüşmenin devamıdır.",
+            "see_older_messages": "Daha eski mesajları görmek için buraya tıklayın."
         }
     },
     "slash_command": {
@@ -1923,7 +1920,15 @@
         "join": "Belirtilen adres ile odaya katılır",
         "failed_find_user": "Kullanıcı odada bulunamadı",
         "op": "Bir kullanıcının güç düzeyini tanımla",
-        "deop": "ID'leriyle birlikte , düşürülmüş kullanıcılar"
+        "deop": "ID'leriyle birlikte , düşürülmüş kullanıcılar",
+        "server_error": "Sunucu Hatası",
+        "command_error": "Komut Hatası",
+        "server_error_detail": "Sunucu kullanılamıyor , aşırı yüklenmiş veya başka bir şey ters gitmiş olabilir.",
+        "unknown_command": "Bilinmeyen Komut",
+        "unknown_command_detail": "Tanınmayan komut: %(commandText)s",
+        "unknown_command_help": "<code>/help</code> yazarak var olan komutları listeleyebilirsiniz. Yoksa bunu bir ileti olarak mı göndermek istemiştiniz?",
+        "unknown_command_hint": "İpucu: İletilerinizi eğik çizgi ile başlatmak için <code>//</code> ile başlayın.",
+        "unknown_command_button": "Mesaj olarak gönder"
     },
     "presence": {
         "online_for": "%(duration)s süresince çevrimiçi",
@@ -2161,5 +2166,9 @@
             "see_msgtype_sent_this_room": "Bu odada gönderilen <b>%(msgtype)s</b> mesajlara bak",
             "see_msgtype_sent_active_room": "Aktif odanıza gönderilen <b>%(msgtype)s</b> mesajları görün"
         }
+    },
+    "labs_mjolnir": {
+        "room_name": "Yasaklı Listem",
+        "room_topic": "Bu sizin engellediğiniz kullanıcılar/sunucular listeniz - odadan ayrılmayın!"
     }
 }

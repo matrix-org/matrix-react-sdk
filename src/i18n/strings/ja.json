@@ -36,7 +36,6 @@
     "No update available.": "更新はありません。",
     "Changelog": "更新履歴",
     "Invite to this room": "このルームに招待",
-    "Waiting for response from server": "サーバーからの応答を待っています",
     "Wednesday": "水曜日",
     "Tuesday": "火曜日",
     "Search…": "検索…",
@@ -47,7 +46,6 @@
     "Unavailable": "使用できません",
     "Source URL": "ソースのURL",
     "Filter results": "結果を絞り込む",
-    "Noisy": "音量大",
     "Preparing to send logs": "ログを送信する準備をしています",
     "What's new?": "新着",
     "Logs sent": "ログが送信されました",
@@ -128,8 +126,6 @@
     "Confirm password": "パスワードを確認",
     "Authentication": "認証",
     "Failed to set display name": "表示名の設定に失敗しました",
-    "Off": "オフ",
-    "On": "オン",
     "Drop file here to upload": "アップロードするファイルをここにドロップしてください",
     "This event could not be displayed": "このイベントは表示できませんでした",
     "Demote yourself?": "自身を降格しますか？",
@@ -149,9 +145,6 @@
     "This room has been replaced and is no longer active.": "このルームは置き換えられており、アクティブではありません。",
     "The conversation continues here.": "こちらから継続中の会話を確認。",
     "You do not have permission to post to this room": "このルームに投稿する権限がありません",
-    "Server error": "サーバーエラー",
-    "Server unavailable, overloaded, or something else went wrong.": "サーバーが使用できないか、オーバーロードしているか、または問題が発生しました。",
-    "Command error": "コマンドエラー",
     "%(duration)ss": "%(duration)s秒",
     "%(duration)sm": "%(duration)s分",
     "%(duration)sh": "%(duration)s時",
@@ -201,11 +194,6 @@
     "Invalid file%(extra)s": "無効なファイル %(extra)s",
     "Error decrypting image": "画像を復号化する際にエラーが発生しました",
     "Error decrypting video": "動画を復号化する際にエラーが発生しました",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)sが%(roomName)sのアバターを変更しました",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)sがルームのアバターを削除しました。",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)sはルームのアバターを<img/>に変更しました",
-    "This room is a continuation of another conversation.": "このルームは別の会話の続きです。",
-    "Click here to see older messages.": "ここをクリックすると、以前のメッセージを表示します。",
     "Copied!": "コピーしました！",
     "Failed to copy": "コピーに失敗しました",
     "Add an Integration": "統合を追加",
@@ -413,7 +401,6 @@
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "ルームで必要な権限レベルを変更する際にエラーが発生しました。必要な権限があることを確認したうえで、もう一度やり直してください。",
     "Select the roles required to change various parts of the room": "ルームに関する変更を行うために必要な役割を選択",
     "Room Topic": "ルームのトピック",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>%(shortName)sでリアクションしました</reactedWith>",
     "Create account": "アカウントを作成",
     "Error upgrading room": "ルームをアップグレードする際にエラーが発生しました",
     "Delete Backup": "バックアップを削除",
@@ -463,9 +450,6 @@
     "To continue you need to accept the terms of this service.": "続行するには、このサービスの利用規約に同意する必要があります。",
     "Italics": "斜字体",
     "Local address": "ローカルアドレス",
-    "Unknown Command": "不明なコマンド",
-    "Unrecognised command: %(commandText)s": "認識されていないコマンド：%(commandText)s",
-    "Send as message": "メッセージとして送信",
     "Enable encryption?": "暗号化を有効にしますか？",
     "Once enabled, encryption for a room cannot be disabled. Messages sent in an encrypted room cannot be seen by the server, only by the participants of the room. Enabling encryption may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>": "一度有効にしたルームの暗号化は無効にすることはできません。暗号化されたルームで送信されたメッセージは、サーバーからは閲覧できず、そのルームのメンバーだけが閲覧できます。暗号化を有効にすると、多くのボットやブリッジが正常に動作しなくなる可能性があります。<a>暗号化についての詳細はこちらをご覧ください。</a>",
     "Enter username": "ユーザー名を入力",
@@ -533,7 +517,6 @@
     "Join the discussion": "ルームに参加",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)sはプレビューできません。ルームに参加しますか？",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "アドレスを設定すると、他のユーザーがあなたのホームサーバー（%(localDomain)s）を通じてこのルームを見つけられるようになります。",
-    "Hey you. You're the best!": "こんにちは、よろしくね！",
     "Verify User": "ユーザーの認証",
     "Your homeserver": "あなたのホームサーバー",
     "%(displayName)s cancelled verification.": "%(displayName)sが認証をキャンセルしました。",
@@ -653,8 +636,6 @@
     "Revoke invite": "招待を取り消す",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "招待を取り消すことができませんでした。サーバーで一時的な問題が発生しているか、招待を取り消すための十分な権限がありません。",
     "Failed to revoke invite": "招待を取り消せませんでした",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "ヒント：通常メッセージをスラッシュで開始したい場合は<code>//</code>から始めます。",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "<code>/help</code>を使うと利用可能なコマンドを一覧できます。メッセージとして送信するつもりでしたか？",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "このルームはホームサーバーが<i>不安定</i>と判断したルームバージョン<roomVersion />で動作しています。",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "このルームをアップグレードすると、現在のルームの使用を終了し、アップグレードしたルームを同じ名前で作成します。",
     "This room has already been upgraded.": "このルームは既にアップグレードされています。",
@@ -726,9 +707,6 @@
     "Ignored/Blocked": "無視/ブロック",
     "Discovery": "ディスカバリー（発見）",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "メールアドレスか電話番号でアカウントを検出可能にするには、IDサーバー（%(serverName)s）の利用規約への同意が必要です。",
-    "Use between %(min)s pt and %(max)s pt": "%(min)s～%(max)s（pt）の間の数字を指定",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "ユーザー定義のフォントの大きさは%(min)s～%(max)s（単位：point）の間で指定できます",
-    "Size must be a number": "サイズには数値を指定してください",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "IDサーバーから切断すると、他のユーザーによって見つけられなくなり、また、メールアドレスや電話で他のユーザーを招待することもできなくなります。",
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "現在、IDサーバーを使用していません。連絡先を見つけたり、連絡先から見つけてもらったりするには、以下でIDサーバーを追加してください。",
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "連絡先の検出に<server />ではなく他のIDサーバーを使いたい場合は、以下で指定してください。",
@@ -1132,8 +1110,6 @@
     "Dial pad": "ダイヤルパッド",
     "There was an error looking up the phone number": "電話番号を検索する際にエラーが発生しました",
     "Unable to look up phone number": "電話番号が見つかりません",
-    "This is your list of users/servers you have blocked - don't leave the room!": "あなたがブロックしたユーザーとサーバーのリストです。このルームから退出しないでください！",
-    "My Ban List": "マイブロックリスト",
     "IRC display name width": "IRCの表示名の幅",
     "Change notification settings": "通知設定を変更",
     "New login. Was this you?": "新しいログインです。ログインしましたか？",
@@ -1257,12 +1233,9 @@
     "Global": "全体",
     "New keyword": "新しいキーワード",
     "Keyword": "キーワード",
-    "Anyone can find and join.": "誰でも検索し、参加できます。",
     "Anyone in a space can find and join. You can select multiple spaces.": "スペースのメンバーが検索し、参加できます。複数のスペースを選択できます。",
     "Space members": "スペースのメンバー",
     "Upgrade required": "アップグレードが必要",
-    "Only invited people can join.": "招待された人のみ参加できます。",
-    "Private (invite only)": "非公開（招待者のみ参加可能）",
     "Decide who can join %(roomName)s.": "%(roomName)sに参加できる人を設定してください。",
     "Verify your identity to access encrypted messages and prove your identity to others.": "暗号化されたメッセージにアクセスするには、本人確認が必要です。",
     "Are you sure you want to sign out?": "サインアウトしてよろしいですか？",
@@ -1275,7 +1248,6 @@
     "Suggested": "おすすめ",
     "Joined": "参加済",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
-    "Keyboard": "キーボード",
     "Group all your rooms that aren't part of a space in one place.": "スペースに含まれない全てのルームを一箇所にまとめる。",
     "Rooms outside of a space": "スペース外のルーム",
     "Group all your people in one place.": "全ての連絡先を一箇所にまとめる。",
@@ -1356,7 +1328,6 @@
     "Link to room": "ルームへのリンク",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "このスペースのメンバーとの会話をまとめます。無効にすると、それらの会話は%(spaceName)sの表示画面に表示されなくなります。",
     "Space home": "スペースのホーム",
-    "Expand map": "地図を開く",
     "%(count)s votes": {
         "one": "%(count)s個の投票",
         "other": "%(count)s個の投票"
@@ -1372,7 +1343,6 @@
     "Submit logs": "ログを提出",
     "Click to view edits": "クリックすると変更履歴を表示",
     "Can't load this message": "このメッセージを読み込めません",
-    "Large": "大",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "スペースを更新しています…",
         "other": "スペースを更新しています…（計%(count)s個のうち%(progress)s個）"
@@ -1394,7 +1364,6 @@
     "Question or topic": "質問あるいはトピック",
     "Create poll": "アンケートを作成",
     "Create Poll": "アンケートを作成",
-    "Message deleted on %(date)s": "%(date)sにメッセージが削除されました",
     "Add reaction": "リアクションを追加",
     "Edited at %(date)s": "%(date)sに編集済",
     "Internal room ID": "内部ルームID：",
@@ -1860,7 +1829,6 @@
     "Remember this": "これを記憶",
     "Message search initialisation failed, check <a>your settings</a> for more information": "メッセージの検索の初期化に失敗しました。<a>設定</a>から詳細を確認してください",
     "Any of the following data may be shared:": "以下のデータが共有される可能性があります：",
-    "%(reactors)s reacted with %(content)s": "%(reactors)sは%(content)sでリアクションしました",
     "%(count)s votes cast. Vote to see the results": {
         "one": "合計%(count)s票。投票すると結果を確認できます",
         "other": "合計%(count)s票。投票すると結果を確認できます"
@@ -1905,8 +1873,6 @@
     "Adding spaces has moved.": "スペースの追加機能は移動しました。",
     "Click to drop a pin": "クリックして位置情報を共有",
     "Click to move the pin": "クリックしてピンを移動",
-    "Shared a location: ": "位置情報を共有しました： ",
-    "Unable to load map": "地図を読み込めません",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "以前このセッションで、より新しい%(brand)sのバージョンを使用していました。エンドツーエンド暗号化を有効にしてこのバージョンを再び使用するには、サインアウトして、再びサインインする必要があります。",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)sでは、インテグレーションマネージャーでこれを行うことができません。管理者に連絡してください。",
     "To avoid these issues, create a <a>new encrypted room</a> for the conversation you plan to have.": "これらの問題を避けるには、予定している会話用に<a>暗号化されたルーム</a>を新しく作成してください。",
@@ -2024,7 +1990,6 @@
     "Sessions": "セッション",
     "Spell check": "スペルチェック",
     "Your password was successfully changed.": "パスワードを変更しました。",
-    "Developer tools": "開発者ツール",
     "Rename session": "セッション名を変更",
     "Video settings": "ビデオの設定",
     "Voice settings": "音声の設定",
@@ -2198,7 +2163,6 @@
     "Live location sharing": "位置情報（ライブ）の共有",
     "Enable live location sharing": "位置情報（ライブ）の共有を有効にする",
     "Preserve system messages": "システムメッセージを保存",
-    "Shared their location: ": "位置情報を共有しました： ",
     "Message pending moderation": "保留中のメッセージのモデレート",
     "Widget added by": "ウィジェットの追加者",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
@@ -2482,7 +2446,10 @@
         "qr_code": "QRコード",
         "feedback": "フィードバック",
         "all_rooms": "全てのルーム",
-        "orphan_rooms": "他のルーム"
+        "orphan_rooms": "他のルーム",
+        "preview_message": "こんにちは、よろしくね！",
+        "on": "オン",
+        "off": "オフ"
     },
     "action": {
         "continue": "続行",
@@ -2769,7 +2736,8 @@
         "collecting_logs": "ログを収集しています",
         "uploading_logs": "ログをアップロードしています",
         "downloading_logs": "ログをダウンロードしています",
-        "create_new_issue": "不具合を調査できるように、GitHubで<newIssueLink>新しいIssueを作成</newIssueLink>してください。"
+        "create_new_issue": "不具合を調査できるように、GitHubで<newIssueLink>新しいIssueを作成</newIssueLink>してください。",
+        "waiting_for_server": "サーバーからの応答を待っています"
     },
     "time": {
         "hours_minutes_seconds_left": "残り%(hours)s時間%(minutes)s分%(seconds)s秒",
@@ -2909,7 +2877,8 @@
             "enable_notifications_device": "この端末で通知を有効にする",
             "enable_desktop_notifications_session": "このセッションでデスクトップ通知を有効にする",
             "show_message_desktop_notification": "デスクトップ通知にメッセージの内容を表示",
-            "enable_audible_notifications_session": "このセッションで音声通知を有効にする"
+            "enable_audible_notifications_session": "このセッションで音声通知を有効にする",
+            "noisy": "音量大"
         },
         "appearance": {
             "layout_irc": "IRC（実験的）",
@@ -2930,7 +2899,12 @@
             "timeline_image_size": "タイムライン上での画像のサイズ",
             "timeline_image_size_default": "既定値",
             "timeline_image_size_large": "大",
-            "custom_font_size": "ユーザー定義のサイズを使用"
+            "custom_font_size": "ユーザー定義のサイズを使用",
+            "font_size_nan": "サイズには数値を指定してください",
+            "font_size_limit": "ユーザー定義のフォントの大きさは%(min)s～%(max)s（単位：point）の間で指定できます",
+            "font_size_valid": "%(min)s～%(max)s（pt）の間の数字を指定",
+            "image_size_default": "既定値",
+            "image_size_large": "大"
         },
         "inline_url_previews_room_account": "このルームのURLプレビューを有効にする（あなたにのみ適用）",
         "inline_url_previews_room": "このルームの参加者のために既定でURLプレビューを有効にする",
@@ -2980,6 +2954,9 @@
             "echo_cancellation": "エコーキャンセル",
             "noise_suppression": "雑音抑制",
             "enable_fallback_ice_server_description": "あなたのホームサーバーがアシストサーバーを提供していない場合にのみ適用。IPアドレスが通話中に共有されます。"
+        },
+        "keyboard": {
+            "title": "キーボード"
         }
     },
     "devtools": {
@@ -3066,7 +3043,8 @@
         "show_hidden_events": "タイムラインで非表示のイベントを表示",
         "low_bandwidth_mode": "低速モード",
         "low_bandwidth_mode_description": "対応するホームサーバーが必要。",
-        "developer_mode": "開発者モード"
+        "developer_mode": "開発者モード",
+        "title": "開発者ツール"
     },
     "export_chat": {
         "html": "HTML",
@@ -3183,7 +3161,12 @@
             "kick": "%(senderName)sが%(targetName)sを追放しました"
         },
         "m.room.topic": "%(senderDisplayName)sがトピックを\"%(topic)s\"に変更しました。",
-        "m.room.avatar": "%(senderDisplayName)sがルームのアバターを変更しました。",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)sがルームのアバターを変更しました。",
+            "lightbox_title": "%(senderDisplayName)sが%(roomName)sのアバターを変更しました",
+            "removed": "%(senderDisplayName)sがルームのアバターを削除しました。",
+            "changed_img": "%(senderDisplayName)sはルームのアバターを<img/>に変更しました"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)sがルーム名を削除しました。",
             "change": "%(senderDisplayName)sがルーム名を%(oldRoomName)sから%(newRoomName)sに変更しました。",
@@ -3249,7 +3232,11 @@
             "removed": "%(widgetName)sウィジェットが%(senderName)sによって削除されました"
         },
         "io.element.widgets.layout": "%(senderName)sがルームのレイアウトを更新しました",
-        "m.location": "%(senderName)sが位置情報を共有しました",
+        "m.location": {
+            "full": "%(senderName)sが位置情報を共有しました",
+            "self_location": "位置情報を共有しました： ",
+            "location": "位置情報を共有しました： "
+        },
         "self_redaction": "メッセージが削除されました",
         "redaction": "%(name)sによってメッセージが削除されました",
         "m.poll.start": "%(senderName)sがアンケートを開始しました - %(pollQuestion)s",
@@ -3426,6 +3413,17 @@
         "io.element.voice_broadcast_info": {
             "you": "<a>音声配信</a>を終了しました",
             "user": "%(senderName)sが<a>音声配信</a>を終了しました"
+        },
+        "reactions": {
+            "label": "%(reactors)sは%(content)sでリアクションしました",
+            "tooltip": "<reactors/><reactedWith>%(shortName)sでリアクションしました</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "%(date)sにメッセージが削除されました"
+        },
+        "m.room.create": {
+            "continuation": "このルームは別の会話の続きです。",
+            "see_older_messages": "ここをクリックすると、以前のメッセージを表示します。"
         }
     },
     "slash_command": {
@@ -3489,7 +3487,15 @@
         "failed_find_room": "コマンドエラー：ルーム（%(roomId)s）が見つかりません",
         "failed_find_user": "ルームにユーザーが見つかりません",
         "op": "ユーザーの権限レベルを規定",
-        "deop": "指定したIDのユーザーの権限をリセット"
+        "deop": "指定したIDのユーザーの権限をリセット",
+        "server_error": "サーバーエラー",
+        "command_error": "コマンドエラー",
+        "server_error_detail": "サーバーが使用できないか、オーバーロードしているか、または問題が発生しました。",
+        "unknown_command": "不明なコマンド",
+        "unknown_command_detail": "認識されていないコマンド：%(commandText)s",
+        "unknown_command_help": "<code>/help</code>を使うと利用可能なコマンドを一覧できます。メッセージとして送信するつもりでしたか？",
+        "unknown_command_hint": "ヒント：通常メッセージをスラッシュで開始したい場合は<code>//</code>から始めます。",
+        "unknown_command_button": "メッセージとして送信"
     },
     "presence": {
         "busy": "取り込み中",
@@ -3606,7 +3612,10 @@
             "notifications.room": "全員に通知"
         },
         "security": {
-            "strict_encryption": "このセッションでは、このルームの未認証のセッションに対して暗号化されたメッセージを送信しない"
+            "strict_encryption": "このセッションでは、このルームの未認証のセッションに対して暗号化されたメッセージを送信しない",
+            "join_rule_invite": "非公開（招待者のみ参加可能）",
+            "join_rule_invite_description": "招待された人のみ参加できます。",
+            "join_rule_public_description": "誰でも検索し、参加できます。"
         }
     },
     "encryption": {
@@ -3911,7 +3920,9 @@
         "failed_permission": "%(brand)sは位置情報を取得できませんでした。ブラウザーの設定画面から位置情報の取得を許可してください。",
         "failed_generic": "位置情報の取得に失敗しました。後でもう一度やり直してください。",
         "failed_timeout": "位置情報を取得する際にタイムアウトしました。後でもう一度やり直してください。",
-        "failed_unknown": "位置情報を取得する際に不明なエラーが発生しました。後でもう一度やり直してください。"
+        "failed_unknown": "位置情報を取得する際に不明なエラーが発生しました。後でもう一度やり直してください。",
+        "expand_map": "地図を開く",
+        "failed_load_map": "地図を読み込めません"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "新しい音声配信を開始できません",
@@ -3933,5 +3944,9 @@
         "30s_backward": "30秒戻す",
         "30s_forward": "30秒進める",
         "go_live": "ライブ配信"
+    },
+    "labs_mjolnir": {
+        "room_name": "マイブロックリスト",
+        "room_topic": "あなたがブロックしたユーザーとサーバーのリストです。このルームから退出しないでください！"
     }
 }

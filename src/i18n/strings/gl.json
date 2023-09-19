@@ -93,9 +93,6 @@
     "Filter room members": "Filtrar os participantes da conversa",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (permiso %(powerLevelNumber)s)",
     "You do not have permission to post to this room": "Non ten permiso para comentar nesta sala",
-    "Server error": "Fallo no servidor",
-    "Server unavailable, overloaded, or something else went wrong.": "Servidor non dispoñible, sobrecargado, ou outra cousa puido fallar.",
-    "Command error": "Erro na orde",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -145,9 +142,6 @@
     "Invalid file%(extra)s": "Ficheiro non válido %(extra)s",
     "Error decrypting image": "Fallo ao descifrar a imaxe",
     "Error decrypting video": "Fallo descifrando vídeo",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s cambiou o avatar para %(roomName)s",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s eliminou o avatar da sala.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s cambiou o avatar da sala a <img/>",
     "Copied!": "Copiado!",
     "Failed to copy": "Fallo ao copiar",
     "Add an Integration": "Engadir unha integración",
@@ -260,12 +254,9 @@
     "Today": "Hoxe",
     "Friday": "Venres",
     "What's New": "Que hai de novo",
-    "On": "On",
     "Changelog": "Rexistro de cambios",
-    "Waiting for response from server": "Agardando pola resposta do servidor",
     "Failed to send logs: ": "Fallo ao enviar os informes: ",
     "This Room": "Esta sala",
-    "Noisy": "Ruidoso",
     "Unavailable": "Non dispoñible",
     "Source URL": "URL fonte",
     "Filter results": "Filtrar resultados",
@@ -286,7 +277,6 @@
     "Yesterday": "Onte",
     "Error encountered (%(errorDetail)s).": "Houbo un erro (%(errorDetail)s).",
     "Low Priority": "Baixa prioridade",
-    "Off": "Off",
     "Thank you!": "Grazas!",
     "Missing roomId.": "Falta o ID da sala.",
     "Popout widget": "trebello emerxente",
@@ -374,7 +364,6 @@
     "Roles & Permissions": "Roles & Permisos",
     "Room %(name)s": "Sala %(name)s",
     "Direct Messages": "Mensaxes Directas",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Podes usar <code>axuda</code> para ver os comandos dispoñibles. ¿Querías mellor enviar esto como unha mensaxe?",
     "Enter the name of a new server you want to explore.": "Escribe o nome do novo servidor que queres explorar.",
     "Command Help": "Comando Axuda",
     "To help us prevent this in future, please <a>send us logs</a>.": "Para axudarnos a evitar esto no futuro, envíanos <a>o rexistro</a>.",
@@ -454,8 +443,6 @@
     "Straight rows of keys are easy to guess": "Palabras de letras contiguas son doadas de adiviñar",
     "Short keyboard patterns are easy to guess": "Patróns curtos de teclas son doados de adiviñar",
     "IRC display name width": "Ancho do nome mostrado de IRC",
-    "My Ban List": "Listaxe de bloqueo",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Esta é a listaxe de usuarias/servidores que ti bloqueaches - non deixes a sala!",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "As mensaxes seguras con esta usuaria están cifradas extremo-a-extremo e non son lexibles por terceiras.",
     "Got It": "Vale",
     "Verify this user by confirming the following emoji appear on their screen.": "Verifica a usuaria confirmando que as emoticonas aparecen na súa pantalla.",
@@ -592,9 +579,6 @@
     "Enter a new identity server": "Escribe o novo servidor de identidade",
     "Manage integrations": "Xestionar integracións",
     "New version available. <a>Update now.</a>": "Nova versión dispoñible. <a>Actualiza.</a>",
-    "Size must be a number": "O tamaño ten que ser un número",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "O tamaño da fonte só pode estar entre %(min)s pt e %(max)s pt",
-    "Use between %(min)s pt and %(max)s pt": "Usa entre %(min)s pt e %(max)s pt",
     "Email addresses": "Enderezos de email",
     "Phone numbers": "Número de teléfono",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Acepta os Termos do Servizo do servidor (%(serverName)s) para permitir que te atopen polo enderezo de email ou número de teléfono.",
@@ -715,10 +699,6 @@
     "This room has already been upgraded.": "Esta sala xa foi actualizada.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "A sala está usando a versión <roomVersion />, que este servidor considera como <i>non estable</i>.",
     "Only room administrators will see this warning": "Só a administración da sala pode ver este aviso",
-    "Unknown Command": "Comando descoñecido",
-    "Unrecognised command: %(commandText)s": "Comando non recoñecido: %(commandText)s",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Truco: Comeza a mensaxe con <code>//</code> para comezar cun trazo.",
-    "Send as message": "Enviar como mensaxe",
     "Failed to connect to integration manager": "Fallou a conexión co xestor de integracións",
     "Add some now": "Engade algún agora",
     "Failed to revoke invite": "Fallo ao revogar o convite",
@@ -808,9 +788,6 @@
     "%(name)s cancelled": "%(name)s cancelou",
     "%(name)s wants to verify": "%(name)s desexa verificar",
     "You sent a verification request": "Enviaches unha solicitude de verificación",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reaccionaron con %(shortName)s</reactedWith>",
-    "This room is a continuation of another conversation.": "Esta sala é continuación doutra conversa.",
-    "Click here to see older messages.": "Preme aquí para ver mensaxes antigas.",
     "Edited at %(date)s. Click to view edits.": "Editada o %(date)s. Preme para ver edicións.",
     "edited": "editada",
     "Can't load this message": "Non se cargou a mensaxe",
@@ -872,7 +849,6 @@
     "Server did not return valid authentication information.": "O servidor non devolveu información válida de autenticación.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifica esta usuaria para marcala como confiable. Ao confiar nas usuarias proporcionache tranquilidade extra cando usas cifrado de extremo-a-extremo.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Ao verificar esta usuaria marcarás a súa sesión como confiable, e tamén marcará a túa sesión como confiable para elas.",
-    "Hey you. You're the best!": "Ei ti. Es grande!",
     "Power level": "Nivel responsabilidade",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Verifica este dispositivo para marcalo como confiable. Confiando neste dispositivo permite que ti e outras usuarias estedes máis tranquilas ao utilizar mensaxes cifradas.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Ao verificar este dispositivo marcaralo como confiable, e as usuarias que confiaron en ti tamén confiarán nel.",
@@ -1036,7 +1012,6 @@
     "Recovery Method Removed": "Método de Recuperación eliminado",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se fixeches esto sen querer, podes configurar Mensaxes Seguras nesta sesión e volverá a cifrar as mensaxes da sesión cun novo método de recuperación.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se non eliminaches o método de recuperación, un atacante podería estar a intentar acceder á túa conta. Cambia inmediatamente o contrasinal da conta e establece un novo método de recuperación nos Axustes.",
-    "Message deleted on %(date)s": "Mensaxe eliminada o %(date)s",
     "Wrong file type": "Tipo de ficheiro erróneo",
     "Looks good!": "Pinta ben!",
     "Security Phrase": "Frase de seguridade",
@@ -1677,9 +1652,6 @@
         "one": "e %(count)s máis"
     },
     "Upgrade required": "Actualización requerida",
-    "Anyone can find and join.": "Calquera pode atopala e unirse.",
-    "Only invited people can join.": "Só se poden unir persoas con convite.",
-    "Private (invite only)": "Privada (só con convite)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Esta actualización permitirá que os membros dos espazos seleccionados teñan acceso á sala sen precisar convite.",
     "Want to add an existing space instead?": "Queres engadir un espazo xa existente?",
     "Private space (invite only)": "Espazo privado (só convidadas)",
@@ -1734,7 +1706,6 @@
     "Leave some rooms": "Saír de algunhas salas",
     "Leave all rooms": "Saír de tódalas salas",
     "Don't leave any rooms": "Non saír de ningunha sala",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s reaccionou con %(content)s",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "O restablecemento das chaves de seguridade non se pode desfacer. Tras o restablecemento, non terás acceso ás antigas mensaxes cifradas, e calquera amizade que verificaras con anterioridade vai ver un aviso de seguridade ata que volvades a verificarvos mutuamente.",
     "I'll verify later": "Verificarei máis tarde",
     "Verify with Security Key": "Verificar coa Chave de Seguridade",
@@ -1806,7 +1777,6 @@
     "Spaces to show": "Espazos a mostrar",
     "Sidebar": "Barra lateral",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está nalgúns espazos nos que non es admin. Nesos espazos, seguirase mostrando a sala antiga, pero as usuarias serán convidadas a unirse á nova.",
-    "Large": "Grande",
     "Select all": "Seleccionar todos",
     "Deselect all": "Retirar selección a todos",
     "Sign out devices": {
@@ -1899,7 +1869,6 @@
     "Could not fetch location": "Non se obtivo a localización",
     "Location": "Localización",
     "toggle event": "activar evento",
-    "Expand map": "Despregar mapa",
     "Pick a date to jump to": "Elixe unha data á que ir",
     "Message pending moderation": "Mensaxe pendente de moderar",
     "Message pending moderation: %(reason)s": "Mensaxe pendente de moderar: %(reason)s",
@@ -1923,7 +1892,6 @@
     "Group all your people in one place.": "Agrupa tódalas persoas nun só lugar.",
     "Group all your favourite rooms and people in one place.": "Agrupa tódalas túas salas favoritas e persoas nun só lugar.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Os Espazos son xeitos de agrupar salas e persoas. Xunto cos espazos nos que estás, tamén podes usar algún dos prestablecidos.",
-    "Keyboard": "Teclado",
     "Waiting for you to verify on your other device…": "Agardando a que verifiques no teu outro dispositivo…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Agardando a que verifiques o teu outro dispositivo, %(deviceName)s %(deviceId)s …",
     "Verify this device by confirming the following number appears on its screen.": "Verifica este dispositivo confirmando que o seguinte número aparece na pantalla.",
@@ -1988,9 +1956,6 @@
     "Click to drop a pin": "Click para soltar un marcador",
     "Click to move the pin": "Click para mover marcador",
     "Share for %(duration)s": "Compartida durante %(duration)s",
-    "Shared a location: ": "Compartiu unha localización: ",
-    "Shared their location: ": "Compartiron a súa localización: ",
-    "Unable to load map": "Non se cargou o mapa",
     "Can't create a thread from an event with an existing relation": "Non se pode crear un tema con unha relación existente desde un evento",
     "Currently removing messages in %(count)s rooms": {
         "one": "Eliminando agora mensaxes de %(count)s sala",
@@ -1998,7 +1963,6 @@
     },
     "Unsent": "Sen enviar",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Podes usar as opcións personalizadas do servidor para acceder a outros servidores Matrix indicando o URL do servidor de inicio. Así podes usar %(brand)s cunha conta Matrix rexistrada nun servidor diferente.",
-    "Developer tools": "Ferramentas desenvolvemento",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s é experimental no navegador web móbil. Para ter unha mellor experiencia e as últimas características usa a nosa app nativa.",
     "User may or may not exist": "A usuaria podería non existir",
     "User does not exist": "A usuaria non existe",
@@ -2303,7 +2267,10 @@
         "qr_code": "Código QR",
         "feedback": "Comenta",
         "all_rooms": "Todas as salas",
-        "orphan_rooms": "Outras salas"
+        "orphan_rooms": "Outras salas",
+        "preview_message": "Ei ti. Es grande!",
+        "on": "On",
+        "off": "Off"
     },
     "action": {
         "continue": "Continuar",
@@ -2565,7 +2532,8 @@
         "collecting_logs": "Obtendo rexistros",
         "uploading_logs": "Subindo o rexistro",
         "downloading_logs": "Descargando o rexistro",
-        "create_new_issue": "Por favor <newIssueLink>abre un novo informe</newIssueLink> en GitHub para poder investigar o problema."
+        "create_new_issue": "Por favor <newIssueLink>abre un novo informe</newIssueLink> en GitHub para poder investigar o problema.",
+        "waiting_for_server": "Agardando pola resposta do servidor"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
@@ -2702,7 +2670,8 @@
             "enable_email_notifications": "Activar notificacións de email para %(email)s",
             "enable_desktop_notifications_session": "Activa as notificacións de escritorio para esta sesión",
             "show_message_desktop_notification": "Mostrar mensaxe nas notificacións de escritorio",
-            "enable_audible_notifications_session": "Activa as notificacións por son para esta sesión"
+            "enable_audible_notifications_session": "Activa as notificacións por son para esta sesión",
+            "noisy": "Ruidoso"
         },
         "appearance": {
             "layout_irc": "IRC (Experimental)",
@@ -2723,7 +2692,12 @@
             "timeline_image_size": "Tamaño de imaxe na cronoloxía",
             "timeline_image_size_default": "Por defecto",
             "timeline_image_size_large": "Grande",
-            "custom_font_size": "Usar tamaño personalizado"
+            "custom_font_size": "Usar tamaño personalizado",
+            "font_size_nan": "O tamaño ten que ser un número",
+            "font_size_limit": "O tamaño da fonte só pode estar entre %(min)s pt e %(max)s pt",
+            "font_size_valid": "Usa entre %(min)s pt e %(max)s pt",
+            "image_size_default": "Por defecto",
+            "image_size_large": "Grande"
         },
         "inline_url_previews_room_account": "Activar vista previa de URL nesta sala (só che afecta a ti)",
         "inline_url_previews_room": "Activar a vista previa de URL por defecto para as participantes nesta sala",
@@ -2765,6 +2739,9 @@
         "send_read_receipts_unsupported": "O teu servidor non ten soporte para desactivar o envío de resgardos de lectura.",
         "voip": {
             "mirror_local_feed": "Replicar a fonte de vídeo local"
+        },
+        "keyboard": {
+            "title": "Teclado"
         }
     },
     "devtools": {
@@ -2835,7 +2812,8 @@
         "category_other": "Outro",
         "widget_screenshots": "Activar as capturas de trebellos para aqueles que as permiten",
         "show_hidden_events": "Mostrar na cronoloxía eventos ocultos",
-        "developer_mode": "Modo desenvolvemento"
+        "developer_mode": "Modo desenvolvemento",
+        "title": "Ferramentas desenvolvemento"
     },
     "export_chat": {
         "html": "HTML",
@@ -2947,7 +2925,12 @@
             "kick": "%(senderName)s eliminou %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s cambiou o asunto a \"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s cambiou o avatar da sala.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s cambiou o avatar da sala.",
+            "lightbox_title": "%(senderDisplayName)s cambiou o avatar para %(roomName)s",
+            "removed": "%(senderDisplayName)s eliminou o avatar da sala.",
+            "changed_img": "%(senderDisplayName)s cambiou o avatar da sala a <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s eliminou o nome da sala.",
             "change": "%(senderDisplayName)s cambiou o nome da sala de %(oldRoomName)s a %(newRoomName)s.",
@@ -3013,7 +2996,11 @@
             "removed": "%(widgetName)s eliminado por %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s actualizou a disposición da sala",
-        "m.location": "%(senderName)s compartiu a súa localización",
+        "m.location": {
+            "full": "%(senderName)s compartiu a súa localización",
+            "self_location": "Compartiron a súa localización: ",
+            "location": "Compartiu unha localización: "
+        },
         "self_redaction": "Mensaxe eliminada",
         "redaction": "Mensaxe eliminada por %(name)s",
         "m.poll.start": "%(senderName)s publicou unha enquisa - %(pollQuestion)s",
@@ -3186,7 +3173,18 @@
         "no_permission_messages_before_invite": "Non tes permiso para ver mensaxes anteriores a que te unises.",
         "no_permission_messages_before_join": "Non tes permiso para ver mensaxes anteriores a que te unises.",
         "encrypted_historical_messages_unavailable": "Non están dispoñibles as mensaxes cifradas anteriores a este punto.",
-        "historical_messages_unavailable": "Non podes ver mensaxes anteriores"
+        "historical_messages_unavailable": "Non podes ver mensaxes anteriores",
+        "reactions": {
+            "label": "%(reactors)s reaccionou con %(content)s",
+            "tooltip": "<reactors/><reactedWith>reaccionaron con %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Mensaxe eliminada o %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Esta sala é continuación doutra conversa.",
+            "see_older_messages": "Preme aquí para ver mensaxes antigas."
+        }
     },
     "slash_command": {
         "spoiler": "Envía a mensaxe dada como un spoiler",
@@ -3249,7 +3247,15 @@
         "failed_find_room": "Fallo no comando: Non se atopa a sala (%(roomId)s)",
         "failed_find_user": "Non se atopa a usuaria na sala",
         "op": "Define o nivel de permisos de unha usuaria",
-        "deop": "Degrada usuaria co id proporcionado"
+        "deop": "Degrada usuaria co id proporcionado",
+        "server_error": "Fallo no servidor",
+        "command_error": "Erro na orde",
+        "server_error_detail": "Servidor non dispoñible, sobrecargado, ou outra cousa puido fallar.",
+        "unknown_command": "Comando descoñecido",
+        "unknown_command_detail": "Comando non recoñecido: %(commandText)s",
+        "unknown_command_help": "Podes usar <code>axuda</code> para ver os comandos dispoñibles. ¿Querías mellor enviar esto como unha mensaxe?",
+        "unknown_command_hint": "Truco: Comeza a mensaxe con <code>//</code> para comezar cun trazo.",
+        "unknown_command_button": "Enviar como mensaxe"
     },
     "presence": {
         "busy": "Ocupado",
@@ -3357,7 +3363,10 @@
             "notifications.room": "Notificar a todas"
         },
         "security": {
-            "strict_encryption": "Non enviar mensaxes cifradas desde esta sesión a sesións non verificadas nesta sala"
+            "strict_encryption": "Non enviar mensaxes cifradas desde esta sesión a sesións non verificadas nesta sala",
+            "join_rule_invite": "Privada (só con convite)",
+            "join_rule_invite_description": "Só se poden unir persoas con convite.",
+            "join_rule_public_description": "Calquera pode atopala e unirse."
         }
     },
     "encryption": {
@@ -3647,6 +3656,12 @@
         "failed_permission": "%(brand)s non ten permiso para obter a túa localización. Concede acceso á localización nos axustes do navegador.",
         "failed_generic": "Non se obtivo a localización, inténtao máis tarde.",
         "failed_timeout": "Caducou o intento de obter a localización, inténtao máis tarde.",
-        "failed_unknown": "Erro descoñecido ao obter a localización, inténtao máis tarde."
+        "failed_unknown": "Erro descoñecido ao obter a localización, inténtao máis tarde.",
+        "expand_map": "Despregar mapa",
+        "failed_load_map": "Non se cargou o mapa"
+    },
+    "labs_mjolnir": {
+        "room_name": "Listaxe de bloqueo",
+        "room_topic": "Esta é a listaxe de usuarias/servidores que ti bloqueaches - non deixes a sala!"
     }
 }

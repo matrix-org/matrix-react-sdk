@@ -38,12 +38,9 @@
     "Today": "Сьогодні",
     "Friday": "П'ятниця",
     "What's New": "Що нового",
-    "On": "Увімкнено",
     "Changelog": "Журнал змін",
-    "Waiting for response from server": "Очікується відповідь від сервера",
     "Failed to send logs: ": "Не вдалося надіслати журнали: ",
     "This Room": "Ця кімната",
-    "Noisy": "Шумно",
     "Unavailable": "Недоступний",
     "Source URL": "Початкова URL-адреса",
     "Filter results": "Відфільтрувати результати",
@@ -66,7 +63,6 @@
     "Yesterday": "Вчора",
     "Error encountered (%(errorDetail)s).": "Трапилась помилка (%(errorDetail)s).",
     "Low Priority": "Неважливі",
-    "Off": "Вимкнено",
     "Thank you!": "Дякуємо!",
     "Check for update": "Перевірити на наявність оновлень",
     "Reject all %(invitedRooms)s invites": "Відхилити запрошення до усіх %(invitedRooms)s",
@@ -260,7 +256,6 @@
     "Failed to deactivate user": "Не вдалося деактивувати користувача",
     "Are you sure you want to cancel entering passphrase?": "Ви точно хочете скасувати введення парольної фрази?",
     "%(name)s is requesting verification": "%(name)s робить запит на звірення",
-    "Command error": "Помилка команди",
     "Once enabled, encryption cannot be disabled.": "Після увімкнення шифрування не можна буде вимкнути.",
     "Please enter verification code sent via text.": "Введіть код перевірки, надісланий у текстовому повідомленні.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Текстове повідомлення надіслано на номер +%(msisdn)s. Введіть код перевірки з нього.",
@@ -362,9 +357,7 @@
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (повноваження %(powerLevelNumber)s)",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Поширте цю адресу е-пошти у налаштуваннях, щоб отримувати запрошення безпосередньо в %(brand)s.",
     "Room options": "Параметри кімнати",
-    "Send as message": "Надіслати як повідомлення",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Ви не зможете скасувати цю зміну через те, що ви підвищуєте рівень повноважень користувача до свого рівня.",
-    "Message deleted on %(date)s": "Повідомлення видалено %(date)s",
     "Power level": "Рівень повноважень",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Використовуйте сервер ідентифікації щоб запрошувати через е-пошту. Керується у <settings>налаштуваннях</settings>.",
     "Confirm by comparing the following with the User Settings in your other session:": "Підтвердьте шляхом порівняння наступного рядка з рядком у користувацьких налаштуваннях вашого іншого сеансу:",
@@ -458,7 +451,6 @@
     "Do not use an identity server": "Не використовувати сервер ідентифікації",
     "Enter a new identity server": "Введіть новий сервер ідентифікації",
     "Manage integrations": "Керування інтеграціями",
-    "Size must be a number": "Розмір повинен бути числом",
     "No Audio Outputs detected": "Звуковий вивід не виявлено",
     "Audio Output": "Звуковий вивід",
     "Voice & Video": "Голос і відео",
@@ -548,8 +540,6 @@
     "Set up Secure Backup": "Налаштувати захищене резервне копіювання",
     "Safeguard against losing access to encrypted messages & data": "Захистіться від втрати доступу до зашифрованих повідомлень і даних",
     "Change notification settings": "Змінити налаштування сповіщень",
-    "My Ban List": "Мій список блокувань",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Це ваш список користувачів/серверів, які ви заблокували – не виходьте з кімнати!",
     "Got It": "Зрозуміло",
     "Comoros": "Коморські Острови",
     "Colombia": "Колумбія",
@@ -809,7 +799,6 @@
     "No need for symbols, digits, or uppercase letters": "Цифри або великі букви не вимагаються",
     "Capitalization doesn't help very much": "Великі букви не дуже допомагають",
     "You're all caught up.": "Все готово.",
-    "Hey you. You're the best!": "Агов, ти, так, ти. Ти найкращий!",
     "You've reached the maximum number of simultaneous calls.": "Ви досягли максимальної кількості одночасних викликів.",
     "Too Many Calls": "Забагато викликів",
     "Members only (since they joined)": "Лише учасники (від часу приєднання)",
@@ -835,7 +824,6 @@
     "User Busy": "Користувач зайнятий",
     "We couldn't log you in": "Нам не вдалося виконати вхід",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Ви не можете надсилати жодних повідомлень, поки не переглянете та не погодитесь з <consentLink>нашими умовами та положеннями</consentLink>.",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Ви можете скористатися <code>/help</code> для перегляду доступних команд. Ви мали намір надіслати це як повідомлення?",
     "unknown person": "невідома особа",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не дозволяє вам користуватись для цього менеджером інтеграцій. Зверніться до адміністратора.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Користування цим віджетом може призвести до поширення ваших даних <helpIcon /> через %(widgetDomain)s і ваш менеджер інтеграцій.",
@@ -892,8 +880,6 @@
     "Recently Direct Messaged": "Недавно надіслані особисті повідомлення",
     "User Directory": "Каталог користувачів",
     "Room version:": "Версія кімнати:",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s змінює аватар кімнати на <img/>",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s змінює аватар %(roomName)s",
     "Select the roles required to change various parts of the room": "Виберіть ролі, необхідні для зміни різних частин кімнати",
     "Privileged Users": "Привілейовані користувачі",
     "Roles & Permissions": "Ролі й дозволи",
@@ -1112,9 +1098,6 @@
         "other": "і ще %(count)s"
     },
     "Upgrade required": "Потрібне поліпшення",
-    "Anyone can find and join.": "Будь-хто може знайти та приєднатися.",
-    "Only invited people can join.": "Приєднатися можуть лише запрошені люди.",
-    "Private (invite only)": "Приватно (лише за запрошенням)",
     "Message search initialisation failed": "Не вдалося ініціалізувати пошук повідомлень",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
         "other": "Безпечно кешуйте зашифровані повідомлення локально, щоб вони з'являлися в результатах пошуку, використовуючи %(size)s для зберігання повідомлень з %(rooms)s кімнат.",
@@ -1176,10 +1159,6 @@
     },
     "There was a problem communicating with the server. Please try again.": "Виникла проблема зв'язку з сервером. Повторіть спробу.",
     "Can't load this message": "Не вдалося завантажити це повідомлення",
-    "Click here to see older messages.": "Клацніть тут, щоб переглянути давніші повідомлення.",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s вилучає аватар кімнати.",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>додає реакцію %(shortName)s</reactedWith>",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s додає реакцію %(content)s",
     "Add reaction": "Додати реакцію",
     "Manually export keys": "Експорт ключів власноруч",
     "Don't leave any rooms": "Не виходити з будь-якої кімнати",
@@ -1276,9 +1255,6 @@
         "other": "%(count)s відповідей"
     },
     "Edit message": "Редагувати повідомлення",
-    "Unrecognised command: %(commandText)s": "Нерозпізнана команда: %(commandText)s",
-    "Unknown Command": "Невідома команда",
-    "Server error": "Помилка сервера",
     "Remove %(phone)s?": "Вилучити %(phone)s?",
     "Email Address": "Адреса е-пошти",
     "Unable to add email address": "Не вдалося додати адресу е-пошти",
@@ -1363,7 +1339,6 @@
         "other": "%(spaceName)s і %(count)s інших"
     },
     "Connectivity to the server has been lost": "Втрачено зʼєднання з сервером",
-    "Large": "Великі",
     "Discovery options will appear once you have added a phone number above.": "Опції знаходження з'являться тут, коли ви додасте номер телефону вгорі.",
     "Discovery options will appear once you have added an email above.": "Опції знаходження з'являться тут, коли ви додасте е-пошту вгорі.",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Після від'єднання від сервера ідентифікації вас більше не знаходитимуть інші користувачі, а ви не зможете запрошувати інших е-поштою чи телефоном.",
@@ -1549,7 +1524,6 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ця кімната — версії <roomVersion />, позначена цим домашнім сервером <i>нестабільною</i>.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s зараз офлайн.",
     "%(creator)s created and configured the room.": "%(creator)s створює й налаштовує кімнату.",
-    "This room is a continuation of another conversation.": "Ця кімната — продовження іншої розмови.",
     "Jump to read receipt": "Перейти до останнього прочитаного",
     "Jump to first unread message.": "Перейти до першого непрочитаного повідомлення.",
     "a new cross-signing key signature": "новий підпис ключа перехресного підписування",
@@ -1695,8 +1669,6 @@
     "Scroll to most recent messages": "Перейти до найновіших повідомлень",
     "Unencrypted": "Не зашифроване",
     "Message Actions": "Дії з повідомленням",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Порада: Почніть повідомлення з <code>//</code>, щоб його першим символом стала скісна риска.",
-    "Server unavailable, overloaded, or something else went wrong.": "Сервер недоступний, перевантажений чи ще щось пішло не так.",
     "Everyone in this room is verified": "Усі в цій кімнаті звірені",
     "Someone is using an unknown session": "Хтось користується невідомим сеансом",
     "You have verified this user. This user has verified all of their sessions.": "Ви звірили цього користувача. Цей користувач звірив усі свої сеанси.",
@@ -1720,8 +1692,6 @@
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Слід <b>вилучити ваші особисті дані</b> з сервера ідентифікації <idserver />, перш ніж від'єднатися. На жаль, сервер ідентифікації <idserver /> зараз офлайн чи недоступний.",
     "Connect this session to Key Backup": "Налаштувати цьому сеансу резервне копіювання ключів",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ця кімната належить до просторів, які ви не адмініструєте. Ці простори показуватимуть стару кімнату, але пропонуватимуть людям приєднатись до нової.",
-    "Use between %(min)s pt and %(max)s pt": "Введіть від %(min)s пт до %(max)s пт",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Нетиповий розмір шрифту може бути лише в межах %(min)s пт і %(max)s пт",
     "Import E2E room keys": "Імпортувати ключі кімнат наскрізного шифрування",
     "<not supported>": "<не підтримується>",
     "Unable to find a supported verification method.": "Не вдалося знайти підтримуваний спосіб звірки.",
@@ -1919,7 +1889,6 @@
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Очікування вашої звірки на іншому пристрої, %(deviceName)s (%(deviceId)s)…",
     "Verify this device by confirming the following number appears on its screen.": "Звірте цей пристрій, підтвердивши, що на екрані з'явилося це число.",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Переконайтеся, що наведені внизу емоджі показано на обох пристроях в однаковому порядку:",
-    "Expand map": "Розгорнути карту",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Невідома пара (користувач, сеанс): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Нерозпізнана адреса кімнати: %(roomAlias)s",
     "From a thread": "З гілки",
@@ -1930,7 +1899,6 @@
     "Remove them from everything I'm able to": "Вилучити їх звідусіль, де мене на це уповноважено",
     "Remove from %(roomName)s": "Вилучити з %(roomName)s",
     "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s вилучає вас із %(roomName)s",
-    "Keyboard": "Клавіатура",
     "Message pending moderation": "Повідомлення очікує модерування",
     "Message pending moderation: %(reason)s": "Повідомлення очікує модерування: %(reason)s",
     "Space home": "Домівка простору",
@@ -1979,9 +1947,6 @@
     "Collapse quotes": "Згорнути цитати",
     "Click to drop a pin": "Натисніть, щоб створити маркер",
     "Click to move the pin": "Натисніть, щоб посунути маркер",
-    "Shared a location: ": "Повідомляє місцеперебування: ",
-    "Shared their location: ": "Повідомляє своє місцеперебування: ",
-    "Unable to load map": "Неможливо завантажити карту",
     "Can't create a thread from an event with an existing relation": "Неможливо створити гілку з події з наявним відношенням",
     "You are sharing your live location": "Ви ділитеся місцеперебуванням",
     "%(displayName)s's live location": "Місцеперебування %(displayName)s наживо",
@@ -1998,7 +1963,6 @@
     "Share for %(duration)s": "Поділитися на %(duration)s",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Використайте нетипові параметри сервера, щоб увійти в інший домашній сервер Matrix, вказавши його URL-адресу. Це дасть вам змогу використовувати %(brand)s з уже наявним у вас на іншому домашньому сервері обліковим записом Matrix.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s у мобільних браузерах ще випробовується. Поки що кращі враження й новіші функції — у нашому вільному мобільному застосунку.",
-    "Developer tools": "Інструменти розробника",
     "Unsent": "Не надіслано",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Під час спроби отримати доступ до кімнати або простору було повернено помилку %(errcode)s. Якщо ви думаєте, що ви бачите це повідомлення помилково, будь ласка, <issueLink>надішліть звіт про помилку</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Повторіть спробу пізніше, або запитайте у кімнати або простору перевірку, чи маєте ви доступ.",
@@ -2445,8 +2409,6 @@
     "Start DM anyway and never warn me again": "Усе одно розпочати особисте спілкування і більше ніколи не попереджати мене",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Не вдалося знайти профілі для перелічених далі Matrix ID — ви все одно хочете розпочати особисте спілкування?",
     "Formatting": "Форматування",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Не можемо знайти стару версію цієї кімнати (ідентифікатор кімнати: %(roomId)s), а нам не було надано 'via_servers', щоб знайти її.",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Не можемо знайти стару версію цієї кімнати (ідентифікатор кімнати: %(roomId)s), а нам не було надано 'via_servers', щоб знайти її. Можливо, вам вдасться вгадати сервер за ID кімнати. Якщо ви хочете спробувати, натисніть на це посилання:",
     "The add / bind with MSISDN flow is misconfigured": "Неправильно налаштовано додавання / зв'язування з потоком MSISDN",
     "No identity access token found": "Токен доступу до ідентифікації не знайдено",
     "Identity server not set": "Сервер ідентифікації не налаштовано",
@@ -2615,7 +2577,10 @@
         "qr_code": "QR-код",
         "feedback": "Відгук",
         "all_rooms": "Усі кімнати",
-        "orphan_rooms": "Інші кімнати"
+        "orphan_rooms": "Інші кімнати",
+        "preview_message": "Агов, ти, так, ти. Ти найкращий!",
+        "on": "Увімкнено",
+        "off": "Вимкнено"
     },
     "action": {
         "continue": "Продовжити",
@@ -2921,7 +2886,8 @@
         "collecting_logs": "Збір журналів",
         "uploading_logs": "Відвантаження журналів",
         "downloading_logs": "Завантаження журналів",
-        "create_new_issue": "<newIssueLink>Створіть нове обговорення</newIssueLink> на GitHub, щоб ми могли розібратися з цією вадою."
+        "create_new_issue": "<newIssueLink>Створіть нове обговорення</newIssueLink> на GitHub, щоб ми могли розібратися з цією вадою.",
+        "waiting_for_server": "Очікується відповідь від сервера"
     },
     "time": {
         "hours_minutes_seconds_left": "Залишилося %(hours)sгод %(minutes)sхв %(seconds)sс",
@@ -3065,7 +3031,8 @@
             "enable_notifications_device": "Увімкнути сповіщення для цього пристрою",
             "enable_desktop_notifications_session": "Увімкнути стільничні сповіщення для цього сеансу",
             "show_message_desktop_notification": "Показувати повідомлення у стільничних сповіщеннях",
-            "enable_audible_notifications_session": "Увімкнути звукові сповіщення для цього сеансу"
+            "enable_audible_notifications_session": "Увімкнути звукові сповіщення для цього сеансу",
+            "noisy": "Шумно"
         },
         "appearance": {
             "layout_irc": "IRC (Експериментально)",
@@ -3086,7 +3053,12 @@
             "timeline_image_size": "Розмір зображень у стрічці",
             "timeline_image_size_default": "Типовий",
             "timeline_image_size_large": "Великі",
-            "custom_font_size": "Використовувати нетиповий розмір"
+            "custom_font_size": "Використовувати нетиповий розмір",
+            "font_size_nan": "Розмір повинен бути числом",
+            "font_size_limit": "Нетиповий розмір шрифту може бути лише в межах %(min)s пт і %(max)s пт",
+            "font_size_valid": "Введіть від %(min)s пт до %(max)s пт",
+            "image_size_default": "Типовий",
+            "image_size_large": "Великі"
         },
         "inline_url_previews_room_account": "Увімкнути попередній перегляд гіперпосилань в цій кімнаті (стосується тільки вас)",
         "inline_url_previews_room": "Увімкнути попередній перегляд гіперпосилань за умовчанням для учасників цієї кімнати",
@@ -3138,6 +3110,9 @@
             "noise_suppression": "Шумопригнічення",
             "enable_fallback_ice_server": "Дозволити резервний сервер підтримки викликів (%(server)s)",
             "enable_fallback_ice_server_description": "Застосовується лише в тому випадку, якщо ваш домашній сервер не пропонує його. Ваша IP-адреса передаватиметься під час виклику."
+        },
+        "keyboard": {
+            "title": "Клавіатура"
         }
     },
     "devtools": {
@@ -3236,7 +3211,8 @@
         "show_hidden_events": "Показувати приховані події у часоряді",
         "low_bandwidth_mode": "Режим низької пропускної спроможності",
         "low_bandwidth_mode_description": "Потрібен сумісний домашній сервер.",
-        "developer_mode": "Режим розробника"
+        "developer_mode": "Режим розробника",
+        "title": "Інструменти розробника"
     },
     "export_chat": {
         "html": "HTML",
@@ -3358,7 +3334,12 @@
             "kick": "%(senderName)s вилучає %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s змінює тему на %(topic)s.",
-        "m.room.avatar": "%(senderDisplayName)s змінює аватар кімнати.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s змінює аватар кімнати.",
+            "lightbox_title": "%(senderDisplayName)s змінює аватар %(roomName)s",
+            "removed": "%(senderDisplayName)s вилучає аватар кімнати.",
+            "changed_img": "%(senderDisplayName)s змінює аватар кімнати на <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s видалив ім'я кімнати.",
             "change": "%(senderDisplayName)s змінює назву кімнати з %(oldRoomName)s на %(newRoomName)s.",
@@ -3425,7 +3406,11 @@
             "removed": "%(senderName)s вилучає віджет %(widgetName)s"
         },
         "io.element.widgets.layout": "%(senderName)s оновлює макет кімнати",
-        "m.location": "%(senderName)s поширює своє місцеперебування",
+        "m.location": {
+            "full": "%(senderName)s поширює своє місцеперебування",
+            "self_location": "Повідомляє своє місцеперебування: ",
+            "location": "Повідомляє місцеперебування: "
+        },
         "self_redaction": "Повідомлення видалено",
         "redaction": "Повідомлення видалено %(name)s",
         "m.poll.start": "%(senderName)s починає опитування - %(pollQuestion)s",
@@ -3610,6 +3595,19 @@
         "io.element.voice_broadcast_info": {
             "you": "Ви завершили <a>голосову трансляцію</a>",
             "user": "%(senderName)s завершує <a>голосову трансляцію</a>"
+        },
+        "reactions": {
+            "label": "%(reactors)s додає реакцію %(content)s",
+            "tooltip": "<reactors/><reactedWith>додає реакцію %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Повідомлення видалено %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Ця кімната — продовження іншої розмови.",
+            "unknown_predecessor_guess_server": "Не можемо знайти стару версію цієї кімнати (ідентифікатор кімнати: %(roomId)s), а нам не було надано 'via_servers', щоб знайти її. Можливо, вам вдасться вгадати сервер за ID кімнати. Якщо ви хочете спробувати, натисніть на це посилання:",
+            "unknown_predecessor": "Не можемо знайти стару версію цієї кімнати (ідентифікатор кімнати: %(roomId)s), а нам не було надано 'via_servers', щоб знайти її.",
+            "see_older_messages": "Клацніть тут, щоб переглянути давніші повідомлення."
         }
     },
     "slash_command": {
@@ -3678,7 +3676,15 @@
         "failed_find_room": "Не вдалося виконати команду: Неможливо знайти кімнату (%(roomId)s",
         "failed_find_user": "Не вдалося знайти користувача в кімнаті",
         "op": "Вказати рівень повноважень користувача",
-        "deop": "Знімає повноваження оператора з користувача із вказаним ID"
+        "deop": "Знімає повноваження оператора з користувача із вказаним ID",
+        "server_error": "Помилка сервера",
+        "command_error": "Помилка команди",
+        "server_error_detail": "Сервер недоступний, перевантажений чи ще щось пішло не так.",
+        "unknown_command": "Невідома команда",
+        "unknown_command_detail": "Нерозпізнана команда: %(commandText)s",
+        "unknown_command_help": "Ви можете скористатися <code>/help</code> для перегляду доступних команд. Ви мали намір надіслати це як повідомлення?",
+        "unknown_command_hint": "Порада: Почніть повідомлення з <code>//</code>, щоб його першим символом стала скісна риска.",
+        "unknown_command_button": "Надіслати як повідомлення"
     },
     "presence": {
         "busy": "Зайнятий",
@@ -3799,7 +3805,10 @@
             "notifications.room": "Сповістити всіх"
         },
         "security": {
-            "strict_encryption": "Ніколи не надсилати зашифровані повідомлення до незвірених сеансів у цій кімнаті з цього сеансу"
+            "strict_encryption": "Ніколи не надсилати зашифровані повідомлення до незвірених сеансів у цій кімнаті з цього сеансу",
+            "join_rule_invite": "Приватно (лише за запрошенням)",
+            "join_rule_invite_description": "Приєднатися можуть лише запрошені люди.",
+            "join_rule_public_description": "Будь-хто може знайти та приєднатися."
         }
     },
     "encryption": {
@@ -4113,7 +4122,9 @@
         "failed_permission": "%(brand)s не отримав доступу до вашого місця перебування. Дозвольте доступ до місця перебування в налаштуваннях браузера.",
         "failed_generic": "Не вдалося отримати ваше місцеперебування. Повторіть спробу пізніше.",
         "failed_timeout": "Сплив час отримання місцеперебування. Повторіть спробу пізніше.",
-        "failed_unknown": "Невідома помилка отримання місцеперебування. Повторіть спробу пізніше."
+        "failed_unknown": "Невідома помилка отримання місцеперебування. Повторіть спробу пізніше.",
+        "expand_map": "Розгорнути карту",
+        "failed_load_map": "Неможливо завантажити карту"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Не вдалося розпочати нову голосову трансляцію",
@@ -4135,5 +4146,9 @@
         "30s_backward": "Назад на 30 с",
         "30s_forward": "Уперед на 30 с",
         "go_live": "Слухати"
+    },
+    "labs_mjolnir": {
+        "room_name": "Мій список блокувань",
+        "room_topic": "Це ваш список користувачів/серверів, які ви заблокували – не виходьте з кімнати!"
     }
 }

@@ -28,7 +28,6 @@
         "one": "ja yksi muu..."
     },
     "Banned users": "Porttikiellon saaneet käyttäjät",
-    "Command error": "Komentovirhe",
     "Commands": "Komennot",
     "Confirm password": "Varmista salasana",
     "Cryptography": "Salaus",
@@ -82,7 +81,6 @@
     "Return to login screen": "Palaa kirjautumissivulle",
     "Rooms": "Huoneet",
     "Search failed": "Haku epäonnistui",
-    "Server error": "Palvelinvirhe",
     "Session ID": "Istuntotunniste",
     "This email address is already in use": "Tämä sähköpostiosoite on jo käytössä",
     "This email address was not found": "Sähköpostiosoitetta ei löytynyt",
@@ -163,7 +161,6 @@
     "Power level must be positive integer.": "Oikeustason pitää olla positiivinen kokonaisluku.",
     "Server may be unavailable, overloaded, or search timed out :(": "Palvelin saattaa olla saavuttamattomissa, ylikuormitettu tai haku kesti liian kauan :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Palvelin saattaa olla saavuttamattomissa, ylikuormitettu tai olet törmännyt virheeseen.",
-    "Server unavailable, overloaded, or something else went wrong.": "Palvelin on saavuttamattomissa, ylikuormitettu tai jotain muuta meni vikaan.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Aikajanan tietty hetki yritettiin ladata, mutta sinulla ei ole oikeutta nähdä kyseistä viestiä.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Huoneen aikajanan tietty hetki yritettiin ladata, mutta sitä ei löytynyt.",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (oikeustaso %(powerLevelNumber)s)",
@@ -213,9 +210,6 @@
     "Members only (since the point in time of selecting this option)": "Vain jäsenet (tämän valinnan tekemisestä lähtien)",
     "Members only (since they were invited)": "Vain jäsenet (kutsumisestaan lähtien)",
     "Members only (since they joined)": "Vain jäsenet (liittymisestään lähtien)",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s vaihtoi huoneen %(roomName)s kuvan",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s poisti huoneen kuvan.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s vaihtoi huoneen kuvaksi <img/>",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Sinut ohjataan kolmannen osapuolen sivustolle, jotta voit autentikoida tilisi käyttääksesi palvelua %(integrationsUrl)s. Haluatko jatkaa?",
     "A text message has been sent to %(msisdn)s": "Tekstiviesti lähetetty numeroon %(msisdn)s",
     "And %(count)s more...": {
@@ -251,11 +245,8 @@
     "Today": "Tänään",
     "Friday": "Perjantai",
     "What's New": "Mitä uutta",
-    "On": "Päällä",
     "Changelog": "Muutosloki",
-    "Waiting for response from server": "Odotetaan vastausta palvelimelta",
     "This Room": "Tämä huone",
-    "Noisy": "Äänekäs",
     "Unavailable": "Ei saatavilla",
     "Source URL": "Lähdeosoite",
     "Filter results": "Suodata tuloksia",
@@ -273,7 +264,6 @@
     "Yesterday": "Eilen",
     "Error encountered (%(errorDetail)s).": "Virhe: %(errorDetail)s.",
     "Low Priority": "Matala prioriteetti",
-    "Off": "Ei päällä",
     "Wednesday": "Keskiviikko",
     "Thank you!": "Kiitos!",
     "<a>In reply to</a> <pill>": "<a>Vastauksena käyttäjälle</a> <pill>",
@@ -398,8 +388,6 @@
     "Preparing to send logs": "Valmistaudutaan lokien lähettämiseen",
     "Invite anyway": "Kutsu silti",
     "Invite anyway and never warn me again": "Kutsu silti, äläkä varoita minua enää uudelleen",
-    "Click here to see older messages.": "Napsauta tästä nähdäksesi vanhemmat viestit.",
-    "This room is a continuation of another conversation.": "Tämä huone on jatkumo toisesta keskustelusta.",
     "The conversation continues here.": "Keskustelu jatkuu täällä.",
     "Share Link to User": "Jaa linkki käyttäjään",
     "Muted Users": "Mykistetyt käyttäjät",
@@ -649,7 +637,6 @@
     "Call failed due to misconfigured server": "Puhelu epäonnistui palvelimen väärien asetusten takia",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Pyydä kotipalvelimesi (<code>%(homeserverDomain)s</code>) ylläpitäjää asentamaan TURN-palvelin, jotta puhelut toimisivat luotettavasti.",
     "Only continue if you trust the owner of the server.": "Jatka vain, jos luotat palvelimen omistajaan.",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reagoi(vat) emojilla %(shortName)s</reactedWith>",
     "Accept <policyLink /> to continue:": "Hyväksy <policyLink /> jatkaaksesi:",
     "Identity server has no terms of service": "Identiteettipalvelimella ei ole käyttöehtoja",
     "The identity server you have chosen does not have any terms of service.": "Valitsemallasi identiteettipalvelimella ei ole käyttöehtoja.",
@@ -724,8 +711,6 @@
     "User Autocomplete": "Käyttäjien automaattinen täydennys",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Tämä toiminto vaatii oletusidentiteettipalvelimen <server /> käyttämistä sähköpostiosoitteen tai puhelinnumeron validointiin, mutta palvelimella ei ole käyttöehtoja.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "My Ban List": "Tekemäni estot",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Tämä on luettelo käyttäjistä ja palvelimista, jotka olet estänyt - älä poistu huoneesta!",
     "Something went wrong. Please try again or view your console for hints.": "Jotain meni vikaan. Yritä uudelleen tai katso vihjeitä konsolista.",
     "Please try again or view your console for hints.": "Yritä uudelleen tai katso vihjeitä konsolista.",
     "⚠ These settings are meant for advanced users.": "⚠ Nämä asetukset on tarkoitettu edistyneille käyttäjille.",
@@ -833,9 +818,6 @@
     "Later": "Myöhemmin",
     "in memory": "muistissa",
     "Bridges": "Sillat",
-    "Unknown Command": "Tuntematon komento",
-    "Unrecognised command: %(commandText)s": "Tunnistamaton komento: %(commandText)s",
-    "Send as message": "Lähetä viestinä",
     "Waiting for %(displayName)s to accept…": "Odotetaan, että %(displayName)s hyväksyy…",
     "Failed to find the following users": "Seuraavia käyttäjiä ei löytynyt",
     "Upgrade your encryption": "Päivitä salauksesi",
@@ -897,8 +879,6 @@
     "cached locally": "paikallisessa välimuistissa",
     "not found locally": "ei paikallisessa välimuistissa",
     "exists": "on olemassa",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "<code>/help</code> näyttää luettelon käytettävissä olevista komennoista. Oliko tarkoituksesi lähettää se viestinä?",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Vinkki: <code>//</code> aloittaa viestin kauttaviivalla.",
     "Published Addresses": "Julkaistut osoitteet",
     "Other published addresses:": "Muut julkaistut osoitteet:",
     "No other published addresses yet, add one below": "Toistaiseksi ei muita julkaistuja osoitteita, lisää alle",
@@ -956,9 +936,6 @@
     "You've successfully verified your device!": "Olet onnistuneesti varmentanut laitteesi!",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Olet onnistuneesti varmentanut laitteen %(deviceName)s (%(deviceId)s)!",
     "You've successfully verified %(displayName)s!": "Olet varmentanut käyttäjän %(displayName)s!",
-    "Size must be a number": "Koon täytyy olla luku",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Mukautetun fonttikoon täytyy olla vähintään %(min)s pt ja enintään %(max)s pt",
-    "Use between %(min)s pt and %(max)s pt": "Käytä kokoa väliltä %(min)s pt ja %(max)s pt",
     "Start verification again from the notification.": "Aloita varmennus uudelleen ilmoituksesta.",
     "Start verification again from their profile.": "Aloita varmennus uudelleen hänen profiilista.",
     "Verification timed out.": "Varmennuksessa kesti liikaa.",
@@ -1010,7 +987,6 @@
     "Join the conference at the top of this room": "Liity ryhmäpuheluun huoneen ylälaidassa",
     "Wrong file type": "Väärä tiedostotyyppi",
     "Room address": "Huoneen osoite",
-    "Message deleted on %(date)s": "Viesti poistettu %(date)s",
     "Add widgets, bridges & bots": "Lisää sovelmia, siltoja ja botteja",
     "Edit widgets, bridges & bots": "Muokkaa sovelmia, siltoja ja botteja",
     "Widgets": "Sovelmat",
@@ -1215,7 +1191,6 @@
     "Backup key stored:": "Varmuuskopioavain tallennettu:",
     "Backup key cached:": "Välimuistissa oleva varmuuskopioavain:",
     "Secret storage:": "Salainen tallennus:",
-    "Hey you. You're the best!": "Hei siellä, olet paras!",
     "Room ID or address of ban list": "Huonetunnus tai -osoite on estolistalla",
     "Add a photo, so people can easily spot your room.": "Lisää kuva, jotta ihmiset voivat helpommin huomata huoneesi.",
     "Hide Widgets": "Piilota sovelmat",
@@ -1515,8 +1490,6 @@
         "one": "& %(count)s lisää",
         "other": "& %(count)s lisää"
     },
-    "Anyone can find and join.": "Kuka tahansa voi löytää ja liittyä.",
-    "Only invited people can join.": "Vain kutsutut ihmiset voivat liittyä.",
     "Space options": "Avaruuden valinnat",
     "Recommended for public spaces.": "Suositeltu julkisiin avaruuksiin.",
     "Guests can join a space without having an account.": "Vieraat voivat liittyä avaruuteen ilman tiliä.",
@@ -1587,7 +1560,6 @@
     "Role in <RoomName/>": "Rooli huoneessa <RoomName/>",
     "Are you sure you want to add encryption to this public room?": "Haluatko varmasti lisätä salauksen tähän julkiseen huoneeseen?",
     "There was an error loading your notification settings.": "Virhe ladatessa ilmoitusasetuksia.",
-    "Private (invite only)": "Yksityinen (vain kutsulla)",
     "Workspace: <networkLink/>": "Työtila: <networkLink/>",
     "This may be useful for public spaces.": "Tämä voi olla hyödyllinen julkisille avaruuksille.",
     "Invite with email or username": "Kutsu sähköpostiosoitteella tai käyttäjänimellä",
@@ -1747,8 +1719,6 @@
     "People with supported clients will be able to join the room without having a registered account.": "Käyttäjät, joilla on tuettu asiakasohjelma, voivat liittyä huoneeseen ilman rekisteröityä käyttäjätiliä.",
     "To avoid these issues, create a <a>new public room</a> for the conversation you plan to have.": "Vältä nämä ongelmat luomalla <a>uusi julkinen huone</a> aikomallesi keskustelulle.",
     "Get notified for every message": "Vastaanota ilmoitus joka viestistä",
-    "Keyboard": "Näppäimistö",
-    "Large": "Suuri",
     "Access": "Pääsy",
     "Room members": "Huoneen jäsenet",
     "Back to chat": "Takaisin keskusteluun",
@@ -1802,8 +1772,6 @@
     "Sorry, the poll you tried to create was not posted.": "Kyselyä, jota yritit luoda, ei valitettavasti julkaistu.",
     "Failed to post poll": "Kyselyn julkaiseminen epäonnistui",
     "We couldn't send your location": "Emme voineet lähettää sijaintiasi",
-    "Unable to load map": "Kartan lataaminen ei onnistu",
-    "Expand map": "Laajenna kartta",
     "Are you sure you're at the right place?": "Oletko varma, että olet oikeassa paikassa?",
     "There's no preview, would you like to join?": "Esikatselua ei ole. Haluaisitko liittyä?",
     "This invite was sent to %(email)s": "Tämä kutsu lähetettiin osoitteeseen %(email)s",
@@ -1815,7 +1783,6 @@
         "other": "Poistetaan parhaillaan viestejä %(count)s huoneesta"
     },
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Tämän salatun viestin aitoutta ei voida taata tällä laitteella.",
-    "Developer tools": "Kehittäjätyökalut",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Varmista, että alla olevat emojit näkyvät molemmilla laitteilla samassa järjestyksessä:",
     "Failed to join": "Liittyminen epäonnistui",
     "The person who invited you has already left.": "Henkilö, joka kutsui sinut on jo poistunut.",
@@ -1915,8 +1882,6 @@
     "Open room": "Avaa huone",
     "You will not be able to reactivate your account": "Et voi ottaa tiliäsi uudelleen käyttöön",
     "Confirm that you would like to deactivate your account. If you proceed:": "Vahvista, että haluat deaktivoida eli poistaa tilisi. Jos jatkat:",
-    "Shared a location: ": "Jakoi sijainnin: ",
-    "Shared their location: ": "Jakoi sijaintinsa: ",
     "Expand quotes": "Laajenna lainaukset",
     "Collapse quotes": "Supista lainaukset",
     "Could not connect media": "Ei voitu yhdistää mediaa",
@@ -2372,7 +2337,10 @@
         "qr_code": "QR-koodi",
         "feedback": "Palaute",
         "all_rooms": "Kaikki huoneet",
-        "orphan_rooms": "Muut huoneet"
+        "orphan_rooms": "Muut huoneet",
+        "preview_message": "Hei siellä, olet paras!",
+        "on": "Päällä",
+        "off": "Ei päällä"
     },
     "action": {
         "continue": "Jatka",
@@ -2653,7 +2621,8 @@
         "collecting_logs": "Haetaan lokeja",
         "uploading_logs": "Lähetetään lokeja",
         "downloading_logs": "Ladataan lokeja",
-        "create_new_issue": "<newIssueLink>Luo uusi issue</newIssueLink> GitHubissa, jotta voimme tutkia tätä ongelmaa."
+        "create_new_issue": "<newIssueLink>Luo uusi issue</newIssueLink> GitHubissa, jotta voimme tutkia tätä ongelmaa.",
+        "waiting_for_server": "Odotetaan vastausta palvelimelta"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)s h %(minutes)s m %(seconds)s s jäljellä",
@@ -2793,7 +2762,8 @@
             "enable_notifications_device": "Ota ilmoitukset käyttöön tälle laitteelle",
             "enable_desktop_notifications_session": "Ota käyttöön työpöytäilmoitukset tälle istunnolle",
             "show_message_desktop_notification": "Näytä viestit ilmoituskeskuksessa",
-            "enable_audible_notifications_session": "Ota käyttöön ääni-ilmoitukset tälle istunnolle"
+            "enable_audible_notifications_session": "Ota käyttöön ääni-ilmoitukset tälle istunnolle",
+            "noisy": "Äänekäs"
         },
         "appearance": {
             "layout_irc": "IRC (kokeellinen)",
@@ -2814,7 +2784,12 @@
             "timeline_image_size": "Kuvan koko aikajanalla",
             "timeline_image_size_default": "Oletus",
             "timeline_image_size_large": "Suuri",
-            "custom_font_size": "Käytä mukautettua kokoa"
+            "custom_font_size": "Käytä mukautettua kokoa",
+            "font_size_nan": "Koon täytyy olla luku",
+            "font_size_limit": "Mukautetun fonttikoon täytyy olla vähintään %(min)s pt ja enintään %(max)s pt",
+            "font_size_valid": "Käytä kokoa väliltä %(min)s pt ja %(max)s pt",
+            "image_size_default": "Oletus",
+            "image_size_large": "Suuri"
         },
         "inline_url_previews_room_account": "Ota linkkien esikatselut käyttöön tässä huoneessa (koskee ainoastaan sinua)",
         "inline_url_previews_room": "Ota linkkien esikatselu käyttöön kaikille huoneen jäsenille",
@@ -2861,6 +2836,9 @@
             "auto_gain_control": "Automaattinen vahvistuksen säätö",
             "echo_cancellation": "Kaiunpoisto",
             "noise_suppression": "Kohinanvaimennus"
+        },
+        "keyboard": {
+            "title": "Näppäimistö"
         }
     },
     "devtools": {
@@ -2917,7 +2895,8 @@
         "widget_screenshots": "Ota sovelmien kuvankaappaukset käyttöön tuetuissa sovelmissa",
         "show_hidden_events": "Näytä piilotetut tapahtumat aikajanalla",
         "low_bandwidth_mode_description": "Vaatii yhteensopivan kotipalvelimen.",
-        "developer_mode": "Kehittäjätila"
+        "developer_mode": "Kehittäjätila",
+        "title": "Kehittäjätyökalut"
     },
     "export_chat": {
         "html": "HTML",
@@ -3033,7 +3012,12 @@
             "kick": "%(senderName)s poisti %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s vaihtoi aiheeksi \"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s vaihtoi huoneen kuvan.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s vaihtoi huoneen kuvan.",
+            "lightbox_title": "%(senderDisplayName)s vaihtoi huoneen %(roomName)s kuvan",
+            "removed": "%(senderDisplayName)s poisti huoneen kuvan.",
+            "changed_img": "%(senderDisplayName)s vaihtoi huoneen kuvaksi <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s poisti huoneen nimen.",
             "change": "%(senderDisplayName)s vaihtoi huoneen nimen %(oldRoomName)s nimeksi %(newRoomName)s.",
@@ -3099,7 +3083,11 @@
             "removed": "%(senderName)s poisti sovelman %(widgetName)s"
         },
         "io.element.widgets.layout": "%(senderName)s on päivittänyt huoneen asettelun",
-        "m.location": "%(senderName)s on jakanut sijaintinsa",
+        "m.location": {
+            "full": "%(senderName)s on jakanut sijaintinsa",
+            "self_location": "Jakoi sijaintinsa: ",
+            "location": "Jakoi sijainnin: "
+        },
         "self_redaction": "Viesti poistettu",
         "redaction": "%(name)s poisti viestin",
         "m.poll.start": "%(senderName)s on aloittanut kyselyn - %(pollQuestion)s",
@@ -3268,6 +3256,16 @@
         "io.element.voice_broadcast_info": {
             "you": "Lopetit <a>äänen yleislähetyksen</a>",
             "user": "%(senderName)s lopetti <a>äänen yleislähetyksen</a>"
+        },
+        "reactions": {
+            "tooltip": "<reactors/><reactedWith>reagoi(vat) emojilla %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Viesti poistettu %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Tämä huone on jatkumo toisesta keskustelusta.",
+            "see_older_messages": "Napsauta tästä nähdäksesi vanhemmat viestit."
         }
     },
     "slash_command": {
@@ -3332,7 +3330,15 @@
         "failed_find_room": "Komento epäonnistui: Huonetta %(roomId)s ei löydetty",
         "failed_find_user": "Käyttäjää ei löytynyt huoneesta",
         "op": "Määritä käyttäjän oikeustaso",
-        "deop": "Poistaa tunnuksen mukaiselta käyttäjältä ylläpito-oikeudet"
+        "deop": "Poistaa tunnuksen mukaiselta käyttäjältä ylläpito-oikeudet",
+        "server_error": "Palvelinvirhe",
+        "command_error": "Komentovirhe",
+        "server_error_detail": "Palvelin on saavuttamattomissa, ylikuormitettu tai jotain muuta meni vikaan.",
+        "unknown_command": "Tuntematon komento",
+        "unknown_command_detail": "Tunnistamaton komento: %(commandText)s",
+        "unknown_command_help": "<code>/help</code> näyttää luettelon käytettävissä olevista komennoista. Oliko tarkoituksesi lähettää se viestinä?",
+        "unknown_command_hint": "Vinkki: <code>//</code> aloittaa viestin kauttaviivalla.",
+        "unknown_command_button": "Lähetä viestinä"
     },
     "presence": {
         "busy": "Varattu",
@@ -3447,7 +3453,10 @@
             "notifications.room": "Kiinnitä kaikkien huomio"
         },
         "security": {
-            "strict_encryption": "Älä lähetä salattuja viestejä vahvistamattomiin istuntoihin tässä huoneessa tässä istunnossa"
+            "strict_encryption": "Älä lähetä salattuja viestejä vahvistamattomiin istuntoihin tässä huoneessa tässä istunnossa",
+            "join_rule_invite": "Yksityinen (vain kutsulla)",
+            "join_rule_invite_description": "Vain kutsutut ihmiset voivat liittyä.",
+            "join_rule_public_description": "Kuka tahansa voi löytää ja liittyä."
         }
     },
     "encryption": {
@@ -3720,7 +3729,9 @@
         "failed_permission": "%(brand)s ei saanut lupaa noutaa sijaintiasi. Salli sijainnin käyttäminen selaimen asetuksista.",
         "failed_generic": "Sijaintisi noutaminen epäonnistui. Yritä myöhemmin uudelleen.",
         "failed_timeout": "Sijaintisi noutaminen aikakatkaistiin. Yritä myöhemmin uudelleen.",
-        "failed_unknown": "Tuntematon virhe sijaintia noudettaessa. Yritä myöhemmin uudelleen."
+        "failed_unknown": "Tuntematon virhe sijaintia noudettaessa. Yritä myöhemmin uudelleen.",
+        "expand_map": "Laajenna kartta",
+        "failed_load_map": "Kartan lataaminen ei onnistu"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Uutta äänen yleislähetystä ei voi käynnistää",
@@ -3733,5 +3744,9 @@
         "confirm_stop_affirm": "Kyllä, pysäytä yleislähetys",
         "30s_backward": "30 s taaksepäin",
         "30s_forward": "30 s eteenpäin"
+    },
+    "labs_mjolnir": {
+        "room_name": "Tekemäni estot",
+        "room_topic": "Tämä on luettelo käyttäjistä ja palvelimista, jotka olet estänyt - älä poistu huoneesta!"
     }
 }

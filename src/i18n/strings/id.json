@@ -12,7 +12,6 @@
     "Deactivate Account": "Nonaktifkan Akun",
     "Email": "Email",
     "Email address": "Alamat email",
-    "Command error": "Perintah gagal",
     "Default": "Bawaan",
     "Download %(text)s": "Unduh %(text)s",
     "Failed to reject invitation": "Gagal menolak undangan",
@@ -32,7 +31,6 @@
     "Return to login screen": "Kembali ke halaman masuk",
     "Rooms": "Ruangan",
     "Search failed": "Pencarian gagal",
-    "Server error": "Kesalahan server",
     "Session ID": "ID Sesi",
     "This email address was not found": "Alamat email ini tidak ditemukan",
     "Unable to add email address": "Tidak dapat menambahkan alamat email",
@@ -78,11 +76,8 @@
     "Today": "Hari Ini",
     "Notifications": "Notifikasi",
     "What's New": "Apa Yang Baru",
-    "On": "Nyala",
     "Changelog": "Changelog",
-    "Waiting for response from server": "Menunggu respon dari server",
     "This Room": "Ruangan ini",
-    "Noisy": "Berisik",
     "Unavailable": "Tidak Tersedia",
     "All Rooms": "Semua Ruangan",
     "Source URL": "URL Sumber",
@@ -104,7 +99,6 @@
     "Yesterday": "Kemarin",
     "Error encountered (%(errorDetail)s).": "Terjadi kesalahan (%(errorDetail)s).",
     "Low Priority": "Prioritas Rendah",
-    "Off": "Mati",
     "Failed to change password. Is your password correct?": "Gagal untuk mengubah kata sandi. Apakah kata sandi Anda benar?",
     "Thank you!": "Terima kasih!",
     "This email address is already in use": "Alamat email ini telah dipakai",
@@ -659,7 +653,6 @@
     "Sending": "Mengirim",
     "Spaces": "Space",
     "Connecting": "Menghubungkan",
-    "Hey you. You're the best!": "Hei kamu. Kamu adalah yang terbaik!",
     "Light high contrast": "Kontras tinggi terang",
     "Error upgrading room": "Gagal meningkatkan ruangan",
     "Short keyboard patterns are easy to guess": "Pola keyboard yang pendek mudah ditebak",
@@ -779,14 +772,8 @@
         "other": "& %(count)s lainnya"
     },
     "Upgrade required": "Peningkatan diperlukan",
-    "Anyone can find and join.": "Siapa saja dapat menemukan dan bergabung.",
-    "Only invited people can join.": "Hanya orang yang diundang dapat bergabung.",
-    "Private (invite only)": "Privat (undangan saja)",
     "The integration manager is offline or it cannot reach your homeserver.": "Manager integrasinya mungkin sedang luring atau tidak dapat mencapai homeserver Anda.",
     "Cannot connect to integration manager": "Tidak dapat menghubungkan ke manajer integrasi",
-    "Use between %(min)s pt and %(max)s pt": "Gunakan antara %(min)s pt dan %(max)s pt",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Ukuran font kustom hanya bisa antara %(min)s pt dan %(max)s pt",
-    "Size must be a number": "Ukuran harus sebuah angka",
     "Message search initialisation failed": "Inisialisasi pencarian pesan gagal",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s tidak dapat menyimpan pesan terenkripsi secara lokal dengan aman saat dijalankan di browser. Gunakan <desktopLink>%(brand)s Desktop</desktopLink> supaya pesan terenkripsi dapat muncul di hasil pencarian.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s tidak memiliki beberapa komponen yang diperlukan untuk menyimpan pesan terenkripsi secara lokal dengan aman. Jika Anda ingin bereksperimen dengan fitur ini, buat %(brand)s Desktop yang khusus dengan <nativeLink>tambahan komponen penelusuran</nativeLink>.",
@@ -878,8 +865,6 @@
     "Show sidebar": "Tampilkan sisi bilah",
     "Hide sidebar": "Sembunyikan sisi bilah",
     "unknown person": "pengguna tidak dikenal",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Ini adalah daftar pengguna/server Anda telah blokir — jangan tinggalkan ruangan ini!",
-    "My Ban List": "Daftar Cekalan Saya",
     "IRC display name width": "Lebar nama tampilan IRC",
     "Change notification settings": "Ubah pengaturan notifikasi",
     "Please contact your homeserver administrator.": "Mohon hubungi administrator homeserver Anda.",
@@ -1122,12 +1107,6 @@
         "one": "%(count)s balasan",
         "other": "%(count)s balasan"
     },
-    "Send as message": "Kirim sebagai pesan",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Petunjuk: Mulai pesan Anda dengan <code>//</code> untuk memulainya dengan sebuah garis miring.",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Anda dapat menggunakan <code>/help</code> untuk melihat perintah yang tersedia. Apakah Anda bermaksud untuk mengirimkannya sebagai sebuah pesan?",
-    "Unrecognised command: %(commandText)s": "Perintah tidak diketahui: %(commandText)s",
-    "Unknown Command": "Perintah Tidak Diketahui",
-    "Server unavailable, overloaded, or something else went wrong.": "Server tidak tersedia, terlalu penuh, atau ada sesuatu yang salah.",
     "Everyone in this room is verified": "Semuanya di ruangan ini telah terverifikasi",
     "This room is end-to-end encrypted": "Ruangan ini dienkripsi secara ujung ke ujung",
     "Someone is using an unknown session": "Seseorang menggunakan sesi yang tidak dikenal",
@@ -1184,7 +1163,6 @@
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Dapatkan notifikasi hanya dengan sebutan dan kata kunci yang diatur di <a>pengaturan</a> Anda",
     "@mentions & keywords": "@sebutan & kata kunci",
     "Get notified for every message": "Dapatkan notifikasi untuk setiap pesan",
-    "Large": "Besar",
     "Something went wrong!": "Ada sesuatu yang salah!",
     "Can't load this message": "Tidak dapat memuat pesan ini",
     "Submit logs": "Kirim catatan",
@@ -1193,14 +1171,6 @@
     "Edited at %(date)s": "Diedit di %(date)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Anda akan dialihkan ke situs pihak ketiga sehingga Anda dapat mengautentikasi akun Anda untuk digunakan dengan %(integrationsUrl)s. Apakah Anda yakin untuk melanjutkan?",
     "Add an Integration": "Tambahkan sebuah Integrasi",
-    "This room is a continuation of another conversation.": "Ruangan ini adalah lanjutan dari obrolan sebelumnya.",
-    "Click here to see older messages.": "Klik di sini untuk melihat pesan-pesan lama.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s mengubah avatar ruangan ke <img/>",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s menghapus avatar ruangan.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s mengubah avatar untuk %(roomName)s",
-    "Message deleted on %(date)s": "Pesan terhapus di %(date)s",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>bereaksi dengan %(shortName)s</reactedWith>",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s berekasi dengan %(content)s",
     "Add reaction": "Tambahkan reaksi",
     "Error processing voice message": "Terjadi kesalahan mengolah pesan suara",
     "Error decrypting video": "Terjadi kesalahan mendekripsi video",
@@ -1919,7 +1889,6 @@
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Menunggu Anda untuk memverifikasi perangkat Anda yang lain, %(deviceName)s (%(deviceId)s)…",
     "Verify this device by confirming the following number appears on its screen.": "Verifikasi perangkat ini dengan mengkonfirmasi nomor berikut ini yang ditampilkan di layarnya.",
     "Confirm the emoji below are displayed on both devices, in the same order:": "Konfirmasi emoji di bawah yang ditampilkan di kedua perangkat, dalam urutan yang sama:",
-    "Expand map": "Buka peta",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Pasangan tidak diketahui (pengguna, sesi): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Alamat ruangan tidak dikenal: %(roomAlias)s",
     "Could not fetch location": "Tidak dapat mendapatkan lokasi",
@@ -1932,7 +1901,6 @@
     "Remove them from everything I'm able to": "Keluarkan dari semuanya yang saya bisa",
     "Message pending moderation: %(reason)s": "Pesan akan dimoderasikan: %(reason)s",
     "Message pending moderation": "Pesan akan dimoderasikan",
-    "Keyboard": "Keyboard",
     "Space home": "Beranda space",
     "Internal room ID": "ID ruangan internal",
     "Group all your people in one place.": "Kelompokkan semua orang di satu tempat.",
@@ -1979,9 +1947,6 @@
     "Collapse quotes": "Tutup kutip",
     "Click to drop a pin": "Klik untuk menaruh pin",
     "Click to move the pin": "Klik untuk memindahkan pin",
-    "Shared a location: ": "Membagikan sebuah lokasi: ",
-    "Shared their location: ": "Membagikan lokasinya: ",
-    "Unable to load map": "Tidak dapat memuat peta",
     "Can't create a thread from an event with an existing relation": "Tidak dapat membuat utasan dari sebuah peristiwa dengan relasi yang sudah ada",
     "You are sharing your live location": "Anda membagikan lokasi langsung Anda",
     "%(displayName)s's live location": "Lokasi langsung %(displayName)s",
@@ -1997,7 +1962,6 @@
     },
     "Share for %(duration)s": "Bagikan selama %(duration)s",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Anda dapat menggunakan opsi server khusus untuk masuk ke server Matrix lain dengan menentukan URL homeserver yang berbeda. Ini memungkinkan Anda untuk menggunakan %(brand)s dengan akun Matrix yang ada di homeserver yang berbeda.",
-    "Developer tools": "Alat pengembang",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s bersifat eksperimental pada peramban web ponsel. Untuk pengalaman yang lebih baik dan fitur-fitur terkini, gunakan aplikasi natif gratis kami.",
     "Unsent": "Belum dikirim",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s didapatkan saat mencoba mengakses ruangan atau space. Jika Anda pikir Anda melihat pesan ini secara tidak benar, silakan <issueLink>kirim sebuah laporan kutu</issueLink>.",
@@ -2444,8 +2408,6 @@
     "Start DM anyway": "Mulai percakapan langsung saja",
     "Start DM anyway and never warn me again": "Mulai percakapan langsung saja dan jangan peringatkan saya lagi",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Tidak dapat menemukan profil untuk ID Matrix yang disertakan di bawah — apakah Anda ingin memulai percakapan langsung saja?",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Tidak dapat mencari versi lama ruangan ini (ID ruangan: %(roomId)s), dan kami tidak disediakan dengan 'via_servers' untuk mencarinya.",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Tidak dapat mencari versi lama ruangan ini (ID ruangan: %(roomId)s), dan kami tidak disediakan dengan 'via_servers' untuk mencarinya. Ini mungkin bahwa menebak server dari ID ruangan akan bekerja. Jika Anda ingin mencoba, klik tautan berikut:",
     "Formatting": "Format",
     "The add / bind with MSISDN flow is misconfigured": "Aliran penambahan/pengaitan MSISDN tidak diatur dengan benar",
     "No identity access token found": "Tidak ada token akses identitas yang ditemukan",
@@ -2619,7 +2581,10 @@
         "qr_code": "Kode QR",
         "feedback": "Masukan",
         "all_rooms": "Semua ruangan",
-        "orphan_rooms": "Ruangan lainnya"
+        "orphan_rooms": "Ruangan lainnya",
+        "preview_message": "Hei kamu. Kamu adalah yang terbaik!",
+        "on": "Nyala",
+        "off": "Mati"
     },
     "action": {
         "continue": "Lanjut",
@@ -2926,7 +2891,8 @@
         "collecting_logs": "Mengumpulkan catatan",
         "uploading_logs": "Mengunggah catatan",
         "downloading_logs": "Mengunduh catatan",
-        "create_new_issue": "Mohon <newIssueLink>buat sebuah issue baru</newIssueLink> di GitHub supaya kami dapat memeriksa kutu ini."
+        "create_new_issue": "Mohon <newIssueLink>buat sebuah issue baru</newIssueLink> di GitHub supaya kami dapat memeriksa kutu ini.",
+        "waiting_for_server": "Menunggu respon dari server"
     },
     "time": {
         "hours_minutes_seconds_left": "Sisa %(hours)sj %(minutes)sm %(seconds)sd",
@@ -3070,7 +3036,8 @@
             "enable_notifications_device": "Aktifkan notifikasi untuk perangkat ini",
             "enable_desktop_notifications_session": "Aktifkan notifikasi desktop untuk sesi ini",
             "show_message_desktop_notification": "Tampilkan pesan di notifikasi desktop",
-            "enable_audible_notifications_session": "Aktifkan notifikasi bersuara untuk sesi ini"
+            "enable_audible_notifications_session": "Aktifkan notifikasi bersuara untuk sesi ini",
+            "noisy": "Berisik"
         },
         "appearance": {
             "layout_irc": "IRC (Eksperimental)",
@@ -3091,7 +3058,12 @@
             "timeline_image_size": "Ukuran gambar di lini masa",
             "timeline_image_size_default": "Bawaan",
             "timeline_image_size_large": "Besar",
-            "custom_font_size": "Gunakan ukuran kustom"
+            "custom_font_size": "Gunakan ukuran kustom",
+            "font_size_nan": "Ukuran harus sebuah angka",
+            "font_size_limit": "Ukuran font kustom hanya bisa antara %(min)s pt dan %(max)s pt",
+            "font_size_valid": "Gunakan antara %(min)s pt dan %(max)s pt",
+            "image_size_default": "Bawaan",
+            "image_size_large": "Besar"
         },
         "inline_url_previews_room_account": "Aktifkan tampilan URL secara bawaan (hanya memengaruhi Anda)",
         "inline_url_previews_room": "Aktifkan tampilan URL secara bawaan untuk anggota di ruangan ini",
@@ -3143,6 +3115,9 @@
             "noise_suppression": "Pengurangan suara bising",
             "enable_fallback_ice_server": "Perbolehkan server bantuan panggilan cadangan (%(server)s)",
             "enable_fallback_ice_server_description": "Hanya diterapkan jika homeserver Anda tidak menyediakan satu. Alamat IP Anda akan dibagikan selama panggilan berlangsung."
+        },
+        "keyboard": {
+            "title": "Keyboard"
         }
     },
     "devtools": {
@@ -3241,7 +3216,8 @@
         "show_hidden_events": "Tampilkan peristiwa tersembunyi di lini masa",
         "low_bandwidth_mode": "Mode bandwidth rendah",
         "low_bandwidth_mode_description": "Membutuhkan homeserver yang kompatibel.",
-        "developer_mode": "Mode pengembang"
+        "developer_mode": "Mode pengembang",
+        "title": "Alat pengembang"
     },
     "export_chat": {
         "html": "HTML",
@@ -3363,7 +3339,12 @@
             "kick": "%(senderName)s mengeluarkan %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s telah mengubah topik menjadi \"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s mengubah avatar ruangan ini.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s mengubah avatar ruangan ini.",
+            "lightbox_title": "%(senderDisplayName)s mengubah avatar untuk %(roomName)s",
+            "removed": "%(senderDisplayName)s menghapus avatar ruangan.",
+            "changed_img": "%(senderDisplayName)s mengubah avatar ruangan ke <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s telah menghapus nama ruangan.",
             "change": "%(senderDisplayName)s mengubah nama ruangan ini dari %(oldRoomName)s ke %(newRoomName)s.",
@@ -3430,7 +3411,11 @@
             "removed": "Widget %(widgetName)s dihapus oleh %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s telah memperbarui tata letak ruangan",
-        "m.location": "%(senderName)s telah membagikan lokasinya",
+        "m.location": {
+            "full": "%(senderName)s telah membagikan lokasinya",
+            "self_location": "Membagikan lokasinya: ",
+            "location": "Membagikan sebuah lokasi: "
+        },
         "self_redaction": "Pesan dihapus",
         "redaction": "Pesan dihapus oleh %(name)s",
         "m.poll.start": "%(senderName)s telah memulai sebuah pungutan suara — %(pollQuestion)s",
@@ -3615,6 +3600,19 @@
         "io.element.voice_broadcast_info": {
             "you": "Anda mengakhiri sebuah <a>siaran suara</a>",
             "user": "%(senderName)s mengakhiri sebuah <a>siaran suara</a>"
+        },
+        "reactions": {
+            "label": "%(reactors)s berekasi dengan %(content)s",
+            "tooltip": "<reactors/><reactedWith>bereaksi dengan %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Pesan terhapus di %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Ruangan ini adalah lanjutan dari obrolan sebelumnya.",
+            "unknown_predecessor_guess_server": "Tidak dapat mencari versi lama ruangan ini (ID ruangan: %(roomId)s), dan kami tidak disediakan dengan 'via_servers' untuk mencarinya. Ini mungkin bahwa menebak server dari ID ruangan akan bekerja. Jika Anda ingin mencoba, klik tautan berikut:",
+            "unknown_predecessor": "Tidak dapat mencari versi lama ruangan ini (ID ruangan: %(roomId)s), dan kami tidak disediakan dengan 'via_servers' untuk mencarinya.",
+            "see_older_messages": "Klik di sini untuk melihat pesan-pesan lama."
         }
     },
     "slash_command": {
@@ -3683,7 +3681,15 @@
         "failed_find_room": "Perintah gagal: Tidak dapat menemukan ruangan (%(roomId)s)",
         "failed_find_user": "Tidak dapat menemukan pengguna di ruangan",
         "op": "Tentukan tingkat daya pengguna",
-        "deop": "De-op pengguna dengan ID yang dicantumkan"
+        "deop": "De-op pengguna dengan ID yang dicantumkan",
+        "server_error": "Kesalahan server",
+        "command_error": "Perintah gagal",
+        "server_error_detail": "Server tidak tersedia, terlalu penuh, atau ada sesuatu yang salah.",
+        "unknown_command": "Perintah Tidak Diketahui",
+        "unknown_command_detail": "Perintah tidak diketahui: %(commandText)s",
+        "unknown_command_help": "Anda dapat menggunakan <code>/help</code> untuk melihat perintah yang tersedia. Apakah Anda bermaksud untuk mengirimkannya sebagai sebuah pesan?",
+        "unknown_command_hint": "Petunjuk: Mulai pesan Anda dengan <code>//</code> untuk memulainya dengan sebuah garis miring.",
+        "unknown_command_button": "Kirim sebagai pesan"
     },
     "presence": {
         "busy": "Sibuk",
@@ -3804,7 +3810,10 @@
             "notifications.room": "Beri tahu semua"
         },
         "security": {
-            "strict_encryption": "Jangan kirim pesan terenkripsi ke sesi yang belum diverifikasi di ruangan ini dari sesi ini"
+            "strict_encryption": "Jangan kirim pesan terenkripsi ke sesi yang belum diverifikasi di ruangan ini dari sesi ini",
+            "join_rule_invite": "Privat (undangan saja)",
+            "join_rule_invite_description": "Hanya orang yang diundang dapat bergabung.",
+            "join_rule_public_description": "Siapa saja dapat menemukan dan bergabung."
         }
     },
     "encryption": {
@@ -4118,7 +4127,9 @@
         "failed_permission": "Izin %(brand)s ditolak untuk mengakses lokasi Anda. Mohon izinkan akses lokasi di pengaturan peramban Anda.",
         "failed_generic": "Gagal untuk mendapatkan lokasi Anda. Silakan coba lagi nanti.",
         "failed_timeout": "Waktu habis dalam mendapatkan lokasi Anda. Silakan coba lagi nanti.",
-        "failed_unknown": "Kesalahan yang tidak ketahui terjadi saat mendapatkan lokasi. Silakan coba lagi nanti."
+        "failed_unknown": "Kesalahan yang tidak ketahui terjadi saat mendapatkan lokasi. Silakan coba lagi nanti.",
+        "expand_map": "Buka peta",
+        "failed_load_map": "Tidak dapat memuat peta"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Tidak dapat memulai sebuah siaran suara baru",
@@ -4140,5 +4151,9 @@
         "30s_backward": "30d sebelumnya",
         "30s_forward": "30d selanjutnya",
         "go_live": "Mulai siaran langsung"
+    },
+    "labs_mjolnir": {
+        "room_name": "Daftar Cekalan Saya",
+        "room_topic": "Ini adalah daftar pengguna/server Anda telah blokir — jangan tinggalkan ruangan ini!"
     }
 }

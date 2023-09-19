@@ -84,7 +84,6 @@
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Tiun ĉi ŝanĝon vi ne povos malfari, ĉar vi donas al la uzanto la saman povnivelon, kiun havas vi mem.",
     "Are you sure?": "Ĉu vi certas?",
     "Unignore": "Reatenti",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s ŝanĝis la profilbildon de %(roomName)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vi estas direktota al ekstera retejo por aŭtentikigi vian konton por uzo kun %(integrationsUrl)s. Ĉu vi volas daŭrigi tion?",
     "Jump to read receipt": "Salti al legokonfirmo",
     "Admin Tools": "Estriloj",
@@ -96,9 +95,6 @@
     "Filter room members": "Filtri ĉambranojn",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (povnivelo je %(powerLevelNumber)s)",
     "You do not have permission to post to this room": "Mankas al vi permeso afiŝi en tiu ĉambro",
-    "Server error": "Servila eraro",
-    "Server unavailable, overloaded, or something else went wrong.": "Servilo estas neatingebla, troŝarĝita, aŭ io alia misokazis.",
-    "Command error": "Komanda eraro",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -146,8 +142,6 @@
     "Invalid file%(extra)s": "Malvalida dosiero%(extra)s",
     "Error decrypting image": "Malĉifro de bildo eraris",
     "Error decrypting video": "Malĉifro de filmo eraris",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s forigis la ĉambran profilbildon.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s agordis la ĉambran profilbildon al <img/>",
     "Copied!": "Kopiita!",
     "Failed to copy": "Malsukcesis kopii",
     "Add an Integration": "Aldoni kunigon",
@@ -256,11 +250,8 @@
     "Today": "Hodiaŭ",
     "Friday": "Vendredo",
     "What's New": "Kio novas",
-    "On": "Jes",
     "Changelog": "Protokolo de ŝanĝoj",
-    "Waiting for response from server": "Atendante respondon el la servilo",
     "This Room": "Ĉi tiu ĉambro",
-    "Noisy": "Brue",
     "Unavailable": "Nedisponebla",
     "Source URL": "Fonta URL",
     "Filter results": "Filtri rezultojn",
@@ -279,7 +270,6 @@
     "Yesterday": "Hieraŭ",
     "Error encountered (%(errorDetail)s).": "Eraron renkonti (%(errorDetail)s).",
     "Low Priority": "Malalta prioritato",
-    "Off": "Ne",
     "Thank you!": "Dankon!",
     "Logs sent": "Protokolo sendiĝis",
     "Failed to send logs: ": "Malsukcesis sendi protokolon: ",
@@ -457,9 +447,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Ĝisdatigo de la ĉefa adreso de la ĉambro eraris. Aŭ la servilo tion ne permesas, aŭ io misfunkciis.",
     "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.": "En ĉifritaj ĉambroj, kiel ĉi tiu, antaŭrigardoj al URL-oj estas implicite malŝaltitaj por certigi, ke via hejmservilo (kie la antaŭrigardoj estas generataj) ne povas kolekti informojn pri ligiloj en ĉi tiu ĉambro.",
     "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.": "Kiam iu metas URL-on en sian mesaĝon, antaŭrigardo al tiu URL povas montriĝi, por doni pliajn informojn pri tiu ligilo, kiel ekzemple la titolon, priskribon, kaj bildon el la retejo.",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reagis per %(shortName)s</reactedWith>",
-    "This room is a continuation of another conversation.": "Ĉi tiu ĉambro estas daŭrigo de alia interparolo.",
-    "Click here to see older messages.": "Klaku ĉi tien por vidi pli malnovajn mesaĝojn.",
     "edited": "redaktita",
     "Popout widget": "Fenestrigi fenestraĵon",
     "Rotate Left": "Turni maldekstren",
@@ -749,8 +736,6 @@
     "Notification Autocomplete": "Memkompletigo de sciigoj",
     "Room Autocomplete": "Memkompletigo de ĉambroj",
     "User Autocomplete": "Memkompletigo de uzantoj",
-    "My Ban List": "Mia listo de forbaroj",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Ĉi tio estas la listo de uzantoj/serviloj, kiujn vi blokis – ne eliru el la ĉambro!",
     "Error subscribing to list": "Eraris abono al listo",
     "Error removing ignored user/server": "Eraris forigo de la malatentata uzanto/servilo",
     "Error unsubscribing from list": "Eraris malabono de la listo",
@@ -782,8 +767,6 @@
     "<userName/> wants to chat": "<userName/> volas babili",
     "Start chatting": "Ekbabili",
     "Reject & Ignore user": "Rifuzi kaj malatenti uzanton",
-    "Unknown Command": "Nekonata komando",
-    "Send as message": "Sendi mesaĝon",
     "Failed to connect to integration manager": "Malsukcesis konekton al kunigilo",
     "Verify User": "Kontroli uzanton",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Por plia sekureco, kontrolu ĉi tiun uzanton per unufoja kodo aperonta sur ambaŭ el viaj aparatoj.",
@@ -859,9 +842,6 @@
     "Encrypted by an unverified session": "Ĉifrita de nekontrolita salutaĵo",
     "Encrypted by a deleted session": "Ĉifrita de forigita salutaĵo",
     "Close preview": "Fermi antaŭrigardon",
-    "Unrecognised command: %(commandText)s": "Nerekonita komando: %(commandText)s",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Vi povas komandi <code>/help</code> por listigi uzeblajn komandojn. Ĉu vi intencis sendi ĉi tion kiel mesaĝon?",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Helpeto: Komencu vian mesaĝon per <code>//</code> por komenci ĝin per suprenstreko.",
     "Mark all as read": "Marki ĉion legita",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Eraris ĝisdatigo de la alternativaj adresoj de la ĉambro. Eble la servilo ne permesas tion, aŭ io dumtempe ne funkcias.",
     "Waiting for %(displayName)s to accept…": "Atendante akcepton de %(displayName)s…",
@@ -1005,9 +985,6 @@
     "Confirm encryption setup": "Konfirmi agordon de ĉifrado",
     "Click the button below to confirm setting up encryption.": "Klaku sube la butonon por konfirmi agordon de ĉifrado.",
     "IRC display name width": "Larĝo de vidiga nomo de IRC",
-    "Size must be a number": "Grando devas esti nombro",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Propra grando de tiparo povas interi nur %(min)s punktojn kaj %(max)s punktojn",
-    "Use between %(min)s pt and %(max)s pt": "Uzi inter %(min)s punktoj kaj %(max)s punktoj",
     "Please verify the room ID or address and try again.": "Bonvolu kontroli identigilon aŭ adreson de la ĉambro kaj reprovi.",
     "Room ID or address of ban list": "Ĉambra identigilo aŭ adreso de listo de forbaroj",
     "To link to this room, please add an address.": "Por ligi al ĉi tiu ĉambro, bonvolu aldoni adreson.",
@@ -1027,7 +1004,6 @@
     "Ok": "Bone",
     "New version available. <a>Update now.</a>": "Nova versio estas disponebla. <a>Ĝisdatigu nun.</a>",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s ne povas sekure kaŝkopii ĉifritajn mesaĝojn loke, funkciante per foliumilo. Uzu <desktopLink>%(brand)s Desktop</desktopLink> por aperigi ĉifritajn mesaĝojn en serĉrezultoj.",
-    "Hey you. You're the best!": "He, vi. Vi bonegas!",
     "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "Aldonu uzantojn kaj servilojn, kiujn vi volas malatenti, ĉi tien. Uzu steletojn por ke %(brand)s atendu iujn ajn signojn. Ekzemple, <code>@bot:*</code> malatentigus ĉiujn uzantojn, kiuj havas la nomon «bot» sur ĉiu ajn servilo.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "La administranto de via servilo malŝaltis implicitan tutvojan ĉifradon en privataj kaj individuaj ĉambroj.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "La aŭtentikeco de ĉi tiu ĉifrita mesaĝo ne povas esti garantiita sur ĉi tiu aparato.",
@@ -1036,7 +1012,6 @@
     "Favourited": "Elstarigita",
     "Forget Room": "Forgesi ĉambron",
     "Room options": "Elektebloj pri ĉambro",
-    "Message deleted on %(date)s": "Mesaĝo forigita je %(date)s",
     "Wrong file type": "Neĝusta dosiertipo",
     "Looks good!": "Ŝajnas bona!",
     "Security Phrase": "Sekureca frazo",
@@ -1628,9 +1603,6 @@
         "one": "kaj %(count)s pli"
     },
     "Upgrade required": "Necesas gradaltigo",
-    "Anyone can find and join.": "Ĉiu povas trovi kaj aliĝi.",
-    "Only invited people can join.": "Nur invititoj povas aliĝi.",
-    "Private (invite only)": "Privata (nur invititoj)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Ĉi tiu gradaltigo povigos anojn de la elektitaj aroj aliri ĉi tiun ĉambron sen invito.",
     "Space information": "Informoj pri aro",
     "Identity server URL must be HTTPS": "URL de identiga servilo devas esti je HTTPS",
@@ -1725,7 +1697,6 @@
     "Leave some rooms": "Foriri de iuj ĉambroj",
     "Leave all rooms": "Foriri de ĉiuj ĉambroj",
     "Don't leave any rooms": "Foriru de neniuj ĉambroj",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s reagis per %(content)s",
     "Some encryption parameters have been changed.": "Ŝanĝiĝis iuj parametroj de ĉifrado.",
     "Role in <RoomName/>": "Rolo en <RoomName/>",
     "Message didn't send. Click for info.": "Mesaĝo ne sendiĝis. Klaku por akiri informojn.",
@@ -1739,7 +1710,6 @@
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Nekonata (uzanto, salutaĵo) duopo: (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Nekonata ĉambra adreso: %(roomAlias)s",
     "Pin to sidebar": "Fiksi al flanka breto",
-    "Keyboard": "Klavaro",
     "Quick settings": "Rapidaj agordoj",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Vi ne povas komenci vokon ĉar vi nuntempe registras vivan elsendon. Bonvolu fini vian vivan elsendon por komenci vokon.",
     "Can’t start a call": "Ne povas komenci vokon",
@@ -1820,8 +1790,6 @@
     "Share location": "Kunhavigi lokon",
     "Could not fetch location": "Loko ne eblis akiri",
     "Location": "Loko",
-    "Shared a location: ": "Kunhavis lokon: ",
-    "Shared their location: ": "Kunhavis sian lokon: ",
     "Confirm new password": "Konfirmu novan pasvorton",
     "Sign out of all devices": "Elsaluti en ĉiuj aparatoj",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Vi estis elsalutita el ĉiuj aparatoj kaj ne plu ricevos puŝajn sciigojn. Por reŝalti sciigojn, ensalutu denove sur ĉiu aparato.",
@@ -1963,7 +1931,10 @@
         "qr_code": "Rapidresponda kodo",
         "feedback": "Prikomenti",
         "all_rooms": "Ĉiuj ĉambroj",
-        "orphan_rooms": "Aliaj ĉambroj"
+        "orphan_rooms": "Aliaj ĉambroj",
+        "preview_message": "He, vi. Vi bonegas!",
+        "on": "Jes",
+        "off": "Ne"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -2192,7 +2163,8 @@
         "collecting_logs": "Kolektante protokolon",
         "uploading_logs": "Alŝutante protokolon",
         "downloading_logs": "Elŝutante protokolon",
-        "create_new_issue": "Bonvolu <newIssueLink>raporti novan problemon</newIssueLink> je GitHub, por ke ni povu ĝin esplori."
+        "create_new_issue": "Bonvolu <newIssueLink>raporti novan problemon</newIssueLink> je GitHub, por ke ni povu ĝin esplori.",
+        "waiting_for_server": "Atendante respondon el la servilo"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh. %(minutes)sm. %(seconds)ss. restas",
@@ -2270,7 +2242,8 @@
             "enable_email_notifications": "Ŝalti retpoŝtajn sciigojn por %(email)s",
             "enable_desktop_notifications_session": "Ŝalti labortablajn sciigojn por ĉi tiu salutaĵo",
             "show_message_desktop_notification": "Montradi mesaĝojn en labortablaj sciigoj",
-            "enable_audible_notifications_session": "Ŝalti aŭdeblajn sciigojn por ĉi tiu salutaĵo"
+            "enable_audible_notifications_session": "Ŝalti aŭdeblajn sciigojn por ĉi tiu salutaĵo",
+            "noisy": "Brue"
         },
         "appearance": {
             "layout_bubbles": "Mesaĝaj vezikoj",
@@ -2287,7 +2260,11 @@
             "font_size": "Grando de tiparo",
             "custom_font_description": "Agordu la nomon de tiparo instalita en via sistemo kaj %(brand)s provos ĝin uzi.",
             "timeline_image_size_default": "Ordinara",
-            "custom_font_size": "Uzi propran grandon"
+            "custom_font_size": "Uzi propran grandon",
+            "font_size_nan": "Grando devas esti nombro",
+            "font_size_limit": "Propra grando de tiparo povas interi nur %(min)s punktojn kaj %(max)s punktojn",
+            "font_size_valid": "Uzi inter %(min)s punktoj kaj %(max)s punktoj",
+            "image_size_default": "Ordinara"
         },
         "inline_url_previews_room_account": "Ŝalti URL-antaŭrigardon en ĉi tiu ĉambro (nur por vi)",
         "inline_url_previews_room": "Ŝalti URL-antaŭrigardon por anoj de ĉi tiu ĉambro",
@@ -2321,6 +2298,9 @@
         },
         "voip": {
             "mirror_local_feed": "Speguli lokan filmon"
+        },
+        "keyboard": {
+            "title": "Klavaro"
         }
     },
     "devtools": {
@@ -2442,7 +2422,12 @@
             "kick": "%(senderName)s forigis %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s ŝanĝis la temon al « %(topic)s ».",
-        "m.room.avatar": "%(senderDisplayName)s ŝanĝis la profilbildon de ĉambro.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s ŝanĝis la profilbildon de ĉambro.",
+            "lightbox_title": "%(senderDisplayName)s ŝanĝis la profilbildon de %(roomName)s",
+            "removed": "%(senderDisplayName)s forigis la ĉambran profilbildon.",
+            "changed_img": "%(senderDisplayName)s agordis la ĉambran profilbildon al <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s forigis nomon de la ĉambro.",
             "change": "%(senderDisplayName)s ŝanĝis nomon de la ĉambro de %(oldRoomName)s al %(newRoomName)s.",
@@ -2508,7 +2493,11 @@
             "removed": "Fenestraĵon %(widgetName)s forigis %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s ĝisdatigis la aranĝon de ĉambro",
-        "m.location": "%(senderName)s dividis sian lokon",
+        "m.location": {
+            "full": "%(senderName)s dividis sian lokon",
+            "self_location": "Kunhavis sian lokon: ",
+            "location": "Kunhavis lokon: "
+        },
         "self_redaction": "Mesaĝo foriĝis",
         "redaction": "Mesaĝon forigis %(name)s",
         "m.poll.start": "%(senderName)s komencis balotenketon - %(pollQuestion)s",
@@ -2649,6 +2638,17 @@
         "io.element.voice_broadcast_info": {
             "you": "Vi finis <a>voĉan elsendon</a>",
             "user": "%(senderName)s finis <a>voĉan elsendon</a>"
+        },
+        "reactions": {
+            "label": "%(reactors)s reagis per %(content)s",
+            "tooltip": "<reactors/><reactedWith>reagis per %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Mesaĝo forigita je %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Ĉi tiu ĉambro estas daŭrigo de alia interparolo.",
+            "see_older_messages": "Klaku ĉi tien por vidi pli malnovajn mesaĝojn."
         }
     },
     "slash_command": {
@@ -2712,7 +2712,15 @@
         "failed_find_room": "Komando malsukcesis: Ne povas trovi ĉambron (%(roomId)s)",
         "failed_find_user": "Ne povis trovi uzanton en ĉambro",
         "op": "Difini la povnivelon de uzanto",
-        "deop": "Senestrigas uzanton kun donita identigilo"
+        "deop": "Senestrigas uzanton kun donita identigilo",
+        "server_error": "Servila eraro",
+        "command_error": "Komanda eraro",
+        "server_error_detail": "Servilo estas neatingebla, troŝarĝita, aŭ io alia misokazis.",
+        "unknown_command": "Nekonata komando",
+        "unknown_command_detail": "Nerekonita komando: %(commandText)s",
+        "unknown_command_help": "Vi povas komandi <code>/help</code> por listigi uzeblajn komandojn. Ĉu vi intencis sendi ĉi tion kiel mesaĝon?",
+        "unknown_command_hint": "Helpeto: Komencu vian mesaĝon per <code>//</code> por komenci ĝin per suprenstreko.",
+        "unknown_command_button": "Sendi mesaĝon"
     },
     "presence": {
         "online_for": "Enreta jam je %(duration)s",
@@ -2816,7 +2824,10 @@
             "notifications.room": "Sciigi ĉiujn"
         },
         "security": {
-            "strict_encryption": "Neniam sendi ĉifritajn mesaĝojn al nekontrolitaj salutaĵoj en ĉi tiu ĉambro de ĉi tiu salutaĵo"
+            "strict_encryption": "Neniam sendi ĉifritajn mesaĝojn al nekontrolitaj salutaĵoj en ĉi tiu ĉambro de ĉi tiu salutaĵo",
+            "join_rule_invite": "Privata (nur invititoj)",
+            "join_rule_invite_description": "Nur invititoj povas aliĝi.",
+            "join_rule_public_description": "Ĉiu povas trovi kaj aliĝi."
         }
     },
     "encryption": {
@@ -3109,5 +3120,9 @@
         "30s_backward": "30s. reen",
         "30s_forward": "30s. antaŭen",
         "go_live": "Iru vivi"
+    },
+    "labs_mjolnir": {
+        "room_name": "Mia listo de forbaroj",
+        "room_topic": "Ĉi tio estas la listo de uzantoj/serviloj, kiujn vi blokis – ne eliru el la ĉambro!"
     }
 }

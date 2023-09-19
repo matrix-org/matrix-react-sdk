@@ -488,7 +488,6 @@
     "Something went wrong. Please try again or view your console for hints.": "ມີບາງຢ່າງຜິດພາດ. ກະລຸນາລອງອີກຄັ້ງ ຫຼື ເບິ່ງ console ຂອງທ່ານເພື່ອຂໍຄຳແນະນຳ.",
     "Error adding ignored user/server": "ເກີດຄວາມຜິດພາດໃນການເພີ່ມຜູ້ໃຊ້/ເຊີບເວີທີ່ລະເລີຍ",
     "Ignored/Blocked": "ບໍ່ສົນໃຈ/ຖືກບລັອກ",
-    "Keyboard": "ແປ້ນພິມ",
     "Cross-signing public keys:": "ກະແຈສາທາລະນະທີ່ມີ Cross-signing:",
     "Cross-signing is not set up.": "ບໍ່ໄດ້ຕັ້ງຄ່າ Cross-signing.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "ບັນຊີຂອງທ່ານມີຂໍ້ມູນແບບ cross-signing ໃນການເກັບຮັກສາຄວາມລັບ, ແຕ່ວ່າຍັງບໍ່ມີຄວາມເຊື່ອຖືໃນລະບົບນີ້.",
@@ -550,7 +549,6 @@
     "Match system": "ລະບົບການຈັບຄູ່",
     "More options": "ທາງເລືອກເພີ່ມເຕີມ",
     "Pin to sidebar": "ປັກໝຸດໃສ່ແຖບດ້ານຂ້າງ",
-    "Developer tools": "ເຄື່ອງມືພັດທະນາ",
     "All settings": "ການຕັ້ງຄ່າທັງໝົດ",
     "Quick settings": "ການຕັ້ງຄ່າດ່ວນ",
     "Accept <policyLink /> to continue:": "ຍອມຮັບ <policyLink /> ເພື່ອສືບຕໍ່:",
@@ -1045,16 +1043,8 @@
         "other": "&%(count)s ເພີ່ມເຕີມ"
     },
     "Upgrade required": "ຕ້ອງການບົກລະດັບ",
-    "Anyone can find and join.": "ທຸກຄົນສາມາດຊອກຫາ ແລະ ເຂົ້າຮ່ວມໄດ້.",
-    "Only invited people can join.": "ສະເພາະຄົນທີ່ຖືກເຊີນເທົ່ານັ້ນທີ່ສາມາດເຂົ້າຮ່ວມໄດ້.",
-    "Private (invite only)": "ສ່ວນຕົວ (ເຊີນສ່ວນຕົວເທົ່ານັ້ນ )",
     "The integration manager is offline or it cannot reach your homeserver.": "ຜູ້ຈັດການການເຊື່ອມໂຍງແມ່ນອອບໄລນ໌ຫຼືບໍ່ສາມາດເຂົ້າຫາ homeserver ຂອງທ່ານໄດ້.",
     "Cannot connect to integration manager": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບຕົວຈັດການການເຊື່ອມໂຍງໄດ້",
-    "Large": "ຂະຫນາດໃຫຍ່",
-    "Use between %(min)s pt and %(max)s pt": "ໃຊ້ລະຫວ່າງ %(min)s pt ແລະ %(max)s pt",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "ຂະໜາດຕົວອັກສອນທີ່ກຳນົດເອງສາມາດຢູ່ໃນລະຫວ່າງ %(min)s pt ແລະ %(max)s pt",
-    "Size must be a number": "ຂະໜາດຕ້ອງເປັນຕົວເລກ",
-    "Hey you. You're the best!": "ສະບາຍດີ ທ່ານ. ທ່ານດີທີ່ສຸດ!",
     "Message search initialisation failed": "ການເລີ່ມຕົ້ນການຄົ້ນຫາຂໍ້ຄວາມບໍ່ສຳເລັດ",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s ບໍ່ສາມາດເກັບຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງ ໃນຂະນະທີ່ກຳລັງດຳເນີນການໃນເວັບບຣາວເຊີ. ໃຊ້ <desktopLink>%(brand)s Desktop</desktopLink> ເພື່ອໃຫ້ຂໍ້ຄວາມເຂົ້າລະຫັດຈະປາກົດໃນຜົນການຊອກຫາ.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s ຂາດບາງອົງປະກອບທີ່ຕ້ອງການສໍາລັບການເກັບຂໍ້ຄວາມເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງ. ຖ້າທ່ານຕ້ອງການທົດລອງໃຊ້ຄຸນສົມບັດນີ້, ສ້າງ %(brand)s Desktop ແບບກຳນົດເອງດ້ວຍການເພີ່ມ <nativeLink>ອົງປະກອບການຄົ້ນຫາ</nativeLink>.",
@@ -1361,9 +1351,6 @@
     "Failed to end poll": "ບໍ່ສາມາດສີ່ນສູດການສຳຫຼວດ",
     "The poll has ended. Top answer: %(topAnswer)s": "ການສໍາຫຼວດໄດ້ສິ້ນສຸດລົງ. ຄຳຕອບສູງສຸດ: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "ການສໍາຫຼວດໄດ້ສິ້ນສຸດລົງ. ບໍ່ມີການລົງຄະແນນສຽງ.",
-    "This is your list of users/servers you have blocked - don't leave the room!": "ນີ້ແມ່ນບັນຊີລາຍຊື່ຜູ້ໃຊ້ / ເຊີບເວີຂອງທ່ານທີ່ທ່ານໄດ້ບລັອກ - ຢ່າອອກຈາກຫ້ອງ!",
-    "My Ban List": "ບັນຊີລາຍຊື່ການຫ້າມຂອງຂ້ອຍ",
-    "Waiting for response from server": "ກຳລັງລໍຖ້າການຕອບສະໜອງຈາກເຊີບເວີ",
     "IRC display name width": "ຄວາມກວ້າງຂອງຊື່ສະແດງ IRC",
     "Reply in thread": "ຕອບໃນກະທູ້",
     "Developer": "ນັກພັດທະນາ",
@@ -1420,14 +1407,6 @@
     "Edited at %(date)s": "ແກ້ໄຂເມື່ອ %(date)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "ທ່ານກໍາລັງຈະຖືກນໍາໄປຫາເວັບໄຊທ໌ພາກສ່ວນທີສາມເພື່ອໃຫ້ທ່ານສາມາດພິສູດຢືນຢັນບັນຊີຂອງທ່ານເພື່ອໃຊ້ກັບ %(integrationsUrl)s. ທ່ານຕ້ອງການສືບຕໍ່ບໍ?",
     "Add an Integration": "ເພີ່ມການປະສົມປະສານ",
-    "This room is a continuation of another conversation.": "ຫ້ອງນີ້ແມ່ນສືບຕໍ່ການສົນທະນາອື່ນ.",
-    "Click here to see older messages.": "ກົດທີ່ນີ້ເພື່ອເບິ່ງຂໍ້ຄວາມເກົ່າ.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s ໄດ້ປ່ຽນຮູບແທນຕົວຂອງຫ້ອງເປັນ <img/>",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s ເອົາຮູບແທນຕົວຂອງຫ້ອງອອກແລ້ວ.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s ໄດ້ປ່ຽນຮູບແທນຕົວຂອງ %(roomName)s",
-    "Message deleted on %(date)s": "ຂໍ້ຄວາມຖືກລຶບເມື່ອ %(date)s",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>ປະຕິກິລິຍາດ້ວຍ %(shortName)s</reactedWith>",
-    "%(reactors)s reacted with %(content)s": "%(reactors)sປະຕິກິລິຍາກັບ %(content)s",
     "Add reaction": "ເພີ່ມການຕອບໂຕ້",
     "Error processing voice message": "ການປະມວນຜົນຂໍ້ຄວາມສຽງຜິດພາດ",
     "Error decrypting video": "ການຖອດລະຫັດວິດີໂອຜິດພາດ",
@@ -1454,10 +1433,6 @@
     "Vote not registered": "ລົງຄະແນນສຽງບໍ່ໄດ້ລົງທະບຽນ",
     "Sorry, you can't edit a poll after votes have been cast.": "ຂໍອະໄພ, ທ່ານບໍ່ສາມາດແກ້ໄຂແບບສຳຫຼວດໄດ້ຫຼັງຈາກລົງຄະແນນສຽງແລ້ວ.",
     "Can't edit poll": "ບໍ່ສາມາດແກ້ໄຂແບບສຳຫຼວດໄດ້",
-    "Shared a location: ": "ແບ່ງປັນສະຖານທີ່: ",
-    "Shared their location: ": "ແບ່ງປັນສະຖານທີ່ຂອງພວກເຂົາ: ",
-    "Unable to load map": "ບໍ່ສາມາດໂຫຼດແຜນທີ່ໄດ້",
-    "Expand map": "ຂະຫຍາຍແຜນທີ່",
     "You sent a verification request": "ທ່ານໄດ້ສົ່ງຄໍາຮ້ອງຂໍການຢັ້ງຢືນ",
     "%(name)s wants to verify": "%(name)s ຕ້ອງການກວດສອບ",
     "%(name)s cancelled": "%(name)s ຖືກຍົກເລີກ",
@@ -1768,7 +1743,6 @@
     "Leave space": "ອອກຈາກພື້ນທີ່",
     "Leave some rooms": "ອອກຈາກບາງຫ້ອງ",
     "Leave all rooms": "ອອກຈາກຫ້ອງທັງຫມົດ",
-    "On": "ເທິງ",
     "New keyword": "ຄໍາສໍາຄັນໃຫມ່",
     "Keyword": "ຄໍາສໍາຄັນ",
     "Phone numbers": "ເບີໂທລະສັບ",
@@ -1841,8 +1815,6 @@
     "Notification targets": "ເປົ້າໝາຍການແຈ້ງເຕືອນ",
     "Mentions & keywords": "ກ່າວເຖິງ & ຄໍາສໍາຄັນ",
     "Global": "ທົ່ວໂລກ",
-    "Noisy": "ສຽງດັງ",
-    "Off": "ປິດ",
     "Fish": "ປາ",
     "Turtle": "ເຕົ່າ",
     "Penguin": "ນົກເພັນກິນ",
@@ -1997,14 +1969,6 @@
     "not found": "ບໍ່ພົບເຫັນ",
     "in memory": "ໃນຄວາມຊົງຈໍາ",
     "unknown person": "ຄົນທີ່ບໍ່ຮູ້",
-    "Send as message": "ສົ່ງຂໍ້ເປັນຄວາມ",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "ຄຳໃບ້: ເລີ່ມຕົ້ນຂໍ້ຄວາມຂອງທ່ານດ້ວຍ <code>//</code> ເພື່ອເລີ່ມຕົ້ນມັນດ້ວຍເຄື່ອງໝາຍທັບ.",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "ທ່ານສາມາດໃຊ້ <code>/help</code> ເພື່ອບອກລາຍການຄຳສັ່ງທີ່ມີຢູ່. ທ່ານໝາຍເຖິງການສົ່ງຂໍ້ຄວາມນີ້ບໍ?",
-    "Unrecognised command: %(commandText)s": "ຄໍາສັ່ງທີ່ບໍ່ຮູ້ຈັກ: %(commandText)s",
-    "Unknown Command": "ຄໍາສັ່ງທີ່ບໍ່ຮູ້ຈັກ",
-    "Server unavailable, overloaded, or something else went wrong.": "ເຊີບເວີບໍ່ສາມາດໃຊ້ໄດ້, ໂຫຼດເກີນກຳນົດ, ຫຼື ມີອັນອື່ນຜິດພາດ.",
-    "Command error": "ຄໍາສັ່ງຜິດພາດ",
-    "Server error": "ເຊີບເວີຜິດພາດ",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "ອຸປະກອນນີ້ບໍ່ສາມາດຮັບປະກັນຄວາມຖືກຕ້ອງຂອງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດນີ້ໄດ້.",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (power %(powerLevelNumber)s)",
     "Filter room members": "ການກັ່ນຕອງສະມາຊິກຫ້ອງ",
@@ -2189,7 +2153,10 @@
         "qr_code": "ລະຫັດ QR",
         "feedback": "ຄໍາຕິຊົມ",
         "all_rooms": "ຫ້ອງທັງໝົດ",
-        "orphan_rooms": "ຫ້ອງອື່ນໆ"
+        "orphan_rooms": "ຫ້ອງອື່ນໆ",
+        "preview_message": "ສະບາຍດີ ທ່ານ. ທ່ານດີທີ່ສຸດ!",
+        "on": "ເທິງ",
+        "off": "ປິດ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -2434,7 +2401,8 @@
         "collecting_logs": "ການເກັບກໍາຂໍ້ມູນບັນທຶກ",
         "uploading_logs": "ກຳລັງບັນທຶກການອັບໂຫຼດ",
         "downloading_logs": "ບັນທຶກການດາວໂຫຼດ",
-        "create_new_issue": "ກະລຸນາ <newIssueLink>ສ້າງບັນຫາໃໝ່</newIssueLink> ໃນ GitHub ເພື່ອໃຫ້ພວກເຮົາສາມາດກວດສອບຂໍ້ຜິດພາດນີ້ໄດ້."
+        "create_new_issue": "ກະລຸນາ <newIssueLink>ສ້າງບັນຫາໃໝ່</newIssueLink> ໃນ GitHub ເພື່ອໃຫ້ພວກເຮົາສາມາດກວດສອບຂໍ້ຜິດພາດນີ້ໄດ້.",
+        "waiting_for_server": "ກຳລັງລໍຖ້າການຕອບສະໜອງຈາກເຊີບເວີ"
     },
     "time": {
         "seconds_left": "ຍັງເຫຼືອ %(seconds)s",
@@ -2514,7 +2482,8 @@
             "enable_email_notifications": "ເປີດໃຊ້ການແຈ້ງເຕືອນອີເມວສຳລັບ %(email)s",
             "enable_desktop_notifications_session": "ເປີດໃຊ້ການແຈ້ງເຕືອນເດັສທັອບສຳລັບລະບົບນີ້",
             "show_message_desktop_notification": "ສະແດງຂໍ້ຄວາມໃນການແຈ້ງເຕືອນ desktop",
-            "enable_audible_notifications_session": "ເປີດໃຊ້ການແຈ້ງເຕືອນທີ່ໄດ້ຍິນໄດ້ສໍາລັບລະບົບນີ້"
+            "enable_audible_notifications_session": "ເປີດໃຊ້ການແຈ້ງເຕືອນທີ່ໄດ້ຍິນໄດ້ສໍາລັບລະບົບນີ້",
+            "noisy": "ສຽງດັງ"
         },
         "appearance": {
             "layout_irc": "(ທົດລອງ)IRC",
@@ -2535,7 +2504,12 @@
             "timeline_image_size": "ຂະຫນາດຮູບພາບຢູ່ໃນທາມລາຍ",
             "timeline_image_size_default": "ຄ່າເລີ່ມຕົ້ນ",
             "timeline_image_size_large": "ຂະຫນາດໃຫຍ່",
-            "custom_font_size": "ໃຊ້ຂະຫນາດທີ່ກໍາຫນົດເອງ"
+            "custom_font_size": "ໃຊ້ຂະຫນາດທີ່ກໍາຫນົດເອງ",
+            "font_size_nan": "ຂະໜາດຕ້ອງເປັນຕົວເລກ",
+            "font_size_limit": "ຂະໜາດຕົວອັກສອນທີ່ກຳນົດເອງສາມາດຢູ່ໃນລະຫວ່າງ %(min)s pt ແລະ %(max)s pt",
+            "font_size_valid": "ໃຊ້ລະຫວ່າງ %(min)s pt ແລະ %(max)s pt",
+            "image_size_default": "ຄ່າເລີ່ມຕົ້ນ",
+            "image_size_large": "ຂະຫນາດໃຫຍ່"
         },
         "inline_url_previews_room_account": "ເປີດໃຊ້ຕົວຢ່າງ URL ສໍາລັບຫ້ອງນີ້ (ມີຜົນຕໍ່ທ່ານເທົ່ານັ້ນ)",
         "inline_url_previews_room": "ເປີດໃຊ້ການສະແດງຕົວຢ່າງ URL ໂດຍຄ່າເລີ່ມຕົ້ນສໍາລັບຜູ້ເຂົ້າຮ່ວມໃນຫ້ອງນີ້",
@@ -2573,6 +2547,9 @@
         },
         "voip": {
             "mirror_local_feed": "ເບິ່ງຟີດວິດີໂອທ້ອງຖິ່ນ"
+        },
+        "keyboard": {
+            "title": "ແປ້ນພິມ"
         }
     },
     "devtools": {
@@ -2643,7 +2620,8 @@
         "category_other": "ອື່ນໆ",
         "widget_screenshots": "ເປີດໃຊ້ widget ຖ່າຍໜ້າຈໍໃນ widget ທີ່ຮອງຮັບ",
         "show_hidden_events": "ສະແດງເຫດການທີ່ເຊື່ອງໄວ້ໃນທາມລາຍ",
-        "developer_mode": "ຮູບແບບນັກພັດທະນາ"
+        "developer_mode": "ຮູບແບບນັກພັດທະນາ",
+        "title": "ເຄື່ອງມືພັດທະນາ"
     },
     "export_chat": {
         "html": "HTML",
@@ -2750,7 +2728,12 @@
             "kick": "%(senderName)s ເອົາອອກ %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s ໄດ້ປ່ຽນຫົວຂໍ້ເປັນ \"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s ໄດ້ປ່ຽນແປງຮູບແທນຕົວຂອງຫ້ອງ.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s ໄດ້ປ່ຽນແປງຮູບແທນຕົວຂອງຫ້ອງ.",
+            "lightbox_title": "%(senderDisplayName)s ໄດ້ປ່ຽນຮູບແທນຕົວຂອງ %(roomName)s",
+            "removed": "%(senderDisplayName)s ເອົາຮູບແທນຕົວຂອງຫ້ອງອອກແລ້ວ.",
+            "changed_img": "%(senderDisplayName)s ໄດ້ປ່ຽນຮູບແທນຕົວຂອງຫ້ອງເປັນ <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s ລຶບຊື່ຫ້ອງອອກ.",
             "change": "%(senderDisplayName)s ໄດ້ປ່ຽນຊື່ຫ້ອງຈາກ %(oldRoomName)s ເປັນ %(newRoomName)s.",
@@ -2816,7 +2799,11 @@
             "removed": "%(widgetName)s ຖືກລຶບອອກໂດຍ %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s ໄດ້ອັບເດດຮູບແບບຫ້ອງແລ້ວ",
-        "m.location": "%(senderName)s ໄດ້ແບ່ງປັນສະຖານທີ່ຂອງພວກເຂົາ",
+        "m.location": {
+            "full": "%(senderName)s ໄດ້ແບ່ງປັນສະຖານທີ່ຂອງພວກເຂົາ",
+            "self_location": "ແບ່ງປັນສະຖານທີ່ຂອງພວກເຂົາ: ",
+            "location": "ແບ່ງປັນສະຖານທີ່: "
+        },
         "self_redaction": "ຂໍ້ຄວາມຖືກລຶບແລ້ວ",
         "redaction": "ຂໍ້ຄວາມຖືກລຶບໂດຍ %(name)s",
         "m.poll.start": "%(senderName)s ໄດ້ເລີ່ມສຳຫຼວດ - %(pollQuestion)s",
@@ -2989,7 +2976,18 @@
         "no_permission_messages_before_invite": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງຂໍ້ຄວາມ ກ່ອນທີ່ທ່ານໄດ້ຖືກເຊີນ.",
         "no_permission_messages_before_join": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງຂໍ້ຄວາມ ກ່ອນທີ່ທ່ານເຂົ້າຮ່ວມ.",
         "encrypted_historical_messages_unavailable": "ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້ກ່ອນຈຸດນີ້ບໍ່ສາມາດໃຊ້ໄດ້.",
-        "historical_messages_unavailable": "ທ່ານບໍ່ສາມາດເຫັນຂໍ້ຄວາມກ່ອນໜ້ານີ້"
+        "historical_messages_unavailable": "ທ່ານບໍ່ສາມາດເຫັນຂໍ້ຄວາມກ່ອນໜ້ານີ້",
+        "reactions": {
+            "label": "%(reactors)sປະຕິກິລິຍາກັບ %(content)s",
+            "tooltip": "<reactors/><reactedWith>ປະຕິກິລິຍາດ້ວຍ %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "ຂໍ້ຄວາມຖືກລຶບເມື່ອ %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "ຫ້ອງນີ້ແມ່ນສືບຕໍ່ການສົນທະນາອື່ນ.",
+            "see_older_messages": "ກົດທີ່ນີ້ເພື່ອເບິ່ງຂໍ້ຄວາມເກົ່າ."
+        }
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",
@@ -3051,7 +3049,15 @@
         "failed_find_room": "ຄຳສັ່ງບໍ່ສໍາເລັດ: ບໍ່ສາມາດຊອກຫາຫ້ອງ (%(roomId)s",
         "failed_find_user": "ບໍ່ສາມາດຊອກຫາຜູ້ໃຊ້ຢູ່ໃນຫ້ອງໄດ້",
         "op": "ກໍານົດລະດັບພະລັງງານຂອງຜູ້ໃຊ້",
-        "deop": "Deops ຜູ້ໃຊ້ທີ່ມີ ID"
+        "deop": "Deops ຜູ້ໃຊ້ທີ່ມີ ID",
+        "server_error": "ເຊີບເວີຜິດພາດ",
+        "command_error": "ຄໍາສັ່ງຜິດພາດ",
+        "server_error_detail": "ເຊີບເວີບໍ່ສາມາດໃຊ້ໄດ້, ໂຫຼດເກີນກຳນົດ, ຫຼື ມີອັນອື່ນຜິດພາດ.",
+        "unknown_command": "ຄໍາສັ່ງທີ່ບໍ່ຮູ້ຈັກ",
+        "unknown_command_detail": "ຄໍາສັ່ງທີ່ບໍ່ຮູ້ຈັກ: %(commandText)s",
+        "unknown_command_help": "ທ່ານສາມາດໃຊ້ <code>/help</code> ເພື່ອບອກລາຍການຄຳສັ່ງທີ່ມີຢູ່. ທ່ານໝາຍເຖິງການສົ່ງຂໍ້ຄວາມນີ້ບໍ?",
+        "unknown_command_hint": "ຄຳໃບ້: ເລີ່ມຕົ້ນຂໍ້ຄວາມຂອງທ່ານດ້ວຍ <code>//</code> ເພື່ອເລີ່ມຕົ້ນມັນດ້ວຍເຄື່ອງໝາຍທັບ.",
+        "unknown_command_button": "ສົ່ງຂໍ້ເປັນຄວາມ"
     },
     "presence": {
         "busy": "ບໍ່ຫວ່າງ",
@@ -3158,7 +3164,10 @@
             "notifications.room": "ແຈ້ງເຕືອນທຸກຄົນ"
         },
         "security": {
-            "strict_encryption": "ບໍ່ສົ່ງຂໍ້ຄວາມເຂົ້າລະຫັດໄປຫາລະບົບທີ່ບໍ່ໄດ້ຢືນຢັນໃນຫ້ອງນີ້ຈາກລະບົບນີ້"
+            "strict_encryption": "ບໍ່ສົ່ງຂໍ້ຄວາມເຂົ້າລະຫັດໄປຫາລະບົບທີ່ບໍ່ໄດ້ຢືນຢັນໃນຫ້ອງນີ້ຈາກລະບົບນີ້",
+            "join_rule_invite": "ສ່ວນຕົວ (ເຊີນສ່ວນຕົວເທົ່ານັ້ນ )",
+            "join_rule_invite_description": "ສະເພາະຄົນທີ່ຖືກເຊີນເທົ່ານັ້ນທີ່ສາມາດເຂົ້າຮ່ວມໄດ້.",
+            "join_rule_public_description": "ທຸກຄົນສາມາດຊອກຫາ ແລະ ເຂົ້າຮ່ວມໄດ້."
         }
     },
     "encryption": {
@@ -3451,6 +3460,12 @@
         "failed_permission": "%(brand)s ຖືກປະຕິເສດການອະນຸຍາດໃຫ້ດຶງຂໍ້ມູນສະຖານທີ່ຂອງທ່ານ. ກະລຸນາອະນຸຍາດໃຫ້ເຂົ້າເຖິງສະຖານທີ່ໃນການຕັ້ງຄ່າບຣາວເຊີຂອງທ່ານ.",
         "failed_generic": "ດຶງຂໍ້ມູນສະຖານທີ່ຂອງທ່ານບໍ່ສຳເລັດ. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
         "failed_timeout": "ໝົດເວລາດຶງຂໍ້ມູນສະຖານທີ່ຂອງທ່ານ. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
-        "failed_unknown": "ການດຶງຂໍ້ມູນສະຖານທີ່ເກີດຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ."
+        "failed_unknown": "ການດຶງຂໍ້ມູນສະຖານທີ່ເກີດຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
+        "expand_map": "ຂະຫຍາຍແຜນທີ່",
+        "failed_load_map": "ບໍ່ສາມາດໂຫຼດແຜນທີ່ໄດ້"
+    },
+    "labs_mjolnir": {
+        "room_name": "ບັນຊີລາຍຊື່ການຫ້າມຂອງຂ້ອຍ",
+        "room_topic": "ນີ້ແມ່ນບັນຊີລາຍຊື່ຜູ້ໃຊ້ / ເຊີບເວີຂອງທ່ານທີ່ທ່ານໄດ້ບລັອກ - ຢ່າອອກຈາກຫ້ອງ!"
     }
 }

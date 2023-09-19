@@ -20,7 +20,6 @@
     "Banned users": "Bannade användare",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Kan inte ansluta till en hemserver via HTTP då adressen i webbläsaren är HTTPS. Använd HTTPS, eller <a>aktivera osäkra skript</a>.",
     "Change Password": "Byt lösenord",
-    "Command error": "Kommandofel",
     "Commands": "Kommandon",
     "Confirm password": "Bekräfta lösenord",
     "Cryptography": "Kryptografi",
@@ -95,10 +94,8 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s är inte tillgängligt för tillfället.",
     "Rooms": "Rum",
     "Search failed": "Sökning misslyckades",
-    "Server error": "Serverfel",
     "Server may be unavailable, overloaded, or search timed out :(": "Servern kan vara otillgänglig eller överbelastad, eller så tog sökningen för lång tid :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Servern kan vara otillgänglig eller överbelastad, eller så stötte du på en bugg.",
-    "Server unavailable, overloaded, or something else went wrong.": "Servern är otillgänglig eller överbelastad, eller så gick något annat fel.",
     "Session ID": "Sessions-ID",
     "Signed Out": "Loggade ut",
     "Start authentication": "Starta autentisering",
@@ -145,11 +142,8 @@
     "Today": "idag",
     "Friday": "fredag",
     "What's New": "Vad är nytt",
-    "On": "På",
     "Changelog": "Ändringslogg",
-    "Waiting for response from server": "Väntar på svar från servern",
     "This Room": "Det här rummet",
-    "Noisy": "Högljudd",
     "Unavailable": "Otillgänglig",
     "Source URL": "Käll-URL",
     "Filter results": "Filtrera resultaten",
@@ -169,7 +163,6 @@
     "Yesterday": "igår",
     "Error encountered (%(errorDetail)s).": "Fel påträffat (%(errorDetail)s).",
     "Low Priority": "Låg prioritet",
-    "Off": "Av",
     "Thank you!": "Tack!",
     "Who can read history?": "Vilka kan läsa historik?",
     "Members only (since the point in time of selecting this option)": "Endast medlemmar (från tidpunkten för när denna inställning valdes)",
@@ -221,9 +214,6 @@
     "Do you want to set an email address?": "Vill du ange en e-postadress?",
     "Not a valid %(brand)s keyfile": "Inte en giltig %(brand)s-nyckelfil",
     "Authentication check failed: incorrect password?": "Autentiseringskontroll misslyckades: felaktigt lösenord?",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s bytte avatar för %(roomName)s",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s tog bort rummets avatar.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s bytte rummets avatar till <img/>",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
@@ -327,8 +317,6 @@
     "This room has been replaced and is no longer active.": "Detta rum har ersatts och är inte längre aktivt.",
     "The conversation continues here.": "Konversationen fortsätter här.",
     "Only room administrators will see this warning": "Endast rumsadministratörer kommer att se denna varning",
-    "This room is a continuation of another conversation.": "Detta rum är en fortsättning på en annan konversation.",
-    "Click here to see older messages.": "Klicka här för att se äldre meddelanden.",
     "Failed to upgrade room": "Misslyckades att uppgradera rummet",
     "The room upgrade could not be completed": "Rumsuppgraderingen kunde inte slutföras",
     "Upgrade this room to version %(version)s": "Uppgradera detta rum till version %(version)s",
@@ -587,7 +575,6 @@
     "Italics": "Kursiv",
     "Join the conversation with an account": "Gå med i konversationen med ett konto",
     "Sign Up": "Registrera dig",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>reagerade med %(shortName)s</reactedWith>",
     "Edited at %(date)s. Click to view edits.": "Redigerat vid %(date)s. Klicka för att visa redigeringar.",
     "edited": "redigerat",
     "Couldn't load page": "Kunde inte ladda sidan",
@@ -726,8 +713,6 @@
     "New login. Was this you?": "Ny inloggning. Var det du?",
     "Change notification settings": "Ändra aviseringsinställningar",
     "IRC display name width": "Bredd för IRC-visningsnamn",
-    "My Ban List": "Min bannlista",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Det här är din lista med användare och server du har blockerat - lämna inte rummet!",
     "Waiting for %(displayName)s to verify…": "Väntar på att %(displayName)s ska verifiera…",
     "Cancelling…": "Avbryter…",
     "Lock": "Lås",
@@ -771,10 +756,6 @@
     "contact the administrators of identity server <idserver />": "kontakta administratören för identitetsservern <idserver />",
     "wait and try again later": "vänta och försöka igen senare",
     "New version available. <a>Update now.</a>": "Ny version tillgänglig. <a>Uppdatera nu.</a>",
-    "Hey you. You're the best!": "Hallå där. Du är bäst!",
-    "Size must be a number": "Storleken måste vara ett nummer",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Anpassad teckenstorlek kan bara vara mellan %(min)s pt och %(max)s pt",
-    "Use between %(min)s pt and %(max)s pt": "Använd mellan %(min)s pt och %(max)s pt",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Samtyck till identitetsserverns (%(serverName)s) användarvillkor för att låta dig själv vara upptäckbar med e-postadress eller telefonnummer.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "För att rapportera ett Matrix-relaterat säkerhetsproblem, vänligen läs Matrix.orgs <a>riktlinjer för säkerhetspublicering</a>.",
     "Ignored/Blocked": "Ignorerade/blockerade",
@@ -849,11 +830,6 @@
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Att uppgradera det här rummet kommer att stänga den nuvarande instansen av rummet och skapa ett uppgraderat rum med samma namn.",
     "This room has already been upgraded.": "Det här rummet har redan uppgraderats.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Det här rummet kör rumsversion <roomVersion />, vilket den här hemservern har markerat som <i>instabil</i>.",
-    "Unknown Command": "Okänt kommando",
-    "Unrecognised command: %(commandText)s": "Okänt kommando: %(commandText)s",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Du kan använda <code>/help</code> för att lista tillgängliga kommandon. Menade du att skicka detta som ett meddelande?",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Tips: Börja ditt meddelande med <code>//</code> för att starta det med ett snedstreck.",
-    "Send as message": "Skicka som meddelande",
     "Mark all as read": "Markera alla som lästa",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Ett fel inträffade vid uppdatering av rummets alternativa adresser. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
     "Error creating address": "Fel vid skapande av adress",
@@ -911,7 +887,6 @@
     "The encryption used by this room isn't supported.": "Krypteringen som används i det här rummet stöds inte.",
     "You declined": "Du avslog",
     "%(name)s declined": "%(name)s avslog",
-    "Message deleted on %(date)s": "Meddelande raderat vid %(date)s",
     "Edited at %(date)s": "Redigerat vid %(date)s",
     "Click to view edits": "Klicka för att visa redigeringar",
     "Can't load this message": "Kan inte ladda det här meddelandet",
@@ -1647,9 +1622,6 @@
         "one": "& %(count)s till"
     },
     "Upgrade required": "Uppgradering krävs",
-    "Anyone can find and join.": "Vem som helst kan hitta och gå med.",
-    "Only invited people can join.": "Endast inbjudna personer kan gå med.",
-    "Private (invite only)": "Privat (endast inbjudan)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Den här uppgraderingen kommer att låta medlemmar i valda utrymmen komma åt det här rummet utan en inbjudan.",
     "This space has no local addresses": "Det här utrymmet har inga lokala adresser",
     "Error processing audio message": "Fel vid hantering av ljudmeddelande",
@@ -1727,7 +1699,6 @@
     "Failed to update the join rules": "Misslyckades att uppdatera regler för att gå med",
     "Select the roles required to change various parts of the space": "Välj de roller som krävs för att ändra olika delar av utrymmet",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Vem som helst i <spaceName/> kan hitta och gå med. Du kan välja andra utrymmen också.",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s reagerade med %(content)s",
     "Message didn't send. Click for info.": "Meddelande skickades inte. Klicka för info.",
     "To join a space you'll need an invite.": "För att gå med i ett utrymme så behöver du en inbjudan.",
     "Would you like to leave the rooms in this space?": "Vill du lämna rummen i det här utrymmet?",
@@ -1832,11 +1803,9 @@
     "Spaces to show": "Utrymmen att visa",
     "Sidebar": "Sidofält",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Dela anonyma data med oss för att hjälpa oss att identifiera problem. Inget personligt. Inga tredje parter.",
-    "Large": "Stor",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Okänt (användare, session)-par: (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Okänd rumsadress: %(roomAlias)s",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Utrymmen är sätt att gruppera rum och personer. Utöver utrymmena du är med i så kan du använda några färdiggjorda också.",
-    "Keyboard": "Tangentbord",
     "Waiting for you to verify on your other device…": "Väntar på att du ska verifiera på din andra enhet…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Väntar på att du ska verifiera på din andra enhet, %(deviceName)s (%(deviceId)s)…",
     "Verify this device by confirming the following number appears on its screen.": "Verifiera den här enheten genom att bekräfta att det följande numret visas på dess skärm.",
@@ -1858,7 +1827,6 @@
     "Show all your rooms in Home, even if they're in a space.": "Visa alla dina rum i Hem, även om de är i ett utrymme.",
     "Home is useful for getting an overview of everything.": "Hem är användbar för att få en översikt över allt.",
     "Vote not registered": "Röst registrerades inte",
-    "Expand map": "Expandera karta",
     "Reply in thread": "Svara i tråd",
     "Pick a date to jump to": "Välj ett datum att hoppa till",
     "Message pending moderation": "Meddelandet inväntar moderering",
@@ -1968,7 +1936,6 @@
     "Pinned": "Fäst",
     "Open thread": "Öppna tråd",
     "Match system": "Matcha systemet",
-    "Developer tools": "Utvecklarverktyg",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s är experimentell i mobila webbläsare. För en bättre upplevelse och de senaste funktionerna använd våran nativa app.",
     "This invite was sent to %(email)s": "Denna inbjudan skickades till %(email)s",
     "This invite was sent to %(email)s which is not associated with your account": "Denna inbjudan skickades till %(email)s vilken inte är associerad med ditt konto",
@@ -2011,9 +1978,6 @@
     "Are you sure you're at the right place?": "Är du säker på att du är på rätt ställe?",
     "This room or space does not exist.": "Det här rummet eller utrymmet finns inte.",
     "There's no preview, would you like to join?": "Det finns ingen förhandsgranskning, vill du gå med?",
-    "Shared a location: ": "Delade en plats: ",
-    "Shared their location: ": "Delade sin plats: ",
-    "Unable to load map": "Kunde inte ladda kartan",
     "Click": "Klicka",
     "Expand quotes": "Expandera citat",
     "Collapse quotes": "Kollapsa citat",
@@ -2446,7 +2410,6 @@
     "unknown status code": "okänd statuskod",
     "Image view": "Bildvy",
     "Waiting for users to join %(brand)s": "Väntar på att användare går med i %(brand)s",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Kan inte hitta den gamla versionen av det här rummet (rums-ID: %(roomId)s), och vi har inte fått ”via_servers” för att leta efter det.",
     "Error details": "Feldetaljer",
     "Desktop app logo": "Skrivbordsappslogga",
     "Your device ID": "Ditt enhets-ID",
@@ -2462,7 +2425,6 @@
     "Server returned %(statusCode)s with error code %(errorCode)s": "Servern gav svar %(statusCode)s med felkoden %(errorCode)s",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Kunde inte hitta profiler för Matrix-ID:n nedan — skulle du vilja starta ett DM ändå?",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "När inbjudna användare har gått med i %(brand)s kommer du att kunna chatta och rummet kommer att vara totalsträckskrypterat",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Kan inte hitta den gamla versionen av det här rummet (rums-ID: %(roomId)s), och vi har inte fått ”via_servers” för att leta efter det. Det är möjligt att det går att gissa servern från rums-ID:t. Om du vill pröva, klicka på den här länken:",
     "Please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "Vänligen skicka in <debugLogsLink>felsökningsloggar</debugLogsLink> för att hjälpa oss att spåra problemet.",
     "Invites by email can only be sent one at a time": "Inbjudningar via e-post kan endast skickas en i taget",
     "Match default setting": "Matcha förvalsinställning",
@@ -2572,7 +2534,10 @@
         "qr_code": "QR-kod",
         "feedback": "Återkoppling",
         "all_rooms": "Alla rum",
-        "orphan_rooms": "Andra rum"
+        "orphan_rooms": "Andra rum",
+        "preview_message": "Hallå där. Du är bäst!",
+        "on": "På",
+        "off": "Av"
     },
     "action": {
         "continue": "Fortsätt",
@@ -2877,7 +2842,8 @@
         "collecting_logs": "Samlar in loggar",
         "uploading_logs": "Laddar upp loggar",
         "downloading_logs": "Laddar ner loggar",
-        "create_new_issue": "Vänligen <newIssueLink>skapa ett nytt ärende</newIssueLink> på GitHub så att vi kan undersöka denna bugg."
+        "create_new_issue": "Vänligen <newIssueLink>skapa ett nytt ärende</newIssueLink> på GitHub så att vi kan undersöka denna bugg.",
+        "waiting_for_server": "Väntar på svar från servern"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)st %(minutes)sm %(seconds)ss kvar",
@@ -3021,7 +2987,8 @@
             "enable_notifications_device": "Aktivera aviseringar för den här enheten",
             "enable_desktop_notifications_session": "Aktivera skrivbordsaviseringar för den här sessionen",
             "show_message_desktop_notification": "Visa meddelande i skrivbordsavisering",
-            "enable_audible_notifications_session": "Aktivera ljudaviseringar för den här sessionen"
+            "enable_audible_notifications_session": "Aktivera ljudaviseringar för den här sessionen",
+            "noisy": "Högljudd"
         },
         "appearance": {
             "layout_irc": "IRC (Experimentellt)",
@@ -3042,7 +3009,12 @@
             "timeline_image_size": "Bildstorlek i tidslinjen",
             "timeline_image_size_default": "Standard",
             "timeline_image_size_large": "Stor",
-            "custom_font_size": "Använd anpassad storlek"
+            "custom_font_size": "Använd anpassad storlek",
+            "font_size_nan": "Storleken måste vara ett nummer",
+            "font_size_limit": "Anpassad teckenstorlek kan bara vara mellan %(min)s pt och %(max)s pt",
+            "font_size_valid": "Använd mellan %(min)s pt och %(max)s pt",
+            "image_size_default": "Standard",
+            "image_size_large": "Stor"
         },
         "inline_url_previews_room_account": "Aktivera URL-förhandsgranskning för detta rum (påverkar bara dig)",
         "inline_url_previews_room": "Aktivera URL-förhandsgranskning som standard för deltagare i detta rum",
@@ -3094,6 +3066,9 @@
             "noise_suppression": "Brusreducering",
             "enable_fallback_ice_server": "Tillåt reservserver för samtalsassistans (%(server)s)",
             "enable_fallback_ice_server_description": "Gäller endast om din hemserver inte erbjuder en. Din IP-adress delas under samtal."
+        },
+        "keyboard": {
+            "title": "Tangentbord"
         }
     },
     "devtools": {
@@ -3187,7 +3162,8 @@
         "show_hidden_events": "Visa dolda händelser i tidslinjen",
         "low_bandwidth_mode": "Lågt bandbreddsläge",
         "low_bandwidth_mode_description": "Kräver kompatibel hemserver.",
-        "developer_mode": "Utvecklarläge"
+        "developer_mode": "Utvecklarläge",
+        "title": "Utvecklarverktyg"
     },
     "export_chat": {
         "html": "HTML",
@@ -3308,7 +3284,12 @@
             "kick": "%(senderName)s tog bort %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s bytte rummets ämne till \"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s bytte rummets avatar.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s bytte rummets avatar.",
+            "lightbox_title": "%(senderDisplayName)s bytte avatar för %(roomName)s",
+            "removed": "%(senderDisplayName)s tog bort rummets avatar.",
+            "changed_img": "%(senderDisplayName)s bytte rummets avatar till <img/>"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s tog bort rummets namn.",
             "change": "%(senderDisplayName)s bytte rummets namn från %(oldRoomName)s till %(newRoomName)s.",
@@ -3375,7 +3356,11 @@
             "removed": "%(widgetName)s-widget har tagits bort av %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s har uppdaterat rummets arrangemang",
-        "m.location": "%(senderName)s har delat sin plats",
+        "m.location": {
+            "full": "%(senderName)s har delat sin plats",
+            "self_location": "Delade sin plats: ",
+            "location": "Delade en plats: "
+        },
         "self_redaction": "Meddelande raderat",
         "redaction": "Meddelande raderat av %(name)s",
         "m.poll.start": "%(senderName)s har startat en omröstning - %(pollQuestion)s",
@@ -3552,6 +3537,19 @@
         "io.element.voice_broadcast_info": {
             "you": "Du avslutade en <a>röstsändning</a>",
             "user": "%(senderName)s avslutade en <a>röstsändning</a>"
+        },
+        "reactions": {
+            "label": "%(reactors)s reagerade med %(content)s",
+            "tooltip": "<reactors/><reactedWith>reagerade med %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Meddelande raderat vid %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Detta rum är en fortsättning på en annan konversation.",
+            "unknown_predecessor_guess_server": "Kan inte hitta den gamla versionen av det här rummet (rums-ID: %(roomId)s), och vi har inte fått ”via_servers” för att leta efter det. Det är möjligt att det går att gissa servern från rums-ID:t. Om du vill pröva, klicka på den här länken:",
+            "unknown_predecessor": "Kan inte hitta den gamla versionen av det här rummet (rums-ID: %(roomId)s), och vi har inte fått ”via_servers” för att leta efter det.",
+            "see_older_messages": "Klicka här för att se äldre meddelanden."
         }
     },
     "slash_command": {
@@ -3619,7 +3617,15 @@
         "failed_find_room": "Kommandot misslyckades: Kunde inte hitta rummet (%(roomId)s",
         "failed_find_user": "Kunde inte hitta användaren i rummet",
         "op": "Definiera behörighetsnivå för en användare",
-        "deop": "Degraderar användaren med givet ID"
+        "deop": "Degraderar användaren med givet ID",
+        "server_error": "Serverfel",
+        "command_error": "Kommandofel",
+        "server_error_detail": "Servern är otillgänglig eller överbelastad, eller så gick något annat fel.",
+        "unknown_command": "Okänt kommando",
+        "unknown_command_detail": "Okänt kommando: %(commandText)s",
+        "unknown_command_help": "Du kan använda <code>/help</code> för att lista tillgängliga kommandon. Menade du att skicka detta som ett meddelande?",
+        "unknown_command_hint": "Tips: Börja ditt meddelande med <code>//</code> för att starta det med ett snedstreck.",
+        "unknown_command_button": "Skicka som meddelande"
     },
     "presence": {
         "busy": "Upptagen",
@@ -3740,7 +3746,10 @@
             "notifications.room": "Meddela alla"
         },
         "security": {
-            "strict_encryption": "Skicka aldrig krypterade meddelanden till overifierade sessioner i det här rummet från den här sessionen"
+            "strict_encryption": "Skicka aldrig krypterade meddelanden till overifierade sessioner i det här rummet från den här sessionen",
+            "join_rule_invite": "Privat (endast inbjudan)",
+            "join_rule_invite_description": "Endast inbjudna personer kan gå med.",
+            "join_rule_public_description": "Vem som helst kan hitta och gå med."
         }
     },
     "encryption": {
@@ -4053,7 +4062,9 @@
         "failed_permission": "%(brand)s nekades behörighet för att komma åt din position. Du behöver godkänna platsåtkomst i dina webbläsarinställningar.",
         "failed_generic": "Misslyckades att hämta din plats. Pröva igen senare.",
         "failed_timeout": "Tidsgränsen överskreds vid försök att hämta din plats. Pröva igen senare.",
-        "failed_unknown": "Ökänt fel när plats hämtades. Pröva igen senare."
+        "failed_unknown": "Ökänt fel när plats hämtades. Pröva igen senare.",
+        "expand_map": "Expandera karta",
+        "failed_load_map": "Kunde inte ladda kartan"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Kan inte starta en ny röstsändning",
@@ -4075,5 +4086,9 @@
         "30s_backward": "30s bakåt",
         "30s_forward": "30s framåt",
         "go_live": "Börja sända"
+    },
+    "labs_mjolnir": {
+        "room_name": "Min bannlista",
+        "room_topic": "Det här är din lista med användare och server du har blockerat - lämna inte rummet!"
     }
 }

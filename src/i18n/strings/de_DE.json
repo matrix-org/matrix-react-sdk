@@ -99,7 +99,6 @@
     },
     "Are you sure?": "Bist du sicher?",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Es kann keine Verbindung zum Heim-Server via HTTP aufgebaut werden, wenn die Adresszeile des Browsers eine HTTPS-URL enthält. Entweder HTTPS verwenden oder alternativ <a>unsichere Skripte erlauben</a>.",
-    "Command error": "Fehler im Befehl",
     "Decrypt %(text)s": "%(text)s entschlüsseln",
     "Download %(text)s": "%(text)s herunterladen",
     "Failed to ban user": "Verbannen des Benutzers fehlgeschlagen",
@@ -112,9 +111,7 @@
     "not specified": "nicht angegeben",
     "No more results": "Keine weiteren Ergebnisse",
     "Search failed": "Suche ist fehlgeschlagen",
-    "Server error": "Server-Fehler",
     "Server may be unavailable, overloaded, or search timed out :(": "Der Server ist entweder nicht verfügbar, überlastet oder die Suche wurde wegen Zeitüberschreitung abgebrochen :(",
-    "Server unavailable, overloaded, or something else went wrong.": "Server ist nicht verfügbar, überlastet oder ein anderer Fehler ist aufgetreten.",
     "This room has no local addresses": "Dieser Raum hat keine lokale Adresse",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Dir fehlt die Berechtigung, diese alten Nachrichten zu lesen.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Das Laden einer bestimmten Stelle im Verlauf des Raumes zu laden ist gescheitert, da sie nicht gefunden wurde.",
@@ -162,7 +159,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Um dein Konto für die Verwendung von %(integrationsUrl)s zu authentifizieren, wirst du jetzt auf die Website eines Drittanbieters weitergeleitet. Möchtest du fortfahren?",
     "Jump to first unread message.": "Zur ersten ungelesenen Nachricht springen.",
     "Invited": "Eingeladen",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s hat das Raumbild entfernt.",
     "No Webcams detected": "Keine Webcam erkannt",
     "No Microphones detected": "Keine Mikrofone erkannt",
     "No media permissions": "Keine Medienberechtigungen",
@@ -176,8 +172,6 @@
     "Verified key": "Verifizierter Schlüssel",
     "You have <a>disabled</a> URL previews by default.": "Du hast die URL-Vorschau <a>standardmäßig deaktiviert</a>.",
     "You have <a>enabled</a> URL previews by default.": "Du hast die URL-Vorschau <a>standardmäßig aktiviert</a>.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s hat das Raumbild zu <img/> geändert",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s hat das Raumbild von %(roomName)s geändert",
     "Uploading %(filename)s": "%(filename)s wird hochgeladen",
     "Uploading %(filename)s and %(count)s others": {
         "one": "%(filename)s und %(count)s weitere Dateien werden hochgeladen",
@@ -260,16 +254,13 @@
     "Today": "Heute",
     "Friday": "Freitag",
     "What's New": "Was ist neu",
-    "On": "An",
     "Changelog": "Änderungsprotokoll",
-    "Waiting for response from server": "Warte auf Antwort vom Server",
     "Failed to send logs: ": "Senden von Protokolldateien fehlgeschlagen: ",
     "This Room": "In diesem Raum",
     "Unavailable": "Nicht verfügbar",
     "Source URL": "Quell-URL",
     "Filter results": "Ergebnisse filtern",
     "No update available.": "Keine Aktualisierung verfügbar.",
-    "Noisy": "Laut",
     "Tuesday": "Dienstag",
     "Preparing to send logs": "Senden von Protokolldateien wird vorbereitet",
     "Saturday": "Samstag",
@@ -286,7 +277,6 @@
     "Yesterday": "Gestern",
     "Error encountered (%(errorDetail)s).": "Es ist ein Fehler aufgetreten (%(errorDetail)s).",
     "Low Priority": "Niedrige Priorität",
-    "Off": "Aus",
     "Thank you!": "Danke!",
     "Missing roomId.": "Fehlende Raum-ID.",
     "Popout widget": "Widget in eigenem Fenster öffnen",
@@ -332,8 +322,6 @@
     "Please contact your homeserver administrator.": "Bitte setze dich mit der Administration deines Heim-Servers in Verbindung.",
     "This room has been replaced and is no longer active.": "Dieser Raum wurde ersetzt und ist nicht länger aktiv.",
     "The conversation continues here.": "Die Konversation wird hier fortgesetzt.",
-    "This room is a continuation of another conversation.": "Dieser Raum ist eine Fortsetzung einer anderen Konversation.",
-    "Click here to see older messages.": "Klicke hier, um ältere Nachrichten zu sehen.",
     "Failed to upgrade room": "Raumaktualisierung fehlgeschlagen",
     "The room upgrade could not be completed": "Die Raumaktualisierung konnte nicht fertiggestellt werden",
     "Upgrade this room to version %(version)s": "Raum auf Version %(version)s aktualisieren",
@@ -590,8 +578,6 @@
     "Only continue if you trust the owner of the server.": "Fahre nur fort, wenn du den Server-Betreibenden vertraust.",
     "Use an identity server to invite by email. Manage in Settings.": "Verwende einen Identitäts-Server, um per E-Mail einladen zu können. Lege einen in den Einstellungen fest.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "My Ban List": "Meine Bannliste",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Dies ist die Liste von Benutzer und Servern, die du blockiert hast – verlasse diesen Raum nicht!",
     "Accept <policyLink /> to continue:": "Akzeptiere <policyLink />, um fortzufahren:",
     "Change identity server": "Identitäts-Server wechseln",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Du solltest deine <b>persönlichen Daten</b> vom Identitäts-Server <idserver /> entfernen, bevor du die Verbindung trennst. Leider ist der Identitäts-Server <idserver /> derzeit außer Betrieb oder kann nicht erreicht werden.",
@@ -641,7 +627,6 @@
     "Set a new custom sound": "Neuen individuellen Ton festlegen",
     "Browse": "Durchsuchen",
     "Direct Messages": "Direktnachrichten",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Du kannst <code>/help</code> benutzen, um alle verfügbaren Befehle aufzulisten. Willst du es stattdessen als Nachricht senden?",
     "Recently Direct Messaged": "Zuletzt kontaktiert",
     "Command Help": "Befehl Hilfe",
     "To help us prevent this in future, please <a>send us logs</a>.": "Um uns zu helfen, dies in Zukunft zu vermeiden, <a>sende uns bitte die Protokolldateien</a>.",
@@ -827,10 +812,6 @@
     "%(roomName)s can't be previewed. Do you want to join it?": "Vorschau von %(roomName)s kann nicht angezeigt werden. Möchtest du den Raum betreten?",
     "This room has already been upgraded.": "Dieser Raum wurde bereits aktualisiert.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Dieser Raum läuft mit der Raumversion <roomVersion />, welche dieser Heim-Server als <i>instabil</i> markiert hat.",
-    "Unknown Command": "Unbekannter Befehl",
-    "Unrecognised command: %(commandText)s": "Unbekannter Befehl: %(commandText)s",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Hinweis: Beginne deine Nachricht mit <code>//</code>, um sie mit einem Schrägstrich zu beginnen.",
-    "Send as message": "Als Nachricht senden",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Die Einladung konnte nicht zurückgezogen werden. Der Server hat möglicherweise ein vorübergehendes Problem oder du hast nicht ausreichende Berechtigungen, um die Einladung zurückzuziehen.",
     "Mark all as read": "Alle als gelesen markieren",
@@ -869,7 +850,6 @@
     "You declined": "Du hast abgelehnt",
     "You cancelled": "Du brachst ab",
     "You sent a verification request": "Du hast eine Verifizierungsanfrage gesendet",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>hat mit %(shortName)s reagiert</reactedWith>",
     "Edited at %(date)s. Click to view edits.": "Am %(date)s geändert. Klicke, um Änderungen anzuzeigen.",
     "Can't load this message": "Diese Nachricht kann nicht geladen werden",
     "Submit logs": "Protokolldateien senden",
@@ -1005,9 +985,6 @@
     "Confirm encryption setup": "Bestätige die Einrichtung der Verschlüsselung",
     "Click the button below to confirm setting up encryption.": "Klick die Schaltfläche unten um die Einstellungen der Verschlüsselung zu bestätigen.",
     "IRC display name width": "Breite des IRC-Anzeigenamens",
-    "Size must be a number": "Schriftgröße muss eine Zahl sein",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Eigene Schriftgröße kann nur eine Zahl zwischen %(min)s pt und %(max)s pt sein",
-    "Use between %(min)s pt and %(max)s pt": "Verwende eine Zahl zwischen %(min)s pt und %(max)s pt",
     "Your homeserver has exceeded its user limit.": "Dein Heim-Server hat den Benutzergrenzwert erreicht.",
     "Your homeserver has exceeded one of its resource limits.": "Dein Heim-Server hat einen seiner Ressourcengrenzwerte erreicht.",
     "Contact your <a>server admin</a>.": "Kontaktiere deine <a>Heim-Server-Administration</a>.",
@@ -1035,9 +1012,7 @@
     "Message preview": "Nachrichtenvorschau",
     "Room options": "Raumoptionen",
     "Looks good!": "Sieht gut aus!",
-    "Hey you. You're the best!": "Hey du. Du bist großartig!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Die Echtheit dieser verschlüsselten Nachricht kann auf diesem Gerät nicht garantiert werden.",
-    "Message deleted on %(date)s": "Nachricht am %(date)s gelöscht",
     "Wrong file type": "Falscher Dateityp",
     "Are you sure you want to cancel entering passphrase?": "Bist du sicher, dass du die Eingabe der Passphrase abbrechen möchtest?",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "Das Durchsuchen von verschlüsselten Nachrichten wird aus Sicherheitsgründen nur von %(brand)s Desktop unterstützt. <desktopLink>Hier gehts zum Download</desktopLink>.",
@@ -1678,8 +1653,6 @@
         "one": "und %(count)s weitere"
     },
     "Upgrade required": "Aktualisierung erforderlich",
-    "Only invited people can join.": "Nur Eingeladene können betreten.",
-    "Private (invite only)": "Privat (Betreten mit Einladung)",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Diese Aktualisierung gewährt Mitgliedern der ausgewählten Spaces Zugang zu diesem Raum ohne Einladung.",
     "Show all rooms": "Alle Räume anzeigen",
     "Delete avatar": "Avatar löschen",
@@ -1704,7 +1677,6 @@
     "Spaces you know that contain this room": "Spaces, in denen du Mitglied bist und die diesen Raum enthalten",
     "You're removing all spaces. Access will default to invite only": "Du entfernst alle Spaces. Der Zutritt wird auf den Standard (Privat) zurückgesetzt",
     "People with supported clients will be able to join the room without having a registered account.": "Personen mit unterstützter Anwendung werden diesen Raum ohne registriertes Konto betreten können.",
-    "Anyone can find and join.": "Sichtbar und zugänglich für jeden.",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Entscheide, welche Spaces auf den Raum zugreifen können. Mitglieder ausgewählter Spaces können <RoomName/> betreten.",
     "Their device couldn't start the camera or microphone": "Mikrofon oder Kamera des Gesprächspartners konnte nicht gestartet werden",
     "Enable encryption in settings.": "Aktiviere Verschlüsselung in den Einstellungen.",
@@ -1724,7 +1696,6 @@
     "Leave some rooms": "Zu verlassende Räume auswählen",
     "Leave all rooms": "Alle Räume verlassen",
     "Don't leave any rooms": "Keine Räume und Subspaces verlassen",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s hat mit %(content)s reagiert",
     "Some encryption parameters have been changed.": "Einige Verschlüsselungsoptionen wurden geändert.",
     "Message didn't send. Click for info.": "Nachricht nicht gesendet. Klicke für Details.",
     "To avoid these issues, create a <a>new public room</a> for the conversation you plan to have.": "<a>Erstelle einen neuen Raum für deine Konversation</a>, um diese Probleme zu umgehen.",
@@ -1812,7 +1783,6 @@
     "Light high contrast": "Hell kontrastreich",
     "Reply in thread": "In Thread antworten",
     "Sidebar": "Seitenleiste",
-    "Large": "Groß",
     "Show all your rooms in Home, even if they're in a space.": "Alle Räume auf der Startseite anzeigen, auch wenn sie Teil eines Space sind.",
     "Home is useful for getting an overview of everything.": "Die Startseite bietet dir einen Überblick über deine Unterhaltungen.",
     "Get notifications as set up in your <a>settings</a>": "Du erhältst Benachrichtigungen, wie du sie in den <a>Einstellungen</a> konfiguriert hast",
@@ -1898,7 +1868,6 @@
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Gruppiere Unterhaltungen mit Mitgliedern dieses Spaces. Diese Option zu deaktivieren, wird die Unterhaltungen aus %(spaceName)s ausblenden.",
     "Including you, %(commaSeparatedMembers)s": "Mit dir, %(commaSeparatedMembers)s",
     "Device verified": "Gerät verifiziert",
-    "Expand map": "Karte vergrößern",
     "Room members": "Raummitglieder",
     "Waiting for you to verify on your other device…": "Warten darauf, dass du das auf deinem anderen Gerät bestätigst…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Warten, dass du auf deinem anderen Gerät %(deviceName)s (%(deviceId)s) verifizierst…",
@@ -1916,7 +1885,6 @@
     "Remove from %(roomName)s": "Aus %(roomName)s entfernen",
     "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s hat dich aus %(roomName)s entfernt",
     "From a thread": "Aus einem Thread",
-    "Keyboard": "Tastatur",
     "Remove them from specific things I'm able to": "Person aus gewählten, mir möglichen, Bereichen entfernen",
     "Remove them from everything I'm able to": "Person aus allen, mir möglichen Bereichen entfernen",
     "To proceed, please accept the verification request on your other device.": "Akzeptiere die Verifizierungsanfrage am anderen Gerät, um fortzufahren.",
@@ -1969,9 +1937,6 @@
     "They won't be able to access whatever you're not an admin of.": "Die Person wird keinen Zutritt zu Bereichen haben, in denen du nicht administrierst.",
     "Click to drop a pin": "Klicke, um den Standort zu setzen",
     "Click to move the pin": "Klicke, um den Standort zu bewegen",
-    "Shared a location: ": "Hat einen Standort geteilt: ",
-    "Shared their location: ": "Hat den Standort geteilt: ",
-    "Unable to load map": "Karte kann nicht geladen werden",
     "Click": "Klick",
     "Expand quotes": "Zitate ausklappen",
     "Collapse quotes": "Zitate einklappen",
@@ -2053,7 +2018,6 @@
         "one": "Abmelden des Geräts bestätigen",
         "other": "Abmelden dieser Geräte bestätigen"
     },
-    "Developer tools": "Entwicklungswerkzeuge",
     "View List": "Liste Anzeigen",
     "View list": "Liste anzeigen",
     "Cameras": "Kameras",
@@ -2445,8 +2409,6 @@
     "Start DM anyway and never warn me again": "Dennoch DM beginnen und mich nicht mehr warnen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die folgenden Matrix-IDs finden – möchtest du dennoch eine Direktnachricht beginnen?",
     "Formatting": "Formatierung",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.": "Konnte die alte Version dieses Raumes nicht finden (Raum-ID: %(roomId)s) und uns wurde „via_servers“ nicht mitgeteilt, um danach zu suchen.",
-    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it. It's possible that guessing the server from the room ID will work. If you want to try, click this link:": "Konnte die alte Version dieses Raumes nicht finden (Raum-ID: %(roomId)s) und uns wurde „via_servers“ nicht mitgeteilt, um danach zu suchen. Es ist möglich, dass das Erraten des Servers basierend auf der Raum-ID funktioniert. Wenn du dies probieren möchtest, klicke auf folgenden Link:",
     "The add / bind with MSISDN flow is misconfigured": "Das MSISDN-Verknüpfungsverfahren ist falsch konfiguriert",
     "No identity access token found": "Kein Identitäts-Zugangs-Token gefunden",
     "Identity server not set": "Kein Identitäts-Server festgelegt",
@@ -2619,7 +2581,10 @@
         "qr_code": "QR-Code",
         "feedback": "Rückmeldung",
         "all_rooms": "Alle Räume",
-        "orphan_rooms": "Andere Räume"
+        "orphan_rooms": "Andere Räume",
+        "preview_message": "Hey du. Du bist großartig!",
+        "on": "An",
+        "off": "Aus"
     },
     "action": {
         "continue": "Fortfahren",
@@ -2926,7 +2891,8 @@
         "collecting_logs": "Protokolle werden abgerufen",
         "uploading_logs": "Lade Protokolle hoch",
         "downloading_logs": "Lade Protokolle herunter",
-        "create_new_issue": "Bitte <newIssueLink>erstelle ein neues Issue</newIssueLink> auf GitHub damit wir diesen Fehler untersuchen können."
+        "create_new_issue": "Bitte <newIssueLink>erstelle ein neues Issue</newIssueLink> auf GitHub damit wir diesen Fehler untersuchen können.",
+        "waiting_for_server": "Warte auf Antwort vom Server"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)s h %(minutes)s m %(seconds)s s verbleibend",
@@ -3070,7 +3036,8 @@
             "enable_notifications_device": "Aktiviere Benachrichtigungen für dieses Gerät",
             "enable_desktop_notifications_session": "Desktopbenachrichtigungen in dieser Sitzung",
             "show_message_desktop_notification": "Nachrichteninhalt in der Desktopbenachrichtigung anzeigen",
-            "enable_audible_notifications_session": "Benachrichtigungstöne in dieser Sitzung"
+            "enable_audible_notifications_session": "Benachrichtigungstöne in dieser Sitzung",
+            "noisy": "Laut"
         },
         "appearance": {
             "layout_irc": "IRC (Experimentell)",
@@ -3091,7 +3058,12 @@
             "timeline_image_size": "Bildgröße im Verlauf",
             "timeline_image_size_default": "Standard",
             "timeline_image_size_large": "Groß",
-            "custom_font_size": "Andere Schriftgröße verwenden"
+            "custom_font_size": "Andere Schriftgröße verwenden",
+            "font_size_nan": "Schriftgröße muss eine Zahl sein",
+            "font_size_limit": "Eigene Schriftgröße kann nur eine Zahl zwischen %(min)s pt und %(max)s pt sein",
+            "font_size_valid": "Verwende eine Zahl zwischen %(min)s pt und %(max)s pt",
+            "image_size_default": "Standard",
+            "image_size_large": "Groß"
         },
         "inline_url_previews_room_account": "URL-Vorschau für dich in diesem Raum",
         "inline_url_previews_room": "URL-Vorschau für Raummitglieder",
@@ -3143,6 +3115,9 @@
             "noise_suppression": "Rauschreduzierung",
             "enable_fallback_ice_server": "Ersatz-Anrufassistenz-Server erlauben (%(server)s)",
             "enable_fallback_ice_server_description": "Dieser wird nur verwendet, sollte dein Heim-Server keinen bieten. Deine IP-Adresse würde während eines Anrufs geteilt werden."
+        },
+        "keyboard": {
+            "title": "Tastatur"
         }
     },
     "devtools": {
@@ -3241,7 +3216,8 @@
         "show_hidden_events": "Versteckte Ereignisse im Verlauf anzeigen",
         "low_bandwidth_mode": "Modus für geringe Bandbreite",
         "low_bandwidth_mode_description": "Benötigt kompatiblen Heim-Server.",
-        "developer_mode": "Entwicklungsmodus"
+        "developer_mode": "Entwicklungsmodus",
+        "title": "Entwicklungswerkzeuge"
     },
     "export_chat": {
         "html": "HTML",
@@ -3363,7 +3339,12 @@
             "kick": "%(senderName)s hat %(targetName)s entfernt"
         },
         "m.room.topic": "%(senderDisplayName)s hat das Thema geändert in \"%(topic)s\".",
-        "m.room.avatar": "%(senderDisplayName)s hat das Raumbild geändert.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s hat das Raumbild geändert.",
+            "lightbox_title": "%(senderDisplayName)s hat das Raumbild von %(roomName)s geändert",
+            "removed": "%(senderDisplayName)s hat das Raumbild entfernt.",
+            "changed_img": "%(senderDisplayName)s hat das Raumbild zu <img/> geändert"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s hat den Raumnamen entfernt.",
             "change": "%(senderDisplayName)s hat den Raumnamen von %(oldRoomName)s zu %(newRoomName)s geändert.",
@@ -3430,7 +3411,11 @@
             "removed": "%(senderName)s hat das Widget %(widgetName)s entfernt"
         },
         "io.element.widgets.layout": "%(senderName)s hat das Raumlayout geändert",
-        "m.location": "%(senderName)s hat seine Position geteilt",
+        "m.location": {
+            "full": "%(senderName)s hat seine Position geteilt",
+            "self_location": "Hat den Standort geteilt: ",
+            "location": "Hat einen Standort geteilt: "
+        },
         "self_redaction": "Nachricht gelöscht",
         "redaction": "Nachricht von %(name)s gelöscht",
         "m.poll.start": "%(senderName)s hat eine Umfrage begonnen – %(pollQuestion)s",
@@ -3615,6 +3600,19 @@
         "io.element.voice_broadcast_info": {
             "you": "Du hast eine <a>Sprachübertragung</a> beendet",
             "user": "%(senderName)s beendete eine <a>Sprachübertragung</a>"
+        },
+        "reactions": {
+            "label": "%(reactors)s hat mit %(content)s reagiert",
+            "tooltip": "<reactors/><reactedWith>hat mit %(shortName)s reagiert</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Nachricht am %(date)s gelöscht"
+        },
+        "m.room.create": {
+            "continuation": "Dieser Raum ist eine Fortsetzung einer anderen Konversation.",
+            "unknown_predecessor_guess_server": "Konnte die alte Version dieses Raumes nicht finden (Raum-ID: %(roomId)s) und uns wurde „via_servers“ nicht mitgeteilt, um danach zu suchen. Es ist möglich, dass das Erraten des Servers basierend auf der Raum-ID funktioniert. Wenn du dies probieren möchtest, klicke auf folgenden Link:",
+            "unknown_predecessor": "Konnte die alte Version dieses Raumes nicht finden (Raum-ID: %(roomId)s) und uns wurde „via_servers“ nicht mitgeteilt, um danach zu suchen.",
+            "see_older_messages": "Klicke hier, um ältere Nachrichten zu sehen."
         }
     },
     "slash_command": {
@@ -3683,7 +3681,15 @@
         "failed_find_room": "Befehl fehlgeschlagen: Raum kann nicht gefunden werden (%(roomId)s",
         "failed_find_user": "Benutzer konnte nicht im Raum gefunden werden",
         "op": "Berechtigungsstufe einers Benutzers setzen",
-        "deop": "Setzt das Berechtigungslevel beim Benutzer mit der angegebenen ID zurück"
+        "deop": "Setzt das Berechtigungslevel beim Benutzer mit der angegebenen ID zurück",
+        "server_error": "Server-Fehler",
+        "command_error": "Fehler im Befehl",
+        "server_error_detail": "Server ist nicht verfügbar, überlastet oder ein anderer Fehler ist aufgetreten.",
+        "unknown_command": "Unbekannter Befehl",
+        "unknown_command_detail": "Unbekannter Befehl: %(commandText)s",
+        "unknown_command_help": "Du kannst <code>/help</code> benutzen, um alle verfügbaren Befehle aufzulisten. Willst du es stattdessen als Nachricht senden?",
+        "unknown_command_hint": "Hinweis: Beginne deine Nachricht mit <code>//</code>, um sie mit einem Schrägstrich zu beginnen.",
+        "unknown_command_button": "Als Nachricht senden"
     },
     "presence": {
         "busy": "Beschäftigt",
@@ -3804,7 +3810,10 @@
             "notifications.room": "Alle benachrichtigen"
         },
         "security": {
-            "strict_encryption": "Niemals verschlüsselte Nachrichten von dieser Sitzung zu unverifizierten Sitzungen in diesem Raum senden"
+            "strict_encryption": "Niemals verschlüsselte Nachrichten von dieser Sitzung zu unverifizierten Sitzungen in diesem Raum senden",
+            "join_rule_invite": "Privat (Betreten mit Einladung)",
+            "join_rule_invite_description": "Nur Eingeladene können betreten.",
+            "join_rule_public_description": "Sichtbar und zugänglich für jeden."
         }
     },
     "encryption": {
@@ -4118,7 +4127,9 @@
         "failed_permission": "%(brand)s wurde der Zugriff auf deinen Standort verweigert. Bitte erlaube den Zugriff in den Einstellungen deines Browsers.",
         "failed_generic": "Standort konnte nicht abgerufen werden. Bitte versuche es später erneut.",
         "failed_timeout": "Zeitüberschreitung beim Abrufen deines Standortes. Bitte versuche es später erneut.",
-        "failed_unknown": "Beim Abruf deines Standortes ist ein unbekannter Fehler aufgetreten. Bitte versuche es später erneut."
+        "failed_unknown": "Beim Abruf deines Standortes ist ein unbekannter Fehler aufgetreten. Bitte versuche es später erneut.",
+        "expand_map": "Karte vergrößern",
+        "failed_load_map": "Karte kann nicht geladen werden"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Sprachübertragung kann nicht gestartet werden",
@@ -4140,5 +4151,9 @@
         "30s_backward": "30s zurückspulen",
         "30s_forward": "30s vorspulen",
         "go_live": "Live schalten"
+    },
+    "labs_mjolnir": {
+        "room_name": "Meine Bannliste",
+        "room_topic": "Dies ist die Liste von Benutzer und Servern, die du blockiert hast – verlasse diesen Raum nicht!"
     }
 }

@@ -297,9 +297,6 @@
     "General": "Ginearálta",
     "Account": "Cuntas",
     "Profile": "Próifíl",
-    "Noisy": "Callánach",
-    "On": "Ar siúl",
-    "Off": "Múchta",
     "Authentication": "Fíordheimhniú",
     "Warning!": "Aire!",
     "Folder": "Fillteán",
@@ -436,8 +433,6 @@
     "Share your public space": "Roinn do spás poiblí",
     "Invite to %(spaceName)s": "Tabhair cuireadh chun %(spaceName)s",
     "Unnamed room": "Seomra gan ainm",
-    "Command error": "Earráid ordaithe",
-    "Server error": "Earráid freastalaí",
     "Admin Tools": "Uirlisí Riaracháin",
     "Demote yourself?": "Tabhair ísliú céime duit féin?",
     "Enable encryption?": "Cumasaigh criptiú?",
@@ -545,7 +540,9 @@
         "unnamed_room": "Seomra gan ainm",
         "stickerpack": "Pacáiste greamáin",
         "cross_signing": "Cros-síniú",
-        "feedback": "Aiseolas"
+        "feedback": "Aiseolas",
+        "on": "Ar siúl",
+        "off": "Múchta"
     },
     "action": {
         "continue": "Lean ar aghaidh",
@@ -663,10 +660,12 @@
     "settings": {
         "always_show_message_timestamps": "Taispeáin stampaí ama teachtaireachta i gcónaí",
         "notifications": {
-            "rule_call": "Nuair a fhaighim cuireadh glaoigh"
+            "rule_call": "Nuair a fhaighim cuireadh glaoigh",
+            "noisy": "Callánach"
         },
         "appearance": {
-            "timeline_image_size_default": "Réamhshocrú"
+            "timeline_image_size_default": "Réamhshocrú",
+            "image_size_default": "Réamhshocrú"
         },
         "preferences": {
             "composer_heading": "Eagarthóir"
@@ -720,7 +719,9 @@
         "category_effects": "Tionchair",
         "category_other": "Eile",
         "me": "Taispeáin gníomh",
-        "deop": "Bain an cumhacht oibritheora ó úsáideoir leis an ID áirithe"
+        "deop": "Bain an cumhacht oibritheora ó úsáideoir leis an ID áirithe",
+        "server_error": "Earráid freastalaí",
+        "command_error": "Earráid ordaithe"
     },
     "presence": {
         "online": "Ar Líne",

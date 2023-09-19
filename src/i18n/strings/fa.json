@@ -5,9 +5,7 @@
     "Friday": "آدینه",
     "Notifications": "آگاهی‌ها",
     "What's New": "چه خبر",
-    "On": "روشن",
     "Changelog": "تغییراتِ به‌وجودآمده",
-    "Waiting for response from server": "در انتظار پاسخی از سمت سرور",
     "Operation failed": "عملیات انجام نشد",
     "This Room": "این گپ",
     "Unavailable": "غیرقابل‌دسترسی",
@@ -15,7 +13,6 @@
     "All Rooms": "همه‌ی گپ‌ها",
     "Source URL": "آدرس مبدا",
     "No update available.": "هیچ به روزرسانی جدیدی موجود نیست.",
-    "Noisy": "پرسروصدا",
     "Tuesday": "سه‌شنبه",
     "Unnamed room": "گپ نام‌گذاری نشده",
     "Saturday": "شنبه",
@@ -33,7 +30,6 @@
     "Yesterday": "دیروز",
     "Error encountered (%(errorDetail)s).": "خطای رخ داده (%(errorDetail)s).",
     "Low Priority": "کم اهمیت",
-    "Off": "خاموش",
     "Failed to change password. Is your password correct?": "خطا در تغییر گذرواژه. آیا از درستی گذرواژه‌تان اطمینان دارید؟",
     "This email address is already in use": "این آدرس ایمیل در حال حاضر در حال استفاده است",
     "This phone number is already in use": "این شماره تلفن در حال استفاده است",
@@ -71,7 +67,6 @@
     "Cryptography": "رمزنگاری",
     "Confirm password": "تأیید گذرواژه",
     "Commands": "فرمان‌ها",
-    "Command error": "خطای فرمان",
     "Change Password": "تغییر گذواژه",
     "Banned users": "کاربران مسدود شده",
     "Are you sure you want to reject the invitation?": "آیا مطمئن هستید که می خواهید دعوت را رد کنید؟",
@@ -930,13 +925,6 @@
     "Edited at %(date)s": "ویرایش شده در %(date)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "شما در آستانه هدایت شدن به یک سایت ثالث هستید بنابراین می توانید حساب خود را برای استفاده با %(integrationsUrl)s احراز هویت کنید. آیا مایل هستید ادامه دهید؟",
     "Add an Integration": "یکپارچه سازی اضافه کنید",
-    "This room is a continuation of another conversation.": "این اتاق ادامه گفتگوی دیگر است.",
-    "Click here to see older messages.": "برای دیدن پیام های قدیمی اینجا کلیک کنید.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s آواتار اتاق را به <img/> تغییر داد",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s آواتار اتاق را حذف کرد.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s آواتار خود را در %(roomName)s تغییر داد",
-    "Message deleted on %(date)s": "پیام در %(date)s حذف شد",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith> واکنش نشان داد با %(shortName)s</reactedWith>",
     "Add reaction": "افزودن واکنش",
     "Error processing voice message": "خطا در پردازش پیام صوتی",
     "Error decrypting video": "خطا در رمزگشایی ویدیو",
@@ -948,17 +936,11 @@
     "You declined": "شما رد کردید",
     "%(name)s accepted": "%(name)s پذیرفت",
     "You accepted": "پذیرفتید",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "نکته: پیام خود را با <code>//</code> شروع کنید تا با یک اسلش شروع شود.",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "برای لیست کردن دستورات موجود می توانید از <code>/help</code> استفاده کنید. آیا قصد داشتید این پیام را به عنوان متم ارسال کنید؟",
     "Short keyboard patterns are easy to guess": "الگوهای کوتاه صفحه کلید به راحتی قابل حدس هستند",
     "Straight rows of keys are easy to guess": "ردیف کلیدهای مستقیم به راحتی قابل حدس هستند",
     "Common names and surnames are easy to guess": "نام و نام خانوادگی‌های متداول به راحتی قابل حدس زدن هستند",
     "Names and surnames by themselves are easy to guess": "به راحتی می توان نام و نام خانوادگی را حدس زد",
     "Predictable substitutions like '@' instead of 'a' don't help very much": "جایگزین‌های قابل پیش بینی مانند '@' به جای 'a' کمک زیادی نمی کند",
-    "Unrecognised command: %(commandText)s": "دستور نامفهوم: %(commandText)s",
-    "Unknown Command": "دستور ناشناس",
-    "Server unavailable, overloaded, or something else went wrong.": "سرور در دسترس نیست، یا حجم بار روی آن زیاد شده و یا خطای دیگری رخ داده است.",
-    "Server error": "خطای سرور",
     "Everyone in this room is verified": "همه‌ی اعضای این اتاق تائید شده‌اند",
     "This room is end-to-end encrypted": "این اتاق به صورت سرتاسر رمزشده است",
     "Someone is using an unknown session": "فردی از یک نشست ناشناس استفاده می‌کند",
@@ -1006,8 +988,6 @@
     "Ban list rules - %(roomName)s": "قوانین لیست تحریم - %(roomName)s",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "برای گزارش مشکلات امنیتی مربوط به ماتریکس، لطفا سایت Matrix.org بخش <a>Security Disclosure Policy</a> را مطالعه فرمائید.",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "با شرایط و ضوایط سرویس سرور هویت‌سنجی (%(serverName)s) موافقت کرده تا بتوانید از طریق آدرس ایمیل و شماره تلفن قابل یافته‌شدن باشید.",
-    "Use between %(min)s pt and %(max)s pt": "از عددی بین %(min)s pt و %(max)s pt استفاده کنید",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "اندازه فونت دلخواه تنها می‌تواند عددی بین %(min)s pt و %(max)s pt باشد",
     "New version available. <a>Update now.</a>": "نسخه‌ی جدید موجود است. <a>هم‌اکنون به‌روزرسانی کنید.</a>",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "استفاده از سرور هویت‌سنجی اختیاری است. اگر تصمیم بگیرید از سرور هویت‌سنجی استفاده نکنید، شما با استفاده از آدرس ایمیل و شماره تلفن قابل یافته‌شدن و دعوت‌شدن توسط سایر کاربران نخواهید بود.",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "قطع ارتباط با سرور هویت‌سنجی به این معناست که شما از طریق ادرس ایمیل و شماره تلفن، بیش از این قابل یافته‌شدن و دعوت‌شدن توسط کاربران دیگر نیستید.",
@@ -1214,12 +1194,9 @@
     "Unable to look up phone number": "امکان یافتن شماره تلفن میسر نیست",
     "Connecting": "در حال اتصال",
     "unknown person": "فرد ناشناس",
-    "This is your list of users/servers you have blocked - don't leave the room!": "این لیست کاربران/اتاق‌هایی است که شما آن‌ها را بلاک کرده‌اید - اتاق را ترک نکنید!",
-    "My Ban List": "لیست تحریم‌های من",
     "IRC display name width": "عرض نمایش نام‌های IRC",
     "This event could not be displayed": "امکان نمایش این رخداد وجود ندارد",
     "Edit message": "ویرایش پیام",
-    "Send as message": "ارسال به عنوان پیام",
     "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\"": "تکرارهایی مانند \"abcabcabc\" تنها مقداری سخت‌تر از \"abc\" قابل حدس‌زدن هستند",
     "Add another word or two. Uncommon words are better.": "یک یا دو کلمه دیگر اضافه کنید. کلمات غیرمعمول بهتر هستند.",
     "Reversed words aren't much harder to guess": "حدس زدن کلمات معکوس خیلی سخت تر نیست",
@@ -1465,8 +1442,6 @@
     "Email addresses": "آدرس ایمیل",
     "Show advanced": "نمایش بخش پیشرفته",
     "Hide advanced": "پنهان‌کردن بخش پیشرفته",
-    "Size must be a number": "سایز باید یک عدد باشد",
-    "Hey you. You're the best!": "سلام. حال شما خوبه؟",
     "Check for update": "بررسی برای به‌روزرسانی جدید",
     "Manage integrations": "مدیریت پکپارچه‌سازی‌ها",
     "Enter a new identity server": "یک سرور هویت‌سنجی جدید وارد کنید",
@@ -1742,7 +1717,10 @@
         "qr_code": "کد QR",
         "feedback": "بازخورد",
         "all_rooms": "همه اتاق‌ها",
-        "orphan_rooms": "دیگر اتاق ها"
+        "orphan_rooms": "دیگر اتاق ها",
+        "preview_message": "سلام. حال شما خوبه؟",
+        "on": "روشن",
+        "off": "خاموش"
     },
     "action": {
         "continue": "ادامه",
@@ -1966,7 +1944,8 @@
         "collecting_logs": "درحال جمع‌آوری گزارش‌ها",
         "uploading_logs": "در حال بارگذاری لاگ‌ها",
         "downloading_logs": "در حال دریافت لاگ‌ها",
-        "create_new_issue": "لطفا در GitHub <newIssueLink>یک مسئله جدید ایجاد کنید</newIssueLink> تا بتوانیم این اشکال را بررسی کنیم."
+        "create_new_issue": "لطفا در GitHub <newIssueLink>یک مسئله جدید ایجاد کنید</newIssueLink> تا بتوانیم این اشکال را بررسی کنیم.",
+        "waiting_for_server": "در انتظار پاسخی از سمت سرور"
     },
     "time": {
         "seconds_left": "%(seconds)s ثانیه باقی‌مانده",
@@ -2035,7 +2014,8 @@
             "enable_notifications_account": "اعلان‌ها را برای این اکانت فعال کنید",
             "enable_desktop_notifications_session": "فعال‌سازی اعلان‌های دسکتاپ برای این نشست",
             "show_message_desktop_notification": "پیام‌ها را در اعلان دسکتاپ نشان بده",
-            "enable_audible_notifications_session": "فعال‌سازی اعلان‌های صدادار برای این نشست"
+            "enable_audible_notifications_session": "فعال‌سازی اعلان‌های صدادار برای این نشست",
+            "noisy": "پرسروصدا"
         },
         "appearance": {
             "heading": "ظاهر پیام‌رسان خود را سفارشی‌سازی کنید",
@@ -2051,7 +2031,11 @@
             "font_size": "اندازه فونت",
             "custom_font_description": "نام فونتی که بر روی سیستم‌تان نصب است را وارد کرده و %(brand)s سعی می‌کند از آن استفاده کند.",
             "timeline_image_size_default": "پیشفرض",
-            "custom_font_size": "از اندازه‌ی دلخواه استفاده کنید"
+            "custom_font_size": "از اندازه‌ی دلخواه استفاده کنید",
+            "font_size_nan": "سایز باید یک عدد باشد",
+            "font_size_limit": "اندازه فونت دلخواه تنها می‌تواند عددی بین %(min)s pt و %(max)s pt باشد",
+            "font_size_valid": "از عددی بین %(min)s pt و %(max)s pt استفاده کنید",
+            "image_size_default": "پیشفرض"
         },
         "inline_url_previews_room_account": "فعال‌سازی پیش‌نمایش URL برای این اتاق (تنها شما را تحت تاثیر قرار می‌دهد)",
         "inline_url_previews_room": "امکان پیش‌نمایش URL را به صورت پیش‌فرض برای اعضای این اتاق فعال کن",
@@ -2181,7 +2165,12 @@
             "kick": "%(senderName)s حذف شد %(targetName)s"
         },
         "m.room.topic": "%(senderDisplayName)s موضوع را به %(topic)s تغییر داد.",
-        "m.room.avatar": "%(senderDisplayName)s آواتار اتاق تغییر کرد.",
+        "m.room.avatar": {
+            "changed": "%(senderDisplayName)s آواتار اتاق تغییر کرد.",
+            "lightbox_title": "%(senderDisplayName)s آواتار خود را در %(roomName)s تغییر داد",
+            "removed": "%(senderDisplayName)s آواتار اتاق را حذف کرد.",
+            "changed_img": "%(senderDisplayName)s آواتار اتاق را به <img/> تغییر داد"
+        },
         "m.room.name": {
             "remove": "%(senderDisplayName)s نام اتاق را حذف کرد.",
             "change": "%(senderDisplayName)s نام اتاق را از %(oldRoomName)s به %(newRoomName)s تغییر داد.",
@@ -2245,7 +2234,9 @@
             "removed": "ویجت %(widgetName)s توسط %(senderName)s حذف گردید"
         },
         "io.element.widgets.layout": "%(senderName)s قالب نمایش اتاق را تغییر داد",
-        "m.location": "%(senderName)s موقعیت مکانی خود را به اشتراک گذاشت",
+        "m.location": {
+            "full": "%(senderName)s موقعیت مکانی خود را به اشتراک گذاشت"
+        },
         "self_redaction": "پیغام پاک شد",
         "redaction": "پیام توسط %(name)s حذف شد",
         "m.poll.start": "%(senderName)s یک نظر سنجی را شروع کرد - %(pollQuestion)s",
@@ -2374,6 +2365,16 @@
             "changed_rule_rooms": "%(senderName)s یک قاعده تحریم اتاق‌ها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
             "changed_rule_servers": "%(senderName)s یک قاعده تحریم سرورها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
             "changed_rule_glob": "%(senderName)s یک قاعده تحریم را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای به‌روزرسانی کرد که با %(newGlob)s تطابق داشته باشد"
+        },
+        "reactions": {
+            "tooltip": "<reactors/><reactedWith> واکنش نشان داد با %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "پیام در %(date)s حذف شد"
+        },
+        "m.room.create": {
+            "continuation": "این اتاق ادامه گفتگوی دیگر است.",
+            "see_older_messages": "برای دیدن پیام های قدیمی اینجا کلیک کنید."
         }
     },
     "slash_command": {
@@ -2437,7 +2438,15 @@
         "failed_find_room": "دستور با خطا روبرو شد: اتاق %(roomId)s پیدا نشد",
         "failed_find_user": "کاربر در اتاق پیدا نشد",
         "op": "سطح قدرت یک کاربر را تعریف کنید",
-        "deop": "کاربر را با شناسه داده شده از بین می برد"
+        "deop": "کاربر را با شناسه داده شده از بین می برد",
+        "server_error": "خطای سرور",
+        "command_error": "خطای فرمان",
+        "server_error_detail": "سرور در دسترس نیست، یا حجم بار روی آن زیاد شده و یا خطای دیگری رخ داده است.",
+        "unknown_command": "دستور ناشناس",
+        "unknown_command_detail": "دستور نامفهوم: %(commandText)s",
+        "unknown_command_help": "برای لیست کردن دستورات موجود می توانید از <code>/help</code> استفاده کنید. آیا قصد داشتید این پیام را به عنوان متم ارسال کنید؟",
+        "unknown_command_hint": "نکته: پیام خود را با <code>//</code> شروع کنید تا با یک اسلش شروع شود.",
+        "unknown_command_button": "ارسال به عنوان پیام"
     },
     "presence": {
         "online_for": "آنلاین برای مدت %(duration)s",
@@ -2781,5 +2790,9 @@
         "confirm_stop_title": "آیا ارسال جمعی زنده متوقف شود؟",
         "confirm_stop_affirm": "بله، توقف ارسال جمعی",
         "go_live": "برو به زنده"
+    },
+    "labs_mjolnir": {
+        "room_name": "لیست تحریم‌های من",
+        "room_topic": "این لیست کاربران/اتاق‌هایی است که شما آن‌ها را بلاک کرده‌اید - اتاق را ترک نکنید!"
     }
 }

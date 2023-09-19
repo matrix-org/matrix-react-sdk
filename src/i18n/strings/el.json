@@ -50,7 +50,6 @@
     "Sign in with": "Συνδεθείτε με",
     "Jump to first unread message.": "Πηγαίνετε στο πρώτο μη αναγνωσμένο μήνυμα.",
     "Low priority": "Χαμηλής προτεραιότητας",
-    "Command error": "Σφάλμα εντολής",
     "Commands": "Εντολές",
     "Failed to send request.": "Δεν ήταν δυνατή η αποστολή αιτήματος.",
     "Failure to create room": "Δεν ήταν δυνατή η δημιουργία δωματίου",
@@ -64,7 +63,6 @@
     "Phone": "Τηλέφωνο",
     "Rooms": "Δωμάτια",
     "Search failed": "Η αναζήτηση απέτυχε",
-    "Server error": "Σφάλμα διακομιστή",
     "Signed Out": "Αποσυνδέθηκε",
     "This email address is already in use": "Η διεύθυνση ηλ. αλληλογραφίας χρησιμοποιείται ήδη",
     "This email address was not found": "Δεν βρέθηκε η διεύθυνση ηλ. αλληλογραφίας",
@@ -143,8 +141,6 @@
     "Add an Integration": "Προσθήκη ενσωμάτωσης",
     "URL Previews": "Προεπισκόπηση συνδέσμων",
     "Drop file here to upload": "Αποθέστε εδώ για αποστολή",
-    "%(senderDisplayName)s removed the room avatar.": "Ο %(senderDisplayName)s διέγραψε την προσωπική εικόνα του δωματίου.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "Ο %(senderDisplayName)s άλλαξε την προσωπική εικόνα του %(roomName)s",
     "Something went wrong!": "Κάτι πήγε στραβά!",
     "Failed to ban user": "Δεν ήταν δυνατό ο αποκλεισμός του χρήστη",
     "Failed to change power level": "Δεν ήταν δυνατή η αλλαγή του επιπέδου δύναμης",
@@ -160,7 +156,6 @@
     "%(roomName)s is not accessible at this time.": "Το %(roomName)s δεν είναι προσβάσιμο αυτή τη στιγμή.",
     "Server may be unavailable, overloaded, or search timed out :(": "Ο διακομιστής μπορεί να είναι μη διαθέσιμος, υπερφορτωμένος, ή να έχει λήξει η αναζήτηση :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Ο διακομιστής μπορεί να είναι μη διαθέσιμος, υπερφορτωμένος, ή να πέσατε σε ένα σφάλμα.",
-    "Server unavailable, overloaded, or something else went wrong.": "Ο διακομιστής μπορεί να είναι μη διαθέσιμος, υπερφορτωμένος, ή κάτι άλλο να πήγε στραβά.",
     "This room is not recognised.": "Αυτό το δωμάτιο δεν αναγνωρίζεται.",
     "Uploading %(filename)s": "Γίνεται αποστολή του %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
@@ -177,7 +172,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Connectivity to the server has been lost.": "Χάθηκε η συνδεσιμότητα στον διακομιστή.",
     "Failed to invite": "Δεν ήταν δυνατή η πρόσκληση",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "Ο %(senderDisplayName)s άλλαξε την εικόνα του δωματίου σε <img/>",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Μπορεί να χρειαστεί να ορίσετε χειροκίνητα την πρόσβαση του %(brand)s στο μικρόφωνο/κάμερα",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Δεν είναι δυνατή η σύνδεση στον κεντρικό διακομιστή - παρακαλούμε ελέγξτε τη συνδεσιμότητα, βεβαιωθείτε ότι το <a>πιστοποιητικό SSL</a> του διακομιστή είναι έμπιστο και ότι κάποιο πρόσθετο περιηγητή δεν αποτρέπει τα αιτήματα.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Δεν είναι δυνατή η σύνδεση στον κεντρικό διακομιστή μέσω HTTP όταν μια διεύθυνση HTTPS βρίσκεται στην μπάρα του περιηγητή. Είτε χρησιμοποιήστε HTTPS ή <a>ενεργοποιήστε τα μη ασφαλή σενάρια εντολών</a>.",
@@ -208,15 +202,12 @@
     "Notification targets": "Στόχοι ειδοποιήσεων",
     "Today": "Σήμερα",
     "Friday": "Παρασκευή",
-    "On": "Ενεργό",
     "Changelog": "Αλλαγές",
-    "Waiting for response from server": "Αναμονή απάντησης από τον διακομιστή",
     "This Room": "Στο δωμάτιο",
     "Unavailable": "Μη διαθέσιμο",
     "Send": "Αποστολή",
     "Source URL": "Πηγαίο URL",
     "No update available.": "Δεν υπάρχει διαθέσιμη ενημέρωση.",
-    "Noisy": "Δυνατά",
     "Tuesday": "Τρίτη",
     "Unnamed room": "Ανώνυμο δωμάτιο",
     "Saturday": "Σάββατο",
@@ -233,7 +224,6 @@
     "Error encountered (%(errorDetail)s).": "Παρουσιάστηκε σφάλμα (%(errorDetail)s).",
     "Low Priority": "Χαμηλή προτεραιότητα",
     "What's New": "Τι νέο υπάρχει",
-    "Off": "Ανενεργό",
     "AM": "ΠΜ",
     "PM": "ΜΜ",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
@@ -669,7 +659,6 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Ο διαχειριστής του διακομιστή σας έχει απενεργοποιήσει την κρυπτογράφηση από άκρο σε άκρο από προεπιλογή σε ιδιωτικά δωμάτια & άμεσα μηνύματα.",
     "Message search": "Αναζήτηση μηνυμάτων",
     "Security & Privacy": "Ασφάλεια & Απόρρητο",
-    "Only invited people can join.": "Μόνο προσκεκλημένοι μπορούν να συμμετάσχουν.",
     "Allow people to preview your space before they join.": "Επιτρέψτε στους χρήστες να κάνουν προεπισκόπηση του χώρου σας προτού να εγγραφούν.",
     "Invite people": "Προσκαλέστε άτομα",
     "Unknown App": "Άγνωστη εφαρμογή",
@@ -792,13 +781,6 @@
     "Show sidebar": "Εμφάνιση πλαϊνής μπάρας",
     "Connecting": "Συνδέεται",
     "unknown person": "άγνωστο άτομο",
-    "Send as message": "Αποστολή ως μήνυμα",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Συμβουλή: Ξεκινήστε το μήνυμά σας με <code>//</code> για να το ξεκινήσετε με κάθετο.",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Μπορείτε να χρησιμοποιήσετε το <code>/help</code> για να παραθέσετε τις διαθέσιμες εντολές. Μήπως θέλατε να το στείλετε αυτό ως μήνυμα;",
-    "Unrecognised command: %(commandText)s": "Μη αναγνωρισμένη εντολή: %(commandText)s",
-    "Unknown Command": "Αγνωστη εντολή",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Αυτή είναι η λίστα με τους χρήστες/διακομιστές που έχετε αποκλείσει - μην φύγετε από το δωμάτιο!",
-    "My Ban List": "Η λίστα απαγορεύσεων μου",
     "Heart": "Καρδιά",
     "Cake": "Τούρτα",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Αυτή η αναβάθμιση θα επιτρέψει σε μέλη επιλεγμένων Χώρων πρόσβαση σε αυτό το δωμάτιο χωρίς πρόσκληση.",
@@ -895,9 +877,6 @@
     "Session ID:": "Αναγνωριστικό συνεδρίας:",
     "exists": "υπάρχει",
     "Homeserver feature support:": "Υποστήριξη λειτουργιών κεντρικού διακομιστή:",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Το προσαρμοσμένο μέγεθος γραμματοσειράς μπορεί να είναι μόνο μεταξύ %(min)s pt και %(max)s pt",
-    "Size must be a number": "Το μέγεθος πρέπει να είναι ένας αριθμός",
-    "Hey you. You're the best!": "Είσαι ο καλύτερος!",
     "Message search initialisation failed": "Η αρχικοποίηση αναζήτησης μηνυμάτων απέτυχε",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "Το %(brand)s δεν μπορεί να αποθηκεύσει με ασφάλεια κρυπτογραφημένα μηνύματα τοπικά ενώ εκτελείται σε πρόγραμμα περιήγησης ιστού. Χρησιμοποιήστε την <desktopLink>%(brand)s Επιφάνεια εργασίας</desktopLink> για να εμφανίζονται κρυπτογραφημένα μηνύματα στα αποτελέσματα αναζήτησης.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "Λείπουν ορισμένα στοιχεία από το %(brand)s που απαιτούνται για την ασφαλή αποθήκευση κρυπτογραφημένων μηνυμάτων τοπικά. Εάν θέλετε να πειραματιστείτε με αυτό το χαρακτηριστικό, δημιουργήστε μια προσαρμοσμένη %(brand)s επιφάνεια εργασίαςμε <nativeLink>προσθήκη στοιχείων αναζήτησης</nativeLink>.",
@@ -964,10 +943,6 @@
         "other": "& %(count)s περισσότερα"
     },
     "Upgrade required": "Απαιτείται αναβάθμιση",
-    "Anyone can find and join.": "Οποιοσδήποτε μπορεί να το βρει και να εγγραφεί.",
-    "Private (invite only)": "Ιδιωτικό (μόνο με πρόσκληση)",
-    "Large": "Μεγάλο",
-    "Use between %(min)s pt and %(max)s pt": "Χρήση μεταξύ %(min)s pt και %(max)s pt",
     "Room ID or address of ban list": "Ταυτότητα δωματίου ή διεύθυνση της λίστας απαγορευσων",
     "If this isn't what you want, please use a different tool to ignore users.": "Εάν αυτό δεν είναι αυτό που θέλετε, χρησιμοποιήστε ένα διαφορετικό εργαλείο για να αγνοήσετε τους χρήστες.",
     "Subscribing to a ban list will cause you to join it!": "Η εγγραφή σε μια λίστα απαγορεύσων θα σας κάνει να εγγραφείτε σε αυτήν!",
@@ -996,7 +971,6 @@
     "Something went wrong. Please try again or view your console for hints.": "Κάτι πήγε στραβά. Δοκιμάστε ξανά ή δείτε την κονσόλα σας για συμβουλές.",
     "Error adding ignored user/server": "Σφάλμα κατά την προσθήκη χρήστη/διακομιστή που αγνοήθηκε",
     "Ignored/Blocked": "Αγνοήθηκε/Αποκλείστηκε",
-    "Keyboard": "Πληκτρολόγιο",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Για να αναφέρετε ένα ζήτημα ασφάλειας που σχετίζεται με το Matrix, διαβάστε την <a>Πολιτική Γνωστοποίησης Ασφαλείας</a> του Matrix.org.",
     "Deactivate account": "Απενεργοποίηση λογαριασμού",
     "Signature upload failed": "Αποτυχία μεταφόρτωσης υπογραφής",
@@ -1014,8 +988,6 @@
     "Share entire screen": "Κοινή χρήση ολόκληρης της οθόνης",
     "Sorry, you can't edit a poll after votes have been cast.": "Λυπούμαστε, δεν μπορείτε να επεξεργαστείτε μια δημοσκόπηση μετά την ψηφοφορία.",
     "Can't edit poll": "Αδυναμία επεξεργασίας δημοσκόπησης",
-    "Unable to load map": "Αδυναμία φόρτωσης χάρτη",
-    "Expand map": "Ανάπτυξη χάρτη",
     "You sent a verification request": "Στείλατε ένα αίτημα επαλήθευσης",
     "Forget this room": "Ξεχάστε αυτό το δωμάτιο",
     "Reason: %(reason)s": "Αιτία: %(reason)s",
@@ -1449,10 +1421,6 @@
     "Edited at %(date)s. Click to view edits.": "Επεξεργάστηκε στις %(date)s. Κάντε κλικ για να δείτε τις τροποποιήσεις.",
     "Edited at %(date)s": "Τροποποιήθηκε στις %(date)s",
     "Click to view edits": "Κάντε κλικ για να δείτε τις τροποποιήσεις",
-    "This room is a continuation of another conversation.": "Αυτό το δωμάτιο είναι η συνέχεια μιας άλλης συνομιλίας.",
-    "Click here to see older messages.": "Κάντε κλικ εδώ για να δείτε παλαιότερα μηνύματα.",
-    "Message deleted on %(date)s": "Το μήνυμα διαγράφηκε στις %(date)s",
-    "%(reactors)s reacted with %(content)s": "%(reactors)s αντέδρασαν με %(content)s",
     "Add reaction": "Προσθέστε αντίδραση",
     "Error processing voice message": "Σφάλμα επεξεργασίας του φωνητικού μηνύματος",
     "%(count)s votes": {
@@ -1574,7 +1542,6 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Αυτό το δωμάτιο τρέχει την έκδοση <roomVersion />, την οποία ο κεντρικός διακομιστής έχει επισημάνει ως <i>ασταθής</i>.",
     "This room has already been upgraded.": "Αυτό το δωμάτιο έχει ήδη αναβαθμιστεί.",
     "Discovery": "Ανακάλυψη",
-    "Developer tools": "Εργαλεία προγραμματιστή",
     "Got It": "Κατανοώ",
     "Sending": "Αποστολή",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Μπορείτε να χρησιμοποιήσετε τις προσαρμοσμένες επιλογές διακομιστή για να συνδεθείτε σε άλλους διακομιστές Matrix, καθορίζοντας μια διαφορετική διεύθυνση URL του κεντρικού διακομιστή. Αυτό σας επιτρέπει να χρησιμοποιείτε το %(brand)s με έναν υπάρχοντα λογαριασμό Matrix σε διαφορετικό τοπικό διακομιστή.",
@@ -1687,9 +1654,6 @@
     "We couldn't send your location": "Αδυναμία αποστολής της τοποθεσίας σας",
     "Click to drop a pin": "Κλικ για να εισάγετε μια καρφίτσα",
     "Share for %(duration)s": "Κοινή χρήση για %(duration)s",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>αντέδρασε με %(shortName)s</reactedWith>",
-    "Shared a location: ": "Μοιράστηκε μια τοποθεσία: ",
-    "Shared their location: ": "Μοιράστηκαν την τοποθεσία τους: ",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Έχετε αγνοήσει αυτόν τον χρήστη, επομένως τα μηνύματα του είναι κρυφά. <a>Εμφάνιση ούτως ή άλλως.</a>",
     "They won't be able to access whatever you're not an admin of.": "Δε θα μπορούν να έχουν πρόσβαση σε λειτουργίες δεν είστε διαχειριστής.",
     "Ban them from specific things I'm able to": "Αποκλεισμός από συγκεκριμένες λειτουργίες που έχω δικαίωμα",
@@ -2169,7 +2133,10 @@
         "qr_code": "Κωδικός QR",
         "feedback": "Ανατροφοδότηση",
         "all_rooms": "Όλα τα δωμάτια",
-        "orphan_rooms": "Άλλα δωμάτια"
+        "orphan_rooms": "Άλλα δωμάτια",
+        "preview_message": "Είσαι ο καλύτερος!",
+        "on": "Ενεργό",
+        "off": "Ανενεργό"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -2421,7 +2388,8 @@
         "collecting_logs": "Συγκέντρωση πληροφοριών",
         "uploading_logs": "Μεταφόρτωση αρχείων καταγραφής",
         "downloading_logs": "Λήψη αρχείων καταγραφής",
-        "create_new_issue": "Παρακαλούμε <newIssueLink>δημιουργήστε ένα νέο issue</newIssueLink> στο GitHub ώστε να μπορέσουμε να διερευνήσουμε αυτό το σφάλμα."
+        "create_new_issue": "Παρακαλούμε <newIssueLink>δημιουργήστε ένα νέο issue</newIssueLink> στο GitHub ώστε να μπορέσουμε να διερευνήσουμε αυτό το σφάλμα.",
+        "waiting_for_server": "Αναμονή απάντησης από τον διακομιστή"
     },
     "time": {
         "seconds_left": "%(seconds)ss απομένουν",
@@ -2501,7 +2469,8 @@
             "enable_email_notifications": "Ενεργοποίηση ειδοποιήσεων email για %(email)s",
             "enable_desktop_notifications_session": "Ενεργοποιήστε τις ειδοποιήσεις στον υπολογιστή για αυτήν τη συνεδρία",
             "show_message_desktop_notification": "Εμφάνιση του μηνύματος στην ειδοποίηση στον υπολογιστή",
-            "enable_audible_notifications_session": "Ενεργοποιήστε τις ηχητικές ειδοποιήσεις για αυτήν τη συνεδρία"
+            "enable_audible_notifications_session": "Ενεργοποιήστε τις ηχητικές ειδοποιήσεις για αυτήν τη συνεδρία",
+            "noisy": "Δυνατά"
         },
         "appearance": {
             "layout_irc": "IRC (Πειραματικό)",
@@ -2522,7 +2491,12 @@
             "timeline_image_size": "Μέγεθος εικόνας στη γραμμή χρόνου",
             "timeline_image_size_default": "Προεπιλογή",
             "timeline_image_size_large": "Μεγάλο",
-            "custom_font_size": "Χρησιμοποιήστε προσαρμοσμένο μέγεθος"
+            "custom_font_size": "Χρησιμοποιήστε προσαρμοσμένο μέγεθος",
+            "font_size_nan": "Το μέγεθος πρέπει να είναι ένας αριθμός",
+            "font_size_limit": "Το προσαρμοσμένο μέγεθος γραμματοσειράς μπορεί να είναι μόνο μεταξύ %(min)s pt και %(max)s pt",
+            "font_size_valid": "Χρήση μεταξύ %(min)s pt και %(max)s pt",
+            "image_size_default": "Προεπιλογή",
+            "image_size_large": "Μεγάλο"
         },
         "inline_url_previews_room_account": "Ενεργοποίηση προεπισκόπισης URL για αυτό το δωμάτιο (επηρεάζει μόνο εσάς)",
         "inline_url_previews_room": "Ενεργοποιήστε τις προεπισκοπήσεις URL από προεπιλογή για τους συμμετέχοντες σε αυτό το δωμάτιο",
@@ -2561,6 +2535,9 @@
         },
         "voip": {
             "mirror_local_feed": "Αντικατοπτρίστε την τοπική ροή βίντεο"
+        },
+        "keyboard": {
+            "title": "Πληκτρολόγιο"
         }
     },
     "devtools": {
@@ -2631,7 +2608,8 @@
         "category_other": "Άλλα",
         "widget_screenshots": "Ενεργοποίηση στιγμιότυπων οθόνης μικροεφαρμογών σε υποστηριζόμενες μικροεφαρμογές",
         "show_hidden_events": "Εμφάνιση κρυφών συμβάντων στη γραμμή χρόνου",
-        "developer_mode": "Λειτουργία για προγραμματιστές"
+        "developer_mode": "Λειτουργία για προγραμματιστές",
+        "title": "Εργαλεία προγραμματιστή"
     },
     "export_chat": {
         "html": "HTML",
@@ -2738,7 +2716,12 @@
             "kick": "%(senderName)s αφαιρέθηκε %(targetName)s"
         },
         "m.room.topic": "Ο %(senderDisplayName)s άλλαξε το θέμα σε \"%(topic)s\".",
-        "m.room.avatar": "Ο %(senderDisplayName)s άλλαξε την εικόνα του δωματίου.",
+        "m.room.avatar": {
+            "changed": "Ο %(senderDisplayName)s άλλαξε την εικόνα του δωματίου.",
+            "lightbox_title": "Ο %(senderDisplayName)s άλλαξε την προσωπική εικόνα του %(roomName)s",
+            "removed": "Ο %(senderDisplayName)s διέγραψε την προσωπική εικόνα του δωματίου.",
+            "changed_img": "Ο %(senderDisplayName)s άλλαξε την εικόνα του δωματίου σε <img/>"
+        },
         "m.room.name": {
             "remove": "Ο %(senderDisplayName)s διέγραψε το όνομα του δωματίου.",
             "change": "Ο %(senderDisplayName)s άλλαξε το όνομα δωματίου από %(oldRoomName)s σε %(newRoomName)s.",
@@ -2804,7 +2787,11 @@
             "removed": "Η μικροεφαρμογή %(widgetName)s αφαιρέθηκε από τον/την %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s έχει ενημερώσει τη διάταξη του δωματίου",
-        "m.location": "%(senderName)s μοιράστηκαν την τοποθεσία τους",
+        "m.location": {
+            "full": "%(senderName)s μοιράστηκαν την τοποθεσία τους",
+            "self_location": "Μοιράστηκαν την τοποθεσία τους: ",
+            "location": "Μοιράστηκε μια τοποθεσία: "
+        },
         "self_redaction": "Το μήνυμα διαγράφηκε",
         "redaction": "Το μήνυμα διαγράφηκε από %(name)s",
         "m.poll.start": "%(senderName)s ξεκίνησε μια δημοσκόπηση - %(pollQuestion)s",
@@ -2977,7 +2964,18 @@
         "no_permission_messages_before_invite": "Δεν έχετε άδεια προβολής των μηνυμάτων που δημιουργήθηκαν πριν από την πρόσκληση σας.",
         "no_permission_messages_before_join": "Δεν έχετε άδεια προβολής των μηνυμάτων που δημιουργήθηκαν πριν από την εγγραφή σας.",
         "encrypted_historical_messages_unavailable": "Κρυπτογραφημένα μηνύματα πριν από αυτό το σημείο δεν είναι διαθέσιμα.",
-        "historical_messages_unavailable": "Δεν μπορείτε να δείτε προηγούμενα μηνύματα"
+        "historical_messages_unavailable": "Δεν μπορείτε να δείτε προηγούμενα μηνύματα",
+        "reactions": {
+            "label": "%(reactors)s αντέδρασαν με %(content)s",
+            "tooltip": "<reactors/><reactedWith>αντέδρασε με %(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "Το μήνυμα διαγράφηκε στις %(date)s"
+        },
+        "m.room.create": {
+            "continuation": "Αυτό το δωμάτιο είναι η συνέχεια μιας άλλης συνομιλίας.",
+            "see_older_messages": "Κάντε κλικ εδώ για να δείτε παλαιότερα μηνύματα."
+        }
     },
     "slash_command": {
         "spoiler": "Στέλνει το δοθέν μήνυμα ως spoiler",
@@ -3039,7 +3037,15 @@
         "failed_find_room": "Η εντολή απέτυχε: Δεν είναι δυνατή η εύρεση δωματίου (%(roomId)s",
         "failed_find_user": "Δεν βρέθηκε ο χρήστης στο δωμάτιο",
         "op": "Καθορίζει το επίπεδο δύναμης ενός χρήστη",
-        "deop": "Deop χρήστη με το συγκεκριμένο αναγνωριστικό"
+        "deop": "Deop χρήστη με το συγκεκριμένο αναγνωριστικό",
+        "server_error": "Σφάλμα διακομιστή",
+        "command_error": "Σφάλμα εντολής",
+        "server_error_detail": "Ο διακομιστής μπορεί να είναι μη διαθέσιμος, υπερφορτωμένος, ή κάτι άλλο να πήγε στραβά.",
+        "unknown_command": "Αγνωστη εντολή",
+        "unknown_command_detail": "Μη αναγνωρισμένη εντολή: %(commandText)s",
+        "unknown_command_help": "Μπορείτε να χρησιμοποιήσετε το <code>/help</code> για να παραθέσετε τις διαθέσιμες εντολές. Μήπως θέλατε να το στείλετε αυτό ως μήνυμα;",
+        "unknown_command_hint": "Συμβουλή: Ξεκινήστε το μήνυμά σας με <code>//</code> για να το ξεκινήσετε με κάθετο.",
+        "unknown_command_button": "Αποστολή ως μήνυμα"
     },
     "presence": {
         "busy": "Απασχολημένος",
@@ -3146,7 +3152,10 @@
             "notifications.room": "Ειδοποιήστε όλους"
         },
         "security": {
-            "strict_encryption": "Μη στέλνετε ποτέ κρυπτογραφημένα μηνύματα σε μη επαληθευμένες συνεδρίες σε αυτό το δωμάτιο από αυτή τη συνεδρία"
+            "strict_encryption": "Μη στέλνετε ποτέ κρυπτογραφημένα μηνύματα σε μη επαληθευμένες συνεδρίες σε αυτό το δωμάτιο από αυτή τη συνεδρία",
+            "join_rule_invite": "Ιδιωτικό (μόνο με πρόσκληση)",
+            "join_rule_invite_description": "Μόνο προσκεκλημένοι μπορούν να συμμετάσχουν.",
+            "join_rule_public_description": "Οποιοσδήποτε μπορεί να το βρει και να εγγραφεί."
         }
     },
     "encryption": {
@@ -3434,6 +3443,12 @@
         "failed_permission": "Δε δόθηκε άδεια στο %(brand)s να λάβει την τοποθεσία σας. Επιτρέψτε την πρόσβαση στην τοποθεσία από τις ρυθμίσεις του προγράμματος περιήγησής σας.",
         "failed_generic": "Αποτυχία λήψης της τοποθεσίας σας. Παρακαλώ δοκιμάστε ξανά αργότερα.",
         "failed_timeout": "Έληξε η προσπάθεια λήψης της τοποθεσίας σας. Παρακαλώ δοκιμάστε ξανά αργότερα.",
-        "failed_unknown": "Άγνωστο σφάλμα λήψης της τοποθεσίας. Παρακαλώ δοκιμάστε ξανά αργότερα."
+        "failed_unknown": "Άγνωστο σφάλμα λήψης της τοποθεσίας. Παρακαλώ δοκιμάστε ξανά αργότερα.",
+        "expand_map": "Ανάπτυξη χάρτη",
+        "failed_load_map": "Αδυναμία φόρτωσης χάρτη"
+    },
+    "labs_mjolnir": {
+        "room_name": "Η λίστα απαγορεύσεων μου",
+        "room_topic": "Αυτή είναι η λίστα με τους χρήστες/διακομιστές που έχετε αποκλείσει - μην φύγετε από το δωμάτιο!"
     }
 }

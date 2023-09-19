@@ -12,7 +12,6 @@
     "What's New": "آخِر المُستجدّات",
     "No update available.": "لا يوجد هناك أي تحديث.",
     "Changelog": "سِجل التغييرات",
-    "Waiting for response from server": "في انتظار الرد مِن الخادوم",
     "Thank you!": "شكرًا !",
     "What's new?": "ما الجديد ؟",
     "Use Single Sign On to continue": "استعمل الولوج الموحّد للمواصلة",
@@ -88,7 +87,6 @@
     "Missing room_id in request": "رقم الغرفة مفقود في الطلب",
     "Room %(roomId)s not visible": "الغرفة %(roomId)s غير مرئية",
     "Missing user_id in request": "رقم المستخدم مفقود في الطلب",
-    "Command error": "خطأ في الأمر",
     "Error upgrading room": "خطأ في ترقية الغرفة",
     "Double check that your server supports the room version chosen and try again.": "تحقق مرة أخرى من أن سيرفرك يدعم إصدار الغرفة المختار وحاول مرة أخرى.",
     "Use an identity server": "خادوم التعريف",
@@ -151,13 +149,6 @@
     "Add an Integration": "أضف تكاملاً",
     "Failed to copy": "تعذر النسخ",
     "Copied!": "نُسخ!",
-    "This room is a continuation of another conversation.": "هذه الغرفة هي استمرار لمحادثة أخرى.",
-    "Click here to see older messages.": "انقر هنا لترى رسائل أقدم.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s غير صورة الغرفة إلى <img/>",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s حذف صورة الغرفة.",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s غير صورة الغرفة %(roomName)s",
-    "Message deleted on %(date)s": "حذفت الرسالة في %(date)s",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>تفاعلو ب%(shortName)s</reactedWith>",
     "Error decrypting video": "تعذر فك تشفير الفيديو",
     "You sent a verification request": "أنت أرسلت طلب تحقق",
     "%(name)s wants to verify": "%(name)s يريد التحقق",
@@ -230,13 +221,6 @@
     "Add some now": "أضف البعض الآن",
     "You don't currently have any stickerpacks enabled": "ليس لديك حاليًا أي حزم ملصقات ممكّنة",
     "Failed to connect to integration manager": "تعذر الاتصال بمدير التكامل",
-    "Send as message": "أرسل كرسالة",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "تلميح: ابدأ رسالتك ب<code>//</code> لتبدأها بشرطة مائلة.",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "يمكنك استخدام <code>المساعدة</code> لسرد الأوامر المتاحة. هل قصدت إرسال هذا كرسالة؟",
-    "Unrecognised command: %(commandText)s": "أمر غير معروف: %(commandText)s",
-    "Unknown Command": "أمر غير معروف",
-    "Server unavailable, overloaded, or something else went wrong.": "الخادم غير متوفر أو محمّل فوق طاقته أو وقع خطأ غير ذلك.",
-    "Server error": "خطأ في الخادم",
     "Search…": "بحث …",
     "This Room": "هذه الغرفة",
     "Only room administrators will see this warning": "لن يرى هذا التحذير سوى مديرو الغرفة",
@@ -356,10 +340,6 @@
     "Account": "الحساب",
     "Phone numbers": "أرقام الهواتف",
     "Email addresses": "عنوان البريد الإلكتروني",
-    "Use between %(min)s pt and %(max)s pt": "استعمل ما بين %(min)spt و %(max)sps",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "الحجم المخصص للخط يجب أن ينحصر بين %(min)spt و %(max)spt",
-    "Size must be a number": "الحجم يجب أن يكون رقمًا",
-    "Hey you. You're the best!": "يا من ترى هذه الرسالة. أنت الأفضل!",
     "New version available. <a>Update now.</a>": "ثمة إصدارٌ جديد. <a>حدّث الآن.</a>",
     "Check for update": "ابحث عن تحديث",
     "Error encountered (%(errorDetail)s).": "صودِفَ خطأ: (%(errorDetail)s).",
@@ -414,9 +394,6 @@
     "Profile": "الملف الشخصي",
     "The operation could not be completed": "تعذر إتمام العملية",
     "Failed to save your profile": "تعذر حفظ ملفك الشخصي",
-    "Noisy": "مزعج",
-    "On": "مشتغل",
-    "Off": "مطفأ",
     "Notification targets": "أهداف الإشعار",
     "You've successfully verified your device!": "لقد نجحت في التحقق من جهازك!",
     "Verify all users in a room to ensure it's secure.": "تحقق من جميع المستخدمين في الغرفة للتأكد من أنها آمنة.",
@@ -539,8 +516,6 @@
     "Verify this user by confirming the following emoji appear on their screen.": "تحقق من هذا المستخدم من خلال التأكيد من ظهور الرموز التعبيرية التالية على شاشته.",
     "Got It": "فهمت",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "الرسائل الآمنة مع هذا المستخدم مشفرة من طرفك إلى طرفه ولا يمكن قراءتها من قبل جهات خارجية.",
-    "This is your list of users/servers you have blocked - don't leave the room!": "هذه قائمتك للمستخدمين / الخوادم التي حظرت - لا تغادر الغرفة!",
-    "My Ban List": "قائمة الحظر",
     "IRC display name width": "عرض الاسم الظاهر لIRC",
     "Change notification settings": "تغيير إعدادات الإشعار",
     "Please contact your homeserver administrator.": "يُرجى تواصلك مع مدير خادمك.",
@@ -919,7 +894,10 @@
         "system_alerts": "تنبيهات النظام",
         "secure_backup": "تأمين النسخ الاحتياطي",
         "cross_signing": "التوقيع المتبادل",
-        "identity_server": "خادوم الهوية"
+        "identity_server": "خادوم الهوية",
+        "preview_message": "يا من ترى هذه الرسالة. أنت الأفضل!",
+        "on": "مشتغل",
+        "off": "مطفأ"
     },
     "action": {
         "continue": "واصِل",
@@ -1021,7 +999,8 @@
         "collecting_logs": "تجميع السجلات",
         "uploading_logs": "رفع السجلات",
         "downloading_logs": "تحميل السجلات",
-        "create_new_issue": "الرجاء <newIssueLink> إنشاء إشكال جديد</newIssueLink> على GitHub حتى نتمكن من التحقيق في هذا الخطأ."
+        "create_new_issue": "الرجاء <newIssueLink> إنشاء إشكال جديد</newIssueLink> على GitHub حتى نتمكن من التحقيق في هذا الخطأ.",
+        "waiting_for_server": "في انتظار الرد مِن الخادوم"
     },
     "time": {
         "date_at_time": "%(date)s في %(time)s"
@@ -1057,7 +1036,8 @@
             "rule_encrypted_room_one_to_one": "رسائل مشفرة في المحادثات المباشرة",
             "enable_desktop_notifications_session": "تمكين إشعارات سطح المكتب لهذا الاتصال",
             "show_message_desktop_notification": "إظهار الرسالة في إشعارات سطح المكتب",
-            "enable_audible_notifications_session": "تمكين الإشعارات الصوتية لهذا الاتصال"
+            "enable_audible_notifications_session": "تمكين الإشعارات الصوتية لهذا الاتصال",
+            "noisy": "مزعج"
         },
         "appearance": {
             "heading": "تخصيص مظهرك",
@@ -1073,7 +1053,11 @@
             "font_size": "حجم الخط",
             "custom_font_description": "قم بتعيين اسم الخط المثبت على نظامك وسيحاول %(brand)s استخدامه.",
             "timeline_image_size_default": "المبدئي",
-            "custom_font_size": "استخدام حجم مخصص"
+            "custom_font_size": "استخدام حجم مخصص",
+            "font_size_nan": "الحجم يجب أن يكون رقمًا",
+            "font_size_limit": "الحجم المخصص للخط يجب أن ينحصر بين %(min)spt و %(max)spt",
+            "font_size_valid": "استعمل ما بين %(min)spt و %(max)sps",
+            "image_size_default": "المبدئي"
         },
         "inline_url_previews_room_account": "تمكين معاينة الروابط لهذه الغرفة (يؤثر عليك فقط)",
         "inline_url_previews_room": "تمكين معاينة الروابط أصلاً لأي مشارك في هذه الغرفة",
@@ -1214,6 +1198,21 @@
             "changed_rule_rooms": "%(senderName)s قاعدة متغيرة التي تحظر الغرف المطابقة %(oldGlob)s من أجل مطابقة %(newGlob)s من أجل %(reason)s",
             "changed_rule_servers": "%(senderName)s قاعدة متغيرة التي تحظر سيرفرات مطابقة %(oldGlob)s من أجل مطابقة %(newGlob)s من أجل %(reason)s",
             "changed_rule_glob": "%(senderName)s قاعدة حظر محدثة التي طابقت %(oldGlob)s لتطابق %(newGlob)s من أجل %(reason)s"
+        },
+        "reactions": {
+            "tooltip": "<reactors/><reactedWith>تفاعلو ب%(shortName)s</reactedWith>"
+        },
+        "redacted": {
+            "tooltip": "حذفت الرسالة في %(date)s"
+        },
+        "m.room.avatar": {
+            "lightbox_title": "%(senderDisplayName)s غير صورة الغرفة %(roomName)s",
+            "removed": "%(senderDisplayName)s حذف صورة الغرفة.",
+            "changed_img": "%(senderDisplayName)s غير صورة الغرفة إلى <img/>"
+        },
+        "m.room.create": {
+            "continuation": "هذه الغرفة هي استمرار لمحادثة أخرى.",
+            "see_older_messages": "انقر هنا لترى رسائل أقدم."
         }
     },
     "slash_command": {
@@ -1261,7 +1260,15 @@
         "join": "الانضمام الى الغرفة بحسب العنوان المعطى",
         "failed_find_user": "لم يستطع ايجاد مستخدم في غرفة",
         "op": "قم بتعريف مستوى الطاقة للمستخدم",
-        "deop": "يُلغي إدارية المستخدم حسب المعرّف المعطى"
+        "deop": "يُلغي إدارية المستخدم حسب المعرّف المعطى",
+        "server_error": "خطأ في الخادم",
+        "command_error": "خطأ في الأمر",
+        "server_error_detail": "الخادم غير متوفر أو محمّل فوق طاقته أو وقع خطأ غير ذلك.",
+        "unknown_command": "أمر غير معروف",
+        "unknown_command_detail": "أمر غير معروف: %(commandText)s",
+        "unknown_command_help": "يمكنك استخدام <code>المساعدة</code> لسرد الأوامر المتاحة. هل قصدت إرسال هذا كرسالة؟",
+        "unknown_command_hint": "تلميح: ابدأ رسالتك ب<code>//</code> لتبدأها بشرطة مائلة.",
+        "unknown_command_button": "أرسل كرسالة"
     },
     "presence": {
         "online_for": "متصل منذ %(duration)s",
@@ -1457,5 +1464,9 @@
             "see_videos_sent_this_room": "أظهر الفيديوهات المرسلة إلى هذه الغرفة",
             "see_videos_sent_active_room": "أظهر الفيديوهات المرسلة إلى هذه غرفتك النشطة"
         }
+    },
+    "labs_mjolnir": {
+        "room_name": "قائمة الحظر",
+        "room_topic": "هذه قائمتك للمستخدمين / الخوادم التي حظرت - لا تغادر الغرفة!"
     }
 }

@@ -64,7 +64,6 @@
     "Your browser does not support the required cryptography extensions": "Nettlesaren din støttar ikkje dei naudsynte kryptografiske utvidingane",
     "Not a valid %(brand)s keyfile": "Ikkje ei gyldig %(brand)s-nykelfil",
     "Authentication check failed: incorrect password?": "Authentiseringsforsøk mislukkast: feil passord?",
-    "Waiting for response from server": "Ventar på svar frå tenaren",
     "Incorrect verification code": "Urett stadfestingskode",
     "Phone": "Telefon",
     "No display name": "Ingen visningsnamn",
@@ -79,9 +78,6 @@
     "Authentication": "Authentisering",
     "Failed to set display name": "Fekk ikkje til å setja visningsnamn",
     "Notification targets": "Varselmål",
-    "Off": "Av",
-    "On": "På",
-    "Noisy": "Bråkete",
     "Drop file here to upload": "Slipp ein fil her for å lasta opp",
     "This event could not be displayed": "Denne hendingen kunne ikkje visast",
     "Unban": "Slepp inn att",
@@ -103,9 +99,6 @@
     "Invited": "Invitert",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (tilgangsnivå %(powerLevelNumber)s)",
     "You do not have permission to post to this room": "Du har ikkje lov til å senda meldingar i dette rommet",
-    "Server error": "Noko gjekk gale med tenaren",
-    "Server unavailable, overloaded, or something else went wrong.": "Tenar utilgjengeleg, overlasta eller har eit anna problem.",
-    "Command error": "Noko gjekk gale med kommandoen",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)st",
@@ -168,9 +161,6 @@
     "Invalid file%(extra)s": "Ugangbar fil%(extra)s",
     "Error decrypting image": "Noko gjekk gale med biletedekrypteringa",
     "Error decrypting video": "Noko gjekk gale med videodekrypteringa",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s endra avataren til %(roomName)s",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s fjerna romavataren.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s endra romavataren til <img/>",
     "Copied!": "Kopiert!",
     "Failed to copy": "Noko gjekk gale med kopieringa",
     "A text message has been sent to %(msisdn)s": "Ei tekstmelding vart send til %(msisdn)s",
@@ -435,10 +425,6 @@
     "Reject & Ignore user": "Avslå og ignorer brukar",
     "You're previewing %(roomName)s. Want to join it?": "Du førehandsviser %(roomName)s. Ynskjer du å bli med ?",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s kan ikkje førehandsvisast. Ynskjer du å bli med ?",
-    "Unknown Command": "Ukjend kommando",
-    "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Du kan bruka <code>/help</code> for å lista tilgjengelege kommandoar. Meinte du å senda dette som ein melding ?",
-    "Hint: Begin your message with <code>//</code> to start it with a slash.": "Hint: Start meldinga med <code>//</code> for å starte den med skråstrek.",
-    "Send as message": "Send som melding",
     "Failed to revoke invite": "Fekk ikkje til å trekke invitasjonen",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Fekk ikkje til å ta attende invitasjonen. Det kan ha oppstått ein mellombels feil på tenaren, eller så har ikkje du tilstrekkelege rettar for å ta attende invitasjonen.",
     "Revoke invite": "Trekk invitasjon",
@@ -460,7 +446,6 @@
     "Room avatar": "Rom-avatar",
     "Power level": "Tilgangsnivå",
     "Voice & Video": "Tale og video",
-    "This is your list of users/servers you have blocked - don't leave the room!": "Dette er di liste over brukarar/tenarar du har blokkert - ikkje forlat rommet!",
     "Show more": "Vis meir",
     "Display Name": "Visningsnamn",
     "Invalid theme schema.": "",
@@ -479,7 +464,6 @@
     "Upload completed": "Opplasting fullført",
     "Cancelled signature upload": "Kansellerte opplasting av signatur",
     "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
-    "My Ban List": "Mi blokkeringsliste",
     "Upgrade this room to the recommended room version": "Oppgrader dette rommet til anbefalt romversjon",
     "Your theme": "Ditt tema",
     "Failed to upgrade room": "Fekk ikkje til å oppgradere rom",
@@ -533,7 +517,6 @@
     "Delete Backup": "Slett sikkerheitskopi",
     "Restore from Backup": "Gjenopprett frå sikkerheitskopi",
     "Encryption": "Kryptografi",
-    "Custom font size can only be between %(min)s pt and %(max)s pt": "Tilpassa skriftstorleik må vere mellom %(min)s og %(max)s punkt",
     "Change notification settings": "Endra varslingsinnstillingar",
     "Enable desktop notifications": "Aktiver skrivebordsvarsel",
     "Video conference started by %(senderName)s": "Videokonferanse starta av %(senderName)s",
@@ -588,9 +571,6 @@
     "New keyword": "Nytt nøkkelord",
     "Keyword": "Nøkkelord",
     "Mentions & keywords": "Nemningar & nøkkelord",
-    "Keyboard": "Tastatur",
-    "Large": "Stor",
-    "Use between %(min)s pt and %(max)s pt": "Må vere mellom %(min)s og %(max)s punkt",
     "Identity server (%(server)s)": "Identietstenar (%(server)s)",
     "Change identity server": "Endre identitetstenar",
     "Not a valid identity server (status code %(code)s)": "Ikkje ein gyldig identietstenar (statuskode %(code)s)",
@@ -602,7 +582,6 @@
     "Show sidebar": "Vis sidestolpen",
     "Close sidebar": "Lat att sidestolpen",
     "Sidebar": "Sidestolpe",
-    "Expand map": "Utvid kart",
     "Expand quotes": "Utvid sitat",
     "Deactivate account": "Avliv brukarkontoen",
     "Enter a new identity server": "Skriv inn ein ny identitetstenar",
@@ -677,7 +656,9 @@
         "stickerpack": "Klistremerkepakke",
         "system_alerts": "Systemvarsel",
         "identity_server": "Identitetstenar",
-        "feedback": "Tilbakemeldingar"
+        "feedback": "Tilbakemeldingar",
+        "on": "På",
+        "off": "Av"
     },
     "action": {
         "continue": "Fortset",
@@ -775,7 +756,8 @@
         "additional_context": "Om du har meir info rundt korleis problemet oppstod, som kva du prøvde å gjere på det tidspunktet, brukar-IDar m.m ,inkluder gjerne den informasjonen her.",
         "send_logs": "Send loggar inn",
         "collecting_information": "Samlar versjonsinfo for programmet",
-        "collecting_logs": "Samlar loggar"
+        "collecting_logs": "Samlar loggar",
+        "waiting_for_server": "Ventar på svar frå tenaren"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)st %(minutes)sm %(seconds)ss att",
@@ -829,7 +811,8 @@
             "enable_email_notifications": "Aktiver varsel på epost for %(email)s",
             "enable_desktop_notifications_session": "Aktiver skrivebordsvarslingar for denne øka",
             "show_message_desktop_notification": "Vis meldinga i eit skriverbordsvarsel",
-            "enable_audible_notifications_session": "Aktiver høyrbare varslingar for denne økta"
+            "enable_audible_notifications_session": "Aktiver høyrbare varslingar for denne økta",
+            "noisy": "Bråkete"
         },
         "appearance": {
             "layout_irc": "IRC (eksperimentell)",
@@ -848,7 +831,11 @@
             "timeline_image_size": "Storleik for bilete på tidslinja",
             "timeline_image_size_default": "Opphavleg innstilling",
             "timeline_image_size_large": "Stor",
-            "custom_font_size": "Bruk ein spesifikk skriftstorleik"
+            "custom_font_size": "Bruk ein spesifikk skriftstorleik",
+            "font_size_limit": "Tilpassa skriftstorleik må vere mellom %(min)s og %(max)s punkt",
+            "font_size_valid": "Må vere mellom %(min)s og %(max)s punkt",
+            "image_size_default": "Opphavleg innstilling",
+            "image_size_large": "Stor"
         },
         "inline_url_previews_room_account": "Skru URL-førehandsvisingar på for dette rommet (påverkar deg åleine)",
         "inline_url_previews_room": "Skru URL-førehandsvisingar på som utgangspunkt for deltakarar i dette rommet",
@@ -868,6 +855,9 @@
             "strict_encryption": "Aldri send krypterte meldingar til ikkje-verifiserte sesjonar frå denne sesjonen",
             "enable_message_search": "Aktiver søk etter meldingar i krypterte rom",
             "manually_verify_all_sessions": "Manuelt verifiser alle eksterne økter"
+        },
+        "keyboard": {
+            "title": "Tastatur"
         }
     },
     "devtools": {
@@ -1044,6 +1034,11 @@
         "m.room.power_levels": {
             "changed": "%(senderName)s endra tilgangsnivået til %(powerLevelDiffText)s.",
             "user_from_to": "%(userId)s frå %(fromPowerLevel)s til %(toPowerLevel)s"
+        },
+        "m.room.avatar": {
+            "lightbox_title": "%(senderDisplayName)s endra avataren til %(roomName)s",
+            "removed": "%(senderDisplayName)s fjerna romavataren.",
+            "changed_img": "%(senderDisplayName)s endra romavataren til <img/>"
         }
     },
     "slash_command": {
@@ -1086,7 +1081,14 @@
         "join": "Legg saman rom med spesifisert adresse",
         "failed_find_user": "Klarde ikkje å finna brukaren i rommet",
         "op": "Sett tilgangsnivået til ein brukar",
-        "deop": "AvOPar brukarar med den gjevne IDen"
+        "deop": "AvOPar brukarar med den gjevne IDen",
+        "server_error": "Noko gjekk gale med tenaren",
+        "command_error": "Noko gjekk gale med kommandoen",
+        "server_error_detail": "Tenar utilgjengeleg, overlasta eller har eit anna problem.",
+        "unknown_command": "Ukjend kommando",
+        "unknown_command_help": "Du kan bruka <code>/help</code> for å lista tilgjengelege kommandoar. Meinte du å senda dette som ein melding ?",
+        "unknown_command_hint": "Hint: Start meldinga med <code>//</code> for å starte den med skråstrek.",
+        "unknown_command_button": "Send som melding"
     },
     "presence": {
         "online_for": "tilkopla i %(duration)s",
@@ -1197,5 +1199,12 @@
             "versions": "Versjonar",
             "clear_cache_reload": "Tøm buffer og last inn på nytt"
         }
+    },
+    "labs_mjolnir": {
+        "room_name": "Mi blokkeringsliste",
+        "room_topic": "Dette er di liste over brukarar/tenarar du har blokkert - ikkje forlat rommet!"
+    },
+    "location_sharing": {
+        "expand_map": "Utvid kart"
     }
 }

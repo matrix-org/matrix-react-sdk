@@ -110,7 +110,6 @@
     "Straight rows of keys are easy to guess": "Zulk’n aneengeslootn riksje toetsn es gemakkelik te roadn",
     "Short keyboard patterns are easy to guess": "Korte patroonn ip ’t toetsenbord wordn gemakkelik geroadn",
     "Please contact your homeserver administrator.": "Gelieve contact ip te neemn me den beheerder van je thuusserver.",
-    "Waiting for response from server": "Wachtn ip antwoord van de server",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Beveiligde berichtn me deze gebruuker zyn eind-tout-eind-versleuterd en kunn nie door derdn wordn geleezn.",
     "Got It": "’k Snappen ’t",
     "Verify this user by confirming the following emoji appear on their screen.": "Verifieert deze gebruuker deur te bevestign da zyn/heur scherm de volgende emoji toogt.",
@@ -207,9 +206,6 @@
     "Back up your keys before signing out to avoid losing them.": "Makt een back-up van je sleuters vooraleer da je jen afmeldt vo ze nie kwyt te speeln.",
     "Start using Key Backup": "Begint me de sleuterback-up te gebruukn",
     "Notification targets": "Meldiengsbestemmiengn",
-    "Off": "Uut",
-    "On": "An",
-    "Noisy": "Lawoaierig",
     "Unable to verify phone number.": "Kostege de telefongnumero nie verifieern.",
     "Incorrect verification code": "Onjuste verificoasjecode",
     "Verification code": "Verificoasjecode",
@@ -299,9 +295,6 @@
     "The conversation continues here.": "’t Gesprek goat hier verder.",
     "This room has been replaced and is no longer active.": "Dit gesprek is vervangn gewist en is nie langer actief.",
     "You do not have permission to post to this room": "J’èt geen toestemmienge voor in dit gesprek te postn",
-    "Server error": "Serverfoute",
-    "Server unavailable, overloaded, or something else went wrong.": "De server is ounbereikboar of overbelast, of der is etwat anders foutgegoan.",
-    "Command error": "Ipdrachtfoute",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)su",
@@ -378,12 +371,6 @@
     "Invalid file%(extra)s": "Oungeldig bestand %(extra)s",
     "Error decrypting image": "Foute by ’t ountsleutern van ’t fotootje",
     "Error decrypting video": "Foute by ’t ountsleutern van ’t filmtje",
-    "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>": "<reactors/><reactedWith>èt gereageerd me %(shortName)s</reactedWith>",
-    "%(senderDisplayName)s changed the avatar for %(roomName)s": "%(senderDisplayName)s èt den avatar van %(roomName)s veranderd",
-    "%(senderDisplayName)s removed the room avatar.": "%(senderDisplayName)s èt de gespreksavatar verwyderd.",
-    "%(senderDisplayName)s changed the room avatar to <img/>": "%(senderDisplayName)s èt de gespreksavatar angepast noa <img/>",
-    "This room is a continuation of another conversation.": "Dit gesprek es e voortzettienge van een ander gesprek.",
-    "Click here to see older messages.": "Klikt hier voor oudere berichtn te bekykn.",
     "Copied!": "Gekopieerd!",
     "Failed to copy": "Kopieern mislukt",
     "Add an Integration": "Voegt een integroasje toe",
@@ -709,7 +696,9 @@
         "stickerpack": "Stickerpakket",
         "system_alerts": "Systeemmeldiengn",
         "identity_server": "Identiteitsserver",
-        "integration_manager": "Integroasjebeheerder"
+        "integration_manager": "Integroasjebeheerder",
+        "on": "An",
+        "off": "Uut"
     },
     "action": {
         "continue": "Verdergoan",
@@ -796,7 +785,8 @@
         "github_issue": "GitHub-meldienge",
         "before_submitting": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
         "collecting_information": "App-versieinformoasje wor verzoameld",
-        "collecting_logs": "Logboekn worden verzoameld"
+        "collecting_logs": "Logboekn worden verzoameld",
+        "waiting_for_server": "Wachtn ip antwoord van de server"
     },
     "settings": {
         "use_12_hour_format": "Tyd in 12-uursformoat weregeevn (bv. 2:30pm)",
@@ -824,10 +814,12 @@
             "rule_suppress_notices": "Berichtn verzoundn deur e robot",
             "rule_tombstone": "Wanneer da gesprekkn ipgewoardeerd wordn",
             "rule_encrypted_room_one_to_one": "Versleuterde berichtn in twigesprekkn",
-            "show_message_desktop_notification": "Bericht toogn in bureaubladmeldienge"
+            "show_message_desktop_notification": "Bericht toogn in bureaubladmeldienge",
+            "noisy": "Lawoaierig"
         },
         "appearance": {
-            "timeline_image_size_default": "Standoard"
+            "timeline_image_size_default": "Standoard",
+            "image_size_default": "Standoard"
         },
         "inline_url_previews_room_account": "URL-voorvertoniengn in dit gesprek inschoakeln (geldt alleene vo joun)",
         "inline_url_previews_room": "URL-voorvertoniengn standoard vo de gebruukers in dit gesprek inschoakeln",
@@ -999,6 +991,18 @@
         "m.room.power_levels": {
             "changed": "%(senderName)s èt ’t machtsniveau van %(powerLevelDiffText)s gewyzigd.",
             "user_from_to": "%(userId)s van %(fromPowerLevel)s noa %(toPowerLevel)s"
+        },
+        "reactions": {
+            "tooltip": "<reactors/><reactedWith>èt gereageerd me %(shortName)s</reactedWith>"
+        },
+        "m.room.avatar": {
+            "lightbox_title": "%(senderDisplayName)s èt den avatar van %(roomName)s veranderd",
+            "removed": "%(senderDisplayName)s èt de gespreksavatar verwyderd.",
+            "changed_img": "%(senderDisplayName)s èt de gespreksavatar angepast noa <img/>"
+        },
+        "m.room.create": {
+            "continuation": "Dit gesprek es e voortzettienge van een ander gesprek.",
+            "see_older_messages": "Klikt hier voor oudere berichtn te bekykn."
         }
     },
     "slash_command": {
@@ -1030,7 +1034,10 @@
         "discardsession": "Forceert de huudige uutwoartsche groepssessie in e versleuterd gesprek vo verworpn te wordn",
         "me": "Toogt actie",
         "op": "Bepoal ’t machtsniveau van e gebruuker",
-        "deop": "Ountmachtigt de gebruuker me de gegeevn ID"
+        "deop": "Ountmachtigt de gebruuker me de gegeevn ID",
+        "server_error": "Serverfoute",
+        "command_error": "Ipdrachtfoute",
+        "server_error_detail": "De server is ounbereikboar of overbelast, of der is etwat anders foutgegoan."
     },
     "presence": {
         "online_for": "Online vo %(duration)s",
