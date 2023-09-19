@@ -14,7 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, ClientEvent, EventType, MatrixClient, RoomStateEvent, SyncState } from "matrix-js-sdk/src/matrix";
+import {
+    MatrixEvent,
+    ClientEvent,
+    EventType,
+    MatrixClient,
+    RoomStateEvent,
+    SyncState,
+    ClientStoppedError,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
@@ -260,7 +268,17 @@ export default class DeviceListener {
         return cli?.getRooms().some((r) => cli.isRoomEncrypted(r.roomId)) ?? false;
     }
 
-    private async recheck(): Promise<void> {
+    private recheck(): void {
+        this.doRecheck().catch((e) => {
+            if (e instanceof ClientStoppedError) {
+                // the client was stopped while recheck() was running. Nothing left to do.
+            } else {
+                logger.error("Error during `DeviceListener.recheck`", e);
+            }
+        });
+    }
+
+    private async doRecheck(): Promise<void> {
         if (!this.running || !this.client) return; // we have been stopped
         const cli = this.client;
 
@@ -289,7 +307,7 @@ export default class DeviceListener {
 
             // cross signing isn't enabled - nag to enable it
             // There are 3 different toasts for:
-            if (!(await crypto.getCrossSigningKeyId()) && cli.getStoredCrossSigningForUser(cli.getSafeUserId())) {
+            if (!(await crypto.getCrossSigningKeyId()) && (await crypto.userHasCrossSigningKeys())) {
                 // Cross-signing on account but this device doesn't trust the master key (verify this session)
                 showSetupEncryptionToast(SetupKind.VERIFY_THIS_SESSION);
                 this.checkKeyBackupStatus();

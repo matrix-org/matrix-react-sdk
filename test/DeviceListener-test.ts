@@ -15,9 +15,16 @@ limitations under the License.
 */
 
 import { Mocked, mocked } from "jest-mock";
-import { MatrixEvent, Room, MatrixClient, DeviceVerificationStatus, CryptoApi, Device } from "matrix-js-sdk/src/matrix";
+import {
+    MatrixEvent,
+    Room,
+    MatrixClient,
+    DeviceVerificationStatus,
+    CryptoApi,
+    Device,
+    ClientStoppedError,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 
@@ -84,6 +91,7 @@ describe("DeviceListener", () => {
             getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
             isCrossSigningReady: jest.fn().mockResolvedValue(true),
             isSecretStorageReady: jest.fn().mockResolvedValue(true),
+            userHasCrossSigningKeys: jest.fn(),
         } as unknown as Mocked<CryptoApi>;
         mockClient = getMockClientWithEventEmitter({
             isGuest: jest.fn(),
@@ -94,7 +102,6 @@ describe("DeviceListener", () => {
             isVersionSupported: jest.fn().mockResolvedValue(true),
             isInitialSyncComplete: jest.fn().mockReturnValue(true),
             getKeyBackupEnabled: jest.fn(),
-            getStoredCrossSigningForUser: jest.fn(),
             waitForClientWellKnown: jest.fn(),
             isRoomEncrypted: jest.fn(),
             getClientWellKnown: jest.fn(),
@@ -257,6 +264,20 @@ describe("DeviceListener", () => {
 
             expect(mockCrypto!.isCrossSigningReady).not.toHaveBeenCalled();
         });
+        it("correctly handles the client being stopped", async () => {
+            mockCrypto!.isCrossSigningReady.mockImplementation(() => {
+                throw new ClientStoppedError();
+            });
+            await createAndStart();
+            expect(logger.error).not.toHaveBeenCalled();
+        });
+        it("correctly handles other errors", async () => {
+            mockCrypto!.isCrossSigningReady.mockImplementation(() => {
+                throw new Error("blah");
+            });
+            await createAndStart();
+            expect(logger.error).toHaveBeenCalledTimes(1);
+        });
 
         describe("set up encryption", () => {
             const rooms = [{ roomId: "!room1" }, { roomId: "!room2" }] as unknown as Room[];
@@ -302,7 +323,7 @@ describe("DeviceListener", () => {
                 });
 
                 it("shows verify session toast when account has cross signing", async () => {
-                    mockClient!.getStoredCrossSigningForUser.mockReturnValue(new CrossSigningInfo(userId));
+                    mockCrypto!.userHasCrossSigningKeys.mockResolvedValue(true);
                     await createAndStart();
 
                     expect(mockCrypto!.getUserDeviceInfo).toHaveBeenCalled();
@@ -313,7 +334,7 @@ describe("DeviceListener", () => {
 
                 it("checks key backup status when when account has cross signing", async () => {
                     mockCrypto!.getCrossSigningKeyId.mockResolvedValue(null);
-                    mockClient!.getStoredCrossSigningForUser.mockReturnValue(new CrossSigningInfo(userId));
+                    mockCrypto!.userHasCrossSigningKeys.mockResolvedValue(true);
                     await createAndStart();
 
                     expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalled();

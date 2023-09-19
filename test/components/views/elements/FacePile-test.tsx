@@ -23,7 +23,7 @@ describe("<FacePile />", () => {
         const member = mkRoomMember("123", "456", "join");
 
         const { asFragment } = render(
-            <FacePile members={[member]} size="36px" overflow={false} tooltip={<>tooltip</>} />,
+            <FacePile members={[member]} size="36px" overflow={false} tooltipLabel="tooltip" />,
         );
 
         expect(asFragment()).toMatchSnapshot();

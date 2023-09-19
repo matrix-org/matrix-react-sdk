@@ -41,7 +41,6 @@ exports[`<AddExistingToSpaceDialog /> looks as expected 1`] = `
               loading="lazy"
               referrerpolicy="no-referrer"
               src="http://this.is.a.url/avatar.url/room.png"
-              title="!spaceid:example.com"
               width="40px"
             />
           </span>

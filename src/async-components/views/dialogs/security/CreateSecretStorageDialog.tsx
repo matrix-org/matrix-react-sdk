@@ -303,7 +303,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 [SSOAuthEntry.PHASE_PREAUTH]: {
                     title: _t("Use Single Sign On to continue"),
                     body: _t("To continue, use Single Sign On to prove your identity."),
-                    continueText: _t("Single Sign On"),
+                    continueText: _t("auth|sso"),
                     continueKind: "primary",
                 },
                 [SSOAuthEntry.PHASE_POSTAUTH]: {
@@ -601,7 +601,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     <div>{_t("Restore your key backup to upgrade your encryption")}</div>
                 </div>
             );
-            nextCaption = _t("Restore");
+            nextCaption = _t("action|restore");
         } else {
             authPrompt = <p>{_t("You'll need to authenticate with the server to confirm the upgrade.")}</p>;
         }

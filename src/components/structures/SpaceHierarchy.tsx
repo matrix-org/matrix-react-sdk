@@ -119,7 +119,7 @@ const Tile: React.FC<ITileProps> = ({
         room.name ||
         room.canonical_alias ||
         room.aliases?.[0] ||
-        (room.room_type === RoomType.Space ? _t("Unnamed Space") : _t("Unnamed Room"));
+        (room.room_type === RoomType.Space ? _t("common|unnamed_space") : _t("common|unnamed_room"));
 
     const [showChildren, toggleShowChildren] = useStateToggle(true);
     const [onFocus, isActive, ref] = useRovingTabIndex();
@@ -897,7 +897,7 @@ const SpaceHierarchy: React.FC<IProps> = ({ space, initialText = "", showRoom, a
                                 className="mx_SpaceHierarchy_list"
                                 onKeyDown={onKeyDownHandler}
                                 role="tree"
-                                aria-label={_t("Space")}
+                                aria-label={_t("common|space")}
                             >
                                 {results}
                             </ul>

@@ -1313,7 +1313,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 );
             }
 
-            buttonText = _t("Go");
+            buttonText = _t("action|go");
             goButtonFn = this.checkProfileAndStartDm;
             extraSection = (
                 <div className="mx_InviteDialog_section_hidden_suggestions_disclaimer">
@@ -1338,10 +1338,10 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             const isSpace = room?.isSpaceRoom();
             title = isSpace
                 ? _t("Invite to %(spaceName)s", {
-                      spaceName: room?.name || _t("Unnamed Space"),
+                      spaceName: room?.name || _t("common|unnamed_space"),
                   })
                 : _t("Invite to %(roomName)s", {
-                      roomName: room?.name || _t("Unnamed Room"),
+                      roomName: room?.name || _t("common|unnamed_room"),
                   });
 
             let helpTextUntranslated;

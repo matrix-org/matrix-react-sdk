@@ -24,6 +24,7 @@ import {
     RoomType,
     Room,
     HierarchyRoom,
+    JoinRule,
 } from "matrix-js-sdk/src/matrix";
 import { normalize } from "matrix-js-sdk/src/utils";
 import React, { ChangeEvent, RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
@@ -262,18 +263,22 @@ const findVisibleRoomMembers = (visibleRooms: Room[], cli: MatrixClient, filterD
 
 const roomAriaUnreadLabel = (room: Room, notification: RoomNotificationState): string | undefined => {
     if (notification.hasMentions) {
-        return _t("%(count)s unread messages including mentions.", {
+        return _t("a11y|n_unread_messages_mentions", {
             count: notification.count,
         });
     } else if (notification.hasUnreadCount) {
-        return _t("%(count)s unread messages.", {
+        return _t("a11y|n_unread_messages", {
             count: notification.count,
         });
     } else if (notification.isUnread) {
-        return _t("Unread messages.");
+        return _t("a11y|unread_messages");
     } else {
         return undefined;
     }
+};
+
+const canAskToJoin = (joinRule?: JoinRule): boolean => {
+    return SettingsStore.getValue("feature_ask_to_join") && JoinRule.Knock === joinRule;
 };
 
 interface IDirectoryOpts {
@@ -514,7 +519,14 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     }, [results, filter]);
 
     const viewRoom = (
-        room: { roomId: string; roomAlias?: string; autoJoin?: boolean; shouldPeek?: boolean; viaServers?: string[] },
+        room: {
+            roomId: string;
+            roomAlias?: string;
+            autoJoin?: boolean;
+            shouldPeek?: boolean;
+            viaServers?: string[];
+            joinRule?: IPublicRoomsChunkRoom["join_rule"];
+        },
         persist = false,
         viaKeyboard = false,
     ): void => {
@@ -538,15 +550,20 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             metricsViaKeyboard: viaKeyboard,
             room_id: room.roomId,
             room_alias: room.roomAlias,
-            auto_join: room.autoJoin,
+            auto_join: room.autoJoin && !canAskToJoin(room.joinRule),
             should_peek: room.shouldPeek,
             via_servers: room.viaServers,
         });
+
+        if (canAskToJoin(room.joinRule)) {
+            defaultDispatcher.dispatch({ action: Action.PromptAskToJoin });
+        }
+
         onFinished();
     };
 
     let otherSearchesSection: JSX.Element | undefined;
-    if (trimmedQuery || filter !== Filter.PublicRooms) {
+    if (trimmedQuery || (filter !== Filter.PublicRooms && filter !== Filter.PublicSpaces)) {
         otherSearchesSection = (
             <div
                 className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches"
@@ -647,12 +664,15 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             }
             if (isPublicRoomResult(result)) {
                 const clientRoom = cli.getRoom(result.publicRoom.room_id);
+                const joinRule = result.publicRoom.join_rule;
                 // Element Web currently does not allow guests to join rooms, so we
                 // instead show them view buttons for all rooms. If the room is not
                 // world readable, a modal will appear asking you to register first. If
                 // it is readable, the preview appears as normal.
                 const showViewButton =
-                    clientRoom?.getMyMembership() === "join" || result.publicRoom.world_readable || cli.isGuest();
+                    clientRoom?.getMyMembership() === "join" ||
+                    (result.publicRoom.world_readable && !canAskToJoin(joinRule)) ||
+                    cli.isGuest();
 
                 const listener = (ev: ButtonEvent): void => {
                     ev.stopPropagation();
@@ -665,11 +685,19 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             autoJoin: !result.publicRoom.world_readable && !cli.isGuest(),
                             shouldPeek: result.publicRoom.world_readable || cli.isGuest(),
                             viaServers: config ? [config.roomServer] : undefined,
+                            joinRule,
                         },
                         true,
                         ev.type !== "click",
                     );
                 };
+
+                let buttonLabel;
+                if (showViewButton) {
+                    buttonLabel = _t("action|view");
+                } else {
+                    buttonLabel = canAskToJoin(joinRule) ? _t("action|ask_to_join") : _t("action|join");
+                }
 
                 return (
                     <Option
@@ -683,7 +711,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                 onClick={listener}
                                 tabIndex={-1}
                             >
-                                {showViewButton ? _t("action|view") : _t("action|join")}
+                                {buttonLabel}
                             </AccessibleButton>
                         }
                         aria-labelledby={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}_name`}
@@ -1010,7 +1038,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     <h4>
                         <span id="mx_SpotlightDialog_section_recentSearches">{_t("Recent searches")}</span>
                         <AccessibleButton kind="link" onClick={clearRecentSearches}>
-                            {_t("Clear")}
+                            {_t("action|clear")}
                         </AccessibleButton>
                     </h4>
                     <div>
