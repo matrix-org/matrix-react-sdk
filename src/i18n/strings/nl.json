@@ -3347,12 +3347,12 @@
         "no_active_call": "Geen actieve oproep in deze kamer",
         "unholdcall": "De huidige oproep in huidige kamer in de wacht zetten",
         "me": "Toont actie",
-        "op": "Bepaal het machtsniveau van een persoon",
-        "join": "Neem aan de kamer met dat adres deel",
-        "failed_find_user": "Kan die persoon in de kamer niet vinden",
-        "failed_find_room": "Commando mislukt: Kan kamer niet vinden (%(roomId)s",
         "error_invalid_runfn": "Commandofout: Kan slash commando niet verwerken.",
         "error_invalid_rendering_type": "Commandofout: Kan rendering type niet vinden (%(renderingType)s)",
+        "join": "Neem aan de kamer met dat adres deel",
+        "failed_find_room": "Commando mislukt: Kan kamer niet vinden (%(roomId)s",
+        "failed_find_user": "Kan die persoon in de kamer niet vinden",
+        "op": "Bepaal het machtsniveau van een persoon",
         "deop": "Ontmachtigt persoon met de gegeven ID"
     },
     "presence": {
@@ -3539,35 +3539,35 @@
         "server_picker_title": "Login op jouw homeserver",
         "server_picker_dialog_title": "Kies waar je account wordt gehost",
         "footer_powered_by_matrix": "draait op Matrix",
-        "username_in_use": "Iemand heeft die inlognaam al, probeer een andere.",
+        "failed_homeserver_discovery": "Ontdekken van homeserver is mislukt",
+        "sync_footer_subtitle": "Als je bij veel kamers bent aangesloten kan dit een tijdje duren",
         "unsupported_auth_msisdn": "Deze server biedt geen ondersteuning voor authenticatie met een telefoonnummer.",
         "unsupported_auth_email": "Deze homeserver biedt geen ondersteuning voor inloggen met een e-mailadres.",
-        "sync_footer_subtitle": "Als je bij veel kamers bent aangesloten kan dit een tijdje duren",
-        "soft_logout_intro_unsupported_auth": "Je kan niet inloggen met jouw account. Neem voor meer informatie contact op met de beheerder van je homeserver.",
-        "soft_logout_intro_sso": "Meld je aan en herkrijg toegang tot je account.",
-        "soft_logout_intro_password": "Voer je wachtwoord in om je aan te melden en toegang tot je account te herkrijgen.",
-        "soft_logout_heading": "Je bent uitgelogd",
-        "sign_in_prompt": "Heb je een account? <a>Inloggen</a>",
-        "sign_in_or_register_description": "Gebruik je bestaande account of maak een nieuwe aan om verder te gaan.",
-        "sign_in_or_register": "Meld je aan of maak een account aan",
-        "server_picker_required": "Specificeer een homeserver",
-        "server_picker_matrix.org": "Matrix.org is de grootste publieke homeserver ter wereld, dus het is een goede plek voor velen.",
-        "server_picker_learn_more": "Over homeservers",
-        "server_picker_invalid_url": "Ongeldige URL",
-        "server_picker_intro": "Wij noemen de plaatsen waar je jouw account kunt hosten 'homeservers'.",
-        "server_picker_failed_validate_homeserver": "Kan homeserver niet valideren",
-        "server_picker_explainer": "Gebruik de Matrix-homeserver van je voorkeur als je er een hebt, of host je eigen.",
-        "server_picker_custom": "Andere homeserver",
         "registration_disabled": "Registratie is uitgeschakeld op deze homeserver.",
-        "register_action": "Registreren",
+        "failed_query_registration_methods": "Kan ondersteunde registratiemethoden niet opvragen.",
+        "username_in_use": "Iemand heeft die inlognaam al, probeer een andere.",
         "incorrect_password": "Onjuist wachtwoord",
-        "forgot_password_prompt": "Wachtwoord vergeten?",
+        "failed_soft_logout_auth": "Opnieuw inloggen is mislukt",
+        "soft_logout_heading": "Je bent uitgelogd",
         "forgot_password_email_required": "Het aan jouw account gekoppelde e-mailadres dient ingevoerd worden.",
         "forgot_password_email_invalid": "Dit e-mailadres lijkt niet geldig te zijn.",
-        "failed_soft_logout_auth": "Opnieuw inloggen is mislukt",
-        "failed_query_registration_methods": "Kan ondersteunde registratiemethoden niet opvragen.",
-        "failed_homeserver_discovery": "Ontdekken van homeserver is mislukt",
-        "create_account_prompt": "Nieuw hier? <a>Maak een account</a>"
+        "sign_in_prompt": "Heb je een account? <a>Inloggen</a>",
+        "forgot_password_prompt": "Wachtwoord vergeten?",
+        "soft_logout_intro_password": "Voer je wachtwoord in om je aan te melden en toegang tot je account te herkrijgen.",
+        "soft_logout_intro_sso": "Meld je aan en herkrijg toegang tot je account.",
+        "soft_logout_intro_unsupported_auth": "Je kan niet inloggen met jouw account. Neem voor meer informatie contact op met de beheerder van je homeserver.",
+        "create_account_prompt": "Nieuw hier? <a>Maak een account</a>",
+        "sign_in_or_register": "Meld je aan of maak een account aan",
+        "sign_in_or_register_description": "Gebruik je bestaande account of maak een nieuwe aan om verder te gaan.",
+        "register_action": "Registreren",
+        "server_picker_failed_validate_homeserver": "Kan homeserver niet valideren",
+        "server_picker_invalid_url": "Ongeldige URL",
+        "server_picker_required": "Specificeer een homeserver",
+        "server_picker_matrix.org": "Matrix.org is de grootste publieke homeserver ter wereld, dus het is een goede plek voor velen.",
+        "server_picker_intro": "Wij noemen de plaatsen waar je jouw account kunt hosten 'homeservers'.",
+        "server_picker_custom": "Andere homeserver",
+        "server_picker_explainer": "Gebruik de Matrix-homeserver van je voorkeur als je er een hebt, of host je eigen.",
+        "server_picker_learn_more": "Over homeservers"
     },
     "room_list": {
         "sort_unread_first": "Kamers met ongelezen berichten als eerste tonen",
@@ -3681,6 +3681,15 @@
             "see_msgtype_sent_active_room": "Zie <b>%(msgtype)s</b>-berichten verstuurd in je actieve kamer"
         }
     },
+    "feedback": {
+        "sent": "Feedback verstuurd",
+        "comment_label": "Opmerking",
+        "platform_username": "Jouw platform en inlognaam zullen worden opgeslagen om onze te helpen je feedback zo goed mogelijk te gebruiken.",
+        "may_contact_label": "Je kan contact met mij opnemen als je updates wil van of wilt deelnemen aan nieuwe ideeën",
+        "pro_type": "PRO TIP: Als je een nieuwe bug maakt, stuur ons dan je <debugLogsLink>foutenlogboek</debugLogsLink> om ons te helpen het probleem op te sporen.",
+        "existing_issue_link": "Bekijk eerst de <existingIssuesLink>bestaande bugs op GitHub</existingIssuesLink>. <newIssueLink>Maak een nieuwe aan</newIssueLink> wanneer je jouw bugs niet hebt gevonden.",
+        "send_feedback_action": "Feedback versturen"
+    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Gebruik enkele woorden - maar geen bekende uitdrukkingen",
@@ -3713,14 +3722,5 @@
             "straightRow": "Zo’n aaneengesloten rijtje toetsen is eenvoudig te raden",
             "keyPattern": "Korte patronen op het toetsenbord worden gemakkelijk geraden"
         }
-    },
-    "feedback": {
-        "sent": "Feedback verstuurd",
-        "comment_label": "Opmerking",
-        "platform_username": "Jouw platform en inlognaam zullen worden opgeslagen om onze te helpen je feedback zo goed mogelijk te gebruiken.",
-        "may_contact_label": "Je kan contact met mij opnemen als je updates wil van of wilt deelnemen aan nieuwe ideeën",
-        "pro_type": "PRO TIP: Als je een nieuwe bug maakt, stuur ons dan je <debugLogsLink>foutenlogboek</debugLogsLink> om ons te helpen het probleem op te sporen.",
-        "existing_issue_link": "Bekijk eerst de <existingIssuesLink>bestaande bugs op GitHub</existingIssuesLink>. <newIssueLink>Maak een nieuwe aan</newIssueLink> wanneer je jouw bugs niet hebt gevonden.",
-        "send_feedback_action": "Feedback versturen"
     }
 }

@@ -3269,12 +3269,12 @@
         "no_active_call": "Sen chamada activa nesta sala",
         "unholdcall": "Acepta a chamada na sala actual",
         "me": "Mostra acción",
-        "op": "Define o nivel de permisos de unha usuaria",
-        "join": "Unirse a sala co enderezo dado",
-        "failed_find_user": "Non se atopa a usuaria na sala",
-        "failed_find_room": "Fallo no comando: Non se atopa a sala (%(roomId)s)",
         "error_invalid_runfn": "Erro no comando: non se puido xestionar o comando con barra.",
         "error_invalid_rendering_type": "Erro no comando: non se puido atopa o tipo de renderizado (%(renderingType)s)",
+        "join": "Unirse a sala co enderezo dado",
+        "failed_find_room": "Fallo no comando: Non se atopa a sala (%(roomId)s)",
+        "failed_find_user": "Non se atopa a usuaria na sala",
+        "op": "Define o nivel de permisos de unha usuaria",
         "deop": "Degrada usuaria co id proporcionado"
     },
     "presence": {
@@ -3456,35 +3456,35 @@
         "server_picker_title": "Conecta co teu servidor de inicio",
         "server_picker_dialog_title": "Decide onde queres crear a túa conta",
         "footer_powered_by_matrix": "funciona grazas a Matrix",
-        "username_in_use": "Este nome de usuaria xa está pillado, inténtao con outro.",
+        "failed_homeserver_discovery": "Fallo ao intentar o descubrimento do servidor",
+        "sync_footer_subtitle": "Se te uniches a moitas salas, esto podería levarnos un anaco",
         "unsupported_auth_msisdn": "O servidor non soporta a autenticación con número de teléfono.",
         "unsupported_auth_email": "Este servidor non soporta o acceso usando enderezos de email.",
-        "sync_footer_subtitle": "Se te uniches a moitas salas, esto podería levarnos un anaco",
-        "soft_logout_intro_unsupported_auth": "Non podes conectar a conta. Contacta coa administración do teu servidor para máis información.",
-        "soft_logout_intro_sso": "Conéctate e recupera o acceso a túa conta.",
-        "soft_logout_intro_password": "Escribe o contrasinal para acceder e retomar o control da túa conta.",
-        "soft_logout_heading": "Estás desconectada",
-        "sign_in_prompt": "Tes unha conta? <a>Conéctate</a>",
-        "sign_in_or_register_description": "Usa a túa conta ou crea unha nova para continuar.",
-        "sign_in_or_register": "Conéctate ou Crea unha Conta",
-        "server_picker_required": "Indica un servidor de inicio",
-        "server_picker_matrix.org": "Matrix.org é o servidor público máis grande do mundo, podería ser un bo lugar para comezar.",
-        "server_picker_learn_more": "Acerca dos servidores de inicio",
-        "server_picker_invalid_url": "URL non válido",
-        "server_picker_intro": "Chamámoslle 'Servidores de Inicio' aos lugares onde podes ter a túa conta.",
-        "server_picker_failed_validate_homeserver": "Non se puido validar o servidor de inicio",
-        "server_picker_explainer": "Usa o teu servidor de inicio Matrix preferido, ou usa o teu propio.",
-        "server_picker_custom": "Outro servidor de inicio",
         "registration_disabled": "O rexistro está desactivado neste servidor.",
-        "register_action": "Crear conta",
+        "failed_query_registration_methods": "Non se puido consultar os métodos de rexistro soportados.",
+        "username_in_use": "Este nome de usuaria xa está pillado, inténtao con outro.",
         "incorrect_password": "Contrasinal incorrecto",
-        "forgot_password_prompt": "¿Esqueceches o contrasinal?",
+        "failed_soft_logout_auth": "Fallo na reautenticación",
+        "soft_logout_heading": "Estás desconectada",
         "forgot_password_email_required": "Debe introducir o correo electrónico ligado a súa conta.",
         "forgot_password_email_invalid": "O enderezo de email non semella ser válido.",
-        "failed_soft_logout_auth": "Fallo na reautenticación",
-        "failed_query_registration_methods": "Non se puido consultar os métodos de rexistro soportados.",
-        "failed_homeserver_discovery": "Fallo ao intentar o descubrimento do servidor",
-        "create_account_prompt": "Acabas de coñecernos? <a>Crea unha conta</a>"
+        "sign_in_prompt": "Tes unha conta? <a>Conéctate</a>",
+        "forgot_password_prompt": "¿Esqueceches o contrasinal?",
+        "soft_logout_intro_password": "Escribe o contrasinal para acceder e retomar o control da túa conta.",
+        "soft_logout_intro_sso": "Conéctate e recupera o acceso a túa conta.",
+        "soft_logout_intro_unsupported_auth": "Non podes conectar a conta. Contacta coa administración do teu servidor para máis información.",
+        "create_account_prompt": "Acabas de coñecernos? <a>Crea unha conta</a>",
+        "sign_in_or_register": "Conéctate ou Crea unha Conta",
+        "sign_in_or_register_description": "Usa a túa conta ou crea unha nova para continuar.",
+        "register_action": "Crear conta",
+        "server_picker_failed_validate_homeserver": "Non se puido validar o servidor de inicio",
+        "server_picker_invalid_url": "URL non válido",
+        "server_picker_required": "Indica un servidor de inicio",
+        "server_picker_matrix.org": "Matrix.org é o servidor público máis grande do mundo, podería ser un bo lugar para comezar.",
+        "server_picker_intro": "Chamámoslle 'Servidores de Inicio' aos lugares onde podes ter a túa conta.",
+        "server_picker_custom": "Outro servidor de inicio",
+        "server_picker_explainer": "Usa o teu servidor de inicio Matrix preferido, ou usa o teu propio.",
+        "server_picker_learn_more": "Acerca dos servidores de inicio"
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",
@@ -3598,6 +3598,15 @@
             "see_msgtype_sent_active_room": "Ver mensaxes <b>%(msgtype)s</b> publicados na túa sala activa"
         }
     },
+    "feedback": {
+        "sent": "Comentario enviado",
+        "comment_label": "Comentar",
+        "platform_username": "A túa plataforma e nome de usuaria serán notificados para axudarnos a utilizar a túa opinión do mellor xeito posible.",
+        "may_contact_label": "Podes contactar conmigo se queres estar ao día ou comentarme algunha suxestión",
+        "pro_type": "PRO TIP: se inicias un novo informe, envía <debugLogsLink>rexistros de depuración</debugLogsLink> para axudarnos a investigar o problema.",
+        "existing_issue_link": "Primeiro revisa <existingIssuesLink>a lista existente de fallo en Github</existingIssuesLink>. Non hai nada? <newIssueLink>Abre un novo</newIssueLink>.",
+        "send_feedback_action": "Enviar comentario"
+    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Usa unhas poucas palabras, evita frases comúns",
@@ -3630,14 +3639,5 @@
             "straightRow": "Palabras de letras contiguas son doadas de adiviñar",
             "keyPattern": "Patróns curtos de teclas son doados de adiviñar"
         }
-    },
-    "feedback": {
-        "sent": "Comentario enviado",
-        "comment_label": "Comentar",
-        "platform_username": "A túa plataforma e nome de usuaria serán notificados para axudarnos a utilizar a túa opinión do mellor xeito posible.",
-        "may_contact_label": "Podes contactar conmigo se queres estar ao día ou comentarme algunha suxestión",
-        "pro_type": "PRO TIP: se inicias un novo informe, envía <debugLogsLink>rexistros de depuración</debugLogsLink> para axudarnos a investigar o problema.",
-        "existing_issue_link": "Primeiro revisa <existingIssuesLink>a lista existente de fallo en Github</existingIssuesLink>. Non hai nada? <newIssueLink>Abre un novo</newIssueLink>.",
-        "send_feedback_action": "Enviar comentario"
     }
 }

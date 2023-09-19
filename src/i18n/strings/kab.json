@@ -1923,9 +1923,9 @@
         "holdcall": "Seḥbes asiwel deg texxamt-a i kra n wakud",
         "unholdcall": "Uɣal ɣer usiwel ara iteddun deg -texxamt-a",
         "me": "Yeskan tigawt",
-        "op": "Sbadu aswir iǧehden n useqdac",
         "join": "Kcem ɣer texxamt s tansa i d-yettunefken",
         "failed_find_user": "Ur yettwaf ara useqdac deg texxamt",
+        "op": "Sbadu aswir iǧehden n useqdac",
         "deop": "Aseqdac Deops s usulay i d-yettunefken"
     },
     "presence": {
@@ -2033,24 +2033,24 @@
         "server_picker_title": "Sezdeɣ amiḍan deg",
         "server_picker_dialog_title": "Wali anida ara yezdeɣ umiḍan-ik·im",
         "footer_powered_by_matrix": "s lmendad n Matrix",
+        "failed_homeserver_discovery": "Tifin n uqeddac agejdan tegguma ad teddu",
+        "sync_footer_subtitle": "Ma yella tettekkaḍ deg waṭas n texxamin, ayagi yezmer ad yeṭṭef kra n wakud",
         "unsupported_auth_msisdn": "Aqeddac-a ur yessefrak ara asesteb s wuṭṭun n tilifun.",
         "unsupported_auth_email": "Aqeddac-a agejdan ur yessefrak ara inekcum s useqdec n tansa n yimayl.",
-        "sync_footer_subtitle": "Ma yella tettekkaḍ deg waṭas n texxamin, ayagi yezmer ad yeṭṭef kra n wakud",
-        "soft_logout_intro_unsupported_auth": "Ur tessawḍeḍ ara ad teqqneḍ ɣer umiḍan-inek:inem. Ttxil-k·m nermes anedbal n uqeddac-ik·im agejdan i wugar n talɣut.",
-        "soft_logout_intro_sso": "Qqen syen εreḍ anekcum ɣer umiḍan-inek·inem tikkelt-nniḍen.",
-        "soft_logout_intro_password": "Sekcem awal-ik·im uffir i wakken ad teqqneḍ syen ad tkecmeḍ i tikkelt tayeḍ ɣer umiḍan-ik·im.",
-        "soft_logout_heading": "Teffɣeḍ-d seg tuqqna",
-        "sign_in_or_register_description": "Seqdec amiḍan-ik/im neɣ snulfu-d yiwen akken ad tkemmleḍ.",
-        "sign_in_or_register": "Kcem ɣer neɣ rnu amiḍan",
-        "server_picker_invalid_url": "Yir URL",
         "registration_disabled": "Aklas yensa deg uqeddac-a agejdan.",
-        "register_action": "Rnu amiḍan",
-        "incorrect_password": "Awal uffir d arameɣtu",
-        "forgot_password_prompt": "Tettuḍ awal-ik·im uffir?",
-        "forgot_password_email_required": "Tansa n yimayl i icudden ɣer umiḍan-ik·im ilaq ad tettwasekcem.",
-        "failed_soft_logout_auth": "Aɛiwed n usesteb ur yeddi ara",
         "failed_query_registration_methods": "Anadi n tarrayin n usekles yettusefraken d awezi.",
-        "failed_homeserver_discovery": "Tifin n uqeddac agejdan tegguma ad teddu"
+        "incorrect_password": "Awal uffir d arameɣtu",
+        "failed_soft_logout_auth": "Aɛiwed n usesteb ur yeddi ara",
+        "soft_logout_heading": "Teffɣeḍ-d seg tuqqna",
+        "forgot_password_email_required": "Tansa n yimayl i icudden ɣer umiḍan-ik·im ilaq ad tettwasekcem.",
+        "forgot_password_prompt": "Tettuḍ awal-ik·im uffir?",
+        "soft_logout_intro_password": "Sekcem awal-ik·im uffir i wakken ad teqqneḍ syen ad tkecmeḍ i tikkelt tayeḍ ɣer umiḍan-ik·im.",
+        "soft_logout_intro_sso": "Qqen syen εreḍ anekcum ɣer umiḍan-inek·inem tikkelt-nniḍen.",
+        "soft_logout_intro_unsupported_auth": "Ur tessawḍeḍ ara ad teqqneḍ ɣer umiḍan-inek:inem. Ttxil-k·m nermes anedbal n uqeddac-ik·im agejdan i wugar n talɣut.",
+        "sign_in_or_register": "Kcem ɣer neɣ rnu amiḍan",
+        "sign_in_or_register_description": "Seqdec amiḍan-ik/im neɣ snulfu-d yiwen akken ad tkemmleḍ.",
+        "register_action": "Rnu amiḍan",
+        "server_picker_invalid_url": "Yir URL"
     },
     "export_chat": {
         "messages": "Iznan"
@@ -2097,6 +2097,10 @@
             "send_videos_this_room": "Azen tividyutin deg texxamt-a am wakken d kečč"
         }
     },
+    "feedback": {
+        "comment_label": "Awennit",
+        "send_feedback_action": "Azen takti-inek·inem"
+    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Seqdec kra n wawalen, sinef i tefyar i d-yettuɣalen",
@@ -2129,9 +2133,5 @@
             "straightRow": "Idurren ubdisen n tsura fessusit i ussumer",
             "keyPattern": "Tinerufin n unasiw amecṭuḥ fessusit i ussumer"
         }
-    },
-    "feedback": {
-        "comment_label": "Awennit",
-        "send_feedback_action": "Azen takti-inek·inem"
     }
 }

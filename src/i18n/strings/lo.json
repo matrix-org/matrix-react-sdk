@@ -3064,12 +3064,12 @@
         "no_active_call": "ບໍ່ມີການໂທຢູ່ໃນຫ້ອງນີ້",
         "unholdcall": "ການຮັບສາຍໃນຫ້ອງປະຈຸບັນຖຶກປິດໄວ້",
         "me": "ສະແດງການດຳເນີນການ",
-        "op": "ກໍານົດລະດັບພະລັງງານຂອງຜູ້ໃຊ້",
-        "join": "ເຂົ້າຮ່ວມຫ້ອງຕາມທີ່ຢູ່ໄດ້ລະບຸໃຫ້",
-        "failed_find_user": "ບໍ່ສາມາດຊອກຫາຜູ້ໃຊ້ຢູ່ໃນຫ້ອງໄດ້",
-        "failed_find_room": "ຄຳສັ່ງບໍ່ສໍາເລັດ: ບໍ່ສາມາດຊອກຫາຫ້ອງ (%(roomId)s",
         "error_invalid_runfn": "ຄໍາສັ່ງຜິດພາດ: ບໍ່ສາມາດຈັດການກັບຄໍາສັ່ງ slash ໄດ້.",
         "error_invalid_rendering_type": "ຄໍາສັ່ງຜິດພາດ: ບໍ່ສາມາດຊອກຫາປະເພດການສະແດງຜົນ (%(renderingType)s)",
+        "join": "ເຂົ້າຮ່ວມຫ້ອງຕາມທີ່ຢູ່ໄດ້ລະບຸໃຫ້",
+        "failed_find_room": "ຄຳສັ່ງບໍ່ສໍາເລັດ: ບໍ່ສາມາດຊອກຫາຫ້ອງ (%(roomId)s",
+        "failed_find_user": "ບໍ່ສາມາດຊອກຫາຜູ້ໃຊ້ຢູ່ໃນຫ້ອງໄດ້",
+        "op": "ກໍານົດລະດັບພະລັງງານຂອງຜູ້ໃຊ້",
         "deop": "Deops ຜູ້ໃຊ້ທີ່ມີ ID"
     },
     "presence": {
@@ -3249,35 +3249,35 @@
         "server_picker_title": "ເຂົ້າສູ່ລະບົບ homeserver ຂອງທ່ານ",
         "server_picker_dialog_title": "ຕັດສິນໃຈວ່າບັນຊີຂອງທ່ານໃຊ້ເປັນເຈົ້າພາບຢູ່ໃສ",
         "footer_powered_by_matrix": "ຂັບເຄື່ອນໂດຍ Matrix",
-        "username_in_use": "ບາງຄົນມີຊື່ຜູ້ໃຊ້ນັ້ນແລ້ວ, ກະລຸນາລອງຊຶ່ຜູ້ໃຊ້ອື່ນ.",
+        "failed_homeserver_discovery": "ການປະຕິບັດການຄົ້ນພົບ homeserver ບໍ່ສຳເລັດ",
+        "sync_footer_subtitle": "ຖ້າທ່ານໄດ້ເຂົ້າຮ່ວມຫຼາຍຫ້ອງ, ມັນອາດຈະໃຊ້ເວລາໄລຍະໜຶ່ງ",
         "unsupported_auth_msisdn": "ເຊີບເວີນີ້ບໍ່ຮອງຮັບການພິສູດຢືນຢັນດ້ວຍເບີໂທລະສັບ.",
         "unsupported_auth_email": "homeserver ນີ້ບໍ່ຮອງຮັບການເຂົ້າສູ່ລະບົບໂດຍໃຊ້ທີ່ຢູ່ອີເມວ.",
-        "sync_footer_subtitle": "ຖ້າທ່ານໄດ້ເຂົ້າຮ່ວມຫຼາຍຫ້ອງ, ມັນອາດຈະໃຊ້ເວລາໄລຍະໜຶ່ງ",
-        "soft_logout_intro_unsupported_auth": "ທ່ານບໍ່ສາມາດເຂົ້າສູ່ລະບົບບັນຊີຂອງທ່ານໄດ້. ກະລຸນາຕິດຕໍ່ຜູຸ້ຄຸ້ມຄອງ homeserver ຂອງທ່ານສໍາລັບຂໍ້ມູນເພີ່ມເຕີມ.",
-        "soft_logout_intro_sso": "ເຂົ້າສູ່ລະບົບ ແລະ ເຂົ້າເຖິງບັນຊີຂອງທ່ານຄືນໃໝ່.",
-        "soft_logout_intro_password": "ໃສ່ລະຫັດຜ່ານຂອງທ່ານເພື່ອເຂົ້າສູ່ລະບົບ ແລະ ເຂົ້າເຖິງບັນຊີຂອງທ່ານຄືນໃໝ່.",
-        "soft_logout_heading": "ທ່ານອອກຈາກລະບົບແລ້ວ",
-        "sign_in_prompt": "ມີບັນຊີບໍ? <a>ເຂົ້າສູ່ລະບົບ</a>",
-        "sign_in_or_register_description": "ໃຊ້ບັນຊີຂອງທ່ານ ຫຼື ສ້າງອັນໃໝ່ເພື່ອສືບຕໍ່.",
-        "sign_in_or_register": "ເຂົ້າສູ່ລະບົບ ຫຼື ສ້າງບັນຊີ",
-        "server_picker_required": "ລະບຸ homeserver",
-        "server_picker_matrix.org": "Matrix.org ເປັນ homeserver ສາທາລະນະທີ່ໃຫຍ່ທີ່ສຸດໃນໂລກ, ສະນັ້ນມັນເປັນສະຖານທີ່ທີ່ດີສໍາລັບຫຼາຍໆຄົນ.",
-        "server_picker_learn_more": "ກ່ຽວກັບ homeservers",
-        "server_picker_invalid_url": "URL ບໍ່ຖືກຕ້ອງ",
-        "server_picker_intro": "ພວກເຮົາໂທຫາສະຖານที่ບ່ອນທີ່ທ່ານເປັນhostບັນຊີຂອງທ່ານ 'homeservers'.",
-        "server_picker_failed_validate_homeserver": "ບໍ່ສາມາດກວດສອບ homeserver ໄດ້",
-        "server_picker_explainer": "ໃຊ້ Matrix homeserver ທີ່ທ່ານຕ້ອງການ ຖ້າຫາກທ່ານມີ ຫຼື ເປັນເຈົ້າພາບເອງ.",
-        "server_picker_custom": "homeserver ອື່ນ",
         "registration_disabled": "ການລົງທະບຽນຖືກປິດການນຳໃຊ້ໃນ homeserver ນີ້.",
-        "register_action": "ສ້າງບັນຊີ",
+        "failed_query_registration_methods": "ບໍ່ສາມາດສອບຖາມວິທີການລົງທະບຽນໄດ້.",
+        "username_in_use": "ບາງຄົນມີຊື່ຜູ້ໃຊ້ນັ້ນແລ້ວ, ກະລຸນາລອງຊຶ່ຜູ້ໃຊ້ອື່ນ.",
         "incorrect_password": "ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ",
-        "forgot_password_prompt": "ລືມລະຫັດຜ່ານຂອງທ່ານບໍ?",
+        "failed_soft_logout_auth": "ການພິສູດຢືນຢັນຄືນໃໝ່ບໍ່ສຳເລັດ",
+        "soft_logout_heading": "ທ່ານອອກຈາກລະບົບແລ້ວ",
         "forgot_password_email_required": "ຕ້ອງໃສ່ທີ່ຢູ່ອີເມວທີ່ເຊື່ອມຕໍ່ກັບບັນຊີຂອງທ່ານ.",
         "forgot_password_email_invalid": "ທີ່ຢູ່ອີເມວບໍ່ຖືກຕ້ອງ.",
-        "failed_soft_logout_auth": "ການພິສູດຢືນຢັນຄືນໃໝ່ບໍ່ສຳເລັດ",
-        "failed_query_registration_methods": "ບໍ່ສາມາດສອບຖາມວິທີການລົງທະບຽນໄດ້.",
-        "failed_homeserver_discovery": "ການປະຕິບັດການຄົ້ນພົບ homeserver ບໍ່ສຳເລັດ",
-        "create_account_prompt": "ມາໃໝ່ບໍ? <a>ສ້າງບັນຊີ</a>"
+        "sign_in_prompt": "ມີບັນຊີບໍ? <a>ເຂົ້າສູ່ລະບົບ</a>",
+        "forgot_password_prompt": "ລືມລະຫັດຜ່ານຂອງທ່ານບໍ?",
+        "soft_logout_intro_password": "ໃສ່ລະຫັດຜ່ານຂອງທ່ານເພື່ອເຂົ້າສູ່ລະບົບ ແລະ ເຂົ້າເຖິງບັນຊີຂອງທ່ານຄືນໃໝ່.",
+        "soft_logout_intro_sso": "ເຂົ້າສູ່ລະບົບ ແລະ ເຂົ້າເຖິງບັນຊີຂອງທ່ານຄືນໃໝ່.",
+        "soft_logout_intro_unsupported_auth": "ທ່ານບໍ່ສາມາດເຂົ້າສູ່ລະບົບບັນຊີຂອງທ່ານໄດ້. ກະລຸນາຕິດຕໍ່ຜູຸ້ຄຸ້ມຄອງ homeserver ຂອງທ່ານສໍາລັບຂໍ້ມູນເພີ່ມເຕີມ.",
+        "create_account_prompt": "ມາໃໝ່ບໍ? <a>ສ້າງບັນຊີ</a>",
+        "sign_in_or_register": "ເຂົ້າສູ່ລະບົບ ຫຼື ສ້າງບັນຊີ",
+        "sign_in_or_register_description": "ໃຊ້ບັນຊີຂອງທ່ານ ຫຼື ສ້າງອັນໃໝ່ເພື່ອສືບຕໍ່.",
+        "register_action": "ສ້າງບັນຊີ",
+        "server_picker_failed_validate_homeserver": "ບໍ່ສາມາດກວດສອບ homeserver ໄດ້",
+        "server_picker_invalid_url": "URL ບໍ່ຖືກຕ້ອງ",
+        "server_picker_required": "ລະບຸ homeserver",
+        "server_picker_matrix.org": "Matrix.org ເປັນ homeserver ສາທາລະນະທີ່ໃຫຍ່ທີ່ສຸດໃນໂລກ, ສະນັ້ນມັນເປັນສະຖານທີ່ທີ່ດີສໍາລັບຫຼາຍໆຄົນ.",
+        "server_picker_intro": "ພວກເຮົາໂທຫາສະຖານที่ບ່ອນທີ່ທ່ານເປັນhostບັນຊີຂອງທ່ານ 'homeservers'.",
+        "server_picker_custom": "homeserver ອື່ນ",
+        "server_picker_explainer": "ໃຊ້ Matrix homeserver ທີ່ທ່ານຕ້ອງການ ຖ້າຫາກທ່ານມີ ຫຼື ເປັນເຈົ້າພາບເອງ.",
+        "server_picker_learn_more": "ກ່ຽວກັບ homeservers"
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",
@@ -3402,6 +3402,15 @@
             "see_msgtype_sent_active_room": "ເບິ່ງ <b>%(msgtype)s</b> ຂໍ້ຄວາມທີ່ໂພສໃນຫ້ອງໃຊ້ງານຂອງທ່ານ"
         }
     },
+    "feedback": {
+        "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
+        "comment_label": "ຄໍາເຫັນ",
+        "platform_username": "ແຟັດຟອມ ແລະ ຊື່ຜູ້ໃຊ້ຂອງທ່ານຈະຖືກບັນທຶກໄວ້ເພື່ອຊ່ວຍໃຫ້ພວກເຮົາໃຊ້ຄໍາຕິຊົມຂອງທ່ານເທົ່າທີ່ພວກເຮົາສາມາດເຮັດໄດ້.",
+        "may_contact_label": "ທ່ານສາມາດຕິດຕໍ່ຫາຂ້ອຍໄດ້ ຖ້າທ່ານຕ້ອງການຕິດຕາມ ຫຼືໃຫ້ຂ້ອຍທົດສອບແນວຄວາມຄິດທີ່ເກີດຂື້ນ",
+        "pro_type": "PRO TIP: ຖ້າທ່ານເລີ່ມມີຂໍ້ຜິດພາດ, ກະລຸນາສົ່ງ <debugLogsLink>ບັນທຶກການແກ້ບັນຫາ</debugLogsLink> ເພື່ອຊ່ວຍພວກເຮົາຕິດຕາມບັນຫາ.",
+        "existing_issue_link": "ກະລຸນາເບິ່ງ <existingIssuesLink>ຂໍ້ບົກຜ່ອງທີ່ມີຢູ່ແລ້ວໃນ Github</existingIssuesLink> ກ່ອນ. ບໍ່ກົງກັນບໍ? <newIssueLink>ເລີ່ມອັນໃໝ່</newIssueLink>.",
+        "send_feedback_action": "ສົ່ງຄໍາຄິດເຫັນ"
+    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "ໃຊ້ສອງສາມຄໍາ, ເພື່ອຫຼີກເວັ້ນປະໂຫຍກທົ່ວໄປ",
@@ -3434,14 +3443,5 @@
             "straightRow": "ແຖວຊື່ຂອງກະແຈເດົາໄດ້ງ່າຍ",
             "keyPattern": "ຮູບແບບແປ້ນພິມສັ້ນໆແມ່ນເດົາໄດ້ງ່າຍ"
         }
-    },
-    "feedback": {
-        "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
-        "comment_label": "ຄໍາເຫັນ",
-        "platform_username": "ແຟັດຟອມ ແລະ ຊື່ຜູ້ໃຊ້ຂອງທ່ານຈະຖືກບັນທຶກໄວ້ເພື່ອຊ່ວຍໃຫ້ພວກເຮົາໃຊ້ຄໍາຕິຊົມຂອງທ່ານເທົ່າທີ່ພວກເຮົາສາມາດເຮັດໄດ້.",
-        "may_contact_label": "ທ່ານສາມາດຕິດຕໍ່ຫາຂ້ອຍໄດ້ ຖ້າທ່ານຕ້ອງການຕິດຕາມ ຫຼືໃຫ້ຂ້ອຍທົດສອບແນວຄວາມຄິດທີ່ເກີດຂື້ນ",
-        "pro_type": "PRO TIP: ຖ້າທ່ານເລີ່ມມີຂໍ້ຜິດພາດ, ກະລຸນາສົ່ງ <debugLogsLink>ບັນທຶກການແກ້ບັນຫາ</debugLogsLink> ເພື່ອຊ່ວຍພວກເຮົາຕິດຕາມບັນຫາ.",
-        "existing_issue_link": "ກະລຸນາເບິ່ງ <existingIssuesLink>ຂໍ້ບົກຜ່ອງທີ່ມີຢູ່ແລ້ວໃນ Github</existingIssuesLink> ກ່ອນ. ບໍ່ກົງກັນບໍ? <newIssueLink>ເລີ່ມອັນໃໝ່</newIssueLink>.",
-        "send_feedback_action": "ສົ່ງຄໍາຄິດເຫັນ"
     }
 }

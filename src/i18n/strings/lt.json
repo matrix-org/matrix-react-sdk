@@ -2365,9 +2365,9 @@
         "discardsession": "Priverčia išmesti esamą užsibaigiantį grupės seansą užšifruotame kambaryje",
         "query": "Atidaro pokalbį su nurodytu vartotoju",
         "me": "Rodo veiksmą",
-        "op": "Nustatykite vartotojo galios lygį",
         "join": "Prisijungia prie kambario su nurodytu adresu",
         "failed_find_user": "Vartotojo rasti kambaryje nepavyko",
+        "op": "Nustatykite vartotojo galios lygį",
         "deop": "Deop'ina vartotoją su nurodytu id"
     },
     "presence": {
@@ -2534,24 +2534,24 @@
         "registration_successful": "Registracija sėkminga",
         "server_picker_title": "Prisijunkite prie savo namų serverio",
         "footer_powered_by_matrix": "veikia su Matrix",
+        "failed_homeserver_discovery": "Nepavyko atlikti serverio radimo",
+        "sync_footer_subtitle": "Jei esate prisijungę prie daug kambarių, tai gali užtrukti",
         "unsupported_auth_msisdn": "Šis serveris nepalaiko tapatybės nustatymo telefono numeriu.",
         "unsupported_auth_email": "Šis serveris nepalaiko prisijungimo naudojant el. pašto adresą.",
-        "sync_footer_subtitle": "Jei esate prisijungę prie daug kambarių, tai gali užtrukti",
-        "sign_in_or_register_description": "Norėdami tęsti naudokite savo paskyrą arba sukurkite naują.",
-        "sign_in_or_register": "Prisijungti arba Sukurti Paskyrą",
-        "server_picker_required": "Nurodykite namų serverį",
-        "server_picker_learn_more": "Apie namų serverius",
-        "server_picker_invalid_url": "Netinkamas URL",
-        "server_picker_failed_validate_homeserver": "Nepavyksta patvirtinti namų serverio",
-        "server_picker_explainer": "Naudokite pageidaujamą Matrix namų serverį, jei tokį turite, arba talpinkite savo.",
-        "server_picker_custom": "Kitas namų serveris",
         "registration_disabled": "Registracija šiame serveryje išjungta.",
-        "register_action": "Sukurti Paskyrą",
         "incorrect_password": "Neteisingas slaptažodis",
-        "forgot_password_prompt": "Pamiršote savo slaptažodį?",
         "forgot_password_email_required": "Privalo būti įvestas su jūsų paskyra susietas el. pašto adresas.",
-        "failed_homeserver_discovery": "Nepavyko atlikti serverio radimo",
-        "create_account_prompt": "Naujas vartotojas? <a>Sukurkite paskyrą</a>"
+        "forgot_password_prompt": "Pamiršote savo slaptažodį?",
+        "create_account_prompt": "Naujas vartotojas? <a>Sukurkite paskyrą</a>",
+        "sign_in_or_register": "Prisijungti arba Sukurti Paskyrą",
+        "sign_in_or_register_description": "Norėdami tęsti naudokite savo paskyrą arba sukurkite naują.",
+        "register_action": "Sukurti Paskyrą",
+        "server_picker_failed_validate_homeserver": "Nepavyksta patvirtinti namų serverio",
+        "server_picker_invalid_url": "Netinkamas URL",
+        "server_picker_required": "Nurodykite namų serverį",
+        "server_picker_custom": "Kitas namų serveris",
+        "server_picker_explainer": "Naudokite pageidaujamą Matrix namų serverį, jei tokį turite, arba talpinkite savo.",
+        "server_picker_learn_more": "Apie namų serverius"
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
@@ -2621,6 +2621,13 @@
             "see_event_type_sent_active_room": "Peržiūrėti <b>%(eventType)s</b> įvykius, paskelbtus jūsų aktyviame kambaryje"
         }
     },
+    "feedback": {
+        "sent": "Atsiliepimas išsiųstas",
+        "comment_label": "Komentaras",
+        "pro_type": "PRO PATARIMAS: Jei pradėjote klaidos pranešimą, pateikite <debugLogsLink>derinimo žurnalus</debugLogsLink>, kad padėtumėte mums išsiaiškinti problemą.",
+        "existing_issue_link": "Pirmiausia peržiūrėkite <existingIssuesLink>Github'e esančius pranešimus apie klaidas</existingIssuesLink>. Jokio atitikmens? <newIssueLink>Pradėkite naują pranešimą</newIssueLink>.",
+        "send_feedback_action": "Siųsti atsiliepimą"
+    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Naudokite keletą žodžių, venkite dažnai naudojamų frazių",
@@ -2653,12 +2660,5 @@
             "straightRow": "Klavišų eilę yra lengva atspėti",
             "keyPattern": "Trumpus klaviatūros šablonus yra lengva atspėti"
         }
-    },
-    "feedback": {
-        "sent": "Atsiliepimas išsiųstas",
-        "comment_label": "Komentaras",
-        "pro_type": "PRO PATARIMAS: Jei pradėjote klaidos pranešimą, pateikite <debugLogsLink>derinimo žurnalus</debugLogsLink>, kad padėtumėte mums išsiaiškinti problemą.",
-        "existing_issue_link": "Pirmiausia peržiūrėkite <existingIssuesLink>Github'e esančius pranešimus apie klaidas</existingIssuesLink>. Jokio atitikmens? <newIssueLink>Pradėkite naują pranešimą</newIssueLink>.",
-        "send_feedback_action": "Siųsti atsiliepimą"
     }
 }

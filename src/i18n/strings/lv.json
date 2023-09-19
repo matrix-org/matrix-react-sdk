@@ -1725,9 +1725,9 @@
         "holdcall": "Iepauzē sazvanu šajā istabā",
         "unholdcall": "Šajā istabā iepauzētās sazvana atpauzēšana",
         "me": "Parāda darbību",
-        "op": "Definē lietotāja statusu",
         "join": "Pievienojas istabai ar šādu adresi",
         "failed_find_user": "Lietotājs istabā netika atrasts",
+        "op": "Definē lietotāja statusu",
         "deop": "Atceļ operatora statusu lietotājam ar norādīto Id"
     },
     "presence": {
@@ -1832,24 +1832,24 @@
         "log_in_new_account": "<a>Pierakstīties</a> jaunajā kontā.",
         "registration_successful": "Reģistrācija ir veiksmīga",
         "footer_powered_by_matrix": "tiek darbināta ar Matrix",
-        "unsupported_auth_msisdn": "Šis serveris neatbalsta autentifikāciju pēc telefona numura.",
         "sync_footer_subtitle": "Ja esat pievienojies daudzām istabām, tas var aizņemt kādu laiku",
-        "soft_logout_intro_unsupported_auth": "Jūs nevarat pierakstīties savā kontā. Lūdzu, sazinieties ar sava bāzes servera administratoru, lai iegūtu vairāk informācijas.",
-        "soft_logout_intro_sso": "Pierakstieties un atgūstiet piekļuvi savam kontam.",
-        "soft_logout_intro_password": "Ievadiet paroli, lai pierakstītos un atgūtu piekļuvi savam kontam.",
-        "soft_logout_heading": "Jūs izrakstījāties",
-        "sign_in_prompt": "Vai jums ir konts? <a>Pierakstieties</a>",
-        "sign_in_or_register_description": "Izmantojiet esošu kontu vai izveidojiet jaunu, lai turpinātu.",
-        "sign_in_or_register": "Pierakstīties vai izveidot kontu",
-        "server_picker_learn_more": "Par bāzes serveriem",
+        "unsupported_auth_msisdn": "Šis serveris neatbalsta autentifikāciju pēc telefona numura.",
         "registration_disabled": "Šajā bāzes serverī reģistrācija ir atspējota.",
-        "register_action": "Izveidot kontu",
-        "incorrect_password": "Nepareiza parole",
-        "forgot_password_prompt": "Aizmirsāt paroli?",
-        "forgot_password_email_required": "Ir jāievada jūsu kontam piesaistītā epasta adrese.",
-        "failed_soft_logout_auth": "Neizdevās atkārtoti autentificēties",
         "failed_query_registration_methods": "Neizdevās pieprasīt atbalstītās reģistrācijas metodes.",
-        "create_account_prompt": "Pirmo reizi šeit? <a>Izveidojiet kontu</a>"
+        "incorrect_password": "Nepareiza parole",
+        "failed_soft_logout_auth": "Neizdevās atkārtoti autentificēties",
+        "soft_logout_heading": "Jūs izrakstījāties",
+        "forgot_password_email_required": "Ir jāievada jūsu kontam piesaistītā epasta adrese.",
+        "sign_in_prompt": "Vai jums ir konts? <a>Pierakstieties</a>",
+        "forgot_password_prompt": "Aizmirsāt paroli?",
+        "soft_logout_intro_password": "Ievadiet paroli, lai pierakstītos un atgūtu piekļuvi savam kontam.",
+        "soft_logout_intro_sso": "Pierakstieties un atgūstiet piekļuvi savam kontam.",
+        "soft_logout_intro_unsupported_auth": "Jūs nevarat pierakstīties savā kontā. Lūdzu, sazinieties ar sava bāzes servera administratoru, lai iegūtu vairāk informācijas.",
+        "create_account_prompt": "Pirmo reizi šeit? <a>Izveidojiet kontu</a>",
+        "sign_in_or_register": "Pierakstīties vai izveidot kontu",
+        "sign_in_or_register_description": "Izmantojiet esošu kontu vai izveidojiet jaunu, lai turpinātu.",
+        "register_action": "Izveidot kontu",
+        "server_picker_learn_more": "Par bāzes serveriem"
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",
@@ -1942,6 +1942,10 @@
             "see_msgtype_sent_active_room": "Apskatīt <b>%(msgtype)s</b> ziņas, kas publicētas jūsu aktīvajā istabā"
         }
     },
+    "feedback": {
+        "sent": "Atsauksme nosūtīta",
+        "send_feedback_action": "Nosūtīt atsauksmi"
+    },
     "zxcvbn": {
         "suggestions": {
             "allUppercase": "Visus lielos burtus ir gandrīz tikpat viegli uzminēt kā visus mazos",
@@ -1951,9 +1955,5 @@
             "dates": "Datumi bieži vien ir viegli uzminami",
             "wordByItself": "Vārds pats par sevi ir viegli uzminams"
         }
-    },
-    "feedback": {
-        "sent": "Atsauksme nosūtīta",
-        "send_feedback_action": "Nosūtīt atsauksmi"
     }
 }

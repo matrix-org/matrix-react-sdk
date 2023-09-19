@@ -2572,12 +2572,12 @@
         "no_active_call": "אין שיחה פעילה בחדר זה",
         "unholdcall": "מחזיר את השיחה הנוכחית ממצב המתנה",
         "me": "הצג פעולה",
-        "op": "הגדירו את רמת ההרשאות של משתמש",
-        "join": "חיבור לחדר עם כתובת מסויימת",
-        "failed_find_user": "משתמש זה לא נמצא בחדר",
-        "failed_find_room": "הפעולה נכשלה: לא ניתן למצוא את החדר (%(roomId)s",
         "error_invalid_runfn": "שגיאת פקודה: לא ניתן לטפל בפקודת לוכסן.",
         "error_invalid_rendering_type": "שגיאת פקודה: לא ניתן למצוא את סוג העיבוד (%(renderingType)s)",
+        "join": "חיבור לחדר עם כתובת מסויימת",
+        "failed_find_room": "הפעולה נכשלה: לא ניתן למצוא את החדר (%(roomId)s",
+        "failed_find_user": "משתמש זה לא נמצא בחדר",
+        "op": "הגדירו את רמת ההרשאות של משתמש",
         "deop": "מסיר משתמש עם קוד זיהוי זה"
     },
     "presence": {
@@ -2743,33 +2743,33 @@
         "server_picker_title": "היכנס לשרת הבית שלך",
         "server_picker_dialog_title": "החלט היכן מתארח חשבונך",
         "footer_powered_by_matrix": "מופעל ע\"י Matrix",
+        "failed_homeserver_discovery": "נכשל גילוי שרת הבית",
+        "sync_footer_subtitle": "אם הצטרפת להרבה חדרים, זה עשוי לקחת זמן מה",
         "unsupported_auth_msisdn": "שרת זה אינו תומך באימות עם מספר טלפון.",
         "unsupported_auth_email": "שרת בית זה אינו תומך בכניסה באמצעות כתובת דוא\"ל.",
-        "sync_footer_subtitle": "אם הצטרפת להרבה חדרים, זה עשוי לקחת זמן מה",
-        "soft_logout_intro_unsupported_auth": "אינך יכול להיכנס לחשבונך. אנא פנה למנהל שרת הבית שלך למידע נוסף.",
-        "soft_logout_intro_sso": "היכנס וקבל שוב גישה לחשבונך.",
-        "soft_logout_intro_password": "הזן את הסיסמה שלך כדי להיכנס לחזרה ולחזור אליה.",
-        "soft_logout_heading": "התנתקתם",
-        "sign_in_prompt": "יש לך חשבון? <a> היכנס </a>",
-        "sign_in_or_register_description": "השתמשו בחשבונכם או צרו חשבון חדש.",
-        "sign_in_or_register": "התחברו או צרו חשבון",
-        "server_picker_required": "ציין שרת בית",
-        "server_picker_learn_more": "אודות שרתי בית",
-        "server_picker_invalid_url": "כתובת אתר לא חוקית",
-        "server_picker_failed_validate_homeserver": "לא ניתן לאמת את שרת הבית",
-        "server_picker_explainer": "השתמש בשרת הבית המועדף על מטריקס אם יש לך כזה, או מארח משלך.",
-        "server_picker_custom": "שרת בית אחר",
         "registration_disabled": "ההרשמה הושבתה בשרת הבית הזה.",
-        "register_action": "משתמש חדש",
-        "incorrect_password": "סיסמה שגויה",
-        "forgot_password_prompt": "שכחת את הסיסמה שלך?",
-        "forgot_password_email_required": "יש להזין את כתובת הדוא\"ל המקושרת לחשבונך.",
-        "failed_soft_logout_auth": "האימות מחדש נכשל",
         "failed_query_registration_methods": "לא ניתן לשאול לשיטות רישום נתמכות.",
-        "failed_homeserver_discovery": "נכשל גילוי שרת הבית",
+        "incorrect_password": "סיסמה שגויה",
+        "failed_soft_logout_auth": "האימות מחדש נכשל",
+        "soft_logout_heading": "התנתקתם",
+        "forgot_password_email_required": "יש להזין את כתובת הדוא\"ל המקושרת לחשבונך.",
+        "sign_in_prompt": "יש לך חשבון? <a> היכנס </a>",
+        "forgot_password_prompt": "שכחת את הסיסמה שלך?",
+        "soft_logout_intro_password": "הזן את הסיסמה שלך כדי להיכנס לחזרה ולחזור אליה.",
+        "soft_logout_intro_sso": "היכנס וקבל שוב גישה לחשבונך.",
+        "soft_logout_intro_unsupported_auth": "אינך יכול להיכנס לחשבונך. אנא פנה למנהל שרת הבית שלך למידע נוסף.",
         "enter_email_heading": "הקלד את כתובת הדואר האלקטרוני שלך לצורך איפוס סיסמה",
         "enter_email_explainer": "<b>%(homeserver)s</b> ישלח אליך קישור לצורך איפוס הסיסמה שלך.",
-        "create_account_prompt": "חדש פה? <a> צור חשבון </a>"
+        "create_account_prompt": "חדש פה? <a> צור חשבון </a>",
+        "sign_in_or_register": "התחברו או צרו חשבון",
+        "sign_in_or_register_description": "השתמשו בחשבונכם או צרו חשבון חדש.",
+        "register_action": "משתמש חדש",
+        "server_picker_failed_validate_homeserver": "לא ניתן לאמת את שרת הבית",
+        "server_picker_invalid_url": "כתובת אתר לא חוקית",
+        "server_picker_required": "ציין שרת בית",
+        "server_picker_custom": "שרת בית אחר",
+        "server_picker_explainer": "השתמש בשרת הבית המועדף על מטריקס אם יש לך כזה, או מארח משלך.",
+        "server_picker_learn_more": "אודות שרתי בית"
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
@@ -2872,6 +2872,13 @@
             "see_msgtype_sent_active_room": "ראו <b>%(msgtype)s</b> הודעות שפורסמו בחדר הפעיל שלכם"
         }
     },
+    "feedback": {
+        "sent": "משוב נשלח",
+        "comment_label": "תגובה",
+        "pro_type": "טיפ למקצוענים: אם אתה מפעיל באג, שלח <debugLogsLink> יומני איתור באגים </debugLogsLink> כדי לעזור לנו לאתר את הבעיה.",
+        "existing_issue_link": "אנא צפה תחילה ב <existingIssuesLink> באגים קיימים ב- Github </existingIssuesLink>. אין התאמה? <newIssueLink> התחל חדש </newIssueLink>.",
+        "send_feedback_action": "שלח משוב"
+    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "השתמשו במילים ספורות, המנעו מביטויים מוכרים",
@@ -2904,12 +2911,5 @@
             "straightRow": "שורות מסודרות של מקשים מאוד קל לנחש",
             "keyPattern": "דפוסים קצרים קל לנחש"
         }
-    },
-    "feedback": {
-        "sent": "משוב נשלח",
-        "comment_label": "תגובה",
-        "pro_type": "טיפ למקצוענים: אם אתה מפעיל באג, שלח <debugLogsLink> יומני איתור באגים </debugLogsLink> כדי לעזור לנו לאתר את הבעיה.",
-        "existing_issue_link": "אנא צפה תחילה ב <existingIssuesLink> באגים קיימים ב- Github </existingIssuesLink>. אין התאמה? <newIssueLink> התחל חדש </newIssueLink>.",
-        "send_feedback_action": "שלח משוב"
     }
 }

@@ -2445,12 +2445,12 @@
         "no_active_call": "تماس فعالی در این اتفاق وجود ندارد",
         "unholdcall": "تماس را در اتاق فعلی خاموش نگه می دارد",
         "me": "عملکرد را نمایش می دهد",
-        "op": "سطح قدرت یک کاربر را تعریف کنید",
-        "join": "به اتاق با آدرس داده‌شده بپیوندید",
-        "failed_find_user": "کاربر در اتاق پیدا نشد",
-        "failed_find_room": "دستور با خطا روبرو شد: اتاق %(roomId)s پیدا نشد",
         "error_invalid_runfn": "خطای دستور: ناتوانی در اجرای دستور اسلش.",
         "error_invalid_rendering_type": "خطای دستوری: نوع نمایش (%(renderingType)s ) یافت نشد",
+        "join": "به اتاق با آدرس داده‌شده بپیوندید",
+        "failed_find_room": "دستور با خطا روبرو شد: اتاق %(roomId)s پیدا نشد",
+        "failed_find_user": "کاربر در اتاق پیدا نشد",
+        "op": "سطح قدرت یک کاربر را تعریف کنید",
         "deop": "کاربر را با شناسه داده شده از بین می برد"
     },
     "presence": {
@@ -2595,32 +2595,32 @@
         "server_picker_title": "وارد سرور خود شوید",
         "server_picker_dialog_title": "حساب کاربری شما بر روی کجا ساخته شود",
         "footer_powered_by_matrix": "قدرت‌یافته از ماتریکس",
+        "failed_homeserver_discovery": "جستجوی سرور با موفقیت انجام نشد",
+        "sync_footer_subtitle": "اگر عضو اتاق‌های بسیار زیادی هستید، ممکن است این فرآیند مقدای به طول بیانجامد",
         "unsupported_auth_msisdn": "این سرور از قابلیت احراز با شماره تلفن پشتیبانی نمی کند.",
         "unsupported_auth_email": "این سرور از ورود با استفاده از آدرس ایمیل پشتیبانی نمی کند.",
-        "sync_footer_subtitle": "اگر عضو اتاق‌های بسیار زیادی هستید، ممکن است این فرآیند مقدای به طول بیانجامد",
-        "soft_logout_intro_unsupported_auth": "نمی توانید وارد حساب کاربری خود شوید. لطفا برای اطلاعات بیشتر با مدیر سرور خود تماس بگیرید.",
-        "soft_logout_intro_sso": "وارد شوید و به حساب کاربری خود دسترسی داشته باشید.",
-        "soft_logout_intro_password": "جهت ورود مجدد به حساب کاربری و دسترسی به منوی کاربری، گذرواژه‌ی خود را وارد نمائید.",
-        "soft_logout_heading": "شما خارج شدید",
-        "sign_in_prompt": "حساب کاربری دارید؟ <a>وارد شوید</a>",
-        "sign_in_or_register_description": "برای ادامه کار از حساب کاربری خود استفاده کرده و یا حساب کاربری جدیدی ایجاد کنید.",
-        "sign_in_or_register": "وارد شوید یا حساب کاربری بسازید",
-        "sign_in_description": "برای ادامه از حساب خود استفاده کنید.",
-        "server_picker_required": "یک سرور مشخص کنید",
-        "server_picker_learn_more": "درباره سرورها",
-        "server_picker_invalid_url": "آدرس URL نامعتبر",
-        "server_picker_failed_validate_homeserver": "تأیید اعتبار سرور امکان‌پذیر نیست",
-        "server_picker_explainer": "از یک سرور مبتنی بر پروتکل ماتریکس که ترجیح می‌دهید استفاده کرده، و یا از سرور شخصی خودتان استفاده کنید.",
-        "server_picker_custom": "سرور دیگر",
         "registration_disabled": "ثبت‌نام بر روی این سرور غیرفعال شده‌است.",
-        "register_action": "ایجاد حساب کاربری",
-        "incorrect_password": "گذرواژه صحیح نیست",
-        "forgot_password_prompt": "گذرواژه‌ی خود را فراموش کردید؟",
-        "forgot_password_email_required": "آدرس ایمیلی که به حساب کاربری شما متصل است، باید وارد شود.",
-        "failed_soft_logout_auth": "احراز هویت مجدد موفیت‌آمیز نبود",
         "failed_query_registration_methods": "درخواست از روش‌های پشتیبانی‌شده‌ی ثبت‌نام میسر نیست.",
-        "failed_homeserver_discovery": "جستجوی سرور با موفقیت انجام نشد",
-        "create_account_prompt": "تازه وارد هستید؟ <a>یک حساب کاربری ایجاد کنید</a>"
+        "incorrect_password": "گذرواژه صحیح نیست",
+        "failed_soft_logout_auth": "احراز هویت مجدد موفیت‌آمیز نبود",
+        "soft_logout_heading": "شما خارج شدید",
+        "forgot_password_email_required": "آدرس ایمیلی که به حساب کاربری شما متصل است، باید وارد شود.",
+        "sign_in_prompt": "حساب کاربری دارید؟ <a>وارد شوید</a>",
+        "forgot_password_prompt": "گذرواژه‌ی خود را فراموش کردید؟",
+        "soft_logout_intro_password": "جهت ورود مجدد به حساب کاربری و دسترسی به منوی کاربری، گذرواژه‌ی خود را وارد نمائید.",
+        "soft_logout_intro_sso": "وارد شوید و به حساب کاربری خود دسترسی داشته باشید.",
+        "soft_logout_intro_unsupported_auth": "نمی توانید وارد حساب کاربری خود شوید. لطفا برای اطلاعات بیشتر با مدیر سرور خود تماس بگیرید.",
+        "create_account_prompt": "تازه وارد هستید؟ <a>یک حساب کاربری ایجاد کنید</a>",
+        "sign_in_or_register": "وارد شوید یا حساب کاربری بسازید",
+        "sign_in_or_register_description": "برای ادامه کار از حساب کاربری خود استفاده کرده و یا حساب کاربری جدیدی ایجاد کنید.",
+        "sign_in_description": "برای ادامه از حساب خود استفاده کنید.",
+        "register_action": "ایجاد حساب کاربری",
+        "server_picker_failed_validate_homeserver": "تأیید اعتبار سرور امکان‌پذیر نیست",
+        "server_picker_invalid_url": "آدرس URL نامعتبر",
+        "server_picker_required": "یک سرور مشخص کنید",
+        "server_picker_custom": "سرور دیگر",
+        "server_picker_explainer": "از یک سرور مبتنی بر پروتکل ماتریکس که ترجیح می‌دهید استفاده کرده، و یا از سرور شخصی خودتان استفاده کنید.",
+        "server_picker_learn_more": "درباره سرورها"
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2730,6 +2730,14 @@
             "see_msgtype_sent_active_room": "پیام های <b>%(msgtype)s</b> ارسال شده به اتاق فعال خودتان را مشاهده کنید"
         }
     },
+    "feedback": {
+        "sent": "بازخورد ارسال شد",
+        "comment_label": "نظر",
+        "platform_username": "سیستم‌عامل و نام کاربری شما ثبت خواهد شد تا به ما کمک کند تا جایی که می توانیم از نظرات شما استفاده کنیم.",
+        "pro_type": "نکته‌ای برای کاربران حرفه‌ای: اگر به مشکل نرم‌افزاری در برنامه برخورد کردید، لطفاً <debugLogsLink>لاگ‌های مشکل</debugLogsLink> را ارسال کنید تا به ما در ردیابی و رفع آن کمک کند.",
+        "existing_issue_link": "لطفاً ابتدا اشکالات موجود را در <existingIssuesLink>گیتهاب برنامه</existingIssuesLink> را مشاهده کنید. با اشکال شما مطابقتی وجود ندارد؟<newIssueLink> مورد جدیدی را ثبت کنید</newIssueLink>.",
+        "send_feedback_action": "ارسال بازخورد"
+    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "از چند کلمه استفاده کنید ، از عبارات معمول خودداری نمائید",
@@ -2762,13 +2770,5 @@
             "straightRow": "ردیف کلیدهای مستقیم به راحتی قابل حدس هستند",
             "keyPattern": "الگوهای کوتاه صفحه کلید به راحتی قابل حدس هستند"
         }
-    },
-    "feedback": {
-        "sent": "بازخورد ارسال شد",
-        "comment_label": "نظر",
-        "platform_username": "سیستم‌عامل و نام کاربری شما ثبت خواهد شد تا به ما کمک کند تا جایی که می توانیم از نظرات شما استفاده کنیم.",
-        "pro_type": "نکته‌ای برای کاربران حرفه‌ای: اگر به مشکل نرم‌افزاری در برنامه برخورد کردید، لطفاً <debugLogsLink>لاگ‌های مشکل</debugLogsLink> را ارسال کنید تا به ما در ردیابی و رفع آن کمک کند.",
-        "existing_issue_link": "لطفاً ابتدا اشکالات موجود را در <existingIssuesLink>گیتهاب برنامه</existingIssuesLink> را مشاهده کنید. با اشکال شما مطابقتی وجود ندارد؟<newIssueLink> مورد جدیدی را ثبت کنید</newIssueLink>.",
-        "send_feedback_action": "ارسال بازخورد"
     }
 }

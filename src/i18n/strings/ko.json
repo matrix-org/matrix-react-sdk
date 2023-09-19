@@ -1411,20 +1411,20 @@
         "log_in_new_account": "새 계정으로 <a>로그인</a>하기.",
         "registration_successful": "등록 성공",
         "footer_powered_by_matrix": "Matrix의 지원을 받음",
+        "failed_homeserver_discovery": "홈서버 검색 수행에 실패함",
         "unsupported_auth_msisdn": "이 서버는 전화번호 인증을 지원하지 않습니다.",
         "unsupported_auth_email": "이 홈서버는 이메일 주소로 로그인을 지원하지 않습니다.",
-        "soft_logout_intro_unsupported_auth": "계정에 로그인할 수 없습니다. 자세한 정보는 홈서버 관리자에게 연락하세요.",
-        "soft_logout_intro_sso": "로그인하고 계정에 다시 접근하기.",
-        "soft_logout_intro_password": "로그인하고 계정에 다시 접근하려면 비밀번호를 입력하세요.",
-        "soft_logout_heading": "로그아웃됬습니다",
         "registration_disabled": "이 홈서버는 등록이 비활성화되어 있습니다.",
-        "register_action": "계정 만들기",
-        "incorrect_password": "맞지 않는 비밀번호",
-        "forgot_password_prompt": "비밀번호를 잊었습니까?",
-        "forgot_password_email_required": "계정에 연결한 이메일 주소를 입력해야 합니다.",
-        "failed_soft_logout_auth": "다시 인증에 실패함",
         "failed_query_registration_methods": "지원하는 등록 방식을 쿼리할 수 없습니다.",
-        "failed_homeserver_discovery": "홈서버 검색 수행에 실패함"
+        "incorrect_password": "맞지 않는 비밀번호",
+        "failed_soft_logout_auth": "다시 인증에 실패함",
+        "soft_logout_heading": "로그아웃됬습니다",
+        "forgot_password_email_required": "계정에 연결한 이메일 주소를 입력해야 합니다.",
+        "forgot_password_prompt": "비밀번호를 잊었습니까?",
+        "soft_logout_intro_password": "로그인하고 계정에 다시 접근하려면 비밀번호를 입력하세요.",
+        "soft_logout_intro_sso": "로그인하고 계정에 다시 접근하기.",
+        "soft_logout_intro_unsupported_auth": "계정에 로그인할 수 없습니다. 자세한 정보는 홈서버 관리자에게 연락하세요.",
+        "register_action": "계정 만들기"
     },
     "export_chat": {
         "title": "대화 내보내기",
@@ -1469,6 +1469,10 @@
             "clear_cache_reload": "캐시 지우기 및 새로고침"
         }
     },
+    "feedback": {
+        "sent": "피드백 보내기",
+        "send_feedback_action": "피드백 보내기"
+    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "몇 단어를 사용하되, 흔한 단어는 피하세요",
@@ -1501,9 +1505,5 @@
             "straightRow": "키의 한 줄은 추측하기 쉽습니다",
             "keyPattern": "짧은 키보드 패턴은 추측하기 쉽습니다"
         }
-    },
-    "feedback": {
-        "sent": "피드백 보내기",
-        "send_feedback_action": "피드백 보내기"
     }
 }

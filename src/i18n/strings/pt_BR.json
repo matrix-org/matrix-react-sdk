@@ -2699,12 +2699,12 @@
         "no_active_call": "Nenhuma chamada ativa nesta sala",
         "unholdcall": "Retoma a chamada na sala atual",
         "me": "Visualizar atividades",
-        "op": "Define o nível de permissões de um usuário",
-        "join": "Entra em uma sala com o endereço fornecido",
-        "failed_find_user": "Não encontrei este(a) usuário(a) na sala",
-        "failed_find_room": "Falha no comando: Não foi possível encontrar sala %(roomId)s",
         "error_invalid_runfn": "Erro de comando: Não é possível manipular o comando de barra.",
         "error_invalid_rendering_type": "Erro de comando: Não é possível manipular o tipo (%(renderingType)s)",
+        "join": "Entra em uma sala com o endereço fornecido",
+        "failed_find_room": "Falha no comando: Não foi possível encontrar sala %(roomId)s",
+        "failed_find_user": "Não encontrei este(a) usuário(a) na sala",
+        "op": "Define o nível de permissões de um usuário",
         "deop": "Retira o nível de moderador do usuário com o ID informado"
     },
     "presence": {
@@ -2872,31 +2872,31 @@
         "server_picker_title": "Faça login em seu servidor local",
         "server_picker_dialog_title": "Decida onde a sua conta será hospedada",
         "footer_powered_by_matrix": "oferecido por Matrix",
+        "failed_homeserver_discovery": "Falha ao executar a descoberta do homeserver",
+        "sync_footer_subtitle": "Se você participa em muitas salas, isso pode demorar um pouco",
         "unsupported_auth_msisdn": "Este servidor não permite a autenticação através de números de telefone.",
         "unsupported_auth_email": "Este servidor local não suporta login usando endereço de e-mail.",
-        "sync_footer_subtitle": "Se você participa em muitas salas, isso pode demorar um pouco",
-        "soft_logout_intro_unsupported_auth": "Você não pôde se conectar na sua conta. Entre em contato com o administrador do servidor para obter mais informações.",
-        "soft_logout_intro_sso": "Entre e recupere o acesso à sua conta.",
-        "soft_logout_intro_password": "Digite sua senha para entrar e recuperar o acesso à sua conta.",
-        "soft_logout_heading": "Você está desconectada/o",
-        "sign_in_prompt": "Já tem uma conta? <a>Login</a>",
-        "sign_in_or_register_description": "Use sua conta ou crie uma nova para continuar.",
-        "sign_in_or_register": "Faça login ou crie uma conta",
-        "server_picker_required": "Digite um servidor local",
-        "server_picker_learn_more": "Sobre os servidores locais",
-        "server_picker_invalid_url": "URL inválido",
-        "server_picker_failed_validate_homeserver": "Não foi possível validar o servidor local",
-        "server_picker_explainer": "Use o seu servidor local Matrix preferido, ou hospede o seu próprio servidor.",
-        "server_picker_custom": "Outro servidor local",
         "registration_disabled": "O registro de contas foi desativado neste servidor local.",
-        "register_action": "Criar Conta",
-        "incorrect_password": "Senha incorreta",
-        "forgot_password_prompt": "Esqueceu sua senha?",
-        "forgot_password_email_required": "O e-mail vinculado à sua conta precisa ser informado.",
-        "failed_soft_logout_auth": "Falha em autenticar novamente",
         "failed_query_registration_methods": "Não foi possível consultar as opções de registro suportadas.",
-        "failed_homeserver_discovery": "Falha ao executar a descoberta do homeserver",
-        "create_account_prompt": "Novo por aqui? <a>Crie uma conta</a>"
+        "incorrect_password": "Senha incorreta",
+        "failed_soft_logout_auth": "Falha em autenticar novamente",
+        "soft_logout_heading": "Você está desconectada/o",
+        "forgot_password_email_required": "O e-mail vinculado à sua conta precisa ser informado.",
+        "sign_in_prompt": "Já tem uma conta? <a>Login</a>",
+        "forgot_password_prompt": "Esqueceu sua senha?",
+        "soft_logout_intro_password": "Digite sua senha para entrar e recuperar o acesso à sua conta.",
+        "soft_logout_intro_sso": "Entre e recupere o acesso à sua conta.",
+        "soft_logout_intro_unsupported_auth": "Você não pôde se conectar na sua conta. Entre em contato com o administrador do servidor para obter mais informações.",
+        "create_account_prompt": "Novo por aqui? <a>Crie uma conta</a>",
+        "sign_in_or_register": "Faça login ou crie uma conta",
+        "sign_in_or_register_description": "Use sua conta ou crie uma nova para continuar.",
+        "register_action": "Criar Conta",
+        "server_picker_failed_validate_homeserver": "Não foi possível validar o servidor local",
+        "server_picker_invalid_url": "URL inválido",
+        "server_picker_required": "Digite um servidor local",
+        "server_picker_custom": "Outro servidor local",
+        "server_picker_explainer": "Use o seu servidor local Matrix preferido, ou hospede o seu próprio servidor.",
+        "server_picker_learn_more": "Sobre os servidores locais"
     },
     "room_list": {
         "sort_unread_first": "Mostrar salas não lidas em primeiro",
@@ -2997,6 +2997,13 @@
             "see_msgtype_sent_active_room": "Veja mensagens de <b>%(msgtype)s</b> enviadas nesta sala ativa"
         }
     },
+    "feedback": {
+        "sent": "Comentário enviado",
+        "comment_label": "Comentário",
+        "pro_type": "DICA: se você nos informar um erro, envie <debugLogsLink> relatórios de erro </debugLogsLink> para nos ajudar a rastrear o problema.",
+        "existing_issue_link": "Por favor, consulte os <existingIssuesLink> erros conhecidos no Github </existingIssuesLink> antes de enviar o seu. Se ninguém tiver mencionado o seu erro, <newIssueLink> informe-nos sobre um erro novo </newIssueLink>.",
+        "send_feedback_action": "Enviar comentário"
+    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Use algumas palavras, evite frases comuns",
@@ -3029,12 +3036,5 @@
             "straightRow": "Linhas retas de teclas são fáceis de adivinhar",
             "keyPattern": "Padrões de teclado curtos são fáceis de adivinhar"
         }
-    },
-    "feedback": {
-        "sent": "Comentário enviado",
-        "comment_label": "Comentário",
-        "pro_type": "DICA: se você nos informar um erro, envie <debugLogsLink> relatórios de erro </debugLogsLink> para nos ajudar a rastrear o problema.",
-        "existing_issue_link": "Por favor, consulte os <existingIssuesLink> erros conhecidos no Github </existingIssuesLink> antes de enviar o seu. Se ninguém tiver mencionado o seu erro, <newIssueLink> informe-nos sobre um erro novo </newIssueLink>.",
-        "send_feedback_action": "Enviar comentário"
     }
 }

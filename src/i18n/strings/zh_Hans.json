@@ -3331,12 +3331,12 @@
         "no_active_call": "此房间未有活跃中的通话",
         "unholdcall": "解除挂起当前房间的通话",
         "me": "显示操作",
-        "op": "定义一名用户的权力级别",
-        "join": "使用指定地址加入房间",
-        "failed_find_user": "房间中无用户",
-        "failed_find_room": "命令失败：无法找到房间（%(roomId)s）",
         "error_invalid_runfn": "命令错误：无法处理斜杠命令。",
         "error_invalid_rendering_type": "命令错误：无法找到渲染类型（%(renderingType)s）",
+        "join": "使用指定地址加入房间",
+        "failed_find_room": "命令失败：无法找到房间（%(roomId)s）",
+        "failed_find_user": "房间中无用户",
+        "op": "定义一名用户的权力级别",
         "deop": "按照 ID 取消特定用户的管理员权限"
     },
     "presence": {
@@ -3522,36 +3522,36 @@
         "server_picker_title": "登录你的家服务器",
         "server_picker_dialog_title": "决定账户托管位置",
         "footer_powered_by_matrix": "由 Matrix 驱动",
-        "username_in_use": "用户名已被占用，请尝试使用其他用户名。",
+        "failed_homeserver_discovery": "无法执行家服务器搜索",
+        "sync_footer_subtitle": "如果你加入了很多房间，可能会消耗一些时间",
         "unsupported_auth_msisdn": "此服务器不支持使用电话号码认证。",
         "unsupported_auth_email": "此家服务器不支持使用电子邮箱地址登录。",
-        "sync_footer_subtitle": "如果你加入了很多房间，可能会消耗一些时间",
-        "soft_logout_intro_unsupported_auth": "你不能登录到你的账户。请联系你的家服务器管理员以获取更多信息。",
-        "soft_logout_intro_sso": "请登录以重新获取访问你账户的权限。",
-        "soft_logout_intro_password": "输入你的密码以登录并重新获取访问你账户的权限。",
-        "soft_logout_heading": "你已登出",
-        "sign_in_prompt": "有账户了？<a>登录</a>",
-        "sign_in_or_register_description": "使用已有账户或创建一个新账户。",
-        "sign_in_or_register": "登录或创建账户",
-        "sign_in_description": "使用你的账户继续。",
-        "server_picker_required": "指定家服务器",
-        "server_picker_matrix.org": "Matrix.org 是世界上最大的公共家服务器，因此对许多人来说是一个好地方。",
-        "server_picker_learn_more": "关于家服务器",
-        "server_picker_invalid_url": "URL 无效",
-        "server_picker_intro": "我们将您可以托管账户的地方称为“家服务器”。",
-        "server_picker_failed_validate_homeserver": "无法验证家服务器",
-        "server_picker_explainer": "使用你偏好的Matrix家服务器，如果你有的话，或自己架设一个。",
-        "server_picker_custom": "其他家服务器",
         "registration_disabled": "此家服务器已禁止注册。",
-        "register_action": "创建账户",
+        "failed_query_registration_methods": "无法查询支持的注册方法。",
+        "username_in_use": "用户名已被占用，请尝试使用其他用户名。",
         "incorrect_password": "密码错误",
-        "forgot_password_prompt": "忘记你的密码了吗？",
+        "failed_soft_logout_auth": "重新认证失败",
+        "soft_logout_heading": "你已登出",
         "forgot_password_email_required": "必须输入和你账户关联的邮箱地址。",
         "forgot_password_email_invalid": "电子邮件地址似乎无效。",
-        "failed_soft_logout_auth": "重新认证失败",
-        "failed_query_registration_methods": "无法查询支持的注册方法。",
-        "failed_homeserver_discovery": "无法执行家服务器搜索",
-        "create_account_prompt": "新来的？<a>创建账户</a>"
+        "sign_in_prompt": "有账户了？<a>登录</a>",
+        "forgot_password_prompt": "忘记你的密码了吗？",
+        "soft_logout_intro_password": "输入你的密码以登录并重新获取访问你账户的权限。",
+        "soft_logout_intro_sso": "请登录以重新获取访问你账户的权限。",
+        "soft_logout_intro_unsupported_auth": "你不能登录到你的账户。请联系你的家服务器管理员以获取更多信息。",
+        "create_account_prompt": "新来的？<a>创建账户</a>",
+        "sign_in_or_register": "登录或创建账户",
+        "sign_in_or_register_description": "使用已有账户或创建一个新账户。",
+        "sign_in_description": "使用你的账户继续。",
+        "register_action": "创建账户",
+        "server_picker_failed_validate_homeserver": "无法验证家服务器",
+        "server_picker_invalid_url": "URL 无效",
+        "server_picker_required": "指定家服务器",
+        "server_picker_matrix.org": "Matrix.org 是世界上最大的公共家服务器，因此对许多人来说是一个好地方。",
+        "server_picker_intro": "我们将您可以托管账户的地方称为“家服务器”。",
+        "server_picker_custom": "其他家服务器",
+        "server_picker_explainer": "使用你偏好的Matrix家服务器，如果你有的话，或自己架设一个。",
+        "server_picker_learn_more": "关于家服务器"
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",
@@ -3665,6 +3665,15 @@
             "see_msgtype_sent_active_room": "查看发布到你所活跃的房间的 <b>%(msgtype)s</b> 消息"
         }
     },
+    "feedback": {
+        "sent": "反馈已发送",
+        "comment_label": "备注",
+        "platform_username": "我们将会记录你的平台及用户名，以帮助我们尽我们所能地使用你的反馈。",
+        "may_contact_label": "如果您想跟进或让我测试即将到来的想法，您可以与我联系",
+        "pro_type": "专业建议：如果你要发起新问题，请一并提交<debugLogsLink>调试日志</debugLogsLink>，以便我们找出问题根源。",
+        "existing_issue_link": "请先查找一下 <existingIssuesLink>Github 上已有的问题</existingIssuesLink>，以免重复。找不到重复问题？<newIssueLink>发起一个吧</newIssueLink>。",
+        "send_feedback_action": "发送反馈"
+    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "用一些字符，避免常用短语",
@@ -3697,14 +3706,5 @@
             "straightRow": "键位在一条直线上的组合很容易被猜到",
             "keyPattern": "键位短序列很容易被猜到"
         }
-    },
-    "feedback": {
-        "sent": "反馈已发送",
-        "comment_label": "备注",
-        "platform_username": "我们将会记录你的平台及用户名，以帮助我们尽我们所能地使用你的反馈。",
-        "may_contact_label": "如果您想跟进或让我测试即将到来的想法，您可以与我联系",
-        "pro_type": "专业建议：如果你要发起新问题，请一并提交<debugLogsLink>调试日志</debugLogsLink>，以便我们找出问题根源。",
-        "existing_issue_link": "请先查找一下 <existingIssuesLink>Github 上已有的问题</existingIssuesLink>，以免重复。找不到重复问题？<newIssueLink>发起一个吧</newIssueLink>。",
-        "send_feedback_action": "发送反馈"
     }
 }

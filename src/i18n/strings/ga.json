@@ -789,13 +789,13 @@
         "sso": "Single Sign On",
         "sign_in_instead": "An bhfuil cuntas agat cheana? <a>Sínigh isteach anseo</a>",
         "server_picker_title": "Óstáil cuntas ar",
+        "failed_query_registration_methods": "Ní féidir iarratas a dhéanamh faoi modhanna cláraithe tacaithe.",
         "soft_logout_heading": "Tá tú sínithe amach",
         "sign_in_prompt": "An bhfuil cuntas agat? <a>Sínigh isteach</a>",
-        "sign_in_or_register": "Sínigh Isteach nó Déan cuntas a chruthú",
-        "register_action": "Déan cuntas a chruthú",
         "forgot_password_prompt": "An nDearna tú dearmad ar do fhocal faire?",
-        "failed_query_registration_methods": "Ní féidir iarratas a dhéanamh faoi modhanna cláraithe tacaithe.",
-        "create_account_prompt": "Céaduaire? <a>Cruthaigh cuntas</a>"
+        "create_account_prompt": "Céaduaire? <a>Cruthaigh cuntas</a>",
+        "sign_in_or_register": "Sínigh Isteach nó Déan cuntas a chruthú",
+        "register_action": "Déan cuntas a chruthú"
     },
     "export_chat": {
         "messages": "Teachtaireachtaí"
@@ -817,12 +817,12 @@
             "versions": "Leaganacha"
         }
     },
+    "feedback": {
+        "comment_label": "Trácht"
+    },
     "zxcvbn": {
         "suggestions": {
             "sequences": "Seachain seicheamh"
         }
-    },
-    "feedback": {
-        "comment_label": "Trácht"
     }
 }

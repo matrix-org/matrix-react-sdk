@@ -701,10 +701,10 @@
         "addwidget_no_permissions": "Du kan ikke ændre widgets i dette rum.",
         "discardsession": "Tvinger den nuværende udgående gruppe-session i et krypteret rum til at blive kasseret",
         "me": "Viser handling",
-        "op": "Indstil rettighedsniveau for en bruger",
-        "failed_find_user": "Kunne ikke finde bruger i rum",
         "error_invalid_runfn": "Kommandofejl: Kan ikke håndtere skråstregskommando.",
         "error_invalid_rendering_type": "Kommandofejl: Kan ikke finde renderingstype (%(renderingType)s)",
+        "failed_find_user": "Kunne ikke finde bruger i rum",
+        "op": "Indstil rettighedsniveau for en bruger",
         "deop": "Fjerner OP af bruger med givet id"
     },
     "presence": {
@@ -753,12 +753,12 @@
     "auth": {
         "sso": "Engangs login",
         "footer_powered_by_matrix": "Drevet af Matrix",
-        "soft_logout_heading": "Du er logget ud",
-        "sign_in_or_register_description": "Brug din konto eller opret en ny for at fortsætte.",
-        "sign_in_or_register": "Log ind eller Opret bruger",
-        "register_action": "Opret brugerkonto",
         "incorrect_password": "Forkert adgangskode",
-        "forgot_password_email_required": "Den emailadresse, der tilhører til din adgang, skal indtastes."
+        "soft_logout_heading": "Du er logget ud",
+        "forgot_password_email_required": "Den emailadresse, der tilhører til din adgang, skal indtastes.",
+        "sign_in_or_register": "Log ind eller Opret bruger",
+        "sign_in_or_register_description": "Brug din konto eller opret en ny for at fortsætte.",
+        "register_action": "Opret brugerkonto"
     },
     "export_chat": {
         "messages": "Beskeder"
@@ -773,6 +773,9 @@
     },
     "create_room": {
         "name_validation_required": "Indtast et navn for rummet"
+    },
+    "feedback": {
+        "comment_label": "Kommentar"
     },
     "zxcvbn": {
         "suggestions": {
@@ -806,8 +809,5 @@
             "straightRow": "Bogstaver i en række på tastaturet er nemme at gætte",
             "keyPattern": "Korte tastaturmønstre er nemme at gætte"
         }
-    },
-    "feedback": {
-        "comment_label": "Kommentar"
     }
 }

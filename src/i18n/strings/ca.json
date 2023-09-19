@@ -655,8 +655,8 @@
         "category_advanced": "Avançat",
         "category_other": "Altres",
         "me": "Mostra l'acció",
-        "op": "Defineix el nivell d'autoritat d'un usuari",
         "join": "S'uneix a la sala amb l'adreça indicada",
+        "op": "Defineix el nivell d'autoritat d'un usuari",
         "deop": "Degrada l'usuari amb l'id donat"
     },
     "presence": {
@@ -693,10 +693,10 @@
         "sign_in_with_sso": "Inicia sessió mitjançant la inscripció única (SSO)",
         "sso": "Inscripció única (SSO)",
         "footer_powered_by_matrix": "amb tecnologia de Matrix",
-        "sign_in_or_register_description": "Utilitza el teu compte o crea'n un de nou per continuar.",
+        "incorrect_password": "Contrasenya incorrecta",
         "sign_in_or_register": "Inicia sessió o Crea un compte",
-        "register_action": "Crea un compte",
-        "incorrect_password": "Contrasenya incorrecta"
+        "sign_in_or_register_description": "Utilitza el teu compte o crea'n un de nou per continuar.",
+        "register_action": "Crea un compte"
     },
     "export_chat": {
         "messages": "Missatges"

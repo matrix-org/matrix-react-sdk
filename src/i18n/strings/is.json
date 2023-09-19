@@ -3132,12 +3132,12 @@
         "no_active_call": "Ekkert virkt símtal á þessari spjallrás",
         "unholdcall": "Tekur símtalið í fyrirliggjandi spjallrás úr bið",
         "me": "Birtir aðgerð",
-        "op": "Skilgreindu völd notanda",
-        "join": "Gengur til liðs við spjallrás með uppgefnu vistfangi",
-        "failed_find_user": "Gat ekki fundið notanda á spjallrás",
-        "failed_find_room": "Skipun mistókst: Gat ekki fundið spjallrásina (%(roomId)s",
         "error_invalid_runfn": "Villa í skipun: Get ekki meðhöndlað skástriks-skipun.",
         "error_invalid_rendering_type": "Villa í skipun: Get ekki fundið myndgerðartegundina (%(renderingType)s)",
+        "join": "Gengur til liðs við spjallrás með uppgefnu vistfangi",
+        "failed_find_room": "Skipun mistókst: Gat ekki fundið spjallrásina (%(roomId)s",
+        "failed_find_user": "Gat ekki fundið notanda á spjallrás",
+        "op": "Skilgreindu völd notanda",
         "deop": "Tekur stjórnunarréttindi af notanda með uppgefið auðkenni"
     },
     "presence": {
@@ -3325,37 +3325,37 @@
         "server_picker_title": "Skráðu þig inn á heimaþjóninn þinn",
         "server_picker_dialog_title": "Ákveddu hvar aðgangurinn þinn er hýstur",
         "footer_powered_by_matrix": "keyrt með Matrix",
-        "verify_email_heading": "Skoðaðu tölvupóstinn þinn til að halda áfram",
-        "username_in_use": "Einhver annar er að nota þetta notandanafn, prófaðu eitthvað annað.",
+        "sync_footer_subtitle": "Þetta getur tekið dálítinn tíma ef þú tekur þátt í mörgum spjallrásum",
         "unsupported_auth_msisdn": "Þessi netþjónn styður ekki auðkenningu með símanúmeri.",
         "unsupported_auth_email": "Þessi heimaþjónn styður ekki innskráningu með tölvupóstfangi.",
-        "sync_footer_subtitle": "Þetta getur tekið dálítinn tíma ef þú tekur þátt í mörgum spjallrásum",
-        "soft_logout_intro_unsupported_auth": "Þú getur ekki skráð þig inn á notandaaðganginn þinn. Hafðu samband við stjórnanda heimaþjónsins þíns til að fá frekari upplýsingar.",
-        "soft_logout_intro_sso": "Skráðu þig inn og fáðu aftur aðgang að notandaaðgangnum þínum.",
-        "soft_logout_intro_password": "Settu inn lykilorðið þitt til að skrá þig inn og fáðu aftur aðgang að notandaaðgangnum þínum.",
-        "soft_logout_heading": "Þú ert skráð/ur út",
-        "sign_in_prompt": "Ertu með aðgang? <a>Skráðu þig inn</a>",
-        "sign_in_or_register_description": "Notaðu aðganginn þinn eða búðu til nýjan til að halda áfram.",
-        "sign_in_or_register": "Skráðu þig inn eða búðu til aðgang",
-        "server_picker_required": "Tilgreindu heimaþjón",
-        "server_picker_matrix.org": "Matrix.org is er heimsins stærsti opinberi heimaþjónninn, þannig að þar er góður staður fyrir marga.",
-        "server_picker_learn_more": "Um heimaþjóna",
-        "server_picker_invalid_url": "Ógild slóð",
-        "server_picker_failed_validate_homeserver": "Ekki tókst að sannreyna heimaþjón",
-        "server_picker_custom": "Annar heimaþjónn",
         "registration_disabled": "Nýskráning hefur verið gerð óvirk á þessum heimaþjóni.",
-        "register_action": "Búa til notandaaðgang",
+        "username_in_use": "Einhver annar er að nota þetta notandanafn, prófaðu eitthvað annað.",
         "incorrect_password": "Rangt lykilorð",
-        "forgot_password_prompt": "Gleymdirðu lykilorðinu þínu?",
+        "failed_soft_logout_auth": "Tókst ekki að endurauðkenna",
+        "soft_logout_heading": "Þú ert skráð/ur út",
         "forgot_password_email_required": "Það þarf að setja inn tölvupóstfangið sem tengt er notandaaðgangnum þínum.",
         "forgot_password_email_invalid": "Tölvupóstfangið lítur ekki út fyrir að vera í lagi.",
-        "failed_soft_logout_auth": "Tókst ekki að endurauðkenna",
-        "enter_email_heading": "Settu inn tölvupóstfangið þitt til að endurstilla lykilorðið þitt",
-        "create_account_prompt": "Nýr hérna? <a>Stofnaðu aðgang</a>",
+        "sign_in_prompt": "Ertu með aðgang? <a>Skráðu þig inn</a>",
+        "verify_email_heading": "Skoðaðu tölvupóstinn þinn til að halda áfram",
+        "forgot_password_prompt": "Gleymdirðu lykilorðinu þínu?",
+        "soft_logout_intro_password": "Settu inn lykilorðið þitt til að skrá þig inn og fáðu aftur aðgang að notandaaðgangnum þínum.",
+        "soft_logout_intro_sso": "Skráðu þig inn og fáðu aftur aðgang að notandaaðgangnum þínum.",
+        "soft_logout_intro_unsupported_auth": "Þú getur ekki skráð þig inn á notandaaðganginn þinn. Hafðu samband við stjórnanda heimaþjónsins þíns til að fá frekari upplýsingar.",
         "check_email_wrong_email_prompt": "Rangt tölvupóstfang?",
         "check_email_wrong_email_button": "Settu aftur inn tölvupóstfangið þitt",
+        "check_email_resend_prompt": "Fékkstu ekki póstinn?",
         "check_email_resend_tooltip": "Endursendi póst með staðfestingartengli!",
-        "check_email_resend_prompt": "Fékkstu ekki póstinn?"
+        "enter_email_heading": "Settu inn tölvupóstfangið þitt til að endurstilla lykilorðið þitt",
+        "create_account_prompt": "Nýr hérna? <a>Stofnaðu aðgang</a>",
+        "sign_in_or_register": "Skráðu þig inn eða búðu til aðgang",
+        "sign_in_or_register_description": "Notaðu aðganginn þinn eða búðu til nýjan til að halda áfram.",
+        "register_action": "Búa til notandaaðgang",
+        "server_picker_failed_validate_homeserver": "Ekki tókst að sannreyna heimaþjón",
+        "server_picker_invalid_url": "Ógild slóð",
+        "server_picker_required": "Tilgreindu heimaþjón",
+        "server_picker_matrix.org": "Matrix.org is er heimsins stærsti opinberi heimaþjónninn, þannig að þar er góður staður fyrir marga.",
+        "server_picker_custom": "Annar heimaþjónn",
+        "server_picker_learn_more": "Um heimaþjóna"
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
@@ -3468,6 +3468,11 @@
             "see_msgtype_sent_active_room": "Sjá <b>%(msgtype)s</b> skilaboð sem birtast í virku spjallrásina þinni"
         }
     },
+    "feedback": {
+        "sent": "Umsögn send",
+        "comment_label": "Athugasemd",
+        "send_feedback_action": "Senda umsögn"
+    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Notaðu nokkur orð. Forðastu algengar setningar",
@@ -3500,10 +3505,5 @@
             "straightRow": "Auðvelt er að giska á beinar raðir af lyklum á lyklaborði",
             "keyPattern": "Auðvelt er að giska á styttri mynstur á lyklaborði"
         }
-    },
-    "feedback": {
-        "sent": "Umsögn send",
-        "comment_label": "Athugasemd",
-        "send_feedback_action": "Senda umsögn"
     }
 }
