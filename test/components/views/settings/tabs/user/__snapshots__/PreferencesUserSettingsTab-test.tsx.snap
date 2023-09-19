@@ -498,6 +498,31 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   <span
                     class="mx_SettingsFlag_labelText"
                   >
+                    Show voice message button
+                  </span>
+                </label>
+                <div
+                  aria-checked="true"
+                  aria-disabled="true"
+                  aria-label="Show voice message button"
+                  class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  role="switch"
+                  tabindex="0"
+                >
+                  <div
+                    class="mx_ToggleSwitch_ball"
+                  />
+                </div>
+              </div>
+              <div
+                class="mx_SettingsFlag"
+              >
+                <label
+                  class="mx_SettingsFlag_label"
+                >
+                  <span
+                    class="mx_SettingsFlag_labelText"
+                  >
                     Insert a trailing colon after user mentions at the start of a message
                   </span>
                 </label>
