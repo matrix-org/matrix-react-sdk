@@ -200,13 +200,11 @@
     "Authentication check failed: incorrect password?": "Autentifikazio errorea: pasahitz okerra?",
     "Do you want to set an email address?": "E-mail helbidea ezarri nahi duzu?",
     "This will allow you to reset your password and receive notifications.": "Honek zure pasahitza berrezarri eta jakinarazpenak jasotzea ahalbidetuko dizu.",
-    "Deops user with given id": "Emandako ID-a duen erabiltzailea mailaz jaisten du",
     "and %(count)s others...": {
         "other": "eta beste %(count)s…",
         "one": "eta beste bat…"
     },
     "Delete widget": "Ezabatu trepeta",
-    "Define the power level of a user": "Zehaztu erabiltzaile baten botere maila",
     "Publish this room to the public in %(domain)s's room directory?": "Argitaratu gela hau publikora %(domain)s domeinuko gelen direktorioan?",
     "AM": "AM",
     "PM": "PM",
@@ -224,8 +222,6 @@
     "Restricted": "Mugatua",
     "Send": "Bidali",
     "Mirror local video feed": "Bikoiztu tokiko bideo jarioa",
-    "Enable URL previews for this room (only affects you)": "Gaitu URLen aurrebista gela honetan (zuretzat bakarrik aldatuko duzu)",
-    "Enable URL previews by default for participants in this room": "Gaitu URLen aurrebista lehenetsita gela honetako partaideentzat",
     "%(duration)ss": "%(duration)s s",
     "%(duration)sm": "%(duration)s m",
     "%(duration)sh": "%(duration)s h",
@@ -922,9 +918,6 @@
     "One of the following may be compromised:": "Hauetakoren bat konprometituta egon daiteke:",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Egiztatu gailu hau fidagarri gisa markatzeko. Gailu hau fidagarritzat jotzeak lasaitasuna ematen du muturretik-muturrera zifratutako mezuak erabiltzean.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Gailu hau egiaztatzean fidagarri gisa markatuko da, eta egiaztatu zaituzten erabiltzaileek fidagarri gisa ikusiko dute.",
-    "Sign In or Create Account": "Hasi saioa edo sortu kontua",
-    "Use your account or create a new one to continue.": "Erabili zure kontua edo sortu berri bat jarraitzeko.",
-    "Create Account": "Sortu kontua",
     "Cancelling…": "Ezeztatzen…",
     "Your homeserver does not support cross-signing.": "Zure hasiera-zerbitzariak ez du zeharkako sinatzea onartzen.",
     "Homeserver feature support:": "Hasiera-zerbitzariaren ezaugarrien euskarria:",
@@ -1016,7 +1009,6 @@
     "Server did not require any authentication": "Zerbitzariak ez du autentifikaziorik eskatu",
     "Server did not return valid authentication information.": "Zerbitzariak ez du baliozko autentifikazio informaziorik itzuli.",
     "There was a problem communicating with the server. Please try again.": "Arazo bat egon da zerbitzariarekin komunikatzeko. Saiatu berriro.",
-    "Could not find user in room": "Ezin izan da erabiltzailea gelan aurkitu",
     "Can't load this message": "Ezin izan da mezu hau kargatu",
     "Submit logs": "Bidali egunkariak",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Oroigarria: Ez dugu zure nabigatzailearentzako euskarririk, ezin da zure esperientzia nolakoa izango den aurreikusi.",
@@ -1040,7 +1032,6 @@
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s gako ongi berreskuratuta",
     "Confirm encryption setup": "Berretsi zifratze ezarpena",
     "Click the button below to confirm setting up encryption.": "Sakatu azpiko botoia zifratze-ezarpena berresteko.",
-    "Joins room with given address": "Emandako helbidea duen gelara elkartzen da",
     "Your homeserver has exceeded its user limit.": "Zure hasiera-zerbitzariak erabiltzaile muga gainditu du.",
     "Your homeserver has exceeded one of its resource limits.": "Zure hasiera-zerbitzariak bere baliabide mugetako bat gainditu du.",
     "Contact your <a>server admin</a>.": "Jarri kontaktuan <a>zerbitzariaren administratzailearekin</a>.",
@@ -1363,7 +1354,9 @@
             "custom_theme_add_button": "Gehitu azala",
             "font_size": "Letra-tamaina",
             "timeline_image_size_default": "Lehenetsia"
-        }
+        },
+        "inline_url_previews_room_account": "Gaitu URLen aurrebista gela honetan (zuretzat bakarrik aldatuko duzu)",
+        "inline_url_previews_room": "Gaitu URLen aurrebista lehenetsita gela honetako partaideentzat"
     },
     "devtools": {
         "event_type": "Gertaera mota",
@@ -1605,7 +1598,11 @@
         "addwidget_no_permissions": "Ezin dituzu gela honetako trepetak aldatu.",
         "discardsession": "Uneko irteerako talde saioa zifratutako gela batean baztertzera behartzen du",
         "query": "Erabiltzailearekin txata irekitzen du",
-        "me": "Ekintza bistaratzen du"
+        "me": "Ekintza bistaratzen du",
+        "join": "Emandako helbidea duen gelara elkartzen da",
+        "failed_find_user": "Ezin izan da erabiltzailea gelan aurkitu",
+        "op": "Zehaztu erabiltzaile baten botere maila",
+        "deop": "Emandako ID-a duen erabiltzailea mailaz jaisten du"
     },
     "presence": {
         "online_for": "Konektatua %(duration)s",
@@ -1706,7 +1703,10 @@
         "forgot_password_prompt": "Pasahitza ahaztuta?",
         "soft_logout_intro_password": "Sartu zure pasahitza saioa hasteko eta berreskuratu zure kontura sarbidea.",
         "soft_logout_intro_sso": "Hasi saioa eta berreskuratu zure kontua.",
-        "soft_logout_intro_unsupported_auth": "Ezin duzu zure kontuan saioa hasi. Jarri kontaktuan zure hasiera zerbitzariko administratzailearekin informazio gehiagorako."
+        "soft_logout_intro_unsupported_auth": "Ezin duzu zure kontuan saioa hasi. Jarri kontaktuan zure hasiera zerbitzariko administratzailearekin informazio gehiagorako.",
+        "sign_in_or_register": "Hasi saioa edo sortu kontua",
+        "sign_in_or_register_description": "Erabili zure kontua edo sortu berri bat jarraitzeko.",
+        "register_action": "Sortu kontua"
     },
     "export_chat": {
         "messages": "Mezuak"

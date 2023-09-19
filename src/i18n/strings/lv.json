@@ -26,7 +26,6 @@
     "Custom level": "Pielāgots līmenis",
     "Deactivate Account": "Deaktivizēt kontu",
     "Decrypt %(text)s": "Atšifrēt %(text)s",
-    "Deops user with given id": "Atceļ operatora statusu lietotājam ar norādīto Id",
     "Default": "Noklusējuma",
     "Download %(text)s": "Lejupielādēt: %(text)s",
     "Email": "Epasts",
@@ -206,7 +205,6 @@
         "one": "un vēl viens cits..."
     },
     "Delete widget": "Dzēst vidžetu",
-    "Define the power level of a user": "Definē lietotāja statusu",
     "Publish this room to the public in %(domain)s's room directory?": "Publicēt šo istabu publiskajā %(domain)s katalogā?",
     "AM": "AM",
     "PM": "PM",
@@ -222,8 +220,6 @@
     "Unignored user": "Atignorēts lietotājs",
     "You are no longer ignoring %(userId)s": "Tu vairāk neignorē %(userId)s",
     "Mirror local video feed": "Rādīt spoguļskatā kameras video",
-    "Enable URL previews for this room (only affects you)": "Iespējot URL priekšskatījumus šajā istabā (ietekmē tikai jūs pašu)",
-    "Enable URL previews by default for participants in this room": "Iespējot URL priekšskatījumus pēc noklusējuma visiem šīs istabas dalībniekiem",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Jūs nevarēsiet atcelt šīs izmaiņas pēc sava statusa pazemināšanas. Gadījumā, ja esat pēdējais priviliģētais lietotājs istabā, būs neiespējami atgūt šīs privilēģijas.",
     "Unignore": "Atcelt ignorēšanu",
     "Jump to read receipt": "Pāriet uz pēdējo skatīto ziņu",
@@ -478,7 +474,6 @@
     "Room Settings - %(roomName)s": "Istabas iestatījumi - %(roomName)s",
     "Room settings": "Istabas iestatījumi",
     "Share room": "Dalīties ar istabu",
-    "About homeservers": "Par bāzes serveriem",
     "Enable message search in encrypted rooms": "Iespējot ziņu meklēšanu šifrētās istabās",
     "Message search": "Ziņu meklēšana",
     "Cancel search": "Atcelt meklējumu",
@@ -556,11 +551,7 @@
     "Don't miss a reply": "Nepalaidiet garām atbildi",
     "Later": "Vēlāk",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Pārliecinieties par stabilu internet savienojumu vai sazinieties ar servera administratoru",
-    "Could not find user in room": "Lietotājs istabā netika atrasts",
     "Missing roomId.": "Trūkst roomId.",
-    "Create Account": "Izveidot kontu",
-    "Use your account or create a new one to continue.": "Izmantojiet esošu kontu vai izveidojiet jaunu, lai turpinātu.",
-    "Sign In or Create Account": "Pierakstīties vai izveidot kontu",
     "Malawi": "Malāvija",
     "Madagascar": "Madagaskara",
     "Macedonia": "Maķedonija",
@@ -698,7 +689,6 @@
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Jūsu iesniegtā parakstīšanas atslēga atbilst parakstīšanas atslēgai, kuru saņēmāt no %(userId)s sesijas %(deviceId)s. Sesija atzīmēta kā verificēta.",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "BRĪDINĀJUMS: ATSLĒGU VERIFIKĀCIJA NEIZDEVĀS! Parakstīšanas atslēga lietotājam %(userId)s un sesijai %(deviceId)s ir \"%(fprint)s\", kura neatbilst norādītajai atslēgai \"%(fingerprint)s\". Tas var nozīmēt, ka jūsu saziņa tiek pārtverta!",
     "Verifies a user, session, and pubkey tuple": "Verificē lietotāju, sesiju un publiskās atslēgas",
-    "Joins room with given address": "Pievienojas istabai ar šādu adresi",
     "Use an identity server to invite by email. Manage in Settings.": "Izmantojiet identitātes serveri, lai uzaicinātu pa e-pastu. Pārvaldība pieejama Iestatījumos.",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Izmantojiet identitātes serveri, lai uzaicinātu pa e-pastu. Noklikšķiniet uz Turpināt, lai izmantotu noklusējuma identitātes serveri (%(defaultIdentityServerName)s) vai nomainītu to Iestatījumos.",
     "Use an identity server": "Izmantot identitāšu serveri",
@@ -1425,7 +1415,9 @@
             "font_size": "Šrifta izmērs",
             "custom_font_description": "Iestaties uz jūsu sistēmas instalēta fonta nosaukumu, kuru & %(brand)s vajadzētu mēģināt izmantot.",
             "timeline_image_size_default": "Noklusējuma"
-        }
+        },
+        "inline_url_previews_room_account": "Iespējot URL priekšskatījumus šajā istabā (ietekmē tikai jūs pašu)",
+        "inline_url_previews_room": "Iespējot URL priekšskatījumus pēc noklusējuma visiem šīs istabas dalībniekiem"
     },
     "devtools": {
         "event_type": "Notikuma tips",
@@ -1736,7 +1728,11 @@
         "query": "Atvērt čatu ar šo lietotāju",
         "holdcall": "Iepauzē sazvanu šajā istabā",
         "unholdcall": "Šajā istabā iepauzētās sazvana atpauzēšana",
-        "me": "Parāda darbību"
+        "me": "Parāda darbību",
+        "join": "Pievienojas istabai ar šādu adresi",
+        "failed_find_user": "Lietotājs istabā netika atrasts",
+        "op": "Definē lietotāja statusu",
+        "deop": "Atceļ operatora statusu lietotājam ar norādīto Id"
     },
     "presence": {
         "online_for": "Tiešsaistē %(duration)s",
@@ -1853,7 +1849,11 @@
         "soft_logout_intro_password": "Ievadiet paroli, lai pierakstītos un atgūtu piekļuvi savam kontam.",
         "soft_logout_intro_sso": "Pierakstieties un atgūstiet piekļuvi savam kontam.",
         "soft_logout_intro_unsupported_auth": "Jūs nevarat pierakstīties savā kontā. Lūdzu, sazinieties ar sava bāzes servera administratoru, lai iegūtu vairāk informācijas.",
-        "create_account_prompt": "Pirmo reizi šeit? <a>Izveidojiet kontu</a>"
+        "create_account_prompt": "Pirmo reizi šeit? <a>Izveidojiet kontu</a>",
+        "sign_in_or_register": "Pierakstīties vai izveidot kontu",
+        "sign_in_or_register_description": "Izmantojiet esošu kontu vai izveidojiet jaunu, lai turpinātu.",
+        "register_action": "Izveidot kontu",
+        "server_picker_learn_more": "Par bāzes serveriem"
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",

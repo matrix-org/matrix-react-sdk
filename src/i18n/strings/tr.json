@@ -30,7 +30,6 @@
     "Custom level": "Özel seviye",
     "Deactivate Account": "Hesabı Devre Dışı Bırakma",
     "Decrypt %(text)s": "%(text)s metninin şifresini çöz",
-    "Deops user with given id": "ID'leriyle birlikte , düşürülmüş kullanıcılar",
     "Default": "Varsayılan",
     "Download %(text)s": "%(text)s metnini indir",
     "Email": "E-posta",
@@ -248,7 +247,6 @@
     "You do not have permission to do that in this room.": "Bu odada bunu yapma yetkiniz yok.",
     "Error upgrading room": "Oda güncellenirken hata",
     "Use an identity server": "Bir kimlik sunucusu kullan",
-    "Define the power level of a user": "Bir kullanıcının güç düzeyini tanımla",
     "Cannot reach homeserver": "Ana sunucuya erişilemiyor",
     "Your %(brand)s is misconfigured": "%(brand)s hatalı ayarlanmış",
     "Cannot reach identity server": "Kimlik sunucu erişilemiyor",
@@ -660,8 +658,6 @@
     "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\"": "“abcabcabc” gibi tekrarlar “abc” yi tahmin etmekten çok az daha zor olur",
     "Sequences like abc or 6543 are easy to guess": "abc veya 6543 gibi diziler tahmin için oldukça kolaydır",
     "Common names and surnames are easy to guess": "Yaygın isimleri ve soyisimleri tahmin etmek oldukça kolay",
-    "Enable URL previews for this room (only affects you)": "Bu oda için URL önizlemeyi aç (sadece sizi etkiler)",
-    "Enable URL previews by default for participants in this room": "Bu odadaki katılımcılar için URL önizlemeyi varsayılan olarak açık hale getir",
     "Enable widget screenshots on supported widgets": "Desteklenen görsel bileşenlerde anlık görüntüleri aç",
     "Show hidden events in timeline": "Zaman çizelgesinde gizli olayları göster",
     "This is your list of users/servers you have blocked - don't leave the room!": "Bu sizin engellediğiniz kullanıcılar/sunucular listeniz - odadan ayrılmayın!",
@@ -742,9 +738,6 @@
     "Session key": "Oturum anahtarı",
     "Recent Conversations": "Güncel Sohbetler",
     "Recently Direct Messaged": "Güncel Doğrudan Mesajlar",
-    "Sign In or Create Account": "Oturum Açın veya Hesap Oluşturun",
-    "Use your account or create a new one to continue.": "Hesabınızı kullanın veya devam etmek için yeni bir tane oluşturun.",
-    "Create Account": "Hesap Oluştur",
     "Add another word or two. Uncommon words are better.": "Bir iki kelime daha ekleyin. Yaygın olmayan kelimeler daha iyi olur.",
     "Recent years are easy to guess": "Güncel yılların tahmini kolaydır",
     "Enable message search in encrypted rooms": "Şifrelenmiş odalardaki mesaj aramayı aktifleştir",
@@ -828,8 +821,6 @@
     "Click the button below to confirm adding this phone number.": "Telefon numarasını eklemeyi kabul etmek için aşağıdaki tuşa tıklayın.",
     "Are you sure you want to cancel entering passphrase?": "Parola girmeyi iptal etmek istediğinizden emin misiniz?",
     "%(name)s is requesting verification": "%(name)s doğrulama istiyor",
-    "Joins room with given address": "Belirtilen adres ile odaya katılır",
-    "Could not find user in room": "Kullanıcı odada bulunamadı",
     "You signed in to a new session without verifying it:": "Yeni bir oturuma, doğrulamadan oturum açtınız:",
     "Verify your other session using one of the options below.": "Diğer oturumunuzu aşağıdaki seçeneklerden birini kullanarak doğrulayın.",
     "Your homeserver has exceeded its user limit.": "Homeserver'ınız kullanıcı limitini aştı.",
@@ -1644,7 +1635,9 @@
             "font_size": "Yazı boyutu",
             "custom_font_description": "Sisteminizde bulunan bir font adı belirtiniz. %(brand)s sizin için onu kullanmaya çalışacak.",
             "timeline_image_size_default": "Varsayılan"
-        }
+        },
+        "inline_url_previews_room_account": "Bu oda için URL önizlemeyi aç (sadece sizi etkiler)",
+        "inline_url_previews_room": "Bu odadaki katılımcılar için URL önizlemeyi varsayılan olarak açık hale getir"
     },
     "devtools": {
         "event_type": "Olay Tipi",
@@ -1923,7 +1916,11 @@
         "query": "Belirtilen kullanıcı ile sohbet başlatır",
         "holdcall": "Mevcut odadaki aramayı beklemeye alır",
         "unholdcall": "Mevcut odadaki aramayı beklemeden çıkarır",
-        "me": "Eylemi görüntüler"
+        "me": "Eylemi görüntüler",
+        "join": "Belirtilen adres ile odaya katılır",
+        "failed_find_user": "Kullanıcı odada bulunamadı",
+        "op": "Bir kullanıcının güç düzeyini tanımla",
+        "deop": "ID'leriyle birlikte , düşürülmüş kullanıcılar"
     },
     "presence": {
         "online_for": "%(duration)s süresince çevrimiçi",
@@ -2053,7 +2050,10 @@
         "forgot_password_prompt": "Parolanızı mı unuttunuz?",
         "soft_logout_intro_password": "Oturum açmak için şifreni gir ve hesabına yeniden erişimi sağla.",
         "soft_logout_intro_sso": "Oturum açın ve yeniden hesabınıza ulaşın.",
-        "soft_logout_intro_unsupported_auth": "Hesabınıza giriş yapamazsınız. Lütfen daha fazla bilgi için ana sunucu yöneticiniz ile bağlantıya geçiniz."
+        "soft_logout_intro_unsupported_auth": "Hesabınıza giriş yapamazsınız. Lütfen daha fazla bilgi için ana sunucu yöneticiniz ile bağlantıya geçiniz.",
+        "sign_in_or_register": "Oturum Açın veya Hesap Oluşturun",
+        "sign_in_or_register_description": "Hesabınızı kullanın veya devam etmek için yeni bir tane oluşturun.",
+        "register_action": "Hesap Oluştur"
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",

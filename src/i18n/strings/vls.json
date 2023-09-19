@@ -63,8 +63,6 @@
     "You are now ignoring %(userId)s": "Je negeert nu %(userId)s",
     "Unignored user": "Oungenegeerde gebruuker",
     "You are no longer ignoring %(userId)s": "Je negeert %(userId)s nie mi",
-    "Define the power level of a user": "Bepoal ’t machtsniveau van e gebruuker",
-    "Deops user with given id": "Ountmachtigt de gebruuker me de gegeevn ID",
     "Verified key": "Geverifieerde sleuter",
     "Reason": "Reedn",
     "No homeserver URL provided": "Geen thuusserver-URL ingegeevn",
@@ -114,8 +112,6 @@
     "Please contact your homeserver administrator.": "Gelieve contact ip te neemn me den beheerder van je thuusserver.",
     "Mirror local video feed": "Lokoale videoanvoer ook elders ipsloan (spiegeln)",
     "Send analytics data": "Statistische gegeevns (analytics) verstuurn",
-    "Enable URL previews for this room (only affects you)": "URL-voorvertoniengn in dit gesprek inschoakeln (geldt alleene vo joun)",
-    "Enable URL previews by default for participants in this room": "URL-voorvertoniengn standoard vo de gebruukers in dit gesprek inschoakeln",
     "Enable widget screenshots on supported widgets": "Widget-schermafdrukkn inschoakeln ip oundersteunde widgets",
     "Show hidden events in timeline": "Verborgn gebeurtenissn ip de tydslyn weregeevn",
     "Waiting for response from server": "Wachtn ip antwoord van de server",
@@ -683,7 +679,6 @@
     "Remove %(email)s?": "%(email)s verwydern?",
     "Remove %(phone)s?": "%(phone)s verwydern?",
     "Explore rooms": "Gesprekkn ountdekkn",
-    "Create Account": "Account anmoakn",
     "Identity server (%(server)s)": "Identiteitsserver (%(server)s)",
     "Could not connect to identity server": "Kostege geen verbindienge moakn me den identiteitsserver",
     "Not a valid identity server (status code %(code)s)": "Geen geldigen identiteitsserver (statuscode %(code)s)",
@@ -843,7 +838,9 @@
         },
         "appearance": {
             "timeline_image_size_default": "Standoard"
-        }
+        },
+        "inline_url_previews_room_account": "URL-voorvertoniengn in dit gesprek inschoakeln (geldt alleene vo joun)",
+        "inline_url_previews_room": "URL-voorvertoniengn standoard vo de gebruukers in dit gesprek inschoakeln"
     },
     "devtools": {
         "event_type": "Gebeurtenistype",
@@ -1027,7 +1024,9 @@
         "addwidget_invalid_protocol": "Gift een https://- of http://-widget-URL in",
         "addwidget_no_permissions": "J’en kut de widgets in ’t gesprek hier nie anpassn.",
         "discardsession": "Forceert de huudige uutwoartsche groepssessie in e versleuterd gesprek vo verworpn te wordn",
-        "me": "Toogt actie"
+        "me": "Toogt actie",
+        "op": "Bepoal ’t machtsniveau van e gebruuker",
+        "deop": "Ountmachtigt de gebruuker me de gegeevn ID"
     },
     "presence": {
         "online_for": "Online vo %(duration)s",
@@ -1091,7 +1090,8 @@
         "forgot_password_prompt": "Paswoord vergeetn?",
         "soft_logout_intro_password": "Voert je paswoord in vo jen an te meldn en den toegank tou jen account te herkrygn.",
         "soft_logout_intro_sso": "Meldt jen heran en herkrygt den toegank tou jen account.",
-        "soft_logout_intro_unsupported_auth": "Je ku je nie anmeldn me jen account. Nimt contact ip me de beheerder van je thuusserver vo meer informoasje."
+        "soft_logout_intro_unsupported_auth": "Je ku je nie anmeldn me jen account. Nimt contact ip me de beheerder van je thuusserver vo meer informoasje.",
+        "register_action": "Account anmoakn"
     },
     "export_chat": {
         "messages": "Berichtn"

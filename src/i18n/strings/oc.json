@@ -142,7 +142,6 @@
     "Users": "Utilizaires",
     "Success!": "Capitada !",
     "Explore rooms": "Percórrer las salas",
-    "Create Account": "Crear un compte",
     "Click the button below to confirm adding this email address.": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail.",
     "Confirm adding email": "Confirmar l'adicion de l'adressa e-mail",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirmatz l'adicion d'aquela adreça e-mail en utilizant l'autentificacion unica per provar la vòstra identitat.",
@@ -337,7 +336,8 @@
     },
     "auth": {
         "sso": "Autentificacion unica",
-        "incorrect_password": "Senhal incorrècte"
+        "incorrect_password": "Senhal incorrècte",
+        "register_action": "Crear un compte"
     },
     "export_chat": {
         "messages": "Messatges"

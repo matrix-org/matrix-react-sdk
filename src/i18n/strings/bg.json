@@ -72,8 +72,6 @@
     "Not a valid %(brand)s keyfile": "Невалиден файл с ключ за %(brand)s",
     "Authentication check failed: incorrect password?": "Неуспешна автентикация: неправилна парола?",
     "Mirror local video feed": "Показвай ми огледално моя видео образ",
-    "Enable URL previews for this room (only affects you)": "Включване на URL прегледи за тази стая (засяга само Вас)",
-    "Enable URL previews by default for participants in this room": "Включване по подразбиране на URL прегледи за участници в тази стая",
     "Incorrect verification code": "Неправилен код за потвърждение",
     "Phone": "Телефон",
     "No display name": "Няма име",
@@ -240,8 +238,6 @@
     "Incorrect username and/or password.": "Неправилно потребителско име и/или парола.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Моля, обърнете внимание, че влизате в %(hs)s сървър, а не в matrix.org.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Не е възможно свързване към Home сървъра чрез HTTP, когато има HTTPS адрес в лентата на браузъра Ви. Или използвайте HTTPS или <a>включете функция небезопасни скриптове</a>.",
-    "Define the power level of a user": "Променя нивото на достъп на потребителя",
-    "Deops user with given id": "Отнема правата на потребител с даден идентификатор",
     "Commands": "Команди",
     "Notify the whole room": "Извести всички в стаята",
     "Room Notification": "Известие за стая",
@@ -858,9 +854,6 @@
     "Setting up keys": "Настройка на ключове",
     "Verify this session": "Потвърди тази сесия",
     "Encryption upgrade available": "Има обновление на шифроването",
-    "Sign In or Create Account": "Влезте или Създайте профил",
-    "Use your account or create a new one to continue.": "Използвайте профила си или създайте нов за да продължите.",
-    "Create Account": "Създай профил",
     "Verifies a user, session, and pubkey tuple": "Потвърждава потребител, сесия и двойка ключове",
     "Session already verified!": "Сесията вече е потвърдена!",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ВНИМАНИЕ: ПОТВЪРЖДАВАНЕТО НА КЛЮЧОВЕТЕ Е НЕУСПЕШНО! Подписващия ключ за %(userId)s и сесия %(deviceId)s е \"%(fprint)s\", което не съвпада с предоставения ключ \"%(fingerprint)s\". Това може би означава, че комуникацията ви бива прихваната!",
@@ -875,7 +868,6 @@
     "Manually verify all remote sessions": "Ръчно потвърждаване на всички отдалечени сесии",
     "New login. Was this you?": "Нов вход. Вие ли бяхте това?",
     "%(name)s is requesting verification": "%(name)s изпрати запитване за верификация",
-    "Could not find user in room": "Неуспешно намиране на потребител в стаята",
     "Waiting for %(displayName)s to verify…": "Изчакване на %(displayName)s да потвърди…",
     "Cancelling…": "Отказване…",
     "Lock": "Заключи",
@@ -1018,7 +1010,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Потвърдете чрез сравняване на следното с Потребителски Настройки в другата ви сесия:",
     "Confirm this user's session by comparing the following with their User Settings:": "Потвърдете сесията на този потребител чрез сравняване на следното с техните Потребителски Настройки:",
     "If they don't match, the security of your communication may be compromised.": "Ако няма съвпадение, сигурността на комуникацията ви може би е компрометирана.",
-    "Joins room with given address": "Присъединява се към стая с дадения адрес",
     "Your homeserver has exceeded its user limit.": "Надвишен е лимитът за потребители на сървъра ви.",
     "Your homeserver has exceeded one of its resource limits.": "Беше надвишен някой от лимитите на сървъра.",
     "Contact your <a>server admin</a>.": "Свържете се със <a>сървърния администратор</a>.",
@@ -1798,7 +1789,9 @@
             "font_size": "Размер на шрифта",
             "custom_font_description": "Настройте името на шрифт инсталиран в системата и %(brand)s ще се опита да го използва.",
             "timeline_image_size_default": "По подразбиране"
-        }
+        },
+        "inline_url_previews_room_account": "Включване на URL прегледи за тази стая (засяга само Вас)",
+        "inline_url_previews_room": "Включване по подразбиране на URL прегледи за участници в тази стая"
     },
     "devtools": {
         "event_type": "Вид на събитие",
@@ -2058,7 +2051,11 @@
         "query": "Отваря чат с дадения потребител",
         "holdcall": "Задържа повикването в текущата стая",
         "unholdcall": "Възстановява повикването в текущата стая",
-        "me": "Показва действие"
+        "me": "Показва действие",
+        "join": "Присъединява се към стая с дадения адрес",
+        "failed_find_user": "Неуспешно намиране на потребител в стаята",
+        "op": "Променя нивото на достъп на потребителя",
+        "deop": "Отнема правата на потребител с даден идентификатор"
     },
     "presence": {
         "online_for": "Онлайн от %(duration)s",
@@ -2192,7 +2189,10 @@
         "soft_logout_intro_password": "Въведете паролата си за да влезете и да възстановите достъп до профила.",
         "soft_logout_intro_sso": "Влез и възвърни достъп до профила.",
         "soft_logout_intro_unsupported_auth": "Не можете да влезете в профила си. Свържете се с администратора на сървъра за повече информация.",
-        "create_account_prompt": "Вие сте нов тук? <a>Създайте профил</a>"
+        "create_account_prompt": "Вие сте нов тук? <a>Създайте профил</a>",
+        "sign_in_or_register": "Влезте или Създайте профил",
+        "sign_in_or_register_description": "Използвайте профила си или създайте нов за да продължите.",
+        "register_action": "Създай профил"
     },
     "export_chat": {
         "messages": "Съобщения"

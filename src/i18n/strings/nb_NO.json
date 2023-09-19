@@ -90,8 +90,6 @@
     "You are now ignoring %(userId)s": "%(userId)s er nå ignorert",
     "Unignored user": "Uignorert bruker",
     "You are no longer ignoring %(userId)s": "%(userId)s blir ikke lengre ignorert",
-    "Define the power level of a user": "Definer tilgangnivå til en bruker",
-    "Deops user with given id": "Fjerner OP nivå til bruker med gitt ID",
     "Verified key": "Verifisert nøkkel",
     "Reason": "Årsak",
     "Add Email Address": "Legg til E-postadresse",
@@ -352,7 +350,6 @@
     "Space used:": "Plass brukt:",
     "Indexed rooms:": "Indekserte rom:",
     "Verify this session": "Verifiser denne økten",
-    "Create Account": "Opprett konto",
     "Not Trusted": "Ikke betrodd",
     "%(items)s and %(count)s others": {
         "other": "%(items)s og %(count)s andre",
@@ -361,8 +358,6 @@
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Never send encrypted messages to unverified sessions in this room from this session": "Aldri send krypterte meldinger til uverifiserte økter i dette rommet fra denne økten",
-    "Enable URL previews for this room (only affects you)": "Skru på URL-forhåndsvisninger for dette rommet (Påvirker bare deg)",
-    "Enable URL previews by default for participants in this room": "Skru på URL-forhåndsvisninger som standard for deltakerne i dette rommet",
     "Manually verify all remote sessions": "Verifiser alle eksterne økter manuelt",
     "Show more": "Vis mer",
     "Warning!": "Advarsel!",
@@ -490,9 +485,7 @@
     "Confirm adding phone number": "Bekreft tillegging av telefonnummer",
     "Setting up keys": "Setter opp nøkler",
     "New login. Was this you?": "En ny pålogging. Var det deg?",
-    "Sign In or Create Account": "Logg inn eller lag en konto",
     "Use an identity server": "Bruk en identitetstjener",
-    "Could not find user in room": "Klarte ikke å finne brukeren i rommet",
     "Session already verified!": "Økten er allerede verifisert!",
     "Your %(brand)s is misconfigured": "Ditt %(brand)s-oppsett er feiloppsatt",
     "Not a valid %(brand)s keyfile": "Ikke en gyldig %(brand)s-nøkkelfil",
@@ -780,7 +773,6 @@
     "Security Key": "Sikkerhetsnøkkel",
     "Invalid Security Key": "Ugyldig sikkerhetsnøkkel",
     "Wrong Security Key": "Feil sikkerhetsnøkkel",
-    "About homeservers": "Om hjemmetjenere",
     "New Recovery Method": "Ny gjenopprettingsmetode",
     "Generate a Security Key": "Generer en sikkerhetsnøkkel",
     "Confirm your Security Phrase": "Bekreft sikkerhetsfrasen din",
@@ -798,7 +790,6 @@
     "Widgets": "Komponenter",
     "Favourited": "Favorittmerket",
     "Forget Room": "Glem rommet",
-    "Invalid URL": "Ugyldig URL",
     "Continuing without email": "Fortsetter uten E-post",
     "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
     "Transfer": "Overfør",
@@ -1350,7 +1341,9 @@
             "custom_theme_add_button": "Legg til tema",
             "font_size": "Skriftstørrelse",
             "timeline_image_size_default": "Standard"
-        }
+        },
+        "inline_url_previews_room_account": "Skru på URL-forhåndsvisninger for dette rommet (Påvirker bare deg)",
+        "inline_url_previews_room": "Skru på URL-forhåndsvisninger som standard for deltakerne i dette rommet"
     },
     "devtools": {
         "event_type": "Hendelsestype",
@@ -1554,7 +1547,10 @@
         "addwidget_invalid_protocol": "Oppgi en https: // eller http: // widget-URL",
         "addwidget_no_permissions": "Du kan ikke endre widgets i dette rommet.",
         "discardsession": "Tvinger den gjeldende utgående gruppeøkten i et kryptert rom til å stoppe",
-        "me": "Viser handling"
+        "me": "Viser handling",
+        "failed_find_user": "Klarte ikke å finne brukeren i rommet",
+        "op": "Definer tilgangnivå til en bruker",
+        "deop": "Fjerner OP nivå til bruker med gitt ID"
     },
     "presence": {
         "online_for": "På nett i %(duration)s",
@@ -1655,7 +1651,11 @@
         "soft_logout_heading": "Du er logget av",
         "sign_in_prompt": "Har du en konto? <a>Logg på</a>",
         "forgot_password_prompt": "Har du glemt passordet ditt?",
-        "create_account_prompt": "Er du ny her? <a>Opprett en konto</a>"
+        "create_account_prompt": "Er du ny her? <a>Opprett en konto</a>",
+        "sign_in_or_register": "Logg inn eller lag en konto",
+        "register_action": "Opprett konto",
+        "server_picker_invalid_url": "Ugyldig URL",
+        "server_picker_learn_more": "Om hjemmetjenere"
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",

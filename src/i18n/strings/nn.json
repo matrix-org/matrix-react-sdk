@@ -54,10 +54,8 @@
     "You are now ignoring %(userId)s": "Du overser no %(userId)s",
     "Unignored user": "Avoversedd brukar",
     "You are no longer ignoring %(userId)s": "Du overser ikkje %(userId)s no lenger",
-    "Define the power level of a user": "Sett tilgangsnivået til ein brukar",
     "This email address is already in use": "Denne e-postadressa er allereie i bruk",
     "Failed to verify email address: make sure you clicked the link in the email": "Fekk ikkje til å stadfesta e-postadressa: sjå til at du klikka på den rette lenkja i e-posten",
-    "Deops user with given id": "AvOPar brukarar med den gjevne IDen",
     "Verified key": "Godkjend nøkkel",
     "Reason": "Grunnlag",
     "Failure to create room": "Klarte ikkje å laga rommet",
@@ -68,8 +66,6 @@
     "Authentication check failed: incorrect password?": "Authentiseringsforsøk mislukkast: feil passord?",
     "Mirror local video feed": "Spegl den lokale videofeeden",
     "Send analytics data": "Send statistikkdata",
-    "Enable URL previews for this room (only affects you)": "Skru URL-førehandsvisingar på for dette rommet (påverkar deg åleine)",
-    "Enable URL previews by default for participants in this room": "Skru URL-førehandsvisingar på som utgangspunkt for deltakarar i dette rommet",
     "Enable widget screenshots on supported widgets": "Skru widget-skjermbilete på for støtta widgetar",
     "Waiting for response from server": "Ventar på svar frå tenaren",
     "Incorrect verification code": "Urett stadfestingskode",
@@ -391,8 +387,6 @@
     "Session already verified!": "Sesjon er tidligare verifisert!",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ÅTVARING: NØKKELVERIFIKASJON FEILA! Signeringsnøkkel for %(userId)s og økt %(deviceId)s er \"%(fprint)s\" stemmer ikkje med innsendt nøkkel \"%(fingerprint)s\". Dette kan vere teikn på at kommunikasjonen er avlytta!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Innsendt signeringsnøkkel er lik nøkkelen du mottok frå %(userId)s med økt %(deviceId)s. Sesjonen no er verifisert.",
-    "Sign In or Create Account": "Logg inn eller opprett konto",
-    "Create Account": "Opprett konto",
     "You do not have permission to invite people to this room.": "Du har ikkje lov til å invitera andre til dette rommet.",
     "The user must be unbanned before they can be invited.": "Blokkeringa av brukaren må fjernast før dei kan bli inviterte.",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Ved å fjerne koplinga mot din identitetstenar, vil ikkje brukaren din bli oppdaga av andre brukarar, og du kan heller ikkje invitera andre med e-post eller telefonnummer.",
@@ -522,9 +516,6 @@
     "Confirm adding phone number": "Stadfest tilleggjing av telefonnummeret",
     "Click the button below to confirm adding this phone number.": "Trykk på knappen nedanfor for å legge til dette telefonnummeret.",
     "%(name)s is requesting verification": "%(name)s spør etter verifikasjon",
-    "Use your account or create a new one to continue.": "Bruk kontoen din eller opprett ein ny for å halda fram.",
-    "Joins room with given address": "Legg saman rom med spesifisert adresse",
-    "Could not find user in room": "Klarde ikkje å finna brukaren i rommet",
     "Later": "Seinare",
     "Never send encrypted messages to unverified sessions from this session": "Aldri send krypterte meldingar til ikkje-verifiserte sesjonar frå denne sesjonen",
     "Never send encrypted messages to unverified sessions in this room from this session": "Aldri send krypterte meldingar i dette rommet til ikkje-verifiserte sesjonar frå denne sesjonen",
@@ -874,7 +865,9 @@
             "timeline_image_size": "Storleik for bilete på tidslinja",
             "timeline_image_size_default": "Opphavleg innstilling",
             "timeline_image_size_large": "Stor"
-        }
+        },
+        "inline_url_previews_room_account": "Skru URL-førehandsvisingar på for dette rommet (påverkar deg åleine)",
+        "inline_url_previews_room": "Skru URL-førehandsvisingar på som utgangspunkt for deltakarar i dette rommet"
     },
     "devtools": {
         "event_type": "Hendingsort",
@@ -1086,7 +1079,11 @@
         "addwidget_no_permissions": "Du kan ikkje endra miniprogram i dette rommet.",
         "discardsession": "Tvingar i eit kryptert rom kassering av gjeldande utgåande gruppe-økt",
         "query": "Opna ein samtale med den spesifiserte brukaren",
-        "me": "Visar handlingar"
+        "me": "Visar handlingar",
+        "join": "Legg saman rom med spesifisert adresse",
+        "failed_find_user": "Klarde ikkje å finna brukaren i rommet",
+        "op": "Sett tilgangsnivået til ein brukar",
+        "deop": "AvOPar brukarar med den gjevne IDen"
     },
     "presence": {
         "online_for": "tilkopla i %(duration)s",
@@ -1157,7 +1154,10 @@
         "forgot_password_prompt": "Gløymt passord ?",
         "soft_logout_intro_password": "Skriv inn ditt passord for å logge på og ta tilbake tilgang til kontoen din.",
         "soft_logout_intro_sso": "Logg på og ta tilbake tilgang til din konto.",
-        "soft_logout_intro_unsupported_auth": "Du har ikkje muligheit til å logge på kontoen din. Kontakt systemadministratoren for meir informasjon."
+        "soft_logout_intro_unsupported_auth": "Du har ikkje muligheit til å logge på kontoen din. Kontakt systemadministratoren for meir informasjon.",
+        "sign_in_or_register": "Logg inn eller opprett konto",
+        "sign_in_or_register_description": "Bruk kontoen din eller opprett ein ny for å halda fram.",
+        "register_action": "Opprett konto"
     },
     "export_chat": {
         "messages": "Meldingar"
